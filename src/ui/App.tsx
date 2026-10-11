@@ -20,6 +20,7 @@ import { DestinyRollScreen } from './screens/DestinyRoll';
 import { MainScreen } from './screens/Main';
 import { SettingsScreen, type SlotView } from './screens/Settings';
 import { TitleScreen } from './screens/Title';
+import { loadDevMode, saveDevMode } from './devMode';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -44,6 +45,8 @@ function Screens({ content }: { content: Content }) {
   const [slot, setSlot] = useState<number | null>(null);
   const [rollCount, setRollCount] = useState(0);
   const [theme, setTheme] = useState<ThemePref>(loadThemePref);
+  const [devMode, setDevMode] = useState(loadDevMode);
+  const toggleDev = (on: boolean) => { saveDevMode(on); setDevMode(on); };
   const [savesFrom, setSavesFrom] = useState<Screen>('title');
   const [picking, setPicking] = useState<Picking>(null);
   const [message, setMessage] = useState<Message>(null);
@@ -162,6 +165,7 @@ function Screens({ content }: { content: Content }) {
         onNewLife={() => setScreen('create')}
         onSummary={() => setScreen('death')}
         onSaves={() => openSaves('main')}
+        dev={devMode ? { onChange: (next) => setLife(checkDeath(next, content)), onDisable: () => toggleDev(false) } : null}
         theme={theme}
         onToggleTheme={toggleTheme}
       />
@@ -172,6 +176,8 @@ function Screens({ content }: { content: Content }) {
     <TitleScreen
       canContinue={latest !== null}
       livesPlayed={readMeta(store).livesPlayed}
+      devMode={devMode}
+      onDevUnlock={() => toggleDev(true)}
       onContinue={() => latest !== null && loadSlot(latest)}
       onStart={() => {
         const free = firstFreeSlot(store);
