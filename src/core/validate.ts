@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { BalanceSchema, EventFileSchema, GlossarySchema, NamesSchema, OriginFileSchema, TraitFileSchema, WorldSchema, type GameEvent, type Origin, type Trait, type World } from './schemas';
+import { BalanceSchema, FamilyActionFileSchema, EventFileSchema, GlossarySchema, NamesSchema, OriginFileSchema, TraitFileSchema, WorldSchema, type GameEvent, type Origin, type Trait, type World } from './schemas';
 
 export interface Problem {
   file: string;
@@ -24,6 +24,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'config/balance.json') return BalanceSchema;
     if (rest === 'glossary.json') return GlossarySchema;
     if (rest === 'traits.json') return TraitFileSchema;
+    if (rest === 'family-actions.json') return FamilyActionFileSchema;
     return null;
   }
   // Belongs to one world.
@@ -77,6 +78,13 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
             problems.push({ file, level: 'error', message: `khí vận "${t.id}": móc "${e.hook}" phải có activeFrom.age ≥ 18` });
           }
         }
+      }
+    }
+    if (schema === FamilyActionFileSchema) {
+      const seenAction = new Set<string>();
+      for (const a of parsed.data as { id: string }[]) {
+        if (seenAction.has(a.id)) problems.push({ file, level: 'error', message: `trùng id tương tác "${a.id}"` });
+        seenAction.add(a.id);
       }
     }
     if (schema === EventFileSchema) {

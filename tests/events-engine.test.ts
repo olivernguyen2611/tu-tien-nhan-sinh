@@ -23,6 +23,7 @@ const content: Content = {
   traits: TraitFileSchema.parse(traits),
   events: [childhood, study, work, funny, accident].flatMap((f) => EventFileSchema.parse(f)),
   glossary: [],
+  familyActions: [],
 };
 const ev = (id: string) => findEvent(content, id)!;
 const at = (s: GameState, age: number, patch: Partial<GameState> = {}): GameState =>
