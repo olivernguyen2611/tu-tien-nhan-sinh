@@ -9,12 +9,12 @@ export function FamilyPanel({ state, content, onAction, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome text to show under the relative. */
-  onAction: (relativeId: string, actionId: string) => { text: string; tone: Tone };
+  onAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
   onClose: () => void;
 }) {
   const age = state.character.age;
   const [open, setOpen] = useState<string | null>(null);
-  const [result, setResult] = useState<{ id: string; text: string; tone: Tone } | null>(null);
+  const [result, setResult] = useState<{ id: string; text: string; tone: Tone; changes: string } | null>(null);
 
   return (
     <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Quan hệ" onClick={(e) => e.target === e.currentTarget && onClose()}>
@@ -45,7 +45,12 @@ export function FamilyPanel({ state, content, onAction, onClose }: {
                     ))}
                   </div>
                 )}
-                {result?.id === r.id && result.text && <p class={`action-result ${result.tone}`}>{result.text}</p>}
+                {result?.id === r.id && result.text && (
+                  <p class={`action-result ${result.tone}`}>
+                    {result.text}
+                    {result.changes && <span class="changes">{result.changes}</span>}
+                  </p>
+                )}
               </li>
             ))}
           </ul>

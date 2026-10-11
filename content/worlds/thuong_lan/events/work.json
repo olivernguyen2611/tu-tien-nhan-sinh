@@ -96,14 +96,16 @@
         "success": {
           "text": "Khách quay lại khen thuốc hay. Ngươi toát mồ hôi.",
           "effects": {
-            "karma": -1
+            "karma": -1,
+            "stat.happiness": -1
           }
         },
         "fail": {
           "text": "Khách đau bụng cả đêm, sáng ra đứng chửi trước cửa tiệm. Lão chủ trừ lương.",
           "effects": {
             "silver": -10,
-            "karma": -3
+            "karma": -3,
+            "stat.happiness": -5
           }
         }
       },
@@ -154,7 +156,8 @@
         "success": {
           "text": "Gã móc tiền trả, còn boa thêm vì sợ.",
           "effects": {
-            "silver": 5
+            "silver": 5,
+            "stat.happiness": 3
           }
         },
         "fail": {
@@ -171,7 +174,8 @@
           "text": "Ngươi bù tiền mâm cỗ. Lòng hơi đau.",
           "effects": {
             "silver": -5,
-            "karma": 1
+            "karma": 1,
+            "stat.happiness": -2
           }
         }
       },
@@ -186,7 +190,8 @@
         "result": {
           "text": "Gã sướng quá, trả gấp đôi và hứa mai quay lại.",
           "effects": {
-            "silver": 10
+            "silver": 10,
+            "stat.charm": 2
           }
         }
       }
@@ -241,7 +246,8 @@
         "result": {
           "text": "Hàng xóm dập lửa kịp. Sư phụ khen ngươi biết điều.",
           "effects": {
-            "karma": 1
+            "karma": 1,
+            "stat.intellect": 1
           }
         }
       },
@@ -256,10 +262,11 @@
         "result": {
           "text": "Lửa liếm qua người mà ngươi chỉ thấy ấm ấm.",
           "effects": {
-            "karma": 5,
             "setFlags": [
               "su_phu_ren_quy"
-            ]
+            ],
+            "karma": 5,
+            "stat.physique": 2
           }
         }
       }
@@ -312,7 +319,10 @@
         "text": "Từ chối",
         "result": {
           "text": "Ngươi giữ tiền trong túi, ngủ yên giấc.",
-          "effects": {}
+          "effects": {
+            "stat.health": 1,
+            "stat.happiness": 1
+          }
         }
       },
       {
@@ -332,7 +342,8 @@
         "result": {
           "text": "Dọc đường gặp một thương nhân lớn mua sỉ cả chuyến.",
           "effects": {
-            "silver": 40
+            "silver": 40,
+            "stat.happiness": 5
           }
         }
       }

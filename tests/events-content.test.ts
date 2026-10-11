@@ -27,9 +27,8 @@ describe('mortal events of Thương Lan giới', () => {
     expect(give.choices[0].result?.effects.followUp).toEqual({ event: 'ong_lao_tro_lai', afterYears: [3, 8] });
   });
 
-  it('events about parents skip orphans', () => {
-    for (const id of ['thoi_noi', 'cha_me_lam_benh']) {
-      expect(events.find((e) => e.id === id)!.conditions.flagsNone).toContain('no_parents');
-    }
+  it('events about parents skip lives without that parent', () => {
+    expect(events.find((e) => e.id === 'thoi_noi')!.conditions.flagsNone).toEqual(expect.arrayContaining(['no_father', 'no_mother']));
+    expect(events.find((e) => e.id === 'cha_me_lam_benh')!.conditions.flagsNone).toContain('no_father');
   });
 });

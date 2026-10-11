@@ -2,6 +2,7 @@
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameState, Gender, LogLine, Relative, Tone } from '../core/types';
+import { describeDelta } from './deltas';
 import { makeName, splitName } from './names';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
@@ -70,8 +71,13 @@ export function ageFamily(state: GameState, content: Content): GameState {
     if (!r.alive) return r;
     const age = r.age + 1;
     if (age >= r.lifespan) {
-      lines.push({ text: `${relationLabel(r, state.character.age)} ${r.name} qua đời, hưởng thọ ${age} tuổi.`, tone: 'bad' });
-      happiness += cfg.deathHappiness * (r.affinity / 100);
+      // Grief: even a relative you drifted from hurts (minShare); a close one hurts most.
+      const g = cfg.grief;
+      const loss = Math.round(g[r.role] * (g.minShare + (1 - g.minShare) * (r.affinity / 100)));
+      const before = clamp(happiness);
+      happiness = clamp(happiness + loss);
+      const change = describeDelta('happiness', happiness - before);
+      lines.push({ text: `${relationLabel(r, state.character.age)} ${r.name} qua đời, hưởng thọ ${age} tuổi.${change ? ` ${change}.` : ''}`, tone: 'bad' });
       return { ...r, age, alive: false };
     }
     return { ...r, age, affinity: clamp(r.affinity - cfg.affinityDecay) };
@@ -98,9 +104,12 @@ export function ageFamily(state: GameState, content: Content): GameState {
     lines.push({ text: `Nhà có thêm ${gender === 'nam' ? 'một em trai' : 'một em gái'}: ${baby.name}.`, tone: 'good' });
   }
 
-  // When both parents are gone, events that need parents stop (flag no_parents, task 1.6).
-  const parentsGone = family.filter((r) => r.role !== 'sibling').every((r) => !r.alive);
-  const flags = parentsGone ? { ...state.flags, no_parents: true } : state.flags;
+  // Events that need a parent stop once that parent is gone (no_father / no_mother; both = no_parents).
+  const gone = (role: Relative['role']) => !family.some((r) => r.role === role && r.alive);
+  const flags = { ...state.flags };
+  if (gone('father')) flags.no_father = true;
+  if (gone('mother')) flags.no_mother = true;
+  if (flags.no_father && flags.no_mother) flags.no_parents = true;
 
   const log = state.log.slice();
   const last = log[log.length - 1];

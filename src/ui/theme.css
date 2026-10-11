@@ -518,6 +518,9 @@ button { font: inherit; color: inherit; }
 .event-card .outcome.good { color: var(--good); }
 .event-card .outcome.bad { color: var(--bad); }
 .event-card .outcome.rare { color: var(--rare); }
+/* Stat deltas under a result ("Hạnh phúc −3 · Bạc +10"). */
+.changes { margin: 6px 0 12px; font-size: 0.8125rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.action-result .changes { display: block; margin: 4px 0 0; font-family: var(--font-ui, inherit); }
 .age-btn:disabled { opacity: 0.55; cursor: default; }
 
 /* Family panel */

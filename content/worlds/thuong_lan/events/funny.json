@@ -38,10 +38,11 @@
         "result": {
           "text": "Đạo sĩ trả mười lăm lạng, ôm gà đi, miệng lẩm bẩm 'tìm được rồi'.",
           "effects": {
-            "silver": 15,
             "setFlags": [
               "ban_ga_cho_dao_si"
-            ]
+            ],
+            "silver": 15,
+            "stat.happiness": 2
           }
         }
       }

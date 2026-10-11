@@ -8,7 +8,7 @@ const balance = {
   character: { mortalStatRange: [30, 80], aptitudeRange: [10, 90], aptitudeRolls: 2 },
   family: {
     fatherAge: [20, 35], motherAge: [17, 30], affinityStart: [55, 85], olderSiblings: [0, 2], olderSiblingGap: [2, 6],
-    youngerSiblingChance: 0.12, motherMinAgeForChild: 16, motherMaxAgeForChild: 40, maxSiblings: 4, affinityDecay: 1, deathHappiness: -20,
+    youngerSiblingChance: 0.12, motherMinAgeForChild: 16, motherMaxAgeForChild: 40, maxSiblings: 4, affinityDecay: 1, grief: { father: -25, mother: -25, sibling: -15, minShare: 0.5 },
   },
   lifespan: { mortalBase: 70, mortalVariance: 10, healthAdjustMax: 10 },
   fastForward: { maxYears: 10 },
@@ -22,7 +22,7 @@ function event(overrides: Record<string, unknown> = {}) {
     title: 'Động phủ trong núi',
     text: '{name} lạc vào một hang động...',
     weight: 5,
-    choices: [{ text: 'Rời đi', result: { text: 'Bạn quay về.' } }],
+    choices: [{ text: 'Rời đi', result: { text: 'Bạn quay về.', effects: { 'stat.happiness': -1 } } }],
     ...overrides,
   };
 }
@@ -41,12 +41,30 @@ describe('validateContent', () => {
         {
           text: 'Phá cấm chế',
           check: { stat: 'stat.luck', difficulty: 60 },
-          success: { text: 'Thành công', effects: { addItems: ['ngoc_gian_01'], setFlags: ['found_old_cave'] } },
+          success: { text: 'Thành công', effects: { addItems: ['ngoc_gian_01'], setFlags: ['found_old_cave'], 'stat.luck': 1 } },
           fail: { text: 'Thất bại', effects: { 'stat.health': -30 } },
         },
       ],
     });
     expect(errors({ 'worlds/w/events/a.json': [ev] })).toEqual([]);
+  });
+
+  it('requires every outcome to change at least one number', () => {
+    const msgs = errors({ 'worlds/w/events/a.json': [event({ choices: [{ text: 'x', result: { text: 'y', effects: { setFlags: ['a'] } } }] })] });
+    expect(msgs.join()).toContain('không đổi chỉ số');
+  });
+
+  it('text naming a parent must exclude lives where that parent is gone', () => {
+    const fx = { 'stat.happiness': 1 };
+    const sick = event({ text: 'Cha ngươi ho ra máu.', choices: [{ text: 'Chăm sóc', result: { text: 'Mẹ ngươi khóc.', effects: fx } }] });
+    const msgs = errors({ 'worlds/w/events/a.json': [sick] }).join();
+    expect(msgs).toContain('no_father');
+    expect(msgs).toContain('no_mother');
+    const ok = event({ text: 'Cha ngươi ho ra máu.', conditions: { flagsNone: ['no_father'] },
+      choices: [{ text: 'Chăm sóc', requires: { flagsNone: ['no_mother'] }, result: { text: 'Mẹ ngươi khóc.', effects: fx } }] });
+    expect(errors({ 'worlds/w/events/a.json': [ok] })).toEqual([]);
+    // "chạy", "chăm" are not "cha".
+    expect(errors({ 'worlds/w/events/a.json': [event({ text: 'Ngươi chạy đi chăm vườn.' })] })).toEqual([]);
   });
 
   it('reports schema errors with their path', () => {

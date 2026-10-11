@@ -289,7 +289,10 @@ export const BalanceSchema = z
         motherMaxAgeForChild: z.number().int(),
         maxSiblings: z.number().int().min(0),
         affinityDecay: z.number().min(0),
-        deathHappiness: z.number(),
+        /** Happiness lost when a relative dies: base × (minShare + (1 − minShare) × affinity/100). */
+        grief: z
+          .object({ father: z.number().max(0), mother: z.number().max(0), sibling: z.number().max(0), minShare: probability })
+          .strict(),
       })
       .strict(),
     lifespan: z

@@ -41,7 +41,7 @@
     "motherMaxAgeForChild": 40,
     "maxSiblings": 4,
     "affinityDecay": 1,
-    "deathHappiness": -20
+    "grief": { "father": -30, "mother": -30, "sibling": -15, "minShare": 0.67 }
   },
   "lifespan": {
     "mortalBase": 70,

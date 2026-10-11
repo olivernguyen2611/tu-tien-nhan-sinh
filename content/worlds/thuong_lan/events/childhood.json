@@ -13,7 +13,8 @@
         "max": 1
       },
       "flagsNone": [
-        "no_parents"
+        "no_father",
+        "no_mother"
       ]
     },
     "weight": 10,
@@ -108,7 +109,8 @@
         "result": {
           "text": "Một lão bán thuốc trả ngay hai mươi lạng, mắt sáng rỡ. Có lẽ ngươi bán hớ.",
           "effects": {
-            "silver": 20
+            "silver": 20,
+            "stat.happiness": 3
           }
         }
       },
@@ -116,7 +118,7 @@
         "text": "Đưa cho mẹ",
         "requires": {
           "flagsNone": [
-            "no_parents"
+            "no_mother"
           ]
         },
         "result": {
@@ -197,7 +199,9 @@
         "text": "Bỏ đi",
         "result": {
           "text": "Ngươi đi, lòng còn vương vấn.",
-          "effects": {}
+          "effects": {
+            "stat.daoHeart": 1
+          }
         }
       },
       {
@@ -209,7 +213,7 @@
           ]
         },
         "result": {
-          "text": "Chuột trong nhà chết sạch. Mẹ ngươi cho thêm một bát cơm.",
+          "text": "Chuột trong nhà chết sạch. Tối đó ngươi được thêm một bát cơm.",
           "effects": {
             "stat.happiness": 3
           }
@@ -325,7 +329,7 @@
           "difficulty": 50
         },
         "success": {
-          "text": "Ngươi lấy lại diều. Phú hộ tới nhà mắng vốn, cha ngươi lén cho thêm cái đùi gà.",
+          "text": "Ngươi lấy lại diều. Phú hộ tới nhà mắng vốn, nhưng tối đó ngươi vẫn được lén cho thêm cái đùi gà.",
           "effects": {
             "stat.happiness": 5,
             "karma": -1
@@ -353,7 +357,9 @@
         "text": "Mách người lớn",
         "result": {
           "text": "Người lớn hai nhà cãi nhau, quên mất cái diều.",
-          "effects": {}
+          "effects": {
+            "stat.happiness": -2
+          }
         }
       },
       {
@@ -396,7 +402,6 @@
         "result": {
           "text": "Ông lão ăn xong, nhìn ngươi rất lâu rồi bỏ đi, không nói một lời.",
           "effects": {
-            "karma": 3,
             "setFlags": [
               "cho_ong_lao_an"
             ],
@@ -406,7 +411,9 @@
                 3,
                 8
               ]
-            }
+            },
+            "karma": 3,
+            "stat.happiness": 2
           }
         }
       },
@@ -414,7 +421,9 @@
         "text": "Đóng cửa",
         "result": {
           "text": "Ngoài cửa im lặng. Hôm sau ông lão không còn đó.",
-          "effects": {}
+          "effects": {
+            "stat.daoHeart": -1
+          }
         }
       },
       {
@@ -422,7 +431,8 @@
         "result": {
           "text": "Ông lão chỉ cười. Đêm đó ngươi mơ thấy bị chó đuổi.",
           "effects": {
-            "karma": -3
+            "karma": -3,
+            "stat.happiness": 2
           }
         }
       }
@@ -466,7 +476,8 @@
         "result": {
           "text": "Túi nặng trịch. Ông lão lắc đầu như thấy tiếc.",
           "effects": {
-            "silver": 50
+            "silver": 50,
+            "stat.happiness": 5
           }
         }
       },
