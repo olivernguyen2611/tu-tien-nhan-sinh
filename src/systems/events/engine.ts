@@ -8,6 +8,7 @@ import { extremeThemeMultiplier } from '../extremes';
 import type { GameState, LogLine, Tone } from '../../core/types';
 import { meets, readValue } from './conditions';
 import { grantRoot, hookActive, lifeHooks, revealRoot, startCultivating } from '../cultivation';
+import { learnTechnique } from '../technique';
 
 type Outcome = NonNullable<GameEvent['choices'][number]['result']>;
 
@@ -188,6 +189,13 @@ export function resolveChoice(state: GameState, content: Content, choiceIndex: n
     const started = startCultivating(revealed.state, content);
     next = started.state;
     for (const line of [revealed.line, started.line]) if (line) text = `${text} ${line.text}`;
+  }
+  if (outcome.effects.learnTechnique) {
+    const learned = learnTechnique(next, content, outcome.effects.learnTechnique);
+    if (learned) {
+      next = learned.state;
+      text = `${text} ${learned.text}`;
+    }
   }
   if (outcome.effects.grantRoot) {
     const granted = grantRoot(next, content);

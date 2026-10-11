@@ -556,6 +556,9 @@ button { font: inherit; color: inherit; }
 .career-row { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--line); }
 .career-row .profile-note { margin: 2px 0 6px; }
 .life-title { margin: 4px 0; font-family: var(--font-story); font-weight: 700; color: var(--rare); }
+.technique { margin: 8px 0; }
+.technique .story { margin: 0; }
+.technique .profile-note { margin: 2px 0; }
 .panel-sub { margin: 0 0 2px; font-size: 1rem; }
 .craft-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; align-items: center; margin-top: 10px; }
 .craft-head { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 8px; font-size: 0.875rem; }

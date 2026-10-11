@@ -51,8 +51,13 @@
     "injuryHealed": "Kinh mạch đã lành hẳn, linh khí lại chạy thông suốt.",
     "majorSuccess": "Linh khí trong người hóa lỏng, chảy về đan điền đắp thành nền. Từ nay ngươi là tu sĩ {realm}, đạo cơ {grade}.",
     "majorDeviation": "Tâm thần chao đảo, linh khí chạy loạn. Tẩu hỏa nhập ma! Ngươi gắng gượng giữ được mạng, nhưng tâm cảnh đã có vết nứt.",
-    "bottleneck": "Thất bại liền mấy lần, bình chướng như bức tường đá. Linh khí vào người cũng chậm hẳn: đây là bình cảnh."
+    "bottleneck": "Thất bại liền mấy lần, bình chướng như bức tường đá. Linh khí vào người cũng chậm hẳn: đây là bình cảnh.",
+    "learnTechnique": "Ngươi bắt đầu tu {technique} ({grade} phẩm, {lineage}).",
+    "switchTechnique": "Tán công trùng tu: bỏ {old}, chuyển sang {technique}. Tu vi tầng này mất đi mấy phần.",
+    "techniqueCap": "{technique} chỉ tu tới {realm} viên mãn. Muốn đi xa hơn phải tìm công pháp tốt hơn."
   },
+  "gradeNames": { "hoang": "Hoàng", "huyen": "Huyền", "dia": "Địa", "thien": "Thiên" },
+  "lineageNames": { "tien": "Tiên đạo", "ma": "Ma đạo", "phat": "Phật đạo", "quy": "Quỷ đạo", "yeu": "Yêu đạo" },
   "foundations": [
     { "id": "ha", "name": "hạ phẩm", "description": "Nền móng lỏng lẻo, đi tiếp sẽ vất vả." },
     { "id": "trung", "name": "trung phẩm", "description": "Nền móng vững vàng như phần lớn tu sĩ." },

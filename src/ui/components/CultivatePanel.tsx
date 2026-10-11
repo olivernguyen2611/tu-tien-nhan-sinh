@@ -5,6 +5,7 @@ import type { GameState, Tone } from '../../core/types';
 import { inBottleneck, majorBreakthroughInfo, realmLabel, rootLabel, yearlyGain } from '../../systems/cultivation';
 import { craftViews } from '../../systems/crafts';
 import { careerIncome, careerLabel, careerViews } from '../../systems/career';
+import { currentTechnique, techniqueSummary } from '../../systems/technique';
 import { Meter } from './Meter';
 import { TermText } from './Tooltip';
 
@@ -39,6 +40,14 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
         <div class="kicker">Tu luyện</div>
         <h2>{realmLabel(state, content)}</h2>
         <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>
+        {currentTechnique(state, content) && (
+          <div class="technique">
+            <p class="story"><b>Công pháp: {currentTechnique(state, content)!.name}</b></p>
+            <p class="profile-note">{techniqueSummary(state, content)}</p>
+            <p class="profile-note"><TermText text={currentTechnique(state, content)!.flavor} /></p>
+            {currentTechnique(state, content)!.note && <p class="profile-note">{currentTechnique(state, content)!.note}</p>}
+          </div>
+        )}
         {foundation && <p class="profile-note"><TermText text={`Đạo cơ ${foundation.name}: ${foundation.description}`} /></p>}
         {mortal ? (
           <p class="story">

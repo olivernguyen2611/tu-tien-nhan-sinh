@@ -74,6 +74,10 @@ export interface GameState {
     fails: Record<string, number>;
     /** Meridian injury slows cultivation until this age (exclusive). */
     injuredUntil: number | null;
+    /** Main technique id (techniques.json); null for mortals. */
+    technique: string | null;
+    /** Every technique learned this life (one-time stat hooks are given once). */
+    learned: string[];
     /** Đạo cơ grade id after Trúc Cơ (realms.json foundations). */
     foundation: string | null;
     /** Age of the last big breakthrough attempt (one per year). */

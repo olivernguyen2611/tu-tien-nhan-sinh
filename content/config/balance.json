@@ -109,7 +109,6 @@
     "aptitudeBase": 0.75,
     "aptitudeDivisor": 400,
     "regionQi": 1.0,
-    "techniqueMul": 1.0,
     "breakthrough": { "comprehensionPerPoint": 0.3, "daoHeartPerPoint": 0.2, "failPenaltyPct": 5, "minPct": 3, "maxPct": 95 },
     "minorFailure": {
       "weights": { "lose": 70, "injury": 25, "lifespan": 5 },
@@ -172,6 +171,21 @@
     "safeAge": 30,
     "deathPerYear": 0.02,
     "deathMax": 0.6
+  },
+  "techniques": {
+    "default": "dan_khi_quyet",
+    "gradeMul": { "hoang": 1.0, "huyen": 1.2, "dia": 1.5, "thien": 2.0 },
+    "gradeMaxRealm": { "hoang": "truc_co", "huyen": "kim_dan", "dia": "nguyen_anh" },
+    "mismatchMul": 0.7,
+    "lineageMul": { "tien": 1.0, "ma": 1.4, "phat": 0.8, "quy": 1.0, "yeu": 1.0 },
+    "rootlessDaoHeartMax": 0.7,
+    "switchLossPct": 20
+  },
+  "sects": {
+    "stipend": { "bich_lac_tong": 3, "tang_phong_kiem_cac": 1, "bach_thao_coc": 2, "vo_uu_tu": 1, "u_ha_ma_tong": 4, "van_yeu_dien": 2 },
+    "rankStipendMul": [0.5, 1, 2, 4],
+    "karmaPerYear": { "u_ha_ma_tong": -2 },
+    "joinReputation": { "u_ha_ma_tong": { "chinh": -20, "ma": 10 } }
   },
   "paths": {
     "startAffinity": [5, 30],

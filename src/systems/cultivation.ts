@@ -8,6 +8,7 @@ import { extremeHookSum } from './extremes';
 import { checkDeath } from './time';
 import { difficultyHookSum } from './difficulty';
 import { careerHooks } from './career';
+import { currentTechnique, learnTechnique, techniqueCapReason, techniqueMul } from './technique';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -121,14 +122,17 @@ const realmIndex = (content: Content, id: string) => content.cultivation.realms.
 export function hookActive(e: Hook, state: GameState, content: Content): boolean {
   if (e.activeFrom && state.character.age < e.activeFrom.age) return false;
   if (e.activeUntil && realmIndex(content, state.cult.realm) >= realmIndex(content, e.activeUntil.realm)) return false;
+  if (e.activeIf?.minRootElements !== undefined && (state.cult.root?.elements.length ?? 0) < e.activeIf.minRootElements) return false;
+  if (e.activeIf?.daoHeartBelow !== undefined && state.aptitudes.daoHeart >= e.activeIf.daoHeartBelow) return false;
   return true;
 }
 
-/** Hooks this life carries from traits, its special body and its career. */
+/** Hooks this life carries from traits, its special body, its career and its technique. */
 export function lifeHooks(state: GameState, content: Content): Hook[] {
   const fromTraits = state.traits.flatMap((id) => content.traits.find((t) => t.id === id)?.effects ?? []);
   const body = state.cult.root?.body ? content.cultivation.roots.bodies.find((b) => b.id === state.cult.root!.body) : undefined;
-  return [...fromTraits, ...(body?.effects ?? []), ...careerHooks(state, content)];
+  // Sect hooks join here in task 2.5.
+  return [...fromTraits, ...(body?.effects ?? []), ...careerHooks(state, content), ...(currentTechnique(state, content)?.effects ?? [])];
 }
 
 /** Sum of an add-hook from traits, special body, extreme states and difficulty. `lineage.<x>.<hook>` counts for the life's lineage. */
@@ -145,15 +149,19 @@ export function hookSum(state: GameState, content: Content, hook: string): numbe
 export function yearlyGain(state: GameState, content: Content): number {
   const root = state.cult.root;
   const realm = content.balance.realms[state.cult.realm];
-  if (!root || !realm || state.cult.realm === 'pham_nhan') return 0;
+  if (!realm || state.cult.realm === 'pham_nhan') return 0;
   const cfg = content.balance.cultivation;
-  const rootMul = content.balance.roots.gradeSpeed[root.grade] ?? 0;
+  let rootMul = root ? content.balance.roots.gradeSpeed[root.grade] ?? 0 : 0;
+  // Rootless techniques (Phật duyên) cultivate on đạo tâm instead of a root.
+  if (rootMul <= 0 && currentTechnique(state, content)?.requires.rootless) {
+    rootMul = Math.min(content.balance.techniques.rootlessDaoHeartMax, state.aptitudes.daoHeart / 100);
+  }
   const aptitude = cfg.aptitudeBase + (state.aptitudes.physique + state.aptitudes.comprehension) / cfg.aptitudeDivisor;
   const qi = content.world.qi ?? cfg.regionQi;
   const bonus = Math.max(0, 1 + hookSum(state, content, 'cultivationSpeed'));
   const injured = state.cult.injuredUntil !== null && state.character.age < state.cult.injuredUntil ? cfg.minorFailure.injurySpeedMul : 1;
   const foundation = state.cult.foundation ? content.balance.majorBreakthrough.foundationSpeed[state.cult.foundation] ?? 1 : 1;
-  return realm.speedPct * rootMul * aptitude * qi * cfg.techniqueMul * bonus * injured * foundation * bottleneckMul(state, content);
+  return realm.speedPct * rootMul * aptitude * qi * techniqueMul(state, content) * bonus * injured * foundation * bottleneckMul(state, content);
 }
 
 /** PLAN G.2 bình cảnh: after N failed big breakthroughs at a realm's peak, cultivation slows. */
@@ -223,7 +231,9 @@ export function startCultivating(state: GameState, content: Content): { state: G
   const first = content.cultivation.realms.realms[1];
   if (!first) return { state, line: null };
   const rng = Rng.fromState(state.rng);
-  const next = enterRealm(state, content, first.id, rng);
+  const entered = enterRealm(state, content, first.id, rng);
+  // The tiên sư leaves the default technique (Dẫn Khí Quyết); the start line already says so.
+  const next = learnTechnique(entered, content, content.balance.techniques.default, { quiet: true })?.state ?? entered;
   const line: LogLine = { text: fillRealm(content.cultivation.realms.texts.start, next, content), tone: 'good' };
   return { state: { ...next, rng: rng.getState(), log: pushLine(next.log, line) }, line };
 }
@@ -237,7 +247,7 @@ function pushLine(log: GameState['log'], line: LogLine): GameState['log'] {
 
 /** One year of cultivation: fill the bar; a full bar tries the next stage (only inside a realm). */
 export function cultivateYear(state: GameState, content: Content): GameState {
-  if (!state.alive || state.cult.realm === 'pham_nhan' || !state.cult.root) return state;
+  if (!state.alive || state.cult.realm === 'pham_nhan' || (!state.cult.root && !currentTechnique(state, content))) return state;
   const texts = content.cultivation.realms.texts;
   const cfg = content.balance.cultivation.minorFailure;
   const realm = content.cultivation.realms.realms.find((r) => r.id === state.cult.realm);
@@ -313,6 +323,8 @@ export function majorBreakthroughInfo(state: GameState, content: Content): Major
   const info = { target: { id: next.id, name: next.name }, chancePct: breakthroughPct(state, content, base, true) };
   const atPeak = state.cult.stage >= realm.stages.length - 1 && state.cult.progress >= 100;
   if (!atPeak) return { ...info, blocked: `Cần tu tới ${realm.name} ${realm.stages[realm.stages.length - 1]}, đầy thanh tu vi.` };
+  const cap = techniqueCapReason(state, content, next.id);
+  if (cap) return { ...info, blocked: cap };
   if (state.cult.lastMajorAttempt === state.character.age) return { ...info, blocked: 'Năm nay đã thử rồi, đợi sang năm.' };
   return { ...info, blocked: null };
 }

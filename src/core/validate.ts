@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, TechniqueFileSchema, type Sect, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World } from './schemas';
 
 export interface Problem {
   file: string;
@@ -33,12 +33,14 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'difficulties.json') return DifficultyFileSchema;
     if (rest === 'tutorial.json') return TutorialFileSchema;
     if (rest === 'careers.json') return CareersFileSchema;
+    if (rest === 'techniques.json') return TechniqueFileSchema;
     return null;
   }
   // Belongs to one world.
   if (rest === 'world.json') return WorldSchema;
   if (rest === 'character/origins.json') return OriginFileSchema;
   if (rest === 'character/names.json') return NamesSchema;
+  if (rest === 'sects.json') return SectFileSchema;
   if (/^events\/[^/]+\.json$/.test(rest)) return EventFileSchema;
   return null;
 }
@@ -57,6 +59,8 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   let traitIds: Set<string> | null = null;
   const rootTests: { file: string; event: string }[] = [];
   let difficultyIds: string[] | null = null;
+  let techniques: Technique[] | null = null;
+  const sectFiles: { file: string; sects: Sect[] }[] = [];
   const parsedShared: { balance?: Balance; realms?: RealmsFile; roots?: RootsFile; aptitudes?: AptitudesFile } = {};
 
   for (const [file, raw] of Object.entries(files)) {
@@ -129,6 +133,8 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
         problems.push({ file, level: 'warning', message: 'mục tiêu cuối nên có "when": {} để luôn có một mục tiêu' });
       }
     }
+    if (schema === TechniqueFileSchema) techniques = parsed.data as Technique[];
+    if (schema === SectFileSchema) sectFiles.push({ file, sects: parsed.data as Sect[] });
     if (schema === CareersFileSchema) problems.push(...duplicates(file, 'đường đời', (parsed.data as { careers: { id: string }[] }).careers));
     if (schema === DifficultyFileSchema) difficultyIds = (parsed.data as { id: string }[]).map((d) => d.id);
   }
@@ -141,6 +147,8 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       problems.push({ file: 'config/balance.json', level: 'error', message: `defaultDifficulty "${b.defaultDifficulty}" không có trong difficulties.json` });
     }
   }
+
+  problems.push(...checkTechniquesAndSects(techniques, sectFiles, parsedShared));
 
   // The world's root-test event must exist among that world's events.
   for (const { file, event } of rootTests) {
@@ -221,6 +229,10 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
         // Owner rule: every choice moves the character's numbers a little.
         if (outcome && !Object.values(outcome.effects).some((v) => typeof v === 'number' && v !== 0)) {
           problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: kết quả không đổi chỉ số nào (mỗi lựa chọn phải ảnh hưởng ít nhất một chỉ số)` });
+        }
+        const tech = outcome?.effects.learnTechnique;
+        if (tech && techniques && !techniques.some((x) => x.id === tech)) {
+          problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: công pháp không tồn tại "${tech}"` });
         }
         const target = outcome?.effects.followUp?.event;
         if (target && !seen.has(target)) {
@@ -325,6 +337,54 @@ function checkCultivationTables(t: { balance?: Balance; realms?: RealmsFile; roo
           if (!craftIds.includes(c)) out.push({ file: bal, level: 'error', message: `crafts: nghề "${job}" nhắc tới bách nghệ không tồn tại "${c}"` });
         }
       }
+    }
+  }
+  return out;
+}
+
+/** Task 2.4: techniques name real realms; sects teach real techniques and have balance numbers. */
+function checkTechniquesAndSects(
+  techniques: Technique[] | null,
+  sectFiles: { file: string; sects: Sect[] }[],
+  t: { balance?: Balance; realms?: RealmsFile },
+): Problem[] {
+  const out: Problem[] = [];
+  const bal = 'config/balance.json';
+  const realmIds = t.realms?.realms.map((r) => r.id);
+  if (techniques) {
+    out.push(...duplicates('techniques.json', 'công pháp', techniques));
+    for (const tech of techniques) {
+      if (tech.maxRealm && realmIds && !realmIds.includes(tech.maxRealm)) {
+        out.push({ file: 'techniques.json', level: 'error', message: `công pháp "${tech.id}": maxRealm không tồn tại "${tech.maxRealm}"` });
+      }
+    }
+    if (t.balance) {
+      const tb = t.balance.techniques;
+      if (!techniques.some((x) => x.id === tb.default)) out.push({ file: bal, level: 'error', message: `techniques.default "${tb.default}" không có trong techniques.json` });
+      for (const g of ['hoang', 'huyen', 'dia', 'thien']) {
+        if (tb.gradeMul[g] === undefined) out.push({ file: bal, level: 'error', message: `techniques.gradeMul thiếu phẩm "${g}"` });
+      }
+      for (const l of ['tien', 'ma', 'phat', 'quy', 'yeu']) {
+        if (tb.lineageMul[l] === undefined) out.push({ file: bal, level: 'error', message: `techniques.lineageMul thiếu đạo thống "${l}"` });
+      }
+      for (const r of Object.values(tb.gradeMaxRealm)) {
+        if (realmIds && !realmIds.includes(r)) out.push({ file: bal, level: 'error', message: `techniques.gradeMaxRealm: cảnh giới không tồn tại "${r}"` });
+      }
+    }
+  }
+  for (const { file, sects } of sectFiles) {
+    out.push(...duplicates(file, 'tông môn', sects));
+    for (const sect of sects) {
+      for (const tech of sect.techniques) {
+        if (techniques && !techniques.some((x) => x.id === tech.id)) out.push({ file, level: 'error', message: `tông môn "${sect.id}" truyền công pháp không tồn tại "${tech.id}"` });
+        if (tech.rank >= sect.ranks.length) out.push({ file, level: 'error', message: `tông môn "${sect.id}": cấp bậc ${tech.rank} vượt số cấp bậc` });
+      }
+      if (t.balance && t.balance.sects.stipend[sect.id] === undefined) {
+        out.push({ file: bal, level: 'error', message: `sects.stipend thiếu tông môn "${sect.id}"` });
+      }
+    }
+    if (t.balance && sects.length > 0 && t.balance.sects.rankStipendMul.length < Math.max(...sects.map((s) => s.ranks.length))) {
+      out.push({ file: bal, level: 'error', message: 'sects.rankStipendMul ngắn hơn số cấp bậc tông môn' });
     }
   }
   return out;

@@ -57,12 +57,14 @@ export const EffectsSchema = z
     followUp: FollowUpSchema.optional(),
     /** Test the spirit root now (task 2.2); does nothing if it is already known. */
     testRoot: z.boolean().optional(),
+    /** Learn this technique now (task 2.4; switching costs part of the bar). */
+    learnTechnique: id.optional(),
     /** Thiên địa kỳ vật (task 2.11): a rootless mortal gains a root (balance.kyVat). */
     grantRoot: z.boolean().optional(),
   })
   .catchall(z.number())
   .superRefine((e, ctx) => {
-    const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot'];
+    const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -190,9 +192,9 @@ export const NamesSchema = z
 // Traits, talents and items may only touch the game through these hooks.
 // Adding a hook is its own code task.
 
-const ELEMENTS = 'kim|moc|thuy|hoa|tho|loi|bang|phong|am|root'; // "root" = the main spirit root's element
+const ELEMENTS = 'kim|moc|thuy|hoa|tho|loi|bang|phong|am|root|all'; // "root" = the main spirit root's element, "all" = every element
 const PATHS = 'sword|body|spell|weapon|arts';                    // Kiếm, Thể, Pháp, Binh, Thuật
-const CRAFTS = 'alchemy|forging|formation|talisman|farming|beast'; // Đan, Khí, Trận, Phù, Linh thực, Ngự thú
+const CRAFTS = 'alchemy|forging|formation|talisman|farming|beast|all'; // Đan, Khí, Trận, Phù, Linh thực, Ngự thú; "all" = every craft
 
 /** Hooks that take a number to add. */
 const ADD_HOOK = new RegExp(
@@ -213,7 +215,7 @@ const ADD_HOOK = new RegExp(
       `statFloor\\.(${[...MORTAL_STATS, ...APTITUDES].join('|')})`,
       'silverPerYear', 'deathChancePerYear', 'illnessChancePct', 'tribulationPct',
       // Special bodies (realms-roots-paths.md B5); takes effect from task 2.3.
-      'lineage\\.(tien|ma|phat|quy)\\.cultivationSpeed',
+      'lineage\\.(tien|ma|phat|quy|yeu)\\.cultivationSpeed',
     ].join('|') +
     ')$',
 );
@@ -234,6 +236,11 @@ export const EffectHookSchema = z
     activeFrom: z.object({ age: z.number().int().min(0) }).strict().optional(),
     /** Off once the character reaches this realm (e.g. Thiên Tuyệt Mạch); takes effect from task 2.3. */
     activeUntil: z.object({ realm: id }).strict().optional(),
+    /** Only while these hold (task 2.4: Ngũ Hành Luân Chuyển Kinh, Tàng Phong Kiếm Kinh). */
+    activeIf: z
+      .object({ minRootElements: z.number().int().min(1).optional(), daoHeartBelow: z.number().optional() })
+      .strict()
+      .optional(),
   })
   .strict()
   .superRefine((e, ctx) => {
@@ -460,8 +467,6 @@ export const BalanceSchema = z
         aptitudeDivisor: z.number().positive(),
         /** Spiritual qi of the place; a world may override it (world.json "qi"). */
         regionQi: z.number().positive(),
-        /** Until techniques exist (task 2.4) every cultivator uses this multiplier. */
-        techniqueMul: z.number().positive(),
         breakthrough: z
           .object({
             comprehensionPerPoint: z.number(),
@@ -550,6 +555,33 @@ export const BalanceSchema = z
         safeAge: z.number().int().min(0),
         deathPerYear: probability,
         deathMax: probability,
+      })
+      .strict(),
+    /** Task 2.4: technique multipliers (PLAN G.1, K.3.1) and rules. */
+    techniques: z
+      .object({
+        /** Technique a new cultivator gets from the root test. */
+        default: id,
+        gradeMul: z.record(id, z.number().positive()),
+        /** Highest realm each grade reaches; a grade not listed has no limit. */
+        gradeMaxRealm: z.record(id, id),
+        mismatchMul: z.number().positive(),
+        lineageMul: z.record(id, z.number().positive()),
+        /** Rootless techniques (Phật duyên): root multiplier = min(this, đạo tâm / 100). */
+        rootlessDaoHeartMax: z.number().positive(),
+        /** Switching techniques loses this % of the current bar. */
+        switchLossPct: z.number().min(0).max(100),
+      })
+      .strict(),
+    /** Task 2.4/2.5: sect numbers keyed by sect id (worlds/<id>/sects.json). */
+    sects: z
+      .object({
+        /** Spirit stones a year at the outer-disciple rank. */
+        stipend: z.record(id, z.number().min(0)),
+        /** Stipend multiplier per rank index. */
+        rankStipendMul: z.array(z.number().min(0)).min(1),
+        karmaPerYear: z.record(id, z.number()),
+        joinReputation: z.record(id, z.record(z.enum(['chinh', 'ma', 'tan_tu', 'yeu']), z.number())),
       })
       .strict(),
     /** Combat path modifiers (realms-roots-paths.md C); keyed by path id. */
@@ -669,8 +701,15 @@ export const RealmsFileSchema = z
         majorDeviation: z.string().min(1),
         /** Two failures at a realm's peak: cultivation slows (PLAN G.2 bình cảnh). */
         bottleneck: z.string().min(1),
+        /** Task 2.4: {technique}, {grade}, {lineage}, {old}, {realm}. */
+        learnTechnique: z.string().min(1),
+        switchTechnique: z.string().min(1),
+        techniqueCap: z.string().min(1),
       })
       .strict(),
+    /** Display names for technique grades and lineages (task 2.4). */
+    gradeNames: z.record(id, z.string().min(1)),
+    lineageNames: z.record(id, z.string().min(1)),
     /** Đạo cơ grades after breaking into Trúc Cơ, worst to best (task 2.6). */
     foundations: z.array(z.object({ id, name: z.string().min(1), description: z.string().min(1) }).strict()).min(1),
     /** Shown as a greyed-out "???" after the last realm. */
@@ -829,3 +868,72 @@ export const CareersFileSchema = z
   })
   .strict();
 export type CareersFile = z.infer<typeof CareersFileSchema>;
+
+// ---------- Techniques and sects (task 2.4) ----------
+
+export const TECHNIQUE_GRADES = ['hoang', 'huyen', 'dia', 'thien'] as const;
+export const LINEAGES = ['tien', 'ma', 'phat', 'quy', 'yeu'] as const;
+
+/** content/techniques.json (shared): main cultivation methods, docs/design/techniques.md. */
+export const TechniqueFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      grade: z.enum(TECHNIQUE_GRADES),
+      lineage: z.enum(LINEAGES),
+      /** "root": follows the main root · "any": fits every root · "none": no element, never penalised · "five": fits any basic element · or element ids. */
+      elements: z.union([z.enum(['root', 'any', 'none', 'five']), z.array(id).min(1)]),
+      requires: z
+        .object({
+          /** Learnable without a usable root (cultivation speed from đạo tâm). */
+          rootless: z.boolean().optional(),
+          minDaoHeart: z.number().optional(),
+          minRootElements: z.number().int().min(1).optional(),
+          /** Only for ghost cultivators (later task). */
+          ghostOnly: z.boolean().optional(),
+        })
+        .strict()
+        .default({}),
+      /** Overrides balance.techniques.gradeMaxRealm (tàn quyển). */
+      maxRealm: id.optional(),
+      flavor: z.string().min(1),
+      /** Rules the engine does not apply yet, shown to the player. */
+      note: z.string().optional(),
+      effects: z.array(EffectHookSchema),
+    })
+    .strict(),
+);
+export type Technique = z.infer<typeof TechniqueFileSchema>[number];
+
+const SectStatsSchema = z.record(z.enum([...MORTAL_STATS, ...APTITUDES]), z.number());
+
+/** content/worlds/<id>/sects.json: sects of one world (docs/design/sects.md). */
+export const SectFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      faction: z.enum(['chinh', 'ma', 'tan_tu', 'yeu']),
+      lineage: z.enum(LINEAGES),
+      /** False: in the world but not taking disciples yet. */
+      recruitable: z.boolean(),
+      description: z.string().min(1),
+      /** Rank names from lowest (index 0) to highest. */
+      ranks: z.array(z.string().min(1)).min(2),
+      requires: z
+        .object({
+          minStats: SectStatsSchema.optional(),
+          /** At least one must hold. */
+          oneOf: z.array(z.object({ rootElements: z.array(id).optional(), minStats: SectStatsSchema.optional() }).strict()).optional(),
+        })
+        .strict(),
+      /** Techniques taught, from the given rank index. */
+      techniques: z.array(z.object({ id, rank: z.number().int().min(0) }).strict()),
+      /** K.6 hooks while a disciple. */
+      effects: z.array(EffectHookSchema),
+      duty: z.string().min(1),
+    })
+    .strict(),
+);
+export type Sect = z.infer<typeof SectFileSchema>[number];
