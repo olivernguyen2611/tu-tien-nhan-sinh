@@ -134,7 +134,8 @@ function Screens({ content }: { content: Content }) {
         state={life}
         content={content}
         rollCount={rollCount}
-        onReroll={() => { setLife(rerollDestiny(life, content)); setRollCount((n) => n + 1); }}
+        unlimited={devMode}
+        onReroll={() => { setLife(rerollDestiny(life, content, devMode)); setRollCount((n) => n + 1); }}
         onConfirm={() => { recordNewLife(store); setLife(confirmDestiny(life, content)); setScreen('main'); }}
       />
     );

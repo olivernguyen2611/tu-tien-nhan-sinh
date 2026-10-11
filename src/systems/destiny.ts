@@ -33,11 +33,12 @@ export function rollDestiny(state: GameState, content: Content): GameState {
   return { ...state, rng: rng.getState(), destiny: { ...state.destiny, offered } };
 }
 
-/** "Nghịch thiên cải mệnh": spend one reroll. */
-export function rerollDestiny(state: GameState, content: Content): GameState {
-  if (state.destiny.confirmed || state.destiny.rerollsLeft <= 0) return state;
+/** "Nghịch thiên cải mệnh": spend one reroll (developer mode rerolls for free). */
+export function rerollDestiny(state: GameState, content: Content, unlimited = false): GameState {
+  if (state.destiny.confirmed || (!unlimited && state.destiny.rerollsLeft <= 0)) return state;
   const rolled = rollDestiny(state, content);
-  return { ...rolled, destiny: { ...rolled.destiny, rerollsLeft: state.destiny.rerollsLeft - 1 } };
+  const rerollsLeft = unlimited ? state.destiny.rerollsLeft : state.destiny.rerollsLeft - 1;
+  return { ...rolled, destiny: { ...rolled.destiny, rerollsLeft } };
 }
 
 /** Accept the offered traits and apply their immediate hooks (stats, lifespan). */

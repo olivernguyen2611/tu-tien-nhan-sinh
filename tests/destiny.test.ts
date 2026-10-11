@@ -55,6 +55,18 @@ describe('destiny roll', () => {
     expect(after).toBe(s);
   });
 
+  it('developer mode rerolls without spending', () => {
+    let s = born('dev-reroll');
+    const left = s.destiny.rerollsLeft;
+    const offers = new Set<string>();
+    for (let i = 0; i < 20; i++) {
+      s = rerollDestiny(s, content, true);
+      offers.add(s.destiny.offered.join());
+    }
+    expect(s.destiny.rerollsLeft).toBe(left);
+    expect(offers.size).toBeGreaterThan(5);
+  });
+
   it('confirming applies stat and lifespan hooks once', () => {
     const s = born('apply');
     const forced = { ...s, destiny: { ...s.destiny, offered: ['menh_nhu_dang_hoa', 'tu_khi_dong_lai', 'kheo_mom'] } };
