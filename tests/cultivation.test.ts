@@ -3,7 +3,8 @@ import { loadContent } from '../src/core/content';
 import { Rng } from '../src/core/rng';
 import { advanceYear, createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
-import { revealRoot, rollRoot, rootName, rootTestAge } from '../src/systems/cultivation';
+import { breakthroughPct, cultivateYear, enterRealm, hookActive, realmLabel, revealRoot, rollRoot, rootName, rootTestAge, startCultivating, yearlyGain } from '../src/systems/cultivation';
+import { migrate, makeSave } from '../src/systems/save';
 import { resolveChoice } from '../src/systems/events/engine';
 
 const content = loadContent();
@@ -102,5 +103,132 @@ describe('spirit root (task 2.2)', () => {
 
   it('is reproducible for the same seed', () => {
     expect(untilTested('same').cult.root).toEqual(untilTested('same').cult.root);
+  });
+});
+
+/** A cultivator at Luyện Khí with plain aptitudes (50) and no traits. */
+function cultivator(seed: string, patch: Partial<GameState['cult']> = {}, grade = 'song'): GameState {
+  const b = createLife({ seed }, content);
+  const s: GameState = {
+    ...b,
+    character: { ...b.character, age: 15 },
+    aptitudes: { physique: 50, comprehension: 50, luck: 50, daoHeart: 50 },
+    stats: { ...b.stats, health: 80 },
+    traits: [],
+    destiny: { ...b.destiny, confirmed: true },
+    events: { ...b.events, followUps: [] },
+    cult: { ...b.cult, root: { grade, elements: ['kim', 'hoa'], body: null } },
+    log: [...b.log, { age: 15, lines: [] }],
+  };
+  return { ...s, cult: { ...s.cult, realm: 'luyen_khi', ...patch } };
+}
+
+describe('cultivation per year (task 2.3)', () => {
+  it('follows G.1: base speed × root × aptitude', () => {
+    expect(yearlyGain(cultivator('g1'), content)).toBeCloseTo(25);
+    const genius = { ...cultivator('g2', {}, 'don'), aptitudes: { physique: 70, comprehension: 70, luck: 50, daoHeart: 50 } };
+    expect(yearlyGain(genius, content)).toBeCloseTo(25 * 1.6 * 1.1);
+    expect(yearlyGain({ ...cultivator('g3'), cult: { ...cultivator('g3').cult, realm: 'pham_nhan' } }, content)).toBe(0);
+  });
+
+  it('a meridian injury halves the gain until it heals', () => {
+    const s = cultivator('inj', { injuredUntil: 18 });
+    expect(yearlyGain(s, content)).toBeCloseTo(12.5);
+    const healed = cultivateYear({ ...s, character: { ...s.character, age: 18 } }, content);
+    expect(healed.cult.injuredUntil).toBeNull();
+  });
+
+  it('lineage hooks count only for that lineage', () => {
+    const body = (lineage: string | null) => cultivator('ma', { root: { grade: 'the_chat', elements: [], body: 'thien_sinh_ma_the' }, lineage });
+    expect(yearlyGain(body('ma'), content) / yearlyGain(body(null), content)).toBeCloseTo(1.2);
+    expect(yearlyGain(body('tien'), content)).toBeCloseTo(yearlyGain(body(null), content));
+  });
+
+  it('G.2: stage chance moves with comprehension, đạo tâm and past failures', () => {
+    const s = cultivator('bt');
+    expect(breakthroughPct(s, content, 90, false)).toBeCloseTo(90);
+    const wise = { ...s, aptitudes: { ...s.aptitudes, comprehension: 80, daoHeart: 70 } };
+    expect(breakthroughPct(wise, content, 30, true)).toBeCloseTo(30 + 9 + 4);
+    const failed = { ...s, cult: { ...s.cult, fails: { 'luyen_khi:0': 2 } } };
+    expect(breakthroughPct(failed, content, 90, false)).toBeCloseTo(80);
+    expect(breakthroughPct(s, content, 200, false)).toBe(95);
+  });
+
+  it('a full bar climbs to the next Luyện Khí stage about 90% of the time', () => {
+    let up = 0;
+    for (let i = 0; i < 400; i++) {
+      const s = cultivateYear(cultivator(`up${i}`, { progress: 99 }), content);
+      if (s.cult.stage === 1) {
+        up++;
+        expect(s.cult.progress).toBe(0);
+      } else {
+        expect(s.cult.fails['luyen_khi:0']).toBe(1);
+      }
+    }
+    expect(up / 400).toBeGreaterThan(0.85);
+    expect(up / 400).toBeLessThan(0.95);
+  });
+
+  it('stops at Luyện Khí 9 with a full bar and says so once', () => {
+    let s = cultivator('peak', { stage: 8, progress: 90 });
+    s = cultivateYear(s, content);
+    expect(s.cult.stage).toBe(8);
+    expect(s.cult.progress).toBe(100);
+    const lines = s.log.at(-1)!.lines.length;
+    s = cultivateYear(s, content);
+    expect(s.log.at(-1)!.lines.length).toBe(lines);
+    expect(realmLabel(s, content)).toBe('Luyện Khí tầng 9');
+  });
+
+  it('a Song linh căn with plain aptitudes reaches Luyện Khí 9 in about 36 years', () => {
+    let s = cultivator('long');
+    let years = 0;
+    while (!(s.cult.stage === 8 && s.cult.progress >= 100) && years < 100) {
+      s = cultivateYear({ ...s, character: { ...s.character, age: s.character.age + 1 } }, content);
+      years++;
+    }
+    expect(years).toBeGreaterThan(30);
+    expect(years).toBeLessThan(50);
+  });
+
+  it('a root starts Luyện Khí 1 with a longer life; no root stays mortal', () => {
+    const b = createLife({ seed: 'start' }, content);
+    const s = { ...b, character: { ...b.character, age: 9 }, cult: { ...b.cult, root: { grade: 'tam', elements: ['kim', 'moc', 'thuy'], body: null } } };
+    const { state, line } = startCultivating(s, content);
+    expect(state.cult.realm).toBe('luyen_khi');
+    expect(state.cult.stage).toBe(0);
+    expect(state.cult.lifespan - s.cult.lifespan).toBeGreaterThanOrEqual(40);
+    expect(state.cult.lifespan - s.cult.lifespan).toBeLessThanOrEqual(60);
+    expect(line?.text).toContain('Luyện Khí tầng 1');
+    const none = { ...s, cult: { ...s.cult, root: { grade: 'none', elements: [], body: null } } };
+    expect(startCultivating(none, content).state).toBe(none);
+  });
+
+  it('Thiên Tuyệt Mạch gives its lifespan back on reaching Trúc Cơ (activeUntil)', () => {
+    const s = cultivator('ttm', { root: { grade: 'the_chat', elements: [], body: 'thien_tuyet_mach' }, lifespan: 36 });
+    const hook = content.cultivation.roots.bodies.find((b) => b.id === 'thien_tuyet_mach')!.effects[1];
+    expect(hookActive(hook, s, content)).toBe(true);
+    const rng = new Rng('ttm');
+    const up = enterRealm(s, content, 'truc_co', rng);
+    expect(hookActive(hook, up, content)).toBe(false);
+    // 36 + (200 − 120 ± 15) × 0.3, then ÷ 0.3.
+    expect(up.cult.lifespan).toBeGreaterThan(36 / 0.3 + 60);
+    expect(up.cult.lifespan).toBeLessThan(36 / 0.3 + 100);
+  });
+
+  it('old saves get the new cultivation fields', () => {
+    const life = createLife({ seed: 'old' }, content);
+    const { fails: _f, injuredUntil: _i, lineage: _l, ...oldCult } = life.cult;
+    const save = makeSave({ ...life, cult: oldCult as GameState['cult'] }, 1);
+    expect(migrate(save).life.cult).toMatchObject({ fails: {}, injuredUntil: null, lineage: null });
+  });
+
+  it('a whole life with a root keeps cultivating through advanceYear', () => {
+    let s = untilTested('life-x');
+    for (let i = 0; i < 300 && s.alive && s.character.age < 60; i++) {
+      s = s.events.pending ? resolveChoice(s, content, 0).state : advanceYear(s, content);
+    }
+    if (s.cult.root && content.balance.roots.gradeSpeed[s.cult.root.grade] > 0) expect(s.cult.realm).toBe('luyen_khi');
+    else expect(s.cult.realm).toBe('pham_nhan');
   });
 });

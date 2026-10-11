@@ -9,34 +9,47 @@
     {
       "id": "luyen_khi",
       "name": "Luyện Khí",
-      "stages": ["Tầng 1", "Tầng 2", "Tầng 3", "Tầng 4", "Tầng 5", "Tầng 6", "Tầng 7", "Tầng 8", "Tầng 9"],
+      "stages": ["tầng 1", "tầng 2", "tầng 3", "tầng 4", "tầng 5", "tầng 6", "tầng 7", "tầng 8", "tầng 9"],
       "description": "Dẫn linh khí trời đất vào kinh mạch, từng chút một như kiến tha mồi. Đủ sức nhấc cối đá, chưa đủ sức bay."
     },
     {
       "id": "truc_co",
       "name": "Trúc Cơ",
-      "stages": ["Sơ kỳ", "Trung kỳ", "Hậu kỳ", "Viên mãn"],
+      "stages": ["sơ kỳ", "trung kỳ", "hậu kỳ", "viên mãn"],
       "description": "Linh khí hóa lỏng, đắp nền cho đạo đồ. Từ đây mới thật sự bước qua cửa tiên, thọ thêm một đời người."
     },
     {
       "id": "kim_dan",
       "name": "Kim Đan",
-      "stages": ["Sơ kỳ", "Trung kỳ", "Hậu kỳ", "Viên mãn"],
+      "stages": ["sơ kỳ", "trung kỳ", "hậu kỳ", "viên mãn"],
       "description": "Linh lực ngưng thành một viên đan trong đan điền. Ngự kiếm phi hành, một mình giữ được một thành."
     },
     {
       "id": "nguyen_anh",
       "name": "Nguyên Anh",
-      "stages": ["Sơ kỳ", "Trung kỳ", "Hậu kỳ", "Viên mãn"],
+      "stages": ["sơ kỳ", "trung kỳ", "hậu kỳ", "viên mãn"],
       "description": "Đan vỡ thành anh, thân thể có hư đi thì Nguyên Anh vẫn còn. Một tiếng nói làm cả một vùng phải dè chừng."
     },
     {
       "id": "hoa_than",
       "name": "Hóa Thần",
-      "stages": ["Sơ kỳ", "Trung kỳ", "Hậu kỳ", "Viên mãn"],
+      "stages": ["sơ kỳ", "trung kỳ", "hậu kỳ", "viên mãn"],
       "description": "Thần thức trải ngàn dặm, nhất cử nhất động liên quan đến khí vận cả một đại vực."
     }
   ],
+  "texts": {
+    "start": "Tiên sư để lại một tờ khẩu quyết dẫn khí. Đêm ấy, lần đầu tiên linh khí chịu dừng lại trong kinh mạch ngươi: {realm} {stage}.",
+    "stageUp": [
+      "Linh khí trong kinh mạch dày thêm một tầng. Ngươi đã là {realm} {stage}.",
+      "Một đêm ngồi tĩnh tọa, bình chướng vỡ ra như lớp băng mỏng: {realm} {stage}.",
+      "Sáng ra mở mắt, cả người nhẹ bẫng. {realm} {stage}, không uổng mấy năm ngồi mòn chiếu."
+    ],
+    "peak": "Tu vi đã tới {realm} {stage}, đầy tràn mà chưa có cửa đi tiếp. Muốn lên nữa phải đột phá đại cảnh giới.",
+    "failLose": "Xung kích bình chướng thất bại, linh khí tán mất mấy phần. Đành ngồi tích lại.",
+    "failInjury": "Linh khí chạy ngược, kinh mạch tổn thương. Mấy năm tới tu luyện sẽ chậm hẳn.",
+    "failLifespan": "Đột phá thất bại, nguyên khí hao tổn. Soi gương thấy tóc mai bạc thêm một sợi.",
+    "injuryHealed": "Kinh mạch đã lành hẳn, linh khí lại chạy thông suốt."
+  },
   "beyond": {
     "name": "???",
     "description": "Phía trên Hóa Thần vẫn còn đường. Chỉ là chưa ai trong vùng này đi tới đó để kể lại."
