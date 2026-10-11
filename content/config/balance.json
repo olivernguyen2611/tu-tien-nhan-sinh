@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "events": {
+    "popupChanceLowRealm": 0.2,
+    "popupChanceHighRealm": 0.1,
+    "logLineChance": 0.6
+  },
+  "traits": {
+    "slots": 3,
+    "rerolls": 3,
+    "badLuckChance": 0.12,
+    "rarityWeights": {
+      "pham": 45,
+      "luong": 28,
+      "uu": 15,
+      "tuyet": 8,
+      "thien": 3.5,
+      "than": 0.5
+    }
+  }
+}
