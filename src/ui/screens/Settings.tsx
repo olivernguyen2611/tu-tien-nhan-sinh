@@ -1,0 +1,116 @@
+// "Sổ lưu": the save slots (play, export, delete, import) plus settings.
+// In pick mode the player chooses a slot for a new life or an imported save.
+import { useRef, useState } from 'preact/hooks';
+import type { SlotSummary } from '../../systems/save';
+import { ConfirmDialog } from '../components/ConfirmDialog';
+import { ThemeToggle } from '../components/ThemeToggle';
+import type { ThemePref } from '../theme';
+
+export interface SlotView {
+  slot: number;
+  /** Null when empty or unreadable; `taken` tells the two apart. */
+  summary: SlotSummary | null;
+  taken: boolean;
+}
+
+type Pending = { kind: 'delete' | 'overwrite'; slot: number } | null;
+
+const when = (iso: string) => new Date(iso).toLocaleString('vi-VN', { dateStyle: 'short', timeStyle: 'short' });
+
+export function SettingsScreen({ slots, pick, worldName, message, onPlay, onExport, onDelete, onImport, onPick, onBack, theme, onToggleTheme }: {
+  slots: SlotView[];
+  /** Set in pick mode: what the chosen slot is for ("đời mới", "save vừa nhập"). */
+  pick: string | null;
+  worldName: (id: string) => string;
+  message: { text: string; tone: 'good' | 'bad' } | null;
+  onPlay: (slot: number) => void;
+  onExport: (slot: number) => void;
+  onDelete: (slot: number) => void;
+  onImport: (file: File) => void;
+  onPick: (slot: number) => void;
+  onBack: () => void;
+  theme: ThemePref;
+  onToggleTheme: () => void;
+}) {
+  const [pending, setPending] = useState<Pending>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+  const pendingSlot = pending && slots.find((s) => s.slot === pending.slot);
+  const pendingName = pendingSlot?.summary?.name ?? 'save hỏng';
+
+  const choose = (s: SlotView) => (s.taken ? setPending({ kind: 'overwrite', slot: s.slot }) : onPick(s.slot));
+
+  return (
+    <main class="settings-screen">
+      <header class="settings-head">
+        <button class="icon-btn" aria-label="Quay lại" onClick={onBack}>←</button>
+        <h1>{pick ? 'Chọn ô lưu' : 'Sổ lưu'}</h1>
+      </header>
+      {pick && <p class="settings-note">Chọn một ô để đặt {pick}. Ô đã có đời khác sẽ bị ghi đè.</p>}
+      {message && <p class={`settings-msg ${message.tone}`} role="status">{message.text}</p>}
+
+      <ol class="slot-list">
+        {slots.map((s) => (
+          <li class={`slot-card${s.taken ? '' : ' empty'}`} key={s.slot}>
+            <div class="slot-no">{s.slot}</div>
+            <div class="slot-info">
+              {s.summary ? (
+                <>
+                  <b>{s.summary.name}</b>
+                  <span>{s.summary.age} tuổi · {s.summary.alive ? 'Đang sống' : 'Đã mất'} · {worldName(s.summary.worldId)}</span>
+                  <span class="muted">Lưu lúc {when(s.summary.savedAt)}</span>
+                </>
+              ) : (
+                <b class="muted">{s.taken ? 'Save hỏng, không đọc được' : 'Trống'}</b>
+              )}
+            </div>
+            <div class="slot-actions">
+              {pick ? (
+                <button class="chip-btn" onClick={() => choose(s)}>{s.taken ? 'Ghi đè' : 'Chọn'}</button>
+              ) : (
+                <>
+                  {s.summary && <button class="chip-btn" onClick={() => onPlay(s.slot)}>Chơi</button>}
+                  {s.summary && <button class="chip-btn" onClick={() => onExport(s.slot)}>Xuất file</button>}
+                  {s.taken && <button class="chip-btn danger" onClick={() => setPending({ kind: 'delete', slot: s.slot })}>Xóa</button>}
+                </>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      {!pick && (
+        <>
+          <button class="btn-secondary wide" onClick={() => fileRef.current?.click()}>Nhập file save (.json)</button>
+          <input ref={fileRef} type="file" accept=".json,application/json" hidden
+            onChange={(e) => {
+              const f = (e.target as HTMLInputElement).files?.[0];
+              if (f) onImport(f);
+              (e.target as HTMLInputElement).value = '';
+            }} />
+          <p class="settings-note">Game tự lưu mỗi năm vào ô đang chơi. Save nằm trong trình duyệt này; muốn chơi trên máy khác hay giữ phòng hờ thì xuất file.</p>
+          <div class="settings-row">
+            <span>Giao diện</span>
+            <ThemeToggle pref={theme} onChange={onToggleTheme} />
+          </div>
+        </>
+      )}
+
+      {pending && (
+        <ConfirmDialog
+          title={pending.kind === 'delete' ? `Xóa ô ${pending.slot}?` : `Ghi đè ô ${pending.slot}?`}
+          text={pending.kind === 'delete'
+            ? `Đời của ${pendingName} sẽ mất hẳn. Nếu muốn giữ, hãy xuất file trước.`
+            : `Đời của ${pendingName} trong ô này sẽ bị thay bằng ${pick}.`}
+          confirmLabel={pending.kind === 'delete' ? 'Xóa' : 'Ghi đè'}
+          onCancel={() => setPending(null)}
+          onConfirm={() => {
+            const p = pending;
+            setPending(null);
+            if (p.kind === 'delete') onDelete(p.slot);
+            else onPick(p.slot);
+          }}
+        />
+      )}
+    </main>
+  );
+}

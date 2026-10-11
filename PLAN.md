@@ -178,6 +178,7 @@ Vì logic là hàm thuần + RNG có seed, **cùng seed + cùng chuỗi lựa ch
 - Có hàm `migrate(save)` nâng cấp save cũ theo `saveVersion`, để bản cập nhật không làm hỏng save của bạn.
 - Nhật ký quá dài sẽ được nén (giữ năm quan trọng) để không vượt giới hạn localStorage (~5 MB).
 - `life.worldId`: đời này thuộc thế giới nào; mở save là nạp đúng nội dung thế giới đó.
+- Bản đầu (task 1.9): `life` là nguyên `GameState`; `meta` (số kiếp đã trải…) lưu riêng ở khóa `tutien.meta`, không nằm trong từng ô lưu.
 
 ### C.7 Nhiều thế giới
 Mỗi thế giới có tuyến cốt truyện riêng; engine không biết gì về thế giới cụ thể nào.
@@ -270,7 +271,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 1.6 | [x] ✍️ Soạn ~20 sự kiện phàm nhân (tuổi thơ, đi học, làm việc, hài hước, tai nạn) | `content/worlds/thuong_lan/events/childhood.json`, `study.json`, `work.json`, `funny.json`, `accident.json` |
 | 1.7 | [x] Cha mẹ, anh chị em cơ bản (thiện cảm, già và mất theo thời gian) | `systems/relationships.ts` |
 | 1.8 | [x] Lão hóa, bệnh, chết già; màn tổng kết đời đơn giản | `systems/time.ts`, `screens/Death.tsx` |
-| 1.9 | [ ] SaveSystem: 3 slot, tự lưu mỗi năm, xuất/nhập file, cảnh báo ghi đè | `systems/save.ts`, `screens/Settings.tsx` |
+| 1.9 | [x] SaveSystem: 3 slot, tự lưu mỗi năm, xuất/nhập file, cảnh báo ghi đè | `systems/save.ts`, `screens/Settings.tsx` |
 | 1.10 | [ ] ✍️ Glossary + tooltip (chạm vào thuật ngữ gạch chân để xem giải thích) | `content/glossary.json`, `components/Tooltip.tsx` |
 | 1.11 | [ ] Tua nhanh (tự qua năm tới khi có sự kiện) | `systems/time.ts` |
 
