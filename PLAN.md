@@ -17,6 +17,7 @@
 | 6 | Cách làm | **Từng bước nhỏ**, mỗi bước chơi thử được, tránh lỗi dây chuyền. |
 | 7 | Nội dung (sự kiện, khí vận…) | **Claude soạn nháp, bạn duyệt** trước khi đưa vào game. |
 | 8 | Nhiều thế giới | Game sẽ có **nhiều thế giới**, mỗi thế giới một tuyến cốt truyện riêng. Thế giới đầu tiên là **Thương Lan giới** (`thuong_lan`), các thế giới sau thêm dần. Engine không gắn với thế giới nào (xem C.7). |
+| 9 | Đời không linh căn | Đời phàm nhân là một lối chơi trọn vẹn (4 con đường đời, võ đạo 7 cảnh giới), có cửa vào tiên lộ muộn và phúc báo cho đời sau. **Linh căn do trời sinh**, chỉ thiên địa kỳ vật mới tạo được. Chi tiết: `docs/design/mortal-path.md` (duyệt 2026-10-11). |
 
 ---
 
@@ -282,9 +283,9 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 
 | # | Task | File chính |
 |---|---|---|
-| 2.1 | [ ] ✍️ Bảng cảnh giới (Phàm Nhân → Hóa Thần) + linh căn + 5 con đường chiến đấu + 6 bách nghệ (mục K) | `content/realms.json`, `roots.json`, `aptitudes.json` |
-| 2.2 | [ ] Sự kiện kiểm tra linh căn (6–12 tuổi) + hiển thị linh căn | `systems/cultivation.ts`, `content/worlds/thuong_lan/events/root-test.json` |
-| 2.3 | [ ] Tu vi tăng mỗi năm theo công thức mục G; thanh tu vi; đột phá tiểu cảnh giới Luyện Khí | `systems/cultivation.ts` |
+| 2.1 | [ ] ✍️ Bảng cảnh giới (Phàm Nhân → Hóa Thần) + linh căn + 5 con đường chiến đấu + 6 bách nghệ (mục K). **Nội dung đã duyệt**: `docs/design/realms-roots-paths.md`, chỉ còn nhập JSON | `content/realms.json`, `roots.json`, `aptitudes.json` |
+| 2.2 | [ ] Sự kiện kiểm tra linh căn (6–12 tuổi) + hiển thị linh căn; xuất thân Hậu duệ gia tộc tu tiên quay 2 lần lấy kết quả tốt hơn | `systems/cultivation.ts`, `content/worlds/thuong_lan/events/root-test.json` |
+| 2.3 | [ ] Tu vi tăng mỗi năm theo công thức mục G; thanh tu vi; đột phá tiểu cảnh giới Luyện Khí; móc mới `lineage.<đạo thống>.cultivationSpeed` và điều kiện `activeUntil: { realm }` (cho Thiên Sinh Ma Thể, Thiên Tuyệt Mạch) | `systems/cultivation.ts` |
 | 2.4 | [ ] ✍️ 6 tông môn khởi đầu (chính/ma/kiếm/đan/phật/yêu) + 8 công pháp Hoàng/Huyền phẩm | `content/worlds/thuong_lan/sects.json`, `techniques.json` |
 | 2.5 | [ ] Tuyển đệ tử tông môn, cấp bậc ngoại môn/nội môn, nhiệm vụ tông môn đơn giản, sư phụ NPC | `systems/sect.ts`, `content/worlds/thuong_lan/events/sect-recruit.json` |
 | 2.6 | [ ] Đột phá Trúc Cơ: tỉ lệ thành công, phẩm đạo cơ (Hạ/Trung/Thượng/Hoàn mỹ), hậu quả thất bại | `systems/cultivation.ts` |
@@ -292,6 +293,8 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 2.8 | [ ] ✍️ ~25 sự kiện tu luyện & tông môn | `content/worlds/thuong_lan/events/cultivation.json` |
 | 2.9 | [ ] Đời đầu tiên dạng hướng dẫn + dòng "Mục tiêu hiện tại" | `systems/tutorial.ts` |
 | 2.10 | [ ] Chọn độ khó Dễ/Thường/Khó (Khó: không load lại) | `screens/CreateCharacter.tsx`, `balance.json` |
+| 2.11 | [ ] Đời không linh căn: 4 con đường đời (Quan, Thương, Võ lâm, Y; bậc thang 5 nấc + thu nhập + danh hiệu cuối đời) + cửa **Thiên địa kỳ vật** (tạo Ngũ/Tứ linh căn) và **Tạp dịch tông môn** (`mortal-path.md` mục 1, 2.1, 2.3) | `systems/career.ts`, `content/careers.json` |
+| 2.12 | [ ] Phàm nhân học Luyện Đan và Linh Thực từ cấp 0; nghề `nghe_thuoc` bắt đầu Luyện Đan cấp 10 (`realms-roots-paths.md` mục D) | `systems/crafts.ts` |
 
 **Tiêu chí hoàn thành:** một đời có linh căn vào được tông môn và tu tới Trúc Cơ; đời không linh căn vẫn sống tiếp như phàm nhân; đột phá thất bại có hậu quả rõ ràng.
 
@@ -312,6 +315,9 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 3.8 | [ ] Đạo thống (Tiên/Ma/Phật/Quỷ) × con đường (Kiếm/Thể/Pháp/Binh/Thuật) theo K.3 |
 | 3.9 | [ ] ✍️ ~40 sự kiện: tình duyên, giết người đoạt bảo, ma đạo cám dỗ, yêu thú, phường thị |
 | 3.10 | [ ] Tăng Tiên Thiên Khí Vận lên ~40, thêm tag cho sự kiện dùng |
+| 3.11 | [ ] Võ đạo nhập tiên: 7 cảnh giới võ đạo (Tam lưu → Ngũ khí triều nguyên). Hóa cảnh nhờ khổ luyện + Căn cốt ≥ 70; Tam hoa tụ đỉnh và Ngũ khí triều nguyên cần kỳ ngộ; Ngũ khí triều nguyên tính là Ngũ linh căn, vào Luyện Khí 1 (`mortal-path.md` mục 2.2, 2b) |
+| 3.12 | [ ] Phật duyên: đạo tâm ≥ 70 tu Phật đạo không cần linh căn (`mortal-path.md` mục 2.4) |
+| 3.13 | [ ] ✍️ Sự kiện "ma tu hứa khai mạch" (lừa làm vật tế) + sự kiện cho 4 con đường đời |
 
 **Tiêu chí hoàn thành:** đánh nhau có văn bản sinh động; một NPC bị bạn hại sẽ quay lại báo thù vài năm sau; kết được đạo lữ và có con mang linh căn di truyền.
 
@@ -332,6 +338,8 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 4.8 | [ ] Bản đồ đại vực mở dần theo cảnh giới + ✍️ đại năng trấn giữ |
 | 4.9 | [ ] Thu đồ đệ (cơ bản) |
 | 4.10 | [ ] Áp lực thọ nguyên: chuỗi sự kiện sắp hết thọ, tìm thọ đan, đoạt xá, di ngôn |
+| 4.11 | [ ] Tàn hồn trong vật cũ: Kim Thủ Chỉ "lão gia gia" dẫn đường tới thiên địa kỳ vật, có thể đoạt xá (`mortal-path.md` mục 2.5) |
+| 4.12 | [ ] Quỷ tu: chết còn chấp niệm thì chơi tiếp bằng Quỷ đạo; móc mới `continueAfterDeath` (`mortal-path.md` mục 2.6) |
 
 **Tiêu chí hoàn thành:** một đời tu tới Nguyên Anh có kết đan mini-game, ít nhất một lần tâm ma và một lần thiên kiếp; sắp hết thọ có lựa chọn liều mạng.
 
@@ -358,6 +366,9 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 5b.5 | [ ] Thành tựu, huy hiệu cuối đời, cáo phó dạng ảnh để chia sẻ |
 | 5b.6 | [ ] Thử thách tuần (seed chung theo tuần) |
 | 5b.7 | [ ] Gặp lại tông môn đời trước |
+| 5b.8 | [ ] Phúc báo đời phàm nhân sang đời sau; móc mới `rootReroll` (`mortal-path.md` mục 3.1) |
+| 5b.9 | [ ] Cầu đầu thai: tiêu điểm Luân Hồi chọn xuất thân đời sau (`mortal-path.md` mục 3.2) |
+| 5b.10 | [ ] Trùng sinh: Hồi Quang Kính, chết thì quay về năm 6 tuổi giữ ký ức; móc mới `rewindOnDeath` (`mortal-path.md` mục 3.3) |
 
 ### GĐ 6 — Hoàn thiện
 Cân bằng bằng **mô phỏng tự động** (chạy hàng nghìn đời giả lập, xem thống kê tuổi chết/cảnh giới), âm thanh, hiệu ứng, PWA cài lên điện thoại, chơi offline, tối ưu tốc độ, rà soát hiển thị trên nhiều cỡ màn hình.
@@ -704,9 +715,11 @@ Mọi khí vận/thiên phú chỉ được viết bằng các móc dưới đâ
 | Xã hội | `npcAffinityStart`, `faction.<phe>.reputation`, `karmaShift` | `+10` |
 | Kinh tế | `priceDiscount`, `incomePct`, `lootPct` | `+0.1` |
 | Kích hoạt đặc biệt | `trigger.cheatDeath` (số lần), `trigger.everyNYears` (sự kiện đảm bảo), `counter` (đếm dấu rồi thưởng) | |
+| *Đã duyệt, thêm ở task sau* | `lineage.<đạo thống>.cultivationSpeed` (2.3), `rootReroll` (5b.8), `continueAfterDeath` (4.12), `rewindOnDeath` (5b.10) | `+0.2`, `1` |
 
 Quy tắc an toàn:
-- Móc có điều kiện tuổi/cảnh giới được (`activeFrom: { age: 18 }`), dùng cho khí vận tình duyên theo mục H.
+- Móc có điều kiện tuổi/cảnh giới được (`activeFrom: { age: 18 }`), dùng cho khí vận tình duyên theo mục H. Điều kiện ngược `activeUntil: { realm }` (hết tác dụng khi lên cảnh giới đó) thêm ở task 2.3.
+- Id dùng trong code giữ theo K: con đường Thuật là `arts` (tài liệu thiết kế viết `arcane`), Linh Thực là `farming` (tài liệu viết `herbalism`).
 - Mọi hiệu ứng `%` cộng dồn có **trần** trong `balance.json` (ví dụ tốc tu từ khí vận + thiên phú tối đa +150%) để không vỡ game.
 
 ---
