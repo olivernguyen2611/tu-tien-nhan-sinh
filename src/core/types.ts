@@ -39,5 +39,12 @@ export interface GameState {
     reputation: Record<'chinh' | 'ma' | 'tan_tu' | 'yeu', number>;
   };
   flags: Record<string, boolean>;
+  /** Tiên Thiên Khí Vận: offered at birth, kept after confirming. */
+  destiny: {
+    offered: string[];
+    rerollsLeft: number;
+    confirmed: boolean;
+  };
+  traits: string[];
   log: LogYear[];
 }

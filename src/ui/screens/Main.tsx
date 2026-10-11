@@ -109,6 +109,14 @@ export function MainScreen({ state, content, onAdvance, onNewLife, theme, onTogg
               ))}
             </div>
             <p class="profile-note">Tư chất tiên thiên định từ lúc sinh, chỉ đổi được nhờ kỳ ngộ hay khí vận.</p>
+            {state.traits.length > 0 && (
+              <ul class="trait-chips" aria-label="Tiên thiên khí vận">
+                {state.traits.map((id) => {
+                  const t = content.traits.find((x) => x.id === id);
+                  return t && <li class={`trait-chip r-${t.rarity}`} key={id} title={t.summary}><b>{t.name}</b><span>{t.summary}</span></li>;
+                })}
+              </ul>
+            )}
             <button class="choice" onClick={() => setProfileOpen(false)}>Đóng</button>
             <button class="choice danger" onClick={() => { setProfileOpen(false); onNewLife(); }}>Bỏ kiếp này, đầu thai lại</button>
           </div>
