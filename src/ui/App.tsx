@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import type { Content } from '../core/content';
-import { advanceYear, createLife } from '../core/state';
+import { advanceYear, createLife, fastForward } from '../core/state';
 import type { GameState } from '../core/types';
 import { performFamilyAction } from '../systems/relationships';
 import { findEvent, resolveChoice } from '../systems/events/engine';
@@ -146,6 +146,7 @@ function Screens({ content }: { content: Content }) {
         content={content}
         saveWarning={saveFailed ? 'Không lưu được: trình duyệt đang chặn hoặc đầy bộ nhớ. Hãy xuất file để giữ đời này.' : null}
         onAdvance={() => setLife(advanceYear(life, content))}
+        onFastForward={() => setLife(fastForward(life, content))}
         onFamilyAction={(relId, actionId) => {
           const r = performFamilyAction(life, content, relId, actionId);
           setLife(checkDeath(r.state, content));

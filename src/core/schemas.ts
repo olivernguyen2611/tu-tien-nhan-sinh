@@ -293,6 +293,8 @@ export const BalanceSchema = z
         healthAdjustMax: z.number().int().min(0),
       })
       .strict(),
+    /** Task 1.11: "Tua nhanh" stops after at most this many years. */
+    fastForward: z.object({ maxYears: z.number().int().min(1) }).strict(),
     aging: z
       .object({
         /** Before declineStartAge, health below recoverCap heals recoverPerYear each year. */

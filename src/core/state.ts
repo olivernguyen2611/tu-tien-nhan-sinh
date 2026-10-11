@@ -98,3 +98,20 @@ export function advanceYear(state: GameState, content: Content): GameState {
   }
   return { ...next, log };
 }
+
+/**
+ * "Tua nhanh" (task 1.11): pass years until something needs the player's eye —
+ * an event to answer, death, or a year with good/bad/rare news — or until
+ * balance.fastForward.maxYears have passed.
+ */
+export function fastForward(state: GameState, content: Content): GameState {
+  let s = state;
+  for (let i = 0; i < content.balance.fastForward.maxYears; i++) {
+    const next = advanceYear(s, content);
+    if (next === s) break;
+    s = next;
+    const year = s.log[s.log.length - 1];
+    if (!s.alive || s.events.pending || year.lines.some((l) => l.tone !== 'normal')) break;
+  }
+  return s;
+}

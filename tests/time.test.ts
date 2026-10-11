@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Content } from '../src/core/content';
 import { BalanceSchema, FamilyActionFileSchema, LifeTextsSchema, NamesSchema, OriginFileSchema, TraitFileSchema, WorldSchema } from '../src/core/schemas';
-import { advanceYear, createLife } from '../src/core/state';
+import { advanceYear, createLife, fastForward } from '../src/core/state';
 import type { GameState } from '../src/core/types';
 import { ageBody, checkDeath, lifeSummary } from '../src/systems/time';
 import balance from '../content/config/balance.json';
@@ -109,5 +109,32 @@ describe('death', () => {
     expect(content.lifeTexts.epitaph.bad).toContain(bad.death!.epitaph);
     expect(lifeSummary(good, content)!.karmaLabel).toBe('Thiện nhân');
     expect(lifeSummary(bad, content)!.causeText).toBe(`Hưởng thọ ${base.cult.lifespan} tuổi`);
+  });
+});
+
+describe('fast forward', () => {
+  it('stops at a noteworthy year, death or after maxYears, and matches pressing +1 the same number of times', () => {
+    const max = content.balance.fastForward.maxYears;
+    for (let i = 0; i < 30; i++) {
+      const start = createLife({ seed: `ff-${i}` }, content);
+      const end = fastForward(start, content);
+      const years = end.character.age - start.character.age;
+      expect(years).toBeGreaterThan(0);
+      expect(years).toBeLessThanOrEqual(max);
+      let manual = start;
+      for (let y = 0; y < years; y++) manual = advanceYear(manual, content);
+      expect(end).toEqual(manual);
+      const last = end.log.at(-1)!;
+      const stoppedEarly = years < max;
+      if (stoppedEarly) expect(!end.alive || !!end.events.pending || last.lines.some((l) => l.tone !== 'normal')).toBe(true);
+      // Years skipped over were all quiet.
+      for (const y of end.log.slice(start.log.length, -1)) expect(y.lines.every((l) => l.tone === 'normal')).toBe(true);
+    }
+  });
+
+  it('does nothing for a dead life', () => {
+    const base = createLife({ seed: 'ff-dead' }, content);
+    const dead = checkDeath(at(base, base.cult.lifespan), content);
+    expect(fastForward(dead, content)).toBe(dead);
   });
 });

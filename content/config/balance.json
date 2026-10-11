@@ -48,6 +48,9 @@
     "mortalVariance": 10,
     "healthAdjustMax": 10
   },
+  "fastForward": {
+    "maxYears": 10
+  },
   "aging": {
     "recoverPerYear": 3,
     "recoverCap": 70,

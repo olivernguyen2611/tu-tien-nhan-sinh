@@ -639,3 +639,23 @@ button { font: inherit; color: inherit; }
 .term-card .aka { display: block; font-size: 0.75rem; color: var(--muted); }
 .term-card p { margin: 6px 0 0; }
 @media (min-width: 720px) { .term-backdrop { place-items: center; } }
+
+/* ---------- Fast forward (task 1.11) ---------- */
+.age-wrap { position: relative; justify-self: center; }
+.ff-btn {
+  position: absolute;
+  top: -30px; right: -18px;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--bg);
+  background: var(--jade);
+  color: var(--bg);
+  font-family: var(--font-story);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+.ff-btn:active { transform: scale(0.94); }
+.ff-btn:disabled { opacity: 0.5; cursor: default; }
