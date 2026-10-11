@@ -2,6 +2,11 @@
 
 ## [Chưa phát hành]
 
+### Task 0.3 — Random có seed + test (2026-10-11)
+- `src/core/rng.ts`: bộ sinh số ngẫu nhiên có seed, lưu/khôi phục được trạng thái, có chọn theo trọng số.
+- Cài Vitest, `npm test` chạy 7 test cho RNG; CI chạy test trước khi build.
+- PLAN.md: thêm GĐ 8 — AI tuỳ chọn (hướng an toàn, rẻ).
+
 ### Task 0.2 — Link chơi thử (2026-10-11)
 - GitHub Actions tự build mỗi PR và tự đưa bản mới lên GitHub Pages mỗi khi merge vào `main`.
 - Link chơi thử: https://olivernguyen2611.github.io/tu-tien-nhan-sinh/

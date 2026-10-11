@@ -232,7 +232,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 |---|---|---|
 | 0.1 | [x] Khởi tạo Vite + TypeScript + Preact, cấu trúc thư mục, `CLAUDE.md`, `CHANGELOG.md` | `package.json`, `vite.config.ts`, `src/main.tsx` |
 | 0.2 | [x] GitHub Actions tự build và đưa lên GitHub Pages | `.github/workflows/deploy.yml` |
-| 0.3 | [ ] RNG có seed + Vitest + test đầu tiên | `src/core/rng.ts`, `tests/rng.test.ts` |
+| 0.3 | [x] RNG có seed + Vitest + test đầu tiên | `src/core/rng.ts`, `tests/rng.test.ts` |
 | 0.4 | [ ] Nạp JSON + schema Zod + `npm run validate` | `src/core/content.ts`, `tools/validate-content.ts` |
 | 0.5 | [ ] Theme cổ phong (giấy cũ + dark mode ngọc bích), font tiếng Việt, khung bố cục co giãn điện thoại/máy tính | `src/ui/theme.css`, `src/ui/screens/Main.tsx` |
 
@@ -348,6 +348,21 @@ Cân bằng bằng **mô phỏng tự động** (chạy hàng nghìn đời gi�
 
 ### GĐ 7 — Mở rộng nội dung
 Linh giới/Tiên giới, thêm hàng trăm sự kiện, các nghề bách nghệ còn lại (Trận pháp, Phù lục, Linh thực, Ngự thú), thêm mô bản khí vận chi tử, Capacitor nếu muốn lên store.
+
+### GĐ 8 — AI tuỳ chọn (để sau, khi bản chơi được đã xong)
+> Quyết định 2026-10-11: đi hướng **an toàn và rẻ trước**. Đến lúc đó nội dung vẫn là JSON soạn sẵn (Claude soạn nháp, bạn duyệt, validator kiểm tra).
+
+Nguyên tắc: AI chỉ viết lời, **không quyết định cơ chế**; game luôn chơi trọn vẹn khi không có AI; **không đưa API key vào code** (người chơi tự nhập key nếu muốn).
+
+Thứ tự theo rủi ro tăng dần, mỗi mục là một task riêng:
+| # | Task |
+|---|---|
+| 8.1 | [ ] Tiểu sử cuối đời do AI viết (1 lần gọi mỗi đời), có văn bản dự phòng khi không có AI |
+| 8.2 | [ ] Tô màu lời văn sự kiện soạn sẵn (bật/tắt được, mặc định tắt) |
+| 8.3 | [ ] Trò chuyện với NPC (giới hạn lượt, chỉ ảnh hưởng nhẹ thiện cảm) |
+| 8.4 | [ ] Kỳ ngộ do AI tạo theo khuôn JSON + validator |
+
+Tuỳ chọn bất kỳ lúc nào: script trong `tools/` xuất nháp JSON theo chủ đề để soạn nội dung nhanh hơn (vẫn qua bước duyệt và kiểm trùng `id`).
 
 ---
 
