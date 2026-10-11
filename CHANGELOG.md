@@ -2,6 +2,12 @@
 
 ## [Chưa phát hành]
 
+### Task 0.5 — Giao diện cổ phong (2026-10-11)
+- Theme giấy cũ + mực (sáng) và ngọc bích (tối), nút đổi Tự động/Sáng/Tối (nhớ lựa chọn).
+- Font Noto Serif cho chữ truyện, Be Vietnam Pro cho giao diện (đủ dấu tiếng Việt).
+- Màn tiêu đề với nút "Nhập thế"; khung màn chính xem trước: thẻ nhân vật, thanh tu vi/thọ nguyên, nhật ký cuộn, nút "Qua một năm", 6 tab.
+- Điện thoại: tab ở đáy, chừa vùng tai thỏ/thanh home. Máy tính (≥900px): cột trái thẻ nhân vật + tab, cột phải nhật ký.
+
 ### Task 0.4 — Nạp và kiểm tra dữ liệu JSON (2026-10-11)
 - Schema Zod cho sự kiện, cấu hình cân bằng, thuật ngữ (`src/core/schemas.ts`).
 - `npm run validate`: báo sai schema, trùng id, followUp tới sự kiện không tồn tại, flag không ai đặt, ảnh thiếu, sự kiện "mature" cho nhân vật dưới 18 tuổi.
