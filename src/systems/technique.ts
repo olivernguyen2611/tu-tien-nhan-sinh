@@ -18,6 +18,8 @@ export function currentTechnique(state: GameState, content: Content): Technique 
 /** Does the technique fit this root? A mismatch slows cultivation (×mismatchMul). */
 export function techniqueMatches(tech: Technique, root: SpiritRoot | null, content: Content): boolean {
   if (!root || tech.elements === 'root' || tech.elements === 'any' || tech.elements === 'none') return true;
+  // No usable root (Phật duyên): nothing to clash with.
+  if ((content.balance.roots.gradeSpeed[root.grade] ?? 0) <= 0) return true;
   if (root.body) return !!content.cultivation.roots.bodies.find((b) => b.id === root.body)?.anyTechnique;
   const basic = new Set(content.cultivation.roots.elements.filter((e) => !e.variant).map((e) => e.id));
   if (tech.elements === 'five') return root.elements.some((e) => basic.has(e));
@@ -103,6 +105,7 @@ export function learnTechnique(state: GameState, content: Content, techId: strin
       technique: techId,
       lineage: tech.lineage,
       learned: state.cult.learned.includes(techId) ? state.cult.learned : [...state.cult.learned, techId],
+      scrolls: state.cult.scrolls.filter((s) => s !== techId),
       lifespan,
       progress,
     },
@@ -128,4 +131,16 @@ export function techniqueSummary(state: GameState, content: Content): string | n
     techniqueMatches(tech, state.cult.root, content) ? 'hợp linh căn' : 'không hợp linh căn',
     maxName ? `tu tới ${maxName}` : 'không giới hạn cảnh giới',
   ].join(' · ');
+}
+
+/** Keep a technique scroll to practise later (task 2.8). */
+export function gainScroll(state: GameState, content: Content, techId: string): { state: GameState; text: string } | null {
+  const tech = techniqueById(content, techId);
+  if (!tech || state.cult.scrolls.includes(techId) || state.cult.technique === techId) return null;
+  const text = `Ngươi có được bí tịch ${tech.name} (${content.cultivation.realms.gradeNames[tech.grade] ?? tech.grade} phẩm). Mở Tu luyện để tu.`;
+  const next: GameState = { ...state, cult: { ...state.cult, scrolls: [...state.cult.scrolls, techId] } };
+  const log = next.log.slice();
+  const last = log[log.length - 1];
+  if (last) log[log.length - 1] = { ...last, lines: [...last.lines, { text, tone: 'rare' }] };
+  return { state: { ...next, log }, text };
 }

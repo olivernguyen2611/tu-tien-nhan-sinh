@@ -7,9 +7,12 @@ import { fillTemplate } from '../../core/state';
 import { extremeThemeMultiplier } from '../extremes';
 import type { GameState, LogLine, Tone } from '../../core/types';
 import { meets, readValue } from './conditions';
-import { grantRoot, hookActive, lifeHooks, revealRoot, startCultivating } from '../cultivation';
-import { learnTechnique } from '../technique';
-import { addContribution, joinSect, leaveSect, promoteSect } from '../sect';
+import { addProgress, addSpeedBuff, enterFirstRealm, grantRoot, hookActive, lifeHooks, reducePeakFails, revealRoot, startCultivating } from '../cultivation';
+import { gainScroll, learnTechnique } from '../technique';
+import { addItems, removeItems } from '../items';
+import { addCraftXp } from '../crafts';
+import { forceJoinCareer, leaveCareer, promoteCareer } from '../career';
+import { addContribution, grantMaster, joinSect, leaveSect, promoteSect } from '../sect';
 
 type Outcome = NonNullable<GameEvent['choices'][number]['result']>;
 
@@ -95,7 +98,9 @@ export function visibleChoices(state: GameState, content: Content, event: GameEv
       index,
       text: c.text,
       hidden: c.hidden,
-      traitId: c.hidden ? c.requires?.traitsAny?.find((t) => state.traits.includes(t)) ?? null : null,
+      traitId: c.hidden
+        ? c.requires?.traitsAny?.find((t) => state.traits.includes(t)) ?? c.requires?.talentsAny?.find((t) => state.talents.includes(t)) ?? null
+        : null,
       disabled: !ok,
       check: c.check ? { ...c.check, chance: checkChance(state, content, c.check.stat, c.check.difficulty) } : null,
     });
@@ -164,10 +169,10 @@ export function resolveChoice(state: GameState, content: Content, choiceIndex: n
   }
 
   let next = applyEffects(state, outcome.effects, rng);
-  let text = fillTemplate(outcome.text, state);
+  let text = fillTemplate(outcome.text, state, content);
   const tone: Tone = event.tags.includes('rare') ? 'rare' : success === true ? 'good' : success === false ? 'bad' : 'normal';
   const lines: LogLine[] = [
-    { text: `${event.title}: ${fillTemplate(choice.text, state)}.`, tone: 'normal' },
+    { text: `${event.title}: ${fillTemplate(choice.text, state, content)}.`, tone: 'normal' },
     { text, tone },
   ];
   const log = next.log.slice();
@@ -198,12 +203,32 @@ export function resolveChoice(state: GameState, content: Content, choiceIndex: n
     if (joined.text) text = `${text} ${joined.text}`;
   }
   if (fx.sectContribution) next = addContribution(next, fx.sectContribution);
+  if (fx.gainMaster) next = grantMaster(next, content);
+  if (fx.cultProgress) next = addProgress(next, fx.cultProgress);
+  if (fx.speedBuff) next = addSpeedBuff(next, fx.speedBuff.mul, fx.speedBuff.years);
+  if (fx.nextBreakthroughBonus) next = { ...next, cult: { ...next.cult, nextBonus: next.cult.nextBonus + fx.nextBreakthroughBonus } };
+  if (fx.reducePeakFails) next = reducePeakFails(next, fx.reducePeakFails);
+  for (const [craft, n] of Object.entries(fx.craftXp ?? {})) next = addCraftXp(next, content, craft, n);
+  if (fx.reputation) {
+    const rep = { ...next.social.reputation };
+    for (const [k, v] of Object.entries(fx.reputation)) rep[k as keyof typeof rep] = Math.max(-100, Math.min(100, rep[k as keyof typeof rep] + v));
+    next = { ...next, social: { ...next.social, reputation: rep } };
+  }
+  next = removeItems(addItems(next, fx.addItems ?? []), fx.removeItems ?? []);
+  if (fx.leaveCareer) next = leaveCareer(next);
+  if (fx.joinCareer) next = forceJoinCareer(next, content, fx.joinCareer);
+  if (fx.careerPromote) next = promoteCareer(next, content);
+  if (fx.gainTechnique) {
+    const got = gainScroll(next, content, fx.gainTechnique);
+    if (got) { next = got.state; text = `${text} ${got.text}`; }
+  }
   if (fx.sectPromote) next = promoteSect(next, content);
   if (fx.leaveSect) next = leaveSect(next, content)?.state ?? next;
   if (outcome.effects.learnTechnique) {
     const learned = learnTechnique(next, content, outcome.effects.learnTechnique);
     if (learned) {
-      next = learned.state;
+      // A rootless technique (Phật duyên) brings a mortal into the first realm.
+      next = enterFirstRealm(learned.state, content);
       text = `${text} ${learned.text}`;
     }
   }

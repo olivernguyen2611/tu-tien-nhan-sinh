@@ -5,11 +5,11 @@ import type { GameState, Tone } from '../../core/types';
 import { inBottleneck, majorBreakthroughInfo, realmLabel, rootLabel, yearlyGain } from '../../systems/cultivation';
 import { craftViews } from '../../systems/crafts';
 import { careerIncome, careerLabel, careerViews } from '../../systems/career';
-import { currentTechnique, techniqueSummary } from '../../systems/technique';
+import { currentTechnique, learnBlocked, techniqueById, techniqueSummary } from '../../systems/technique';
 import { Meter } from './Meter';
 import { TermText } from './Tooltip';
 
-export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJoinCareer, onClose }: {
+export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJoinCareer, onLearn, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome to show in the sheet. */
@@ -18,6 +18,8 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
   onPractice: (craftId: string) => string | null;
   /** Take up a mortal career; returns the log text, or null. */
   onJoinCareer: (careerId: string) => string | null;
+  /** Practise a technique from a scroll; returns the log text, or null. */
+  onLearn: (techniqueId: string) => string | null;
   onClose: () => void;
 }) {
   const [confirming, setConfirming] = useState(false);
@@ -46,6 +48,25 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
             <p class="profile-note">{techniqueSummary(state, content)}</p>
             <p class="profile-note"><TermText text={currentTechnique(state, content)!.flavor} /></p>
             {currentTechnique(state, content)!.note && <p class="profile-note">{currentTechnique(state, content)!.note}</p>}
+          </div>
+        )}
+        {state.cult.scrolls.length > 0 && state.alive && (
+          <div class="crafts">
+            <h3 class="panel-sub">Bí tịch</h3>
+            {state.cult.scrolls.map((id) => {
+              const tech = techniqueById(content, id);
+              if (!tech) return null;
+              const blocked = learnBlocked(state, content, tech);
+              return (
+                <div class="career-row" key={id}>
+                  <div class="craft-head"><b>{tech.name}</b><span class="muted">{content.cultivation.realms.gradeNames[tech.grade]} phẩm · {content.cultivation.realms.lineageNames[tech.lineage]}</span></div>
+                  <p class="profile-note"><TermText text={tech.flavor} /></p>
+                  <button class="chip-btn" disabled={!!blocked} onClick={() => setPracticed(onLearn(id))}>Tu công pháp này</button>
+                  {blocked ? <span class="craft-note">{blocked}</span>
+                    : state.cult.technique && <span class="craft-note">Đổi công pháp mất {content.balance.techniques.switchLossPct}% thanh tu vi.</span>}
+                </div>
+              );
+            })}
           </div>
         )}
         {foundation && <p class="profile-note"><TermText text={`Đạo cơ ${foundation.name}: ${foundation.description}`} /></p>}

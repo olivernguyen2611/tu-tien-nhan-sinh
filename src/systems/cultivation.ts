@@ -11,6 +11,7 @@ import { careerHooks } from './career';
 import { currentTechnique, learnTechnique, techniqueCapReason, techniqueMul } from './technique';
 import { sectHooks } from './sect';
 import { offerFate } from './fate';
+import { breakthroughItem, removeItems } from './items';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -166,7 +167,8 @@ export function yearlyGain(state: GameState, content: Content): number {
   const bonus = Math.max(0, 1 + hookSum(state, content, 'cultivationSpeed'));
   const injured = state.cult.injuredUntil !== null && state.character.age < state.cult.injuredUntil ? cfg.minorFailure.injurySpeedMul : 1;
   const foundation = state.cult.foundation ? content.balance.majorBreakthrough.foundationSpeed[state.cult.foundation] ?? 1 : 1;
-  return realm.speedPct * rootMul * aptitude * qi * techniqueMul(state, content) * bonus * injured * foundation * bottleneckMul(state, content);
+  const buffs = state.cult.buffs.filter((b) => state.character.age < b.until).reduce((m, b) => m * b.mul, 1);
+  return realm.speedPct * rootMul * aptitude * qi * techniqueMul(state, content) * bonus * injured * foundation * buffs * bottleneckMul(state, content);
 }
 
 /** PLAN G.2 bình cảnh: after N failed big breakthroughs at a realm's peak, cultivation slows. */
@@ -189,6 +191,8 @@ export function breakthroughPct(state: GameState, content: Content, basePct: num
     + (state.aptitudes.daoHeart - 50) * b.daoHeartPerPoint
     + hookSum(state, content, 'breakthroughChance')
     + hookSum(state, content, major ? 'breakthroughChance.major' : 'breakthroughChance.minor')
+    + (major ? state.cult.nextBonus : 0)
+    + (breakthroughItem(state, content, major)?.breakthrough?.add ?? 0)
     - b.failPenaltyPct * fails;
   return Math.max(b.minPct, Math.min(b.maxPct, pct));
 }
@@ -272,6 +276,9 @@ export function cultivateYear(state: GameState, content: Content): GameState {
     log = pushLine(log, { text: texts.injuryHealed, tone: 'good' });
   }
 
+  if (s.cult.buffs.some((b) => s.character.age >= b.until)) {
+    s = { ...s, cult: { ...s.cult, buffs: s.cult.buffs.filter((b) => s.character.age < b.until) } };
+  }
   const wasFull = s.cult.progress >= 100;
   const progress = Math.min(100, s.cult.progress + yearlyGain(s, content));
   s = { ...s, cult: { ...s.cult, progress } };
@@ -285,7 +292,10 @@ export function cultivateYear(state: GameState, content: Content): GameState {
       ? content.balance.realmStages.luyenKhiLevelUpChance
       : content.balance.realmStages.minorStageChance;
     const key = `${s.cult.realm}:${s.cult.stage}`;
-    if (rng.chance(breakthroughPct(s, content, base * 100, false) / 100)) {
+    const chance = breakthroughPct(s, content, base * 100, false) / 100;
+    const pill = breakthroughItem(s, content, false);
+    if (pill) s = removeItems(s, [pill.id]);
+    if (rng.chance(chance)) {
       s = { ...s, cult: { ...s.cult, stage: s.cult.stage + 1, progress: 0 } };
       log = pushLine(log, { text: fillRealm(rng.pick(texts.stageUp), s, content), tone: 'good' });
     } else {
@@ -370,7 +380,9 @@ export function attemptMajorBreakthrough(state: GameState, content: Content): Br
   const cfg = content.balance.majorBreakthrough;
   const minor = content.balance.cultivation.minorFailure;
   const rng = Rng.fromState(state.rng);
-  let s: GameState = { ...state, cult: { ...state.cult, lastMajorAttempt: state.character.age } };
+  let s: GameState = { ...state, cult: { ...state.cult, lastMajorAttempt: state.character.age, nextBonus: 0 } };
+  const pill = breakthroughItem(state, content, true);
+  if (pill) s = removeItems(s, [pill.id]);
 
   if (rng.chance(info.chancePct / 100)) {
     const foundation = info.target.id === 'truc_co' ? rollFoundation(s, content, rng) : null;
@@ -454,4 +466,32 @@ export function grantRoot(state: GameState, content: Content): { state: GameStat
   const revealed = { ...withRoot, log: pushLine(withRoot.log, { text, tone: 'rare' as const }) };
   const started = startCultivating(revealed, content);
   return { state: started.state, text: [text, started.line?.text].filter(Boolean).join(' ') };
+}
+
+// ---------- Task 2.8: event effects on cultivation ----------
+
+/** Add (or take) % of the current bar; a full bar at a realm's peak stays capped at 100. */
+export function addProgress(state: GameState, pct: number): GameState {
+  if (state.cult.realm === 'pham_nhan' || pct === 0) return state;
+  return { ...state, cult: { ...state.cult, progress: Math.max(0, Math.min(100, state.cult.progress + pct)) } };
+}
+
+export function addSpeedBuff(state: GameState, mul: number, years: number): GameState {
+  return { ...state, cult: { ...state.cult, buffs: [...state.cult.buffs, { mul, until: state.character.age + years }] } };
+}
+
+export function reducePeakFails(state: GameState, n: number): GameState {
+  const key = `${state.cult.realm}:peak`;
+  const now = state.cult.fails[key] ?? 0;
+  if (now === 0) return state;
+  return { ...state, cult: { ...state.cult, fails: { ...state.cult.fails, [key]: Math.max(0, now - n) } } };
+}
+
+/** A mortal who took up a rootless technique (Phật duyên) steps into the first realm. */
+export function enterFirstRealm(state: GameState, content: Content): GameState {
+  const first = content.cultivation.realms.realms[1];
+  if (state.cult.realm !== 'pham_nhan' || !first || !currentTechnique(state, content)) return state;
+  const rng = Rng.fromState(state.rng);
+  const next = enterRealm(state, content, first.id, rng);
+  return { ...next, rng: rng.getState() };
 }

@@ -291,7 +291,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 2.5 | [x] Tuyển đệ tử tông môn, cấp bậc ngoại môn/nội môn, nhiệm vụ tông môn đơn giản, sư phụ NPC | `systems/sect.ts`, `content/worlds/thuong_lan/events/sect-recruit.json` |
 | 2.6 | [x] Đột phá Trúc Cơ: tỉ lệ thành công, phẩm đạo cơ (Hạ/Trung/Thượng/Hoàn mỹ), hậu quả thất bại | `systems/cultivation.ts` |
 | 2.7 | [x] ✍️ + code: Nghịch Thiên Cải Mệnh lần đầu (chọn 1 trong 3 thiên phú khi Trúc Cơ) | `content/fate-talents.json`, `systems/destiny.ts` — **đã duyệt**: `docs/design/fate-talents.md` |
-| 2.8 | [ ] ✍️ 40 sự kiện tu luyện, tông môn & đời phàm nhân | `content/worlds/thuong_lan/events/*.json` — **đã duyệt**: `docs/design/cultivation-events.md` |
+| 2.8 | [x] ✍️ 40 sự kiện tu luyện, tông môn & đời phàm nhân | `content/worlds/thuong_lan/events/*.json` — **đã duyệt**: `docs/design/cultivation-events.md` |
 | 2.9 | [x] Đời đầu tiên dạng hướng dẫn + dòng "Mục tiêu hiện tại" | `systems/tutorial.ts` |
 | 2.10 | [x] Chọn độ khó Dễ/Thường/Khó (Khó: không load lại) | `screens/CreateCharacter.tsx`, `balance.json` |
 | 2.11 | [x] Đời không linh căn: 4 con đường đời (Quan, Thương, Võ lâm, Y; bậc thang 5 nấc + thu nhập + danh hiệu cuối đời) + cửa **Thiên địa kỳ vật** (tạo Ngũ/Tứ linh căn) và **Tạp dịch tông môn** (`mortal-path.md` mục 1, 2.1, 2.3) | `systems/career.ts`, `content/careers.json` |
@@ -316,7 +316,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 3.8 | [ ] Đạo thống (Tiên/Ma/Phật/Quỷ) × con đường (Kiếm/Thể/Pháp/Binh/Thuật) theo K.3 |
 | 3.9 | [ ] ✍️ 40 sự kiện: tình duyên, giết người đoạt bảo, ma đạo cám dỗ, yêu thú, phường thị — **đã duyệt**: `docs/design/events-jianghu.md` |
 | 3.10 | [ ] Tăng Tiên Thiên Khí Vận lên ~40, thêm tag cho sự kiện dùng |
-| 3.11 | [ ] Võ đạo nhập tiên: 7 cảnh giới võ đạo (Tam lưu → Ngũ khí triều nguyên). Hóa cảnh nhờ khổ luyện + Căn cốt ≥ 70; Tam hoa tụ đỉnh và Ngũ khí triều nguyên cần kỳ ngộ; Ngũ khí triều nguyên tính là Ngũ linh căn, vào Luyện Khí 1 (`mortal-path.md` mục 2.2, 2b) |
+| 3.11 | [ ] Võ đạo nhập tiên: 7 cảnh giới võ đạo (Tam lưu → Ngũ khí triều nguyên). Hóa cảnh nhờ khổ luyện + Căn cốt ≥ 70; Tam hoa tụ đỉnh và Ngũ khí triều nguyên cần kỳ ngộ; Ngũ khí triều nguyên tính là Ngũ linh căn, vào Luyện Khí 1 (`mortal-path.md` mục 2.2, 2b). Kèm 4 sự kiện võ đạo đã duyệt #32–35 của `cultivation-events.md` (Lục Hợp Môn, khổ luyện, Hóa cảnh, đại hội võ lâm) |
 | 3.12 | [ ] Phật duyên: đạo tâm ≥ 70 tu Phật đạo không cần linh căn (`mortal-path.md` mục 2.4) |
 | 3.13 | [ ] ✍️ Sự kiện "ma tu hứa khai mạch" (lừa làm vật tế) + sự kiện cho 4 con đường đời |
 

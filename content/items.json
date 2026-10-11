@@ -1,0 +1,16 @@
+[
+  {
+    "id": "tu_khi_dan", "name": "Tụ Khí Đan", "kind": "pill",
+    "description": "Viên đan màu ngà, ngửi thấy mùi lúa mới. Giúp linh khí tụ lại khi xung kích tầng tiếp theo.",
+    "breakthrough": { "realm": "luyen_khi", "major": false, "add": 5 }
+  },
+  {
+    "id": "truc_co_dan", "name": "Trúc Cơ Đan", "kind": "pill",
+    "description": "Viên đan ai muốn Trúc Cơ cũng thèm. Một viên đổi được ba năm cống hiến.",
+    "breakthrough": { "realm": "luyen_khi", "major": true, "add": 25 }
+  },
+  {
+    "id": "kiem_gay", "name": "Kiếm gãy trong kiếm trủng", "kind": "artifact",
+    "description": "Gãy mất nửa thân, vẫn sắc. Ban đêm thỉnh thoảng tự rung lên như muốn đi đâu đó."
+  }
+]

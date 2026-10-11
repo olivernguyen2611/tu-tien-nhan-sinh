@@ -21,7 +21,7 @@ import { MainScreen } from './screens/Main';
 import { SettingsScreen, type SlotView } from './screens/Settings';
 import { TitleScreen } from './screens/Title';
 import { loadDevMode, saveDevMode } from './devMode';
-import { attemptMajorBreakthrough } from '../systems/cultivation';
+import { attemptMajorBreakthrough, enterFirstRealm } from '../systems/cultivation';
 import { savesLocked } from '../systems/difficulty';
 import { disableTutorial, dismissTip } from '../systems/tutorial';
 import { practiceCraft } from '../systems/crafts';
@@ -182,6 +182,12 @@ function Screens({ content }: { content: Content }) {
           const r = joinCareer(life, content, careerId);
           if (!r) return null;
           setLife(r.state);
+          return r.text;
+        }}
+        onLearn={(id) => {
+          const r = learnTechnique(life, content, id);
+          if (!r) return null;
+          setLife(enterFirstRealm(r.state, content));
           return r.text;
         }}
         onSectAction={(a) => {

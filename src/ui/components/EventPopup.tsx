@@ -44,9 +44,9 @@ export function EventPopup({ state, content, result, onChoose, onClose }: {
           <>
             <div class="kicker">{CATEGORY_NAMES[event.category] ?? event.category} · tuổi {state.character.age}</div>
             <h2>{event.title}</h2>
-            <p class="story"><TermText text={fillTemplate(event.text, state)} /></p>
+            <p class="story"><TermText text={fillTemplate(event.text, state, content)} /></p>
             {visibleChoices(state, content, event).map((c) => {
-              const trait = c.traitId ? content.traits.find((t) => t.id === c.traitId) : undefined;
+              const trait = c.traitId ? content.traits.find((t) => t.id === c.traitId) ?? content.fateTalents.find((t) => t.id === c.traitId) : undefined;
               return (
                 <button key={c.index} class={`choice${c.hidden ? ` hidden-choice r-${trait?.rarity ?? 'pham'}` : ''}`}
                   disabled={c.disabled} onClick={() => onChoose(c.index)}>

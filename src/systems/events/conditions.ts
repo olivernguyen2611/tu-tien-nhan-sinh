@@ -14,7 +14,9 @@ export function readValue(state: GameState, key: string): number {
     if (k in state.aptitudes) return state.aptitudes[k as keyof GameState['aptitudes']];
     return 0;
   }
+  if (key.startsWith('craft.')) return state.crafts.skills[key.slice(6)]?.level ?? 0;
   switch (key) {
+    case 'sect.contribution': return state.sect.id ? state.sect.contribution : 0;
     case 'silver': return state.money.silver;
     case 'spiritStones': return state.money.spiritStones;
     case 'karma': return state.social.karma;
@@ -31,8 +33,21 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
   if (c.realm && !realmInRange(state, c.realm, content)) return false;
   // Regions arrive in GĐ 3; until then nobody is in one.
   if (c.region && c.region.length > 0) return false;
+  if (c.anyOf && !c.anyOf.some((sub) => meets(state, sub, content))) return false;
+  if (c.stage?.min !== undefined && state.cult.stage < c.stage.min) return false;
+  if (c.stage?.max !== undefined && state.cult.stage > c.stage.max) return false;
+  if (c.career) {
+    const k = c.career;
+    if (k.member !== undefined && !!state.career.id !== k.member) return false;
+    if (k.id !== undefined && state.career.id !== k.id) return false;
+    if (k.minRung !== undefined && (!state.career.id || state.career.rung < k.minRung)) return false;
+    if (k.maxRung !== undefined && (!state.career.id || state.career.rung > k.maxRung)) return false;
+  }
+  if (c.peakFails && (state.cult.fails[`${state.cult.realm}:peak`] ?? 0) < c.peakFails.min) return false;
+  if (c.talentsAny?.length && !c.talentsAny.some((t) => state.talents.includes(t))) return false;
   if (c.sect && content) {
     const s = c.sect;
+    if (s.notId !== undefined && state.sect.id === s.notId) return false;
     if (s.member !== undefined && !!state.sect.id !== s.member) return false;
     if (s.id !== undefined && state.sect.id !== s.id) return false;
     if (s.minRank !== undefined && (!state.sect.id || state.sect.rank < s.minRank)) return false;

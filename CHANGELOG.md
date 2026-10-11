@@ -2,6 +2,33 @@
 
 ## [Chưa phát hành]
 
+### Task 2.8 — Sự kiện tu luyện, tông môn và đời phàm nhân (2026-10-11)
+- **36/40 sự kiện** theo bản duyệt `docs/design/cultivation-events.md`, chia 5 file trong `events/`:
+  - `sect.json`: 9 sự kiện đời tông môn;
+  - `cultivation.json`: 7 sự kiện tu luyện;
+  - `fortune.json`: 5 kỳ ngộ công pháp;
+  - `rogue.json`: 4 sự kiện tán tu và ma đạo;
+  - `mortal-path.json`: 11 sự kiện đời phàm nhân, thêm 1 sự kiện nối tiếp "Hương Hỏa Hội lộ mặt" (lựa chọn báo Khâm Thiên Giám cần flag do chính sự kiện đó đặt, nên tách ra xảy ra sau).
+- **4 sự kiện võ đạo (#32–35) chuyển sang task 3.11**, vì cần thang cảnh giới võ đạo.
+- "Linh quả nghìn năm" bản duyệt thay cho bản mình viết ở task 2.11.
+- Engine thêm:
+  - hiệu ứng `cultProgress` (± % thanh tu vi), `speedBuff` (tốc tu × có thời hạn), `craftXp`, `reputation` (thêm phe Triều đình, Giang hồ);
+  - `nextBreakthroughBonus`, `reducePeakFails`, `gainTechnique` (bí tịch: học sau ở mục Bí tịch của bảng Tu luyện);
+  - `joinCareer`, `careerPromote`, `leaveCareer`, `gainMaster`; `addItems`/`removeItems` nay lưu vào túi;
+  - điều kiện `anyOf`, `stage`, `career`, `peakFails`, `talentsAny`, `sect.notId`;
+  - đọc được `craft.<nghệ>` và `sect.contribution` trong điều kiện và kiểm tra chỉ số;
+  - chữ `{sect}` trong văn bản; lựa chọn ẩn theo thiên phú hiện tên thiên phú.
+- **Vật phẩm tối thiểu** (`content/items.json`): Tụ Khí Đan (+5 khi lên tầng Luyện Khí), Trúc Cơ Đan (+25 khi đột phá Trúc Cơ). Cả hai tự dùng khi đột phá, đúng bảng G.2. Thêm kiếm gãy. Túi đồ đầy đủ làm ở task 3.1; thẻ nhân vật có dòng "Mang theo".
+- **Phật duyên qua sự kiện**: người không linh căn quy y Vô Ưu Tự thì tu Vô Ưu Thiền Tâm Pháp, vào Luyện Khí, tốc độ theo Đạo tâm (tối đa 0.7).
+- Validator:
+  - mỗi kết quả phải đổi ít nhất một trong 8 chỉ số (tiền, cống hiến, nhân quả, flag không tính), theo quy tắc của chủ dự án;
+  - kiểm tra id vật phẩm, bí tịch, đường đời, thiên phú nhắc trong sự kiện.
+- Chỗ làm gần đúng vì hệ thống chưa có (sẽ chỉnh khi có):
+  - "⚄ Chiến lực" tạm kiểm tra bằng Căn cốt;
+  - bế quan 3 năm ở #11 chưa làm trôi thời gian;
+  - NPC bạn hay ân nhân chỉ đặt flag;
+  - "tư chất Kiếm ≥ 40" ở Kiếm trủng chưa kiểm tra.
+
 ### Task 2.7 — Nghịch Thiên Cải Mệnh lần đầu (2026-10-11)
 - Đột phá Trúc Cơ thành công thì hiện màn **Nghịch Thiên Cải Mệnh**: chọn 1 trong 3 thiên phú. Không đóng được; chọn xong mới qua năm tiếp.
 - **24 thiên phú** theo bản duyệt (`content/fate-talents.json`): Lương 6, Ưu 6, Tuyệt 6, Thiên 4, Thần 2.

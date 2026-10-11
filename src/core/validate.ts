@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World } from './schemas';
 
 export interface Problem {
   file: string;
@@ -35,6 +35,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'careers.json') return CareersFileSchema;
     if (rest === 'techniques.json') return TechniqueFileSchema;
     if (rest === 'fate-talents.json') return FateTalentFileSchema;
+    if (rest === 'items.json') return ItemFileSchema;
     return null;
   }
   // Belongs to one world.
@@ -63,6 +64,8 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   let difficultyIds: string[] | null = null;
   let techniques: Technique[] | null = null;
   let fateIds: string[] | null = null;
+  let itemIds: string[] | null = null;
+  let careerIds: string[] | null = null;
   const sectFiles: { file: string; sects: Sect[] }[] = [];
   const parsedShared: { balance?: Balance; realms?: RealmsFile; roots?: RootsFile; aptitudes?: AptitudesFile } = {};
 
@@ -145,6 +148,8 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === WorldSchema && (parsed.data as World).sectRecruitEvent) rootTests.push({ file, event: (parsed.data as World).sectRecruitEvent! });
     if (schema === TechniqueFileSchema) techniques = parsed.data as Technique[];
     if (schema === SectFileSchema) sectFiles.push({ file, sects: parsed.data as Sect[] });
+    if (schema === ItemFileSchema) itemIds = (parsed.data as { id: string }[]).map((x) => x.id);
+    if (schema === CareersFileSchema) careerIds = (parsed.data as { careers: { id: string }[] }).careers.map((c) => c.id);
     if (schema === CareersFileSchema) problems.push(...duplicates(file, 'đường đời', (parsed.data as { careers: { id: string }[] }).careers));
     if (schema === DifficultyFileSchema) difficultyIds = (parsed.data as { id: string }[]).map((d) => d.id);
   }
@@ -233,15 +238,35 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       problems.push({ file, level: 'error', message: `${where} nhắc tới ${p.name} nhưng conditions.flagsNone thiếu "${p.flag}"` });
     }
 
+    const talentsNamed = [event.conditions, ...event.choices.map((c) => c.requires ?? {})].flatMap((c) => c.talentsAny ?? []);
+    for (const t of talentsNamed) {
+      if (fateIds && !fateIds.includes(t)) problems.push({ file, level: 'error', message: `${where} nhắc tới thiên phú không tồn tại "${t}"` });
+    }
+    const careerNamed = [event.conditions, ...event.choices.map((c) => c.requires ?? {})].map((c) => c.career?.id).filter(Boolean) as string[];
+    for (const c of careerNamed) {
+      if (careerIds && !careerIds.includes(c)) problems.push({ file, level: 'error', message: `${where} nhắc tới đường đời không tồn tại "${c}"` });
+    }
+
     event.choices.forEach((choice, i) => {
       const texts = [choice.text, choice.result?.text, choice.success?.text, choice.fail?.text].filter(Boolean).join(' ');
       for (const p of needsParent(texts, choice.requires?.flagsNone ?? [])) {
         problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1} nhắc tới ${p.name} nhưng sự kiện hoặc lựa chọn chưa loại "${p.flag}"` });
       }
       for (const outcome of [choice.result, choice.success, choice.fail]) {
-        // Owner rule: every choice moves the character's numbers a little.
-        if (outcome && !Object.values(outcome.effects).some((v) => typeof v === 'number' && v !== 0)) {
-          problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: kết quả không đổi chỉ số nào (mỗi lựa chọn phải ảnh hưởng ít nhất một chỉ số)` });
+        // Owner rule: every outcome changes at least one of the 8 stats (money, contribution, karma and flags do not count).
+        // A root test or a granted root changes the character more than any stat, so it counts too.
+        const fx = outcome?.effects;
+        if (fx && !fx.testRoot && !fx.grantRoot && !Object.entries(fx).some(([k, v]) => k.startsWith('stat.') && typeof v === 'number' && v !== 0)) {
+          problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: kết quả không đổi chỉ số nào (mỗi lựa chọn phải ảnh hưởng ít nhất một trong 8 chỉ số)` });
+        }
+        for (const it of [...(fx?.addItems ?? []), ...(fx?.removeItems ?? [])]) {
+          if (itemIds && !itemIds.includes(it)) problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: vật phẩm không tồn tại "${it}"` });
+        }
+        if (fx?.gainTechnique && techniques && !techniques.some((x) => x.id === fx.gainTechnique)) {
+          problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: công pháp không tồn tại "${fx.gainTechnique}"` });
+        }
+        if (fx?.joinCareer && careerIds && !careerIds.includes(fx.joinCareer)) {
+          problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: đường đời không tồn tại "${fx.joinCareer}"` });
         }
         const tech = outcome?.effects.learnTechnique;
         if (tech && techniques && !techniques.some((x) => x.id === tech)) {

@@ -19,6 +19,7 @@ import { difficultyName } from '../../systems/difficulty';
 import { currentGoal, pendingTip } from '../../systems/tutorial';
 import { careerLabel } from '../../systems/career';
 import { sectLabel } from '../../systems/sect';
+import { inventoryLabel } from '../../systems/items';
 
 const DOCK_LEFT = [
   { id: 'cultivate', glyph: '修', label: 'Tu luyện' },
@@ -36,7 +37,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onBreakthrough, onPractice, onJoinCareer, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onBreakthrough, onPractice, onJoinCareer, onLearn, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -51,6 +52,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onPractice: (craftId: string) => string | null;
   /** Take up a mortal career from the "Tu luyện" sheet. */
   onJoinCareer: (careerId: string) => string | null;
+  /** Practise a technique from a scroll (task 2.8). */
+  onLearn: (techniqueId: string) => string | null;
   /** Nghịch Thiên Cải Mệnh: take a talent, or refresh the offer (task 2.7). */
   onFate: (action: { choose: string } | { reroll: true }) => void;
   /** Sect sheet actions (task 2.5). */
@@ -187,7 +190,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       {sectOpen && <SectPanel state={state} content={content} onAction={onSectAction} onClose={() => setSectOpen(false)} />}
 
-      {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onClose={() => setCultivateOpen(false)} />}
+      {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onClose={() => setCultivateOpen(false)} />}
 
       {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onClose={() => setFamilyOpen(false)} />}
 
@@ -207,6 +210,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>
             {careerLabel(state, content) && <p class="profile-note">Đường đời: {careerLabel(state, content)}</p>}
             {sectLabel(state, content) && <p class="profile-note">Tông môn: {sectLabel(state, content)}</p>}
+            {inventoryLabel(state, content) && <p class="profile-note">Mang theo: {inventoryLabel(state, content)}</p>}
             <p class="profile-note"><TermText text="Tư chất tiên thiên định từ lúc sinh, chỉ đổi được nhờ kỳ ngộ hay khí vận." /></p>
             {states.length > 0 && (
               <ul class="trait-chips" aria-label="Trạng thái đặc biệt">

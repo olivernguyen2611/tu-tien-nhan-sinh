@@ -124,3 +124,28 @@ export function lifeTitles(state: GameState, content: Content): string[] {
   if (state.cult.realm === 'pham_nhan' && state.character.age >= content.balance.careers.longLifeAge) out.push(content.careers.longLifeTitle);
   return out;
 }
+
+// ---------- Task 2.8: event effects on careers ----------
+
+/** Put the life on a career path from an event (the join-age window does not apply). */
+export function forceJoinCareer(state: GameState, content: Content, careerId: string): GameState {
+  const career = careerDef(content, careerId);
+  if (!career || state.career.id === careerId || state.cult.realm !== 'pham_nhan') return state;
+  if (career.requires.rootless && (!state.cult.root || usableRoot(state, content))) return state;
+  const text = content.careers.joinText.replaceAll('{career}', career.name).replaceAll('{rung}', career.rungs[0]);
+  const next: GameState = { ...state, career: { id: careerId, rung: 0, since: state.character.age } };
+  return { ...next, log: addLines(next, [{ text, tone: 'good' }]) };
+}
+
+/** One rung up the current career (exams, a shop, a cure…). */
+export function promoteCareer(state: GameState, content: Content): GameState {
+  const career = careerDef(content, state.career.id);
+  if (!career || state.career.rung >= career.rungs.length - 1) return state;
+  const rung = state.career.rung + 1;
+  const next: GameState = { ...state, career: { ...state.career, rung, since: state.character.age } };
+  return { ...next, log: addLines(next, [{ text: career.promoteText.replaceAll('{rung}', career.rungs[rung]), tone: 'good' }]) };
+}
+
+export function leaveCareer(state: GameState): GameState {
+  return state.career.id ? { ...state, career: { id: null, rung: 0, since: 0 } } : state;
+}

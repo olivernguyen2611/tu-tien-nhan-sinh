@@ -67,7 +67,7 @@ describe('mortal careers (task 2.11)', () => {
 
   it('Tạp dịch triples kỳ vật events', () => {
     const lucky = rootless(mortal('f', 20, { aptitudes: { physique: 50, comprehension: 50, luck: 80, daoHeart: 50 } }));
-    const ev = findEvent(content, 'linh_qua_ngan_nam')!;
+    const ev = findEvent(content, 'linh_qua_nghin_nam')!;
     const base = eventWeight(lucky, content, ev);
     expect(base).toBeGreaterThan(0);
     const servant = joinCareer(lucky, content, 'tap_dich')!.state;
@@ -114,7 +114,7 @@ describe('Thiên địa kỳ vật (task 2.11)', () => {
   });
 
   it('works through the event choice', () => {
-    const s = { ...rootless(mortal('ev', 20)), events: { pending: 'linh_qua_ngan_nam', history: {}, followUps: [] } };
+    const s = { ...rootless(mortal('ev', 20)), events: { pending: 'tuy_linh_mach', history: {}, followUps: [] } };
     const r = resolveChoice(s, content, 0);
     expect(r.state.cult.root?.grade).toMatch(/ngu|tu/);
     expect(r.text).toContain('Linh căn:');

@@ -245,6 +245,15 @@ export function requestMaster(state: GameState, content: Content): { state: Game
   return { state: { ...next, log: addLines(next, [{ text, tone: success ? 'good' : 'bad' }]) }, text, success };
 }
 
+/** An elder takes the life as a personal disciple (event effect, task 2.8). */
+export function grantMaster(state: GameState, content: Content): GameState {
+  if (!state.sect.id || state.sect.master || !content.sectLife) return state;
+  const rng = Rng.fromState(state.rng);
+  const master = fill(content.sectLife.texts.masterTitle, { master: makeName(rng, content.names, rng.chance(0.5) ? 'nam' : 'nu') });
+  const next: GameState = { ...state, rng: rng.getState(), sect: { ...state.sect, master }, flags: { ...state.flags, co_su_phu: true } };
+  return { ...next, log: addLines(next, [{ text: fill(content.sectLife.texts.master, { master }), tone: 'good' }]) };
+}
+
 /** "Bích Lạc Tông · Ngoại môn" for the profile. */
 export function sectLabel(state: GameState, content: Content): string | null {
   const sect = currentSect(state, content);
