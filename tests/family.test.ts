@@ -10,7 +10,7 @@ import familyActions from '../content/family-actions.json';
 import { FamilyActionFileSchema, LifeTextsSchema } from '../src/core/schemas';
 import lifeTexts from '../content/life-texts.json';
 import extremes from '../content/stat-extremes.json';
-import { cultivation } from './fixtures';
+import { cultivation, difficulties } from './fixtures';
 import { StatExtremesFileSchema } from '../src/core/schemas';
 import traits from '../content/traits.json';
 import world from '../content/worlds/thuong_lan/world.json';
@@ -29,6 +29,7 @@ const content: Content = {
   lifeTexts: LifeTextsSchema.parse(lifeTexts),
   extremes: StatExtremesFileSchema.parse(extremes),
   cultivation,
+  difficulties,
 };
 
 describe('family', () => {

@@ -293,7 +293,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 2.7 | [ ] ✍️ + code: Nghịch Thiên Cải Mệnh lần đầu (chọn 1 trong 3 thiên phú khi Trúc Cơ) | `content/fate-talents.json`, `systems/destiny.ts` |
 | 2.8 | [ ] ✍️ ~25 sự kiện tu luyện & tông môn | `content/worlds/thuong_lan/events/cultivation.json` |
 | 2.9 | [ ] Đời đầu tiên dạng hướng dẫn + dòng "Mục tiêu hiện tại" | `systems/tutorial.ts` |
-| 2.10 | [ ] Chọn độ khó Dễ/Thường/Khó (Khó: không load lại) | `screens/CreateCharacter.tsx`, `balance.json` |
+| 2.10 | [x] Chọn độ khó Dễ/Thường/Khó (Khó: không load lại) | `screens/CreateCharacter.tsx`, `balance.json` |
 | 2.11 | [ ] Đời không linh căn: 4 con đường đời (Quan, Thương, Võ lâm, Y; bậc thang 5 nấc + thu nhập + danh hiệu cuối đời) + cửa **Thiên địa kỳ vật** (tạo Ngũ/Tứ linh căn) và **Tạp dịch tông môn** (`mortal-path.md` mục 1, 2.1, 2.3) | `systems/career.ts`, `content/careers.json` |
 | 2.12 | [ ] Phàm nhân học Luyện Đan và Linh Thực từ cấp 0; nghề `nghe_thuoc` bắt đầu Luyện Đan cấp 10 (`realms-roots-paths.md` mục D) | `systems/crafts.ts` |
 

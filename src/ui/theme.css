@@ -426,6 +426,8 @@ button { font: inherit; color: inherit; }
 .create-head h1 { font-family: var(--font-story); font-size: 1.5rem; margin: 0; }
 .field { display: flex; flex-direction: column; gap: 8px; }
 .field > label, .field-label { font-size: 0.8125rem; font-weight: 600; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+.field-hint { margin: 6px 0 0; font-size: 0.8125rem; color: var(--muted); }
+.slot-lock { font-size: 0.75rem; align-self: center; }
 .name-row { display: flex; gap: 8px; }
 .name-row input {
   flex: 1; min-width: 0;

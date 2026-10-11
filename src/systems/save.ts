@@ -33,6 +33,7 @@ export interface SlotSummary {
   alive: boolean;
   worldId: string;
   savedAt: string;
+  difficulty: string;
 }
 
 // Only the fields the game cannot run without are checked; the rest of
@@ -67,6 +68,8 @@ export function migrate(save: SaveFile): SaveFile {
   // Fields added within saveVersion 1 get their empty defaults.
   let life = save.life as GameState & { extremes?: GameState['extremes'] };
   if (!life.extremes) life = { ...life, extremes: { streak: {}, active: {}, givenAt: {} } };
+  // Task 2.10: lives from before difficulty were "Thường".
+  if (life.difficulty === undefined) life = { ...life, difficulty: 'normal' };
   // Task 2.3: cultivation bookkeeping.
   const cult = life.cult as Partial<GameState['cult']> & GameState['cult'];
   if (cult.fails === undefined || cult.injuredUntil === undefined || cult.lineage === undefined || cult.foundation === undefined || cult.lastMajorAttempt === undefined) {
@@ -157,7 +160,7 @@ export function listSlots(store: KeyValueStore, knownWorlds: string[]): (SlotSum
     const r = readSlot(store, i + 1, knownWorlds);
     if (!r || !r.ok) return null;
     const { life, savedAt } = r.save;
-    return { slot: i + 1, name: life.character.name, age: life.character.age, alive: life.alive, worldId: life.worldId, savedAt };
+    return { slot: i + 1, name: life.character.name, age: life.character.age, alive: life.alive, worldId: life.worldId, savedAt, difficulty: life.difficulty };
   });
 }
 
