@@ -521,6 +521,15 @@ export const BalanceSchema = z
       .catchall(z.record(z.string(), z.number())),
     crafts: z
       .object({
+        /** Youngest age that can practise a craft (task 2.12). */
+        minAge: z.number().int().min(0),
+        /** Aptitude (tư chất) for a craft, rolled the first time it is practised. */
+        startAffinity: range,
+        /** Levels per practice = base × (0.5 + affinity/100) × (0.5 + comprehension/100). */
+        practiceBase: z.number().min(0),
+        affinityPerPractice: z.number().min(0),
+        /** Silver per practice (herbs, iron, paper…). */
+        practiceCost: z.record(id, z.number().int().min(0)),
         /** Job flag → starting craft levels. Mortals get them at once, cultivators once they have a root. */
         mortalStartLevel: z.record(id, z.record(id, z.number().int().min(0).max(100))),
         cultivatorStartLevel: z.record(id, z.record(id, z.number().int().min(0).max(100))),
@@ -702,6 +711,11 @@ export const AptitudesFileSchema = z
           .strict(),
       )
       .min(1),
+    /** Log lines (task 2.12): {craft}, {from}, {to}, {title}. */
+    practiceText: z.string().min(1),
+    titleUpText: z.string().min(1),
+    /** Starting level from a job (nghề thuốc, nghề rèn). */
+    jobStartText: z.string().min(1),
     /** Ascending by minLevel; {craft} = craft name in lower case, {prefix} = its prefix. */
     craftTitles: z.array(z.object({ minLevel: z.number().int().min(0).max(100), title: z.string().min(1) }).strict()).min(1),
   })

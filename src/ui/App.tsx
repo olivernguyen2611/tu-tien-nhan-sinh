@@ -24,6 +24,7 @@ import { loadDevMode, saveDevMode } from './devMode';
 import { attemptMajorBreakthrough } from '../systems/cultivation';
 import { savesLocked } from '../systems/difficulty';
 import { disableTutorial, dismissTip } from '../systems/tutorial';
+import { practiceCraft } from '../systems/crafts';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -166,6 +167,12 @@ function Screens({ content }: { content: Content }) {
           const r = performFamilyAction(life, content, relId, actionId);
           setLife(checkDeath(r.state, content));
           return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+        }}
+        onPractice={(craftId) => {
+          const r = practiceCraft(life, content, craftId);
+          if (!r) return null;
+          setLife(r.state);
+          return r.text;
         }}
         onTip={(id, off) => setLife(off ? disableTutorial(dismissTip(life, id)) : dismissTip(life, id))}
         onBreakthrough={() => {

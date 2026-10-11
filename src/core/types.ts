@@ -38,6 +38,8 @@ export type DeathCause = 'old_age' | 'illness' | 'breakthrough';
 
 export interface GameState {
   version: 1;
+  /** Bách nghệ (task 2.12): craft id → level and aptitude 0–100; age of the last practice. */
+  crafts: { skills: Record<string, { level: number; affinity: number }>; lastPractice: number | null };
   /** First-life tips (task 2.9): on for the first life; tip ids already shown. */
   tutorial: { enabled: boolean; seen: string[] };
   /** Dễ/Thường/Khó id (difficulties.json), fixed when the life starts. */

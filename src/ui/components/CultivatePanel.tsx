@@ -3,14 +3,17 @@ import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
 import { inBottleneck, majorBreakthroughInfo, realmLabel, rootLabel, yearlyGain } from '../../systems/cultivation';
+import { craftViews } from '../../systems/crafts';
 import { Meter } from './Meter';
 import { TermText } from './Tooltip';
 
-export function CultivatePanel({ state, content, onBreakthrough, onClose }: {
+export function CultivatePanel({ state, content, onBreakthrough, onPractice, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome to show in the sheet. */
   onBreakthrough: () => { text: string; tone: Tone; changes: string } | null;
+  /** Practise a craft this year; returns the log text, or null. */
+  onPractice: (craftId: string) => string | null;
   onClose: () => void;
 }) {
   const [confirming, setConfirming] = useState(false);
@@ -19,6 +22,8 @@ export function CultivatePanel({ state, content, onBreakthrough, onClose }: {
   const mortal = cult.realm === 'pham_nhan';
   const gain = yearlyGain(state, content);
   const info = majorBreakthroughInfo(state, content);
+  const crafts = craftViews(state, content);
+  const [practiced, setPracticed] = useState<string | null>(null);
   const foundation = content.cultivation.realms.foundations.find((g) => g.id === cult.foundation);
 
   return (
@@ -62,6 +67,28 @@ export function CultivatePanel({ state, content, onBreakthrough, onClose }: {
             {result.changes && <span class="changes">{result.changes}</span>}
           </p>
         )}
+        {crafts.length > 0 && (
+          <div class="crafts">
+            <h3 class="panel-sub"><TermText text="Bách nghệ" /></h3>
+            <p class="profile-note">Mỗi năm chuyên tâm được một nghề.</p>
+            {crafts.map((c) => (
+              <div class="craft-row" key={c.id}>
+                <div class="craft-head">
+                  <b><TermText text={c.name} /></b>
+                  <span class="muted">{c.title}</span>
+                </div>
+                <Meter label={`Cấp ${c.level}`} value={c.level} color="var(--bar-cult)" text="" />
+                <button class="chip-btn" disabled={!!c.blocked} title={c.blocked ?? undefined}
+                  onClick={() => setPracticed(onPractice(c.id))}>
+                  Luyện tập{c.cost > 0 && <span class="chip-cost"> · {c.cost} bạc</span>}
+                </button>
+                {c.blocked && <span class="craft-note">{c.blocked}</span>}
+              </div>
+            ))}
+            {practiced && <p class="action-result good">{practiced}</p>}
+          </div>
+        )}
+
         <button class="choice" onClick={onClose}>Đóng</button>
       </div>
     </div>
