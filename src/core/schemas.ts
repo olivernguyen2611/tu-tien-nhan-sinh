@@ -480,6 +480,27 @@ export const BalanceSchema = z
           .strict(),
       })
       .strict(),
+    /** PLAN.md G.2 big breakthroughs (task 2.6). */
+    majorBreakthrough: z
+      .object({
+        /** Realms a player may break into for now; later tasks add Kim Đan and up. */
+        openRealms: z.array(id),
+        failureWeights: z
+          .object({ lose: z.number().min(0), injury: z.number().min(0), lifespan: z.number().min(0), deviation: z.number().min(0), death: z.number().min(0) })
+          .strict(),
+        deviationHealth: z.number(),
+        deviationDaoHeart: z.number(),
+        /** Failures at a realm's peak before the bottleneck slows cultivation. */
+        bottleneckFails: z.number().int().min(1),
+        bottleneckSpeedMul: z.number().min(0).max(1),
+        /** Foundation grade score = d100 + (comprehension − 50) × perPoint + (daoHeart − 50) × perPoint. */
+        foundationPerPoint: z.number().min(0),
+        /** Minimum score for each grade id; grades not listed are the floor. */
+        foundationThresholds: z.record(id, z.number()),
+        /** Cultivation speed multiplier per foundation grade. */
+        foundationSpeed: z.record(id, z.number().min(0)),
+      })
+      .strict(),
     /** Combat path modifiers (realms-roots-paths.md C); keyed by path id. */
     paths: z
       .object({ startAffinity: range })
@@ -552,6 +573,8 @@ export const LifeTextsSchema = z
     /** Old-age milestones (balance.aging.milestoneAges); {age}. */
     agingMilestone: lines,
     deathOldAge: lines,
+    /** Died breaking into a new realm (task 2.6); {age}. */
+    deathBreakthrough: lines,
     deathIllness: lines,
     epitaph: z.object({ good: lines, bad: lines, plain: lines }).strict(),
   })
@@ -578,8 +601,16 @@ export const RealmsFileSchema = z
         failInjury: z.string().min(1),
         failLifespan: z.string().min(1),
         injuryHealed: z.string().min(1),
+        /** Big breakthrough (task 2.6): {realm} = new realm, {grade} = foundation grade name. */
+        majorSuccess: z.string().min(1),
+        /** Tẩu hỏa nhập ma. */
+        majorDeviation: z.string().min(1),
+        /** Two failures at a realm's peak: cultivation slows (PLAN G.2 bình cảnh). */
+        bottleneck: z.string().min(1),
       })
       .strict(),
+    /** Đạo cơ grades after breaking into Trúc Cơ, worst to best (task 2.6). */
+    foundations: z.array(z.object({ id, name: z.string().min(1), description: z.string().min(1) }).strict()).min(1),
     /** Shown as a greyed-out "???" after the last realm. */
     beyond: z.object({ name: z.string().min(1), description: z.string().min(1) }).strict(),
   })

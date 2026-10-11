@@ -6,6 +6,7 @@ import type { GameState, Tone } from '../../core/types';
 import { activeExtremes, extremeWarnings } from '../../systems/extremes';
 import { DevPanel } from '../components/DevPanel';
 import { FamilyPanel } from '../components/FamilyPanel';
+import { CultivatePanel } from '../components/CultivatePanel';
 import { EventPopup, type PopupResult } from '../components/EventPopup';
 import { Meter } from '../components/Meter';
 import { Term, TermText } from '../components/Tooltip';
@@ -29,7 +30,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onBreakthrough, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -40,6 +41,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   /** Returns the outcome to show on the card. */
   onChoose: (index: number) => PopupResult;
   onFamilyAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
+  /** Big breakthrough from the "Tu luyện" sheet; null when it cannot be tried. */
+  onBreakthrough: () => { text: string; tone: Tone; changes: string } | null;
   onNewLife: () => void;
   /** Open the end-of-life summary (after death). */
   onSummary: () => void;
@@ -53,6 +56,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const [profileOpen, setProfileOpen] = useState(false);
   const [result, setResult] = useState<PopupResult | null>(null);
   const [familyOpen, setFamilyOpen] = useState(false);
+  const [cultivateOpen, setCultivateOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
   const logRef = useRef<HTMLElement>(null);
   const { character: c, stats, cult, money } = state;
@@ -64,7 +68,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
     logRef.current?.scrollTo({ top: logRef.current.scrollHeight, behavior: 'smooth' });
   }, [state.log.length]);
 
-  const dockActions: Record<string, () => void> = { bonds: () => setFamilyOpen(true) };
+  const dockActions: Record<string, () => void> = { bonds: () => setFamilyOpen(true), cultivate: () => setCultivateOpen(true) };
   const dockItem = (t: { id: string; glyph: string; label: string }) => (
     <button class="dock-item" key={t.id} title={dockActions[t.id] ? t.label : 'Sắp có'} onClick={dockActions[t.id]}>
       <span class="glyph" aria-hidden="true">{t.glyph}</span>
@@ -142,6 +146,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         <DevPanel state={state} content={content} onChange={dev.onChange} onClose={() => setDevOpen(false)}
           onDisable={() => { setDevOpen(false); dev.onDisable(); }} />
       )}
+
+      {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onClose={() => setCultivateOpen(false)} />}
 
       {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onClose={() => setFamilyOpen(false)} />}
 

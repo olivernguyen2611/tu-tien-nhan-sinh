@@ -69,8 +69,18 @@ export function migrate(save: SaveFile): SaveFile {
   if (!life.extremes) life = { ...life, extremes: { streak: {}, active: {}, givenAt: {} } };
   // Task 2.3: cultivation bookkeeping.
   const cult = life.cult as Partial<GameState['cult']> & GameState['cult'];
-  if (cult.fails === undefined || cult.injuredUntil === undefined || cult.lineage === undefined) {
-    life = { ...life, cult: { ...cult, fails: cult.fails ?? {}, injuredUntil: cult.injuredUntil ?? null, lineage: cult.lineage ?? null } };
+  if (cult.fails === undefined || cult.injuredUntil === undefined || cult.lineage === undefined || cult.foundation === undefined || cult.lastMajorAttempt === undefined) {
+    life = {
+      ...life,
+      cult: {
+        ...cult,
+        fails: cult.fails ?? {},
+        injuredUntil: cult.injuredUntil ?? null,
+        lineage: cult.lineage ?? null,
+        foundation: cult.foundation ?? null,
+        lastMajorAttempt: cult.lastMajorAttempt ?? null,
+      },
+    };
   }
   return life === save.life ? save : { ...save, life };
 }
