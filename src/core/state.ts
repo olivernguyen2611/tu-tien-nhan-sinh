@@ -6,6 +6,7 @@ import type { GameState, Gender } from './types';
 import { rollYearEvent } from '../systems/events/engine';
 import { ageFamily, createFamily } from '../systems/relationships';
 import { ageBody, checkDeath } from '../systems/time';
+import { makeName, splitName } from '../systems/names';
 
 export interface NewLifeInput {
   seed: string;
@@ -17,8 +18,7 @@ export interface NewLifeInput {
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
 
 export function randomName(rng: Rng, content: Content, gender: Gender): string {
-  const { surnames, male, female } = content.names;
-  return `${rng.pick(surnames)} ${rng.pick(gender === 'nam' ? male : female)}`;
+  return makeName(rng, content.names, gender);
 }
 
 export function fillTemplate(text: string, state: GameState): string {
@@ -55,7 +55,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
   const healthShift = Math.round(((stats.health - 50) / 50) * life.healthAdjustMax);
   const lifespan = life.mortalBase + rng.int(-life.mortalVariance, life.mortalVariance) + healthShift;
 
-  const family = createFamily(rng, content, name.split(' ')[0], !!origin.noParents);
+  const family = createFamily(rng, content, splitName(name, content.names).surname, !!origin.noParents, name);
 
   const state: GameState = {
     version: 1,
