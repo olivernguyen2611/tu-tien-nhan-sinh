@@ -44,12 +44,21 @@
       "Một đêm ngồi tĩnh tọa, bình chướng vỡ ra như lớp băng mỏng: {realm} {stage}.",
       "Sáng ra mở mắt, cả người nhẹ bẫng. {realm} {stage}, không uổng mấy năm ngồi mòn chiếu."
     ],
-    "peak": "Tu vi đã tới {realm} {stage}, đầy tràn mà chưa có cửa đi tiếp. Muốn lên nữa phải đột phá đại cảnh giới.",
+    "peak": "Tu vi đã tới {realm} {stage}, đầy tràn mà chưa có cửa đi tiếp. Muốn lên nữa phải đột phá đại cảnh giới (mở Tu luyện).",
     "failLose": "Xung kích bình chướng thất bại, linh khí tán mất mấy phần. Đành ngồi tích lại.",
     "failInjury": "Linh khí chạy ngược, kinh mạch tổn thương. Mấy năm tới tu luyện sẽ chậm hẳn.",
     "failLifespan": "Đột phá thất bại, nguyên khí hao tổn. Soi gương thấy tóc mai bạc thêm một sợi.",
-    "injuryHealed": "Kinh mạch đã lành hẳn, linh khí lại chạy thông suốt."
+    "injuryHealed": "Kinh mạch đã lành hẳn, linh khí lại chạy thông suốt.",
+    "majorSuccess": "Linh khí trong người hóa lỏng, chảy về đan điền đắp thành nền. Từ nay ngươi là tu sĩ {realm}, đạo cơ {grade}.",
+    "majorDeviation": "Tâm thần chao đảo, linh khí chạy loạn. Tẩu hỏa nhập ma! Ngươi gắng gượng giữ được mạng, nhưng tâm cảnh đã có vết nứt.",
+    "bottleneck": "Thất bại liền mấy lần, bình chướng như bức tường đá. Linh khí vào người cũng chậm hẳn: đây là bình cảnh."
   },
+  "foundations": [
+    { "id": "ha", "name": "hạ phẩm", "description": "Nền móng lỏng lẻo, đi tiếp sẽ vất vả." },
+    { "id": "trung", "name": "trung phẩm", "description": "Nền móng vững vàng như phần lớn tu sĩ." },
+    { "id": "thuong", "name": "thượng phẩm", "description": "Nền móng dày chắc, đồng môn nhìn ngươi bằng ánh mắt khác." },
+    { "id": "hoan_my", "name": "hoàn mỹ", "description": "Nền móng không một vết rạn. Trăm năm mới thấy một người." }
+  ],
   "beyond": {
     "name": "???",
     "description": "Phía trên Hóa Thần vẫn còn đường. Chỉ là chưa ai trong vùng này đi tới đó để kể lại."

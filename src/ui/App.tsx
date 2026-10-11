@@ -21,6 +21,7 @@ import { MainScreen } from './screens/Main';
 import { SettingsScreen, type SlotView } from './screens/Settings';
 import { TitleScreen } from './screens/Title';
 import { loadDevMode, saveDevMode } from './devMode';
+import { attemptMajorBreakthrough } from '../systems/cultivation';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -155,6 +156,12 @@ function Screens({ content }: { content: Content }) {
         onFamilyAction={(relId, actionId) => {
           const r = performFamilyAction(life, content, relId, actionId);
           setLife(checkDeath(r.state, content));
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+        }}
+        onBreakthrough={() => {
+          const r = attemptMajorBreakthrough(life, content);
+          if (!r) return null;
+          setLife(r.state);
           return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
         }}
         onChoose={(i) => {

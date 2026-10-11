@@ -5,6 +5,7 @@ import { Rng } from '../core/rng';
 import type { EffectHook } from '../core/schemas';
 import type { GameState, LogLine, SpiritRoot } from '../core/types';
 import { extremeHookSum } from './extremes';
+import { checkDeath } from './time';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -149,13 +150,25 @@ export function yearlyGain(state: GameState, content: Content): number {
   const qi = content.world.qi ?? cfg.regionQi;
   const bonus = Math.max(0, 1 + hookSum(state, content, 'cultivationSpeed'));
   const injured = state.cult.injuredUntil !== null && state.character.age < state.cult.injuredUntil ? cfg.minorFailure.injurySpeedMul : 1;
-  return realm.speedPct * rootMul * aptitude * qi * cfg.techniqueMul * bonus * injured;
+  const foundation = state.cult.foundation ? content.balance.majorBreakthrough.foundationSpeed[state.cult.foundation] ?? 1 : 1;
+  return realm.speedPct * rootMul * aptitude * qi * cfg.techniqueMul * bonus * injured * foundation * bottleneckMul(state, content);
+}
+
+/** PLAN G.2 bình cảnh: after N failed big breakthroughs at a realm's peak, cultivation slows. */
+export function inBottleneck(state: GameState, content: Content): boolean {
+  return (state.cult.fails[`${state.cult.realm}:peak`] ?? 0) >= content.balance.majorBreakthrough.bottleneckFails;
+}
+
+function bottleneckMul(state: GameState, content: Content): number {
+  if (!inBottleneck(state, content)) return 1;
+  return Math.min(1, content.balance.majorBreakthrough.bottleneckSpeedMul + hookSum(state, content, 'bottleneckResist'));
 }
 
 /** PLAN.md G.2 in percent, for a breakthrough out of the current stage. `major` = into the next realm. */
 export function breakthroughPct(state: GameState, content: Content, basePct: number, major: boolean): number {
   const b = content.balance.cultivation.breakthrough;
-  const fails = state.cult.fails[`${state.cult.realm}:${state.cult.stage}`] ?? 0;
+  // Big breakthroughs count failures at the realm's peak, stages count their own.
+  const fails = state.cult.fails[major ? `${state.cult.realm}:peak` : `${state.cult.realm}:${state.cult.stage}`] ?? 0;
   const pct = basePct
     + (state.aptitudes.comprehension - 50) * b.comprehensionPerPoint
     + (state.aptitudes.daoHeart - 50) * b.daoHeartPerPoint
@@ -274,4 +287,113 @@ export function cultivateYear(state: GameState, content: Content): GameState {
     }
   }
   return { ...s, rng: rng.getState(), log };
+}
+
+// ---------- Task 2.6: big breakthrough (Luyện Khí → Trúc Cơ) ----------
+
+export interface MajorBreakthroughInfo {
+  /** Realm it would break into. */
+  target: { id: string; name: string };
+  chancePct: number;
+  /** Why it cannot be tried now, if so. */
+  blocked: string | null;
+}
+
+/** The big breakthrough open to this life now, or null when there is none to show. */
+export function majorBreakthroughInfo(state: GameState, content: Content): MajorBreakthroughInfo | null {
+  const realms = content.cultivation.realms.realms;
+  const i = realmIndex(content, state.cult.realm);
+  const realm = realms[i];
+  const next = realms[i + 1];
+  if (!state.alive || !realm || !next || state.cult.realm === 'pham_nhan') return null;
+  if (!content.balance.majorBreakthrough.openRealms.includes(next.id)) return null;
+  const base = (content.balance.realms[next.id]?.breakthroughChance ?? 0) * 100;
+  const info = { target: { id: next.id, name: next.name }, chancePct: breakthroughPct(state, content, base, true) };
+  const atPeak = state.cult.stage >= realm.stages.length - 1 && state.cult.progress >= 100;
+  if (!atPeak) return { ...info, blocked: `Cần tu tới ${realm.name} ${realm.stages[realm.stages.length - 1]}, đầy thanh tu vi.` };
+  if (state.cult.lastMajorAttempt === state.character.age) return { ...info, blocked: 'Năm nay đã thử rồi, đợi sang năm.' };
+  return { ...info, blocked: null };
+}
+
+export interface BreakthroughResult {
+  state: GameState;
+  success: boolean;
+  text: string;
+  tone: 'good' | 'bad' | 'rare';
+}
+
+/** Foundation grade from a d100 roll shifted by comprehension and đạo tâm. */
+function rollFoundation(state: GameState, content: Content, rng: Rng): string {
+  const cfg = content.balance.majorBreakthrough;
+  const score = rng.int(0, 99)
+    + (state.aptitudes.comprehension - 50) * cfg.foundationPerPoint
+    + (state.aptitudes.daoHeart - 50) * cfg.foundationPerPoint;
+  const grades = content.cultivation.realms.foundations;
+  let grade = grades[0].id;
+  for (const g of grades) {
+    const min = cfg.foundationThresholds[g.id];
+    if (min !== undefined && score >= min) grade = g.id;
+  }
+  return grade;
+}
+
+/** The player tries the big breakthrough (PLAN G.2); one attempt a year. */
+export function attemptMajorBreakthrough(state: GameState, content: Content): BreakthroughResult | null {
+  const info = majorBreakthroughInfo(state, content);
+  if (!info || info.blocked) return null;
+  const texts = content.cultivation.realms.texts;
+  const cfg = content.balance.majorBreakthrough;
+  const minor = content.balance.cultivation.minorFailure;
+  const rng = Rng.fromState(state.rng);
+  let s: GameState = { ...state, cult: { ...state.cult, lastMajorAttempt: state.character.age } };
+
+  if (rng.chance(info.chancePct / 100)) {
+    const foundation = info.target.id === 'truc_co' ? rollFoundation(s, content, rng) : null;
+    s = enterRealm(s, content, info.target.id, rng);
+    const perfect = foundation === 'hoan_my' ? content.balance.realmStages.perfectFoundationLifespan : 0;
+    const fails = Object.fromEntries(Object.entries(s.cult.fails).filter(([k]) => !k.startsWith(`${state.cult.realm}:`)));
+    s = { ...s, cult: { ...s.cult, foundation, fails, lifespan: s.cult.lifespan + perfect } };
+    const grade = content.cultivation.realms.foundations.find((g) => g.id === foundation);
+    const text = texts.majorSuccess
+      .replaceAll('{realm}', info.target.name)
+      .replaceAll('{grade}', grade ? `${grade.name}. ${grade.description}` : '');
+    const tone = foundation === 'hoan_my' || foundation === 'thuong' ? 'rare' : 'good';
+    return { state: { ...s, rng: rng.getState(), log: pushLine(s.log, { text, tone }) }, success: true, text, tone };
+  }
+
+  const key = `${state.cult.realm}:peak`;
+  const failCount = (s.cult.fails[key] ?? 0) + 1;
+  s = { ...s, cult: { ...s.cult, fails: { ...s.cult.fails, [key]: failCount } } };
+  const kind = rng.weighted(['lose', 'injury', 'lifespan', 'deviation', 'death'] as const, (k) => cfg.failureWeights[k]);
+  let text: string;
+  if (kind === 'lose') {
+    s = { ...s, cult: { ...s.cult, progress: Math.max(0, 100 - minor.loseProgress) } };
+    text = texts.failLose;
+  } else if (kind === 'injury') {
+    s = { ...s, stats: { ...s.stats, health: clamp(s.stats.health + minor.injuryHealth) }, cult: { ...s.cult, injuredUntil: s.character.age + minor.injuryYears } };
+    text = texts.failInjury;
+  } else if (kind === 'lifespan') {
+    s = { ...s, cult: { ...s.cult, lifespan: Math.max(s.character.age + 1, Math.round(s.cult.lifespan * (1 - minor.lifespanLossPct / 100))) } };
+    text = texts.failLifespan;
+  } else if (kind === 'deviation') {
+    s = {
+      ...s,
+      stats: { ...s.stats, health: clamp(s.stats.health + cfg.deviationHealth) },
+      aptitudes: { ...s.aptitudes, daoHeart: clamp(s.aptitudes.daoHeart + cfg.deviationDaoHeart) },
+      cult: { ...s.cult, progress: Math.max(0, 100 - minor.loseProgress), injuredUntil: s.character.age + minor.injuryYears },
+      // Kept for the "Tẩu hỏa nhập ma" event chain in a later task.
+      flags: { ...s.flags, tau_hoa_nhap_ma: true },
+    };
+    text = texts.majorDeviation;
+  } else {
+    const dead = checkDeath({ ...s, rng: rng.getState() }, content, 'breakthrough');
+    const line = dead.log.at(-1)?.lines.at(-1)?.text ?? '';
+    return { state: dead, success: false, text: line, tone: 'bad' };
+  }
+  let log = pushLine(s.log, { text, tone: 'bad' });
+  if (failCount === cfg.bottleneckFails) {
+    log = pushLine(log, { text: texts.bottleneck, tone: 'bad' });
+    text = `${text} ${texts.bottleneck}`;
+  }
+  return { state: checkDeath({ ...s, rng: rng.getState(), log }, content), success: false, text, tone: 'bad' };
 }

@@ -61,16 +61,19 @@ export function deathCause(state: GameState): DeathCause | null {
   return null;
 }
 
-/** End the life if lifespan ran out or health hit zero. Call after anything that changes age or health. */
-export function checkDeath(state: GameState, content: Content): GameState {
+/**
+ * End the life if lifespan ran out or health hit zero. Call after anything that changes age or health.
+ * `forced` ends it now for that cause (e.g. a failed breakthrough).
+ */
+export function checkDeath(state: GameState, content: Content, forced?: DeathCause): GameState {
   if (!state.alive) return state;
-  const cause = deathCause(state);
+  const cause = forced ?? deathCause(state);
   if (!cause) return state;
   const cfg = content.balance.aging;
   const texts = content.lifeTexts;
   const rng = Rng.fromState(state.rng);
   const age = state.character.age;
-  const line = rng.pick(cause === 'old_age' ? texts.deathOldAge : texts.deathIllness);
+  const line = rng.pick(cause === 'old_age' ? texts.deathOldAge : cause === 'breakthrough' ? texts.deathBreakthrough : texts.deathIllness);
   const karma = state.social.karma;
   const pool = karma >= cfg.epitaphKarma ? texts.epitaph.good : karma <= -cfg.epitaphKarma ? texts.epitaph.bad : texts.epitaph.plain;
   return {
@@ -101,7 +104,9 @@ export function lifeSummary(state: GameState, content: Content): LifeSummary | n
   const t = content.balance.aging.epitaphKarma;
   return {
     age,
-    causeText: cause === 'old_age' ? `Hưởng thọ ${age} tuổi` : `Mất năm ${age} tuổi vì bệnh`,
+    causeText: cause === 'old_age' ? `Hưởng thọ ${age} tuổi`
+      : cause === 'breakthrough' ? `Mất năm ${age} tuổi khi đột phá`
+      : `Mất năm ${age} tuổi vì bệnh`,
     epitaph,
     karmaLabel: k >= t ? 'Thiện nhân' : k <= -t ? 'Ác nhân' : 'Người thường',
     eventsLived: Object.keys(state.events.history).length,

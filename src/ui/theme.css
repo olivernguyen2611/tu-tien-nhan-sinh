@@ -539,6 +539,9 @@ button { font: inherit; color: inherit; }
 .action-result { margin: 8px 0 0; font-family: var(--font-story); font-size: 0.875rem; }
 .action-result.good { color: var(--good); }
 .action-result.bad { color: var(--bad); }
+.action-result.rare { color: var(--rare); }
+.breakthrough { margin: 14px 0 6px; padding-top: 10px; border-top: 1px solid var(--line); }
+.breakthrough .btn-primary { width: 100%; }
 .relative-head b { font-family: var(--font-story); }
 .relation { font-size: 0.75rem; font-weight: 700; color: var(--jade); text-transform: uppercase; letter-spacing: 0.04em; }
 .relative-age { margin-left: auto; font-size: 0.75rem; color: var(--muted); }

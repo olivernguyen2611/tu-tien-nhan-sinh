@@ -3,7 +3,7 @@ import { loadContent } from '../src/core/content';
 import { Rng } from '../src/core/rng';
 import { advanceYear, createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
-import { breakthroughPct, cultivateYear, enterRealm, hookActive, realmLabel, revealRoot, rollRoot, rootName, rootTestAge, startCultivating, yearlyGain } from '../src/systems/cultivation';
+import { attemptMajorBreakthrough, breakthroughPct, cultivateYear, inBottleneck, majorBreakthroughInfo, enterRealm, hookActive, realmLabel, revealRoot, rollRoot, rootName, rootTestAge, startCultivating, yearlyGain } from '../src/systems/cultivation';
 import { migrate, makeSave } from '../src/systems/save';
 import { resolveChoice } from '../src/systems/events/engine';
 
@@ -230,5 +230,91 @@ describe('cultivation per year (task 2.3)', () => {
     }
     if (s.cult.root && content.balance.roots.gradeSpeed[s.cult.root.grade] > 0) expect(s.cult.realm).toBe('luyen_khi');
     else expect(s.cult.realm).toBe('pham_nhan');
+  });
+});
+
+describe('big breakthrough into Trúc Cơ (task 2.6)', () => {
+  const peak = (seed: string, patch: Partial<GameState['cult']> = {}) => cultivator(seed, { stage: 8, progress: 100, lifespan: 130, ...patch });
+
+  it('is offered only at Luyện Khí 9 with a full bar, once a year', () => {
+    expect(majorBreakthroughInfo(createLife({ seed: 'm' }, content), content)).toBeNull();
+    expect(majorBreakthroughInfo(cultivator('low', { stage: 3 }), content)?.blocked).toContain('Luyện Khí tầng 9');
+    const info = majorBreakthroughInfo(peak('ok'), content)!;
+    expect(info.blocked).toBeNull();
+    expect(info.target.id).toBe('truc_co');
+    expect(info.chancePct).toBeCloseTo(30);
+    const tried = attemptMajorBreakthrough(peak('ok'), content)!.state;
+    if (tried.alive && tried.cult.realm === 'luyen_khi') expect(attemptMajorBreakthrough(tried, content)).toBeNull();
+  });
+
+  it('succeeds about 30% of the time; success brings a foundation and a longer life', () => {
+    let ok = 0;
+    let deaths = 0;
+    const grades: Record<string, number> = {};
+    for (let i = 0; i < 1000; i++) {
+      const before = peak(`bt${i}`);
+      const r = attemptMajorBreakthrough(before, content)!;
+      if (r.success) {
+        ok++;
+        expect(r.state.cult.realm).toBe('truc_co');
+        expect(r.state.cult.stage).toBe(0);
+        expect(r.state.cult.foundation).not.toBeNull();
+        grades[r.state.cult.foundation!] = (grades[r.state.cult.foundation!] ?? 0) + 1;
+        const extra = r.state.cult.foundation === 'hoan_my' ? 20 : 0;
+        expect(r.state.cult.lifespan - before.cult.lifespan - extra).toBeGreaterThanOrEqual(65);
+        expect(r.state.cult.lifespan - before.cult.lifespan - extra).toBeLessThanOrEqual(95);
+      } else {
+        expect(r.state.cult.fails['luyen_khi:peak']).toBe(1);
+        if (!r.state.alive) {
+          deaths++;
+          expect(r.state.death?.cause).toBe('breakthrough');
+        }
+      }
+    }
+    expect(ok / 1000).toBeGreaterThan(0.25);
+    expect(ok / 1000).toBeLessThan(0.35);
+    // Death is 3% of failures, about 2% of attempts.
+    expect(deaths).toBeGreaterThan(5);
+    expect(deaths).toBeLessThan(45);
+    expect(grades.trung).toBeGreaterThan(grades.hoan_my ?? 0);
+  });
+
+  it('better comprehension and đạo tâm give better foundations', () => {
+    const avgGrade = (apt: number) => {
+      const order = ['ha', 'trung', 'thuong', 'hoan_my'];
+      let sum = 0;
+      let n = 0;
+      for (let i = 0; i < 2000 && n < 300; i++) {
+        const s = peak(`fd${apt}-${i}`);
+        const r = attemptMajorBreakthrough({ ...s, aptitudes: { ...s.aptitudes, comprehension: apt, daoHeart: apt } }, content)!;
+        if (r.success) { sum += order.indexOf(r.state.cult.foundation!); n++; }
+      }
+      return sum / n;
+    };
+    expect(avgGrade(90)).toBeGreaterThan(avgGrade(30) + 0.5);
+  });
+
+  it('two failures bring the bottleneck: cultivation slows to 30%', () => {
+    const s = cultivator('bn', { stage: 8, progress: 50, fails: { 'luyen_khi:peak': 2 } });
+    expect(inBottleneck(s, content)).toBe(true);
+    expect(yearlyGain(s, content)).toBeCloseTo(25 * 0.3);
+    expect(breakthroughPct(s, content, 30, true)).toBeCloseTo(20);
+  });
+
+  it('a foundation grade changes the speed in Trúc Cơ', () => {
+    const tc = (foundation: string) => cultivator('fs', { realm: 'truc_co', stage: 0, foundation });
+    expect(yearlyGain(tc('hoan_my'), content) / yearlyGain(tc('trung'), content)).toBeCloseTo(1.2);
+    expect(yearlyGain(tc('trung'), content)).toBeCloseTo(8);
+  });
+
+  it('Thiên Tuyệt Mạch is lifted on reaching Trúc Cơ', () => {
+    for (let i = 0; i < 200; i++) {
+      const s = peak(`ttm${i}`, { root: { grade: 'the_chat', elements: [], body: 'thien_tuyet_mach' }, lifespan: 36 });
+      const r = attemptMajorBreakthrough(s, content)!;
+      if (!r.success) continue;
+      expect(r.state.cult.lifespan).toBeGreaterThan(150);
+      return;
+    }
+    throw new Error('no success in 200 tries');
   });
 });

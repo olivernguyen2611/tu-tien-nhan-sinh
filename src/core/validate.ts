@@ -241,8 +241,21 @@ function checkCultivationTables(t: { balance?: Balance; realms?: RealmsFile; roo
   const bal = 'config/balance.json';
   const realmIds = t.realms?.realms.map((r) => r.id) ?? [];
   if (t.realms) {
-    out.push(...duplicates('realms.json', 'cảnh giới', t.realms.realms));
-    if (t.balance) out.push(...sameKeys(bal, 'realms', realmIds, Object.keys(t.balance.realms)));
+    out.push(...duplicates('realms.json', 'cảnh giới', t.realms.realms), ...duplicates('realms.json', 'phẩm đạo cơ', t.realms.foundations));
+    if (t.balance) {
+      const mb = t.balance.majorBreakthrough;
+      const grades = t.realms.foundations.map((g) => g.id);
+      out.push(
+        ...sameKeys(bal, 'realms', realmIds, Object.keys(t.balance.realms)),
+        ...sameKeys(bal, 'majorBreakthrough.foundationSpeed', grades, Object.keys(mb.foundationSpeed)),
+      );
+      for (const g of Object.keys(mb.foundationThresholds)) {
+        if (!grades.includes(g)) out.push({ file: bal, level: 'error', message: `majorBreakthrough.foundationThresholds: "${g}" không có trong realms.json` });
+      }
+      for (const r of mb.openRealms) {
+        if (!realmIds.includes(r)) out.push({ file: bal, level: 'error', message: `majorBreakthrough.openRealms: cảnh giới không tồn tại "${r}"` });
+      }
+    }
   }
   if (t.roots) {
     const f = 'roots.json';

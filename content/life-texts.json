@@ -16,6 +16,10 @@
     "Năm {age} tuổi, thọ nguyên đã cạn, bạn nhắm mắt trong tiếng gió thu.",
     "Năm {age} tuổi, bạn dặn dò mấy câu, cười một tiếng rồi ra đi thanh thản."
   ],
+  "deathBreakthrough": [
+    "Năm {age} tuổi, đột phá thất bại, linh khí nổ tung trong kinh mạch. Thân tử đạo tiêu.",
+    "Năm {age} tuổi, bình chướng chưa phá, kinh mạch đã đứt. Bạn ngã xuống giữa tĩnh thất."
+  ],
   "deathIllness": [
     "Năm {age} tuổi, bệnh nặng không qua khỏi, bạn trút hơi thở cuối cùng.",
     "Năm {age} tuổi, thân thể suy kiệt, thuốc thang vô hiệu, bạn lìa trần.",

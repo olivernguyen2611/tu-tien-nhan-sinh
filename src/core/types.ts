@@ -34,7 +34,7 @@ export interface SpiritRoot {
   body: string | null;
 }
 
-export type DeathCause = 'old_age' | 'illness';
+export type DeathCause = 'old_age' | 'illness' | 'breakthrough';
 
 export interface GameState {
   version: 1;
@@ -66,6 +66,10 @@ export interface GameState {
     fails: Record<string, number>;
     /** Meridian injury slows cultivation until this age (exclusive). */
     injuredUntil: number | null;
+    /** Đạo cơ grade id after Trúc Cơ (realms.json foundations). */
+    foundation: string | null;
+    /** Age of the last big breakthrough attempt (one per year). */
+    lastMajorAttempt: number | null;
     /** Đạo thống (Tiên/Ma/Phật/Quỷ), chosen in GĐ 3; reads lineage.<x>.* hooks. */
     lineage: string | null;
   };
