@@ -1,14 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import type { Content } from '../src/core/content';
-import { BalanceSchema, NamesSchema, OriginFileSchema, TraitFileSchema } from '../src/core/schemas';
+import { BalanceSchema, WorldSchema, NamesSchema, OriginFileSchema, TraitFileSchema } from '../src/core/schemas';
 import { createLife } from '../src/core/state';
 import { confirmDestiny, rerollDestiny, rollDestiny } from '../src/systems/destiny';
+import world from '../content/worlds/world_1/world.json';
 import balance from '../content/config/balance.json';
-import names from '../content/character/names.json';
-import origins from '../content/character/origins.json';
+import names from '../content/worlds/world_1/character/names.json';
+import origins from '../content/worlds/world_1/character/origins.json';
 import traits from '../content/traits.json';
 
 const content: Content = {
+  world: WorldSchema.parse(world),
   balance: BalanceSchema.parse(balance),
   names: NamesSchema.parse(names),
   origins: OriginFileSchema.parse(origins),

@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { BalanceSchema, EventFileSchema, GlossarySchema, NamesSchema, OriginFileSchema, TraitFileSchema, type GameEvent, type Origin, type Trait } from './schemas';
+import { BalanceSchema, EventFileSchema, GlossarySchema, NamesSchema, OriginFileSchema, TraitFileSchema, WorldSchema, type GameEvent, type Origin, type Trait, type World } from './schemas';
 
 export interface Problem {
   file: string;
@@ -11,13 +11,26 @@ export interface Problem {
 }
 
 /** Which schema applies to which content file. */
+/** "worlds/<id>/rest" → { worldId, rest }; shared files have no world. */
+export function splitWorldPath(path: string): { worldId: string | null; rest: string } {
+  const m = /^worlds\/([^/]+)\/(.+)$/.exec(path);
+  return m ? { worldId: m[1], rest: m[2] } : { worldId: null, rest: path };
+}
+
 export function schemaFor(path: string): ZodTypeAny | null {
-  if (path === 'config/balance.json') return BalanceSchema;
-  if (path === 'glossary.json') return GlossarySchema;
-  if (path === 'character/origins.json') return OriginFileSchema;
-  if (path === 'character/names.json') return NamesSchema;
-  if (path === 'traits.json') return TraitFileSchema;
-  if (/^events\/[^/]+\.json$/.test(path)) return EventFileSchema;
+  const { worldId, rest } = splitWorldPath(path);
+  if (worldId === null) {
+    // Shared by every world.
+    if (rest === 'config/balance.json') return BalanceSchema;
+    if (rest === 'glossary.json') return GlossarySchema;
+    if (rest === 'traits.json') return TraitFileSchema;
+    return null;
+  }
+  // Belongs to one world.
+  if (rest === 'world.json') return WorldSchema;
+  if (rest === 'character/origins.json') return OriginFileSchema;
+  if (rest === 'character/names.json') return NamesSchema;
+  if (/^events\/[^/]+\.json$/.test(rest)) return EventFileSchema;
   return null;
 }
 
@@ -37,6 +50,9 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
         problems.push({ file, level: 'error', message: `${issue.path.join('.') || '(gốc)'}: ${issue.message}` });
       }
       continue;
+    }
+    if (schema === WorldSchema && (parsed.data as World).id !== splitWorldPath(file).worldId) {
+      problems.push({ file, level: 'error', message: `id thế giới "${(parsed.data as World).id}" phải trùng tên thư mục` });
     }
     if (schema === OriginFileSchema) {
       const seenOrigin = new Set<string>();

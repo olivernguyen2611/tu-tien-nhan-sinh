@@ -2,6 +2,12 @@
 
 ## [Chưa phát hành]
 
+### Chuẩn bị cho nhiều thế giới (2026-10-11)
+- Nội dung riêng của thế giới chuyển vào `content/worlds/world_1/` (xuất thân, họ tên, sự kiện) kèm `world.json`; cân bằng, khí vận, thuật ngữ vẫn dùng chung.
+- `loadContent(worldId)` nạp phần chung + phần của một thế giới; nhân vật lưu `worldId`.
+- Validator nhận diện file theo thế giới, báo lỗi khi id trong `world.json` khác tên thư mục.
+- PLAN.md: quyết định số 8 và mục C.7 "Nhiều thế giới"; đường dẫn sự kiện trong các task cập nhật theo thư mục mới. Trong game chưa có gì thay đổi.
+
 ### Task 1.3 — Nghịch Thiên Bốc Mệnh (2026-10-11)
 - Sau khi đầu thai, màn quay hiện 3 khí vận dạng thẻ lật, màu theo phẩm (Phàm, Lương xanh lục, Ưu xanh lam, Tuyệt tím, Thiên cam, Thần đỏ, Ác vận xám); Tuyệt trở lên có viền sáng.
 - Quay theo tỉ lệ phẩm trong `balance.json`, mỗi ô có 12% ra ác vận, 3 ô không trùng nhau; "Nghịch thiên cải mệnh" quay lại được 3 lần (theo seed, chơi lại cùng seed ra cùng kết quả).

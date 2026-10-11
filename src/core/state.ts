@@ -54,6 +54,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
 
   const state: GameState = {
     version: 1,
+    worldId: content.world.id,
     seed: input.seed,
     rng: rng.getState(),
     alive: true,

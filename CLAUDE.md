@@ -19,6 +19,7 @@ Game mô phỏng cuộc đời tu tiên kiểu BitLife (web, Vite + TypeScript +
 10. Nội dung nhạy cảm theo mục H của `PLAN.md`: không miêu tả trần trụi; nhân vật dưới 18 tuổi không vào sự kiện tình duyên/song tu.
 11. Không dùng tên, hình, văn bản của BitLife, Quỷ Cốc Bát Hoang hay tiểu thuyết có bản quyền.
 12. Giao diện phải dùng tốt **cả điện thoại lẫn máy tính**.
+13. Game có **nhiều thế giới** (PLAN.md mục C.7). Nội dung riêng của thế giới nằm trong `content/worlds/<id>/`; engine không hardcode thế giới nào. Id sự kiện không trùng giữa các thế giới.
 
 ## Lệnh
 - `npm run dev` — chạy thử trên máy
@@ -31,6 +32,6 @@ Game mô phỏng cuộc đời tu tiên kiểu BitLife (web, Vite + TypeScript +
 - `src/core/` — GameState, RNG, vòng lặp game, nạp nội dung
 - `src/systems/` — từng hệ thống (cultivation, events, destiny, save…)
 - `src/ui/` — components và screens (Preact)
-- `content/` — dữ liệu JSON của game
+- `content/` — dữ liệu JSON dùng chung; `content/worlds/<id>/` — dữ liệu riêng từng thế giới
 - `tools/` — script hỗ trợ (validator nội dung)
 - `tests/` — test theo seed

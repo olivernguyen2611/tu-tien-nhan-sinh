@@ -16,6 +16,7 @@
 | 5 | Nơi lưu code | **Repo GitHub + GitHub Pages** để chơi thử bằng link trên mọi thiết bị. |
 | 6 | Cách làm | **Từng bước nhỏ**, mỗi bước chơi thử được, tránh lỗi dây chuyền. |
 | 7 | Nội dung (sự kiện, khí vận…) | **Claude soạn nháp, bạn duyệt** trước khi đưa vào game. |
+| 8 | Nhiều thế giới | Game sẽ có **nhiều thế giới**, mỗi thế giới một tuyến cốt truyện riêng. Thế giới đang làm là thế giới thứ nhất, các thế giới sau thêm dần. Engine không gắn với thế giới nào (xem C.7). |
 
 ---
 
@@ -73,17 +74,21 @@ tu-tien-nhan-sinh/
 ├─ public/
 │  └─ img/events/                            (ảnh AI cho tình tiết đặc biệt)
 ├─ content/                                  (TOÀN BỘ NỘI DUNG GAME, dạng JSON)
-│  ├─ config/balance.json                    (mọi con số cân bằng)
-│  ├─ realms.json · roots.json · aptitudes.json
-│  ├─ traits.json · trait-combos.json        (Tiên Thiên Khí Vận, tổ hợp ẩn)
-│  ├─ golden-fingers.json · fate-talents.json
-│  ├─ techniques.json · items.json · pills.json · treasures.json
-│  ├─ sects.json · regions.json · npc-templates.json · protagonist-templates.json
-│  ├─ achievements.json · rebirth-talents.json · end-badges.json
-│  ├─ glossary.json
-│  └─ events/
-│     ├─ childhood.json · root-test.json · sect-recruit.json
-│     ├─ cultivation.json · fortune.json · romance.json · funny.json …
+│  ├─ config/balance.json                    (mọi con số cân bằng)          ┐
+│  ├─ realms.json · roots.json · aptitudes.json                             │
+│  ├─ traits.json · trait-combos.json        (Tiên Thiên Khí Vận, tổ hợp ẩn)│ dùng chung
+│  ├─ golden-fingers.json · fate-talents.json                               │ cho mọi
+│  ├─ techniques.json · items.json · pills.json · treasures.json            │ thế giới
+│  ├─ achievements.json · rebirth-talents.json · end-badges.json            │
+│  ├─ glossary.json                                                         ┘
+│  └─ worlds/                                (mỗi thế giới một thư mục, xem C.7)
+│     └─ world_1/
+│        ├─ world.json                       (id, tên, mô tả, thứ tự)
+│        ├─ character/origins.json · names.json   (xuất thân, họ tên, quê quán)
+│        ├─ regions.json · sects.json · npc-templates.json · protagonist-templates.json
+│        └─ events/
+│           ├─ childhood.json · root-test.json · sect-recruit.json
+│           ├─ cultivation.json · fortune.json · romance.json · funny.json …
 ├─ src/
 │  ├─ main.tsx
 │  ├─ core/
@@ -153,6 +158,7 @@ Vì logic là hàm thuần + RNG có seed, **cùng seed + cùng chuỗi lựa ch
   "savedAt": "2026-10-11T14:00:00Z",
   "meta": { "rebirthPoints": 0, "livesPlayed": 3, "achievements": [], "codex": [], "pityCounter": 2 },
   "life": {
+    "worldId": "world_1",
     "seed": 123456789,
     "rngState": [1, 2, 3, 4],
     "year": 37,
@@ -170,6 +176,16 @@ Vì logic là hàm thuần + RNG có seed, **cùng seed + cùng chuỗi lựa ch
 - `meta`: dữ liệu vĩnh viễn giữa các đời. `life`: đời hiện tại.
 - Có hàm `migrate(save)` nâng cấp save cũ theo `saveVersion`, để bản cập nhật không làm hỏng save của bạn.
 - Nhật ký quá dài sẽ được nén (giữ năm quan trọng) để không vượt giới hạn localStorage (~5 MB).
+- `life.worldId`: đời này thuộc thế giới nào; mở save là nạp đúng nội dung thế giới đó.
+
+### C.7 Nhiều thế giới
+Mỗi thế giới có tuyến cốt truyện riêng; engine không biết gì về thế giới cụ thể nào.
+- **Riêng của thế giới** (`content/worlds/<id>/`): `world.json`, xuất thân, họ tên, quê quán, vùng đất, tông môn, NPC, thiên mệnh chi tử, sự kiện.
+- **Dùng chung**: cân bằng, cảnh giới, linh căn, khí vận, thiên phú, công pháp, vật phẩm, thành tựu, luân hồi, thuật ngữ. Khi một thế giới cần khác (ví dụ hệ cảnh giới riêng), thêm file cùng tên trong thư mục thế giới để thay bản chung; làm khi thật sự cần.
+- `loadContent(worldId)` gộp phần chung + phần của một thế giới thành một gói nội dung; hệ thống chỉ đọc gói đó. `GameState.worldId` ghi đời đang ở thế giới nào.
+- Id sự kiện là duy nhất trên toàn game (không trùng giữa các thế giới), để save, thành tựu, Thiên Thư không nhầm.
+- Thêm thế giới mới = thêm một thư mục trong `content/worlds/`, không sửa engine. Màn chọn thế giới làm khi có thế giới thứ hai.
+- `meta` (thành tựu, điểm luân hồi) dùng chung giữa các thế giới.
 
 ### C.6 Cấu trúc sự kiện (cải tiến so với spec)
 Giữ khung trong spec, thêm 5 điểm:
@@ -250,7 +266,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 1.3 | [x] Màn *Nghịch Thiên Bốc Mệnh*: quay 3 ô, thẻ lật, phát sáng theo màu, reroll giới hạn | `systems/destiny.ts`, `screens/DestinyRoll.tsx` |
 | 1.4 | [ ] Màn chính: thanh chỉ số trên, nhật ký cuộn, nút **Qua một năm**, thanh tab | `screens/Main.tsx`, `components/*` |
 | 1.5 | [ ] EventEngine lõi: lọc điều kiện, rút trọng số, áp hiệu ứng, thay biến văn bản, popup lựa chọn | `systems/events/*`, `components/EventPopup.tsx` |
-| 1.6 | [ ] ✍️ Soạn ~20 sự kiện phàm nhân (tuổi thơ, đi học, làm việc, hài hước, tai nạn) | `content/events/childhood.json`, `mortal.json`, `funny.json` |
+| 1.6 | [ ] ✍️ Soạn ~20 sự kiện phàm nhân (tuổi thơ, đi học, làm việc, hài hước, tai nạn) | `content/worlds/world_1/events/childhood.json`, `mortal.json`, `funny.json` |
 | 1.7 | [ ] Cha mẹ, anh chị em cơ bản (thiện cảm, già và mất theo thời gian) | `systems/relationships.ts` |
 | 1.8 | [ ] Lão hóa, bệnh, chết già; màn tổng kết đời đơn giản | `systems/time.ts`, `screens/Death.tsx` |
 | 1.9 | [ ] SaveSystem: 3 slot, tự lưu mỗi năm, xuất/nhập file, cảnh báo ghi đè | `systems/save.ts`, `screens/Settings.tsx` |
@@ -267,13 +283,13 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | # | Task | File chính |
 |---|---|---|
 | 2.1 | [ ] ✍️ Bảng cảnh giới (Phàm Nhân → Hóa Thần) + linh căn + 5 con đường chiến đấu + 6 bách nghệ (mục K) | `content/realms.json`, `roots.json`, `aptitudes.json` |
-| 2.2 | [ ] Sự kiện kiểm tra linh căn (6–12 tuổi) + hiển thị linh căn | `systems/cultivation.ts`, `content/events/root-test.json` |
+| 2.2 | [ ] Sự kiện kiểm tra linh căn (6–12 tuổi) + hiển thị linh căn | `systems/cultivation.ts`, `content/worlds/world_1/events/root-test.json` |
 | 2.3 | [ ] Tu vi tăng mỗi năm theo công thức mục G; thanh tu vi; đột phá tiểu cảnh giới Luyện Khí | `systems/cultivation.ts` |
-| 2.4 | [ ] ✍️ 6 tông môn khởi đầu (chính/ma/kiếm/đan/phật/yêu) + 8 công pháp Hoàng/Huyền phẩm | `content/sects.json`, `techniques.json` |
-| 2.5 | [ ] Tuyển đệ tử tông môn, cấp bậc ngoại môn/nội môn, nhiệm vụ tông môn đơn giản, sư phụ NPC | `systems/sect.ts`, `content/events/sect-recruit.json` |
+| 2.4 | [ ] ✍️ 6 tông môn khởi đầu (chính/ma/kiếm/đan/phật/yêu) + 8 công pháp Hoàng/Huyền phẩm | `content/worlds/world_1/sects.json`, `techniques.json` |
+| 2.5 | [ ] Tuyển đệ tử tông môn, cấp bậc ngoại môn/nội môn, nhiệm vụ tông môn đơn giản, sư phụ NPC | `systems/sect.ts`, `content/worlds/world_1/events/sect-recruit.json` |
 | 2.6 | [ ] Đột phá Trúc Cơ: tỉ lệ thành công, phẩm đạo cơ (Hạ/Trung/Thượng/Hoàn mỹ), hậu quả thất bại | `systems/cultivation.ts` |
 | 2.7 | [ ] ✍️ + code: Nghịch Thiên Cải Mệnh lần đầu (chọn 1 trong 3 thiên phú khi Trúc Cơ) | `content/fate-talents.json`, `systems/destiny.ts` |
-| 2.8 | [ ] ✍️ ~25 sự kiện tu luyện & tông môn | `content/events/cultivation.json` |
+| 2.8 | [ ] ✍️ ~25 sự kiện tu luyện & tông môn | `content/worlds/world_1/events/cultivation.json` |
 | 2.9 | [ ] Đời đầu tiên dạng hướng dẫn + dòng "Mục tiêu hiện tại" | `systems/tutorial.ts` |
 | 2.10 | [ ] Chọn độ khó Dễ/Thường/Khó (Khó: không load lại) | `screens/CreateCharacter.tsx`, `balance.json` |
 
@@ -347,7 +363,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 Cân bằng bằng **mô phỏng tự động** (chạy hàng nghìn đời giả lập, xem thống kê tuổi chết/cảnh giới), âm thanh, hiệu ứng, PWA cài lên điện thoại, chơi offline, tối ưu tốc độ, rà soát hiển thị trên nhiều cỡ màn hình.
 
 ### GĐ 7 — Mở rộng nội dung
-Linh giới/Tiên giới, thêm hàng trăm sự kiện, các nghề bách nghệ còn lại (Trận pháp, Phù lục, Linh thực, Ngự thú), thêm mô bản khí vận chi tử, Capacitor nếu muốn lên store.
+Thêm **thế giới mới** với tuyến cốt truyện riêng (mục C.7) + màn chọn thế giới. Linh giới/Tiên giới, thêm hàng trăm sự kiện, các nghề bách nghệ còn lại (Trận pháp, Phù lục, Linh thực, Ngự thú), thêm mô bản khí vận chi tử, Capacitor nếu muốn lên store.
 
 ### GĐ 8 — AI tuỳ chọn (để sau, khi bản chơi được đã xong)
 > Quyết định 2026-10-11: đi hướng **an toàn và rẻ trước**. Đến lúc đó nội dung vẫn là JSON soạn sẵn (Claude soạn nháp, bạn duyệt, validator kiểm tra).
