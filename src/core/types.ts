@@ -12,6 +12,8 @@ export interface LogYear { age: number; lines: LogLine[] }
 
 export interface GameState {
   version: 1;
+  /** Which world (content/worlds/<id>) this life is in. */
+  worldId: string;
   seed: string;
   rng: RngState;
   alive: boolean;

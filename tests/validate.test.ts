@@ -26,7 +26,7 @@ const errors = (files: Record<string, unknown>) =>
 
 describe('validateContent', () => {
   it('accepts valid content', () => {
-    expect(errors({ 'config/balance.json': balance, 'events/a.json': [event()] })).toEqual([]);
+    expect(errors({ 'config/balance.json': balance, 'worlds/w/events/a.json': [event()] })).toEqual([]);
   });
 
   it('accepts a skill check with success and fail', () => {
@@ -40,49 +40,57 @@ describe('validateContent', () => {
         },
       ],
     });
-    expect(errors({ 'events/a.json': [ev] })).toEqual([]);
+    expect(errors({ 'worlds/w/events/a.json': [ev] })).toEqual([]);
   });
 
   it('reports schema errors with their path', () => {
-    const msgs = errors({ 'events/a.json': [event({ weight: 'nhiều' })] });
+    const msgs = errors({ 'worlds/w/events/a.json': [event({ weight: 'nhiều' })] });
     expect(msgs.some((m) => m.startsWith('0.weight'))).toBe(true);
   });
 
   it('rejects ids with accents or spaces', () => {
-    expect(errors({ 'events/a.json': [event({ id: 'động phủ' })] }).length).toBeGreaterThan(0);
+    expect(errors({ 'worlds/w/events/a.json': [event({ id: 'động phủ' })] }).length).toBeGreaterThan(0);
   });
 
   it('reports duplicate ids across files', () => {
-    const msgs = errors({ 'events/a.json': [event()], 'events/b.json': [event()] });
+    const msgs = errors({ 'worlds/w/events/a.json': [event()], 'worlds/w/events/b.json': [event()] });
     expect(msgs.some((m) => m.includes('trùng id'))).toBe(true);
   });
 
   it('requires success and fail when a choice has a check', () => {
     const ev = event({ choices: [{ text: 'Thử', check: { stat: 'luck', difficulty: 50 }, success: { text: 'ok' } }] });
-    expect(errors({ 'events/a.json': [ev] }).some((m) => m.includes('success'))).toBe(true);
+    expect(errors({ 'worlds/w/events/a.json': [ev] }).some((m) => m.includes('success'))).toBe(true);
   });
 
   it('reports follow-ups to missing events', () => {
     const ev = event({
       choices: [{ text: 'Hẹn', result: { text: '...', effects: { followUp: { event: 'khong_co', afterYears: [3, 10] } } } }],
     });
-    expect(errors({ 'events/a.json': [ev] }).some((m) => m.includes('khong_co'))).toBe(true);
+    expect(errors({ 'worlds/w/events/a.json': [ev] }).some((m) => m.includes('khong_co'))).toBe(true);
   });
 
   it('blocks mature events for characters under 18', () => {
     const young = event({ tags: ['mature'], conditions: { age: { min: 16 } } });
     const adult = event({ id: 'adult', tags: ['mature'], conditions: { age: { min: 18 } } });
-    expect(errors({ 'events/a.json': [young] }).some((m) => m.includes('mature'))).toBe(true);
-    expect(errors({ 'events/b.json': [adult] })).toEqual([]);
+    expect(errors({ 'worlds/w/events/a.json': [young] }).some((m) => m.includes('mature'))).toBe(true);
+    expect(errors({ 'worlds/w/events/b.json': [adult] })).toEqual([]);
   });
 
   it('warns when a required flag is never set', () => {
     const ev = event({ conditions: { flagsAll: ['never_set'] } });
-    const problems = validateContent({ 'events/a.json': [ev] });
+    const problems = validateContent({ 'worlds/w/events/a.json': [ev] });
     expect(problems.some((p) => p.level === 'warning' && p.message.includes('never_set'))).toBe(true);
   });
 
   it('validates the balance config', () => {
     expect(errors({ 'config/balance.json': { ...balance, version: 'một' } }).length).toBeGreaterThan(0);
+  });
+
+  it('keeps world files inside their world and checks the world id', () => {
+    const world = { id: 'w', name: 'Thử', description: '', order: 1 };
+    expect(errors({ 'worlds/w/world.json': world })).toEqual([]);
+    expect(errors({ 'worlds/x/world.json': world }).join()).toContain('trùng tên thư mục');
+    // World-only files at the top level are not recognised.
+    expect(validateContent({ 'events/a.json': [event()] })[0].level).toBe('warning');
   });
 });

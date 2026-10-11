@@ -130,6 +130,17 @@ export const OriginSchema = z
   .strict();
 export const OriginFileSchema = z.array(OriginSchema).min(1);
 
+/** content/worlds/<id>/world.json: one playable world with its own storylines. */
+export const WorldSchema = z
+  .object({
+    id: z.string().regex(/^[a-z0-9_]+$/),
+    name: z.string().min(1),
+    description: z.string(),
+    order: z.number().int(),
+  })
+  .strict();
+export type World = z.infer<typeof WorldSchema>;
+
 export const NamesSchema = z
   .object({
     surnames: z.array(z.string().min(1)).min(1),

@@ -30,7 +30,7 @@ problems.push(...validateContent(files));
 
 // Images referenced by events must exist under public/.
 for (const [file, data] of Object.entries(files)) {
-  if (!file.startsWith('events/') || !Array.isArray(data)) continue;
+  if (!/(^|\/)events\//.test(file) || !Array.isArray(data)) continue;
   for (const ev of data as { id?: string; image?: string | null }[]) {
     if (ev.image && !existsSync(join(publicDir, ev.image))) {
       problems.push({ file, level: 'error', message: `sự kiện "${ev.id}": không tìm thấy ảnh public/${ev.image}` });
