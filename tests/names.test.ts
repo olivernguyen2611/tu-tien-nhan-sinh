@@ -7,6 +7,8 @@ import { makeName, splitName } from '../src/systems/names';
 import balance from '../content/config/balance.json';
 import familyActions from '../content/family-actions.json';
 import lifeTexts from '../content/life-texts.json';
+import extremes from '../content/stat-extremes.json';
+import { StatExtremesFileSchema } from '../src/core/schemas';
 import world from '../content/worlds/thuong_lan/world.json';
 import names from '../content/worlds/thuong_lan/character/names.json';
 import origins from '../content/worlds/thuong_lan/character/origins.json';
@@ -18,6 +20,7 @@ const content: Content = {
   names: N,
   origins: OriginFileSchema.parse(origins),
   lifeTexts: LifeTextsSchema.parse(lifeTexts),
+  extremes: StatExtremesFileSchema.parse(extremes),
   familyActions: FamilyActionFileSchema.parse(familyActions),
   events: [],
   glossary: [],

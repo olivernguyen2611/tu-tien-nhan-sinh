@@ -3,6 +3,8 @@ import type { Content } from '../src/core/content';
 import { BalanceSchema, WorldSchema, NamesSchema, OriginFileSchema, TraitFileSchema } from '../src/core/schemas';
 import { LifeTextsSchema } from '../src/core/schemas';
 import lifeTexts from '../content/life-texts.json';
+import extremes from '../content/stat-extremes.json';
+import { StatExtremesFileSchema } from '../src/core/schemas';
 import { createLife } from '../src/core/state';
 import { confirmDestiny, rerollDestiny, rollDestiny } from '../src/systems/destiny';
 import world from '../content/worlds/thuong_lan/world.json';
@@ -21,6 +23,7 @@ const content: Content = {
   glossary: [],
   familyActions: [],
   lifeTexts: LifeTextsSchema.parse(lifeTexts),
+  extremes: StatExtremesFileSchema.parse(extremes),
 };
 const born = (seed: string) => rollDestiny(createLife({ seed }, content), content);
 

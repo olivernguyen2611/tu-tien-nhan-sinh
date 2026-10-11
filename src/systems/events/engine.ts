@@ -4,6 +4,7 @@ import type { Content } from '../../core/content';
 import { Rng } from '../../core/rng';
 import type { GameEvent } from '../../core/schemas';
 import { fillTemplate } from '../../core/state';
+import { extremeThemeMultiplier } from '../extremes';
 import type { GameState, LogLine, Tone } from '../../core/types';
 import { meets, readValue } from './conditions';
 
@@ -24,7 +25,7 @@ export function themeMultiplier(state: GameState, content: Content, event: GameE
       if (event.themes.includes(e.hook.slice('eventWeight.'.length))) mul *= e.mul;
     }
   }
-  return mul;
+  return mul * extremeThemeMultiplier(state, content, event.themes);
 }
 
 /** Weight of an event for this life right now; 0 = cannot happen. */

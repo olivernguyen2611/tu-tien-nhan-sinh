@@ -6,6 +6,11 @@
     "Một trận sốt cao kéo đến, tỉnh lại thấy người gầy rộc.",
     "Mắt mờ tai lãng, bạn bắt đầu gọi nhầm tên con cháu."
   ],
+  "agingMilestone": [
+    "Tuổi {age}, soi gương thấy tóc bạc thêm một nửa.",
+    "Tuổi {age}, đi vài bước đã phải dừng lại thở.",
+    "Tuổi {age}, răng rụng thêm một chiếc, ăn gì cũng phải nhai lâu."
+  ],
   "deathOldAge": [
     "Năm {age} tuổi, bạn ngồi phơi nắng trước hiên, thiếp đi rồi không tỉnh lại nữa.",
     "Năm {age} tuổi, thọ nguyên đã cạn, bạn nhắm mắt trong tiếng gió thu.",

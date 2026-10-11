@@ -3,6 +3,8 @@ import type { Content } from '../src/core/content';
 import { BalanceSchema, EventFileSchema, NamesSchema, OriginFileSchema, TraitFileSchema, WorldSchema } from '../src/core/schemas';
 import { LifeTextsSchema } from '../src/core/schemas';
 import lifeTexts from '../content/life-texts.json';
+import extremes from '../content/stat-extremes.json';
+import { StatExtremesFileSchema } from '../src/core/schemas';
 import { createLife } from '../src/core/state';
 import balance from '../content/config/balance.json';
 import traits from '../content/traits.json';
@@ -25,6 +27,7 @@ const content: Content = {
   glossary: [],
   familyActions: [],
   lifeTexts: LifeTextsSchema.parse(lifeTexts),
+  extremes: StatExtremesFileSchema.parse(extremes),
 };
 
 import { devAddKarma, devAddMoney, devAddStat, devHeal, devSkipYears, devTriggerEvent } from '../src/systems/dev';

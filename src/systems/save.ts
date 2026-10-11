@@ -64,7 +64,9 @@ const SaveShape = z
 
 /** Upgrade a save written by an older version. Each saveVersion bump adds a step here. */
 export function migrate(save: SaveFile): SaveFile {
-  // saveVersion 1 is the first format: nothing to upgrade yet.
+  // Fields added within saveVersion 1 get their empty defaults.
+  const life = save.life as GameState & { extremes?: GameState['extremes'] };
+  if (!life.extremes) return { ...save, life: { ...life, extremes: { streak: {}, active: {}, givenAt: {} } } };
   return save;
 }
 

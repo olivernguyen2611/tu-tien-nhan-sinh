@@ -4,6 +4,8 @@ import { advanceYear, createLife } from '../src/core/state';
 import { BalanceSchema, WorldSchema, NamesSchema, OriginFileSchema } from '../src/core/schemas';
 import { LifeTextsSchema } from '../src/core/schemas';
 import lifeTexts from '../content/life-texts.json';
+import extremes from '../content/stat-extremes.json';
+import { StatExtremesFileSchema } from '../src/core/schemas';
 import world from '../content/worlds/thuong_lan/world.json';
 import balance from '../content/config/balance.json';
 import names from '../content/worlds/thuong_lan/character/names.json';
@@ -18,6 +20,7 @@ const content: Content = {
   glossary: [],
   familyActions: [],
   lifeTexts: LifeTextsSchema.parse(lifeTexts),
+  extremes: StatExtremesFileSchema.parse(extremes),
   traits: [],
 };
 

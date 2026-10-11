@@ -195,11 +195,15 @@ const ADD_HOOK = new RegExp(
       'npcAffinityStart', 'faction\\.(chinh|ma|tan_tu|yeu)\\.reputation', 'karmaShift',
       'priceDiscount', 'incomePct', 'lootPct',
       'trigger\\.cheatDeath',
+      // Stat extremes (stat-extremes-approved.md): yearly drift, floors, risk.
+      `statPerYear\\.(${[...MORTAL_STATS, ...APTITUDES].join('|')})`,
+      `statFloor\\.(${[...MORTAL_STATS, ...APTITUDES].join('|')})`,
+      'silverPerYear', 'deathChancePerYear', 'illnessChancePct', 'tribulationPct',
     ].join('|') +
     ')$',
 );
 const MUL_HOOK = /^eventWeight\.[a-z0-9_]+$/;
-const FLAG_HOOK = /^(agingSlow|unlockChain\.[a-z0-9_]+)$/;
+const FLAG_HOOK = /^(agingSlow|unlockChain\.[a-z0-9_]+|cannotWork|noLineageChange|blockEvent\.[a-z0-9_]+)$/;
 
 export const EffectHookSchema = z
   .object({
@@ -232,6 +236,50 @@ export const EffectHookSchema = z
     }
   });
 
+/** Special states from a stat stuck at an extreme (stat-extremes-approved.md). */
+export const EXTREME_STATS = [...MORTAL_STATS, ...APTITUDES, 'karma'] as const;
+const OnceEffectSchema = z
+  .object({ hook: z.string().regex(/^(stat\.[a-zA-Z]+|lifespanPct)$/, 'chỉ dùng stat.<tên> hoặc lifespanPct'), add: z.number() })
+  .strict();
+export const StatExtremeSchema = z
+  .object({
+    id,
+    stat: z.enum(EXTREME_STATS),
+    zone: z.enum(['low', 'high']),
+    /** Years in the zone before the state starts; default balance.extremes.years. */
+    years: z.number().int().min(1).optional(),
+    name: z.string().min(1),
+    /** Logged when the state starts and shown in the profile while it lasts. */
+    text: z.string().min(1),
+    /** Lasting effects while the state is on. */
+    effects: z.array(EffectHookSchema).min(1),
+    /** Given when the state starts; again only after balance.extremes.onceCooldownYears. */
+    onceEffects: z.array(OnceEffectSchema).default([]),
+    /** One-off twists while the state lasts: after N years in it, or by chance each year. */
+    specials: z
+      .array(
+        z
+          .object({ afterYears: z.number().int().min(1).optional(), chancePerYear: probability.optional(), text: z.string().min(1), effects: z.array(OnceEffectSchema).min(1) })
+          .strict()
+          .refine((s) => (s.afterYears === undefined) !== (s.chancePerYear === undefined), 'cần đúng một trong "afterYears" hoặc "chancePerYear"'),
+      )
+      .default([]),
+    /** What the state costs or opens up later (cultivation, combat…); for the profile card. */
+    note: z.string().optional(),
+  })
+  .strict();
+export const StatExtremesFileSchema = z
+  .object({
+    /** Log lines: the year before a state starts ({stat}), when it starts and ends ({name}, {text}). */
+    warn: z.object({ low: z.string().min(1), high: z.string().min(1) }).strict(),
+    enter: z.string().min(1),
+    exit: z.string().min(1),
+    states: z.array(StatExtremeSchema).min(1),
+  })
+  .strict();
+export type StatExtreme = z.infer<typeof StatExtremeSchema>;
+export type StatExtremesFile = z.infer<typeof StatExtremesFileSchema>;
+
 export const TRAIT_RARITIES = ['pham', 'luong', 'uu', 'tuyet', 'thien', 'than', 'ac'] as const;
 
 export const TraitSchema = z
@@ -246,6 +294,8 @@ export const TraitSchema = z
   .strict();
 export const TraitFileSchema = z.array(TraitSchema).min(1);
 
+/** [loss when distant, loss when close] (both ≤ 0). */
+const griefRange = z.tuple([z.number().max(0), z.number().max(0)]);
 const range = z.tuple([z.number(), z.number()]).refine(([a, b]) => a <= b, 'khoảng [min, max] bị ngược');
 
 export const BalanceSchema = z
@@ -289,9 +339,9 @@ export const BalanceSchema = z
         motherMaxAgeForChild: z.number().int(),
         maxSiblings: z.number().int().min(0),
         affinityDecay: z.number().min(0),
-        /** Happiness lost when a relative dies: base × (minShare + (1 − minShare) × affinity/100). */
+        /** When a relative dies: happiness [distant, close] scaled by affinity, plus Đạo tâm for a parent. */
         grief: z
-          .object({ father: z.number().max(0), mother: z.number().max(0), sibling: z.number().max(0), minShare: probability })
+          .object({ father: griefRange, mother: griefRange, sibling: griefRange, parentDaoHeart: z.number() })
           .strict(),
       })
       .strict(),
@@ -319,6 +369,29 @@ export const BalanceSchema = z
         illnessHappinessLoss: z.number().min(0),
         /** |karma| at or above this picks a good/bad epitaph. */
         epitaphKarma: z.number().min(0).max(100),
+        /** At these ages the body takes a visible blow (stat-extremes-approved.md §3). */
+        milestoneAges: z.array(z.number().int().min(1)),
+        milestoneHealth: z.number(),
+        milestoneCharm: z.number(),
+      })
+      .strict(),
+    /** Stats stuck at an extreme (stat-extremes-approved.md). */
+    extremes: z
+      .object({
+        lowAt: z.number(),
+        highAt: z.number(),
+        /** A state ends once the stat is back to exitLow (low zone) or exitHigh (high zone). */
+        exitLow: z.number(),
+        exitHigh: z.number(),
+        karmaLowAt: z.number(),
+        karmaHighAt: z.number(),
+        karmaExitLow: z.number(),
+        karmaExitHigh: z.number(),
+        years: z.number().int().min(1),
+        onceCooldownYears: z.number().int().min(0),
+        /** Quiet years pull happiness this much toward happinessRest. */
+        happinessDrift: z.number().min(0),
+        happinessRest: z.number(),
       })
       .strict(),
   })
@@ -379,6 +452,8 @@ const lines = z.array(z.string().min(1)).min(1);
 export const LifeTextsSchema = z
   .object({
     illness: lines,
+    /** Old-age milestones (balance.aging.milestoneAges); {age}. */
+    agingMilestone: lines,
     deathOldAge: lines,
     deathIllness: lines,
     epitaph: z.object({ good: lines, bad: lines, plain: lines }).strict(),

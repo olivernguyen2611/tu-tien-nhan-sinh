@@ -5,6 +5,7 @@ import { APTITUDES, MORTAL_STATS } from './schemas';
 import type { GameState, Gender } from './types';
 import { rollYearEvent } from '../systems/events/engine';
 import { ageFamily, createFamily } from '../systems/relationships';
+import { ageExtremes } from '../systems/extremes';
 import { ageBody, checkDeath } from '../systems/time';
 import { makeName, splitName } from '../systems/names';
 
@@ -75,6 +76,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     traits: [],
     family,
     events: { pending: null, history: {}, followUps: [] },
+    extremes: { streak: {}, active: {}, givenAt: {} },
     log: [],
   };
   state.log.push({ age: 0, lines: [{ text: fillTemplate(origin.birthText, state), tone: 'normal' }] });
@@ -88,13 +90,18 @@ export function advanceYear(state: GameState, content: Content): GameState {
   if (!state.alive || state.events.pending) return state;
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(ageBody(ageFamily(withYear(aged), content), content), content);
+  const body = checkDeath(ageExtremes(ageBody(ageFamily(withYear(aged), content), content), content), content);
   const next = body.alive ? rollYearEvent(body, content) : body;
   // The year's log block exists before family news and the event are added to it.
   const log = next.log.slice();
   const block = log[log.length - 1];
   if (!next.events.pending && block.lines.length === 0) {
     log[log.length - 1] = { ...block, lines: [{ text: 'Một năm bình lặng trôi qua.', tone: 'normal' }] };
+    // A quiet year eases happiness back toward its resting point.
+    const { happinessDrift: drift, happinessRest: rest } = content.balance.extremes;
+    const h = next.stats.happiness;
+    const eased = h > rest ? Math.max(rest, h - drift) : Math.min(rest, h + drift);
+    return { ...next, stats: { ...next.stats, happiness: eased }, log };
   }
   return { ...next, log };
 }

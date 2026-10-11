@@ -8,6 +8,8 @@ import {
 } from '../src/systems/save';
 import balance from '../content/config/balance.json';
 import lifeTexts from '../content/life-texts.json';
+import extremes from '../content/stat-extremes.json';
+import { StatExtremesFileSchema } from '../src/core/schemas';
 import world from '../content/worlds/thuong_lan/world.json';
 import names from '../content/worlds/thuong_lan/character/names.json';
 import origins from '../content/worlds/thuong_lan/character/origins.json';
@@ -18,6 +20,7 @@ const content: Content = {
   names: NamesSchema.parse(names),
   origins: OriginFileSchema.parse(origins),
   lifeTexts: LifeTextsSchema.parse(lifeTexts),
+  extremes: StatExtremesFileSchema.parse(extremes),
   events: [],
   glossary: [],
   familyActions: [],

@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { BalanceSchema, FamilyActionFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, TraitFileSchema, WorldSchema, type GameEvent, type Origin, type Trait, type World } from './schemas';
+import { BalanceSchema, FamilyActionFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type GameEvent, type Origin, type StatExtremesFile, type Trait, type World } from './schemas';
 
 export interface Problem {
   file: string;
@@ -26,6 +26,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'traits.json') return TraitFileSchema;
     if (rest === 'family-actions.json') return FamilyActionFileSchema;
     if (rest === 'life-texts.json') return LifeTextsSchema;
+    if (rest === 'stat-extremes.json') return StatExtremesFileSchema;
     return null;
   }
   // Belongs to one world.
@@ -61,6 +62,17 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
         problems.push({ file, level: 'error', message: `${issue.path.join('.') || '(gốc)'}: ${issue.message}` });
       }
       continue;
+    }
+    if (schema === StatExtremesFileSchema) {
+      const ids = new Set<string>();
+      const zones = new Set<string>();
+      for (const d of (parsed.data as StatExtremesFile).states) {
+        if (ids.has(d.id)) problems.push({ file, level: 'error', message: `trùng id trạng thái "${d.id}"` });
+        const zone = `${d.stat}/${d.zone}`;
+        if (zones.has(zone)) problems.push({ file, level: 'error', message: `"${d.id}": đã có trạng thái khác cho ${d.stat} vùng ${d.zone}` });
+        ids.add(d.id);
+        zones.add(zone);
+      }
     }
     if (schema === WorldSchema && (parsed.data as World).id !== splitWorldPath(file).worldId) {
       problems.push({ file, level: 'error', message: `id thế giới "${(parsed.data as World).id}" phải trùng tên thư mục` });

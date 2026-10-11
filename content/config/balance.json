@@ -41,7 +41,7 @@
     "motherMaxAgeForChild": 40,
     "maxSiblings": 4,
     "affinityDecay": 1,
-    "grief": { "father": -30, "mother": -30, "sibling": -15, "minShare": 0.67 }
+    "grief": { "father": [-20, -30], "mother": [-20, -30], "sibling": [-15, -15], "parentDaoHeart": 2 }
   },
   "lifespan": {
     "mortalBase": 70,
@@ -60,6 +60,23 @@
     "illnessChancePerYear": 0.008,
     "illnessHealthLoss": [5, 15],
     "illnessHappinessLoss": 5,
-    "epitaphKarma": 30
+    "epitaphKarma": 30,
+    "milestoneAges": [60, 70, 80],
+    "milestoneHealth": -5,
+    "milestoneCharm": -3
+  },
+  "extremes": {
+    "lowAt": 5,
+    "highAt": 95,
+    "exitLow": 20,
+    "exitHigh": 80,
+    "karmaLowAt": -80,
+    "karmaHighAt": 80,
+    "karmaExitLow": -60,
+    "karmaExitHigh": 60,
+    "years": 3,
+    "onceCooldownYears": 10,
+    "happinessDrift": 2,
+    "happinessRest": 50
   }
 }

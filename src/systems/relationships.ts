@@ -65,18 +65,25 @@ export function ageFamily(state: GameState, content: Content): GameState {
   const rng = Rng.fromState(state.rng);
   const lines: LogLine[] = [];
   let happiness = state.stats.happiness;
+  let daoHeart = state.aptitudes.daoHeart;
   const { surname } = splitName(state.character.name, content.names);
 
   const family = state.family.map((r) => {
     if (!r.alive) return r;
     const age = r.age + 1;
     if (age >= r.lifespan) {
-      // Grief: even a relative you drifted from hurts (minShare); a close one hurts most.
-      const g = cfg.grief;
-      const loss = Math.round(g[r.role] * (g.minShare + (1 - g.minShare) * (r.affinity / 100)));
+      // Grief: even a relative you drifted from hurts; a close one hurts most.
+      const [distant, close] = cfg.grief[r.role];
+      const loss = Math.round(distant + (close - distant) * (r.affinity / 100));
       const before = clamp(happiness);
       happiness = clamp(happiness + loss);
-      const change = describeDelta('happiness', happiness - before);
+      let change = describeDelta('happiness', happiness - before);
+      if (r.role !== 'sibling' && cfg.grief.parentDaoHeart) {
+        const d = clamp(daoHeart + cfg.grief.parentDaoHeart) - daoHeart;
+        daoHeart += d;
+        const dao = describeDelta('daoHeart', d);
+        change = [change, dao].filter(Boolean).join(' · ');
+      }
       lines.push({ text: `${relationLabel(r, state.character.age)} ${r.name} qua đời, hưởng thọ ${age} tuổi.${change ? ` ${change}.` : ''}`, tone: 'bad' });
       return { ...r, age, alive: false };
     }
@@ -118,7 +125,7 @@ export function ageFamily(state: GameState, content: Content): GameState {
     else log.push({ age: state.character.age, lines });
   }
 
-  return { ...state, rng: rng.getState(), family, flags, stats: { ...state.stats, happiness: clamp(happiness) }, log };
+  return { ...state, rng: rng.getState(), family, flags, stats: { ...state.stats, happiness: clamp(happiness) }, aptitudes: { ...state.aptitudes, daoHeart }, log };
 }
 
 export interface ActionView {

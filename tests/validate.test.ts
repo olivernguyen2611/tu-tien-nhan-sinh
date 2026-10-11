@@ -8,11 +8,12 @@ const balance = {
   character: { mortalStatRange: [30, 80], aptitudeRange: [10, 90], aptitudeRolls: 2 },
   family: {
     fatherAge: [20, 35], motherAge: [17, 30], affinityStart: [55, 85], olderSiblings: [0, 2], olderSiblingGap: [2, 6],
-    youngerSiblingChance: 0.12, motherMinAgeForChild: 16, motherMaxAgeForChild: 40, maxSiblings: 4, affinityDecay: 1, grief: { father: -25, mother: -25, sibling: -15, minShare: 0.5 },
+    youngerSiblingChance: 0.12, motherMinAgeForChild: 16, motherMaxAgeForChild: 40, maxSiblings: 4, affinityDecay: 1, grief: { father: [-20, -30], mother: [-20, -30], sibling: [-15, -15], parentDaoHeart: 2 },
   },
   lifespan: { mortalBase: 70, mortalVariance: 10, healthAdjustMax: 10 },
   fastForward: { maxYears: 10 },
-  aging: { recoverPerYear: 3, recoverCap: 70, declineStartAge: 50, healthDeclinePerYear: 1, illnessStartAge: 60, illnessChancePerYear: 0.008, illnessHealthLoss: [5, 15], illnessHappinessLoss: 5, epitaphKarma: 30 },
+  aging: { recoverPerYear: 3, recoverCap: 70, declineStartAge: 50, healthDeclinePerYear: 1, illnessStartAge: 60, illnessChancePerYear: 0.008, illnessHealthLoss: [5, 15], illnessHappinessLoss: 5, epitaphKarma: 30, milestoneAges: [60], milestoneHealth: -5, milestoneCharm: -3 },
+  extremes: { lowAt: 5, highAt: 95, exitLow: 20, exitHigh: 80, karmaLowAt: -80, karmaHighAt: 80, karmaExitLow: -60, karmaExitHigh: 60, years: 3, onceCooldownYears: 10, happinessDrift: 2, happinessRest: 50 },
 };
 
 function event(overrides: Record<string, unknown> = {}) {

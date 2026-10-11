@@ -3,6 +3,8 @@ import type { Content } from '../src/core/content';
 import { BalanceSchema, EventFileSchema, NamesSchema, OriginFileSchema, TraitFileSchema, WorldSchema } from '../src/core/schemas';
 import { LifeTextsSchema } from '../src/core/schemas';
 import lifeTexts from '../content/life-texts.json';
+import extremes from '../content/stat-extremes.json';
+import { StatExtremesFileSchema } from '../src/core/schemas';
 import { advanceYear, createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
 import { eventWeight, findEvent, resolveChoice, rollYearEvent, visibleChoices } from '../src/systems/events/engine';
@@ -27,6 +29,7 @@ const content: Content = {
   glossary: [],
   familyActions: [],
   lifeTexts: LifeTextsSchema.parse(lifeTexts),
+  extremes: StatExtremesFileSchema.parse(extremes),
 };
 const ev = (id: string) => findEvent(content, id)!;
 const at = (s: GameState, age: number, patch: Partial<GameState> = {}): GameState =>
