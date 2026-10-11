@@ -3,6 +3,7 @@ import type { Content } from '../src/core/content';
 import { BalanceSchema, NamesSchema, OriginFileSchema, TraitFileSchema, WorldSchema } from '../src/core/schemas';
 import { advanceYear, createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
+import { describeChanges } from '../src/systems/deltas';
 import { ageFamily, availableActions, performFamilyAction, relationLabel } from '../src/systems/relationships';
 import balance from '../content/config/balance.json';
 import familyActions from '../content/family-actions.json';
@@ -46,6 +47,24 @@ describe('family', () => {
     expect(s.flags.no_parents).toBe(true);
     expect(s.stats.happiness).toBeLessThan(happy);
     expect(s.log.at(-1)!.lines.filter((l) => l.text.includes('qua đời'))).toHaveLength(2);
+  });
+
+  it('a parent dying always hurts, shows the loss, and only stops events for that parent', () => {
+    let s = createLife({ seed: 'grief', originId: 'nong_dan' }, content);
+    // Father dies next year even though the player barely knows him (affinity 0).
+    s = {
+      ...s,
+      stats: { ...s.stats, happiness: 60 },
+      family: s.family.map((r) => (r.role === 'father' ? { ...r, lifespan: r.age + 1, affinity: 0 } : { ...r, lifespan: 999 })),
+    };
+    const next = ageFamily(s, content);
+    const g = content.balance.family.grief;
+    expect(next.stats.happiness).toBe(60 + Math.round(g.father * g.minShare));
+    const line = next.log.at(-1)!.lines.find((l) => l.text.includes('qua đời'))!;
+    expect(line.text).toContain(`Hạnh phúc −${Math.abs(Math.round(g.father * g.minShare))}`);
+    expect(next.flags.no_father).toBe(true);
+    expect(next.flags.no_mother).toBeUndefined();
+    expect(next.flags.no_parents).toBeUndefined();
   });
 
   it('older siblings are never born before the mother turned 16', () => {
@@ -105,5 +124,12 @@ describe('family', () => {
     const a = run();
     expect(run()).toEqual(a);
     expect(a.family.filter((r) => r.role === 'sibling').length).toBeLessThanOrEqual(content.balance.family.maxSiblings);
+  });
+
+  it('describes stat changes in a short line', () => {
+    const s = createLife({ seed: 'delta', originId: 'nong_dan' }, content);
+    const after = { ...s, stats: { ...s.stats, happiness: s.stats.happiness - 12 }, money: { ...s.money, silver: s.money.silver + 30 } };
+    expect(describeChanges(s, after)).toBe('Hạnh phúc −12 · Bạc +30');
+    expect(describeChanges(s, s)).toBe('');
   });
 });

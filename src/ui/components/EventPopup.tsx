@@ -14,7 +14,8 @@ const CATEGORY_NAMES: Record<string, string> = {
   childhood: 'Tuổi thơ', study: 'Đi học', work: 'Mưu sinh', funny: 'Chuyện lạ', accident: 'Tai ương',
 };
 
-export interface PopupResult { title: string; text: string; tone: Tone }
+/** `changes`: stat deltas line, e.g. "Hạnh phúc −3 · Bạc +10". */
+export interface PopupResult { title: string; text: string; tone: Tone; changes: string }
 
 export function EventPopup({ state, content, result, onChoose, onClose }: {
   state: GameState;
@@ -35,6 +36,7 @@ export function EventPopup({ state, content, result, onChoose, onClose }: {
             <div class="kicker">Tuổi {state.character.age}</div>
             <h2>{result.title}</h2>
             <p class={`story outcome ${result.tone}`}><TermText text={result.text} /></p>
+            {result.changes && <p class="changes">{result.changes}</p>}
             <button class="choice" onClick={onClose}>Tiếp tục</button>
           </>
         ) : event && (

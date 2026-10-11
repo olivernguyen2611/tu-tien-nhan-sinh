@@ -37,7 +37,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
 }
 
 /** Flags the engine sets itself (not via events). */
-export const ENGINE_FLAGS = ['no_parents'];
+export const ENGINE_FLAGS = ['no_parents', 'no_father', 'no_mother'];
 
 export function validateContent(files: Record<string, unknown>): Problem[] {
   const problems: Problem[] = [];
@@ -140,6 +140,10 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
 
     event.choices.forEach((choice, i) => {
       for (const outcome of [choice.result, choice.success, choice.fail]) {
+        // Owner rule: every choice moves the character's numbers a little.
+        if (outcome && !Object.values(outcome.effects).some((v) => typeof v === 'number' && v !== 0)) {
+          problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: kết quả không đổi chỉ số nào (mỗi lựa chọn phải ảnh hưởng ít nhất một chỉ số)` });
+        }
         const target = outcome?.effects.followUp?.event;
         if (target && !seen.has(target)) {
           problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: followUp tới sự kiện không tồn tại "${target}"` });

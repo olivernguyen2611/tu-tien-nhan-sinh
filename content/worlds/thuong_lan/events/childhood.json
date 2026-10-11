@@ -116,7 +116,7 @@
         "text": "Đưa cho mẹ",
         "requires": {
           "flagsNone": [
-            "no_parents"
+            "no_mother"
           ]
         },
         "result": {
@@ -197,7 +197,10 @@
         "text": "Bỏ đi",
         "result": {
           "text": "Ngươi đi, lòng còn vương vấn.",
-          "effects": {}
+          "effects": {
+            "stat.happiness": -1,
+            "stat.daoHeart": 1
+          }
         }
       },
       {
@@ -209,7 +212,7 @@
           ]
         },
         "result": {
-          "text": "Chuột trong nhà chết sạch. Mẹ ngươi cho thêm một bát cơm.",
+          "text": "Chuột trong nhà chết sạch. Tối đó ngươi được thêm một bát cơm.",
           "effects": {
             "stat.happiness": 3
           }
@@ -325,7 +328,7 @@
           "difficulty": 50
         },
         "success": {
-          "text": "Ngươi lấy lại diều. Phú hộ tới nhà mắng vốn, cha ngươi lén cho thêm cái đùi gà.",
+          "text": "Ngươi lấy lại diều. Phú hộ tới nhà mắng vốn, nhưng tối đó ngươi vẫn được lén cho thêm cái đùi gà.",
           "effects": {
             "stat.happiness": 5,
             "karma": -1
@@ -353,7 +356,9 @@
         "text": "Mách người lớn",
         "result": {
           "text": "Người lớn hai nhà cãi nhau, quên mất cái diều.",
-          "effects": {}
+          "effects": {
+            "stat.happiness": -3
+          }
         }
       },
       {
@@ -414,7 +419,9 @@
         "text": "Đóng cửa",
         "result": {
           "text": "Ngoài cửa im lặng. Hôm sau ông lão không còn đó.",
-          "effects": {}
+          "effects": {
+            "karma": -1
+          }
         }
       },
       {

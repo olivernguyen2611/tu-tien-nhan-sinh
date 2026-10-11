@@ -36,7 +36,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onFastForward: () => void;
   /** Returns the outcome to show on the card. */
   onChoose: (index: number) => PopupResult;
-  onFamilyAction: (relativeId: string, actionId: string) => { text: string; tone: Tone };
+  onFamilyAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
   onNewLife: () => void;
   /** Open the end-of-life summary (after death). */
   onSummary: () => void;

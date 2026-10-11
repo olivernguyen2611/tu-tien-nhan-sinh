@@ -212,7 +212,7 @@
           "difficulty": 60
         },
         "success": {
-          "text": "Tên ngươi được dán ở cổng huyện. Mẹ ngươi đi khoe khắp chợ.",
+          "text": "Tên ngươi được dán ở cổng huyện. Cả xóm đi khoe khắp chợ.",
           "effects": {
             "stat.happiness": 10,
             "stat.charm": 3,
@@ -233,7 +233,10 @@
         "text": "Bỏ thi, đi làm",
         "result": {
           "text": "Ngươi nghĩ: chữ nhiều không no bụng.",
-          "effects": {}
+          "effects": {
+            "silver": 10,
+            "stat.intellect": -1
+          }
         }
       },
       {

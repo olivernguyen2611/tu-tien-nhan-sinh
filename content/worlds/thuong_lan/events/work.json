@@ -312,7 +312,10 @@
         "text": "Từ chối",
         "result": {
           "text": "Ngươi giữ tiền trong túi, ngủ yên giấc.",
-          "effects": {}
+          "effects": {
+            "stat.health": 1,
+            "stat.happiness": 1
+          }
         }
       },
       {

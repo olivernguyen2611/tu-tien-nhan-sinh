@@ -70,7 +70,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     cult: { realm: 'pham_nhan', stage: 0, progress: 0, root: null, lifespan },
     money: { silver: origin.silver, spiritStones: origin.spiritStones },
     social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0 } },
-    flags: origin.noParents ? { no_parents: true } : {},
+    flags: origin.noParents ? { no_parents: true, no_father: true, no_mother: true } : {},
     destiny: { offered: [], rerollsLeft: content.balance.traits.rerolls, confirmed: false },
     traits: [],
     family,

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'preact/hooks';
 import type { Content } from '../core/content';
 import { advanceYear, createLife, fastForward } from '../core/state';
 import type { GameState } from '../core/types';
+import { describeChanges } from '../systems/deltas';
 import { performFamilyAction } from '../systems/relationships';
 import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, rerollDestiny, rollDestiny } from '../systems/destiny';
@@ -150,13 +151,13 @@ function Screens({ content }: { content: Content }) {
         onFamilyAction={(relId, actionId) => {
           const r = performFamilyAction(life, content, relId, actionId);
           setLife(checkDeath(r.state, content));
-          return { text: r.text, tone: r.tone };
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
         }}
         onChoose={(i) => {
           const title = findEvent(content, life.events.pending ?? '')?.title ?? '';
           const r = resolveChoice(life, content, i);
           setLife(checkDeath(r.state, content));
-          return { title, text: r.text, tone: r.tone };
+          return { title, text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
         }}
         onNewLife={() => setScreen('create')}
         onSummary={() => setScreen('death')}
