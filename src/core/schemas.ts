@@ -161,8 +161,14 @@ export type World = z.infer<typeof WorldSchema>;
 export const NamesSchema = z
   .object({
     surnames: z.array(z.string().min(1)).min(1),
+    /** Curated two-syllable given names. */
     male: z.array(z.string().min(1)).min(1),
     female: z.array(z.string().min(1)).min(1),
+    /** Syllables combined as middle + given for many more names. */
+    maleMiddle: z.array(z.string().min(1)).min(1),
+    maleGiven: z.array(z.string().min(1)).min(2),
+    femaleMiddle: z.array(z.string().min(1)).min(1),
+    femaleGiven: z.array(z.string().min(1)).min(2),
     hometowns: z.array(z.string().min(1)).min(1),
   })
   .strict();

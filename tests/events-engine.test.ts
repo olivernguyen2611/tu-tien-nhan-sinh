@@ -58,7 +58,7 @@ describe('event engine', () => {
   });
 
   it('respects age, flags, orphans and once-per-life', () => {
-    const base = createLife({ seed: 'cond' }, content);
+    const base = createLife({ seed: 'cond', originId: 'nong_dan' }, content);
     expect(eventWeight(at(base, 1), content, ev('thoi_noi'))).toBeGreaterThan(0);
     expect(eventWeight(at(base, 2), content, ev('thoi_noi'))).toBe(0);
     expect(eventWeight(at(base, 1, { flags: { no_parents: true } }), content, ev('thoi_noi'))).toBe(0);

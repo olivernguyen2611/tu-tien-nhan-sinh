@@ -2,6 +2,7 @@
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameState, Gender, LogLine, Relative, Tone } from '../core/types';
+import { makeName, splitName } from './names';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 const between = (rng: Rng, [a, b]: readonly [number, number]) => rng.int(a, b);
@@ -12,23 +13,28 @@ function relativeLifespan(rng: Rng, content: Content): number {
 }
 
 /** Family at birth. Orphans (no_parents) start with nobody. */
-export function createFamily(rng: Rng, content: Content, surname: string, noParents: boolean): Relative[] {
+export function createFamily(rng: Rng, content: Content, surname: string, noParents: boolean, playerName: string): Relative[] {
   if (noParents) return [];
   const cfg = content.balance.family;
-  const { surnames, male, female } = content.names;
-  const person = (role: Relative['role'], gender: Gender, family: string, age: number, n: number): Relative => ({
-    id: `${role}_${n}`,
-    role,
-    gender,
-    name: `${family} ${rng.pick(gender === 'nam' ? male : female)}`,
-    age,
-    alive: true,
-    lifespan: relativeLifespan(rng, content),
-    affinity: between(rng, cfg.affinityStart),
-    lastActions: {},
-  });
+  // Nobody in the family shares a given name with the player or each other.
+  const taken = [playerName];
+  const person = (role: Relative['role'], gender: Gender, family: string | undefined, age: number, n: number): Relative => {
+    const name = makeName(rng, content.names, gender, { surname: family, taken });
+    taken.push(name);
+    return {
+      id: `${role}_${n}`,
+      role,
+      gender,
+      name,
+      age,
+      alive: true,
+      lifespan: relativeLifespan(rng, content),
+      affinity: between(rng, cfg.affinityStart),
+      lastActions: {},
+    };
+  };
   const father = person('father', 'nam', surname, between(rng, cfg.fatherAge), 0);
-  const mother = person('mother', 'nu', rng.pick(surnames), between(rng, cfg.motherAge), 0);
+  const mother = person('mother', 'nu', undefined, between(rng, cfg.motherAge), 0);
   const family = [father, mother];
   const older = between(rng, cfg.olderSiblings);
   // Older siblings, never born before the mother was old enough.
@@ -58,7 +64,7 @@ export function ageFamily(state: GameState, content: Content): GameState {
   const rng = Rng.fromState(state.rng);
   const lines: LogLine[] = [];
   let happiness = state.stats.happiness;
-  const surname = state.character.name.split(' ')[0];
+  const { surname } = splitName(state.character.name, content.names);
 
   const family = state.family.map((r) => {
     if (!r.alive) return r;
@@ -81,7 +87,7 @@ export function ageFamily(state: GameState, content: Content): GameState {
       id: `sibling_${siblings}_${state.character.age}`,
       role: 'sibling',
       gender,
-      name: `${surname} ${rng.pick(gender === 'nam' ? content.names.male : content.names.female)}`,
+      name: makeName(rng, content.names, gender, { surname, taken: [state.character.name, ...family.map((r) => r.name)] }),
       age: 0,
       alive: true,
       lifespan: relativeLifespan(rng, content),
