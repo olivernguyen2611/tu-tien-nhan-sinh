@@ -3,8 +3,10 @@ import type { Content } from '../src/core/content';
 import { BalanceSchema, NamesSchema, OriginFileSchema, TraitFileSchema, WorldSchema } from '../src/core/schemas';
 import { advanceYear, createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
-import { ageFamily, chatWith, relationLabel } from '../src/systems/relationships';
+import { ageFamily, availableActions, performFamilyAction, relationLabel } from '../src/systems/relationships';
 import balance from '../content/config/balance.json';
+import familyActions from '../content/family-actions.json';
+import { FamilyActionFileSchema } from '../src/core/schemas';
 import traits from '../content/traits.json';
 import world from '../content/worlds/thuong_lan/world.json';
 import names from '../content/worlds/thuong_lan/character/names.json';
@@ -18,6 +20,7 @@ const content: Content = {
   traits: TraitFileSchema.parse(traits),
   events: [],
   glossary: [],
+  familyActions: FamilyActionFileSchema.parse(familyActions),
 };
 
 describe('family', () => {
@@ -52,17 +55,43 @@ describe('family', () => {
   });
 
   it('labels siblings by age and gender', () => {
-    const r = { id: 'x', role: 'sibling' as const, gender: 'nu' as const, name: 'A B', age: 10, alive: true, lifespan: 70, affinity: 50, chattedAt: null };
+    const r = { id: 'x', role: 'sibling' as const, gender: 'nu' as const, name: 'A B', age: 10, alive: true, lifespan: 70, affinity: 50, lastActions: {} };
     expect(relationLabel(r, 5)).toBe('Chị');
     expect(relationLabel(r, 12)).toBe('Em gái');
   });
 
-  it('chatting raises affinity once per year', () => {
-    const s = createLife({ seed: 'chat', originId: 'nong_dan' }, content);
-    const id = s.family[0].id;
-    const once = chatWith(s, content, id);
-    expect(once.family[0].affinity).toBeGreaterThan(s.family[0].affinity);
-    expect(chatWith(once, content, id)).toBe(once);
+  it('actions change affinity, cost silver and work once a year per relative', () => {
+    let s = createLife({ seed: 'act', originId: 'nong_dan' }, content);
+    s = { ...s, character: { ...s.character, age: 20 } };
+    const mother = s.family.find((r) => r.role === 'mother')!;
+    const gift = performFamilyAction(s, content, mother.id, 'tang_qua');
+    const after = gift.state.family.find((r) => r.id === mother.id)!;
+    expect(after.affinity).toBeGreaterThan(mother.affinity);
+    expect(gift.state.money.silver).toBe(s.money.silver - 5);
+    expect(gift.text).not.toContain('{');
+    expect(gift.state.log.at(-1)!.lines.at(-1)!.text).toBe(gift.text);
+    expect(performFamilyAction(gift.state, content, mother.id, 'tang_qua').state).toBe(gift.state);
+    expect(availableActions(gift.state, content, after).find((a) => a.id === 'tang_qua')!.disabled).toBe(true);
+  });
+
+  it('actions respect ages, roles and money', () => {
+    const base = createLife({ seed: 'act2', originId: 'nong_dan' }, content);
+    const father = base.family.find((r) => r.role === 'father')!;
+    const ids = (s: typeof base) => availableActions(s, content, father).map((a) => a.id);
+    expect(ids({ ...base, character: { ...base.character, age: 2 } })).toEqual([]);
+    expect(ids({ ...base, character: { ...base.character, age: 8 } })).not.toContain('du_ngoan');
+    expect(ids({ ...base, character: { ...base.character, age: 20 } })).toContain('du_ngoan');
+    expect(ids({ ...base, character: { ...base.character, age: 20 } })).not.toContain('cham_soc');
+    const broke = { ...base, character: { ...base.character, age: 20 }, money: { ...base.money, silver: 0 } };
+    expect(availableActions(broke, content, father).find((a) => a.id === 'tang_qua')!.disabled).toBe(true);
+  });
+
+  it('asking for money is refused when affinity is low', () => {
+    let s = createLife({ seed: 'money', originId: 'nong_dan' }, content);
+    s = { ...s, character: { ...s.character, age: 10 }, family: s.family.map((r) => ({ ...r, affinity: 20 })) };
+    const r = performFamilyAction(s, content, s.family[0].id, 'xin_tien');
+    expect(r.tone).toBe('bad');
+    expect(r.state.money.silver).toBe(s.money.silver);
   });
 
   it('a long life is deterministic and siblings stay within the cap', () => {

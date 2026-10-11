@@ -1,7 +1,7 @@
 // Family (PLAN.md task 1.7): parents and siblings with affinity, who age and die.
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
-import type { GameState, Gender, LogLine, Relative } from '../core/types';
+import type { GameState, Gender, LogLine, Relative, Tone } from '../core/types';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 const between = (rng: Rng, [a, b]: readonly [number, number]) => rng.int(a, b);
@@ -25,7 +25,7 @@ export function createFamily(rng: Rng, content: Content, surname: string, noPare
     alive: true,
     lifespan: relativeLifespan(rng, content),
     affinity: between(rng, cfg.affinityStart),
-    chattedAt: null,
+    lastActions: {},
   });
   const father = person('father', 'nam', surname, between(rng, cfg.fatherAge), 0);
   const mother = person('mother', 'nu', rng.pick(surnames), between(rng, cfg.motherAge), 0);
@@ -86,7 +86,7 @@ export function ageFamily(state: GameState, content: Content): GameState {
       alive: true,
       lifespan: relativeLifespan(rng, content),
       affinity: between(rng, cfg.affinityStart),
-      chattedAt: null,
+      lastActions: {},
     };
     family.push(baby);
     lines.push({ text: `Nhà có thêm ${gender === 'nam' ? 'một em trai' : 'một em gái'}: ${baby.name}.`, tone: 'good' });
@@ -106,17 +106,89 @@ export function ageFamily(state: GameState, content: Content): GameState {
   return { ...state, rng: rng.getState(), family, flags, stats: { ...state.stats, happiness: clamp(happiness) }, log };
 }
 
-/** "Hỏi han": once a year per relative, a little affinity and happiness. */
-export function chatWith(state: GameState, content: Content, relativeId: string): GameState {
-  const cfg = content.balance.family;
+export interface ActionView {
+  id: string;
+  name: string;
+  cost: number;
+  /** Already done with this relative this year, or not enough silver. */
+  disabled: boolean;
+  reason: string | null;
+}
+
+/** Actions the player can do with this relative right now. */
+export function availableActions(state: GameState, content: Content, r: Relative): ActionView[] {
+  if (!r.alive) return [];
+  const age = state.character.age;
+  return content.familyActions
+    .filter((a) => age >= a.minAge && (a.maxAge === undefined || age <= a.maxAge))
+    .filter((a) => a.roles.length === 0 || a.roles.includes(r.role))
+    .filter((a) => a.minTargetAge === undefined || r.age >= a.minTargetAge)
+    .filter((a) => r.role !== 'sibling' || r.age >= 3 || a.id === 'hoi_han')
+    .map((a) => {
+      const done = r.lastActions[a.id] === age;
+      const poor = state.money.silver < a.cost;
+      return { id: a.id, name: a.name, cost: a.cost, disabled: done || poor, reason: done ? 'Năm nay đã làm' : poor ? 'Không đủ bạc' : null };
+    });
+}
+
+export interface ActionResult { state: GameState; text: string; tone: Tone }
+
+function applyNumbers(state: GameState, effects: Record<string, number>): GameState {
+  const stats = { ...state.stats };
+  const aptitudes = { ...state.aptitudes };
+  const money = { ...state.money };
+  const social = { ...state.social };
+  for (const [key, v] of Object.entries(effects)) {
+    const k = key.slice(5);
+    if (key.startsWith('stat.') && k in stats) stats[k as keyof typeof stats] = clamp(stats[k as keyof typeof stats] + v);
+    else if (key.startsWith('stat.') && k in aptitudes) aptitudes[k as keyof typeof aptitudes] = clamp(aptitudes[k as keyof typeof aptitudes] + v);
+    else if (key === 'silver' || key === 'spiritStones') money[key] = Math.max(0, money[key] + v);
+    else if (key === 'karma') social.karma = Math.max(-100, Math.min(100, social.karma + v));
+  }
+  return { ...state, stats, aptitudes, money, social };
+}
+
+/** Do one family action (once a year per relative); logs the outcome in this year's block. */
+export function performFamilyAction(state: GameState, content: Content, relativeId: string, actionId: string): ActionResult {
   const r = state.family.find((x) => x.id === relativeId);
-  if (!r || !r.alive || r.chattedAt === state.character.age) return state;
+  const action = content.familyActions.find((a) => a.id === actionId);
+  const view = r && availableActions(state, content, r).find((a) => a.id === actionId);
+  if (!r || !action || !view || view.disabled) return { state, text: '', tone: 'normal' };
+
   const rng = Rng.fromState(state.rng);
-  const gain = between(rng, cfg.chatAffinity);
-  return {
-    ...state,
+  let outcome: { affinity: readonly [number, number]; effects: Record<string, number>; texts: string[] } = action;
+  let tone: Tone = 'good';
+  let silver = 0;
+  if (action.needAffinity !== undefined && r.affinity < action.needAffinity && action.refused) {
+    outcome = action.refused;
+    tone = 'bad';
+  } else if (action.mishap && rng.chance(action.mishapChance)) {
+    outcome = action.mishap;
+    tone = 'normal';
+  } else if (action.silver) {
+    silver = between(rng, action.silver);
+  }
+  const gain = between(rng, outcome.affinity);
+  if (gain < 0 && tone === 'good') tone = 'normal';
+
+  const label = relationLabel(r, state.character.age).toLowerCase();
+  const text = rng.pick(outcome.texts)
+    .replace(/\{Rel\}/g, label.charAt(0).toUpperCase() + label.slice(1))
+    .replace(/\{rel\}/g, label)
+    .replace(/\{relName\}/g, r.name);
+
+  let next = applyNumbers(state, { ...outcome.effects, silver: silver - action.cost });
+  next = {
+    ...next,
     rng: rng.getState(),
-    family: state.family.map((x) => (x.id === relativeId ? { ...x, affinity: clamp(x.affinity + gain), chattedAt: state.character.age } : x)),
-    stats: { ...state.stats, happiness: clamp(state.stats.happiness + cfg.chatHappiness) },
+    family: next.family.map((x) => (x.id === relativeId
+      ? { ...x, affinity: clamp(x.affinity + gain), lastActions: { ...x.lastActions, [actionId]: state.character.age } }
+      : x)),
   };
+  const log = next.log.slice();
+  const last = log[log.length - 1];
+  const line: LogLine = { text, tone };
+  if (last && last.age === state.character.age) log[log.length - 1] = { ...last, lines: [...last.lines, line] };
+  else log.push({ age: state.character.age, lines: [line] });
+  return { state: { ...next, log }, text, tone };
 }

@@ -1,0 +1,96 @@
+[
+  {
+    "id": "hoi_han",
+    "name": "Hỏi han",
+    "minAge": 3,
+    "affinity": [2, 6],
+    "effects": { "stat.happiness": 1 },
+    "texts": [
+      "Ngươi ngồi cạnh {rel} nói chuyện cả buổi chiều.",
+      "{Rel} kể chuyện ngày xưa, ngươi nghe tới ngủ gật mà {rel} vẫn vui."
+    ]
+  },
+  {
+    "id": "tang_qua",
+    "name": "Tặng quà",
+    "minAge": 6,
+    "cost": 5,
+    "affinity": [6, 12],
+    "effects": { "stat.happiness": 2 },
+    "texts": [
+      "Ngươi mua tặng {rel} một cây trâm gỗ. {Rel} cài lên tóc, đi khoe cả xóm.",
+      "Ngươi tặng {rel} một gói trà ngon. {Rel} uống một ngụm, mắt đỏ hoe.",
+      "Ngươi tặng {rel} đôi giày mới. {Rel} cứ tiếc không dám đi."
+    ]
+  },
+  {
+    "id": "du_ngoan",
+    "name": "Dẫn đi du ngoạn",
+    "minAge": 14,
+    "cost": 10,
+    "affinity": [8, 15],
+    "effects": { "stat.happiness": 5, "stat.health": 1 },
+    "mishapChance": 0.15,
+    "mishap": {
+      "affinity": [2, 4],
+      "effects": { "stat.happiness": 1, "stat.health": -3 },
+      "texts": ["Ngươi dẫn {rel} lên núi ngắm mây, giữa đường mưa như trút. Hai người ướt như chuột lột, về nhà vẫn cười."]
+    },
+    "texts": [
+      "Ngươi dẫn {rel} đi hội chùa đầu xuân. {Rel} mua một xâu kẹo hồ lô, ăn như trẻ con.",
+      "Hai người chèo thuyền trên hồ cả ngày. Lâu lắm rồi {rel} mới cười nhiều như vậy.",
+      "Ngươi đưa {rel} lên trấn trên xem gánh hát. Về nhà {rel} còn ngâm nga cả tuần."
+    ]
+  },
+  {
+    "id": "phu_giup",
+    "name": "Phụ việc nhà",
+    "minAge": 6,
+    "roles": ["father", "mother"],
+    "affinity": [3, 6],
+    "effects": { "stat.health": 1 },
+    "texts": [
+      "Ngươi giúp {rel} gánh nước, bổ củi. {Rel} khen ngươi đã lớn.",
+      "Ngươi phụ {rel} phơi thóc, bị gà mổ trúng chân. {Rel} cười lăn."
+    ]
+  },
+  {
+    "id": "xin_tien",
+    "name": "Xin tiền",
+    "minAge": 6,
+    "maxAge": 25,
+    "roles": ["father", "mother"],
+    "needAffinity": 50,
+    "silver": [2, 8],
+    "affinity": [-4, -1],
+    "texts": ["{Rel} lục túi, đưa ngươi mấy lạng bạc, dặn đừng tiêu hoang."],
+    "refused": {
+      "affinity": [-6, -3],
+      "effects": { "stat.happiness": -2 },
+      "texts": ["{Rel} gõ đầu ngươi: tiền đâu ra mà xin!"]
+    }
+  },
+  {
+    "id": "cham_soc",
+    "name": "Chăm sóc lúc tuổi già",
+    "minAge": 12,
+    "minTargetAge": 60,
+    "affinity": [8, 12],
+    "effects": { "stat.happiness": -1, "karma": 1 },
+    "texts": [
+      "Ngươi sắc thuốc, bón cơm cho {rel}. {Rel} nắm tay ngươi rất lâu.",
+      "Đêm {rel} trở bệnh, ngươi thức trắng bên giường."
+    ]
+  },
+  {
+    "id": "cai_nhau",
+    "name": "Cãi nhau",
+    "minAge": 4,
+    "affinity": [-15, -8],
+    "effects": { "stat.happiness": -3 },
+    "texts": [
+      "Ngươi và {rel} cãi nhau to, hàng xóm ra hóng.",
+      "Hai người cãi nhau chỉ vì một cái bánh. Không ai nhường ai."
+    ]
+  }
+]

@@ -41,9 +41,7 @@
     "motherMaxAgeForChild": 40,
     "maxSiblings": 4,
     "affinityDecay": 1,
-    "deathHappiness": -20,
-    "chatAffinity": [2, 6],
-    "chatHappiness": 1
+    "deathHappiness": -20
   },
   "lifespan": {
     "mortalBase": 70,
