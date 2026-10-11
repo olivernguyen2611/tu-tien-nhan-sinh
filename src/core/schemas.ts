@@ -293,6 +293,23 @@ export const BalanceSchema = z
         healthAdjustMax: z.number().int().min(0),
       })
       .strict(),
+    aging: z
+      .object({
+        /** Before declineStartAge, health below recoverCap heals recoverPerYear each year. */
+        recoverPerYear: z.number().min(0),
+        recoverCap: z.number().min(0).max(100),
+        /** Health drops healthDeclinePerYear each year from this age. */
+        declineStartAge: z.number().int().min(0),
+        healthDeclinePerYear: z.number().min(0),
+        /** PLAN.md G.3: from this age, illness chance = (age − start) × illnessChancePerYear. */
+        illnessStartAge: z.number().int().min(0),
+        illnessChancePerYear: probability,
+        illnessHealthLoss: range,
+        illnessHappinessLoss: z.number().min(0),
+        /** |karma| at or above this picks a good/bad epitaph. */
+        epitaphKarma: z.number().min(0).max(100),
+      })
+      .strict(),
   })
   .passthrough(); // later tasks add sections (cultivation, lifespan…)
 
@@ -343,3 +360,17 @@ export type Origin = z.infer<typeof OriginSchema>;
 export type Names = z.infer<typeof NamesSchema>;
 export type Trait = z.infer<typeof TraitSchema>;
 export type EffectHook = z.infer<typeof EffectHookSchema>;
+
+// ---------- Aging and death texts (content/life-texts.json) ----------
+
+const lines = z.array(z.string().min(1)).min(1);
+/** Log and summary lines for aging, illness and death. `{age}` is replaced by the age. */
+export const LifeTextsSchema = z
+  .object({
+    illness: lines,
+    deathOldAge: lines,
+    deathIllness: lines,
+    epitaph: z.object({ good: lines, bad: lines, plain: lines }).strict(),
+  })
+  .strict();
+export type LifeTexts = z.infer<typeof LifeTextsSchema>;

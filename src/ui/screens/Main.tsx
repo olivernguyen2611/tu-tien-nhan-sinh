@@ -25,7 +25,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心'],
 ] as const;
 
-export function MainScreen({ state, content, onAdvance, onChoose, onFamilyAction, onNewLife, theme, onToggleTheme }: {
+export function MainScreen({ state, content, onAdvance, onChoose, onFamilyAction, onNewLife, onSummary, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   onAdvance: () => void;
@@ -33,6 +33,8 @@ export function MainScreen({ state, content, onAdvance, onChoose, onFamilyAction
   onChoose: (index: number) => PopupResult;
   onFamilyAction: (relativeId: string, actionId: string) => { text: string; tone: Tone };
   onNewLife: () => void;
+  /** Open the end-of-life summary (after death). */
+  onSummary: () => void;
   theme: ThemePref;
   onToggleTheme: () => void;
 }) {
@@ -86,10 +88,17 @@ export function MainScreen({ state, content, onAdvance, onChoose, onFamilyAction
 
       <nav class="dock" aria-label="Hành động">
         {DOCK_LEFT.map(dockItem)}
-        <button class="age-btn" onClick={onAdvance} aria-label="Qua một năm" disabled={!!state.events.pending || !!result}>
-          <span class="big">+1</span>
-          <span class="small">năm</span>
-        </button>
+        {state.alive ? (
+          <button class="age-btn" onClick={onAdvance} aria-label="Qua một năm" disabled={!!state.events.pending || !!result}>
+            <span class="big">+1</span>
+            <span class="small">năm</span>
+          </button>
+        ) : (
+          <button class="age-btn ended" onClick={onSummary} aria-label="Xem tổng kết đời người" disabled={!!result}>
+            <span class="big">終</span>
+            <span class="small">Tổng kết</span>
+          </button>
+        )}
         {DOCK_RIGHT.map(dockItem)}
       </nav>
 

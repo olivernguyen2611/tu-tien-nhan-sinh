@@ -1,0 +1,33 @@
+{
+  "illness": [
+    "Trời trở lạnh, bạn nhiễm phong hàn, nằm liệt giường cả tháng.",
+    "Lưng đau gối mỏi, thầy lang bắt mạch xong chỉ lắc đầu thở dài.",
+    "Bạn ho suốt mùa đông, thuốc sắc uống đến đắng cả lưỡi.",
+    "Một trận sốt cao kéo đến, tỉnh lại thấy người gầy rộc.",
+    "Mắt mờ tai lãng, bạn bắt đầu gọi nhầm tên con cháu."
+  ],
+  "deathOldAge": [
+    "Năm {age} tuổi, bạn ngồi phơi nắng trước hiên, thiếp đi rồi không tỉnh lại nữa.",
+    "Năm {age} tuổi, thọ nguyên đã cạn, bạn nhắm mắt trong tiếng gió thu.",
+    "Năm {age} tuổi, bạn dặn dò mấy câu, cười một tiếng rồi ra đi thanh thản."
+  ],
+  "deathIllness": [
+    "Năm {age} tuổi, bệnh nặng không qua khỏi, bạn trút hơi thở cuối cùng.",
+    "Năm {age} tuổi, thân thể suy kiệt, thuốc thang vô hiệu, bạn lìa trần.",
+    "Năm {age} tuổi, một trận bạo bệnh cướp đi mạng sống của bạn."
+  ],
+  "epitaph": {
+    "good": [
+      "Một đời hành thiện, người trong làng nhắc tên còn chắp tay.",
+      "Sống không thẹn với trời, chết không thẹn với đất."
+    ],
+    "bad": [
+      "Lúc đưa tang, người đi đường thì nhiều, người khóc thì ít.",
+      "Nợ ân oán chưa trả hết, để lại cho kiếp sau."
+    ],
+    "plain": [
+      "Một kiếp phàm nhân, như hạt bụi giữa hồng trần.",
+      "Sinh ra, lớn lên, già đi, rồi về với cát bụi."
+    ]
+  }
+}

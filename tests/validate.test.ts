@@ -11,6 +11,7 @@ const balance = {
     youngerSiblingChance: 0.12, motherMinAgeForChild: 16, motherMaxAgeForChild: 40, maxSiblings: 4, affinityDecay: 1, deathHappiness: -20,
   },
   lifespan: { mortalBase: 70, mortalVariance: 10, healthAdjustMax: 10 },
+  aging: { recoverPerYear: 3, recoverCap: 70, declineStartAge: 50, healthDeclinePerYear: 1, illnessStartAge: 60, illnessChancePerYear: 0.008, illnessHealthLoss: [5, 15], illnessHappinessLoss: 5, epitaphKarma: 30 },
 };
 
 function event(overrides: Record<string, unknown> = {}) {

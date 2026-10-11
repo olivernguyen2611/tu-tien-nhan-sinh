@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { BalanceSchema, FamilyActionFileSchema, EventFileSchema, GlossarySchema, NamesSchema, OriginFileSchema, TraitFileSchema, WorldSchema, type GameEvent, type Origin, type Trait, type World } from './schemas';
+import { BalanceSchema, FamilyActionFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, TraitFileSchema, WorldSchema, type GameEvent, type Origin, type Trait, type World } from './schemas';
 
 export interface Problem {
   file: string;
@@ -25,6 +25,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'glossary.json') return GlossarySchema;
     if (rest === 'traits.json') return TraitFileSchema;
     if (rest === 'family-actions.json') return FamilyActionFileSchema;
+    if (rest === 'life-texts.json') return LifeTextsSchema;
     return null;
   }
   // Belongs to one world.

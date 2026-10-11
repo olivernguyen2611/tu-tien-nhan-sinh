@@ -5,13 +5,15 @@ import type { GameState } from '../core/types';
 import { performFamilyAction } from '../systems/relationships';
 import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, rerollDestiny, rollDestiny } from '../systems/destiny';
+import { checkDeath } from '../systems/time';
 import { applyThemePref, loadThemePref, nextThemePref, type ThemePref } from './theme';
 import { CreateCharacterScreen } from './screens/CreateCharacter';
+import { DeathScreen } from './screens/Death';
 import { DestinyRollScreen } from './screens/DestinyRoll';
 import { MainScreen } from './screens/Main';
 import { TitleScreen } from './screens/Title';
 
-type Screen = 'title' | 'create' | 'destiny' | 'main';
+type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death';
 
 export function App({ content }: { content: Content }) {
   const [screen, setScreen] = useState<Screen>('title');
@@ -42,6 +44,9 @@ export function App({ content }: { content: Content }) {
       />
     );
   }
+  if (screen === 'death' && life) {
+    return <DeathScreen state={life} content={content} onReadLog={() => setScreen('main')} onNewLife={() => setScreen('create')} />;
+  }
   if (screen === 'main' && life) {
     return (
       <MainScreen
@@ -50,16 +55,17 @@ export function App({ content }: { content: Content }) {
         onAdvance={() => setLife(advanceYear(life, content))}
         onFamilyAction={(relId, actionId) => {
           const r = performFamilyAction(life, content, relId, actionId);
-          setLife(r.state);
+          setLife(checkDeath(r.state, content));
           return { text: r.text, tone: r.tone };
         }}
         onChoose={(i) => {
           const title = findEvent(content, life.events.pending ?? '')?.title ?? '';
           const r = resolveChoice(life, content, i);
-          setLife(r.state);
+          setLife(checkDeath(r.state, content));
           return { title, text: r.text, tone: r.tone };
         }}
         onNewLife={() => setScreen('create')}
+        onSummary={() => setScreen('death')}
         theme={theme}
         onToggleTheme={toggleTheme}
       />

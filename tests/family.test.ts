@@ -6,7 +6,8 @@ import type { GameState } from '../src/core/types';
 import { ageFamily, availableActions, performFamilyAction, relationLabel } from '../src/systems/relationships';
 import balance from '../content/config/balance.json';
 import familyActions from '../content/family-actions.json';
-import { FamilyActionFileSchema } from '../src/core/schemas';
+import { FamilyActionFileSchema, LifeTextsSchema } from '../src/core/schemas';
+import lifeTexts from '../content/life-texts.json';
 import traits from '../content/traits.json';
 import world from '../content/worlds/thuong_lan/world.json';
 import names from '../content/worlds/thuong_lan/character/names.json';
@@ -21,6 +22,7 @@ const content: Content = {
   events: [],
   glossary: [],
   familyActions: FamilyActionFileSchema.parse(familyActions),
+  lifeTexts: LifeTextsSchema.parse(lifeTexts),
 };
 
 describe('family', () => {

@@ -25,6 +25,8 @@ export interface Relative {
   lastActions: Record<string, number>;
 }
 
+export type DeathCause = 'old_age' | 'illness';
+
 export interface GameState {
   version: 1;
   /** Which world (content/worlds/<id>) this life is in. */
@@ -32,6 +34,8 @@ export interface GameState {
   seed: string;
   rng: RngState;
   alive: boolean;
+  /** Set when the life ends. */
+  death: { age: number; cause: DeathCause; epitaph: string } | null;
   character: {
     name: string;
     gender: Gender;

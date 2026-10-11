@@ -5,6 +5,7 @@ import { APTITUDES, MORTAL_STATS } from './schemas';
 import type { GameState, Gender } from './types';
 import { rollYearEvent } from '../systems/events/engine';
 import { ageFamily, createFamily } from '../systems/relationships';
+import { ageBody, checkDeath } from '../systems/time';
 
 export interface NewLifeInput {
   seed: string;
@@ -62,6 +63,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     seed: input.seed,
     rng: rng.getState(),
     alive: true,
+    death: null,
     character: { name, gender, originId: origin.id, hometown, age: 0 },
     stats,
     aptitudes,
@@ -86,7 +88,8 @@ export function advanceYear(state: GameState, content: Content): GameState {
   if (!state.alive || state.events.pending) return state;
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const next = rollYearEvent(ageFamily(withYear(aged), content), content);
+  const body = checkDeath(ageBody(ageFamily(withYear(aged), content), content), content);
+  const next = body.alive ? rollYearEvent(body, content) : body;
   // The year's log block exists before family news and the event are added to it.
   const log = next.log.slice();
   const block = log[log.length - 1];

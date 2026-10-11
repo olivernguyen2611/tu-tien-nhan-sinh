@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 import type { Content } from '../src/core/content';
 import { advanceYear, createLife } from '../src/core/state';
 import { BalanceSchema, WorldSchema, NamesSchema, OriginFileSchema } from '../src/core/schemas';
+import { LifeTextsSchema } from '../src/core/schemas';
+import lifeTexts from '../content/life-texts.json';
 import world from '../content/worlds/thuong_lan/world.json';
 import balance from '../content/config/balance.json';
 import names from '../content/worlds/thuong_lan/character/names.json';
@@ -15,6 +17,7 @@ const content: Content = {
   events: [],
   glossary: [],
   familyActions: [],
+  lifeTexts: LifeTextsSchema.parse(lifeTexts),
   traits: [],
 };
 
