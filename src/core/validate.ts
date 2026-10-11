@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { BalanceSchema, EventFileSchema, GlossarySchema, type GameEvent } from './schemas';
+import { BalanceSchema, EventFileSchema, GlossarySchema, NamesSchema, OriginFileSchema, type GameEvent, type Origin } from './schemas';
 
 export interface Problem {
   file: string;
@@ -14,6 +14,8 @@ export interface Problem {
 export function schemaFor(path: string): ZodTypeAny | null {
   if (path === 'config/balance.json') return BalanceSchema;
   if (path === 'glossary.json') return GlossarySchema;
+  if (path === 'character/origins.json') return OriginFileSchema;
+  if (path === 'character/names.json') return NamesSchema;
   if (/^events\/[^/]+\.json$/.test(path)) return EventFileSchema;
   return null;
 }
@@ -34,6 +36,13 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
         problems.push({ file, level: 'error', message: `${issue.path.join('.') || '(gốc)'}: ${issue.message}` });
       }
       continue;
+    }
+    if (schema === OriginFileSchema) {
+      const seenOrigin = new Set<string>();
+      for (const o of parsed.data as Origin[]) {
+        if (seenOrigin.has(o.id)) problems.push({ file, level: 'error', message: `trùng id xuất thân "${o.id}"` });
+        seenOrigin.add(o.id);
+      }
     }
     if (schema === EventFileSchema) {
       for (const event of parsed.data as GameEvent[]) events.push({ file, event });

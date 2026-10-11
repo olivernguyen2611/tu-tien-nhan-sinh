@@ -17,5 +17,21 @@
       "thien": 3.5,
       "than": 0.5
     }
+  },
+  "character": {
+    "mortalStatRange": [
+      30,
+      80
+    ],
+    "aptitudeRange": [
+      10,
+      90
+    ],
+    "aptitudeRolls": 2
+  },
+  "lifespan": {
+    "mortalBase": 70,
+    "mortalVariance": 10,
+    "healthAdjustMax": 10
   }
 }
