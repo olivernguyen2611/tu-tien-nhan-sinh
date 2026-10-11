@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type StatExtremesFile, type Trait, type World } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World } from './schemas';
 
 export interface Problem {
   file: string;
@@ -31,6 +31,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'roots.json') return RootsFileSchema;
     if (rest === 'aptitudes.json') return AptitudesFileSchema;
     if (rest === 'difficulties.json') return DifficultyFileSchema;
+    if (rest === 'tutorial.json') return TutorialFileSchema;
     return null;
   }
   // Belongs to one world.
@@ -120,6 +121,13 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === RealmsFileSchema) parsedShared.realms = parsed.data as RealmsFile;
     if (schema === RootsFileSchema) parsedShared.roots = parsed.data as RootsFile;
     if (schema === AptitudesFileSchema) parsedShared.aptitudes = parsed.data as AptitudesFile;
+    if (schema === TutorialFileSchema) {
+      const t = parsed.data as TutorialFile;
+      problems.push(...duplicates(file, 'mục tiêu', t.goals), ...duplicates(file, 'mẹo', t.tips));
+      if (Object.keys(t.goals[t.goals.length - 1].when).length > 0) {
+        problems.push({ file, level: 'warning', message: 'mục tiêu cuối nên có "when": {} để luôn có một mục tiêu' });
+      }
+    }
     if (schema === DifficultyFileSchema) difficultyIds = (parsed.data as { id: string }[]).map((d) => d.id);
   }
 

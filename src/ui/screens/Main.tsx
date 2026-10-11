@@ -14,6 +14,7 @@ import { ThemeToggle } from '../components/ThemeToggle';
 import type { ThemePref } from '../theme';
 import { realmLabel, rootLabel } from '../../systems/cultivation';
 import { difficultyName } from '../../systems/difficulty';
+import { currentGoal, pendingTip } from '../../systems/tutorial';
 
 const DOCK_LEFT = [
   { id: 'cultivate', glyph: '修', label: 'Tu luyện' },
@@ -31,7 +32,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onBreakthrough, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onBreakthrough, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -42,6 +43,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   /** Returns the outcome to show on the card. */
   onChoose: (index: number) => PopupResult;
   onFamilyAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
+  /** Tutorial tip read ("Đã hiểu") or tips turned off. */
+  onTip: (tipId: string, turnOff: boolean) => void;
   /** Big breakthrough from the "Tu luyện" sheet; null when it cannot be tried. */
   onBreakthrough: () => { text: string; tone: Tone; changes: string } | null;
   onNewLife: () => void;
@@ -64,6 +67,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const origin = content.origins.find((o) => o.id === c.originId);
   const warn = extremeWarnings(state, content);
   const states = activeExtremes(state, content);
+  const goal = currentGoal(state, content);
+  const tip = pendingTip(state, content);
 
   useEffect(() => {
     logRef.current?.scrollTo({ top: logRef.current.scrollHeight, behavior: 'smooth' });
@@ -100,6 +105,20 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
       </header>
 
       <section class="life-log" aria-label="Nhật ký đời người" ref={logRef}>
+        {(goal || tip) && (
+          <div class="guide">
+            {goal && <p class="goal-line"><span class="goal-label">Mục tiêu</span> <TermText text={goal} /></p>}
+            {tip && !state.events.pending && (
+              <aside class="tip-card" aria-label="Hướng dẫn">
+                <p><TermText text={tip.text} /></p>
+                <div class="tip-actions">
+                  <button class="chip-btn" onClick={() => onTip(tip.id, false)}>Đã hiểu</button>
+                  <button class="link-btn" onClick={() => onTip(tip.id, true)}>Tắt hướng dẫn</button>
+                </div>
+              </aside>
+            )}
+          </div>
+        )}
         {saveWarning && <p class="save-warning" role="alert">{saveWarning}</p>}
         {state.log.map((y, i) => (
           <article class={`age-block${i === state.log.length - 1 ? ' current' : ''}`} key={y.age}>

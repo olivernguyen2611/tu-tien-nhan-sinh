@@ -188,6 +188,14 @@ button { font: inherit; color: inherit; }
   background: var(--bg);
 }
 
+/* Goal line and first-life tips, pinned at the top of the log */
+.guide { position: sticky; top: 0; z-index: 2; margin: 0 -4px 8px; padding: 6px 4px 8px; background: var(--bg); }
+.goal-line { margin: 0; font-size: 0.875rem; }
+.goal-label { display: inline-block; margin-right: 4px; padding: 1px 8px; border-radius: 999px; background: var(--jade); color: var(--surface); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; vertical-align: 1px; }
+.tip-card { margin-top: 8px; padding: 10px 12px; border: 1px solid var(--jade); border-left-width: 4px; border-radius: 10px; background: var(--surface); }
+.tip-card p { margin: 0 0 8px; font-size: 0.875rem; }
+.tip-actions { display: flex; align-items: center; gap: 12px; }
+
 /* Top bar: who you are + purse */
 .top-bar {
   grid-area: top;
@@ -392,6 +400,7 @@ button { font: inherit; color: inherit; }
     padding: 20px;
   }
   .top-bar { border: 1px solid var(--line); border-radius: 14px; margin-bottom: 16px; padding: 12px 16px; }
+  .guide { background: var(--surface); }
   .life-log {
     background: var(--surface);
     border: 1px solid var(--line);

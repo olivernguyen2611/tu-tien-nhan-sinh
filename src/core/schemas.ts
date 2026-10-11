@@ -713,3 +713,28 @@ export const DifficultyFileSchema = z
   .array(z.object({ id, name: z.string().min(1), description: z.string().min(1) }).strict())
   .min(1);
 export type Difficulty = z.infer<typeof DifficultyFileSchema>[number];
+
+/** When a goal or tip applies (task 2.9); every key given must hold. */
+const TutorialWhenSchema = z
+  .object({
+    minAge: z.number().int().min(0).optional(),
+    /** Answered events so far. */
+    minEvents: z.number().int().min(0).optional(),
+    rootTested: z.boolean().optional(),
+    /** A root that can cultivate (not "Không linh căn"); false only once tested. */
+    hasRoot: z.boolean().optional(),
+    realm: id.optional(),
+    /** Full bar at the last stage of the realm. */
+    atPeak: z.boolean().optional(),
+  })
+  .strict();
+export type TutorialWhen = z.infer<typeof TutorialWhenSchema>;
+
+/** content/tutorial.json: "Mục tiêu hiện tại" (first match wins) and first-life tips. */
+export const TutorialFileSchema = z
+  .object({
+    goals: z.array(z.object({ id, text: z.string().min(1), when: TutorialWhenSchema }).strict()).min(1),
+    tips: z.array(z.object({ id, text: z.string().min(1), when: TutorialWhenSchema }).strict()),
+  })
+  .strict();
+export type TutorialFile = z.infer<typeof TutorialFileSchema>;

@@ -4,7 +4,7 @@ import { BalanceSchema, EventFileSchema, NamesSchema, OriginFileSchema, TraitFil
 import { LifeTextsSchema } from '../src/core/schemas';
 import lifeTexts from '../content/life-texts.json';
 import extremes from '../content/stat-extremes.json';
-import { cultivation, difficulties } from './fixtures';
+import { cultivation, difficulties, tutorial } from './fixtures';
 import { StatExtremesFileSchema } from '../src/core/schemas';
 import { advanceYear, createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
@@ -33,6 +33,7 @@ const content: Content = {
   extremes: StatExtremesFileSchema.parse(extremes),
   cultivation,
   difficulties,
+  tutorial,
 };
 const ev = (id: string) => findEvent(content, id)!;
 const at = (s: GameState, age: number, patch: Partial<GameState> = {}): GameState =>
