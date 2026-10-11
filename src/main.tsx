@@ -1,13 +1,15 @@
 import { render } from 'preact';
 import { loadContent } from './core/content';
-import { TitleScreen } from './ui/screens/Title';
-import './ui/base.css';
+import { App } from './ui/App';
+import { applyThemePref, loadThemePref } from './ui/theme';
+import './ui/theme.css';
 
 const app = document.getElementById('app')!;
+applyThemePref(loadThemePref());
 
 try {
   loadContent();
-  render(<TitleScreen />, app);
+  render(<App />, app);
 } catch (err) {
   // Broken content should be loud during development, not a blank page.
   render(<pre class="content-error">{(err as Error).message}</pre>, app);
