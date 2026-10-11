@@ -2,16 +2,19 @@ import { useEffect, useState } from 'preact/hooks';
 import type { Content } from '../core/content';
 import { advanceYear, createLife } from '../core/state';
 import type { GameState } from '../core/types';
+import { confirmDestiny, rerollDestiny, rollDestiny } from '../systems/destiny';
 import { applyThemePref, loadThemePref, nextThemePref, type ThemePref } from './theme';
 import { CreateCharacterScreen } from './screens/CreateCharacter';
+import { DestinyRollScreen } from './screens/DestinyRoll';
 import { MainScreen } from './screens/Main';
 import { TitleScreen } from './screens/Title';
 
-type Screen = 'title' | 'create' | 'main';
+type Screen = 'title' | 'create' | 'destiny' | 'main';
 
 export function App({ content }: { content: Content }) {
   const [screen, setScreen] = useState<Screen>('title');
   const [life, setLife] = useState<GameState | null>(null);
+  const [rollCount, setRollCount] = useState(0);
   const [theme, setTheme] = useState<ThemePref>(loadThemePref);
 
   useEffect(() => applyThemePref(theme), [theme]);
@@ -22,7 +25,18 @@ export function App({ content }: { content: Content }) {
       <CreateCharacterScreen
         content={content}
         onBack={() => setScreen('title')}
-        onCreate={(input) => { setLife(createLife(input, content)); setScreen('main'); }}
+        onCreate={(input) => { setLife(rollDestiny(createLife(input, content), content)); setScreen('destiny'); }}
+      />
+    );
+  }
+  if (screen === 'destiny' && life) {
+    return (
+      <DestinyRollScreen
+        state={life}
+        content={content}
+        rollCount={rollCount}
+        onReroll={() => { setLife(rerollDestiny(life, content)); setRollCount((n) => n + 1); }}
+        onConfirm={() => { setLife(confirmDestiny(life, content)); setScreen('main'); }}
       />
     );
   }

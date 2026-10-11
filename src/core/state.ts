@@ -64,6 +64,8 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     money: { silver: origin.silver, spiritStones: origin.spiritStones },
     social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0 } },
     flags: origin.noParents ? { orphan: true } : {},
+    destiny: { offered: [], rerollsLeft: content.balance.traits.rerolls, confirmed: false },
+    traits: [],
     log: [],
   };
   state.log.push({ age: 0, lines: [{ text: fillTemplate(origin.birthText, state), tone: 'normal' }] });

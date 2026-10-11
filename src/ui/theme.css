@@ -17,6 +17,14 @@
   --warn: #b7791f;
   --bad: #b3362b;
   --rare: #6b4fa0;
+  /* Trait rarity colors (Tiên Thiên Khí Vận) */
+  --r-pham: #8a7d6a;
+  --r-luong: #3f7d3a;
+  --r-uu: #2f5f9e;
+  --r-tuyet: #7a4fb0;
+  --r-thien: #c7701c;
+  --r-than: #c0302a;
+  --r-ac: #4a4440;
   --shadow: 0 1px 2px rgb(60 40 20 / 0.12), 0 4px 16px rgb(60 40 20 / 0.08);
   --font-ui: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-story: 'Noto Serif', Georgia, 'Times New Roman', serif;
@@ -42,6 +50,13 @@
     --warn: #e0b04e;
     --bad: #e2675b;
     --rare: #b59cf0;
+    --r-pham: #cfc6b4;
+    --r-luong: #7cc46f;
+    --r-uu: #6fa8ec;
+    --r-tuyet: #b98cf2;
+    --r-thien: #f2a24a;
+    --r-than: #ff6b5e;
+    --r-ac: #8c857e;
     --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 4px 16px rgb(0 0 0 / 0.3);
     color-scheme: dark;
   }
@@ -64,6 +79,13 @@
   --warn: #e0b04e;
   --bad: #e2675b;
   --rare: #b59cf0;
+  --r-pham: #cfc6b4;
+  --r-luong: #7cc46f;
+  --r-uu: #6fa8ec;
+  --r-tuyet: #b98cf2;
+  --r-thien: #f2a24a;
+  --r-than: #ff6b5e;
+  --r-ac: #8c857e;
   --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 4px 16px rgb(0 0 0 / 0.3);
   color-scheme: dark;
 }
@@ -441,3 +463,43 @@ button { font: inherit; color: inherit; }
 .profile-grid .stat-row .label { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); }
 .profile-note { font-size: 0.8125rem; color: var(--muted); margin: 10px 0 4px; }
 .choice.danger { color: var(--bad); }
+
+/* Destiny roll (Nghịch Thiên Bốc Mệnh) */
+.destiny-screen { max-width: 960px; margin: 0 auto; min-height: 100dvh; padding: calc(12px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 14px; }
+.destiny-intro { margin: 0; color: var(--muted); font-family: var(--font-story); font-size: 0.9375rem; }
+.destiny-cards { display: grid; gap: 10px; }
+@media (min-width: 900px) { .destiny-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.trait-card { perspective: 900px; }
+.trait-card .flip { position: relative; height: 100%; transform-style: preserve-3d; animation: trait-flip 0.6s ease-out both; }
+@keyframes trait-flip { from { transform: rotateY(180deg); } to { transform: rotateY(0); } }
+@media (prefers-reduced-motion: reduce) { .trait-card .flip { animation: none; } }
+.trait-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: var(--radius); border: 1px solid var(--line); background: var(--surface); }
+.trait-back { transform: rotateY(180deg); display: grid; place-items: center; font-family: var(--font-story); font-size: 2.25rem; color: var(--seal); background: var(--surface-2); }
+.trait-front { position: relative; height: 100%; box-sizing: border-box; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; border-left: 5px solid var(--rc); box-shadow: var(--shadow); overflow: hidden; }
+.trait-card { --rc: var(--r-pham); }
+.trait-card.r-luong { --rc: var(--r-luong); }
+.trait-card.r-uu { --rc: var(--r-uu); }
+.trait-card.r-tuyet { --rc: var(--r-tuyet); }
+.trait-card.r-thien { --rc: var(--r-thien); }
+.trait-card.r-than { --rc: var(--r-than); }
+.trait-card.r-ac { --rc: var(--r-ac); }
+.trait-card.r-tuyet .trait-front, .trait-card.r-thien .trait-front, .trait-card.r-than .trait-front { box-shadow: 0 0 0 1px var(--rc), 0 0 18px -2px var(--rc); }
+.trait-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.trait-head b { font-family: var(--font-story); font-size: 1.0625rem; color: var(--rc); }
+.trait-card.r-pham .trait-head b, .trait-chip.r-pham b { color: var(--ink); }
+.trait-rarity { flex: none; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--rc); border: 1px solid var(--rc); border-radius: 999px; padding: 1px 8px; }
+.trait-flavor { margin: 0; font-family: var(--font-story); font-style: italic; font-size: 0.8125rem; color: var(--muted); }
+.trait-summary { margin: 0; font-size: 0.875rem; }
+.destiny-actions { position: sticky; bottom: calc(8px + env(safe-area-inset-bottom)); margin-top: auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
+.btn-secondary { min-height: 52px; border: 1px solid var(--seal); border-radius: var(--radius); background: var(--surface); color: var(--seal); font-weight: 600; cursor: pointer; }
+.btn-secondary:disabled { opacity: 0.45; cursor: default; }
+.trait-chips { list-style: none; margin: 0 0 10px; padding: 0; display: grid; gap: 6px; }
+.trait-chip { --rc: var(--r-pham); display: flex; flex-direction: column; gap: 1px; padding: 6px 10px; border-left: 4px solid var(--rc); border-radius: 6px; background: var(--surface-2); font-size: 0.8125rem; }
+.trait-chip b { font-family: var(--font-story); color: var(--rc); }
+.trait-chip span { color: var(--muted); }
+.trait-chip.r-luong { --rc: var(--r-luong); }
+.trait-chip.r-uu { --rc: var(--r-uu); }
+.trait-chip.r-tuyet { --rc: var(--r-tuyet); }
+.trait-chip.r-thien { --rc: var(--r-thien); }
+.trait-chip.r-than { --rc: var(--r-than); }
+.trait-chip.r-ac { --rc: var(--r-ac); }
