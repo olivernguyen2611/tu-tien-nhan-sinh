@@ -127,6 +127,7 @@ export const GlossarySchema = z.array(
 );
 
 const probability = z.number().min(0).max(1);
+const weightMap = z.record(id, z.number().min(0));
 
 // ---------- Character creation ----------
 
@@ -199,6 +200,8 @@ const ADD_HOOK = new RegExp(
       `statPerYear\\.(${[...MORTAL_STATS, ...APTITUDES].join('|')})`,
       `statFloor\\.(${[...MORTAL_STATS, ...APTITUDES].join('|')})`,
       'silverPerYear', 'deathChancePerYear', 'illnessChancePct', 'tribulationPct',
+      // Special bodies (realms-roots-paths.md B5); takes effect from task 2.3.
+      'lineage\\.(tien|ma|phat|quy)\\.cultivationSpeed',
     ].join('|') +
     ')$',
 );
@@ -217,6 +220,8 @@ export const EffectHookSchema = z
     at: z.number().int().min(1).optional(),
     then: id.optional(),
     activeFrom: z.object({ age: z.number().int().min(0) }).strict().optional(),
+    /** Off once the character reaches this realm (e.g. Thiên Tuyệt Mạch); takes effect from task 2.3. */
+    activeUntil: z.object({ realm: id }).strict().optional(),
   })
   .strict()
   .superRefine((e, ctx) => {
@@ -394,6 +399,56 @@ export const BalanceSchema = z
         happinessRest: z.number(),
       })
       .strict(),
+    /** Per realm (ids from realms.json): PLAN.md G and realms-roots-paths.md A. */
+    realms: z.record(
+      id,
+      z
+        .object({
+          /** Base cultivation gain, % of the realm per year. */
+          speedPct: z.number().min(0),
+          /** Missing = mortal lifespan (balance.lifespan). */
+          lifespan: z.number().int().min(1).optional(),
+          lifespanVariance: z.number().int().min(0).optional(),
+          combatPower: z.number().min(0),
+          /** Mortals: combat power grows up to this through the martial stages. */
+          combatPowerMax: z.number().min(0).optional(),
+          /** Chance to break through into this realm. */
+          breakthroughChance: probability,
+        })
+        .strict(),
+    ),
+    realmStages: z
+      .object({
+        luyenKhiLevelUpChance: probability,
+        minorStageChance: probability,
+        perfectFoundationLifespan: z.number().int().min(0),
+        goldenCoreLifespanPerGradeAbove5: z.number().int().min(0),
+      })
+      .strict(),
+    roots: z
+      .object({
+        gradeWeights: weightMap,
+        /** Cultivation speed multiplier per grade. */
+        gradeSpeed: z.record(id, z.number().min(0)),
+        elementCount: z.record(id, z.number().int().min(0)),
+        bodyWeights: weightMap,
+        /** Origin "Hậu duệ gia tộc tu tiên" rolls this many times and keeps the best. */
+        clanDescendantRolls: z.number().int().min(1),
+        /** Combat bonus when your element beats the enemy's (K.3.3). */
+        elementCounterBonus: z.number().min(0),
+      })
+      .strict(),
+    /** Combat path modifiers (realms-roots-paths.md C); keyed by path id. */
+    paths: z
+      .object({ startAffinity: range })
+      .catchall(z.record(z.string(), z.number())),
+    crafts: z
+      .object({
+        /** Job flag → starting craft levels. Mortals get them at once, cultivators once they have a root. */
+        mortalStartLevel: z.record(id, z.record(id, z.number().int().min(0).max(100))),
+        cultivatorStartLevel: z.record(id, z.record(id, z.number().int().min(0).max(100))),
+      })
+      .strict(),
   })
   .passthrough(); // later tasks add sections (cultivation, lifespan…)
 
@@ -460,3 +515,80 @@ export const LifeTextsSchema = z
   })
   .strict();
 export type LifeTexts = z.infer<typeof LifeTextsSchema>;
+
+// ---------- Realms, spirit roots, paths, crafts (task 2.1) ----------
+
+/** content/realms.json: realm order is the array order (Phàm Nhân first). */
+export const RealmsFileSchema = z
+  .object({
+    realms: z
+      .array(z.object({ id, name: z.string().min(1), stages: z.array(z.string().min(1)).min(1), description: z.string().min(1) }).strict())
+      .min(1),
+    /** Shown as a greyed-out "???" after the last realm. */
+    beyond: z.object({ name: z.string().min(1), description: z.string().min(1) }).strict(),
+  })
+  .strict();
+export type RealmsFile = z.infer<typeof RealmsFileSchema>;
+
+/** content/roots.json: root grades, elements with what they beat, special bodies. */
+export const RootsFileSchema = z
+  .object({
+    grades: z.array(z.object({ id, name: z.string().min(1), description: z.string().min(1) }).strict()).min(1),
+    elements: z
+      .array(
+        z
+          .object({
+            id,
+            name: z.string().min(1),
+            /** Biến dị (Lôi, Băng, Phong, Ám). */
+            variant: z.boolean(),
+            /** Elements this one beats; "weak to" is derived from the others. */
+            beats: ids,
+            description: z.string().min(1),
+          })
+          .strict(),
+      )
+      .min(1),
+    bodies: z
+      .array(
+        z
+          .object({
+            id,
+            name: z.string().min(1),
+            description: z.string().min(1),
+            /** Every technique counts as matching the root (Lưu Ly Linh Thể). */
+            anyTechnique: z.boolean().default(false),
+            effects: z.array(EffectHookSchema).min(1),
+          })
+          .strict(),
+      )
+      .min(1),
+  })
+  .strict();
+export type RootsFile = z.infer<typeof RootsFileSchema>;
+
+/** content/aptitudes.json: five combat paths and six crafts. */
+export const AptitudesFileSchema = z
+  .object({
+    paths: z.array(z.object({ id, name: z.string().min(1), description: z.string().min(1) }).strict()).min(1),
+    crafts: z
+      .array(
+        z
+          .object({
+            id,
+            name: z.string().min(1),
+            /** Used in level titles: "Đan" → Đan Sư, Đại Đan Sư… */
+            prefix: z.string().min(1),
+            /** Mortals can learn it without a spirit root. */
+            mortal: z.boolean(),
+            makes: z.string().min(1),
+            description: z.string().min(1),
+          })
+          .strict(),
+      )
+      .min(1),
+    /** Ascending by minLevel; {craft} = craft name in lower case, {prefix} = its prefix. */
+    craftTitles: z.array(z.object({ minLevel: z.number().int().min(0).max(100), title: z.string().min(1) }).strict()).min(1),
+  })
+  .strict();
+export type AptitudesFile = z.infer<typeof AptitudesFileSchema>;

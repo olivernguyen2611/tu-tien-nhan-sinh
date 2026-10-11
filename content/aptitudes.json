@@ -1,0 +1,24 @@
+{
+  "paths": [
+    { "id": "sword", "name": "Kiếm", "description": "Một kiếm phân thắng bại. Kiếm tu không thích đánh lâu, vì đánh lâu là thua." },
+    { "id": "body", "name": "Thể", "description": "Lấy thân làm pháp bảo. Đao chém không đứt, nhưng tốn cơm." },
+    { "id": "spell", "name": "Pháp", "description": "Hô phong hoán vũ, gọi lửa gọi sấm. Đánh đúng hệ thì một chiêu bằng ba." },
+    { "id": "weapon", "name": "Binh", "description": "Đao, thương, côn, kích. Không chói lọi nhưng chắc chắn, càng nhiều đồ tốt càng mạnh." },
+    { "id": "arts", "name": "Thuật", "description": "Phù, trận, độc, thú. Kẻ chuẩn bị kỹ không bao giờ đánh một trận công bằng." }
+  ],
+  "crafts": [
+    { "id": "alchemy", "name": "Luyện Đan", "prefix": "Đan", "mortal": true, "makes": "Đan dược", "description": "Một lò, một lửa, trăm vị thuốc. Sai một vị là đan thành than." },
+    { "id": "forging", "name": "Luyện Khí", "prefix": "Khí", "mortal": false, "makes": "Pháp bảo, binh khí", "description": "Nung sắt thành kiếm, nung kiếm thành pháp bảo. Tiếng búa ba năm không ngớt." },
+    { "id": "formation", "name": "Trận Pháp", "prefix": "Trận", "mortal": false, "makes": "Trận bàn", "description": "Vài lá cờ, mấy hòn đá, đặt đúng chỗ thì nghìn quân không qua." },
+    { "id": "talisman", "name": "Phù Lục", "prefix": "Phù", "mortal": false, "makes": "Phù", "description": "Một nét bút sai là cháy cả tay áo. Một nét bút đúng là cháy cả đối thủ." },
+    { "id": "farming", "name": "Linh Thực", "prefix": "Linh Thực", "mortal": true, "makes": "Linh thảo", "description": "Trồng linh thảo, chăm linh điền. Cây lớn chậm, nhưng không bao giờ phản bội ngươi." },
+    { "id": "beast", "name": "Ngự Thú", "prefix": "Ngự Thú", "mortal": false, "makes": "Linh thú đồng hành", "description": "Nuôi, thuần, kết khế ước với linh thú. Nó cắn người khác, đôi khi cắn cả ngươi." }
+  ],
+  "craftTitles": [
+    { "minLevel": 0, "title": "Học đồ {craft}" },
+    { "minLevel": 20, "title": "{prefix} Đồ" },
+    { "minLevel": 40, "title": "{prefix} Sư" },
+    { "minLevel": 60, "title": "Đại {prefix} Sư" },
+    { "minLevel": 80, "title": "{prefix} Tông" }
+  ]
+}

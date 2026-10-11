@@ -9,6 +9,7 @@ import {
 import balance from '../content/config/balance.json';
 import lifeTexts from '../content/life-texts.json';
 import extremes from '../content/stat-extremes.json';
+import { cultivation } from './fixtures';
 import { StatExtremesFileSchema } from '../src/core/schemas';
 import world from '../content/worlds/thuong_lan/world.json';
 import names from '../content/worlds/thuong_lan/character/names.json';
@@ -21,6 +22,7 @@ const content: Content = {
   origins: OriginFileSchema.parse(origins),
   lifeTexts: LifeTextsSchema.parse(lifeTexts),
   extremes: StatExtremesFileSchema.parse(extremes),
+  cultivation,
   events: [],
   glossary: [],
   familyActions: [],

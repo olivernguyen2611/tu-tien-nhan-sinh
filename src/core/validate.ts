@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { BalanceSchema, FamilyActionFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type GameEvent, type Origin, type StatExtremesFile, type Trait, type World } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type StatExtremesFile, type Trait, type World } from './schemas';
 
 export interface Problem {
   file: string;
@@ -27,6 +27,9 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'family-actions.json') return FamilyActionFileSchema;
     if (rest === 'life-texts.json') return LifeTextsSchema;
     if (rest === 'stat-extremes.json') return StatExtremesFileSchema;
+    if (rest === 'realms.json') return RealmsFileSchema;
+    if (rest === 'roots.json') return RootsFileSchema;
+    if (rest === 'aptitudes.json') return AptitudesFileSchema;
     return null;
   }
   // Belongs to one world.
@@ -49,6 +52,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   const problems: Problem[] = [];
   const events: { file: string; event: GameEvent }[] = [];
   let traitIds: Set<string> | null = null;
+  const parsedShared: { balance?: Balance; realms?: RealmsFile; roots?: RootsFile; aptitudes?: AptitudesFile } = {};
 
   for (const [file, raw] of Object.entries(files)) {
     const schema = schemaFor(file);
@@ -108,7 +112,14 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === EventFileSchema) {
       for (const event of parsed.data as GameEvent[]) events.push({ file, event });
     }
+    if (schema === BalanceSchema) parsedShared.balance = parsed.data as Balance;
+    if (schema === RealmsFileSchema) parsedShared.realms = parsed.data as RealmsFile;
+    if (schema === RootsFileSchema) parsedShared.roots = parsed.data as RootsFile;
+    if (schema === AptitudesFileSchema) parsedShared.aptitudes = parsed.data as AptitudesFile;
   }
+
+  problems.push(...checkCultivationTables(parsedShared));
+  const realmIds = parsedShared.realms ? new Set(parsedShared.realms.realms.map((r) => r.id)) : null;
 
   // Duplicate event ids across all event files.
   const seen = new Map<string, string>();
@@ -146,6 +157,12 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
         .flatMap((c) => [...(c.traitsAny ?? []), ...(c.traitsAll ?? []), ...(c.traitsNone ?? [])]);
       for (const t of named) {
         if (!traitIds.has(t)) problems.push({ file, level: 'error', message: `${where} nhắc tới khí vận không tồn tại "${t}"` });
+      }
+    }
+
+    if (realmIds) {
+      for (const r of [event.conditions.realm?.min, event.conditions.realm?.max]) {
+        if (r && !realmIds.has(r)) problems.push({ file, level: 'error', message: `${where} nhắc tới cảnh giới không tồn tại "${r}"` });
       }
     }
 
@@ -188,4 +205,83 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   }
 
   return problems;
+}
+
+/** Duplicate ids in a list, as messages. */
+function duplicates(file: string, what: string, list: { id: string }[]): Problem[] {
+  const seen = new Set<string>();
+  const out: Problem[] = [];
+  for (const { id } of list) {
+    if (seen.has(id)) out.push({ file, level: 'error', message: `trùng id ${what} "${id}"` });
+    seen.add(id);
+  }
+  return out;
+}
+
+/** Content ids and their numbers in balance.json must name the same things. */
+function sameKeys(file: string, what: string, contentIds: string[], balanceKeys: string[]): Problem[] {
+  const out: Problem[] = [];
+  for (const k of contentIds) if (!balanceKeys.includes(k)) out.push({ file, level: 'error', message: `${what}: thiếu số liệu cho "${k}"` });
+  for (const k of balanceKeys) if (!contentIds.includes(k)) out.push({ file, level: 'error', message: `${what}: "${k}" không có trong nội dung` });
+  return out;
+}
+
+/** Cross-checks for realms.json, roots.json, aptitudes.json against balance.json (task 2.1). */
+function checkCultivationTables(t: { balance?: Balance; realms?: RealmsFile; roots?: RootsFile; aptitudes?: AptitudesFile }): Problem[] {
+  const out: Problem[] = [];
+  const bal = 'config/balance.json';
+  const realmIds = t.realms?.realms.map((r) => r.id) ?? [];
+  if (t.realms) {
+    out.push(...duplicates('realms.json', 'cảnh giới', t.realms.realms));
+    if (t.balance) out.push(...sameKeys(bal, 'realms', realmIds, Object.keys(t.balance.realms)));
+  }
+  if (t.roots) {
+    const f = 'roots.json';
+    out.push(...duplicates(f, 'linh căn', t.roots.grades), ...duplicates(f, 'hệ', t.roots.elements), ...duplicates(f, 'thể chất', t.roots.bodies));
+    const elements = new Set(t.roots.elements.map((e) => e.id));
+    for (const e of t.roots.elements) {
+      for (const b of e.beats) {
+        if (!elements.has(b)) out.push({ file: f, level: 'error', message: `hệ "${e.id}" khắc hệ không tồn tại "${b}"` });
+        if (b === e.id) out.push({ file: f, level: 'error', message: `hệ "${e.id}" không thể tự khắc mình` });
+      }
+    }
+    for (const body of t.roots.bodies) {
+      for (const h of body.effects) {
+        if (h.activeUntil && t.realms && !realmIds.includes(h.activeUntil.realm)) {
+          out.push({ file: f, level: 'error', message: `thể chất "${body.id}": activeUntil tới cảnh giới không tồn tại "${h.activeUntil.realm}"` });
+        }
+      }
+    }
+    if (t.balance) {
+      const grades = t.roots.grades.map((g) => g.id);
+      const r = t.balance.roots;
+      out.push(
+        ...sameKeys(bal, 'roots.gradeWeights', grades, Object.keys(r.gradeWeights)),
+        ...sameKeys(bal, 'roots.gradeSpeed', grades, Object.keys(r.gradeSpeed)),
+        ...sameKeys(bal, 'roots.elementCount', grades, Object.keys(r.elementCount)),
+        ...sameKeys(bal, 'roots.bodyWeights', t.roots.bodies.map((b) => b.id), Object.keys(r.bodyWeights)),
+      );
+    }
+  }
+  if (t.aptitudes) {
+    const f = 'aptitudes.json';
+    out.push(...duplicates(f, 'con đường', t.aptitudes.paths), ...duplicates(f, 'bách nghệ', t.aptitudes.crafts));
+    const titles = t.aptitudes.craftTitles;
+    if (titles[0].minLevel !== 0) out.push({ file: f, level: 'error', message: 'craftTitles phải bắt đầu từ minLevel 0' });
+    titles.forEach((x, i) => {
+      if (i > 0 && x.minLevel <= titles[i - 1].minLevel) out.push({ file: f, level: 'error', message: 'craftTitles phải tăng dần theo minLevel' });
+    });
+    if (t.balance) {
+      const { startAffinity: _, ...paths } = t.balance.paths;
+      out.push(...sameKeys(bal, 'paths', t.aptitudes.paths.map((p) => p.id), Object.keys(paths)));
+      const craftIds = t.aptitudes.crafts.map((c) => c.id);
+      const starts = { ...t.balance.crafts.mortalStartLevel, ...t.balance.crafts.cultivatorStartLevel };
+      for (const [job, levels] of Object.entries(starts)) {
+        for (const c of Object.keys(levels)) {
+          if (!craftIds.includes(c)) out.push({ file: bal, level: 'error', message: `crafts: nghề "${job}" nhắc tới bách nghệ không tồn tại "${c}"` });
+        }
+      }
+    }
+  }
+  return out;
 }

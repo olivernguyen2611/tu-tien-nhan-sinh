@@ -1,6 +1,7 @@
 // Loads all JSON under content/ at build time and checks it with the same
 // rules as `npm run validate`.
 import {
+  AptitudesFileSchema, RealmsFileSchema, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile,
   BalanceSchema, EventFileSchema, FamilyActionFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema,
   type Balance, type FamilyAction, type GameEvent, type Glossary, type LifeTexts, type Names, type Origin, type StatExtremesFile, type Trait, type World,
 } from './schemas';
@@ -24,6 +25,18 @@ export interface Content {
   familyActions: FamilyAction[];
   lifeTexts: LifeTexts;
   extremes: StatExtremesFile;
+  /** Realms, spirit roots, combat paths and crafts (task 2.1). */
+  cultivation: CultivationTables;
+}
+
+export interface CultivationTables {
+  realms: RealmsFile;
+  roots: RootsFile;
+  aptitudes: AptitudesFile;
+}
+
+export function parseCultivationTables(realms: unknown, roots: unknown, aptitudes: unknown): CultivationTables {
+  return { realms: RealmsFileSchema.parse(realms), roots: RootsFileSchema.parse(roots), aptitudes: AptitudesFileSchema.parse(aptitudes) };
 }
 
 const modules = import.meta.glob('../../content/**/*.json', { eager: true, import: 'default' });
@@ -72,5 +85,6 @@ export function loadContent(worldId: string = DEFAULT_WORLD_ID): Content {
     familyActions: FamilyActionFileSchema.parse(files['family-actions.json'] ?? []),
     lifeTexts: LifeTextsSchema.parse(files['life-texts.json']),
     extremes: StatExtremesFileSchema.parse(files['stat-extremes.json']),
+    cultivation: parseCultivationTables(files['realms.json'], files['roots.json'], files['aptitudes.json']),
   };
 }
