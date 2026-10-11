@@ -51,7 +51,7 @@ describe('createLife', () => {
     expect(s.character.name).toBe('Tô Vân');
     expect(s.character.gender).toBe('nu');
     expect(s.character.originId).toBe('co_nhi');
-    expect(s.flags.orphan).toBe(true);
+    expect(s.flags.no_parents).toBe(true);
     expect(s.money.silver).toBe(0);
   });
 

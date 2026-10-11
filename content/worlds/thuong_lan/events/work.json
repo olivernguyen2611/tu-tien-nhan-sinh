@@ -1,0 +1,341 @@
+[
+  {
+    "id": "hoc_nghe",
+    "category": "work",
+    "title": "Học nghề",
+    "text": "Tới tuổi phải kiếm cơm. Trong {hometown} có ba nơi đang nhận người học việc.",
+    "conditions": {
+      "age": {
+        "min": 13,
+        "max": 16
+      },
+      "flagsNone": [
+        "nghe_ren",
+        "nghe_thuoc",
+        "nghe_quan"
+      ]
+    },
+    "weight": 15,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Lò rèn",
+        "result": {
+          "text": "Búa nặng, lửa nóng. Ba tháng đầu ngươi chỉ được kéo bễ.",
+          "effects": {
+            "stat.physique": 5,
+            "setFlags": [
+              "nghe_ren"
+            ]
+          }
+        }
+      },
+      {
+        "text": "Tiệm thuốc",
+        "result": {
+          "text": "Lão chủ tiệm bắt ngươi thuộc một trăm vị thuốc trong một tháng.",
+          "effects": {
+            "stat.intellect": 3,
+            "setFlags": [
+              "nghe_thuoc"
+            ]
+          }
+        }
+      },
+      {
+        "text": "Quán trọ",
+        "result": {
+          "text": "Bưng bê, lau bàn, nghe đủ chuyện thiên hạ.",
+          "effects": {
+            "stat.charm": 3,
+            "setFlags": [
+              "nghe_quan"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "boc_nham_thuoc",
+    "category": "work",
+    "title": "Bốc nhầm thuốc",
+    "text": "Khách vừa đi, {name} giật mình: gói thuốc vừa bốc có một vị không đúng.",
+    "themes": [
+      "poisoning",
+      "herb"
+    ],
+    "conditions": {
+      "age": {
+        "min": 13,
+        "max": 40
+      },
+      "flagsAll": [
+        "nghe_thuoc"
+      ]
+    },
+    "weight": 10,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Chạy theo đổi lại",
+        "result": {
+          "text": "Ngươi đuổi kịp ở đầu phố. Khách cảm ơn rối rít.",
+          "effects": {
+            "karma": 3,
+            "stat.physique": 1
+          }
+        }
+      },
+      {
+        "text": "Kệ, chắc không sao",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Khách quay lại khen thuốc hay. Ngươi toát mồ hôi.",
+          "effects": {
+            "karma": -1
+          }
+        },
+        "fail": {
+          "text": "Khách đau bụng cả đêm, sáng ra đứng chửi trước cửa tiệm. Lão chủ trừ lương.",
+          "effects": {
+            "silver": -10,
+            "karma": -3
+          }
+        }
+      },
+      {
+        "text": "Ngửi ra từ lúc bốc, đổi ngay",
+        "hidden": true,
+        "requires": {
+          "traitsAny": [
+            "linh_ty"
+          ]
+        },
+        "result": {
+          "text": "Lão chủ tiệm lần đầu tiên khen ngươi.",
+          "effects": {
+            "stat.intellect": 2,
+            "silver": 5
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "khach_an_quyt",
+    "category": "work",
+    "title": "Khách ăn quỵt",
+    "text": "Một gã mặc áo gấm ăn hết ba mâm, rồi đứng dậy đi thẳng ra cửa.",
+    "tags": [
+      "funny"
+    ],
+    "conditions": {
+      "age": {
+        "min": 13,
+        "max": 40
+      },
+      "flagsAll": [
+        "nghe_quan"
+      ]
+    },
+    "weight": 10,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Chặn lại",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Gã móc tiền trả, còn boa thêm vì sợ.",
+          "effects": {
+            "silver": 5
+          }
+        },
+        "fail": {
+          "text": "Gã đẩy ngươi ngã vào chậu nước rửa bát rồi đi mất.",
+          "effects": {
+            "stat.health": -3,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Cho qua, tự bù tiền",
+        "result": {
+          "text": "Ngươi bù tiền mâm cỗ. Lòng hơi đau.",
+          "effects": {
+            "silver": -5,
+            "karma": 1
+          }
+        }
+      },
+      {
+        "text": "Khen gã một tràng",
+        "hidden": true,
+        "requires": {
+          "traitsAny": [
+            "kheo_mom"
+          ]
+        },
+        "result": {
+          "text": "Gã sướng quá, trả gấp đôi và hứa mai quay lại.",
+          "effects": {
+            "silver": 10
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "lo_ren_chay",
+    "category": "work",
+    "title": "Lò rèn bốc cháy",
+    "text": "Bễ lò hỏng, lửa bén lên mái. Sư phụ {name} còn đang ngủ trưa trong buồng.",
+    "themes": [
+      "mishap"
+    ],
+    "conditions": {
+      "age": {
+        "min": 13,
+        "max": 40
+      },
+      "flagsAll": [
+        "nghe_ren"
+      ]
+    },
+    "weight": 6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Lao vào cứu sư phụ",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Ngươi cõng sư phụ ra, tóc cháy xém một mảng. Sư phụ truyền cho ngươi bí quyết tôi thép.",
+          "effects": {
+            "karma": 5,
+            "stat.physique": 2,
+            "setFlags": [
+              "su_phu_ren_quy"
+            ]
+          }
+        },
+        "fail": {
+          "text": "Ngươi cứu được sư phụ nhưng bỏng cả cánh tay.",
+          "effects": {
+            "karma": 5,
+            "stat.health": -15
+          }
+        }
+      },
+      {
+        "text": "Chạy ra gọi người",
+        "result": {
+          "text": "Hàng xóm dập lửa kịp. Sư phụ khen ngươi biết điều.",
+          "effects": {
+            "karma": 1
+          }
+        }
+      },
+      {
+        "text": "Xông vào như không",
+        "hidden": true,
+        "requires": {
+          "traitsAny": [
+            "hau_bi"
+          ]
+        },
+        "result": {
+          "text": "Lửa liếm qua người mà ngươi chỉ thấy ấm ấm.",
+          "effects": {
+            "karma": 5,
+            "setFlags": [
+              "su_phu_ren_quy"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "buon_chuyen_dau",
+    "category": "work",
+    "title": "Buôn chuyến đầu",
+    "text": "Một người quen rủ {name} góp hai mươi lạng buôn một chuyến muối lên miền núi.",
+    "conditions": {
+      "age": {
+        "min": 16,
+        "max": 50
+      }
+    },
+    "weight": 10,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Góp vốn",
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 20
+            }
+          ]
+        },
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Chuyến hàng trót lọt. Hai mươi lạng thành năm mươi.",
+          "effects": {
+            "silver": 30,
+            "stat.happiness": 5
+          }
+        },
+        "fail": {
+          "text": "Gặp mưa, muối tan hết. Người quen khóc to hơn ngươi.",
+          "effects": {
+            "silver": -20,
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Từ chối",
+        "result": {
+          "text": "Ngươi giữ tiền trong túi, ngủ yên giấc.",
+          "effects": {}
+        }
+      },
+      {
+        "text": "Góp vốn, nhờ người quen dẫn đường",
+        "hidden": true,
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 20
+            }
+          ],
+          "traitsAny": [
+            "quy_nhan_duyen"
+          ]
+        },
+        "result": {
+          "text": "Dọc đường gặp một thương nhân lớn mua sỉ cả chuyến.",
+          "effects": {
+            "silver": 40
+          }
+        }
+      }
+    ]
+  }
+]

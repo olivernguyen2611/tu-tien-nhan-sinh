@@ -1,0 +1,489 @@
+[
+  {
+    "id": "thoi_noi",
+    "category": "childhood",
+    "title": "Lễ thôi nôi",
+    "text": "Cả nhà bày lên chiếu một quyển sách, một thanh kiếm gỗ, một cái bàn tính và một cái bánh bao, chờ xem {name} bốc gì để đoán tương lai.",
+    "tags": [
+      "funny"
+    ],
+    "conditions": {
+      "age": {
+        "min": 1,
+        "max": 1
+      },
+      "flagsNone": [
+        "no_parents"
+      ]
+    },
+    "weight": 10,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Bốc quyển sách",
+        "result": {
+          "text": "Cha ngươi cười đến rụng răng: nhà sắp có người đỗ đạt.",
+          "effects": {
+            "stat.intellect": 3
+          }
+        }
+      },
+      {
+        "text": "Bốc thanh kiếm gỗ",
+        "result": {
+          "text": "Ngươi vung kiếm, trúng ngay trán ông nội. Ông khen: có khí phách!",
+          "effects": {
+            "stat.physique": 3
+          }
+        }
+      },
+      {
+        "text": "Bốc cái bàn tính",
+        "result": {
+          "text": "Mẹ ngươi mừng thầm: ít ra sau này không bị lừa tiền.",
+          "effects": {
+            "stat.charm": 2,
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Bốc cái bánh bao",
+        "result": {
+          "text": "Ngươi ăn sạch, không chừa ai. Cả nhà im lặng một lúc lâu.",
+          "effects": {
+            "stat.health": 3,
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Bốc hết, ăn luôn cả góc bàn tính",
+        "hidden": true,
+        "requires": {
+          "traitsAny": [
+            "thiet_vi"
+          ]
+        },
+        "result": {
+          "text": "Đại phu được mời tới, xem xong nói: thằng bé không sao, cái bàn tính thì có sao.",
+          "effects": {
+            "stat.health": 5,
+            "stat.physique": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "cu_la_trong_vuon",
+    "category": "childhood",
+    "title": "Củ lạ trong vườn",
+    "text": "{name} đào giun ngoài vườn, đào mãi lại ra một củ rễ trắng có râu, ngửi thơm thơm.",
+    "themes": [
+      "herb",
+      "fortune"
+    ],
+    "conditions": {
+      "age": {
+        "min": 4,
+        "max": 9
+      }
+    },
+    "weight": 6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Ăn luôn",
+        "result": {
+          "text": "Người ngươi nóng ran ba ngày, sau đó khỏe như nghé.",
+          "effects": {
+            "stat.health": 5,
+            "stat.physique": 2
+          }
+        }
+      },
+      {
+        "text": "Mang ra chợ bán",
+        "result": {
+          "text": "Một lão bán thuốc trả ngay hai mươi lạng, mắt sáng rỡ. Có lẽ ngươi bán hớ.",
+          "effects": {
+            "silver": 20
+          }
+        }
+      },
+      {
+        "text": "Đưa cho mẹ",
+        "requires": {
+          "flagsNone": [
+            "no_parents"
+          ]
+        },
+        "result": {
+          "text": "Mẹ ngươi nấu canh cho cả nhà. Tối đó cả nhà ngủ rất ngon.",
+          "effects": {
+            "stat.happiness": 5,
+            "karma": 2
+          }
+        }
+      },
+      {
+        "text": "Ngửi kỹ rồi đào tiếp",
+        "hidden": true,
+        "requires": {
+          "traitsAny": [
+            "linh_ty"
+          ]
+        },
+        "result": {
+          "text": "Dưới củ thứ nhất còn hai củ nữa. Mũi ngươi đúng là không phụ ngươi.",
+          "effects": {
+            "stat.health": 5,
+            "silver": 20
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "qua_do_ben_suoi",
+    "category": "childhood",
+    "title": "Quả đỏ bên suối",
+    "text": "Bên suối có cây quả đỏ mọng, chim không dám đậu. {name} nuốt nước miếng.",
+    "tags": [
+      "funny"
+    ],
+    "themes": [
+      "poisoning"
+    ],
+    "conditions": {
+      "age": {
+        "min": 5,
+        "max": 12
+      }
+    },
+    "weight": 10,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Hái ăn thử",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Chua lè, nhưng không sao. Bụng ngươi đúng là bằng sắt.",
+          "effects": {
+            "stat.happiness": 2
+          }
+        },
+        "fail": {
+          "text": "Ngươi nằm bẹp ba ngày, môi tím như quả mận.",
+          "effects": {
+            "stat.health": -10
+          }
+        }
+      },
+      {
+        "text": "Hái về hỏi người lớn",
+        "result": {
+          "text": "Người lớn bảo: quả này chim còn không ăn, ngươi ăn làm gì? Ngươi học được một bài.",
+          "effects": {
+            "stat.intellect": 2
+          }
+        }
+      },
+      {
+        "text": "Bỏ đi",
+        "result": {
+          "text": "Ngươi đi, lòng còn vương vấn.",
+          "effects": {}
+        }
+      },
+      {
+        "text": "Ngửi ra mùi độc, hái về đuổi chuột",
+        "hidden": true,
+        "requires": {
+          "traitsAny": [
+            "linh_ty"
+          ]
+        },
+        "result": {
+          "text": "Chuột trong nhà chết sạch. Mẹ ngươi cho thêm một bát cơm.",
+          "effects": {
+            "stat.happiness": 3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "cho_du_dau_lang",
+    "category": "childhood",
+    "title": "Chó dữ đầu làng",
+    "text": "Con chó vàng đầu làng gầm gừ, chặn đường {name} đi chợ về.",
+    "tags": [
+      "funny"
+    ],
+    "themes": [
+      "mishap"
+    ],
+    "conditions": {
+      "age": {
+        "min": 5,
+        "max": 12
+      }
+    },
+    "weight": 10,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Chạy",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 40
+        },
+        "success": {
+          "text": "Ngươi chạy nhanh đến mức rơi một chiếc dép. Chó tha dép đi, coi như hòa.",
+          "effects": {
+            "stat.happiness": -1
+          }
+        },
+        "fail": {
+          "text": "Chó cắn rách quần. Cả làng cười ba ngày.",
+          "effects": {
+            "stat.health": -5,
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Ném gói bánh cho nó",
+        "result": {
+          "text": "Chó vẫy đuôi ăn bánh. Ngươi về tay không, bị mắng.",
+          "effects": {
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Ngồi xuống nói chuyện với nó",
+        "hidden": true,
+        "requires": {
+          "traitsAny": [
+            "kheo_mom"
+          ]
+        },
+        "result": {
+          "text": "Không ai biết ngươi nói gì, chỉ biết từ hôm đó con chó theo ngươi về nhà.",
+          "effects": {
+            "stat.happiness": 8,
+            "setFlags": [
+              "co_cho_vang"
+            ]
+          }
+        }
+      },
+      {
+        "text": "Chạy vòng quanh làng ba vòng",
+        "hidden": true,
+        "requires": {
+          "traitsAny": [
+            "khoai_cuoc"
+          ]
+        },
+        "result": {
+          "text": "Chó mệt lăn ra, ngươi còn chưa thở dốc.",
+          "effects": {
+            "stat.physique": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "gianh_dieu",
+    "category": "childhood",
+    "title": "Giành diều",
+    "text": "Thằng con nhà phú hộ giật con diều {name} tự làm, còn cười khẩy.",
+    "tags": [
+      "funny"
+    ],
+    "conditions": {
+      "age": {
+        "min": 6,
+        "max": 12
+      }
+    },
+    "weight": 10,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Lao vào đánh",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Ngươi lấy lại diều. Phú hộ tới nhà mắng vốn, cha ngươi lén cho thêm cái đùi gà.",
+          "effects": {
+            "stat.happiness": 5,
+            "karma": -1
+          }
+        },
+        "fail": {
+          "text": "Ngươi bị đánh bầm mắt, diều cũng rách.",
+          "effects": {
+            "stat.health": -5,
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Thôi, làm cái khác",
+        "result": {
+          "text": "Ngươi làm cái diều mới to gấp đôi. Thằng kia nhìn mà tức.",
+          "effects": {
+            "stat.intellect": 2,
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Mách người lớn",
+        "result": {
+          "text": "Người lớn hai nhà cãi nhau, quên mất cái diều.",
+          "effects": {}
+        }
+      },
+      {
+        "text": "Đứng yên cho nó đánh",
+        "hidden": true,
+        "requires": {
+          "traitsAny": [
+            "hau_bi"
+          ]
+        },
+        "result": {
+          "text": "Nó đánh mỏi tay, ngươi vẫn cười. Nó sợ quá trả diều rồi chạy.",
+          "effects": {
+            "stat.happiness": 5,
+            "stat.daoHeart": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ong_lao_xin_an",
+    "category": "childhood",
+    "title": "Ông lão xin ăn",
+    "text": "Một ông lão rách rưới ngồi trước cửa nhà {name}, bụng kêu to hơn tiếng nói.",
+    "themes": [
+      "benefactor"
+    ],
+    "conditions": {
+      "age": {
+        "min": 6,
+        "max": 14
+      }
+    },
+    "weight": 6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Chia nửa bát cơm",
+        "result": {
+          "text": "Ông lão ăn xong, nhìn ngươi rất lâu rồi bỏ đi, không nói một lời.",
+          "effects": {
+            "karma": 3,
+            "setFlags": [
+              "cho_ong_lao_an"
+            ],
+            "followUp": {
+              "event": "ong_lao_tro_lai",
+              "afterYears": [
+                3,
+                8
+              ]
+            }
+          }
+        }
+      },
+      {
+        "text": "Đóng cửa",
+        "result": {
+          "text": "Ngoài cửa im lặng. Hôm sau ông lão không còn đó.",
+          "effects": {}
+        }
+      },
+      {
+        "text": "Trêu ông lão",
+        "result": {
+          "text": "Ông lão chỉ cười. Đêm đó ngươi mơ thấy bị chó đuổi.",
+          "effects": {
+            "karma": -3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ong_lao_tro_lai",
+    "category": "childhood",
+    "title": "Ông lão trở lại",
+    "text": "Ông lão năm xưa đứng trước cửa, áo vẫn rách, nhưng mắt sáng như sao. \"Bát cơm năm ấy, ta trả.\"",
+    "tags": [
+      "rare"
+    ],
+    "themes": [
+      "benefactor",
+      "fortune"
+    ],
+    "conditions": {
+      "flagsAll": [
+        "cho_ong_lao_an"
+      ]
+    },
+    "weight": 0,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận quyển sách cũ ông đưa",
+        "result": {
+          "text": "Chữ trong sách như sống dậy. Ngươi hiểu được vài điều lạ.",
+          "effects": {
+            "stat.comprehension": 3,
+            "stat.intellect": 3,
+            "setFlags": [
+              "nghe_noi_tu_tien"
+            ]
+          }
+        }
+      },
+      {
+        "text": "Nhận túi bạc",
+        "result": {
+          "text": "Túi nặng trịch. Ông lão lắc đầu như thấy tiếc.",
+          "effects": {
+            "silver": 50
+          }
+        }
+      },
+      {
+        "text": "Mời ông ở lại ăn cơm",
+        "result": {
+          "text": "Ông lão cười lớn, ăn ba bát, để lại cả sách lẫn bạc rồi đi mất.",
+          "effects": {
+            "stat.comprehension": 2,
+            "silver": 20,
+            "karma": 2,
+            "setFlags": [
+              "nghe_noi_tu_tien"
+            ]
+          }
+        }
+      }
+    ]
+  }
+]
