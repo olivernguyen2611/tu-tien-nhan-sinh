@@ -1,9 +1,10 @@
 {
   "version": 1,
   "events": {
-    "popupChanceLowRealm": 0.2,
+    "popupChanceLowRealm": 0.5,
     "popupChanceHighRealm": 0.1,
-    "logLineChance": 0.6
+    "logLineChance": 0.6,
+    "check": { "base": 0.5, "perPoint": 0.015, "min": 0.05, "max": 0.95 }
   },
   "traits": {
     "slots": 3,

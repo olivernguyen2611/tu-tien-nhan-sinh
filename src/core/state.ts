@@ -3,6 +3,7 @@ import type { Content } from './content';
 import { Rng } from './rng';
 import { APTITUDES, MORTAL_STATS } from './schemas';
 import type { GameState, Gender } from './types';
+import { rollYearEvent } from '../systems/events/engine';
 
 export interface NewLifeInput {
   seed: string;
@@ -67,6 +68,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     flags: origin.noParents ? { no_parents: true } : {},
     destiny: { offered: [], rerollsLeft: content.balance.traits.rerolls, confirmed: false },
     traits: [],
+    events: { pending: null, history: {}, followUps: [] },
     log: [],
   };
   state.log.push({ age: 0, lines: [{ text: fillTemplate(origin.birthText, state), tone: 'normal' }] });
@@ -74,12 +76,14 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
 }
 
 /** Placeholder year step until TimeSystem and events land (tasks 1.5, 1.8). */
-export function advanceYear(state: GameState): GameState {
-  if (!state.alive) return state;
+/** One year passes; at most one event is rolled for the player to answer. */
+export function advanceYear(state: GameState, content: Content): GameState {
+  if (!state.alive || state.events.pending) return state;
   const age = state.character.age + 1;
-  return {
-    ...state,
-    character: { ...state.character, age },
-    log: [...state.log, { age, lines: [{ text: 'Một năm bình lặng trôi qua.', tone: 'normal' }] }],
-  };
+  const aged: GameState = { ...state, character: { ...state.character, age } };
+  const next = rollYearEvent(aged, content);
+  const line = next.events.pending
+    ? []
+    : [{ text: 'Một năm bình lặng trôi qua.', tone: 'normal' as const }];
+  return { ...next, log: [...next.log, { age, lines: line }] };
 }

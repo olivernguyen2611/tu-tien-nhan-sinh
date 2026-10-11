@@ -503,3 +503,19 @@ button { font: inherit; color: inherit; }
 .trait-chip.r-thien { --rc: var(--r-thien); }
 .trait-chip.r-than { --rc: var(--r-than); }
 .trait-chip.r-ac { --rc: var(--r-ac); }
+
+/* Event popup */
+.choice:disabled { opacity: 0.5; cursor: default; }
+.choice.hidden-choice { --rc: var(--r-pham); border-color: var(--rc); color: var(--rc); }
+.choice.hidden-choice.r-pham { color: var(--ink); }
+.choice.hidden-choice.r-luong { --rc: var(--r-luong); }
+.choice.hidden-choice.r-uu { --rc: var(--r-uu); }
+.choice.hidden-choice.r-tuyet { --rc: var(--r-tuyet); }
+.choice.hidden-choice.r-thien { --rc: var(--r-thien); }
+.choice.hidden-choice.r-than { --rc: var(--r-than); }
+.choice.hidden-choice.r-ac { --rc: var(--r-ac); }
+.choice-trait { font-weight: 700; }
+.event-card .outcome.good { color: var(--good); }
+.event-card .outcome.bad { color: var(--bad); }
+.event-card .outcome.rare { color: var(--rare); }
+.age-btn:disabled { opacity: 0.55; cursor: default; }

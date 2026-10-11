@@ -2,6 +2,7 @@ import { useEffect, useState } from 'preact/hooks';
 import type { Content } from '../core/content';
 import { advanceYear, createLife } from '../core/state';
 import type { GameState } from '../core/types';
+import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, rerollDestiny, rollDestiny } from '../systems/destiny';
 import { applyThemePref, loadThemePref, nextThemePref, type ThemePref } from './theme';
 import { CreateCharacterScreen } from './screens/CreateCharacter';
@@ -45,7 +46,13 @@ export function App({ content }: { content: Content }) {
       <MainScreen
         state={life}
         content={content}
-        onAdvance={() => setLife(advanceYear(life))}
+        onAdvance={() => setLife(advanceYear(life, content))}
+        onChoose={(i) => {
+          const title = findEvent(content, life.events.pending ?? '')?.title ?? '';
+          const r = resolveChoice(life, content, i);
+          setLife(r.state);
+          return { title, text: r.text, tone: r.tone };
+        }}
         onNewLife={() => setScreen('create')}
         theme={theme}
         onToggleTheme={toggleTheme}

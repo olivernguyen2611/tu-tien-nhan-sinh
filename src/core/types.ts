@@ -48,5 +48,13 @@ export interface GameState {
     confirmed: boolean;
   };
   traits: string[];
+  events: {
+    /** Event waiting for the player's choice, if any. */
+    pending: string | null;
+    /** Event id → age it last happened (once-per-life, cooldowns). */
+    history: Record<string, number>;
+    /** Follow-up events booked by earlier choices. */
+    followUps: { event: string; atAge: number }[];
+  };
   log: LogYear[];
 }
