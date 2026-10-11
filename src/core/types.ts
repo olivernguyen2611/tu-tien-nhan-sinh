@@ -21,8 +21,8 @@ export interface Relative {
   lifespan: number;
   /** Thiện cảm 0–100. */
   affinity: number;
-  /** Player's age when last "hỏi han" (once a year). */
-  chattedAt: number | null;
+  /** Family action id → player's age when last done (each once a year). */
+  lastActions: Record<string, number>;
 }
 
 export interface GameState {

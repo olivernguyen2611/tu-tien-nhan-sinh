@@ -17,6 +17,7 @@ const content: Content = {
   traits: TraitFileSchema.parse(traits),
   events: [],
   glossary: [],
+  familyActions: [],
 };
 const born = (seed: string) => rollDestiny(createLife({ seed }, content), content);
 

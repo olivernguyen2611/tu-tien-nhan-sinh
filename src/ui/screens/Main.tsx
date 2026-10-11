@@ -2,7 +2,7 @@
 // middle, a dock with the big age button, and stat bars underneath.
 import { useEffect, useRef, useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
-import type { GameState } from '../../core/types';
+import type { GameState, Tone } from '../../core/types';
 import { FamilyPanel } from '../components/FamilyPanel';
 import { EventPopup, type PopupResult } from '../components/EventPopup';
 import { Meter } from '../components/Meter';
@@ -25,13 +25,13 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心'],
 ] as const;
 
-export function MainScreen({ state, content, onAdvance, onChoose, onChat, onNewLife, theme, onToggleTheme }: {
+export function MainScreen({ state, content, onAdvance, onChoose, onFamilyAction, onNewLife, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   onAdvance: () => void;
   /** Returns the outcome to show on the card. */
   onChoose: (index: number) => PopupResult;
-  onChat: (relativeId: string) => void;
+  onFamilyAction: (relativeId: string, actionId: string) => { text: string; tone: Tone };
   onNewLife: () => void;
   theme: ThemePref;
   onToggleTheme: () => void;
@@ -106,7 +106,7 @@ export function MainScreen({ state, content, onAdvance, onChoose, onChat, onNewL
       <EventPopup state={state} content={content} result={result}
         onChoose={(i) => setResult(onChoose(i))} onClose={() => setResult(null)} />
 
-      {familyOpen && <FamilyPanel state={state} onChat={onChat} onClose={() => setFamilyOpen(false)} />}
+      {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onClose={() => setFamilyOpen(false)} />}
 
       {profileOpen && (
         <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Nhân vật" onClick={(e) => e.target === e.currentTarget && setProfileOpen(false)}>

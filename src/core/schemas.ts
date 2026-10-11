@@ -284,8 +284,6 @@ export const BalanceSchema = z
         maxSiblings: z.number().int().min(0),
         affinityDecay: z.number().min(0),
         deathHappiness: z.number(),
-        chatAffinity: range,
-        chatHappiness: z.number(),
       })
       .strict(),
     lifespan: z
@@ -300,6 +298,46 @@ export const BalanceSchema = z
 
 export type GameEvent = z.infer<typeof EventSchema>;
 export type Glossary = z.infer<typeof GlossarySchema>;
+// ---------- Family actions (content/family-actions.json) ----------
+
+const affinityRange = z.tuple([z.number().int(), z.number().int()]).refine(([a, b]) => a <= b, 'khoảng [min, max] bị ngược');
+const familyEffects = z.record(numericKey, z.number()).default({});
+const ActionOutcomeSchema = z
+  .object({ affinity: affinityRange, effects: familyEffects, texts: z.array(z.string().min(1)).min(1) })
+  .strict();
+
+/** One thing the player can do with a relative ("Tặng quà", "Dẫn đi du ngoạn"…). Once a year per relative. */
+export const FamilyActionSchema = z
+  .object({
+    id,
+    name: z.string().min(1),
+    /** Player age range. */
+    minAge: z.number().int().min(0).default(0),
+    maxAge: z.number().int().optional(),
+    /** Only for these roles; empty = everyone. */
+    roles: z.array(z.enum(['father', 'mother', 'sibling'])).default([]),
+    minTargetAge: z.number().int().optional(),
+    /** Silver spent. */
+    cost: z.number().int().min(0).default(0),
+    /** Silver received (e.g. "Xin tiền"). */
+    silver: affinityRange.optional(),
+    /** Below this affinity the relative refuses (outcome `refused`). */
+    needAffinity: z.number().optional(),
+    refused: ActionOutcomeSchema.optional(),
+    mishapChance: z.number().min(0).max(1).default(0),
+    mishap: ActionOutcomeSchema.optional(),
+    affinity: affinityRange,
+    effects: familyEffects,
+    texts: z.array(z.string().min(1)).min(1),
+  })
+  .strict()
+  .superRefine((a, ctx) => {
+    if (a.needAffinity !== undefined && !a.refused) ctx.addIssue({ code: 'custom', message: 'có "needAffinity" thì phải có "refused"' });
+    if (a.mishapChance > 0 && !a.mishap) ctx.addIssue({ code: 'custom', message: 'có "mishapChance" thì phải có "mishap"' });
+  });
+export const FamilyActionFileSchema = z.array(FamilyActionSchema);
+export type FamilyAction = z.infer<typeof FamilyActionSchema>;
+
 export type Balance = z.infer<typeof BalanceSchema>;
 export type Origin = z.infer<typeof OriginSchema>;
 export type Names = z.infer<typeof NamesSchema>;

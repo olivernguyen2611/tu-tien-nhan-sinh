@@ -14,6 +14,7 @@ const content: Content = {
   origins: OriginFileSchema.parse(origins),
   events: [],
   glossary: [],
+  familyActions: [],
   traits: [],
 };
 
