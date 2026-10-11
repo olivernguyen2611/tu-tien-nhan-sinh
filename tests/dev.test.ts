@@ -70,3 +70,17 @@ describe('developer mode', () => {
     expect(s.events.pending).toBeNull();
   });
 });
+
+describe('dev items', () => {
+  it('gives an item and clears item cooldowns', async () => {
+    const { devGiveItem, devResetItemUse } = await import('../src/systems/dev');
+    const { createLife } = await import('../src/core/state');
+    const { loadContent } = await import('../src/core/content');
+    const c = loadContent();
+    const s = createLife({ seed: 'dev-items', originId: 'nong_dan' }, c);
+    const g = devGiveItem(s, c, 'kiem_gay');
+    expect(g.inventory.kiem_gay).toBe(1);
+    const used = { ...g, itemUse: { ...g.itemUse, lastAge: { x: 0 }, spent: ['x'] } };
+    expect(devResetItemUse(used).itemUse.spent).toEqual([]);
+  });
+});

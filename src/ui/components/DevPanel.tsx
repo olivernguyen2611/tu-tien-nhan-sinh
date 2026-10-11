@@ -3,7 +3,7 @@ import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
 import { STAT_LABELS } from '../../systems/deltas';
-import { DEV_STATS, devAddKarma, devAddMoney, devAddStat, devHeal, devSkipYears, devStartFight, devTriggerEvent } from '../../systems/dev';
+import { DEV_STATS, devAddKarma, devAddMoney, devAddStat, devHeal, devGiveItem, devResetItemUse, devSkipYears, devStartFight, devTriggerEvent } from '../../systems/dev';
 
 export function DevPanel({ state, content, onChange, onDisable, onClose }: {
   state: GameState;
@@ -13,6 +13,7 @@ export function DevPanel({ state, content, onChange, onDisable, onClose }: {
   onClose: () => void;
 }) {
   const [eventId, setEventId] = useState(content.events[0]?.id ?? '');
+  const [itemId, setItemId] = useState(content.items[0]?.id ?? '');
   const live = state.alive;
   const stats: Record<string, number> = { ...state.stats, ...state.aptitudes };
 
@@ -48,6 +49,17 @@ export function DevPanel({ state, content, onChange, onDisable, onClose }: {
           <button class="chip-btn" disabled={!live} onClick={() => onChange(devSkipYears(state, content, 1))}>Qua 1 năm</button>
           <button class="chip-btn" disabled={!live} onClick={() => onChange(devSkipYears(state, content, 10))}>Qua 10 năm</button>
           <button class="chip-btn" disabled={!live} onClick={() => onChange(devHeal(state))}>Hồi đầy sức khỏe</button>
+        </div>
+
+        <h3>Vật phẩm</h3>
+        <div class="dev-event">
+          <select value={itemId} onChange={(e) => setItemId((e.target as HTMLSelectElement).value)} aria-label="Vật phẩm">
+            {content.items.map((it) => <option key={it.id} value={it.id}>{it.name} ({state.inventory[it.id] ?? 0})</option>)}
+          </select>
+          <button class="chip-btn" disabled={!live || !itemId} onClick={() => onChange(devGiveItem(state, content, itemId))}>+1</button>
+        </div>
+        <div class="action-chips">
+          <button class="chip-btn" disabled={!live} onClick={() => onChange(devResetItemUse(state))}>Xóa kháng thuốc</button>
         </div>
 
         <h3>Đánh thử</h3>

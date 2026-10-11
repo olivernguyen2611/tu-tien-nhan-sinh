@@ -7,6 +7,7 @@ import { advanceYear } from '../core/state';
 import type { GameState, LogLine } from '../core/types';
 import { startBattle } from './combat';
 import { STAT_LABELS } from './deltas';
+import { addItems } from './items';
 
 export type DevStat = (typeof MORTAL_STATS)[number] | (typeof APTITUDES)[number];
 export const DEV_STATS: DevStat[] = [...MORTAL_STATS, ...APTITUDES];
@@ -73,4 +74,16 @@ export function devStartFight(state: GameState, content: Content, realm: 'below'
     lose: { text: 'Bị hình nhân đánh bại, mất mặt vô cùng.', effects: { 'stat.happiness': -1 } },
   });
   return startBattle(devLog(state, `đánh thử (${realm}, ${intent})`), content, fight, 'Dev');
+}
+
+/** Put one item in the bag. */
+export function devGiveItem(state: GameState, content: Content, itemId: string): GameState {
+  const item = content.items.find((i) => i.id === itemId);
+  if (!state.alive || !item) return state;
+  return devLog(addItems(state, [itemId]), `nhận ${item.name}`);
+}
+
+/** Forget this year's and this life's item use (kháng thuốc, once-per-life). */
+export function devResetItemUse(state: GameState): GameState {
+  return devLog({ ...state, itemUse: { ...state.itemUse, lastAge: {}, spent: [] } }, 'xóa kháng thuốc');
 }
