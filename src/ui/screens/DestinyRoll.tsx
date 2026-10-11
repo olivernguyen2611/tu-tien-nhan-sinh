@@ -1,6 +1,7 @@
 // Nghịch Thiên Bốc Mệnh: show the rolled Tiên Thiên Khí Vận, allow limited rerolls.
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
+import { TermText } from '../components/Tooltip';
 
 const RARITY_LABEL: Record<string, string> = {
   pham: 'Phàm', luong: 'Lương', uu: 'Ưu', tuyet: 'Tuyệt', thien: 'Thiên', than: 'Thần', ac: 'Ác vận',
@@ -36,7 +37,7 @@ export function DestinyRollScreen({ state, content, rollCount, onReroll, onConfi
                   <span class="trait-rarity">{RARITY_LABEL[t.rarity]}</span>
                 </div>
                 <p class="trait-flavor">{t.flavor}</p>
-                <p class="trait-summary">{t.summary}</p>
+                <p class="trait-summary"><TermText text={t.summary} /></p>
               </div>
               <div class="trait-face trait-back" aria-hidden="true">命</div>
             </div>

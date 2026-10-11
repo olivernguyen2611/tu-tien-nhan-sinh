@@ -1,1 +1,229 @@
-[]
+[
+  {
+    "id": "hanh_phuc",
+    "term": "Hạnh phúc",
+    "definition": "Lòng người vui hay buồn. Buồn lâu thì làm gì cũng dở, tu luyện cũng chậm.",
+    "aliases": []
+  },
+  {
+    "id": "suc_khoe",
+    "term": "Sức khỏe",
+    "definition": "Thân thể khỏe hay yếu. Về 0 là bệnh chết; trẻ thì tự hồi, già thì hao dần.",
+    "aliases": []
+  },
+  {
+    "id": "tri_tue",
+    "term": "Trí tuệ",
+    "definition": "Học chữ, tính toán, đọc hiểu. Người học nhiều dễ qua các phép thử cần đầu óc.",
+    "aliases": []
+  },
+  {
+    "id": "mi_luc",
+    "term": "Mị lực",
+    "definition": "Dung mạo cộng phong thái. Dễ được người khác mến, nói lời hay cũng lọt tai hơn.",
+    "aliases": []
+  },
+  {
+    "id": "can_cot",
+    "term": "Căn cốt",
+    "definition": "Xương cốt trời cho. Căn cốt tốt thì luyện thể, luyện võ, chịu đòn đều hơn người.",
+    "aliases": []
+  },
+  {
+    "id": "ngo_tinh",
+    "term": "Ngộ tính",
+    "definition": "Sức hiểu đạo lý. Cùng một quyển công pháp, người ngộ tính cao đọc một lần là thấu.",
+    "aliases": []
+  },
+  {
+    "id": "khi_van",
+    "term": "Khí vận",
+    "definition": "Số may. Khí vận cao thì chuyện tốt tìm đến nhiều hơn; thấp thì uống nước cũng mắc nghẹn.",
+    "aliases": [
+      "Vận khí"
+    ]
+  },
+  {
+    "id": "dao_tam",
+    "term": "Đạo tâm",
+    "definition": "Lòng kiên định trên đường tu. Đạo tâm vững thì ít bị tâm ma quấy, gặp cám dỗ cũng khó lung lay.",
+    "aliases": []
+  },
+  {
+    "id": "tu_chat",
+    "term": "Tư chất tiên thiên",
+    "definition": "Căn cốt, Ngộ tính, Khí vận, Đạo tâm: định từ lúc sinh, chỉ đổi được nhờ kỳ ngộ hay khí vận.",
+    "aliases": []
+  },
+  {
+    "id": "tho_nguyen",
+    "term": "Thọ nguyên",
+    "definition": "Số năm trời cho được sống. Phàm nhân chừng bảy mươi; tu càng cao, thọ càng dài.",
+    "aliases": []
+  },
+  {
+    "id": "luong_bac",
+    "term": "Lượng bạc",
+    "definition": "Tiền của phàm nhân: mua gạo, mua quà, đóng học phí. Người tu tiên thì ít ngó tới.",
+    "aliases": []
+  },
+  {
+    "id": "linh_thach",
+    "term": "Linh thạch",
+    "definition": "Đá chứa linh khí, tiền của người tu tiên. Một viên đổi được cả xe bạc, mà phàm nhân cầm cũng chẳng biết dùng.",
+    "aliases": []
+  },
+  {
+    "id": "thien_ac",
+    "term": "Thiện ác",
+    "definition": "Cán cân việc tốt việc xấu cả đời. Nặng bên nào thì văn bia, nhân quả về sau ngả theo bên ấy.",
+    "aliases": []
+  },
+  {
+    "id": "thien_cam",
+    "term": "Thiện cảm",
+    "definition": "Người khác quý mình tới đâu. Năm nào không hỏi han thì thiện cảm cũng nhạt dần.",
+    "aliases": []
+  },
+  {
+    "id": "dau_thai",
+    "term": "Đầu thai",
+    "definition": "Hết một kiếp thì sang kiếp mới. Kiếp trước để lại gì cho kiếp sau, còn tùy phúc phận.",
+    "aliases": [
+      "Luân hồi"
+    ]
+  },
+  {
+    "id": "ky_ngo",
+    "term": "Kỳ ngộ",
+    "definition": "Gặp gỡ hiếm có làm đổi cả vận mệnh: bí tịch dưới đáy giếng, cao nhân qua đường, tiên dược trên vách núi.",
+    "aliases": [
+      "Cơ duyên"
+    ]
+  },
+  {
+    "id": "tien_thien_khi_van",
+    "term": "Tiên Thiên Khí Vận",
+    "definition": "Ba điều trời ban lúc chào đời, theo người suốt kiếp. Không vừa ý thì có ba lượt \"nghịch thiên cải mệnh\".",
+    "aliases": []
+  },
+  {
+    "id": "pham_khi_van",
+    "term": "Phẩm khí vận",
+    "definition": "Từ thấp đến cao: Phàm, Lương, Ưu, Tuyệt, Thiên, Thần. Phẩm càng cao càng hiếm, Thần phẩm trăm kiếp khó gặp một lần.",
+    "aliases": []
+  },
+  {
+    "id": "ac_van",
+    "term": "Ác vận",
+    "definition": "Khí vận mang họa: có cái dở rõ ràng, nhưng thường giấu một cái lợi bất ngờ.",
+    "aliases": []
+  },
+  {
+    "id": "tu_tien",
+    "term": "Tu tiên",
+    "definition": "Hấp thu linh khí trời đất để thoát khỏi phàm thai, sống lâu và mạnh hơn người thường.",
+    "aliases": [
+      "Tu luyện",
+      "Tu hành"
+    ]
+  },
+  {
+    "id": "tu_vi",
+    "term": "Tu vi",
+    "definition": "Mức tu luyện hiện có: đang ở cảnh giới nào, tầng nào, đi được mấy phần.",
+    "aliases": []
+  },
+  {
+    "id": "canh_gioi",
+    "term": "Cảnh giới",
+    "definition": "Các bậc lớn trên đường tu. Mỗi bậc thọ thêm, mạnh thêm, và khó vượt hơn bậc trước.",
+    "aliases": []
+  },
+  {
+    "id": "dot_pha",
+    "term": "Đột phá",
+    "definition": "Vượt từ tầng này lên tầng kia, từ cảnh giới này lên cảnh giới khác. Thành thì thoát xác, bại thì tổn thương, có khi mất mạng.",
+    "aliases": []
+  },
+  {
+    "id": "linh_can",
+    "term": "Linh căn",
+    "definition": "Rễ linh khí trong kinh mạch, trời sinh có hay không. Không linh căn thì cửa tiên đóng, trừ khi gặp kỳ ngộ lớn.",
+    "aliases": []
+  },
+  {
+    "id": "ngu_hanh",
+    "term": "Ngũ hành",
+    "definition": "Kim, Mộc, Thủy, Hỏa, Thổ: năm hệ của linh khí, sinh khắc lẫn nhau.",
+    "aliases": []
+  },
+  {
+    "id": "linh_khi",
+    "term": "Linh khí",
+    "definition": "Khí trời đất mà người tu hấp thu. Nơi linh khí dày gọi là động thiên phúc địa.",
+    "aliases": []
+  },
+  {
+    "id": "cong_phap",
+    "term": "Công pháp",
+    "definition": "Phép tu hành ghi trong bí tịch. Công pháp phẩm thấp thì đến một cảnh giới là hết đường.",
+    "aliases": []
+  },
+  {
+    "id": "tong_mon",
+    "term": "Tông môn",
+    "definition": "Nơi người tu tụ họp, truyền thừa. Vào được thì có thầy, có công pháp, nhưng cũng có quy củ.",
+    "aliases": [
+      "Môn phái"
+    ]
+  },
+  {
+    "id": "tan_tu",
+    "term": "Tán tu",
+    "definition": "Người tu không thuộc tông môn nào. Tự do, nhưng tài nguyên đều phải tự giành.",
+    "aliases": []
+  },
+  {
+    "id": "tam_ma",
+    "term": "Tâm ma",
+    "definition": "Ma niệm trong lòng, hay nổi lên lúc đột phá. Đạo tâm yếu thì dễ bị nó nuốt.",
+    "aliases": []
+  },
+  {
+    "id": "pham_nhan",
+    "term": "Phàm Nhân",
+    "definition": "Ăn cơm, cày ruộng, sống bảy mươi năm. Trời cao bao nhiêu, phàm nhân chỉ biết ngẩng đầu mà đoán.",
+    "aliases": []
+  },
+  {
+    "id": "luyen_khi",
+    "term": "Luyện Khí",
+    "definition": "Dẫn linh khí vào kinh mạch, từng chút một như kiến tha mồi. Đủ sức nhấc cối đá, chưa đủ sức bay.",
+    "aliases": []
+  },
+  {
+    "id": "truc_co",
+    "term": "Trúc Cơ",
+    "definition": "Linh khí hóa lỏng, đắp nền cho đạo đồ. Từ đây mới thật sự bước qua cửa tiên, thọ thêm một đời người.",
+    "aliases": []
+  },
+  {
+    "id": "kim_dan",
+    "term": "Kim Đan",
+    "definition": "Linh lực ngưng thành một viên đan trong đan điền. Ngự kiếm phi hành, một mình giữ được một thành.",
+    "aliases": []
+  },
+  {
+    "id": "nguyen_anh",
+    "term": "Nguyên Anh",
+    "definition": "Đan vỡ thành anh, thân thể có hư đi thì Nguyên Anh vẫn còn.",
+    "aliases": []
+  },
+  {
+    "id": "hoa_than",
+    "term": "Hóa Thần",
+    "definition": "Thần thức trải ngàn dặm, nhất cử nhất động liên quan đến khí vận cả một đại vực.",
+    "aliases": []
+  }
+]
