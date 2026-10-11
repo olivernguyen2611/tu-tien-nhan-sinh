@@ -1,0 +1,166 @@
+[
+  {
+    "id": "cha_me_lam_benh",
+    "category": "accident",
+    "title": "Cha mẹ lâm bệnh",
+    "text": "Cha {name} ho ra máu, nằm liệt giường. Đại phu lắc đầu: thuốc thì có, nhưng đắt.",
+    "themes": [
+      "family_tragedy"
+    ],
+    "conditions": {
+      "age": {
+        "min": 8
+      },
+      "flagsNone": [
+        "no_parents"
+      ]
+    },
+    "weight": 6,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Bán đồ trong nhà mua thuốc",
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 30
+            }
+          ]
+        },
+        "result": {
+          "text": "Thuốc đắng nhưng hiệu nghiệm. Nhà trống trơn mà lòng nhẹ nhõm.",
+          "effects": {
+            "silver": -30,
+            "karma": 3,
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Lên núi hái thuốc",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Ngươi tìm được đúng vị thuốc bên vách đá. Cha khỏi bệnh.",
+          "effects": {
+            "karma": 3,
+            "stat.physique": 2
+          }
+        },
+        "fail": {
+          "text": "Ngươi trượt chân ngã, về tay không. Bệnh của cha kéo dài thêm.",
+          "effects": {
+            "stat.health": -10,
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Lên miếu cầu khấn",
+        "result": {
+          "text": "Ngươi khấn suốt ba ngày. Không biết thần linh có nghe không, nhưng ông đồng thì thu tiền.",
+          "effects": {
+            "silver": -5,
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Tình cờ gặp lang y đi ngang",
+        "hidden": true,
+        "requires": {
+          "traitsAny": [
+            "quy_nhan_duyen"
+          ]
+        },
+        "result": {
+          "text": "Lang y bắt mạch, cho thuốc, không lấy tiền.",
+          "effects": {
+            "karma": 1,
+            "stat.happiness": 5
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "lu_quet",
+    "category": "accident",
+    "title": "Lũ quét",
+    "text": "Mưa ba ngày ba đêm. Nửa đêm, nước từ trên núi đổ xuống {hometown} như thác.",
+    "tags": [
+      "violence"
+    ],
+    "themes": [
+      "mishap"
+    ],
+    "conditions": {
+      "age": {
+        "min": 6
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Cứu nhà hàng xóm",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Ngươi kéo được hai đứa trẻ lên mái nhà. Cả làng nhớ ơn.",
+          "effects": {
+            "karma": 6,
+            "stat.charm": 3
+          }
+        },
+        "fail": {
+          "text": "Nước cuốn ngươi trôi nửa dặm, may mắc vào gốc cây.",
+          "effects": {
+            "karma": 3,
+            "stat.health": -15
+          }
+        }
+      },
+      {
+        "text": "Cứu của cải",
+        "result": {
+          "text": "Ngươi giữ được hũ bạc, mất cả mái nhà.",
+          "effects": {
+            "silver": 10,
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Chạy lên núi",
+        "result": {
+          "text": "Ngươi an toàn. Sáng ra nhìn xuống, làng chỉ còn một màu nước đục.",
+          "effects": {
+            "stat.happiness": -5,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Chạy dọc làng hô hoán",
+        "hidden": true,
+        "requires": {
+          "traitsAny": [
+            "khoai_cuoc"
+          ]
+        },
+        "result": {
+          "text": "Ngươi chạy nhanh hơn nước, gọi dậy cả xóm. Không ai chết.",
+          "effects": {
+            "karma": 8
+          }
+        }
+      }
+    ]
+  }
+]

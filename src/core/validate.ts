@@ -34,9 +34,13 @@ export function schemaFor(path: string): ZodTypeAny | null {
   return null;
 }
 
+/** Flags the engine sets itself (not via events). */
+export const ENGINE_FLAGS = ['no_parents'];
+
 export function validateContent(files: Record<string, unknown>): Problem[] {
   const problems: Problem[] = [];
   const events: { file: string; event: GameEvent }[] = [];
+  let traitIds: Set<string> | null = null;
 
   for (const [file, raw] of Object.entries(files)) {
     const schema = schemaFor(file);
@@ -63,6 +67,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     }
     if (schema === TraitFileSchema) {
       const seenTrait = new Set<string>();
+      traitIds = seenTrait;
       for (const t of parsed.data as Trait[]) {
         if (seenTrait.has(t.id)) problems.push({ file, level: 'error', message: `trùng id khí vận "${t.id}"` });
         seenTrait.add(t.id);
@@ -88,7 +93,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   }
 
   // Collect flags that some event sets, and follow-up targets.
-  const flagsSet = new Set<string>();
+  const flagsSet = new Set<string>(ENGINE_FLAGS);
   for (const { event } of events) {
     for (const choice of event.choices) {
       for (const outcome of [choice.result, choice.success, choice.fail]) {
@@ -103,6 +108,19 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     // PLAN.md mục H: mature content only for adults.
     if (event.tags.includes('mature') && (event.conditions.age?.min ?? 0) < 18) {
       problems.push({ file, level: 'error', message: `${where} gắn tag "mature" nhưng conditions.age.min chưa ≥ 18` });
+    }
+
+    if (event.themes.some((t) => t.startsWith('romance')) && (event.conditions.age?.min ?? 0) < 18) {
+      problems.push({ file, level: 'error', message: `${where} có chủ đề tình duyên nhưng conditions.age.min chưa ≥ 18` });
+    }
+
+    // Traits named in conditions must exist.
+    if (traitIds) {
+      const named = [event.conditions, ...event.choices.map((c) => c.requires ?? {})]
+        .flatMap((c) => [...(c.traitsAny ?? []), ...(c.traitsAll ?? []), ...(c.traitsNone ?? [])]);
+      for (const t of named) {
+        if (!traitIds.has(t)) problems.push({ file, level: 'error', message: `${where} nhắc tới khí vận không tồn tại "${t}"` });
+      }
     }
 
     for (const flag of event.conditions.flagsAll) {

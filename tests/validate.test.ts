@@ -34,9 +34,9 @@ describe('validateContent', () => {
       choices: [
         {
           text: 'Phá cấm chế',
-          check: { stat: 'luck', difficulty: 60 },
+          check: { stat: 'stat.luck', difficulty: 60 },
           success: { text: 'Thành công', effects: { addItems: ['ngoc_gian_01'], setFlags: ['found_old_cave'] } },
-          fail: { text: 'Thất bại', effects: { health: -30 } },
+          fail: { text: 'Thất bại', effects: { 'stat.health': -30 } },
         },
       ],
     });
@@ -92,5 +92,16 @@ describe('validateContent', () => {
     expect(errors({ 'worlds/x/world.json': world }).join()).toContain('trùng tên thư mục');
     // World-only files at the top level are not recognised.
     expect(validateContent({ 'events/a.json': [event()] })[0].level).toBe('warning');
+  });
+
+  it('checks event effects, stat checks, themes and trait references', () => {
+    const traits = [{ id: 'kheo_mom', rarity: 'pham', name: 'Khéo Mồm', flavor: '.', summary: '.', effects: [{ hook: 'stat.charm', add: 5 }] }];
+    const bad = (ev: Record<string, unknown>) => errors({ 'traits.json': traits, 'worlds/w/events/a.json': [event(ev)] });
+    expect(bad({ choices: [{ text: 'x', result: { text: 'y', effects: { 'stat.health': -5, silver: 3, karma: 1 } } }] })).toEqual([]);
+    expect(bad({ choices: [{ text: 'x', result: { text: 'y', effects: { health: -5 } } }] }).join()).toContain('health');
+    expect(bad({ choices: [{ text: 'x', check: { stat: 'silver', difficulty: 40 }, success: { text: 'a' }, fail: { text: 'b' } }] }).length).toBeGreaterThan(0);
+    expect(bad({ themes: ['romance_trouble'], conditions: { age: { min: 16 } } }).join()).toContain('tình duyên');
+    expect(bad({ choices: [{ text: 'x', hidden: true, requires: { traitsAny: ['khong_co'] }, result: { text: 'y' } }] }).join()).toContain('khong_co');
+    expect(bad({ conditions: { flagsAll: ['no_parents'] } })).toEqual([]);
   });
 });
