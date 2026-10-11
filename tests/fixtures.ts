@@ -4,7 +4,9 @@ import realms from '../content/realms.json';
 import roots from '../content/roots.json';
 import aptitudes from '../content/aptitudes.json';
 import difficultyFile from '../content/difficulties.json';
-import { DifficultyFileSchema } from '../src/core/schemas';
+import { DifficultyFileSchema, TutorialFileSchema } from '../src/core/schemas';
+import tutorialFile from '../content/tutorial.json';
 
 export const cultivation = parseCultivationTables(realms, roots, aptitudes);
 export const difficulties = DifficultyFileSchema.parse(difficultyFile);
+export const tutorial = TutorialFileSchema.parse(tutorialFile);

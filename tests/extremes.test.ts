@@ -4,7 +4,7 @@ import { BalanceSchema, EventFileSchema, NamesSchema, OriginFileSchema, TraitFil
 import { LifeTextsSchema } from '../src/core/schemas';
 import lifeTexts from '../content/life-texts.json';
 import extremes from '../content/stat-extremes.json';
-import { cultivation, difficulties } from './fixtures';
+import { cultivation, difficulties, tutorial } from './fixtures';
 import { StatExtremesFileSchema } from '../src/core/schemas';
 import { createLife } from '../src/core/state';
 import balance from '../content/config/balance.json';
@@ -31,6 +31,7 @@ const content: Content = {
   extremes: StatExtremesFileSchema.parse(extremes),
   cultivation,
   difficulties,
+  tutorial,
 };
 
 import { ageExtremes, extremeHookSum, extremeWarnings } from '../src/systems/extremes';

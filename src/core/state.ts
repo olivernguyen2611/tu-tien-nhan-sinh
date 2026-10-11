@@ -16,6 +16,7 @@ export interface NewLifeInput {
   gender?: Gender;    // undefined → random
   originId?: string;  // undefined → weighted random
   difficulty?: string; // undefined → balance.defaultDifficulty
+  tutorial?: boolean;  // show first-life tips
 }
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
@@ -64,6 +65,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
   const state: GameState = {
     version: 1,
     difficulty,
+    tutorial: { enabled: !!input.tutorial, seen: [] },
     worldId: content.world.id,
     seed: input.seed,
     rng: rng.getState(),

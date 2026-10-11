@@ -23,6 +23,7 @@ import { TitleScreen } from './screens/Title';
 import { loadDevMode, saveDevMode } from './devMode';
 import { attemptMajorBreakthrough } from '../systems/cultivation';
 import { savesLocked } from '../systems/difficulty';
+import { disableTutorial, dismissTip } from '../systems/tutorial';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -129,7 +130,11 @@ function Screens({ content }: { content: Content }) {
       <CreateCharacterScreen
         content={content}
         onBack={() => setScreen('title')}
-        onCreate={(input) => { setLife(rollDestiny(createLife(input, content), content)); setScreen('destiny'); }}
+        onCreate={(input) => {
+          // Tips only for the very first life on this browser.
+          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0 }, content), content));
+          setScreen('destiny');
+        }}
       />
     );
   }
@@ -162,6 +167,7 @@ function Screens({ content }: { content: Content }) {
           setLife(checkDeath(r.state, content));
           return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
         }}
+        onTip={(id, off) => setLife(off ? disableTutorial(dismissTip(life, id)) : dismissTip(life, id))}
         onBreakthrough={() => {
           const r = attemptMajorBreakthrough(life, content);
           if (!r) return null;

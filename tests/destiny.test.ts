@@ -4,7 +4,7 @@ import { BalanceSchema, WorldSchema, NamesSchema, OriginFileSchema, TraitFileSch
 import { LifeTextsSchema } from '../src/core/schemas';
 import lifeTexts from '../content/life-texts.json';
 import extremes from '../content/stat-extremes.json';
-import { cultivation, difficulties } from './fixtures';
+import { cultivation, difficulties, tutorial } from './fixtures';
 import { StatExtremesFileSchema } from '../src/core/schemas';
 import { createLife } from '../src/core/state';
 import { confirmDestiny, rerollDestiny, rollDestiny } from '../src/systems/destiny';
@@ -27,6 +27,7 @@ const content: Content = {
   extremes: StatExtremesFileSchema.parse(extremes),
   cultivation,
   difficulties,
+  tutorial,
 };
 const born = (seed: string) => rollDestiny(createLife({ seed }, content), content);
 

@@ -68,6 +68,8 @@ export function migrate(save: SaveFile): SaveFile {
   // Fields added within saveVersion 1 get their empty defaults.
   let life = save.life as GameState & { extremes?: GameState['extremes'] };
   if (!life.extremes) life = { ...life, extremes: { streak: {}, active: {}, givenAt: {} } };
+  // Task 2.9: older lives get no tips.
+  if (life.tutorial === undefined) life = { ...life, tutorial: { enabled: false, seen: [] } };
   // Task 2.10: lives from before difficulty were "Thường".
   if (life.difficulty === undefined) life = { ...life, difficulty: 'normal' };
   // Task 2.3: cultivation bookkeeping.
