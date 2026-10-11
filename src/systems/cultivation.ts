@@ -10,6 +10,7 @@ import { difficultyHookSum } from './difficulty';
 import { careerHooks } from './career';
 import { currentTechnique, learnTechnique, techniqueCapReason, techniqueMul } from './technique';
 import { sectHooks } from './sect';
+import { offerFate } from './fate';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -135,6 +136,7 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
   return [
     ...fromTraits, ...(body?.effects ?? []), ...careerHooks(state, content),
     ...(currentTechnique(state, content)?.effects ?? []), ...sectHooks(state, content),
+    ...state.talents.flatMap((id) => content.fateTalents.find((t) => t.id === id)?.effects ?? []),
   ];
 }
 
@@ -186,7 +188,7 @@ export function breakthroughPct(state: GameState, content: Content, basePct: num
     + (state.aptitudes.comprehension - 50) * b.comprehensionPerPoint
     + (state.aptitudes.daoHeart - 50) * b.daoHeartPerPoint
     + hookSum(state, content, 'breakthroughChance')
-    + (major ? hookSum(state, content, 'breakthroughChance.major') : 0)
+    + hookSum(state, content, major ? 'breakthroughChance.major' : 'breakthroughChance.minor')
     - b.failPenaltyPct * fails;
   return Math.max(b.minPct, Math.min(b.maxPct, pct));
 }
@@ -381,7 +383,9 @@ export function attemptMajorBreakthrough(state: GameState, content: Content): Br
       .replaceAll('{realm}', info.target.name)
       .replaceAll('{grade}', grade ? `${grade.name}. ${grade.description}` : '');
     const tone = foundation === 'hoan_my' || foundation === 'thuong' ? 'rare' : 'good';
-    return { state: { ...s, rng: rng.getState(), log: pushLine(s.log, { text, tone }) }, success: true, text, tone };
+    // Nghịch Thiên Cải Mệnh: choose a fate talent before the next year (task 2.7).
+    const done = offerFate({ ...s, rng: rng.getState(), log: pushLine(s.log, { text, tone }) }, content);
+    return { state: done, success: true, text, tone };
   }
 
   const key = `${state.cult.realm}:peak`;

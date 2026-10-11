@@ -71,6 +71,8 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     tutorial: { enabled: !!input.tutorial, seen: [] },
     crafts: { skills: {}, lastPractice: null },
     career: { id: null, rung: 0, since: 0 },
+    talents: [],
+    fate: null,
     sect: { id: null, rank: 0, since: 0, contribution: 0, master: null, lastMission: null, lastMasterTry: null, left: [] },
     worldId: content.world.id,
     seed: input.seed,
@@ -104,7 +106,7 @@ const withYear = (s: GameState): GameState => ({ ...s, log: [...s.log, { age: s.
 
 /** One year passes; at most one event is rolled for the player to answer. */
 export function advanceYear(state: GameState, content: Content): GameState {
-  if (!state.alive || state.events.pending) return state;
+  if (!state.alive || state.events.pending || state.fate) return state;
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
   const body = checkDeath(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageFamily(withYear(aged), content), content), content), content), content), content), content), content);

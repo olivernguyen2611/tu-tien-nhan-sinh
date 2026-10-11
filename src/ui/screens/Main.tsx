@@ -8,6 +8,7 @@ import { DevPanel } from '../components/DevPanel';
 import { FamilyPanel } from '../components/FamilyPanel';
 import { CultivatePanel } from '../components/CultivatePanel';
 import { SectPanel, type SectAction } from '../components/SectPanel';
+import { FatePopup } from '../components/FatePopup';
 import { EventPopup, type PopupResult } from '../components/EventPopup';
 import { Meter } from '../components/Meter';
 import { Term, TermText } from '../components/Tooltip';
@@ -35,7 +36,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onBreakthrough, onPractice, onJoinCareer, onSectAction, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onBreakthrough, onPractice, onJoinCareer, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -50,6 +51,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onPractice: (craftId: string) => string | null;
   /** Take up a mortal career from the "Tu luyện" sheet. */
   onJoinCareer: (careerId: string) => string | null;
+  /** Nghịch Thiên Cải Mệnh: take a talent, or refresh the offer (task 2.7). */
+  onFate: (action: { choose: string } | { reroll: true }) => void;
   /** Sect sheet actions (task 2.5). */
   onSectAction: (action: SectAction) => { text: string; good: boolean } | null;
   /** Tutorial tip read ("Đã hiểu") or tips turned off. */
@@ -142,12 +145,12 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         {DOCK_LEFT.map(dockItem)}
         {state.alive ? (
           <div class="age-wrap">
-            <button class="age-btn" onClick={onAdvance} aria-label="Qua một năm" disabled={!!state.events.pending || !!result}>
+            <button class="age-btn" onClick={onAdvance} aria-label="Qua một năm" disabled={!!state.events.pending || !!state.fate || !!result}>
               <span class="big">+1</span>
               <span class="small">năm</span>
             </button>
             <button class="ff-btn" onClick={onFastForward} aria-label="Tua nhanh tới khi có chuyện" title="Tua nhanh tới khi có chuyện"
-              disabled={!!state.events.pending || !!result}>»</button>
+              disabled={!!state.events.pending || !!state.fate || !!result}>»</button>
           </div>
         ) : (
           <button class="age-btn ended" onClick={onSummary} aria-label="Xem tổng kết đời người" disabled={!!result}>
@@ -175,6 +178,11 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
       {dev && devOpen && (
         <DevPanel state={state} content={content} onChange={dev.onChange} onClose={() => setDevOpen(false)}
           onDisable={() => { setDevOpen(false); dev.onDisable(); }} />
+      )}
+
+      {state.fate && !cultivateOpen && (
+        <FatePopup state={state} content={content} unlimited={!!dev}
+          onChoose={(id) => onFate({ choose: id })} onReroll={() => onFate({ reroll: true })} />
       )}
 
       {sectOpen && <SectPanel state={state} content={content} onAction={onSectAction} onClose={() => setSectOpen(false)} />}
@@ -208,6 +216,14 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
                     <span>{d.text}{d.note ? ` ${d.note}` : ''}</span>
                   </li>
                 ))}
+              </ul>
+            )}
+            {state.talents.length > 0 && (
+              <ul class="trait-chips" aria-label="Thiên phú">
+                {state.talents.map((id) => {
+                  const t = content.fateTalents.find((x) => x.id === id);
+                  return t && <li class={`trait-chip r-${t.rarity}`} key={id}><b>{t.name}</b><span><TermText text={t.summary} /></span></li>;
+                })}
               </ul>
             )}
             {state.traits.length > 0 && (

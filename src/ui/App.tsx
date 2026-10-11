@@ -28,6 +28,7 @@ import { practiceCraft } from '../systems/crafts';
 import { joinCareer } from '../systems/career';
 import { doMission, joinSect, leaveSect, requestMaster } from '../systems/sect';
 import { learnTechnique } from '../systems/technique';
+import { chooseFate, rerollFate } from '../systems/fate';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -194,6 +195,7 @@ function Screens({ content }: { content: Content }) {
           const good: boolean = 'joined' in r ? (r.joined as boolean) : 'success' in r ? (r.success as boolean) : true;
           return { text: r.text, good };
         }}
+        onFate={(a) => setLife('choose' in a ? chooseFate(life, content, a.choose) : rerollFate(life, content, devMode))}
         onTip={(id, off) => setLife(off ? disableTutorial(dismissTip(life, id)) : dismissTip(life, id))}
         onBreakthrough={() => {
           const r = attemptMajorBreakthrough(life, content);

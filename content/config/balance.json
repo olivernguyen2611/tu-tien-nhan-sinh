@@ -197,6 +197,19 @@
     "masterChancePerPoint": 0.01,
     "masterSpeed": 0.1
   },
+  "fate": {
+    "rarityByFoundation": {
+      "ha": { "luong": 60, "uu": 30, "tuyet": 10 },
+      "trung": { "luong": 35, "uu": 40, "tuyet": 20, "thien": 5 },
+      "thuong": { "uu": 40, "tuyet": 40, "thien": 18, "than": 2 },
+      "hoan_my": { "tuyet": 50, "thien": 40, "than": 10 }
+    },
+    "defaultFoundation": "trung",
+    "luckShiftPer10": 2,
+    "slots": 3,
+    "refreshes": 1,
+    "extraRefreshLuck": 70
+  },
   "paths": {
     "startAffinity": [5, 30],
     "sword": { "combatPower": 0.15, "firstRoundBonus": 0.1, "injuryTaken": 0.1, "cultivationSpeed": 0.1 },

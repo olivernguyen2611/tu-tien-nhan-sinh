@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World } from './schemas';
 
 export interface Problem {
   file: string;
@@ -34,6 +34,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'tutorial.json') return TutorialFileSchema;
     if (rest === 'careers.json') return CareersFileSchema;
     if (rest === 'techniques.json') return TechniqueFileSchema;
+    if (rest === 'fate-talents.json') return FateTalentFileSchema;
     return null;
   }
   // Belongs to one world.
@@ -61,6 +62,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   const rootTests: { file: string; event: string }[] = [];
   let difficultyIds: string[] | null = null;
   let techniques: Technique[] | null = null;
+  let fateIds: string[] | null = null;
   const sectFiles: { file: string; sects: Sect[] }[] = [];
   const parsedShared: { balance?: Balance; realms?: RealmsFile; roots?: RootsFile; aptitudes?: AptitudesFile } = {};
 
@@ -134,6 +136,11 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
         problems.push({ file, level: 'warning', message: 'mục tiêu cuối nên có "when": {} để luôn có một mục tiêu' });
       }
     }
+    if (schema === FateTalentFileSchema) {
+      const list = parsed.data as { id: string }[];
+      problems.push(...duplicates(file, 'thiên phú', list));
+      fateIds = list.map((x) => x.id);
+    }
     if (schema === SectLifeSchema) problems.push(...duplicates(file, 'nhiệm vụ', (parsed.data as SectLife).missions));
     if (schema === WorldSchema && (parsed.data as World).sectRecruitEvent) rootTests.push({ file, event: (parsed.data as World).sectRecruitEvent! });
     if (schema === TechniqueFileSchema) techniques = parsed.data as Technique[];
@@ -152,6 +159,9 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   }
 
   problems.push(...checkTechniquesAndSects(techniques, sectFiles, parsedShared));
+  if (fateIds && traitIds) {
+    for (const id of fateIds) if (traitIds.has(id)) problems.push({ file: 'fate-talents.json', level: 'error', message: `id thiên phú "${id}" trùng id khí vận` });
+  }
 
   // The world's root-test event must exist among that world's events.
   for (const { file, event } of rootTests) {

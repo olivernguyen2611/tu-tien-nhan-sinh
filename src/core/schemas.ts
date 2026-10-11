@@ -213,7 +213,7 @@ const ADD_HOOK = new RegExp(
   '^(' +
     [
       `stat\\.(${[...MORTAL_STATS, ...APTITUDES].join('|')})`,
-      'cultivationSpeed', 'breakthroughChance(\\.major)?', 'bottleneckResist',
+      'cultivationSpeed', 'breakthroughChance(\\.major|\\.minor)?', 'bottleneckResist',
       'lifespanPct',
       'combatPower(\\.vsHigherRealm)?', 'speed', 'divineSense', 'escapeChance', 'injuryReduce', 'lifesteal',
       `element\\.(${ELEMENTS})\\.power`, `path\\.(${PATHS})\\.(affinity|power)`,
@@ -226,13 +226,15 @@ const ADD_HOOK = new RegExp(
       `statPerYear\\.(${[...MORTAL_STATS, ...APTITUDES].join('|')})`,
       `statFloor\\.(${[...MORTAL_STATS, ...APTITUDES].join('|')})`,
       'silverPerYear', 'deathChancePerYear', 'illnessChancePct', 'tribulationPct',
+      // Fate talents (fate-talents.md, task 2.7).
+      'artifactPct', 'tribulationPower',
       // Special bodies (realms-roots-paths.md B5); takes effect from task 2.3.
       'lineage\\.(tien|ma|phat|quy|yeu)\\.cultivationSpeed',
     ].join('|') +
     ')$',
 );
 const MUL_HOOK = /^eventWeight\.[a-z0-9_]+$/;
-const FLAG_HOOK = /^(agingSlow|unlockChain\.[a-z0-9_]+|cannotWork|noLineageChange|blockEvent\.[a-z0-9_]+)$/;
+const FLAG_HOOK = /^(agingSlow|unlockChain\.[a-z0-9_]+|cannotWork|noLineageChange|blockEvent\.[a-z0-9_]+|ignoreElementWeakness|rewindOnDeath)$/;
 
 export const EffectHookSchema = z
   .object({
@@ -605,6 +607,21 @@ export const BalanceSchema = z
         masterChancePerPoint: z.number().min(0),
         /** Cultivation speed bonus while having a master. */
         masterSpeed: z.number().min(0),
+      })
+      .strict(),
+    /** Task 2.7: Nghịch Thiên Cải Mệnh (fate-talents.md). */
+    fate: z
+      .object({
+        /** Rarity weights per foundation grade (row), e.g. { ha: { luong: 60, uu: 30, tuyet: 10 } }. */
+        rarityByFoundation: z.record(id, z.record(id, z.number().min(0))),
+        /** Foundation row used without a foundation. */
+        defaultFoundation: id,
+        /** Each 10 khí vận above 50 moves this many points from the lowest to the highest rarity of the row. */
+        luckShiftPer10: z.number().min(0),
+        slots: z.number().int().min(1),
+        refreshes: z.number().int().min(0),
+        /** Khí vận at or above this gives one more refresh. */
+        extraRefreshLuck: z.number(),
       })
       .strict(),
     /** Combat path modifiers (realms-roots-paths.md C); keyed by path id. */
@@ -1006,3 +1023,22 @@ export const SectLifeSchema = z
   })
   .strict();
 export type SectLife = z.infer<typeof SectLifeSchema>;
+
+/** content/fate-talents.json: Nghịch Thiên Cải Mệnh talents (task 2.7, fate-talents.md). */
+export const FateTalentFileSchema = z.array(
+  z
+    .object({
+      id,
+      rarity: z.enum(TRAIT_RARITIES),
+      name: z.string().min(1),
+      flavor: z.string().min(1),
+      summary: z.string().min(1),
+      /** Build tags it suits: path ids, craft ids, lineages, "cau_dao". */
+      fits: ids,
+      /** Only offered to this lineage. */
+      requiresLineage: z.enum(LINEAGES).optional(),
+      effects: z.array(EffectHookSchema).min(1),
+    })
+    .strict(),
+);
+export type FateTalent = z.infer<typeof FateTalentFileSchema>[number];

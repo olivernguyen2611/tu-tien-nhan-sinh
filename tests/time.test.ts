@@ -8,7 +8,7 @@ import balance from '../content/config/balance.json';
 import familyActions from '../content/family-actions.json';
 import lifeTexts from '../content/life-texts.json';
 import extremes from '../content/stat-extremes.json';
-import { careers, cultivation, difficulties, sectLife, sects, techniques, tutorial } from './fixtures';
+import { careers, cultivation, difficulties, fateTalents, sectLife, sects, techniques, tutorial } from './fixtures';
 import { StatExtremesFileSchema } from '../src/core/schemas';
 import traits from '../content/traits.json';
 import world from '../content/worlds/thuong_lan/world.json';
@@ -31,6 +31,7 @@ const content: Content = {
   techniques,
   sects,
   sectLife,
+  fateTalents,
   events: [],
   glossary: [],
 };

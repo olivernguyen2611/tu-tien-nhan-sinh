@@ -38,6 +38,10 @@ export type DeathCause = 'old_age' | 'illness' | 'breakthrough' | 'ordeal';
 
 export interface GameState {
   version: 1;
+  /** Nghịch Thiên Cải Mệnh talents taken (fate-talents.json, task 2.7). */
+  talents: string[];
+  /** A talent choice waiting for the player (after a big breakthrough); blocks the next year. */
+  fate: { offered: string[]; refreshesLeft: number } | null;
   /** Sect membership (task 2.5). */
   sect: {
     id: string | null;

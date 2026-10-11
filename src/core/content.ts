@@ -1,7 +1,7 @@
 // Loads all JSON under content/ at build time and checks it with the same
 // rules as `npm run validate`.
 import {
-  AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile,
+  AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, FateTalentFileSchema, type FateTalent, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile,
   BalanceSchema, EventFileSchema, FamilyActionFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema,
   type Balance, type FamilyAction, type GameEvent, type Glossary, type LifeTexts, type Names, type Origin, type StatExtremesFile, type Trait, type World,
 } from './schemas';
@@ -39,6 +39,8 @@ export interface Content {
   sects: Sect[];
   /** Sect texts and missions of this world (task 2.5); null when it has no sects. */
   sectLife: SectLife | null;
+  /** Nghịch Thiên Cải Mệnh talents (task 2.7). */
+  fateTalents: FateTalent[];
 }
 
 export interface CultivationTables {
@@ -103,6 +105,7 @@ export function loadContent(worldId: string = DEFAULT_WORLD_ID): Content {
     careers: CareersFileSchema.parse(files['careers.json']),
     techniques: TechniqueFileSchema.parse(files['techniques.json']),
     sects: SectFileSchema.parse(files[`${dir}sects.json`] ?? []),
+    fateTalents: FateTalentFileSchema.parse(files['fate-talents.json']),
     sectLife: files[`${dir}sect-life.json`] ? SectLifeSchema.parse(files[`${dir}sect-life.json`]) : null,
   };
 }
