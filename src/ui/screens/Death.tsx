@@ -2,6 +2,7 @@
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
 import { lifeSummary } from '../../systems/time';
+import { careerLabel, lifeTitles } from '../../systems/career';
 import { Meter } from '../components/Meter';
 
 const STAT_LABELS = [
@@ -28,9 +29,11 @@ export function DeathScreen({ state, content, onReadLog, onNewLife }: {
         <h1>{c.name}</h1>
         <p class="cause">{s.causeText}</p>
         <p class="epitaph">“{s.epitaph}”</p>
+        {lifeTitles(state, content).map((t) => <p class="life-title" key={t}>{t}</p>)}
 
         <dl class="facts">
           <div><dt>Thiện ác</dt><dd>{s.karmaLabel}</dd></div>
+          {careerLabel(state, content) && <div><dt>Đường đời</dt><dd>{careerLabel(state, content)}</dd></div>}
           <div><dt>Gia tài</dt><dd>{state.money.silver} lượng bạc</dd></div>
           <div><dt>Biến cố đã trải</dt><dd>{s.eventsLived}</dd></div>
           <div><dt>Người thân còn sống</dt><dd>{s.relativesAlive}</dd></div>

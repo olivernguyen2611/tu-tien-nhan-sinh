@@ -1,0 +1,100 @@
+[
+  {
+    "id": "linh_qua_ngan_nam",
+    "category": "fortune",
+    "title": "Linh quả nghìn năm",
+    "text": "Lạc đường trong núi sâu, {name} gặp một cây cổ thụ khô quắt, trên cành treo đúng một quả đỏ như son. Chim muông quanh đó nằm im, không con nào dám lại gần.",
+    "tags": ["rare"],
+    "themes": ["ky_vat"],
+    "conditions": { "age": { "min": 14 }, "root": { "tested": true, "usable": false }, "stats": [{ "stat": "stat.luck", "gte": 70 }] },
+    "weight": 0.4,
+    "luckAffected": true,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Hái xuống, ăn ngay",
+        "result": {
+          "text": "Quả vào bụng như nuốt một hòn than. Ngươi lăn lộn ba ngày ba đêm, xương cốt như bị bẻ ra lắp lại.",
+          "effects": { "grantRoot": true, "stat.daoHeart": 2 }
+        }
+      },
+      {
+        "text": "Hái về bán cho phú hộ trong thành",
+        "result": {
+          "text": "Phú hộ trả một đống bạc, mắt sáng rỡ như bắt được vàng. Có lẽ hắn biết thứ này đáng giá hơn thế nhiều.",
+          "effects": { "silver": 200 }
+        }
+      },
+      {
+        "text": "Không dám đụng, lạy cây ba lạy rồi đi",
+        "result": {
+          "text": "Ngươi quay lưng. Sau lưng có tiếng quả rụng, rồi tiếng gì đó ăn nó rất ngon lành.",
+          "effects": { "karma": 2, "stat.happiness": -2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tuy_linh_mach",
+    "category": "fortune",
+    "title": "Nước tủy linh mạch",
+    "text": "Đào giếng sau nhà, {name} chạm vào một mạch nước trắng như sữa, lạnh buốt và thơm lạ. Người làm cùng bảo nước độc, mau lấp đi.",
+    "tags": ["rare"],
+    "themes": ["ky_vat"],
+    "conditions": { "age": { "min": 14 }, "root": { "tested": true, "usable": false }, "stats": [{ "stat": "stat.luck", "gte": 70 }] },
+    "weight": 0.4,
+    "luckAffected": true,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhảy xuống ngâm mình",
+        "result": {
+          "text": "Nước len vào từng lỗ chân lông, tẩy qua tủy xương. Lúc bò lên, ngươi gầy rộc, nhưng có thứ gì đó trong kinh mạch đã khác.",
+          "effects": { "grantRoot": true, "stat.physique": 2 }
+        }
+      },
+      {
+        "text": "Múc vài vò đem bán cho thầy thuốc",
+        "result": {
+          "text": "Thầy thuốc nếm một ngụm, tay run run trả bạc. Hôm sau giếng đã cạn.",
+          "effects": { "silver": 120 }
+        }
+      },
+      {
+        "text": "Nghe lời, lấp giếng lại",
+        "result": {
+          "text": "Giếng lấp xong, đêm nào ngươi cũng mơ thấy dòng nước trắng ấy.",
+          "effects": { "stat.happiness": -3 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "thien_loi_nhap_the",
+    "category": "fortune",
+    "title": "Sét đánh không chết",
+    "text": "Giữa đồng, trời quang mây tạnh bỗng một tia sét giáng thẳng xuống người {name}. Ngươi chưa chết. Trong ngực có một luồng tê dại đang chạy loạn.",
+    "tags": ["rare", "violence"],
+    "themes": ["ky_vat"],
+    "conditions": { "age": { "min": 14 }, "root": { "tested": true, "usable": false }, "stats": [{ "stat": "stat.luck", "gte": 70 }] },
+    "weight": 0.3,
+    "luckAffected": true,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Ngồi xuống, dẫn luồng tê dại đi khắp người",
+        "result": {
+          "text": "Lôi khí xé kinh mạch thành từng sợi rồi hàn lại. Ngươi ngất đi giữa đồng, tỉnh dậy thì tóc dựng đứng cả tuần.",
+          "effects": { "grantRoot": true, "stat.charm": -3 }
+        }
+      },
+      {
+        "text": "Chạy về nhà trùm chăn",
+        "result": {
+          "text": "Luồng tê dại tan dần. Cả làng kéo đến xem người bị sét đánh mà không chết.",
+          "effects": { "stat.health": -10, "stat.charm": 3 }
+        }
+      }
+    ]
+  }
+]

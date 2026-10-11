@@ -4,16 +4,19 @@ import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
 import { inBottleneck, majorBreakthroughInfo, realmLabel, rootLabel, yearlyGain } from '../../systems/cultivation';
 import { craftViews } from '../../systems/crafts';
+import { careerIncome, careerLabel, careerViews } from '../../systems/career';
 import { Meter } from './Meter';
 import { TermText } from './Tooltip';
 
-export function CultivatePanel({ state, content, onBreakthrough, onPractice, onClose }: {
+export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJoinCareer, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome to show in the sheet. */
   onBreakthrough: () => { text: string; tone: Tone; changes: string } | null;
   /** Practise a craft this year; returns the log text, or null. */
   onPractice: (craftId: string) => string | null;
+  /** Take up a mortal career; returns the log text, or null. */
+  onJoinCareer: (careerId: string) => string | null;
   onClose: () => void;
 }) {
   const [confirming, setConfirming] = useState(false);
@@ -24,6 +27,10 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onC
   const info = majorBreakthroughInfo(state, content);
   const crafts = craftViews(state, content);
   const [practiced, setPracticed] = useState<string | null>(null);
+  const [joined, setJoined] = useState<string | null>(null);
+  const [careerOpen, setCareerOpen] = useState(false);
+  const careers = mortal ? careerViews(state, content) : [];
+  const currentCareer = careerLabel(state, content);
   const foundation = content.cultivation.realms.foundations.find((g) => g.id === cult.foundation);
 
   return (
@@ -67,6 +74,27 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onC
             {result.changes && <span class="changes">{result.changes}</span>}
           </p>
         )}
+        {mortal && state.alive && (
+          <div class="crafts">
+            <h3 class="panel-sub">Đường đời</h3>
+            {currentCareer ? (
+              <p class="story">{currentCareer} · thu nhập {careerIncome(state, content)} lượng bạc mỗi năm.</p>
+            ) : (
+              <p class="profile-note">Chưa theo đường nào. Từ {content.balance.careers.joinAge[0]} tuổi có thể chọn một đường để kiếm sống và tiến thân.</p>
+            )}
+            <button class="chip-btn" aria-expanded={careerOpen} onClick={() => setCareerOpen(!careerOpen)}>{currentCareer ? 'Đổi đường' : 'Chọn đường'}</button>
+            {careerOpen && careers.filter((c) => !c.current).map((c) => (
+              <div class="career-row" key={c.id}>
+                <div class="craft-head"><b>{c.name}</b></div>
+                <p class="profile-note"><TermText text={c.description} /></p>
+                <button class="chip-btn" disabled={!!c.blocked} onClick={() => { setJoined(onJoinCareer(c.id)); setCareerOpen(false); }}>Theo đường này</button>
+                {c.blocked && <span class="craft-note">{c.blocked}</span>}
+              </div>
+            ))}
+            {joined && <p class="action-result good">{joined}</p>}
+          </div>
+        )}
+
         {crafts.length > 0 && (
           <div class="crafts">
             <h3 class="panel-sub"><TermText text="Bách nghệ" /></h3>

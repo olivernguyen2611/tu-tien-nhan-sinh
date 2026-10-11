@@ -10,6 +10,7 @@ import { ageBody, checkDeath } from '../systems/time';
 import { makeName, splitName } from '../systems/names';
 import { cultivateYear, rootTestAge } from '../systems/cultivation';
 import { applyJobCrafts } from '../systems/crafts';
+import { careerYear } from '../systems/career';
 
 export interface NewLifeInput {
   seed: string;
@@ -68,6 +69,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     difficulty,
     tutorial: { enabled: !!input.tutorial, seen: [] },
     crafts: { skills: {}, lastPractice: null },
+    career: { id: null, rung: 0, since: 0 },
     worldId: content.world.id,
     seed: input.seed,
     rng: rng.getState(),
@@ -103,7 +105,7 @@ export function advanceYear(state: GameState, content: Content): GameState {
   if (!state.alive || state.events.pending) return state;
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageFamily(withYear(aged), content), content), content), content), content), content);
+  const body = checkDeath(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageFamily(withYear(aged), content), content), content), content), content), content), content);
   const next = body.alive ? rollYearEvent(body, content) : body;
   // The year's log block exists before family news and the event are added to it.
   const log = next.log.slice();

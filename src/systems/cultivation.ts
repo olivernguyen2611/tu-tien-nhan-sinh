@@ -7,6 +7,7 @@ import type { GameState, LogLine, SpiritRoot } from '../core/types';
 import { extremeHookSum } from './extremes';
 import { checkDeath } from './time';
 import { difficultyHookSum } from './difficulty';
+import { careerHooks } from './career';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -123,11 +124,11 @@ export function hookActive(e: Hook, state: GameState, content: Content): boolean
   return true;
 }
 
-/** Hooks this life carries from traits and its special body. */
-function lifeHooks(state: GameState, content: Content): Hook[] {
+/** Hooks this life carries from traits, its special body and its career. */
+export function lifeHooks(state: GameState, content: Content): Hook[] {
   const fromTraits = state.traits.flatMap((id) => content.traits.find((t) => t.id === id)?.effects ?? []);
   const body = state.cult.root?.body ? content.cultivation.roots.bodies.find((b) => b.id === state.cult.root!.body) : undefined;
-  return [...fromTraits, ...(body?.effects ?? [])];
+  return [...fromTraits, ...(body?.effects ?? []), ...careerHooks(state, content)];
 }
 
 /** Sum of an add-hook from traits, special body, extreme states and difficulty. `lineage.<x>.<hook>` counts for the life's lineage. */
@@ -397,4 +398,35 @@ export function attemptMajorBreakthrough(state: GameState, content: Content): Br
     text = `${text} ${texts.bottleneck}`;
   }
   return { state: checkDeath({ ...s, rng: rng.getState(), log }, content), success: false, text, tone: 'bad' };
+}
+
+// ---------- Task 2.11: Thiên địa kỳ vật gives a rootless mortal a root ----------
+
+/**
+ * A rootless (tested) mortal takes a heaven-and-earth treasure: a Ngũ (sometimes
+ * Tứ) linh căn, at a heavy cost to the body; past safeAge it can kill.
+ */
+export function grantRoot(state: GameState, content: Content): { state: GameState; text: string } {
+  const root = state.cult.root;
+  if (!state.alive || !root || (content.balance.roots.gradeSpeed[root.grade] ?? 0) > 0 || state.cult.realm !== 'pham_nhan') {
+    return { state, text: '' };
+  }
+  const cfg = content.balance.kyVat;
+  const rng = Rng.fromState(state.rng);
+  const grade = rng.chance(cfg.tuChance) ? 'tu' : 'ngu';
+  const basic = content.cultivation.roots.elements.filter((e) => !e.variant).map((e) => e.id);
+  const elements = pickElements(rng, basic, content.balance.roots.elementCount[grade] ?? 0);
+  const deathChance = Math.min(cfg.deathMax, Math.max(0, state.character.age - cfg.safeAge) * cfg.deathPerYear);
+  const hurt: GameState = { ...state, rng: rng.getState(), stats: { ...state.stats, health: clamp(state.stats.health + cfg.healthLoss) } };
+  if (rng.chance(deathChance)) {
+    const dead = checkDeath({ ...hurt, rng: rng.getState() }, content, 'ordeal');
+    return { state: dead, text: dead.log.at(-1)?.lines.at(-1)?.text ?? '' };
+  }
+  const withRoot: GameState = { ...hurt, rng: rng.getState(), cult: { ...hurt.cult, root: { grade, elements, body: null } } };
+  const text = content.cultivation.roots.revealText
+    .replace('{root}', rootName(withRoot.cult.root!, content))
+    .replace('{description}', rootDescription(withRoot.cult.root!, content));
+  const revealed = { ...withRoot, log: pushLine(withRoot.log, { text, tone: 'rare' as const }) };
+  const started = startCultivating(revealed, content);
+  return { state: started.state, text: [text, started.line?.text].filter(Boolean).join(' ') };
 }

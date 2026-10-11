@@ -25,6 +25,7 @@ import { attemptMajorBreakthrough } from '../systems/cultivation';
 import { savesLocked } from '../systems/difficulty';
 import { disableTutorial, dismissTip } from '../systems/tutorial';
 import { practiceCraft } from '../systems/crafts';
+import { joinCareer } from '../systems/career';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -170,6 +171,12 @@ function Screens({ content }: { content: Content }) {
         }}
         onPractice={(craftId) => {
           const r = practiceCraft(life, content, craftId);
+          if (!r) return null;
+          setLife(r.state);
+          return r.text;
+        }}
+        onJoinCareer={(careerId) => {
+          const r = joinCareer(life, content, careerId);
           if (!r) return null;
           setLife(r.state);
           return r.text;

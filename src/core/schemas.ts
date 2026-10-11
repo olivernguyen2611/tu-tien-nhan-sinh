@@ -34,6 +34,8 @@ export const ConditionsSchema = z
     traitsNone: ids,
     goldenFinger: id.nullable().optional(),
     stats: z.array(StatConditionSchema).default([]),
+    /** Spirit root (task 2.11): tested or not; usable = can cultivate. */
+    root: z.object({ tested: z.boolean().optional(), usable: z.boolean().optional() }).strict().optional(),
   })
   .strict();
 
@@ -55,10 +57,12 @@ export const EffectsSchema = z
     followUp: FollowUpSchema.optional(),
     /** Test the spirit root now (task 2.2); does nothing if it is already known. */
     testRoot: z.boolean().optional(),
+    /** Thiên địa kỳ vật (task 2.11): a rootless mortal gains a root (balance.kyVat). */
+    grantRoot: z.boolean().optional(),
   })
   .catchall(z.number())
   .superRefine((e, ctx) => {
-    const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot'];
+    const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -515,6 +519,39 @@ export const BalanceSchema = z
         })
         .strict(),
     ),
+    /** Mortal careers (task 2.11). */
+    careers: z
+      .object({
+        joinAge: range,
+        /** Silver per year at each rung (index 0 = first rung); longer ladders reuse the last value. */
+        income: z.array(z.number().int().min(0)).min(1),
+        /** Years at a rung before a promotion can happen. */
+        yearsPerRung: z.number().int().min(1),
+        /** Promotion chance = base + (avg main stats − difficulty[rung]) × perPoint, clamped. */
+        promoteBase: probability,
+        promotePerPoint: z.number().min(0),
+        promoteMin: probability,
+        promoteMax: probability,
+        /** Difficulty to climb into rung i+1 (index 0 = into the second rung). */
+        difficulty: z.array(z.number()).min(1),
+        /** Added to the chance when a bonus flag or origin applies. */
+        bonusChance: probability,
+        eavesdropChance: probability,
+        longLifeAge: z.number().int().min(1),
+      })
+      .strict(),
+    /** Thiên địa kỳ vật (mortal-path.md 2.1). */
+    kyVat: z
+      .object({
+        /** Chance the root is Tứ instead of Ngũ. */
+        tuChance: probability,
+        healthLoss: z.number(),
+        /** Above this age each year adds deathPerYear to the death chance, up to deathMax. */
+        safeAge: z.number().int().min(0),
+        deathPerYear: probability,
+        deathMax: probability,
+      })
+      .strict(),
     /** Combat path modifiers (realms-roots-paths.md C); keyed by path id. */
     paths: z
       .object({ startAffinity: range })
@@ -598,6 +635,8 @@ export const LifeTextsSchema = z
     deathOldAge: lines,
     /** Died breaking into a new realm (task 2.6); {age}. */
     deathBreakthrough: lines,
+    /** Died taking a heaven-and-earth treasure (task 2.11); {age}. */
+    deathOrdeal: lines,
     deathIllness: lines,
     epitaph: z.object({ good: lines, bad: lines, plain: lines }).strict(),
   })
@@ -752,3 +791,41 @@ export const TutorialFileSchema = z
   })
   .strict();
 export type TutorialFile = z.infer<typeof TutorialFileSchema>;
+
+/** content/careers.json: mortal life paths (task 2.11, mortal-path.md mục 1, 2.3). */
+export const CareersFileSchema = z
+  .object({
+    careers: z
+      .array(
+        z
+          .object({
+            id,
+            name: z.string().min(1),
+            description: z.string().min(1),
+            /** Stats averaged for promotions (stat or aptitude names). */
+            mainStats: z.array(z.enum([...MORTAL_STATS, ...APTITUDES])).min(1),
+            rungs: z.array(z.string().min(1)).min(1),
+            /** Flags from earlier events that make promotions easier. */
+            bonusFlags: ids,
+            bonusOrigins: ids,
+            requires: z.object({ rootless: z.boolean().optional() }).strict().default({}),
+            /** {rung} = the new rung's name. */
+            promoteText: z.string().min(1),
+            /** End-of-life title when the last rung is reached. */
+            title: z.string().min(1).optional(),
+            /** K.6 hooks while in this career. */
+            effects: z.array(EffectHookSchema).default([]),
+          })
+          .strict(),
+      )
+      .min(1),
+    /** {career}, {rung}. */
+    joinText: z.string().min(1),
+    leaveText: z.string().min(1),
+    /** Tạp dịch hears the sect's lessons: comprehension +1. */
+    eavesdropText: z.string().min(1),
+    /** Title for a mortal who lives to balance.careers.longLifeAge. */
+    longLifeTitle: z.string().min(1),
+  })
+  .strict();
+export type CareersFile = z.infer<typeof CareersFileSchema>;

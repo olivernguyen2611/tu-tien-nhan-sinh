@@ -553,6 +553,9 @@ button { font: inherit; color: inherit; }
 .action-result.rare { color: var(--rare); }
 .crafts { margin: 14px 0 6px; padding-top: 10px; border-top: 1px solid var(--line); }
 .craft-note { grid-column: 1 / -1; font-size: 0.75rem; color: var(--muted); }
+.career-row { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--line); }
+.career-row .profile-note { margin: 2px 0 6px; }
+.life-title { margin: 4px 0; font-family: var(--font-story); font-weight: 700; color: var(--rare); }
 .panel-sub { margin: 0 0 2px; font-size: 1rem; }
 .craft-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; align-items: center; margin-top: 10px; }
 .craft-head { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 8px; font-size: 0.875rem; }

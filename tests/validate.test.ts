@@ -21,6 +21,8 @@ const balance = {
   majorBreakthrough: realBalance.majorBreakthrough,
   defaultDifficulty: realBalance.defaultDifficulty,
   difficulty: realBalance.difficulty,
+  careers: realBalance.careers,
+  kyVat: realBalance.kyVat,
   paths: realBalance.paths,
   crafts: realBalance.crafts,
   extremes: { lowAt: 5, highAt: 95, exitLow: 20, exitHigh: 80, karmaLowAt: -80, karmaHighAt: 80, karmaExitLow: -60, karmaExitHigh: 60, years: 3, onceCooldownYears: 10, happinessDrift: 2, happinessRest: 50 },

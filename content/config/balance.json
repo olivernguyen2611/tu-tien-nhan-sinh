@@ -153,6 +153,26 @@
       ]
     }
   },
+  "careers": {
+    "joinAge": [14, 40],
+    "income": [10, 25, 50, 100, 200],
+    "yearsPerRung": 3,
+    "promoteBase": 0.25,
+    "promotePerPoint": 0.01,
+    "promoteMin": 0.03,
+    "promoteMax": 0.7,
+    "difficulty": [35, 50, 62, 75],
+    "bonusChance": 0.1,
+    "eavesdropChance": 0.2,
+    "longLifeAge": 100
+  },
+  "kyVat": {
+    "tuChance": 0.2,
+    "healthLoss": -30,
+    "safeAge": 30,
+    "deathPerYear": 0.02,
+    "deathMax": 0.6
+  },
   "paths": {
     "startAffinity": [5, 30],
     "sword": { "combatPower": 0.15, "firstRoundBonus": 0.1, "injuryTaken": 0.1, "cultivationSpeed": 0.1 },

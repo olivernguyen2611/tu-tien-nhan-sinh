@@ -34,10 +34,12 @@ export interface SpiritRoot {
   body: string | null;
 }
 
-export type DeathCause = 'old_age' | 'illness' | 'breakthrough';
+export type DeathCause = 'old_age' | 'illness' | 'breakthrough' | 'ordeal';
 
 export interface GameState {
   version: 1;
+  /** Mortal career (task 2.11): careers.json id, rung index, age the rung was reached. */
+  career: { id: string | null; rung: number; since: number };
   /** Bách nghệ (task 2.12): craft id → level and aptitude 0–100; age of the last practice. */
   crafts: { skills: Record<string, { level: number; affinity: number }>; lastPractice: number | null };
   /** First-life tips (task 2.9): on for the first life; tip ids already shown. */

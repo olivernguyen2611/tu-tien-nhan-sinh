@@ -27,9 +27,17 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
   const age = state.character.age;
   if (c.age?.min !== undefined && age < c.age.min) return false;
   if (c.age?.max !== undefined && age > c.age.max) return false;
-  // Realms and regions arrive in GĐ 2/3; until then everyone is a mortal with no region.
-  if (c.realm?.min && c.realm.min !== 'pham_nhan') return false;
+  if (c.realm && !realmInRange(state, c.realm, content)) return false;
+  // Regions arrive in GĐ 3; until then nobody is in one.
   if (c.region && c.region.length > 0) return false;
+  if (c.root) {
+    const root = state.cult.root;
+    if (c.root.tested !== undefined && !!root !== c.root.tested) return false;
+    if (c.root.usable !== undefined) {
+      const usable = !!root && (content?.balance.roots.gradeSpeed[root.grade] ?? 0) > 0;
+      if (!root || usable !== c.root.usable) return false;
+    }
+  }
   if (c.flagsAll?.some((f) => !state.flags[f])) return false;
   if (c.flagsNone?.some((f) => state.flags[f])) return false;
   if (c.traitsAny?.length && !c.traitsAny.some((t) => state.traits.includes(t))) return false;
@@ -41,6 +49,14 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (s.gte !== undefined && v < s.gte) return false;
     if (s.lte !== undefined && v > s.lte) return false;
   }
-  void content;
+  return true;
+}
+
+/** realm.min / realm.max by the order in realms.json. Without content only Phàm Nhân is known. */
+function realmInRange(state: GameState, realm: NonNullable<Conditions['realm']>, content?: Content): boolean {
+  const order = content?.cultivation.realms.realms.map((r) => r.id) ?? ['pham_nhan'];
+  const at = order.indexOf(state.cult.realm);
+  if (realm.min && at < order.indexOf(realm.min)) return false;
+  if (realm.max && order.indexOf(realm.max) >= 0 && at > order.indexOf(realm.max)) return false;
   return true;
 }

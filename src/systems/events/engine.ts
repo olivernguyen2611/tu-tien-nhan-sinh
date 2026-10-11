@@ -7,7 +7,7 @@ import { fillTemplate } from '../../core/state';
 import { extremeThemeMultiplier } from '../extremes';
 import type { GameState, LogLine, Tone } from '../../core/types';
 import { meets, readValue } from './conditions';
-import { revealRoot, startCultivating } from '../cultivation';
+import { grantRoot, hookActive, lifeHooks, revealRoot, startCultivating } from '../cultivation';
 
 type Outcome = NonNullable<GameEvent['choices'][number]['result']>;
 
@@ -15,16 +15,13 @@ export function findEvent(content: Content, id: string): GameEvent | undefined {
   return content.events.find((e) => e.id === id);
 }
 
-/** Product of the life's trait multipliers for this event's themes (K.6 eventWeight.<theme>). */
+/** Product of the life's multipliers for this event's themes (K.6 eventWeight.<theme>). */
 export function themeMultiplier(state: GameState, content: Content, event: GameEvent): number {
   let mul = 1;
-  for (const id of state.traits) {
-    const trait = content.traits.find((t) => t.id === id);
-    for (const e of trait?.effects ?? []) {
-      if (!e.hook.startsWith('eventWeight.') || e.mul === undefined) continue;
-      if (e.activeFrom && state.character.age < e.activeFrom.age) continue;
-      if (event.themes.includes(e.hook.slice('eventWeight.'.length))) mul *= e.mul;
-    }
+  // Traits, special body and career (K.6 eventWeight.<theme>).
+  for (const e of lifeHooks(state, content)) {
+    if (!e.hook.startsWith('eventWeight.') || e.mul === undefined || !hookActive(e, state, content)) continue;
+    if (event.themes.includes(e.hook.slice('eventWeight.'.length))) mul *= e.mul;
   }
   return mul * extremeThemeMultiplier(state, content, event.themes);
 }
@@ -191,6 +188,11 @@ export function resolveChoice(state: GameState, content: Content, choiceIndex: n
     const started = startCultivating(revealed.state, content);
     next = started.state;
     for (const line of [revealed.line, started.line]) if (line) text = `${text} ${line.text}`;
+  }
+  if (outcome.effects.grantRoot) {
+    const granted = grantRoot(next, content);
+    next = granted.state;
+    if (granted.text) text = `${text} ${granted.text}`;
   }
   return { state: next, text, tone, success };
 }
