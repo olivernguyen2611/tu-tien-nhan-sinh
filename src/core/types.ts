@@ -40,6 +40,8 @@ export interface GameState {
   version: 1;
   /** Items carried (items.json id → count); the full bag is task 3.1. */
   inventory: Record<string, number>;
+  /** Task 3.1: item id → age last used (one use a year); ids whose once-per-life effect is spent; bonus for the next breakthrough. */
+  itemUse: { lastAge: Record<string, number>; spent: string[]; nextBreakthrough: number };
   /** Nghịch Thiên Cải Mệnh talents taken (fate-talents.json, task 2.7). */
   talents: string[];
   /** A talent choice waiting for the player (after a big breakthrough); blocks the next year. */

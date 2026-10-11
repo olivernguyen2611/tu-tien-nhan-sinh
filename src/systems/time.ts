@@ -32,7 +32,8 @@ export function ageBody(state: GameState, content: Content): GameState {
   // Old-age milestones (60, 70, 80): a visible blow to health and looks.
   if (cfg.milestoneAges.includes(age)) {
     const dh = clamp(health + cfg.milestoneHealth) - clamp(health);
-    const dc = clamp(charm + cfg.milestoneCharm) - charm;
+    // Trú Nhan Đan keeps the face (flag no_aging_charm).
+    const dc = state.flags.no_aging_charm ? 0 : clamp(charm + cfg.milestoneCharm) - charm;
     health += dh;
     charm += dc;
     const change = [describeDelta('health', dh), describeDelta('charm', dc)].filter(Boolean).join(' · ');

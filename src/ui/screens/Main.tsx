@@ -5,6 +5,7 @@ import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
 import { activeExtremes, extremeWarnings } from '../../systems/extremes';
 import { DevPanel } from '../components/DevPanel';
+import { BagPanel } from '../components/BagPanel';
 import { FamilyPanel } from '../components/FamilyPanel';
 import { CultivatePanel } from '../components/CultivatePanel';
 import { SectPanel, type SectAction } from '../components/SectPanel';
@@ -37,7 +38,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onBreakthrough, onPractice, onJoinCareer, onLearn, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onUseItem, onBreakthrough, onPractice, onJoinCareer, onLearn, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -48,6 +49,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   /** Returns the outcome to show on the card. */
   onChoose: (index: number) => PopupResult;
   onFamilyAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
+  /** Use one item from the bag. */
+  onUseItem: (itemId: string) => { text: string; tone: Tone; changes: string };
   /** Practise a craft from the "Tu luyện" sheet. */
   onPractice: (craftId: string) => string | null;
   /** Take up a mortal career from the "Tu luyện" sheet. */
@@ -75,6 +78,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const [profileOpen, setProfileOpen] = useState(false);
   const [result, setResult] = useState<PopupResult | null>(null);
   const [familyOpen, setFamilyOpen] = useState(false);
+  const [bagOpen, setBagOpen] = useState(false);
   const [cultivateOpen, setCultivateOpen] = useState(false);
   const [sectOpen, setSectOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
@@ -112,7 +116,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         </div>
         <div class="top-actions">
           {dev && <button class="icon-btn dev-btn" aria-label="Developer mode" title="Developer mode" onClick={() => setDevOpen(true)}>Dev</button>}
-          <button class="icon-btn" aria-label="Túi đồ" title="Túi đồ">囊</button>
+          <button class="icon-btn" aria-label="Túi đồ" title="Túi đồ" onClick={() => setBagOpen(true)}>囊</button>
           <button class="icon-btn" aria-label="Sổ lưu" title="Sổ lưu" onClick={onSaves}>簿</button>
           <span class="desktop-only">
             <ThemeToggle pref={theme} onChange={onToggleTheme} />
@@ -191,6 +195,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
       {sectOpen && <SectPanel state={state} content={content} onAction={onSectAction} onClose={() => setSectOpen(false)} />}
 
       {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onClose={() => setCultivateOpen(false)} />}
+
+      {bagOpen && <BagPanel state={state} content={content} onUse={onUseItem} onClose={() => setBagOpen(false)} />}
 
       {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onClose={() => setFamilyOpen(false)} />}
 

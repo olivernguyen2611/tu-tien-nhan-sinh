@@ -11,6 +11,14 @@
     "Tuổi {age}, đi vài bước đã phải dừng lại thở.",
     "Tuổi {age}, răng rụng thêm một chiếc, ăn gì cũng phải nhai lâu."
   ],
+  "itemMortal": [
+    "Viên đan trôi tuột xuống bụng, như ăn một hạt đậu.",
+    "Không có linh căn, linh dược vào người cũng chỉ như nước lã."
+  ],
+  "itemRepeat": [
+    "Lần này thì cơ thể đã quen thuốc, chẳng thấy gì khác.",
+    "Thuốc tốt chỉ linh nghiệm một lần, lần hai chỉ còn vị đắng."
+  ],
   "deathOldAge": [
     "Năm {age} tuổi, bạn ngồi phơi nắng trước hiên, thiếp đi rồi không tỉnh lại nữa.",
     "Năm {age} tuổi, thọ nguyên đã cạn, bạn nhắm mắt trong tiếng gió thu.",

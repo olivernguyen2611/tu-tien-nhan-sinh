@@ -744,6 +744,9 @@ export const LifeTextsSchema = z
     illness: lines,
     /** Old-age milestones (balance.aging.milestoneAges); {age}. */
     agingMilestone: lines,
+    /** Task 3.1: a rootless mortal takes a cultivator's pill; a once-per-life pill taken again. */
+    itemMortal: lines,
+    itemRepeat: lines,
     deathOldAge: lines,
     /** Died breaking into a new realm (task 2.6); {age}. */
     deathBreakthrough: lines,
@@ -1083,16 +1086,48 @@ export const FateTalentFileSchema = z.array(
 );
 export type FateTalent = z.infer<typeof FateTalentFileSchema>[number];
 
-/** content/items.json: items known so far (task 2.8; the full bag is task 3.1). */
+/** What using an item does right away (task 3.1). */
+const ITEM_USE_HOOK = new RegExp(
+  `^(stat\\.(${[...MORTAL_STATS, ...APTITUDES].join('|')})|cultivationProgress|breakthroughNext|lifespanYears|noAgingCharm|clearFlag\\.[a-z0-9_]+|combatPowerNext)$`,
+);
+const ItemUseEffectSchema = z
+  .object({ hook: z.string().regex(ITEM_USE_HOOK, 'móc dùng vật phẩm không hợp lệ'), add: z.number().optional() })
+  .strict();
+const ItemUseSchema = z
+  .object({
+    /** Log line when used (the stat changes are added after it). */
+    text: z.string().min(1),
+    effects: z.array(ItemUseEffectSchema).default([]),
+    /** One of these happens instead, by weight (Phế Đan). */
+    random: z.array(z.object({ weight: z.number().min(0), text: z.string().min(1), effects: z.array(ItemUseEffectSchema) }).strict()).default([]),
+    /** Only the first use in a life works; later ones give `repeatEffects`. */
+    oncePerLife: z.boolean().default(false),
+    repeatEffects: z.array(ItemUseEffectSchema).default([]),
+    /** Works for someone without a spirit root. */
+    mortalOk: z.boolean().default(false),
+    /** Kept for combat (task 3.3): cannot be used from the bag yet. */
+    combatOnly: z.boolean().default(false),
+  })
+  .strict();
+
+/** content/items.json (tasks 2.8, 3.1). */
+export const ITEM_KINDS = ['pill', 'artifact', 'array', 'talisman', 'material', 'misc'] as const;
 export const ItemFileSchema = z.array(
   z
     .object({
       id,
       name: z.string().min(1),
-      kind: z.enum(['pill', 'artifact', 'material']),
+      kind: z.enum(ITEM_KINDS),
       description: z.string().min(1),
+      /** One line for the bag: what it does. */
+      summary: z.string().min(1).optional(),
+      /** Base price for the market (task 3.2); none = not for sale. */
+      price: z.object({ silver: z.number().int().min(0).optional(), spiritStones: z.number().int().min(0).optional() }).strict().optional(),
       /** Used up automatically on a breakthrough out of `realm`: a stage (major false) or into the next realm (major true). */
       breakthrough: z.object({ realm: id, major: z.boolean(), add: z.number() }).strict().optional(),
+      use: ItemUseSchema.optional(),
+      /** K.6 hooks while the item is in the bag; the same hook from several items counts once, the strongest. */
+      carried: z.array(EffectHookSchema).default([]),
     })
     .strict(),
 );

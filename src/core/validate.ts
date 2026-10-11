@@ -49,7 +49,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
 }
 
 /** Flags the engine sets itself (not via events). */
-export const ENGINE_FLAGS = ['no_parents', 'no_father', 'no_mother'];
+export const ENGINE_FLAGS = ['no_aging_charm', 'no_parents', 'no_father', 'no_mother'];
 /** Words naming a parent in event text, and the flag the engine sets once that parent is gone. */
 const PARENT_WORDS = [
   { name: 'cha', flag: 'no_father', word: /(^|[^\p{L}])cha(?![\p{L}])/iu },
