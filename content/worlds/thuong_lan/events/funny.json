@@ -1,0 +1,123 @@
+[
+  {
+    "id": "ga_trong_gay_dem",
+    "category": "funny",
+    "title": "Gà trống gáy nửa đêm",
+    "text": "Con gà trống nhà {name} đêm nào cũng gáy lúc canh ba, mắt đỏ như than. Hàng xóm đồn nó sắp thành tinh.",
+    "tags": [
+      "funny"
+    ],
+    "conditions": {
+      "age": {
+        "min": 8
+      }
+    },
+    "weight": 6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Làm thịt",
+        "result": {
+          "text": "Thịt dai như dây thừng, ăn xong cả nhà ngủ ngáy rất to.",
+          "effects": {
+            "stat.health": 2
+          }
+        }
+      },
+      {
+        "text": "Thắp hương cho nó",
+        "result": {
+          "text": "Gà nhìn ngươi, ngươi nhìn gà. Từ đó nó gáy đúng giờ.",
+          "effects": {
+            "stat.luck": 1
+          }
+        }
+      },
+      {
+        "text": "Bán cho đạo sĩ dạo",
+        "result": {
+          "text": "Đạo sĩ trả mười lăm lạng, ôm gà đi, miệng lẩm bẩm 'tìm được rồi'.",
+          "effects": {
+            "silver": 15,
+            "setFlags": [
+              "ban_ga_cho_dao_si"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ba_moi_toi_nha",
+    "category": "funny",
+    "title": "Bà mối tới nhà",
+    "text": "Bà mối áo đỏ ngồi chễm chệ giữa nhà, kể về một mối \"ngàn năm có một\" ở làng bên.",
+    "tags": [
+      "funny"
+    ],
+    "themes": [
+      "romance_trouble"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18,
+        "max": 30
+      },
+      "flagsNone": [
+        "da_dinh_than"
+      ]
+    },
+    "weight": 10,
+    "cooldownYears": 3,
+    "choices": [
+      {
+        "text": "Đi xem mặt",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Hai người nhìn nhau, đỏ mặt. Bà mối thu tiền công rất nhanh.",
+          "effects": {
+            "stat.happiness": 8,
+            "setFlags": [
+              "da_dinh_than"
+            ]
+          }
+        },
+        "fail": {
+          "text": "Người ta nhìn ngươi một cái rồi xin về sớm.",
+          "effects": {
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Trốn ra sau núi",
+        "result": {
+          "text": "Ngươi nằm trên đồi ngắm mây cả buổi. Bà mối uống hết ấm trà rồi về.",
+          "effects": {
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Mở cửa ra đón",
+        "hidden": true,
+        "requires": {
+          "traitsAny": [
+            "dao_hoa_kiep"
+          ]
+        },
+        "result": {
+          "text": "Ngoài cửa có ba bà mối cùng tới, cãi nhau giành ngươi, đánh nhau đổ cả giàn mướp.",
+          "effects": {
+            "stat.charm": 2,
+            "stat.happiness": -3,
+            "silver": -5
+          }
+        }
+      }
+    ]
+  }
+]

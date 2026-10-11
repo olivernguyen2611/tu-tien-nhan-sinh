@@ -1,12 +1,20 @@
 // Loads all JSON under content/ at build time and checks it with the same
 // rules as `npm run validate`.
 import {
-  BalanceSchema, EventFileSchema, GlossarySchema, NamesSchema, OriginFileSchema, TraitFileSchema,
-  type Balance, type GameEvent, type Glossary, type Names, type Origin, type Trait,
+  BalanceSchema, EventFileSchema, GlossarySchema, NamesSchema, OriginFileSchema, TraitFileSchema, WorldSchema,
+  type Balance, type GameEvent, type Glossary, type Names, type Origin, type Trait, type World,
 } from './schemas';
-import { validateContent } from './validate';
+import { splitWorldPath, validateContent } from './validate';
 
+/** The world played when none is chosen (world picker comes later). */
+export const DEFAULT_WORLD_ID = 'thuong_lan';
+
+/**
+ * Everything the engine needs for one life: shared files (balance, traits,
+ * glossary) plus the files of the chosen world (origins, names, events).
+ */
 export interface Content {
+  world: World;
   balance: Balance;
   events: GameEvent[];
   glossary: Glossary;
@@ -26,21 +34,37 @@ function rawFiles(): Record<string, unknown> {
   return out;
 }
 
-export function loadContent(): Content {
+function checkedFiles(): Record<string, unknown> {
   const files = rawFiles();
   const errors = validateContent(files).filter((p) => p.level === 'error');
   if (errors.length > 0) {
     throw new Error('Dữ liệu game lỗi:\n' + errors.map((e) => `${e.file}: ${e.message}`).join('\n'));
   }
+  return files;
+}
+
+/** All worlds found under content/worlds/, in display order. */
+export function listWorlds(): World[] {
+  return Object.entries(rawFiles())
+    .filter(([path]) => splitWorldPath(path).rest === 'world.json')
+    .map(([, data]) => WorldSchema.parse(data))
+    .sort((a, b) => a.order - b.order);
+}
+
+export function loadContent(worldId: string = DEFAULT_WORLD_ID): Content {
+  const files = checkedFiles();
+  const dir = `worlds/${worldId}/`;
+  if (!files[`${dir}world.json`]) throw new Error(`Không có thế giới "${worldId}"`);
   const events = Object.entries(files)
-    .filter(([path]) => path.startsWith('events/'))
+    .filter(([path]) => path.startsWith(`${dir}events/`))
     .flatMap(([, data]) => EventFileSchema.parse(data));
   return {
+    world: WorldSchema.parse(files[`${dir}world.json`]),
     balance: BalanceSchema.parse(files['config/balance.json']),
     events,
     glossary: GlossarySchema.parse(files['glossary.json'] ?? []),
-    origins: OriginFileSchema.parse(files['character/origins.json']),
-    names: NamesSchema.parse(files['character/names.json']),
+    origins: OriginFileSchema.parse(files[`${dir}character/origins.json`]),
+    names: NamesSchema.parse(files[`${dir}character/names.json`]),
     traits: TraitFileSchema.parse(files['traits.json']),
   };
 }

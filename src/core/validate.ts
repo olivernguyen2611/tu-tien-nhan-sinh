@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { BalanceSchema, EventFileSchema, GlossarySchema, NamesSchema, OriginFileSchema, TraitFileSchema, type GameEvent, type Origin, type Trait } from './schemas';
+import { BalanceSchema, EventFileSchema, GlossarySchema, NamesSchema, OriginFileSchema, TraitFileSchema, WorldSchema, type GameEvent, type Origin, type Trait, type World } from './schemas';
 
 export interface Problem {
   file: string;
@@ -11,19 +11,36 @@ export interface Problem {
 }
 
 /** Which schema applies to which content file. */
+/** "worlds/<id>/rest" → { worldId, rest }; shared files have no world. */
+export function splitWorldPath(path: string): { worldId: string | null; rest: string } {
+  const m = /^worlds\/([^/]+)\/(.+)$/.exec(path);
+  return m ? { worldId: m[1], rest: m[2] } : { worldId: null, rest: path };
+}
+
 export function schemaFor(path: string): ZodTypeAny | null {
-  if (path === 'config/balance.json') return BalanceSchema;
-  if (path === 'glossary.json') return GlossarySchema;
-  if (path === 'character/origins.json') return OriginFileSchema;
-  if (path === 'character/names.json') return NamesSchema;
-  if (path === 'traits.json') return TraitFileSchema;
-  if (/^events\/[^/]+\.json$/.test(path)) return EventFileSchema;
+  const { worldId, rest } = splitWorldPath(path);
+  if (worldId === null) {
+    // Shared by every world.
+    if (rest === 'config/balance.json') return BalanceSchema;
+    if (rest === 'glossary.json') return GlossarySchema;
+    if (rest === 'traits.json') return TraitFileSchema;
+    return null;
+  }
+  // Belongs to one world.
+  if (rest === 'world.json') return WorldSchema;
+  if (rest === 'character/origins.json') return OriginFileSchema;
+  if (rest === 'character/names.json') return NamesSchema;
+  if (/^events\/[^/]+\.json$/.test(rest)) return EventFileSchema;
   return null;
 }
+
+/** Flags the engine sets itself (not via events). */
+export const ENGINE_FLAGS = ['no_parents'];
 
 export function validateContent(files: Record<string, unknown>): Problem[] {
   const problems: Problem[] = [];
   const events: { file: string; event: GameEvent }[] = [];
+  let traitIds: Set<string> | null = null;
 
   for (const [file, raw] of Object.entries(files)) {
     const schema = schemaFor(file);
@@ -38,6 +55,9 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       }
       continue;
     }
+    if (schema === WorldSchema && (parsed.data as World).id !== splitWorldPath(file).worldId) {
+      problems.push({ file, level: 'error', message: `id thế giới "${(parsed.data as World).id}" phải trùng tên thư mục` });
+    }
     if (schema === OriginFileSchema) {
       const seenOrigin = new Set<string>();
       for (const o of parsed.data as Origin[]) {
@@ -47,6 +67,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     }
     if (schema === TraitFileSchema) {
       const seenTrait = new Set<string>();
+      traitIds = seenTrait;
       for (const t of parsed.data as Trait[]) {
         if (seenTrait.has(t.id)) problems.push({ file, level: 'error', message: `trùng id khí vận "${t.id}"` });
         seenTrait.add(t.id);
@@ -72,7 +93,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   }
 
   // Collect flags that some event sets, and follow-up targets.
-  const flagsSet = new Set<string>();
+  const flagsSet = new Set<string>(ENGINE_FLAGS);
   for (const { event } of events) {
     for (const choice of event.choices) {
       for (const outcome of [choice.result, choice.success, choice.fail]) {
@@ -87,6 +108,19 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     // PLAN.md mục H: mature content only for adults.
     if (event.tags.includes('mature') && (event.conditions.age?.min ?? 0) < 18) {
       problems.push({ file, level: 'error', message: `${where} gắn tag "mature" nhưng conditions.age.min chưa ≥ 18` });
+    }
+
+    if (event.themes.some((t) => t.startsWith('romance')) && (event.conditions.age?.min ?? 0) < 18) {
+      problems.push({ file, level: 'error', message: `${where} có chủ đề tình duyên nhưng conditions.age.min chưa ≥ 18` });
+    }
+
+    // Traits named in conditions must exist.
+    if (traitIds) {
+      const named = [event.conditions, ...event.choices.map((c) => c.requires ?? {})]
+        .flatMap((c) => [...(c.traitsAny ?? []), ...(c.traitsAll ?? []), ...(c.traitsNone ?? [])]);
+      for (const t of named) {
+        if (!traitIds.has(t)) problems.push({ file, level: 'error', message: `${where} nhắc tới khí vận không tồn tại "${t}"` });
+      }
     }
 
     for (const flag of event.conditions.flagsAll) {

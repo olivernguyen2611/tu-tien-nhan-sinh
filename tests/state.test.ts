@@ -1,12 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import type { Content } from '../src/core/content';
 import { advanceYear, createLife } from '../src/core/state';
-import { BalanceSchema, NamesSchema, OriginFileSchema } from '../src/core/schemas';
+import { BalanceSchema, WorldSchema, NamesSchema, OriginFileSchema } from '../src/core/schemas';
+import world from '../content/worlds/thuong_lan/world.json';
 import balance from '../content/config/balance.json';
-import names from '../content/character/names.json';
-import origins from '../content/character/origins.json';
+import names from '../content/worlds/thuong_lan/character/names.json';
+import origins from '../content/worlds/thuong_lan/character/origins.json';
 
 const content: Content = {
+  world: WorldSchema.parse(world),
   balance: BalanceSchema.parse(balance),
   names: NamesSchema.parse(names),
   origins: OriginFileSchema.parse(origins),
@@ -16,6 +18,10 @@ const content: Content = {
 };
 
 describe('createLife', () => {
+  it('records which world the life belongs to', () => {
+    expect(createLife({ seed: 'w' }, content).worldId).toBe('thuong_lan');
+  });
+
   it('same seed gives the same character', () => {
     expect(createLife({ seed: 'abc' }, content)).toEqual(createLife({ seed: 'abc' }, content));
   });
@@ -45,7 +51,7 @@ describe('createLife', () => {
     expect(s.character.name).toBe('Tô Vân');
     expect(s.character.gender).toBe('nu');
     expect(s.character.originId).toBe('co_nhi');
-    expect(s.flags.orphan).toBe(true);
+    expect(s.flags.no_parents).toBe(true);
     expect(s.money.silver).toBe(0);
   });
 

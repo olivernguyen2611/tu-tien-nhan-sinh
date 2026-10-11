@@ -1,0 +1,260 @@
+[
+  {
+    "id": "vao_tu_thuc",
+    "category": "study",
+    "title": "Vào trường tư thục",
+    "text": "Trong {hometown} có một trường tư thục, học phí mười lạng một năm.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "age": {
+        "min": 6,
+        "max": 8
+      }
+    },
+    "weight": 10,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đi học",
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 10
+            }
+          ]
+        },
+        "result": {
+          "text": "Ngày đầu tiên ngươi học được chữ 'nhân'. Ngày thứ hai đã quên.",
+          "effects": {
+            "silver": -10,
+            "stat.intellect": 4,
+            "setFlags": [
+              "di_hoc"
+            ]
+          }
+        }
+      },
+      {
+        "text": "Ở nhà phụ việc",
+        "result": {
+          "text": "Ngươi chặt củi, gánh nước, tay chai nhưng người rắn rỏi.",
+          "effects": {
+            "stat.physique": 3
+          }
+        }
+      },
+      {
+        "text": "Đứng ngoài cửa sổ nghe lén",
+        "result": {
+          "text": "Thầy đồ giả vờ không thấy. Ngươi học ké được mấy chữ.",
+          "effects": {
+            "stat.intellect": 2,
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "thay_do_ngu_gat",
+    "category": "study",
+    "title": "Thầy đồ ngủ gật",
+    "text": "Giữa giờ giảng, thầy đồ gục đầu ngáy khò khò. Cả lớp nhìn {name}.",
+    "tags": [
+      "funny"
+    ],
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "age": {
+        "min": 7,
+        "max": 14
+      },
+      "flagsAll": [
+        "di_hoc"
+      ]
+    },
+    "weight": 10,
+    "cooldownYears": 4,
+    "choices": [
+      {
+        "text": "Vẽ râu lên mặt thầy",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Thầy dậy, không ai dám cười. Ngươi thành anh hùng của cả lớp.",
+          "effects": {
+            "stat.happiness": 8,
+            "stat.charm": 2
+          }
+        },
+        "fail": {
+          "text": "Thầy mở mắt đúng lúc. Lòng bàn tay ngươi sưng ba ngày.",
+          "effects": {
+            "stat.health": -3,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Tự đọc sách",
+        "result": {
+          "text": "Thầy tỉnh dậy thấy ngươi đang đọc, gật gù rất hài lòng.",
+          "effects": {
+            "stat.intellect": 3
+          }
+        }
+      },
+      {
+        "text": "Ngủ theo",
+        "result": {
+          "text": "Cả lớp ngủ ngon. Lâu lắm rồi mới có một buổi học êm đềm như thế.",
+          "effects": {
+            "stat.happiness": 3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "sach_cu_tren_gac",
+    "category": "study",
+    "title": "Sách cũ trên gác",
+    "text": "Trên gác xép bụi bặm, {name} thấy một quyển sách bìa da, chữ nghiêng ngả như rắn bò.",
+    "themes": [
+      "study",
+      "fortune"
+    ],
+    "conditions": {
+      "age": {
+        "min": 8,
+        "max": 16
+      }
+    },
+    "weight": 6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đọc thử",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Sách ghi chuyện người bay trên mây, sống nghìn năm. Ngươi đọc suốt đêm.",
+          "effects": {
+            "stat.comprehension": 2,
+            "setFlags": [
+              "nghe_noi_tu_tien"
+            ]
+          }
+        },
+        "fail": {
+          "text": "Đọc ba trang đau đầu, ngươi ngủ quên lúc nào không biết.",
+          "effects": {
+            "stat.happiness": 1
+          }
+        }
+      },
+      {
+        "text": "Đem bán",
+        "result": {
+          "text": "Tiệm sách cũ trả ba lạng.",
+          "effects": {
+            "silver": 3
+          }
+        }
+      },
+      {
+        "text": "Dùng để nhóm lửa",
+        "result": {
+          "text": "Lửa cháy xanh lè, thơm lạ. Hơi tiếc.",
+          "effects": {
+            "stat.happiness": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "khao_thi_huyen",
+    "category": "study",
+    "title": "Khảo thí ở huyện",
+    "text": "Kỳ khảo thí ở huyện tới. Đỗ thì làm rạng danh tổ tông, trượt thì làm trò cười cho hàng xóm.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "age": {
+        "min": 14,
+        "max": 20
+      },
+      "flagsAll": [
+        "di_hoc"
+      ],
+      "flagsNone": [
+        "tu_tai"
+      ]
+    },
+    "weight": 10,
+    "cooldownYears": 3,
+    "choices": [
+      {
+        "text": "Dốc sức thi",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Tên ngươi được dán ở cổng huyện. Mẹ ngươi đi khoe khắp chợ.",
+          "effects": {
+            "stat.happiness": 10,
+            "stat.charm": 3,
+            "silver": 30,
+            "setFlags": [
+              "tu_tai"
+            ]
+          }
+        },
+        "fail": {
+          "text": "Bảng không có tên ngươi. Hàng xóm an ủi rất to.",
+          "effects": {
+            "stat.happiness": -8
+          }
+        }
+      },
+      {
+        "text": "Bỏ thi, đi làm",
+        "result": {
+          "text": "Ngươi nghĩ: chữ nhiều không no bụng.",
+          "effects": {}
+        }
+      },
+      {
+        "text": "Đoán đề từ tính cách quan chủ khảo",
+        "hidden": true,
+        "requires": {
+          "traitsAny": [
+            "thong_minh_vat"
+          ]
+        },
+        "result": {
+          "text": "Trúng tám phần. Quan chủ khảo khen bài văn 'rất hiểu ý ta'.",
+          "effects": {
+            "stat.happiness": 10,
+            "silver": 30,
+            "setFlags": [
+              "tu_tai"
+            ]
+          }
+        }
+      }
+    ]
+  }
+]

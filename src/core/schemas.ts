@@ -5,9 +5,18 @@ import { z } from 'zod';
 const id = z.string().regex(/^[a-z0-9_]+$/, 'id chỉ dùng chữ thường không dấu, số và dấu _');
 const ids = z.array(id).default([]);
 
+/** Stat keys from PLAN.md K.2 (mortal body + aptitudes). */
+export const MORTAL_STATS = ['health', 'happiness', 'intellect', 'charm'] as const;
+export const APTITUDES = ['physique', 'comprehension', 'luck', 'daoHeart'] as const;
+/** Values an event can read or change, named like the trait hooks (K.6). */
+export const STAT_KEYS = [...MORTAL_STATS, ...APTITUDES].map((k) => `stat.${k}`);
+export const NUMERIC_KEYS = [...STAT_KEYS, 'silver', 'spiritStones', 'karma', 'age'];
+const statKey = z.string().refine((k) => STAT_KEYS.includes(k), (k) => ({ message: `"${k}" không phải chỉ số (dùng stat.<tên>)` }));
+const numericKey = z.string().refine((k) => NUMERIC_KEYS.includes(k), (k) => ({ message: `"${k}" không phải giá trị đọc được` }));
+
 export const StatConditionSchema = z
   .object({
-    stat: z.string(),
+    stat: numericKey,
     gte: z.number().optional(),
     lte: z.number().optional(),
   })
@@ -45,7 +54,15 @@ export const EffectsSchema = z
     addTraits: ids,
     followUp: FollowUpSchema.optional(),
   })
-  .catchall(z.number());
+  .catchall(z.number())
+  .superRefine((e, ctx) => {
+    const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp'];
+    for (const key of Object.keys(e)) {
+      if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
+        ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
+      }
+    }
+  });
 
 export const OutcomeSchema = z
   .object({
@@ -59,7 +76,7 @@ export const ChoiceSchema = z
     text: z.string().min(1),
     requires: ConditionsSchema.partial().optional(),
     hidden: z.boolean().default(false),
-    check: z.object({ stat: z.string(), difficulty: z.number().min(0).max(100) }).strict().optional(),
+    check: z.object({ stat: statKey, difficulty: z.number().min(0).max(100) }).strict().optional(),
     success: OutcomeSchema.optional(),
     fail: OutcomeSchema.optional(),
     result: OutcomeSchema.optional(),
@@ -82,7 +99,10 @@ export const EventSchema = z
     category: z.string().min(1),
     title: z.string().min(1),
     text: z.string().min(1),
+    /** Content-filter tags (violence, mature…). */
     tags: z.array(z.enum(EVENT_TAGS)).default([]),
+    /** Story themes that traits weight via eventWeight.<theme> (K.6). */
+    themes: ids,
     image: z.string().nullable().default(null),
     conditions: ConditionsSchema.default({}),
     weight: z.number().min(0),
@@ -110,9 +130,6 @@ const probability = z.number().min(0).max(1);
 
 // ---------- Character creation ----------
 
-/** Stat keys from PLAN.md K.2 (mortal body + aptitudes). */
-export const MORTAL_STATS = ['health', 'happiness', 'intellect', 'charm'] as const;
-export const APTITUDES = ['physique', 'comprehension', 'luck', 'daoHeart'] as const;
 const statHook = z.enum([...MORTAL_STATS, ...APTITUDES].map((k) => `stat.${k}`) as [string, ...string[]]);
 
 export const OriginSchema = z
@@ -129,6 +146,17 @@ export const OriginSchema = z
   })
   .strict();
 export const OriginFileSchema = z.array(OriginSchema).min(1);
+
+/** content/worlds/<id>/world.json: one playable world with its own storylines. */
+export const WorldSchema = z
+  .object({
+    id: z.string().regex(/^[a-z0-9_]+$/),
+    name: z.string().min(1),
+    description: z.string(),
+    order: z.number().int(),
+  })
+  .strict();
+export type World = z.infer<typeof WorldSchema>;
 
 export const NamesSchema = z
   .object({
