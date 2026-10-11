@@ -2,6 +2,7 @@ import { useEffect, useState } from 'preact/hooks';
 import type { Content } from '../core/content';
 import { advanceYear, createLife } from '../core/state';
 import type { GameState } from '../core/types';
+import { chatWith } from '../systems/relationships';
 import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, rerollDestiny, rollDestiny } from '../systems/destiny';
 import { applyThemePref, loadThemePref, nextThemePref, type ThemePref } from './theme';
@@ -47,6 +48,7 @@ export function App({ content }: { content: Content }) {
         state={life}
         content={content}
         onAdvance={() => setLife(advanceYear(life, content))}
+        onChat={(id) => setLife(chatWith(life, content, id))}
         onChoose={(i) => {
           const title = findEvent(content, life.events.pending ?? '')?.title ?? '';
           const r = resolveChoice(life, content, i);

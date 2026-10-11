@@ -10,6 +10,21 @@ export type Tone = 'normal' | 'good' | 'bad' | 'rare';
 export interface LogLine { text: string; tone: Tone }
 export interface LogYear { age: number; lines: LogLine[] }
 
+export interface Relative {
+  id: string;
+  role: 'father' | 'mother' | 'sibling';
+  gender: Gender;
+  name: string;
+  age: number;
+  alive: boolean;
+  /** Age at which this relative dies of old age. */
+  lifespan: number;
+  /** Thiện cảm 0–100. */
+  affinity: number;
+  /** Player's age when last "hỏi han" (once a year). */
+  chattedAt: number | null;
+}
+
 export interface GameState {
   version: 1;
   /** Which world (content/worlds/<id>) this life is in. */
@@ -48,6 +63,7 @@ export interface GameState {
     confirmed: boolean;
   };
   traits: string[];
+  family: Relative[];
   events: {
     /** Event waiting for the player's choice, if any. */
     pending: string | null;

@@ -30,6 +30,21 @@
     ],
     "aptitudeRolls": 2
   },
+  "family": {
+    "fatherAge": [20, 35],
+    "motherAge": [17, 30],
+    "affinityStart": [55, 85],
+    "olderSiblings": [0, 2],
+    "olderSiblingGap": [2, 6],
+    "youngerSiblingChance": 0.12,
+    "motherMinAgeForChild": 16,
+    "motherMaxAgeForChild": 40,
+    "maxSiblings": 4,
+    "affinityDecay": 1,
+    "deathHappiness": -20,
+    "chatAffinity": [2, 6],
+    "chatHappiness": 1
+  },
   "lifespan": {
     "mortalBase": 70,
     "mortalVariance": 10,
