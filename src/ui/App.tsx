@@ -26,6 +26,8 @@ import { savesLocked } from '../systems/difficulty';
 import { disableTutorial, dismissTip } from '../systems/tutorial';
 import { practiceCraft } from '../systems/crafts';
 import { joinCareer } from '../systems/career';
+import { doMission, joinSect, leaveSect, requestMaster } from '../systems/sect';
+import { learnTechnique } from '../systems/technique';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -180,6 +182,17 @@ function Screens({ content }: { content: Content }) {
           if (!r) return null;
           setLife(r.state);
           return r.text;
+        }}
+        onSectAction={(a) => {
+          const r = a.kind === 'join' ? joinSect(life, content, a.sectId)
+            : a.kind === 'mission' ? doMission(life, content, a.missionId)
+            : a.kind === 'learn' ? learnTechnique(life, content, a.techniqueId)
+            : a.kind === 'master' ? requestMaster(life, content)
+            : leaveSect(life, content);
+          if (!r || !r.text) return null;
+          setLife(r.state);
+          const good: boolean = 'joined' in r ? (r.joined as boolean) : 'success' in r ? (r.success as boolean) : true;
+          return { text: r.text, good };
         }}
         onTip={(id, off) => setLife(off ? disableTutorial(dismissTip(life, id)) : dismissTip(life, id))}
         onBreakthrough={() => {

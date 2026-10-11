@@ -2,6 +2,7 @@
 import type { Content } from '../../core/content';
 import type { GameEvent } from '../../core/schemas';
 import type { GameState } from '../../core/types';
+import { sectEligibility } from '../sect';
 
 type Conditions = Partial<GameEvent['conditions']>;
 
@@ -30,6 +31,14 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
   if (c.realm && !realmInRange(state, c.realm, content)) return false;
   // Regions arrive in GĐ 3; until then nobody is in one.
   if (c.region && c.region.length > 0) return false;
+  if (c.sect && content) {
+    const s = c.sect;
+    if (s.member !== undefined && !!state.sect.id !== s.member) return false;
+    if (s.id !== undefined && state.sect.id !== s.id) return false;
+    if (s.minRank !== undefined && (!state.sect.id || state.sect.rank < s.minRank)) return false;
+    if (s.maxRank !== undefined && (!state.sect.id || state.sect.rank > s.maxRank)) return false;
+    if (s.eligible !== undefined && sectEligibility(state, content, s.eligible)) return false;
+  }
   if (c.root) {
     const root = state.cult.root;
     if (c.root.tested !== undefined && !!root !== c.root.tested) return false;

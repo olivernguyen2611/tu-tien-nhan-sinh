@@ -68,6 +68,10 @@ export function migrate(save: SaveFile): SaveFile {
   // Fields added within saveVersion 1 get their empty defaults.
   let life = save.life as GameState & { extremes?: GameState['extremes'] };
   if (!life.extremes) life = { ...life, extremes: { streak: {}, active: {}, givenAt: {} } };
+  // Task 2.5: not in a sect.
+  if (life.sect === undefined) {
+    life = { ...life, sect: { id: null, rank: 0, since: 0, contribution: 0, master: null, lastMission: null, lastMasterTry: null, left: [] } };
+  }
   // Task 2.4: cultivators from before techniques get the default one.
   if ((life.cult as Partial<GameState['cult']>).technique === undefined) {
     const technique = life.cult.realm === 'pham_nhan' ? null : 'dan_khi_quyet';

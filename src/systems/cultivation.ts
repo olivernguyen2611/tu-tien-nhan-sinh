@@ -9,6 +9,7 @@ import { checkDeath } from './time';
 import { difficultyHookSum } from './difficulty';
 import { careerHooks } from './career';
 import { currentTechnique, learnTechnique, techniqueCapReason, techniqueMul } from './technique';
+import { sectHooks } from './sect';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -127,12 +128,14 @@ export function hookActive(e: Hook, state: GameState, content: Content): boolean
   return true;
 }
 
-/** Hooks this life carries from traits, its special body, its career and its technique. */
+/** Hooks this life carries from traits, its special body, its career, its technique and its sect. */
 export function lifeHooks(state: GameState, content: Content): Hook[] {
   const fromTraits = state.traits.flatMap((id) => content.traits.find((t) => t.id === id)?.effects ?? []);
   const body = state.cult.root?.body ? content.cultivation.roots.bodies.find((b) => b.id === state.cult.root!.body) : undefined;
-  // Sect hooks join here in task 2.5.
-  return [...fromTraits, ...(body?.effects ?? []), ...careerHooks(state, content), ...(currentTechnique(state, content)?.effects ?? [])];
+  return [
+    ...fromTraits, ...(body?.effects ?? []), ...careerHooks(state, content),
+    ...(currentTechnique(state, content)?.effects ?? []), ...sectHooks(state, content),
+  ];
 }
 
 /** Sum of an add-hook from traits, special body, extreme states and difficulty. `lineage.<x>.<hook>` counts for the life's lineage. */
@@ -233,7 +236,13 @@ export function startCultivating(state: GameState, content: Content): { state: G
   const rng = Rng.fromState(state.rng);
   const entered = enterRealm(state, content, first.id, rng);
   // The tiên sư leaves the default technique (Dẫn Khí Quyết); the start line already says so.
-  const next = learnTechnique(entered, content, content.balance.techniques.default, { quiet: true })?.state ?? entered;
+  let next = learnTechnique(entered, content, content.balance.techniques.default, { quiet: true })?.state ?? entered;
+  // Sects come recruiting a few years later (task 2.5).
+  const recruit = content.world.sectRecruitEvent;
+  if (recruit) {
+    const [lo, hi] = content.balance.sects.recruitAfterYears;
+    next = { ...next, events: { ...next.events, followUps: [...next.events.followUps, { event: recruit, atAge: next.character.age + rng.int(lo, hi) }] } };
+  }
   const line: LogLine = { text: fillRealm(content.cultivation.realms.texts.start, next, content), tone: 'good' };
   return { state: { ...next, rng: rng.getState(), log: pushLine(next.log, line) }, line };
 }

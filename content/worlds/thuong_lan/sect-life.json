@@ -1,0 +1,44 @@
+{
+  "texts": {
+    "join": "Ngươi bái nhập {sect}, làm đệ tử {rank}.",
+    "refused": "{sect} không nhận ngươi: {reason}",
+    "promote": "Ngươi được thăng làm đệ tử {rank} của {sect}.",
+    "stipend": "Nhận bổng lộc của {sect}: {stones} linh thạch.",
+    "leave": "Ngươi rời {sect}. Sau lưng, sơn môn khép lại.",
+    "master": "{master} nhận ngươi làm đệ tử thân truyền. Từ nay ngươi có sư phụ.",
+    "masterRefused": "Trưởng lão nhìn ngươi một lúc rồi lắc đầu: \"Chưa đủ.\"",
+    "masterTitle": "Trưởng lão {master}"
+  },
+  "missions": [
+    {
+      "id": "ganh_nuoc", "name": "Gánh nước cho nhà bếp", "minRank": 0,
+      "text": "Ba trăm gánh nước từ suối lên núi.", "stat": "physique", "difficulty": 30,
+      "success": { "text": "Vai sưng vù nhưng xong việc. Nhà bếp cho thêm một bát cơm.", "contribution": 5, "spiritStones": 0, "stats": { "physique": 1 } },
+      "fail": { "text": "Gánh tới gánh thứ hai trăm thì trượt chân lăn xuống dốc.", "contribution": 1, "spiritStones": 0, "stats": { "health": -5 } }
+    },
+    {
+      "id": "hai_thuoc", "name": "Hái thuốc trong núi", "minRank": 1,
+      "text": "Tông môn cần mười gốc Ngưng Huyết Thảo mọc ở vách đá.", "stat": "luck", "difficulty": 45,
+      "success": { "text": "Tìm đủ mười gốc, còn nhặt thêm được một viên linh thạch vụn.", "contribution": 10, "spiritStones": 1, "stats": { "happiness": 2 } },
+      "fail": { "text": "Lạc đường hai ngày, về tay không, bị trừ điểm.", "contribution": 2, "spiritStones": 0, "stats": { "happiness": -3 } }
+    },
+    {
+      "id": "tuan_son", "name": "Tuần núi ban đêm", "minRank": 1,
+      "text": "Gác một đêm ở rìa đại trận hộ sơn.", "stat": "daoHeart", "difficulty": 45,
+      "success": { "text": "Một đêm yên ả. Nhìn sao lâu, lòng cũng tĩnh hơn.", "contribution": 8, "spiritStones": 0, "stats": { "daoHeart": 1 } },
+      "fail": { "text": "Ngủ gật lúc canh ba, bị chấp sự bắt được.", "contribution": 0, "spiritStones": 0, "stats": { "happiness": -3 } }
+    },
+    {
+      "id": "diet_yeu_thu", "name": "Diệt yêu thú quấy làng", "minRank": 2,
+      "text": "Một con lang yêu cấp thấp quấy nhiễu làng dưới chân núi.", "stat": "physique", "difficulty": 55,
+      "success": { "text": "Lang yêu bị diệt, dân làng đem gà tới tận sơn môn cảm tạ.", "contribution": 20, "spiritStones": 3, "stats": { "happiness": 3 } },
+      "fail": { "text": "Lang yêu chạy mất, để lại trên tay ngươi ba vết cào.", "contribution": 3, "spiritStones": 0, "stats": { "health": -12 } }
+    },
+    {
+      "id": "ho_tong_thuong_doi", "name": "Hộ tống thương đội", "minRank": 2,
+      "text": "Một thương đội thân với tông môn cần người hộ tống qua đèo.", "stat": "charm", "difficulty": 50,
+      "success": { "text": "Thương đội tới nơi bình an, chủ hàng còn biếu thêm.", "contribution": 15, "spiritStones": 4, "stats": { "charm": 1 } },
+      "fail": { "text": "Gặp cướp, mất nửa xe hàng. Chủ hàng mặt nặng mày nhẹ.", "contribution": 3, "spiritStones": 0, "stats": { "happiness": -4 } }
+    }
+  ]
+}

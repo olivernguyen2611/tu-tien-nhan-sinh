@@ -7,6 +7,7 @@ import { activeExtremes, extremeWarnings } from '../../systems/extremes';
 import { DevPanel } from '../components/DevPanel';
 import { FamilyPanel } from '../components/FamilyPanel';
 import { CultivatePanel } from '../components/CultivatePanel';
+import { SectPanel, type SectAction } from '../components/SectPanel';
 import { EventPopup, type PopupResult } from '../components/EventPopup';
 import { Meter } from '../components/Meter';
 import { Term, TermText } from '../components/Tooltip';
@@ -16,6 +17,7 @@ import { realmLabel, rootLabel } from '../../systems/cultivation';
 import { difficultyName } from '../../systems/difficulty';
 import { currentGoal, pendingTip } from '../../systems/tutorial';
 import { careerLabel } from '../../systems/career';
+import { sectLabel } from '../../systems/sect';
 
 const DOCK_LEFT = [
   { id: 'cultivate', glyph: '修', label: 'Tu luyện' },
@@ -33,7 +35,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onBreakthrough, onPractice, onJoinCareer, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onBreakthrough, onPractice, onJoinCareer, onSectAction, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -48,6 +50,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onPractice: (craftId: string) => string | null;
   /** Take up a mortal career from the "Tu luyện" sheet. */
   onJoinCareer: (careerId: string) => string | null;
+  /** Sect sheet actions (task 2.5). */
+  onSectAction: (action: SectAction) => { text: string; good: boolean } | null;
   /** Tutorial tip read ("Đã hiểu") or tips turned off. */
   onTip: (tipId: string, turnOff: boolean) => void;
   /** Big breakthrough from the "Tu luyện" sheet; null when it cannot be tried. */
@@ -66,6 +70,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const [result, setResult] = useState<PopupResult | null>(null);
   const [familyOpen, setFamilyOpen] = useState(false);
   const [cultivateOpen, setCultivateOpen] = useState(false);
+  const [sectOpen, setSectOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
   const logRef = useRef<HTMLElement>(null);
   const { character: c, stats, cult, money } = state;
@@ -79,7 +84,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
     logRef.current?.scrollTo({ top: logRef.current.scrollHeight, behavior: 'smooth' });
   }, [state.log.length]);
 
-  const dockActions: Record<string, () => void> = { bonds: () => setFamilyOpen(true), cultivate: () => setCultivateOpen(true) };
+  const dockActions: Record<string, () => void> = { bonds: () => setFamilyOpen(true), cultivate: () => setCultivateOpen(true), sect: () => setSectOpen(true) };
   const dockItem = (t: { id: string; glyph: string; label: string }) => (
     <button class="dock-item" key={t.id} title={dockActions[t.id] ? t.label : 'Sắp có'} onClick={dockActions[t.id]}>
       <span class="glyph" aria-hidden="true">{t.glyph}</span>
@@ -172,6 +177,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
           onDisable={() => { setDevOpen(false); dev.onDisable(); }} />
       )}
 
+      {sectOpen && <SectPanel state={state} content={content} onAction={onSectAction} onClose={() => setSectOpen(false)} />}
+
       {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onClose={() => setCultivateOpen(false)} />}
 
       {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onClose={() => setFamilyOpen(false)} />}
@@ -191,6 +198,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             </div>
             <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>
             {careerLabel(state, content) && <p class="profile-note">Đường đời: {careerLabel(state, content)}</p>}
+            {sectLabel(state, content) && <p class="profile-note">Tông môn: {sectLabel(state, content)}</p>}
             <p class="profile-note"><TermText text="Tư chất tiên thiên định từ lúc sinh, chỉ đổi được nhờ kỳ ngộ hay khí vận." /></p>
             {states.length > 0 && (
               <ul class="trait-chips" aria-label="Trạng thái đặc biệt">

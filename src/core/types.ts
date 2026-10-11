@@ -38,6 +38,22 @@ export type DeathCause = 'old_age' | 'illness' | 'breakthrough' | 'ordeal';
 
 export interface GameState {
   version: 1;
+  /** Sect membership (task 2.5). */
+  sect: {
+    id: string | null;
+    /** Index into the sect's ranks. */
+    rank: number;
+    /** Age when the current rank was reached. */
+    since: number;
+    contribution: number;
+    /** Master's name once taken as a personal disciple. */
+    master: string | null;
+    /** Ages of the last mission and the last request to a master (once a year each). */
+    lastMission: number | null;
+    lastMasterTry: number | null;
+    /** Sects this life has left (no coming back). */
+    left: string[];
+  };
   /** Mortal career (task 2.11): careers.json id, rung index, age the rung was reached. */
   career: { id: string | null; rung: number; since: number };
   /** Bách nghệ (task 2.12): craft id → level and aptitude 0–100; age of the last practice. */

@@ -9,6 +9,7 @@ import type { GameState, LogLine, Tone } from '../../core/types';
 import { meets, readValue } from './conditions';
 import { grantRoot, hookActive, lifeHooks, revealRoot, startCultivating } from '../cultivation';
 import { learnTechnique } from '../technique';
+import { addContribution, joinSect, leaveSect, promoteSect } from '../sect';
 
 type Outcome = NonNullable<GameEvent['choices'][number]['result']>;
 
@@ -190,6 +191,15 @@ export function resolveChoice(state: GameState, content: Content, choiceIndex: n
     next = started.state;
     for (const line of [revealed.line, started.line]) if (line) text = `${text} ${line.text}`;
   }
+  const fx = outcome.effects;
+  if (fx.joinSect) {
+    const joined = joinSect(next, content, fx.joinSect);
+    next = joined.state;
+    if (joined.text) text = `${text} ${joined.text}`;
+  }
+  if (fx.sectContribution) next = addContribution(next, fx.sectContribution);
+  if (fx.sectPromote) next = promoteSect(next, content);
+  if (fx.leaveSect) next = leaveSect(next, content)?.state ?? next;
   if (outcome.effects.learnTechnique) {
     const learned = learnTechnique(next, content, outcome.effects.learnTechnique);
     if (learned) {

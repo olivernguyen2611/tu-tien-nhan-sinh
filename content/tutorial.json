@@ -15,6 +15,7 @@
     { "id": "fast_forward", "text": "Nút » cạnh +1 năm tua nhanh tới khi có chuyện đáng xem.", "when": { "minAge": 7 } },
     { "id": "rooted", "text": "Ngươi đã bước vào Luyện Khí. Tu vi tự tăng mỗi năm; đầy thanh thì tự lên tầng. Mở Tu luyện để xem tốc độ.", "when": { "hasRoot": true } },
     { "id": "no_root", "text": "Không linh căn cũng không sao. Đời phàm nhân vẫn có cái thú của nó, và biết đâu kỳ ngộ lại tìm tới.", "when": { "hasRoot": false } },
+    { "id": "sect", "text": "Đã vào tông môn. Mở Tông môn để nhận nhiệm vụ lấy cống hiến, học công pháp của tông, xin bái sư. Cống hiến đủ và tu vi đủ thì được thăng cấp.", "when": { "inSect": true } },
     { "id": "peak", "text": "Đầy thanh ở tầng chót rồi. Mở Tu luyện để đột phá: thành thì lên cảnh giới mới, bại thì có giá phải trả.", "when": { "atPeak": true } }
   ]
 }

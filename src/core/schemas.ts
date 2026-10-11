@@ -34,6 +34,11 @@ export const ConditionsSchema = z
     traitsNone: ids,
     goldenFinger: id.nullable().optional(),
     stats: z.array(StatConditionSchema).default([]),
+    /** Sect membership (task 2.5): in a sect (or this one), rank range, or able to join `eligible`. */
+    sect: z
+      .object({ member: z.boolean().optional(), id: id.optional(), minRank: z.number().int().optional(), maxRank: z.number().int().optional(), eligible: id.optional() })
+      .strict()
+      .optional(),
     /** Spirit root (task 2.11): tested or not; usable = can cultivate. */
     root: z.object({ tested: z.boolean().optional(), usable: z.boolean().optional() }).strict().optional(),
   })
@@ -57,6 +62,11 @@ export const EffectsSchema = z
     followUp: FollowUpSchema.optional(),
     /** Test the spirit root now (task 2.2); does nothing if it is already known. */
     testRoot: z.boolean().optional(),
+    /** Sect life (task 2.5): join a sect, add contribution, promote one rank, leave. */
+    joinSect: id.optional(),
+    sectContribution: z.number().optional(),
+    sectPromote: z.boolean().optional(),
+    leaveSect: z.boolean().optional(),
     /** Learn this technique now (task 2.4; switching costs part of the bar). */
     learnTechnique: id.optional(),
     /** Thiên địa kỳ vật (task 2.11): a rootless mortal gains a root (balance.kyVat). */
@@ -64,7 +74,7 @@ export const EffectsSchema = z
   })
   .catchall(z.number())
   .superRefine((e, ctx) => {
-    const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique'];
+    const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -167,6 +177,8 @@ export const WorldSchema = z
     order: z.number().int(),
     /** Spiritual qi of this world; default balance.cultivation.regionQi. */
     qi: z.number().positive().optional(),
+    /** Event booked 1–3 years after a usable root is found (task 2.5). */
+    sectRecruitEvent: z.string().regex(/^[a-z0-9_]+$/).optional(),
     /** Event booked for every life at an age in balance.roots.testAge (task 2.2). */
     rootTestEvent: z.string().regex(/^[a-z0-9_]+$/).optional(),
   })
@@ -582,6 +594,17 @@ export const BalanceSchema = z
         rankStipendMul: z.array(z.number().min(0)).min(1),
         karmaPerYear: z.record(id, z.number()),
         joinReputation: z.record(id, z.record(z.enum(['chinh', 'ma', 'tan_tu', 'yeu']), z.number())),
+        recruitAfterYears: range,
+        /** Ký danh becomes the next rank after this many years. */
+        outerAfterYears: z.number().int().min(0),
+        /** Climbing to `rank` needs this contribution and realm/stage. */
+        promotion: z.array(z.object({ rank: z.number().int().min(1), contribution: z.number().min(0), realm: id, stage: z.number().int().min(0) }).strict()),
+        masterMinRank: z.number().int().min(0),
+        /** Chance to be taken as a personal disciple = base + (comprehension − 50) × perPoint. */
+        masterChanceBase: probability,
+        masterChancePerPoint: z.number().min(0),
+        /** Cultivation speed bonus while having a master. */
+        masterSpeed: z.number().min(0),
       })
       .strict(),
     /** Combat path modifiers (realms-roots-paths.md C); keyed by path id. */
@@ -818,6 +841,8 @@ const TutorialWhenSchema = z
     realm: id.optional(),
     /** Full bar at the last stage of the realm. */
     atPeak: z.boolean().optional(),
+    /** In a sect (task 2.5). */
+    inSect: z.boolean().optional(),
   })
   .strict();
 export type TutorialWhen = z.infer<typeof TutorialWhenSchema>;
@@ -937,3 +962,47 @@ export const SectFileSchema = z.array(
     .strict(),
 );
 export type Sect = z.infer<typeof SectFileSchema>[number];
+
+/** content/worlds/<id>/sect-life.json: sect log lines and yearly missions (task 2.5). */
+const MissionOutcomeSchema = z
+  .object({
+    text: z.string().min(1),
+    contribution: z.number(),
+    spiritStones: z.number().int().min(0),
+    stats: z.record(z.enum([...MORTAL_STATS, ...APTITUDES]), z.number()),
+  })
+  .strict();
+export const SectLifeSchema = z
+  .object({
+    /** {sect}, {rank}, {reason}, {stones}, {master}. */
+    texts: z
+      .object({
+        join: z.string().min(1),
+        refused: z.string().min(1),
+        promote: z.string().min(1),
+        stipend: z.string().min(1),
+        leave: z.string().min(1),
+        master: z.string().min(1),
+        masterRefused: z.string().min(1),
+        masterTitle: z.string().min(1),
+      })
+      .strict(),
+    missions: z
+      .array(
+        z
+          .object({
+            id,
+            name: z.string().min(1),
+            minRank: z.number().int().min(0),
+            text: z.string().min(1),
+            stat: z.enum([...MORTAL_STATS, ...APTITUDES]),
+            difficulty: z.number().min(0).max(100),
+            success: MissionOutcomeSchema,
+            fail: MissionOutcomeSchema,
+          })
+          .strict(),
+      )
+      .min(1),
+  })
+  .strict();
+export type SectLife = z.infer<typeof SectLifeSchema>;

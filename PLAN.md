@@ -288,7 +288,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 2.2 | [x] Sự kiện kiểm tra linh căn (6–12 tuổi) + hiển thị linh căn; xuất thân Hậu duệ gia tộc tu tiên quay 2 lần lấy kết quả tốt hơn | `systems/cultivation.ts`, `content/worlds/thuong_lan/events/root-test.json` |
 | 2.3 | [x] Tu vi tăng mỗi năm theo công thức mục G; thanh tu vi; đột phá tiểu cảnh giới Luyện Khí; móc mới `lineage.<đạo thống>.cultivationSpeed` và điều kiện `activeUntil: { realm }` (cho Thiên Sinh Ma Thể, Thiên Tuyệt Mạch) | `systems/cultivation.ts` |
 | 2.4 | [x] ✍️ 6 tông môn khởi đầu (chính/ma/kiếm/đan/phật/yêu) + công pháp (C0–C16) | `content/worlds/thuong_lan/sects.json`, `content/techniques.json` — **đã duyệt**: `docs/design/sects.md`, `techniques.md` |
-| 2.5 | [ ] Tuyển đệ tử tông môn, cấp bậc ngoại môn/nội môn, nhiệm vụ tông môn đơn giản, sư phụ NPC | `systems/sect.ts`, `content/worlds/thuong_lan/events/sect-recruit.json` |
+| 2.5 | [x] Tuyển đệ tử tông môn, cấp bậc ngoại môn/nội môn, nhiệm vụ tông môn đơn giản, sư phụ NPC | `systems/sect.ts`, `content/worlds/thuong_lan/events/sect-recruit.json` |
 | 2.6 | [x] Đột phá Trúc Cơ: tỉ lệ thành công, phẩm đạo cơ (Hạ/Trung/Thượng/Hoàn mỹ), hậu quả thất bại | `systems/cultivation.ts` |
 | 2.7 | [ ] ✍️ + code: Nghịch Thiên Cải Mệnh lần đầu (chọn 1 trong 3 thiên phú khi Trúc Cơ) | `content/fate-talents.json`, `systems/destiny.ts` — **đã duyệt**: `docs/design/fate-talents.md` |
 | 2.8 | [ ] ✍️ 40 sự kiện tu luyện, tông môn & đời phàm nhân | `content/worlds/thuong_lan/events/*.json` — **đã duyệt**: `docs/design/cultivation-events.md` |
