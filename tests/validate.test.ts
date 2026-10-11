@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { validateContent } from '../src/core/validate';
+import realBalance from '../content/config/balance.json';
 
 const balance = {
   version: 1,
@@ -13,6 +14,11 @@ const balance = {
   lifespan: { mortalBase: 70, mortalVariance: 10, healthAdjustMax: 10 },
   fastForward: { maxYears: 10 },
   aging: { recoverPerYear: 3, recoverCap: 70, declineStartAge: 50, healthDeclinePerYear: 1, illnessStartAge: 60, illnessChancePerYear: 0.008, illnessHealthLoss: [5, 15], illnessHappinessLoss: 5, epitaphKarma: 30, milestoneAges: [60], milestoneHealth: -5, milestoneCharm: -3 },
+  realms: realBalance.realms,
+  realmStages: realBalance.realmStages,
+  roots: realBalance.roots,
+  paths: realBalance.paths,
+  crafts: realBalance.crafts,
   extremes: { lowAt: 5, highAt: 95, exitLow: 20, exitHigh: 80, karmaLowAt: -80, karmaHighAt: 80, karmaExitLow: -60, karmaExitHigh: 60, years: 3, onceCooldownYears: 10, happinessDrift: 2, happinessRest: 50 },
 };
 

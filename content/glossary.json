@@ -199,7 +199,7 @@
   {
     "id": "luyen_khi",
     "term": "Luyện Khí",
-    "definition": "Dẫn linh khí vào kinh mạch, từng chút một như kiến tha mồi. Đủ sức nhấc cối đá, chưa đủ sức bay.",
+    "definition": "Dẫn linh khí vào kinh mạch, từng chút một như kiến tha mồi. Đủ sức nhấc cối đá, chưa đủ sức bay. Cũng là tên nghề rèn pháp bảo trong bách nghệ.",
     "aliases": []
   },
   {
@@ -224,6 +224,84 @@
     "id": "hoa_than",
     "term": "Hóa Thần",
     "definition": "Thần thức trải ngàn dặm, nhất cử nhất động liên quan đến khí vận cả một đại vực.",
+    "aliases": []
+  },
+  {
+    "id": "ngu_linh_can",
+    "term": "Ngũ linh căn",
+    "definition": "Năm hệ đủ cả, hệ nào cũng mỏng. Người ta gọi là \"phế linh căn\", nhưng cũng có kẻ khổ tu mà thành.",
+    "aliases": []
+  },
+  {
+    "id": "tu_linh_can",
+    "term": "Tứ linh căn",
+    "definition": "Tạp mà không loạn. Tông môn nhỏ còn nhận, tông môn lớn thì lắc đầu.",
+    "aliases": []
+  },
+  {
+    "id": "tam_linh_can",
+    "term": "Tam linh căn",
+    "definition": "Tư chất trung bình của tu chân giới. Chăm chỉ thì Trúc Cơ không khó.",
+    "aliases": []
+  },
+  {
+    "id": "song_linh_can",
+    "term": "Song linh căn",
+    "definition": "Hai hệ tương trợ, tông môn nào cũng muốn giữ.",
+    "aliases": []
+  },
+  {
+    "id": "thien_linh_can",
+    "term": "Thiên linh căn",
+    "definition": "Một hệ thuần khiết, linh khí vào như nước đổ xuống dốc. Thiên kiêu bảng có chỗ chờ sẵn.",
+    "aliases": []
+  },
+  {
+    "id": "bien_di_linh_can",
+    "term": "Biến dị linh căn",
+    "definition": "Linh căn đột biến thành hệ hiếm. Mạnh, nhưng công pháp phù hợp khó tìm.",
+    "aliases": []
+  },
+  {
+    "id": "the_chat_dac_biet",
+    "term": "Thể chất đặc biệt",
+    "definition": "Trời sinh dị thể, trăm năm khó gặp.",
+    "aliases": []
+  },
+  {
+    "id": "nghe_alchemy",
+    "term": "Luyện Đan",
+    "definition": "Một lò, một lửa, trăm vị thuốc. Sai một vị là đan thành than.",
+    "aliases": []
+  },
+  {
+    "id": "nghe_formation",
+    "term": "Trận Pháp",
+    "definition": "Vài lá cờ, mấy hòn đá, đặt đúng chỗ thì nghìn quân không qua.",
+    "aliases": []
+  },
+  {
+    "id": "nghe_talisman",
+    "term": "Phù Lục",
+    "definition": "Một nét bút sai là cháy cả tay áo. Một nét bút đúng là cháy cả đối thủ.",
+    "aliases": []
+  },
+  {
+    "id": "nghe_farming",
+    "term": "Linh Thực",
+    "definition": "Trồng linh thảo, chăm linh điền. Cây lớn chậm, nhưng không bao giờ phản bội ngươi.",
+    "aliases": []
+  },
+  {
+    "id": "nghe_beast",
+    "term": "Ngự Thú",
+    "definition": "Nuôi, thuần, kết khế ước với linh thú. Nó cắn người khác, đôi khi cắn cả ngươi.",
+    "aliases": []
+  },
+  {
+    "id": "bach_nghe",
+    "term": "Bách nghệ",
+    "definition": "Các nghề phụ của người tu: Luyện Đan, Luyện Khí, Trận Pháp, Phù Lục, Linh Thực, Ngự Thú. Cấp càng cao, danh hiệu càng kêu.",
     "aliases": []
   }
 ]

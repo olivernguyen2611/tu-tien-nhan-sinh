@@ -78,5 +78,42 @@
     "onceCooldownYears": 10,
     "happinessDrift": 2,
     "happinessRest": 50
+  },
+  "realms": {
+    "pham_nhan": { "speedPct": 0, "combatPower": 1, "combatPowerMax": 9, "breakthroughChance": 0 },
+    "luyen_khi": { "speedPct": 25, "lifespan": 120, "lifespanVariance": 10, "combatPower": 10, "breakthroughChance": 1 },
+    "truc_co": { "speedPct": 8, "lifespan": 200, "lifespanVariance": 15, "combatPower": 40, "breakthroughChance": 0.3 },
+    "kim_dan": { "speedPct": 3, "lifespan": 500, "lifespanVariance": 30, "combatPower": 160, "breakthroughChance": 0.2 },
+    "nguyen_anh": { "speedPct": 1.2, "lifespan": 1000, "lifespanVariance": 50, "combatPower": 640, "breakthroughChance": 0.12 },
+    "hoa_than": { "speedPct": 0.5, "lifespan": 2000, "lifespanVariance": 100, "combatPower": 2560, "breakthroughChance": 0.08 }
+  },
+  "realmStages": {
+    "luyenKhiLevelUpChance": 0.9,
+    "minorStageChance": 0.7,
+    "perfectFoundationLifespan": 20,
+    "goldenCoreLifespanPerGradeAbove5": 10
+  },
+  "roots": {
+    "gradeWeights": { "none": 60, "ngu": 14, "tu": 10, "tam": 8, "song": 5, "don": 2, "bien_di": 0.9, "the_chat": 0.1 },
+    "gradeSpeed": { "none": 0, "ngu": 0.4, "tu": 0.55, "tam": 0.7, "song": 1.0, "don": 1.6, "bien_di": 1.8, "the_chat": 2.0 },
+    "elementCount": { "none": 0, "ngu": 5, "tu": 4, "tam": 3, "song": 2, "don": 1, "bien_di": 1, "the_chat": 0 },
+    "bodyWeights": {
+      "luu_ly_linh_the": 2, "ban_thach_thanh_cot": 2, "u_minh_hon_the": 2, "cuu_duong_the": 2, "thai_am_the": 2,
+      "hon_don_the": 1, "tien_thien_dao_cot": 1, "kim_cuong_than": 2, "thien_sinh_ma_the": 2, "van_doc_the": 2, "thien_tuyet_mach": 2
+    },
+    "clanDescendantRolls": 2,
+    "elementCounterBonus": 0.2
+  },
+  "paths": {
+    "startAffinity": [5, 30],
+    "sword": { "combatPower": 0.15, "firstRoundBonus": 0.1, "injuryTaken": 0.1, "cultivationSpeed": 0.1 },
+    "body": { "injuryTaken": -0.25, "maxHealth": 10, "artifactBonusMul": 0.5, "cultivationSpeed": -0.1 },
+    "spell": { "elementCounterBonus": 0.35, "elementCounteredPenalty": -0.25, "cultivationSpeed": 0 },
+    "weapon": { "artifactBonusMul": 1.5, "cultivationSpeed": 0 },
+    "arts": { "itemActionMul": 2, "unarmedCombatPower": -0.2, "cultivationSpeed": 0 }
+  },
+  "crafts": {
+    "mortalStartLevel": { "nghe_thuoc": { "alchemy": 10 } },
+    "cultivatorStartLevel": { "nghe_ren": { "forging": 10 } }
   }
 }

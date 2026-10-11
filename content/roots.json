@@ -1,0 +1,132 @@
+{
+  "grades": [
+    { "id": "none", "name": "Không linh căn", "description": "Kinh mạch như ống tre bít đầu, linh khí chảy qua không đọng lại. Làm phàm nhân cũng có cái hay của phàm nhân." },
+    { "id": "ngu", "name": "Ngũ linh căn", "description": "Năm hệ đủ cả, hệ nào cũng mỏng. Người ta gọi là \"phế linh căn\", nhưng cũng có kẻ khổ tu mà thành." },
+    { "id": "tu", "name": "Tứ linh căn", "description": "Tạp mà không loạn. Tông môn nhỏ còn nhận, tông môn lớn thì lắc đầu." },
+    { "id": "tam", "name": "Tam linh căn", "description": "Tư chất trung bình của tu chân giới. Chăm chỉ thì Trúc Cơ không khó." },
+    { "id": "song", "name": "Song linh căn", "description": "Hai hệ tương trợ, tông môn nào cũng muốn giữ." },
+    { "id": "don", "name": "Thiên linh căn", "description": "Một hệ thuần khiết, linh khí vào như nước đổ xuống dốc. Thiên kiêu bảng có chỗ chờ sẵn." },
+    { "id": "bien_di", "name": "Biến dị linh căn", "description": "Linh căn đột biến thành hệ hiếm. Mạnh, nhưng công pháp phù hợp khó tìm." },
+    { "id": "the_chat", "name": "Thể chất đặc biệt", "description": "Trời sinh dị thể, trăm năm khó gặp." }
+  ],
+  "elements": [
+    { "id": "kim", "name": "Kim", "variant": false, "beats": ["moc", "phong"], "description": "Sắc bén, cương trực. Hợp kiếm, hợp binh khí." },
+    { "id": "moc", "name": "Mộc", "variant": false, "beats": ["tho"], "description": "Sinh sôi, bền bỉ. Hợp linh thực, hồi phục." },
+    { "id": "thuy", "name": "Thủy", "variant": false, "beats": ["hoa"], "description": "Mềm mà khó cắt đứt. Hợp phòng thủ, ảo thuật." },
+    { "id": "hoa", "name": "Hỏa", "variant": false, "beats": ["kim", "bang"], "description": "Bạo liệt, nhanh gọn. Hợp luyện đan, luyện khí." },
+    { "id": "tho", "name": "Thổ", "variant": false, "beats": ["thuy", "loi"], "description": "Dày nặng, vững chãi. Hợp luyện thể, trận pháp." },
+    { "id": "loi", "name": "Lôi", "variant": true, "beats": ["thuy", "am"], "description": "Nhanh nhất trong các hệ. Thiên kiếp với người hệ Lôi nhẹ hơn một chút." },
+    { "id": "bang", "name": "Băng", "variant": true, "beats": ["moc", "thuy"], "description": "Lạnh và tĩnh. Làm chậm đối thủ, hợp người đạo tâm vững." },
+    { "id": "phong", "name": "Phong", "variant": true, "beats": ["tho"], "description": "Nhẹ và khó bắt. Bỏ chạy, né tránh giỏi nhất." },
+    { "id": "am", "name": "Ám", "variant": true, "beats": ["moc", "kim"], "description": "Ẩn trong bóng tối. Hợp ám sát, ma đạo, quỷ đạo." }
+  ],
+  "bodies": [
+    {
+      "id": "luu_ly_linh_the",
+      "name": "Lưu Ly Linh Thể",
+      "description": "Thân trong như lưu ly, linh khí đi qua không vướng chút tạp chất.",
+      "anyTechnique": true,
+      "effects": [{ "hook": "breakthroughChance", "add": 10 }]
+    },
+    {
+      "id": "ban_thach_thanh_cot",
+      "name": "Bàn Thạch Thánh Cốt",
+      "description": "Xương nặng như đá tảng. Lúc nhỏ ngã cầu thang, cầu thang gãy.",
+      "effects": [
+        { "hook": "stat.physique", "add": 20 },
+        { "hook": "path.body.affinity", "add": 30 },
+        { "hook": "injuryReduce", "add": 0.2 }
+      ]
+    },
+    {
+      "id": "u_minh_hon_the",
+      "name": "U Minh Hồn Thể",
+      "description": "Sinh ra đã thấy những thứ người khác không thấy. Đêm đêm có \"bạn\" tới chơi.",
+      "effects": [
+        { "hook": "divineSense", "add": 0.5 },
+        { "hook": "lifespanPct", "add": 0.2 },
+        { "hook": "stat.charm", "add": -10 }
+      ]
+    },
+    {
+      "id": "cuu_duong_the",
+      "name": "Cửu Dương Thể",
+      "description": "Mùa đông cởi trần vẫn đổ mồ hôi. Nồi cơm nhà ngươi chưa bao giờ cần nhóm lửa.",
+      "effects": [
+        { "hook": "element.hoa.power", "add": 0.3 },
+        { "hook": "cultivationSpeed", "add": 0.2 },
+        { "hook": "stat.daoHeart", "add": -5 }
+      ]
+    },
+    {
+      "id": "thai_am_the",
+      "name": "Thái Âm Thể",
+      "description": "Người lạnh như ngọc, đi qua đâu hoa cỏ đọng sương. Mùa hè cả nhà tranh nhau ngồi cạnh.",
+      "effects": [
+        { "hook": "element.bang.power", "add": 0.3 },
+        { "hook": "element.thuy.power", "add": 0.2 },
+        { "hook": "divineSense", "add": 0.2 },
+        { "hook": "stat.happiness", "add": -5 }
+      ]
+    },
+    {
+      "id": "hon_don_the",
+      "name": "Hỗn Độn Thể",
+      "description": "Linh khí vào người như rơi xuống vực, mãi không thấy đáy. Người ngoài nhìn thì tưởng phế vật.",
+      "effects": [
+        { "hook": "cultivationSpeed", "add": -0.25 },
+        { "hook": "combatPower", "add": 0.3 },
+        { "hook": "combatPower.vsHigherRealm", "add": 0.3 }
+      ]
+    },
+    {
+      "id": "tien_thien_dao_cot",
+      "name": "Tiên Thiên Đạo Cốt",
+      "description": "Ba tuổi ngồi xem mây cả buổi, năm tuổi nói một câu khiến lão đạo sĩ bỏ đi suy nghĩ ba ngày.",
+      "effects": [
+        { "hook": "stat.comprehension", "add": 20 },
+        { "hook": "bottleneckResist", "add": 0.3 },
+        { "hook": "heartDemonResist", "add": 0.15 }
+      ]
+    },
+    {
+      "id": "kim_cuong_than",
+      "name": "Kim Cương Thân",
+      "description": "Bị trâu húc, trâu gãy sừng. Sư cụ chùa bên cứ lấp ló ngoài cổng nhà ngươi.",
+      "effects": [
+        { "hook": "injuryReduce", "add": 0.3 },
+        { "hook": "path.body.affinity", "add": 20 },
+        { "hook": "heartDemonResist", "add": 0.1 }
+      ]
+    },
+    {
+      "id": "thien_sinh_ma_the",
+      "name": "Thiên Sinh Ma Thể",
+      "description": "Lúc sinh ra, chó cả làng sủa suốt đêm. Lớn lên đẹp đến mức đáng ngờ.",
+      "effects": [
+        { "hook": "lineage.ma.cultivationSpeed", "add": 0.2 },
+        { "hook": "heartDemonResist", "add": 0.3 },
+        { "hook": "faction.chinh.reputation", "add": -30 }
+      ]
+    },
+    {
+      "id": "van_doc_the",
+      "name": "Vạn Độc Thể",
+      "description": "Rắn cắn ngươi, rắn chết. Muỗi cũng không dám lại gần.",
+      "effects": [
+        { "hook": "eventWeight.poisoning", "mul": 0 },
+        { "hook": "path.arts.affinity", "add": 30 },
+        { "hook": "npcAffinityStart", "add": -10 }
+      ]
+    },
+    {
+      "id": "thien_tuyet_mach",
+      "name": "Thiên Tuyệt Mạch",
+      "description": "Đại phu bảo không sống quá hai mươi. Trời cho ngươi tài, lấy lại tuổi thọ.",
+      "effects": [
+        { "hook": "cultivationSpeed", "add": 0.5 },
+        { "hook": "lifespanPct", "add": -0.7, "activeUntil": { "realm": "truc_co" } }
+      ]
+    }
+  ]
+}
