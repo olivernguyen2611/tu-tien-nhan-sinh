@@ -32,7 +32,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onBreakthrough, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onBreakthrough, onPractice, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -43,6 +43,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   /** Returns the outcome to show on the card. */
   onChoose: (index: number) => PopupResult;
   onFamilyAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
+  /** Practise a craft from the "Tu luyện" sheet. */
+  onPractice: (craftId: string) => string | null;
   /** Tutorial tip read ("Đã hiểu") or tips turned off. */
   onTip: (tipId: string, turnOff: boolean) => void;
   /** Big breakthrough from the "Tu luyện" sheet; null when it cannot be tried. */
@@ -167,7 +169,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
           onDisable={() => { setDevOpen(false); dev.onDisable(); }} />
       )}
 
-      {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onClose={() => setCultivateOpen(false)} />}
+      {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onClose={() => setCultivateOpen(false)} />}
 
       {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onClose={() => setFamilyOpen(false)} />}
 

@@ -551,6 +551,12 @@ button { font: inherit; color: inherit; }
 .action-result.good { color: var(--good); }
 .action-result.bad { color: var(--bad); }
 .action-result.rare { color: var(--rare); }
+.crafts { margin: 14px 0 6px; padding-top: 10px; border-top: 1px solid var(--line); }
+.craft-note { grid-column: 1 / -1; font-size: 0.75rem; color: var(--muted); }
+.panel-sub { margin: 0 0 2px; font-size: 1rem; }
+.craft-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; align-items: center; margin-top: 10px; }
+.craft-head { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 8px; font-size: 0.875rem; }
+.craft-head .muted { color: var(--muted); font-size: 0.8125rem; }
 .breakthrough { margin: 14px 0 6px; padding-top: 10px; border-top: 1px solid var(--line); }
 .breakthrough .btn-primary { width: 100%; }
 .relative-head b { font-family: var(--font-story); }

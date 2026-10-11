@@ -14,6 +14,9 @@
     { "id": "farming", "name": "Linh Thực", "prefix": "Linh Thực", "mortal": true, "makes": "Linh thảo", "description": "Trồng linh thảo, chăm linh điền. Cây lớn chậm, nhưng không bao giờ phản bội ngươi." },
     { "id": "beast", "name": "Ngự Thú", "prefix": "Ngự Thú", "mortal": false, "makes": "Linh thú đồng hành", "description": "Nuôi, thuần, kết khế ước với linh thú. Nó cắn người khác, đôi khi cắn cả ngươi." }
   ],
+  "practiceText": "Một năm chuyên tâm {craft}: cấp {from} → {to}.",
+  "titleUpText": "Tay nghề đã khác xưa. Người ta bắt đầu gọi ngươi là {title}.",
+  "jobStartText": "Mấy năm làm nghề không uổng: {craft} của ngươi đã có chút căn bản (cấp {to}).",
   "craftTitles": [
     { "minLevel": 0, "title": "Học đồ {craft}" },
     { "minLevel": 20, "title": "{prefix} Đồ" },

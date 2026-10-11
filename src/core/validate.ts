@@ -316,6 +316,7 @@ function checkCultivationTables(t: { balance?: Balance; realms?: RealmsFile; roo
       const { startAffinity: _, ...paths } = t.balance.paths;
       out.push(...sameKeys(bal, 'paths', t.aptitudes.paths.map((p) => p.id), Object.keys(paths)));
       const craftIds = t.aptitudes.crafts.map((c) => c.id);
+      out.push(...sameKeys(bal, 'crafts.practiceCost', craftIds, Object.keys(t.balance.crafts.practiceCost)));
       const starts = { ...t.balance.crafts.mortalStartLevel, ...t.balance.crafts.cultivatorStartLevel };
       for (const [job, levels] of Object.entries(starts)) {
         for (const c of Object.keys(levels)) {
