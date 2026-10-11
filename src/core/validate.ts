@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { AptitudesFileSchema, BalanceSchema, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type StatExtremesFile, type Trait, type World } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type StatExtremesFile, type Trait, type World } from './schemas';
 
 export interface Problem {
   file: string;
@@ -30,6 +30,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'realms.json') return RealmsFileSchema;
     if (rest === 'roots.json') return RootsFileSchema;
     if (rest === 'aptitudes.json') return AptitudesFileSchema;
+    if (rest === 'difficulties.json') return DifficultyFileSchema;
     return null;
   }
   // Belongs to one world.
@@ -53,6 +54,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   const events: { file: string; event: GameEvent }[] = [];
   let traitIds: Set<string> | null = null;
   const rootTests: { file: string; event: string }[] = [];
+  let difficultyIds: string[] | null = null;
   const parsedShared: { balance?: Balance; realms?: RealmsFile; roots?: RootsFile; aptitudes?: AptitudesFile } = {};
 
   for (const [file, raw] of Object.entries(files)) {
@@ -118,9 +120,18 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === RealmsFileSchema) parsedShared.realms = parsed.data as RealmsFile;
     if (schema === RootsFileSchema) parsedShared.roots = parsed.data as RootsFile;
     if (schema === AptitudesFileSchema) parsedShared.aptitudes = parsed.data as AptitudesFile;
+    if (schema === DifficultyFileSchema) difficultyIds = (parsed.data as { id: string }[]).map((d) => d.id);
   }
 
   problems.push(...checkCultivationTables(parsedShared));
+  if (difficultyIds && parsedShared.balance) {
+    const b = parsedShared.balance;
+    problems.push(...sameKeys('config/balance.json', 'difficulty', difficultyIds, Object.keys(b.difficulty)));
+    if (!difficultyIds.includes(b.defaultDifficulty)) {
+      problems.push({ file: 'config/balance.json', level: 'error', message: `defaultDifficulty "${b.defaultDifficulty}" không có trong difficulties.json` });
+    }
+  }
+
   // The world's root-test event must exist among that world's events.
   for (const { file, event } of rootTests) {
     const world = splitWorldPath(file).worldId;

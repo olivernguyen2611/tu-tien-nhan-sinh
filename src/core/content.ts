@@ -1,7 +1,7 @@
 // Loads all JSON under content/ at build time and checks it with the same
 // rules as `npm run validate`.
 import {
-  AptitudesFileSchema, RealmsFileSchema, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile,
+  AptitudesFileSchema, DifficultyFileSchema, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile,
   BalanceSchema, EventFileSchema, FamilyActionFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema,
   type Balance, type FamilyAction, type GameEvent, type Glossary, type LifeTexts, type Names, type Origin, type StatExtremesFile, type Trait, type World,
 } from './schemas';
@@ -27,6 +27,8 @@ export interface Content {
   extremes: StatExtremesFile;
   /** Realms, spirit roots, combat paths and crafts (task 2.1). */
   cultivation: CultivationTables;
+  /** Dễ/Thường/Khó names (task 2.10); numbers are in balance.difficulty. */
+  difficulties: Difficulty[];
 }
 
 export interface CultivationTables {
@@ -86,5 +88,6 @@ export function loadContent(worldId: string = DEFAULT_WORLD_ID): Content {
     lifeTexts: LifeTextsSchema.parse(files['life-texts.json']),
     extremes: StatExtremesFileSchema.parse(files['stat-extremes.json']),
     cultivation: parseCultivationTables(files['realms.json'], files['roots.json'], files['aptitudes.json']),
+    difficulties: DifficultyFileSchema.parse(files['difficulties.json']),
   };
 }

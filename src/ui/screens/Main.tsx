@@ -13,6 +13,7 @@ import { Term, TermText } from '../components/Tooltip';
 import { ThemeToggle } from '../components/ThemeToggle';
 import type { ThemePref } from '../theme';
 import { realmLabel, rootLabel } from '../../systems/cultivation';
+import { difficultyName } from '../../systems/difficulty';
 
 const DOCK_LEFT = [
   { id: 'cultivate', glyph: '修', label: 'Tu luyện' },
@@ -157,7 +158,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             <div class="kicker">Nhân vật</div>
             <h2>{c.name}</h2>
             <p class="story">
-              {c.gender === 'nam' ? 'Nam' : 'Nữ'} · {origin?.name} · quê {c.hometown}
+              {c.gender === 'nam' ? 'Nam' : 'Nữ'} · {origin?.name} · quê {c.hometown} · độ khó {difficultyName(state, content)}
             </p>
             <div class="profile-grid">
               {APTITUDE_LABELS.map(([key, label, glyph, term]) => (

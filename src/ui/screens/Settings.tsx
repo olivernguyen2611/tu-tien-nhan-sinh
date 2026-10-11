@@ -11,6 +11,8 @@ export interface SlotView {
   /** Null when empty or unreadable; `taken` tells the two apart. */
   summary: SlotSummary | null;
   taken: boolean;
+  /** Khó and still alive: no export (task 2.10). */
+  locked: boolean;
 }
 
 type Pending = { kind: 'delete' | 'overwrite'; slot: number } | null;
@@ -69,7 +71,8 @@ export function SettingsScreen({ slots, pick, worldName, message, onPlay, onExpo
               ) : (
                 <>
                   {s.summary && <button class="chip-btn" onClick={() => onPlay(s.slot)}>Chơi</button>}
-                  {s.summary && <button class="chip-btn" onClick={() => onExport(s.slot)}>Xuất file</button>}
+                  {s.summary && !s.locked && <button class="chip-btn" onClick={() => onExport(s.slot)}>Xuất file</button>}
+                  {s.summary && s.locked && <span class="muted slot-lock" title="Độ khó Khó: đời còn sống thì không xuất file">Khó · không xuất file</span>}
                   {s.taken && <button class="chip-btn danger" onClick={() => setPending({ kind: 'delete', slot: s.slot })}>Xóa</button>}
                 </>
               )}

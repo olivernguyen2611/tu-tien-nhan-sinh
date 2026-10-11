@@ -17,6 +17,8 @@ export function CreateCharacterScreen({ content, onCreate, onBack }: {
   const [name, setName] = useState('');
   const [gender, setGender] = useState<Gender | undefined>(undefined);
   const [originId, setOriginId] = useState<string | undefined>(undefined);
+  const [difficulty, setDifficulty] = useState(content.balance.defaultDifficulty);
+  const chosen = content.difficulties.find((d) => d.id === difficulty);
 
   const rollName = () => {
     // A rolled name fits one gender, so "Trời định" settles on that gender.
@@ -52,6 +54,16 @@ export function CreateCharacterScreen({ content, onCreate, onBack }: {
       </section>
 
       <section class="field">
+        <span class="field-label">Độ khó</span>
+        <div class="segmented" role="radiogroup" aria-label="Độ khó">
+          {content.difficulties.map((d) => (
+            <button role="radio" key={d.id} aria-checked={difficulty === d.id} class={difficulty === d.id ? 'on' : ''} onClick={() => setDifficulty(d.id)}>{d.name}</button>
+          ))}
+        </div>
+        {chosen && <p class="field-hint">{chosen.description}</p>}
+      </section>
+
+      <section class="field">
         <span class="field-label">Xuất thân</span>
         <div class="origin-list" role="radiogroup" aria-label="Xuất thân">
           <button role="radio" aria-checked={originId === undefined} class={`origin${originId === undefined ? ' on' : ''}`} onClick={() => setOriginId(undefined)}>
@@ -68,7 +80,7 @@ export function CreateCharacterScreen({ content, onCreate, onBack }: {
       </section>
 
       <div class="create-action">
-        <button class="btn-primary" onClick={() => onCreate({ seed: newSeed(), name, gender, originId })}>Đầu thai</button>
+        <button class="btn-primary" onClick={() => onCreate({ seed: newSeed(), name, gender, originId, difficulty })}>Đầu thai</button>
       </div>
     </main>
   );

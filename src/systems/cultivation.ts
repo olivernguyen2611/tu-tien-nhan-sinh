@@ -6,6 +6,7 @@ import type { EffectHook } from '../core/schemas';
 import type { GameState, LogLine, SpiritRoot } from '../core/types';
 import { extremeHookSum } from './extremes';
 import { checkDeath } from './time';
+import { difficultyHookSum } from './difficulty';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -129,10 +130,10 @@ function lifeHooks(state: GameState, content: Content): Hook[] {
   return [...fromTraits, ...(body?.effects ?? [])];
 }
 
-/** Sum of an add-hook from traits, special body and extreme states. `lineage.<x>.<hook>` counts for the life's lineage. */
+/** Sum of an add-hook from traits, special body, extreme states and difficulty. `lineage.<x>.<hook>` counts for the life's lineage. */
 export function hookSum(state: GameState, content: Content, hook: string): number {
   const lineageHook = state.cult.lineage ? `lineage.${state.cult.lineage}.${hook}` : null;
-  let sum = extremeHookSum(state, content, hook);
+  let sum = extremeHookSum(state, content, hook) + difficultyHookSum(state, content, hook);
   for (const e of lifeHooks(state, content)) {
     if ((e.hook === hook || e.hook === lineageHook) && e.add !== undefined && hookActive(e, state, content)) sum += e.add;
   }

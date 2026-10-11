@@ -4,6 +4,7 @@ import { Rng } from '../core/rng';
 import type { DeathCause, GameState, LogLine } from '../core/types';
 import { describeDelta } from './deltas';
 import { extremeHookSum } from './extremes';
+import { difficultyHookSum } from './difficulty';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 const fill = (text: string, age: number) => text.replaceAll('{age}', String(age));
@@ -38,7 +39,7 @@ export function ageBody(state: GameState, content: Content): GameState {
     lines.push({ text: `${fill(rng.pick(content.lifeTexts.agingMilestone), age)}${change ? ` ${change}.` : ''}`, tone: 'normal' });
   }
   // Extreme states can make illness likelier or rule it out (illnessChancePct).
-  const illnessMul = Math.max(0, 1 + extremeHookSum(state, content, 'illnessChancePct') / 100);
+  const illnessMul = Math.max(0, 1 + (extremeHookSum(state, content, 'illnessChancePct') + difficultyHookSum(state, content, 'illnessChancePct')) / 100);
   const illnessChance = (age - cfg.illnessStartAge) * cfg.illnessChancePerYear * illnessMul;
   if (illnessChance > 0 && rng.chance(illnessChance)) {
     health -= rng.int(cfg.illnessHealthLoss[0], cfg.illnessHealthLoss[1]);

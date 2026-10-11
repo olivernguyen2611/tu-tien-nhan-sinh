@@ -1,0 +1,5 @@
+[
+  { "id": "easy", "name": "Dễ", "description": "Trời rộng lượng: tu nhanh hơn, đột phá dễ hơn, ít bệnh, thêm 2 lượt cải mệnh." },
+  { "id": "normal", "name": "Thường", "description": "Thiên đạo vô tư, được mất tùy mình." },
+  { "id": "hard", "name": "Khó", "description": "Thiên đạo khắc nghiệt: tu chậm, đột phá khó, ít lượt cải mệnh. Đời còn sống thì không xuất hay nhập save được, chọn rồi là không quay lại." }
+]

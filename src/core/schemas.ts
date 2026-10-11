@@ -501,6 +501,20 @@ export const BalanceSchema = z
         foundationSpeed: z.record(id, z.number().min(0)),
       })
       .strict(),
+    /** Task 2.10: difficulty id (difficulties.json) used when none is chosen. */
+    defaultDifficulty: id,
+    /** Per difficulty: K.6 hooks for the whole life, extra destiny rerolls, and whether saves are locked. */
+    difficulty: z.record(
+      id,
+      z
+        .object({
+          rerollBonus: z.number().int(),
+          /** No export/import while the life is alive: what happens, stays. */
+          noReload: z.boolean(),
+          effects: z.array(EffectHookSchema),
+        })
+        .strict(),
+    ),
     /** Combat path modifiers (realms-roots-paths.md C); keyed by path id. */
     paths: z
       .object({ startAffinity: range })
@@ -693,3 +707,9 @@ export const AptitudesFileSchema = z
   })
   .strict();
 export type AptitudesFile = z.infer<typeof AptitudesFileSchema>;
+
+/** content/difficulties.json: names shown when creating a life (task 2.10). */
+export const DifficultyFileSchema = z
+  .array(z.object({ id, name: z.string().min(1), description: z.string().min(1) }).strict())
+  .min(1);
+export type Difficulty = z.infer<typeof DifficultyFileSchema>[number];

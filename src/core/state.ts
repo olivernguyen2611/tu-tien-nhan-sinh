@@ -15,6 +15,7 @@ export interface NewLifeInput {
   name?: string;      // empty → random
   gender?: Gender;    // undefined → random
   originId?: string;  // undefined → weighted random
+  difficulty?: string; // undefined → balance.defaultDifficulty
 }
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
@@ -36,6 +37,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
   const name = input.name?.trim() || randomName(rng, content, gender);
   const origin = content.origins.find((o) => o.id === input.originId) ?? rng.weighted(content.origins, (o) => o.weight);
   const hometown = rng.pick(content.names.hometowns);
+  const difficulty = input.difficulty && content.balance.difficulty[input.difficulty] ? input.difficulty : content.balance.defaultDifficulty;
 
   const stats = Object.fromEntries(MORTAL_STATS.map((k) => [k, rng.int(cfg.mortalStatRange[0], cfg.mortalStatRange[1])])) as GameState['stats'];
   // Aptitudes average several rolls so extremes are rare.
@@ -61,6 +63,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
 
   const state: GameState = {
     version: 1,
+    difficulty,
     worldId: content.world.id,
     seed: input.seed,
     rng: rng.getState(),
@@ -73,7 +76,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     money: { silver: origin.silver, spiritStones: origin.spiritStones },
     social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0 } },
     flags: origin.noParents ? { no_parents: true, no_father: true, no_mother: true } : {},
-    destiny: { offered: [], rerollsLeft: content.balance.traits.rerolls, confirmed: false },
+    destiny: { offered: [], rerollsLeft: Math.max(0, content.balance.traits.rerolls + (content.balance.difficulty[difficulty]?.rerollBonus ?? 0)), confirmed: false },
     traits: [],
     family,
     events: {

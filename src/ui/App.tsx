@@ -22,6 +22,7 @@ import { SettingsScreen, type SlotView } from './screens/Settings';
 import { TitleScreen } from './screens/Title';
 import { loadDevMode, saveDevMode } from './devMode';
 import { attemptMajorBreakthrough } from '../systems/cultivation';
+import { savesLocked } from '../systems/difficulty';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -75,7 +76,9 @@ function Screens({ content }: { content: Content }) {
   };
 
   if (screen === 'saves') {
-    const slots: SlotView[] = listSlots(store, worlds).map((summary, i) => ({ slot: i + 1, summary, taken: slotTaken(store, i + 1) }));
+    const slots: SlotView[] = listSlots(store, worlds).map((summary, i) => ({
+      slot: i + 1, summary, taken: slotTaken(store, i + 1), locked: !!summary && savesLocked(summary, content),
+    }));
     return (
       <SettingsScreen
         slots={slots}
@@ -85,7 +88,7 @@ function Screens({ content }: { content: Content }) {
         onPlay={loadSlot}
         onExport={(s) => {
           const r = readSlot(store, s, worlds);
-          if (r?.ok) { const f = exportSave(r.save); downloadText(f.fileName, f.text); }
+          if (r?.ok && !savesLocked(r.save.life, content)) { const f = exportSave(r.save); downloadText(f.fileName, f.text); }
         }}
         onDelete={(s) => {
           deleteSlot(store, s);
@@ -96,6 +99,7 @@ function Screens({ content }: { content: Content }) {
           const raw = await readJsonFile(file);
           const r = raw === null ? { ok: false as const, error: 'File không phải JSON.' } : parseSave(raw, worlds);
           if (!r.ok) { setMessage({ text: r.error, tone: 'bad' }); return; }
+          if (savesLocked(r.save.life, content)) { setMessage({ text: 'Đời này chơi ở độ khó Khó và vẫn còn sống: không nhập lại được.', tone: 'bad' }); return; }
           setMessage(null);
           setPicking({ purpose: 'import', save: r.save });
         }}

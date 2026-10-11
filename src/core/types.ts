@@ -38,6 +38,8 @@ export type DeathCause = 'old_age' | 'illness' | 'breakthrough';
 
 export interface GameState {
   version: 1;
+  /** Dễ/Thường/Khó id (difficulties.json), fixed when the life starts. */
+  difficulty: string;
   /** Which world (content/worlds/<id>) this life is in. */
   worldId: string;
   seed: string;

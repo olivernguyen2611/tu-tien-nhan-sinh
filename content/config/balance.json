@@ -131,6 +131,28 @@
     "foundationThresholds": { "trung": 40, "thuong": 75, "hoan_my": 95 },
     "foundationSpeed": { "ha": 0.9, "trung": 1.0, "thuong": 1.1, "hoan_my": 1.2 }
   },
+  "defaultDifficulty": "normal",
+  "difficulty": {
+    "easy": {
+      "rerollBonus": 2,
+      "noReload": false,
+      "effects": [
+        { "hook": "cultivationSpeed", "add": 0.25 },
+        { "hook": "breakthroughChance", "add": 10 },
+        { "hook": "illnessChancePct", "add": -50 }
+      ]
+    },
+    "normal": { "rerollBonus": 0, "noReload": false, "effects": [] },
+    "hard": {
+      "rerollBonus": -1,
+      "noReload": true,
+      "effects": [
+        { "hook": "cultivationSpeed", "add": -0.1 },
+        { "hook": "breakthroughChance", "add": -5 },
+        { "hook": "illnessChancePct", "add": 25 }
+      ]
+    }
+  },
   "paths": {
     "startAffinity": [5, 30],
     "sword": { "combatPower": 0.15, "firstRoundBonus": 0.1, "injuryTaken": 0.1, "cultivationSpeed": 0.1 },
