@@ -581,3 +581,39 @@ button { font: inherit; color: inherit; }
 .death-actions { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 8px; margin-top: 4px; }
 .death-actions .btn-primary { min-height: 52px; font-size: 1.0625rem; }
 .age-btn.ended { background: var(--ink); color: var(--bg); box-shadow: var(--shadow), 0 0 0 2px var(--ink); }
+
+/* ---------- Title extras & save slots (Sổ lưu) ---------- */
+.title-screen .btn-secondary.start { min-height: 52px; font-size: 1.0625rem; }
+.link-btn { min-height: 44px; padding: 0 16px; border: none; background: none; color: var(--jade); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.settings-screen {
+  width: min(640px, 100%);
+  margin: 0 auto;
+  min-height: 100dvh;
+  padding: calc(12px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.settings-head { display: flex; align-items: center; gap: 12px; }
+.settings-head h1 { margin: 0; font-family: var(--font-story); font-size: 1.5rem; }
+.settings-note { margin: 0; color: var(--muted); font-size: 0.875rem; }
+.settings-msg { margin: 0; padding: 8px 12px; border-radius: 8px; background: var(--surface-2); font-weight: 600; }
+.settings-msg.good { color: var(--good); }
+.settings-msg.bad { color: var(--bad); }
+.slot-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.slot-card { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 4px 10px; align-items: center; padding: 10px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.slot-card.empty { border-style: dashed; background: none; }
+.slot-no { grid-row: span 2; width: 36px; height: 36px; display: grid; place-items: center; border: 2px solid var(--seal); border-radius: 6px; color: var(--seal); font-family: var(--font-story); font-weight: 700; }
+.slot-info { display: flex; flex-direction: column; min-width: 0; font-size: 0.875rem; }
+.slot-info b { font-family: var(--font-story); font-size: 1.0625rem; }
+.slot-info .muted, .slot-card .muted { color: var(--muted); font-size: 0.8125rem; }
+.slot-actions { grid-column: 2; display: flex; flex-wrap: wrap; gap: 6px; }
+.chip-btn.danger { border-color: var(--bad); color: var(--bad); }
+.btn-secondary.wide { width: 100%; }
+.settings-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.save-warning { margin: 0 0 8px; padding: 8px 12px; border-radius: 8px; background: var(--surface-2); color: var(--bad); font-size: 0.875rem; font-weight: 600; }
+@media (min-width: 720px) {
+  .slot-card { grid-template-columns: 36px minmax(0, 1fr) auto; }
+  .slot-no { grid-row: auto; }
+  .slot-actions { grid-column: auto; }
+}

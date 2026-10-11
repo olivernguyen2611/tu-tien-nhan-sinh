@@ -25,9 +25,11 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心'],
 ] as const;
 
-export function MainScreen({ state, content, onAdvance, onChoose, onFamilyAction, onNewLife, onSummary, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onChoose, onFamilyAction, onNewLife, onSummary, onSaves, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
+  /** Shown when autosave failed. */
+  saveWarning: string | null;
   onAdvance: () => void;
   /** Returns the outcome to show on the card. */
   onChoose: (index: number) => PopupResult;
@@ -35,6 +37,8 @@ export function MainScreen({ state, content, onAdvance, onChoose, onFamilyAction
   onNewLife: () => void;
   /** Open the end-of-life summary (after death). */
   onSummary: () => void;
+  /** Open the save slots (Sổ lưu). */
+  onSaves: () => void;
   theme: ThemePref;
   onToggleTheme: () => void;
 }) {
@@ -71,6 +75,7 @@ export function MainScreen({ state, content, onAdvance, onChoose, onFamilyAction
         </div>
         <div class="top-actions">
           <button class="icon-btn" aria-label="Túi đồ" title="Túi đồ">囊</button>
+          <button class="icon-btn" aria-label="Sổ lưu" title="Sổ lưu" onClick={onSaves}>簿</button>
           <span class="desktop-only">
             <ThemeToggle pref={theme} onChange={onToggleTheme} />
           </span>
@@ -78,6 +83,7 @@ export function MainScreen({ state, content, onAdvance, onChoose, onFamilyAction
       </header>
 
       <section class="life-log" aria-label="Nhật ký đời người" ref={logRef}>
+        {saveWarning && <p class="save-warning" role="alert">{saveWarning}</p>}
         {state.log.map((y, i) => (
           <article class={`age-block${i === state.log.length - 1 ? ' current' : ''}`} key={y.age}>
             <h3>{y.age === 0 ? 'Chào đời' : `Tuổi ${y.age}`}</h3>
