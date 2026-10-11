@@ -10,6 +10,7 @@ import {
   slotTaken, writeSlot, type SaveFile,
 } from '../systems/save';
 import { checkDeath } from '../systems/time';
+import { GlossaryProvider } from './components/Tooltip';
 import { browserStore, downloadText, readJsonFile } from './storage';
 import { applyThemePref, loadThemePref, nextThemePref, type ThemePref } from './theme';
 import { CreateCharacterScreen } from './screens/CreateCharacter';
@@ -25,6 +26,14 @@ type Picking = { purpose: 'new' } | { purpose: 'import'; save: SaveFile } | null
 type Message = { text: string; tone: 'good' | 'bad' } | null;
 
 export function App({ content }: { content: Content }) {
+  return (
+    <GlossaryProvider glossary={content.glossary}>
+      <Screens content={content} />
+    </GlossaryProvider>
+  );
+}
+
+function Screens({ content }: { content: Content }) {
   const store = useMemo(browserStore, []);
   // Only the loaded world can be played for now (world picker comes later).
   const worlds = [content.world.id];

@@ -6,6 +6,7 @@ import type { GameState, Tone } from '../../core/types';
 import { FamilyPanel } from '../components/FamilyPanel';
 import { EventPopup, type PopupResult } from '../components/EventPopup';
 import { Meter } from '../components/Meter';
+import { Term, TermText } from '../components/Tooltip';
 import { ThemeToggle } from '../components/ThemeToggle';
 import type { ThemePref } from '../theme';
 
@@ -19,10 +20,10 @@ const DOCK_RIGHT = [
 ];
 
 const APTITUDE_LABELS = [
-  ['physique', 'Căn cốt', '骨'],
-  ['comprehension', 'Ngộ tính', '悟'],
-  ['luck', 'Khí vận', '運'],
-  ['daoHeart', 'Đạo tâm', '心'],
+  ['physique', 'Căn cốt', '骨', 'can_cot'],
+  ['comprehension', 'Ngộ tính', '悟', 'ngo_tinh'],
+  ['luck', 'Khí vận', '運', 'khi_van'],
+  ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
 export function MainScreen({ state, content, saveWarning, onAdvance, onChoose, onFamilyAction, onNewLife, onSummary, onSaves, theme, onToggleTheme }: {
@@ -70,8 +71,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onChoose, o
           <div class="title">{c.age} tuổi · Phàm Nhân</div>
         </div>
         <div class="purse">
-          <span class="silver">{money.silver} lượng bạc</span>
-          <span class="stone">{money.spiritStones} linh thạch</span>
+          <span class="silver">{money.silver} <Term id="luong_bac">lượng bạc</Term></span>
+          <span class="stone">{money.spiritStones} <Term id="linh_thach">linh thạch</Term></span>
         </div>
         <div class="top-actions">
           <button class="icon-btn" aria-label="Túi đồ" title="Túi đồ">囊</button>
@@ -87,7 +88,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onChoose, o
         {state.log.map((y, i) => (
           <article class={`age-block${i === state.log.length - 1 ? ' current' : ''}`} key={y.age}>
             <h3>{y.age === 0 ? 'Chào đời' : `Tuổi ${y.age}`}</h3>
-            {y.lines.map((l) => <p class={l.tone === 'normal' ? '' : l.tone}>{l.text}</p>)}
+            {y.lines.map((l) => <p class={l.tone === 'normal' ? '' : l.tone}><TermText text={l.text} /></p>)}
           </article>
         ))}
       </section>
@@ -110,12 +111,12 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onChoose, o
 
       <section class="stats-panel" aria-label="Chỉ số">
         <span class="panel-title">Chỉ số</span>
-        <div class="stat-row"><span class="icon">樂</span><Meter label="Hạnh phúc" value={stats.happiness} tone="auto" /></div>
-        <div class="stat-row"><span class="icon">體</span><Meter label="Sức khỏe" value={stats.health} tone="auto" /></div>
-        <div class="stat-row"><span class="icon">智</span><Meter label="Trí tuệ" value={stats.intellect} tone="auto" /></div>
-        <div class="stat-row"><span class="icon">貌</span><Meter label="Mị lực" value={stats.charm} tone="auto" /></div>
-        <div class="stat-row wide"><span class="icon">修</span><Meter label="Tu vi" value={cult.progress} color="var(--bar-cult)" text="Chưa tu luyện" /></div>
-        <div class="stat-row wide"><span class="icon">壽</span><Meter label="Tuổi" value={c.age} max={cult.lifespan} color="var(--bar-life)" text={`${c.age} tuổi`} /></div>
+        <div class="stat-row"><span class="icon">樂</span><Meter label="Hạnh phúc" term="hanh_phuc" value={stats.happiness} tone="auto" /></div>
+        <div class="stat-row"><span class="icon">體</span><Meter label="Sức khỏe" term="suc_khoe" value={stats.health} tone="auto" /></div>
+        <div class="stat-row"><span class="icon">智</span><Meter label="Trí tuệ" term="tri_tue" value={stats.intellect} tone="auto" /></div>
+        <div class="stat-row"><span class="icon">貌</span><Meter label="Mị lực" term="mi_luc" value={stats.charm} tone="auto" /></div>
+        <div class="stat-row wide"><span class="icon">修</span><Meter label="Tu vi" term="tu_vi" value={cult.progress} color="var(--bar-cult)" text="Chưa tu luyện" /></div>
+        <div class="stat-row wide"><span class="icon">壽</span><Meter label="Tuổi" term="tho_nguyen" value={c.age} max={cult.lifespan} color="var(--bar-life)" text={`${c.age} tuổi`} /></div>
       </section>
 
       <EventPopup state={state} content={content} result={result}
@@ -132,16 +133,16 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onChoose, o
               {c.gender === 'nam' ? 'Nam' : 'Nữ'} · {origin?.name} · quê {c.hometown}
             </p>
             <div class="profile-grid">
-              {APTITUDE_LABELS.map(([key, label, glyph]) => (
-                <div class="stat-row" key={key}><span class="icon">{glyph}</span><Meter label={label} value={state.aptitudes[key]} tone="auto" /></div>
+              {APTITUDE_LABELS.map(([key, label, glyph, term]) => (
+                <div class="stat-row" key={key}><span class="icon">{glyph}</span><Meter label={label} term={term} value={state.aptitudes[key]} tone="auto" /></div>
               ))}
             </div>
-            <p class="profile-note">Tư chất tiên thiên định từ lúc sinh, chỉ đổi được nhờ kỳ ngộ hay khí vận.</p>
+            <p class="profile-note"><TermText text="Tư chất tiên thiên định từ lúc sinh, chỉ đổi được nhờ kỳ ngộ hay khí vận." /></p>
             {state.traits.length > 0 && (
               <ul class="trait-chips" aria-label="Tiên thiên khí vận">
                 {state.traits.map((id) => {
                   const t = content.traits.find((x) => x.id === id);
-                  return t && <li class={`trait-chip r-${t.rarity}`} key={id} title={t.summary}><b>{t.name}</b><span>{t.summary}</span></li>;
+                  return t && <li class={`trait-chip r-${t.rarity}`} key={id} title={t.summary}><b>{t.name}</b><span><TermText text={t.summary} /></span></li>;
                 })}
               </ul>
             )}

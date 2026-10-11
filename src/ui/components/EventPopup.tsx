@@ -3,6 +3,7 @@ import type { Content } from '../../core/content';
 import { fillTemplate } from '../../core/state';
 import type { GameState, Tone } from '../../core/types';
 import { findEvent, visibleChoices } from '../../systems/events/engine';
+import { TermText } from './Tooltip';
 
 const STAT_NAMES: Record<string, string> = {
   'stat.health': 'Sức khỏe', 'stat.happiness': 'Hạnh phúc', 'stat.intellect': 'Trí tuệ', 'stat.charm': 'Mị lực',
@@ -33,14 +34,14 @@ export function EventPopup({ state, content, result, onChoose, onClose }: {
           <>
             <div class="kicker">Tuổi {state.character.age}</div>
             <h2>{result.title}</h2>
-            <p class={`story outcome ${result.tone}`}>{result.text}</p>
+            <p class={`story outcome ${result.tone}`}><TermText text={result.text} /></p>
             <button class="choice" onClick={onClose}>Tiếp tục</button>
           </>
         ) : event && (
           <>
             <div class="kicker">{CATEGORY_NAMES[event.category] ?? event.category} · tuổi {state.character.age}</div>
             <h2>{event.title}</h2>
-            <p class="story">{fillTemplate(event.text, state)}</p>
+            <p class="story"><TermText text={fillTemplate(event.text, state)} /></p>
             {visibleChoices(state, content, event).map((c) => {
               const trait = c.traitId ? content.traits.find((t) => t.id === c.traitId) : undefined;
               return (

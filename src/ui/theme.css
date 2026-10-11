@@ -617,3 +617,25 @@ button { font: inherit; color: inherit; }
   .slot-no { grid-row: auto; }
   .slot-actions { grid-column: auto; }
 }
+
+/* ---------- Glossary terms (task 1.10) ---------- */
+.term {
+  display: inline;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-decoration: underline dotted;
+  text-decoration-color: var(--jade);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  cursor: help;
+}
+.term:hover, .term:focus-visible { color: var(--jade); }
+.term-backdrop { position: fixed; inset: 0; z-index: 30; display: grid; place-items: end center; padding: 16px 16px calc(16px + env(safe-area-inset-bottom)); background: rgb(10 8 5 / 0.25); animation: fade 0.12s ease; }
+.term-card { width: min(420px, 100%); padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--jade); border-radius: 10px; box-shadow: var(--shadow); animation: rise 0.15s ease; }
+.term-card b { font-family: var(--font-story); font-size: 1.0625rem; }
+.term-card .aka { display: block; font-size: 0.75rem; color: var(--muted); }
+.term-card p { margin: 6px 0 0; }
+@media (min-width: 720px) { .term-backdrop { place-items: center; } }
