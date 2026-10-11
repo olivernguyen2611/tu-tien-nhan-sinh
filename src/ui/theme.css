@@ -677,3 +677,10 @@ button { font: inherit; color: inherit; }
 .dev-event select { flex: 1; min-width: 0; font: inherit; padding: 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
 .dev-foot { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; margin-top: 16px; }
 .dev-foot .choice { width: auto; flex: 1; }
+
+/* A stat about to tip into a special state blinks (stat-extremes). */
+.meter-warn .bar { animation: meter-blink 1s ease-in-out infinite; }
+@keyframes meter-blink { 50% { opacity: 0.35; } }
+@media (prefers-reduced-motion: reduce) { .meter-warn .bar { animation: none; outline: 2px dashed var(--warn); outline-offset: 1px; } }
+.trait-chip.extreme-low { --rc: var(--bad); }
+.trait-chip.extreme-high { --rc: var(--good); }

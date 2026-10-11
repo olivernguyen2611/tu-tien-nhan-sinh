@@ -76,5 +76,14 @@ export interface GameState {
     /** Follow-up events booked by earlier choices. */
     followUps: { event: string; atAge: number }[];
   };
+  /** Stats stuck at an extreme (stat-extremes.json). */
+  extremes: {
+    /** Stat (or "karma") → consecutive years in the low / high zone. */
+    streak: Record<string, { low: number; high: number }>;
+    /** Active state id → age it started. */
+    active: Record<string, number>;
+    /** State id → age its once-effects were last given; "<id>#<n>" for its specials. */
+    givenAt: Record<string, number>;
+  };
   log: LogYear[];
 }

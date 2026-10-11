@@ -1,0 +1,189 @@
+{
+  "warn": {
+    "low": "{stat} của ngươi chạm đáy đã lâu. Cứ thế này e là sinh chuyện.",
+    "high": "{stat} của ngươi đầy tràn đã lâu. Trời đất dường như đang để mắt."
+  },
+  "enter": "【{name}】 {text}",
+  "exit": "【{name}】 đã qua.",
+  "states": [
+    {
+      "id": "benh_liet_giuong", "stat": "health", "zone": "low", "years": 2,
+      "name": "Bệnh nằm liệt giường",
+      "text": "Thuốc thang không ngớt, người gầy như que củi.",
+      "effects": [
+        { "hook": "deathChancePerYear", "add": 0.2 },
+        { "hook": "cultivationSpeed", "add": -0.7 },
+        { "hook": "cannotWork" },
+        { "hook": "statPerYear.happiness", "add": -5 }
+      ],
+      "note": "Lối ra: cầu danh y, linh đan cứu mạng, người thân chăm sóc."
+    },
+    {
+      "id": "than_cuong_the_trang", "stat": "health", "zone": "high",
+      "name": "Thân cường thể tráng",
+      "text": "Mười năm không hắt hơi một lần.",
+      "effects": [{ "hook": "illnessChancePct", "add": -100 }],
+      "onceEffects": [{ "hook": "lifespanPct", "add": 5 }, { "hook": "stat.physique", "add": 3 }],
+      "note": "Hay bị nhờ khiêng đồ."
+    },
+    {
+      "id": "long_nhu_tro_nguoi", "stat": "happiness", "zone": "low",
+      "name": "Lòng như tro nguội",
+      "text": "Ngày nào cũng như ngày nào, cơm nhạt, trà nguội.",
+      "effects": [
+        { "hook": "statPerYear.health", "add": -3 },
+        { "hook": "statPerYear.daoHeart", "add": -2 },
+        { "hook": "cultivationSpeed", "add": -0.3 }
+      ],
+      "note": "Lối ra: buông bỏ, ở ẩn, quy y, hoặc một người bạn tới gõ cửa."
+    },
+    {
+      "id": "vo_uu_vo_lo", "stat": "happiness", "zone": "high",
+      "name": "Vô ưu vô lo",
+      "text": "Cười nhiều tới mức hàng xóm tưởng nhặt được vàng.",
+      "effects": [
+        { "hook": "statPerYear.health", "add": 3 },
+        { "hook": "cultivationSpeed", "add": -0.1 }
+      ],
+      "onceEffects": [{ "hook": "lifespanPct", "add": 3 }],
+      "note": "Vui quá quên tu."
+    },
+    {
+      "id": "ngay_ngo", "stat": "intellect", "zone": "low",
+      "name": "Ngây ngô",
+      "text": "Bán bò mua gà, về khoe là lời.",
+      "effects": [
+        { "hook": "eventWeight.scam", "mul": 2 },
+        { "hook": "statFloor.happiness", "add": 30 }
+      ],
+      "specials": [
+        { "chancePerYear": 0.01, "text": "Đại trí nhược ngu: một sáng thức dậy, ngươi bỗng hiểu ra nhiều điều.", "effects": [{ "hook": "stat.comprehension", "add": 10 }] }
+      ],
+      "note": "Ngốc mà vui: Hạnh phúc không xuống dưới 30."
+    },
+    {
+      "id": "bac_lam_quan_thu", "stat": "intellect", "zone": "high",
+      "name": "Bác lãm quần thư",
+      "text": "Sách trong huyện đã đọc hết, đang đọc tới sách dạy nấu ăn.",
+      "effects": [{ "hook": "statPerYear.happiness", "add": -2 }],
+      "note": "Mở lựa chọn ẩn \"dùng kiến thức\" khi có. Nghĩ nhiều nên kém vui."
+    },
+    {
+      "id": "ma_che_quy_hon", "stat": "charm", "zone": "low",
+      "name": "Ma chê quỷ hờn",
+      "text": "Ra đường trẻ con khóc, chó sủa, gà bay.",
+      "effects": [
+        { "hook": "npcAffinityStart", "add": -15 },
+        { "hook": "eventWeight.romance_trouble", "mul": 0 }
+      ],
+      "note": "Không bao giờ dính chuyện ghen tuông, đào hoa; kẻ địch xem thường."
+    },
+    {
+      "id": "khuynh_quoc_khuynh_thanh", "stat": "charm", "zone": "high",
+      "name": "Khuynh quốc khuynh thành",
+      "text": "Đi qua cầu, người trên cầu quên đường về.",
+      "effects": [
+        { "hook": "npcAffinityStart", "add": 15 },
+        { "hook": "priceDiscount", "add": 10 },
+        { "hook": "eventWeight.romance_trouble", "mul": 2 }
+      ],
+      "note": "Từ 18 tuổi: tình địch, bị kẻ quyền thế để ý."
+    },
+    {
+      "id": "than_nhu_lieu_yeu", "stat": "physique", "zone": "low",
+      "name": "Thân như liễu yếu",
+      "text": "Gió thổi mạnh cũng phải bám cột.",
+      "effects": [
+        { "hook": "injuryReduce", "add": -20 },
+        { "hook": "illnessChancePct", "add": 100 }
+      ],
+      "note": "Lối ra: luyện võ, thuốc bổ, thầy võ thương tình."
+    },
+    {
+      "id": "long_tuong_chi_luc", "stat": "physique", "zone": "high",
+      "name": "Long tượng chi lực",
+      "text": "Một tay nhấc cối đá, tay kia còn cầm bánh.",
+      "effects": [
+        { "hook": "combatPower", "add": 10 },
+        { "hook": "breakthroughChance", "add": 10 },
+        { "hook": "silverPerYear", "add": -5 }
+      ],
+      "note": "Ăn gấp ba người thường: tốn bạc mỗi năm."
+    },
+    {
+      "id": "dau_go", "stat": "comprehension", "zone": "low",
+      "name": "Đầu gỗ",
+      "text": "Thầy giảng mười lần, ngươi gật đầu mười lần, hiểu không lần nào.",
+      "effects": [{ "hook": "cultivationSpeed", "add": -0.2 }],
+      "note": "Không nghĩ nhiều nên không tẩu hỏa."
+    },
+    {
+      "id": "thong_tue", "stat": "comprehension", "zone": "high",
+      "name": "Thông tuệ",
+      "text": "Nhìn lá rơi cũng ngộ ra một đạo lý.",
+      "effects": [{ "hook": "breakthroughChance", "add": 15 }],
+      "note": "Mỗi năm có thể đốn ngộ; hay bị đồng môn ghen ghét."
+    },
+    {
+      "id": "xui_tan_mang", "stat": "luck", "zone": "low",
+      "name": "Xui tận mạng",
+      "text": "Uống nước cũng sặc, đứng yên cũng bị chim ỉa trúng.",
+      "effects": [{ "hook": "eventWeight.mishap", "mul": 2 }],
+      "specials": [
+        { "afterYears": 6, "text": "Bĩ cực thái lai: xui tới tận cùng thì vận cũng phải đổi.", "effects": [{ "hook": "stat.luck", "add": 20 }] }
+      ]
+    },
+    {
+      "id": "phuc_tinh_cao_chieu", "stat": "luck", "zone": "high",
+      "name": "Phúc tinh cao chiếu",
+      "text": "Đi đường nhặt được bạc, ngồi câu cá câu được rương.",
+      "effects": [
+        { "hook": "eventWeight.fortune", "mul": 1.5 },
+        { "hook": "trigger.cheatDeath", "add": 1 },
+        { "hook": "tribulationPct", "add": 10 }
+      ],
+      "note": "Trời ghen: thiên kiếp nặng hơn, kẻ đố kỵ tìm tới."
+    },
+    {
+      "id": "tam_ma_xam_nhap", "stat": "daoHeart", "zone": "low",
+      "name": "Tâm ma xâm nhập",
+      "text": "Đêm nào cũng nghe tiếng ai thì thầm bên tai.",
+      "effects": [
+        { "hook": "eventWeight.heart_demon", "mul": 3 },
+        { "hook": "breakthroughChance.major", "add": -15 }
+      ],
+      "note": "Thua tâm ma hai lần có thể nhập ma; lối ra: Phật duyên, bế quan, sư phụ cứu."
+    },
+    {
+      "id": "dao_tam_nhu_ban_thach", "stat": "daoHeart", "zone": "high",
+      "name": "Đạo tâm như bàn thạch",
+      "text": "Núi sập trước mặt, sắc mặt không đổi.",
+      "effects": [
+        { "hook": "charmResist", "add": 100 },
+        { "hook": "breakthroughChance.major", "add": 5 },
+        { "hook": "heartDemonResist", "add": 20 },
+        { "hook": "noLineageChange" }
+      ],
+      "note": "Khó thay đổi: không thể đổi đạo thống."
+    },
+    {
+      "id": "ac_quan_man_doanh", "stat": "karma", "zone": "low",
+      "name": "Ác quán mãn doanh",
+      "text": "Đi tới đâu, chim chóc im bặt tới đó.",
+      "effects": [
+        { "hook": "faction.ma.reputation", "add": 10 },
+        { "hook": "eventWeight.retribution", "mul": 2 },
+        { "hook": "tribulationPct", "add": 20 }
+      ],
+      "note": "Chính đạo truy sát. Lối ra: chuộc tội, hoặc đi hẳn đường ma."
+    },
+    {
+      "id": "cong_duc_kim_quang", "stat": "karma", "zone": "high",
+      "name": "Công đức kim quang",
+      "text": "Người hiền thấy ngươi thì cúi chào, kẻ ác thấy thì tránh đường.",
+      "effects": [{ "hook": "tribulationPct", "add": -10 }],
+      "onceEffects": [{ "hook": "stat.luck", "add": 10 }, { "hook": "stat.daoHeart", "add": 5 }],
+      "note": "Ma tu coi ngươi là mục tiêu."
+    }
+  ]
+}

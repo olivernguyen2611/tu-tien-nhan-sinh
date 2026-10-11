@@ -9,6 +9,8 @@ import balance from '../content/config/balance.json';
 import familyActions from '../content/family-actions.json';
 import { FamilyActionFileSchema, LifeTextsSchema } from '../src/core/schemas';
 import lifeTexts from '../content/life-texts.json';
+import extremes from '../content/stat-extremes.json';
+import { StatExtremesFileSchema } from '../src/core/schemas';
 import traits from '../content/traits.json';
 import world from '../content/worlds/thuong_lan/world.json';
 import names from '../content/worlds/thuong_lan/character/names.json';
@@ -24,6 +26,7 @@ const content: Content = {
   glossary: [],
   familyActions: FamilyActionFileSchema.parse(familyActions),
   lifeTexts: LifeTextsSchema.parse(lifeTexts),
+  extremes: StatExtremesFileSchema.parse(extremes),
 };
 
 describe('family', () => {
@@ -58,10 +61,11 @@ describe('family', () => {
       family: s.family.map((r) => (r.role === 'father' ? { ...r, lifespan: r.age + 1, affinity: 0 } : { ...r, lifespan: 999 })),
     };
     const next = ageFamily(s, content);
-    const g = content.balance.family.grief;
-    expect(next.stats.happiness).toBe(60 + Math.round(g.father * g.minShare));
+    const [distant] = content.balance.family.grief.father;
+    expect(next.stats.happiness).toBe(60 + distant);
+    expect(next.aptitudes.daoHeart).toBe(Math.min(100, s.aptitudes.daoHeart + content.balance.family.grief.parentDaoHeart));
     const line = next.log.at(-1)!.lines.find((l) => l.text.includes('qua đời'))!;
-    expect(line.text).toContain(`Hạnh phúc −${Math.abs(Math.round(g.father * g.minShare))}`);
+    expect(line.text).toContain(`Hạnh phúc −${Math.abs(distant)}`);
     expect(next.flags.no_father).toBe(true);
     expect(next.flags.no_mother).toBeUndefined();
     expect(next.flags.no_parents).toBeUndefined();

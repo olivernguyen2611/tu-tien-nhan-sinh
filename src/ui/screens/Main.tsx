@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
+import { activeExtremes, extremeWarnings } from '../../systems/extremes';
 import { DevPanel } from '../components/DevPanel';
 import { FamilyPanel } from '../components/FamilyPanel';
 import { EventPopup, type PopupResult } from '../components/EventPopup';
@@ -55,6 +56,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const logRef = useRef<HTMLElement>(null);
   const { character: c, stats, cult, money } = state;
   const origin = content.origins.find((o) => o.id === c.originId);
+  const warn = extremeWarnings(state, content);
+  const states = activeExtremes(state, content);
 
   useEffect(() => {
     logRef.current?.scrollTo({ top: logRef.current.scrollHeight, behavior: 'smooth' });
@@ -122,10 +125,10 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       <section class="stats-panel" aria-label="Chỉ số">
         <span class="panel-title">Chỉ số</span>
-        <div class="stat-row"><span class="icon">樂</span><Meter label="Hạnh phúc" term="hanh_phuc" value={stats.happiness} tone="auto" /></div>
-        <div class="stat-row"><span class="icon">體</span><Meter label="Sức khỏe" term="suc_khoe" value={stats.health} tone="auto" /></div>
-        <div class="stat-row"><span class="icon">智</span><Meter label="Trí tuệ" term="tri_tue" value={stats.intellect} tone="auto" /></div>
-        <div class="stat-row"><span class="icon">貌</span><Meter label="Mị lực" term="mi_luc" value={stats.charm} tone="auto" /></div>
+        <div class="stat-row"><span class="icon">樂</span><Meter label="Hạnh phúc" term="hanh_phuc" value={stats.happiness} tone="auto" warn={warn.includes('happiness')} /></div>
+        <div class="stat-row"><span class="icon">體</span><Meter label="Sức khỏe" term="suc_khoe" value={stats.health} tone="auto" warn={warn.includes('health')} /></div>
+        <div class="stat-row"><span class="icon">智</span><Meter label="Trí tuệ" term="tri_tue" value={stats.intellect} tone="auto" warn={warn.includes('intellect')} /></div>
+        <div class="stat-row"><span class="icon">貌</span><Meter label="Mị lực" term="mi_luc" value={stats.charm} tone="auto" warn={warn.includes('charm')} /></div>
         <div class="stat-row wide"><span class="icon">修</span><Meter label="Tu vi" term="tu_vi" value={cult.progress} color="var(--bar-cult)" text="Chưa tu luyện" /></div>
         <div class="stat-row wide"><span class="icon">壽</span><Meter label="Tuổi" term="tho_nguyen" value={c.age} max={cult.lifespan} color="var(--bar-life)" text={`${c.age} tuổi`} /></div>
       </section>
@@ -150,10 +153,20 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             </p>
             <div class="profile-grid">
               {APTITUDE_LABELS.map(([key, label, glyph, term]) => (
-                <div class="stat-row" key={key}><span class="icon">{glyph}</span><Meter label={label} term={term} value={state.aptitudes[key]} tone="auto" /></div>
+                <div class="stat-row" key={key}><span class="icon">{glyph}</span><Meter label={label} term={term} value={state.aptitudes[key]} tone="auto" warn={warn.includes(key)} /></div>
               ))}
             </div>
             <p class="profile-note"><TermText text="Tư chất tiên thiên định từ lúc sinh, chỉ đổi được nhờ kỳ ngộ hay khí vận." /></p>
+            {states.length > 0 && (
+              <ul class="trait-chips" aria-label="Trạng thái đặc biệt">
+                {states.map((d) => (
+                  <li class={`trait-chip extreme-${d.zone}`} key={d.id}>
+                    <b>{d.name}</b>
+                    <span>{d.text}{d.note ? ` ${d.note}` : ''}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
             {state.traits.length > 0 && (
               <ul class="trait-chips" aria-label="Tiên thiên khí vận">
                 {state.traits.map((id) => {

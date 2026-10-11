@@ -2,6 +2,26 @@
 
 ## [Chưa phát hành]
 
+### Chỉ số ở đáy/đỉnh quá lâu (2026-10-11)
+- 18 trạng thái đặc biệt đã duyệt (`content/stat-extremes.json`), cho 8 chỉ số và Nhân quả. Ví dụ: Bệnh nằm liệt giường, Lòng như tro nguội, Ngây ngô, Xui tận mạng, Công đức kim quang.
+- Luật (`balance.json` mục `extremes`):
+  - chỉ số ≤ 5 hoặc ≥ 95 đủ 3 năm liền thì sinh trạng thái (Sức khỏe đáy chỉ cần 2 năm); Nhân quả dùng mốc ≤ −80 / ≥ +80;
+  - năm trước đó nhật ký có dòng cảnh báo và thanh chỉ số nhấp nháy;
+  - trạng thái hết khi chỉ số về lại ≥ 20 (đáy) hoặc ≤ 80 (đỉnh);
+  - phần thưởng một lần chỉ nhận lại sau 10 năm.
+- Đã có tác dụng ngay:
+  - đổi chỉ số hằng năm; sàn chỉ số ("ngốc mà vui": Hạnh phúc không dưới 30);
+  - tỉ lệ chết mỗi năm khi liệt giường; bệnh tuổi già dễ hơn hoặc miễn hẳn;
+  - sự kiện xui/kỳ ngộ nhiều hơn; tốn bạc mỗi năm; thọ nguyên và chỉ số một lần;
+  - "Bĩ cực thái lai" sau 6 năm xui, "Đại trí nhược ngu" 1% mỗi năm.
+- Các móc tu luyện, chiến đấu, đột phá, thiên kiếp, danh vọng đã ghi sẵn trong dữ liệu, sẽ có tác dụng khi các hệ thống đó được làm.
+- Thẻ nhân vật hiện các trạng thái đang mắc. Móc K.6 mới: `statPerYear.*`, `statFloor.*`, `silverPerYear`, `deathChancePerYear`, `illnessChancePct`, `tribulationPct`, `cannotWork`, `noLineageChange`, `blockEvent.*`.
+- Theo bảng sự kiện hệ thống đã duyệt:
+  - cha hoặc mẹ mất: Hạnh phúc −20 (tới −30 nếu rất thân) và Đạo tâm +2;
+  - anh chị em mất: Hạnh phúc −15;
+  - tuổi 60, 70, 80: Sức khỏe −5, Mị lực −3, có dòng nhật ký;
+  - năm yên ả: Hạnh phúc trôi dần về 50 (±2 mỗi năm).
+
 ### Developer mode (2026-10-11)
 - Chạm con dấu 仙 ở màn hình chính 20 lần liền (mỗi lần cách nhau không quá 2 giây) để bật; 5 lần cuối có đếm ngược. Bật rồi thì thanh trên của màn chơi có nút **Dev**.
 - Khi bật, **Nghịch thiên cải mệnh quay không giới hạn** (nút hiện ∞).

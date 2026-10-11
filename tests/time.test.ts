@@ -7,6 +7,8 @@ import { ageBody, checkDeath, lifeSummary } from '../src/systems/time';
 import balance from '../content/config/balance.json';
 import familyActions from '../content/family-actions.json';
 import lifeTexts from '../content/life-texts.json';
+import extremes from '../content/stat-extremes.json';
+import { StatExtremesFileSchema } from '../src/core/schemas';
 import traits from '../content/traits.json';
 import world from '../content/worlds/thuong_lan/world.json';
 import names from '../content/worlds/thuong_lan/character/names.json';
@@ -20,6 +22,7 @@ const content: Content = {
   traits: TraitFileSchema.parse(traits),
   familyActions: FamilyActionFileSchema.parse(familyActions),
   lifeTexts: LifeTextsSchema.parse(lifeTexts),
+  extremes: StatExtremesFileSchema.parse(extremes),
   events: [],
   glossary: [],
 };
@@ -53,7 +56,7 @@ describe('aging', () => {
 
   it('illness only strikes after illnessStartAge', () => {
     for (let i = 0; i < 100; i++) {
-      const s = at(createLife({ seed: `ill-${i}` }, content), 60, 80);
+      const s = at(createLife({ seed: `ill-${i}` }, content), 59, 80);
       expect(ageBody(s, content).log.at(-1)!.lines).toHaveLength(0);
     }
     let sick = 0;
@@ -64,6 +67,15 @@ describe('aging', () => {
     // (90 − 60) × 0.8% = 24%.
     expect(sick).toBeGreaterThan(20);
     expect(sick).toBeLessThan(80);
+  });
+});
+
+describe('old-age milestones', () => {
+  it('ages 60, 70, 80 cost health and charm with a visible line', () => {
+    const s = at(createLife({ seed: 'mile' }, content), 70, 80);
+    const next = ageBody({ ...s, stats: { ...s.stats, charm: 50 } }, content);
+    expect(next.stats.charm).toBe(47);
+    expect(next.log.at(-1)!.lines[0].text).toContain('Mị lực −3');
   });
 });
 

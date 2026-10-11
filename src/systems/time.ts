@@ -2,6 +2,8 @@
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { DeathCause, GameState, LogLine } from '../core/types';
+import { describeDelta } from './deltas';
+import { extremeHookSum } from './extremes';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 const fill = (text: string, age: number) => text.replaceAll('{age}', String(age));
@@ -21,12 +23,23 @@ export function ageBody(state: GameState, content: Content): GameState {
   const cfg = content.balance.aging;
   const rng = Rng.fromState(state.rng);
   const age = state.character.age;
-  let { health, happiness } = state.stats;
+  let { health, happiness, charm } = state.stats;
   const lines: LogLine[] = [];
 
   if (age >= cfg.declineStartAge) health -= cfg.healthDeclinePerYear;
   else if (health < cfg.recoverCap) health = Math.min(cfg.recoverCap, health + cfg.recoverPerYear);
-  const illnessChance = (age - cfg.illnessStartAge) * cfg.illnessChancePerYear;
+  // Old-age milestones (60, 70, 80): a visible blow to health and looks.
+  if (cfg.milestoneAges.includes(age)) {
+    const dh = clamp(health + cfg.milestoneHealth) - clamp(health);
+    const dc = clamp(charm + cfg.milestoneCharm) - charm;
+    health += dh;
+    charm += dc;
+    const change = [describeDelta('health', dh), describeDelta('charm', dc)].filter(Boolean).join(' · ');
+    lines.push({ text: `${fill(rng.pick(content.lifeTexts.agingMilestone), age)}${change ? ` ${change}.` : ''}`, tone: 'normal' });
+  }
+  // Extreme states can make illness likelier or rule it out (illnessChancePct).
+  const illnessMul = Math.max(0, 1 + extremeHookSum(state, content, 'illnessChancePct') / 100);
+  const illnessChance = (age - cfg.illnessStartAge) * cfg.illnessChancePerYear * illnessMul;
   if (illnessChance > 0 && rng.chance(illnessChance)) {
     health -= rng.int(cfg.illnessHealthLoss[0], cfg.illnessHealthLoss[1]);
     happiness -= cfg.illnessHappinessLoss;
@@ -36,7 +49,7 @@ export function ageBody(state: GameState, content: Content): GameState {
   return {
     ...state,
     rng: rng.getState(),
-    stats: { ...state.stats, health: clamp(health), happiness: clamp(happiness) },
+    stats: { ...state.stats, health: clamp(health), happiness: clamp(happiness), charm: clamp(charm) },
     log: addLines(state, lines),
   };
 }
