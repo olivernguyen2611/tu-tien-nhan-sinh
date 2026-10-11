@@ -11,7 +11,7 @@ import { Meter } from '../components/Meter';
 import { Term, TermText } from '../components/Tooltip';
 import { ThemeToggle } from '../components/ThemeToggle';
 import type { ThemePref } from '../theme';
-import { rootLabel } from '../../systems/cultivation';
+import { realmLabel, rootLabel } from '../../systems/cultivation';
 
 const DOCK_LEFT = [
   { id: 'cultivate', glyph: '修', label: 'Tu luyện' },
@@ -78,7 +78,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         <button class="avatar" aria-label="Nhân vật" onClick={() => setProfileOpen(true)}>{c.name.split(' ')[0]}</button>
         <div class="who">
           <div class="name">{c.name}</div>
-          <div class="title">{c.age} tuổi · Phàm Nhân</div>
+          <div class="title">{c.age} tuổi · {realmLabel(state, content)}</div>
         </div>
         <div class="purse">
           <span class="silver">{money.silver} <Term id="luong_bac">lượng bạc</Term></span>
@@ -130,7 +130,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         <div class="stat-row"><span class="icon">體</span><Meter label="Sức khỏe" term="suc_khoe" value={stats.health} tone="auto" warn={warn.includes('health')} /></div>
         <div class="stat-row"><span class="icon">智</span><Meter label="Trí tuệ" term="tri_tue" value={stats.intellect} tone="auto" warn={warn.includes('intellect')} /></div>
         <div class="stat-row"><span class="icon">貌</span><Meter label="Mị lực" term="mi_luc" value={stats.charm} tone="auto" warn={warn.includes('charm')} /></div>
-        <div class="stat-row wide"><span class="icon">修</span><Meter label="Tu vi" term="tu_vi" value={cult.progress} color="var(--bar-cult)" text="Chưa tu luyện" /></div>
+        <div class="stat-row wide"><span class="icon">修</span><Meter label="Tu vi" term="tu_vi" value={cult.progress} color="var(--bar-cult)"
+          text={cult.realm === 'pham_nhan' ? 'Chưa tu luyện' : `${realmLabel(state, content)} · ${Math.floor(cult.progress)}%`} /></div>
         <div class="stat-row wide"><span class="icon">壽</span><Meter label="Tuổi" term="tho_nguyen" value={c.age} max={cult.lifespan} color="var(--bar-life)" text={`${c.age} tuổi`} /></div>
       </section>
 

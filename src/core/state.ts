@@ -8,7 +8,7 @@ import { ageFamily, createFamily } from '../systems/relationships';
 import { ageExtremes } from '../systems/extremes';
 import { ageBody, checkDeath } from '../systems/time';
 import { makeName, splitName } from '../systems/names';
-import { rootTestAge } from '../systems/cultivation';
+import { cultivateYear, rootTestAge } from '../systems/cultivation';
 
 export interface NewLifeInput {
   seed: string;
@@ -69,7 +69,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     character: { name, gender, originId: origin.id, hometown, age: 0 },
     stats,
     aptitudes,
-    cult: { realm: 'pham_nhan', stage: 0, progress: 0, root: null, lifespan },
+    cult: { realm: 'pham_nhan', stage: 0, progress: 0, root: null, lifespan, fails: {}, injuredUntil: null, lineage: null },
     money: { silver: origin.silver, spiritStones: origin.spiritStones },
     social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0 } },
     flags: origin.noParents ? { no_parents: true, no_father: true, no_mother: true } : {},
@@ -96,7 +96,7 @@ export function advanceYear(state: GameState, content: Content): GameState {
   if (!state.alive || state.events.pending) return state;
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(ageExtremes(ageBody(ageFamily(withYear(aged), content), content), content), content);
+  const body = checkDeath(cultivateYear(ageExtremes(ageBody(ageFamily(withYear(aged), content), content), content), content), content);
   const next = body.alive ? rollYearEvent(body, content) : body;
   // The year's log block exists before family news and the event are added to it.
   const log = next.log.slice();

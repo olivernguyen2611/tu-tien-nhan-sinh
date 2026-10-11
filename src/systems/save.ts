@@ -65,9 +65,14 @@ const SaveShape = z
 /** Upgrade a save written by an older version. Each saveVersion bump adds a step here. */
 export function migrate(save: SaveFile): SaveFile {
   // Fields added within saveVersion 1 get their empty defaults.
-  const life = save.life as GameState & { extremes?: GameState['extremes'] };
-  if (!life.extremes) return { ...save, life: { ...life, extremes: { streak: {}, active: {}, givenAt: {} } } };
-  return save;
+  let life = save.life as GameState & { extremes?: GameState['extremes'] };
+  if (!life.extremes) life = { ...life, extremes: { streak: {}, active: {}, givenAt: {} } };
+  // Task 2.3: cultivation bookkeeping.
+  const cult = life.cult as Partial<GameState['cult']> & GameState['cult'];
+  if (cult.fails === undefined || cult.injuredUntil === undefined || cult.lineage === undefined) {
+    life = { ...life, cult: { ...cult, fails: cult.fails ?? {}, injuredUntil: cult.injuredUntil ?? null, lineage: cult.lineage ?? null } };
+  }
+  return life === save.life ? save : { ...save, life };
 }
 
 export type ParseResult = { ok: true; save: SaveFile } | { ok: false; error: string };

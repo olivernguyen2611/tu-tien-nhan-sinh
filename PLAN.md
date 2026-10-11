@@ -286,7 +286,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 |---|---|---|
 | 2.1 | [x] ✍️ Bảng cảnh giới (Phàm Nhân → Hóa Thần) + linh căn + 5 con đường chiến đấu + 6 bách nghệ (mục K). **Nội dung đã duyệt**: `docs/design/realms-roots-paths.md`, chỉ còn nhập JSON | `content/realms.json`, `roots.json`, `aptitudes.json` |
 | 2.2 | [x] Sự kiện kiểm tra linh căn (6–12 tuổi) + hiển thị linh căn; xuất thân Hậu duệ gia tộc tu tiên quay 2 lần lấy kết quả tốt hơn | `systems/cultivation.ts`, `content/worlds/thuong_lan/events/root-test.json` |
-| 2.3 | [ ] Tu vi tăng mỗi năm theo công thức mục G; thanh tu vi; đột phá tiểu cảnh giới Luyện Khí; móc mới `lineage.<đạo thống>.cultivationSpeed` và điều kiện `activeUntil: { realm }` (cho Thiên Sinh Ma Thể, Thiên Tuyệt Mạch) | `systems/cultivation.ts` |
+| 2.3 | [x] Tu vi tăng mỗi năm theo công thức mục G; thanh tu vi; đột phá tiểu cảnh giới Luyện Khí; móc mới `lineage.<đạo thống>.cultivationSpeed` và điều kiện `activeUntil: { realm }` (cho Thiên Sinh Ma Thể, Thiên Tuyệt Mạch) | `systems/cultivation.ts` |
 | 2.4 | [ ] ✍️ 6 tông môn khởi đầu (chính/ma/kiếm/đan/phật/yêu) + 8 công pháp Hoàng/Huyền phẩm | `content/worlds/thuong_lan/sects.json`, `techniques.json` |
 | 2.5 | [ ] Tuyển đệ tử tông môn, cấp bậc ngoại môn/nội môn, nhiệm vụ tông môn đơn giản, sư phụ NPC | `systems/sect.ts`, `content/worlds/thuong_lan/events/sect-recruit.json` |
 | 2.6 | [ ] Đột phá Trúc Cơ: tỉ lệ thành công, phẩm đạo cơ (Hạ/Trung/Thượng/Hoàn mỹ), hậu quả thất bại | `systems/cultivation.ts` |

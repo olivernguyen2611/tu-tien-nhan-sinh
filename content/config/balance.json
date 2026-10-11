@@ -105,6 +105,21 @@
     "testAge": [6, 12],
     "elementCounterBonus": 0.2
   },
+  "cultivation": {
+    "aptitudeBase": 0.75,
+    "aptitudeDivisor": 400,
+    "regionQi": 1.0,
+    "techniqueMul": 1.0,
+    "breakthrough": { "comprehensionPerPoint": 0.3, "daoHeartPerPoint": 0.2, "failPenaltyPct": 5, "minPct": 3, "maxPct": 95 },
+    "minorFailure": {
+      "weights": { "lose": 70, "injury": 25, "lifespan": 5 },
+      "loseProgress": 30,
+      "injuryHealth": -20,
+      "injurySpeedMul": 0.5,
+      "injuryYears": 5,
+      "lifespanLossPct": 5
+    }
+  },
   "paths": {
     "startAffinity": [5, 30],
     "sword": { "combatPower": 0.15, "firstRoundBonus": 0.1, "injuryTaken": 0.1, "cultivationSpeed": 0.1 },

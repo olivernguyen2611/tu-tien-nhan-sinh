@@ -159,6 +159,8 @@ export const WorldSchema = z
     name: z.string().min(1),
     description: z.string(),
     order: z.number().int(),
+    /** Spiritual qi of this world; default balance.cultivation.regionQi. */
+    qi: z.number().positive().optional(),
     /** Event booked for every life at an age in balance.roots.testAge (task 2.2). */
     rootTestEvent: z.string().regex(/^[a-z0-9_]+$/).optional(),
   })
@@ -446,6 +448,38 @@ export const BalanceSchema = z
         elementCounterBonus: z.number().min(0),
       })
       .strict(),
+    /** PLAN.md G.1 / G.2: yearly cultivation and minor breakthroughs (task 2.3). */
+    cultivation: z
+      .object({
+        /** Aptitude factor = aptitudeBase + (physique + comprehension) / aptitudeDivisor. */
+        aptitudeBase: z.number(),
+        aptitudeDivisor: z.number().positive(),
+        /** Spiritual qi of the place; a world may override it (world.json "qi"). */
+        regionQi: z.number().positive(),
+        /** Until techniques exist (task 2.4) every cultivator uses this multiplier. */
+        techniqueMul: z.number().positive(),
+        breakthrough: z
+          .object({
+            comprehensionPerPoint: z.number(),
+            daoHeartPerPoint: z.number(),
+            failPenaltyPct: z.number().min(0),
+            minPct: z.number().min(0).max(100),
+            maxPct: z.number().min(0).max(100),
+          })
+          .strict(),
+        minorFailure: z
+          .object({
+            weights: z.object({ lose: z.number().min(0), injury: z.number().min(0), lifespan: z.number().min(0) }).strict(),
+            /** Percent of the bar lost. */
+            loseProgress: z.number().min(0).max(100),
+            injuryHealth: z.number(),
+            injurySpeedMul: z.number().min(0),
+            injuryYears: z.number().int().min(1),
+            lifespanLossPct: z.number().min(0),
+          })
+          .strict(),
+      })
+      .strict(),
     /** Combat path modifiers (realms-roots-paths.md C); keyed by path id. */
     paths: z
       .object({ startAffinity: range })
@@ -532,6 +566,20 @@ export const RealmsFileSchema = z
     realms: z
       .array(z.object({ id, name: z.string().min(1), stages: z.array(z.string().min(1)).min(1), description: z.string().min(1) }).strict())
       .min(1),
+    /** Log lines for cultivation (task 2.3). {realm}, {stage} are filled in. */
+    texts: z
+      .object({
+        /** Root found: the first technique and the first stage. */
+        start: z.string().min(1),
+        stageUp: z.array(z.string().min(1)).min(1),
+        /** Bar full at the last stage of a realm: waiting for the big breakthrough. */
+        peak: z.string().min(1),
+        failLose: z.string().min(1),
+        failInjury: z.string().min(1),
+        failLifespan: z.string().min(1),
+        injuryHealed: z.string().min(1),
+      })
+      .strict(),
     /** Shown as a greyed-out "???" after the last realm. */
     beyond: z.object({ name: z.string().min(1), description: z.string().min(1) }).strict(),
   })

@@ -62,6 +62,12 @@ export interface GameState {
     progress: number;  // % of current stage
     root: SpiritRoot | null; // null until tested at 6–12
     lifespan: number;  // max age
+    /** Failed breakthroughs per milestone ("<realm>:<stage>"), for the G.2 penalty. */
+    fails: Record<string, number>;
+    /** Meridian injury slows cultivation until this age (exclusive). */
+    injuredUntil: number | null;
+    /** Đạo thống (Tiên/Ma/Phật/Quỷ), chosen in GĐ 3; reads lineage.<x>.* hooks. */
+    lineage: string | null;
   };
   money: { silver: number; spiritStones: number };
   social: {

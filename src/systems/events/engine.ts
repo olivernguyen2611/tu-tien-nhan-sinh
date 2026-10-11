@@ -7,7 +7,7 @@ import { fillTemplate } from '../../core/state';
 import { extremeThemeMultiplier } from '../extremes';
 import type { GameState, LogLine, Tone } from '../../core/types';
 import { meets, readValue } from './conditions';
-import { revealRoot } from '../cultivation';
+import { revealRoot, startCultivating } from '../cultivation';
 
 type Outcome = NonNullable<GameEvent['choices'][number]['result']>;
 
@@ -188,8 +188,9 @@ export function resolveChoice(state: GameState, content: Content, choiceIndex: n
   };
   if (outcome.effects.testRoot) {
     const revealed = revealRoot(next, content);
-    next = revealed.state;
-    if (revealed.line) text = `${text} ${revealed.line.text}`;
+    const started = startCultivating(revealed.state, content);
+    next = started.state;
+    for (const line of [revealed.line, started.line]) if (line) text = `${text} ${line.text}`;
   }
   return { state: next, text, tone, success };
 }

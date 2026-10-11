@@ -1,7 +1,10 @@
 // Cultivation (GĐ 2). Task 2.2: the spirit-root test and how a root is shown.
+// Task 2.3: yearly cultivation (PLAN.md G.1), Luyện Khí stages (G.2).
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
+import type { EffectHook } from '../core/schemas';
 import type { GameState, LogLine, SpiritRoot } from '../core/types';
+import { extremeHookSum } from './extremes';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -103,4 +106,172 @@ export function revealRoot(state: GameState, content: Content): { state: GameSta
     state: { ...state, rng: rng.getState(), stats, aptitudes, cult: { ...state.cult, root, lifespan }, log },
     line,
   };
+}
+
+// ---------- Task 2.3: yearly cultivation and Luyện Khí stages ----------
+
+type Hook = EffectHook;
+
+const realmIndex = (content: Content, id: string) => content.cultivation.realms.realms.findIndex((r) => r.id === id);
+
+/** activeFrom (age) and activeUntil (realm reached → off). */
+export function hookActive(e: Hook, state: GameState, content: Content): boolean {
+  if (e.activeFrom && state.character.age < e.activeFrom.age) return false;
+  if (e.activeUntil && realmIndex(content, state.cult.realm) >= realmIndex(content, e.activeUntil.realm)) return false;
+  return true;
+}
+
+/** Hooks this life carries from traits and its special body. */
+function lifeHooks(state: GameState, content: Content): Hook[] {
+  const fromTraits = state.traits.flatMap((id) => content.traits.find((t) => t.id === id)?.effects ?? []);
+  const body = state.cult.root?.body ? content.cultivation.roots.bodies.find((b) => b.id === state.cult.root!.body) : undefined;
+  return [...fromTraits, ...(body?.effects ?? [])];
+}
+
+/** Sum of an add-hook from traits, special body and extreme states. `lineage.<x>.<hook>` counts for the life's lineage. */
+export function hookSum(state: GameState, content: Content, hook: string): number {
+  const lineageHook = state.cult.lineage ? `lineage.${state.cult.lineage}.${hook}` : null;
+  let sum = extremeHookSum(state, content, hook);
+  for (const e of lifeHooks(state, content)) {
+    if ((e.hook === hook || e.hook === lineageHook) && e.add !== undefined && hookActive(e, state, content)) sum += e.add;
+  }
+  return sum;
+}
+
+/** PLAN.md G.1: percent of the current stage's bar gained in one year. */
+export function yearlyGain(state: GameState, content: Content): number {
+  const root = state.cult.root;
+  const realm = content.balance.realms[state.cult.realm];
+  if (!root || !realm || state.cult.realm === 'pham_nhan') return 0;
+  const cfg = content.balance.cultivation;
+  const rootMul = content.balance.roots.gradeSpeed[root.grade] ?? 0;
+  const aptitude = cfg.aptitudeBase + (state.aptitudes.physique + state.aptitudes.comprehension) / cfg.aptitudeDivisor;
+  const qi = content.world.qi ?? cfg.regionQi;
+  const bonus = Math.max(0, 1 + hookSum(state, content, 'cultivationSpeed'));
+  const injured = state.cult.injuredUntil !== null && state.character.age < state.cult.injuredUntil ? cfg.minorFailure.injurySpeedMul : 1;
+  return realm.speedPct * rootMul * aptitude * qi * cfg.techniqueMul * bonus * injured;
+}
+
+/** PLAN.md G.2 in percent, for a breakthrough out of the current stage. `major` = into the next realm. */
+export function breakthroughPct(state: GameState, content: Content, basePct: number, major: boolean): number {
+  const b = content.balance.cultivation.breakthrough;
+  const fails = state.cult.fails[`${state.cult.realm}:${state.cult.stage}`] ?? 0;
+  const pct = basePct
+    + (state.aptitudes.comprehension - 50) * b.comprehensionPerPoint
+    + (state.aptitudes.daoHeart - 50) * b.daoHeartPerPoint
+    + hookSum(state, content, 'breakthroughChance')
+    + (major ? hookSum(state, content, 'breakthroughChance.major') : 0)
+    - b.failPenaltyPct * fails;
+  return Math.max(b.minPct, Math.min(b.maxPct, pct));
+}
+
+/** "Luyện Khí tầng 3"; a mortal is just "Phàm Nhân" (martial stages come with task 3.11). */
+export function realmLabel(state: GameState, content: Content): string {
+  const realm = content.cultivation.realms.realms.find((r) => r.id === state.cult.realm);
+  if (!realm) return state.cult.realm;
+  if (realm.id === 'pham_nhan') return realm.name;
+  return `${realm.name} ${realm.stages[state.cult.stage] ?? ''}`.trim();
+}
+
+const fillRealm = (text: string, state: GameState, content: Content) => {
+  const realm = content.cultivation.realms.realms.find((r) => r.id === state.cult.realm);
+  return text.replaceAll('{realm}', realm?.name ?? '').replaceAll('{stage}', realm?.stages[state.cult.stage] ?? '');
+};
+
+/**
+ * Step into a realm at its first stage. Lifespan grows by the gap between the
+ * realms' base lifespans (plus variance), scaled by lifespan hooks; hooks that
+ * stop at this realm (activeUntil) give back what they took.
+ */
+export function enterRealm(state: GameState, content: Content, realmId: string, rng: Rng): GameState {
+  const prev = content.balance.realms[state.cult.realm];
+  const next = content.balance.realms[realmId];
+  const mortal = content.balance.lifespan.mortalBase;
+  const prevBase = prev?.lifespan ?? mortal;
+  const variance = next?.lifespanVariance ?? 0;
+  const gain = Math.max(0, (next?.lifespan ?? mortal) - prevBase) + rng.int(-variance, variance);
+  const moved: GameState = { ...state, cult: { ...state.cult, realm: realmId, stage: 0, progress: 0 } };
+
+  let lifespan = state.cult.lifespan + Math.round(gain * Math.max(0, 1 + hookSum(state, content, 'lifespanPct')));
+  for (const e of lifeHooks(state, content)) {
+    if (e.hook === 'lifespanPct' && e.add !== undefined && e.activeUntil && hookActive(e, state, content) && !hookActive(e, moved, content)) {
+      lifespan = Math.round(lifespan / Math.max(0.05, 1 + e.add));
+    }
+  }
+  return { ...moved, cult: { ...moved.cult, lifespan: Math.max(state.character.age + 1, lifespan) } };
+}
+
+/** First steps after the root test: a root (not "none") starts at Luyện Khí 1. */
+export function startCultivating(state: GameState, content: Content): { state: GameState; line: LogLine | null } {
+  const root = state.cult.root;
+  if (!root || state.cult.realm !== 'pham_nhan' || (content.balance.roots.gradeSpeed[root.grade] ?? 0) <= 0) return { state, line: null };
+  const first = content.cultivation.realms.realms[1];
+  if (!first) return { state, line: null };
+  const rng = Rng.fromState(state.rng);
+  const next = enterRealm(state, content, first.id, rng);
+  const line: LogLine = { text: fillRealm(content.cultivation.realms.texts.start, next, content), tone: 'good' };
+  return { state: { ...next, rng: rng.getState(), log: pushLine(next.log, line) }, line };
+}
+
+function pushLine(log: GameState['log'], line: LogLine): GameState['log'] {
+  const out = log.slice();
+  const last = out[out.length - 1];
+  if (last) out[out.length - 1] = { ...last, lines: [...last.lines, line] };
+  return out;
+}
+
+/** One year of cultivation: fill the bar; a full bar tries the next stage (only inside a realm). */
+export function cultivateYear(state: GameState, content: Content): GameState {
+  if (!state.alive || state.cult.realm === 'pham_nhan' || !state.cult.root) return state;
+  const texts = content.cultivation.realms.texts;
+  const cfg = content.balance.cultivation.minorFailure;
+  const realm = content.cultivation.realms.realms.find((r) => r.id === state.cult.realm);
+  if (!realm) return state;
+  const rng = Rng.fromState(state.rng);
+  let s = state;
+  let log = s.log;
+
+  if (s.cult.injuredUntil !== null && s.character.age >= s.cult.injuredUntil) {
+    s = { ...s, cult: { ...s.cult, injuredUntil: null } };
+    log = pushLine(log, { text: texts.injuryHealed, tone: 'good' });
+  }
+
+  const wasFull = s.cult.progress >= 100;
+  const progress = Math.min(100, s.cult.progress + yearlyGain(s, content));
+  s = { ...s, cult: { ...s.cult, progress } };
+  const lastStage = s.cult.stage >= realm.stages.length - 1;
+
+  if (progress >= 100 && lastStage) {
+    // Peak of the realm: waits for the big breakthrough (task 2.6). Say it once.
+    if (!wasFull) log = pushLine(log, { text: fillRealm(texts.peak, s, content), tone: 'good' });
+  } else if (progress >= 100) {
+    const base = s.cult.realm === 'luyen_khi'
+      ? content.balance.realmStages.luyenKhiLevelUpChance
+      : content.balance.realmStages.minorStageChance;
+    const key = `${s.cult.realm}:${s.cult.stage}`;
+    if (rng.chance(breakthroughPct(s, content, base * 100, false) / 100)) {
+      s = { ...s, cult: { ...s.cult, stage: s.cult.stage + 1, progress: 0 } };
+      log = pushLine(log, { text: fillRealm(rng.pick(texts.stageUp), s, content), tone: 'good' });
+    } else {
+      const fails = { ...s.cult.fails, [key]: (s.cult.fails[key] ?? 0) + 1 };
+      const kind = rng.weighted(['lose', 'injury', 'lifespan'] as const, (k) => cfg.weights[k]);
+      if (kind === 'lose') {
+        s = { ...s, cult: { ...s.cult, fails, progress: Math.max(0, 100 - cfg.loseProgress) } };
+        log = pushLine(log, { text: texts.failLose, tone: 'bad' });
+      } else if (kind === 'injury') {
+        // Bar stays full: it tries again next year, harder (fail penalty).
+        s = {
+          ...s,
+          stats: { ...s.stats, health: clamp(s.stats.health + cfg.injuryHealth) },
+          cult: { ...s.cult, fails, injuredUntil: s.character.age + cfg.injuryYears },
+        };
+        log = pushLine(log, { text: texts.failInjury, tone: 'bad' });
+      } else {
+        const lifespan = Math.max(s.character.age + 1, Math.round(s.cult.lifespan * (1 - cfg.lifespanLossPct / 100)));
+        s = { ...s, cult: { ...s.cult, fails, lifespan } };
+        log = pushLine(log, { text: texts.failLifespan, tone: 'bad' });
+      }
+    }
+  }
+  return { ...s, rng: rng.getState(), log };
 }
