@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
+import { FamilyPanel } from '../components/FamilyPanel';
 import { EventPopup, type PopupResult } from '../components/EventPopup';
 import { Meter } from '../components/Meter';
 import { ThemeToggle } from '../components/ThemeToggle';
@@ -24,18 +25,20 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心'],
 ] as const;
 
-export function MainScreen({ state, content, onAdvance, onChoose, onNewLife, theme, onToggleTheme }: {
+export function MainScreen({ state, content, onAdvance, onChoose, onChat, onNewLife, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   onAdvance: () => void;
   /** Returns the outcome to show on the card. */
   onChoose: (index: number) => PopupResult;
+  onChat: (relativeId: string) => void;
   onNewLife: () => void;
   theme: ThemePref;
   onToggleTheme: () => void;
 }) {
   const [profileOpen, setProfileOpen] = useState(false);
   const [result, setResult] = useState<PopupResult | null>(null);
+  const [familyOpen, setFamilyOpen] = useState(false);
   const logRef = useRef<HTMLElement>(null);
   const { character: c, stats, cult, money } = state;
   const origin = content.origins.find((o) => o.id === c.originId);
@@ -44,8 +47,9 @@ export function MainScreen({ state, content, onAdvance, onChoose, onNewLife, the
     logRef.current?.scrollTo({ top: logRef.current.scrollHeight, behavior: 'smooth' });
   }, [state.log.length]);
 
+  const dockActions: Record<string, () => void> = { bonds: () => setFamilyOpen(true) };
   const dockItem = (t: { id: string; glyph: string; label: string }) => (
-    <button class="dock-item" key={t.id} title="Sắp có">
+    <button class="dock-item" key={t.id} title={dockActions[t.id] ? t.label : 'Sắp có'} onClick={dockActions[t.id]}>
       <span class="glyph" aria-hidden="true">{t.glyph}</span>
       <span>{t.label}</span>
     </button>
@@ -101,6 +105,8 @@ export function MainScreen({ state, content, onAdvance, onChoose, onNewLife, the
 
       <EventPopup state={state} content={content} result={result}
         onChoose={(i) => setResult(onChoose(i))} onClose={() => setResult(null)} />
+
+      {familyOpen && <FamilyPanel state={state} onChat={onChat} onClose={() => setFamilyOpen(false)} />}
 
       {profileOpen && (
         <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Nhân vật" onClick={(e) => e.target === e.currentTarget && setProfileOpen(false)}>

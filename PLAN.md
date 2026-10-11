@@ -267,7 +267,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 1.4 | [x] Màn chính: thanh chỉ số trên, nhật ký cuộn, nút **Qua một năm**, thanh tab | `screens/Main.tsx`, `components/*` |
 | 1.5 | [x] EventEngine lõi: lọc điều kiện, rút trọng số, áp hiệu ứng, thay biến văn bản, popup lựa chọn | `systems/events/*`, `components/EventPopup.tsx` |
 | 1.6 | [x] ✍️ Soạn ~20 sự kiện phàm nhân (tuổi thơ, đi học, làm việc, hài hước, tai nạn) | `content/worlds/thuong_lan/events/childhood.json`, `study.json`, `work.json`, `funny.json`, `accident.json` |
-| 1.7 | [ ] Cha mẹ, anh chị em cơ bản (thiện cảm, già và mất theo thời gian) | `systems/relationships.ts` |
+| 1.7 | [x] Cha mẹ, anh chị em cơ bản (thiện cảm, già và mất theo thời gian) | `systems/relationships.ts` |
 | 1.8 | [ ] Lão hóa, bệnh, chết già; màn tổng kết đời đơn giản | `systems/time.ts`, `screens/Death.tsx` |
 | 1.9 | [ ] SaveSystem: 3 slot, tự lưu mỗi năm, xuất/nhập file, cảnh báo ghi đè | `systems/save.ts`, `screens/Settings.tsx` |
 | 1.10 | [ ] ✍️ Glossary + tooltip (chạm vào thuật ngữ gạch chân để xem giải thích) | `content/glossary.json`, `components/Tooltip.tsx` |

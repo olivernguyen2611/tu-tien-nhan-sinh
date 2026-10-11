@@ -6,6 +6,11 @@ const balance = {
   events: { popupChanceLowRealm: 0.2, popupChanceHighRealm: 0.1, logLineChance: 0.6, check: { base: 0.5, perPoint: 0.015, min: 0.05, max: 0.95 } },
   traits: { slots: 3, rerolls: 3, badLuckChance: 0.12, rarityWeights: { pham: 45 } },
   character: { mortalStatRange: [30, 80], aptitudeRange: [10, 90], aptitudeRolls: 2 },
+  family: {
+    fatherAge: [20, 35], motherAge: [17, 30], affinityStart: [55, 85], olderSiblings: [0, 2], olderSiblingGap: [2, 6],
+    youngerSiblingChance: 0.12, motherMinAgeForChild: 16, motherMaxAgeForChild: 40, maxSiblings: 4, affinityDecay: 1, deathHappiness: -20,
+    chatAffinity: [2, 6], chatHappiness: 1,
+  },
   lifespan: { mortalBase: 70, mortalVariance: 10, healthAdjustMax: 10 },
 };
 

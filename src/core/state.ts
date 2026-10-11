@@ -4,6 +4,7 @@ import { Rng } from './rng';
 import { APTITUDES, MORTAL_STATS } from './schemas';
 import type { GameState, Gender } from './types';
 import { rollYearEvent } from '../systems/events/engine';
+import { ageFamily, createFamily } from '../systems/relationships';
 
 export interface NewLifeInput {
   seed: string;
@@ -53,6 +54,8 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
   const healthShift = Math.round(((stats.health - 50) / 50) * life.healthAdjustMax);
   const lifespan = life.mortalBase + rng.int(-life.mortalVariance, life.mortalVariance) + healthShift;
 
+  const family = createFamily(rng, content, name.split(' ')[0], !!origin.noParents);
+
   const state: GameState = {
     version: 1,
     worldId: content.world.id,
@@ -68,6 +71,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     flags: origin.noParents ? { no_parents: true } : {},
     destiny: { offered: [], rerollsLeft: content.balance.traits.rerolls, confirmed: false },
     traits: [],
+    family,
     events: { pending: null, history: {}, followUps: [] },
     log: [],
   };
@@ -75,15 +79,19 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
   return state;
 }
 
-/** Placeholder year step until TimeSystem and events land (tasks 1.5, 1.8). */
+const withYear = (s: GameState): GameState => ({ ...s, log: [...s.log, { age: s.character.age, lines: [] }] });
+
 /** One year passes; at most one event is rolled for the player to answer. */
 export function advanceYear(state: GameState, content: Content): GameState {
   if (!state.alive || state.events.pending) return state;
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const next = rollYearEvent(aged, content);
-  const line = next.events.pending
-    ? []
-    : [{ text: 'Một năm bình lặng trôi qua.', tone: 'normal' as const }];
-  return { ...next, log: [...next.log, { age, lines: line }] };
+  const next = rollYearEvent(ageFamily(withYear(aged), content), content);
+  // The year's log block exists before family news and the event are added to it.
+  const log = next.log.slice();
+  const block = log[log.length - 1];
+  if (!next.events.pending && block.lines.length === 0) {
+    log[log.length - 1] = { ...block, lines: [{ text: 'Một năm bình lặng trôi qua.', tone: 'normal' }] };
+  }
+  return { ...next, log };
 }

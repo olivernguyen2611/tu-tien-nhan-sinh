@@ -271,6 +271,23 @@ export const BalanceSchema = z
         aptitudeRolls: z.number().int().min(1),
       })
       .strict(),
+    family: z
+      .object({
+        fatherAge: range,
+        motherAge: range,
+        affinityStart: range,
+        olderSiblings: range,
+        olderSiblingGap: range,
+        youngerSiblingChance: probability,
+        motherMinAgeForChild: z.number().int(),
+        motherMaxAgeForChild: z.number().int(),
+        maxSiblings: z.number().int().min(0),
+        affinityDecay: z.number().min(0),
+        deathHappiness: z.number(),
+        chatAffinity: range,
+        chatHappiness: z.number(),
+      })
+      .strict(),
     lifespan: z
       .object({
         mortalBase: z.number().int().min(1),

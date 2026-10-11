@@ -519,3 +519,16 @@ button { font: inherit; color: inherit; }
 .event-card .outcome.bad { color: var(--bad); }
 .event-card .outcome.rare { color: var(--rare); }
 .age-btn:disabled { opacity: 0.55; cursor: default; }
+
+/* Family panel */
+.family-list { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 8px; max-height: 55dvh; overflow-y: auto; }
+.relative { padding: 8px 10px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.relative.dead { opacity: 0.6; }
+.relative-head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.relative-head b { font-family: var(--font-story); }
+.relation { font-size: 0.75rem; font-weight: 700; color: var(--jade); text-transform: uppercase; letter-spacing: 0.04em; }
+.relative-age { margin-left: auto; font-size: 0.75rem; color: var(--muted); }
+.relative-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; margin-top: 6px; }
+.chip-btn { min-height: 34px; padding: 0 12px; border: 1px solid var(--jade); border-radius: 999px; background: none; color: var(--jade); font-weight: 600; cursor: pointer; white-space: nowrap; }
+.chip-btn:disabled { opacity: 0.5; cursor: default; }
+.relative-row .label { display: flex; justify-content: space-between; gap: 8px; font-size: 0.75rem; color: var(--muted); white-space: nowrap; }
