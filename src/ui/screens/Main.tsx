@@ -7,6 +7,9 @@ import { activeExtremes, extremeWarnings } from '../../systems/extremes';
 import { DevPanel } from '../components/DevPanel';
 import { BagPanel } from '../components/BagPanel';
 import { MarketPanel, type MarketAction } from '../components/MarketPanel';
+import { CombatPanel } from '../components/CombatPanel';
+import type { CombatAction } from '../../core/schemas';
+import type { Aftermath } from '../../systems/combat';
 import { FamilyPanel } from '../components/FamilyPanel';
 import { CultivatePanel } from '../components/CultivatePanel';
 import { SectPanel, type SectAction } from '../components/SectPanel';
@@ -39,7 +42,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onUseItem, onMarket, onBreakthrough, onPractice, onJoinCareer, onLearn, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onUseItem, onMarket, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -52,6 +55,9 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onFamilyAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
   /** Use one item from the bag. */
   onUseItem: (itemId: string) => { text: string; tone: Tone; changes: string };
+  /** One round of the fight in progress, and the choice after winning (task 3.3). */
+  onCombat: (action: CombatAction, itemId?: string) => void;
+  onSettle: (choice: Aftermath) => void;
   /** Buy, sell or bargain at a market (Phường thị). */
   onMarket: (marketId: string, action: MarketAction) => { text: string; tone: Tone };
   /** Practise a craft from the "Tu luyện" sheet. */
@@ -156,12 +162,12 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         {DOCK_LEFT.map(dockItem)}
         {state.alive ? (
           <div class="age-wrap">
-            <button class="age-btn" onClick={onAdvance} aria-label="Qua một năm" disabled={!!state.events.pending || !!state.fate || !!result}>
+            <button class="age-btn" onClick={onAdvance} aria-label="Qua một năm" disabled={!!state.events.pending || !!state.fate || !!state.combat || !!result}>
               <span class="big">+1</span>
               <span class="small">năm</span>
             </button>
             <button class="ff-btn" onClick={onFastForward} aria-label="Tua nhanh tới khi có chuyện" title="Tua nhanh tới khi có chuyện"
-              disabled={!!state.events.pending || !!state.fate || !!result}>»</button>
+              disabled={!!state.events.pending || !!state.fate || !!state.combat || !!result}>»</button>
           </div>
         ) : (
           <button class="age-btn ended" onClick={onSummary} aria-label="Xem tổng kết đời người" disabled={!!result}>
@@ -195,6 +201,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         <FatePopup state={state} content={content} unlimited={!!dev}
           onChoose={(id) => onFate({ choose: id })} onReroll={() => onFate({ reroll: true })} />
       )}
+
+      {state.combat && !result && <CombatPanel state={state} content={content} onAct={onCombat} onSettle={onSettle} />}
 
       {sectOpen && <SectPanel state={state} content={content} onAction={onSectAction} onClose={() => setSectOpen(false)} />}
 

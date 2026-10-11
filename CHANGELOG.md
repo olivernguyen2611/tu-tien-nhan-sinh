@@ -2,6 +2,28 @@
 
 ## [Chưa phát hành]
 
+### Task 3.3 — Giao chiến (2026-10-11)
+- **Chiến lực** theo K.4.1: nền cảnh giới × tầng × Căn cốt × phẩm công pháp × đạo thống × (1 + pháp bảo, thiên phú, con đường). Chênh một đại cảnh giới gần như thua chắc.
+- **Trận đánh** tối đa 3 hiệp, ai thắng 2 hiệp trước là thắng. Mỗi hiệp chọn 1 trong 5 hành động, có hiện tỉ lệ:
+  - Toàn lực;
+  - Pháp bảo / Phù (đốt một lá bùa trong túi);
+  - Thủ;
+  - Bỏ chạy (so Tốc);
+  - Cầu xin (theo Mị lực; ma tu ít khi tha).
+- Thắng: chọn tha (nhân quả +), cướp đồ (bạc hoặc linh thạch), giết (nhân quả −; Phật tu mất Đạo tâm).
+- Thua: theo ý đồ đối phương:
+  - dạy dỗ thì bị thương;
+  - cướp thì mất 30% tiền và một món đồ, trừ khi có túi trữ vật;
+  - muốn giết thì chết, trừ khi Hộ Thân Ngọc Bội vỡ thay hoặc Khí vận cho thoát.
+- Tử trận có lời kết riêng.
+- Hệ khắc hệ +20% (con đường Pháp +35%, bị khắc −25%). Kiếm tu mạnh hiệp đầu. Thể tu chịu đòn tốt. Thuật tu dùng bùa mạnh gấp đôi.
+- Đã có tác dụng: các móc `injuryReduce`, `lifesteal`, `speed`, `escapeChance`, `combatPower.vsHigherRealm`, `path.<x>.power`, `artifactPct`, `lootPct`.
+- Đan uống trước trận (Huyết Khí Hoàn) có tác dụng cả trận kế tiếp. Bùa đốt trong trận chỉ có tác dụng một hiệp.
+- Sự kiện gây ra trận đánh bằng `fight` trong kết quả, gồm đối thủ, kết quả thắng/thua/chạy. Validator kiểm tra cảnh giới, hệ, con đường, đạo thống của đối thủ.
+- Developer mode có thêm mục "Đánh thử", với đối thủ yếu hơn, ngang sức hoặc mạnh hơn.
+- Văn bản trận đánh ở `content/combat.json`. Số liệu ở `balance.combat`.
+- Con đường chính tạm suy ra từ thiên phú. Task 3.8 sẽ thay bằng tư chất con đường thật.
+
 ### Task 3.2 — Phường thị (2026-10-11)
 - Nút **遊 Khám phá** mở bảng Phường thị: chọn chợ, xem hàng và giá, mua, bán lại đồ trong túi.
 - 3 chợ ở `content/worlds/thuong_lan/markets.json`:

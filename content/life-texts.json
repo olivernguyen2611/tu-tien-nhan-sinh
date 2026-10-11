@@ -31,6 +31,10 @@
   "deathOrdeal": [
     "Năm {age} tuổi, thân phàm không chịu nổi sức mạnh của kỳ vật. Kinh mạch đứt từng khúc, ngươi không qua khỏi."
   ],
+  "deathCombat": [
+    "Năm {age} tuổi, ngươi ngã xuống giữa trận. Máu thấm vào đất, người qua đường không ai biết tên.",
+    "Năm {age} tuổi, một chiêu cuối cùng không đỡ nổi. Giang hồ bớt đi một người."
+  ],
   "deathIllness": [
     "Năm {age} tuổi, bệnh nặng không qua khỏi, bạn trút hơi thở cuối cùng.",
     "Năm {age} tuổi, thân thể suy kiệt, thuốc thang vô hiệu, bạn lìa trần.",

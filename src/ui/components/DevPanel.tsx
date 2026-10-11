@@ -3,7 +3,7 @@ import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
 import { STAT_LABELS } from '../../systems/deltas';
-import { DEV_STATS, devAddKarma, devAddMoney, devAddStat, devHeal, devSkipYears, devTriggerEvent } from '../../systems/dev';
+import { DEV_STATS, devAddKarma, devAddMoney, devAddStat, devHeal, devSkipYears, devStartFight, devTriggerEvent } from '../../systems/dev';
 
 export function DevPanel({ state, content, onChange, onDisable, onClose }: {
   state: GameState;
@@ -48,6 +48,13 @@ export function DevPanel({ state, content, onChange, onDisable, onClose }: {
           <button class="chip-btn" disabled={!live} onClick={() => onChange(devSkipYears(state, content, 1))}>Qua 1 năm</button>
           <button class="chip-btn" disabled={!live} onClick={() => onChange(devSkipYears(state, content, 10))}>Qua 10 năm</button>
           <button class="chip-btn" disabled={!live} onClick={() => onChange(devHeal(state))}>Hồi đầy sức khỏe</button>
+        </div>
+
+        <h3>Đánh thử</h3>
+        <div class="action-chips">
+          <button class="chip-btn" disabled={!live || !!state.combat} onClick={() => { onChange(devStartFight(state, content, 'below', 'rob')); onClose(); }}>Yếu hơn</button>
+          <button class="chip-btn" disabled={!live || !!state.combat} onClick={() => { onChange(devStartFight(state, content, 'same', 'teach')); onClose(); }}>Ngang sức</button>
+          <button class="chip-btn" disabled={!live || !!state.combat} onClick={() => { onChange(devStartFight(state, content, 'above', 'kill')); onClose(); }}>Mạnh hơn (muốn giết)</button>
         </div>
 
         <h3>Gọi sự kiện</h3>

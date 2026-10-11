@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MarketFileSchema, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MarketFileSchema, CombatTextsSchema, LINEAGES, type Fight, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World } from './schemas';
 
 export interface Problem {
   file: string;
@@ -36,6 +36,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'techniques.json') return TechniqueFileSchema;
     if (rest === 'fate-talents.json') return FateTalentFileSchema;
     if (rest === 'items.json') return ItemFileSchema;
+    if (rest === 'combat.json') return CombatTextsSchema;
     return null;
   }
   // Belongs to one world.
@@ -257,9 +258,12 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
         // Owner rule: every outcome changes at least one of the 8 stats (money, contribution, karma and flags do not count).
         // A root test or a granted root changes the character more than any stat, so it counts too.
         const fx = outcome?.effects;
-        if (fx && !fx.testRoot && !fx.grantRoot && !Object.entries(fx).some(([k, v]) => k.startsWith('stat.') && typeof v === 'number' && v !== 0)) {
+        const changesStat = (e: typeof fx) => !!e && Object.entries(e).some(([k, v]) => k.startsWith('stat.') && typeof v === 'number' && v !== 0);
+        // A fight always costs or gives something; its win and lose outcomes are checked instead.
+        if (fx && !fx.testRoot && !fx.grantRoot && !outcome?.fight && !changesStat(fx)) {
           problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: kết quả không đổi chỉ số nào (mỗi lựa chọn phải ảnh hưởng ít nhất một trong 8 chỉ số)` });
         }
+        if (outcome?.fight) problems.push(...checkFight(file, `${where}, lựa chọn ${i + 1}`, outcome.fight, parsedShared, itemIds, changesStat));
         for (const it of [...(fx?.addItems ?? []), ...(fx?.removeItems ?? [])]) {
           if (itemIds && !itemIds.includes(it)) problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: vật phẩm không tồn tại "${it}"` });
         }
@@ -425,6 +429,27 @@ function checkTechniquesAndSects(
     if (t.balance && sects.length > 0 && t.balance.sects.rankStipendMul.length < Math.max(...sects.map((s) => s.ranks.length))) {
       out.push({ file: bal, level: 'error', message: 'sects.rankStipendMul ngắn hơn số cấp bậc tông môn' });
     }
+  }
+  return out;
+}
+
+/** Task 3.3: a fight's foe must name real realms, elements, paths and lineages; its endings must change a stat. */
+function checkFight(
+  file: string, where: string, fight: Fight,
+  t: { realms?: RealmsFile; roots?: RootsFile; aptitudes?: AptitudesFile },
+  itemIds: string[] | null, changesStat: (e: Fight['win']['effects']) => boolean,
+): Problem[] {
+  const out: Problem[] = [];
+  const err = (message: string) => out.push({ file, level: 'error', message: `${where}: ${message}` });
+  const foe = fight.foe;
+  if (t.realms && !['same', 'above', 'below', ...t.realms.realms.map((r) => r.id)].includes(foe.realm)) err(`cảnh giới đối thủ không tồn tại "${foe.realm}"`);
+  if (t.roots && foe.element !== null && foe.element !== 'random' && !t.roots.elements.some((e) => e.id === foe.element)) err(`hệ đối thủ không tồn tại "${foe.element}"`);
+  if (t.aptitudes && foe.path && !t.aptitudes.paths.some((p) => p.id === foe.path)) err(`con đường đối thủ không tồn tại "${foe.path}"`);
+  if (!(LINEAGES as readonly string[]).includes(foe.lineage)) err(`đạo thống đối thủ không tồn tại "${foe.lineage}"`);
+  for (const [name, o] of [['thắng', fight.win], ['thua', fight.lose], ['chạy', fight.fled]] as const) {
+    if (!o) continue;
+    if (!changesStat(o.effects)) err(`kết quả ${name} không đổi chỉ số nào`);
+    for (const it of [...o.effects.addItems, ...o.effects.removeItems]) if (itemIds && !itemIds.includes(it)) err(`vật phẩm không tồn tại "${it}"`);
   }
   return out;
 }

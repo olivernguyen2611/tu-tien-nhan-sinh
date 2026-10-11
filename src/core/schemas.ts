@@ -122,10 +122,46 @@ export const EffectsSchema = z
     }
   });
 
+/** Task 3.3: who the player fights. Power is built like the player's (K.4.1). */
+export const FoeSpecSchema = z
+  .object({
+    name: z.string().min(1),
+    /** Realm id, or relative to the player: "same", "above" (one realm up), "below". */
+    realm: z.string().default('same'),
+    /** Stage within the realm; default the player's stage when "same", else 0. */
+    stage: z.number().int().min(0).optional(),
+    powerMul: z.number().positive().default(1),
+    /** Element id, "random", or none. */
+    element: z.string().nullable().default(null),
+    /** Combat path id for the flavour of the foe's blows. */
+    path: id.optional(),
+    lineage: id.default('tien'),
+    /** What the foe wants: dạy dỗ, cướp, giết. Decides what losing costs. */
+    intent: z.enum(['teach', 'rob', 'kill']),
+    /** Base chance the foe accepts a plea (balance.combat.pleaIntent when left out). */
+    mercy: z.number().min(0).max(1).optional(),
+  })
+  .strict();
+
+const PlainOutcomeSchema = z.object({ text: z.string().min(1), effects: EffectsSchema.default({}) }).strict();
+
+/** A 3-round fight started by an event choice; its win/lose outcomes apply when it ends. */
+export const FightSchema = z
+  .object({
+    foe: FoeSpecSchema,
+    win: PlainOutcomeSchema,
+    lose: PlainOutcomeSchema,
+    /** When the player gets away (default: no further effect). */
+    fled: PlainOutcomeSchema.optional(),
+  })
+  .strict();
+
 export const OutcomeSchema = z
   .object({
     text: z.string().min(1),
     effects: EffectsSchema.default({}),
+    /** Task 3.3: this outcome starts a fight. */
+    fight: FightSchema.optional(),
   })
   .strict();
 
@@ -262,6 +298,8 @@ const ADD_HOOK = new RegExp(
       'npcAffinityStart', 'faction\\.(chinh|ma|tan_tu|yeu|trieu_dinh|giang_ho)\\.reputation', 'karmaShift',
       'priceDiscount', 'incomePct', 'lootPct',
       'trigger\\.cheatDeath',
+      // Task 3.3: a storage bag keeps the goods when a robber wins.
+      'keepItemsOnLoss',
       // Stat extremes (stat-extremes-approved.md): yearly drift, floors, risk.
       `statPerYear\\.(${[...MORTAL_STATS, ...APTITUDES].join('|')})`,
       `statFloor\\.(${[...MORTAL_STATS, ...APTITUDES].join('|')})`,
@@ -451,6 +489,63 @@ export const BalanceSchema = z
         milestoneAges: z.array(z.number().int().min(1)),
         milestoneHealth: z.number(),
         milestoneCharm: z.number(),
+      })
+      .strict(),
+    /** Task 3.3: fights (PLAN.md K.4). */
+    combat: z
+      .object({
+        /** Power × (1 + stagePct × stage). */
+        stagePct: z.number().min(0),
+        /** Power × (physiqueBase + căn cốt / physiqueDivisor). */
+        physiqueBase: z.number().min(0),
+        physiqueDivisor: z.number().positive(),
+        /** Power multiplier by lineage (đạo thống). */
+        lineagePower: z.record(z.number().positive()),
+        /** Round win chance A^k / (A^k + B^k). */
+        k: z.number().positive(),
+        /** Rounds to win the fight (of 3). */
+        winRounds: z.number().int().min(1),
+        allOutMul: z.number().positive(),
+        allOutInjuryMul: z.number().min(0),
+        defendMul: z.number().positive(),
+        defendInjuryMul: z.number().min(0),
+        /** Health lost when a round is lost. */
+        roundInjury: z.tuple([z.number().int().min(0), z.number().int().min(0)]),
+        /** Speed = speedBase × (1 + realm index) × (1 + path + hooks). */
+        speedBase: z.number().positive(),
+        pathSpeed: z.record(z.number()),
+        fleeMin: probability,
+        fleeMax: probability,
+        /** Plea chance = foe mercy + (charm − 50) × pleaPerCharm, ma đạo foes less. */
+        pleaIntent: z.object({ teach: probability, rob: probability, kill: probability }).strict(),
+        pleaPerCharm: z.number(),
+        pleaMaPenalty: z.number(),
+        pleaMin: probability,
+        pleaMax: probability,
+        /** Foe power × a random factor in this range. */
+        foeVariance: z.tuple([z.number().positive(), z.number().positive()]),
+        /** Losing: lessons hurt, robbers take a share of money and an item, killers kill unless luck saves you. */
+        lose: z
+          .object({
+            teachHealth: z.number(),
+            robShare: probability,
+            robItems: z.number().int().min(0),
+            killEscapeBase: probability,
+            killEscapePerLuck: z.number().min(0),
+            killEscapeHealth: z.number(),
+          })
+          .strict(),
+        /** Winning: what each choice costs or gives. */
+        win: z
+          .object({
+            /** Loot = foe power × this (silver from a mortal foe, spirit stones from a cultivator). */
+            lootStonesPerPower: z.number().min(0),
+            lootSilverPerPower: z.number().min(0),
+            spareKarma: z.number(),
+            killKarma: z.number(),
+            killDaoHeartPhat: z.number(),
+          })
+          .strict(),
       })
       .strict(),
     /** Task 3.2: buying, selling, bargaining. */
@@ -769,6 +864,8 @@ export const LifeTextsSchema = z
     deathBreakthrough: lines,
     /** Died taking a heaven-and-earth treasure (task 2.11); {age}. */
     deathOrdeal: lines,
+    /** Task 3.3: killed in a fight. */
+    deathCombat: lines,
     deathIllness: lines,
     epitaph: z.object({ good: lines, bad: lines, plain: lines }).strict(),
   })
@@ -1129,7 +1226,7 @@ export type Market = z.infer<typeof MarketFileSchema>[number];
 
 /** What using an item does right away (task 3.1). */
 const ITEM_USE_HOOK = new RegExp(
-  `^(stat\\.(${[...MORTAL_STATS, ...APTITUDES].join('|')})|cultivationProgress|breakthroughNext|lifespanYears|noAgingCharm|clearFlag\\.[a-z0-9_]+|combatPowerNext)$`,
+  `^(stat\\.(${[...MORTAL_STATS, ...APTITUDES].join('|')})|cultivationProgress|breakthroughNext|lifespanYears|noAgingCharm|clearFlag\\.[a-z0-9_]+|combatPowerNext|escapeNext)$`,
 );
 const ItemUseEffectSchema = z
   .object({ hook: z.string().regex(ITEM_USE_HOOK, 'móc dùng vật phẩm không hợp lệ'), add: z.number().optional() })
@@ -1173,3 +1270,35 @@ export const ItemFileSchema = z.array(
     .strict(),
 );
 export type Item = z.infer<typeof ItemFileSchema>[number];
+
+/** content/combat.json: fight texts (task 3.3). {foe} = foe name, {name} = player. */
+const pool = z.array(z.string().min(1)).min(1);
+export const COMBAT_ACTIONS = ['all_out', 'item', 'defend', 'flee', 'plead'] as const;
+const actionText = z.object({ name: z.string().min(1), hint: z.string().min(1) }).strict();
+export const CombatTextsSchema = z
+  .object({
+    start: z.string().min(1),
+    intent: z.object({ teach: z.string().min(1), rob: z.string().min(1), kill: z.string().min(1) }).strict(),
+    actions: z.object(Object.fromEntries(COMBAT_ACTIONS.map((a) => [a, actionText])) as Record<CombatAction, typeof actionText>).strict(),
+    /** Round won, by the player's path ("none" when no path yet). */
+    hit: z.record(pool),
+    /** Extra words when the player's element beats the foe's. */
+    counter: pool,
+    /** Round lost. */
+    miss: pool,
+    defendHit: pool,
+    defendMiss: pool,
+    itemHit: pool,
+    fleeOk: pool,
+    fleeFail: pool,
+    pleaOk: z.object({ teach: pool, rob: pool, kill: pool }).strict(),
+    pleaFail: pool,
+    won: z.string().min(1),
+    after: z.object({ spare: z.string().min(1), loot: z.string().min(1), kill: z.string().min(1) }).strict(),
+    lost: z.object({ teach: z.string().min(1), rob: z.string().min(1), kill: z.string().min(1), killEscape: z.string().min(1) }).strict(),
+  })
+  .strict();
+export type CombatTexts = z.infer<typeof CombatTextsSchema>;
+export type FoeSpec = z.infer<typeof FoeSpecSchema>;
+export type Fight = z.infer<typeof FightSchema>;
+export type CombatAction = (typeof COMBAT_ACTIONS)[number];

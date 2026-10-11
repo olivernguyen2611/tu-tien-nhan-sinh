@@ -1,0 +1,90 @@
+{
+  "start": "{foe} chặn đường. {intent}",
+  "intent": {
+    "teach": "Xem ra chỉ muốn dạy cho ngươi một bài học.",
+    "rob": "Mắt y cứ dán vào túi đồ của ngươi.",
+    "kill": "Sát khí lạnh tới tận gáy. Kẻ này muốn lấy mạng."
+  },
+  "actions": {
+    "all_out": { "name": "Toàn lực", "hint": "Dễ thắng hiệp hơn, thua thì bị thương nặng hơn." },
+    "item": { "name": "Pháp bảo / Phù", "hint": "Đốt một món trong túi để hiệp này mạnh hẳn lên." },
+    "defend": { "name": "Thủ", "hint": "Khó thắng hơn, nhưng thua cũng nhẹ." },
+    "flee": { "name": "Bỏ chạy", "hint": "So tốc độ hai bên. Chạy được là hết trận." },
+    "plead": { "name": "Cầu xin", "hint": "Tùy Mị lực và lòng dạ đối phương. Ma tu ít khi tha." }
+  },
+  "hit": {
+    "sword": [
+      "Kiếm quang lóe lên một đường, {foe} lùi ba bước, vạt áo rách toạc.",
+      "Một kiếm đâm thẳng, nhanh tới mức {foe} chỉ kịp nghe tiếng gió."
+    ],
+    "body": [
+      "Ngươi đón đòn bằng ngực, rồi đáp lại một quyền. {foe} bay ra như bao gạo.",
+      "Hai nắm đấm va nhau. Người lùi lại là {foe}."
+    ],
+    "spell": [
+      "Pháp quyết vừa thành, lửa sấm đổ ập xuống đầu {foe}.",
+      "Ngươi bấm tay niệm chú, đất dưới chân {foe} sụt xuống một thước."
+    ],
+    "weapon": [
+      "Đao thế nặng như núi đổ, {foe} đỡ được nhưng tay tê dại.",
+      "Mũi thương vẽ một vòng tròn, {foe} không biết đỡ chỗ nào."
+    ],
+    "arts": [
+      "Lá bùa giấu trong tay áo nổ tung ngay trước mặt {foe}.",
+      "{foe} bước trúng trận văn ngươi vẽ từ trước, đứng khựng lại."
+    ],
+    "none": [
+      "Ngươi lao vào, đánh không theo bài bản gì, nhưng trúng.",
+      "Một cú đấm vụng về mà đúng chỗ. {foe} ôm mặt lùi lại."
+    ]
+  },
+  "counter": [
+    "Linh lực của ngươi khắc đúng hệ của y.",
+    "Đúng hệ khắc chế, một chiêu bằng hai."
+  ],
+  "miss": [
+    "{foe} lách người, phản đòn trúng vai ngươi.",
+    "Ngươi chậm một nhịp. Một chưởng của {foe} in lên ngực.",
+    "{foe} cười khẩy, một chiêu đánh bật ngươi ra xa."
+  ],
+  "defendHit": [
+    "Ngươi thủ kín như bưng, {foe} sơ hở một cái là ăn đòn.",
+    "Đỡ đủ mười chiêu, ngươi chờ được một chỗ hở và đánh trả."
+  ],
+  "defendMiss": [
+    "Ngươi chống đỡ được, chỉ bị sượt qua một vết.",
+    "{foe} đánh mạnh, nhưng ngươi đã thủ sẵn, vết thương không sâu."
+  ],
+  "itemHit": [
+    "Món đồ trong tay bùng sáng. Hiệp này ngươi mạnh hẳn lên."
+  ],
+  "fleeOk": [
+    "Ngươi quay đầu chạy thục mạng. {foe} đuổi một đoạn rồi bỏ.",
+    "Lợi dụng một khắc sơ hở, ngươi đã ở ngoài ba dặm."
+  ],
+  "fleeFail": [
+    "Chạy chưa được mười bước đã bị {foe} chặn đầu, ăn thêm một đòn.",
+    "{foe} nhanh hơn ngươi tưởng. Bỏ chạy thất bại, lưng lãnh một chưởng."
+  ],
+  "pleaOk": {
+    "teach": ["{foe} hừ một tiếng: \"Biết điều thì tốt.\" rồi bỏ đi."],
+    "rob": ["{foe} nhìn ngươi một lúc, phẩy tay: \"Cút.\""],
+    "kill": ["Không biết vì sao, {foe} thu chiêu: \"Hôm nay ta không muốn bẩn tay.\""]
+  },
+  "pleaFail": [
+    "{foe} không nói gì, chỉ ra tay mạnh hơn.",
+    "\"Cầu xin?\" {foe} bật cười, rồi đánh tiếp."
+  ],
+  "won": "{foe} quỳ một gối, không đứng dậy nổi. Số phận y nằm trong tay ngươi.",
+  "after": {
+    "spare": "Ngươi tha cho {foe}. Y lết đi, ngoái lại nhìn một lần.",
+    "loot": "Ngươi lột sạch túi đồ của {foe} rồi đá y ra đường.",
+    "kill": "Ngươi kết liễu {foe}. Gió thổi qua, mùi máu tanh không tan."
+  },
+  "lost": {
+    "teach": "{foe} phủi tay: \"Lần sau nhìn người mà nói chuyện.\" Ngươi nằm dưỡng thương mấy tháng.",
+    "rob": "{foe} lục túi ngươi, lấy thứ đáng giá rồi đi.",
+    "kill": "{foe} giơ tay định kết liễu.",
+    "killEscape": "May mắn thay, ngươi lăn xuống khe núi. {foe} tưởng ngươi đã chết."
+  }
+}

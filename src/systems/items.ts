@@ -97,7 +97,8 @@ function applyUseEffect(state: GameState, e: UseEffect): GameState {
     case 'breakthroughNext': return { ...state, itemUse: { ...state.itemUse, nextBreakthrough: state.itemUse.nextBreakthrough + add } };
     case 'lifespanYears': return { ...state, cult: { ...state.cult, lifespan: state.cult.lifespan + add } };
     case 'noAgingCharm': return { ...state, flags: { ...state.flags, no_aging_charm: true } };
-    case 'combatPowerNext': return state; // combat arrives with task 3.3
+    // Taken before a fight: lasts the whole next fight. Used during a fight it is the current round (combat.ts).
+    case 'combatPowerNext': return { ...state, itemUse: { ...state.itemUse, nextCombat: state.itemUse.nextCombat + add } };
     default:
       if (e.hook.startsWith('clearFlag.')) {
         const flags = { ...state.flags };

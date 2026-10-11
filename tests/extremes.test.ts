@@ -4,7 +4,7 @@ import { BalanceSchema, EventFileSchema, NamesSchema, OriginFileSchema, TraitFil
 import { LifeTextsSchema } from '../src/core/schemas';
 import lifeTexts from '../content/life-texts.json';
 import extremes from '../content/stat-extremes.json';
-import { careers, cultivation, difficulties, fateTalents, items, sectLife, sects, techniques, tutorial } from './fixtures';
+import { careers, cultivation, difficulties, fateTalents, items, sectLife, sects, techniques, tutorial, combat } from './fixtures';
 import { StatExtremesFileSchema } from '../src/core/schemas';
 import { createLife } from '../src/core/state';
 import balance from '../content/config/balance.json';
@@ -39,6 +39,7 @@ const content: Content = {
   fateTalents,
   items,
   markets: [],
+  combat,
 };
 
 import { ageExtremes, extremeHookSum, extremeWarnings } from '../src/systems/extremes';
