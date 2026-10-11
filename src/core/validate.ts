@@ -1,0 +1,90 @@
+// Cross-file checks on top of the schemas. Pure: takes parsed-JSON files keyed
+// by their path under content/, returns problems. Used by tools/validate-content.ts
+// and by the in-game loader.
+import type { ZodTypeAny } from 'zod';
+import { BalanceSchema, EventFileSchema, GlossarySchema, type GameEvent } from './schemas';
+
+export interface Problem {
+  file: string;
+  level: 'error' | 'warning';
+  message: string;
+}
+
+/** Which schema applies to which content file. */
+export function schemaFor(path: string): ZodTypeAny | null {
+  if (path === 'config/balance.json') return BalanceSchema;
+  if (path === 'glossary.json') return GlossarySchema;
+  if (/^events\/[^/]+\.json$/.test(path)) return EventFileSchema;
+  return null;
+}
+
+export function validateContent(files: Record<string, unknown>): Problem[] {
+  const problems: Problem[] = [];
+  const events: { file: string; event: GameEvent }[] = [];
+
+  for (const [file, raw] of Object.entries(files)) {
+    const schema = schemaFor(file);
+    if (!schema) {
+      problems.push({ file, level: 'warning', message: 'chưa có schema cho file này, bỏ qua' });
+      continue;
+    }
+    const parsed = schema.safeParse(raw);
+    if (!parsed.success) {
+      for (const issue of parsed.error.issues) {
+        problems.push({ file, level: 'error', message: `${issue.path.join('.') || '(gốc)'}: ${issue.message}` });
+      }
+      continue;
+    }
+    if (schema === EventFileSchema) {
+      for (const event of parsed.data as GameEvent[]) events.push({ file, event });
+    }
+  }
+
+  // Duplicate event ids across all event files.
+  const seen = new Map<string, string>();
+  for (const { file, event } of events) {
+    const prev = seen.get(event.id);
+    if (prev) problems.push({ file, level: 'error', message: `trùng id sự kiện "${event.id}" (đã có trong ${prev})` });
+    else seen.set(event.id, file);
+  }
+
+  // Collect flags that some event sets, and follow-up targets.
+  const flagsSet = new Set<string>();
+  for (const { event } of events) {
+    for (const choice of event.choices) {
+      for (const outcome of [choice.result, choice.success, choice.fail]) {
+        outcome?.effects.setFlags.forEach((f) => flagsSet.add(f));
+      }
+    }
+  }
+
+  for (const { file, event } of events) {
+    const where = `sự kiện "${event.id}"`;
+
+    // PLAN.md mục H: mature content only for adults.
+    if (event.tags.includes('mature') && (event.conditions.age?.min ?? 0) < 18) {
+      problems.push({ file, level: 'error', message: `${where} gắn tag "mature" nhưng conditions.age.min chưa ≥ 18` });
+    }
+
+    for (const flag of event.conditions.flagsAll) {
+      if (!flagsSet.has(flag)) {
+        problems.push({ file, level: 'warning', message: `${where} cần flag "${flag}" nhưng không sự kiện nào đặt flag này` });
+      }
+    }
+
+    event.choices.forEach((choice, i) => {
+      for (const outcome of [choice.result, choice.success, choice.fail]) {
+        const target = outcome?.effects.followUp?.event;
+        if (target && !seen.has(target)) {
+          problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: followUp tới sự kiện không tồn tại "${target}"` });
+        }
+        const range = outcome?.effects.followUp?.afterYears;
+        if (range && range[0] > range[1]) {
+          problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: afterYears [${range[0]}, ${range[1]}] bị ngược` });
+        }
+      }
+    });
+  }
+
+  return problems;
+}

@@ -233,7 +233,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 0.1 | [x] Khởi tạo Vite + TypeScript + Preact, cấu trúc thư mục, `CLAUDE.md`, `CHANGELOG.md` | `package.json`, `vite.config.ts`, `src/main.tsx` |
 | 0.2 | [x] GitHub Actions tự build và đưa lên GitHub Pages | `.github/workflows/deploy.yml` |
 | 0.3 | [x] RNG có seed + Vitest + test đầu tiên | `src/core/rng.ts`, `tests/rng.test.ts` |
-| 0.4 | [ ] Nạp JSON + schema Zod + `npm run validate` | `src/core/content.ts`, `tools/validate-content.ts` |
+| 0.4 | [x] Nạp JSON + schema Zod + `npm run validate` | `src/core/content.ts`, `tools/validate-content.ts` |
 | 0.5 | [ ] Theme cổ phong (giấy cũ + dark mode ngọc bích), font tiếng Việt, khung bố cục co giãn điện thoại/máy tính | `src/ui/theme.css`, `src/ui/screens/Main.tsx` |
 
 **Tiêu chí hoàn thành:** mở link GitHub Pages trên điện thoại và máy tính thấy màn hình tiêu đề "Tu Tiên Nhân Sinh" theo phong cách cổ phong, đổi được sáng/tối, không lỗi.

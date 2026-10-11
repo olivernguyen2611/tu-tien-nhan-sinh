@@ -25,6 +25,7 @@ Game mô phỏng cuộc đời tu tiên kiểu BitLife (web, Vite + TypeScript +
 - `npm run build` — kiểm tra kiểu + build ra `dist/`
 - `npm run typecheck` — chỉ kiểm tra kiểu
 - `npm test` — chạy test (Vitest)
+- `npm run validate` — kiểm tra toàn bộ JSON trong `content/` (schema ở `src/core/schemas.ts`)
 
 ## Cấu trúc
 - `src/core/` — GameState, RNG, vòng lặp game, nạp nội dung

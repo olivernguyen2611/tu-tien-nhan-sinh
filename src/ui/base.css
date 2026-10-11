@@ -30,3 +30,4 @@ body {
 .title-screen h1 { font-size: clamp(2rem, 8vw, 3.5rem); margin: 0 0 0.5rem; letter-spacing: 0.05em; }
 .subtitle { margin: 0 0 2rem; font-style: italic; }
 .note { color: var(--muted); font-size: 0.875rem; }
+.content-error { padding: 16px; white-space: pre-wrap; color: #b3261e; }

@@ -2,6 +2,12 @@
 
 ## [Chưa phát hành]
 
+### Task 0.4 — Nạp và kiểm tra dữ liệu JSON (2026-10-11)
+- Schema Zod cho sự kiện, cấu hình cân bằng, thuật ngữ (`src/core/schemas.ts`).
+- `npm run validate`: báo sai schema, trùng id, followUp tới sự kiện không tồn tại, flag không ai đặt, ảnh thiếu, sự kiện "mature" cho nhân vật dưới 18 tuổi.
+- Game nạp nội dung lúc khởi động; dữ liệu lỗi thì hiện thông báo thay vì trang trắng.
+- `content/config/balance.json` bản đầu (nhịp sự kiện, tỉ lệ khí vận); CI chạy validate trước test và build.
+
 ### Task 0.3 — Random có seed + test (2026-10-11)
 - `src/core/rng.ts`: bộ sinh số ngẫu nhiên có seed, lưu/khôi phục được trạng thái, có chọn theo trọng số.
 - Cài Vitest, `npm test` chạy 7 test cho RNG; CI chạy test trước khi build.
