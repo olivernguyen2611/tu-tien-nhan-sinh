@@ -14,7 +14,7 @@ Game mô phỏng cuộc đời tu tiên kiểu BitLife (web, Vite + TypeScript +
 5. Nội dung game (sự kiện, khí vận, vật phẩm…) là JSON trong `content/`. Thêm nội dung = thêm JSON, không sửa engine.
 6. Random luôn đi qua RNG có seed (`src/core/rng.ts`), không gọi `Math.random()` trong logic game.
 7. Khi xong task: đánh dấu `[x]` trong `PLAN.md` và ghi `CHANGELOG.md`.
-8. Task nội dung (✍️): soạn nháp cho chủ dự án duyệt trước khi nhập vào JSON; kiểm tra trùng `id`.
+8. Task nội dung (✍️): dùng **file thiết kế của chủ dự án** (bản đã duyệt, lưu vào `docs/design/`) làm nguồn; không tự soạn nháp thay. Chưa có file thì hỏi chủ dự án. Chỉ bổ sung khi file thiếu chi tiết kỹ thuật, và ghi rõ chỗ bổ sung. Kiểm tra trùng `id`.
 9. Văn phong trong game: cổ phong, súc tích, có chút hài hước; dùng từ Hán Việt đúng nghĩa.
 10. Nội dung nhạy cảm theo mục H của `PLAN.md`: không miêu tả trần trụi; nhân vật dưới 18 tuổi không vào sự kiện tình duyên/song tu.
 11. Không dùng tên, hình, văn bản của BitLife, Quỷ Cốc Bát Hoang hay tiểu thuyết có bản quyền.
