@@ -3,7 +3,7 @@
 ## [Chưa phát hành]
 
 ### Chuẩn bị cho nhiều thế giới (2026-10-11)
-- Nội dung riêng của thế giới chuyển vào `content/worlds/world_1/` (xuất thân, họ tên, sự kiện) kèm `world.json`; cân bằng, khí vận, thuật ngữ vẫn dùng chung.
+- Nội dung riêng của thế giới chuyển vào `content/worlds/thuong_lan/` (xuất thân, họ tên, sự kiện) kèm `world.json`. Thế giới đầu tiên: **Thương Lan giới** (`thuong_lan`); cân bằng, khí vận, thuật ngữ vẫn dùng chung.
 - `loadContent(worldId)` nạp phần chung + phần của một thế giới; nhân vật lưu `worldId`.
 - Validator nhận diện file theo thế giới, báo lỗi khi id trong `world.json` khác tên thư mục.
 - PLAN.md: quyết định số 8 và mục C.7 "Nhiều thế giới"; đường dẫn sự kiện trong các task cập nhật theo thư mục mới. Trong game chưa có gì thay đổi.

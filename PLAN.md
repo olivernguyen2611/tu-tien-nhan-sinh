@@ -16,7 +16,7 @@
 | 5 | Nơi lưu code | **Repo GitHub + GitHub Pages** để chơi thử bằng link trên mọi thiết bị. |
 | 6 | Cách làm | **Từng bước nhỏ**, mỗi bước chơi thử được, tránh lỗi dây chuyền. |
 | 7 | Nội dung (sự kiện, khí vận…) | **Claude soạn nháp, bạn duyệt** trước khi đưa vào game. |
-| 8 | Nhiều thế giới | Game sẽ có **nhiều thế giới**, mỗi thế giới một tuyến cốt truyện riêng. Thế giới đang làm là thế giới thứ nhất, các thế giới sau thêm dần. Engine không gắn với thế giới nào (xem C.7). |
+| 8 | Nhiều thế giới | Game sẽ có **nhiều thế giới**, mỗi thế giới một tuyến cốt truyện riêng. Thế giới đầu tiên là **Thương Lan giới** (`thuong_lan`), các thế giới sau thêm dần. Engine không gắn với thế giới nào (xem C.7). |
 
 ---
 
@@ -82,7 +82,7 @@ tu-tien-nhan-sinh/
 │  ├─ achievements.json · rebirth-talents.json · end-badges.json            │
 │  ├─ glossary.json                                                         ┘
 │  └─ worlds/                                (mỗi thế giới một thư mục, xem C.7)
-│     └─ world_1/
+│     └─ thuong_lan/
 │        ├─ world.json                       (id, tên, mô tả, thứ tự)
 │        ├─ character/origins.json · names.json   (xuất thân, họ tên, quê quán)
 │        ├─ regions.json · sects.json · npc-templates.json · protagonist-templates.json
@@ -158,7 +158,7 @@ Vì logic là hàm thuần + RNG có seed, **cùng seed + cùng chuỗi lựa ch
   "savedAt": "2026-10-11T14:00:00Z",
   "meta": { "rebirthPoints": 0, "livesPlayed": 3, "achievements": [], "codex": [], "pityCounter": 2 },
   "life": {
-    "worldId": "world_1",
+    "worldId": "thuong_lan",
     "seed": 123456789,
     "rngState": [1, 2, 3, 4],
     "year": 37,
@@ -266,7 +266,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 1.3 | [x] Màn *Nghịch Thiên Bốc Mệnh*: quay 3 ô, thẻ lật, phát sáng theo màu, reroll giới hạn | `systems/destiny.ts`, `screens/DestinyRoll.tsx` |
 | 1.4 | [ ] Màn chính: thanh chỉ số trên, nhật ký cuộn, nút **Qua một năm**, thanh tab | `screens/Main.tsx`, `components/*` |
 | 1.5 | [ ] EventEngine lõi: lọc điều kiện, rút trọng số, áp hiệu ứng, thay biến văn bản, popup lựa chọn | `systems/events/*`, `components/EventPopup.tsx` |
-| 1.6 | [ ] ✍️ Soạn ~20 sự kiện phàm nhân (tuổi thơ, đi học, làm việc, hài hước, tai nạn) | `content/worlds/world_1/events/childhood.json`, `mortal.json`, `funny.json` |
+| 1.6 | [ ] ✍️ Soạn ~20 sự kiện phàm nhân (tuổi thơ, đi học, làm việc, hài hước, tai nạn) | `content/worlds/thuong_lan/events/childhood.json`, `mortal.json`, `funny.json` |
 | 1.7 | [ ] Cha mẹ, anh chị em cơ bản (thiện cảm, già và mất theo thời gian) | `systems/relationships.ts` |
 | 1.8 | [ ] Lão hóa, bệnh, chết già; màn tổng kết đời đơn giản | `systems/time.ts`, `screens/Death.tsx` |
 | 1.9 | [ ] SaveSystem: 3 slot, tự lưu mỗi năm, xuất/nhập file, cảnh báo ghi đè | `systems/save.ts`, `screens/Settings.tsx` |
@@ -283,13 +283,13 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | # | Task | File chính |
 |---|---|---|
 | 2.1 | [ ] ✍️ Bảng cảnh giới (Phàm Nhân → Hóa Thần) + linh căn + 5 con đường chiến đấu + 6 bách nghệ (mục K) | `content/realms.json`, `roots.json`, `aptitudes.json` |
-| 2.2 | [ ] Sự kiện kiểm tra linh căn (6–12 tuổi) + hiển thị linh căn | `systems/cultivation.ts`, `content/worlds/world_1/events/root-test.json` |
+| 2.2 | [ ] Sự kiện kiểm tra linh căn (6–12 tuổi) + hiển thị linh căn | `systems/cultivation.ts`, `content/worlds/thuong_lan/events/root-test.json` |
 | 2.3 | [ ] Tu vi tăng mỗi năm theo công thức mục G; thanh tu vi; đột phá tiểu cảnh giới Luyện Khí | `systems/cultivation.ts` |
-| 2.4 | [ ] ✍️ 6 tông môn khởi đầu (chính/ma/kiếm/đan/phật/yêu) + 8 công pháp Hoàng/Huyền phẩm | `content/worlds/world_1/sects.json`, `techniques.json` |
-| 2.5 | [ ] Tuyển đệ tử tông môn, cấp bậc ngoại môn/nội môn, nhiệm vụ tông môn đơn giản, sư phụ NPC | `systems/sect.ts`, `content/worlds/world_1/events/sect-recruit.json` |
+| 2.4 | [ ] ✍️ 6 tông môn khởi đầu (chính/ma/kiếm/đan/phật/yêu) + 8 công pháp Hoàng/Huyền phẩm | `content/worlds/thuong_lan/sects.json`, `techniques.json` |
+| 2.5 | [ ] Tuyển đệ tử tông môn, cấp bậc ngoại môn/nội môn, nhiệm vụ tông môn đơn giản, sư phụ NPC | `systems/sect.ts`, `content/worlds/thuong_lan/events/sect-recruit.json` |
 | 2.6 | [ ] Đột phá Trúc Cơ: tỉ lệ thành công, phẩm đạo cơ (Hạ/Trung/Thượng/Hoàn mỹ), hậu quả thất bại | `systems/cultivation.ts` |
 | 2.7 | [ ] ✍️ + code: Nghịch Thiên Cải Mệnh lần đầu (chọn 1 trong 3 thiên phú khi Trúc Cơ) | `content/fate-talents.json`, `systems/destiny.ts` |
-| 2.8 | [ ] ✍️ ~25 sự kiện tu luyện & tông môn | `content/worlds/world_1/events/cultivation.json` |
+| 2.8 | [ ] ✍️ ~25 sự kiện tu luyện & tông môn | `content/worlds/thuong_lan/events/cultivation.json` |
 | 2.9 | [ ] Đời đầu tiên dạng hướng dẫn + dòng "Mục tiêu hiện tại" | `systems/tutorial.ts` |
 | 2.10 | [ ] Chọn độ khó Dễ/Thường/Khó (Khó: không load lại) | `screens/CreateCharacter.tsx`, `balance.json` |
 

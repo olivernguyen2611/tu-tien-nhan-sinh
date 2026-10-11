@@ -7,7 +7,7 @@ import {
 import { splitWorldPath, validateContent } from './validate';
 
 /** The world played when none is chosen (world picker comes later). */
-export const DEFAULT_WORLD_ID = 'world_1';
+export const DEFAULT_WORLD_ID = 'thuong_lan';
 
 /**
  * Everything the engine needs for one life: shared files (balance, traits,

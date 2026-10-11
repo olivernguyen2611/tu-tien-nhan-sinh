@@ -2,10 +2,10 @@ import { describe, expect, it } from 'vitest';
 import type { Content } from '../src/core/content';
 import { advanceYear, createLife } from '../src/core/state';
 import { BalanceSchema, WorldSchema, NamesSchema, OriginFileSchema } from '../src/core/schemas';
-import world from '../content/worlds/world_1/world.json';
+import world from '../content/worlds/thuong_lan/world.json';
 import balance from '../content/config/balance.json';
-import names from '../content/worlds/world_1/character/names.json';
-import origins from '../content/worlds/world_1/character/origins.json';
+import names from '../content/worlds/thuong_lan/character/names.json';
+import origins from '../content/worlds/thuong_lan/character/origins.json';
 
 const content: Content = {
   world: WorldSchema.parse(world),
@@ -19,7 +19,7 @@ const content: Content = {
 
 describe('createLife', () => {
   it('records which world the life belongs to', () => {
-    expect(createLife({ seed: 'w' }, content).worldId).toBe('world_1');
+    expect(createLife({ seed: 'w' }, content).worldId).toBe('thuong_lan');
   });
 
   it('same seed gives the same character', () => {
