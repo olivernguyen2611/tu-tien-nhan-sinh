@@ -34,6 +34,7 @@ const content: Content = {
   sectLife,
   fateTalents,
   items,
+  markets: [],
 };
 const born = (seed: string) => rollDestiny(createLife({ seed }, content), content);
 

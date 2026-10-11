@@ -38,6 +38,7 @@ const content: Content = {
   sectLife,
   fateTalents,
   items,
+  markets: [],
 };
 
 import { ageExtremes, extremeHookSum, extremeWarnings } from '../src/systems/extremes';

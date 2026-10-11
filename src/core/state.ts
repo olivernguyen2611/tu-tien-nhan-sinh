@@ -74,6 +74,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     career: { id: null, rung: 0, since: 0 },
     inventory: {},
     itemUse: { lastAge: {}, spent: [], nextBreakthrough: 0 },
+    bargains: {},
     talents: [],
     fate: null,
     sect: { id: null, rank: 0, since: 0, contribution: 0, master: null, lastMission: null, lastMasterTry: null, left: [] },

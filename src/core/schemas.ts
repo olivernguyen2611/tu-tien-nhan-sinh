@@ -453,6 +453,23 @@ export const BalanceSchema = z
         milestoneCharm: z.number(),
       })
       .strict(),
+    /** Task 3.2: buying, selling, bargaining. */
+    market: z
+      .object({
+        /** Youngest age that can go to market alone. */
+        minAge: z.number().int().nonnegative(),
+        /** Selling gets this share of the base price. */
+        sellShare: probability,
+        /** Bargain: chance = base + ((charm + intellect)/2 − 50) × perPoint, clamped to [min, max]. */
+        bargainBase: probability,
+        bargainPerPoint: z.number(),
+        bargainMin: probability,
+        bargainMax: probability,
+        /** Price multiplier for the rest of the year after a won / lost bargain. */
+        bargainWinMul: z.number().min(0),
+        bargainLoseMul: z.number().min(0),
+      })
+      .strict(),
     /** Stats stuck at an extreme (stat-extremes-approved.md). */
     extremes: z
       .object({
@@ -1085,6 +1102,30 @@ export const FateTalentFileSchema = z.array(
     .strict(),
 );
 export type FateTalent = z.infer<typeof FateTalentFileSchema>[number];
+
+/** content/worlds/<id>/markets.json (task 3.2): where things are bought and sold. */
+export const MarketFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      description: z.string().min(1),
+      /** Cultivators only (spirit stones). Mortal markets trade in silver. */
+      needsRoot: z.boolean().default(false),
+      currency: z.enum(['silver', 'spiritStones']),
+      priceMul: z.number().min(0).default(1),
+      /** Chance a bought pill is a fake (Vô Chủ Phường); sets flag `mua_hang_gia`. */
+      fakeChance: probability.default(0),
+      /** Item kinds on sale (items priced in this market's currency). */
+      kinds: z.array(id).min(1),
+      /** Log lines: a bargain won / lost ({name} = market). */
+      bargainWin: z.string().min(1),
+      bargainLose: z.string().min(1),
+      fakeText: z.string().min(1).optional(),
+    })
+    .strict(),
+);
+export type Market = z.infer<typeof MarketFileSchema>[number];
 
 /** What using an item does right away (task 3.1). */
 const ITEM_USE_HOOK = new RegExp(

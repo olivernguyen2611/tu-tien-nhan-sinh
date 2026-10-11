@@ -37,6 +37,7 @@ const content: Content = {
   sectLife,
   fateTalents,
   items,
+  markets: [],
 };
 
 describe('family', () => {

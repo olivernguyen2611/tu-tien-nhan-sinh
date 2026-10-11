@@ -2,6 +2,16 @@
 
 ## [Chưa phát hành]
 
+### Task 3.2 — Phường thị (2026-10-11)
+- Nút **遊 Khám phá** mở bảng Phường thị: chọn chợ, xem hàng và giá, mua, bán lại đồ trong túi.
+- 3 chợ ở `content/worlds/thuong_lan/markets.json`:
+  - Chợ phiên huyện: trả bằng bạc, bán phàm dược, bùa, đồ lặt vặt;
+  - Kim Thiềm Các: cần linh căn, giá ×1.2;
+  - Chợ không chủ: cần linh căn, giá ×0.7 nhưng 15% mua phải đan giả (đặt flag `mua_hang_gia`).
+- Bán lại được nửa giá gốc. Trả giá mỗi chợ một lần mỗi năm; tỉ lệ theo Mị lực và Trí tuệ; thắng thì giá năm đó ×0.85, thua thì ×1.1.
+- Dưới 8 tuổi chưa được đi chợ. Số liệu ở `balance.market`.
+- Giá thật của từng món có khi nhập danh sách vật phẩm task 3.1 (đang chờ duyệt).
+
 ### Task 2.8 — Sự kiện tu luyện, tông môn và đời phàm nhân (2026-10-11)
 - **36/40 sự kiện** theo bản duyệt `docs/design/cultivation-events.md`, chia 5 file trong `events/`:
   - `sect.json`: 9 sự kiện đời tông môn;

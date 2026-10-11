@@ -722,3 +722,10 @@ button { font: inherit; color: inherit; }
 .bag-item { border: 1px solid var(--line); border-radius: 10px; padding: 4px 8px; background: var(--surface-2); }
 .bag-detail { padding: 4px 2px 8px; }
 .bag-detail .story { margin-bottom: 6px; }
+
+/* Phường thị (task 3.2). */
+.market-head { margin: 14px 0 6px; font-size: 0.875rem; }
+.market-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 8px; }
+.market-row > div { display: flex; flex-direction: column; min-width: 0; }
+.market-row .chip-btn { flex: none; }
+.chip-btn.active { background: var(--jade); color: var(--seal-ink); border-color: var(--jade); }

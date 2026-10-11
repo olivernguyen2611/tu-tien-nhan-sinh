@@ -218,6 +218,16 @@
     "weapon": { "artifactBonusMul": 1.5, "cultivationSpeed": 0 },
     "arts": { "itemActionMul": 2, "unarmedCombatPower": -0.2, "cultivationSpeed": 0 }
   },
+  "market": {
+    "minAge": 8,
+    "sellShare": 0.5,
+    "bargainBase": 0.4,
+    "bargainPerPoint": 0.01,
+    "bargainMin": 0.1,
+    "bargainMax": 0.8,
+    "bargainWinMul": 0.85,
+    "bargainLoseMul": 1.1
+  },
   "crafts": {
     "minAge": 10,
     "startAffinity": [5, 30],

@@ -38,6 +38,7 @@ const content: Content = {
   sectLife,
   fateTalents,
   items,
+  markets: [],
 };
 
 import { devAddKarma, devAddMoney, devAddStat, devHeal, devSkipYears, devTriggerEvent } from '../src/systems/dev';

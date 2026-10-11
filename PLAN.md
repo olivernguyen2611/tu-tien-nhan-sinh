@@ -307,7 +307,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | # | Task |
 |---|---|
 | 3.1 | [ ] Túi đồ, bạc/linh thạch, đan dược dùng được (✍️ ~15 đan dược, ~15 vật phẩm) |
-| 3.2 | [ ] Phường thị: mua bán, trả giá đơn giản |
+| 3.2 | [x] Phường thị: mua bán, trả giá đơn giản |
 | 3.3 | [ ] CombatSystem theo K.4: chiến lực, 3 hiệp × 5 hành động, văn bản theo con đường + hệ |
 | 3.4 | [ ] NPC có số mệnh riêng: tự tu luyện, già, chết; tính cách bề ngoài/bản chất; sổ ân oán |
 | 3.5 | [ ] Thiên kiêu bảng cập nhật mỗi năm |

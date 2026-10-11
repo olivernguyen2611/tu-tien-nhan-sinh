@@ -1,7 +1,7 @@
 // Loads all JSON under content/ at build time and checks it with the same
 // rules as `npm run validate`.
 import {
-  AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, FateTalentFileSchema, ItemFileSchema, type FateTalent, type Item, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile,
+  AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, FateTalentFileSchema, ItemFileSchema, MarketFileSchema, type Market, type FateTalent, type Item, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile,
   BalanceSchema, EventFileSchema, FamilyActionFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema,
   type Balance, type FamilyAction, type GameEvent, type Glossary, type LifeTexts, type Names, type Origin, type StatExtremesFile, type Trait, type World,
 } from './schemas';
@@ -39,6 +39,7 @@ export interface Content {
   sects: Sect[];
   /** Sect texts and missions of this world (task 2.5); null when it has no sects. */
   sectLife: SectLife | null;
+  markets: Market[];
   /** Nghịch Thiên Cải Mệnh talents (task 2.7). */
   fateTalents: FateTalent[];
   /** Items known so far (task 2.8). */
@@ -110,5 +111,6 @@ export function loadContent(worldId: string = DEFAULT_WORLD_ID): Content {
     fateTalents: FateTalentFileSchema.parse(files['fate-talents.json']),
     items: ItemFileSchema.parse(files['items.json'] ?? []),
     sectLife: files[`${dir}sect-life.json`] ? SectLifeSchema.parse(files[`${dir}sect-life.json`]) : null,
+    markets: MarketFileSchema.parse(files[`${dir}markets.json`] ?? []),
   };
 }

@@ -33,6 +33,7 @@ const content: Content = {
   sectLife,
   fateTalents,
   items,
+  markets: [],
   events: [],
   glossary: [],
 };

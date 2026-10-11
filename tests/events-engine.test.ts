@@ -40,6 +40,7 @@ const content: Content = {
   sectLife,
   fateTalents,
   items,
+  markets: [],
 };
 const ev = (id: string) => findEvent(content, id)!;
 const at = (s: GameState, age: number, patch: Partial<GameState> = {}): GameState =>
