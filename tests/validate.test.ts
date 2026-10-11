@@ -54,6 +54,19 @@ describe('validateContent', () => {
     expect(msgs.join()).toContain('không đổi chỉ số');
   });
 
+  it('text naming a parent must exclude lives where that parent is gone', () => {
+    const fx = { 'stat.happiness': 1 };
+    const sick = event({ text: 'Cha ngươi ho ra máu.', choices: [{ text: 'Chăm sóc', result: { text: 'Mẹ ngươi khóc.', effects: fx } }] });
+    const msgs = errors({ 'worlds/w/events/a.json': [sick] }).join();
+    expect(msgs).toContain('no_father');
+    expect(msgs).toContain('no_mother');
+    const ok = event({ text: 'Cha ngươi ho ra máu.', conditions: { flagsNone: ['no_father'] },
+      choices: [{ text: 'Chăm sóc', requires: { flagsNone: ['no_mother'] }, result: { text: 'Mẹ ngươi khóc.', effects: fx } }] });
+    expect(errors({ 'worlds/w/events/a.json': [ok] })).toEqual([]);
+    // "chạy", "chăm" are not "cha".
+    expect(errors({ 'worlds/w/events/a.json': [event({ text: 'Ngươi chạy đi chăm vườn.' })] })).toEqual([]);
+  });
+
   it('reports schema errors with their path', () => {
     const msgs = errors({ 'worlds/w/events/a.json': [event({ weight: 'nhiều' })] });
     expect(msgs.some((m) => m.startsWith('0.weight'))).toBe(true);

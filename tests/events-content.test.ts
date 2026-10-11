@@ -28,7 +28,7 @@ describe('mortal events of Thương Lan giới', () => {
   });
 
   it('events about parents skip lives without that parent', () => {
-    expect(events.find((e) => e.id === 'thoi_noi')!.conditions.flagsNone).toContain('no_parents');
+    expect(events.find((e) => e.id === 'thoi_noi')!.conditions.flagsNone).toEqual(expect.arrayContaining(['no_father', 'no_mother']));
     expect(events.find((e) => e.id === 'cha_me_lam_benh')!.conditions.flagsNone).toContain('no_father');
   });
 });

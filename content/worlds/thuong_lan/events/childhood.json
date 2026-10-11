@@ -13,7 +13,8 @@
         "max": 1
       },
       "flagsNone": [
-        "no_parents"
+        "no_father",
+        "no_mother"
       ]
     },
     "weight": 10,

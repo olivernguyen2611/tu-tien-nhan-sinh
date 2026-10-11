@@ -38,6 +38,11 @@ export function schemaFor(path: string): ZodTypeAny | null {
 
 /** Flags the engine sets itself (not via events). */
 export const ENGINE_FLAGS = ['no_parents', 'no_father', 'no_mother'];
+/** Words naming a parent in event text, and the flag the engine sets once that parent is gone. */
+const PARENT_WORDS = [
+  { name: 'cha', flag: 'no_father', word: /(^|[^\p{L}])cha(?![\p{L}])/iu },
+  { name: 'mẹ', flag: 'no_mother', word: /(^|[^\p{L}])mẹ(?![\p{L}])/iu },
+];
 
 export function validateContent(files: Record<string, unknown>): Problem[] {
   const problems: Problem[] = [];
@@ -138,7 +143,21 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       }
     }
 
+    // Text that names a parent needs that parent alive: the event (or the choice) must
+    // exclude no_father / no_mother, or a dead father "falls ill" years later.
+    const needsParent = (text: string, choiceFlags: string[]) => {
+      const excluded = [...event.conditions.flagsNone, ...choiceFlags];
+      return PARENT_WORDS.filter((p) => p.word.test(text) && !excluded.includes(p.flag));
+    };
+    for (const p of needsParent(`${event.title} ${event.text}`, [])) {
+      problems.push({ file, level: 'error', message: `${where} nhắc tới ${p.name} nhưng conditions.flagsNone thiếu "${p.flag}"` });
+    }
+
     event.choices.forEach((choice, i) => {
+      const texts = [choice.text, choice.result?.text, choice.success?.text, choice.fail?.text].filter(Boolean).join(' ');
+      for (const p of needsParent(texts, choice.requires?.flagsNone ?? [])) {
+        problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1} nhắc tới ${p.name} nhưng sự kiện hoặc lựa chọn chưa loại "${p.flag}"` });
+      }
       for (const outcome of [choice.result, choice.success, choice.fail]) {
         // Owner rule: every choice moves the character's numbers a little.
         if (outcome && !Object.values(outcome.effects).some((v) => typeof v === 'number' && v !== 0)) {

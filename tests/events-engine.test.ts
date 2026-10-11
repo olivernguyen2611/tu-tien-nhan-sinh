@@ -61,7 +61,7 @@ describe('event engine', () => {
     const base = createLife({ seed: 'cond', originId: 'nong_dan' }, content);
     expect(eventWeight(at(base, 1), content, ev('thoi_noi'))).toBeGreaterThan(0);
     expect(eventWeight(at(base, 2), content, ev('thoi_noi'))).toBe(0);
-    expect(eventWeight(at(base, 1, { flags: { no_parents: true } }), content, ev('thoi_noi'))).toBe(0);
+    expect(eventWeight(at(base, 1, { flags: { no_parents: true, no_father: true, no_mother: true } }), content, ev('thoi_noi'))).toBe(0);
     expect(eventWeight(at(base, 10), content, ev('thay_do_ngu_gat'))).toBe(0);
     expect(eventWeight(at(base, 10, { flags: { di_hoc: true } }), content, ev('thay_do_ngu_gat'))).toBeGreaterThan(0);
     const seen = at(base, 1, { events: { ...base.events, history: { thoi_noi: 1 } } });
