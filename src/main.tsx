@@ -8,8 +8,8 @@ const app = document.getElementById('app')!;
 applyThemePref(loadThemePref());
 
 try {
-  loadContent();
-  render(<App />, app);
+  const content = loadContent();
+  render(<App content={content} />, app);
 } catch (err) {
   // Broken content should be loud during development, not a blank page.
   render(<pre class="content-error">{(err as Error).message}</pre>, app);

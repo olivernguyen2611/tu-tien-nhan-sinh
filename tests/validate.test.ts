@@ -5,6 +5,8 @@ const balance = {
   version: 1,
   events: { popupChanceLowRealm: 0.2, popupChanceHighRealm: 0.1, logLineChance: 0.6 },
   traits: { slots: 3, rerolls: 3, badLuckChance: 0.12, rarityWeights: { pham: 45 } },
+  character: { mortalStatRange: [30, 80], aptitudeRange: [10, 90], aptitudeRolls: 2 },
+  lifespan: { mortalBase: 70, mortalVariance: 10, healthAdjustMax: 10 },
 };
 
 function event(overrides: Record<string, unknown> = {}) {

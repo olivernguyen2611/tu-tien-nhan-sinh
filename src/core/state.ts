@@ -1,0 +1,82 @@
+// Creating a new life. Pure: same seed + same input → same character.
+import type { Content } from './content';
+import { Rng } from './rng';
+import { APTITUDES, MORTAL_STATS } from './schemas';
+import type { GameState, Gender } from './types';
+
+export interface NewLifeInput {
+  seed: string;
+  name?: string;      // empty → random
+  gender?: Gender;    // undefined → random
+  originId?: string;  // undefined → weighted random
+}
+
+const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
+
+export function randomName(rng: Rng, content: Content, gender: Gender): string {
+  const { surnames, male, female } = content.names;
+  return `${rng.pick(surnames)} ${rng.pick(gender === 'nam' ? male : female)}`;
+}
+
+export function fillTemplate(text: string, state: GameState): string {
+  return text.replace(/\{name\}/g, state.character.name).replace(/\{hometown\}/g, state.character.hometown);
+}
+
+export function createLife(input: NewLifeInput, content: Content): GameState {
+  const rng = new Rng(input.seed);
+  const cfg = content.balance.character;
+  const life = content.balance.lifespan;
+
+  const gender: Gender = input.gender ?? (rng.chance(0.5) ? 'nam' : 'nu');
+  const name = input.name?.trim() || randomName(rng, content, gender);
+  const origin = content.origins.find((o) => o.id === input.originId) ?? rng.weighted(content.origins, (o) => o.weight);
+  const hometown = rng.pick(content.names.hometowns);
+
+  const stats = Object.fromEntries(MORTAL_STATS.map((k) => [k, rng.int(cfg.mortalStatRange[0], cfg.mortalStatRange[1])])) as GameState['stats'];
+  // Aptitudes average several rolls so extremes are rare.
+  const rollAptitude = () => {
+    let sum = 0;
+    for (let i = 0; i < cfg.aptitudeRolls; i++) sum += rng.int(cfg.aptitudeRange[0], cfg.aptitudeRange[1]);
+    return sum / cfg.aptitudeRolls;
+  };
+  const aptitudes = Object.fromEntries(APTITUDES.map((k) => [k, clamp(rollAptitude())])) as GameState['aptitudes'];
+
+  // Origin effects use the stat hooks from PLAN.md K.6 ("stat.<name>").
+  for (const [hook, delta] of Object.entries(origin.effects)) {
+    const key = hook.slice('stat.'.length);
+    if (key in stats) stats[key as keyof typeof stats] = clamp(stats[key as keyof typeof stats] + delta);
+    else if (key in aptitudes) aptitudes[key as keyof typeof aptitudes] = clamp(aptitudes[key as keyof typeof aptitudes] + delta);
+  }
+
+  // PLAN.md G.3: mortal lifespan = base ± variance, health shifts it up to ±healthAdjustMax.
+  const healthShift = Math.round(((stats.health - 50) / 50) * life.healthAdjustMax);
+  const lifespan = life.mortalBase + rng.int(-life.mortalVariance, life.mortalVariance) + healthShift;
+
+  const state: GameState = {
+    version: 1,
+    seed: input.seed,
+    rng: rng.getState(),
+    alive: true,
+    character: { name, gender, originId: origin.id, hometown, age: 0 },
+    stats,
+    aptitudes,
+    cult: { realm: 'pham_nhan', stage: 0, progress: 0, root: null, lifespan },
+    money: { silver: origin.silver, spiritStones: origin.spiritStones },
+    social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0 } },
+    flags: origin.noParents ? { orphan: true } : {},
+    log: [],
+  };
+  state.log.push({ age: 0, lines: [{ text: fillTemplate(origin.birthText, state), tone: 'normal' }] });
+  return state;
+}
+
+/** Placeholder year step until TimeSystem and events land (tasks 1.5, 1.8). */
+export function advanceYear(state: GameState): GameState {
+  if (!state.alive) return state;
+  const age = state.character.age + 1;
+  return {
+    ...state,
+    character: { ...state.character, age },
+    log: [...state.log, { age, lines: [{ text: 'Một năm bình lặng trôi qua.', tone: 'normal' }] }],
+  };
+}

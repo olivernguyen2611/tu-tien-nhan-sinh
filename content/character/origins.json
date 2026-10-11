@@ -1,0 +1,63 @@
+[
+  {
+    "id": "nong_dan",
+    "name": "Con nhà nông",
+    "description": "Cha mẹ quanh năm cày cấy, cơm không no nhưng áo đủ ấm.",
+    "weight": 35,
+    "effects": { "stat.health": 5 },
+    "silver": 5,
+    "spiritStones": 0,
+    "birthText": "Ngươi chào đời trong một gian nhà tranh ở {hometown}. Cha ngươi vừa cày xong ruộng, chân còn dính bùn."
+  },
+  {
+    "id": "thuong_nhan",
+    "name": "Con nhà buôn",
+    "description": "Nhà mở tiệm tạp hóa, từ nhỏ đã quen đếm tiền và mặc cả.",
+    "weight": 20,
+    "effects": { "stat.intellect": 5, "stat.charm": 3 },
+    "silver": 60,
+    "spiritStones": 0,
+    "birthText": "Ngươi chào đời sau quầy hàng của một tiệm tạp hóa ở {hometown}. Cha ngươi bận tính sổ nên đặt tên vội."
+  },
+  {
+    "id": "quan_gia",
+    "name": "Con nhà quan",
+    "description": "Gia đình làm quan trong huyện, ăn mặc sung túc, phép tắc nghiêm ngặt.",
+    "weight": 10,
+    "effects": { "stat.intellect": 5, "stat.charm": 5, "stat.happiness": 5 },
+    "silver": 200,
+    "spiritStones": 0,
+    "birthText": "Ngươi chào đời trong phủ đệ của một vị quan huyện ở {hometown}. Gia nhân bày tiệc ba ngày."
+  },
+  {
+    "id": "vo_lam",
+    "name": "Con nhà võ",
+    "description": "Cha mở võ quán, ngươi biết đứng tấn trước khi biết đọc.",
+    "weight": 15,
+    "effects": { "stat.physique": 8, "stat.health": 5 },
+    "silver": 20,
+    "spiritStones": 0,
+    "birthText": "Ngươi chào đời ở hậu viện một võ quán tại {hometown}. Tiếng hét luyện quyền át cả tiếng khóc của ngươi."
+  },
+  {
+    "id": "co_nhi",
+    "name": "Cô nhi",
+    "description": "Không cha không mẹ, lớn lên nhờ lòng tốt của người lạ. Khổ từ nhỏ nên tâm chí cứng cỏi.",
+    "weight": 15,
+    "effects": { "stat.health": -5, "stat.happiness": -10, "stat.daoHeart": 10 },
+    "silver": 0,
+    "spiritStones": 0,
+    "noParents": true,
+    "birthText": "Ngươi bị bỏ lại trước cổng miếu hoang ở {hometown}, chỉ có một tấm chăn rách và một mảnh giấy ghi tên."
+  },
+  {
+    "id": "tu_tien_gia_toc",
+    "name": "Hậu duệ gia tộc tu tiên",
+    "description": "Tổ tiên từng có người tu tiên. Gia tộc đã sa sút nhưng vẫn giữ vài viên linh thạch và một quyển gia phả.",
+    "weight": 5,
+    "effects": { "stat.luck": 5, "stat.comprehension": 5 },
+    "silver": 80,
+    "spiritStones": 3,
+    "birthText": "Ngươi chào đời trong từ đường của một gia tộc tu tiên đã sa sút ở {hometown}. Lão tổ trong gia phả có lẽ đang nhìn ngươi."
+  }
+]

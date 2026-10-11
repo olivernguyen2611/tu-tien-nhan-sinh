@@ -1,0 +1,64 @@
+import { describe, expect, it } from 'vitest';
+import type { Content } from '../src/core/content';
+import { advanceYear, createLife } from '../src/core/state';
+import { BalanceSchema, NamesSchema, OriginFileSchema } from '../src/core/schemas';
+import balance from '../content/config/balance.json';
+import names from '../content/character/names.json';
+import origins from '../content/character/origins.json';
+
+const content: Content = {
+  balance: BalanceSchema.parse(balance),
+  names: NamesSchema.parse(names),
+  origins: OriginFileSchema.parse(origins),
+  events: [],
+  glossary: [],
+};
+
+describe('createLife', () => {
+  it('same seed gives the same character', () => {
+    expect(createLife({ seed: 'abc' }, content)).toEqual(createLife({ seed: 'abc' }, content));
+  });
+
+  it('different seeds give different characters', () => {
+    const a = createLife({ seed: 'a' }, content);
+    const b = createLife({ seed: 'b' }, content);
+    expect(a.stats).not.toEqual(b.stats);
+  });
+
+  it('keeps every stat within 0–100 and starts as a mortal newborn', () => {
+    for (let i = 0; i < 200; i++) {
+      const s = createLife({ seed: `seed-${i}` }, content);
+      for (const v of [...Object.values(s.stats), ...Object.values(s.aptitudes)]) {
+        expect(v).toBeGreaterThanOrEqual(0);
+        expect(v).toBeLessThanOrEqual(100);
+      }
+      expect(s.character.age).toBe(0);
+      expect(s.cult.realm).toBe('pham_nhan');
+      expect(s.cult.lifespan).toBeGreaterThanOrEqual(50);
+      expect(s.cult.lifespan).toBeLessThanOrEqual(90);
+    }
+  });
+
+  it('respects the chosen name, gender and origin', () => {
+    const s = createLife({ seed: 'x', name: '  Tô Vân  ', gender: 'nu', originId: 'co_nhi' }, content);
+    expect(s.character.name).toBe('Tô Vân');
+    expect(s.character.gender).toBe('nu');
+    expect(s.character.originId).toBe('co_nhi');
+    expect(s.flags.orphan).toBe(true);
+    expect(s.money.silver).toBe(0);
+  });
+
+  it('fills the hometown into the birth line', () => {
+    const s = createLife({ seed: 'y' }, content);
+    expect(s.log[0].lines[0].text).toContain(s.character.hometown);
+    expect(s.log[0].lines[0].text).not.toContain('{');
+  });
+});
+
+describe('advanceYear', () => {
+  it('ages the character by one and logs the year', () => {
+    const s = advanceYear(createLife({ seed: 'z' }, content));
+    expect(s.character.age).toBe(1);
+    expect(s.log.at(-1)?.age).toBe(1);
+  });
+});

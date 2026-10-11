@@ -245,7 +245,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 
 | # | Task | File chính |
 |---|---|---|
-| 1.1 | [ ] GameState + tạo nhân vật (tên, giới tính, xuất thân, quê quán, chỉ số phàm nhân) | `core/state.ts`, `screens/CreateCharacter.tsx` |
+| 1.1 | [x] GameState + tạo nhân vật (tên, giới tính, xuất thân, quê quán, chỉ số phàm nhân) | `core/state.ts`, `screens/CreateCharacter.tsx` |
 | 1.2 | [ ] ✍️ Soạn ~20 Tiên Thiên Khí Vận (đủ phẩm Phàm→Thần + 3–4 ác vận) | `content/traits.json` |
 | 1.3 | [ ] Màn *Nghịch Thiên Bốc Mệnh*: quay 3 ô, thẻ lật, phát sáng theo màu, reroll giới hạn | `systems/destiny.ts`, `screens/DestinyRoll.tsx` |
 | 1.4 | [ ] Màn chính: thanh chỉ số trên, nhật ký cuộn, nút **Qua một năm**, thanh tab | `screens/Main.tsx`, `components/*` |

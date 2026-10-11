@@ -108,6 +108,39 @@ export const GlossarySchema = z.array(
 
 const probability = z.number().min(0).max(1);
 
+// ---------- Character creation ----------
+
+/** Stat keys from PLAN.md K.2 (mortal body + aptitudes). */
+export const MORTAL_STATS = ['health', 'happiness', 'intellect', 'charm'] as const;
+export const APTITUDES = ['physique', 'comprehension', 'luck', 'daoHeart'] as const;
+const statHook = z.enum([...MORTAL_STATS, ...APTITUDES].map((k) => `stat.${k}`) as [string, ...string[]]);
+
+export const OriginSchema = z
+  .object({
+    id,
+    name: z.string().min(1),
+    description: z.string().min(1),
+    weight: z.number().min(0),
+    effects: z.record(statHook, z.number()).default({}),
+    silver: z.number().int().min(0),
+    spiritStones: z.number().int().min(0),
+    noParents: z.boolean().default(false),
+    birthText: z.string().min(1),
+  })
+  .strict();
+export const OriginFileSchema = z.array(OriginSchema).min(1);
+
+export const NamesSchema = z
+  .object({
+    surnames: z.array(z.string().min(1)).min(1),
+    male: z.array(z.string().min(1)).min(1),
+    female: z.array(z.string().min(1)).min(1),
+    hometowns: z.array(z.string().min(1)).min(1),
+  })
+  .strict();
+
+const range = z.tuple([z.number(), z.number()]).refine(([a, b]) => a <= b, 'khoảng [min, max] bị ngược');
+
 export const BalanceSchema = z
   .object({
     version: z.number().int(),
@@ -126,9 +159,25 @@ export const BalanceSchema = z
         rarityWeights: z.record(id, z.number().min(0)),
       })
       .strict(),
+    character: z
+      .object({
+        mortalStatRange: range,
+        aptitudeRange: range,
+        aptitudeRolls: z.number().int().min(1),
+      })
+      .strict(),
+    lifespan: z
+      .object({
+        mortalBase: z.number().int().min(1),
+        mortalVariance: z.number().int().min(0),
+        healthAdjustMax: z.number().int().min(0),
+      })
+      .strict(),
   })
   .passthrough(); // later tasks add sections (cultivation, lifespan…)
 
 export type GameEvent = z.infer<typeof EventSchema>;
 export type Glossary = z.infer<typeof GlossarySchema>;
 export type Balance = z.infer<typeof BalanceSchema>;
+export type Origin = z.infer<typeof OriginSchema>;
+export type Names = z.infer<typeof NamesSchema>;
