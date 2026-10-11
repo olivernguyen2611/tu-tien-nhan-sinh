@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import type { Content } from '../src/core/content';
 import { BalanceSchema, EventFileSchema, NamesSchema, OriginFileSchema, TraitFileSchema, WorldSchema } from '../src/core/schemas';
+import { LifeTextsSchema } from '../src/core/schemas';
+import lifeTexts from '../content/life-texts.json';
 import { advanceYear, createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
 import { eventWeight, findEvent, resolveChoice, rollYearEvent, visibleChoices } from '../src/systems/events/engine';
@@ -24,6 +26,7 @@ const content: Content = {
   events: [childhood, study, work, funny, accident].flatMap((f) => EventFileSchema.parse(f)),
   glossary: [],
   familyActions: [],
+  lifeTexts: LifeTextsSchema.parse(lifeTexts),
 };
 const ev = (id: string) => findEvent(content, id)!;
 const at = (s: GameState, age: number, patch: Partial<GameState> = {}): GameState =>

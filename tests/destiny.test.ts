@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import type { Content } from '../src/core/content';
 import { BalanceSchema, WorldSchema, NamesSchema, OriginFileSchema, TraitFileSchema } from '../src/core/schemas';
+import { LifeTextsSchema } from '../src/core/schemas';
+import lifeTexts from '../content/life-texts.json';
 import { createLife } from '../src/core/state';
 import { confirmDestiny, rerollDestiny, rollDestiny } from '../src/systems/destiny';
 import world from '../content/worlds/thuong_lan/world.json';
@@ -18,6 +20,7 @@ const content: Content = {
   events: [],
   glossary: [],
   familyActions: [],
+  lifeTexts: LifeTextsSchema.parse(lifeTexts),
 };
 const born = (seed: string) => rollDestiny(createLife({ seed }, content), content);
 

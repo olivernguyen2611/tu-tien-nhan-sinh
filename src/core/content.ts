@@ -1,8 +1,8 @@
 // Loads all JSON under content/ at build time and checks it with the same
 // rules as `npm run validate`.
 import {
-  BalanceSchema, EventFileSchema, FamilyActionFileSchema, GlossarySchema, NamesSchema, OriginFileSchema, TraitFileSchema, WorldSchema,
-  type Balance, type FamilyAction, type GameEvent, type Glossary, type Names, type Origin, type Trait, type World,
+  BalanceSchema, EventFileSchema, FamilyActionFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, TraitFileSchema, WorldSchema,
+  type Balance, type FamilyAction, type GameEvent, type Glossary, type LifeTexts, type Names, type Origin, type Trait, type World,
 } from './schemas';
 import { splitWorldPath, validateContent } from './validate';
 
@@ -22,6 +22,7 @@ export interface Content {
   names: Names;
   traits: Trait[];
   familyActions: FamilyAction[];
+  lifeTexts: LifeTexts;
 }
 
 const modules = import.meta.glob('../../content/**/*.json', { eager: true, import: 'default' });
@@ -68,5 +69,6 @@ export function loadContent(worldId: string = DEFAULT_WORLD_ID): Content {
     names: NamesSchema.parse(files[`${dir}character/names.json`]),
     traits: TraitFileSchema.parse(files['traits.json']),
     familyActions: FamilyActionFileSchema.parse(files['family-actions.json'] ?? []),
+    lifeTexts: LifeTextsSchema.parse(files['life-texts.json']),
   };
 }

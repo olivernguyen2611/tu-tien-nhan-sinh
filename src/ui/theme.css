@@ -537,3 +537,47 @@ button { font: inherit; color: inherit; }
 .relative-age { margin-left: auto; font-size: 0.75rem; color: var(--muted); }
 .chip-btn { min-height: 34px; padding: 0 12px; border: 1px solid var(--jade); border-radius: 999px; background: none; color: var(--jade); font-weight: 600; cursor: pointer; white-space: nowrap; }
 .chip-btn:disabled { opacity: 0.5; cursor: default; }
+
+/* ---------- Death screen ---------- */
+.death-screen {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: calc(16px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom));
+}
+.death-screen .tablet {
+  width: min(520px, 100%);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 20px 16px 16px;
+  text-align: center;
+  display: grid;
+  gap: 10px;
+  animation: rise 0.25s ease;
+}
+.death-screen .seal-mark {
+  justify-self: center;
+  width: 56px; height: 56px;
+  display: grid; place-items: center;
+  border: 3px solid var(--ink);
+  border-radius: 8px;
+  font-family: var(--font-story);
+  font-size: 1.75rem;
+  font-weight: 700;
+  transform: rotate(-4deg);
+}
+.death-screen .kicker { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+.death-screen h1 { font-family: var(--font-story); font-size: 1.75rem; margin: 0; }
+.death-screen .cause { margin: 0; font-weight: 600; }
+.death-screen .epitaph { margin: 0 0 4px; font-family: var(--font-story); font-style: italic; color: var(--muted); }
+.death-screen .facts { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; text-align: left; }
+.death-screen .facts div { background: var(--surface-2); border-radius: 8px; padding: 6px 10px; }
+.death-screen .facts dt { font-size: 0.75rem; color: var(--muted); }
+.death-screen .facts dd { margin: 0; font-weight: 600; }
+.death-screen .profile-grid, .death-screen .trait-chips { text-align: left; }
+.death-actions { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 8px; margin-top: 4px; }
+.death-actions .btn-primary { min-height: 52px; font-size: 1.0625rem; }
+.age-btn.ended { background: var(--ink); color: var(--bg); box-shadow: var(--shadow), 0 0 0 2px var(--ink); }

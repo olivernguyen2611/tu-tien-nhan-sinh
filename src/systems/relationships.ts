@@ -117,7 +117,7 @@ export interface ActionView {
 
 /** Actions the player can do with this relative right now. */
 export function availableActions(state: GameState, content: Content, r: Relative): ActionView[] {
-  if (!r.alive) return [];
+  if (!r.alive || !state.alive) return [];
   const age = state.character.age;
   return content.familyActions
     .filter((a) => age >= a.minAge && (a.maxAge === undefined || age <= a.maxAge))
