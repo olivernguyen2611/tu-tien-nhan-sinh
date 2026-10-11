@@ -7,11 +7,13 @@ const RARITY_LABEL: Record<string, string> = {
   pham: 'Phàm', luong: 'Lương', uu: 'Ưu', tuyet: 'Tuyệt', thien: 'Thiên', than: 'Thần', ac: 'Ác vận',
 };
 
-export function DestinyRollScreen({ state, content, rollCount, onReroll, onConfirm }: {
+export function DestinyRollScreen({ state, content, rollCount, unlimited, onReroll, onConfirm }: {
   state: GameState;
   content: Content;
   /** Changes on every reroll so the cards flip again. */
   rollCount: number;
+  /** Developer mode: rerolls never run out. */
+  unlimited: boolean;
   onReroll: () => void;
   onConfirm: () => void;
 }) {
@@ -46,8 +48,8 @@ export function DestinyRollScreen({ state, content, rollCount, onReroll, onConfi
       </div>
 
       <div class="destiny-actions">
-        <button class="btn-secondary" onClick={onReroll} disabled={left <= 0}>
-          Nghịch thiên cải mệnh ({left})
+        <button class="btn-secondary" onClick={onReroll} disabled={!unlimited && left <= 0}>
+          Nghịch thiên cải mệnh ({unlimited ? '∞' : left})
         </button>
         <button class="btn-primary" onClick={onConfirm}>Thuận theo thiên ý</button>
       </div>

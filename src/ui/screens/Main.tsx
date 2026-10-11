@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
+import { DevPanel } from '../components/DevPanel';
 import { FamilyPanel } from '../components/FamilyPanel';
 import { EventPopup, type PopupResult } from '../components/EventPopup';
 import { Meter } from '../components/Meter';
@@ -26,7 +27,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onNewLife, onSummary, onSaves, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -42,12 +43,15 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onSummary: () => void;
   /** Open the save slots (Sổ lưu). */
   onSaves: () => void;
+  /** Set when developer mode is on: apply a cheat, or turn the mode off. */
+  dev: { onChange: (next: GameState) => void; onDisable: () => void } | null;
   theme: ThemePref;
   onToggleTheme: () => void;
 }) {
   const [profileOpen, setProfileOpen] = useState(false);
   const [result, setResult] = useState<PopupResult | null>(null);
   const [familyOpen, setFamilyOpen] = useState(false);
+  const [devOpen, setDevOpen] = useState(false);
   const logRef = useRef<HTMLElement>(null);
   const { character: c, stats, cult, money } = state;
   const origin = content.origins.find((o) => o.id === c.originId);
@@ -77,6 +81,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
           <span class="stone">{money.spiritStones} <Term id="linh_thach">linh thạch</Term></span>
         </div>
         <div class="top-actions">
+          {dev && <button class="icon-btn dev-btn" aria-label="Developer mode" title="Developer mode" onClick={() => setDevOpen(true)}>Dev</button>}
           <button class="icon-btn" aria-label="Túi đồ" title="Túi đồ">囊</button>
           <button class="icon-btn" aria-label="Sổ lưu" title="Sổ lưu" onClick={onSaves}>簿</button>
           <span class="desktop-only">
@@ -127,6 +132,11 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       <EventPopup state={state} content={content} result={result}
         onChoose={(i) => setResult(onChoose(i))} onClose={() => setResult(null)} />
+
+      {dev && devOpen && (
+        <DevPanel state={state} content={content} onChange={dev.onChange} onClose={() => setDevOpen(false)}
+          onDisable={() => { setDevOpen(false); dev.onDisable(); }} />
+      )}
 
       {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onClose={() => setFamilyOpen(false)} />}
 

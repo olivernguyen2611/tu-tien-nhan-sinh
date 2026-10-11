@@ -1,21 +1,46 @@
+import { useRef, useState } from 'preact/hooks';
 import { ThemeToggle } from '../components/ThemeToggle';
+import { DEV_TAP_GAP_MS, DEV_TAPS } from '../devMode';
 import type { ThemePref } from '../theme';
 
-export function TitleScreen({ canContinue, livesPlayed, onContinue, onStart, onSaves, theme, onToggleTheme }: {
+export function TitleScreen({ canContinue, livesPlayed, devMode, onDevUnlock, onContinue, onStart, onSaves, theme, onToggleTheme }: {
   canContinue: boolean;
   livesPlayed: number;
+  devMode: boolean;
+  /** Called after the seal is tapped DEV_TAPS times in a row. */
+  onDevUnlock: () => void;
   onContinue: () => void;
   onStart: () => void;
   onSaves: () => void;
   theme: ThemePref;
   onToggleTheme: () => void;
 }) {
+  // Hidden unlock: tap the seal 20 times (no more than 2 s apart).
+  const taps = useRef({ count: 0, at: 0 });
+  const [left, setLeft] = useState<number | null>(null);
+  const tapSeal = () => {
+    if (devMode) return;
+    const now = Date.now();
+    const t = taps.current;
+    t.count = now - t.at > DEV_TAP_GAP_MS ? 1 : t.count + 1;
+    t.at = now;
+    if (t.count >= DEV_TAPS) {
+      t.count = 0;
+      setLeft(null);
+      onDevUnlock();
+    } else {
+      setLeft(t.count >= DEV_TAPS - 5 ? DEV_TAPS - t.count : null);
+    }
+  };
+
   return (
     <main class="title-screen">
       <div class="theme-corner">
         <ThemeToggle pref={theme} onChange={onToggleTheme} />
       </div>
-      <div class="seal-mark" aria-hidden="true">仙</div>
+      <div class="seal-mark" aria-hidden="true" onClick={tapSeal}>仙</div>
+      {left !== null && <p class="dev-hint" role="status">Còn {left} lần nữa…</p>}
+      {devMode && <p class="dev-hint">Developer mode đang bật</p>}
       <h1>Tu Tiên Nhân Sinh</h1>
       <p class="subtitle">Một đời phàm nhân, vạn năm tiên lộ</p>
       {canContinue && <button class="btn-primary start" onClick={onContinue}>Tiếp tục</button>}

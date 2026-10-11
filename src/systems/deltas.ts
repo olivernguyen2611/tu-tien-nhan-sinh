@@ -3,7 +3,7 @@
 import { APTITUDES, MORTAL_STATS } from '../core/schemas';
 import type { GameState } from '../core/types';
 
-const LABELS: Record<string, string> = {
+export const STAT_LABELS: Record<string, string> = {
   health: 'Sức khỏe', happiness: 'Hạnh phúc', intellect: 'Trí tuệ', charm: 'Mị lực',
   physique: 'Căn cốt', comprehension: 'Ngộ tính', luck: 'Khí vận', daoHeart: 'Đạo tâm',
 };
@@ -16,11 +16,11 @@ export function statChanges(before: GameState, after: GameState): Change[] {
   const out: Change[] = [];
   for (const k of MORTAL_STATS) {
     const d = after.stats[k] - before.stats[k];
-    if (d) out.push({ label: LABELS[k], delta: d });
+    if (d) out.push({ label: STAT_LABELS[k], delta: d });
   }
   for (const k of APTITUDES) {
     const d = after.aptitudes[k] - before.aptitudes[k];
-    if (d) out.push({ label: LABELS[k], delta: d });
+    if (d) out.push({ label: STAT_LABELS[k], delta: d });
   }
   const money: [string, number][] = [
     ['Bạc', after.money.silver - before.money.silver],
@@ -37,6 +37,6 @@ export function describeChanges(before: GameState, after: GameState): string {
 }
 
 /** Same format for a single stat, for log lines built inside a system. */
-export function describeDelta(label: keyof typeof LABELS, delta: number): string {
-  return delta ? `${LABELS[label]} ${signed(delta)}` : '';
+export function describeDelta(label: keyof typeof STAT_LABELS, delta: number): string {
+  return delta ? `${STAT_LABELS[label]} ${signed(delta)}` : '';
 }
