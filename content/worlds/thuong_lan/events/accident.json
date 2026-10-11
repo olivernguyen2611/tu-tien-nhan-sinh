@@ -157,7 +157,8 @@
         "result": {
           "text": "Ngươi chạy nhanh hơn nước, gọi dậy cả xóm. Không ai chết.",
           "effects": {
-            "karma": 8
+            "karma": 8,
+            "stat.charm": 3
           }
         }
       }

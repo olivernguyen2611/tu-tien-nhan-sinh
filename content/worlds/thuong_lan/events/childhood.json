@@ -109,7 +109,8 @@
         "result": {
           "text": "Một lão bán thuốc trả ngay hai mươi lạng, mắt sáng rỡ. Có lẽ ngươi bán hớ.",
           "effects": {
-            "silver": 20
+            "silver": 20,
+            "stat.happiness": 3
           }
         }
       },
@@ -199,7 +200,6 @@
         "result": {
           "text": "Ngươi đi, lòng còn vương vấn.",
           "effects": {
-            "stat.happiness": -1,
             "stat.daoHeart": 1
           }
         }
@@ -358,7 +358,7 @@
         "result": {
           "text": "Người lớn hai nhà cãi nhau, quên mất cái diều.",
           "effects": {
-            "stat.happiness": -3
+            "stat.happiness": -2
           }
         }
       },
@@ -402,7 +402,6 @@
         "result": {
           "text": "Ông lão ăn xong, nhìn ngươi rất lâu rồi bỏ đi, không nói một lời.",
           "effects": {
-            "karma": 3,
             "setFlags": [
               "cho_ong_lao_an"
             ],
@@ -412,7 +411,9 @@
                 3,
                 8
               ]
-            }
+            },
+            "karma": 3,
+            "stat.happiness": 2
           }
         }
       },
@@ -421,7 +422,7 @@
         "result": {
           "text": "Ngoài cửa im lặng. Hôm sau ông lão không còn đó.",
           "effects": {
-            "karma": -1
+            "stat.daoHeart": -1
           }
         }
       },
@@ -430,7 +431,8 @@
         "result": {
           "text": "Ông lão chỉ cười. Đêm đó ngươi mơ thấy bị chó đuổi.",
           "effects": {
-            "karma": -3
+            "karma": -3,
+            "stat.happiness": 2
           }
         }
       }
@@ -474,7 +476,8 @@
         "result": {
           "text": "Túi nặng trịch. Ông lão lắc đầu như thấy tiếc.",
           "effects": {
-            "silver": 50
+            "silver": 50,
+            "stat.happiness": 5
           }
         }
       },
