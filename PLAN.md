@@ -1,0 +1,509 @@
+# KẾ HOẠCH PHÁT TRIỂN — "TU TIÊN NHÂN SINH"
+
+> Phiên bản: bản nháp 1 (2026-10-11) · Trạng thái: **chờ duyệt**
+> Quy ước đánh dấu task: `[ ]` chưa làm · `[~]` đang làm · `[x]` xong
+
+---
+
+## A. Các quyết định đã chốt (trả lời câu hỏi làm rõ)
+
+| # | Câu hỏi | Quyết định |
+|---|---|---|
+| 1 | Độ dài một đời | Không cố định. Dài hay ngắn tùy lựa chọn và cách người chơi xử lý tình huống. Engine phải hỗ trợ cả đời phàm nhân 40 năm lẫn đời tu sĩ vạn năm (tua nhanh, bế quan). |
+| 2 | Giao diện | Bố cục kiểu BitLife (thanh chỉ số trên, nhật ký cuộn giữa, nút lớn dưới) nhưng **vẽ lại hoàn toàn theo phong cách cổ phong**. Không dùng logo, hình, chữ của BitLife. Ảnh AI chỉ dùng cho **tình tiết đặc biệt**. |
+| 3 | Nội dung | Có giết chóc, ma đạo, lô đỉnh, cảnh nhạy cảm, nhưng **không miêu tả trần trụi** (xem mục H). |
+| 4 | Thiết bị | Điện thoại và máy tính **quan trọng ngang nhau**. |
+| 5 | Nơi lưu code | **Repo GitHub + GitHub Pages** để chơi thử bằng link trên mọi thiết bị. |
+| 6 | Cách làm | **Từng bước nhỏ**, mỗi bước chơi thử được, tránh lỗi dây chuyền. |
+| 7 | Nội dung (sự kiện, khí vận…) | **Claude soạn nháp, bạn duyệt** trước khi đưa vào game. |
+
+---
+
+## B. Tóm tắt thiết kế
+
+### Vòng lặp chính
+1. **Tạo nhân vật** → bấm *Nghịch Thiên Bốc Mệnh* quay 3 ô Tiên Thiên Khí Vận (có reroll).
+2. **Qua một năm** (1 chạm): tuổi +1 → tu vi tăng → kiểm tra thọ nguyên → có thể nảy ra sự kiện → người chơi chọn → hậu quả ghi vào nhật ký.
+3. Lúc rảnh, người chơi mở các tab (Tu luyện, Tông môn, Túi đồ, Quan hệ, Khám phá, Nhân vật) để chủ động làm việc: đột phá, bái sư, đi phường thị, tỏ tình, gây chuyện…
+4. **Chết** (già, đánh nhau, đột phá hỏng, thiên kiếp…) → màn **tổng kết đời** → nhận điểm Luân Hồi → mở khóa thiên phú → đời mới.
+
+### Điểm hấp dẫn
+- **Mỗi đời một câu chuyện**: khí vận quay ngẫu nhiên + sự kiện có điều kiện + nhân quả nhiều năm sau → không đời nào giống đời nào.
+- **Nhân quả thật**: NPC nhớ việc bạn làm (sổ ân oán), cả ân oán lẫn tông môn tồn tại sang đời sau.
+- **Build nhân vật**: khí vận + kim thủ chỉ + thiên phú Nghịch Thiên Cải Mệnh xếp chồng thành lối chơi riêng (kiếm tu tốc chiến, đan sư sống lâu, ma tu hút máu…).
+- **Motif tu tiên kinh điển + hài hước**: phế vật nghịch tập, từ hôn, lão gia gia trong nhẫn, đồ đệ xuyên không gọi sư phụ là "NPC".
+
+### Khác biệt so với BitLife
+| BitLife | Tu Tiên Nhân Sinh |
+|---|---|
+| Đời người ~80 năm, cố định nhịp | Từ vài chục đến hàng nghìn năm; nhịp tự co giãn (bế quan, tua nhanh) |
+| Chỉ số đời thường | Thêm hệ cảnh giới, linh căn, tu vi, thọ nguyên, nhân quả |
+| Chết là hết | Luân hồi mang theo điểm, thành tựu, Thiên Thư; gặp lại tông môn mình lập |
+| Quay ngẫu nhiên xuất thân | Quay khí vận có phẩm cấp, ác vận có lợi ích kèm, tổ hợp ẩn |
+| NPC đứng yên | NPC quan trọng tự tu luyện, già đi, phản bội, báo thù |
+
+### Nhịp chơi
+- ~80% số năm chỉ cần 1 chạm, không popup.
+- Có **Tua nhanh** (tự qua năm đến khi gặp sự kiện quan trọng) và **Bế quan X năm** ở cảnh giới cao.
+- Độ dài đời do người chơi quyết định: liều mạng thì chết sớm, cẩn trọng thì sống lâu nhưng có thể lỡ cơ duyên.
+
+---
+
+## C. Kiến trúc kỹ thuật
+
+### C.1 Công nghệ và lý do
+| Thành phần | Chọn | Lý do |
+|---|---|---|
+| Build | **Vite** | Khởi động nhanh, cấu hình tối thiểu, build ra web tĩnh để đưa lên GitHub Pages. |
+| Ngôn ngữ | **TypeScript** | Bắt lỗi kiểu dữ liệu sớm. Rất quan trọng khi vibe coding: AI sửa sai chỗ nào là trình biên dịch báo ngay. |
+| Giao diện | **Preact** (~4 KB, cú pháp giống React) | Game có nhiều tab, popup, danh sách. Viết giao diện thuần JS sẽ rối nhanh; React đầy đủ thì nặng hơn mức cần. Preact nhẹ, dễ đọc, dễ chuyển sang React sau nếu cần. |
+| Kiểm tra dữ liệu | **Zod** | Định nghĩa schema cho mọi file JSON; validator dùng chung schema đó. |
+| Test | **Vitest** | Test engine bằng seed cố định, chạy cùng hệ thống Vite. |
+| Lưu game | **localStorage** | Nhiều slot, tự lưu mỗi năm, xuất/nhập file `.json`. |
+| Triển khai | **GitHub Actions → GitHub Pages** | Mỗi lần đẩy code, link chơi thử tự cập nhật. |
+| Mở rộng sau | **PWA**, sau đó Capacitor nếu cần lên store | PWA cài được lên màn hình điện thoại, chơi offline. |
+
+### C.2 Cấu trúc thư mục
+```
+tu-tien-nhan-sinh/
+├─ index.html
+├─ package.json · vite.config.ts · tsconfig.json
+├─ PLAN.md · CHANGELOG.md · CLAUDE.md        (CLAUDE.md = quy tắc làm việc mục 8 của spec)
+├─ .github/workflows/deploy.yml              (tự build và đưa lên GitHub Pages)
+├─ public/
+│  └─ img/events/                            (ảnh AI cho tình tiết đặc biệt)
+├─ content/                                  (TOÀN BỘ NỘI DUNG GAME, dạng JSON)
+│  ├─ config/balance.json                    (mọi con số cân bằng)
+│  ├─ realms.json · roots.json · aptitudes.json
+│  ├─ traits.json · trait-combos.json        (Tiên Thiên Khí Vận, tổ hợp ẩn)
+│  ├─ golden-fingers.json · fate-talents.json
+│  ├─ techniques.json · items.json · pills.json · treasures.json
+│  ├─ sects.json · regions.json · npc-templates.json · protagonist-templates.json
+│  ├─ achievements.json · rebirth-talents.json · end-badges.json
+│  ├─ glossary.json
+│  └─ events/
+│     ├─ childhood.json · root-test.json · sect-recruit.json
+│     ├─ cultivation.json · fortune.json · romance.json · funny.json …
+├─ src/
+│  ├─ main.tsx
+│  ├─ core/
+│  │  ├─ types.ts            (kiểu dữ liệu dùng chung)
+│  │  ├─ rng.ts              (random có seed)
+│  │  ├─ state.ts            (GameState + tạo nhân vật mới)
+│  │  ├─ gameLoop.ts         (xử lý một năm, nhận hành động người chơi)
+│  │  └─ content.ts          (nạp + kiểm tra JSON)
+│  ├─ systems/
+│  │  ├─ time.ts             (TimeSystem: qua năm, tua nhanh, bế quan)
+│  │  ├─ events/             (EventEngine: conditions.ts, effects.ts, picker.ts, text.ts)
+│  │  ├─ cultivation.ts      (tu vi, đột phá, bình cảnh, tâm ma)
+│  │  ├─ combat.ts
+│  │  ├─ relationships.ts    (quan hệ, thiện cảm, sổ ân oán)
+│  │  ├─ lineage.ts          (đạo lữ, con cháu, gia tộc, di truyền)
+│  │  ├─ disciples.ts        (sư đồ, khí vận chi tử)
+│  │  ├─ sect.ts             (lập tông phái)
+│  │  ├─ destiny.ts          (khí vận, kim thủ chỉ, Nghịch Thiên Cải Mệnh)
+│  │  ├─ inventory.ts
+│  │  ├─ world.ts            (vùng, NPC thế giới sống, thiên kiêu bảng)
+│  │  ├─ rebirth.ts          (luân hồi, thành tựu, Thiên Thư)
+│  │  └─ save.ts             (SaveSystem)
+│  └─ ui/
+│     ├─ theme.css           (màu giấy cũ/mực + dark mode ngọc bích)
+│     ├─ components/         (StatBar, LogBlock, EventPopup, Tooltip, TabBar…)
+│     └─ screens/            (Title, CreateCharacter, DestinyRoll, Main, Death, Rebirth, Settings)
+├─ tools/
+│  └─ validate-content.ts    (npm run validate: kiểm tra schema, trùng id, tham chiếu hỏng)
+└─ tests/                    (test engine theo seed)
+```
+
+### C.3 Các module chính
+| Module | Nhiệm vụ | Giai đoạn |
+|---|---|---|
+| **GameState** | Một object duy nhất chứa toàn bộ trạng thái đời đang chơi (nhân vật, chỉ số, flag, NPC, túi đồ, nhật ký, trạng thái RNG). | GĐ1 |
+| **TimeSystem** | Qua năm, tua nhanh, bế quan; gọi các hệ thống khác theo thứ tự cố định. | GĐ1 |
+| **EventEngine** | Lọc sự kiện theo điều kiện, rút theo trọng số (có khí vận), áp hậu quả, thay biến `{name}`, chuỗi sự kiện qua flag. | GĐ1 |
+| **CultivationSystem** | Linh căn, tu vi, cảnh giới, đột phá, phẩm đạo cơ/Kim Đan/Nguyên Anh, bình cảnh, tâm ma, thiên kiếp. | GĐ2–4 |
+| **CombatSystem** | So chỉ số + vài lựa chọn (đánh, pháp bảo, phù, chạy, cầu xin), xuất văn bản mô tả. | GĐ3 |
+| **RelationshipSystem** | Cha mẹ, bằng hữu, sư phụ, kẻ thù; thiện cảm nhiều nấc; sổ ân oán. | GĐ1 (cơ bản) → GĐ3 |
+| **LineageSystem** | Đạo lữ, song tu, sinh con, di truyền linh căn, gia tộc, chơi tiếp bằng con cháu. | GĐ3, GĐ5 |
+| **DiscipleSystem** | Thu đồ đệ, khí vận chi tử, phản sư, truyền y bát. | GĐ4–5 |
+| **SectSystem** | Gia nhập tông môn (GĐ2), lập tông phái + báo cáo năm (GĐ5). | GĐ2, GĐ5 |
+| **DestinySystem** | Tiên Thiên Khí Vận, tổ hợp ẩn, Kim Thủ Chỉ, Nghịch Thiên Cải Mệnh. | GĐ1 → GĐ5b |
+| **InventorySystem** | Bạc, linh thạch, vật phẩm, đan dược, pháp bảo. | GĐ3 |
+| **SaveSystem** | Nhiều slot, tự lưu, xuất/nhập file, nâng cấp save cũ khi game đổi phiên bản. | GĐ1 |
+| **UI** | Chỉ hiển thị và gửi hành động; **không chứa logic game**. | Mọi GĐ |
+
+### C.4 Luồng dữ liệu
+```
+Người chơi bấm nút
+   → UI gửi Action (vd: { type: "ADVANCE_YEAR" } / { type: "CHOOSE", choiceIndex: 1 })
+   → gameLoop(state, action, content, rng)   ← hàm thuần, không đụng tới giao diện
+        → TimeSystem → CultivationSystem → World/NPC → EventEngine → …
+   → trả về GameState mới (+ dòng nhật ký, + sự kiện đang chờ chọn nếu có)
+   → SaveSystem tự lưu
+   → UI vẽ lại
+```
+Vì logic là hàm thuần + RNG có seed, **cùng seed + cùng chuỗi lựa chọn = cùng kết quả**. Khi bạn báo lỗi, chỉ cần gửi file save là tái hiện được.
+
+### C.5 Định dạng file save
+```json
+{
+  "saveVersion": 1,
+  "gameVersion": "0.1.0",
+  "slot": 1,
+  "savedAt": "2026-10-11T14:00:00Z",
+  "meta": { "rebirthPoints": 0, "livesPlayed": 3, "achievements": [], "codex": [], "pityCounter": 2 },
+  "life": {
+    "seed": 123456789,
+    "rngState": [1, 2, 3, 4],
+    "year": 37,
+    "character": { "name": "Lý Thanh Phong", "gender": "nam", "age": 37, "origin": "nong_dan", "region": "thanh_van_tran" },
+    "stats": { "health": 80, "happiness": 60, "intellect": 55, "charm": 40 },
+    "cult": { "realm": "luyen_khi", "stage": 6, "progress": 42, "root": "song_kim_hoa", "lifespan": 120 },
+    "traits": ["an_khoe_ngu_ngon", "kiem_cot", "thien_sat_co_tinh"],
+    "flags": { "found_old_cave": true },
+    "npcs": [],
+    "inventory": [],
+    "log": []
+  }
+}
+```
+- `meta`: dữ liệu vĩnh viễn giữa các đời. `life`: đời hiện tại.
+- Có hàm `migrate(save)` nâng cấp save cũ theo `saveVersion`, để bản cập nhật không làm hỏng save của bạn.
+- Nhật ký quá dài sẽ được nén (giữ năm quan trọng) để không vượt giới hạn localStorage (~5 MB).
+
+### C.6 Cấu trúc sự kiện (cải tiến so với spec)
+Giữ khung trong spec, thêm 5 điểm:
+1. `conditions` gộp các điều kiện chỉ số vào một mảng `stats: [{ "stat": "luck", "gte": 50 }]` để không phải thêm trường mới cho mỗi chỉ số.
+2. Mỗi lựa chọn có `requires` (điều kiện để hiện) và `hidden: true` → hiện như **lựa chọn ẩn** tô màu theo phẩm khí vận.
+3. `followUp: { "event": "id", "afterYears": [3, 10] }` để hẹn sự kiện tiếp theo nhiều năm sau (nhân quả).
+4. `tags`: dùng cho bộ lọc nội dung (`violence`, `dark`, `mature`) và cho thống kê.
+5. `image` (tùy chọn): đường dẫn ảnh AI cho tình tiết đặc biệt; không có ảnh thì hiện khung mực mặc định.
+
+```json
+{
+  "id": "find_old_cave_01",
+  "category": "fortune",
+  "title": "Động phủ trong núi",
+  "text": "Trên đường hái thuốc, {name} lạc vào một hang động có cấm chế mờ nhạt...",
+  "tags": [],
+  "image": null,
+  "conditions": {
+    "age": { "min": 10 },
+    "realm": { "min": "pham_nhan", "max": "truc_co" },
+    "region": ["thanh_van_son"],
+    "flagsNone": ["found_old_cave"],
+    "traitsAny": [],
+    "stats": []
+  },
+  "weight": 5,
+  "luckAffected": true,
+  "cooldownYears": 0,
+  "oncePerLife": true,
+  "choices": [
+    {
+      "text": "Mạo hiểm phá cấm chế",
+      "check": { "stat": "luck", "difficulty": 60 },
+      "success": { "text": "...", "effects": { "addItems": ["ngoc_gian_01"], "setFlags": ["found_old_cave"] } },
+      "fail":    { "text": "...", "effects": { "health": -30, "setFlags": ["found_old_cave"] } }
+    },
+    {
+      "text": "[Lão gia gia] Hỏi ý tàn hồn trong nhẫn",
+      "requires": { "goldenFinger": "lao_gia_gia" },
+      "hidden": true,
+      "result": { "text": "...", "effects": { "addItems": ["ngoc_gian_01"], "setFlags": ["found_old_cave"] } }
+    },
+    { "text": "Rời đi", "result": { "text": "...", "effects": {} } }
+  ]
+}
+```
+Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới vật phẩm/sự kiện/khí vận không tồn tại, flag được đòi hỏi nhưng không sự kiện nào đặt, ảnh khai báo mà không có file.
+
+---
+
+## D. Lộ trình theo giai đoạn
+
+> Mỗi task = một lần trao đổi. Xong task nào, Claude đẩy code lên repo, bạn mở link GitHub Pages chơi thử, rồi duyệt hoặc báo lỗi.
+> Task có ký hiệu ✍️ là task **nội dung**: Claude soạn nháp, bạn duyệt rồi mới nhập vào game.
+
+### GĐ 0 — Khung dự án
+**Mục tiêu:** có link chơi thử trống, mọi công cụ chạy được.
+
+| # | Task | File chính |
+|---|---|---|
+| 0.1 | [x] Khởi tạo Vite + TypeScript + Preact, cấu trúc thư mục, `CLAUDE.md`, `CHANGELOG.md` | `package.json`, `vite.config.ts`, `src/main.tsx` |
+| 0.2 | [ ] GitHub Actions tự build và đưa lên GitHub Pages | `.github/workflows/deploy.yml` |
+| 0.3 | [ ] RNG có seed + Vitest + test đầu tiên | `src/core/rng.ts`, `tests/rng.test.ts` |
+| 0.4 | [ ] Nạp JSON + schema Zod + `npm run validate` | `src/core/content.ts`, `tools/validate-content.ts` |
+| 0.5 | [ ] Theme cổ phong (giấy cũ + dark mode ngọc bích), font tiếng Việt, khung bố cục co giãn điện thoại/máy tính | `src/ui/theme.css`, `src/ui/screens/Main.tsx` |
+
+**Tiêu chí hoàn thành:** mở link GitHub Pages trên điện thoại và máy tính thấy màn hình tiêu đề "Tu Tiên Nhân Sinh" theo phong cách cổ phong, đổi được sáng/tối, không lỗi.
+
+**Prompt mẫu:** `Bắt đầu GĐ 0, task 0.1.`
+
+### GĐ 1 — MVP phàm nhân
+**Mục tiêu:** sống trọn một đời phàm nhân từ lúc sinh tới lúc chết, có khí vận, sự kiện, lưu game.
+
+| # | Task | File chính |
+|---|---|---|
+| 1.1 | [ ] GameState + tạo nhân vật (tên, giới tính, xuất thân, quê quán, chỉ số phàm nhân) | `core/state.ts`, `screens/CreateCharacter.tsx` |
+| 1.2 | [ ] ✍️ Soạn ~20 Tiên Thiên Khí Vận (đủ phẩm Phàm→Thần + 3–4 ác vận) | `content/traits.json` |
+| 1.3 | [ ] Màn *Nghịch Thiên Bốc Mệnh*: quay 3 ô, thẻ lật, phát sáng theo màu, reroll giới hạn | `systems/destiny.ts`, `screens/DestinyRoll.tsx` |
+| 1.4 | [ ] Màn chính: thanh chỉ số trên, nhật ký cuộn, nút **Qua một năm**, thanh tab | `screens/Main.tsx`, `components/*` |
+| 1.5 | [ ] EventEngine lõi: lọc điều kiện, rút trọng số, áp hiệu ứng, thay biến văn bản, popup lựa chọn | `systems/events/*`, `components/EventPopup.tsx` |
+| 1.6 | [ ] ✍️ Soạn ~20 sự kiện phàm nhân (tuổi thơ, đi học, làm việc, hài hước, tai nạn) | `content/events/childhood.json`, `mortal.json`, `funny.json` |
+| 1.7 | [ ] Cha mẹ, anh chị em cơ bản (thiện cảm, già và mất theo thời gian) | `systems/relationships.ts` |
+| 1.8 | [ ] Lão hóa, bệnh, chết già; màn tổng kết đời đơn giản | `systems/time.ts`, `screens/Death.tsx` |
+| 1.9 | [ ] SaveSystem: 3 slot, tự lưu mỗi năm, xuất/nhập file, cảnh báo ghi đè | `systems/save.ts`, `screens/Settings.tsx` |
+| 1.10 | [ ] ✍️ Glossary + tooltip (chạm vào thuật ngữ gạch chân để xem giải thích) | `content/glossary.json`, `components/Tooltip.tsx` |
+| 1.11 | [ ] Tua nhanh (tự qua năm tới khi có sự kiện) | `systems/time.ts` |
+
+**Tiêu chí hoàn thành:** tạo nhân vật, quay khí vận, chơi tới khi chết già; có ít nhất vài sự kiện chọn lựa; đóng trình duyệt mở lại vẫn chơi tiếp; xuất file save rồi nhập lại được.
+
+**Prompt mẫu:** `Làm task 1.2: soạn nháp 20 khí vận cho mình duyệt.`
+
+### GĐ 2 — Bước vào tu tiên
+**Mục tiêu:** từ phàm nhân được phát hiện linh căn, vào tông môn, tu tới Trúc Cơ.
+
+| # | Task | File chính |
+|---|---|---|
+| 2.1 | [ ] ✍️ Bảng cảnh giới (Phàm Nhân → Hóa Thần) + linh căn + tư chất đạo đồ | `content/realms.json`, `roots.json`, `aptitudes.json` |
+| 2.2 | [ ] Sự kiện kiểm tra linh căn (6–12 tuổi) + hiển thị linh căn | `systems/cultivation.ts`, `content/events/root-test.json` |
+| 2.3 | [ ] Tu vi tăng mỗi năm theo công thức mục G; thanh tu vi; đột phá tiểu cảnh giới Luyện Khí | `systems/cultivation.ts` |
+| 2.4 | [ ] ✍️ 6 tông môn khởi đầu (chính/ma/kiếm/đan/phật/yêu) + 8 công pháp Hoàng/Huyền phẩm | `content/sects.json`, `techniques.json` |
+| 2.5 | [ ] Tuyển đệ tử tông môn, cấp bậc ngoại môn/nội môn, nhiệm vụ tông môn đơn giản, sư phụ NPC | `systems/sect.ts`, `content/events/sect-recruit.json` |
+| 2.6 | [ ] Đột phá Trúc Cơ: tỉ lệ thành công, phẩm đạo cơ (Hạ/Trung/Thượng/Hoàn mỹ), hậu quả thất bại | `systems/cultivation.ts` |
+| 2.7 | [ ] ✍️ + code: Nghịch Thiên Cải Mệnh lần đầu (chọn 1 trong 3 thiên phú khi Trúc Cơ) | `content/fate-talents.json`, `systems/destiny.ts` |
+| 2.8 | [ ] ✍️ ~25 sự kiện tu luyện & tông môn | `content/events/cultivation.json` |
+| 2.9 | [ ] Đời đầu tiên dạng hướng dẫn + dòng "Mục tiêu hiện tại" | `systems/tutorial.ts` |
+| 2.10 | [ ] Chọn độ khó Dễ/Thường/Khó (Khó: không load lại) | `screens/CreateCharacter.tsx`, `balance.json` |
+
+**Tiêu chí hoàn thành:** một đời có linh căn vào được tông môn và tu tới Trúc Cơ; đời không linh căn vẫn sống tiếp như phàm nhân; đột phá thất bại có hậu quả rõ ràng.
+
+**Prompt mẫu:** `Làm task 2.3 theo công thức ở mục G của PLAN.md.`
+
+### GĐ 3 — Thế giới tu chân
+**Mục tiêu:** thế giới có tiền, đồ, đánh nhau, NPC sống, tình duyên.
+
+| # | Task |
+|---|---|
+| 3.1 | [ ] Túi đồ, bạc/linh thạch, đan dược dùng được (✍️ ~15 đan dược, ~15 vật phẩm) |
+| 3.2 | [ ] Phường thị: mua bán, trả giá đơn giản |
+| 3.3 | [ ] CombatSystem: so chỉ số + 5 lựa chọn, văn bản mô tả; khoảng cách cảnh giới có trọng lượng |
+| 3.4 | [ ] NPC có số mệnh riêng: tự tu luyện, già, chết; tính cách bề ngoài/bản chất; sổ ân oán |
+| 3.5 | [ ] Thiên kiêu bảng cập nhật mỗi năm |
+| 3.6 | [ ] Tình duyên: thiện cảm nhiều nấc, theo đuổi, tặng quà, bị từ chối, bị lợi dụng |
+| 3.7 | [ ] Đạo lữ đại điển, song tu, sinh con (di truyền linh căn, đột biến) |
+| 3.8 | [ ] Các con đường tu luyện (Kiếm, Thể, Đan, Ma, Phật, Quỷ) với điểm mạnh/yếu riêng |
+| 3.9 | [ ] ✍️ ~40 sự kiện: tình duyên, giết người đoạt bảo, ma đạo cám dỗ, yêu thú, phường thị |
+| 3.10 | [ ] Tăng Tiên Thiên Khí Vận lên ~40, thêm tag cho sự kiện dùng |
+
+**Tiêu chí hoàn thành:** đánh nhau có văn bản sinh động; một NPC bị bạn hại sẽ quay lại báo thù vài năm sau; kết được đạo lữ và có con mang linh căn di truyền.
+
+**Prompt mẫu:** `Làm task 3.4, nhớ để mọi con số trong balance.json.`
+
+### GĐ 4 — Chiều sâu
+**Mục tiêu:** cảnh giới cao có trải nghiệm riêng, rủi ro lớn, nhịp chậm mà quy mô lớn.
+
+| # | Task |
+|---|---|
+| 4.1 | [ ] Bế quan X năm (lỡ sự kiện, người thân có thể qua đời) |
+| 4.2 | [ ] Mini-game kết đan (3 lượt xếp linh khí) → phẩm Kim Đan 1–9 + ✍️ đan văn |
+| 4.3 | [ ] Hình thái Nguyên Anh theo đạo đã tu (✍️ ~8 hình thái) |
+| 4.4 | [ ] Tâm ma chiến: ảo cảnh dựa trên chính những việc bạn đã làm (đọc sổ ân oán) |
+| 4.5 | [ ] Thiên kiếp ở các mốc lớn, cần pháp bảo/trận pháp |
+| 4.6 | [ ] Bí cảnh dạng chuỗi nhiều bước |
+| 4.7 | [ ] Bách nghệ cơ bản: Luyện đan + Luyện khí (các nghề khác để GĐ7) |
+| 4.8 | [ ] Bản đồ đại vực mở dần theo cảnh giới + ✍️ đại năng trấn giữ |
+| 4.9 | [ ] Thu đồ đệ (cơ bản) |
+| 4.10 | [ ] Áp lực thọ nguyên: chuỗi sự kiện sắp hết thọ, tìm thọ đan, đoạt xá, di ngôn |
+
+**Tiêu chí hoàn thành:** một đời tu tới Nguyên Anh có kết đan mini-game, ít nhất một lần tâm ma và một lần thiên kiếp; sắp hết thọ có lựa chọn liều mạng.
+
+### GĐ 5 — Tông phái & truyền thừa
+| # | Task |
+|---|---|
+| 5.1 | [ ] Lập tông phái: điều kiện, đặt tên, đạo thống, tông quy |
+| 5.2 | [ ] Công trình + báo cáo tông môn hằng năm (1–3 quyết định, còn lại tự chạy) |
+| 5.3 | [ ] Sự kiện tông môn (khiêu khích, phản đồ, đại bỉ, ma đạo công sơn…) |
+| 5.4 | [ ] Gia tộc tu tiên: tộc phả, sản nghiệp, gia quy |
+| 5.5 | [ ] Khí vận chi tử làm đệ tử: ✍️ 3 mô bản đầu (Xuyên không, Phế vật nghịch tập, Trọng sinh giả) |
+| 5.6 | [ ] Vai trò Hộ đạo / Lợi dụng / Mặc kệ và hệ quả |
+| 5.7 | [ ] Chơi tiếp bằng con cháu hoặc đồ đệ khi chết |
+
+**Tiêu chí hoàn thành:** lập được tông môn, nhận báo cáo năm; thu một khí vận chi tử và thấy chuỗi sự kiện riêng; chết rồi chơi tiếp bằng con.
+
+### GĐ 5b — Luân hồi & giữ chân
+| # | Task |
+|---|---|
+| 5b.1 | [ ] Tổng kết đời đầy đủ + điểm Luân Hồi + ✍️ thiên phú luân hồi |
+| 5b.2 | [ ] Kim Thủ Chỉ (✍️ 6–8 loại, cấp thức tỉnh, rủi ro) + bảo hiểm pity |
+| 5b.3 | [ ] Khóa ô khí vận, mở rộng tới 5 ô; nâng khí vận lên ≥60 + ✍️ 10 tổ hợp ẩn |
+| 5b.4 | [ ] Thiên Thư (bộ sưu tập khí vận, tổ hợp, truyện khí vận chi tử) |
+| 5b.5 | [ ] Thành tựu, huy hiệu cuối đời, cáo phó dạng ảnh để chia sẻ |
+| 5b.6 | [ ] Thử thách tuần (seed chung theo tuần) |
+| 5b.7 | [ ] Gặp lại tông môn đời trước |
+
+### GĐ 6 — Hoàn thiện
+Cân bằng bằng **mô phỏng tự động** (chạy hàng nghìn đời giả lập, xem thống kê tuổi chết/cảnh giới), âm thanh, hiệu ứng, PWA cài lên điện thoại, chơi offline, tối ưu tốc độ, rà soát hiển thị trên nhiều cỡ màn hình.
+
+### GĐ 7 — Mở rộng nội dung
+Linh giới/Tiên giới, thêm hàng trăm sự kiện, các nghề bách nghệ còn lại (Trận pháp, Phù lục, Linh thực, Ngự thú), thêm mô bản khí vận chi tử, Capacitor nếu muốn lên store.
+
+---
+
+## E. Danh sách tính năng theo mức ưu tiên
+
+| Bắt buộc (MVP: GĐ 0–2) | Nên có (GĐ 3–5b) | Để sau (GĐ 6–7) |
+|---|---|---|
+| Tạo nhân vật, xuất thân | Túi đồ, đan dược, phường thị | Trận pháp, Phù lục, Linh thực, Ngự thú |
+| Quay khí vận (~20, có reroll) | Chiến đấu lựa chọn | Đấu giá hội |
+| Nút Qua một năm, nhật ký, tua nhanh | NPC số mệnh riêng, sổ ân oán | Thế giới "sống" (tông môn hưng suy, chiến tranh chính ma) |
+| EventEngine + validator | Thiên kiêu bảng | Linh giới / Tiên giới |
+| ~45 sự kiện | Tình duyên, đạo lữ, sinh con | Âm thanh, hiệu ứng nâng cao |
+| Cha mẹ, anh chị em | Bế quan, kết đan mini-game, Nguyên Anh | PWA / Capacitor |
+| Linh căn, tư chất đạo đồ | Tâm ma, thiên kiếp, bí cảnh | Mini-game đổ thạch, thoát trận |
+| Luyện Khí → Trúc Cơ, phẩm đạo cơ | Đại vực + đại năng | Thử thách tuần |
+| 6 tông môn, sư phụ | Thu đồ đệ, khí vận chi tử | Mô bản khí vận chi tử thứ 4 trở đi |
+| Nghịch Thiên Cải Mệnh lần đầu | Lập tông phái, gia tộc | Cáo phó dạng ảnh |
+| Lưu 3 slot, xuất/nhập file | Luân hồi, Kim Thủ Chỉ, Thiên Thư | |
+| Glossary + tooltip, đời đầu hướng dẫn | Chơi tiếp bằng con cháu/đồ đệ | |
+| Theme cổ phong sáng/tối, đủ tốt trên điện thoại và máy tính | Ảnh AI cho tình tiết đặc biệt | |
+
+---
+
+## F. Rủi ro & cách giảm thiểu
+
+| Rủi ro | Giảm thiểu |
+|---|---|
+| **Phình phạm vi** (spec rất lớn) | Bám bảng mục E. Ý tưởng mới ghi vào mục "Để sau", không chen vào giai đoạn đang làm. Mỗi giai đoạn phải chơi được trước khi sang giai đoạn sau. |
+| **Mất cân bằng** (tu quá nhanh/chậm, chết quá sớm) | Mọi con số nằm trong `balance.json`. Từ GĐ2 có script mô phỏng nhanh 1.000 đời để xem phân bố cảnh giới và tuổi chết trước khi bạn chơi. |
+| **Code rối khi vibe coding** | TypeScript chặt, logic tách khỏi UI, mỗi hệ thống một file, test theo seed cho phần tính toán, `CLAUDE.md` ghi quy tắc để mọi phiên AI làm giống nhau. |
+| **Lỗi dữ liệu JSON** (trùng id, sai tham chiếu) | `npm run validate` chạy tự động trước mỗi lần đưa lên GitHub Pages; lỗi thì không đưa lên. |
+| **Save cũ hỏng khi cập nhật** | `saveVersion` + hàm `migrate`; luôn có nút xuất file save. |
+| **Nội dung lặp, nhàm** | Sự kiện có cooldown, `oncePerLife`, chuỗi nhân quả; theo dõi tỉ lệ xuất hiện trong script mô phỏng. |
+| **Thuật ngữ không thống nhất** | `glossary.json` là nguồn chuẩn; validator cảnh báo thuật ngữ lạ trong văn bản sự kiện. |
+| **Giao diện tốt trên một thiết bị, vỡ trên thiết bị khác** | Thiết kế co giãn từ đầu (GĐ0.5); mỗi task giao diện đều kiểm tra ở khổ điện thoại và máy tính trước khi giao. |
+| **localStorage đầy** | Nén nhật ký các năm bình thường, giữ năm quan trọng; cảnh báo khi gần đầy. |
+| **Bản quyền** | Không dùng tên, hình, văn bản của BitLife, Quỷ Cốc Bát Hoang hay tiểu thuyết có bản quyền; mọi tên đều tự sáng tác. |
+| **Nội dung nhạy cảm vượt mức** | Theo quy tắc mục H; mọi sự kiện có tag để lọc. |
+
+---
+
+## G. Công thức cân bằng ban đầu
+
+> Tất cả nằm trong `content/config/balance.json`, chỉnh số là đổi được, không cần sửa code. Đây là điểm xuất phát, sẽ tinh chỉnh bằng mô phỏng ở GĐ2 và GĐ6.
+
+### G.1 Tốc độ tu luyện
+Tu vi tính theo **% thanh tiến độ của tầng hiện tại** (đầy 100% là đủ điều kiện lên tầng/đột phá).
+
+```
+tu vi mỗi năm (%) = tốc_độ_gốc[cảnh giới]
+                  × hệ_số_linh_căn
+                  × (0.75 + ngộ_tính / 200)        → 0.75 đến 1.25
+                  × linh_khí_vùng                  → 0.5 đến 2.0
+                  × hệ_số_công_pháp                → ×0.7 nếu không hợp linh căn
+                  × (1 + tổng_thưởng_khí_vận_thiên_phú)
+```
+
+| Cảnh giới | Tốc độ gốc (%/năm) | Số tầng | Số năm/tầng ở hệ số 1.0 | Tổng số năm ở hệ số 1.0 |
+|---|---|---|---|---|
+| Luyện Khí | 25 | 9 | 4 | ~36 |
+| Trúc Cơ | 8 | 4 | 12.5 | ~50 |
+| Kim Đan | 3 | 4 | 33 | ~133 |
+| Nguyên Anh | 1.2 | 4 | 83 | ~333 |
+| Hóa Thần | 0.5 | 4 | 200 | ~800 |
+| Luyện Hư trở lên | 0.2 → 0.05 | 4 | để GĐ7 | |
+
+| Linh căn | Tỉ lệ xuất hiện | Hệ số tu luyện |
+|---|---|---|
+| Không linh căn | 60% | 0 (phàm nhân) |
+| Ngũ linh căn | 14% | 0.4 |
+| Tứ linh căn | 10% | 0.55 |
+| Tam linh căn | 8% | 0.7 |
+| Song linh căn | 5% | 1.0 |
+| Đơn linh căn (Thiên linh căn) | 2% | 1.6 |
+| Biến dị linh căn | 0.9% | 1.8 |
+| Thể chất đặc biệt | 0.1% | 2.0 + hiệu ứng riêng |
+
+| Hệ số khác | Giá trị |
+|---|---|
+| Công pháp Hoàng / Huyền / Địa / Thiên | ×1.0 / ×1.2 / ×1.5 / ×2.0 |
+| Bế quan | ×1.5 tốc độ, không có sự kiện thường |
+| Song tu với đạo lữ (công pháp phù hợp) | ×1.3 |
+
+*Ví dụ kiểm tra cảm giác:* đơn linh căn, ngộ tính 70, linh khí 1.2, công pháp Huyền: 25 × 1.6 × 1.1 × 1.2 × 1.2 ≈ 63%/năm → Luyện Khí viên mãn sau ~14 năm (bái sư năm 12 tuổi → thử Trúc Cơ ~26 tuổi: thiên tài). Ngũ linh căn ngộ tính 40, linh khí 1.0, Hoàng phẩm: ≈ 9.5%/năm → ~95 năm, gần hết thọ 120 mới chạm Trúc Cơ (đúng chất "tạp linh căn khổ tu").
+
+### G.2 Tỉ lệ đột phá
+```
+tỉ lệ (%) = gốc[mốc]
+          + (ngộ_tính − 50) × 0.3
+          + (đạo_tâm − 50) × 0.2
+          + thưởng_đan_dược + thưởng_địa_điểm + thưởng_khí_vận
+          − 5 × số_lần_thất_bại_trước_ở_mốc_này
+          → kẹp trong [3%, 95%]
+```
+
+| Mốc | Gốc | Đan dược hỗ trợ (ví dụ) |
+|---|---|---|
+| Lên tầng trong Luyện Khí | 90% | Tụ Khí Đan +5 |
+| Luyện Khí → Trúc Cơ | 30% | Trúc Cơ Đan +25 |
+| Tiểu cảnh giới trong Trúc Cơ trở lên | 70% | +5 đến +10 |
+| Trúc Cơ → Kim Đan | 20% | Kết Kim Đan +20 |
+| Kim Đan → Nguyên Anh | 12% | +15 |
+| Nguyên Anh → Hóa Thần | 8% | +10 |
+
+**Bình cảnh:** ở mỗi đại cảnh giới viên mãn, nếu thất bại 2 lần thì tốc độ tu vi ×0.3 cho tới khi gặp sự kiện cơ duyên hoặc ngộ đạo.
+
+**Hậu quả thất bại** (rút ngẫu nhiên, đại cảnh giới càng cao càng nặng):
+
+| Kết quả | Tiểu cảnh giới | Đại cảnh giới |
+|---|---|---|
+| Chỉ mất tu vi (−30% thanh) | 70% | 40% |
+| Tổn thương kinh mạch (Sức khỏe −20, tu vi ×0.5 trong 5 năm) | 25% | 35% |
+| Giảm thọ (−5% thọ nguyên tối đa) | 5% | 15% |
+| Tẩu hỏa nhập ma (sự kiện chuỗi) | 0% | 7% |
+| Tử vong | 0% | 3% |
+
+### G.3 Thọ nguyên
+| Cảnh giới | Thọ nguyên gốc | Biến thiên ngẫu nhiên |
+|---|---|---|
+| Phàm Nhân | 70 | ±10 (Sức khỏe ảnh hưởng thêm ±10) |
+| Luyện Khí | 120 | ±10 |
+| Trúc Cơ | 200 (+20 nếu đạo cơ Hoàn mỹ) | ±15 |
+| Kim Đan | 500 (+10 mỗi phẩm Kim Đan trên 5) | ±30 |
+| Nguyên Anh | 1.000 | ±50 |
+| Hóa Thần | 2.000 | ±100 |
+
+- Còn ≤10% thọ nguyên: kích hoạt chuỗi sự kiện **"Đại hạn sắp tới"** (liều đột phá, thọ đan, đoạt xá, di ngôn).
+- Phàm nhân trên 60 tuổi: mỗi năm có tỉ lệ bệnh `(tuổi − 60) × 0.8%`.
+
+### G.4 Nhịp sự kiện
+| Thông số | Giá trị ban đầu |
+|---|---|
+| Tỉ lệ một năm có popup lựa chọn | 20% (cảnh giới thấp) → 10% (Kim Đan trở lên, nhưng sự kiện lớn hơn) |
+| Tỉ lệ một năm có dòng nhật ký thường (không cần chọn) | 60% |
+| Ảnh hưởng của Khí vận lên sự kiện tốt | trọng số × (1 + (khí_vận − 50) / 100) |
+| Sự kiện hiếm | trọng số ≤1, nhiều cái cần khí vận ≥70 |
+
+### G.5 Tiên Thiên Khí Vận
+Giữ tỉ lệ trong spec: Phàm 45% · Lương 28% · Ưu 15% · Tuyệt 8% · Thiên 3.5% · Thần 0.5%. Mỗi ô có 12% là ác vận thay vì khí vận thường. Reroll ban đầu: 3 lượt/đời. Kim Thủ Chỉ: 0.3% khi quay, pity sau 15 đời.
+
+---
+
+## H. Quy tắc nội dung nhạy cảm
+- **Giết chóc, ma đạo, đoạt xá, diệt môn:** được phép; tả kết quả và cảm xúc, không tả chi tiết ghê rợn.
+- **Lô đỉnh, song tu, quan hệ thân mật:** được nhắc tới và có hậu quả trong cốt truyện (lô đỉnh là hành vi ác, ảnh hưởng nhân quả và tâm ma); cảnh thân mật dừng ở mức gợi ý rồi chuyển cảnh, không miêu tả tình dục.
+- **Không bao giờ:** nội dung tình dục liên quan trẻ vị thành niên (nhân vật dưới 18 tuổi không tham gia bất kỳ sự kiện tình duyên/song tu/lô đỉnh nào; engine chặn bằng điều kiện tuổi).
+- Mỗi sự kiện có tag `violence` / `dark` / `mature`; phần Cài đặt có tùy chọn **ẩn nội dung nhạy cảm** cho ai muốn chơi nhẹ nhàng.
+
+## I. Ảnh AI cho tình tiết đặc biệt
+- Chỉ dùng cho khoảnh khắc lớn: quay trúng khí vận Thiên/Thần, kim thủ chỉ thức tỉnh, kết đạo lữ, thiên kiếp, phi thăng, tâm ma, đại năng xuất hiện. Dự kiến 20–30 ảnh cho tới GĐ5b.
+- Claude không tự tạo ảnh được trong dự án này. Cách làm: Claude viết **prompt ảnh thống nhất phong cách** (tranh thủy mặc cổ phong) vào `content/image-prompts.md`; bạn tạo ảnh bằng công cụ AI bạn chọn và gửi lại, Claude nén ảnh và gắn vào sự kiện.
+- Thiếu ảnh thì hiện khung mực mặc định, game vẫn chạy bình thường. Việc này bắt đầu từ GĐ3, không chặn các giai đoạn trước.
+
+## J. Cách làm việc mỗi task
+1. Bạn gửi prompt mẫu của task (hoặc chỉ cần nói "làm task tiếp theo").
+2. Claude làm đúng một task, đẩy code lên repo, link GitHub Pages tự cập nhật.
+3. Claude báo: đã làm gì, cách chơi thử, task đề xuất tiếp theo; đánh dấu `[x]` trong PLAN.md và ghi `CHANGELOG.md`.
+4. Task ✍️: Claude gửi bản nháp nội dung dạng bảng dễ đọc để bạn duyệt/sửa, sau đó mới nhập vào JSON.
+5. Báo lỗi: mô tả bước tái hiện, hoặc gửi file save xuất ra từ game.
