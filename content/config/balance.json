@@ -102,6 +102,7 @@
       "hon_don_the": 1, "tien_thien_dao_cot": 1, "kim_cuong_than": 2, "thien_sinh_ma_the": 2, "van_doc_the": 2, "thien_tuyet_mach": 2
     },
     "clanDescendantRolls": 2,
+    "testAge": [6, 12],
     "elementCounterBonus": 0.2
   },
   "paths": {

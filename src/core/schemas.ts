@@ -53,10 +53,12 @@ export const EffectsSchema = z
     removeItems: ids,
     addTraits: ids,
     followUp: FollowUpSchema.optional(),
+    /** Test the spirit root now (task 2.2); does nothing if it is already known. */
+    testRoot: z.boolean().optional(),
   })
   .catchall(z.number())
   .superRefine((e, ctx) => {
-    const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp'];
+    const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -143,6 +145,8 @@ export const OriginSchema = z
     silver: z.number().int().min(0),
     spiritStones: z.number().int().min(0),
     noParents: z.boolean().default(false),
+    /** Clan of cultivators: the spirit root is rolled balance.roots.clanDescendantRolls times, best kept. */
+    cultivatorClan: z.boolean().default(false),
     birthText: z.string().min(1),
   })
   .strict();
@@ -155,6 +159,8 @@ export const WorldSchema = z
     name: z.string().min(1),
     description: z.string(),
     order: z.number().int(),
+    /** Event booked for every life at an age in balance.roots.testAge (task 2.2). */
+    rootTestEvent: z.string().regex(/^[a-z0-9_]+$/).optional(),
   })
   .strict();
 export type World = z.infer<typeof WorldSchema>;
@@ -434,6 +440,8 @@ export const BalanceSchema = z
         bodyWeights: weightMap,
         /** Origin "Hậu duệ gia tộc tu tiên" rolls this many times and keeps the best. */
         clanDescendantRolls: z.number().int().min(1),
+        /** Age range of the spirit-root test. */
+        testAge: range,
         /** Combat bonus when your element beats the enemy's (K.3.3). */
         elementCounterBonus: z.number().min(0),
       })
@@ -533,7 +541,21 @@ export type RealmsFile = z.infer<typeof RealmsFileSchema>;
 /** content/roots.json: root grades, elements with what they beat, special bodies. */
 export const RootsFileSchema = z
   .object({
-    grades: z.array(z.object({ id, name: z.string().min(1), description: z.string().min(1) }).strict()).min(1),
+    grades: z
+      .array(
+        z
+          .object({
+            id,
+            name: z.string().min(1),
+            description: z.string().min(1),
+            /** "variant": elements drawn from the variant ones; "body": a special body instead of elements. */
+            special: z.enum(['variant', 'body']).optional(),
+          })
+          .strict(),
+      )
+      .min(1),
+    /** Log line when the root is revealed: {root} = name with elements, {description}. */
+    revealText: z.string().min(1),
     elements: z
       .array(
         z

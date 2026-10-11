@@ -52,6 +52,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   const problems: Problem[] = [];
   const events: { file: string; event: GameEvent }[] = [];
   let traitIds: Set<string> | null = null;
+  const rootTests: { file: string; event: string }[] = [];
   const parsedShared: { balance?: Balance; realms?: RealmsFile; roots?: RootsFile; aptitudes?: AptitudesFile } = {};
 
   for (const [file, raw] of Object.entries(files)) {
@@ -81,6 +82,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === WorldSchema && (parsed.data as World).id !== splitWorldPath(file).worldId) {
       problems.push({ file, level: 'error', message: `id thế giới "${(parsed.data as World).id}" phải trùng tên thư mục` });
     }
+    if (schema === WorldSchema && (parsed.data as World).rootTestEvent) rootTests.push({ file, event: (parsed.data as World).rootTestEvent! });
     if (schema === OriginFileSchema) {
       const seenOrigin = new Set<string>();
       for (const o of parsed.data as Origin[]) {
@@ -119,6 +121,13 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   }
 
   problems.push(...checkCultivationTables(parsedShared));
+  // The world's root-test event must exist among that world's events.
+  for (const { file, event } of rootTests) {
+    const world = splitWorldPath(file).worldId;
+    if (!events.some((e) => e.event.id === event && splitWorldPath(e.file).worldId === world)) {
+      problems.push({ file, level: 'error', message: `rootTestEvent "${event}" không có trong sự kiện của thế giới này` });
+    }
+  }
   const realmIds = parsedShared.realms ? new Set(parsedShared.realms.realms.map((r) => r.id)) : null;
 
   // Duplicate event ids across all event files.

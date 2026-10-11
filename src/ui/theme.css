@@ -464,6 +464,7 @@ button { font: inherit; color: inherit; }
 /* Profile modal */
 .profile-grid { display: grid; gap: 8px; }
 .profile-grid .stat-row .label { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); }
+.profile-root { margin: 12px 0 0; font-weight: 600; }
 .profile-note { font-size: 0.8125rem; color: var(--muted); margin: 10px 0 4px; }
 .choice.danger { color: var(--bad); }
 

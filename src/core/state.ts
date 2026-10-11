@@ -8,6 +8,7 @@ import { ageFamily, createFamily } from '../systems/relationships';
 import { ageExtremes } from '../systems/extremes';
 import { ageBody, checkDeath } from '../systems/time';
 import { makeName, splitName } from '../systems/names';
+import { rootTestAge } from '../systems/cultivation';
 
 export interface NewLifeInput {
   seed: string;
@@ -75,7 +76,12 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     destiny: { offered: [], rerollsLeft: content.balance.traits.rerolls, confirmed: false },
     traits: [],
     family,
-    events: { pending: null, history: {}, followUps: [] },
+    events: {
+      pending: null,
+      history: {},
+      // Every life meets the world's root test once, at an age in balance.roots.testAge.
+      followUps: content.world.rootTestEvent ? [{ event: content.world.rootTestEvent, atAge: rootTestAge(input.seed, content) }] : [],
+    },
     extremes: { streak: {}, active: {}, givenAt: {} },
     log: [],
   };
