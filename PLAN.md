@@ -273,7 +273,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 1.8 | [x] Lão hóa, bệnh, chết già; màn tổng kết đời đơn giản | `systems/time.ts`, `screens/Death.tsx` |
 | 1.9 | [x] SaveSystem: 3 slot, tự lưu mỗi năm, xuất/nhập file, cảnh báo ghi đè | `systems/save.ts`, `screens/Settings.tsx` |
 | 1.10 | [x] ✍️ Glossary + tooltip (chạm vào thuật ngữ gạch chân để xem giải thích) | `content/glossary.json`, `components/Tooltip.tsx` |
-| 1.11 | [ ] Tua nhanh (tự qua năm tới khi có sự kiện) | `systems/time.ts` |
+| 1.11 | [x] Tua nhanh (tự qua năm tới khi có sự kiện) | `core/state.ts` (cạnh `advanceYear`) |
 
 **Tiêu chí hoàn thành:** tạo nhân vật, quay khí vận, chơi tới khi chết già; có ít nhất vài sự kiện chọn lựa; đóng trình duyệt mở lại vẫn chơi tiếp; xuất file save rồi nhập lại được.
 

@@ -26,12 +26,14 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onChoose, onFamilyAction, onNewLife, onSummary, onSaves, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onNewLife, onSummary, onSaves, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
   saveWarning: string | null;
   onAdvance: () => void;
+  /** Pass several quiet years at once. */
+  onFastForward: () => void;
   /** Returns the outcome to show on the card. */
   onChoose: (index: number) => PopupResult;
   onFamilyAction: (relativeId: string, actionId: string) => { text: string; tone: Tone };
@@ -96,10 +98,14 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onChoose, o
       <nav class="dock" aria-label="Hành động">
         {DOCK_LEFT.map(dockItem)}
         {state.alive ? (
-          <button class="age-btn" onClick={onAdvance} aria-label="Qua một năm" disabled={!!state.events.pending || !!result}>
-            <span class="big">+1</span>
-            <span class="small">năm</span>
-          </button>
+          <div class="age-wrap">
+            <button class="age-btn" onClick={onAdvance} aria-label="Qua một năm" disabled={!!state.events.pending || !!result}>
+              <span class="big">+1</span>
+              <span class="small">năm</span>
+            </button>
+            <button class="ff-btn" onClick={onFastForward} aria-label="Tua nhanh tới khi có chuyện" title="Tua nhanh tới khi có chuyện"
+              disabled={!!state.events.pending || !!result}>»</button>
+          </div>
         ) : (
           <button class="age-btn ended" onClick={onSummary} aria-label="Xem tổng kết đời người" disabled={!!result}>
             <span class="big">終</span>
