@@ -95,7 +95,8 @@ describe('event engine', () => {
 
   it('applies effects, books follow-ups and fires them when due', () => {
     let s = at(createLife({ seed: 'follow' }, content), 8);
-    s = { ...s, events: { ...s.events, pending: 'ong_lao_xin_an' } };
+    // Drop the root test booked at birth so only this event's follow-up is left.
+    s = { ...s, events: { ...s.events, pending: 'ong_lao_xin_an', followUps: [] } };
     const karma = s.social.karma;
     s = resolveChoice(s, content, 0).state;
     expect(s.social.karma).toBe(karma + 3);

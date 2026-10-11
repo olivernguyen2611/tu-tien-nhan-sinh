@@ -25,6 +25,15 @@ export interface Relative {
   lastActions: Record<string, number>;
 }
 
+/** Spirit root found by the test at 6–12 (task 2.2); ids from roots.json. */
+export interface SpiritRoot {
+  grade: string;
+  /** Element ids; empty for no root or a special body. */
+  elements: string[];
+  /** Special body id when grade is a body. */
+  body: string | null;
+}
+
 export type DeathCause = 'old_age' | 'illness';
 
 export interface GameState {
@@ -51,7 +60,7 @@ export interface GameState {
     realm: string;     // id from realms.json (GĐ 2); "pham_nhan" for now
     stage: number;
     progress: number;  // % of current stage
-    root: string | null; // spirit root, tested at 6–12 (GĐ 2)
+    root: SpiritRoot | null; // null until tested at 6–12
     lifespan: number;  // max age
   };
   money: { silver: number; spiritStones: number };

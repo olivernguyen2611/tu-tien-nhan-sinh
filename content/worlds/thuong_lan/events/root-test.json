@@ -1,0 +1,26 @@
+[
+  {
+    "id": "thu_linh_can",
+    "category": "cultivation",
+    "title": "Tiên sư thử linh căn",
+    "text": "Một vị tiên sư áo xám ghé {hometown}, đặt một khối đá trắng giữa sân đình. Trẻ con trong vùng xếp hàng dài, đứa nào đặt tay lên cũng run. Tới lượt {name}.",
+    "tags": ["rare"],
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Bước lên, đặt tay lên đá thử linh",
+        "result": {
+          "text": "Khối đá lạnh buốt. Tiên sư nheo mắt nhìn hồi lâu, rồi khẽ gật đầu với chính mình.",
+          "effects": { "testRoot": true, "stat.daoHeart": 1 }
+        }
+      },
+      {
+        "text": "Sợ quá, chui ra sau đống rơm trốn",
+        "result": {
+          "text": "Tiên sư không đợi ai. Năm sau nghe nói người lại ghé qua, lần này đừng trốn nữa.",
+          "effects": { "stat.happiness": -2, "followUp": { "event": "thu_linh_can", "afterYears": [1, 1] } }
+        }
+      }
+    ]
+  }
+]

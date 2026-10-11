@@ -7,6 +7,7 @@ import { fillTemplate } from '../../core/state';
 import { extremeThemeMultiplier } from '../extremes';
 import type { GameState, LogLine, Tone } from '../../core/types';
 import { meets, readValue } from './conditions';
+import { revealRoot } from '../cultivation';
 
 type Outcome = NonNullable<GameEvent['choices'][number]['result']>;
 
@@ -164,7 +165,7 @@ export function resolveChoice(state: GameState, content: Content, choiceIndex: n
   }
 
   let next = applyEffects(state, outcome.effects, rng);
-  const text = fillTemplate(outcome.text, state);
+  let text = fillTemplate(outcome.text, state);
   const tone: Tone = event.tags.includes('rare') ? 'rare' : success === true ? 'good' : success === false ? 'bad' : 'normal';
   const lines: LogLine[] = [
     { text: `${event.title}: ${fillTemplate(choice.text, state)}.`, tone: 'normal' },
@@ -185,5 +186,10 @@ export function resolveChoice(state: GameState, content: Content, choiceIndex: n
       history: { ...next.events.history, [event.id]: state.character.age },
     },
   };
+  if (outcome.effects.testRoot) {
+    const revealed = revealRoot(next, content);
+    next = revealed.state;
+    if (revealed.line) text = `${text} ${revealed.line.text}`;
+  }
   return { state: next, text, tone, success };
 }

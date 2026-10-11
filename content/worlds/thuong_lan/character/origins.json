@@ -58,6 +58,7 @@
     "effects": { "stat.luck": 5, "stat.comprehension": 5 },
     "silver": 80,
     "spiritStones": 3,
+    "cultivatorClan": true,
     "birthText": "Ngươi chào đời trong từ đường của một gia tộc tu tiên đã sa sút ở {hometown}. Lão tổ trong gia phả có lẽ đang nhìn ngươi."
   }
 ]

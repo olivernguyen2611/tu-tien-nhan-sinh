@@ -11,6 +11,7 @@ import { Meter } from '../components/Meter';
 import { Term, TermText } from '../components/Tooltip';
 import { ThemeToggle } from '../components/ThemeToggle';
 import type { ThemePref } from '../theme';
+import { rootLabel } from '../../systems/cultivation';
 
 const DOCK_LEFT = [
   { id: 'cultivate', glyph: '修', label: 'Tu luyện' },
@@ -156,6 +157,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
                 <div class="stat-row" key={key}><span class="icon">{glyph}</span><Meter label={label} term={term} value={state.aptitudes[key]} tone="auto" warn={warn.includes(key)} /></div>
               ))}
             </div>
+            <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>
             <p class="profile-note"><TermText text="Tư chất tiên thiên định từ lúc sinh, chỉ đổi được nhờ kỳ ngộ hay khí vận." /></p>
             {states.length > 0 && (
               <ul class="trait-chips" aria-label="Trạng thái đặc biệt">
