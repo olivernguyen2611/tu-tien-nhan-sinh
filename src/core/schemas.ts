@@ -139,6 +139,79 @@ export const NamesSchema = z
   })
   .strict();
 
+// ---------- Effect hooks (PLAN.md K.6) ----------
+// Traits, talents and items may only touch the game through these hooks.
+// Adding a hook is its own code task.
+
+const ELEMENTS = 'kim|moc|thuy|hoa|tho|loi|bang|phong|am|root'; // "root" = the main spirit root's element
+const PATHS = 'sword|body|spell|weapon|arts';                    // Kiếm, Thể, Pháp, Binh, Thuật
+const CRAFTS = 'alchemy|forging|formation|talisman|farming|beast'; // Đan, Khí, Trận, Phù, Linh thực, Ngự thú
+
+/** Hooks that take a number to add. */
+const ADD_HOOK = new RegExp(
+  '^(' +
+    [
+      `stat\\.(${[...MORTAL_STATS, ...APTITUDES].join('|')})`,
+      'cultivationSpeed', 'breakthroughChance(\\.major)?', 'bottleneckResist',
+      'lifespanPct',
+      'combatPower(\\.vsHigherRealm)?', 'speed', 'divineSense', 'escapeChance', 'injuryReduce', 'lifesteal',
+      `element\\.(${ELEMENTS})\\.power`, `path\\.(${PATHS})\\.(affinity|power)`,
+      `craft\\.(${CRAFTS})\\.(success|yield|affinity)`,
+      'heartDemonResist', 'charmResist',
+      'npcAffinityStart', 'faction\\.(chinh|ma|tan_tu|yeu)\\.reputation', 'karmaShift',
+      'priceDiscount', 'incomePct', 'lootPct',
+      'trigger\\.cheatDeath',
+    ].join('|') +
+    ')$',
+);
+const MUL_HOOK = /^eventWeight\.[a-z0-9_]+$/;
+const FLAG_HOOK = /^(agingSlow|unlockChain\.[a-z0-9_]+)$/;
+
+export const EffectHookSchema = z
+  .object({
+    hook: z.string(),
+    add: z.number().optional(),
+    mul: z.number().min(0).optional(),
+    years: z.number().int().min(1).optional(),
+    tag: id.optional(),
+    id: id.optional(),
+    on: id.optional(),
+    at: z.number().int().min(1).optional(),
+    then: id.optional(),
+    activeFrom: z.object({ age: z.number().int().min(0) }).strict().optional(),
+  })
+  .strict()
+  .superRefine((e, ctx) => {
+    const fail = (message: string) => ctx.addIssue({ code: 'custom', message: `móc "${e.hook}": ${message}` });
+    if (ADD_HOOK.test(e.hook)) {
+      if (e.add === undefined) fail('cần "add"');
+    } else if (MUL_HOOK.test(e.hook)) {
+      if (e.mul === undefined) fail('cần "mul"');
+    } else if (FLAG_HOOK.test(e.hook)) {
+      if (e.add !== undefined || e.mul !== undefined) fail('không nhận giá trị');
+    } else if (e.hook === 'trigger.everyNYears') {
+      if (!e.years || !e.tag) fail('cần "years" và "tag"');
+    } else if (e.hook === 'counter') {
+      if (!e.id || !e.on || !e.at || !e.then) fail('cần "id", "on", "at", "then"');
+    } else {
+      fail('không có trong bộ móc K.6 (thêm móc mới là một task code riêng)');
+    }
+  });
+
+export const TRAIT_RARITIES = ['pham', 'luong', 'uu', 'tuyet', 'thien', 'than', 'ac'] as const;
+
+export const TraitSchema = z
+  .object({
+    id,
+    rarity: z.enum(TRAIT_RARITIES),
+    name: z.string().min(1),
+    flavor: z.string().min(1),
+    summary: z.string().min(1),
+    effects: z.array(EffectHookSchema).min(1),
+  })
+  .strict();
+export const TraitFileSchema = z.array(TraitSchema).min(1);
+
 const range = z.tuple([z.number(), z.number()]).refine(([a, b]) => a <= b, 'khoảng [min, max] bị ngược');
 
 export const BalanceSchema = z
@@ -181,3 +254,5 @@ export type Glossary = z.infer<typeof GlossarySchema>;
 export type Balance = z.infer<typeof BalanceSchema>;
 export type Origin = z.infer<typeof OriginSchema>;
 export type Names = z.infer<typeof NamesSchema>;
+export type Trait = z.infer<typeof TraitSchema>;
+export type EffectHook = z.infer<typeof EffectHookSchema>;

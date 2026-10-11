@@ -1,0 +1,188 @@
+[
+  {
+    "id": "thiet_vi", "rarity": "pham", "name": "Thiết Vị",
+    "flavor": "Bánh bao để ba ngày vẫn tiêu như thường. Đại phu trong trấn gọi đây là kỳ tích, mẹ ngươi gọi là đỡ tốn.",
+    "summary": "Sức khỏe +5, Căn cốt +3; không gặp sự kiện ngộ độc ăn uống.",
+    "effects": [
+      { "hook": "stat.health", "add": 5 },
+      { "hook": "stat.physique", "add": 3 },
+      { "hook": "eventWeight.poisoning", "mul": 0 }
+    ]
+  },
+  {
+    "id": "kheo_mom", "rarity": "pham", "name": "Khéo Mồm",
+    "flavor": "Nói chuyện với chó dữ, chó cũng vẫy đuôi.",
+    "summary": "Mị lực +5; mua bán rẻ hơn 5%.",
+    "effects": [
+      { "hook": "stat.charm", "add": 5 },
+      { "hook": "priceDiscount", "add": 0.05 }
+    ]
+  },
+  {
+    "id": "khoai_cuoc", "rarity": "pham", "name": "Khoái Cước",
+    "flavor": "Đánh không lại thì chạy. Đánh lại được thì... cứ chạy trước đã.",
+    "summary": "Tốc +15%; bỏ chạy thành công +15%.",
+    "effects": [
+      { "hook": "speed", "add": 0.15 },
+      { "hook": "escapeChance", "add": 0.15 }
+    ]
+  },
+  {
+    "id": "thong_minh_vat", "rarity": "pham", "name": "Thông Minh Vặt",
+    "flavor": "Đại sự thì chưa hiểu, mẹo vặt thì không thiếu.",
+    "summary": "Trí tuệ +5; sự kiện học hành xuất hiện nhiều hơn.",
+    "effects": [
+      { "hook": "stat.intellect", "add": 5 },
+      { "hook": "eventWeight.study", "mul": 1.5 }
+    ]
+  },
+  {
+    "id": "can_cu", "rarity": "pham", "name": "Cần Cù",
+    "flavor": "Gà chưa gáy đã dậy, gà phải nể.",
+    "summary": "Thu nhập +10%; tốc độ tu luyện +5%.",
+    "effects": [
+      { "hook": "incomePct", "add": 0.1 },
+      { "hook": "cultivationSpeed", "add": 0.05 }
+    ]
+  },
+  {
+    "id": "linh_ty", "rarity": "luong", "name": "Linh Tỵ",
+    "flavor": "Cách ba dặm ngửi ra linh chi, cách năm dặm ngửi ra nhà hàng xóm đang kho thịt.",
+    "summary": "Hay gặp linh thảo; tư chất Đan +10.",
+    "effects": [
+      { "hook": "eventWeight.herb", "mul": 1.5 },
+      { "hook": "craft.alchemy.affinity", "add": 10 }
+    ]
+  },
+  {
+    "id": "hau_bi", "rarity": "luong", "name": "Hậu Bì",
+    "flavor": "Da dày, mặt cũng dày. Bị đánh không đau, bị mắng không ngượng.",
+    "summary": "Thương tích nhận vào −15%; tư chất con đường Thể +10.",
+    "effects": [
+      { "hook": "injuryReduce", "add": 0.15 },
+      { "hook": "path.body.affinity", "add": 10 }
+    ]
+  },
+  {
+    "id": "quy_nhan_duyen", "rarity": "luong", "name": "Quý Nhân Duyên",
+    "flavor": "Đi đâu cũng có người tốt bụng chỉ đường, cho bánh, đôi khi cho cả bí kíp.",
+    "summary": "Thiện cảm khởi đầu với người mới +10; hay gặp quý nhân.",
+    "effects": [
+      { "hook": "npcAffinityStart", "add": 10 },
+      { "hook": "eventWeight.benefactor", "mul": 1.5 }
+    ]
+  },
+  {
+    "id": "dom_khi", "rarity": "luong", "name": "Đởm Khí",
+    "flavor": "Gan to bằng trời. Có lúc to hơn cả trời, nên hay bị trời đánh.",
+    "summary": "Đạo tâm +8; kháng tâm ma +10%.",
+    "effects": [
+      { "hook": "stat.daoHeart", "add": 8 },
+      { "hook": "heartDemonResist", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "kiem_thai", "rarity": "uu", "name": "Kiếm Thai",
+    "flavor": "Lúc chào đời nắm chặt tay, bà đỡ gỡ ra thấy một vết hằn hình mũi kiếm.",
+    "summary": "Tư chất Kiếm +20; chiến lực khi dùng con đường Kiếm +20%; mở chuỗi sự kiện \"Kiếm minh trong mộng\".",
+    "effects": [
+      { "hook": "path.sword.affinity", "add": 20 },
+      { "hook": "path.sword.power", "add": 0.2 },
+      { "hook": "unlockChain.kiem_minh_trong_mong" }
+    ]
+  },
+  {
+    "id": "dan_thu", "rarity": "uu", "name": "Đan Thủ",
+    "flavor": "Bàn tay ấm, cầm củi thì củi cháy đều, cầm lò thì đan tròn.",
+    "summary": "Luyện đan thành công +15%; mỗi lò thêm 1 viên.",
+    "effects": [
+      { "hook": "craft.alchemy.success", "add": 0.15 },
+      { "hook": "craft.alchemy.yield", "add": 1 }
+    ]
+  },
+  {
+    "id": "thuan_linh", "rarity": "uu", "name": "Thuần Linh",
+    "flavor": "Linh khí trong người trong như nước giếng mùa đông, uống vào không lẫn sạn.",
+    "summary": "Hệ của linh căn chính +20% uy lực; tốc độ tu luyện +10%.",
+    "effects": [
+      { "hook": "element.root.power", "add": 0.2 },
+      { "hook": "cultivationSpeed", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "linh_lung_tam", "rarity": "tuyet", "name": "Linh Lung Tâm",
+    "flavor": "Lòng sáng như gương ngọc, người khác nói dối ngươi nghe ra tiếng \"cạch\".",
+    "summary": "Ngộ tính +10; vượt bình cảnh +15%; Thần thức +20% (nhìn thấu ảo trận).",
+    "effects": [
+      { "hook": "stat.comprehension", "add": 10 },
+      { "hook": "bottleneckResist", "add": 0.15 },
+      { "hook": "divineSense", "add": 0.2 }
+    ]
+  },
+  {
+    "id": "truong_xuan_the", "rarity": "tuyet", "name": "Trường Xuân Thể",
+    "flavor": "Sáu mươi tuổi vẫn bị hỏi \"Cha mẹ cháu đâu?\".",
+    "summary": "Thọ nguyên +25%; lão hóa chậm.",
+    "effects": [
+      { "hook": "lifespanPct", "add": 0.25 },
+      { "hook": "agingSlow" }
+    ]
+  },
+  {
+    "id": "tu_khi_dong_lai", "rarity": "thien", "name": "Tử Khí Đông Lai",
+    "flavor": "Ngày ngươi sinh, mây tím kéo từ phía đông tới, đậu trên mái nhà ba ngày. Lão hàng xóm tưởng cháy bếp.",
+    "summary": "Khí vận +25; cứ 10 năm chắc chắn có một kỳ ngộ.",
+    "effects": [
+      { "hook": "stat.luck", "add": 25 },
+      { "hook": "trigger.everyNYears", "years": 10, "tag": "fortune" }
+    ]
+  },
+  {
+    "id": "thien_vong_huu_lau", "rarity": "than", "name": "Thiên Võng Hữu Lậu",
+    "flavor": "Lưới trời lồng lộng, tới lượt ngươi thì thủng một lỗ. Tiện thể thủng luôn cả khoảng cách cảnh giới.",
+    "summary": "Một lần mỗi đời thoát chết (bị giết, đột phá hỏng…), rớt 1 tầng. Đánh kẻ cảnh giới cao hơn: chiến lực +50%.",
+    "effects": [
+      { "hook": "trigger.cheatDeath", "add": 1 },
+      { "hook": "combatPower.vsHigherRealm", "add": 0.5 }
+    ]
+  },
+  {
+    "id": "khac_than_menh", "rarity": "ac", "name": "Khắc Thân Mệnh",
+    "flavor": "Thầy bói xem xong, trả lại tiền rồi bỏ chạy.",
+    "summary": "✖ Người thân dễ gặp nạn. ✔ Kháng tâm ma +20%, tốc độ tu luyện +10%.",
+    "effects": [
+      { "hook": "eventWeight.family_tragedy", "mul": 2 },
+      { "hook": "heartDemonResist", "add": 0.2 },
+      { "hook": "cultivationSpeed", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "menh_nhu_dang_hoa", "rarity": "ac", "name": "Mệnh Như Đăng Hỏa",
+    "flavor": "Ngọn đèn sáng nhất thường cháy nhanh nhất.",
+    "summary": "✖ Thọ nguyên −30%, Sức khỏe −10. ✔ Ngộ tính +20.",
+    "effects": [
+      { "hook": "lifespanPct", "add": -0.3 },
+      { "hook": "stat.health", "add": -10 },
+      { "hook": "stat.comprehension", "add": 20 }
+    ]
+  },
+  {
+    "id": "dao_hoa_kiep", "rarity": "ac", "name": "Đào Hoa Kiếp",
+    "flavor": "Đi chợ mua rau, về nhà kéo theo ba người đòi tỷ thí.",
+    "summary": "✔ Mị lực +20. ✖ Từ 18 tuổi: sự kiện tình địch, ghen tuông, bị đeo bám ×2.",
+    "effects": [
+      { "hook": "stat.charm", "add": 20 },
+      { "hook": "eventWeight.romance_trouble", "mul": 2, "activeFrom": { "age": 18 } }
+    ]
+  },
+  {
+    "id": "dao_moi_tinh", "rarity": "ac", "name": "Đảo Môi Tinh",
+    "flavor": "Uống nước lạnh cũng mắc răng, đi đường bằng cũng vấp.",
+    "summary": "✖ Khí vận −20, chuyện xui vặt ×1.5. ✔ Khổ tận cam lai: mỗi lần sống sót qua tai nạn tích 1 dấu, đủ 5 dấu chắc chắn có một kỳ ngộ lớn.",
+    "effects": [
+      { "hook": "stat.luck", "add": -20 },
+      { "hook": "eventWeight.mishap", "mul": 1.5 },
+      { "hook": "counter", "id": "kho_tan", "on": "survive_accident", "at": 5, "then": "fortune_major" }
+    ]
+  }
+]
