@@ -266,7 +266,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 
 | # | Task | File chính |
 |---|---|---|
-| 2.1 | [ ] ✍️ Bảng cảnh giới (Phàm Nhân → Hóa Thần) + linh căn + tư chất đạo đồ | `content/realms.json`, `roots.json`, `aptitudes.json` |
+| 2.1 | [ ] ✍️ Bảng cảnh giới (Phàm Nhân → Hóa Thần) + linh căn + 5 con đường chiến đấu + 6 bách nghệ (mục K) | `content/realms.json`, `roots.json`, `aptitudes.json` |
 | 2.2 | [ ] Sự kiện kiểm tra linh căn (6–12 tuổi) + hiển thị linh căn | `systems/cultivation.ts`, `content/events/root-test.json` |
 | 2.3 | [ ] Tu vi tăng mỗi năm theo công thức mục G; thanh tu vi; đột phá tiểu cảnh giới Luyện Khí | `systems/cultivation.ts` |
 | 2.4 | [ ] ✍️ 6 tông môn khởi đầu (chính/ma/kiếm/đan/phật/yêu) + 8 công pháp Hoàng/Huyền phẩm | `content/sects.json`, `techniques.json` |
@@ -288,12 +288,12 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 |---|---|
 | 3.1 | [ ] Túi đồ, bạc/linh thạch, đan dược dùng được (✍️ ~15 đan dược, ~15 vật phẩm) |
 | 3.2 | [ ] Phường thị: mua bán, trả giá đơn giản |
-| 3.3 | [ ] CombatSystem: so chỉ số + 5 lựa chọn, văn bản mô tả; khoảng cách cảnh giới có trọng lượng |
+| 3.3 | [ ] CombatSystem theo K.4: chiến lực, 3 hiệp × 5 hành động, văn bản theo con đường + hệ |
 | 3.4 | [ ] NPC có số mệnh riêng: tự tu luyện, già, chết; tính cách bề ngoài/bản chất; sổ ân oán |
 | 3.5 | [ ] Thiên kiêu bảng cập nhật mỗi năm |
 | 3.6 | [ ] Tình duyên: thiện cảm nhiều nấc, theo đuổi, tặng quà, bị từ chối, bị lợi dụng |
 | 3.7 | [ ] Đạo lữ đại điển, song tu, sinh con (di truyền linh căn, đột biến) |
-| 3.8 | [ ] Các con đường tu luyện (Kiếm, Thể, Đan, Ma, Phật, Quỷ) với điểm mạnh/yếu riêng |
+| 3.8 | [ ] Đạo thống (Tiên/Ma/Phật/Quỷ) × con đường (Kiếm/Thể/Pháp/Binh/Thuật) theo K.3 |
 | 3.9 | [ ] ✍️ ~40 sự kiện: tình duyên, giết người đoạt bảo, ma đạo cám dỗ, yêu thú, phường thị |
 | 3.10 | [ ] Tăng Tiên Thiên Khí Vận lên ~40, thêm tag cho sự kiện dùng |
 
@@ -414,7 +414,7 @@ Tu vi tính theo **% thanh tiến độ của tầng hiện tại** (đầy 100%
 ```
 tu vi mỗi năm (%) = tốc_độ_gốc[cảnh giới]
                   × hệ_số_linh_căn
-                  × (0.75 + ngộ_tính / 200)        → 0.75 đến 1.25
+                  × (0.75 + (căn_cốt + ngộ_tính) / 400)   → 0.75 đến 1.25
                   × linh_khí_vùng                  → 0.5 đến 2.0
                   × hệ_số_công_pháp                → ×0.7 nếu không hợp linh căn
                   × (1 + tổng_thưởng_khí_vận_thiên_phú)
@@ -446,7 +446,7 @@ tu vi mỗi năm (%) = tốc_độ_gốc[cảnh giới]
 | Bế quan | ×1.5 tốc độ, không có sự kiện thường |
 | Song tu với đạo lữ (công pháp phù hợp) | ×1.3 |
 
-*Ví dụ kiểm tra cảm giác:* đơn linh căn, ngộ tính 70, linh khí 1.2, công pháp Huyền: 25 × 1.6 × 1.1 × 1.2 × 1.2 ≈ 63%/năm → Luyện Khí viên mãn sau ~14 năm (bái sư năm 12 tuổi → thử Trúc Cơ ~26 tuổi: thiên tài). Ngũ linh căn ngộ tính 40, linh khí 1.0, Hoàng phẩm: ≈ 9.5%/năm → ~95 năm, gần hết thọ 120 mới chạm Trúc Cơ (đúng chất "tạp linh căn khổ tu").
+*Ví dụ kiểm tra cảm giác* (căn cốt và ngộ tính cùng giá trị nên số không đổi): đơn linh căn, căn cốt và ngộ tính 70, linh khí 1.2, công pháp Huyền: 25 × 1.6 × 1.1 × 1.2 × 1.2 ≈ 63%/năm → Luyện Khí viên mãn sau ~14 năm (bái sư năm 12 tuổi → thử Trúc Cơ ~26 tuổi: thiên tài). Ngũ linh căn căn cốt và ngộ tính 40, linh khí 1.0, Hoàng phẩm: ≈ 9.5%/năm → ~95 năm, gần hết thọ 120 mới chạm Trúc Cơ (đúng chất "tạp linh căn khổ tu").
 
 ### G.2 Tỉ lệ đột phá
 ```
@@ -522,3 +522,175 @@ Giữ tỉ lệ trong spec: Phàm 45% · Lương 28% · Ưu 15% · Tuyệt 8% ·
 3. Claude báo: đã làm gì, cách chơi thử, task đề xuất tiếp theo; đánh dấu `[x]` trong PLAN.md và ghi `CHANGELOG.md`.
 4. Task ✍️: Claude gửi bản nháp nội dung dạng bảng dễ đọc để bạn duyệt/sửa, sau đó mới nhập vào JSON.
 5. Báo lỗi: mô tả bước tái hiện, hoặc gửi file save xuất ra từ game.
+
+---
+
+## K. Khung hệ thống lõi (đã chốt 2026-10-11)
+
+> Mọi khí vận, thiên phú, kim thủ chỉ, đan dược, pháp bảo chỉ tác động lên game qua **bộ móc hiệu ứng ở K.6**. Thêm móc mới là một task code riêng. Các con số là điểm xuất phát và nằm trong `balance.json`.
+> Đã chốt: hai trục tu luyện (đạo thống × con đường chiến đấu), gộp 10 tư chất đạo thành 5 con đường + 6 bách nghệ, chiến đấu 3 hiệp có lựa chọn, công thức G.1 có căn cốt.
+
+### K.1 Sơ đồ tổng thể
+
+```
+                 ┌──────────── TƯ CHẤT TIÊN THIÊN ────────────┐
+                 │ Căn cốt · Ngộ tính · Khí vận · Đạo tâm      │
+                 │ Linh căn (ngũ hành) · Tư chất đạo           │
+                 └──────────────────────┬─────────────────────┘
+                                        ▼
+   CÔNG PHÁP CHÍNH ─────────►  TU LUYỆN (xương sống)  ◄───── LINH KHÍ NƠI Ở
+   (đạo thống + hệ + phẩm)     tu vi → tầng → đột phá → cảnh giới
+                                        │        ▲
+                    ┌───────────────────┼────────┴──────────┐
+                    ▼                   ▼                   │
+              THỌ NGUYÊN          CHIẾN LỰC            TÀI NGUYÊN
+             (áp lực thời gian)  (chiến đấu)        đan · pháp bảo · phù · trận
+                                        │                   ▲
+                                        ▼                   │
+                     NHÂN QUẢ & QUAN HỆ ◄──────────► BÁCH NGHỆ · TÔNG MÔN · KHÁM PHÁ
+                     (thiện/ác, ân oán, tâm ma)
+```
+
+Một câu: **tu vi là trục chính**; mọi hệ thống phụ hoặc *làm tu nhanh hơn*, hoặc *giúp đột phá*, hoặc *giúp sống sót* (chiến đấu, thọ nguyên), hoặc *tạo hậu quả* (nhân quả).
+
+---
+
+### K.2 Chỉ số
+
+Chia 4 lớp để người chơi dễ hiểu và khí vận dễ móc vào.
+
+| Lớp | Chỉ số | Thang | Thay đổi thế nào |
+|---|---|---|---|
+| **Phàm thân** | Sức khỏe `health`, Vui vẻ `happiness`, Trí tuệ `intellect`, Mị lực `charm` | 0–100 | Lên xuống theo sự kiện từng năm |
+| **Tư chất** | Căn cốt `physique`, Ngộ tính `comprehension`, Khí vận `luck`, Đạo tâm `daoHeart` | 0–100 | Định lúc sinh (quay), chỉ đổi qua kỳ ngộ, khí vận, thiên phú. Đạo tâm thì lên xuống theo lựa chọn đạo đức. |
+| **Tu vi** | Cảnh giới, tầng, tiến độ %, thọ nguyên | — | Theo G.1–G.3 |
+| **Tính ra** | Chiến lực, Tốc, Thần thức | số | Không lưu, luôn tính từ các lớp trên + trang bị |
+| **Xã hội** | Danh vọng theo phe (Chính/Ma/Tán tu/Yêu), Nhân quả (−100 ác … +100 thiện) | | Theo hành động |
+
+Vai trò của mỗi tư chất (để khí vận nào cũng có chỗ bám):
+- **Căn cốt**: tốc độ hấp thu linh khí (thay cho một phần ngộ tính trong G.1), chiến lực thể chất, sức chịu thương, bệnh tật.
+- **Ngộ tính**: tốc độ tu, tỉ lệ đột phá, học công pháp/bách nghệ.
+- **Khí vận**: trọng số sự kiện tốt, rơi đồ, thoát chết.
+- **Đạo tâm**: chống tâm ma, đột phá đại cảnh giới, chống mê hoặc.
+
+Công thức G.1 dùng `(0.75 + (căn_cốt + ngộ_tính)/400)` để căn cốt cũng có tác dụng ✅ (đã sửa ở G.1).
+
+---
+
+### K.3 Tu luyện: hai trục "đạo thống" và "con đường"
+
+Spec đang gộp nhiều thứ khác loại vào "con đường tu luyện" (Kiếm, Thể, Đan, Ma, Phật, Quỷ). Mình đề xuất tách làm **hai trục độc lập**, nhân chéo ra nhiều build:
+
+#### K.3.1 Đạo thống (nguồn sức mạnh, do công pháp chính quyết định)
+| Đạo thống | Mạnh | Yếu / cái giá |
+|---|---|---|
+| **Tiên đạo** (chính thống) | Cân bằng, đột phá ổn định | Không có gì nổi trội |
+| **Ma đạo** | Tu vi ×1.4, chiến đấu hút máu | Tâm ma tăng, nhân quả xấu, chính đạo truy sát |
+| **Phật đạo** | Đạo tâm +, kháng tâm ma, hộ thể | Tu vi ×0.8, kiêng sát sinh (giết người giảm đạo tâm) |
+| **Quỷ đạo** | Thọ nguyên dài, đánh thần thức | Sức khỏe giảm dần, NPC sợ hãi (Mị lực −) |
+| **Yêu đạo** (về sau, cho yêu tộc/ngự thú) | Căn cốt + | để GĐ7 |
+
+#### K.3.2 Con đường chiến đấu (cách đánh, do tư chất đạo + thần thông quyết định)
+| Con đường | Kiểu đánh |
+|---|---|
+| **Kiếm** | Sát thương cao, thắng nhanh, khó thủ |
+| **Thể** (luyện thể, quyền) | Chịu đòn tốt, khó chết, không cần pháp bảo |
+| **Pháp** (ngũ hành thuật) | Hưởng tương khắc ngũ hành mạnh nhất |
+| **Binh** (đao, thương…) | Cân bằng, hợp pháp bảo |
+| **Thuật** (phù, trận, độc, ngự thú) | Dựa vào đồ chuẩn bị trước; yếu khi tay không |
+
+Ví dụ build: *Ma đạo + Kiếm* = ma kiếm tu tốc chiến hút máu; *Phật đạo + Thể* = kim cương bất hoại; *Tiên đạo + Thuật* = trận sư cẩu đạo.
+
+✅ 10 "tư chất đạo" trong spec (Kiếm, Đao, Thương, Quyền, Chỉ, Phù, Đan, Khí, Trận, Thú) được gộp thành **5 con đường chiến đấu ở trên + 6 bách nghệ ở K.5**.
+
+#### K.3.3 Ngũ hành
+- Linh căn có hệ (Kim Mộc Thủy Hỏa Thổ, biến dị Lôi Băng Phong Ám). Công pháp có hệ.
+- Công pháp không hợp linh căn: tu vi ×0.7 (đã có trong G.1).
+- Chiến đấu: hệ khắc hệ được +20% chiến lực; con đường Pháp được +35%.
+
+#### K.3.4 Đột phá đại cảnh giới (giữ spec 4.9.3–4.9.4)
+Mỗi đại cảnh giới cho ra **một "phẩm" kết quả** (đạo cơ, Kim Đan 1–9 phẩm, hình thái Nguyên Anh) + chọn **1 trong 3 thiên phú Nghịch Thiên Cải Mệnh**. Thiên phú dùng chung bộ móc ở K.6, chỉ mạnh hơn khí vận.
+
+---
+
+### K.4 Chiến đấu
+
+#### K.4.1 Chiến lực (một con số cho dễ so)
+```
+Chiến lực = nền[cảnh giới] × (1 + 0.1 × tầng)
+          × (0.8 + căn_cốt/250)                 → 0.8 đến 1.2
+          × hệ_số_công_pháp × hệ_số_đạo_thống
+          × (1 + thưởng pháp bảo + thần thông + khí vận/thiên phú)
+```
+| Cảnh giới | Nền |
+|---|---|
+| Phàm nhân (võ phu tới cao thủ võ lâm) | 1 → 3 |
+| Luyện Khí | 10 |
+| Trúc Cơ | 40 |
+| Kim Đan | 160 |
+| Nguyên Anh | 640 |
+| Hóa Thần | 2.560 |
+
+Mỗi đại cảnh giới ×4: **chênh một đại cảnh giới gần như thua chắc**, chỉ khí vận/thiên phú "vượt cấp" mới lật được. Đúng chất truyện.
+
+Hai chỉ số phụ:
+- **Tốc** = nền nhỏ theo cảnh giới + con đường + pháp bảo phi hành → quyết định bỏ chạy và ra tay trước.
+- **Thần thức** = theo cảnh giới + đạo tâm → phát hiện mai phục, chống ảo thuật, dò xét đồ vật.
+
+#### K.4.2 Một trận đánh
+- Tối đa **3 hiệp**, ai thắng 2 hiệp là thắng. Mỗi hiệp người chơi chọn 1 trong 5 hành động:
+
+| Hành động | Tác dụng |
+|---|---|
+| **Toàn lực** | Tỉ lệ thắng hiệp +, nhưng thua hiệp thì bị thương nặng hơn |
+| **Pháp bảo / Phù** | Tốn vật phẩm, tăng mạnh tỉ lệ hiệp này |
+| **Thủ** | Tỉ lệ thắng −, nhưng thua cũng nhẹ; kéo dài để chờ chạy |
+| **Bỏ chạy** | So Tốc hai bên; thành công là kết thúc trận |
+| **Cầu xin / Đàm phán** | So Mị lực, danh vọng, tính cách đối thủ; ma tu thường không tha |
+
+- Tỉ lệ thắng một hiệp: `p = A^k / (A^k + B^k)`, `A, B` là chiến lực, `k = 1.5`. Ví dụ chênh 1 đại cảnh giới (×4): p ≈ 89% cho bên mạnh.
+- **Thắng**: chọn tha / cướp đồ / giết / bắt về → nhân quả và sổ ân oán.
+- **Thua**: hậu quả theo **ý đồ của đối phương** (dạy dỗ, cướp, giết): bị thương, mất đồ, giảm tu vi, hoặc chết. Có lượt "thoát chết" theo khí vận.
+- Văn bản mô tả lấy từ mẫu theo con đường + hệ, nên kiếm tu và thể tu đánh ra chữ khác nhau.
+
+✅ Dùng bản 3 hiệp có lựa chọn.
+
+---
+
+### K.5 Hệ thống phụ và chỗ nó nối vào xương sống
+
+| Hệ thống | Nối vào | Ghi chú |
+|---|---|---|
+| **Bách nghệ**: Đan, Khí (luyện pháp bảo), Trận, Phù, Linh thực, Ngự thú | Đan → tu vi, đột phá, thọ nguyên. Khí → chiến lực. Trận → đột phá, phòng động phủ. Phù → vật phẩm chiến đấu. Linh thực → nguyên liệu đan. Ngự thú → thêm một đồng đội cộng chiến lực. | Mỗi nghệ có cấp 0–100, tăng khi làm; tỉ lệ thành công theo cấp + ngộ tính + tư chất |
+| **Công pháp & thần thông** | Công pháp chính: tốc tu, đạo thống, hệ. Thần thông (tối đa 3 ô): cộng chiến lực theo con đường | Phẩm Hoàng/Huyền/Địa/Thiên (G.1) |
+| **Tông môn** | Cho công pháp, tài nguyên, nhiệm vụ, sư phụ; đổi lại tự do và nghĩa vụ | Cấp bậc ngoại môn → chưởng môn |
+| **Khám phá & bí cảnh** | Nguồn kỳ ngộ, nguyên liệu, công pháp; rủi ro chiến đấu | Vùng có linh khí và độ nguy hiểm |
+| **Quan hệ & nhân quả** | Đồng minh giúp đánh/đột phá, kẻ thù báo thù; nhân quả xấu → tâm ma | Sổ ân oán theo spec |
+| **Tâm ma** | Chặn đột phá đại cảnh giới, kích hoạt khi đạo tâm thấp | Ảo cảnh dựa trên việc đã làm |
+| **Thọ nguyên** | Áp lực thời gian xuyên suốt; hết thì chết | G.3 |
+
+---
+
+### K.6 Bộ móc hiệu ứng (nền cho khí vận, thiên phú, đồ vật)
+
+Mọi khí vận/thiên phú chỉ được viết bằng các móc dưới đây. Thêm móc mới = một task code riêng, không lén thêm trong nội dung.
+
+| Nhóm | Móc | Ví dụ giá trị |
+|---|---|---|
+| Chỉ số | `stat.<tên>` cộng thẳng (health, charm, physique, comprehension, luck, daoHeart…) | `+10` |
+| Tu luyện | `cultivationSpeed`, `breakthroughChance`, `breakthroughChance.major`, `bottleneckResist` | `+0.15`, `+10` |
+| Thọ nguyên | `lifespanPct`, `agingSlow` | `+0.25` |
+| Chiến đấu | `combatPower`, `combatPower.vsHigherRealm` (vượt cấp), `speed`, `divineSense`, `escapeChance`, `injuryReduce`, `lifesteal` | `+0.2` |
+| Ngũ hành / con đường | `element.<hệ>.power`, `path.<con đường>.affinity`, `path.<con đường>.power` | `+20` |
+| Bách nghệ | `craft.<nghệ>.success`, `craft.<nghệ>.yield`, `craft.<nghệ>.affinity` | `+0.15` |
+| Tâm cảnh | `heartDemonResist`, `charmResist` | `+0.2` |
+| Sự kiện | `eventWeight.<tag>` (nhân trọng số sự kiện có tag), `unlockChain.<id>` | `×2` |
+| Xã hội | `npcAffinityStart`, `faction.<phe>.reputation`, `karmaShift` | `+10` |
+| Kinh tế | `priceDiscount`, `incomePct`, `lootPct` | `+0.1` |
+| Kích hoạt đặc biệt | `trigger.cheatDeath` (số lần), `trigger.everyNYears` (sự kiện đảm bảo), `counter` (đếm dấu rồi thưởng) | |
+
+Quy tắc an toàn:
+- Móc có điều kiện tuổi/cảnh giới được (`activeFrom: { age: 18 }`), dùng cho khí vận tình duyên theo mục H.
+- Mọi hiệu ứng `%` cộng dồn có **trần** trong `balance.json` (ví dụ tốc tu từ khí vận + thiên phú tối đa +150%) để không vỡ game.
+
+---

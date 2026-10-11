@@ -2,6 +2,11 @@
 
 ## [Chưa phát hành]
 
+### Kế hoạch — Khung hệ thống lõi (2026-10-11)
+- PLAN.md thêm mục **K. Khung hệ thống lõi** (đã chốt): 4 lớp chỉ số, hai trục đạo thống × con đường chiến đấu, ngũ hành, chiến lực và chiến đấu 3 hiệp, hệ thống phụ, bộ móc hiệu ứng cho khí vận/thiên phú.
+- G.1: tốc độ tu luyện dùng cả căn cốt lẫn ngộ tính.
+- Task 2.1, 3.3, 3.8 cập nhật theo mục K.
+
 ### Task 0.4 — Nạp và kiểm tra dữ liệu JSON (2026-10-11)
 - Schema Zod cho sự kiện, cấu hình cân bằng, thuật ngữ (`src/core/schemas.ts`).
 - `npm run validate`: báo sai schema, trùng id, followUp tới sự kiện không tồn tại, flag không ai đặt, ảnh thiếu, sự kiện "mature" cho nhân vật dưới 18 tuổi.
