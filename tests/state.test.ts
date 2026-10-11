@@ -64,7 +64,7 @@ describe('createLife', () => {
 
 describe('advanceYear', () => {
   it('ages the character by one and logs the year', () => {
-    const s = advanceYear(createLife({ seed: 'z' }, content));
+    const s = advanceYear(createLife({ seed: 'z' }, content), content);
     expect(s.character.age).toBe(1);
     expect(s.log.at(-1)?.age).toBe(1);
   });

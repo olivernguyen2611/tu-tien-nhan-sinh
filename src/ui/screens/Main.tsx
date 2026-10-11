@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
+import { EventPopup, type PopupResult } from '../components/EventPopup';
 import { Meter } from '../components/Meter';
 import { ThemeToggle } from '../components/ThemeToggle';
 import type { ThemePref } from '../theme';
@@ -23,15 +24,18 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心'],
 ] as const;
 
-export function MainScreen({ state, content, onAdvance, onNewLife, theme, onToggleTheme }: {
+export function MainScreen({ state, content, onAdvance, onChoose, onNewLife, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   onAdvance: () => void;
+  /** Returns the outcome to show on the card. */
+  onChoose: (index: number) => PopupResult;
   onNewLife: () => void;
   theme: ThemePref;
   onToggleTheme: () => void;
 }) {
   const [profileOpen, setProfileOpen] = useState(false);
+  const [result, setResult] = useState<PopupResult | null>(null);
   const logRef = useRef<HTMLElement>(null);
   const { character: c, stats, cult, money } = state;
   const origin = content.origins.find((o) => o.id === c.originId);
@@ -78,7 +82,7 @@ export function MainScreen({ state, content, onAdvance, onNewLife, theme, onTogg
 
       <nav class="dock" aria-label="Hành động">
         {DOCK_LEFT.map(dockItem)}
-        <button class="age-btn" onClick={onAdvance} aria-label="Qua một năm">
+        <button class="age-btn" onClick={onAdvance} aria-label="Qua một năm" disabled={!!state.events.pending || !!result}>
           <span class="big">+1</span>
           <span class="small">năm</span>
         </button>
@@ -94,6 +98,9 @@ export function MainScreen({ state, content, onAdvance, onNewLife, theme, onTogg
         <div class="stat-row wide"><span class="icon">修</span><Meter label="Tu vi" value={cult.progress} color="var(--bar-cult)" text="Chưa tu luyện" /></div>
         <div class="stat-row wide"><span class="icon">壽</span><Meter label="Tuổi" value={c.age} max={cult.lifespan} color="var(--bar-life)" text={`${c.age} tuổi`} /></div>
       </section>
+
+      <EventPopup state={state} content={content} result={result}
+        onChoose={(i) => setResult(onChoose(i))} onClose={() => setResult(null)} />
 
       {profileOpen && (
         <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Nhân vật" onClick={(e) => e.target === e.currentTarget && setProfileOpen(false)}>

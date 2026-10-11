@@ -264,8 +264,8 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 1.1 | [x] GameState + tạo nhân vật (tên, giới tính, xuất thân, quê quán, chỉ số phàm nhân) | `core/state.ts`, `screens/CreateCharacter.tsx` |
 | 1.2 | [x] ✍️ Soạn ~20 Tiên Thiên Khí Vận (đủ phẩm Phàm→Thần + 3–4 ác vận) | `content/traits.json` |
 | 1.3 | [x] Màn *Nghịch Thiên Bốc Mệnh*: quay 3 ô, thẻ lật, phát sáng theo màu, reroll giới hạn | `systems/destiny.ts`, `screens/DestinyRoll.tsx` |
-| 1.4 | [ ] Màn chính: thanh chỉ số trên, nhật ký cuộn, nút **Qua một năm**, thanh tab | `screens/Main.tsx`, `components/*` |
-| 1.5 | [ ] EventEngine lõi: lọc điều kiện, rút trọng số, áp hiệu ứng, thay biến văn bản, popup lựa chọn | `systems/events/*`, `components/EventPopup.tsx` |
+| 1.4 | [x] Màn chính: thanh chỉ số trên, nhật ký cuộn, nút **Qua một năm**, thanh tab | `screens/Main.tsx`, `components/*` |
+| 1.5 | [x] EventEngine lõi: lọc điều kiện, rút trọng số, áp hiệu ứng, thay biến văn bản, popup lựa chọn | `systems/events/*`, `components/EventPopup.tsx` |
 | 1.6 | [x] ✍️ Soạn ~20 sự kiện phàm nhân (tuổi thơ, đi học, làm việc, hài hước, tai nạn) | `content/worlds/thuong_lan/events/childhood.json`, `study.json`, `work.json`, `funny.json`, `accident.json` |
 | 1.7 | [ ] Cha mẹ, anh chị em cơ bản (thiện cảm, già và mất theo thời gian) | `systems/relationships.ts` |
 | 1.8 | [ ] Lão hóa, bệnh, chết già; màn tổng kết đời đơn giản | `systems/time.ts`, `screens/Death.tsx` |
@@ -511,7 +511,7 @@ tỉ lệ (%) = gốc[mốc]
 ### G.4 Nhịp sự kiện
 | Thông số | Giá trị ban đầu |
 |---|---|
-| Tỉ lệ một năm có popup lựa chọn | 20% (cảnh giới thấp) → 10% (Kim Đan trở lên, nhưng sự kiện lớn hơn) |
+| Tỉ lệ một năm có popup lựa chọn | 20% (cảnh giới thấp; **tạm 50%** khi mới có ~20 sự kiện, hạ dần khi thêm nội dung) → 10% (Kim Đan trở lên, nhưng sự kiện lớn hơn) |
 | Tỉ lệ một năm có dòng nhật ký thường (không cần chọn) | 60% |
 | Ảnh hưởng của Khí vận lên sự kiện tốt | trọng số × (1 + (khí_vận − 50) / 100) |
 | Sự kiện hiếm | trọng số ≤1, nhiều cái cần khí vận ≥70 |

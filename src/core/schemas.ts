@@ -250,6 +250,10 @@ export const BalanceSchema = z
         popupChanceLowRealm: probability,
         popupChanceHighRealm: probability,
         logLineChance: probability,
+        /** Skill check: chance = base + (stat − difficulty) × perPoint, clamped to [min, max]. */
+        check: z
+          .object({ base: probability, perPoint: z.number().min(0), min: probability, max: probability })
+          .strict(),
       })
       .strict(),
     traits: z
