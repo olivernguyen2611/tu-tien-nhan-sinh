@@ -1,74 +1,109 @@
-// Layout preview for task 0.5. The character and log below are placeholder
-// data only; real state arrives with GameState in GĐ 1.
-import { useState } from 'preact/hooks';
+// Main screen in a BitLife-style layout: who-you-are bar on top, life log in the
+// middle, a dock with the big age button, and stat bars underneath.
+// Task 0.5 shows placeholder data (see ../preview.ts); GĐ 1 wires real state.
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { Meter } from '../components/Meter';
 import { ThemeToggle } from '../components/ThemeToggle';
+import { PREVIEW_NEXT, PREVIEW_POPUP, PREVIEW_START, type PreviewYear } from '../preview';
 import type { ThemePref } from '../theme';
 
-const TABS = [
+const DOCK_LEFT = [
   { id: 'cultivate', glyph: '修', label: 'Tu luyện' },
   { id: 'sect', glyph: '宗', label: 'Tông môn' },
-  { id: 'bag', glyph: '囊', label: 'Túi đồ' },
+];
+const DOCK_RIGHT = [
   { id: 'bonds', glyph: '緣', label: 'Quan hệ' },
   { id: 'explore', glyph: '遊', label: 'Khám phá' },
-  { id: 'self', glyph: '我', label: 'Nhân vật' },
-] as const;
-
-const PREVIEW_LOG = [
-  { year: 0, lines: ['Ngươi chào đời tại Thanh Vân trấn, con thứ hai của một nhà nông.', 'Bà đỡ bảo đứa bé khóc to như sấm, ắt có phúc lớn.'] },
-  { year: 3, lines: ['Ngươi ăn trộm bánh bao của chó nhà hàng xóm. Con chó không tha thứ.'] },
-  { year: 7, lines: ['Một lão đạo sĩ đi ngang qua làng, nhìn ngươi rất lâu rồi lắc đầu bỏ đi.'] },
-  { year: 9, lines: ['Ngươi theo cha lên núi hái thuốc, nhặt được một chiếc nhẫn cũ gỉ sét.'] },
 ];
 
 export function MainScreen({ theme, onToggleTheme }: { theme: ThemePref; onToggleTheme: () => void }) {
-  const [tab, setTab] = useState<string>('self');
+  const [years, setYears] = useState<PreviewYear[]>(PREVIEW_START);
+  const [popupOpen, setPopupOpen] = useState(false);
+  const logRef = useRef<HTMLElement>(null);
+  const age = years[years.length - 1].age;
+
+  useEffect(() => {
+    logRef.current?.scrollTo({ top: logRef.current.scrollHeight, behavior: 'smooth' });
+  }, [years.length]);
+
+  const ageUp = () => {
+    const next = PREVIEW_NEXT.find((y) => y.age > age);
+    if (!next) return;
+    setYears([...years, next]);
+    if (next.popup) setPopupOpen(true);
+  };
+
+  const dockItem = (t: { id: string; glyph: string; label: string }) => (
+    <button class="dock-item" key={t.id}>
+      <span class="glyph" aria-hidden="true">{t.glyph}</span>
+      <span>{t.label}</span>
+    </button>
+  );
 
   return (
     <div class="main-screen">
-      <header class="char-card">
-        <div class="char-head">
-          <div class="avatar" aria-hidden="true">李</div>
-          <div class="who">
-            <div class="name">Lý Thanh Phong</div>
-            <div class="meta">9 tuổi · Phàm Nhân</div>
-          </div>
-          <ThemeToggle pref={theme} onChange={onToggleTheme} />
+      <header class="top-bar">
+        <button class="avatar" aria-label="Nhân vật">李</button>
+        <div class="who">
+          <div class="name">Lý Thanh Phong</div>
+          <div class="title">{age} tuổi · Phàm Nhân</div>
         </div>
-        <div class="meters">
-          <Meter label="Tu vi" value={0} max={100} color="var(--bar-cult)" text="Chưa tu luyện" />
-          <Meter label="Thọ nguyên" value={9} max={72} color="var(--bar-life)" text="Còn ~63 năm" />
+        <div class="purse">
+          <span class="silver">12 lượng bạc</span>
+          <span class="stone">0 linh thạch</span>
         </div>
-        <div class="stats">
-          <div class="stat"><b>82</b><small>Sức khỏe</small></div>
-          <div class="stat"><b>64</b><small>Hạnh phúc</small></div>
-          <div class="stat"><b>58</b><small>Trí tuệ</small></div>
-          <div class="stat"><b>47</b><small>Mị lực</small></div>
+        <div class="top-actions">
+          <button class="icon-btn" aria-label="Túi đồ" title="Túi đồ">囊</button>
+          <span class="desktop-only">
+            <ThemeToggle pref={theme} onChange={onToggleTheme} />
+          </span>
         </div>
       </header>
 
-      <section class="life-log" aria-label="Nhật ký đời người">
-        <span class="preview-tag">Xem trước bố cục · dữ liệu mẫu</span>
-        {PREVIEW_LOG.map((entry) => (
-          <article class="year-block" key={entry.year}>
-            <h3>Năm {entry.year} tuổi</h3>
-            {entry.lines.map((line) => <p>{line}</p>)}
+      <section class="life-log" aria-label="Nhật ký đời người" ref={logRef}>
+        <span class="preview-tag">Xem trước bố cục · dữ liệu mẫu · bấm nút đỏ để thử</span>
+        {years.map((y, i) => (
+          <article class={`age-block${i === years.length - 1 ? ' current' : ''}`} key={y.age}>
+            <h3>{y.age === 0 ? 'Chào đời' : `Tuổi ${y.age}`}</h3>
+            {y.lines.map((l) => <p class={l.tone ?? ''}>{l.text}</p>)}
           </article>
         ))}
       </section>
 
-      <div class="action-bar">
-        <button class="btn-primary" disabled title="Sẽ hoạt động từ GĐ 1">Qua một năm</button>
-      </div>
-
-      <nav class="tab-bar" aria-label="Các mục">
-        {TABS.map((t) => (
-          <button class="tab" key={t.id} aria-current={tab === t.id ? 'true' : undefined} onClick={() => setTab(t.id)}>
-            <span class="glyph" aria-hidden="true">{t.glyph}</span>
-            <span>{t.label}</span>
-          </button>
-        ))}
+      <nav class="dock" aria-label="Hành động">
+        {DOCK_LEFT.map(dockItem)}
+        <button class="age-btn" onClick={ageUp} aria-label="Qua một năm">
+          <span class="big">+1</span>
+          <span class="small">năm</span>
+        </button>
+        {DOCK_RIGHT.map(dockItem)}
       </nav>
+
+      <section class="stats-panel" aria-label="Chỉ số">
+        <span class="panel-title">Chỉ số</span>
+        <div class="stat-row"><span class="icon">樂</span><Meter label="Hạnh phúc" value={64} tone="auto" /></div>
+        <div class="stat-row"><span class="icon">體</span><Meter label="Sức khỏe" value={82} tone="auto" /></div>
+        <div class="stat-row"><span class="icon">智</span><Meter label="Trí tuệ" value={58} tone="auto" /></div>
+        <div class="stat-row"><span class="icon">貌</span><Meter label="Mị lực" value={27} tone="auto" /></div>
+        <div class="stat-row wide"><span class="icon">修</span><Meter label="Tu vi" value={0} color="var(--bar-cult)" text="Chưa tu luyện" /></div>
+        <div class="stat-row wide"><span class="icon">壽</span><Meter label="Thọ nguyên" value={age} max={72} color="var(--bar-life)" text={`Còn ~${72 - age} năm`} /></div>
+      </section>
+
+      {popupOpen && (
+        <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label={PREVIEW_POPUP.title}>
+          <div class="event-card">
+            <div class="kicker">{PREVIEW_POPUP.kicker}</div>
+            <h2>{PREVIEW_POPUP.title}</h2>
+            <p class="story">{PREVIEW_POPUP.story}</p>
+            {PREVIEW_POPUP.choices.map((c) => (
+              <button class={`choice${c.hidden ? ' hidden-choice' : ''}`} onClick={() => setPopupOpen(false)}>
+                {c.text}
+                <span class="hint">{c.hint}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
