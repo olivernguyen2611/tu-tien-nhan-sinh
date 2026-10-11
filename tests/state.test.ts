@@ -12,6 +12,7 @@ const content: Content = {
   origins: OriginFileSchema.parse(origins),
   events: [],
   glossary: [],
+  traits: [],
 };
 
 describe('createLife', () => {

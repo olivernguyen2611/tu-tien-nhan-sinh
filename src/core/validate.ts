@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { BalanceSchema, EventFileSchema, GlossarySchema, NamesSchema, OriginFileSchema, type GameEvent, type Origin } from './schemas';
+import { BalanceSchema, EventFileSchema, GlossarySchema, NamesSchema, OriginFileSchema, TraitFileSchema, type GameEvent, type Origin, type Trait } from './schemas';
 
 export interface Problem {
   file: string;
@@ -16,6 +16,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
   if (path === 'glossary.json') return GlossarySchema;
   if (path === 'character/origins.json') return OriginFileSchema;
   if (path === 'character/names.json') return NamesSchema;
+  if (path === 'traits.json') return TraitFileSchema;
   if (/^events\/[^/]+\.json$/.test(path)) return EventFileSchema;
   return null;
 }
@@ -42,6 +43,19 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       for (const o of parsed.data as Origin[]) {
         if (seenOrigin.has(o.id)) problems.push({ file, level: 'error', message: `trùng id xuất thân "${o.id}"` });
         seenOrigin.add(o.id);
+      }
+    }
+    if (schema === TraitFileSchema) {
+      const seenTrait = new Set<string>();
+      for (const t of parsed.data as Trait[]) {
+        if (seenTrait.has(t.id)) problems.push({ file, level: 'error', message: `trùng id khí vận "${t.id}"` });
+        seenTrait.add(t.id);
+        // PLAN.md mục H: romance-related event weights only from age 18.
+        for (const e of t.effects) {
+          if (e.hook.startsWith('eventWeight.romance') && (e.activeFrom?.age ?? 0) < 18) {
+            problems.push({ file, level: 'error', message: `khí vận "${t.id}": móc "${e.hook}" phải có activeFrom.age ≥ 18` });
+          }
+        }
       }
     }
     if (schema === EventFileSchema) {

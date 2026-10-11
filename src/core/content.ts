@@ -1,8 +1,8 @@
 // Loads all JSON under content/ at build time and checks it with the same
 // rules as `npm run validate`.
 import {
-  BalanceSchema, EventFileSchema, GlossarySchema, NamesSchema, OriginFileSchema,
-  type Balance, type GameEvent, type Glossary, type Names, type Origin,
+  BalanceSchema, EventFileSchema, GlossarySchema, NamesSchema, OriginFileSchema, TraitFileSchema,
+  type Balance, type GameEvent, type Glossary, type Names, type Origin, type Trait,
 } from './schemas';
 import { validateContent } from './validate';
 
@@ -12,6 +12,7 @@ export interface Content {
   glossary: Glossary;
   origins: Origin[];
   names: Names;
+  traits: Trait[];
 }
 
 const modules = import.meta.glob('../../content/**/*.json', { eager: true, import: 'default' });
@@ -40,5 +41,6 @@ export function loadContent(): Content {
     glossary: GlossarySchema.parse(files['glossary.json'] ?? []),
     origins: OriginFileSchema.parse(files['character/origins.json']),
     names: NamesSchema.parse(files['character/names.json']),
+    traits: TraitFileSchema.parse(files['traits.json']),
   };
 }
