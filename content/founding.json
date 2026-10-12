@@ -129,7 +129,10 @@
     "pills": "Luyện Đan Phòng dâng chưởng môn {count} {item}.",
     "decided": "Chưởng môn quyết: {decision}.",
     "donated": "Ngươi góp {count} linh thạch vào kho {sect}.",
-    "claimed": "Ngươi ngồi lại chiếc ghế chưởng môn {sect} của chính mình kiếp trước. {members} đệ tử còn ở lại khấu đầu bái kiến."
+    "succeeded": "Chưởng môn trao lại ấn tín, cả {sect} hơn {members} đệ tử cúi đầu bái kiến tân chưởng môn. Từ nay, gánh nặng cả tông là của ngươi.",
+    "claimed": "Ngươi ngồi lại chiếc ghế chưởng môn {sect} của chính mình kiếp trước. {members} đệ tử còn ở lại khấu đầu bái kiến.",
+    "eldersMet": "Ngày khai môn, {sect} có thêm những người đầu tiên đứng cạnh ngươi: {names}.",
+    "elderRewarded": "Ngươi ban thưởng cho {title} {npc}. Ông ta cúi đầu cảm tạ, nói sẽ dốc sức vì tông môn."
   },
   "buildings": [
     {
@@ -275,6 +278,33 @@
       "withdrawPct": 0,
       "karma": 3,
       "default": false
+    }
+  ],
+  "prestigeTiers": [
+    {
+      "min": 0,
+      "name": "Vô danh",
+      "growth": 0
+    },
+    {
+      "min": 20,
+      "name": "Có tiếng",
+      "growth": 0.01
+    },
+    {
+      "min": 40,
+      "name": "Danh môn",
+      "growth": 0.02
+    },
+    {
+      "min": 65,
+      "name": "Đại tông",
+      "growth": 0.03
+    },
+    {
+      "min": 85,
+      "name": "Thánh địa",
+      "growth": 0.04
     }
   ]
 }
