@@ -644,6 +644,22 @@ export const BalanceSchema = z
         inheritShare: probability,
       })
       .strict(),
+    /** Task 4.9: taking disciples. */
+    disciples: z
+      .object({
+        /** Realm → most disciples at once (realms not listed take none). */
+        maxByRealm: z.record(id, z.number().int().min(0)),
+        /** A new disciple's age and aptitude ranges, and starting affinity. */
+        age: z.tuple([z.number().int(), z.number().int()]),
+        aptitude: z.tuple([z.number().int(), z.number().int()]),
+        affinity: z.number(),
+        /** Teaching once a year: the disciple's progress (+% of a stage × (0.5 + teacher's comprehension / 100)), affinity, favor; the teacher's own progress. */
+        teachProgress: z.number(),
+        teachAffinity: z.number(),
+        teachFavor: z.number(),
+        teacherProgress: z.number(),
+      })
+      .strict(),
     /** Task 4.7: making pills and artifacts. */
     crafting: z
       .object({
@@ -1872,3 +1888,13 @@ export const RecipeFileSchema = z
   .strict();
 export type RecipeFile = z.infer<typeof RecipeFileSchema>;
 export type Recipe = RecipeFile['recipes'][number];
+
+/** content/disciples.json (task 4.9): texts for taking and teaching disciples. {npc}, {name}. */
+export const DisciplesFileSchema = z
+  .object({
+    role: z.string().min(1),
+    recruit: z.string().min(1),
+    teach: z.array(z.string().min(1)).min(1),
+  })
+  .strict();
+export type DisciplesFile = z.infer<typeof DisciplesFileSchema>;

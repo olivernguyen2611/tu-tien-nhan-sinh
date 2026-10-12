@@ -2,6 +2,20 @@
 
 ## [Chưa phát hành]
 
+### Task 4.9 — Thu đồ đệ (cơ bản) (2026-10-12)
+- **Thu đồ đệ** (tab Người quen):
+  - Từ Trúc Cơ, mỗi năm thu được một đồ đệ.
+  - Số đồ đệ tối đa theo cảnh giới: Trúc Cơ 1, Kim Đan 3, Nguyên Anh 5, Hóa Thần 9 (`balance.disciples`).
+  - Đồ đệ là NPC 12–16 tuổi, có linh căn, tư chất 30–85, bái sư xong vào Luyện Khí. Đồ đệ tự tu luyện, già, chết theo hệ NPC 3.4.
+  - Đồ đệ cũng có tính cách bề ngoài/bản chất, nên vẫn có thể lộ bộ mặt thật.
+- **Chỉ điểm**, mỗi đồ đệ mỗi năm một lần:
+  - Đồ đệ được +30% thanh tu vi, nhân với (0.5 + Ngộ tính của thầy / 100).
+  - Thiện cảm +5, ân +5. Ân đủ nhiều thì đồ đệ có thể tới báo ân (sự kiện 3.4).
+  - Người thầy được +3% tu vi ("dạy học tương trưởng").
+- Câu văn ở `content/disciples.json`.
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "Thu đồ đệ (cơ bản)"): mọi con số và câu văn trên.
+- **Chưa làm**: đồ đệ giúp đánh nhau, truyền công pháp, đồ đệ phản sư; để GĐ 5 (tông phái và truyền thừa).
+
 ### Task 4.7 — Luyện đan và luyện khí (2026-10-12)
 - Mục Bách nghệ có thêm **Luyện chế** dưới Luyện Đan và Luyện Khí. Luyện một mẻ chiếm lượt luyện nghề của năm đó (như Luyện tập).
 - **Tỉ lệ thành công** = 60% + 2% mỗi cấp trên mức công thức yêu cầu + 0.5% mỗi điểm Ngộ tính trên 50 + móc `craft.<nghề>.success` (Thủ Ổn Tâm Tĩnh, Đan Hỏa Thuần Thanh…). Trong khoảng 10–95%.

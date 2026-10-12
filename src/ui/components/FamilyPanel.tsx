@@ -6,15 +6,18 @@ import type { GameState, Tone } from '../../core/types';
 import { availableActions, relationLabel } from '../../systems/relationships';
 import { npcLabel } from '../../systems/npcs';
 import { childRootLabel, romanceLabel, romanceViews, type RomanceAction } from '../../systems/romance';
+import { disciples, maxDisciples, recruitBlocked, teachBlocked } from '../../systems/disciples';
 import { Meter } from './Meter';
 
-export function FamilyPanel({ state, content, onAction, onRomance, onClose }: {
+export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome text to show under the relative. */
   onAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
   /** Task 3.6: courting someone met along the way. */
   onRomance: (npcId: string, action: RomanceAction) => { text: string; tone: Tone; changes: string };
+  /** Task 4.9: take a disciple (no id) or teach one. */
+  onDisciple: (npcId: string | null) => { text: string; tone: Tone; changes: string } | null;
   onClose: () => void;
 }) {
   const age = state.character.age;
@@ -34,6 +37,16 @@ export function FamilyPanel({ state, content, onAction, onRomance, onClose }: {
             Người quen{npcs.length > 0 && ` (${npcs.filter((n) => n.alive).length})`}
           </button>
         </div>
+        {tab === 'npcs' && maxDisciples(state, content) > 0 && (
+          <div class="disciples">
+            <p class="profile-note">Đồ đệ: {disciples(state).length}/{maxDisciples(state, content)}</p>
+            <button class="chip-btn" disabled={!!recruitBlocked(state, content)} title={recruitBlocked(state, content) ?? undefined}
+              onClick={() => { const r = onDisciple(null); if (r) setResult({ id: 'recruit', ...r }); }}>
+              Thu đồ đệ
+            </button>
+            {result?.id === 'recruit' && <p class={`action-result ${result.tone}`}>{result.text}</p>}
+          </div>
+        )}
         {tab === 'npcs' && (npcs.length === 0 ? (
           <p class="story">Giang hồ mênh mông, ngươi chưa quen được ai.</p>
         ) : (
@@ -55,6 +68,14 @@ export function FamilyPanel({ state, content, onAction, onRomance, onClose }: {
                     {` · Bản chất: ${l.nature ?? '?'}`}
                   </p>
                   {n.alive && <Meter label={`Thiện cảm · ${love.tier}`} value={n.affinity} tone="auto" />}
+                  {n.alive && n.disciple && (
+                    <div class="action-chips">
+                      <button class="chip-btn" disabled={!!teachBlocked(state, n)} title={teachBlocked(state, n) ?? undefined}
+                        onClick={() => { const r = onDisciple(n.id); if (r) setResult({ id: n.id, ...r }); }}>
+                        Chỉ điểm
+                      </button>
+                    </div>
+                  )}
                   {views.length > 0 && (
                     <div class="action-chips">
                       {views.map((v) => (

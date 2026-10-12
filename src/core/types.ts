@@ -263,4 +263,6 @@ export interface Npc {
   grudge: number;
   /** Id of the NPC whose grudge this one inherited (kin of someone the player killed). */
   heirOf: string | null;
+  /** Task 4.9: the player's disciple, and the age they were last taught. */
+  disciple?: { since: number; lastTaught: number | null };
 }

@@ -39,6 +39,7 @@ import { placeStrand } from '../systems/goldenCore';
 import { becomeGhost } from '../systems/ghost';
 import { meetIllusion } from '../systems/heartDemon';
 import { craftRecipe } from '../systems/crafting';
+import { recruitDisciple, teachDisciple } from '../systems/disciples';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -183,6 +184,12 @@ function Screens({ content }: { content: Content }) {
         onSeclude={(years) => setLife(seclude(life, content, years))}
         onPlaceStrand={(element) => setLife(placeStrand(life, content, element).state)}
         onMeetIllusion={(option) => setLife(meetIllusion(life, content, option).state)}
+        onDisciple={(npcId) => {
+          const r = npcId ? teachDisciple(life, content, npcId) : recruitDisciple(life, content);
+          if (!r) return null;
+          setLife(r.state);
+          return { text: r.text, tone: 'good', changes: describeChanges(life, r.state) };
+        }}
         onCraft={(recipeId) => {
           const r = craftRecipe(life, content, recipeId);
           if (!r) return null;

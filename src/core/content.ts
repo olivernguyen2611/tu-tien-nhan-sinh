@@ -1,7 +1,7 @@
 // Loads all JSON under content/ at build time and checks it with the same
 // rules as `npm run validate`.
 import {
-  AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, CombatTextsSchema, type CombatTexts, type Market, type FateTalent, type Item, type Lineage, type MartialFile, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile, NpcTraitsFileSchema, RankingTextsSchema, type RankingTexts, RomanceFileSchema, type RomanceFile, HeartDemonFileSchema, type HeartDemonFile, RecipeFileSchema, type RecipeFile, type NpcTraitsFile,
+  AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, CombatTextsSchema, type CombatTexts, type Market, type FateTalent, type Item, type Lineage, type MartialFile, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile, NpcTraitsFileSchema, RankingTextsSchema, type RankingTexts, RomanceFileSchema, type RomanceFile, HeartDemonFileSchema, type HeartDemonFile, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, type DisciplesFile, type NpcTraitsFile,
   BalanceSchema, EventFileSchema, FamilyActionFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema,
   type Balance, type FamilyAction, type GameEvent, type Glossary, type LifeTexts, type Names, type Origin, type StatExtremesFile, type Trait, type World,
 } from './schemas';
@@ -44,6 +44,8 @@ export interface Content {
   combat: CombatTexts;
   /** NPC personalities and goals (task 3.4). */
   npcTraits: NpcTraitsFile;
+  /** Disciple texts (task 4.9). */
+  disciples: DisciplesFile;
   /** Luyện đan / Luyện khí recipes (task 4.7). */
   recipes: RecipeFile;
   /** Tâm ma illusions (task 4.4). */
@@ -135,6 +137,7 @@ export function loadContent(worldId: string = DEFAULT_WORLD_ID): Content {
     romance: RomanceFileSchema.parse(files['romance.json']),
     heartDemon: HeartDemonFileSchema.parse(files['heart-demon.json']),
     recipes: RecipeFileSchema.parse(files['recipes.json']),
+    disciples: DisciplesFileSchema.parse(files['disciples.json']),
     npcTraits: NpcTraitsFileSchema.parse(files['npc-traits.json'] ?? { surface: [], nature: [], goals: [] }),
   };
 }

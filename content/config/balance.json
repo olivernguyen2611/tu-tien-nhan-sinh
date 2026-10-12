@@ -307,6 +307,16 @@
     "bargainWinMul": 0.85,
     "bargainLoseMul": 1.1
   },
+  "disciples": {
+    "maxByRealm": { "truc_co": 1, "kim_dan": 3, "nguyen_anh": 5, "hoa_than": 9 },
+    "age": [12, 16],
+    "aptitude": [30, 85],
+    "affinity": 60,
+    "teachProgress": 30,
+    "teachAffinity": 5,
+    "teachFavor": 5,
+    "teacherProgress": 3
+  },
   "crafting": {
     "base": 0.6,
     "perLevel": 0.02,

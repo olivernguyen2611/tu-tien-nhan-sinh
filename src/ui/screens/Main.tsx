@@ -46,7 +46,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onSeclude, onPlaceStrand, onMeetIllusion, onCraft, onChoose, onFamilyAction, onRomance, onUseItem, onMarket, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onSeclude, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onChoose, onFamilyAction, onRomance, onUseItem, onMarket, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -56,6 +56,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onFastForward: () => void;
   /** Returns the outcome to show on the card. */
   onChoose: (index: number) => PopupResult;
+  /** Task 4.9: take a disciple (null) or teach one. */
+  onDisciple: (npcId: string | null) => { text: string; tone: Tone; changes: string } | null;
   /** Task 4.7: luyện đan / luyện khí; returns the log text, or null. */
   onCraft: (recipeId: string) => string | null;
   /** Task 4.4: meet the current tâm ma illusion. */
@@ -232,7 +234,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       {bagOpen && <BagPanel state={state} content={content} onUse={onUseItem} onClose={() => setBagOpen(false)} />}
 
-      {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onRomance={onRomance} onClose={() => setFamilyOpen(false)} />}
+      {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onRomance={onRomance} onDisciple={onDisciple} onClose={() => setFamilyOpen(false)} />}
 
       {profileOpen && (
         <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Nhân vật" onClick={(e) => e.target === e.currentTarget && setProfileOpen(false)}>

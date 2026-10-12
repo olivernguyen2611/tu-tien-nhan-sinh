@@ -1,0 +1,9 @@
+{
+  "role": "đồ đệ",
+  "recruit": "{npc} quỳ trước động phủ ba ngày ba đêm. Ngươi nhận lấy chén trà bái sư, từ nay có thêm một đồ đệ.",
+  "teach": [
+    "Ngươi giảng cho {npc} một đoạn khẩu quyết. Giảng cho người khác, chính mình cũng thông thêm một chỗ.",
+    "{npc} hỏi một câu ngươi chưa từng nghĩ tới. Hai thầy trò ngồi tới sáng.",
+    "Ngươi dẫn {npc} ra suối luyện khí. Đồ đệ ngã xuống nước ba lần, lần thứ tư thì đứng vững."
+  ]
+}
