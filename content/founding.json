@@ -132,7 +132,17 @@
     "succeeded": "Chưởng môn trao lại ấn tín, cả {sect} hơn {members} đệ tử cúi đầu bái kiến tân chưởng môn. Từ nay, gánh nặng cả tông là của ngươi.",
     "claimed": "Ngươi ngồi lại chiếc ghế chưởng môn {sect} của chính mình kiếp trước. {members} đệ tử còn ở lại khấu đầu bái kiến.",
     "eldersMet": "Ngày khai môn, {sect} có thêm những người đầu tiên đứng cạnh ngươi: {names}.",
-    "elderRewarded": "Ngươi ban thưởng cho {title} {npc}. Ông ta cúi đầu cảm tạ, nói sẽ dốc sức vì tông môn."
+    "elderRewarded": "Ngươi ban thưởng cho {title} {npc}. Ông ta cúi đầu cảm tạ, nói sẽ dốc sức vì tông môn.",
+    "recruitYes": [
+      "{npc} nghe lời mời của ngươi, chắp tay: “Được chưởng môn coi trọng, tại hạ xin gia nhập {sect}.”",
+      "{npc} nhìn lễ vật ngươi tặng, mỉm cười: “Cố nhân đã mở lời, sao nỡ chối từ.” Từ nay {npc} là người của {sect}.",
+      "{npc} trầm ngâm hồi lâu rồi gật đầu, quỳ xuống dâng trà bái nhập {sect}."
+    ],
+    "recruitNo": [
+      "{npc} xua tay: “Ta quen cảnh nhàn vân dã hạc, xin tạ ý tốt của chưởng môn.” Ngươi hơi tiếc.",
+      "{npc} nhìn lễ vật rồi đẩy lại: “Công danh chẳng phải việc ta cầu.” Ngươi đành cười trừ.",
+      "{npc} do dự rồi lắc đầu: “Duyên chưa tới, xin cho ta thêm thời gian.”"
+    ]
   },
   "buildings": [
     {

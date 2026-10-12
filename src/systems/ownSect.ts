@@ -185,7 +185,8 @@ export function ownSectYear(state: GameState, content: Content): GameState {
   const left = Math.round(own.members * cfg.attrition);
   const cap = cfg.maxMembers[state.cult.realm] ?? own.members;
   const members = Math.max(0, Math.min(Math.max(cap, own.members), own.members + joined - left));
-  const income = Math.round(members * cfg.tithe + sum(content, own, 'income') - sum(content, own, 'upkeep'));
+  const recruited = state.npcs.filter((n) => n.alive && n.member).length;
+  const income = Math.round(members * cfg.tithe + recruited * cfg.recruit.memberTithe + sum(content, own, 'income') - sum(content, own, 'upkeep'));
   const treasury = Math.max(0, own.treasury + income);
 
   // Danh vọng drifts towards what the sect has built: many disciples and many buildings.
