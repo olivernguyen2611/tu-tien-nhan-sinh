@@ -129,6 +129,7 @@
     "pills": "Luyện Đan Phòng dâng chưởng môn {count} {item}.",
     "decided": "Chưởng môn quyết: {decision}.",
     "donated": "Ngươi góp {count} linh thạch vào kho {sect}.",
+    "succeeded": "Chưởng môn trao lại ấn tín, cả {sect} hơn {members} đệ tử cúi đầu bái kiến tân chưởng môn. Từ nay, gánh nặng cả tông là của ngươi.",
     "claimed": "Ngươi ngồi lại chiếc ghế chưởng môn {sect} của chính mình kiếp trước. {members} đệ tử còn ở lại khấu đầu bái kiến."
   },
   "buildings": [

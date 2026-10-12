@@ -684,5 +684,345 @@
     "themes": [
       "sect_grand"
     ]
+  },
+  {
+    "id": "sg_phe_phai",
+    "category": "sect",
+    "title": "Ba phe trong tông",
+    "text": "Sau những buổi họp đại sảnh, ngươi nhận ra tông không phải một khối: phái giữ nếp cũ thì lo giữ môn quy, phái cải cách muốn mở rộng thu đệ tử, phái chuộng thực lực thì chỉ xem ai đánh thắng. Ai cũng chìa tay về phía ngươi.",
+    "conditions": {
+      "sect": {
+        "member": true,
+        "minRank": 2
+      },
+      "flagsNone": [
+        "phe_bao_thu",
+        "phe_cai_cach",
+        "phe_thuc_luc",
+        "da_ke_nhiem"
+      ]
+    },
+    "weight": 3,
+    "oncePerLife": true,
+    "cooldownYears": 10,
+    "themes": [
+      "sect_grand"
+    ],
+    "choices": [
+      {
+        "text": "Theo phái giữ nếp cũ",
+        "result": {
+          "text": "Các trưởng lão già gật gù hài lòng, giao cho ngươi giữ một phần sổ sách môn quy.",
+          "effects": {
+            "setFlags": [
+              "phe_bao_thu"
+            ],
+            "sectContribution": 15,
+            "stat.daoHeart": 2,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Theo phái cải cách",
+        "result": {
+          "text": "Nhóm đệ tử trẻ kéo ngươi vào bàn bạc, nói cười rôm rả tới khuya.",
+          "effects": {
+            "setFlags": [
+              "phe_cai_cach"
+            ],
+            "sectContribution": 10,
+            "stat.charm": 2,
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Theo phái chuộng thực lực",
+        "result": {
+          "text": "Họ chỉ hỏi ngươi một câu: \"Đánh được không?\" Ngươi gật đầu, thế là xong.",
+          "effects": {
+            "setFlags": [
+              "phe_thuc_luc"
+            ],
+            "sectContribution": 10,
+            "stat.physique": 2,
+            "stat.daoHeart": -1
+          }
+        }
+      },
+      {
+        "text": "Đứng ngoài, không theo phe nào",
+        "result": {
+          "text": "Cả ba phe đều chê ngươi cứng đầu, nhưng không ai dám khinh.",
+          "effects": {
+            "sectContribution": -5,
+            "stat.daoHeart": 2,
+            "stat.happiness": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "sg_ngoi_mo",
+    "category": "sect",
+    "title": "Chưởng môn muốn truyền ngôi",
+    "text": "Chưởng môn đã già, linh lực suy dần. Một buổi sáng, ngài triệu các chân truyền vào điện: \"Ta định chọn người kế nhiệm. Ai thấy mình đủ gánh, cứ nói.\"",
+    "conditions": {
+      "sect": {
+        "member": true,
+        "minRank": 3
+      },
+      "realm": {
+        "min": "truc_co"
+      },
+      "flagsNone": [
+        "da_ke_nhiem"
+      ]
+    },
+    "weight": 2,
+    "oncePerLife": true,
+    "cooldownYears": 20,
+    "themes": [
+      "sect_grand"
+    ],
+    "choices": [
+      {
+        "text": "Đứng ra tranh ngôi",
+        "result": {
+          "text": "Cả điện lặng đi. Có người nhìn ngươi với ánh mắt nể, có người nhìn bằng ánh mắt khác.",
+          "effects": {
+            "chain": "sg_ngoi_vong_phieu",
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Ủng hộ người kế nhiệm mà chưởng môn mong",
+        "result": {
+          "text": "Ngươi lên tiếng ủng hộ, chưởng môn mỉm cười. Từ đó ngài coi ngươi như người nhà.",
+          "effects": {
+            "sectContribution": 40,
+            "setFlags": [
+              "ung_ho_ke_nhiem"
+            ],
+            "stat.charm": 1,
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Xin từ chối, chỉ lo tu luyện",
+        "result": {
+          "text": "Chưởng môn nhìn ngươi lâu rồi gật đầu: \"Đạo của mỗi người khác nhau.\"",
+          "effects": {
+            "cultProgress": 6,
+            "stat.daoHeart": 1,
+            "stat.comprehension": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "sg_ngoi_vong_phieu",
+    "category": "sect",
+    "title": "Tranh ngôi · Vòng bàn bạc",
+    "text": "Các trưởng lão họp kín bàn người kế nhiệm. Ngoài đại sảnh, các phe thì thầm. Ngươi phải kiếm đủ người chịu nói tốt cho mình.",
+    "conditions": {},
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Dựa vào phe giữ nếp cũ",
+        "check": {
+          "stat": "stat.daoHeart",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Các trưởng lão già bỏ phiếu cho ngươi, nhưng đòi ngươi hứa sẽ không đổi nếp tông.",
+          "effects": {
+            "chain": "sg_ngoi_luan_vo",
+            "sectContribution": 20,
+            "stat.daoHeart": 1
+          }
+        },
+        "fail": {
+          "text": "Họ nghi ngươi chỉ lợi dụng, quay sang ủng hộ người khác.",
+          "effects": {
+            "chain": "sg_ngoi_luan_vo",
+            "stat.happiness": -3
+          }
+        },
+        "requires": {
+          "flagsAll": [
+            "phe_bao_thu"
+          ]
+        }
+      },
+      {
+        "text": "Dựa vào phe cải cách",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Đám đệ tử trẻ đứng sau lưng ngươi, tiếng hô vang cả đại sảnh.",
+          "effects": {
+            "chain": "sg_ngoi_luan_vo",
+            "sectContribution": 20,
+            "stat.charm": 1
+          }
+        },
+        "fail": {
+          "text": "Họ quá ồn ào, các trưởng lão thấy chướng tai.",
+          "effects": {
+            "chain": "sg_ngoi_luan_vo",
+            "stat.happiness": -3
+          }
+        },
+        "requires": {
+          "flagsAll": [
+            "phe_cai_cach"
+          ]
+        }
+      },
+      {
+        "text": "Dựa vào phe chuộng thực lực",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Ngươi đập nát một tảng đá giữa sân. Phe thực lực reo lên, không ai dám cãi.",
+          "effects": {
+            "chain": "sg_ngoi_luan_vo",
+            "sectContribution": 20,
+            "stat.physique": 1
+          }
+        },
+        "fail": {
+          "text": "Phe thực lực đông mà rối, mấy trưởng lão chê ngươi chỉ biết dùng sức.",
+          "effects": {
+            "chain": "sg_ngoi_luan_vo",
+            "stat.happiness": -3
+          }
+        },
+        "requires": {
+          "flagsAll": [
+            "phe_thuc_luc"
+          ]
+        }
+      },
+      {
+        "text": "Tự mình đi thuyết phục từng trưởng lão",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Ngươi kiên nhẫn qua từng động phủ, nghe từng lời trách móc. Cuối cùng đa số gật đầu.",
+          "effects": {
+            "chain": "sg_ngoi_luan_vo",
+            "sectContribution": 25,
+            "stat.charm": 2,
+            "stat.health": -2
+          }
+        },
+        "fail": {
+          "text": "Có trưởng lão không thèm tiếp, có người tiếp mà chẳng hứa gì.",
+          "effects": {
+            "chain": "sg_ngoi_luan_vo",
+            "stat.happiness": -4
+          }
+        }
+      }
+    ],
+    "themes": []
+  },
+  {
+    "id": "sg_ngoi_luan_vo",
+    "category": "sect",
+    "title": "Tranh ngôi · Luận võ kế vị",
+    "text": "Chưởng môn quyết định: người kế vị phải thắng trong trận cuối trước toàn tông, để không ai còn dị nghị. Đối thủ của ngươi là một chân truyền khác, vẻ mặt lạnh như đá.",
+    "conditions": {},
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Bước lên đài",
+        "result": {
+          "text": "Ngươi bước lên đài, cả tông im phăng phắc.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Chân truyền đối thủ",
+              "realm": "same",
+              "stage": 3,
+              "powerMul": 1.15,
+              "element": "random",
+              "lineage": "tien",
+              "intent": "teach",
+              "mercy": 0.9
+            },
+            "win": {
+              "text": "Đối thủ chắp tay nhận thua. Chưởng môn trao ấn tín, chuông sơn môn gióng chín tiếng. Ngươi là tân chưởng môn.",
+              "effects": {
+                "succeedSect": true,
+                "setFlags": [
+                  "da_ke_nhiem"
+                ],
+                "reputation": {
+                  "chinh": 5
+                },
+                "stat.daoHeart": 2,
+                "stat.charm": 2,
+                "stat.happiness": 5
+              }
+            },
+            "lose": {
+              "text": "Ngươi thua một chiêu. Đối thủ lên ngôi, ngươi được giữ chức trưởng lão nhưng mất mặt không ít.",
+              "effects": {
+                "setFlags": [
+                  "da_ke_nhiem"
+                ],
+                "sectContribution": -20,
+                "stat.health": -10,
+                "stat.happiness": -6,
+                "stat.daoHeart": -1
+              }
+            },
+            "fled": {
+              "text": "Ngươi bỏ đài. Cả tông nhìn ngươi, rồi lặng lẽ nhìn đi chỗ khác.",
+              "effects": {
+                "setFlags": [
+                  "da_ke_nhiem"
+                ],
+                "sectContribution": -30,
+                "stat.daoHeart": -3,
+                "stat.happiness": -6
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Xin nhường đối thủ vì đại cục",
+        "result": {
+          "text": "Ngươi chắp tay nhường ngôi. Đối thủ sững người, cả tông xôn xao rồi lặng đi. Có người nể ngươi.",
+          "effects": {
+            "setFlags": [
+              "da_ke_nhiem"
+            ],
+            "sectContribution": 30,
+            "reputation": {
+              "chinh": 2
+            },
+            "stat.daoHeart": 2,
+            "stat.happiness": -2
+          }
+        }
+      }
+    ],
+    "themes": []
   }
 ]

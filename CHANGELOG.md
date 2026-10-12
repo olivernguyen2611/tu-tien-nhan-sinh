@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### Tông môn 5c.6 — Tranh ngôi chưởng môn, phe phái (2026-10-12)
+- **Ba phe trong tông** (giữ nếp cũ, cải cách, chuộng thực lực): từ Nội môn, đệ tử chọn theo một phe (hoặc đứng ngoài). Chọn phe lưu bằng cờ và mở lối đi riêng ở vòng bàn bạc kế vị.
+- **Tranh ngôi**: Chân truyền (từ Trúc Cơ) gặp chưởng môn muốn truyền ngôi; được tranh ngôi, ủng hộ người khác hoặc từ chối. Tranh ngôi qua vòng bàn bạc rồi luận võ kế vị với một chân truyền khác. Thắng thì thành chưởng môn thật của tông đó.
+- Hiệu ứng sự kiện mới `succeedSect`: người thuộc tông nhận ghế chưởng môn của chính tông ấy (không tốn phí khai tông), tông thành `ownSect` với `balance.founding.inheritMembers` đệ tử và `inheritTreasury` linh thạch, mở khóa báo cáo năm, xây dựng, quyết định của chưởng môn. Nội dung do Claude tự soạn, chưa qua duyệt.
+
 ### Tông môn 5c.5 — Sự kiện lớn của tông (2026-10-12)
 - 12 sự kiện mới (`events/sect-grand.json`): **Thí luyện sơn môn** (3 ải, có đánh yêu thú canh cốc, chọn một phần thưởng ở đỉnh), **Chuông báo địch** (ngoại địch tập kích, ra trận hay giữ trận nhãn hay lẩn trốn, rồi sau trận), **Kẻ nội gián** (nội loạn, tố cáo hay đối chất, mật điều tra, đêm bắt phản đồ có đánh) và **Đại hội tông môn** (nhiều lựa chọn, ba năm một lần).
 - Mỗi lựa chọn đều đổi chỉ số; thí luyện, ngoại địch, nội loạn chỉ xảy ra một lần mỗi đời. Nội dung do Claude tự soạn, chưa qua duyệt.
