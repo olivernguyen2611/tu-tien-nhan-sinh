@@ -3,9 +3,10 @@
 import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
-import { buildingViews, decisionViews, foundBlocked, sectNameProblem, suggestSectName } from '../../systems/ownSect';
+import { buildingViews, decisionViews, foundBlocked, prestigeOf, prestigeTier, sectNameProblem, suggestSectName } from '../../systems/ownSect';
+import { elderViews } from '../../systems/sectElders';
 
-export function OwnSectSection({ state, content, onFound, onDecide, onBuild, onDonate }: {
+export function OwnSectSection({ state, content, onFound, onDecide, onBuild, onDonate, onElder }: {
   state: GameState;
   content: Content;
   onFound: (name: string, rules: string[]) => void;
@@ -13,6 +14,8 @@ export function OwnSectSection({ state, content, onFound, onDecide, onBuild, onD
   onDecide: (decisionId: string) => void;
   onBuild: (buildingId: string) => void;
   onDonate: () => void;
+  /** Task 5c.7: reward a named elder. */
+  onElder: (npcId: string) => void;
 }) {
   const [salt, setSalt] = useState(0);
   const [name, setName] = useState(() => suggestSectName(state, content));
@@ -26,6 +29,20 @@ export function OwnSectSection({ state, content, onFound, onDecide, onBuild, onD
       <div class="crafts">
         <h3 class="panel-sub">{own.name}</h3>
         <p class="story">Chưởng môn {state.character.name} · {lineageName(own.lineage)} · khai tông năm {own.founded} tuổi · {own.members} đệ tử · kho {own.treasury} linh thạch</p>
+        <p class="profile-note">Danh vọng: {prestigeTier(state, content).name} ({Math.round(prestigeOf(state, content))}/100). Đông đệ tử và nhiều công trình thì danh vọng lên, danh vọng cao thì người đến bái sư càng đông.</p>
+        {elderViews(state, content).length > 0 && (
+          <div class="crafts">
+            <h3 class="panel-sub">Trưởng lão</h3>
+            {elderViews(state, content).map((v) => (
+              <div class="career-row" key={v.npc.id}>
+                <div class="craft-head"><b>{v.npc.name}</b><span class="muted">thiện cảm {v.npc.affinity}</span></div>
+                <p class="profile-note">{v.npc.age} tuổi · {content.cultivation.realms.realms.find((r) => r.id === v.npc.realm)?.name}</p>
+                <button class="chip-btn" disabled={!!v.blocked} onClick={() => onElder(v.npc.id)}>Ban thưởng · {content.balance.founding.elders.rewardCost} linh thạch</button>
+                {v.blocked && <span class="craft-note">{v.blocked}</span>}
+              </div>
+            ))}
+          </div>
+        )}
         {own.report && own.report.age === state.character.age && (
           <div class="sect-report">
             <p class="profile-note">{own.report.text}</p>

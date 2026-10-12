@@ -189,7 +189,10 @@ export function ageNpcs(state: GameState, content: Content): GameState {
       const speed = content.balance.realms[n.realm]?.speedPct ?? 0;
       // Hào quang (task 5.5): a khí vận chi tử climbs faster.
       const halo = n.chosen ? content.balance.chosen.progressMul : 1;
-      n = { ...n, progress: n.progress + speed * (cfg.speedBase + n.aptitude / cfg.speedDivisor) * (nat?.speedMul ?? 1) * halo };
+      // Task 5c.8: a technique handed down by a master speeds the disciple by its grade.
+      const techGrade = n.technique ? content.techniques.find((t) => t.id === n.technique)?.grade : undefined;
+      const handed = 1 + (techGrade ? content.balance.disciples.acts.techniqueSpeed[techGrade] ?? 0 : 0);
+      n = { ...n, progress: n.progress + speed * (cfg.speedBase + n.aptitude / cfg.speedDivisor) * (nat?.speedMul ?? 1) * halo * handed };
       while (n.progress >= 100) {
         const ri = realms.findIndex((r) => r.id === n.realm);
         const stages = realms[ri]?.stages.length ?? 1;
