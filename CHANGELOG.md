@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### Developer mode: cheat cho người có quan hệ (2026-10-12)
+- Mục mới **Người có quan hệ** trong bảng Dev: chọn tên trong danh sách thả (chia nhóm Gia đình / Người quen) rồi chỉnh người đó, không chỉ nhân vật chính.
+- Người quen: thiện cảm, ân, oán, tư chất, tuổi, thọ nguyên, cho chết hoặc sống lại, cho hoặc bỏ linh căn, đặt cảnh giới, lên tầng, xóa khỏi thế giới (không xóa được đạo lữ và đồ đệ). Người thân: thiện cảm, tuổi, thọ nguyên, sống chết, linh căn. Mọi thay đổi ghi `[Dev]` trong nhật ký.
+- Mã: `src/systems/devPeople.ts`.
+
 ### Nhập nhân vật đã lưu thành NPC (2026-10-12)
 - Bảng Quan hệ, tab Người quen có nút **Nhập nhân vật đã lưu**. Chọn một người trong Sổ nhân vật hoặc nhân vật chính của một ô lưu khác (chỉ người còn sống), rồi thiết lập: **tên** trong đời này (đổi khi trùng tên), **vai trò** với nhân vật chính (bằng hữu, tri kỷ, ân nhân, đồng môn, đối thủ, kẻ thù, người lạ có duyên, hoặc tự đặt), **thiện cảm, ân, oán** ban đầu (thanh trượt, mở sẵn theo vai trò) và giữ tuổi cũ hay bằng tuổi mình.
 - Người nhập vào giữ cảnh giới, tư chất, linh căn có hay không, tính cách và mục tiêu của họ; từ đó sống, tu luyện và già đi như mọi người quen khác. Nhật ký ghi lại lúc họ xuất hiện.
