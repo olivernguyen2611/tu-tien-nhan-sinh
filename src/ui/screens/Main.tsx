@@ -166,7 +166,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   return (
     <div class="main-screen">
       <header class="top-bar">
-        <button class="avatar" aria-label="Nhân vật" onClick={() => setProfileOpen(true)}>{c.name.split(' ')[0]}</button>
+        <button class="avatar" aria-label="Nhân vật" onClick={() => setProfileOpen(true)}>{[...c.name][0]}</button>
         <div class="who">
           <div class="name">{c.name}</div>
           <div class="title">{c.age} tuổi · {realmLabel(state, content)}{region ? ` · ${region.name}` : ''}</div>

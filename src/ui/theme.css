@@ -213,7 +213,7 @@ button { font: inherit; color: inherit; }
   background: var(--surface-2);
   border: 2px solid var(--jade);
   font-family: var(--font-story);
-  font-size: 0.9375rem;
+  font-size: 1.25rem;
   font-weight: 700;
   cursor: pointer;
   padding: 0;
