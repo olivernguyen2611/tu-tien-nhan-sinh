@@ -128,7 +128,7 @@ describe('cultivation per year (task 2.3)', () => {
   it('follows G.1: base speed × root × aptitude', () => {
     expect(yearlyGain(cultivator('g1'), content)).toBeCloseTo(25);
     const genius = { ...cultivator('g2', {}, 'don'), aptitudes: { physique: 70, comprehension: 70, luck: 50, daoHeart: 50 } };
-    expect(yearlyGain(genius, content)).toBeCloseTo(25 * 1.6 * 1.1);
+    expect(yearlyGain(genius, content)).toBeCloseTo(25 * 1.6 * 3 ** 0.4); // playtest 2026-10-12: aptitudeGrowth 3
     expect(yearlyGain({ ...cultivator('g3'), cult: { ...cultivator('g3').cult, realm: 'pham_nhan' } }, content)).toBe(0);
   });
 

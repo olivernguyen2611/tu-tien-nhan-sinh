@@ -595,6 +595,10 @@ export const BalanceSchema = z
         popupChanceLowRealm: probability,
         popupChanceHighRealm: probability,
         logLineChance: probability,
+        /** Playtest 2026-10-12: kỳ ngộ (luckAffected or these categories) × max(luckMin, 1 + (khí vận − 50) × luckPerPoint). */
+        luckCategories: z.array(id),
+        luckPerPoint: z.number().min(0),
+        luckMin: z.number().min(0),
         /** Playtest 2026-10-12: repeatable events wait at least this many years; each repeat × repeatDecay weight. */
         minCooldownYears: z.number().int().min(0),
         repeatDecay: z.number().min(0).max(1),
@@ -1141,9 +1145,12 @@ export const BalanceSchema = z
     /** PLAN.md G.1 / G.2: yearly cultivation and minor breakthroughs (task 2.3). */
     cultivation: z
       .object({
-        /** Aptitude factor = aptitudeBase + (physique + comprehension) / aptitudeDivisor. */
-        aptitudeBase: z.number(),
-        aptitudeDivisor: z.number().positive(),
+        /**
+         * Playtest 2026-10-12: aptitude factor = aptitudeGrowth ^ ((physique + comprehension − 100) / 100):
+         * 1 at 50/50, × aptitudeGrowth at 100/100; never below aptitudeMin.
+         */
+        aptitudeGrowth: z.number().min(1),
+        aptitudeMin: z.number().min(0),
         /** Spiritual qi of the place; a world may override it (world.json "qi"). */
         regionQi: z.number().positive(),
         breakthrough: z
