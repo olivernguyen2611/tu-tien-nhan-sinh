@@ -113,6 +113,7 @@ export function migrate(save: SaveFile): SaveFile {
   // Task 5.7: no ancestors recorded.
   if (life.ancestry === undefined) life = { ...life, ancestry: [] };
   if (life.blessings === undefined) life = { ...life, blessings: [] };
+  if (life.checkpoints === undefined) life = { ...life, checkpoints: { age6: null, realm: null } };
   // Task 5.1: no sect of one's own.
   if (life.ownSect === undefined) life = { ...life, ownSect: null };
   // Task 4.2: đan văn.

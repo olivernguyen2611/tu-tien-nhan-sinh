@@ -46,6 +46,7 @@ import { recruitDisciple, teachDisciple } from '../systems/disciples';
 import { build, decide, donate, foundSect } from '../systems/ownSect';
 import { rebirthPoints } from '../systems/rebirth';
 import { earnedBlessings } from '../systems/blessings';
+import { rewind } from '../systems/rewind';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -185,7 +186,8 @@ function Screens({ content }: { content: Content }) {
     return (
       <DeathScreen state={life} content={content} rebirth={rebirth} onReadLog={() => setScreen('main')} onNewLife={() => setScreen('create')}
         onGhost={() => { setLife(becomeGhost(life, content)); setScreen('main'); }}
-        onHeir={(id) => { setLife(continueAsHeir(life, content, id)); setScreen('main'); }} />
+        onHeir={(id) => { setLife(continueAsHeir(life, content, id)); setScreen('main'); }}
+        onRewind={() => { setLife(rewind(life, content)); setScreen('main'); }} />
     );
   }
   if (screen === 'main' && life) {
