@@ -11,7 +11,7 @@ import { performFamilyAction } from '../systems/relationships';
 import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, rerollDestiny, rollDestiny } from '../systems/destiny';
 import {
-  deleteSlot, exportSave, firstFreeSlot, latestSlot, listSlots, makeSave, parseSave, readMeta, readSlot, recordNewLife,
+  deleteSlot, exportSave, firstFreeSlot, latestSlot, listSlots, makeSave, parseSave, readMeta, readSlot, recordNewLife, creditRebirth,
   slotTaken, writeSlot, type SaveFile,
 } from '../systems/save';
 import { checkDeath } from '../systems/time';
@@ -38,9 +38,15 @@ import { romanceAction } from '../systems/romance';
 import { runSeclusion, seclude } from '../systems/seclusion';
 import { placeStrand } from '../systems/goldenCore';
 import { becomeGhost } from '../systems/ghost';
+import { continueAsHeir } from '../systems/heir';
+import { buyProperty, foundClan } from '../systems/clan';
 import { meetIllusion } from '../systems/heartDemon';
 import { craftRecipe } from '../systems/crafting';
 import { recruitDisciple, teachDisciple } from '../systems/disciples';
+import { build, decide, donate, foundSect } from '../systems/ownSect';
+import { newLifeCost, rebirthPoints } from '../systems/rebirth';
+import { earnedBlessings } from '../systems/blessings';
+import { rewind } from '../systems/rewind';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -64,6 +70,8 @@ function Screens({ content }: { content: Content }) {
   /** Slot the current life autosaves into. */
   const [slot, setSlot] = useState<number | null>(null);
   const [rollCount, setRollCount] = useState(0);
+  /** Luân Hồi points the life being rolled will cost once confirmed (task 5b.9). */
+  const [originCost, setOriginCost] = useState(0);
   const [theme, setTheme] = useState<ThemePref>(loadThemePref);
   const [devMode, setDevMode] = useState(loadDevMode);
   const toggleDev = (on: boolean) => { saveDevMode(on); setDevMode(on); };
@@ -81,6 +89,14 @@ function Screens({ content }: { content: Content }) {
     if (!life || slot === null || !life.destiny.confirmed) return;
     setSaveFailed(!writeSlot(store, makeSave(life, slot)));
   }, [life, slot]);
+
+  // Task 5b.1: a finished life pays its Luân Hồi points once (creditRebirth skips what was paid).
+  const [rebirth, setRebirth] = useState<{ gained: number; bank: number }>({ gained: 0, bank: 0 });
+  useEffect(() => {
+    if (screen !== 'death' || !life || life.alive) return;
+    const r = creditRebirth(store, life.seed, rebirthPoints(life, content).total, earnedBlessings(life, content));
+    setRebirth({ gained: r.gained, bank: r.meta.rebirthPoints });
+  }, [screen, life]);
 
   const openSaves = (from: Screen) => { setSavesFrom(from); setPicking(null); setMessage(null); setScreen('saves'); };
   const startNewLife = (target: number) => { setSlot(target); setPicking(null); setScreen('create'); };
@@ -147,9 +163,14 @@ function Screens({ content }: { content: Content }) {
       <CreateCharacterScreen
         content={content}
         onBack={() => setScreen('title')}
+        rebirthPoints={readMeta(store).rebirthPoints}
         onCreate={(input) => {
+          // Task 5b.9: a chosen origin with a price is paid in Luân Hồi points when the life is confirmed.
+          const cost = newLifeCost(content, input.originId);
+          if (cost > readMeta(store).rebirthPoints) return;
+          setOriginCost(cost);
           // Tips only for the very first life on this browser.
-          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0 }, content), content));
+          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list }, content), content));
           setScreen('destiny');
         }}
       />
@@ -163,15 +184,17 @@ function Screens({ content }: { content: Content }) {
         rollCount={rollCount}
         unlimited={devMode}
         onReroll={() => { setLife(rerollDestiny(life, content, devMode)); setRollCount((n) => n + 1); }}
-        onConfirm={() => { recordNewLife(store); setLife(confirmDestiny(life, content)); setScreen('main'); }}
+        onConfirm={() => { recordNewLife(store, originCost); setLife(confirmDestiny(life, content)); setScreen('main'); }}
       />
     );
   }
   if (screen === 'death' && life) {
     // A new life from here reuses this slot, as when abandoning a life.
     return (
-      <DeathScreen state={life} content={content} onReadLog={() => setScreen('main')} onNewLife={() => setScreen('create')}
-        onGhost={() => { setLife(becomeGhost(life, content)); setScreen('main'); }} />
+      <DeathScreen state={life} content={content} rebirth={rebirth} onReadLog={() => setScreen('main')} onNewLife={() => setScreen('create')}
+        onGhost={() => { setLife(becomeGhost(life, content)); setScreen('main'); }}
+        onHeir={(id) => { setLife(continueAsHeir(life, content, id)); setScreen('main'); }}
+        onRewind={() => { setLife(rewind(life, content)); setScreen('main'); }} />
     );
   }
   if (screen === 'main' && life) {
@@ -185,6 +208,12 @@ function Screens({ content }: { content: Content }) {
         onSeclude={(years) => setLife(seclude(life, content, years))}
         onPlaceStrand={(element) => setLife(placeStrand(life, content, element).state)}
         onMeetIllusion={(option) => setLife(meetIllusion(life, content, option).state)}
+        onClan={(a) => {
+          const r = a.kind === 'found' ? foundClan(life, content, a.rules) : buyProperty(life, content, a.propertyId);
+          if (!r) return null;
+          setLife(r.state);
+          return r.text;
+        }}
         onDisciple={(npcId) => {
           const r = npcId ? teachDisciple(life, content, npcId) : recruitDisciple(life, content);
           if (!r) return null;
@@ -259,6 +288,10 @@ function Screens({ content }: { content: Content }) {
             : a.kind === 'mission' ? doMission(life, content, a.missionId)
             : a.kind === 'learn' ? (() => { const l = learnTechnique(life, content, a.techniqueId); return l && { ...l, state: enterFirstRealm(l.state, content) }; })()
             : a.kind === 'master' ? requestMaster(life, content)
+            : a.kind === 'found' ? foundSect(life, content, { name: a.name, rules: a.rules })
+            : a.kind === 'decide' ? decide(life, content, a.decisionId)
+            : a.kind === 'build' ? build(life, content, a.buildingId)
+            : a.kind === 'donate' ? donate(life, content)
             : leaveSect(life, content);
           if (!r || !r.text) return null;
           setLife(r.state);
@@ -294,6 +327,7 @@ function Screens({ content }: { content: Content }) {
     <TitleScreen
       canContinue={latest !== null}
       livesPlayed={readMeta(store).livesPlayed}
+      rebirthPoints={readMeta(store).rebirthPoints}
       devMode={devMode}
       onDevUnlock={() => toggleDev(true)}
       onContinue={() => latest !== null && loadSlot(latest)}

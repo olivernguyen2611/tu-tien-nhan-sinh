@@ -261,6 +261,8 @@ export function grantMaster(state: GameState, content: Content): GameState {
 
 /** "Bích Lạc Tông · Ngoại môn" for the profile. */
 export function sectLabel(state: GameState, content: Content): string | null {
+  // The founder of a sect (task 5.1).
+  if (state.ownSect) return `${state.ownSect.name} · Chưởng môn`;
   const sect = currentSect(state, content);
   return sect ? `${sect.name} · ${sect.ranks[state.sect.rank]}` : null;
 }

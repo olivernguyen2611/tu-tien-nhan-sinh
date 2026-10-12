@@ -468,6 +468,9 @@ button { font: inherit; color: inherit; }
 .origin b { font-family: var(--font-story); }
 .origin span { font-size: 0.8125rem; color: var(--muted); }
 .origin.on { border-color: var(--jade); box-shadow: inset 0 0 0 1px var(--jade); }
+/* Task 5b.9: rare origins cost Luân Hồi points. */
+.origin span.origin-cost { color: var(--rare); font-weight: 600; }
+.origin:disabled { opacity: 0.55; cursor: not-allowed; }
 .create-action { position: sticky; bottom: calc(8px + env(safe-area-inset-bottom)); margin-top: auto; }
 @media (min-width: 900px) {
   .origin-list { grid-template-columns: 1fr 1fr; }
@@ -780,3 +783,20 @@ button { font: inherit; color: inherit; }
 .recipes summary { cursor: pointer; font-size: 0.85rem; color: var(--jade); }
 .recipe { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 6px 0; }
 .disciples { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 0; }
+
+/* Khai tông lập phái (task 5.1) */
+.sect-rules { margin: 4px 0; padding-left: 18px; font-size: 0.9rem; }
+.rule-option { display: flex; gap: 8px; align-items: flex-start; margin: 6px 0; font-size: 0.9rem; }
+.rule-option input { margin-top: 3px; }
+.sect-report { margin: 8px 0; padding: 8px 10px; border-left: 3px solid var(--jade); background: var(--surface-2); border-radius: 6px; }
+
+/* Kế thừa và tộc phả (task 5.7) */
+.heir-offer { border-color: var(--jade); }
+.ancestry { margin: 12px 0; text-align: left; font-size: 0.9rem; }
+.ancestry ol, .ancestry ul { margin: 4px 0; padding-left: 20px; }
+.ancestry li.me { font-weight: 600; }
+/* Task 5b.1: Luân Hồi points on the death screen. */
+.rebirth-points { margin: 12px 0; text-align: left; font-size: 0.9rem; }
+.rebirth-points ul { list-style: none; margin: 4px 0; padding: 0; }
+.rebirth-points li { display: flex; justify-content: space-between; gap: 8px; padding: 2px 0; border-bottom: 1px dotted var(--line); }
+.rebirth-total { margin: 6px 0 0; text-align: right; }

@@ -10,6 +10,7 @@ import type { GameEvent } from '../core/schemas';
 import type { GameState, LogLine, Npc, Relative, SpiritRoot, Tone } from '../core/types';
 import { rollRoot, rootName } from './cultivation';
 import { changeNpc, isMasked, npcById } from './npcs';
+import { clanRootRolls } from './clan';
 import { makeName, splitName } from './names';
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
@@ -281,7 +282,8 @@ export function inheritRoot(state: GameState, content: Content, partner: Npc | n
     const variants = content.cultivation.roots.elements.filter((e) => e.variant);
     if (variants.length > 0) return { grade: 'bien_di', elements: [rng.pick(variants).id], body: null };
   }
-  const root = rollRoot(rng, content, 1 + rooted * b.rootRollsPerParent);
+  // Gia quy Trọng tu luyện adds rolls (task 5.4).
+  const root = rollRoot(rng, content, 1 + rooted * b.rootRollsPerParent + clanRootRolls(state, content));
   const own = (mine?.elements ?? []).filter((e) => !root.elements.includes(e));
   if (root.body || root.elements.length === 0 || own.length === 0 || root.grade === 'bien_di') return root;
   // Keep the count, take the player's elements first.

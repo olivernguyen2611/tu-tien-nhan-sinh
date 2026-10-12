@@ -1,0 +1,6 @@
+{
+  "offer": "Đời này đã hết, nhưng có người kế thừa. Chọn một người để đi tiếp con đường còn dang dở.",
+  "child": "Ngươi là {name}, con của {parent}. Ngày đưa tang, ngươi nhận lấy những gì {parent} để lại, và cả những món nợ chưa trả.",
+  "disciple": "Ngươi là {name}, đồ đệ của {parent}. Sư phụ đã đi, y bát truyền lại tay ngươi.",
+  "sect": "Từ nay ngươi là chưởng môn {sect}."
+}

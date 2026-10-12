@@ -1,0 +1,95 @@
+{
+  "rules": [
+    {
+      "id": "trong_tu_luyen",
+      "name": "Trọng tu luyện",
+      "text": "Con cháu sinh ra là phải thử linh căn, có căn thì dốc sức dạy.",
+      "rootRolls": 1,
+      "incomeMul": 1,
+      "inheritMoney": 0,
+      "karmaPerYear": 0
+    },
+    {
+      "id": "trong_thuong_nghiep",
+      "name": "Trọng thương nghiệp",
+      "text": "Có của mới giữ được người. Sản nghiệp phải sinh lời.",
+      "rootRolls": 0,
+      "incomeMul": 1.5,
+      "inheritMoney": 0,
+      "karmaPerYear": 0
+    },
+    {
+      "id": "doc_dinh_truyen_thua",
+      "name": "Độc đinh truyền thừa",
+      "text": "Gia sản không chia, người kế thừa giữ trọn.",
+      "rootRolls": 0,
+      "incomeMul": 1,
+      "inheritMoney": 0.2,
+      "karmaPerYear": 0
+    },
+    {
+      "id": "tich_thien",
+      "name": "Tích thiện",
+      "text": "Mỗi năm phát chẩn một lần. Phúc ấm để lại cho con cháu.",
+      "rootRolls": 0,
+      "incomeMul": 0.9,
+      "inheritMoney": 0,
+      "karmaPerYear": 2
+    }
+  ],
+  "properties": [
+    {
+      "id": "ruong_tot",
+      "name": "Ruộng tốt",
+      "text": "Mười mẫu ruộng ven sông, năm nào cũng được mùa.",
+      "cost": {
+        "silver": 100
+      },
+      "income": {
+        "silver": 15
+      },
+      "max": 5
+    },
+    {
+      "id": "cua_hieu",
+      "name": "Cửa hiệu",
+      "text": "Một gian hàng ngay chợ huyện, bán đủ thứ trên đời.",
+      "cost": {
+        "silver": 300
+      },
+      "income": {
+        "silver": 50
+      },
+      "max": 3
+    },
+    {
+      "id": "linh_dien_gia_toc",
+      "name": "Linh điền",
+      "text": "Một mảnh ruộng có linh khí, trồng linh mễ bán cho tu sĩ.",
+      "cost": {
+        "spiritStones": 80
+      },
+      "income": {
+        "spiritStones": 8
+      },
+      "max": 3
+    },
+    {
+      "id": "mo_linh_thach",
+      "name": "Mỏ linh thạch nhỏ",
+      "text": "Một mạch linh thạch mỏng trong núi sau nhà.",
+      "cost": {
+        "spiritStones": 300
+      },
+      "income": {
+        "spiritStones": 30
+      },
+      "max": 2
+    }
+  ],
+  "texts": {
+    "founded": "{clan} chính thức lập tộc. Tên ngươi đứng đầu tộc phả, gia quy khắc lên bia đá trước từ đường.",
+    "bought": "{clan} có thêm sản nghiệp: {property}.",
+    "income": "Sản nghiệp của {clan} năm nay thu về {income}."
+  }
+}

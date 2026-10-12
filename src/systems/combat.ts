@@ -10,6 +10,7 @@ import { applyOutcome } from './events/engine';
 import { itemById, removeItems } from './items';
 import { mainPath as mainPathOf } from './paths';
 import { breakPrecept } from './sect';
+import { sectDefense } from './ownSect';
 import { actor, killNpc } from './npcs';
 import { currentTechnique } from './technique';
 
@@ -96,7 +97,10 @@ export function makeFoe(state: GameState, content: Content, spec: FoeSpec, rng: 
   const stage = spec.stage ?? (spec.realm === 'same' ? state.cult.stage : 0);
   const variance = c.foeVariance[0] + rng.next() * (c.foeVariance[1] - c.foeVariance[0]);
   const base = content.balance.realms[realm]?.combatPower ?? 1;
-  const power = base * (1 + c.stagePct * stage) * (c.lineagePower[spec.lineage] ?? 1) * spec.powerMul * variance;
+  // Task 5.3: Hộ Sơn Đại Trận weakens those who attack the founded sect.
+  const f = content.balance.founding;
+  const shield = spec.againstSect ? 1 - Math.min(f.maxDefense, sectDefense(state, content) * f.defensePerLevel) : 1;
+  const power = base * (1 + c.stagePct * stage) * (c.lineagePower[spec.lineage] ?? 1) * spec.powerMul * variance * shield;
   const basic = content.cultivation.roots.elements.filter((e) => !e.variant).map((e) => e.id);
   const element = spec.element === 'random' ? rng.pick(basic) : spec.element;
   return {
@@ -127,6 +131,7 @@ export function startBattle(state: GameState, content: Content, fight: Fight, so
     outcomes: { win: fight.win, lose: fight.lose, fled: fight.fled },
     source,
     npcId: fight.foe.fromNpc ? state.events.npc : null,
+    ...(fight.rescue ? { rescue: true } : {}),
   };
   return { ...state, rng: rng.getState(), combat: battle, itemUse: { ...state.itemUse, nextCombat: 0 } };
 }
@@ -321,6 +326,9 @@ function end(s: GameState, content: Content, battle: Battle, how: 'lost' | 'fled
       const o = applyOutcome({ ...next, rng: rng.getState(), events: { ...next.events, npc: battle.npcId } }, content, battle.outcomes.lose, rng);
       next = o.state;
       lines.push({ text: o.text, tone: 'bad' });
+    } else if (battle.rescue) {
+      // Died saving someone: Phúc báo for the next life (task 5b.8).
+      next = { ...next, flags: { ...next.flags, chet_vi_cuu_nguoi: true } };
     }
   } else if (how === 'fled' && battle.outcomes.fled) {
     const o = applyOutcome({ ...next, rng: rng.getState(), events: { ...next.events, npc: battle.npcId } }, content, battle.outcomes.fled, rng);

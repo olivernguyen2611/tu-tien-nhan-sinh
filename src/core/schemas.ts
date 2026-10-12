@@ -85,6 +85,16 @@ const BaseConditionsSchema = z
       })
       .strict()
       .optional(),
+    /** Task 5.3: the sect this life founded: has one, member range, a building at least this level. */
+    ownSect: z
+      .object({
+        has: z.boolean().optional(),
+        minMembers: z.number().int().optional(),
+        maxMembers: z.number().int().optional(),
+        building: z.object({ id, min: z.number().int().min(1) }).strict().optional(),
+      })
+      .strict()
+      .optional(),
     /** Task 3.9: family state ({deceased} = a relative who has died). */
     family: z.object({ deadAny: z.boolean().optional(), parentAlive: z.boolean().optional() }).strict().optional(),
     /** Task 4.10: nearEnd = years left ≤ balance.lifespan.pressureLeftPct of the lifespan; maxLeft = at most this many years left. */
@@ -185,6 +195,8 @@ export const EffectsSchema = z
       })
       .strict()
       .optional(),
+    /** Task 5.3: the founded sect gains or loses members, treasury, next year's growth. */
+    ownSect: z.object({ members: z.number().int().optional(), treasury: z.number().int().optional(), growthBonus: z.number().optional() }).strict().optional(),
     /** Task 4.6: the next step of a multi-step event (bí cảnh); it opens right after this one, the same year. */
     chain: id.optional(),
     /** Task 4.1: close the door for this many years right after the event. */
@@ -232,7 +244,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -258,6 +270,8 @@ export const FoeSpecSchema = z
     intent: z.enum(['teach', 'rob', 'kill']),
     /** Base chance the foe accepts a plea (balance.combat.pleaIntent when left out). */
     mercy: z.number().min(0).max(1).optional(),
+    /** Task 5.3: the foe attacks the founded sect: Hộ Sơn Đại Trận weakens them (balance.founding.defensePerLevel). */
+    againstSect: z.boolean().default(false),
     /** Task 3.4: the foe is this event's NPC, at their own realm and stage (name, realm, stage are ignored). */
     fromNpc: z.boolean().default(false),
   })
@@ -273,6 +287,8 @@ export const FightSchema = z
     lose: PlainOutcomeSchema,
     /** When the player gets away (default: no further effect). */
     fled: PlainOutcomeSchema.optional(),
+    /** Task 5b.8: fighting to save someone; dying in it sets flag chet_vi_cuu_nguoi (Phúc báo). */
+    rescue: z.boolean().optional(),
   })
   .strict();
 
@@ -363,6 +379,8 @@ export const OriginSchema = z
     noParents: z.boolean().default(false),
     /** Clan of cultivators: the spirit root is rolled balance.roots.clanDescendantRolls times, best kept. */
     cultivatorClan: z.boolean().default(false),
+    /** Task 5b.9 Cầu đầu thai: choosing this origin costs Luân Hồi points (random draws are free). */
+    rebirthCost: z.number().int().min(1).optional(),
     birthText: z.string().min(1),
   })
   .strict();
@@ -432,6 +450,8 @@ const ADD_HOOK = new RegExp(
       'artifactPct', 'tribulationPower',
       // Task 4.5: share of each thiên lôi a carried array or artifact takes; task 4.12: chance to linger as a ghost.
       'tribulationDefense', 'continueAfterDeath',
+      // Task 5b.8: extra spirit-root rolls at the root test, best kept (Phúc báo).
+      'rootReroll',
       // Special bodies (realms-roots-paths.md B5); takes effect from task 2.3.
       'lineage\\.(tien|ma|phat|quy|yeu)\\.cultivationSpeed',
     ].join('|') +
@@ -653,6 +673,54 @@ export const BalanceSchema = z
         revealChance: probability,
         /** Share of a dead NPC's grudge their kin inherits. */
         inheritShare: probability,
+      })
+      .strict(),
+    /** Task 5.4: founding a cultivation clan. */
+    clan: z
+      .object({
+        minRealm: id,
+        /** Living children needed, and the spirit stones for the ancestral hall. */
+        minChildren: z.number().int().min(0),
+        cost: z.number().int().min(0),
+        maxRules: z.number().int().min(1),
+      })
+      .strict(),
+    /** Task 5.7: going on as an heir. */
+    heir: z
+      .object({
+        /** Youngest heir who can carry on. */
+        minAge: z.number().int().min(0),
+        /** Share of silver and spirit stones passed on; share of karma and reputation (phúc ấm). */
+        inheritMoney: probability,
+        inheritKarma: probability,
+      })
+      .strict(),
+    /** Task 5.1: founding one's own sect. */
+    founding: z
+      .object({
+        minRealm: id,
+        /** Spirit stones to open a mountain gate. */
+        cost: z.number().int().min(0),
+        /** How many tông quy to pick, and how long a name may be. */
+        maxRules: z.number().int().min(1),
+        nameLength: z.tuple([z.number().int().min(1), z.number().int().min(1)]),
+        /** Members on the founding day: base + reputation of the founder's realm. */
+        startMembers: z.record(id, z.number().int().min(0)),
+        /** Task 5.2 yearly running: growth = members × growth (+ buildings, rules), at least baseRecruit; attrition share leaves. */
+        growth: z.number().min(0),
+        baseRecruit: z.number().int().min(0),
+        attrition: probability,
+        /** Spirit stones each member brings the treasury a year. */
+        tithe: z.number().min(0),
+        /** Most members the founder's realm can hold. */
+        maxMembers: z.record(id, z.number().int().min(0)),
+        /** Task 5.3: each level of sect defense takes this share off an attacker's power (capped at maxDefense). */
+        defensePerLevel: z.number().min(0),
+        maxDefense: z.number().min(0).max(1),
+        /** Spirit stones the master puts into the treasury with one tap. */
+        donation: z.number().int().min(1),
+        /** How many decisions a yearly report asks for. */
+        decisions: z.tuple([z.number().int().min(0), z.number().int().min(0)]),
       })
       .strict(),
     /** Task 4.9: taking disciples. */
@@ -1197,6 +1265,28 @@ export const BalanceSchema = z
         cultivatorStartLevel: z.record(id, z.record(id, z.number().int().min(0).max(100))),
       })
       .strict(),
+    /** Task 5b.1: Luân Hồi points a life earns (rebirth.ts rebirthPoints). */
+    rebirth: z
+      .object({
+        yearsPerPoint: z.number().int().min(1),
+        /** Per realm above Phàm Nhân, plus per stage in the realm reached. */
+        perRealm: z.number().int().min(0),
+        perStage: z.number().int().min(0),
+        /** Mortals only: per martial stage reached. */
+        perMartialStage: z.number().int().min(0),
+        perCareerRung: z.number().int().min(0),
+        eventsPerPoint: z.number().int().min(1),
+        /** |karma| at or above this gives karmaPoints (đại thiện or đại ác). */
+        karmaAt: z.number().int().min(0).max(100),
+        karmaPoints: z.number().int().min(0),
+        perChild: z.number().int().min(0),
+        ownSect: z.number().int().min(0),
+        clan: z.number().int().min(0),
+        ranked: z.number().int().min(0),
+        /** Rare moments of the log shown on the death screen. */
+        highlights: z.number().int().min(0),
+      })
+      .strict(),
   })
   .passthrough(); // later tasks add sections (cultivation, lifespan…)
 
@@ -1273,6 +1363,10 @@ export const LifeTextsSchema = z
     /** Task 4.12 quỷ tu: the offer on the death screen, and the line when the soul rises. */
     ghostOffer: z.string().min(1),
     ghostRise: z.string().min(1),
+    /** Task 5b.10 Trùng sinh: the offer on the death screen, and the line on going back ({age} died, {back} back to). */
+    rewindOffer: z.string().min(1),
+    rewindAge6: z.string().min(1),
+    rewindRealm: z.string().min(1),
     epitaph: z.object({ good: lines, bad: lines, plain: lines }).strict(),
   })
   .strict();
@@ -1942,6 +2036,113 @@ export const DisciplesFileSchema = z
   .strict();
 export type DisciplesFile = z.infer<typeof DisciplesFileSchema>;
 
+/** content/founding.json (task 5.1): founding one's own sect: name parts, tông quy, texts. */
+export const FoundingFileSchema = z
+  .object({
+    nameParts: z.object({ first: z.array(z.string().min(1)).min(1), second: z.array(z.string().min(1)).min(1), suffix: z.array(z.string().min(1)).min(1) }).strict(),
+    rules: z.array(
+      z
+        .object({
+          id,
+          name: z.string().min(1),
+          text: z.string().min(1),
+          /** New members a year × this. */
+          recruitMul: z.number().min(0),
+          karmaPerYear: z.number(),
+          /** Faction reputation changed once on founding. */
+          reputation: z.record(z.enum(['chinh', 'ma', 'tan_tu', 'yeu', 'trieu_dinh', 'giang_ho']), z.number()),
+          /** K.6 hooks on the founder while the rule stands. */
+          effects: z.array(EffectHookSchema),
+        })
+        .strict(),
+    ),
+    /** Task 5.2: buildings, levels 1..cost.length; per level: hooks on the founder, member growth, income, defense, pills a year. */
+    buildings: z.array(
+      z
+        .object({
+          id,
+          name: z.string().min(1),
+          text: z.string().min(1),
+          cost: z.array(z.number().int().min(0)).min(1),
+          upkeep: z.number().min(0),
+          effects: z.array(EffectHookSchema),
+          growth: z.number().min(0),
+          income: z.number().min(0),
+          defense: z.number().min(0),
+          pills: ids,
+        })
+        .strict(),
+    ),
+    /** Task 5.2: what the yearly report may ask the master to decide. default: what the elders do when the master does not answer. */
+    decisions: z.array(
+      z
+        .object({
+          id,
+          name: z.string().min(1),
+          text: z.string().min(1),
+          cost: z.number().int().min(0),
+          members: z.number().int(),
+          growthBonus: z.number(),
+          withdrawPct: z.number().min(0).max(1),
+          karma: z.number(),
+          default: z.boolean(),
+        })
+        .strict(),
+    ),
+    texts: z
+      .object({
+        founded: z.string().min(1),
+        leftOld: z.string().min(1),
+        /** {sect}, {members}, {membersDelta}, {treasury}, {treasuryDelta}. */
+        report: z.string().min(1),
+        /** {building}, {sect}, {level}. */
+        built: z.string().min(1),
+        /** {count}, {item}. */
+        pills: z.string().min(1),
+        /** {decision}. */
+        decided: z.string().min(1),
+        /** {count}, {sect}. */
+        donated: z.string().min(1),
+      })
+      .strict(),
+  })
+  .strict();
+export type FoundingFile = z.infer<typeof FoundingFileSchema>;
+
+/** content/heir.json (task 5.7): going on as a child or disciple. {name} = heir, {parent} = the one who died, {sect}. */
+export const HeirFileSchema = z
+  .object({ offer: z.string().min(1), child: z.string().min(1), disciple: z.string().min(1), sect: z.string().min(1) })
+  .strict();
+export type HeirFile = z.infer<typeof HeirFileSchema>;
+
+/** content/clan.json (task 5.4): gia tộc tu tiên: gia quy, sản nghiệp, texts. {clan}, {property}, {income}. */
+const moneySpec = z.object({ silver: z.number().int().min(0).optional(), spiritStones: z.number().int().min(0).optional() }).strict();
+export const ClanFileSchema = z
+  .object({
+    rules: z.array(
+      z
+        .object({
+          id,
+          name: z.string().min(1),
+          text: z.string().min(1),
+          /** Extra root rolls for children born into the clan (keep the best). */
+          rootRolls: z.number().int().min(0),
+          /** Property income × this. */
+          incomeMul: z.number().min(0),
+          /** Added to the share of money an heir inherits. */
+          inheritMoney: z.number().min(0).max(1),
+          karmaPerYear: z.number(),
+        })
+        .strict(),
+    ),
+    properties: z.array(
+      z.object({ id, name: z.string().min(1), text: z.string().min(1), cost: moneySpec, income: moneySpec, max: z.number().int().min(1) }).strict(),
+    ),
+    texts: z.object({ founded: z.string().min(1), bought: z.string().min(1), income: z.string().min(1) }).strict(),
+  })
+  .strict();
+export type ClanFile = z.infer<typeof ClanFileSchema>;
+
 /** content/core-patterns.json (task 4.2): đan văn on a new golden core, first match wins. */
 export const CorePatternSchema = z
   .object({
@@ -1981,3 +2182,32 @@ export const NascentSoulFileSchema = z
   .strict();
 export type NascentSoulFile = z.infer<typeof NascentSoulFileSchema>;
 
+
+/** content/blessings.json (task 5b.8, mortal-path.md 3.1): Phúc báo a life earns for the next one. */
+export const BlessingFileSchema = z
+  .object({
+    /** Only a life that ends as a Phàm Nhân earns them ("thành tựu đời phàm nhân"). */
+    mortalOnly: z.boolean(),
+    blessings: z.array(
+      z
+        .object({
+          id,
+          name: z.string().min(1),
+          /** Why it was earned (death screen) and what it gives (next life). */
+          earned: z.string().min(1),
+          text: z.string().min(1),
+          /** All given must hold at death: karma, career rung index reached, age, flag set when dying. */
+          earn: z
+            .object({ karmaMin: z.number().optional(), careerRung: z.number().int().min(0).optional(), ageMin: z.number().int().min(0).optional(), deathFlag: id.optional() })
+            .strict(),
+          /** Added to the first main stat of the career that earned it. */
+          careerMainStat: z.number().int().optional(),
+          /** Extra Tiên Thiên Khí Vận rerolls. */
+          destinyRerolls: z.number().int().min(0).optional(),
+          effects: z.array(EffectHookSchema),
+        })
+        .strict(),
+    ),
+  })
+  .strict();
+export type BlessingFile = z.infer<typeof BlessingFileSchema>;

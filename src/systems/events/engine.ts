@@ -289,6 +289,11 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
     if (broke.text) text = `${text} ${broke.text}`;
   }
   if (fx.pathAffinity) next = addPathAffinity(next, fx.pathAffinity);
+  // Task 5.3: the founded sect.
+  if (fx.ownSect && next.ownSect) {
+    const o = next.ownSect;
+    next = { ...next, ownSect: { ...o, members: Math.max(0, o.members + (fx.ownSect.members ?? 0)), treasury: Math.max(0, o.treasury + (fx.ownSect.treasury ?? 0)), growthBonus: (o.growthBonus ?? 0) + (fx.ownSect.growthBonus ?? 0) } };
+  }
   // Task 4.1: the door closes now; the UI runs the years (runSeclusion).
   if (fx.seclusionYears && next.cult.realm !== 'pham_nhan') {
     const age = next.character.age;

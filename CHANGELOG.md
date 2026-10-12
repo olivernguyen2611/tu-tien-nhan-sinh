@@ -2,6 +2,128 @@
 
 ## [Chưa phát hành]
 
+### Task 5b.9 — Cầu đầu thai (2026-10-12)
+- Theo `mortal-path.md` mục 3.2 và quyết định của chủ dự án (cách 2):
+  - Xuất thân thường vẫn chọn miễn phí.
+  - Xuất thân hiếm phải tiêu điểm Luân Hồi mỗi lần chọn: Con nhà quan 10 điểm, Hậu duệ gia tộc tu tiên 30 điểm (trường `rebirthCost` trong `origins.json`).
+  - "Để trời định" vẫn miễn phí và vẫn có thể quay ra xuất thân hiếm.
+- Màn tạo nhân vật ghi giá dưới xuất thân hiếm. Không đủ điểm thì nút bị khóa và hiện số điểm đang có.
+- Điểm chỉ bị trừ khi xác nhận khí vận ("Thuận theo thiên ý"); quay lại giữa chừng thì không mất.
+- **Bổ sung kỹ thuật**: chọn xuất thân nào có giá, và giá bao nhiêu điểm.
+
+### Task 5b.10 — Trùng sinh (phần code, 2026-10-12)
+- Móc `rewindOnDeath` nay có tác dụng: khi chết, màn tổng kết đời có nút **Trùng sinh** (`src/systems/rewind.ts`).
+  - **Hồi Quang Kính** (vật phẩm mới, `{ "hook": "rewindOnDeath", "at": 6 }`): quay về năm 6 tuổi (`mortal-path.md` 3.3).
+  - Thiên phú **Nhất Niệm Hồi Quang** (F23, đã có từ 2.7): quay về lúc mới vào đại cảnh giới hiện tại (`fate-talents.md`).
+- Sau khi trùng sinh:
+  - Linh căn giữ nguyên.
+  - Bật cờ `ky_uc_kiep_truoc`, nên sự kiện có thể có lựa chọn ẩn "Ta biết chuyện này sẽ xảy ra" (`requires.flags`).
+  - Mỗi đời chỉ một lần.
+  - Bộ sinh ngẫu nhiên đổi hạt, nên những năm về sau không lặp lại y như cũ ("con bướm vỗ cánh").
+- Game tự lưu hai mốc để quay về: lúc 6 tuổi, và lúc mới vào mỗi đại cảnh giới. Save cũ được bổ sung mốc rỗng.
+- **Bổ sung kỹ thuật**: mô tả Hồi Quang Kính, câu chữ lúc trùng sinh (`life-texts.json`: `rewindOffer`, `rewindAge6`, `rewindRealm`).
+- **Chưa làm** (nội dung ✍️, chờ file của chủ dự án): sự kiện kỳ ngộ nhận Hồi Quang Kính, các lựa chọn ẩn "Ta biết chuyện này sẽ xảy ra", thiên phú luân hồi trùng sinh (5b.1).
+
+### Task 5b.8 — Phúc báo (2026-10-12)
+- Theo `mortal-path.md` mục 3.1, dữ liệu trong `content/blessings.json`. Đời kết thúc khi còn là phàm nhân thì nhận Phúc báo cho kiếp sau:
+  - **Đại thiện nhân** (nhân quả ≥ +60): đo linh căn quay 2 lần, lấy kết quả tốt hơn. Dùng móc mới `rootReroll`.
+  - **Danh chấn một nghề** (lên nấc 5 của một con đường đời): +5 chỉ số chính của đường đó.
+  - **Bách tuế** (sống tới 100): thọ nguyên kiếp sau +10%.
+  - **Xả thân cứu người** (chết trong trận ra tay cứu người): thêm một lần quay khí vận.
+- Phúc báo hiện ở màn tổng kết đời, rồi ở màn quay khí vận và dòng đầu nhật ký của kiếp sau.
+- Phúc báo chỉ trao cho lần **đầu thai kiếp mới** kế tiếp. Chơi tiếp bằng con cháu thì Phúc báo vẫn chờ.
+- Trận đánh có cờ `rescue`; chết trong trận ấy thì bật cờ `chet_vi_cuu_nguoi`. Đã gắn cho trận "Ra tay giết ma tu, cứu người" (sự kiện `lo_dinh_cam_do`).
+- "Con cháu ≥ 5 → chơi tiếp bằng con cháu": task 5.7 đã cho chơi tiếp bằng con đã lớn mà không cần đủ 5, nên không thêm gì.
+- **Bổ sung kỹ thuật**:
+  - "Chỉ số chính" lấy chỉ số đầu tiên trong `mainStats` của con đường.
+  - Câu chữ ngắn trên màn hình cho 4 Phúc báo.
+
+### Task 5b.1 — Tổng kết đời + điểm Luân Hồi (phần code, 2026-10-12)
+- **Màn tổng kết đời đầy đủ hơn**: cảnh giới, tông môn, gia tộc, đạo lữ, con cái, đệ tử, hạng Thiên kiêu bảng, đường đời, linh thạch.
+- **Dấu ấn một đời**: 5 khoảnh khắc hiếm gần nhất trong nhật ký.
+- **Điểm Luân Hồi** (`src/systems/rebirth.ts`, số trong `balance.rebirth`), tính theo:
+  - năm tháng đã sống, cảnh giới (hoặc bậc võ đạo nếu là phàm nhân), nấc đường đời;
+  - số biến cố đã trải, đại thiện/đại ác (nhân quả ±60), con cái;
+  - khai tông lập phái, lập gia tộc, lên Thiên kiêu bảng.
+- Điểm cộng dồn qua các kiếp, lưu trong meta của trình duyệt; màn mở đầu hiện tổng điểm.
+  - Mỗi đời chỉ nhận điểm một lần.
+  - Quỷ tu chết lần nữa chỉ nhận phần chênh lệch.
+- **Bổ sung kỹ thuật** (PLAN và `mortal-path.md` không ghi cách tính điểm): các nguồn điểm và mức điểm ở trên.
+- **Chưa làm**: ✍️ thiên phú luân hồi (dùng điểm để mua), chờ file thiết kế của chủ dự án.
+
+### Task 5.3 — Sự kiện tông môn (phần engine, 2026-10-12)
+- Điều kiện sự kiện `ownSect`: đã lập tông môn, khoảng số đệ tử, công trình đạt cấp tối thiểu.
+- Hiệu ứng `ownSect`: thêm/bớt đệ tử, kho linh thạch, đà tăng đệ tử năm sau. Validator đòi sự kiện có hiệu ứng này phải có `conditions.ownSect.has = true`.
+- Đối thủ trận đánh có cờ `againstSect`: mỗi cấp Hộ Sơn Đại Trận làm kẻ công sơn yếu đi 10%, tối đa 50% (`balance.founding`).
+- `{sect}` trong sự kiện nay hiện tên tông môn tự lập khi có.
+- **Chưa làm**: nội dung sự kiện (khiêu khích, phản đồ, đại bỉ, ma đạo công sơn…), chờ file thiết kế của chủ dự án.
+
+### Task 5.4 — Gia tộc tu tiên (2026-10-12)
+- **Lập gia tộc** (tab Gia đình, mục Gia tộc):
+  - Điều kiện: từ Trúc Cơ, có con, 100 linh thạch dựng từ đường (`balance.clan`).
+  - Tên theo họ, ví dụ "Lâm gia". Chọn tối đa 2 gia quy.
+- **4 gia quy** (`content/clan.json`):
+  - Trọng tu luyện: con sinh trong tộc quay linh căn thêm một lần, lấy kết quả tốt nhất.
+  - Trọng thương nghiệp: sản nghiệp sinh lời ×1.5.
+  - Độc đinh truyền thừa: người kế thừa giữ thêm 20% gia sản.
+  - Tích thiện: nhân quả +2 mỗi năm, sản nghiệp ×0.9.
+- **4 loại sản nghiệp**, mua bằng bạc hoặc linh thạch, mỗi năm sinh lời và ghi vào nhật ký: Ruộng tốt, Cửa hiệu, Linh điền, Mỏ linh thạch nhỏ.
+- **Tộc phả**: các đời trước (5.7), người đang sống, rồi tới con cháu.
+- **Gia tộc truyền sang người kế thừa** cùng gia quy và sản nghiệp.
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "tộc phả, sản nghiệp, gia quy"): điều kiện, 4 gia quy, 4 sản nghiệp, giá, lợi tức, câu văn.
+
+### Task 5.7 — Chơi tiếp bằng con cháu hoặc đồ đệ (2026-10-12)
+- **Màn hình chết** liệt kê người kế thừa: con còn sống từ 6 tuổi (kèm linh căn nếu đã thử) và đồ đệ còn sống (kèm cảnh giới). Chọn một người thì chơi tiếp bằng người đó.
+- **Con kế thừa**:
+  - Giữ linh căn di truyền đã quay lúc sinh (3.7); đủ tuổi thử linh căn thì vào Luyện Khí ngay.
+  - Người vừa mất thành cha/mẹ đã khuất; đạo lữ còn sống thành cha/mẹ; các con khác thành anh chị em.
+- **Đồ đệ kế thừa**: giữ cảnh giới, tầng và tu vi; có linh căn dùng được và Dẫn Khí Quyết.
+- **Kế thừa** (`balance.heir`):
+  - 80% bạc và linh thạch, toàn bộ túi đồ.
+  - Tông môn tự lập (5.1): người kế thừa thành chưởng môn.
+  - 30% nhân quả và danh vọng (phúc ấm).
+  - Thế giới giữ nguyên: NPC và sổ ân oán, nên kẻ thù cũ sẽ tìm tới người kế thừa; Thiên kiêu bảng cũng giữ nguyên.
+- **Tộc phả**: mỗi đời ghi tên, cảnh giới, tuổi mất, nguyên nhân, và ai kế thừa. Màn hình chết hiện tộc phả và "đời thứ N". Phần này dùng tiếp cho gia tộc ở 5.4.
+- Câu văn ở `content/heir.json`.
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "chơi tiếp bằng con cháu hoặc đồ đệ khi chết"): tỉ lệ kế thừa, tuổi tối thiểu, câu văn.
+
+### Task 5.2 — Công trình và báo cáo tông môn (2026-10-12)
+- **Tông môn tự chạy mỗi năm** (`balance.founding`):
+  - Đệ tử mới = số đệ tử × (5% + công trình + quyết định năm trước), ít nhất 1, nhân hệ số tông quy.
+  - 2% đệ tử bỏ đi mỗi năm.
+  - Số đệ tử tối đa theo cảnh giới chưởng môn: Kim Đan 100, Nguyên Anh 500, Hóa Thần 2000.
+  - Kho nhận 0.5 linh thạch mỗi đệ tử, cộng thu nhập công trình, trừ bảo trì. Nhân quả đổi theo tông quy.
+- **Báo cáo cuối năm**:
+  - Nhật ký ghi số đệ tử và kho, kèm mức thay đổi.
+  - Bảng Tông môn hiện 1–3 việc cần quyết: chia linh thạch cho đệ tử, mở đại hội thu đồ, rút linh thạch về tay chưởng môn, cứu tế dân làng.
+  - Mỗi việc quyết một lần; việc nào bỏ qua thì trưởng lão tự lo, tông môn vẫn chạy bình thường.
+- **5 công trình**, mỗi cái 3 cấp, xây bằng kho tông môn:
+  - Tàng Kinh Các: chưởng môn tu nhanh hơn 5% mỗi cấp.
+  - Linh Điền: thu nhập.
+  - Nghênh Khách Đường: thu thêm đệ tử.
+  - Hộ Sơn Đại Trận: phòng thủ, dùng cho sự kiện 5.3.
+  - Luyện Đan Phòng: mỗi năm dâng chưởng môn Tụ Khí Đan theo cấp.
+- Chưởng môn **góp 50 linh thạch vào kho** bằng một nút.
+- Validator kiểm tra trùng id công trình/quyết định, cảnh giới, vật phẩm của Luyện Đan Phòng.
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "công trình + báo cáo, 1–3 quyết định"): mọi con số, 5 công trình, 5 quyết định và câu văn trong `founding.json`.
+
+### Task 5.1 — Khai tông lập phái (2026-10-12)
+- **Điều kiện**: từ Kim Đan, có 300 linh thạch (`balance.founding`). Bảng Tông môn có mục **Khai tông lập phái**.
+- **Khi khai tông**:
+  - Đặt tên tông môn, có nút gợi ý tên ghép từ `content/founding.json`, ví dụ "Thanh Tiêu Tông".
+  - Tông môn theo đạo thống của người chơi.
+  - Chọn tối đa 3 tông quy.
+  - Đang ở tông môn nào thì rời đi (không quay lại được).
+  - Ngày khai tông có 10 đệ tử ở Kim Đan, 40 ở Nguyên Anh, 120 ở Hóa Thần.
+- **6 tông quy**, mỗi quy đổi tốc độ thu đệ tử (dùng ở 5.2), nhân quả mỗi năm, danh vọng lúc khai tông và móc K.6 cho chưởng môn:
+  - Cấm sát sinh;
+  - Kẻ mạnh làm vua;
+  - Trọng tình nghĩa;
+  - Mở cửa cho tán tu;
+  - Bế môn tự thủ (tu luyện +5%);
+  - Môn quy nghiêm minh (đột phá +2).
+- Dòng danh hiệu trên đầu hiện "{tên tông} · Chưởng môn". Bảng Tông môn hiện tên, đạo thống, năm khai tông, số đệ tử, các tông quy.
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "điều kiện, đặt tên, đạo thống, tông quy"): mọi con số, bộ chữ ghép tên, 6 tông quy và câu văn trong `founding.json`.
 ### Task 4.8 — Bản đồ đại vực (2026-10-12)
 - **Bản đồ** (nút 圖 trên thanh trên cùng): 6 đại vực của Thương Lan giới, mở dần theo cảnh giới. Mỗi năm đi được một chuyến. Thanh trên cùng hiện vùng đang ở.
   | Vùng | Mở từ | Linh khí | Đặc điểm |

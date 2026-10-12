@@ -8,13 +8,18 @@ import {
 } from '../../systems/sect';
 import { learnBlocked, techniqueById } from '../../systems/technique';
 import { TermText } from './Tooltip';
+import { OwnSectSection } from './OwnSectSection';
 
 export type SectAction =
   | { kind: 'join'; sectId: string }
   | { kind: 'mission'; missionId: string }
   | { kind: 'learn'; techniqueId: string }
   | { kind: 'master' }
-  | { kind: 'leave' };
+  | { kind: 'leave' }
+  | { kind: 'found'; name: string; rules: string[] }
+  | { kind: 'decide'; decisionId: string }
+  | { kind: 'build'; buildingId: string }
+  | { kind: 'donate' };
 
 export function SectPanel({ state, content, onAction, onClose }: {
   state: GameState;
@@ -33,7 +38,7 @@ export function SectPanel({ state, content, onAction, onClose }: {
     <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Tông môn" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div class="event-card">
         <div class="kicker">Tông môn</div>
-        {sect ? (
+        {state.ownSect ? null : sect ? (
           <>
             <h2>{sect.name}</h2>
             <p class="profile-note"><TermText text={sect.description} /></p>
@@ -124,6 +129,9 @@ export function SectPanel({ state, content, onAction, onClose }: {
             })}
           </>
         )}
+
+        <OwnSectSection state={state} content={content} onFound={(name, rules) => act({ kind: 'found', name, rules })}
+          onDecide={(decisionId) => act({ kind: 'decide', decisionId })} onBuild={(buildingId) => act({ kind: 'build', buildingId })} onDonate={() => act({ kind: 'donate' })} />
 
         {result && <p class={`action-result ${result.good ? 'good' : 'bad'}`}>{result.text}</p>}
         <button class="choice" onClick={onClose}>Đóng</button>

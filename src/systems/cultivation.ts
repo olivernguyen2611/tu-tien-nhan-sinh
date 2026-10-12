@@ -11,6 +11,7 @@ import { careerHooks } from './career';
 import { currentRegion, regionQi } from './regions';
 import { currentTechnique, learnTechnique, techniqueCapReason, techniqueMul } from './technique';
 import { sectHooks } from './sect';
+import { ownSectHooks } from './ownSect';
 import { offerFate } from './fate';
 import { breakthroughItem, carriedHooks, removeItems } from './items';
 import { pathSpeedBonus } from './paths';
@@ -18,6 +19,7 @@ import { startCoreForming } from './goldenCore';
 import { soulFormFor } from './nascentSoul';
 import { needsHeartDemonTrial, startHeartDemonTrial } from './heartDemon';
 import { tribulationPreview, undergoTribulation, type TribulationPreview } from './tribulation';
+import { blessingHooks } from './blessings';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -87,7 +89,8 @@ export function revealRoot(state: GameState, content: Content): { state: GameSta
   if (state.cult.root) return { state, line: null };
   const rng = Rng.fromState(state.rng);
   const origin = content.origins.find((o) => o.id === state.character.originId);
-  const rolls = origin?.cultivatorClan ? content.balance.roots.clanDescendantRolls : 1;
+  // Phúc báo Đại thiện nhân (task 5b.8): rootReroll adds rolls, best kept.
+  const rolls = (origin?.cultivatorClan ? content.balance.roots.clanDescendantRolls : 1) + Math.max(0, Math.round(hookSum(state, content, 'rootReroll')));
   const root = rollRoot(rng, content, rolls);
 
   const stats = { ...state.stats };
@@ -142,7 +145,7 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
   const body = state.cult.root?.body ? content.cultivation.roots.bodies.find((b) => b.id === state.cult.root!.body) : undefined;
   return [
     ...fromTraits, ...(body?.effects ?? []), ...careerHooks(state, content),
-    ...(currentTechnique(state, content)?.effects ?? []), ...sectHooks(state, content),
+    ...(currentTechnique(state, content)?.effects ?? []), ...sectHooks(state, content), ...ownSectHooks(state, content),
     ...state.talents.flatMap((id) => content.fateTalents.find((t) => t.id === id)?.effects ?? []),
     // Đạo thống (task 3.8).
     ...(content.lineages.find((l) => l.id === state.cult.lineage)?.effects ?? []),
@@ -155,6 +158,8 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
     ...(content.nascentSouls.forms.find((f) => f.id === state.cult.soulForm)?.effects ?? []),
     // Đại vực (task 4.8).
     ...(currentRegion(state, content)?.effects ?? []),
+    // Phúc báo from the last life (task 5b.8).
+    ...blessingHooks(state, content),
   ];
 }
 

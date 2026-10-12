@@ -2,7 +2,11 @@
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
 import { lifeSummary } from '../../systems/time';
-import { careerLabel, lifeTitles } from '../../systems/career';
+import { lifeTitles } from '../../systems/career';
+import { heirOptions } from '../../systems/heir';
+import { lifeHighlights, lifeRecap, rebirthPoints } from '../../systems/rebirth';
+import { earnedBlessings } from '../../systems/blessings';
+import { rewindOffer } from '../../systems/rewind';
 import { Meter } from '../components/Meter';
 
 const STAT_LABELS = [
@@ -12,17 +16,27 @@ const STAT_LABELS = [
   ['charm', 'Mị lực', '貌'],
 ] as const;
 
-export function DeathScreen({ state, content, onReadLog, onNewLife, onGhost }: {
+export function DeathScreen({ state, content, rebirth, onReadLog, onNewLife, onGhost, onHeir, onRewind }: {
   state: GameState;
   content: Content;
+  /** Task 5b.1: Luân Hồi points paid now for this life, and the total kept across lives. */
+  rebirth: { gained: number; bank: number };
   onReadLog: () => void;
   onNewLife: () => void;
   /** Task 4.12: go on as a quỷ tu (only when the death left a lingering obsession). */
   onGhost: () => void;
+  /** Task 5.7: go on as a child or disciple. */
+  onHeir: (heirId: string) => void;
+  /** Task 5b.10: Trùng sinh, back to an earlier moment of this life. */
+  onRewind: () => void;
 }) {
   const s = lifeSummary(state, content);
   if (!s) return null;
   const c = state.character;
+  const points = rebirthPoints(state, content);
+  const rewind = rewindOffer(state, content);
+  const highlights = lifeHighlights(state, content.balance.rebirth.highlights);
+  const blessings = earnedBlessings(state, content).map((b) => content.blessings.blessings.find((x) => x.id === b.id)!);
   return (
     <main class="death-screen">
       <div class="tablet">
@@ -34,8 +48,8 @@ export function DeathScreen({ state, content, onReadLog, onNewLife, onGhost }: {
         {lifeTitles(state, content).map((t) => <p class="life-title" key={t}>{t}</p>)}
 
         <dl class="facts">
+          {lifeRecap(state, content).map((l) => <div key={l.label}><dt>{l.label}</dt><dd>{l.value}</dd></div>)}
           <div><dt>Thiện ác</dt><dd>{s.karmaLabel}</dd></div>
-          {careerLabel(state, content) && <div><dt>Đường đời</dt><dd>{careerLabel(state, content)}</dd></div>}
           <div><dt>Gia tài</dt><dd>{state.money.silver} lượng bạc</dd></div>
           <div><dt>Biến cố đã trải</dt><dd>{s.eventsLived}</dd></div>
           <div><dt>Người thân còn sống</dt><dd>{s.relativesAlive}</dd></div>
@@ -56,10 +70,66 @@ export function DeathScreen({ state, content, onReadLog, onNewLife, onGhost }: {
           </ul>
         )}
 
+        {highlights.length > 0 && (
+          <div class="ancestry">
+            <p class="kicker">Dấu ấn một đời</p>
+            <ol>{highlights.map((h, i) => <li key={i}>{h}</li>)}</ol>
+          </div>
+        )}
+
+        <div class="rebirth-points">
+          <p class="kicker">Điểm Luân Hồi</p>
+          <ul>
+            {points.lines.map((l) => <li key={l.label}><span>{l.label}</span><b>+{l.points}</b></li>)}
+          </ul>
+          <p class="rebirth-total">
+            Kiếp này: <b>{points.total}</b>
+            {rebirth.gained > 0 && rebirth.gained !== points.total && <> (nhận thêm {rebirth.gained})</>}
+            {' · '}Tích lũy: <b>{rebirth.bank}</b>
+          </p>
+        </div>
+
+        {blessings.length > 0 && (
+          <div class="ancestry">
+            <p class="kicker">Phúc báo cho kiếp sau</p>
+            <ul>{blessings.map((b) => <li key={b.id}><b>{b.name}</b>: {b.earned} {b.text}</li>)}</ul>
+          </div>
+        )}
+
+        {rewind && (
+          <div class="ghost-offer">
+            <p class="story">{content.lifeTexts.rewindOffer}</p>
+            <button class="btn-primary" onClick={onRewind}>
+              Trùng sinh về năm {rewind.age} tuổi{rewind.target === 'realm' ? ', lúc mới vào cảnh giới này' : ''}
+            </button>
+          </div>
+        )}
+
         {state.death?.ghostOffer && (
           <div class="ghost-offer">
             <p class="story">{content.lifeTexts.ghostOffer}</p>
             <button class="btn-primary" onClick={onGhost}>Hóa quỷ tu, tu tiếp bằng Quỷ đạo</button>
+          </div>
+        )}
+
+        {heirOptions(state, content).length > 0 && (
+          <div class="ghost-offer heir-offer">
+            <p class="story">{content.heir.offer}</p>
+            {heirOptions(state, content).map((h) => (
+              <button class="choice" key={h.id} onClick={() => onHeir(h.id)}>
+                {h.name}, {h.age} tuổi
+                <span class="hint">{h.label}</span>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {state.ancestry.length > 0 && (
+          <div class="ancestry">
+            <p class="kicker">Tộc phả · đời thứ {state.ancestry.length + 1}</p>
+            <ol>
+              {state.ancestry.map((a, i) => <li key={i}>{a.name}, {a.realm}, mất năm {a.age} tuổi</li>)}
+            </ol>
           </div>
         )}
 

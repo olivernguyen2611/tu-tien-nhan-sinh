@@ -7,9 +7,10 @@ import { availableActions, relationLabel } from '../../systems/relationships';
 import { npcLabel } from '../../systems/npcs';
 import { childRootLabel, romanceLabel, romanceViews, type RomanceAction } from '../../systems/romance';
 import { disciples, maxDisciples, recruitBlocked, teachBlocked } from '../../systems/disciples';
+import { ClanSection, type ClanAction } from './ClanSection';
 import { Meter } from './Meter';
 
-export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, onClose }: {
+export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, onClan, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome text to show under the relative. */
@@ -18,6 +19,8 @@ export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, o
   onRomance: (npcId: string, action: RomanceAction) => { text: string; tone: Tone; changes: string };
   /** Task 4.9: take a disciple (no id) or teach one. */
   onDisciple: (npcId: string | null) => { text: string; tone: Tone; changes: string } | null;
+  /** Task 5.4: found the clan or buy a property; returns the log text. */
+  onClan: (action: ClanAction) => string | null;
   onClose: () => void;
 }) {
   const age = state.character.age;
@@ -138,6 +141,7 @@ export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, o
             ))}
           </ul>
         ))}
+        {tab === 'family' && <ClanSection state={state} content={content} onClan={onClan} />}
         <button class="choice" onClick={onClose}>Đóng</button>
       </div>
     </div>

@@ -54,6 +54,27 @@ export interface GameState {
   talents: string[];
   /** A talent choice waiting for the player (after a big breakthrough); blocks the next year. */
   fate: { offered: string[]; refreshesLeft: number } | null;
+  /** Task 5.4: the cultivation clan of this line: gia quy, sản nghiệp (property id → count). Passed on to heirs. */
+  clan: { name: string; founded: number; founder: string; rules: string[]; properties: Record<string, number> } | null;
+  /**
+   * Task 5b.10 Trùng sinh: the life as it was at age 6 and at the start of the current major
+   * realm (without log or these checkpoints), for a rewindOnDeath hook to go back to.
+   */
+  checkpoints: { age6: Checkpoint | null; realm: Checkpoint | null };
+  /** Task 5b.8: Phúc báo brought from the last life (blessings.json id; career = the path that earned it). */
+  blessings: { id: string; career?: string }[];
+  /** Task 5.7: lives before this one in the same line (tộc phả), oldest first. */
+  ancestry: { name: string; age: number; realm: string; cause: DeathCause; relation: 'child' | 'disciple' | null }[];
+  /**
+   * Task 5.1: the sect this life founded (it is its master). Members, treasury and buildings
+   * grow from task 5.2 on.
+   */
+  ownSect: {
+    name: string; lineage: string; rules: string[]; founded: number; members: number; treasury: number; buildings: Record<string, number>;
+    /** Task 5.2: next year's growth bonus from decisions, and this year's report (decisions still open, decisions taken). */
+    growthBonus?: number;
+    report?: { age: number; text: string; decisions: string[]; done: string[] } | null;
+  } | null;
   /**
    * Bế quan (task 4.1): the age the door opens again, and when it closed; null when not in seclusion.
    * fixed: set by an event, so reaching the peak does not end it early (the point is to sit out the years).
@@ -194,6 +215,9 @@ export interface GameState {
   log: LogYear[];
 }
 
+/** A saved moment of the life (task 5b.10). */
+export type Checkpoint = Omit<GameState, 'log' | 'checkpoints'>;
+
 /** A foe built from a FoeSpec (task 3.3). */
 export interface Foe {
   name: string;
@@ -225,6 +249,8 @@ export interface Battle {
   source: string | null;
   /** Task 3.4: the foe is this NPC (killing them goes through killNpc). */
   npcId: string | null;
+  /** Task 5b.8: fighting to save someone. */
+  rescue?: boolean;
 }
 
 /** Task 3.5: a young prodigy on the Thiên kiêu bảng (not someone the player has met). */

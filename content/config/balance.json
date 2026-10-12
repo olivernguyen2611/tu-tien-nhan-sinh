@@ -309,6 +309,33 @@
     "bargainLoseMul": 1.1,
     "maxDiscount": 0.3
   },
+  "clan": {
+    "minRealm": "truc_co",
+    "minChildren": 1,
+    "cost": 100,
+    "maxRules": 2
+  },
+  "heir": {
+    "minAge": 6,
+    "inheritMoney": 0.8,
+    "inheritKarma": 0.3
+  },
+  "founding": {
+    "minRealm": "kim_dan",
+    "cost": 300,
+    "maxRules": 3,
+    "nameLength": [2, 24],
+    "startMembers": { "kim_dan": 10, "nguyen_anh": 40, "hoa_than": 120 },
+    "growth": 0.05,
+    "baseRecruit": 1,
+    "attrition": 0.02,
+    "tithe": 0.5,
+    "maxMembers": { "kim_dan": 100, "nguyen_anh": 500, "hoa_than": 2000 },
+    "defensePerLevel": 0.1,
+    "maxDefense": 0.5,
+    "donation": 50,
+    "decisions": [1, 3]
+  },
   "disciples": {
     "maxByRealm": { "truc_co": 1, "kim_dan": 3, "nguyen_anh": 5, "hoa_than": 9 },
     "age": [12, 16],
@@ -455,5 +482,20 @@
     "practiceCost": { "alchemy": 5, "forging": 10, "formation": 0, "talisman": 3, "farming": 0, "beast": 2 },
     "mortalStartLevel": { "nghe_thuoc": { "alchemy": 10 } },
     "cultivatorStartLevel": { "nghe_ren": { "forging": 10 } }
+  },
+  "rebirth": {
+    "yearsPerPoint": 10,
+    "perRealm": 10,
+    "perStage": 1,
+    "perMartialStage": 2,
+    "perCareerRung": 2,
+    "eventsPerPoint": 10,
+    "karmaAt": 60,
+    "karmaPoints": 5,
+    "perChild": 1,
+    "ownSect": 10,
+    "clan": 10,
+    "ranked": 5,
+    "highlights": 5
   }
 }

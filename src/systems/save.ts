@@ -15,8 +15,20 @@ const CALM_LINE = 'Một năm bình lặng trôi qua.';
 /** The part of `Storage` the save system uses (tests pass a Map-backed fake). */
 export type KeyValueStore = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
 
-/** Data kept across lives (PLAN.md C.5 `meta`). Grows in later phases. */
-export interface SaveMeta { livesPlayed: number }
+/**
+ * Data kept across lives (PLAN.md C.5 `meta`). Grows in later phases.
+ * rebirthPoints: Luân Hồi points to spend (task 5b.1); credited: life seed → points already
+ * given for it, so a death screen shown twice (or a quỷ tu dying again) is not paid twice.
+ */
+export interface SaveMeta {
+  livesPlayed: number;
+  rebirthPoints: number;
+  credited: Record<string, number>;
+  /** Task 5b.8: Phúc báo waiting for the next new life (from: the seed of the life that earned them). */
+  blessings: { from: string; list: GameState['blessings'] } | null;
+}
+/** Seeds remembered in `credited`; older ones are dropped. */
+const MAX_CREDITED = 30;
 
 export interface SaveFile {
   saveVersion: number;
@@ -96,6 +108,14 @@ export function migrate(save: SaveFile): SaveFile {
   if (life.cult.heartDemonTrial === undefined) life = { ...life, cult: { ...life.cult, heartDemonTrial: null } };
   // Task 4.2: no core yet.
   if (life.cult.coreGrade === undefined) life = { ...life, cult: { ...life.cult, coreForming: null, coreGrade: null } };
+  // Task 5.4: no clan.
+  if (life.clan === undefined) life = { ...life, clan: null };
+  // Task 5.7: no ancestors recorded.
+  if (life.ancestry === undefined) life = { ...life, ancestry: [] };
+  if (life.blessings === undefined) life = { ...life, blessings: [] };
+  if (life.checkpoints === undefined) life = { ...life, checkpoints: { age6: null, realm: null } };
+  // Task 5.1: no sect of one's own.
+  if (life.ownSect === undefined) life = { ...life, ownSect: null };
   // Task 4.2: đan văn.
   if (life.cult.corePattern === undefined) life = { ...life, cult: { ...life.cult, corePattern: null } };
   // Task 4.8: at home.
@@ -260,18 +280,46 @@ export function exportSave(save: SaveFile): { fileName: string; text: string } {
 export function readMeta(store: KeyValueStore): SaveMeta {
   try {
     const m = JSON.parse(store.getItem(META_KEY) ?? '{}') as Partial<SaveMeta>;
-    return { livesPlayed: typeof m.livesPlayed === 'number' ? m.livesPlayed : 0 };
+    return {
+      livesPlayed: typeof m.livesPlayed === 'number' ? m.livesPlayed : 0,
+      rebirthPoints: typeof m.rebirthPoints === 'number' ? m.rebirthPoints : 0,
+      credited: m.credited && typeof m.credited === 'object' ? m.credited : {},
+      blessings: m.blessings && Array.isArray(m.blessings.list) ? m.blessings : null,
+    };
   } catch {
-    return { livesPlayed: 0 };
+    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null };
   }
 }
 
-export function recordNewLife(store: KeyValueStore): SaveMeta {
-  const meta = { ...readMeta(store), livesPlayed: readMeta(store).livesPlayed + 1 };
+function writeMeta(store: KeyValueStore, meta: SaveMeta): SaveMeta {
   try {
     store.setItem(META_KEY, JSON.stringify(meta));
   } catch {
     /* meta is a bonus; the game still runs without it */
   }
   return meta;
+}
+
+/**
+ * A new life begins: count it; the Phúc báo waiting for it are now spent, and so are the
+ * Luân Hồi points paid for its origin (task 5b.9 Cầu đầu thai).
+ */
+export function recordNewLife(store: KeyValueStore, cost = 0): SaveMeta {
+  const meta = readMeta(store);
+  return writeMeta(store, { ...meta, livesPlayed: meta.livesPlayed + 1, blessings: null, rebirthPoints: Math.max(0, meta.rebirthPoints - cost) });
+}
+
+/**
+ * Task 5b.1: add a finished life's Luân Hồi points (only what was not given for this seed yet).
+ * Task 5b.8: the first time a life is credited, its Phúc báo wait for the next new life.
+ */
+export function creditRebirth(store: KeyValueStore, seed: string, points: number, blessings: GameState['blessings'] = []): { meta: SaveMeta; gained: number } {
+  const meta = readMeta(store);
+  const first = !(seed in meta.credited);
+  const gained = Math.max(0, points - (meta.credited[seed] ?? 0));
+  if (!first && gained === 0) return { meta, gained };
+  const kept = Object.entries(meta.credited).filter(([k]) => k !== seed).slice(-(MAX_CREDITED - 1));
+  const credited = Object.fromEntries([...kept, [seed, Math.max(points, meta.credited[seed] ?? 0)]]);
+  const pending = first ? (blessings.length > 0 ? { from: seed, list: blessings } : null) : meta.blessings;
+  return { meta: writeMeta(store, { ...meta, rebirthPoints: meta.rebirthPoints + gained, credited, blessings: pending }), gained };
 }

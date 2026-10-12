@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -47,6 +47,10 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'core-patterns.json') return CorePatternFileSchema;
     if (rest === 'nascent-souls.json') return NascentSoulFileSchema;
     if (rest === 'disciples.json') return DisciplesFileSchema;
+    if (rest === 'founding.json') return FoundingFileSchema;
+    if (rest === 'heir.json') return HeirFileSchema;
+    if (rest === 'clan.json') return ClanFileSchema;
+    if (rest === 'blessings.json') return BlessingFileSchema;
     return null;
   }
   // Belongs to one world.
@@ -80,6 +84,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   let fateIds: string[] | null = null;
   let itemIds: string[] | null = null;
   let recipeFile: { file: string; data: RecipeFile } | null = null;
+  let foundingPills: { file: string; pills: string[] } | null = null;
   let martialFile: MartialFile | null = null;
   const regionFiles: { file: string; regions: Region[] }[] = [];
   let careerIds: string[] | null = null;
@@ -170,12 +175,25 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === RegionFileSchema) regionFiles.push({ file, regions: parsed.data as Region[] });
     if (schema === ItemFileSchema) itemIds = (parsed.data as { id: string }[]).map((x) => x.id);
     if (schema === RecipeFileSchema) recipeFile = { file, data: parsed.data as RecipeFile };
+    if (schema === ClanFileSchema) {
+      const c = parsed.data as { rules: { id: string }[]; properties: { id: string }[] };
+      problems.push(...duplicates(file, 'gia quy', c.rules), ...duplicates(file, 'sản nghiệp', c.properties));
+    }
+    if (schema === FoundingFileSchema) {
+      const f = parsed.data as FoundingFile;
+      problems.push(...duplicates(file, 'tông quy', f.rules), ...duplicates(file, 'công trình', f.buildings), ...duplicates(file, 'quyết định', f.decisions));
+      foundingPills = { file, pills: f.buildings.flatMap((b) => b.pills) };
+    }
     if (schema === CareersFileSchema) careerIds = (parsed.data as { careers: { id: string }[] }).careers.map((c) => c.id);
     if (schema === CareersFileSchema) problems.push(...duplicates(file, 'đường đời', (parsed.data as { careers: { id: string }[] }).careers));
     if (schema === DifficultyFileSchema) difficultyIds = (parsed.data as { id: string }[]).map((d) => d.id);
   }
 
   problems.push(...checkCultivationTables(parsedShared));
+  // Task 5.2: Luyện Đan Phòng sends real items.
+  for (const it of foundingPills?.pills ?? []) {
+    if (itemIds && !itemIds.includes(it)) problems.push({ file: foundingPills!.file, level: 'error', message: `công trình gửi vật phẩm không tồn tại "${it}"` });
+  }
   // Task 4.7: recipes use and make real items.
   if (recipeFile) {
     const { file, data } = recipeFile;
@@ -326,6 +344,10 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       problems.push({ file, level: 'error', message: `${where}: nhắc tới {lover} nhưng conditions.romance không yêu cầu có người trong lòng/đạo lữ` });
     }
 
+    // Task 5.3: effects on the founded sect need an event that only comes to a founder.
+    if (event.choices.some((c) => [c.result, c.success, c.fail].some((o) => o?.effects.ownSect)) && event.conditions.ownSect?.has !== true) {
+      problems.push({ file, level: 'error', message: `${where}: có hiệu ứng ownSect nhưng thiếu conditions.ownSect.has = true` });
+    }
     if (/\{deceased\}/.test(`${event.text} ${event.choices.map((c) => [c.text, c.result?.text, c.success?.text, c.fail?.text].join(' ')).join(' ')}`) && !event.conditions.family?.deadAny) {
       problems.push({ file, level: 'error', message: `${where}: nhắc tới {deceased} nhưng thiếu conditions.family.deadAny` });
     }
@@ -425,6 +447,10 @@ function checkCultivationTables(t: { balance?: Balance; realms?: RealmsFile; roo
       }
       for (const r of mb.openRealms) {
         if (!realmIds.includes(r)) out.push({ file: bal, level: 'error', message: `majorBreakthrough.openRealms: cảnh giới không tồn tại "${r}"` });
+      }
+      if (!realmIds.includes(t.balance.clan.minRealm)) out.push({ file: bal, level: 'error', message: `clan.minRealm: cảnh giới không tồn tại "${t.balance.clan.minRealm}"` });
+      for (const r of [t.balance.founding.minRealm, ...Object.keys(t.balance.founding.startMembers), ...Object.keys(t.balance.founding.maxMembers)]) {
+        if (!realmIds.includes(r)) out.push({ file: bal, level: 'error', message: `founding: cảnh giới không tồn tại "${r}"` });
       }
       for (const r of Object.keys(t.balance.disciples.maxByRealm)) {
         if (!realmIds.includes(r)) out.push({ file: bal, level: 'error', message: `disciples.maxByRealm: cảnh giới không tồn tại "${r}"` });

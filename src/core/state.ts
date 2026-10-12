@@ -16,6 +16,10 @@ import { sectYear } from '../systems/sect';
 import { lineageYear, rollPaths } from '../systems/paths';
 import { rankingYear } from '../systems/rankings';
 import { romanceYear, romanceTarget } from '../systems/romance';
+import { ownSectYear } from '../systems/ownSect';
+import { clanYear } from '../systems/clan';
+import { blessingRerolls } from '../systems/blessings';
+import { withCheckpoints } from '../systems/rewind';
 
 export interface NewLifeInput {
   seed: string;
@@ -24,6 +28,8 @@ export interface NewLifeInput {
   originId?: string;  // undefined → weighted random
   difficulty?: string; // undefined → balance.defaultDifficulty
   tutorial?: boolean;  // show first-life tips
+  /** Task 5b.8: Phúc báo earned by the last life. */
+  blessings?: GameState['blessings'];
 }
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
@@ -33,7 +39,8 @@ export function randomName(rng: Rng, content: Content, gender: Gender): string {
 }
 
 export function fillTemplate(text: string, state: GameState, content?: Content): string {
-  const sect = content?.sects.find((s) => s.id === state.sect.id)?.name ?? 'tông môn';
+  // The founded sect (task 5.1) when there is one, else the sect the player belongs to.
+  const sect = state.ownSect?.name ?? content?.sects.find((s) => s.id === state.sect.id)?.name ?? 'tông môn';
   // Task 3.4: {npc} = the event's NPC, {npcRole} = how the player knows them, {npcKin} = the dead relative an heir avenges.
   const npc = npcById(state, state.events.npc);
   const kin = npcById(state, npc?.heirOf);
@@ -96,6 +103,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
   const healthShift = Math.round(((stats.health - 50) / 50) * life.healthAdjustMax);
   const lifespan = life.mortalBase + rng.int(-life.mortalVariance, life.mortalVariance) + healthShift;
 
+  const blessings = (input.blessings ?? []).filter((b) => content.blessings.blessings.some((x) => x.id === b.id));
   const family = createFamily(rng, content, splitName(name, content.names).surname, !!origin.noParents, name);
 
   const state: GameState = {
@@ -113,6 +121,11 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     npcs: [],
     ranking: { prodigies: [], rank: null },
     seclusion: null,
+    ownSect: null,
+    ancestry: [],
+    blessings,
+    checkpoints: { age6: null, realm: null },
+    clan: null,
     region: { id: null, visited: [], movedAt: null },
     romance: { lover: null, couple: false, partner: null, exes: [], rivals: 0, lastActions: {} },
     talents: [],
@@ -130,7 +143,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     money: { silver: origin.silver, spiritStones: origin.spiritStones },
     social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0, trieu_dinh: 0, giang_ho: 0 } },
     flags: origin.noParents ? { no_parents: true, no_father: true, no_mother: true } : {},
-    destiny: { offered: [], rerollsLeft: Math.max(0, content.balance.traits.rerolls + (content.balance.difficulty[difficulty]?.rerollBonus ?? 0)), confirmed: false },
+    destiny: { offered: [], rerollsLeft: Math.max(0, content.balance.traits.rerolls + (content.balance.difficulty[difficulty]?.rerollBonus ?? 0) + blessingRerolls(blessings, content)), confirmed: false },
     traits: [],
     family,
     events: {
@@ -152,9 +165,11 @@ const withYear = (s: GameState): GameState => ({ ...s, log: [...s.log, { age: s.
 /** One year passes; at most one event is rolled for the player to answer. */
 export function advanceYear(state: GameState, content: Content): GameState {
   if (!state.alive || state.events.pending || state.fate || state.combat || state.cult.coreForming || state.cult.heartDemonTrial) return state;
+  // Task 5b.10: moments a Trùng sinh can go back to.
+  state = withCheckpoints(state);
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content);
+  const body = checkDeath(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content), content), content);
   // Task 4.1: in seclusion no ordinary event comes (follow-ups wait for the door to open);
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;
