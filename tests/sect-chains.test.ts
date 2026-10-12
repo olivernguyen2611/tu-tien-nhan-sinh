@@ -6,7 +6,7 @@ import { joinSect } from '../src/systems/sect';
 import { chainViews, doChainStep, startChain } from '../src/systems/sectChains';
 
 const content = loadContent();
-const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'], body: null };
+const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'] };
 
 function member(): GameState {
   const b = createLife({ seed: 'chains' }, content);
