@@ -1309,6 +1309,29 @@ export const BalanceSchema = z
         stipendLogEvery: z.number().int().min(1),
         /** Playtest 2: missions posted on the board each year (picked from those the rank allows). */
         missionBoard: z.number().int().min(1),
+        /**
+         * Task 5c.1: named sectmates met on joining. Realm = the higher of minRealm (index into the realm
+         * list) and the player's realm + aboveSelf; age = the player's + ageOffset.
+         */
+        cast: z
+          .array(
+            z
+              .object({
+                kind: z.enum(['elder', 'steward', 'senior', 'peer', 'rival']),
+                count: z.number().int().min(1),
+                minRealm: z.number().int().min(0),
+                aboveSelf: z.number().int().min(0),
+                ageOffset: range,
+                affinity: z.number().min(0).max(100),
+                grudge: z.number().min(0).max(100),
+              })
+              .strict(),
+          )
+          .min(1),
+        /** The master as an NPC: realms above the player (at least minRealm), and the age gap. */
+        masterCast: z.object({ minRealm: z.number().int().min(0), aboveSelf: z.number().int().min(0), ageOffset: range, affinity: z.number().min(0).max(100) }).strict(),
+        /** Task 5c.1: time spent with sectmates a year (each one once a year). */
+        talksPerYear: z.number().int().min(1),
       })
       .strict(),
     /** Task 2.7: Nghịch Thiên Cải Mệnh (fate-talents.md). */
@@ -1818,6 +1841,19 @@ const MissionOutcomeSchema = z
     stats: z.record(z.enum([...MORTAL_STATS, ...APTITUDES]), z.number()),
   })
   .strict();
+/** Task 5c.1: every outcome moves at least one stat (owner rule). */
+const TalkOutcomeSchema = z
+  .object({
+    text: z.string().min(1),
+    stats: z.record(z.enum([...MORTAL_STATS, ...APTITUDES]), z.number()).refine((r) => Object.values(r).some((v) => v !== 0), 'phải đổi ít nhất một chỉ số'),
+    affinity: z.number().optional(),
+    grudge: z.number().optional(),
+    favor: z.number().optional(),
+    contribution: z.number().optional(),
+    /** % of the cultivation bar. */
+    progress: z.number().optional(),
+  })
+  .strict();
 export const SectLifeSchema = z
   .object({
     /** {sect}, {rank}, {reason}, {stones}, {master}. */
@@ -1834,8 +1870,44 @@ export const SectLifeSchema = z
         /** Task 3.12: a Phật đạo cultivator kills; expelled after too many breaks ({sect}). */
         preceptBroken: z.string().min(1),
         expelled: z.string().min(1),
+        /** Task 5c.1: the line when the sectmates are first met ({sect}, {names}). */
+        castMet: z.string().min(1),
+        /** The master died ({master}). */
+        masterDied: z.string().min(1),
       })
       .strict(),
+    /** Task 5c.1: how sectmates are called. older/younger by age next to the player, M = nam, F = nữ. */
+    titles: z
+      .object({
+        master: z.string().min(1), elder: z.string().min(1), steward: z.string().min(1),
+        olderM: z.string().min(1), olderF: z.string().min(1), youngerM: z.string().min(1), youngerF: z.string().min(1),
+        rival: z.string().min(1),
+      })
+      .strict(),
+    /**
+     * Task 5c.1: things to do with a sectmate. stat 'power' is a spar: Chiến lực against theirs.
+     * Texts take {npc} (name) and {title}.
+     */
+    interactions: z
+      .array(
+        z
+          .object({
+            id,
+            name: z.string().min(1),
+            kinds: z.array(z.enum(['master', 'elder', 'steward', 'senior', 'peer', 'rival'])).min(1),
+            text: z.string().min(1),
+            stat: z.enum([...MORTAL_STATS, ...APTITUDES, 'power']),
+            difficulty: z.number().min(0).max(100),
+            /** Thiện cảm needed before they make time for this. */
+            minAffinity: z.number().min(0).max(100).optional(),
+            /** Spirit stones spent whatever the outcome (a gift). */
+            cost: z.number().int().min(0).optional(),
+            success: TalkOutcomeSchema,
+            fail: TalkOutcomeSchema,
+          })
+          .strict(),
+      )
+      .min(1),
     missions: z
       .array(
         z

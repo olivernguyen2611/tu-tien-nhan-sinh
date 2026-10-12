@@ -6,6 +6,7 @@ import type { GameState } from '../../core/types';
 import {
   currentSect, masterBlocked, masterChance, missionViews, nextRankNeed, sectEligibility, sectTechniques,
 } from '../../systems/sect';
+import { sectmateViews } from '../../systems/sectmates';
 import { learnBlocked, techniqueById } from '../../systems/technique';
 import { TermText } from './Tooltip';
 import { OwnSectSection } from './OwnSectSection';
@@ -15,6 +16,7 @@ export type SectAction =
   | { kind: 'mission'; missionId: string }
   | { kind: 'learn'; techniqueId: string }
   | { kind: 'master' }
+  | { kind: 'talk'; npcId: string; talkId: string }
   | { kind: 'leave' }
   | { kind: 'found'; name: string; rules: string[] }
   | { kind: 'decide'; decisionId: string }
@@ -100,6 +102,25 @@ export function SectPanel({ state, content, onAction, onClose }: {
                   {masterBlocked(state, content) && <span class="craft-note">{masterBlocked(state, content)}</span>}
                 </>
               )}
+            </div>
+
+            <div class="crafts">
+              <h3 class="panel-sub">Đồng môn</h3>
+              <p class="profile-note">Mỗi năm đi lại được vài người, mỗi người một lần. Thân thiết thì mới được chỉ điểm.</p>
+              {sectmateViews(state, content).map((v) => (
+                <div class="career-row" key={v.npc.id}>
+                  <div class="craft-head"><b>{v.title} {v.npc.name}</b><span class="muted">thiện cảm {v.npc.affinity}</span></div>
+                  <p class="profile-note">{v.npc.age} tuổi · {content.cultivation.realms.realms.find((r) => r.id === v.npc.realm)?.name}</p>
+                  {v.talks.map((t) => (
+                    <div key={t.id}>
+                      <button class="chip-btn" disabled={!!t.blocked} title={t.text} onClick={() => act({ kind: 'talk', npcId: v.npc.id, talkId: t.id })}>
+                        {t.name} · {Math.round(t.chance * 100)}%
+                      </button>
+                      {t.blocked && <span class="craft-note">{t.blocked}</span>}
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
 
             {leaving ? (

@@ -213,7 +213,16 @@
     "stipendLogEvery": 10,
     "masterChanceBase": 0.25,
     "masterChancePerPoint": 0.01,
-    "masterSpeed": 0.1
+    "masterSpeed": 0.1,
+    "cast": [
+      { "kind": "elder", "count": 1, "minRealm": 3, "aboveSelf": 2, "ageOffset": [80, 200], "affinity": 45, "grudge": 0 },
+      { "kind": "steward", "count": 1, "minRealm": 2, "aboveSelf": 1, "ageOffset": [20, 60], "affinity": 50, "grudge": 0 },
+      { "kind": "senior", "count": 1, "minRealm": 1, "aboveSelf": 0, "ageOffset": [3, 10], "affinity": 55, "grudge": 0 },
+      { "kind": "peer", "count": 2, "minRealm": 1, "aboveSelf": 0, "ageOffset": [-3, 3], "affinity": 50, "grudge": 0 },
+      { "kind": "rival", "count": 1, "minRealm": 1, "aboveSelf": 0, "ageOffset": [-2, 4], "affinity": 25, "grudge": 15 }
+    ],
+    "masterCast": { "minRealm": 3, "aboveSelf": 2, "ageOffset": [60, 180], "affinity": 60 },
+    "talksPerYear": 3
   },
   "fate": {
     "rarityByFoundation": {
@@ -259,7 +268,7 @@
     "arts": { "itemActionMul": 2, "unarmedCombatPower": -0.2, "cultivationSpeed": 0 }
   },
   "npcs": {
-    "max": 20,
+    "max": 30,
     "ageOffset": [-5, 15],
     "peerAgeOffset": [-3, 3],
     "minAge": 6,
