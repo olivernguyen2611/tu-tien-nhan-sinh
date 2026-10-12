@@ -5,7 +5,7 @@ import { BalanceSchema, WorldSchema, NamesSchema, OriginFileSchema } from '../sr
 import { LifeTextsSchema } from '../src/core/schemas';
 import lifeTexts from '../content/life-texts.json';
 import extremes from '../content/stat-extremes.json';
-import { careers, cultivation, difficulties, fateTalents, items, sectLife, sects, techniques, tutorial, combat } from './fixtures';
+import { careers, cultivation, difficulties, fateTalents, items, martial, lineages, sectLife, sects, techniques, tutorial, combat } from './fixtures';
 import { StatExtremesFileSchema } from '../src/core/schemas';
 import world from '../content/worlds/thuong_lan/world.json';
 import balance from '../content/config/balance.json';
@@ -31,6 +31,8 @@ const content: Content = {
   sectLife,
   fateTalents,
   items,
+  martial,
+  lineages,
   markets: [],
   combat,
   traits: [],

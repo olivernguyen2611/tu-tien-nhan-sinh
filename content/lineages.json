@@ -1,0 +1,32 @@
+[
+  {
+    "id": "tien", "name": "Tiên đạo",
+    "strengths": "Cân bằng, đột phá ổn định.", "costs": "Không có gì nổi trội.",
+    "effects": [{ "hook": "breakthroughChance", "add": 3 }],
+    "onAdopt": {}, "perYear": {}
+  },
+  {
+    "id": "ma", "name": "Ma đạo",
+    "strengths": "Tu vi ×1.4, chiến đấu hút máu.", "costs": "Tâm ma tăng, nhân quả xấu, chính đạo truy sát.",
+    "effects": [],
+    "onAdopt": {}, "perYear": {}, "karmaPerYear": -1
+  },
+  {
+    "id": "phat", "name": "Phật đạo",
+    "strengths": "Đạo tâm vững, kháng tâm ma, hộ thể.", "costs": "Tu vi ×0.8, kiêng sát sinh.",
+    "effects": [{ "hook": "injuryReduce", "add": 0.1 }],
+    "onAdopt": { "daoHeart": 5 }, "perYear": {}
+  },
+  {
+    "id": "quy", "name": "Quỷ đạo",
+    "strengths": "Thọ nguyên dài, đánh vào thần thức.", "costs": "Sức khỏe giảm dần, người sống sợ hãi.",
+    "effects": [],
+    "onAdopt": { "charm": -10 }, "perYear": { "health": -1 }
+  },
+  {
+    "id": "yeu", "name": "Yêu đạo",
+    "strengths": "Thân thể cường tráng.", "costs": "Để GĐ 7 làm đầy đủ.",
+    "effects": [],
+    "onAdopt": { "physique": 5 }, "perYear": {}
+  }
+]

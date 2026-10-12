@@ -26,6 +26,8 @@ const balance = {
   techniques: realBalance.techniques,
   sects: realBalance.sects,
   fate: realBalance.fate,
+  martial: realBalance.martial,
+  buddhism: realBalance.buddhism,
   paths: realBalance.paths,
   crafts: realBalance.crafts,
   market: realBalance.market,

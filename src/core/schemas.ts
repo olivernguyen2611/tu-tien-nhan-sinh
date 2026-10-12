@@ -55,6 +55,10 @@ const BaseConditionsSchema = z
     peakFails: z.object({ min: z.number().int().min(0) }).strict().optional(),
     /** Fate talents (task 2.8 hidden choices). */
     talentsAny: ids,
+    /** Martial stage index range (task 3.11; -1 = not yet Tam lưu). */
+    martial: z.object({ min: z.number().int().optional(), max: z.number().int().optional(), ready: z.boolean().optional() }).strict().optional(),
+    /** Born into one of these origins. */
+    origins: ids,
   })
   .strict();
 
@@ -94,10 +98,20 @@ export const EffectsSchema = z
     reducePeakFails: z.number().int().min(1).optional(),
     /** A scroll to learn later from the Tu luyện sheet. */
     gainTechnique: id.optional(),
+    /** Task 3.8: combat path aptitude gained. */
+    pathAffinity: z.record(z.enum(['sword', 'body', 'spell', 'weapon', 'arts']), z.number()).optional(),
     /** Mortal careers. */
     joinCareer: id.optional(),
     careerPromote: z.boolean().optional(),
     leaveCareer: z.boolean().optional(),
+    /** Task 3.12: this choice kills someone (Phật đạo precepts). */
+    kill: z.boolean().optional(),
+    /** Task 3.11: martial path. */
+    martialPromote: z.boolean().optional(),
+    martialAttempt: z.boolean().optional(),
+    martialYears: z.number().int().optional(),
+    /** Extra % for the next martial breakthrough. */
+    martialBonus: z.number().optional(),
     /** An elder of the sect takes you as a personal disciple. */
     gainMaster: z.boolean().optional(),
     /** Sect life (task 2.5): join a sect, add contribution, promote one rank, leave. */
@@ -114,7 +128,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -543,7 +557,6 @@ export const BalanceSchema = z
             lootSilverPerPower: z.number().min(0),
             spareKarma: z.number(),
             killKarma: z.number(),
-            killDaoHeartPhat: z.number(),
           })
           .strict(),
       })
@@ -774,6 +787,42 @@ export const BalanceSchema = z
         refreshes: z.number().int().min(0),
         /** Khí vận at or above this gives one more refresh. */
         extraRefreshLuck: z.number(),
+      })
+      .strict(),
+    /** Task 3.12: Phật đạo precepts (techniques.md C5): killing costs đạo tâm; too many breaks and the temple expels you. */
+    buddhism: z
+      .object({ precepts: z.object({ killDaoHeart: z.number(), maxBreaks: z.number().int().min(1) }).strict() })
+      .strict(),
+    /** Task 3.11: martial path for mortals (mortal-path.md 2b). Index i = stage V(i+1). */
+    martial: z
+      .object({
+        minAge: z.number().int().min(0),
+        combatPower: z.array(z.number().min(0)).min(1),
+        /** Lifespan added on reaching each stage. */
+        lifespan: z.array(z.number().int().min(0)).min(1),
+        /** Training into stage i (steps[0] = into Tam lưu). Stages past the list need a kỳ ngộ. */
+        steps: z.array(
+          z
+            .object({
+              years: z.number().int().min(1),
+              /** Averaged for the check. */
+              stats: z.array(z.enum([...MORTAL_STATS, ...APTITUDES])).min(1),
+              difficulty: z.number(),
+              needsTeacher: z.boolean().optional(),
+              minPhysique: z.number().optional(),
+              /** Overrides the default years lost on a failed attempt. */
+              failYearsBack: z.number().int().min(0).optional(),
+            })
+            .strict(),
+        ),
+        chanceBase: probability,
+        chancePerPoint: z.number().min(0),
+        chanceMin: probability,
+        chanceMax: probability,
+        /** Training years lost on a failed attempt. */
+        failYearsBack: z.number().int().min(0),
+        oldAge: z.number().int(),
+        oldAgeMul: z.number().min(0),
       })
       .strict(),
     /** Combat path modifiers (realms-roots-paths.md C); keyed by path id. */
@@ -1122,6 +1171,8 @@ export const SectFileSchema = z.array(
       ranks: z.array(z.string().min(1)).min(2),
       requires: z
         .object({
+          /** Phật duyên (task 3.12): takes people without a usable root when đạo tâm reaches this. */
+          rootlessMinDaoHeart: z.number().optional(),
           minStats: SectStatsSchema.optional(),
           /** At least one must hold. */
           oneOf: z.array(z.object({ rootElements: z.array(id).optional(), minStats: SectStatsSchema.optional() }).strict()).optional(),
@@ -1159,6 +1210,9 @@ export const SectLifeSchema = z
         master: z.string().min(1),
         masterRefused: z.string().min(1),
         masterTitle: z.string().min(1),
+        /** Task 3.12: a Phật đạo cultivator kills; expelled after too many breaks ({sect}). */
+        preceptBroken: z.string().min(1),
+        expelled: z.string().min(1),
       })
       .strict(),
     missions: z
@@ -1277,6 +1331,40 @@ export const ItemFileSchema = z.array(
 );
 export type Item = z.infer<typeof ItemFileSchema>[number];
 
+/** content/martial.json: martial stages for mortals (task 3.11, mortal-path.md 2b). */
+export const MartialFileSchema = z
+  .object({
+    stages: z.array(z.object({ name: z.string().min(1), description: z.string().min(1) }).strict()).min(1),
+    /** What counts as "bí kíp hoặc sư phụ" for stages that need a teacher. */
+    teacher: z.object({ flags: ids, careers: ids, origins: ids }).strict(),
+    /** Kept after Ngũ khí triều nguyên brings the life into Luyện Khí. */
+    ascendEffects: z.array(EffectHookSchema),
+    /** {years}, {need}, {next}, {stage}, {description}. */
+    texts: z.object({ train: z.string().min(1), promote: z.string().min(1), fail: z.string().min(1), ascend: z.string().min(1) }).strict(),
+  })
+  .strict();
+export type MartialFile = z.infer<typeof MartialFileSchema>;
+
+/** content/lineages.json: đạo thống (task 3.8, PLAN K.3.1). Speed multipliers live in balance.techniques.lineageMul. */
+const StatDeltaSchema = z.record(z.enum([...MORTAL_STATS, ...APTITUDES]), z.number());
+export const LineageFileSchema = z.array(
+  z
+    .object({
+      id: z.enum(LINEAGES),
+      name: z.string().min(1),
+      strengths: z.string().min(1),
+      costs: z.string().min(1),
+      /** K.6 hooks while following this lineage. */
+      effects: z.array(EffectHookSchema),
+      /** Stats changed once, the first time this life takes up the lineage. */
+      onAdopt: StatDeltaSchema,
+      /** Stats changed every year while following it (Quỷ đạo: health wears away). */
+      perYear: StatDeltaSchema,
+      karmaPerYear: z.number().optional(),
+    })
+    .strict(),
+);
+export type Lineage = z.infer<typeof LineageFileSchema>[number];
 /** content/combat.json: fight texts (task 3.3). {foe} = foe name, {name} = player. */
 const pool = z.array(z.string().min(1)).min(1);
 export const COMBAT_ACTIONS = ['all_out', 'item', 'defend', 'flee', 'plead'] as const;

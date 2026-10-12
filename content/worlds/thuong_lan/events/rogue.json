@@ -194,7 +194,8 @@
             "setFlags": [
               "ban_do_bi_canh"
             ],
-            "stat.daoHeart": -5
+            "stat.daoHeart": -5,
+            "kill": true
           }
         }
       },

@@ -78,6 +78,15 @@ describe('a fight (K.4.2)', () => {
     expect(k.state.social.karma).toBeLessThan(s.social.karma);
   });
 
+  it('a Phật tu who kills the beaten foe breaks a precept (task 3.12)', () => {
+    let s = startBattle(cultivator(), content, fight({ realm: 'pham_nhan', intent: 'rob' }), 'Thử');
+    s = playOut(s);
+    const monk = { ...s, cult: { ...s.cult, lineage: 'phat' } };
+    const k = settle(monk, content, 'kill').state;
+    expect(k.cult.preceptBreaks).toBe(1);
+    expect(k.aptitudes.daoHeart).toBe(Math.max(0, monk.aptitudes.daoHeart + content.balance.buddhism.precepts.killDaoHeart));
+  });
+
   it('losing to a robber takes money; to a killer, a jade saves you once', () => {
     let s = startBattle({ ...adult, money: { silver: 100, spiritStones: 0 } }, content, fight({ realm: 'truc_co', intent: 'rob' }), null);
     s = playOut(s);

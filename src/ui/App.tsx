@@ -32,6 +32,7 @@ import { joinCareer } from '../systems/career';
 import { doMission, joinSect, leaveSect, requestMaster } from '../systems/sect';
 import { learnTechnique } from '../systems/technique';
 import { chooseFate, rerollFate } from '../systems/fate';
+import { trainMartial } from '../systems/martial';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -204,6 +205,12 @@ function Screens({ content }: { content: Content }) {
           setLife(r.state);
           return r.text;
         }}
+        onTrain={() => {
+          const r = trainMartial(life, content);
+          if (!r) return null;
+          setLife(r.state);
+          return r.text;
+        }}
         onLearn={(id) => {
           const r = learnTechnique(life, content, id);
           if (!r) return null;
@@ -213,7 +220,7 @@ function Screens({ content }: { content: Content }) {
         onSectAction={(a) => {
           const r = a.kind === 'join' ? joinSect(life, content, a.sectId)
             : a.kind === 'mission' ? doMission(life, content, a.missionId)
-            : a.kind === 'learn' ? learnTechnique(life, content, a.techniqueId)
+            : a.kind === 'learn' ? (() => { const l = learnTechnique(life, content, a.techniqueId); return l && { ...l, state: enterFirstRealm(l.state, content) }; })()
             : a.kind === 'master' ? requestMaster(life, content)
             : leaveSect(life, content);
           if (!r || !r.text) return null;

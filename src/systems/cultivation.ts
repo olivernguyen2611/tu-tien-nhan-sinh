@@ -12,6 +12,7 @@ import { currentTechnique, learnTechnique, techniqueCapReason, techniqueMul } fr
 import { sectHooks } from './sect';
 import { offerFate } from './fate';
 import { breakthroughItem, carriedHooks, removeItems } from './items';
+import { pathSpeedBonus } from './paths';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -138,6 +139,10 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
     ...fromTraits, ...(body?.effects ?? []), ...careerHooks(state, content),
     ...(currentTechnique(state, content)?.effects ?? []), ...sectHooks(state, content),
     ...state.talents.flatMap((id) => content.fateTalents.find((t) => t.id === id)?.effects ?? []),
+    // Đạo thống (task 3.8).
+    ...(content.lineages.find((l) => l.id === state.cult.lineage)?.effects ?? []),
+    // Võ đạo nhập tiên keeps the body's edge (task 3.11).
+    ...(state.flags.vo_dao_nhap_tien ? content.martial.ascendEffects : []),
     ...carriedHooks(state, content),
   ];
 }
@@ -165,7 +170,7 @@ export function yearlyGain(state: GameState, content: Content): number {
   }
   const aptitude = cfg.aptitudeBase + (state.aptitudes.physique + state.aptitudes.comprehension) / cfg.aptitudeDivisor;
   const qi = content.world.qi ?? cfg.regionQi;
-  const bonus = Math.max(0, 1 + hookSum(state, content, 'cultivationSpeed'));
+  const bonus = Math.max(0, 1 + hookSum(state, content, 'cultivationSpeed') + pathSpeedBonus(state, content));
   const injured = state.cult.injuredUntil !== null && state.character.age < state.cult.injuredUntil ? cfg.minorFailure.injurySpeedMul : 1;
   const foundation = state.cult.foundation ? content.balance.majorBreakthrough.foundationSpeed[state.cult.foundation] ?? 1 : 1;
   const buffs = state.cult.buffs.filter((b) => state.character.age < b.until).reduce((m, b) => m * b.mul, 1);
@@ -199,11 +204,14 @@ export function breakthroughPct(state: GameState, content: Content, basePct: num
   return Math.max(b.minPct, Math.min(b.maxPct, pct));
 }
 
-/** "Luyện Khí tầng 3"; a mortal is just "Phàm Nhân" (martial stages come with task 3.11). */
+/** "Luyện Khí tầng 3"; a mortal is "Phàm Nhân", or "Phàm Nhân · Nhất lưu" on the martial path (task 3.11). */
 export function realmLabel(state: GameState, content: Content): string {
   const realm = content.cultivation.realms.realms.find((r) => r.id === state.cult.realm);
   if (!realm) return state.cult.realm;
-  if (realm.id === 'pham_nhan') return realm.name;
+  if (realm.id === 'pham_nhan') {
+    const martial = state.martial.stage >= 0 ? content.martial.stages[state.martial.stage]?.name : null;
+    return martial ? `${realm.name} · ${martial}` : realm.name;
+  }
   return `${realm.name} ${realm.stages[state.cult.stage] ?? ''}`.trim();
 }
 

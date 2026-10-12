@@ -7,7 +7,9 @@
     "leave": "Ngươi rời {sect}. Sau lưng, sơn môn khép lại.",
     "master": "{master} nhận ngươi làm đệ tử thân truyền. Từ nay ngươi có sư phụ.",
     "masterRefused": "Trưởng lão nhìn ngươi một lúc rồi lắc đầu: \"Chưa đủ.\"",
-    "masterTitle": "Trưởng lão {master}"
+    "masterTitle": "Trưởng lão {master}",
+    "preceptBroken": "Phá giới sát sinh. Tiếng mõ trong lòng lạc mất một nhịp.",
+    "expelled": "Phá giới quá nhiều lần, {sect} không giữ ngươi nữa."
   },
   "missions": [
     {

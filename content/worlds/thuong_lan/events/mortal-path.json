@@ -802,5 +802,314 @@
         }
       }
     ]
+  },
+  {
+    "id": "bai_nhap_luc_hop_mon",
+    "category": "mortal",
+    "title": "Bái nhập Lục Hợp Môn",
+    "text": "Lục Hợp Môn mở cửa nhận đệ tử. Bài thử: đứng tấn một nén nhang dưới nắng trưa.",
+    "conditions": {
+      "age": {
+        "min": 10,
+        "max": 20
+      },
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "martial": {
+        "max": -1
+      },
+      "anyOf": [
+        {
+          "career": {
+            "id": "vo_lam"
+          }
+        },
+        {
+          "origins": [
+            "vo_lam"
+          ]
+        }
+      ]
+    },
+    "weight": 6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đứng tấn",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Một nén nhang tàn, chân ngươi vẫn như cắm rễ. Sư phụ gật đầu.",
+          "effects": {
+            "setFlags": [
+              "luc_hop_mon"
+            ],
+            "martialPromote": true,
+            "reputation": {
+              "giang_ho": 5
+            },
+            "stat.physique": 2
+          }
+        },
+        "fail": {
+          "text": "Ngươi ngã sau nửa nén.",
+          "effects": {
+            "stat.physique": 1
+          }
+        }
+      },
+      {
+        "text": "Đứng tấn, tranh thủ ăn bánh",
+        "hidden": true,
+        "requires": {
+          "traitsAny": [
+            "thiet_vi"
+          ]
+        },
+        "result": {
+          "text": "Sư phụ tức cười, nhận luôn.",
+          "effects": {
+            "setFlags": [
+              "luc_hop_mon"
+            ],
+            "martialPromote": true,
+            "stat.happiness": 3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kho_luyen_vuot_ai",
+    "category": "mortal",
+    "title": "Khổ luyện vượt ải",
+    "text": "Võ công dậm chân tại chỗ. Sư phụ bảo: \"Lên núi tuyết, ba năm.\"",
+    "conditions": {
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "martial": {
+        "min": 1,
+        "max": 2
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 3,
+    "choices": [
+      {
+        "text": "Lên núi tuyết",
+        "hidden": true,
+        "requires": {
+          "martial": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Ba năm gió tuyết, gân cốt như được rèn lại.",
+          "effects": {
+            "martialPromote": true,
+            "stat.health": -5
+          }
+        },
+        "fail": {
+          "text": "Ba năm gió tuyết, chưa phá được ải, nhưng xương cứng hơn.",
+          "effects": {
+            "stat.physique": 2
+          }
+        }
+      },
+      {
+        "text": "Lên núi tuyết",
+        "hidden": true,
+        "requires": {
+          "martial": {
+            "min": 2,
+            "max": 2
+          }
+        },
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 65
+        },
+        "success": {
+          "text": "Ba năm gió tuyết, gân cốt như được rèn lại.",
+          "effects": {
+            "martialPromote": true,
+            "stat.health": -5
+          }
+        },
+        "fail": {
+          "text": "Ba năm gió tuyết, chưa phá được ải, nhưng xương cứng hơn.",
+          "effects": {
+            "stat.physique": 2
+          }
+        }
+      },
+      {
+        "text": "Xuống giang hồ tìm người so chiêu",
+        "result": {
+          "text": "Đánh khắp ba huyện, học được vài chiêu lạ.",
+          "effects": {
+            "reputation": {
+              "giang_ho": 5
+            },
+            "stat.comprehension": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "dot_pha_hoa_canh",
+    "category": "mortal",
+    "title": "Hóa cảnh",
+    "text": "Đứng trên đỉnh núi, quyền phong cuốn mây. Bức tường vô hình trước mặt {name} rung lên.",
+    "conditions": {
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "martial": {
+        "min": 3,
+        "max": 3,
+        "ready": true
+      },
+      "stats": [
+        {
+          "stat": "stat.physique",
+          "gte": 70
+        }
+      ]
+    },
+    "weight": 6,
+    "cooldownYears": 3,
+    "choices": [
+      {
+        "text": "Một quyền phá tường",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 65
+        },
+        "success": {
+          "text": "Xương cốt kêu răng rắc, rồi im bặt. Ngươi thấy thân thể nhẹ như lông, nặng như núi.",
+          "effects": {
+            "martialPromote": true,
+            "reputation": {
+              "giang_ho": 30
+            },
+            "stat.physique": 10,
+            "stat.health": 20
+          }
+        },
+        "fail": {
+          "text": "Bức tường vẫn đứng đó. Lần sau sẽ khác.",
+          "effects": {
+            "martialBonus": 10,
+            "stat.health": -15
+          }
+        }
+      },
+      {
+        "text": "Chưa vội, rèn thêm",
+        "result": {
+          "text": "Ngươi xuống núi, rèn thêm mấy năm.",
+          "effects": {
+            "martialYears": 2,
+            "stat.physique": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "dai_hoi_vo_lam",
+    "category": "mortal",
+    "title": "Đại hội võ lâm",
+    "text": "Quần hùng tụ về Diên Châu tranh ngôi minh chủ. Lục Hợp Môn, Thính Vũ Kiếm Phái đều có người, Vô Diện Lâu đâu đó trong đám đông.",
+    "conditions": {
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "career": {
+        "id": "vo_lam"
+      },
+      "martial": {
+        "min": 2
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Lên đài",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Ngươi đứng trên đài tới cuối cùng. Quần hùng chắp tay.",
+          "effects": {
+            "careerPromote": true,
+            "reputation": {
+              "giang_ho": 20
+            },
+            "stat.happiness": 10
+          }
+        },
+        "fail": {
+          "text": "Ngươi bị đánh văng khỏi đài.",
+          "effects": {
+            "stat.health": -10
+          }
+        }
+      },
+      {
+        "text": "Đứng xem, kết giao",
+        "result": {
+          "text": "Uống rượu với mấy người cùng chí hướng, quen được một võ giả.",
+          "effects": {
+            "setFlags": [
+              "ban_vo_gia"
+            ],
+            "reputation": {
+              "giang_ho": 5
+            },
+            "stat.charm": 2
+          }
+        }
+      },
+      {
+        "text": "Rình bắt sát thủ Vô Diện Lâu",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Ngươi lôi được kẻ đeo mặt nạ ra giữa đám đông.",
+          "effects": {
+            "reputation": {
+              "giang_ho": 15
+            },
+            "setFlags": [
+              "thu_vo_dien_lau"
+            ],
+            "stat.charm": 3
+          }
+        },
+        "fail": {
+          "text": "Hắn quay lại đâm ngươi một nhát rồi biến mất.",
+          "effects": {
+            "stat.health": -8
+          }
+        }
+      }
+    ]
   }
 ]

@@ -19,6 +19,7 @@ function life(cult: Partial<GameState['cult']> = {}, patch: Partial<GameState> =
     character: { ...b.character, age, originId: 'nong_dan' },
     stats: { health: 70, happiness: 50, intellect: 50, charm: 50 },
     aptitudes: { physique: 50, comprehension: 50, luck: 50, daoHeart: 50 },
+    paths: {},
     traits: [],
     flags: {},
     log: [...b.log, { age, lines: [] }],
@@ -47,7 +48,7 @@ describe('task 2.8 events and their engine', () => {
 
   it('pills: Trúc Cơ Đan adds 25 to the big breakthrough and is used up', () => {
     const peak = life({ stage: 8, progress: 100 }, { inventory: { truc_co_dan: 1 } });
-    expect(majorBreakthroughInfo(peak, content)!.chancePct).toBeCloseTo(55);
+    expect(majorBreakthroughInfo(peak, content)!.chancePct).toBeCloseTo(55 + 3); // Tiên đạo +3
     const r = attemptMajorBreakthrough(peak, content)!;
     expect(r.state.inventory.truc_co_dan).toBeUndefined();
     const tk = life({ progress: 99 }, { inventory: { tu_khi_dan: 2 } });
@@ -59,7 +60,7 @@ describe('task 2.8 events and their engine', () => {
     const s = life({ stage: 8, progress: 100, fails: { 'luyen_khi:peak': 2 } }, { flags: { co_su_phu: true } });
     const helped = pick(s, 'binh_canh_luyen_khi', 2).state;
     // 30 − 2 failures × 5 + sư phụ 10, and the choice's Ngộ tính +2 (× 0.3).
-    expect(majorBreakthroughInfo(helped, content)!.chancePct).toBeCloseTo(30 - 10 + 10 + 0.6);
+    expect(majorBreakthroughInfo(helped, content)!.chancePct).toBeCloseTo(30 - 10 + 10 + 0.6 + 3); // Tiên đạo +3
     expect(attemptMajorBreakthrough(helped, content)!.state.cult.nextBonus).toBe(0);
     expect(pick(s, 'binh_canh_luyen_khi', 0).state.cult.fails['luyen_khi:peak']).toBe(1);
   });
@@ -92,8 +93,8 @@ describe('task 2.8 events and their engine', () => {
     expect(r.cult.lineage).toBe('phat');
     expect(r.cult.realm).toBe('luyen_khi');
     expect(r.career.id).toBeNull();
-    // 25 × min(0.7, 0.75) × Hoàng 1.0 × Phật 0.8
-    expect(yearlyGain(r, content)).toBeCloseTo(25 * 0.7 * 0.8);
+    // 25 × min(0.7, 0.75) × Hoàng 1.0 × Phật 0.8 × main path Thể 0.9
+    expect(yearlyGain(r, content)).toBeCloseTo(25 * 0.7 * 0.8 * 0.9);
     expect(advanceYear(r, content).cult.progress).toBeGreaterThan(0);
   });
 

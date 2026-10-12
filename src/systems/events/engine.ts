@@ -12,7 +12,9 @@ import { gainScroll, learnTechnique } from '../technique';
 import { addItems, removeItems } from '../items';
 import { addCraftXp } from '../crafts';
 import { forceJoinCareer, leaveCareer, promoteCareer } from '../career';
-import { addContribution, grantMaster, joinSect, leaveSect, promoteSect } from '../sect';
+import { addMartialYears, martialAttempt, martialPromote } from '../martial';
+import { addPathAffinity } from '../paths';
+import { addContribution, breakPrecept, grantMaster, joinSect, leaveSect, promoteSect } from '../sect';
 import { startBattle } from '../combat';
 
 type Outcome = NonNullable<GameEvent['choices'][number]['result']>;
@@ -225,6 +227,20 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
     next = { ...next, social: { ...next.social, reputation: rep } };
   }
   next = removeItems(addItems(next, fx.addItems ?? []), fx.removeItems ?? []);
+  if (fx.kill) {
+    const broke = breakPrecept(next, content);
+    next = broke.state;
+    if (broke.text) text = `${text} ${broke.text}`;
+  }
+  if (fx.pathAffinity) next = addPathAffinity(next, fx.pathAffinity);
+  if (fx.martialYears) next = addMartialYears(next, fx.martialYears);
+  if (fx.martialBonus) next = { ...next, martial: { ...next.martial, bonus: next.martial.bonus + fx.martialBonus } };
+  if (fx.martialPromote) next = martialPromote(next, content);
+  if (fx.martialAttempt) {
+    const tried = martialAttempt(next, content);
+    next = tried.state;
+    if (tried.text) text = `${text} ${tried.text}`;
+  }
   if (fx.leaveCareer) next = leaveCareer(next);
   if (fx.joinCareer) next = forceJoinCareer(next, content, fx.joinCareer);
   if (fx.careerPromote) next = promoteCareer(next, content);

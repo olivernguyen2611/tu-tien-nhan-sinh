@@ -313,11 +313,11 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 3.5 | [ ] Thiên kiêu bảng cập nhật mỗi năm |
 | 3.6 | [ ] Tình duyên: thiện cảm nhiều nấc, theo đuổi, tặng quà, bị từ chối, bị lợi dụng |
 | 3.7 | [ ] Đạo lữ đại điển, song tu, sinh con (di truyền linh căn, đột biến) |
-| 3.8 | [ ] Đạo thống (Tiên/Ma/Phật/Quỷ) × con đường (Kiếm/Thể/Pháp/Binh/Thuật) theo K.3 |
+| 3.8 | [x] Đạo thống (Tiên/Ma/Phật/Quỷ) × con đường (Kiếm/Thể/Pháp/Binh/Thuật) theo K.3 |
 | 3.9 | [ ] ✍️ 40 sự kiện: tình duyên, giết người đoạt bảo, ma đạo cám dỗ, yêu thú, phường thị — **đã duyệt**: `docs/design/events-jianghu.md` |
 | 3.10 | [ ] Tăng Tiên Thiên Khí Vận lên ~40, thêm tag cho sự kiện dùng |
-| 3.11 | [ ] Võ đạo nhập tiên: 7 cảnh giới võ đạo (Tam lưu → Ngũ khí triều nguyên). Hóa cảnh nhờ khổ luyện + Căn cốt ≥ 70; Tam hoa tụ đỉnh và Ngũ khí triều nguyên cần kỳ ngộ; Ngũ khí triều nguyên tính là Ngũ linh căn, vào Luyện Khí 1 (`mortal-path.md` mục 2.2, 2b). Kèm 4 sự kiện võ đạo đã duyệt #32–35 của `cultivation-events.md` (Lục Hợp Môn, khổ luyện, Hóa cảnh, đại hội võ lâm) |
-| 3.12 | [ ] Phật duyên: đạo tâm ≥ 70 tu Phật đạo không cần linh căn (`mortal-path.md` mục 2.4) |
+| 3.11 | [x] Võ đạo nhập tiên: 7 cảnh giới võ đạo (Tam lưu → Ngũ khí triều nguyên). Hóa cảnh nhờ khổ luyện + Căn cốt ≥ 70; Tam hoa tụ đỉnh và Ngũ khí triều nguyên cần kỳ ngộ; Ngũ khí triều nguyên tính là Ngũ linh căn, vào Luyện Khí 1 (`mortal-path.md` mục 2.2, 2b). Kèm 4 sự kiện võ đạo đã duyệt #32–35 của `cultivation-events.md` (Lục Hợp Môn, khổ luyện, Hóa cảnh, đại hội võ lâm) |
+| 3.12 | [x] Phật duyên: đạo tâm ≥ 70 tu Phật đạo không cần linh căn (`mortal-path.md` mục 2.4) |
 | 3.13 | [ ] ✍️ Sự kiện "ma tu hứa khai mạch" (lừa làm vật tế) + sự kiện cho 4 con đường đời |
 
 **Tiêu chí hoàn thành:** đánh nhau có văn bản sinh động; một NPC bị bạn hại sẽ quay lại báo thù vài năm sau; kết được đạo lữ và có con mang linh căn di truyền.

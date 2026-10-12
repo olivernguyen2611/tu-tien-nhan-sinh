@@ -30,7 +30,7 @@
     "id": "vo_uu_tu", "name": "Vô Ưu Tự", "faction": "chinh", "lineage": "phat", "recruitable": true,
     "description": "Chùa cổ trên núi, sư sãi tu tâm trước, tu lực sau. Cơm chay ngon nhất Thương Lan, nhưng không có thịt, tuyệt đối không.",
     "ranks": ["Ký danh", "Ngoại môn", "Nội môn", "Chân truyền"],
-    "requires": { "minStats": { "daoHeart": 55 } },
+    "requires": { "minStats": { "daoHeart": 55 }, "rootlessMinDaoHeart": 70 },
     "techniques": [{ "id": "vo_uu_thien_tam_phap", "rank": 1 }],
     "effects": [{ "hook": "heartDemonResist", "add": 0.15 }],
     "duty": "Kiêng sát sinh, kiêng tình duyên."

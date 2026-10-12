@@ -8,6 +8,8 @@ import type { Battle, Foe, GameState, LogLine, Tone } from '../core/types';
 import { hookSum } from './cultivation';
 import { applyOutcome } from './events/engine';
 import { itemById, removeItems } from './items';
+import { mainPath as mainPathOf } from './paths';
+import { breakPrecept } from './sect';
 import { currentTechnique } from './technique';
 
 export interface CombatResult { state: GameState; text: string; tone: Tone }
@@ -21,15 +23,9 @@ const realmAt = (content: Content, i: number) => {
 const fill = (text: string, foe: Foe, state: GameState) =>
   text.replace(/\{foe\}/g, foe.name).replace(/\{name\}/g, state.character.name);
 
-/** The player's main combat path: the one its hooks favour most (task 3.8 replaces this with trained affinity). */
+/** The player's main combat path (task 3.8 aptitudes), or null while no path stands out. */
 export function mainPath(state: GameState, content: Content): string | null {
-  let best: string | null = null;
-  let top = 0;
-  for (const p of content.cultivation.aptitudes.paths) {
-    const v = hookSum(state, content, `path.${p.id}.affinity`) + hookSum(state, content, `path.${p.id}.power`);
-    if (v > top) { top = v; best = p.id; }
-  }
-  return best;
+  return mainPathOf(state, content).id || null;
 }
 
 /** The player's element for counters: the first element of the root. */
@@ -354,10 +350,8 @@ export function settle(state: GameState, content: Content, choice: Aftermath): C
       : { ...s, money: { ...s.money, spiritStones: s.money.spiritStones + Math.round(mul * w.lootStonesPerPower) } };
   }
   if (choice === 'kill') {
-    s = { ...s, social: karma(w.killKarma) };
-    if ((s.cult.lineage ?? currentTechnique(s, content)?.lineage) === 'phat') {
-      s = { ...s, aptitudes: { ...s.aptitudes, daoHeart: clampStat(s.aptitudes.daoHeart + w.killDaoHeartPhat) } };
-    }
+    // Phật đạo precepts (task 3.12): đạo tâm drops, repeated breaks expel the monk.
+    s = breakPrecept({ ...s, social: karma(w.killKarma) }, content).state;
   }
   const lines: LogLine[] = [{ text: fill(content.combat.after[choice], foe, s), tone: choice === 'kill' ? 'bad' : 'good' }];
   const o = applyOutcome({ ...s, rng: rng.getState() }, content, battle.outcomes.win, rng);
