@@ -5,7 +5,7 @@ import realBalance from '../content/config/balance.json';
 const balance = {
   version: 1,
   events: { popupChanceLowRealm: 0.2, popupChanceHighRealm: 0.1, logLineChance: 0.6, check: { base: 0.5, perPoint: 0.015, min: 0.05, max: 0.95 } },
-  traits: { slots: 3, rerolls: 3, badLuckChance: 0.12, rarityWeights: { pham: 45 } },
+  traits: { slots: 3, rerolls: 3, badLuckChance: 0.12, rarityWeights: { pham: 45 }, maxSlots: 5, locks: 1, lockCost: 3 },
   character: { mortalStatRange: [30, 80], aptitudeRange: [10, 90], aptitudeRolls: 2 },
   family: {
     fatherAge: [20, 35], motherAge: [17, 30], affinityStart: [55, 85], olderSiblings: [0, 2], olderSiblingGap: [2, 6],

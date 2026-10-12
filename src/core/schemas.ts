@@ -600,6 +600,11 @@ export const BalanceSchema = z
         rerolls: z.number().int().min(0),
         badLuckChance: probability,
         rarityWeights: z.record(id, z.number().min(0)),
+        /** Task 5b.3: slots never go above this (thiên phú luân hồi add up to it). */
+        maxSlots: z.number().int().min(1),
+        /** Task 5b.3: slots one may lock before rerolling, and the Luân Hồi points each lock costs (paid on confirming). */
+        locks: z.number().int().min(0),
+        lockCost: z.number().int().min(0),
       })
       .strict(),
     character: z
@@ -2299,6 +2304,9 @@ export const RebirthTalentFileSchema = z
                   destinyRerolls: z.number().int().min(0).optional(),
                   fateRefreshes: z.number().int().min(0).optional(),
                   startSilver: z.number().int().min(0).optional(),
+                  /** Task 5b.3: more Tiên Thiên Khí Vận slots (up to balance.traits.maxSlots) and locks. */
+                  destinySlots: z.number().int().min(0).optional(),
+                  destinyLocks: z.number().int().min(0).optional(),
                 })
                 .strict(),
             )
@@ -2346,3 +2354,24 @@ export const GoldenFingerFileSchema = z
   })
   .strict();
 export type GoldenFingerFile = z.infer<typeof GoldenFingerFileSchema>;
+
+/** Task 5b.3: tổ hợp ẩn: owning all these Tiên Thiên Khí Vận wakes a secret effect. */
+export const TraitComboFileSchema = z
+  .object({
+    combos: z.array(
+      z
+        .object({
+          id,
+          name: z.string().min(1),
+          traits: z.array(id).min(2).max(3),
+          /** Logged when found. */
+          text: z.string().min(1),
+          summary: z.string().min(1),
+          /** stat.* and lifespanPct are given once at birth; other hooks last the whole life. */
+          effects: z.array(EffectHookSchema).min(1),
+        })
+        .strict(),
+    ),
+  })
+  .strict();
+export type TraitComboFile = z.infer<typeof TraitComboFileSchema>;

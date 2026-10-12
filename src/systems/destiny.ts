@@ -2,7 +2,7 @@
 // reroll a limited number of times, then apply the chosen traits' stat hooks.
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
-import type { Trait } from '../core/schemas';
+import type { EffectHook, Trait, TraitComboFile } from '../core/schemas';
 import type { GameState } from '../core/types';
 import { blessingGains, blessingNames } from './blessings';
 import { awakenGoldenFinger, fingerDef } from './goldenFinger';
@@ -23,16 +23,25 @@ function drawOne(rng: Rng, content: Content, taken: Set<string>): Trait {
   return rng.pick(free.filter((t) => t.rarity === rarity));
 }
 
-function drawSlots(rng: Rng, content: Content): string[] {
-  const taken = new Set<string>();
-  for (let i = 0; i < content.balance.traits.slots; i++) taken.add(drawOne(rng, content, taken).id);
-  return [...taken];
+/** Locked slots stay where they are; the others are drawn again (task 5b.3). */
+function drawSlots(rng: Rng, content: Content, slots: number, offered: string[], locked: string[]): string[] {
+  const taken = new Set<string>(locked);
+  const out: string[] = [];
+  for (let i = 0; i < slots; i++) {
+    const keep = offered[i];
+    if (keep && locked.includes(keep)) { out.push(keep); continue; }
+    const t = drawOne(rng, content, taken);
+    taken.add(t.id);
+    out.push(t.id);
+  }
+  return out;
 }
 
-/** First roll at birth. */
+/** First roll at birth (and every reroll). */
 export function rollDestiny(state: GameState, content: Content): GameState {
   const rng = Rng.fromState(state.rng);
-  const offered = drawSlots(rng, content);
+  const d = state.destiny;
+  const offered = drawSlots(rng, content, d.slots ?? content.balance.traits.slots, d.offered, d.locked ?? []);
   return { ...state, rng: rng.getState(), destiny: { ...state.destiny, offered } };
 }
 
@@ -42,6 +51,32 @@ export function rerollDestiny(state: GameState, content: Content, unlimited = fa
   const rolled = rollDestiny(state, content);
   const rerollsLeft = unlimited ? state.destiny.rerollsLeft : state.destiny.rerollsLeft - 1;
   return { ...rolled, destiny: { ...rolled.destiny, rerollsLeft } };
+}
+
+/** Task 5b.3: lock or unlock an offered slot before rerolling (up to destiny.maxLocks). */
+export function toggleLock(state: GameState, traitId: string): GameState {
+  const d = state.destiny;
+  if (d.confirmed || !d.offered.includes(traitId)) return state;
+  if (d.locked.includes(traitId)) return { ...state, destiny: { ...d, locked: d.locked.filter((x) => x !== traitId) } };
+  if (d.locked.length >= d.maxLocks) return state;
+  return { ...state, destiny: { ...d, locked: [...d.locked, traitId] } };
+}
+
+/** Luân Hồi points the locks cost, paid when the destiny is confirmed. */
+export function lockCost(state: GameState, content: Content): number {
+  return state.destiny.locked.length * content.balance.traits.lockCost;
+}
+
+/** Task 5b.3: tổ hợp ẩn woken by the traits this life has. */
+export function activeCombos(state: GameState, content: Content): TraitComboFile['combos'] {
+  return content.traitCombos.combos.filter((c) => c.traits.every((t) => state.traits.includes(t)));
+}
+
+const ONCE = (e: EffectHook) => e.hook.startsWith('stat.') || e.hook === 'lifespanPct';
+
+/** Hooks of the tổ hợp ẩn that last the whole life (read through lifeHooks). */
+export function comboHooks(state: GameState, content: Content): EffectHook[] {
+  return activeCombos(state, content).flatMap((c) => c.effects.filter((e) => !ONCE(e)));
 }
 
 /** Accept the offered traits and apply their immediate hooks (stats, lifespan). */
@@ -56,7 +91,8 @@ export function confirmDestiny(state: GameState, content: Content): GameState {
   let lifespanPct = 0;
 
   // Phúc báo from the last life (task 5b.8) give their one-time gains with the traits.
-  const gains = [...chosen.map((t) => t.effects), blessingGains(state, content), rebirthTalentGains(state, content)];
+  const combos = activeCombos({ ...state, traits: chosen.map((t) => t.id) }, content);
+  const gains = [...chosen.map((t) => t.effects), ...combos.map((c) => c.effects.filter(ONCE)), blessingGains(state, content), rebirthTalentGains(state, content)];
   for (const effects of gains) {
     for (const e of effects) {
       if (e.hook.startsWith('stat.') && e.add !== undefined) {
@@ -78,6 +114,7 @@ export function confirmDestiny(state: GameState, content: Content): GameState {
     ...birth.lines,
     { text: `Tiên thiên khí vận: ${chosen.map((t) => t.name).join(', ')}.`, tone: notable.length ? ('rare' as const) : ('normal' as const) },
     ...notable.map((t) => ({ text: t.flavor, tone: 'rare' as const })),
+    ...combos.map((c) => ({ text: `Tổ hợp ẩn · ${c.name}: ${c.text}`, tone: 'rare' as const })),
     ...(state.blessings.length > 0 ? [{ text: `Phúc báo kiếp trước: ${blessingNames(state.blessings, content).join(', ')}.`, tone: 'rare' as const }] : []),
     ...(talentNames.length > 0 ? [{ text: `Thiên phú luân hồi: ${talentNames.join(', ')}.`, tone: 'good' as const }] : []),
   ];

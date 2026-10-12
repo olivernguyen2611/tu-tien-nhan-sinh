@@ -5,6 +5,13 @@
       {"cost": 12, "summary": "Thêm 2 lượt Nghịch thiên cải mệnh.", "destinyRerolls": 2},
       {"cost": 25, "summary": "Thêm 3 lượt Nghịch thiên cải mệnh.", "destinyRerolls": 3}
     ]},
+    {"id": "menh_ban_them_o", "name": "Mệnh Bàn Thêm Ô", "text": "Mệnh bàn vốn có ba ô. Đi qua đủ nhiều kiếp, ngươi khắc thêm được ô thứ tư, rồi ô thứ năm.", "levels": [
+      {"cost": 40, "summary": "Bốc mệnh được 4 ô khí vận.", "destinySlots": 1},
+      {"cost": 100, "summary": "Bốc mệnh được 5 ô khí vận.", "destinySlots": 2}
+    ]},
+    {"id": "dinh_menh_an", "name": "Định Mệnh Ấn", "text": "Một con ấn nhỏ đóng lên mệnh bàn: ô nào đã đóng ấn, quay lại cũng không đổi.", "levels": [
+      {"cost": 30, "summary": "Khóa được 2 ô thay vì 1 khi quay lại.", "destinyLocks": 1}
+    ]},
     {"id": "tuc_tue", "name": "Túc Tuệ", "text": "Canh Mạnh Bà uống không hết, đáy bát còn đọng chút minh mẫn kiếp trước.", "levels": [
       {"cost": 6, "summary": "Ngộ tính +3 lúc chào đời.", "effects": [{"hook": "stat.comprehension", "add": 3}]},
       {"cost": 15, "summary": "Ngộ tính +6.", "effects": [{"hook": "stat.comprehension", "add": 6}]},

@@ -152,7 +152,9 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     money: { silver: origin.silver + rebirthTalentBonus(rebirthTalents, content, 'startSilver'), spiritStones: origin.spiritStones },
     social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0, trieu_dinh: 0, giang_ho: 0 } },
     flags: origin.noParents ? { no_parents: true, no_father: true, no_mother: true } : {},
-    destiny: { offered: [], rerollsLeft: Math.max(0, content.balance.traits.rerolls + (content.balance.difficulty[difficulty]?.rerollBonus ?? 0) + blessingRerolls(blessings, content) + rebirthTalentBonus(rebirthTalents, content, 'destinyRerolls')), confirmed: false },
+    destiny: { offered: [], rerollsLeft: Math.max(0, content.balance.traits.rerolls + (content.balance.difficulty[difficulty]?.rerollBonus ?? 0) + blessingRerolls(blessings, content) + rebirthTalentBonus(rebirthTalents, content, 'destinyRerolls')), confirmed: false,
+      slots: Math.min(content.balance.traits.maxSlots, content.balance.traits.slots + rebirthTalentBonus(rebirthTalents, content, 'destinySlots')),
+      locked: [], maxLocks: content.balance.traits.locks + rebirthTalentBonus(rebirthTalents, content, 'destinyLocks') },
     traits: [],
     family,
     events: {

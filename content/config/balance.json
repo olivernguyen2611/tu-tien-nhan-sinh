@@ -17,7 +17,10 @@
       "tuyet": 8,
       "thien": 3.5,
       "than": 0.5
-    }
+    },
+    "maxSlots": 5,
+    "locks": 1,
+    "lockCost": 3
   },
   "character": {
     "mortalStatRange": [

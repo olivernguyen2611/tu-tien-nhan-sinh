@@ -119,6 +119,8 @@ export function migrate(save: SaveFile): SaveFile {
   if (life.blessings === undefined) life = { ...life, blessings: [] };
   // Task 5b.1: no thiên phú luân hồi.
   if (life.rebirthTalents === undefined) life = { ...life, rebirthTalents: {} };
+  // Task 5b.3: old lives drew the slots they show, nothing locked.
+  if (life.destiny.slots === undefined) life = { ...life, destiny: { ...life.destiny, slots: life.destiny.offered.length || 3, locked: [], maxLocks: 1 } };
   // Task 5b.2: no Kim Thủ Chỉ.
   if (life.goldenFinger === undefined) life = { ...life, goldenFinger: null };
   if (life.checkpoints === undefined) life = { ...life, checkpoints: { age6: null, realm: null } };

@@ -1,7 +1,7 @@
 // Loads all JSON under content/ at build time and checks it with the same
 // rules as `npm run validate`.
 import {
-  AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, CombatTextsSchema, type CombatTexts, type Market, type FateTalent, type Item, type Lineage, type MartialFile, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile, NpcTraitsFileSchema, RankingTextsSchema, type RankingTexts, RomanceFileSchema, type RomanceFile, HeartDemonFileSchema, type HeartDemonFile, RecipeFileSchema, type RecipeFile, CorePatternFileSchema, type CorePattern, NascentSoulFileSchema, type NascentSoulFile, DisciplesFileSchema, type DisciplesFile, FoundingFileSchema, type FoundingFile, HeirFileSchema, type HeirFile, ChosenFileSchema, type ChosenFile, ClanFileSchema, type ClanFile, BlessingFileSchema, type BlessingFile, RebirthTalentFileSchema, type RebirthTalentFile, GoldenFingerFileSchema, type GoldenFingerFile, type NpcTraitsFile,
+  AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, CombatTextsSchema, type CombatTexts, type Market, type FateTalent, type Item, type Lineage, type MartialFile, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile, NpcTraitsFileSchema, RankingTextsSchema, type RankingTexts, RomanceFileSchema, type RomanceFile, HeartDemonFileSchema, type HeartDemonFile, RecipeFileSchema, type RecipeFile, CorePatternFileSchema, type CorePattern, NascentSoulFileSchema, type NascentSoulFile, DisciplesFileSchema, type DisciplesFile, FoundingFileSchema, type FoundingFile, HeirFileSchema, type HeirFile, ChosenFileSchema, type ChosenFile, ClanFileSchema, type ClanFile, BlessingFileSchema, type BlessingFile, RebirthTalentFileSchema, type RebirthTalentFile, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, type TraitComboFile, type NpcTraitsFile,
   BalanceSchema, EventFileSchema, FamilyActionFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema,
   type Balance, type FamilyAction, type GameEvent, type Glossary, type LifeTexts, type Names, type Origin, type StatExtremesFile, type Trait, type World,
 } from './schemas';
@@ -54,6 +54,8 @@ export interface Content {
   rebirthTalents: RebirthTalentFile;
   /** Task 5b.2: Kim Thủ Chỉ. */
   goldenFingers: GoldenFingerFile;
+  /** Task 5b.3: tổ hợp ẩn. */
+  traitCombos: TraitComboFile;
   /** Going on as an heir (task 5.7). */
   heir: HeirFile;
   /** Khí vận chi tử templates (task 5.5). */
@@ -168,6 +170,7 @@ export function loadContent(worldId: string = DEFAULT_WORLD_ID): Content {
     blessings: BlessingFileSchema.parse(files['blessings.json']),
     rebirthTalents: RebirthTalentFileSchema.parse(files['rebirth-talents.json']),
     goldenFingers: GoldenFingerFileSchema.parse(files['golden-fingers.json']),
+    traitCombos: TraitComboFileSchema.parse(files['trait-combos.json']),
     npcTraits: NpcTraitsFileSchema.parse(files['npc-traits.json'] ?? { surface: [], nature: [], goals: [] }),
   };
 }

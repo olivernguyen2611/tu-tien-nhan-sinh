@@ -48,10 +48,12 @@ export const blessings = BlessingFileSchema.parse(blessingsFile);
 export const combat = CombatTextsSchema.parse(combatFile);
 
 // GĐ 5b content (task 5b.1 on): spread `...legacy` into hand-built Content objects.
-import { GoldenFingerFileSchema, RebirthTalentFileSchema } from '../src/core/schemas';
+import { GoldenFingerFileSchema, RebirthTalentFileSchema, TraitComboFileSchema } from '../src/core/schemas';
+import traitCombosFile from '../content/trait-combos.json';
 import goldenFingersFile from '../content/golden-fingers.json';
 import rebirthTalentsFile from '../content/rebirth-talents.json';
 export const legacy = {
   rebirthTalents: RebirthTalentFileSchema.parse(rebirthTalentsFile),
   goldenFingers: GoldenFingerFileSchema.parse(goldenFingersFile),
+  traitCombos: TraitComboFileSchema.parse(traitCombosFile),
 };

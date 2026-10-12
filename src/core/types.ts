@@ -194,6 +194,10 @@ export interface GameState {
     offered: string[];
     rerollsLeft: number;
     confirmed: boolean;
+    /** Task 5b.3: how many slots are drawn, slots kept through rerolls, and how many may be kept. */
+    slots: number;
+    locked: string[];
+    maxLocks: number;
   };
   traits: string[];
   family: Relative[];
