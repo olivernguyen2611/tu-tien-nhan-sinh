@@ -381,8 +381,7 @@ Nhìn từ hai phía: **đệ tử** cần thăng cấp, tài nguyên, sư phụ
 | 5c.4 | [x] Công trạng đổi đồ: Bảo khố tông môn, cống hiến đổi đan dược, công pháp, linh thạch |
 | 5c.5 | [x] Sự kiện lớn của tông: đại hội, thí luyện, ngoại địch, nội loạn |
 | 5c.6 | [x] Tranh ngôi chưởng môn, phe phái trong tông (hiệu ứng mới `succeedSect`) |
-| 5c.7 | [x] Phía tông chủ: tông môn mình lập có đệ tử NPC, trưởng lão, sự kiện lớn, thịnh suy, danh tiếng |
-| 5c.8 | [x] Sư phụ – đồ đệ: luận bàn, luận đạo, truyền công pháp, tặng vật phẩm |
+| 5c.7 | [ ] Phía tông chủ: tông môn mình lập có đệ tử NPC, trưởng lão, sự kiện lớn, thịnh suy, danh tiếng |
 | 5c.9 | [x] Chiêu mộ người quen (NPC có quan hệ) vào tông của mình |
 
 ### GĐ 6 — Hoàn thiện
