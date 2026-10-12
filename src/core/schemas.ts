@@ -421,6 +421,8 @@ const ADD_HOOK = new RegExp(
       'silverPerYear', 'deathChancePerYear', 'illnessChancePct', 'tribulationPct',
       // Fate talents (fate-talents.md, task 2.7).
       'artifactPct', 'tribulationPower',
+      // Task 4.5: share of each thiên lôi a carried array or artifact takes; task 4.12: chance to linger as a ghost.
+      'tribulationDefense', 'continueAfterDeath',
       // Special bodies (realms-roots-paths.md B5); takes effect from task 2.3.
       'lineage\\.(tien|ma|phat|quy|yeu)\\.cultivationSpeed',
     ].join('|') +
@@ -642,11 +644,27 @@ export const BalanceSchema = z
         inheritShare: probability,
       })
       .strict(),
+    /** Task 4.5: thiên kiếp when a big breakthrough succeeds into these realms. */
+    tribulation: z
+      .object({
+        /** Realm → number of thiên lôi and the health each takes before any defense. */
+        realms: z.record(id, z.object({ strikes: z.number().int().min(1), power: z.number().min(0) }).strict()),
+        /** Each strike's power × a random factor in this range; the last strike × finalMul. */
+        variance: z.tuple([z.number().positive(), z.number().positive()]),
+        finalMul: z.number().min(1),
+        /** Reduction: injuryReduce + tribulationDefense hooks + (physique − 50) × physiquePerPoint + root element bonuses, capped at maxReduce. */
+        physiquePerPoint: z.number(),
+        elementReduce: z.record(id, z.number()),
+        maxReduce: z.number().min(0).max(1),
+        /** Thân thể tôi luyện: physique gained by surviving. */
+        survivePhysique: z.number().int(),
+      })
+      .strict(),
     /** Task 4.12: quỷ tu after death (mortal-path.md 2.6). */
     ghost: z
       .object({
         /** Chance of a lingering obsession by cause of death, + (luck − 50) × luckPerPoint + continueAfterDeath hooks. */
-        causeChance: z.record(z.enum(['old_age', 'illness', 'breakthrough', 'ordeal', 'combat']), probability),
+        causeChance: z.record(z.enum(['old_age', 'illness', 'breakthrough', 'ordeal', 'combat', 'tribulation']), probability),
         luckPerPoint: z.number(),
         maxChance: probability,
         /** The ghost's realm (at least), its technique, health on rising and years of afterlife. */
@@ -1182,6 +1200,8 @@ export const LifeTextsSchema = z
     deathOrdeal: lines,
     /** Task 3.3: killed in a fight. */
     deathCombat: lines,
+    /** Task 4.5: struck down by thiên kiếp. */
+    deathTribulation: lines,
     deathIllness: lines,
     /** Task 4.12 quỷ tu: the offer on the death screen, and the line when the soul rises. */
     ghostOffer: z.string().min(1),
@@ -1221,6 +1241,11 @@ export const RealmsFileSchema = z
         learnTechnique: z.string().min(1),
         switchTechnique: z.string().min(1),
         techniqueCap: z.string().min(1),
+    /** Task 4.5 thiên kiếp. {count} = strikes, {n} = this strike, {damage} = health lost. */
+    tribulationStart: z.string().min(1),
+    tribulationStrike: z.array(z.string().min(1)).min(1),
+    tribulationJade: z.string().min(1),
+    tribulationPassed: z.string().min(1),
     /** Task 4.1. {years}, {realm}, {stage}. */
     seclusionStart: z.string().min(1),
     seclusionYear: z.string().min(1),

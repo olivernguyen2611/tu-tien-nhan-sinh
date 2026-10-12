@@ -111,6 +111,12 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
         {info && state.alive && (
           <div class="breakthrough">
             <p class="story"><TermText text={`Đột phá ${info.target.name}: tỉ lệ thành công khoảng ${Math.round(info.chancePct)}%.`} /></p>
+            {info.tribulation && (
+              <p class="profile-note">
+                Thành công thì phải qua thiên kiếp: {info.tribulation.strikes} đạo lôi, tổng cộng khoảng {info.tribulation.damage} sức khỏe
+                (đã giảm {info.tribulation.reducePct}% nhờ giáp, pháp bảo, căn cốt). Sức khỏe hiện có: {state.stats.health}.
+              </p>
+            )}
             {info.blocked ? (
               <p class="profile-note">{info.blocked}</p>
             ) : confirming ? (

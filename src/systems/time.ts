@@ -78,7 +78,7 @@ export function checkDeath(state: GameState, content: Content, forced?: DeathCau
   const texts = content.lifeTexts;
   const rng = Rng.fromState(state.rng);
   const age = state.character.age;
-  const pools = { old_age: texts.deathOldAge, breakthrough: texts.deathBreakthrough, ordeal: texts.deathOrdeal, illness: texts.deathIllness, combat: texts.deathCombat };
+  const pools = { old_age: texts.deathOldAge, breakthrough: texts.deathBreakthrough, ordeal: texts.deathOrdeal, illness: texts.deathIllness, combat: texts.deathCombat, tribulation: texts.deathTribulation };
   const line = rng.pick(pools[cause]);
   const karma = state.social.karma;
   const pool = karma >= cfg.epitaphKarma ? texts.epitaph.good : karma <= -cfg.epitaphKarma ? texts.epitaph.bad : texts.epitaph.plain;
@@ -114,6 +114,7 @@ export function lifeSummary(state: GameState, content: Content): LifeSummary | n
       : cause === 'breakthrough' ? `Mất năm ${age} tuổi khi đột phá`
       : cause === 'ordeal' ? `Mất năm ${age} tuổi khi luyện hóa kỳ vật`
       : cause === 'combat' ? `Tử trận năm ${age} tuổi`
+      : cause === 'tribulation' ? `Mất năm ${age} tuổi dưới thiên kiếp`
       : `Mất năm ${age} tuổi vì bệnh`,
     epitaph,
     karmaLabel: k >= t ? 'Thiện nhân' : k <= -t ? 'Ác nhân' : 'Người thường',

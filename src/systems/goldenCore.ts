@@ -46,7 +46,7 @@ export function startCoreForming(state: GameState, content: Content, chancePct: 
   return { ...state, rng: rng.getState(), log, cult: { ...state.cult, coreForming: forming } };
 }
 
-export type StrandKind = 'root' | 'flow' | 'clash' | 'plain';
+export type StrandKind = 'root' | 'flow' | 'technique' | 'clash' | 'plain';
 
 export interface StrandView {
   element: string;
@@ -71,7 +71,7 @@ export function strandEffect(state: GameState, content: Content, element: string
   const tech = currentTechnique(state, content);
   const techMatch = !!tech && Array.isArray(tech.elements) && tech.elements.includes(element);
   const purity = cfg.baseGain + (rooted ? cfg.rootMatch : 0) + (flows ? cfg.flow : 0) + (techMatch ? cfg.techniqueMatch : 0);
-  return { ...view, purity, crack: false, kind: rooted ? 'root' : flows ? 'flow' : 'plain' };
+  return { ...view, purity, crack: false, kind: rooted ? 'root' : flows ? 'flow' : techMatch ? 'technique' : 'plain' };
 }
 
 export function coreGradeFor(content: Content, purity: number): number {
@@ -96,7 +96,7 @@ export function placeStrand(state: GameState, content: Content, element: string)
   const cfg = content.balance.coreForming;
   const texts = content.cultivation.realms.texts;
   const effect = strandEffect(state, content, element);
-  const textByKind = { root: texts.coreRoot, flow: texts.coreFlow, clash: texts.coreClash, plain: texts.corePlain };
+  const textByKind = { root: texts.coreRoot, flow: texts.coreFlow, technique: texts.corePlain, clash: texts.coreClash, plain: texts.corePlain };
   const line: LogLine = { text: textByKind[effect.kind].replaceAll('{element}', effect.name), tone: effect.crack ? 'bad' : 'normal' };
   const rng = Rng.fromState(state.rng);
   const next = {

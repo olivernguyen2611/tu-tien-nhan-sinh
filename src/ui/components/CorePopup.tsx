@@ -3,6 +3,7 @@
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
 import { coreChancePct, coreGradeFor, strandEffect } from '../../systems/goldenCore';
+import { tribulationPreview } from '../../systems/tribulation';
 import { Meter } from './Meter';
 
 export function CorePopup({ state, content, onPlace }: {
@@ -14,6 +15,7 @@ export function CorePopup({ state, content, onPlace }: {
   if (!f) return null;
   const cfg = content.balance.coreForming;
   const grade = content.cultivation.realms.coreGradeNames[coreGradeFor(content, f.purity) - 1];
+  const trial = tribulationPreview(state, content, cfg.realm);
   const placed = f.placed.map((e) => content.cultivation.roots.elements.find((x) => x.id === e)?.name ?? e);
   return (
     <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Kết đan">
@@ -26,9 +28,10 @@ export function CorePopup({ state, content, onPlace }: {
           {placed.length > 0 ? `Đã dẫn: ${placed.join(' → ')}` : 'Chưa dẫn luồng nào.'}
           {` · Vết rạn: ${f.cracks}/${cfg.crackLimit} · Tỉ lệ thành công khoảng ${Math.round(coreChancePct(state, content))}%`}
         </p>
+        {trial && <p class="profile-note">Đan thành còn phải qua thiên kiếp: {trial.strikes} đạo lôi, khoảng {trial.damage} sức khỏe (đang có {state.stats.health}).</p>}
         {f.offered.map((e) => {
           const v = strandEffect(state, content, e);
-          const hint = v.crack ? `Tương khắc · rạn · ${v.purity}` : `${v.kind === 'root' ? 'Hợp linh căn' : v.kind === 'flow' ? 'Tương sinh' : 'Bình thường'} · +${v.purity}`;
+          const hint = v.crack ? `Tương khắc · rạn · ${v.purity}` : `${v.kind === 'root' ? 'Hợp linh căn' : v.kind === 'flow' ? 'Tương sinh' : v.kind === 'technique' ? 'Hợp công pháp' : 'Bình thường'} · +${v.purity}`;
           return (
             <button class="choice" key={e} onClick={() => onPlace(e)}>
               Luồng {v.name}

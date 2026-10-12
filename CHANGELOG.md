@@ -2,6 +2,27 @@
 
 ## [Chưa phát hành]
 
+### Task 4.5 — Thiên kiếp (2026-10-12)
+- **Đột phá thành công vào Kim Đan, Nguyên Anh hay Hóa Thần thì phải qua thiên kiếp** trước khi vào cảnh giới mới (`balance.tribulation`):
+  - Kim Đan: 3 đạo lôi, mỗi đạo khoảng 15 sức khỏe.
+  - Nguyên Anh: 6 đạo, khoảng 14 mỗi đạo.
+  - Hóa Thần: 9 đạo, khoảng 13 mỗi đạo.
+  - Mỗi đạo dao động ×0.7–1.3; đạo cuối nặng ×1.5.
+- **Giảm sát thương** (tối đa 80%):
+  - Giáp và pháp bảo hộ thân (`injuryReduce`).
+  - Móc K.6 mới `tribulationDefense` cho trận pháp hoặc pháp bảo chuyên chống kiếp.
+  - Căn cốt trên 50.
+  - Linh căn hệ Lôi giảm 10% (đúng mô tả đã duyệt trong `realms-roots-paths.md`).
+- **Nặng hơn**: các móc đã có `tribulationPct` (Phúc tinh cao chiếu, Ác quán mãn doanh) và `tribulationPower` (Thiên Mệnh Sở Quy +30%).
+- **Hộ Thân Ngọc Bội** vỡ thay ngươi, đỡ cả phần kiếp còn lại (còn 1 sức khỏe).
+- **Kết quả**:
+  - Qua kiếp: thân thể được tôi luyện, Căn cốt +3.
+  - Không qua: chết, nguyên nhân mới "Mất dưới thiên kiếp", có lời kết riêng. Chết vì thiên kiếp có 10% hóa quỷ tu.
+- **Báo trước**: bảng đột phá và popup kết đan đều ghi số đạo lôi, sát thương ước tính và sức khỏe hiện có, để kịp uống đan hồi sức hoặc mặc giáp.
+- **Popup kết đan**: luồng đúng hệ công pháp nay ghi rõ "Hợp công pháp" thay vì "Bình thường".
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "ở các mốc lớn, cần pháp bảo/trận pháp"): mọi con số trên, 6 câu văn thiên kiếp trong `realms.json` và `life-texts.json`.
+- **Chưa có**: trận pháp hay pháp bảo chuyên chống kiếp. Móc `tribulationDefense` đã sẵn, chờ thêm vật phẩm trong file thiết kế.
+
 ### Task 4.12 — Quỷ tu (2026-10-12)
 - **Chấp niệm khi chết** (`mortal-path.md` mục 2.6, số liệu ở `balance.ghost`): tùy cách chết mà có cơ hội hồn không tan.
   - Tử trận 25%; đột phá hoặc thiên địa kỳ vật 10%; bệnh 5%; chết già 0.

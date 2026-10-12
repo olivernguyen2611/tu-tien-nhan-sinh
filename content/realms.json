@@ -104,7 +104,15 @@
     "coreClash": "Luồng {element} khắc với luồng trước. Một tiếng rạn khẽ trong đan điền.",
     "corePlain": "Luồng {element} hòa vào, không nhanh không chậm.",
     "coreSuccess": "Kim Đan thành hình, xoay chậm trong đan điền: {grade} Kim Đan. Thọ nguyên dài thêm, linh lực cuồn cuộn.",
-    "coreShattered": "Vết rạn lan ra, đan chưa kịp thành đã vỡ."
+    "coreShattered": "Vết rạn lan ra, đan chưa kịp thành đã vỡ.",
+    "tribulationStart": "Mây đen kéo tới che kín trời, sấm rền không dứt. Thiên kiếp: {count} đạo lôi đang chờ.",
+    "tribulationStrike": [
+      "Đạo lôi thứ {n} giáng xuống, cả người tê dại. Sức khỏe −{damage}.",
+      "Đạo lôi thứ {n} xé toạc mây, đánh thẳng vào đỉnh đầu. Sức khỏe −{damage}.",
+      "Đạo lôi thứ {n} to bằng thân cây, ngươi nghiến răng chịu. Sức khỏe −{damage}."
+    ],
+    "tribulationJade": "Hộ Thân Ngọc Bội vỡ vụn, đỡ thay ngươi một kiếp.",
+    "tribulationPassed": "Mây tan, trời quang. Thân thể được lôi điện tôi luyện, cứng cáp hơn trước."
   },
   "coreGradeNames": [
     "Nhất phẩm",

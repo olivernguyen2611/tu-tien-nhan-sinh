@@ -333,7 +333,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 4.2 | [ ] Mini-game kết đan (3 lượt xếp linh khí) → phẩm Kim Đan 1–9 + ✍️ đan văn — *code xong, chờ file đan văn* |
 | 4.3 | [ ] Hình thái Nguyên Anh theo đạo đã tu (✍️ ~8 hình thái) |
 | 4.4 | [ ] Tâm ma chiến: ảo cảnh dựa trên chính những việc bạn đã làm (đọc sổ ân oán) |
-| 4.5 | [ ] Thiên kiếp ở các mốc lớn, cần pháp bảo/trận pháp |
+| 4.5 | [x] Thiên kiếp ở các mốc lớn, cần pháp bảo/trận pháp |
 | 4.6 | [ ] Bí cảnh dạng chuỗi nhiều bước |
 | 4.7 | [ ] Bách nghệ cơ bản: Luyện đan + Luyện khí (các nghề khác để GĐ7) |
 | 4.8 | [ ] Bản đồ đại vực mở dần theo cảnh giới + ✍️ đại năng trấn giữ |

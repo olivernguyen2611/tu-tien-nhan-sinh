@@ -307,8 +307,21 @@
     "bargainWinMul": 0.85,
     "bargainLoseMul": 1.1
   },
+  "tribulation": {
+    "realms": {
+      "kim_dan": { "strikes": 3, "power": 15 },
+      "nguyen_anh": { "strikes": 6, "power": 14 },
+      "hoa_than": { "strikes": 9, "power": 13 }
+    },
+    "variance": [0.7, 1.3],
+    "finalMul": 1.5,
+    "physiquePerPoint": 0.005,
+    "elementReduce": { "loi": 0.1 },
+    "maxReduce": 0.8,
+    "survivePhysique": 3
+  },
   "ghost": {
-    "causeChance": { "old_age": 0, "illness": 0.05, "breakthrough": 0.1, "ordeal": 0.1, "combat": 0.25 },
+    "causeChance": { "old_age": 0, "illness": 0.05, "breakthrough": 0.1, "ordeal": 0.1, "combat": 0.25, "tribulation": 0.1 },
     "luckPerPoint": 0.004,
     "maxChance": 0.6,
     "realm": "luyen_khi",

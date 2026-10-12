@@ -14,6 +14,7 @@ import { offerFate } from './fate';
 import { breakthroughItem, carriedHooks, removeItems } from './items';
 import { pathSpeedBonus } from './paths';
 import { startCoreForming } from './goldenCore';
+import { tribulationPreview, undergoTribulation, type TribulationPreview } from './tribulation';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -351,6 +352,8 @@ export interface MajorBreakthroughInfo {
   chancePct: number;
   /** Why it cannot be tried now, if so. */
   blocked: string | null;
+  /** Thiên kiếp waiting on success (task 4.5), or null. */
+  tribulation: TribulationPreview | null;
 }
 
 /** The big breakthrough open to this life now, or null when there is none to show. */
@@ -362,7 +365,7 @@ export function majorBreakthroughInfo(state: GameState, content: Content): Major
   if (!state.alive || !realm || !next || state.cult.realm === 'pham_nhan') return null;
   if (!content.balance.majorBreakthrough.openRealms.includes(next.id)) return null;
   const base = (content.balance.realms[next.id]?.breakthroughChance ?? 0) * 100;
-  const info = { target: { id: next.id, name: next.name }, chancePct: breakthroughPct(state, content, base, true) };
+  const info = { target: { id: next.id, name: next.name }, chancePct: breakthroughPct(state, content, base, true), tribulation: tribulationPreview(state, content, next.id) };
   const atPeak = state.cult.stage >= realm.stages.length - 1 && state.cult.progress >= 100;
   if (!atPeak) return { ...info, blocked: `Cần tu tới ${realm.name} ${realm.stages[realm.stages.length - 1]}, đầy thanh tu vi.` };
   const cap = techniqueCapReason(state, content, next.id);
@@ -418,7 +421,13 @@ export function attemptMajorBreakthrough(state: GameState, content: Content): Br
  */
 export function majorSuccess(before: GameState, s0: GameState, content: Content, rng: Rng, target: { id: string; name: string }, coreGrade: number | null): BreakthroughResult {
   const texts = content.cultivation.realms.texts;
-  let s = s0;
+  // Thiên kiếp before the new realm (task 4.5).
+  const trial = undergoTribulation(s0, content, target.id, rng);
+  if (!trial.survived) {
+    const dead = checkDeath({ ...trial.state, rng: rng.getState() }, content, 'tribulation');
+    return { state: dead, success: false, text: dead.log.at(-1)?.lines.at(-1)?.text ?? '', tone: 'bad' };
+  }
+  let s = trial.state;
   const foundation = target.id === 'truc_co' ? rollFoundation(s, content, rng) : null;
   s = enterRealm(s, content, target.id, rng);
   const perfect = foundation === 'hoan_my' ? content.balance.realmStages.perfectFoundationLifespan : 0;

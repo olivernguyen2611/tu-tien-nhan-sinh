@@ -374,6 +374,9 @@ function checkCultivationTables(t: { balance?: Balance; realms?: RealmsFile; roo
       for (const r of mb.openRealms) {
         if (!realmIds.includes(r)) out.push({ file: bal, level: 'error', message: `majorBreakthrough.openRealms: cảnh giới không tồn tại "${r}"` });
       }
+      for (const r of Object.keys(t.balance.tribulation.realms)) {
+        if (!realmIds.includes(r)) out.push({ file: bal, level: 'error', message: `tribulation.realms: cảnh giới không tồn tại "${r}"` });
+      }
       if (!realmIds.includes(t.balance.ghost.realm)) out.push({ file: bal, level: 'error', message: `ghost.realm: cảnh giới không tồn tại "${t.balance.ghost.realm}"` });
       // Task 4.2: kết đan leads into a real realm; its fate tiers are foundation grades.
       const cf = t.balance.coreForming;
