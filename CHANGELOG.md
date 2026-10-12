@@ -2,6 +2,10 @@
 
 ## [Chưa phát hành]
 
+### Chơi thử 2 — Tu sĩ không già như phàm nhân (2026-10-12)
+- Thân thể già theo thọ nguyên: quá thọ phàm nhân (`balance.lifespan.mortalBase` = 70) thì đồng hồ thân thể chạy chậm theo tỉ lệ 70 / thọ nguyên. Trúc Cơ thọ 200 ở tuổi 62 có thân thể như người 22 tuổi; suy yếu, đổ bệnh và các mốc 60/70/80 chỉ tới gần cuối thọ nguyên.
+- Trước đây 9/10 đời tu sĩ trong lần chơi thử chết bệnh ở 62–80 tuổi và không đủ sức khỏe vượt thiên kiếp.
+
 ### Chơi thử 2 — Sửa lỗi hiển thị và cái chết ẩn (2026-10-12)
 - Tiêu đề sự kiện điền tên người (trước hiện nguyên "{lover} lâm bệnh").
 - Ăn linh quả / ngâm linh mạch mà chết thì chỉ còn câu chết, không kèm câu thành công. Các lựa chọn đó ghi rõ "càng lớn tuổi càng dễ mất mạng".

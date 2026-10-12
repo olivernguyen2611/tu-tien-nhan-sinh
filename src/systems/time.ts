@@ -27,7 +27,12 @@ export function ageBody(state: GameState, content: Content): GameState {
   const rng = Rng.fromState(state.rng);
   const age = state.character.age;
   // Trường Xuân Thể and the like (agingSlow): the body wears as if this many years younger.
-  const bodyAge = age - (hasHook(state, content, 'agingSlow') ? cfg.slowAgingYears : 0);
+  const slow = hasHook(state, content, 'agingSlow') ? cfg.slowAgingYears : 0;
+  // Playtest 2026-10-12: a long life ages slowly. Past the mortal span the body's clock runs at
+  // mortalBase / lifespan (a 200-year Trúc Cơ at 62 has the body of a 22-year-old).
+  const pace = Math.min(1, content.balance.lifespan.mortalBase / Math.max(1, state.cult.lifespan));
+  const bodyAt = (a: number) => a * pace - slow;
+  const bodyAge = bodyAt(age);
   let { health, happiness, charm } = state.stats;
   const lines: LogLine[] = [];
 
@@ -36,7 +41,7 @@ export function ageBody(state: GameState, content: Content): GameState {
   else if (bodyAge >= cfg.declineStartAge) health -= cfg.healthDeclinePerYear;
   else if (health < cfg.recoverCap && !state.flags.quy_tu) health = Math.min(cfg.recoverCap, health + cfg.recoverPerYear);
   // Old-age milestones (60, 70, 80): a visible blow to health and looks.
-  if (cfg.milestoneAges.includes(bodyAge)) {
+  if (cfg.milestoneAges.some((m) => bodyAt(age - 1) < m && bodyAge >= m)) {
     const dh = clamp(health + cfg.milestoneHealth) - clamp(health);
     // Trú Nhan Đan keeps the face (flag no_aging_charm).
     const dc = state.flags.no_aging_charm ? 0 : clamp(charm + cfg.milestoneCharm) - charm;
