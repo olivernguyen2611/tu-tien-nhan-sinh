@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### Khí vận tiên thiên quyết định chỉ số khởi đầu (2026-10-12)
+- Mỗi khí vận được chấm điểm theo độ hiếm (`balance.traits.fate.rarityScore`: Phàm 0, Lương 1, Ưu 2.5, Tuyệt 5, Thiên 8, Thần 12; khí vận Ác 1). Tổng điểm nâng **sàn** của các chỉ số (sức khỏe, trí tuệ, mị lực, căn cốt, ngộ tính, khí vận, đạo tâm) và cộng thêm một khoản cố định, đều tỉ lệ thuận với điểm và có trần. Thiên tài sinh ra không còn chỉ số thấp; khí vận Phàm thì không đổi gì.
+- Làm lúc xác nhận khí vận, sau phần thưởng riêng của từng khí vận; xác định theo seed, không dùng RNG nên không xáo các lần tung khác. Điểm đủ cao thì nhật ký sinh ra ghi một dòng "Khí vận hộ thể…" (`lifeTexts.fateLift`).
+- Con số nằm ở `balance.json` mục `traits.fate`. Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Tách linh căn và thể chất (2026-10-12)
 - Thể chất đặc biệt không còn nằm trong linh căn: mỗi người có `cult.bodyId` riêng (con cái có `bodyId` riêng). Có thể chất đặc biệt thì thể chất **thay thế** linh căn (linh căn giữ chỗ `the_chat`, không cần ngũ hành); không có thì là **Phàm thể** (hiện sau khi thử linh căn).
 - Bảng nhân vật và bảng Tu luyện hiện hai dòng riêng "Linh căn" và "Thể chất"; thể chất thay thế thì dòng linh căn ghi rõ. Lời báo kết quả thử linh căn có câu riêng cho thể chất (`revealBodyText`, `plainBody` trong `roots.json`).
