@@ -1,0 +1,903 @@
+[
+  {
+    "id": "bi_canh_chia_cua",
+    "category": "plunder",
+    "title": "Bí cảnh chia của",
+    "text": "Bốn người tán tu lập đội vào bí cảnh. Tới gian cuối, trên đài đá chỉ có một viên đan và ba ánh mắt đổi màu.",
+    "tags": [
+      "violence",
+      "dark"
+    ],
+    "themes": [
+      "plunder"
+    ],
+    "conditions": {
+      "anyOf": [
+        {
+          "realm": {
+            "min": "truc_co"
+          }
+        },
+        {
+          "realm": {
+            "min": "luyen_khi",
+            "max": "luyen_khi"
+          },
+          "stage": {
+            "min": 4
+          }
+        }
+      ]
+    },
+    "weight": 4,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Ra tay trước",
+        "result": {
+          "text": "Ngươi ra tay khi ba người kia còn đang thở dốc vì vết thương.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Ba tán tu bị thương",
+              "realm": "same",
+              "intent": "rob",
+              "powerMul": 1.2
+            },
+            "win": {
+              "text": "Ngươi bước ra một mình.",
+              "effects": {
+                "addItems": [
+                  "truc_co_dan"
+                ],
+                "karma": -20,
+                "setFlags": [
+                  "da_giet_doat_bao"
+                ],
+                "kill": true,
+                "followUp": {
+                  "event": "bao_thu_doat_bao",
+                  "afterYears": [
+                    3,
+                    15
+                  ]
+                },
+                "stat.daoHeart": -8,
+                "stat.health": -10
+              }
+            },
+            "lose": {
+              "text": "Ngươi bò ra khỏi bí cảnh, mất sạch.",
+              "effects": {
+                "stat.health": -15,
+                "stat.happiness": -10
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Đề nghị bốc thăm",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Ba người kia nhìn nhau. Ngươi rời đi thật nhanh.",
+          "effects": {
+            "addItems": [
+              "truc_co_dan"
+            ],
+            "stat.luck": 1,
+            "stat.happiness": 5
+          }
+        },
+        "fail": {
+          "text": "Ngươi về tay không, nhưng còn sống.",
+          "effects": {
+            "stat.happiness": -3,
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Nhường, lùi ra cửa",
+        "result": {
+          "text": "Sau lưng vang lên tiếng binh khí. Ngươi không quay lại.",
+          "effects": {
+            "stat.daoHeart": 3,
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Cảm được sát ý từ trước, rút lui khi còn ở gian giữa",
+        "requires": {
+          "talentsAny": [
+            "than_thuc_so_khai"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Ngươi nhặt được hai món họ bỏ sót.",
+          "effects": {
+            "addItems": [
+              "linh_thao_tram_nam",
+              "hoa_cau_phu"
+            ],
+            "stat.luck": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bi_theo_doi",
+    "category": "plunder",
+    "title": "Bóng người sau lưng",
+    "text": "Rời phường thị chưa được mười dặm, {name} nghe tiếng lá động ở cả hai bên đường.",
+    "tags": [
+      "violence"
+    ],
+    "themes": [
+      "plunder"
+    ],
+    "conditions": {
+      "root": {
+        "usable": true
+      },
+      "stats": [
+        {
+          "stat": "spiritStones",
+          "gte": 50
+        }
+      ]
+    },
+    "weight": 2,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Chạy",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Ngươi chạy một mạch tới bìa rừng, tim đập như trống trận.",
+          "effects": {
+            "stat.health": -2,
+            "stat.physique": 1
+          }
+        },
+        "fail": {
+          "text": "Hai bóng người đã chặn trước mặt.",
+          "effects": {
+            "stat.happiness": -3
+          },
+          "fight": {
+            "foe": {
+              "name": "Hai tán tu",
+              "realm": "same",
+              "intent": "rob"
+            },
+            "win": {
+              "text": "Hai kẻ cướp bỏ chạy, để lại một vệt máu.",
+              "effects": {
+                "stat.physique": 1
+              }
+            },
+            "lose": {
+              "text": "Ngươi tỉnh dậy bên vệ đường, túi nhẹ hẳn.",
+              "effects": {
+                "stat.health": -5
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Dừng lại, quay đầu phục kích",
+        "result": {
+          "text": "Ngươi nép vào gốc cây, chờ chúng đi qua.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Hai tán tu",
+              "realm": "same",
+              "intent": "rob"
+            },
+            "win": {
+              "text": "Hai cái túi trữ vật, một cái rỗng tuếch.",
+              "effects": {
+                "spiritStones": 20,
+                "stat.daoHeart": 2,
+                "stat.health": -5
+              }
+            },
+            "lose": {
+              "text": "Chúng lột sạch món đồ ngươi vừa mua.",
+              "effects": {
+                "stat.health": -10
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Quay về phường thị, ở trọ có thủ vệ",
+        "requires": {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 5
+            }
+          ]
+        },
+        "result": {
+          "text": "Mất thêm ba ngày, tốn thêm năm khối linh thạch.",
+          "effects": {
+            "spiritStones": -5,
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Để lại áo choàng trên cành cây",
+        "requires": {
+          "talentsAny": [
+            "kim_thien_thoat_xac"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Chúng chém vào áo choàng tới lúc trời sáng.",
+          "effects": {
+            "stat.happiness": 5
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tui_tru_vat_vo_chu",
+    "category": "plunder",
+    "title": "Túi trữ vật vô chủ",
+    "text": "Bên khe núi có xác một tu sĩ, áo mang phù hiệu Tàng Phong Kiếm Các. Túi trữ vật còn đeo bên hông.",
+    "tags": [
+      "dark"
+    ],
+    "themes": [
+      "plunder"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Lấy hết",
+        "result": {
+          "text": "Ba mươi khối linh thạch và một thanh phi kiếm khắc tên.",
+          "effects": {
+            "spiritStones": 30,
+            "addItems": [
+              "phi_kiem_co_chu"
+            ],
+            "stat.daoHeart": -2
+          }
+        }
+      },
+      {
+        "text": "Lấy, rồi chôn cất tử tế",
+        "result": {
+          "text": "Ngươi đắp một nấm mộ, cắm thanh kiếm gãy làm bia.",
+          "effects": {
+            "spiritStones": 30,
+            "karma": 2,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Mang thi thể và túi về Kiếm Các",
+        "result": {
+          "text": "Sư đệ của người chết quỳ xuống cảm tạ ngươi.",
+          "effects": {
+            "reputation": {
+              "chinh": 10
+            },
+            "meetNpc": {
+              "role": "kiếm tu Tàng Phong",
+              "root": true,
+              "affinity": 15,
+              "favor": 30
+            },
+            "stat.happiness": 3,
+            "stat.daoHeart": 3
+          }
+        }
+      },
+      {
+        "text": "Xem kỹ vết thương",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Vết thương của U Hà Huyết Ảnh Công. Kẻ giết còn ở gần.",
+          "effects": {
+            "setFlags": [
+              "dau_vet_u_ha"
+            ],
+            "stat.intellect": 2
+          }
+        },
+        "fail": {
+          "text": "Vết thương lạ, ngươi không đoán ra.",
+          "effects": {
+            "stat.intellect": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bang_treo_thuong",
+    "category": "plunder",
+    "title": "Bảng treo thưởng",
+    "text": "Tờ cáo thị mới: \"Truy nã kẻ trộm đan của Kim Thiềm Thương Minh. Sống hay chết đều được, thưởng 50 linh thạch.\"",
+    "tags": [
+      "violence"
+    ],
+    "themes": [
+      "plunder"
+    ],
+    "conditions": {
+      "root": {
+        "usable": true
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Nhận việc, săn người",
+        "result": {
+          "text": "Ngươi lần theo dấu vết tới một căn lều rách.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Kẻ trộm đan",
+              "realm": "same",
+              "intent": "teach",
+              "powerMul": 0.8
+            },
+            "win": {
+              "text": "Kẻ bị truy nã quỳ xuống. Hắn chỉ là một tán tu nghèo trộm thuốc cứu con.",
+              "effects": {
+                "stat.physique": 1,
+                "followUp": {
+                  "event": "bang_treo_thuong_tiep",
+                  "afterYears": [
+                    0,
+                    0
+                  ]
+                }
+              }
+            },
+            "lose": {
+              "text": "Kẻ trộm liều mạng, ngươi bị thương rút lui.",
+              "effects": {
+                "stat.health": -5,
+                "stat.happiness": -3
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Kiếm việc khác: hộ tống thương đội",
+        "result": {
+          "text": "Mười ngày đường bụi, đổi lấy mười lăm khối linh thạch.",
+          "effects": {
+            "spiritStones": 15,
+            "stat.physique": 1
+          }
+        }
+      },
+      {
+        "text": "Đọc hết bảng rồi về",
+        "result": {
+          "text": "Biết thêm ai đang bị truy nã, ai đang đi săn.",
+          "effects": {
+            "stat.intellect": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bang_treo_thuong_tiep",
+    "category": "plunder",
+    "title": "Bảng treo thưởng",
+    "text": "Kẻ trộm đan quỳ dưới chân {name}, tay vẫn ôm gói thuốc: \"Con ta sốt ba ngày rồi.\"",
+    "themes": [
+      "plunder"
+    ],
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Giao nộp",
+        "result": {
+          "text": "Kim Thiềm trả đủ năm mươi khối. Ngươi không hỏi đứa trẻ ra sao.",
+          "effects": {
+            "spiritStones": 50,
+            "karma": -5,
+            "stat.daoHeart": -3
+          }
+        }
+      },
+      {
+        "text": "Thả đi, báo là đã chết",
+        "result": {
+          "text": "Hắn dập đầu ba cái rồi chạy về phía làng.",
+          "effects": {
+            "karma": 8,
+            "stat.daoHeart": 3,
+            "setFlags": [
+              "lua_kim_thiem"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ru_phuc_kich",
+    "category": "plunder",
+    "title": "Rủ rê phục kích",
+    "text": "Một gã tán tu quen mặt ghé tai: \"Thiếu gia Tô gia mang theo cả rương linh thạch đi ngang hẻm núi. Chia ba bảy, ngươi bảy.\"",
+    "tags": [
+      "violence",
+      "dark"
+    ],
+    "themes": [
+      "plunder"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      },
+      "anyOf": [
+        {
+          "sect": {
+            "member": false
+          }
+        },
+        {
+          "stats": [
+            {
+              "stat": "karma",
+              "lte": 10
+            }
+          ]
+        }
+      ]
+    },
+    "weight": 4,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Tham gia",
+        "result": {
+          "text": "Hai người nấp hai bên hẻm núi, chờ tiếng xe.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Hộ vệ Tô gia",
+              "realm": "same",
+              "intent": "teach",
+              "powerMul": 1.3
+            },
+            "win": {
+              "text": "Rương linh thạch nặng trĩu. Gã tán tu chia đúng phần, mắt không dám nhìn thẳng.",
+              "effects": {
+                "spiritStones": 60,
+                "karma": -15,
+                "setFlags": [
+                  "ke_thu_to_gia"
+                ],
+                "stat.daoHeart": -5,
+                "stat.happiness": 3
+              }
+            },
+            "lose": {
+              "text": "Hộ vệ Tô gia là Trúc Cơ.",
+              "effects": {
+                "setFlags": [
+                  "ke_thu_to_gia"
+                ],
+                "stat.health": -10
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Từ chối",
+        "result": {
+          "text": "Gã nhún vai bỏ đi. Ngươi tiếc cái rương mất nửa đêm.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Báo trước cho Tô gia",
+        "result": {
+          "text": "Tô gia trả công hậu, gã tán tu từ đó nhìn ngươi như nhìn xác chết.",
+          "effects": {
+            "spiritStones": 20,
+            "meetNpc": {
+              "role": "gã tán tu",
+              "root": true,
+              "grudge": 40,
+              "affinity": -30
+            },
+            "setFlags": [
+              "an_to_gia"
+            ],
+            "stat.charm": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bao_vat_xuat_the",
+    "category": "plunder",
+    "title": "Bảo quang xung thiên",
+    "text": "Cột sáng vọt lên từ khe núi. Nửa ngày sau đã có trăm tu sĩ vây quanh, ai cũng chờ người khác ra tay trước.",
+    "tags": [
+      "violence",
+      "rare"
+    ],
+    "themes": [
+      "plunder",
+      "fortune"
+    ],
+    "conditions": {
+      "root": {
+        "usable": true
+      },
+      "realm": {
+        "min": "luyen_khi"
+      }
+    },
+    "weight": 1.5,
+    "luckAffected": true,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Lao vào tranh",
+        "result": {
+          "text": "Ngươi lao xuống khe núi giữa mưa phù lục và kiếm quang.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Tu sĩ tranh bảo",
+              "realm": "same",
+              "intent": "teach",
+              "powerMul": 1.2
+            },
+            "win": {
+              "text": "Ngươi ôm được bảo vật, chạy trối chết.",
+              "effects": {
+                "addItems": [
+                  "thanh_phong_kiem"
+                ],
+                "setFlags": [
+                  "bi_truy_tim_bao_vat"
+                ],
+                "stat.health": -10,
+                "stat.happiness": 10
+              }
+            },
+            "lose": {
+              "text": "Ngươi bị hất văng khỏi khe núi.",
+              "effects": {
+                "stat.health": -15,
+                "stat.happiness": -5
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Ngư ông đắc lợi: chờ hai bên đánh nhau",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Hai bên lưỡng bại câu thương, ngươi nhặt bảo vật lên như nhặt quả rụng.",
+          "effects": {
+            "addItems": [
+              "huyen_thiet_giap"
+            ],
+            "karma": -3,
+            "stat.intellect": 2
+          }
+        },
+        "fail": {
+          "text": "Bảo vật bị một lão quái Kim Đan thu mất.",
+          "effects": {
+            "stat.intellect": 1,
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Đứng ngoài xem",
+        "result": {
+          "text": "Ngươi học được ba chiêu, thấy năm người chết.",
+          "effects": {
+            "stat.comprehension": 2,
+            "stat.daoHeart": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bao_thu_doat_bao",
+    "category": "plunder",
+    "title": "Kẻ đến đòi nợ máu",
+    "text": "Một thanh niên đứng chặn cửa động phủ: \"Mười năm trước, ngươi còn nhớ cha ta không?\"",
+    "tags": [
+      "violence",
+      "dark"
+    ],
+    "themes": [
+      "plunder"
+    ],
+    "conditions": {
+      "flagsAll": [
+        "da_giet_doat_bao"
+      ]
+    },
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Đánh",
+        "result": {
+          "text": "Hắn rút kiếm. Đường kiếm đã luyện suốt mười năm chỉ để chờ ngày này.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Kẻ báo thù",
+              "realm": "same",
+              "intent": "rob",
+              "powerMul": 1.2
+            },
+            "win": {
+              "text": "Hắn ngã xuống, vẫn trừng mắt nhìn ngươi.",
+              "effects": {
+                "stat.daoHeart": -2
+              }
+            },
+            "lose": {
+              "text": "Ngươi thua. Hắn lấy đi món bảo vật quý nhất của ngươi.",
+              "effects": {
+                "stat.health": -15
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Nhận tội, bồi thường",
+        "requires": {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 50
+            }
+          ]
+        },
+        "result": {
+          "text": "Hắn cầm linh thạch, không nhìn ngươi.",
+          "effects": {
+            "spiritStones": -50,
+            "karma": 10,
+            "stat.daoHeart": 5,
+            "stat.happiness": -5,
+            "clearFlags": [
+              "da_giet_doat_bao"
+            ]
+          }
+        }
+      },
+      {
+        "text": "Bỏ chạy, rời vùng",
+        "result": {
+          "text": "Ngươi đi trong đêm. Kẻ kia vẫn sẽ tìm.",
+          "effects": {
+            "stat.happiness": -8,
+            "stat.daoHeart": -3,
+            "followUp": {
+              "event": "bao_thu_doat_bao",
+              "afterYears": [
+                3,
+                8
+              ]
+            }
+          }
+        }
+      },
+      {
+        "text": "Cười lớn, rút kiếm",
+        "requires": {
+          "talentsAny": [
+            "huyet_hai_bat_kho"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Máu kẻ thù là suối nguồn.",
+          "effects": {
+            "stat.daoHeart": -2
+          },
+          "fight": {
+            "foe": {
+              "name": "Kẻ báo thù",
+              "realm": "same",
+              "intent": "rob",
+              "powerMul": 1.2,
+              "lineage": "tien"
+            },
+            "win": {
+              "text": "Huyết khí của hắn chảy vào người ngươi.",
+              "effects": {
+                "stat.health": 5
+              }
+            },
+            "lose": {
+              "text": "Ngươi thua, lần đầu thấy máu không đủ.",
+              "effects": {
+                "stat.health": -15
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ban_do_bay",
+    "category": "plunder",
+    "title": "Bản đồ giá rẻ",
+    "text": "Gã bán bản đồ bí cảnh ở Vô Chủ Phường giá rẻ bất ngờ. Trên bản đồ có đánh dấu một cái hang.",
+    "tags": [
+      "violence"
+    ],
+    "themes": [
+      "plunder",
+      "market"
+    ],
+    "conditions": {
+      "root": {
+        "usable": true
+      },
+      "sect": {
+        "member": false
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Mua và đi theo bản đồ",
+        "requires": {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 3
+            }
+          ]
+        },
+        "result": {
+          "text": "Trong hang không có bảo vật, chỉ có sáu kẻ cầm đao. Bản đồ là mồi.",
+          "effects": {
+            "spiritStones": -3
+          },
+          "fight": {
+            "foe": {
+              "name": "Sáu kẻ cầm đao",
+              "realm": "same",
+              "intent": "rob",
+              "powerMul": 1.1
+            },
+            "win": {
+              "text": "Ngươi đánh tan ổ phục kích, vét được ít linh thạch.",
+              "effects": {
+                "spiritStones": 30,
+                "stat.happiness": 3
+              }
+            },
+            "lose": {
+              "text": "Ngươi bị lột sạch rồi đá ra khỏi hang.",
+              "effects": {
+                "stat.health": -10
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Mua, nhưng bán lại cho kẻ khác",
+        "requires": {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 3
+            }
+          ]
+        },
+        "result": {
+          "text": "Ngươi lời ba khối linh thạch, và một kẻ khác sắp gặp sáu cây đao.",
+          "effects": {
+            "spiritStones": 3,
+            "karma": -5,
+            "stat.intellect": 2
+          }
+        }
+      },
+      {
+        "text": "Báo cho chấp sự phường thị",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Gã bán bản đồ bị tống khỏi phường thị.",
+          "effects": {
+            "reputation": {
+              "tan_tu": 10
+            },
+            "stat.charm": 2
+          }
+        },
+        "fail": {
+          "text": "Chấp sự ăn chia với gã bán bản đồ.",
+          "effects": {
+            "stat.happiness": -3,
+            "setFlags": [
+              "ke_thu_vo_chu_phuong"
+            ]
+          }
+        }
+      },
+      {
+        "text": "Thấy mực trên bản đồ còn mới",
+        "requires": {
+          "traitsAny": [
+            "thong_minh_vat"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Bản đồ \"cổ\" mà mực chưa khô. Ngươi cười, trả lại.",
+          "effects": {
+            "stat.intellect": 2,
+            "stat.luck": 1
+          }
+        }
+      }
+    ]
+  }
+]

@@ -2,6 +2,120 @@
 
 ## [Chưa phát hành]
 
+### Task 3.4 — NPC có số mệnh riêng (2026-10-12)
+- **Engine** (phiên làm `task/3.4-npcs`):
+  - NPC già đi, tự tu luyện và đột phá, rồi chết.
+  - Sổ ân oán phai dần theo năm. Oán ≥ 30 thì có thể tìm tới báo thù, ân ≥ 30 thì tới báo ân. Giết một NPC thì người thân cùng họ nhận một nửa mối thù.
+  - Giao chiến với NPC dùng đúng cảnh giới của người đó.
+  - Bảng Quan hệ có tab Người quen. Developer mode có nút gặp nhanh bạn, thù, ân nhân.
+- **Nội dung theo bản đã duyệt** `docs/design/npcs.md`:
+  - `content/npc-traits.json`: 8 bề ngoài, 8 bản chất, 6 mục tiêu đời.
+  - Theo bảng "bề ngoài che giấu bản chất": người Ôn hòa có thể là Tham lam, Mưu mô hoặc Thù dai, và lộ ra qua sự kiện Bộ mặt thật.
+  - Bản chất đổi luật chơi:
+    - Trung hậu: báo ân ×2.
+    - Mưu mô: thiện cảm tăng một nửa.
+    - Thù dai: oán không phai, báo thù ×1.5.
+    - Nhân hậu: oán phai ×3, báo thù ×0.5.
+    - Cuồng vọng: tu nhanh ×1.3, mỗi năm 1% chết sớm.
+    - Chân thành: lộ bản chất ngay từ đầu (thêm trường `honest`).
+- **4 sự kiện ân oán** (`events/npcs.json`, mục "Ân oán"): Cố nhân tìm tới, Báo ân, Hậu duệ báo thù, Bộ mặt thật.
+  - Đánh nhau là trận thật với chính NPC đó.
+  - Bồi thường trả bạc nếu là phàm nhân, linh thạch nếu là tu sĩ.
+  - Văn bản 4 sự kiện là **phần bổ sung** dựa trên khung đã duyệt (bản nháp ghi "viết sau khi bạn duyệt khung này").
+- Placeholder mới `{npcSurface}`, `{npcNature}`.
+- **Chưa làm** (bản duyệt có nhắc nhưng chưa có hệ thống tương ứng):
+  - Mục tiêu đời mới chỉ hiển thị, chưa đổi hành vi NPC.
+  - Hèn nhát chưa "đâm sau lưng".
+  - NPC chưa có phe và chưa lập gia đình.
+  - Chưa có "ra tay giúp khi ngươi gặp nạn".
+
+### Task 3.9 — 40 sự kiện giang hồ (2026-10-12)
+- **Nhập đủ 40 sự kiện đã duyệt** của `docs/design/events-jianghu.md` vào `content/worlds/thuong_lan/events/`:
+  - `romance.json`: Tình duyên, 10 sự kiện.
+  - `plunder.json`: Giết người đoạt bảo, 8 sự kiện, cộng 1 sự kiện nối cho lựa chọn tiếp của #14.
+  - `demonic.json`: Ma đạo cám dỗ, 8 sự kiện.
+  - `beasts.json`: Yêu thú, 7 sự kiện.
+  - `market.json`: Phường thị, 7 sự kiện.
+- **"⚄ Chiến lực" nay là trận đánh thật** (task 3.3), thắng thua theo kết quả trong thiết kế. Thắng thì vẫn chọn tha, cướp hay giết như mọi trận.
+- **Engine thêm cho bộ này**:
+  - Hiệu ứng: `lifespanYears` (đốt thọ nguyên), `heartDemon` (đếm tâm ma cho hệ tâm ma sau này), `relativeDies` (người thân mất cuối năm), `romance.loverAffinity`, `meetNpc.adult`.
+  - Điều kiện: `family` (có người thân đã mất, cha mẹ còn sống), `itemsAll` (mang theo vật phẩm), `romance.target: "ex"` (người cũ). Danh vọng từng phe đọc được trong điều kiện (`reputation.yeu`…).
+  - Placeholder `{deceased}`, `{loverSelf}` (huynh/muội), `{playerDear}` (chàng/nàng).
+  - Sự kiện tình duyên đến qua đường nối (follow-up) vẫn gắn đúng người trong lòng.
+  - Lựa chọn có hai biến thể cùng chữ, chỉ hiện biến thể đang áp dụng. Chữ trong lựa chọn được thay tên.
+- **Validator**:
+  - Báo `{deceased}` thiếu điều kiện `family.deadAny`.
+  - Đếm cả flag đặt trong kết quả trận đánh.
+  - "cha ta", "mẹ hắn", "yêu thú mẹ" không còn bị coi là cha mẹ của người chơi.
+- **Chỗ xấp xỉ** (engine chưa có hệ thống tương ứng):
+  - Chưa có vùng đất: bỏ điều kiện "ở Lan Sơn, Vạn Yêu Lĩnh, Vô Chủ Phường…".
+  - Chưa có linh thú: dùng flag `co_linh_thu`, `linh_thu_truong_thanh`.
+  - Chưa có món nợ có lãi: chỉ đặt flag `no_kim_thiem`.
+  - Kiểm tra theo chỉ số khác:
+    - "⚄ Tốc độ" tính theo Căn cốt, "⚄ Thần thức" theo Ngộ tính.
+    - "⚄ thiện cảm + Mị lực" (Tỏ tình) tính theo Mị lực.
+    - "⚄ nghề bách nghệ" (Bày sạp) tính theo cấp Luyện Đan.
+  - Điều kiện chuyển sang thứ engine đã có:
+    - "Kẹt bình cảnh ≥ 5 năm" thành "đột phá thất bại ≥ 2 lần".
+    - "Chênh lệch tuổi trông thấy" thành "đã Trúc Cơ".
+    - Bản chất "tham lam/mưu mô" thành "bộ mặt che bản chất khác" (hệ NPC 3.4).
+    - "Người thân bệnh nặng" thành "mẹ còn sống, người chơi ≥ 30 tuổi".
+  - "⚄ thiện cảm 60" (Tình địch) và "⚄ linh thạch so với đối thủ" (Đấu giá) thành hai biến thể theo ngưỡng.
+  - Cấm thuật đốt huyết là sự kiện riêng: kẻ địch mạnh hơn một đại cảnh giới chặn đường. "Chiến lực ×2/×3" quy thành đối thủ yếu đi một nửa hoặc còn một phần ba.
+- **Phần còn thiếu**:
+  - Song tu: chưa xét linh căn hai người khắc nhau.
+  - Người cũ: chưa có lựa chọn "Khuyên quay đầu" (NPC chưa có đạo thống).
+  - Tặng linh thảo: chưa xét sở thích của người trong lòng, dùng thiện cảm +10.
+  - Bốc thăm ở bí cảnh: chưa có 30% bị phục kích.
+  - Phi kiếm có chủ: chưa có 30% bị Kiếm Các hỏi tội.
+  - Quá hạn nợ Kim Thiềm: chưa có người tới đòi.
+- **Câu kết quả tự bổ sung** cho những lựa chọn thiết kế chỉ ghi hiệu ứng, ví dụ "Ngươi rút binh khí…" ở các lựa chọn mở trận đánh.
+
+### Task 3.7 — Đạo lữ, song tu, sinh con (2026-10-12)
+- **Thành thân / Đạo lữ đại điển**: đã thành đôi thì cưới được. Phàm nhân trả bạc, tu sĩ trả linh thạch; Vui vẻ +20. Người kia thành Bạn đời (phàm nhân) hoặc Đạo lữ (tu sĩ).
+- **Song tu** (PLAN G.1): có đạo lữ đang tu luyện thì tu vi mỗi năm ×1.3.
+- **Sinh con**: mỗi năm thử một lần.
+  - Tỉ lệ cơ bản 50%; mỗi bên là tu sĩ thì nhân 0.4 (tu sĩ khó có con).
+  - Mẹ phàm nhân quá 45 tuổi thì thôi, mẹ tu sĩ tới 300 tuổi. Tối đa 6 con.
+  - Hai người cùng giới thì nhận con nuôi.
+  - Con mang họ cha, vào tab Gia đình (Con trai/Con gái), dùng chung các hành động gia đình.
+  - Con qua đời thì Vui vẻ −25 tới −40.
+- **Di truyền linh căn**:
+  - Mỗi bên cha mẹ có linh căn cho con thêm một lần quay, giữ lần tốt nhất.
+  - Hệ của con ưu tiên lấy hệ của người chơi.
+  - Có 20% truyền lại thể chất đặc biệt, và 3% đột biến thành biến dị linh căn (Lôi, Băng, Phong, Ám).
+  - Con lên tuổi thử linh căn (6) thì nhật ký báo kết quả và tab Gia đình hiện linh căn. Con có linh căn dùng được thì sống lâu như tu sĩ Luyện Khí.
+- **Cho sự kiện** (dùng ở 3.9): hiệu ứng `romance.marry` (cưới người của sự kiện, có thể đặt thiện cảm ban đầu cho hôn nhân chính trị) và `romance.partnerProgress` (tu vi của đạo lữ).
+- **Bổ sung kỹ thuật** (PLAN chỉ liệt kê tính năng): mọi con số mới trong `balance.romance` và `balance.family.grief.child`, cùng câu nhật ký cưới, sinh con, thử linh căn của con.
+
+### Task 3.6 — Tình duyên (2026-10-12)
+- **Thiện cảm nhiều nấc** (`content/romance.json`): Chán ghét, Lạnh nhạt, Quen biết, Có cảm tình, Tâm đầu ý hợp, Khắc cốt ghi tâm. Tab Người quen hiện nấc bên thanh thiện cảm.
+- **Hành động với người quen**, mỗi việc một lần mỗi năm, số liệu ở `balance.romance`:
+  - Theo đuổi: mỗi lúc chỉ một người.
+  - Tặng quà: phàm nhân trả bạc, tu sĩ trả linh thạch. Thiện cảm tăng theo Mị lực.
+  - Tỏ tình: cần thiện cảm 70. Tỉ lệ theo thiện cảm và Mị lực.
+  - Thôi theo đuổi, hoặc chia tay.
+- **Bị từ chối**: thiện cảm dưới 30 thì quà có thể bị trả lại. Tỏ tình thất bại thì Vui vẻ −15, Đạo tâm +3, thiện cảm −10.
+- **Bị lợi dụng**: người có bộ mặt hiền che bản chất khác (hệ NPC 3.4) có thể moi thêm tiền sau khi nhận quà.
+- **Tình địch** làm thiện cảm của người trong lòng giảm mỗi năm. Người trong lòng hoặc đạo lữ qua đời thì Vui vẻ −30, nhật ký ghi lại.
+- **Cho sự kiện**:
+  - Điều kiện `romance`: có người trong lòng, đã thành đôi, có đạo lữ, khoảng thiện cảm, người kia có linh căn, có người cũ.
+  - `romance.target` gắn sự kiện vào người trong lòng hoặc đạo lữ, để `{npc}`, `{lover}` và hiệu ứng `npc` áp lên người đó.
+  - Hiệu ứng `romance`: bắt đầu theo đuổi, mất người, thành đôi, thêm tình địch, vạch mặt tình địch.
+- **Mục H của PLAN**:
+  - Mọi điều kiện `romance` đòi người chơi và người kia đủ 18 tuổi, còn sống, và người chơi không theo Phật đạo (kiêng tình duyên, phần còn nợ của task 3.12).
+  - Người gặp trong sự kiện tình duyên luôn được tạo từ 18 tuổi.
+  - Validator báo lỗi nếu sự kiện có chủ đề `romance*`, tag `mature` hoặc hiệu ứng `romance` mà không có `conditions.romance` hay `age.min ≥ 18`.
+- **Bổ sung kỹ thuật** (PLAN chỉ liệt kê tính năng): tên các nấc, câu nhật ký của các hành động, và mọi con số trong `balance.romance`.
+
+### Task 3.5 — Thiên kiêu bảng (2026-10-12)
+- Thế giới có 12 thiên kiêu riêng (`balance.rankings`). Họ tự tu luyện nhanh hơn người thường, tự đột phá, có thể vẫn lạc. Ai quá 100 tuổi thì rời bảng, người trẻ mới lên thay.
+- Mỗi năm bảng xếp 10 người theo cảnh giới, tầng và tu vi. Người chơi có tên trên bảng nếu đã tu luyện và chưa quá 100 tuổi.
+- Nhật ký ghi khi người chơi lên bảng, lên hạng, đứng đầu, rớt bảng, quá tuổi, và khi một thiên kiêu trên bảng vẫn lạc.
+- Bảng Tu luyện có mục **Thiên kiêu bảng** (tên, cảnh giới, tông môn, tuổi; dòng của người chơi được tô).
+- Bảng được tạo vào năm đầu cần tới, kể cả save cũ. Thiên kiêu lớn tuổi hơn sẽ tu bù những năm đã qua. Bảng dùng dòng ngẫu nhiên riêng theo seed, không làm đổi các lần quay khác của kiếp.
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "cập nhật mỗi năm"): các con số trong `balance.rankings` và 8 câu văn trong `content/rankings.json`.
+
 ### Task 3.8 — Đạo thống × con đường (2026-10-12)
 - **Đạo thống** (PLAN K.3.1, file mới `content/lineages.json`): do công pháp chính quyết định, đổi công pháp là đổi đạo thống.
   - Tiên đạo: đột phá +3%.

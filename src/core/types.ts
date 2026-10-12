@@ -12,7 +12,7 @@ export interface LogYear { age: number; lines: LogLine[] }
 
 export interface Relative {
   id: string;
-  role: 'father' | 'mother' | 'sibling';
+  role: 'father' | 'mother' | 'sibling' | 'child';
   gender: Gender;
   name: string;
   age: number;
@@ -23,6 +23,8 @@ export interface Relative {
   affinity: number;
   /** Family action id → player's age when last done (each once a year). */
   lastActions: Record<string, number>;
+  /** Task 3.7: a child's spirit root, rolled at birth and shown from the root-test age. */
+  root?: SpiritRoot | null;
 }
 
 /** Spirit root found by the test at 6–12 (task 2.2); ids from roots.json. */
@@ -42,6 +44,8 @@ export interface GameState {
   inventory: Record<string, number>;
   /** Task 3.1: item id → age last used (one use a year); ids whose once-per-life effect is spent; bonus for the next breakthrough; combat % for the next fight. */
   itemUse: { lastAge: Record<string, number>; spent: string[]; nextBreakthrough: number; nextCombat: number };
+  /** Task 3.4: people met outside the family, each with their own fate. */
+  npcs: Npc[];
   /** Task 3.3: the fight in progress; blocks the next year like a pending event. */
   combat: Battle | null;
   /** Task 3.2: market id → this year's bargain result (price multiplier). */
@@ -50,6 +54,14 @@ export interface GameState {
   talents: string[];
   /** A talent choice waiting for the player (after a big breakthrough); blocks the next year. */
   fate: { offered: string[]; refreshesLeft: number } | null;
+  /**
+   * Romance (task 3.6): the NPC being courted, whether they said yes (couple), the đạo lữ
+   * (task 3.7), people who turned the player down or were left, rivals around the lover,
+   * and the age each romance action was last done (once a year each).
+   */
+  romance: { lover: string | null; couple: boolean; partner: string | null; exes: string[]; rivals: number; lastActions: Record<string, number> };
+  /** Thiên kiêu bảng (task 3.5): the world's prodigies and the player's rank last year (null = not on the board). */
+  ranking: { prodigies: Prodigy[]; rank: number | null };
   /** Base aptitude 0–100 for each combat path (task 3.8); hooks add on top. */
   paths: Record<string, number>;
   /** Martial path (task 3.11): stage index (-1 before Tam lưu), training years toward the next, extra % for it. */
@@ -120,6 +132,8 @@ export interface GameState {
     buffs: { mul: number; until: number }[];
     /** Bonus % for the next big breakthrough only. */
     nextBonus: number;
+    /** Tâm ma seeds from dark choices (task 3.9; read by the heart-demon system later). */
+    heartDemon: number;
     /** Lineages this life has followed (one-time onAdopt stats, task 3.8). */
     lineagesAdopted: string[];
     /** Phật đạo precepts broken (task 3.12). */
@@ -148,6 +162,8 @@ export interface GameState {
     history: Record<string, number>;
     /** Follow-up events booked by earlier choices. */
     followUps: { event: string; atAge: number }[];
+    /** Task 3.4: id of the NPC the pending event is about ({npc}). */
+    npc: string | null;
   };
   /** Stats stuck at an extreme (stat-extremes.json). */
   extremes: {
@@ -190,4 +206,50 @@ export interface Battle {
   outcomes: Pick<Fight, 'win' | 'lose' | 'fled'>;
   /** Event title that started it, for the log. */
   source: string | null;
+  /** Task 3.4: the foe is this NPC (killing them goes through killNpc). */
+  npcId: string | null;
+}
+
+/** Task 3.5: a young prodigy on the Thiên kiêu bảng (not someone the player has met). */
+export interface Prodigy {
+  id: string;
+  name: string;
+  gender: Gender;
+  age: number;
+  /** Sect id of this world, or null for a tán tu. */
+  sect: string | null;
+  aptitude: number;
+  realm: string;
+  stage: number;
+  progress: number;
+}
+
+/** Task 3.4: an NPC who lives, cultivates, ages and remembers what the player did. */
+export interface Npc {
+  id: string;
+  name: string;
+  gender: Gender;
+  age: number;
+  lifespan: number;
+  alive: boolean;
+  /** How the player knows them: bằng hữu, ân nhân, kẻ thù, đồng môn… (free text from the event). */
+  role: string;
+  /** Cultivation; root false = a mortal who never cultivates. */
+  root: boolean;
+  aptitude: number;
+  realm: string;
+  stage: number;
+  progress: number;
+  /** npc-traits.json ids; nature stays hidden until natureKnown. */
+  surface: string | null;
+  nature: string | null;
+  natureKnown: boolean;
+  goal: string | null;
+  /** Thiện cảm 0–100. */
+  affinity: number;
+  /** Sổ ân oán: kindness owed to the player and grudge held against them (0–100 each). */
+  favor: number;
+  grudge: number;
+  /** Id of the NPC whose grudge this one inherited (kin of someone the player killed). */
+  heirOf: string | null;
 }

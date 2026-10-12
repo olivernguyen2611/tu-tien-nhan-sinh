@@ -1,0 +1,994 @@
+[
+  {
+    "id": "chung_o_duoi_mua",
+    "category": "romance",
+    "title": "Chung ô dưới mưa",
+    "text": "Mưa đổ bất chợt. Dưới mái hiên tiệm thuốc chỉ còn {name} và một người lạ đang ôm bọc sách ướt.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "lover": false,
+        "partner": false
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Đưa ô cho người ta, tự mình đội mưa về",
+        "result": {
+          "text": "Hôm sau ngươi cảm lạnh. Hôm sau nữa, có người mang ô tới trả, kèm một gói thuốc.",
+          "effects": {
+            "meetNpc": {
+              "role": "người quen",
+              "affinity": 15
+            },
+            "romance": {
+              "pursue": true
+            },
+            "stat.health": -3,
+            "stat.charm": 2
+          }
+        }
+      },
+      {
+        "text": "Cùng đứng trú, bắt chuyện",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Chuyện từ thời tiết sang thơ văn, mưa tạnh lúc nào không hay.",
+          "effects": {
+            "meetNpc": {
+              "role": "người quen",
+              "affinity": 10
+            },
+            "romance": {
+              "pursue": true
+            },
+            "stat.happiness": 5
+          }
+        },
+        "fail": {
+          "text": "Ngươi khen sách người ta \"ướt rất đẹp\". Người ta đội mưa đi luôn.",
+          "effects": {
+            "stat.happiness": -2,
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Dùng pháp thuật thổi khô mưa",
+        "requires": {
+          "root": {
+            "usable": true
+          }
+        },
+        "result": {
+          "text": "Người kia trố mắt, rồi vái ngươi như vái tiên.",
+          "effects": {
+            "stat.charm": 2,
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Chưa kịp làm gì",
+        "requires": {
+          "traitsAny": [
+            "dao_hoa_kiep"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Thêm hai người nữa chạy vào trú mưa, cả ba đều nhìn ngươi.",
+          "effects": {
+            "romance": {
+              "rival": 2
+            },
+            "stat.charm": 3,
+            "stat.happiness": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "thu_tinh_gui_nham",
+    "category": "romance",
+    "title": "Thư tình gửi nhầm",
+    "text": "Một phong thư thơm mùi hoa đặt trước cửa {name}. Đọc tới dòng cuối mới thấy tên người nhận là sư huynh phòng bên.",
+    "tags": [
+      "funny"
+    ],
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {},
+      "sect": {
+        "member": true
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Đem trả tận tay sư huynh",
+        "result": {
+          "text": "Sư huynh đỏ mặt, ba hôm sau mời ngươi uống rượu mừng.",
+          "effects": {
+            "meetNpc": {
+              "role": "đồng môn",
+              "affinity": 10
+            },
+            "stat.happiness": 3,
+            "karma": 1
+          }
+        }
+      },
+      {
+        "text": "Viết thư trả lời thay",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Văn ngươi hay quá, người viết thư bắt đầu viết thư cho... ngươi.",
+          "effects": {
+            "meetNpc": {
+              "role": "người quen",
+              "affinity": 10
+            },
+            "romance": {
+              "pursue": true
+            },
+            "stat.intellect": 2,
+            "stat.charm": 2
+          }
+        },
+        "fail": {
+          "text": "Bị lộ. Cả ngoại môn cười ba tháng.",
+          "effects": {
+            "stat.happiness": -5,
+            "stat.charm": -2
+          }
+        }
+      },
+      {
+        "text": "Giữ lại làm mẫu tập viết thư",
+        "result": {
+          "text": "Chữ ngươi đẹp lên trông thấy.",
+          "effects": {
+            "stat.intellect": 1,
+            "stat.daoHeart": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tang_qua",
+    "category": "romance",
+    "title": "Tặng quà",
+    "text": "Sinh thần của {lover} sắp tới. Ngươi lật túi trữ vật tới lần thứ ba.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "target": "lover",
+        "minAffinity": 20,
+        "maxAffinity": 70
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 3,
+    "choices": [
+      {
+        "text": "Tặng linh thảo quý",
+        "requires": {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 5
+            }
+          ]
+        },
+        "result": {
+          "text": "{lover} cầm cành linh thảo ngắm mãi, rồi cất vào ngực áo.",
+          "effects": {
+            "spiritStones": -5,
+            "npc": {
+              "affinity": 10
+            },
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Tự tay làm một món",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Món quà xấu, nhưng {lover} giữ bên mình rất lâu.",
+          "effects": {
+            "npc": {
+              "affinity": 15
+            },
+            "stat.happiness": 5
+          }
+        },
+        "fail": {
+          "text": "Món quà nổ trong tay ngươi. {lover} cười tới mức phải ngồi xuống.",
+          "effects": {
+            "stat.health": -3,
+            "npc": {
+              "affinity": 3
+            }
+          }
+        }
+      },
+      {
+        "text": "Làm một bài thơ",
+        "requires": {
+          "stats": [
+            {
+              "stat": "stat.intellect",
+              "gte": 60
+            }
+          ]
+        },
+        "result": {
+          "text": "Bài thơ hay tới mức {lover} chép lại, dán lên vách.",
+          "effects": {
+            "npc": {
+              "affinity": 10
+            },
+            "stat.charm": 2
+          }
+        }
+      },
+      {
+        "text": "Làm một bài thơ",
+        "requires": {
+          "stats": [
+            {
+              "stat": "stat.intellect",
+              "lte": 59
+            }
+          ]
+        },
+        "result": {
+          "text": "{lover} cười tới chảy nước mắt.",
+          "effects": {
+            "npc": {
+              "affinity": 5
+            },
+            "stat.charm": -1
+          }
+        }
+      },
+      {
+        "text": "Quên mất",
+        "result": {
+          "text": "Ngươi nhớ ra lúc {lover} đang nhìn ngươi, tay không.",
+          "effects": {
+            "npc": {
+              "affinity": -10
+            },
+            "stat.happiness": -5
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tinh_dich_xuat_hien",
+    "category": "romance",
+    "title": "Tình địch",
+    "text": "Thiếu gia một thế gia xuất hiện bên cạnh {lover}, mang theo cả xe lễ vật và một ánh mắt khinh khỉnh dành cho {name}.",
+    "tags": [
+      "violence"
+    ],
+    "themes": [
+      "romance",
+      "romance_trouble"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "target": "lover",
+        "minAffinity": 40
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Thách đấu",
+        "result": {
+          "text": "Ngươi rút binh khí. Hắn cười khẩy, ra hiệu cho đám tùy tùng lùi lại.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Thiếu gia thế gia",
+              "realm": "same",
+              "intent": "teach"
+            },
+            "win": {
+              "text": "Hắn ôm lễ vật về. {lover} nhìn ngươi lâu hơn thường lệ.",
+              "effects": {
+                "npc": {
+                  "affinity": 10
+                },
+                "setFlags": [
+                  "ke_thu_the_gia"
+                ],
+                "stat.happiness": 5,
+                "stat.charm": 2
+              }
+            },
+            "lose": {
+              "text": "Ngươi nằm dưới đất, {lover} đứng giữa hai người không biết đỡ ai.",
+              "effects": {
+                "npc": {
+                  "affinity": 5
+                },
+                "stat.happiness": -5
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Lùi một bước, để {lover} tự chọn",
+        "requires": {
+          "romance": {
+            "target": "lover",
+            "minAffinity": 60
+          }
+        },
+        "result": {
+          "text": "{lover} trả lại xe lễ vật.",
+          "effects": {
+            "npc": {
+              "affinity": 15
+            },
+            "stat.daoHeart": 3,
+            "stat.happiness": 8
+          }
+        }
+      },
+      {
+        "text": "Lùi một bước, để {lover} tự chọn",
+        "requires": {
+          "romance": {
+            "target": "lover",
+            "maxAffinity": 59
+          }
+        },
+        "result": {
+          "text": "Ngươi về, đóng cửa ba ngày.",
+          "effects": {
+            "romance": {
+              "lose": true
+            },
+            "stat.happiness": -15,
+            "stat.daoHeart": 3
+          }
+        }
+      },
+      {
+        "text": "Điều tra lai lịch tình địch",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Hắn đã có ba vị hôn thê ở ba thành khác nhau.",
+          "effects": {
+            "romance": {
+              "rivalExposed": true
+            },
+            "npc": {
+              "affinity": 10
+            },
+            "stat.intellect": 2
+          }
+        },
+        "fail": {
+          "text": "Bị bắt quả tang đang rình nhà người ta.",
+          "effects": {
+            "npc": {
+              "affinity": -10
+            },
+            "stat.charm": -3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "the_gia_cau_than",
+    "category": "romance",
+    "title": "Thế gia cầu thân",
+    "text": "Hàn gia sai người mang thiếp tới: muốn gả người trong họ cho {name}, kèm của hồi môn là một động phủ có linh mạch.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "partner": false
+      },
+      "root": {
+        "usable": true
+      },
+      "anyOf": [
+        {
+          "realm": {
+            "min": "truc_co"
+          }
+        },
+        {
+          "realm": {
+            "min": "luyen_khi",
+            "max": "luyen_khi"
+          },
+          "stage": {
+            "min": 6
+          }
+        }
+      ]
+    },
+    "weight": 3,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận lời",
+        "result": {
+          "text": "Tài nguyên dồi dào, ngày cưới linh đình. Nhưng người kia nhìn ngươi như nhìn một món hàng.",
+          "effects": {
+            "meetNpc": {
+              "role": "người Hàn gia",
+              "root": true
+            },
+            "romance": {
+              "marry": {
+                "affinity": 20
+              }
+            },
+            "setFlags": [
+              "re_han_gia"
+            ],
+            "speedBuff": {
+              "mul": 1.1,
+              "years": 100
+            },
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Từ chối khéo",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Hàn gia không vui, nhưng không mất mặt.",
+          "effects": {
+            "stat.charm": 2,
+            "stat.daoHeart": 2
+          }
+        },
+        "fail": {
+          "text": "Hàn gia coi là sỉ nhục.",
+          "effects": {
+            "setFlags": [
+              "ke_thu_han_gia"
+            ],
+            "stat.happiness": -3,
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Gặp riêng người được gả trước khi quyết",
+        "result": {
+          "text": "Hóa ra người ta cũng bị ép. Hai người ngồi uống trà, nói chuyện rất hợp.",
+          "effects": {
+            "meetNpc": {
+              "role": "người Hàn gia",
+              "root": true,
+              "adult": true,
+              "affinity": -20
+            },
+            "stat.happiness": 3,
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Ta đã có người trong lòng",
+        "requires": {
+          "romance": {
+            "lover": true
+          }
+        },
+        "result": {
+          "text": "Sứ giả Hàn gia sầm mặt bỏ về. Tin ấy truyền đi, tới tai cả người ngươi để trong lòng.",
+          "effects": {
+            "romance": {
+              "loverAffinity": 20
+            },
+            "setFlags": [
+              "ke_thu_han_gia"
+            ],
+            "stat.daoHeart": 3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bi_loi_dung_tinh_cam",
+    "category": "romance",
+    "title": "Lời nhờ vả ngọt ngào",
+    "text": "{lover} nắm tay {name}: \"{loverSelf} đang kẹt ở bình cảnh, nếu có Trúc Cơ Đan thì tốt biết mấy…\"",
+    "themes": [
+      "romance",
+      "romance_trouble"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "target": "lover",
+        "minAffinity": 50
+      },
+      "npc": {
+        "masked": true
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Đưa luôn",
+        "requires": {
+          "itemsAll": [
+            "truc_co_dan"
+          ]
+        },
+        "result": {
+          "text": "Một tháng sau, {lover} Trúc Cơ thành công, rồi bận tới mức không còn thời gian gặp ngươi.",
+          "effects": {
+            "removeItems": [
+              "truc_co_dan"
+            ],
+            "romance": {
+              "lose": true
+            },
+            "stat.happiness": -15,
+            "stat.daoHeart": 5
+          }
+        }
+      },
+      {
+        "text": "Hỏi han kỹ trước",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Ngươi phát hiện {lover} xin cùng một thứ từ ba người khác.",
+          "effects": {
+            "romance": {
+              "lose": true
+            },
+            "stat.intellect": 3,
+            "stat.happiness": -8,
+            "stat.daoHeart": 3
+          }
+        },
+        "fail": {
+          "text": "Câu hỏi của ngươi bị coi là nghi ngờ.",
+          "effects": {
+            "npc": {
+              "affinity": -15
+            },
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "\"Cùng nhau đi kiếm\"",
+        "result": {
+          "text": "Đi được nửa đường, {lover} viện cớ quay về.",
+          "effects": {
+            "npc": {
+              "affinity": -5
+            },
+            "stat.intellect": 2,
+            "stat.health": -3
+          }
+        }
+      },
+      {
+        "text": "Nhìn thấu ngay",
+        "requires": {
+          "traitsAny": [
+            "linh_lung_tam"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Ngươi cười, lấy cớ thoái thác. Tim vẫn nhói một chút.",
+          "effects": {
+            "stat.daoHeart": 5,
+            "stat.happiness": -3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "to_tinh",
+    "category": "romance",
+    "title": "Tỏ tình",
+    "text": "Đêm rằm, trên vách núi chỉ có hai người. {name} biết nếu không nói bây giờ thì sẽ không bao giờ nói.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "target": "lover",
+        "minAffinity": 70,
+        "couple": false,
+        "partner": false
+      }
+    },
+    "weight": 6,
+    "cooldownYears": 3,
+    "choices": [
+      {
+        "text": "Nói thẳng",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "{lover} không trả lời, chỉ nắm tay ngươi.",
+          "effects": {
+            "romance": {
+              "couple": true
+            },
+            "stat.happiness": 15,
+            "stat.daoHeart": 2
+          }
+        },
+        "fail": {
+          "text": "\"Ta coi ngươi như người nhà.\" Gió trên núi lạnh hơn ngươi tưởng.",
+          "effects": {
+            "npc": {
+              "affinity": -10
+            },
+            "stat.happiness": -15,
+            "stat.daoHeart": 3
+          }
+        }
+      },
+      {
+        "text": "Viết thư rồi trốn đi bế quan",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Một năm sau xuất quan, {lover} đứng chờ ở cửa động, tay cầm lá thư đã sờn mép.",
+          "effects": {
+            "romance": {
+              "couple": true
+            },
+            "cultProgress": 10,
+            "stat.happiness": 8,
+            "stat.comprehension": 1
+          }
+        },
+        "fail": {
+          "text": "Một năm sau xuất quan, lá thư hồi âm chỉ có một chữ: \"Xin lỗi.\"",
+          "effects": {
+            "npc": {
+              "affinity": -10
+            },
+            "cultProgress": 10,
+            "stat.happiness": -8,
+            "stat.comprehension": 1
+          }
+        }
+      },
+      {
+        "text": "Không nói, giữ trong lòng",
+        "result": {
+          "text": "Có những người, đứng cạnh là đủ.",
+          "effects": {
+            "stat.daoHeart": 3,
+            "stat.happiness": -5,
+            "npc": {
+              "affinity": 5
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "song_tu",
+    "category": "romance",
+    "title": "Song tu",
+    "text": "Đạo lữ khẽ nói: \"Bình cảnh của ta, có lẽ cần {playerDear} giúp một tay.\" Ngọn đèn trong động phủ tắt.",
+    "tags": [
+      "mature"
+    ],
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "target": "partner",
+        "targetRooted": true
+      },
+      "root": {
+        "usable": true
+      },
+      "realm": {
+        "min": "luyen_khi"
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Song tu theo phép chính đạo",
+        "result": {
+          "text": "Hai luồng linh khí hòa vào nhau như hai dòng suối nhập sông.",
+          "effects": {
+            "cultProgress": 20,
+            "romance": {
+              "partnerProgress": 20
+            },
+            "stat.happiness": 8
+          }
+        }
+      },
+      {
+        "text": "Nhường hết linh khí cho đạo lữ",
+        "result": {
+          "text": "Đạo lữ đột phá. Ngươi lùi lại nửa tầng.",
+          "effects": {
+            "romance": {
+              "partnerProgress": 40
+            },
+            "cultProgress": -10,
+            "npc": {
+              "affinity": 20
+            },
+            "stat.daoHeart": 3
+          }
+        }
+      },
+      {
+        "text": "Hẹn khi khác, chuyên tâm bế quan",
+        "result": {
+          "text": "Đạo lữ không nói gì, chỉ khép cửa nhẹ hơn mọi khi.",
+          "effects": {
+            "stat.comprehension": 1,
+            "npc": {
+              "affinity": -5
+            },
+            "stat.happiness": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "chia_ly_tho_nguyen",
+    "category": "romance",
+    "title": "Tóc bạc một bên",
+    "text": "Sáng nay {lover} soi gương, nhặt ra một sợi tóc bạc, rồi lại nhìn khuôn mặt vẫn trẻ như cũ của {name}.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "target": "beloved",
+        "targetRooted": false
+      },
+      "root": {
+        "usable": true
+      },
+      "realm": {
+        "min": "truc_co"
+      }
+    },
+    "weight": 5,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Ở bên tới cuối đời người ấy",
+        "result": {
+          "text": "Ngươi ít bế quan, nhiều năm nấu cơm. Người ấy đi lúc đang cười.",
+          "effects": {
+            "speedBuff": {
+              "mul": 0.7,
+              "years": 30
+            },
+            "stat.happiness": 10,
+            "stat.daoHeart": 5
+          }
+        }
+      },
+      {
+        "text": "Tìm Trú Nhan Đan, kéo dài tuổi xuân cho người ấy",
+        "requires": {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 30
+            }
+          ]
+        },
+        "result": {
+          "text": "Thuốc chỉ giữ được dung nhan, không giữ được thọ nguyên. Người ấy vẫn vui.",
+          "effects": {
+            "spiritStones": -30,
+            "stat.happiness": 5,
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Rời đi khi còn đẹp",
+        "result": {
+          "text": "Ngươi đi trong một đêm. Người ấy không đuổi theo.",
+          "effects": {
+            "romance": {
+              "lose": true
+            },
+            "stat.happiness": -20,
+            "stat.daoHeart": 5,
+            "setFlags": [
+              "tam_ma_nguoi_cu"
+            ]
+          }
+        }
+      },
+      {
+        "text": "Cùng già đi một chút cho có đôi",
+        "requires": {
+          "traitsAny": [
+            "truong_xuan_the"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Ngươi để tóc bạc theo, người ta tưởng hai người cùng tuổi.",
+          "effects": {
+            "stat.charm": -3,
+            "stat.happiness": 10
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "nguoi_cu_tro_ve",
+    "category": "romance",
+    "title": "Người cũ trở về",
+    "text": "Ở phường thị, một bóng người quen dừng lại trước mặt {name}. Bao năm trôi qua, cảnh giới người ấy đã cao hơn, hoặc thấp hơn, so với ngươi.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "target": "ex"
+      }
+    },
+    "weight": 3,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Mời một chén rượu, nói chuyện cũ",
+        "result": {
+          "text": "Không ai nhắc tới chuyện năm xưa. Chén rượu uống rất chậm.",
+          "effects": {
+            "npc": {
+              "affinity": 10,
+              "role": "người cũ"
+            },
+            "stat.happiness": 5,
+            "stat.daoHeart": 2,
+            "clearFlags": [
+              "tam_ma_nguoi_cu"
+            ]
+          }
+        }
+      },
+      {
+        "text": "Làm như không quen",
+        "result": {
+          "text": "Người ấy cũng không gọi. Hai bóng lưng đi về hai phía.",
+          "effects": {
+            "stat.daoHeart": -2,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Thử nối lại",
+        "requires": {
+          "romance": {
+            "lover": false,
+            "partner": false
+          }
+        },
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Người ấy cười, như chưa từng có mấy năm xa cách.",
+          "effects": {
+            "romance": {
+              "pursue": true
+            },
+            "npc": {
+              "affinity": 15
+            },
+            "stat.happiness": 10
+          }
+        },
+        "fail": {
+          "text": "\"Muộn rồi.\" Người ấy đi, không ngoảnh lại.",
+          "effects": {
+            "stat.happiness": -8
+          }
+        }
+      }
+    ]
+  }
+]

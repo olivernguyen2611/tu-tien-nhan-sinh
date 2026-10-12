@@ -21,7 +21,7 @@ function disciple(patch: Partial<GameState> = {}, cult: Partial<GameState['cult'
     aptitudes: { physique: 50, comprehension: 50, luck: 50, daoHeart: 50 },
     traits: [],
     log: [...b.log, { age: 14, lines: [] }],
-    events: { ...b.events, followUps: [] },
+    events: { ...b.events, followUps: [], npc: null },
     cult: { ...b.cult, realm: 'luyen_khi', root: SONG, technique: 'dan_khi_quyet', lineage: 'tien', learned: ['dan_khi_quyet'], lifespan: 130, ...cult },
     ...patch,
   };
@@ -30,7 +30,7 @@ function disciple(patch: Partial<GameState> = {}, cult: Partial<GameState['cult'
 describe('sects (task 2.5)', () => {
   it('a usable root books the recruitment event 1–3 years after the test', () => {
     const b = createLife({ seed: 'rec' }, content);
-    const s = startCultivating({ ...b, character: { ...b.character, age: 9 }, cult: { ...b.cult, root: SONG }, events: { ...b.events, followUps: [] } }, content).state;
+    const s = startCultivating({ ...b, character: { ...b.character, age: 9 }, cult: { ...b.cult, root: SONG }, events: { ...b.events, followUps: [], npc: null } }, content).state;
     const booked = s.events.followUps.find((f) => f.event === 'tong_mon_tuyen_do')!;
     expect(booked.atAge).toBeGreaterThanOrEqual(10);
     expect(booked.atAge).toBeLessThanOrEqual(12);
@@ -49,7 +49,7 @@ describe('sects (task 2.5)', () => {
   });
 
   it('the recruitment event locks sects the life cannot join and joins through the choice', () => {
-    const s = { ...disciple({}, {}), events: { pending: 'tong_mon_tuyen_do', history: {}, followUps: [] } };
+    const s = { ...disciple({}, {}), events: { pending: 'tong_mon_tuyen_do', history: {}, followUps: [], npc: null } };
     const choices = visibleChoices(s, content, findEvent(content, 'tong_mon_tuyen_do')!);
     expect(choices.find((c) => c.text.includes('Vô Ưu'))?.disabled).toBe(true);
     const r = resolveChoice(s, content, 0);

@@ -1,0 +1,783 @@
+[
+  {
+    "id": "huyet_te_dot_pha",
+    "category": "demonic",
+    "title": "Giọng nói trong bình cảnh",
+    "text": "Đêm thứ một trăm bế quan, có tiếng thì thầm: \"Ngoài núi có một thôn ba trăm người. Chỉ cần ba trăm giọt máu đầu tim, bình cảnh sẽ vỡ.\"",
+    "tags": [
+      "dark",
+      "violence"
+    ],
+    "themes": [
+      "demonic",
+      "heart_demon"
+    ],
+    "conditions": {
+      "peakFails": {
+        "min": 2
+      },
+      "realm": {
+        "min": "luyen_khi"
+      }
+    },
+    "weight": 5,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Làm theo",
+        "result": {
+          "text": "Bình cảnh vỡ. Thôn ấy từ đó không còn tiếng gà gáy.",
+          "effects": {
+            "nextBreakthroughBonus": 40,
+            "karma": -40,
+            "heartDemon": 2,
+            "kill": true,
+            "reputation": {
+              "chinh": -30
+            },
+            "stat.daoHeart": -15
+          }
+        }
+      },
+      {
+        "text": "Từ chối, tiếp tục khổ tu",
+        "result": {
+          "text": "Ngươi nhắm mắt niệm khẩu quyết tới sáng. Tiếng thì thầm nhỏ dần.",
+          "effects": {
+            "stat.daoHeart": 5,
+            "reducePeakFails": 1
+          }
+        }
+      },
+      {
+        "text": "Truy tìm nguồn của giọng nói",
+        "check": {
+          "stat": "stat.daoHeart",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Là một tàn hồn ma tu bám vào động phủ. Ngươi diệt nó.",
+          "effects": {
+            "stat.daoHeart": 8,
+            "stat.comprehension": 2
+          }
+        },
+        "fail": {
+          "text": "Giọng nói bật cười, chui sâu vào giấc ngủ của ngươi.",
+          "effects": {
+            "heartDemon": 1,
+            "stat.health": -10
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ma_cong_tan_quyen",
+    "category": "demonic",
+    "title": "Ma công tàn quyển",
+    "text": "Trong đáy một chiếc rương mua lại ở chợ đen có quyển sách da đen. Chữ đầu tiên: \"Lấy huyết luyện khí, nhanh gấp ba.\"",
+    "tags": [
+      "dark"
+    ],
+    "themes": [
+      "demonic",
+      "heart_demon"
+    ],
+    "conditions": {
+      "root": {
+        "usable": true
+      },
+      "sect": {
+        "notId": "vo_uu_tu"
+      }
+    },
+    "weight": 3,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Tu thử",
+        "result": {
+          "text": "Tu vi tăng vùn vụt. Đêm ngủ bắt đầu nghe tiếng ai khóc.",
+          "effects": {
+            "learnTechnique": "u_ha_huyet_anh_cong",
+            "stat.daoHeart": -5,
+            "stat.health": -5
+          }
+        }
+      },
+      {
+        "text": "Đốt",
+        "result": {
+          "text": "Sách cháy ra khói đỏ, có tiếng thét rất nhỏ.",
+          "effects": {
+            "stat.daoHeart": 3,
+            "karma": 2
+          }
+        }
+      },
+      {
+        "text": "Bán lại cho U Hà",
+        "result": {
+          "text": "Người áo đen trả tiền không mặc cả, nhìn ngươi như nhìn khách quen tương lai.",
+          "effects": {
+            "spiritStones": 40,
+            "reputation": {
+              "ma": 5
+            },
+            "karma": -5,
+            "stat.daoHeart": -2
+          }
+        }
+      },
+      {
+        "text": "Đọc để biết, không tu",
+        "check": {
+          "stat": "stat.daoHeart",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Biết người biết ta.",
+          "effects": {
+            "stat.intellect": 3
+          }
+        },
+        "fail": {
+          "text": "Chữ trong sách cứ trườn vào giấc mơ.",
+          "effects": {
+            "heartDemon": 1,
+            "stat.daoHeart": -3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tam_ma_nguoi_than",
+    "category": "demonic",
+    "title": "Khuôn mặt người đã khuất",
+    "text": "Giữa lúc nhập định, {deceased} đứng trước mặt {name}, giọng y như ngày còn sống: \"Sao con không cứu ta?\"",
+    "tags": [
+      "dark"
+    ],
+    "themes": [
+      "demonic",
+      "heart_demon"
+    ],
+    "conditions": {
+      "family": {
+        "deadAny": true
+      },
+      "root": {
+        "usable": true
+      },
+      "anyOf": [
+        {
+          "realm": {
+            "min": "truc_co"
+          }
+        },
+        {
+          "stats": [
+            {
+              "stat": "stat.daoHeart",
+              "lte": 30
+            }
+          ]
+        }
+      ]
+    },
+    "weight": 4,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Đáp lời, nói chuyện với bóng người",
+        "result": {
+          "text": "Bóng người cười, càng lúc càng gần.",
+          "effects": {
+            "heartDemon": 1,
+            "stat.happiness": -5,
+            "stat.daoHeart": -5
+          }
+        }
+      },
+      {
+        "text": "Nhắm mắt niệm tâm pháp",
+        "check": {
+          "stat": "stat.daoHeart",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Bóng người tan như sương.",
+          "effects": {
+            "stat.daoHeart": 5
+          }
+        },
+        "fail": {
+          "text": "Bóng người không tan. Ngươi tỉnh dậy, khóe miệng có máu.",
+          "effects": {
+            "heartDemon": 1,
+            "stat.health": -10
+          }
+        }
+      },
+      {
+        "text": "Khóc một trận cho xong",
+        "result": {
+          "text": "Ngươi khóc như hồi bảy tuổi. Bóng người cũng không còn.",
+          "effects": {
+            "stat.happiness": 5,
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Nhìn thẳng, không động",
+        "requires": {
+          "talentsAny": [
+            "bo_de_tam"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Bóng người nhìn ngươi rất lâu, rồi cúi đầu như an lòng mà đi.",
+          "effects": {
+            "stat.daoHeart": 8,
+            "heartDemon": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "lo_dinh_cam_do",
+    "category": "demonic",
+    "title": "Chợ lô đỉnh",
+    "text": "Một ma tu dắt theo một tu sĩ bị phong ấn tu vi, tay đeo xiềng. Hắn mời {name}: \"Lô đỉnh tốt, linh căn Mộc thuần, giá phải chăng.\"",
+    "tags": [
+      "dark",
+      "mature"
+    ],
+    "themes": [
+      "demonic",
+      "heart_demon"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "root": {
+        "usable": true
+      }
+    },
+    "weight": 1.5,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Mua để dùng làm lô đỉnh",
+        "result": {
+          "text": "Tu vi của ngươi tăng. Mỗi đêm ngươi ngủ ít đi một chút.",
+          "effects": {
+            "cultProgress": 30,
+            "karma": -35,
+            "heartDemon": 2,
+            "reputation": {
+              "chinh": -20
+            },
+            "setFlags": [
+              "dung_lo_dinh"
+            ],
+            "stat.daoHeart": -15
+          }
+        }
+      },
+      {
+        "text": "Mua rồi giải phong ấn, thả đi",
+        "requires": {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 40
+            }
+          ]
+        },
+        "result": {
+          "text": "Người ấy đi, không ngoảnh lại. Ba năm sau gửi tới một túi linh thảo.",
+          "effects": {
+            "spiritStones": -40,
+            "karma": 15,
+            "meetNpc": {
+              "role": "người được cứu",
+              "root": true,
+              "adult": true,
+              "affinity": 20,
+              "favor": 40
+            },
+            "stat.daoHeart": 5,
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Ra tay giết ma tu, cứu người",
+        "result": {
+          "text": "Ngươi rút binh khí giữa chợ.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Ma tu buôn người",
+              "realm": "same",
+              "intent": "teach",
+              "lineage": "ma"
+            },
+            "win": {
+              "text": "Xiềng rơi xuống đất. Người bị bán quỳ xuống khóc.",
+              "effects": {
+                "karma": 15,
+                "reputation": {
+                  "chinh": 10,
+                  "ma": -15
+                },
+                "stat.daoHeart": 5
+              }
+            },
+            "lose": {
+              "text": "Ma tu cười khẩy, dắt người đi tiếp.",
+              "effects": {
+                "setFlags": [
+                  "ke_thu_u_ha"
+                ],
+                "stat.health": -10
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Quay đi",
+        "result": {
+          "text": "Tiếng xiềng xích theo ngươi tới tận cổng chợ.",
+          "effects": {
+            "stat.daoHeart": -3,
+            "stat.happiness": -3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "lao_ma_trong_nhan",
+    "category": "demonic",
+    "title": "Lão nhân trong nhẫn",
+    "text": "Chiếc nhẫn sắt nhặt bên đường bỗng nói: \"Tiểu tử, căn cốt không tệ. Ta dạy ngươi tu luyện, đổi lại, mai này giúp ta một việc nhỏ.\"",
+    "tags": [
+      "dark",
+      "rare"
+    ],
+    "themes": [
+      "demonic",
+      "heart_demon"
+    ],
+    "conditions": {
+      "root": {
+        "usable": true
+      }
+    },
+    "weight": 1,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận lời",
+        "result": {
+          "text": "Lão chỉ điểm rất tận tình. Thỉnh thoảng lão nhìn thân thể ngươi bằng ánh mắt của người đi mua nhà.",
+          "effects": {
+            "speedBuff": {
+              "mul": 1.25,
+              "years": 30
+            },
+            "setFlags": [
+              "lao_ma_doat_xa"
+            ],
+            "stat.comprehension": 3
+          }
+        }
+      },
+      {
+        "text": "Hỏi kỹ \"việc nhỏ\" là gì",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Lão ấp úng. Ngươi đã hiểu.",
+          "effects": {
+            "stat.intellect": 2,
+            "stat.daoHeart": 2
+          }
+        },
+        "fail": {
+          "text": "Lão cười hiền: \"Việc nhỏ thôi mà.\" Ngươi tin.",
+          "effects": {
+            "speedBuff": {
+              "mul": 1.25,
+              "years": 30
+            },
+            "setFlags": [
+              "lao_ma_doat_xa"
+            ],
+            "stat.comprehension": 3
+          }
+        }
+      },
+      {
+        "text": "Mang nhẫn lên Vô Ưu Tự",
+        "result": {
+          "text": "Phương trượng niệm kinh bảy ngày, chiếc nhẫn thành sắt vụn. Ngài tặng ngươi một chuỗi hạt.",
+          "effects": {
+            "addItems": [
+              "chuoi_hat_vo_uu"
+            ],
+            "karma": 10,
+            "reputation": {
+              "chinh": 5
+            },
+            "stat.daoHeart": 5
+          }
+        }
+      },
+      {
+        "text": "Ném xuống sông",
+        "result": {
+          "text": "Ba năm sau, có người kể nhặt được một chiếc nhẫn biết nói.",
+          "effects": {
+            "stat.happiness": 1,
+            "stat.luck": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "u_ha_giao_dich",
+    "category": "demonic",
+    "title": "Thuốc cứu mạng có giá",
+    "text": "Người áo đen lại ngồi đối diện {name}: \"Mẹ ngươi chỉ còn ba tháng. U Hà có thuốc. Đổi lại, mỗi năm một lá thư về chuyện trong {sect}.\"",
+    "tags": [
+      "dark"
+    ],
+    "themes": [
+      "demonic",
+      "heart_demon"
+    ],
+    "conditions": {
+      "sect": {
+        "member": true,
+        "notId": "u_ha_ma_tong"
+      },
+      "flagsNone": [
+        "no_mother"
+      ],
+      "age": {
+        "min": 30
+      }
+    },
+    "weight": 2,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận lời",
+        "result": {
+          "text": "Mẹ ngươi khỏi bệnh. Mỗi năm ngươi viết một lá thư, mỗi năm ngủ ít đi một chút.",
+          "effects": {
+            "setFlags": [
+              "gian_te_u_ha"
+            ],
+            "karma": -10,
+            "stat.happiness": 10,
+            "stat.daoHeart": -8
+          }
+        }
+      },
+      {
+        "text": "Từ chối, tự đi tìm thuốc",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Ngươi lật tung ba ngọn núi, tìm được vị thuốc. Mẹ ngươi khỏi bệnh.",
+          "effects": {
+            "stat.daoHeart": 5,
+            "stat.happiness": 10
+          }
+        },
+        "fail": {
+          "text": "Thuốc tìm được thì đã muộn.",
+          "effects": {
+            "relativeDies": "mother",
+            "stat.daoHeart": 3
+          }
+        }
+      },
+      {
+        "text": "Báo tông môn, xin tông môn cứu",
+        "result": {
+          "text": "Bách Thảo Cốc ra tay, đòi ngươi trả bằng ba năm cống hiến.",
+          "effects": {
+            "sectContribution": -60,
+            "stat.happiness": 8,
+            "stat.daoHeart": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "huyet_dan_cho_den",
+    "category": "demonic",
+    "title": "Huyết đan ở chợ đen",
+    "text": "Viên đan đỏ thắm, rẻ một nửa so với Tụ Khí Đan. Người bán cười: \"Đừng hỏi làm từ gì.\"",
+    "tags": [
+      "dark"
+    ],
+    "themes": [
+      "demonic",
+      "heart_demon",
+      "market"
+    ],
+    "conditions": {
+      "root": {
+        "usable": true
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Mua và uống",
+        "requires": {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 5
+            }
+          ]
+        },
+        "result": {
+          "text": "Đan tan trong miệng, ngọt lợ như máu.",
+          "effects": {
+            "spiritStones": -5,
+            "cultProgress": 15,
+            "karma": -10,
+            "stat.daoHeart": -5,
+            "stat.health": 3
+          }
+        }
+      },
+      {
+        "text": "Hỏi xem làm từ gì",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Từ phàm nhân mất tích ở Diên Châu.",
+          "effects": {
+            "setFlags": [
+              "nguon_huyet_dan"
+            ],
+            "stat.intellect": 2,
+            "stat.happiness": -5
+          }
+        },
+        "fail": {
+          "text": "Người bán bỏ đi, ngươi bị theo dõi.",
+          "effects": {
+            "stat.happiness": -3,
+            "followUp": {
+              "event": "bi_theo_doi",
+              "afterYears": [
+                1,
+                1
+              ]
+            }
+          }
+        }
+      },
+      {
+        "text": "Đập vỡ sạp hàng",
+        "result": {
+          "text": "Sạp đổ, người bán rút dao.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Chủ sạp huyết đan",
+              "realm": "same",
+              "intent": "teach",
+              "lineage": "ma"
+            },
+            "win": {
+              "text": "Huyết đan lăn đầy đất. Người qua đường vỗ tay.",
+              "effects": {
+                "karma": 8,
+                "reputation": {
+                  "chinh": 5
+                },
+                "stat.daoHeart": 3
+              }
+            },
+            "lose": {
+              "text": "Ngươi bị đánh văng ra giữa đường.",
+              "effects": {
+                "stat.health": -10
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Nối hai đầu mối, báo Bích Lạc Tông",
+        "requires": {
+          "flagsAll": [
+            "nguon_huyet_dan",
+            "nghi_huong_hoa_hoi"
+          ]
+        },
+        "result": {
+          "text": "Bích Lạc Tông cử người xuống núi. Mấy hôm sau, chợ đen vắng hẳn một góc.",
+          "effects": {
+            "reputation": {
+              "chinh": 20
+            },
+            "setFlags": [
+              "ke_thu_u_ha"
+            ],
+            "stat.intellect": 3,
+            "stat.daoHeart": 3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "cam_thuat_dot_huyet",
+    "category": "demonic",
+    "title": "Cấm thuật đốt huyết",
+    "text": "Kẻ địch chặn đường mạnh hơn cả một đại cảnh giới, người thân đứng ngay sau lưng {name}. Trong đầu hiện lên một khẩu quyết đã thấy ở đâu đó: đốt mười năm thọ nguyên, đổi một nén nhang sức mạnh.",
+    "tags": [
+      "violence",
+      "dark"
+    ],
+    "themes": [
+      "demonic",
+      "heart_demon"
+    ],
+    "conditions": {
+      "root": {
+        "usable": true
+      },
+      "realm": {
+        "min": "luyen_khi"
+      },
+      "anyOf": [
+        {
+          "family": {
+            "parentAlive": true
+          }
+        },
+        {
+          "romance": {
+            "partner": true
+          }
+        }
+      ]
+    },
+    "weight": 1,
+    "cooldownYears": 30,
+    "choices": [
+      {
+        "text": "Đốt huyết",
+        "result": {
+          "text": "Huyết khí bốc lên như lửa.",
+          "effects": {
+            "lifespanYears": -10,
+            "stat.health": -15,
+            "stat.charm": -3,
+            "stat.daoHeart": 3
+          },
+          "fight": {
+            "foe": {
+              "name": "Kẻ địch",
+              "realm": "above",
+              "intent": "rob",
+              "powerMul": 0.5
+            },
+            "win": {
+              "text": "Ngươi thắng. Tóc ngươi bạc mất một nửa.",
+              "effects": {
+                "stat.happiness": 5
+              }
+            },
+            "lose": {
+              "text": "Đốt huyết vẫn không đủ.",
+              "effects": {
+                "stat.health": -10
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Đốt huyết, lại thêm hai mươi năm",
+        "result": {
+          "text": "Ngươi đốt tới khi da nóng như than.",
+          "effects": {
+            "lifespanYears": -30,
+            "stat.health": -30,
+            "stat.physique": -5
+          },
+          "fight": {
+            "foe": {
+              "name": "Kẻ địch",
+              "realm": "above",
+              "intent": "rob",
+              "powerMul": 0.33
+            },
+            "win": {
+              "text": "Kẻ địch chết. Ngươi nằm liệt ba tháng.",
+              "effects": {
+                "stat.happiness": 5
+              }
+            },
+            "lose": {
+              "text": "Ba mươi năm thọ nguyên đổi một trận thua.",
+              "effects": {
+                "stat.health": -10
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Liều chạy, cõng theo người bên cạnh",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Ngươi chạy tới khi kẻ địch chỉ còn là một chấm đen.",
+          "effects": {
+            "stat.happiness": 5,
+            "stat.health": -10
+          }
+        },
+        "fail": {
+          "text": "Người bên cạnh trúng một chưởng, trọng thương.",
+          "effects": {
+            "stat.happiness": -20
+          }
+        }
+      }
+    ]
+  }
+]

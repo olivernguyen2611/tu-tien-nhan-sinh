@@ -1,4 +1,5 @@
 // Creating a new life. Pure: same seed + same input → same character.
+import { ageNpcs, npcById } from '../systems/npcs';
 import type { Content } from './content';
 import { Rng } from './rng';
 import { APTITUDES, MORTAL_STATS } from './schemas';
@@ -13,6 +14,8 @@ import { applyJobCrafts } from '../systems/crafts';
 import { careerYear } from '../systems/career';
 import { sectYear } from '../systems/sect';
 import { lineageYear, rollPaths } from '../systems/paths';
+import { rankingYear } from '../systems/rankings';
+import { romanceYear, romanceTarget } from '../systems/romance';
 
 export interface NewLifeInput {
   seed: string;
@@ -31,7 +34,35 @@ export function randomName(rng: Rng, content: Content, gender: Gender): string {
 
 export function fillTemplate(text: string, state: GameState, content?: Content): string {
   const sect = content?.sects.find((s) => s.id === state.sect.id)?.name ?? 'tông môn';
-  return text.replace(/\{name\}/g, state.character.name).replace(/\{hometown\}/g, state.character.hometown).replace(/\{sect\}/g, sect);
+  // Task 3.4: {npc} = the event's NPC, {npcRole} = how the player knows them, {npcKin} = the dead relative an heir avenges.
+  const npc = npcById(state, state.events.npc);
+  const kin = npcById(state, npc?.heirOf);
+  return text
+    .replace(/\{name\}/g, state.character.name)
+    .replace(/\{hometown\}/g, state.character.hometown)
+    .replace(/\{sect\}/g, sect)
+    .replace(/\{npc\}/g, npc?.name ?? 'người kia')
+    .replace(/\{npcRole\}/g, npc?.role ?? 'người quen')
+    .replace(/\{npcKin\}/g, kin?.name ?? 'người thân')
+    // Task 3.4: the NPC's outward character and true nature, lower-case for mid-sentence use.
+    .replace(/\{npcSurface\}/g, (content?.npcTraits.surface.find((x) => x.id === npc?.surface)?.name ?? 'dễ gần').toLowerCase())
+    .replace(/\{npcNature\}/g, (content?.npcTraits.nature.find((x) => x.id === npc?.nature)?.name ?? 'khó đoán').toLowerCase())
+    // Task 3.6: {lover} = the đạo lữ, else the one being courted.
+    .replace(/\{lover\}/g, romanceTarget(state, 'beloved')?.name ?? 'người ấy')
+    // Task 3.9: forms of address by gender: the lover calls themself muội/huynh, calls the player chàng/nàng.
+    .replace(/\{loverSelf\}/g, romanceTarget(state, 'beloved')?.gender === 'nam' ? 'huynh' : 'muội')
+    .replace(/\{playerDear\}/g, state.character.gender === 'nam' ? 'chàng' : 'nàng')
+    // Task 3.9: {deceased} = a parent who has died, else any relative.
+    .replace(/\{deceased\}/g, deceasedName(state));
+}
+
+function deceasedName(state: GameState): string {
+  const dead = state.family.filter((r) => !r.alive);
+  const parent = dead.find((r) => r.role === 'father' || r.role === 'mother');
+  const r = parent ?? dead[0];
+  if (!r) return 'người đã khuất';
+  const call = r.role === 'father' ? 'cha' : r.role === 'mother' ? 'mẹ' : r.role === 'child' ? 'đứa con' : 'người thân';
+  return `${call} ${r.name}`;
 }
 
 export function createLife(input: NewLifeInput, content: Content): GameState {
@@ -79,6 +110,9 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     itemUse: { lastAge: {}, spent: [], nextBreakthrough: 0, nextCombat: 0 },
     bargains: {},
     combat: null,
+    npcs: [],
+    ranking: { prodigies: [], rank: null },
+    romance: { lover: null, couple: false, partner: null, exes: [], rivals: 0, lastActions: {} },
     talents: [],
     fate: null,
     sect: { id: null, rank: 0, since: 0, contribution: 0, master: null, lastMission: null, lastMasterTry: null, left: [] },
@@ -90,7 +124,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     character: { name, gender, originId: origin.id, hometown, age: 0 },
     stats,
     aptitudes,
-    cult: { realm: 'pham_nhan', stage: 0, progress: 0, root: null, lifespan, fails: {}, injuredUntil: null, technique: null, learned: [], scrolls: [], buffs: [], nextBonus: 0, preceptBreaks: 0, lineagesAdopted: [], foundation: null, lastMajorAttempt: null, lineage: null },
+    cult: { realm: 'pham_nhan', stage: 0, progress: 0, root: null, lifespan, fails: {}, injuredUntil: null, technique: null, learned: [], scrolls: [], buffs: [], nextBonus: 0, preceptBreaks: 0, lineagesAdopted: [], heartDemon: 0, foundation: null, lastMajorAttempt: null, lineage: null },
     money: { silver: origin.silver, spiritStones: origin.spiritStones },
     social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0, trieu_dinh: 0, giang_ho: 0 } },
     flags: origin.noParents ? { no_parents: true, no_father: true, no_mother: true } : {},
@@ -102,6 +136,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
       history: {},
       // Every life meets the world's root test once, at an age in balance.roots.testAge.
       followUps: content.world.rootTestEvent ? [{ event: content.world.rootTestEvent, atAge: rootTestAge(input.seed, content) }] : [],
+      npc: null,
     },
     extremes: { streak: {}, active: {}, givenAt: {} },
     log: [],
@@ -117,7 +152,7 @@ export function advanceYear(state: GameState, content: Content): GameState {
   if (!state.alive || state.events.pending || state.fate || state.combat) return state;
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content);
+  const body = checkDeath(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content);
   const next = body.alive ? rollYearEvent(body, content) : body;
   // The year's log block exists before family news and the event are added to it.
   const log = next.log.slice();

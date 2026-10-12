@@ -114,7 +114,7 @@ describe('Thiên địa kỳ vật (task 2.11)', () => {
   });
 
   it('works through the event choice', () => {
-    const s = { ...rootless(mortal('ev', 20)), events: { pending: 'tuy_linh_mach', history: {}, followUps: [] } };
+    const s = { ...rootless(mortal('ev', 20)), events: { pending: 'tuy_linh_mach', history: {}, followUps: [], npc: null } };
     const r = resolveChoice(s, content, 0);
     expect(r.state.cult.root?.grade).toMatch(/ngu|tu/);
     expect(r.text).toContain('Linh căn:');

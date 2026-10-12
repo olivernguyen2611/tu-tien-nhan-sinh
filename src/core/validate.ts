@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -39,6 +39,9 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'martial.json') return MartialFileSchema;
     if (rest === 'lineages.json') return LineageFileSchema;
     if (rest === 'combat.json') return CombatTextsSchema;
+    if (rest === 'npc-traits.json') return NpcTraitsFileSchema;
+    if (rest === 'rankings.json') return RankingTextsSchema;
+    if (rest === 'romance.json') return RomanceFileSchema;
     return null;
   }
   // Belongs to one world.
@@ -53,11 +56,12 @@ export function schemaFor(path: string): ZodTypeAny | null {
 }
 
 /** Flags the engine sets itself (not via events). */
-export const ENGINE_FLAGS = ['no_aging_charm', 'no_parents', 'no_father', 'no_mother'];
+export const ENGINE_FLAGS = ['no_aging_charm', 'no_parents', 'no_father', 'no_mother', 'mua_hang_gia'];
 /** Words naming a parent in event text, and the flag the engine sets once that parent is gone. */
+// "cha ta", "mẹ hắn", "yêu thú mẹ"… are someone else's parents (task 3.9), not the player's.
 const PARENT_WORDS = [
-  { name: 'cha', flag: 'no_father', word: /(^|[^\p{L}])cha(?![\p{L}])/iu },
-  { name: 'mẹ', flag: 'no_mother', word: /(^|[^\p{L}])mẹ(?![\p{L}])/iu },
+  { name: 'cha', flag: 'no_father', word: /(^|[^\p{L}])(?<!thú\s)cha(?![\p{L}])(?!\s+(ta|hắn|nó|y|của)(?![\p{L}]))/iu },
+  { name: 'mẹ', flag: 'no_mother', word: /(^|[^\p{L}])(?<!thú\s)mẹ(?![\p{L}])(?!\s+(ta|hắn|nó|y|của)(?![\p{L}]))/iu },
 ];
 
 export function validateContent(files: Record<string, unknown>): Problem[] {
@@ -206,6 +210,8 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     for (const choice of event.choices) {
       for (const outcome of [choice.result, choice.success, choice.fail]) {
         outcome?.effects.setFlags.forEach((f) => flagsSet.add(f));
+        // Task 3.3 fights set flags when they end.
+        for (const end of [outcome?.fight?.win, outcome?.fight?.lose, outcome?.fight?.fled]) end?.effects.setFlags.forEach((f) => flagsSet.add(f));
       }
     }
   }
@@ -262,6 +268,23 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       if (careerIds && !careerIds.includes(c)) problems.push({ file, level: 'error', message: `${where} nhắc tới đường đời không tồn tại "${c}"` });
     }
 
+    // Task 3.6 / PLAN H: romance and mature events never reach anyone under 18. conditions.romance
+    // enforces the age of the player and of the lover; otherwise the event needs age.min ≥ 18.
+    const adultOnly = !!event.conditions.romance || (event.conditions.age?.min ?? 0) >= 18;
+    const romantic = event.themes.some((t) => t.startsWith('romance')) || event.tags.includes('mature')
+      || event.choices.some((c) => !c.requires?.romance && [c.result, c.success, c.fail].some((o) => o?.effects.romance));
+    if (romantic && !adultOnly) {
+      problems.push({ file, level: 'error', message: `${where}: sự kiện tình duyên/mature cần conditions.romance hoặc age.min ≥ 18` });
+    }
+    const loverText = /\{lover(Self)?\}/.test(`${event.title} ${event.text} ${event.choices.map((c) => [c.text, c.result?.text, c.success?.text, c.fail?.text].join(' ')).join(' ')}`);
+    if (loverText && !event.conditions.romance?.target && !event.conditions.romance?.lover && !event.conditions.romance?.partner) {
+      problems.push({ file, level: 'error', message: `${where}: nhắc tới {lover} nhưng conditions.romance không yêu cầu có người trong lòng/đạo lữ` });
+    }
+
+    if (/\{deceased\}/.test(`${event.text} ${event.choices.map((c) => [c.text, c.result?.text, c.success?.text, c.fail?.text].join(' ')).join(' ')}`) && !event.conditions.family?.deadAny) {
+      problems.push({ file, level: 'error', message: `${where}: nhắc tới {deceased} nhưng thiếu conditions.family.deadAny` });
+    }
+
     event.choices.forEach((choice, i) => {
       const texts = [choice.text, choice.result?.text, choice.success?.text, choice.fail?.text].filter(Boolean).join(' ');
       for (const p of needsParent(texts, choice.requires?.flagsNone ?? [])) {
@@ -289,6 +312,13 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
         const tech = outcome?.effects.learnTechnique;
         if (tech && techniques && !techniques.some((x) => x.id === tech)) {
           problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: công pháp không tồn tại "${tech}"` });
+        }
+        // Task 3.4: {npc}, npc effects and a foe fromNpc need an NPC: picked by npcTrigger, required by conditions, or met here.
+        const hasNpc = !!event.npcTrigger || !!event.conditions.npc || !!event.conditions.romance?.target || !!choice.requires?.npc || !!fx?.meetNpc;
+        const npcText = /\{npc(Role|Kin)?\}/.test(`${event.text} ${choice.text} ${outcome?.text ?? ''} ${outcome?.fight?.win.text ?? ''} ${outcome?.fight?.lose.text ?? ''}`);
+        const usesNpc = npcText || !!fx?.npc || !!outcome?.fight?.foe.fromNpc || !!outcome?.fight?.win.effects.npc || !!outcome?.fight?.lose.effects.npc;
+        if (usesNpc && !hasNpc) {
+          problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: nhắc tới NPC ({npc}, npc, fromNpc) nhưng sự kiện không có NPC (cần npcTrigger, conditions.npc hoặc meetNpc)` });
         }
         const target = outcome?.effects.followUp?.event;
         if (target && !seen.has(target)) {

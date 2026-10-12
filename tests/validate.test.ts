@@ -9,7 +9,7 @@ const balance = {
   character: { mortalStatRange: [30, 80], aptitudeRange: [10, 90], aptitudeRolls: 2 },
   family: {
     fatherAge: [20, 35], motherAge: [17, 30], affinityStart: [55, 85], olderSiblings: [0, 2], olderSiblingGap: [2, 6],
-    youngerSiblingChance: 0.12, motherMinAgeForChild: 16, motherMaxAgeForChild: 40, maxSiblings: 4, affinityDecay: 1, grief: { father: [-20, -30], mother: [-20, -30], sibling: [-15, -15], parentDaoHeart: 2 },
+    youngerSiblingChance: 0.12, motherMinAgeForChild: 16, motherMaxAgeForChild: 40, maxSiblings: 4, affinityDecay: 1, grief: { father: [-20, -30], mother: [-20, -30], sibling: [-15, -15], child: [-25, -40], parentDaoHeart: 2 },
   },
   lifespan: { mortalBase: 70, mortalVariance: 10, healthAdjustMax: 10 },
   fastForward: { maxYears: 10 },
@@ -32,6 +32,9 @@ const balance = {
   crafts: realBalance.crafts,
   market: realBalance.market,
   combat: realBalance.combat,
+  npcs: realBalance.npcs,
+  rankings: realBalance.rankings,
+  romance: realBalance.romance,
   extremes: { lowAt: 5, highAt: 95, exitLow: 20, exitHigh: 80, karmaLowAt: -80, karmaHighAt: 80, karmaExitLow: -60, karmaExitHigh: 60, years: 3, onceCooldownYears: 10, happinessDrift: 2, happinessRest: 50 },
 };
 

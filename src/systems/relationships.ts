@@ -54,6 +54,7 @@ export function createFamily(rng: Rng, content: Content, surname: string, noPare
 export function relationLabel(r: Relative, playerAge: number): string {
   if (r.role === 'father') return 'Cha';
   if (r.role === 'mother') return 'Mẹ';
+  if (r.role === 'child') return r.gender === 'nam' ? 'Con trai' : 'Con gái';
   if (r.age > playerAge) return r.gender === 'nam' ? 'Anh' : 'Chị';
   return r.gender === 'nam' ? 'Em trai' : 'Em gái';
 }
@@ -78,7 +79,7 @@ export function ageFamily(state: GameState, content: Content): GameState {
       const before = clamp(happiness);
       happiness = clamp(happiness + loss);
       let change = describeDelta('happiness', happiness - before);
-      if (r.role !== 'sibling' && cfg.grief.parentDaoHeart) {
+      if ((r.role === 'father' || r.role === 'mother') && cfg.grief.parentDaoHeart) {
         const d = clamp(daoHeart + cfg.grief.parentDaoHeart) - daoHeart;
         daoHeart += d;
         const dao = describeDelta('daoHeart', d);
@@ -145,7 +146,7 @@ export function availableActions(state: GameState, content: Content, r: Relative
     .filter((a) => age >= a.minAge && (a.maxAge === undefined || age <= a.maxAge))
     .filter((a) => a.roles.length === 0 || a.roles.includes(r.role))
     .filter((a) => a.minTargetAge === undefined || r.age >= a.minTargetAge)
-    .filter((a) => r.role !== 'sibling' || r.age >= 3 || a.id === 'hoi_han')
+    .filter((a) => (r.role !== 'sibling' && r.role !== 'child') || r.age >= 3 || a.id === 'hoi_han')
     .map((a) => {
       const done = r.lastActions[a.id] === age;
       const poor = state.money.silver < a.cost;

@@ -21,7 +21,7 @@ function mortal(age = 12, physique = 60, patch: Partial<GameState> = {}, seed = 
     traits: [],
     flags: {},
     log: [...b.log, { age, lines: [] }],
-    events: { pending: null, history: {}, followUps: [] },
+    events: { pending: null, history: {}, followUps: [], npc: null },
     cult: { ...b.cult, root: NONE, lifespan: 75 },
     ...patch,
   };

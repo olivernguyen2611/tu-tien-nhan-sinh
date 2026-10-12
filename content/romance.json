@@ -1,0 +1,54 @@
+{
+  "tiers": [
+    {
+      "min": 0,
+      "name": "Chán ghét"
+    },
+    {
+      "min": 20,
+      "name": "Lạnh nhạt"
+    },
+    {
+      "min": 40,
+      "name": "Quen biết"
+    },
+    {
+      "min": 60,
+      "name": "Có cảm tình"
+    },
+    {
+      "min": 80,
+      "name": "Tâm đầu ý hợp"
+    },
+    {
+      "min": 95,
+      "name": "Khắc cốt ghi tâm"
+    }
+  ],
+  "texts": {
+    "pursue": "Ngươi bắt đầu để ý tới {npc}. Đi đâu cũng tình cờ đi ngang chỗ người ta.",
+    "giveUp": "Ngươi thôi theo đuổi {npc}. Lòng nhẹ đi một nửa, nửa kia vẫn nặng.",
+    "gift": "Ngươi tặng quà cho {npc}. Người ta nhận, khóe môi cong lên một chút.",
+    "giftRejected": "{npc} trả quà lại, lễ phép mà xa cách. Ngươi ôm quà về, gió chiều hơi lạnh.",
+    "used": "{npc} than thở chuyện thiếu thốn. Ngươi dốc túi giúp, mà sau đó chẳng thấy người ta nhắc tới.",
+    "confessYes": "Ngươi nói hết lòng mình. {npc} im lặng một lúc, rồi khẽ gật đầu. Từ nay hai người là một đôi.",
+    "confessNo": "Ngươi nói hết lòng mình. {npc} cúi đầu: \"Xin lỗi.\" Đường về hôm ấy dài hơn mọi ngày.",
+    "lost": "Ngươi và {npc} đường ai nấy đi.",
+    "died": "{npc} đã không còn. Chỗ ngồi bên cạnh ngươi từ nay để trống.",
+    "rivals": "Quanh {npc} lại có thêm người để ý. Ngươi phải cố hơn.",
+    "wedMortal": "Ngươi và {npc} bái đường thành thân. Cả xóm ăn cỗ ba ngày, gà trong làng vắng hẳn.",
+    "wedCultivator": "Đạo lữ đại điển: ngươi và {npc} cùng thề trước trời đất, từ nay chung một con đường.",
+    "child": "Nhà có thêm một đứa trẻ: {child}. Tiếng khóc đầu tiên làm ngươi luống cuống cả buổi.",
+    "adopt": "Ngươi và {npc} nhận nuôi một đứa trẻ mồ côi, đặt tên là {child}.",
+    "noChild": "Năm nay vẫn chưa có tin vui. Duyên con cái, cưỡng cầu không được.",
+    "childRoot": "{child} lên {age} tuổi, thử linh căn: {root}.",
+    "childNoRoot": "{child} lên {age} tuổi, thử linh căn: không có. Làm phàm nhân cũng tốt."
+  },
+  "labels": {
+    "lover": "Người trong lòng",
+    "couple": "Người yêu",
+    "ex": "Người cũ",
+    "partner": "Đạo lữ",
+    "spouse": "Bạn đời"
+  }
+}

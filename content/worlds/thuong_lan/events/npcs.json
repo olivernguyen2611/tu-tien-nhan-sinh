@@ -1,0 +1,440 @@
+[
+  {
+    "id": "co_nhan_tim_toi",
+    "category": "npc",
+    "title": "Cố nhân tìm tới",
+    "text": "{npc} đứng chặn đường {name}. Chuyện cũ giữa hai người, y vẫn nhớ từng chữ.",
+    "tags": [
+      "violence"
+    ],
+    "conditions": {
+      "npc": {
+        "heir": false
+      }
+    },
+    "weight": 1,
+    "choices": [
+      {
+        "text": "Đánh",
+        "result": {
+          "text": "Hai bên không ai nói thêm câu nào.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Cố nhân",
+              "realm": "same",
+              "intent": "rob",
+              "fromNpc": true
+            },
+            "win": {
+              "text": "{npc} thua, lau máu khóe miệng rồi bỏ đi. Mối thù sâu thêm một tầng.",
+              "effects": {
+                "npc": {
+                  "grudge": 10
+                },
+                "stat.daoHeart": 1
+              }
+            },
+            "lose": {
+              "text": "{npc} đánh ngươi một trận cho hả giận.",
+              "effects": {
+                "npc": {
+                  "grudge": -20
+                },
+                "stat.happiness": -3
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Xin lỗi, bồi thường",
+        "requires": {
+          "realm": {
+            "max": "pham_nhan"
+          },
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 30
+            }
+          ]
+        },
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "{npc} cầm bạc, im lặng một lúc rồi gật đầu. Chuyện cũ coi như cho qua.",
+          "effects": {
+            "silver": -30,
+            "npc": {
+              "grudge": -25,
+              "affinity": 10
+            },
+            "stat.daoHeart": 2
+          }
+        },
+        "fail": {
+          "text": "{npc} nhận bạc nhưng không nhận lời xin lỗi.",
+          "effects": {
+            "silver": -30,
+            "npc": {
+              "grudge": -5
+            },
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Xin lỗi, bồi thường",
+        "requires": {
+          "realm": {
+            "min": "luyen_khi"
+          },
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 20
+            }
+          ]
+        },
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "{npc} cầm linh thạch, im lặng một lúc rồi gật đầu. Chuyện cũ coi như cho qua.",
+          "effects": {
+            "spiritStones": -20,
+            "npc": {
+              "grudge": -25,
+              "affinity": 10
+            },
+            "stat.daoHeart": 2
+          }
+        },
+        "fail": {
+          "text": "{npc} nhận linh thạch nhưng không nhận lời xin lỗi.",
+          "effects": {
+            "spiritStones": -20,
+            "npc": {
+              "grudge": -5
+            },
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Bỏ chạy",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Ngươi chạy thoát. {npc} sẽ còn tìm tới.",
+          "effects": {
+            "stat.physique": 1,
+            "stat.happiness": -2
+          }
+        },
+        "fail": {
+          "text": "{npc} đuổi kịp.",
+          "effects": {
+            "stat.happiness": -2
+          },
+          "fight": {
+            "foe": {
+              "name": "Cố nhân",
+              "realm": "same",
+              "intent": "rob",
+              "fromNpc": true
+            },
+            "win": {
+              "text": "Ngươi thắng, nhưng chạy không được thì thù cũng không tan.",
+              "effects": {
+                "npc": {
+                  "grudge": 10
+                },
+                "stat.health": -2
+              }
+            },
+            "lose": {
+              "text": "{npc} đánh ngươi một trận cho hả giận.",
+              "effects": {
+                "npc": {
+                  "grudge": -20
+                },
+                "stat.happiness": -3
+              }
+            }
+          }
+        }
+      }
+    ],
+    "npcTrigger": "revenge"
+  },
+  {
+    "id": "bao_an",
+    "category": "npc",
+    "title": "Báo ân",
+    "text": "{npc} tìm tới, tay xách một gói quà: \"Ơn năm xưa, nay xin trả.\"",
+    "weight": 1,
+    "choices": [
+      {
+        "text": "Nhận quà",
+        "requires": {
+          "realm": {
+            "max": "pham_nhan"
+          }
+        },
+        "result": {
+          "text": "Gói quà nặng hơn ngươi tưởng.",
+          "effects": {
+            "silver": 40,
+            "npc": {
+              "favor": -30,
+              "affinity": 5
+            },
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Nhận quà",
+        "requires": {
+          "realm": {
+            "min": "luyen_khi"
+          }
+        },
+        "result": {
+          "text": "Trong gói là hai mươi khối linh thạch, gói kỹ ba lớp.",
+          "effects": {
+            "spiritStones": 20,
+            "npc": {
+              "favor": -30,
+              "affinity": 5
+            },
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Xin một viên đan",
+        "result": {
+          "text": "{npc} lục túi, đưa ra viên đan quý nhất mình có.",
+          "effects": {
+            "addItems": [
+              "hoi_xuan_dan"
+            ],
+            "npc": {
+              "favor": -30,
+              "affinity": 5
+            },
+            "stat.health": 3
+          }
+        }
+      },
+      {
+        "text": "Xin một lời chỉ điểm",
+        "result": {
+          "text": "{npc} nói chuyện cả đêm. Sáng ra ngươi thấy đường đi sáng hơn một chút.",
+          "effects": {
+            "npc": {
+              "favor": -30,
+              "affinity": 10
+            },
+            "stat.comprehension": 2
+          }
+        }
+      },
+      {
+        "text": "Từ chối, coi như bạn bè",
+        "result": {
+          "text": "{npc} cười lớn, kéo ngươi đi uống rượu. Ơn chưa trả, tình đã sâu thêm.",
+          "effects": {
+            "npc": {
+              "favor": -10,
+              "affinity": 15
+            },
+            "stat.daoHeart": 2
+          }
+        }
+      }
+    ],
+    "npcTrigger": "repay"
+  },
+  {
+    "id": "hau_due_bao_thu",
+    "category": "npc",
+    "title": "Hậu duệ báo thù",
+    "text": "Một người lạ chặn cửa: \"Ta là {npc}. {npcKin} là cha ta. Ngươi còn nhớ không?\"",
+    "tags": [
+      "violence"
+    ],
+    "conditions": {
+      "npc": {
+        "heir": true
+      }
+    },
+    "weight": 1,
+    "choices": [
+      {
+        "text": "Đánh",
+        "result": {
+          "text": "{npc} rút binh khí. Đường đi của mối thù này bắt đầu từ tay ngươi.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Hậu duệ",
+              "realm": "same",
+              "intent": "kill",
+              "fromNpc": true
+            },
+            "win": {
+              "text": "{npc} gục xuống, mắt vẫn mở.",
+              "effects": {
+                "stat.daoHeart": -2
+              }
+            },
+            "lose": {
+              "text": "Ngươi ngã xuống trước hậu duệ của người mình từng giết.",
+              "effects": {
+                "stat.health": -10
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Nhận tội, bồi thường",
+        "requires": {
+          "realm": {
+            "min": "luyen_khi"
+          },
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 50
+            }
+          ]
+        },
+        "result": {
+          "text": "{npc} cầm linh thạch, không nhìn ngươi, quay lưng đi.",
+          "effects": {
+            "spiritStones": -50,
+            "npc": {
+              "grudge": -40
+            },
+            "karma": 5,
+            "stat.daoHeart": 3
+          }
+        }
+      },
+      {
+        "text": "Nhận tội, bồi thường",
+        "requires": {
+          "realm": {
+            "max": "pham_nhan"
+          },
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 100
+            }
+          ]
+        },
+        "result": {
+          "text": "{npc} cầm bạc, không nhìn ngươi, quay lưng đi.",
+          "effects": {
+            "silver": -100,
+            "npc": {
+              "grudge": -40
+            },
+            "karma": 5,
+            "stat.daoHeart": 3
+          }
+        }
+      },
+      {
+        "text": "Bỏ chạy",
+        "result": {
+          "text": "Ngươi đi trong đêm. Mối thù không đi theo ngươi, nó chờ.",
+          "effects": {
+            "stat.happiness": -5,
+            "stat.daoHeart": -2
+          }
+        }
+      }
+    ],
+    "npcTrigger": "revenge"
+  },
+  {
+    "id": "bo_mat_that",
+    "category": "npc",
+    "title": "Bộ mặt thật",
+    "text": "Chuyện bé xé ra to. {npc} ngày thường {npcSurface}, hôm nay lộ ra một con người khác hẳn: {npcNature}.",
+    "conditions": {
+      "npc": {
+        "masked": true
+      }
+    },
+    "weight": 1,
+    "choices": [
+      {
+        "text": "Giữ quan hệ, coi như chưa thấy",
+        "result": {
+          "text": "Ngươi cười xòa. {npc} cũng cười, như chưa có gì.",
+          "effects": {
+            "npc": {
+              "reveal": true,
+              "affinity": 5
+            },
+            "stat.daoHeart": -2
+          }
+        }
+      },
+      {
+        "text": "Cắt đứt",
+        "result": {
+          "text": "Ngươi đứng dậy, không nói lời nào. Từ đó hai người như người dưng.",
+          "effects": {
+            "npc": {
+              "reveal": true,
+              "affinity": -30
+            },
+            "stat.happiness": -3,
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Nhìn rõ để sau này phòng bị",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Ngươi ghi nhớ từng chi tiết. Lần sau, ngươi sẽ không bị bất ngờ.",
+          "effects": {
+            "npc": {
+              "reveal": true
+            },
+            "stat.intellect": 2
+          }
+        },
+        "fail": {
+          "text": "Ngươi nhìn mãi vẫn không hiểu nổi con người này.",
+          "effects": {
+            "npc": {
+              "reveal": true,
+              "affinity": -5
+            },
+            "stat.happiness": -2
+          }
+        }
+      }
+    ],
+    "npcTrigger": "reveal"
+  }
+]

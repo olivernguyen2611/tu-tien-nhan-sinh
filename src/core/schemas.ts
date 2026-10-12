@@ -13,7 +13,9 @@ export const STAT_KEYS = [...MORTAL_STATS, ...APTITUDES].map((k) => `stat.${k}`)
 export const NUMERIC_KEYS = [...STAT_KEYS, 'silver', 'spiritStones', 'karma', 'age'];
 /** Also readable by conditions and skill checks (task 2.8): craft levels and sect contribution. */
 export const CRAFT_KEYS = ['alchemy', 'forging', 'formation', 'talisman', 'farming', 'beast'].map((c) => `craft.${c}`);
-export const READ_KEYS = [...NUMERIC_KEYS, ...CRAFT_KEYS, 'sect.contribution'];
+/** Task 3.9: faction reputation is readable too. */
+export const REPUTATION_KEYS = ['chinh', 'ma', 'tan_tu', 'yeu', 'trieu_dinh', 'giang_ho'].map((f) => `reputation.${f}`);
+export const READ_KEYS = [...NUMERIC_KEYS, ...CRAFT_KEYS, 'sect.contribution', ...REPUTATION_KEYS];
 const statKey = z.string().refine((k) => STAT_KEYS.includes(k) || CRAFT_KEYS.includes(k), (k) => ({ message: `"${k}" không phải chỉ số (dùng stat.<tên> hoặc craft.<nghệ>)` }));
 const numericKey = z.string().refine((k) => READ_KEYS.includes(k), (k) => ({ message: `"${k}" không phải giá trị đọc được` }));
 
@@ -59,6 +61,49 @@ const BaseConditionsSchema = z
     martial: z.object({ min: z.number().int().optional(), max: z.number().int().optional(), ready: z.boolean().optional() }).strict().optional(),
     /** Born into one of these origins. */
     origins: ids,
+    /** Task 3.9: items carried (all of them). */
+    itemsAll: ids,
+    /**
+     * Task 3.6: romance. Any romance condition also needs the player of age (balance.romance.minAge),
+     * not on the Phật đạo, and the target (if any) alive and of age. `target` makes the event about
+     * that person ({npc}, {lover}, npc effects).
+     */
+    romance: z
+      .object({
+        /** ex: the most recent person who turned the player down or was left, still alive. */
+        target: z.enum(['lover', 'partner', 'beloved', 'ex']).optional(),
+        lover: z.boolean().optional(),
+        couple: z.boolean().optional(),
+        partner: z.boolean().optional(),
+        /** The target's affinity range. */
+        minAffinity: z.number().optional(),
+        maxAffinity: z.number().optional(),
+        /** The target cultivates (has a root) or is a mortal. */
+        targetRooted: z.boolean().optional(),
+        /** Someone who turned the player down, or whom the player left, is still alive. */
+        ex: z.boolean().optional(),
+      })
+      .strict()
+      .optional(),
+    /** Task 3.9: family state ({deceased} = a relative who has died). */
+    family: z.object({ deadAny: z.boolean().optional(), parentAlive: z.boolean().optional() }).strict().optional(),
+    /** Task 3.4: the NPC this event is about (met earlier, or picked by an npcTrigger). */
+    npc: z
+      .object({
+        present: z.boolean().optional(),
+        minGrudge: z.number().optional(),
+        minFavor: z.number().optional(),
+        /** Kin of someone the player killed. */
+        heir: z.boolean().optional(),
+        natureKnown: z.boolean().optional(),
+        /** Their hidden nature does not match the face they show. */
+        masked: z.boolean().optional(),
+        /** Their realm compared to the player's: -1 lower, 0 same, 1 higher. */
+        minRealmGap: z.number().int().optional(),
+        maxRealmGap: z.number().int().optional(),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 
@@ -123,12 +168,62 @@ export const EffectsSchema = z
     learnTechnique: id.optional(),
     /** Thiên địa kỳ vật (task 2.11): a rootless mortal gains a root (balance.kyVat). */
     grantRoot: z.boolean().optional(),
+    /** Task 3.4: meet someone new; they become this event's NPC ({npc} in texts). affinity is added to a stranger's 50. */
+    meetNpc: z
+      .object({
+        role: z.string().min(1),
+        /** Task 3.9: always an adult (romance.minAge), e.g. someone rescued in a mature event. */
+        adult: z.boolean().optional(),
+        realm: z.string().optional(),
+        stage: z.number().int().min(0).optional(),
+        root: z.boolean().optional(),
+        affinity: z.number().optional(),
+        favor: z.number().optional(),
+        grudge: z.number().optional(),
+      })
+      .strict()
+      .optional(),
+    /** Task 3.9: years of lifespan (burning blood: −10). */
+    lifespanYears: z.number().int().optional(),
+    /** Task 3.9: tâm ma seeds (counted for the heart-demon system to come). */
+    heartDemon: z.number().int().optional(),
+    /** Task 3.9: the oldest living parent dies at the end of the year (grief as usual). */
+    relativeDies: z.enum(['mother', 'father', 'parent']).optional(),
+    /** Task 3.6: romance with the event's NPC: start courting them, lose them, become a couple; rivals appear or are exposed. */
+    romance: z
+      .object({
+        pursue: z.boolean().optional(),
+        lose: z.boolean().optional(),
+        couple: z.boolean().optional(),
+        rival: z.number().int().optional(),
+        rivalExposed: z.boolean().optional(),
+        /** Task 3.7: wed the event's NPC (a political match starts at this affinity). */
+        marry: z.object({ affinity: z.number().optional() }).strict().optional(),
+        /** Task 3.7: the đạo lữ's cultivation progress (+% of a stage). */
+        partnerProgress: z.number().optional(),
+        /** Task 3.9: the lover's (else the đạo lữ's) affinity, when the event is about someone else. */
+        loverAffinity: z.number().optional(),
+      })
+      .strict()
+      .optional(),
+    /** Task 3.4: change this event's NPC (sổ ân oán); kill passes the grudge on to kin. */
+    npc: z
+      .object({
+        affinity: z.number().optional(),
+        favor: z.number().optional(),
+        grudge: z.number().optional(),
+        reveal: z.boolean().optional(),
+        kill: z.boolean().optional(),
+        role: z.string().min(1).optional(),
+      })
+      .strict()
+      .optional(),
   })
   .catchall(z.number())
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'heartDemon', 'relativeDies'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -154,6 +249,8 @@ export const FoeSpecSchema = z
     intent: z.enum(['teach', 'rob', 'kill']),
     /** Base chance the foe accepts a plea (balance.combat.pleaIntent when left out). */
     mercy: z.number().min(0).max(1).optional(),
+    /** Task 3.4: the foe is this event's NPC, at their own realm and stage (name, realm, stage are ignored). */
+    fromNpc: z.boolean().default(false),
   })
   .strict();
 
@@ -217,6 +314,8 @@ export const EventSchema = z
     luckAffected: z.boolean().default(false),
     cooldownYears: z.number().int().min(0).default(0),
     oncePerLife: z.boolean().default(false),
+    /** Task 3.4: not in the yearly pool; fires when an NPC's ledger calls for it (that NPC is the event's NPC). */
+    npcTrigger: z.enum(['revenge', 'repay', 'reveal']).optional(),
     choices: z.array(ChoiceSchema).min(1),
   })
   .strict();
@@ -471,7 +570,7 @@ export const BalanceSchema = z
         affinityDecay: z.number().min(0),
         /** When a relative dies: happiness [distant, close] scaled by affinity, plus Đạo tâm for a parent. */
         grief: z
-          .object({ father: griefRange, mother: griefRange, sibling: griefRange, parentDaoHeart: z.number() })
+          .object({ father: griefRange, mother: griefRange, sibling: griefRange, child: griefRange, parentDaoHeart: z.number() })
           .strict(),
       })
       .strict(),
@@ -503,6 +602,115 @@ export const BalanceSchema = z
         milestoneAges: z.array(z.number().int().min(1)),
         milestoneHealth: z.number(),
         milestoneCharm: z.number(),
+      })
+      .strict(),
+    /** Task 3.4: NPCs with their own fate. */
+    npcs: z
+      .object({
+        /** Most NPCs remembered; past that the least important one is forgotten. */
+        max: z.number().int().min(1),
+        /** New NPC's age = player's age + a value in this range (never under minAge). */
+        ageOffset: z.tuple([z.number().int(), z.number().int()]),
+        minAge: z.number().int().min(0),
+        /** Chance a new NPC has a spirit root, and their aptitude range (0–100). */
+        rootChance: probability,
+        aptitude: z.tuple([z.number().int(), z.number().int()]),
+        /** NPC cultivation: % of a stage a year = realm speedPct × (speedBase + aptitude / speedDivisor). */
+        speedBase: z.number().min(0),
+        speedDivisor: z.number().positive(),
+        /** Chance of a sudden death each year (before old age). */
+        deathPerYear: probability,
+        /** Ân and oán fade by this much a year. */
+        fadePerYear: z.number().min(0),
+        /** Nature shows once affinity reaches this. */
+        revealAffinity: z.number(),
+        /** The log reports big news only for NPCs this close, or with a grudge. */
+        newsAffinity: z.number(),
+        /** Revenge: grudge at least revengeAt; chance a year (higher if the NPC is stronger). */
+        revengeAt: z.number(),
+        revengeChance: probability,
+        /** Repaying a kindness: favor at least repayAt; chance a year. */
+        repayAt: z.number(),
+        repayChance: probability,
+        /** Revenge chance × this when the NPC's realm is above the player's. */
+        revengeStrongerMul: z.number().min(0),
+        /** Chance a year that a masked NPC (nature ≠ surface) shows their true face. */
+        revealChance: probability,
+        /** Share of a dead NPC's grudge their kin inherits. */
+        inheritShare: probability,
+      })
+      .strict(),
+    /** Task 3.6: romance (thiện cảm, theo đuổi, tặng quà, tỏ tình). */
+    romance: z
+      .object({
+        /** Nobody younger takes part in romance (PLAN H). */
+        minAge: z.number().int().min(18),
+        /** Gift: silver for a mortal player, spirit stones for a cultivator; affinity gained (+ charm above 50 ÷ giftCharmDivisor). */
+        giftSilver: z.number().int().min(0),
+        giftStones: z.number().int().min(0),
+        giftAffinity: z.tuple([z.number().int(), z.number().int()]),
+        giftCharmDivisor: z.number().positive(),
+        /** Below this affinity a gift may be turned down. */
+        rejectBelow: z.number(),
+        rejectChance: probability,
+        rejectAffinity: z.number(),
+        /** A masked lover (nature hidden behind a kind face) may use the player: extra money lost. */
+        usedChance: probability,
+        usedSilver: z.number().int().min(0),
+        usedStones: z.number().int().min(0),
+        /** Confession: needs this affinity; chance = base + (affinity − confessAt) × perAffinity + (charm − 50) × perCharm. */
+        confessAt: z.number(),
+        confessBase: z.number(),
+        confessPerAffinity: z.number(),
+        confessPerCharm: z.number(),
+        confessMin: probability,
+        confessMax: probability,
+        confessHappiness: z.number(),
+        rejectHappiness: z.number(),
+        rejectDaoHeart: z.number(),
+        /** Losing a lover or partner to death. */
+        griefHappiness: z.number(),
+        /** Each rival costs this much affinity a year with the lover. */
+        rivalAffinityPerYear: z.number(),
+        /** Task 3.7: wedding cost (silver for a mortal, spirit stones for a cultivator) and joy. */
+        weddingSilver: z.number().int().min(0),
+        weddingStones: z.number().int().min(0),
+        weddingHappiness: z.number(),
+        /** Song tu with a cultivating đạo lữ: yearly cultivation × this (PLAN G.1). */
+        dualCultivationMul: z.number().min(1),
+        /** Trying for a child once a year: base chance, × cultivatorFertility per cultivating parent; the mother's age limit. */
+        birthChance: probability,
+        cultivatorFertility: z.number().min(0).max(1),
+        motherMaxAge: z.number().int(),
+        cultivatorMotherMaxAge: z.number().int(),
+        maxChildren: z.number().int().min(0),
+        childHappiness: z.number(),
+        /** Inheritance: roll the root this many extra times per rooted parent and keep the best; elements come from the player's first. */
+        rootRollsPerParent: z.number().int().min(0),
+        /** Chance the child mutates into a variant root, or inherits the player's special body. */
+        mutationChance: probability,
+        bodyInheritChance: probability,
+      })
+      .strict(),
+    /** Task 3.5: Thiên kiêu bảng, the world's young prodigies. */
+    rankings: z
+      .object({
+        /** Prodigies the world keeps; size of the board shown. */
+        count: z.number().int().min(1),
+        size: z.number().int().min(1),
+        /** First prodigies' age = player's age + this; replacements start at newAge. */
+        ageOffset: z.tuple([z.number().int(), z.number().int()]),
+        newAge: z.tuple([z.number().int(), z.number().int()]),
+        /** Age they start cultivating; past maxAge nobody counts as a prodigy (the player neither). */
+        startAge: z.number().int().min(0),
+        maxAge: z.number().int().min(1),
+        aptitude: z.tuple([z.number().int(), z.number().int()]),
+        /** % of a stage a year = realm speedPct × (speedBase + aptitude / speedDivisor). */
+        speedBase: z.number().min(0),
+        speedDivisor: z.number().positive(),
+        /** Big breakthrough chance = balance.realms breakthroughChance × this. */
+        breakthroughMul: z.number().min(0),
+        deathPerYear: probability,
       })
       .strict(),
     /** Task 3.3: fights (PLAN.md K.4). */
@@ -867,7 +1075,7 @@ export const FamilyActionSchema = z
     minAge: z.number().int().min(0).default(0),
     maxAge: z.number().int().optional(),
     /** Only for these roles; empty = everyone. */
-    roles: z.array(z.enum(['father', 'mother', 'sibling'])).default([]),
+    roles: z.array(z.enum(['father', 'mother', 'sibling', 'child'])).default([]),
     minTargetAge: z.number().int().optional(),
     /** Silver spent. */
     cost: z.number().int().min(0).default(0),
@@ -1396,3 +1604,83 @@ export type CombatTexts = z.infer<typeof CombatTextsSchema>;
 export type FoeSpec = z.infer<typeof FoeSpecSchema>;
 export type Fight = z.infer<typeof FightSchema>;
 export type CombatAction = (typeof COMBAT_ACTIONS)[number];
+
+/** content/npc-traits.json (task 3.4): NPC personalities and life goals. */
+const npcTrait = z.object({ id, name: z.string().min(1), text: z.string().min(1) }).strict();
+export const NpcTraitsFileSchema = z
+  .object({
+    /** Bề ngoài: what the player sees. */
+    surface: z.array(npcTrait),
+    /** Bản chất: hidden until affinity is high or an event shows it. */
+    nature: z.array(
+      npcTrait.extend({
+        /** Grudge fades at this × balance.npcs.fadePerYear (0: never forgets). */
+        grudgeFade: z.number().min(0).default(1),
+        /** Cultivation speed multiplier. */
+        speedMul: z.number().positive().default(1),
+        /** Extra chance of a sudden death each year. */
+        riskPerYear: z.number().min(0).max(1).default(0),
+        /** Surface id this nature always comes with (Chân thành: what you see is what you get). */
+        surface: id.optional(),
+        /** Chân thành: what you see is what you get, so the nature is known from the start. */
+        honest: z.boolean().default(false),
+        /** Surfaces that hide this nature (Ôn hòa hiding Tham lam): such an NPC may show their true face (npcTrigger "reveal"). */
+        masks: ids,
+        /** Revenge / repay chance multipliers and how fast affinity grows. */
+        revengeMul: z.number().min(0).default(1),
+        repayMul: z.number().min(0).default(1),
+        affinityMul: z.number().min(0).default(1),
+      }).strict(),
+    ),
+    goals: z.array(npcTrait),
+  })
+  .strict();
+export type NpcTraitsFile = z.infer<typeof NpcTraitsFileSchema>;
+
+/** content/rankings.json: Thiên kiêu bảng texts (task 3.5). {name}, {rank}, {prodigy}, {realm}. */
+export const RankingTextsSchema = z
+  .object({
+    title: z.string().min(1),
+    note: z.string().min(1),
+    enter: z.string().min(1),
+    rise: z.string().min(1),
+    top: z.string().min(1),
+    drop: z.string().min(1),
+    age: z.string().min(1),
+    fallen: z.string().min(1),
+  })
+  .strict();
+export type RankingTexts = z.infer<typeof RankingTextsSchema>;
+
+/** content/romance.json (task 3.6): affinity tiers and the texts of romance actions. {npc} = the person, {name} = player. */
+export const RomanceFileSchema = z
+  .object({
+    /** Highest min not above the affinity wins. */
+    tiers: z.array(z.object({ min: z.number(), name: z.string().min(1) }).strict()).min(1),
+    texts: z
+      .object({
+        pursue: z.string().min(1),
+        giveUp: z.string().min(1),
+        gift: z.string().min(1),
+        giftRejected: z.string().min(1),
+        used: z.string().min(1),
+        confessYes: z.string().min(1),
+        confessNo: z.string().min(1),
+        lost: z.string().min(1),
+        died: z.string().min(1),
+        rivals: z.string().min(1),
+        /** Task 3.7. {npc}, {child} = the child's name, {root} = the child's spirit root. */
+        wedMortal: z.string().min(1),
+        wedCultivator: z.string().min(1),
+        child: z.string().min(1),
+        adopt: z.string().min(1),
+        noChild: z.string().min(1),
+        childRoot: z.string().min(1),
+        childNoRoot: z.string().min(1),
+      })
+      .strict(),
+    /** Labels for the Người quen tab (partner: a cultivator's đạo lữ; spouse: a mortal's). */
+    labels: z.object({ lover: z.string().min(1), couple: z.string().min(1), ex: z.string().min(1), partner: z.string().min(1), spouse: z.string().min(1) }).strict(),
+  })
+  .strict();
+export type RomanceFile = z.infer<typeof RomanceFileSchema>;
