@@ -14,9 +14,9 @@
     { "hook": "injuryReduce", "add": 0.15 }
   ],
   "texts": {
-    "train": "Một năm luyện võ ({years}/{need} năm cho {next}).",
+    "train": "Một năm luyện võ, đã {years} năm hướng tới {next}.",
     "promote": "Võ công đột phá: {stage}. {description}",
-    "fail": "Xung kích {next} không thành. Gân cốt còn chưa đủ, phải luyện thêm.",
+    "fail": "Luyện đã lâu mà {next} vẫn chưa tới. Phải xem lại gân cốt và ngộ tính.",
     "ascend": "Ngũ khí trong ngũ tạng hợp với ngũ hành, hóa thành Ngũ linh căn. Võ đạo đi tới tận cùng, chạm cửa tiên."
   }
 }

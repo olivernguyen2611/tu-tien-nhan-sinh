@@ -2,6 +2,11 @@
 
 ## [Chưa phát hành]
 
+### Góp ý chơi thử 1 — Luyện võ đột phá theo xác suất (2026-10-12)
+- Bỏ kiểu đếm ngược số năm: năm nào luyện võ cũng có cơ hội đột phá. Tỉ lệ theo Căn cốt và Ngộ tính (mọi bậc đều tính cả hai), tăng dần theo số năm đã luyện tới số năm thường cần của bậc đó (`balance.martial.yearMul` = 0.3 phần tỉ lệ mỗi năm).
+- Bỏ "thất bại lùi năm"; luyện quá lâu mà chưa thành thì nhật ký nhắc xem lại gân cốt, ngộ tính.
+- Bảng tu luyện hiện tỉ lệ đột phá của năm nay.
+
 ### Developer mode — cập nhật toàn diện sau GĐ 5b (2026-10-12)
 - Bảng Dev chia thành mục gập được (dễ dùng trên điện thoại): Chỉ số · Tu luyện & thời gian · Khí vận & Kim Thủ Chỉ · Tông môn, gia tộc, người quen · Vật phẩm & đánh thử · Sự kiện & cờ · Kết thúc đời · Luân hồi.
 - Mới: đặt cảnh giới bất kỳ (phàm nhân được cấp linh căn), lên 1 tầng, đầy tu vi, thọ +50, xóa tâm ma, +500 linh thạch.
