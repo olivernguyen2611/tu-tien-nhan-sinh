@@ -55,7 +55,7 @@ describe('Kim Thủ Chỉ (task 5b.2)', () => {
     const at: GameState = { ...s0, cult: { ...s0.cult, realm: 'kim_dan' } };
     const s = advanceYear(at, content);
     expect(s.goldenFinger!.level).toBe(3);
-    expect(s.aptitudes.physique).toBe(Math.min(100, s0.aptitudes.physique + 5));
+    expect(s.aptitudes.physique).toBe(Math.min(100, s0.aptitudes.physique + 8));
     expect(advanceYear(s, content).aptitudes.physique).toBe(s.aptitudes.physique);
   });
 
