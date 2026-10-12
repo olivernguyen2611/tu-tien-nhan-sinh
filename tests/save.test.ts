@@ -92,7 +92,8 @@ describe('save slots', () => {
     expect(slots[1]).toBeNull();
     expect(firstFreeSlot(store)).toBe(2);
     expect(latestSlot(store, WORLDS)).toBe(3);
-    writeSlot(store, makeSave(lifeAt('c', 1), 2));
+    expect(SLOT_COUNT).toBe(9);
+    for (let n = 2; n <= SLOT_COUNT; n++) if (n !== 3) writeSlot(store, makeSave(lifeAt('c', 1), n));
     expect(firstFreeSlot(store)).toBeNull();
     deleteSlot(store, 1);
     expect(firstFreeSlot(store)).toBe(1);

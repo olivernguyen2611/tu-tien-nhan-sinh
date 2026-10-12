@@ -7,7 +7,7 @@ import { EMPTY_CODEX, mergeCodex, type Codex } from './codex';
 
 /** v2: after the per-version steps in `migrate`, missing fields are backfilled from a fresh life (`backfillLife`). */
 export const SAVE_VERSION = 2;
-export const SLOT_COUNT = 3;
+export const SLOT_COUNT = 9;
 const KEY_PREFIX = 'tutien.save.';
 const META_KEY = 'tutien.meta';
 /** Stay well under the ~5 MB localStorage limit; above this the log is compacted. */
