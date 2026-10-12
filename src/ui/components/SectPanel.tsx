@@ -27,7 +27,8 @@ export type SectAction =
   | { kind: 'decide'; decisionId: string }
   | { kind: 'build'; buildingId: string }
   | { kind: 'donate' }
-  | { kind: 'elder'; npcId: string };
+  | { kind: 'elder'; npcId: string }
+  | { kind: 'recruit'; npcId: string };
 
 export function SectPanel({ state, content, onAction, onClose }: {
   state: GameState;
@@ -196,7 +197,7 @@ export function SectPanel({ state, content, onAction, onClose }: {
         )}
 
         <OwnSectSection state={state} content={content} onFound={(name, rules) => act({ kind: 'found', name, rules })}
-          onDecide={(decisionId) => act({ kind: 'decide', decisionId })} onBuild={(buildingId) => act({ kind: 'build', buildingId })} onDonate={() => act({ kind: 'donate' })} onElder={(npcId) => act({ kind: 'elder', npcId })} />
+          onDecide={(decisionId) => act({ kind: 'decide', decisionId })} onBuild={(buildingId) => act({ kind: 'build', buildingId })} onDonate={() => act({ kind: 'donate' })} onElder={(npcId) => act({ kind: 'elder', npcId })} onRecruit={(npcId) => act({ kind: 'recruit', npcId })} />
 
         {result && <p class={`action-result ${result.good ? 'good' : 'bad'}`}>{result.text}</p>}
         <button class="choice" onClick={onClose}>Đóng</button>
