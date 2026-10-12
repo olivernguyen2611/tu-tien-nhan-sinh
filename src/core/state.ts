@@ -3,7 +3,7 @@ import { ageNpcs, npcById } from '../systems/npcs';
 import type { Content } from './content';
 import { Rng } from './rng';
 import { APTITUDES, MORTAL_STATS } from './schemas';
-import type { GameState, Gender } from './types';
+import type { GameState, Gender, PastSectRecord } from './types';
 import { rollYearEvent } from '../systems/events/engine';
 import { ageFamily, createFamily } from '../systems/relationships';
 import { ageExtremes } from '../systems/extremes';
@@ -22,6 +22,7 @@ import { blessingRerolls } from '../systems/blessings';
 import { withCheckpoints } from '../systems/rewind';
 import { awakenGoldenFinger } from '../systems/goldenFinger';
 import { ownedRebirthTalents, rebirthTalentBonus } from '../systems/rebirthTalents';
+import { pastSectFor } from '../systems/pastSect';
 
 export interface NewLifeInput {
   seed: string;
@@ -36,6 +37,8 @@ export interface NewLifeInput {
   rebirthTalents?: Record<string, number>;
   /** Task 5b.2: a Kim Thủ Chỉ drawn at birth (rollBirthFinger), awakened when the destiny is confirmed. */
   goldenFinger?: string | null;
+  /** Task 5b.7: the sect a past life ran (from the save meta). */
+  pastSect?: PastSectRecord | null;
 }
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
@@ -66,7 +69,10 @@ export function fillTemplate(text: string, state: GameState, content?: Content):
     .replace(/\{loverSelf\}/g, romanceTarget(state, 'beloved')?.gender === 'nam' ? 'huynh' : 'muội')
     .replace(/\{playerDear\}/g, state.character.gender === 'nam' ? 'chàng' : 'nàng')
     // Task 3.9: {deceased} = a parent who has died, else any relative.
-    .replace(/\{deceased\}/g, deceasedName(state));
+    .replace(/\{deceased\}/g, deceasedName(state))
+    // Task 5b.7: the past life's sect and the name its master had then.
+    .replace(/\{pastSect\}/g, state.pastSect?.name ?? 'tông môn cũ')
+    .replace(/\{pastFounder\}/g, state.pastSect?.founder ?? 'vị tổ sư');
 }
 
 function deceasedName(state: GameState): string {
@@ -129,6 +135,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     ranking: { prodigies: [], rank: null },
     seclusion: null,
     ownSect: null,
+    pastSect: pastSectFor(input.pastSect, content),
     ancestry: [],
     blessings,
     rebirthTalents,

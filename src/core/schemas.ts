@@ -96,6 +96,11 @@ const BaseConditionsSchema = z
       })
       .strict()
       .optional(),
+    /** Task 5b.7: the sect a past life ran ({pastSect}, {pastFounder}): known to this life, how far the meeting went, members left. */
+    pastSect: z
+      .object({ has: z.boolean().optional(), status: z.array(z.enum(['unknown', 'met', 'claimed', 'spurned'])).optional(), minMembers: z.number().int().optional() })
+      .strict()
+      .optional(),
     /** Task 5.5: the khí vận chi tử disciple: this life has (had) one; alive, of these templates, taken at least minYears ago. */
     chosen: z
       .object({
@@ -215,6 +220,8 @@ export const EffectsSchema = z
     goldenFinger: id.optional(),
     /** Task 5b.2: the Kim Thủ Chỉ is gone (given up, taken, or the remnant soul driven out). */
     loseGoldenFinger: z.boolean().optional(),
+    /** Task 5b.7: the past life's sect: met, claimed back (becomes this life's ownSect) or turned away from. */
+    pastSect: z.enum(['met', 'claimed', 'spurned']).optional(),
     /** Task 5.6: the master's role towards the khí vận chi tử; "ignore" lets them leave the master's door. */
     chosenRole: z.enum(['protect', 'exploit', 'ignore']).optional(),
     /** Task 4.6: the next step of a multi-step event (bí cảnh); it opens right after this one, the same year. */
@@ -264,7 +271,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1338,6 +1345,11 @@ export const BalanceSchema = z
       .strict(),
     /** Task 5b.5: huy hiệu cuối đời shown on the death screen and the obituary card. */
     badges: z.object({ max: z.number().int().min(1) }).strict(),
+    /**
+     * Task 5b.7: the sect a past life ran. Members shrink by `decay` each life since (gone after maxLives);
+     * claiming it back brings claimShare of them and claimTreasury into the new ownSect.
+     */
+    pastSect: z.object({ decay: probability, maxLives: z.number().int().min(1), claimShare: probability, claimTreasury: z.number().int().min(0) }).strict(),
   })
   .passthrough(); // later tasks add sections (cultivation, lifespan…)
 
@@ -2154,6 +2166,8 @@ export const FoundingFileSchema = z
         decided: z.string().min(1),
         /** {count}, {sect}. */
         donated: z.string().min(1),
+        /** Task 5b.7: the past life's sect taken back ({sect}, {members}). */
+        claimed: z.string().min(1),
       })
       .strict(),
   })

@@ -2,6 +2,13 @@
 
 ## [Chưa phát hành]
 
+### Task 5b.7 — Gặp lại tông môn đời trước (2026-10-12)
+- Đời nào có tông môn tự lập (khai tông hoặc kế thừa), khi mất thì tông môn ấy được ghi lại. Các đời sau trong cùng thế giới sinh ra đã "có duyên" với nó; mỗi đời trôi qua đệ tử còn lại ít đi (`balance.pastSect.decay`), quá 6 đời thì tông môn tan (`maxLives`).
+- 7 sự kiện mới (`events/past-sect.json`): nghe nhắc tên tông cũ, gặp bia sơn môn khắc tên mình kiếp trước (xin vào / tự xưng tổ sư / quay đi), tông môn tàn lụi, viếng mộ chính mình, đồ đệ năm xưa nhận ra đường kiếm, tông cũ gặp nạn (đánh giữ núi), và từ Kim Đan được mời **ngồi lại ghế chưởng môn**.
+- Nhận lại sơn môn: tông cũ thành tông môn của đời này với một nửa số đệ tử còn lại và 200 linh thạch trong kho (`claimShare`, `claimTreasury`); rời tông đang ở như khi khai tông.
+- Điều kiện `pastSect` (has / status / minMembers), hiệu ứng `pastSect` (met / claimed / spurned), chỗ chèn `{pastSect}` và `{pastFounder}`; validator báo lỗi khi nhắc tông cũ mà thiếu điều kiện.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Task 5b.6 — Thử thách tuần (2026-10-12)
 - Màn **Thử thách tuần** mở từ màn tiêu đề (sau kiếp đầu). Mỗi tuần (theo tuần ISO) có một thử thách của thế giới, giống nhau với mọi người chơi: cùng hạt giống, cùng xuất thân / độ khó / khí vận định sẵn.
 - 8 thử thách cho Thương Lan (`content/worlds/thuong_lan/challenges.json`), ví dụ "Phàm Nhân Trường Thọ" (nhà nông, sống tới 90), "Tay Trắng Làm Giàu" (cô nhi, để lại 3.000 lượng), "Thuần Linh Kết Đan".

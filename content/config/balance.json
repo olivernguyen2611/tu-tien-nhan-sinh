@@ -513,5 +513,11 @@
   },
   "badges": {
     "max": 3
+  },
+  "pastSect": {
+    "decay": 0.8,
+    "maxLives": 6,
+    "claimShare": 0.5,
+    "claimTreasury": 200
   }
 }

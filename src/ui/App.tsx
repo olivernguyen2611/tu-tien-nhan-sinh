@@ -12,7 +12,7 @@ import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, lockCost, rerollDestiny, rollDestiny, toggleLock } from '../systems/destiny';
 import {
   deleteSlot, exportSave, firstFreeSlot, latestSlot, listSlots, makeSave, parseSave, readMeta, readSlot, recordNewLife, creditRebirth,
-  slotTaken, writeSlot, buyRebirthTalent, recordCodex, recordAchievements, recordChallenge, type SaveFile,
+  slotTaken, writeSlot, buyRebirthTalent, recordCodex, recordAchievements, recordChallenge, recordPastSect, type SaveFile,
 } from '../systems/save';
 import { checkDeath } from '../systems/time';
 import { GlossaryProvider } from './components/Tooltip';
@@ -55,6 +55,7 @@ import { codexOf } from '../systems/codex';
 import { earnedAchievements, unlockedFingers } from '../systems/achievements';
 import { challengeResult, creditKey, startChallenge, weekKey, weeklyChallenge } from '../systems/challenge';
 import { ChallengeScreen } from './screens/Challenge';
+import { nextPastSectRecord } from '../systems/pastSect';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves' | 'rebirth' | 'codex' | 'challenge';
 /** Why the slot list is open in pick mode. */
@@ -108,6 +109,8 @@ function Screens({ content }: { content: Content }) {
     const r = creditRebirth(store, key, rebirthPoints(life, content).total, life.challenge ? [] : earnedBlessings(life, content));
     const result = challengeResult(life, content);
     if (first && result && life.challenge) recordChallenge(store, life.challenge.week, life.challenge.id, result.score, result.done);
+    // Task 5b.7: the sect this life ran waits for later lives.
+    if (first) recordPastSect(store, nextPastSectRecord(readMeta(store).pastSect, life, content));
     // Task 5b.4: the Thiên Thư keeps what this life saw, and the khí vận chi tử's tale.
     recordCodex(store, codexOf(life, content));
     // Task 5b.5: thành tựu kept across lives; the ones new to this browser are shown.
@@ -231,7 +234,7 @@ function Screens({ content }: { content: Content }) {
           if (cost > readMeta(store).rebirthPoints) return;
           setOriginCost(cost);
           // Tips only for the very first life on this browser.
-          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list, rebirthTalents: readMeta(store).rebirthTalents,
+          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list, rebirthTalents: readMeta(store).rebirthTalents, pastSect: readMeta(store).pastSect,
             goldenFinger: input.goldenFinger ?? rollBirthFinger(input.seed, content, readMeta(store).livesPlayed, readMeta(store).fingerPity) }, content), content));
           setScreen('destiny');
         }}
