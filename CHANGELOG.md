@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### Developer mode: tua ngược thời gian (2026-10-12)
+- Bảng Dev có thêm hai nút **Tua ngược 1 năm** và **Tua ngược 10 năm**: về lại đầu năm đó (trước khi chọn gì), để làm lại các lựa chọn và sự kiện. Nút chỉ sáng khi đã có ảnh chụp của năm ấy.
+- Khi bật Dev mode, game chụp trạng thái đầu mỗi năm (giữ 12 năm gần nhất, kể cả khi bỏ qua nhiều năm hay bế quan). Ảnh chụp chỉ nằm trong bộ nhớ, không vào file lưu; đổi kiếp thì chụp lại từ đầu. Nhật ký ghi dòng `[Dev]`.
+- Số liệu ở `balance.dev`. Mã: `src/systems/timeline.ts`; `advanceYear` báo cho người nghe sau mỗi năm.
+
 ### Danh sách thả có đề mục (2026-10-12)
 - Developer mode: các danh sách chọn dài giờ chia nhóm bằng đề mục (`optgroup`) cho dễ tìm: **Vật phẩm** theo loại (đan dược, pháp khí, phù lục, trận bàn, linh vật, khác), **Công pháp** theo phẩm (Hoàng, Huyền, Địa, Thiên), **Khí vận** theo độ hiếm, **Linh căn** (thường / biến dị), **Sự kiện** theo loại.
 - Thành phần dùng chung `GroupedSelect` (cũng dùng trong tab Gia đạo cho danh sách công pháp và vật phẩm tặng). Danh sách ngắn (cảnh giới, thể chất, tông môn…) giữ nguyên.

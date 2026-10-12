@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import type { Content } from '../core/content';
 import { advanceYear, createLife, fastForward } from '../core/state';
 import type { GameState } from '../core/types';
@@ -51,6 +51,7 @@ import { build, decide, donate, foundSect } from '../systems/ownSect';
 import { newLifeCost, rebirthPoints } from '../systems/rebirth';
 import { earnedBlessings } from '../systems/blessings';
 import { rewind } from '../systems/rewind';
+import { onYearAdvanced, recordSnapshot, rewind as rewindTime, rewindOptions, type Snapshot } from '../systems/timeline';
 import { nextTalentCost } from '../systems/rebirthTalents';
 import { rollBirthFinger } from '../systems/goldenFinger';
 import { RebirthScreen } from './screens/Rebirth';
@@ -95,6 +96,17 @@ function Screens({ content }: { content: Content }) {
   const [message, setMessage] = useState<Message>(null);
   const [saveFailed, setSaveFailed] = useState(false);
   const [, refresh] = useState(0);
+  /** Developer mode's per-year snapshots (backlog 6); memory only. */
+  const history = useRef<Snapshot[]>([]);
+  useEffect(() => {
+    if (!devMode) { history.current = []; return; }
+    const keep = content.balance.dev.rewindKeepYears;
+    return onYearAdvanced((s) => { history.current = recordSnapshot(history.current, s, keep); });
+  }, [devMode, content]);
+  useEffect(() => {
+    // The age the life stands at when dev mode starts to watch it is the first snapshot.
+    if (devMode && life && !history.current.some((h) => h.state.seed === life.seed)) history.current = recordSnapshot([], life, content.balance.dev.rewindKeepYears);
+  }, [devMode, life?.seed]);
 
   useEffect(() => applyThemePref(theme), [theme]);
   const toggleTheme = () => setTheme(nextThemePref);
@@ -425,7 +437,7 @@ function Screens({ content }: { content: Content }) {
         onNewLife={() => setScreen('create')}
         onSummary={() => setScreen('death')}
         onSaves={() => openSaves('main')}
-        dev={devMode ? { meta: readMeta(store), onChange: (next) => setLife(checkDeath(next, content)), onMeta: (m) => { replaceMeta(store, m); refresh((n) => n + 1); }, onDisable: () => toggleDev(false) } : null}
+        dev={devMode ? { rewinds: rewindOptions(history.current, life, content), onRewindTime: (years) => { const r = rewindTime(history.current, life, years); if (r) { history.current = r.history; setLife(r.state); } }, meta: readMeta(store), onChange: (next) => setLife(checkDeath(next, content)), onMeta: (m) => { replaceMeta(store, m); refresh((n) => n + 1); }, onDisable: () => toggleDev(false) } : null}
         theme={theme}
         onToggleTheme={toggleTheme}
       />

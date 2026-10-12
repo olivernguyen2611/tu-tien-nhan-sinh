@@ -39,6 +39,7 @@
       "noteFrom": 5
     }
   },
+  "dev": { "rewindKeepYears": 12, "rewindSteps": [1, 10] },
   "familyBond": {
     "minPlayerAge": 16,
     "insightMax": 100,
