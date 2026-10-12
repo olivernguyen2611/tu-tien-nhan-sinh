@@ -382,6 +382,9 @@ export interface Npc {
   chosen?: { template: string; since: number; role?: 'protect' | 'exploit' | 'ignore' };
   /** Task 5c.1: a member of a sect the player joined (đồng môn), and the age the player last spent time with them. */
   sectmate?: { sect: string; kind: SectmateKind; lastMet: number | null };
+  /** Task 5c.9: recruited into the player's own sect (age joined), and the age of the last invitation (once a year each). */
+  member?: { since: number };
+  recruitTried?: number;
 }
 
 /** Task 5c.1: who a sectmate is to the player. */
