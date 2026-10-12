@@ -68,5 +68,82 @@
       "Động phủ đóng cửa, đèn tắt, trên vách còn dòng chữ chưa khắc xong.",
       "Cầu trường sinh mà chẳng được, thôi thì đi trước một bước."
     ]
+  },
+  "familyBond": {
+    "actionNames": {
+      "spar": "Luận bàn",
+      "discuss": "Luận đạo",
+      "teach": "Truyền công pháp",
+      "gift": "Tặng vật phẩm"
+    },
+    "kindNames": {
+      "pill": "Đan dược",
+      "material": "Linh vật, nguyên liệu",
+      "artifact": "Pháp khí",
+      "talisman": "Phù lục",
+      "array": "Trận bàn",
+      "misc": "Vật phẩm khác"
+    },
+    "texts": {
+      "child": {
+        "spar": [
+          "Hai cha con ra sân luận bàn. {name} đánh trượt ba lần, ngã hai lần, vẫn cười toe: \"Lần sau con thắng!\"",
+          "Ngươi chỉ dùng một ngón tay đỡ chiêu. {name} tức đỏ mặt, đánh lại, lần này chạm được vạt áo ngươi.",
+          "{name} múa một thế quyền học lỏm đâu đó. Ngươi chỉ ra ba chỗ sai, đứa trẻ ghi nhớ cả ba."
+        ],
+        "discuss": [
+          "Đêm trăng, ngươi kể cho {name} nghe vì sao nước chảy xuống mà khí bay lên. Đứa trẻ hỏi lại một câu khiến ngươi ngồi im rất lâu.",
+          "{name} hỏi: \"Cha ơi, tu tiên để làm gì?\" Ngươi trả lời được nửa chừng, rồi nhận ra mình cũng chưa biết hết.",
+          "Hai người ngồi dưới gốc cây luận về chữ \"đạo\". {name} kết luận: đạo là đường về nhà. Ngươi chẳng cãi được."
+        ],
+        "teach": [
+          "Ngươi chép khẩu quyết {technique} từng câu vào tấm giấy dày, dặn {name} học thuộc trước khi học hiểu.",
+          "{name} ngồi xếp bằng, đọc theo từng câu {technique}. Câu nào cũng sai một chữ, câu nào cũng thành thật.",
+          "Ngươi truyền {technique} cho {name}. Đứa trẻ nghe xong hỏi: \"Có cách nào tu mà không phải dậy sớm không?\""
+        ],
+        "gift": [
+          "Ngươi trao {item} cho {name}. Đứa trẻ cầm bằng hai tay, như cầm cả gia tài.",
+          "{name} nhận {item}, nhìn mãi không dám dùng, rồi chạy đi khoe cả xóm.",
+          "Ngươi đặt {item} vào tay {name}: \"Giữ cho kỹ, sau này cần đến.\""
+        ]
+      },
+      "partner": {
+        "spar": [
+          "Ngươi và {name} luận bàn trong sân sau. Kiếm chạm kiếm, ai cũng giữ tay, cuối cùng hòa, cười ngất.",
+          "{name} thua nửa chiêu, bảo hôm nay trời nắng gắt nên không tính. Ngươi đồng ý cho đỡ mất mặt.",
+          "Hai người đấu một trận, đổ mồ hôi, uống chung một bầu rượu. Chẳng ai nhớ ai thắng."
+        ],
+        "discuss": [
+          "Đêm khuya, ngươi và {name} ngồi luận đạo bên chén trà nguội. Mỗi người chỉ ra chỗ kẹt của người kia.",
+          "{name} hỏi một câu về ngũ hành mà ngươi không đáp được. Hai người cùng đi lật sách tới sáng.",
+          "Ngươi nói tới tâm cảnh, {name} nói tới thế đạo. Hai bên không ai thuyết phục được ai, nhưng cả hai đều hiểu thêm."
+        ],
+        "teach": [
+          "Ngươi chậm rãi giảng {technique} cho {name}, từng câu một, như ngày xưa có người giảng cho ngươi.",
+          "{name} nghe {technique} xong, ngồi tĩnh tọa suốt ba ngày. Ngươi canh bên cạnh, ngủ gật hai lần.",
+          "Ngươi truyền {technique} cho {name}. Người ấy bảo công pháp hay thật, chỉ tiếc chữ ngươi chép xấu."
+        ],
+        "gift": [
+          "Ngươi tặng {name} {item}. Người ấy giả vờ chê phô trương, rồi cất kỹ trong tay áo.",
+          "{name} nhận {item}, nhìn ngươi lâu hơn thường lệ. Chẳng nói gì, nhưng tối ấy nấu thêm một món.",
+          "Ngươi đưa {item} cho {name}: \"Của nàng đấy, đừng tiếc.\" Người ấy bật cười: \"Vậy mà bảo là của ta.\""
+        ]
+      },
+      "mismatch": "Công pháp này không hợp căn cơ của người học, tu sẽ chậm và gượng.",
+      "rootGift": {
+        "success": [
+          "{item} tan trong chén thuốc. Qua canh ba, {name} sốt nóng rồi hạ dần; sáng ra, đá thử linh căn chạm tay liền sáng: {root}. Không ai nói được đó là trời thương hay do vật quý, chỉ biết nhà này có thêm người tu.",
+          "Ba ngày ba đêm, ngươi canh bên giường. Khi {name} mở mắt, tay đặt lên đá thử linh căn, đá sáng lên: {root}. Linh căn trời không cho, vật ngàn năm cho thay.",
+          "{name} uống hết {item}, im lặng suốt một ngày. Rồi nói nhỏ: \"Con nghe thấy linh khí rồi.\" Thử lại, quả thật có {root}."
+        ],
+        "fail": [
+          "{item} tan hết mà đá thử linh căn vẫn tối. {name} chỉ thấy người nóng ran một đêm rồi thôi. Vật quý đã mất, ngươi ngồi lặng cả buổi.",
+          "Linh khí xông thẳng vào kinh mạch rồi tản đi như chưa từng đến. {name} ngủ li bì ba ngày, tỉnh dậy vẫn là phàm nhân. Ngươi biết đó là số, mà vẫn không cam.",
+          "Dược lực đã hết, linh căn vẫn không có. Trời sinh đã định, vật quý chỉ gõ cửa chứ không phá cửa. Ngươi nén tiếng thở dài."
+        ]
+      },
+      "heirTechnique": "Cha mẹ để lại cho ngươi {technique}, từng câu khẩu quyết đều đã nghe từ nhỏ. Ngươi bắt đầu tu bằng chính công pháp ấy.",
+      "heirInsight": "Những năm được cha mẹ luận bàn, luận đạo không uổng: ngộ tính của ngươi hơn hẳn lứa tuổi."
+    }
   }
 }

@@ -39,6 +39,25 @@
       "noteFrom": 5
     }
   },
+  "familyBond": {
+    "minPlayerAge": 16,
+    "insightMax": 100,
+    "insightAptitude": 0.12,
+    "insightAptitudeMax": 12,
+    "actions": {
+      "spar": { "minAge": 10, "affinity": [4, 8], "insight": 2, "playerEffects": { "stat.happiness": 1, "stat.health": -1 }, "partnerProgress": 2 },
+      "discuss": { "minAge": 8, "affinity": [3, 7], "insight": 3, "minComprehension": 40, "playerEffects": { "stat.comprehension": 1, "stat.happiness": 1 }, "partnerProgress": 3 },
+      "teach": { "minAge": 12, "affinity": [8, 14], "insight": 6, "matchBonus": 4, "playerEffects": { "stat.happiness": 3 }, "partnerProgress": 6 },
+      "gift": { "minAge": 3, "affinity": [5, 12], "insightByKind": { "pill": 3, "material": 2, "artifact": 1, "talisman": 1, "array": 1, "misc": 1 }, "playerEffects": { "stat.happiness": 2 }, "partnerProgress": 4 }
+    },
+    "rootGift": {
+      "items": { "linh_chi_ngan_nam": 0.75, "bang_tam_lien": 0.4, "dia_nhu_ngan_nam": 0.7, "ha_thu_o_ngan_nam": 0.6 },
+      "tuChance": 0.3,
+      "maxTries": 2,
+      "failHappiness": -4,
+      "insight": 10
+    }
+  },
   "character": {
     "mortalStatRange": [
       30,

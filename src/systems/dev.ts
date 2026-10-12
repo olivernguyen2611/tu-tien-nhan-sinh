@@ -341,6 +341,25 @@ export function devQuestStep(state: GameState, content: Content, what: 'win' | '
   return devLog(finishStep(state, content, what === 'win').state, `ải võ đạo → ${what === 'win' ? 'qua' : 'hỏng'}`);
 }
 
+/** Backlog 2: every child and the đạo lữ can be bonded with again this year. */
+export function devResetBond(state: GameState): GameState {
+  const clear = (a: Record<string, number>) => Object.fromEntries(Object.entries(a).filter(([k]) => !k.startsWith('bond_')));
+  return devLog({
+    ...state,
+    family: state.family.map((r) => ({ ...r, lastActions: clear(r.lastActions) })),
+    npcs: state.npcs.map((n) => (n.lastBond ? { ...n, lastBond: {} } : n)),
+  }, 'gia đạo: làm lại được trong năm');
+}
+
+/** Backlog 2: make every living child rootless again (to test a hậu thiên linh căn), or give them back an ordinary root. */
+export function devChildrenRoot(state: GameState, content: Content, rootless: boolean): GameState {
+  const root = rootless ? { grade: 'none', elements: [] } : { grade: 'song', elements: ['kim', 'hoa'] };
+  return devLog({
+    ...state,
+    family: state.family.map((r) => (r.role === 'child' && r.alive ? { ...r, root, bodyId: null, acquired: false, rootTries: 0 } : r)),
+  }, `con cái → ${rootless ? 'không linh căn' : content.cultivation.roots.grades.find((g) => g.id === 'song')?.name ?? 'song'}`);
+}
+
 /** Every root the dev panel can set: grades (elements from the first ones) and each variant. Bodies are set apart (`devSetBody`). */
 export function devRootOptions(content: Content): { key: string; label: string; root: SpiritRoot }[] {
   const { grades, elements } = content.cultivation.roots;

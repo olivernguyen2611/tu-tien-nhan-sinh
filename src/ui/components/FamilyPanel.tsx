@@ -11,9 +11,11 @@ import { hasHook } from '../../systems/cultivation';
 import { childRootLabel, romanceLabel, romanceViews, type RomanceAction } from '../../systems/romance';
 import { disciples, maxDisciples, recruitBlocked, teachBlocked } from '../../systems/disciples';
 import { ClanSection, type ClanAction } from './ClanSection';
+import { BondSection } from './BondSection';
+import type { BondAction, BondTarget } from '../../systems/familyBond';
 import { Meter } from './Meter';
 
-export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, onClan, onClose }: {
+export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, onClan, onBond, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome text to show under the relative. */
@@ -24,12 +26,14 @@ export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, o
   onDisciple: (npcId: string | null, act?: DiscipleAct) => { text: string; tone: Tone; changes: string } | null;
   /** Task 5.4: found the clan or buy a property; returns the log text. */
   onClan: (action: ClanAction) => string | null;
+  /** Backlog 2: Gia đạo, an action with a child or the đạo lữ (arg: technique or item id). */
+  onBond: (target: BondTarget, action: BondAction, arg?: string) => { text: string; tone: Tone; changes: string };
   onClose: () => void;
 }) {
   const age = state.character.age;
   const [open, setOpen] = useState<string | null>(null);
   const [result, setResult] = useState<{ id: string; text: string; tone: Tone; changes: string } | null>(null);
-  const [tab, setTab] = useState<'family' | 'npcs'>('family');
+  const [tab, setTab] = useState<'family' | 'npcs' | 'bond'>('family');
   // Alive first, then the closest (or most hated) at the top.
   const npcs = state.npcs.slice().sort((a, b) => Number(b.alive) - Number(a.alive) || b.favor + b.grudge + b.affinity - (a.favor + a.grudge + a.affinity));
 
@@ -42,6 +46,7 @@ export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, o
           <button role="tab" class={`tab${tab === 'npcs' ? ' on' : ''}`} aria-selected={tab === 'npcs'} onClick={() => setTab('npcs')}>
             Người quen{npcs.length > 0 && ` (${npcs.filter((n) => n.alive).length})`}
           </button>
+          <button role="tab" class={`tab${tab === 'bond' ? ' on' : ''}`} aria-selected={tab === 'bond'} onClick={() => setTab('bond')}>Gia đạo</button>
         </div>
         {tab === 'npcs' && maxDisciples(state, content) > 0 && (
           <div class="disciples">
@@ -153,6 +158,7 @@ export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, o
             ))}
           </ul>
         ))}
+        {tab === 'bond' && <BondSection state={state} content={content} onBond={onBond} />}
         {tab === 'family' && <ClanSection state={state} content={content} onClan={onClan} />}
         <button class="choice" onClick={onClose}>Đóng</button>
       </div>

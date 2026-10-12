@@ -1653,5 +1653,53 @@
       "oncePerLife": true,
       "mortalOk": true
     }
+  },
+  {
+    "id": "dia_nhu_ngan_nam",
+    "name": "Địa nhũ nghìn năm",
+    "kind": "material",
+    "description": "Giọt sữa đá nhỏ xuống từ nhũ thạch suốt nghìn năm, đặc như mật, ấm như máu.",
+    "summary": "Ăn: Sức khỏe +25. Nguyên liệu luyện đan. Đưa cho người không linh căn có thể mở hậu thiên linh căn.",
+    "price": {
+      "spiritStones": 160
+    },
+    "forSale": false,
+    "use": {
+      "text": "Vị ngọt mà nặng, như nuốt cả một mùa mưa. Người nóng ran rồi nhẹ hẳn.",
+      "effects": [
+        {
+          "hook": "stat.health",
+          "add": 25
+        }
+      ],
+      "oncePerLife": true,
+      "mortalOk": true
+    }
+  },
+  {
+    "id": "ha_thu_o_ngan_nam",
+    "name": "Hà thủ ô nghìn năm",
+    "kind": "material",
+    "description": "Củ đã hóa hình người, có mắt có mũi, nghe nói đêm đến còn biết chạy.",
+    "summary": "Ăn: Thọ nguyên +10 năm, Sức khỏe +20. Đưa cho người không linh căn có thể mở hậu thiên linh căn.",
+    "price": {
+      "spiritStones": 140
+    },
+    "forSale": false,
+    "use": {
+      "text": "Củ sâm hình người tan trong miệng, đắng rồi ngọt, ngọt rồi ấm. Tóc mai dường như bớt bạc.",
+      "effects": [
+        {
+          "hook": "lifespanYears",
+          "add": 10
+        },
+        {
+          "hook": "stat.health",
+          "add": 20
+        }
+      ],
+      "oncePerLife": true,
+      "mortalOk": true
+    }
   }
 ]

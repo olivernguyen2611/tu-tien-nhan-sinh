@@ -572,6 +572,9 @@ button { font: inherit; color: inherit; }
 .quest { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--line); }
 .quest .chip-btn { margin: 4px 6px 0 0; }
 .minigame-keys { display: grid; grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)); gap: 8px; margin: 8px 0; }
+.bond-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 6px; }
+.bond-row { min-width: 0; }
+.bond-row select { width: 100%; min-width: 0; flex: 1 1 100%; }
 .career-row { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--line); }
 .career-row .profile-note { margin: 2px 0 6px; }
 .life-title { margin: 4px 0; font-family: var(--font-story); font-weight: 700; color: var(--rare); }

@@ -9,6 +9,7 @@ import { bargain, buy, sell, buyScroll, placeBid } from '../systems/market';
 import { travel } from '../systems/regions';
 import { act, settle } from '../systems/combat';
 import { performFamilyAction } from '../systems/relationships';
+import { doBond } from '../systems/familyBond';
 import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, lockCost, rerollDestiny, rollDestiny, toggleLock } from '../systems/destiny';
 import {
@@ -318,6 +319,11 @@ function Screens({ content }: { content: Content }) {
         onFamilyAction={(relId, actionId) => {
           const r = performFamilyAction(life, content, relId, actionId);
           setLife(checkDeath(r.state, content));
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+        }}
+        onBond={(target, action, arg) => {
+          const r = doBond(life, content, target, action, arg);
+          setLife(r.state);
           return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
         }}
         onRomance={(npcId, action) => {

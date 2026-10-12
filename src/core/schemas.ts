@@ -394,6 +394,8 @@ export const GlossarySchema = z.array(
 );
 
 const probability = z.number().min(0).max(1);
+
+
 const weightMap = z.record(id, z.number().min(0));
 
 // ---------- Character creation ----------
@@ -593,6 +595,24 @@ export const TraitFileSchema = z.array(TraitSchema).min(1);
 const griefRange = z.tuple([z.number().max(0), z.number().max(0)]);
 const range = z.tuple([z.number(), z.number()]).refine(([a, b]) => a <= b, 'khoảng [min, max] bị ngược');
 
+const BondActionSchema = z
+  .object({
+    minAge: z.number().int().min(0),
+    affinity: range,
+    insight: z.number().min(0).optional(),
+    /** Every action changes the player's stats a little ("stat.<name>": delta). */
+    playerEffects: z.record(z.string(), z.number()),
+    /** Share of a bar the đạo lữ gains (a cultivating spouse only). */
+    partnerProgress: z.number().min(0).optional(),
+    /** discuss: Ngộ tính the player needs. */
+    minComprehension: z.number().min(0).optional(),
+    /** teach: extra insight when the technique suits the child's root. */
+    matchBonus: z.number().min(0).optional(),
+    /** gift: insight by item kind. */
+    insightByKind: z.record(id, z.number().min(0)).optional(),
+  })
+  .strict();
+
 export const BalanceSchema = z
   .object({
     version: z.number().int(),
@@ -645,6 +665,27 @@ export const BalanceSchema = z
             bonusMax: z.number().min(0),
             /** The lift is mentioned in the birth log from this score on. */
             noteFrom: z.number().min(0),
+          })
+          .strict(),
+      })
+      .strict(),
+    /** Backlog 2: Gia đạo, what a parent or spouse does with a child or the đạo lữ. */
+    familyBond: z
+      .object({
+        minPlayerAge: z.number().int().min(0),
+        /** A child's Ngộ tính gathered from bonding caps here; it adds insight × insightAptitude (max insightAptitudeMax) to the heir's Ngộ tính. */
+        insightMax: z.number().int().min(1),
+        insightAptitude: z.number().min(0),
+        insightAptitudeMax: z.number().int().min(0),
+        actions: z.object({ spar: BondActionSchema, discuss: BondActionSchema, teach: BondActionSchema, gift: BondActionSchema }).strict(),
+        /** Thousand-year items that may open a hậu thiên linh căn (id → chance), the share that comes out Tứ instead of Ngũ, tries per person. */
+        rootGift: z
+          .object({
+            items: z.record(id, probability),
+            tuChance: probability,
+            maxTries: z.number().int().min(1),
+            failHappiness: z.number().int().max(0),
+            insight: z.number().int().min(0),
           })
           .strict(),
       })
@@ -1631,6 +1672,26 @@ export const LifeTextsSchema = z
     deathIllness: lines,
     /** Task 4.12 quỷ tu: the offer on the death screen, and the line when the soul rises. */
     ghostOffer: z.string().min(1),
+    /** Backlog 2: Gia đạo wording. {name}, {technique}, {item}, {root}. */
+    familyBond: z
+      .object({
+        actionNames: z.object({ spar: z.string().min(1), discuss: z.string().min(1), teach: z.string().min(1), gift: z.string().min(1) }).strict(),
+        /** Item kind → heading in the gift list. */
+        kindNames: z.record(id, z.string().min(1)),
+        texts: z
+          .object({
+            child: z.object({ spar: lines, discuss: lines, teach: lines, gift: lines }).strict(),
+            partner: z.object({ spar: lines, discuss: lines, teach: lines, gift: lines }).strict(),
+            /** Added when the technique does not suit the child's root. */
+            mismatch: z.string().min(1),
+            /** The heir's start: what the parent taught ({technique}) and the Ngộ tính that came from years of luận đạo. */
+            heirTechnique: z.string().min(1),
+            heirInsight: z.string().min(1),
+            rootGift: z.object({ success: lines, fail: lines }).strict(),
+          })
+          .strict(),
+      })
+      .strict(),
     /** Backlog 5: the khí vận lifted the starting stats (see balance.traits.fate). */
     fateLift: z.string().min(1),
     ghostRise: z.string().min(1),

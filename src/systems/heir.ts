@@ -13,6 +13,7 @@ import { rollRoot, startCultivating } from './cultivation';
 import { learnTechnique } from './technique';
 import { childRootLabel } from './romance';
 import { clanInheritBonus } from './clan';
+import { heirInsightBonus } from './familyBond';
 
 export interface HeirOption {
   kind: 'child' | 'disciple';
@@ -117,7 +118,19 @@ export function continueAsHeir(state: GameState, content: Content, heirId: strin
   const lines: LogLine[] = [{ text: (child ? t.child : t.disciple).replaceAll('{name}', option.name).replaceAll('{parent}', parentName), tone: 'rare' }];
   if (s.ownSect) lines.push({ text: t.sect.replaceAll('{sect}', s.ownSect.name), tone: 'good' });
   s = { ...s, log: [{ age: option.age, lines }] };
+  // Backlog 2 (Gia đạo): what the parent taught the child. The technique is learned once cultivation starts.
+  if (child) {
+    const bonus = heirInsightBonus(content, child);
+    if (bonus > 0) {
+      s = { ...s, aptitudes: { ...s.aptitudes, comprehension: Math.min(100, s.aptitudes.comprehension + bonus) } };
+      s = { ...s, log: [{ ...s.log[0], lines: [...s.log[0].lines, { text: content.lifeTexts.familyBond.texts.heirInsight, tone: 'good' }] }] };
+    }
+  }
   // A child with a usable root, old enough for the root test, starts cultivating now.
-  if (child && option.age >= content.balance.roots.testAge[0]) s = startCultivating(s, content).state;
+  if (child && option.age >= content.balance.roots.testAge[0]) {
+    s = startCultivating(s, content).state;
+    const taught = child.technique && learnTechnique(s, content, child.technique, { quiet: true });
+    if (taught) s = { ...taught.state, log: [{ ...taught.state.log[0], lines: [...taught.state.log[0].lines, { text: content.lifeTexts.familyBond.texts.heirTechnique.replaceAll('{technique}', content.techniques.find((t) => t.id === child.technique)?.name ?? ''), tone: 'good' }] }, ...taught.state.log.slice(1)] };
+  }
   return s;
 }

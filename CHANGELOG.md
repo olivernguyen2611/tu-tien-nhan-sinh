@@ -8,6 +8,15 @@
 
 ## [Chưa phát hành]
 
+### Gia đạo: tương tác với con cái và đạo lữ (2026-10-12)
+- Tab mới **Gia đạo** trong bảng Quan hệ: với mỗi người con và đạo lữ có bốn việc, mỗi việc một lần mỗi năm: **Luận bàn**, **Luận đạo** (cần Ngộ tính 40), **Truyền công pháp** (chọn một công pháp mình đã học; cần có linh căn) và **Tặng vật phẩm** (chọn trong túi, danh sách chia nhóm theo loại). Mọi việc đều cộng thiện cảm và đổi chỉ số của mình một chút.
+- Con cái tích **ngộ** (0–100) qua các việc ấy, nhớ công pháp được truyền. Khi con nối nghiệp, nhận Ngộ tính tương ứng (tối đa +12) và học luôn công pháp cha mẹ truyền, nhật ký ghi rõ. Đạo lữ đang tu thì tiến độ tu luyện nhích lên.
+- **Hậu thiên linh căn**: tặng vật quý nghìn năm (Linh chi, Băng Tâm Liên, Địa nhũ, Hà thủ ô nghìn năm) cho con (hoặc đạo lữ) không linh căn thì có tỉ lệ mở Tứ/Ngũ linh căn hậu thiên; tối đa 2 lần mỗi người, thất bại thì vật quý mất và mình buồn. Luật linh căn trời sinh vẫn giữ: không vật quý thì không có đường tắt, người đã có linh căn hay thể chất thì không bị đổi.
+- 2 vật phẩm mới (Địa nhũ nghìn năm, Hà thủ ô nghìn năm) kèm 2 kỳ ngộ để có (`ngu-linh-can.json`) và 2 lô đấu giá. Số liệu ở `balance.familyBond`, lời văn ở `life-texts.json` (`familyBond`).
+- Developer mode: làm lại các việc gia đạo trong năm, đặt con cái không linh căn hay song linh căn.
+- Thêm `GroupedSelect` (danh sách thả có đề mục) để dùng chung; việc áp dụng cho các danh sách khác nằm ở mục riêng.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Võ đạo: chuỗi nhiệm vụ và mini-game tới Ngũ khí triều nguyên (2026-10-12)
 - Lên **Hóa cảnh** thì sang năm mở chuỗi "Tầm Tam hoa" (4 ải); lên **Tam hoa tụ đỉnh** thì sang năm mở chuỗi "Hợp Ngũ khí" (4 ải). Mỗi năm làm một ải trong bảng Tu luyện, mục Võ đạo; qua ải cuối thì lên cảnh giới kế. Các kỳ ngộ ngẫu nhiên cũ vẫn là đường thứ hai.
 - Ải là **mini-game** hoặc thử sức theo chỉ số. Hai mini-game: **Vòng đá ngũ hành** (chạm đá theo thế tương sinh hay tương khắc, đá đầu cho sẵn) và **Điều tức quan tưởng** (nhớ rồi nhắc lại thứ tự Tinh, Khí, Thần). Sai quá số lần cho phép thì hỏng ải: mất sức khỏe, năm sau thử lại. Có thể dùng vật phẩm hỗ trợ (Ngộ Đạo Trà, Định Tâm Đan…) để được sai thêm một lần hay tăng tỉ lệ. Qua ải được cộng Đạo tâm.
