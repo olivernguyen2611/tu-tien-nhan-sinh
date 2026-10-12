@@ -324,6 +324,7 @@
           "text": "Ngươi rút binh khí giữa chợ.",
           "effects": {},
           "fight": {
+            "rescue": true,
             "foe": {
               "name": "Ma tu buôn người",
               "realm": "same",

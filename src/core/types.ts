@@ -56,6 +56,8 @@ export interface GameState {
   fate: { offered: string[]; refreshesLeft: number } | null;
   /** Task 5.4: the cultivation clan of this line: gia quy, sản nghiệp (property id → count). Passed on to heirs. */
   clan: { name: string; founded: number; founder: string; rules: string[]; properties: Record<string, number> } | null;
+  /** Task 5b.8: Phúc báo brought from the last life (blessings.json id; career = the path that earned it). */
+  blessings: { id: string; career?: string }[];
   /** Task 5.7: lives before this one in the same line (tộc phả), oldest first. */
   ancestry: { name: string; age: number; realm: string; cause: DeathCause; relation: 'child' | 'disciple' | null }[];
   /**
@@ -239,6 +241,8 @@ export interface Battle {
   source: string | null;
   /** Task 3.4: the foe is this NPC (killing them goes through killNpc). */
   npcId: string | null;
+  /** Task 5b.8: fighting to save someone. */
+  rescue?: boolean;
 }
 
 /** Task 3.5: a young prodigy on the Thiên kiêu bảng (not someone the player has met). */

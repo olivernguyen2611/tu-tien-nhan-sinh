@@ -2,6 +2,7 @@
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
 import { TermText } from '../components/Tooltip';
+import { blessingNames } from '../../systems/blessings';
 
 const RARITY_LABEL: Record<string, string> = {
   pham: 'Phàm', luong: 'Lương', uu: 'Ưu', tuyet: 'Tuyệt', thien: 'Thiên', than: 'Thần', ac: 'Ác vận',
@@ -28,6 +29,9 @@ export function DestinyRollScreen({ state, content, rollCount, unlimited, onRero
       <p class="destiny-intro">
         {state.character.name} vừa chào đời. Trời ban ba đạo khí vận, đổi được thì đổi, đổi rồi không lấy lại được.
       </p>
+      {state.blessings.length > 0 && (
+        <p class="destiny-intro blessing-note">Phúc báo kiếp trước: <b>{blessingNames(state.blessings, content).join(', ')}</b>.</p>
+      )}
 
       <div class="destiny-cards">
         {traits.map((t, i) => (
