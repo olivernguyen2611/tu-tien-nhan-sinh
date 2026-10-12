@@ -14,8 +14,10 @@ import { ClanSection, type ClanAction } from './ClanSection';
 import { BondSection } from './BondSection';
 import type { BondAction, BondTarget } from '../../systems/familyBond';
 import { Meter } from './Meter';
+import { ImportSection } from './ImportSection';
+import type { ImportSetup, SavedPerson } from '../../systems/npcLibrary';
 
-export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, onClan, onBond, onSaveNpc, onClose }: {
+export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, onClan, onBond, onSaveNpc, getSources, onImport, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome text to show under the relative. */
@@ -30,6 +32,9 @@ export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, o
   onBond: (target: BondTarget, action: BondAction, arg?: string) => { text: string; tone: Tone; changes: string };
   /** Backlog 11: write this NPC into the Sổ nhân vật; returns the line to show. */
   onSaveNpc: (npcId: string) => { text: string; tone: Tone };
+  /** Backlog 12: the people that can be brought in (read when the form opens), and bringing one in. */
+  getSources: () => SavedPerson[];
+  onImport: (person: SavedPerson, setup: ImportSetup) => { ok: boolean; text: string };
   onClose: () => void;
 }) {
   const age = state.character.age;
@@ -60,6 +65,7 @@ export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, o
             {result?.id === 'recruit' && <p class={`action-result ${result.tone}`}>{result.text}</p>}
           </div>
         )}
+        {tab === 'npcs' && <ImportSection content={content} getSources={getSources} onImport={onImport} />}
         {tab === 'npcs' && (npcs.length === 0 ? (
           <p class="story">Giang hồ mênh mông, ngươi chưa quen được ai.</p>
         ) : (

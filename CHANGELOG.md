@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### Nhập nhân vật đã lưu thành NPC (2026-10-12)
+- Bảng Quan hệ, tab Người quen có nút **Nhập nhân vật đã lưu**. Chọn một người trong Sổ nhân vật hoặc nhân vật chính của một ô lưu khác (chỉ người còn sống), rồi thiết lập: **tên** trong đời này (đổi khi trùng tên), **vai trò** với nhân vật chính (bằng hữu, tri kỷ, ân nhân, đồng môn, đối thủ, kẻ thù, người lạ có duyên, hoặc tự đặt), **thiện cảm, ân, oán** ban đầu (thanh trượt, mở sẵn theo vai trò) và giữ tuổi cũ hay bằng tuổi mình.
+- Người nhập vào giữ cảnh giới, tư chất, linh căn có hay không, tính cách và mục tiêu của họ; từ đó sống, tu luyện và già đi như mọi người quen khác. Nhật ký ghi lại lúc họ xuất hiện.
+- Nội dung (vai trò mẫu, lời văn) do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Sổ nhân vật (2026-10-12)
 - Mục mới **Sổ nhân vật** trong Sổ lưu: lưu lại người đã gặp để mang sang đời khác. Ghi được hai loại: **người quen** (nút "Ghi vào sổ nhân vật" trong bảng Quan hệ, tab Người quen) và **nhân vật chính của một ô lưu** (nút cùng tên trên thẻ ô lưu). Sổ giữ tối đa 40 người (`balance.npcs.libraryMax`), có nút Xóa.
 - Mỗi người ghi lại tên, giới tính, tuổi, thọ nguyên, linh căn có hay không, tư chất, cảnh giới, tính cách và mục tiêu. Sổ nằm trong dữ liệu meta của trình duyệt, không đổi theo ô lưu nào.
