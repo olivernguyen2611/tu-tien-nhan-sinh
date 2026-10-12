@@ -126,7 +126,8 @@
             "stat.charm": 3
           }
         }
-      }
+      },
+      {"text": "Ta biết chuyện này sẽ xảy ra", "hidden": true, "requires": {"flagsAll": ["biet_truoc"]}, "result": {"text": "Kiếp trước con hổ này cắn chết ba người. Kiếp này ngươi đặt bẫy đúng khúc suối nó hay xuống uống nước.", "effects": {"karma": 5, "stat.charm": 3, "silver": 10}}}
     ]
   },
   {
@@ -577,7 +578,8 @@
             "stat.happiness": 3
           }
         }
-      }
+      },
+      {"text": "Ta biết chuyện này sẽ xảy ra", "hidden": true, "requires": {"flagsAll": ["biet_truoc"]}, "result": {"text": "Ngươi biết cổng Tây sẽ vỡ trước. Ngươi dẫn người tới chặn từ sớm, nên lần này cổng không vỡ.", "effects": {"karma": 6, "reputation": {"chinh": 3}, "stat.charm": 2}}}
     ]
   },
   {

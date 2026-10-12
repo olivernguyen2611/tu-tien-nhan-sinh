@@ -369,7 +369,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 5b.7 | [x] Gặp lại tông môn đời trước |
 | 5b.8 | [x] Phúc báo đời phàm nhân sang đời sau; móc mới `rootReroll` (`mortal-path.md` mục 3.1) |
 | 5b.9 | [x] Cầu đầu thai: tiêu điểm Luân Hồi chọn xuất thân đời sau (`mortal-path.md` mục 3.2) |
-| 5b.10 | [ ] Trùng sinh: Hồi Quang Kính, chết thì quay về năm 6 tuổi giữ ký ức; móc mới `rewindOnDeath` (`mortal-path.md` mục 3.3) (✓ phần code; chờ ✍️ sự kiện nhận Hồi Quang Kính + lựa chọn ẩn) |
+| 5b.10 | [x] Trùng sinh: Hồi Quang Kính, chết thì quay về năm 6 tuổi giữ ký ức; móc mới `rewindOnDeath` (`mortal-path.md` mục 3.3) |
 
 ### GĐ 6 — Hoàn thiện
 Cân bằng bằng **mô phỏng tự động** (chạy hàng nghìn đời giả lập, xem thống kê tuổi chết/cảnh giới), âm thanh, hiệu ứng, PWA cài lên điện thoại, chơi offline, tối ưu tốc độ, rà soát hiển thị trên nhiều cỡ màn hình.

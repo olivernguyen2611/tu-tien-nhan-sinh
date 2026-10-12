@@ -4,7 +4,8 @@ import { advanceYear, createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
 import { confirmDestiny, rollDestiny } from '../src/systems/destiny';
 import { checkDeath } from '../src/systems/time';
-import { MEMORY_FLAG, rewind, rewindOffer } from '../src/systems/rewind';
+import { FORESIGHT_FLAG, MEMORY_FLAG, rewind, rewindOffer } from '../src/systems/rewind';
+import { resolveChoice, visibleChoices } from '../src/systems/events/engine';
 import { migrate, makeSave } from '../src/systems/save';
 
 const content = loadContent();
@@ -46,6 +47,7 @@ describe('Trùng sinh (task 5b.10)', () => {
     expect(back.character.age).toBe(6);
     expect(back.cult.root).toEqual(root);
     expect(back.flags[MEMORY_FLAG]).toBe(true);
+    expect(back.flags[FORESIGHT_FLAG]).toBe(true);
     expect(back.inventory.hoi_quang_kinh ?? 0).toBe(0);
     expect(back.rng).not.toEqual(dead.checkpoints.age6!.rng);
     expect(back.log.every((y) => y.age <= 6)).toBe(true);
@@ -71,5 +73,20 @@ describe('Trùng sinh (task 5b.10)', () => {
     const s = born();
     const { checkpoints: _c, ...old } = s;
     expect(migrate(makeSave(old as GameState, 1)).life.checkpoints).toEqual({ age6: null, realm: null });
+  });
+
+  it('Hồi Quang Kính is found in kỳ ngộ; "Ta biết chuyện này sẽ xảy ra" opens only with the memory', () => {
+    const s = { ...live(born(), 20), money: { silver: 100, spiritStones: 0 } };
+    const got = resolveChoice({ ...s, events: { ...s.events, pending: 'hq_tiem_cam_do' } }, content, 0).state;
+    expect(got.inventory.hoi_quang_kinh).toBe(1);
+    const hidden = content.events.filter((e) => e.choices.some((c) => c.text === 'Ta biết chuyện này sẽ xảy ra'));
+    expect(hidden.length).toBeGreaterThanOrEqual(8);
+    for (const e of hidden) {
+      const i = e.choices.findIndex((c) => c.text === 'Ta biết chuyện này sẽ xảy ra');
+      expect(e.choices[i].hidden).toBe(true);
+      const rich = { ...s, money: { silver: 100, spiritStones: 100 } };
+      expect(visibleChoices(rich, content, e).some((v) => v.index === i)).toBe(false);
+      expect(visibleChoices({ ...rich, flags: { ...rich.flags, [FORESIGHT_FLAG]: true } }, content, e).some((v) => v.index === i)).toBe(true);
+    }
   });
 });

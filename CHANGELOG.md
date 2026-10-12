@@ -2,6 +2,12 @@
 
 ## [Chưa phát hành]
 
+### Task 5b.10 — Trùng sinh: nội dung (2026-10-12)
+- 2 kỳ ngộ hiếm cho **Hồi Quang Kính**: gương đồng ở tiệm cầm đồ (mua / mặc cả) và đáy giếng miếu hoang (từ Luyện Khí, thử đạo tâm).
+- Lựa chọn ẩn **"Ta biết chuyện này sẽ xảy ra"** trong 8 sự kiện có sẵn: Lũ quét, Cha lâm bệnh, Bóng người sau lưng, Bản đồ giá rẻ, Hang khai mạch, Thú triều, Đổ thạch, Yêu thú xuống làng. Vài lựa chọn có thử thách nhỏ, vì thế giới đổi khác một chút nên ký ức không phải lúc nào cũng đúng.
+- Lựa chọn ẩn mở bằng cờ `biet_truoc`: đời trùng sinh (Hồi Quang Kính, Nhất Niệm Hồi Quang) và Kim Thủ Chỉ Ký ức kiếp trước đều có.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Task 5b.7 — Gặp lại tông môn đời trước (2026-10-12)
 - Đời nào có tông môn tự lập (khai tông hoặc kế thừa), khi mất thì tông môn ấy được ghi lại. Các đời sau trong cùng thế giới sinh ra đã "có duyên" với nó; mỗi đời trôi qua đệ tử còn lại ít đi (`balance.pastSect.decay`), quá 6 đời thì tông môn tan (`maxLives`).
 - 7 sự kiện mới (`events/past-sect.json`): nghe nhắc tên tông cũ, gặp bia sơn môn khắc tên mình kiếp trước (xin vào / tự xưng tổ sư / quay đi), tông môn tàn lụi, viếng mộ chính mình, đồ đệ năm xưa nhận ra đường kiếm, tông cũ gặp nạn (đánh giữ núi), và từ Kim Đan được mời **ngồi lại ghế chưởng môn**.

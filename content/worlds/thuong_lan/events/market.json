@@ -245,7 +245,8 @@
             "stat.luck": 1
           }
         }
-      }
+      },
+      {"text": "Ta biết chuyện này sẽ xảy ra", "hidden": true, "requires": {"flagsAll": ["biet_truoc"], "stats": [{"stat": "spiritStones", "gte": 5}]}, "check": {"stat": "stat.luck", "difficulty": 40}, "success": {"text": "Kiếp trước, viên thứ ba bên trái ra linh tinh. Kiếp này vẫn thế.", "effects": {"spiritStones": -5, "addItems": ["loi_tinh"], "stat.happiness": 8}}, "fail": {"text": "Viên thứ ba bên trái kiếp này lại là đá. Ở đâu đó có con bướm vừa vỗ cánh.", "effects": {"spiritStones": -5, "stat.happiness": -3, "stat.daoHeart": 1}}}
     ]
   },
   {
