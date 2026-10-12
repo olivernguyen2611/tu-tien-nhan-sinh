@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { loadContent } from '../src/core/content';
 import { createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
-import { lifeHighlights, lifeRecap, rebirthPoints } from '../src/systems/rebirth';
-import { creditRebirth, readMeta, type KeyValueStore } from '../src/systems/save';
+import { lifeHighlights, lifeRecap, newLifeCost, originOptions, rebirthPoints } from '../src/systems/rebirth';
+import { creditRebirth, readMeta, recordNewLife, type KeyValueStore } from '../src/systems/save';
 
 const content = loadContent();
 const b = content.balance.rebirth;
@@ -61,5 +61,22 @@ describe('tổng kết đời và điểm Luân Hồi (task 5b.1)', () => {
     expect(creditRebirth(store, 'seed-a', 20).gained).toBe(8);
     expect(creditRebirth(store, 'seed-b', 5).meta.rebirthPoints).toBe(25);
     expect(readMeta(store)).toMatchObject({ rebirthPoints: 25, livesPlayed: 0 });
+  });
+});
+
+describe('Cầu đầu thai (task 5b.9)', () => {
+  it('rare origins cost points; common ones and fate are free', () => {
+    const opts = Object.fromEntries(originOptions(content, 15).map((o) => [o.id, o]));
+    expect(opts.nong_dan).toEqual({ id: 'nong_dan', cost: 0, affordable: true });
+    expect(opts.quan_gia).toMatchObject({ cost: 10, affordable: true });
+    expect(opts.tu_tien_gia_toc).toMatchObject({ cost: 30, affordable: false });
+    expect(newLifeCost(content, undefined)).toBe(0);
+    expect(newLifeCost(content, 'tu_tien_gia_toc')).toBe(30);
+  });
+
+  it('the price is paid when the new life is confirmed', () => {
+    const store = fakeStore();
+    creditRebirth(store, 'a', 40);
+    expect(recordNewLife(store, 30)).toMatchObject({ rebirthPoints: 10, livesPlayed: 1 });
   });
 });

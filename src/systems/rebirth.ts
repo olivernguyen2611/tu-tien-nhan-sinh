@@ -56,3 +56,15 @@ export function rebirthPoints(state: GameState, content: Content): { lines: Poin
   const lines = raw.filter((l) => l.points > 0);
   return { lines, total: lines.reduce((s, l) => s + l.points, 0) };
 }
+
+export interface OriginOption { id: string; cost: number; affordable: boolean }
+
+/** Task 5b.9 Cầu đầu thai: what choosing each origin costs, given the points kept. */
+export function originOptions(content: Content, points: number): OriginOption[] {
+  return content.origins.map((o) => ({ id: o.id, cost: o.rebirthCost ?? 0, affordable: (o.rebirthCost ?? 0) <= points }));
+}
+
+/** Points a new life costs: only a chosen origin with a price (leaving it to fate is free). */
+export function newLifeCost(content: Content, originId: string | undefined): number {
+  return originId ? content.origins.find((o) => o.id === originId)?.rebirthCost ?? 0 : 0;
+}
