@@ -131,6 +131,7 @@ export function startBattle(state: GameState, content: Content, fight: Fight, so
     outcomes: { win: fight.win, lose: fight.lose, fled: fight.fled },
     source,
     npcId: fight.foe.fromNpc ? state.events.npc : null,
+    ...(fight.rescue ? { rescue: true } : {}),
   };
   return { ...state, rng: rng.getState(), combat: battle, itemUse: { ...state.itemUse, nextCombat: 0 } };
 }
@@ -325,6 +326,9 @@ function end(s: GameState, content: Content, battle: Battle, how: 'lost' | 'fled
       const o = applyOutcome({ ...next, rng: rng.getState(), events: { ...next.events, npc: battle.npcId } }, content, battle.outcomes.lose, rng);
       next = o.state;
       lines.push({ text: o.text, tone: 'bad' });
+    } else if (battle.rescue) {
+      // Died saving someone: Phúc báo for the next life (task 5b.8).
+      next = { ...next, flags: { ...next.flags, chet_vi_cuu_nguoi: true } };
     }
   } else if (how === 'fled' && battle.outcomes.fled) {
     const o = applyOutcome({ ...next, rng: rng.getState(), events: { ...next.events, npc: battle.npcId } }, content, battle.outcomes.fled, rng);

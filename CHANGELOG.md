@@ -2,6 +2,20 @@
 
 ## [Chưa phát hành]
 
+### Task 5b.8 — Phúc báo (2026-10-12)
+- Theo `mortal-path.md` mục 3.1, dữ liệu trong `content/blessings.json`. Đời kết thúc khi còn là phàm nhân thì nhận Phúc báo cho kiếp sau:
+  - **Đại thiện nhân** (nhân quả ≥ +60): đo linh căn quay 2 lần, lấy kết quả tốt hơn. Dùng móc mới `rootReroll`.
+  - **Danh chấn một nghề** (lên nấc 5 của một con đường đời): +5 chỉ số chính của đường đó.
+  - **Bách tuế** (sống tới 100): thọ nguyên kiếp sau +10%.
+  - **Xả thân cứu người** (chết trong trận ra tay cứu người): thêm một lần quay khí vận.
+- Phúc báo hiện ở màn tổng kết đời, rồi ở màn quay khí vận và dòng đầu nhật ký của kiếp sau.
+- Phúc báo chỉ trao cho lần **đầu thai kiếp mới** kế tiếp. Chơi tiếp bằng con cháu thì Phúc báo vẫn chờ.
+- Trận đánh có cờ `rescue`; chết trong trận ấy thì bật cờ `chet_vi_cuu_nguoi`. Đã gắn cho trận "Ra tay giết ma tu, cứu người" (sự kiện `lo_dinh_cam_do`).
+- "Con cháu ≥ 5 → chơi tiếp bằng con cháu": task 5.7 đã cho chơi tiếp bằng con đã lớn mà không cần đủ 5, nên không thêm gì.
+- **Bổ sung kỹ thuật**:
+  - "Chỉ số chính" lấy chỉ số đầu tiên trong `mainStats` của con đường.
+  - Câu chữ ngắn trên màn hình cho 4 Phúc báo.
+
 ### Task 5b.1 — Tổng kết đời + điểm Luân Hồi (phần code, 2026-10-12)
 - **Màn tổng kết đời đầy đủ hơn**: cảnh giới, tông môn, gia tộc, đạo lữ, con cái, đệ tử, hạng Thiên kiêu bảng, đường đời, linh thạch.
 - **Dấu ấn một đời**: 5 khoảnh khắc hiếm gần nhất trong nhật ký.

@@ -45,6 +45,7 @@ import { craftRecipe } from '../systems/crafting';
 import { recruitDisciple, teachDisciple } from '../systems/disciples';
 import { build, decide, donate, foundSect } from '../systems/ownSect';
 import { rebirthPoints } from '../systems/rebirth';
+import { earnedBlessings } from '../systems/blessings';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -90,7 +91,7 @@ function Screens({ content }: { content: Content }) {
   const [rebirth, setRebirth] = useState<{ gained: number; bank: number }>({ gained: 0, bank: 0 });
   useEffect(() => {
     if (screen !== 'death' || !life || life.alive) return;
-    const r = creditRebirth(store, life.seed, rebirthPoints(life, content).total);
+    const r = creditRebirth(store, life.seed, rebirthPoints(life, content).total, earnedBlessings(life, content));
     setRebirth({ gained: r.gained, bank: r.meta.rebirthPoints });
   }, [screen, life]);
 
@@ -161,7 +162,7 @@ function Screens({ content }: { content: Content }) {
         onBack={() => setScreen('title')}
         onCreate={(input) => {
           // Tips only for the very first life on this browser.
-          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0 }, content), content));
+          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list }, content), content));
           setScreen('destiny');
         }}
       />

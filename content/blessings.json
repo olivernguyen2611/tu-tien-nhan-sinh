@@ -1,0 +1,39 @@
+{
+  "mortalOnly": true,
+  "blessings": [
+    {
+      "id": "dai_thien_nhan",
+      "name": "Đại thiện nhân",
+      "earned": "Một đời làm thiện, nhân quả dày như núi.",
+      "text": "Đo linh căn được quay 2 lần, lấy kết quả tốt hơn.",
+      "earn": { "karmaMin": 60 },
+      "effects": [{ "hook": "rootReroll", "add": 1 }]
+    },
+    {
+      "id": "danh_chan_mot_nghe",
+      "name": "Danh chấn một nghề",
+      "earned": "Leo tới nấc cao nhất của một con đường đời.",
+      "text": "+5 chỉ số chính của con đường ấy.",
+      "earn": { "careerRung": 4 },
+      "careerMainStat": 5,
+      "effects": []
+    },
+    {
+      "id": "bach_tue",
+      "name": "Bách tuế",
+      "earned": "Sống trọn trăm năm.",
+      "text": "Thọ nguyên +10%.",
+      "earn": { "ageMin": 100 },
+      "effects": [{ "hook": "lifespanPct", "add": 0.1 }]
+    },
+    {
+      "id": "xa_than_cuu_nguoi",
+      "name": "Xả thân cứu người",
+      "earned": "Chết khi ra tay cứu người.",
+      "text": "Thêm một lần quay khí vận.",
+      "earn": { "deathFlag": "chet_vi_cuu_nguoi" },
+      "destinyRerolls": 1,
+      "effects": []
+    }
+  ]
+}

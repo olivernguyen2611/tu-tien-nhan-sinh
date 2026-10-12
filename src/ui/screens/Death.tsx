@@ -5,6 +5,7 @@ import { lifeSummary } from '../../systems/time';
 import { lifeTitles } from '../../systems/career';
 import { heirOptions } from '../../systems/heir';
 import { lifeHighlights, lifeRecap, rebirthPoints } from '../../systems/rebirth';
+import { earnedBlessings } from '../../systems/blessings';
 import { Meter } from '../components/Meter';
 
 const STAT_LABELS = [
@@ -31,6 +32,7 @@ export function DeathScreen({ state, content, rebirth, onReadLog, onNewLife, onG
   const c = state.character;
   const points = rebirthPoints(state, content);
   const highlights = lifeHighlights(state, content.balance.rebirth.highlights);
+  const blessings = earnedBlessings(state, content).map((b) => content.blessings.blessings.find((x) => x.id === b.id)!);
   return (
     <main class="death-screen">
       <div class="tablet">
@@ -82,6 +84,13 @@ export function DeathScreen({ state, content, rebirth, onReadLog, onNewLife, onG
             {' · '}Tích lũy: <b>{rebirth.bank}</b>
           </p>
         </div>
+
+        {blessings.length > 0 && (
+          <div class="ancestry">
+            <p class="kicker">Phúc báo cho kiếp sau</p>
+            <ul>{blessings.map((b) => <li key={b.id}><b>{b.name}</b>: {b.earned} {b.text}</li>)}</ul>
+          </div>
+        )}
 
         {state.death?.ghostOffer && (
           <div class="ghost-offer">

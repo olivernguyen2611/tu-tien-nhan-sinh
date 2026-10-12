@@ -287,6 +287,8 @@ export const FightSchema = z
     lose: PlainOutcomeSchema,
     /** When the player gets away (default: no further effect). */
     fled: PlainOutcomeSchema.optional(),
+    /** Task 5b.8: fighting to save someone; dying in it sets flag chet_vi_cuu_nguoi (Phúc báo). */
+    rescue: z.boolean().optional(),
   })
   .strict();
 
@@ -446,6 +448,8 @@ const ADD_HOOK = new RegExp(
       'artifactPct', 'tribulationPower',
       // Task 4.5: share of each thiên lôi a carried array or artifact takes; task 4.12: chance to linger as a ghost.
       'tribulationDefense', 'continueAfterDeath',
+      // Task 5b.8: extra spirit-root rolls at the root test, best kept (Phúc báo).
+      'rootReroll',
       // Special bodies (realms-roots-paths.md B5); takes effect from task 2.3.
       'lineage\\.(tien|ma|phat|quy|yeu)\\.cultivationSpeed',
     ].join('|') +
@@ -2172,3 +2176,32 @@ export const NascentSoulFileSchema = z
   .strict();
 export type NascentSoulFile = z.infer<typeof NascentSoulFileSchema>;
 
+
+/** content/blessings.json (task 5b.8, mortal-path.md 3.1): Phúc báo a life earns for the next one. */
+export const BlessingFileSchema = z
+  .object({
+    /** Only a life that ends as a Phàm Nhân earns them ("thành tựu đời phàm nhân"). */
+    mortalOnly: z.boolean(),
+    blessings: z.array(
+      z
+        .object({
+          id,
+          name: z.string().min(1),
+          /** Why it was earned (death screen) and what it gives (next life). */
+          earned: z.string().min(1),
+          text: z.string().min(1),
+          /** All given must hold at death: karma, career rung index reached, age, flag set when dying. */
+          earn: z
+            .object({ karmaMin: z.number().optional(), careerRung: z.number().int().min(0).optional(), ageMin: z.number().int().min(0).optional(), deathFlag: id.optional() })
+            .strict(),
+          /** Added to the first main stat of the career that earned it. */
+          careerMainStat: z.number().int().optional(),
+          /** Extra Tiên Thiên Khí Vận rerolls. */
+          destinyRerolls: z.number().int().min(0).optional(),
+          effects: z.array(EffectHookSchema),
+        })
+        .strict(),
+    ),
+  })
+  .strict();
+export type BlessingFile = z.infer<typeof BlessingFileSchema>;
