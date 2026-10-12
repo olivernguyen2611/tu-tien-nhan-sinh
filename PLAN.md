@@ -363,7 +363,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 5b.1 | [x] Tổng kết đời đầy đủ + điểm Luân Hồi + ✍️ thiên phú luân hồi (Luân Hồi Đài) |
 | 5b.2 | [x] Kim Thủ Chỉ (✍️ 6–8 loại, cấp thức tỉnh, rủi ro) + bảo hiểm pity |
 | 5b.3 | [x] Khóa ô khí vận, mở rộng tới 5 ô; nâng khí vận lên ≥60 + ✍️ 10 tổ hợp ẩn |
-| 5b.4 | [ ] Thiên Thư (bộ sưu tập khí vận, tổ hợp, truyện khí vận chi tử) |
+| 5b.4 | [x] Thiên Thư (bộ sưu tập khí vận, tổ hợp, truyện khí vận chi tử) |
 | 5b.5 | [ ] Thành tựu, huy hiệu cuối đời, cáo phó dạng ảnh để chia sẻ |
 | 5b.6 | [ ] Thử thách tuần (seed chung theo tuần) |
 | 5b.7 | [ ] Gặp lại tông môn đời trước |

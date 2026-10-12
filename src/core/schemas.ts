@@ -2375,3 +2375,15 @@ export const TraitComboFileSchema = z
   })
   .strict();
 export type TraitComboFile = z.infer<typeof TraitComboFileSchema>;
+
+/** Task 5b.4: Thiên Thư texts; stories: how a khí vận chi tử's tale ended ({npc}, {master}). */
+export const CodexFileSchema = z
+  .object({
+    intro: z.string().min(1),
+    stories: z.object({
+      protect: z.string().min(1), exploit_won: z.string().min(1), exploit: z.string().min(1),
+      ignore: z.string().min(1), dead: z.string().min(1), none: z.string().min(1),
+    }).strict(),
+  })
+  .strict();
+export type CodexFile = z.infer<typeof CodexFileSchema>;

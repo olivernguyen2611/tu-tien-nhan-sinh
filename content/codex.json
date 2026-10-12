@@ -1,0 +1,11 @@
+{
+  "intro": "Thiên Thư ghi lại những gì ngươi đã thấy qua bao kiếp: khí vận từng mang, tổ hợp từng thức tỉnh, Kim Thủ Chỉ từng có, và những câu chuyện của người khác mà ngươi đã chứng kiến.",
+  "stories": {
+    "protect": "{master} hộ đạo cho {npc} suốt một đời. Về sau thiên hạ chỉ nhớ tên {npc}, còn {npc} chỉ nhớ một người sư phụ.",
+    "exploit_won": "{master} đoạt cơ duyên của {npc}, rồi chính tay kết thúc câu chuyện ấy. Thiên đạo ghi một dòng, không bình luận.",
+    "exploit": "{master} đoạt cơ duyên của {npc}. {npc} sống sót, mang theo mối hận; câu chuyện \"sư phụ phản diện\" còn chờ chương cuối.",
+    "ignore": "{master} để {npc} tự đi đường mình. Nhiều năm sau, giang hồ có thêm một thiên kiêu, thỉnh thoảng nhắc tới vị sư phụ không giữ người.",
+    "dead": "{npc} chưa kịp thành nhân vật chính đã gặp nạn. Có những câu chuyện chỉ được viết một nửa.",
+    "none": "{npc} theo {master} một đoạn đường. Phần còn lại của câu chuyện, không ai kịp chép."
+  }
+}

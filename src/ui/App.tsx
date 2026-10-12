@@ -12,7 +12,7 @@ import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, lockCost, rerollDestiny, rollDestiny, toggleLock } from '../systems/destiny';
 import {
   deleteSlot, exportSave, firstFreeSlot, latestSlot, listSlots, makeSave, parseSave, readMeta, readSlot, recordNewLife, creditRebirth,
-  slotTaken, writeSlot, buyRebirthTalent, type SaveFile,
+  slotTaken, writeSlot, buyRebirthTalent, recordCodex, type SaveFile,
 } from '../systems/save';
 import { checkDeath } from '../systems/time';
 import { GlossaryProvider } from './components/Tooltip';
@@ -50,8 +50,10 @@ import { rewind } from '../systems/rewind';
 import { nextTalentCost } from '../systems/rebirthTalents';
 import { rollBirthFinger } from '../systems/goldenFinger';
 import { RebirthScreen } from './screens/Rebirth';
+import { CodexScreen } from './screens/Codex';
+import { codexOf } from '../systems/codex';
 
-type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves' | 'rebirth';
+type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves' | 'rebirth' | 'codex';
 /** Why the slot list is open in pick mode. */
 type Picking = { purpose: 'new' } | { purpose: 'import'; save: SaveFile } | null;
 type Message = { text: string; tone: 'good' | 'bad' } | null;
@@ -98,6 +100,8 @@ function Screens({ content }: { content: Content }) {
   useEffect(() => {
     if (screen !== 'death' || !life || life.alive) return;
     const r = creditRebirth(store, life.seed, rebirthPoints(life, content).total, earnedBlessings(life, content));
+    // Task 5b.4: the Thiên Thư keeps what this life saw, and the khí vận chi tử's tale.
+    recordCodex(store, codexOf(life, content));
     setRebirth({ gained: r.gained, bank: r.meta.rebirthPoints });
   }, [screen, life]);
 
@@ -165,6 +169,9 @@ function Screens({ content }: { content: Content }) {
       />
     );
   }
+  if (screen === 'codex') {
+    return <CodexScreen content={content} codex={readMeta(store).codex} onBack={() => setScreen('title')} />;
+  }
   if (screen === 'rebirth') {
     const meta = readMeta(store);
     return (
@@ -207,7 +214,13 @@ function Screens({ content }: { content: Content }) {
           && (devMode || originCost + lockCost(life, content) + content.balance.traits.lockCost <= readMeta(store).rebirthPoints)}
         onLock={(id) => setLife(toggleLock(life, id))}
         onReroll={() => { setLife(rerollDestiny(life, content, devMode)); setRollCount((n) => n + 1); }}
-        onConfirm={() => { recordNewLife(store, originCost + (devMode ? 0 : lockCost(life, content)), !!life.goldenFinger); setLife(confirmDestiny(life, content)); setScreen('main'); }}
+        onConfirm={() => {
+          recordNewLife(store, originCost + (devMode ? 0 : lockCost(life, content)), !!life.goldenFinger);
+          const born = confirmDestiny(life, content);
+          recordCodex(store, codexOf(born, content));
+          setLife(born);
+          setScreen('main');
+        }}
       />
     );
   }
@@ -362,6 +375,7 @@ function Screens({ content }: { content: Content }) {
       }}
       onSaves={() => openSaves('title')}
       onRebirth={() => openRebirth('title')}
+      onCodex={() => setScreen('codex')}
       theme={theme}
       onToggleTheme={toggleTheme}
     />
