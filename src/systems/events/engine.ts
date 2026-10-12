@@ -337,6 +337,8 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
     next = granted.state;
     if (granted.text) text = `${text} ${granted.text}`;
   }
+  // Task 4.6: the next step opens at once (not after a fight; that goes in win/lose).
+  if (fx.chain && next.alive && findEvent(content, fx.chain)) next = { ...next, events: { ...next.events, pending: fx.chain } };
   return { state: next, text };
 }
 

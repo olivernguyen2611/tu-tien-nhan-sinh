@@ -340,6 +340,13 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
         if (usesNpc && !hasNpc) {
           problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: nhắc tới NPC ({npc}, npc, fromNpc) nhưng sự kiện không có NPC (cần npcTrigger, conditions.npc hoặc meetNpc)` });
         }
+        // Task 4.6: a chained step must exist; after a fight it belongs in win/lose, since the fight comes first.
+        for (const step of [fx?.chain, outcome?.fight?.win.effects.chain, outcome?.fight?.lose.effects.chain, outcome?.fight?.fled?.effects.chain]) {
+          if (step && !seen.has(step)) problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: chain tới sự kiện không tồn tại "${step}"` });
+        }
+        if (fx?.chain && outcome?.fight) {
+          problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: có trận đánh thì đặt chain trong win/lose, không đặt ở kết quả` });
+        }
         const target = outcome?.effects.followUp?.event;
         if (target && !seen.has(target)) {
           problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: followUp tới sự kiện không tồn tại "${target}"` });

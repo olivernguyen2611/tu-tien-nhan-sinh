@@ -123,6 +123,14 @@ describe('validateContent', () => {
     expect(errors({ 'worlds/w/events/a.json': [ev] }).some((m) => m.includes('khong_co'))).toBe(true);
   });
 
+  it('reports chains to missing events and chains placed beside a fight', () => {
+    const missing = event({ choices: [{ text: 'Vào', result: { text: '...', effects: { chain: 'khong_co', 'stat.happiness': 1 } } }] });
+    expect(errors({ 'worlds/w/events/a.json': [missing] }).some((m) => m.includes('chain tới sự kiện không tồn tại'))).toBe(true);
+    const fight = { foe: { name: 'Kẻ địch', intent: 'teach' }, win: { text: 'Thắng.', effects: { 'stat.happiness': 1 } }, lose: { text: 'Thua.', effects: { 'stat.happiness': -1 } } };
+    const beside = event({ choices: [{ text: 'Đánh', result: { text: '...', effects: { chain: 'find_old_cave_01' }, fight } }] });
+    expect(errors({ 'worlds/w/events/a.json': [beside] }).some((m) => m.includes('đặt chain trong win/lose'))).toBe(true);
+  });
+
   it('blocks mature events for characters under 18', () => {
     const young = event({ tags: ['mature'], conditions: { age: { min: 16 } } });
     const adult = event({ id: 'adult', tags: ['mature'], conditions: { age: { min: 18 } } });
