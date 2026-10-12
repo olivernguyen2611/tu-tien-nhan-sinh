@@ -4,6 +4,9 @@
     "popupChanceLowRealm": 0.5,
     "popupChanceHighRealm": 0.1,
     "logLineChance": 0.6,
+    "luckCategories": ["fortune", "secret_realm"],
+    "luckPerPoint": 0.02,
+    "luckMin": 0.2,
     "minCooldownYears": 6,
     "repeatDecay": 0.3,
     "check": { "base": 0.5, "perPoint": 0.015, "min": 0.05, "max": 0.95 }
@@ -115,8 +118,8 @@
     "traitFloor": { "ac": "ngu", "pham": "ngu", "luong": "tu", "uu": "tam", "tuyet": "song", "thien": "don", "than": "bien_di" }
   },
   "cultivation": {
-    "aptitudeBase": 0.75,
-    "aptitudeDivisor": 400,
+    "aptitudeGrowth": 3,
+    "aptitudeMin": 0.3,
     "regionQi": 1.0,
     "breakthrough": { "comprehensionPerPoint": 0.3, "daoHeartPerPoint": 0.2, "failPenaltyPct": 5, "minPct": 3, "maxPct": 95 },
     "minorFailure": {

@@ -56,7 +56,9 @@ export function eventWeight(state: GameState, content: Content, event: GameEvent
   const judged = target ? { ...state, events: { ...state.events, npc: romanceTarget(state, target)?.id ?? null } } : state;
   if (!meets(judged, event.conditions, content)) return 0;
   let w = event.weight * themeMultiplier(state, content, event);
-  if (event.luckAffected) w *= 1 + (state.aptitudes.luck - 50) / 100; // G.4
+  // G.4, playtest 2026-10-12: kỳ ngộ come more often to the lucky.
+  const ev = content.balance.events;
+  if (event.luckAffected || ev.luckCategories.includes(event.category)) w *= Math.max(ev.luckMin, 1 + (state.aptitudes.luck - 50) * ev.luckPerPoint);
   // Playtest 2026-10-12: each time it already happened this life, it grows rarer.
   const seen = state.events.seen?.[event.id] ?? (last !== undefined ? 1 : 0);
   if (seen > 0) w *= content.balance.events.repeatDecay ** seen;

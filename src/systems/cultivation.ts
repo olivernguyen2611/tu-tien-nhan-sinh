@@ -252,6 +252,12 @@ export function hasHook(state: GameState, content: Content, hook: string): boole
 }
 
 /** PLAN.md G.1: percent of the current stage's bar gained in one year. */
+/** Căn cốt + Ngộ tính → speed factor (playtest 2026-10-12: grows fast with talent). */
+export function aptitudeFactor(state: GameState, content: Content): number {
+  const cfg = content.balance.cultivation;
+  return Math.max(cfg.aptitudeMin, cfg.aptitudeGrowth ** ((state.aptitudes.physique + state.aptitudes.comprehension - 100) / 100));
+}
+
 export function yearlyGain(state: GameState, content: Content): number {
   const root = state.cult.root;
   const realm = content.balance.realms[state.cult.realm];
@@ -262,7 +268,7 @@ export function yearlyGain(state: GameState, content: Content): number {
   if (rootMul <= 0 && (currentTechnique(state, content)?.requires.rootless || state.flags.quy_tu)) {
     rootMul = Math.min(content.balance.techniques.rootlessDaoHeartMax, state.aptitudes.daoHeart / 100);
   }
-  const aptitude = cfg.aptitudeBase + (state.aptitudes.physique + state.aptitudes.comprehension) / cfg.aptitudeDivisor;
+  const aptitude = aptitudeFactor(state, content);
   // Đại vực (task 4.8): the region's linh khí multiplies the world's.
   const qi = (content.world.qi ?? cfg.regionQi) * regionQi(state, content);
   const bonus = Math.max(0, 1 + hookSum(state, content, 'cultivationSpeed') + pathSpeedBonus(state, content));

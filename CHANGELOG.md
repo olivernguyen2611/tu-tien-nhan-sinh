@@ -2,6 +2,11 @@
 
 ## [Chưa phát hành]
 
+### Góp ý chơi thử 7 — Tu luyện nhanh theo tư chất, kỳ ngộ theo khí vận (2026-10-12)
+- Hệ số tư chất trong tốc độ tu luyện đổi từ tuyến tính rất phẳng (0.75–1.25) sang lũy thừa: `3 ^ ((Căn cốt + Ngộ tính − 100) / 100)` (`balance.cultivation.aptitudeGrowth` = 3, tối thiểu 0.3). Người 50/50 giữ nguyên tốc độ; 95/95 nhanh gấp khoảng 2.7 lần (trước 1.2).
+- Ví dụ thiên tài (Đơn linh căn, Căn cốt và Ngộ tính 95, khí vận Hỗn Độn Linh Thể): Luyện Khí khoảng 6 năm, Trúc Cơ 8, Kim Đan 22, Nguyên Anh 55 (trước 13 / 18 / 49 / 121), chưa tính đột phá thất bại.
+- Kỳ ngộ (mọi sự kiện loại Cơ duyên, Bí cảnh và các sự kiện đánh dấu `luckAffected`) theo Khí vận mạnh hơn: trọng số × (1 + (Khí vận − 50) × 0.02), thấp nhất × 0.2. Khí vận 95 gặp nhiều gấp 1.9 lần người thường.
+
 ### Developer mode — công cụ cho đợt góp ý chơi thử (2026-10-12)
 - Mục mới **Linh căn & võ đạo**: đặt linh căn bất kỳ (mọi cấp, từng hệ biến dị, từng thể chất), đặt bậc võ đạo của phàm nhân, bật nhanh cảm ứng Tam hoa / Ngũ khí để thử kỳ ngộ.
 - Mục mới **Phu thê**: thành thân ngay với một người mới, chỉnh thiện cảm bạn đời ±20 (thử nhà ấm / nhà lạnh / bỏ đi).
