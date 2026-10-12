@@ -784,6 +784,16 @@ export const BalanceSchema = z
         prestige: z.object({ start: z.number().min(0).max(100), membersFor60: z.number().int().min(1), perBuildingLevel: z.number().min(0), approach: probability }).strict(),
         /** Named elders: how many, what a reward costs from the treasury, and the bond it buys. */
         elders: z.object({ count: z.number().int().min(0), rewardCost: z.number().int().min(0), rewardAffinity: z.number(), rewardPrestige: z.number() }).strict(),
+        /**
+         * Task 5c.9: inviting someone the player knows into their sect. Needs affinity ≥ minAffinity, a root,
+         * age ≥ minAge, and giftCost from the treasury (a welcome gift). Chance = base + (affinity − 50) × affinityWeight
+         * + favor × favorWeight − grudge × grudgeWeight, clamped 5–95%. A member adds memberTithe to the treasury a year.
+         */
+        recruit: z.object({
+          minAffinity: z.number().min(0).max(100), minAge: z.number().int().min(0), giftCost: z.number().int().min(0),
+          base: probability, affinityWeight: z.number(), favorWeight: z.number(), grudgeWeight: z.number(),
+          joinAffinity: z.number(), refuseAffinity: z.number(), joinPrestige: z.number(), memberTithe: z.number().min(0),
+        }).strict(),
       })
       .strict(),
     /** Task 4.9: taking disciples. */
@@ -2523,6 +2533,9 @@ export const FoundingFileSchema = z
         claimed: z.string().min(1),
         /** Task 5c.6: {sect}, {members}. */
         succeeded: z.string().min(1),
+        /** Task 5c.9: an invited acquaintance joins or declines ({npc}, {sect}, {name}). */
+        recruitYes: z.array(z.string().min(1)).min(1),
+        recruitNo: z.array(z.string().min(1)).min(1),
       })
       .strict(),
   })
