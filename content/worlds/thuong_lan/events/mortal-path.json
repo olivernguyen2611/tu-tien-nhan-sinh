@@ -545,7 +545,14 @@
             "setFlags": [
               "huong_hoa_hoi"
             ],
-            "stat.happiness": 5
+            "stat.happiness": 5,
+            "followUp": {
+              "event": "hang_khai_mach",
+              "afterYears": [
+                3,
+                3
+              ]
+            }
           }
         }
       },
@@ -577,7 +584,14 @@
             "setFlags": [
               "huong_hoa_hoi"
             ],
-            "stat.happiness": 5
+            "stat.happiness": 5,
+            "followUp": {
+              "event": "hang_khai_mach",
+              "afterYears": [
+                3,
+                3
+              ]
+            }
           }
         }
       }
@@ -622,6 +636,336 @@
     ],
     "themes": [
       "justice"
+    ]
+  },
+  {
+    "id": "hang_khai_mach",
+    "category": "mortal",
+    "title": "Hang khai mạch",
+    "text": "Ba năm thờ phụng, cuối cùng {name} cũng được dẫn vào một hang sâu \"để khai mạch\". Trong hang đã có chín người, ai cũng gầy rộc mà mắt sáng rực. Mỗi sáng, một vị \"tiên sứ\" mặt trắng như giấy phát cho mỗi người một bát canh đỏ, rồi lấy bút chấm máu vẽ bùa lên ngực từng người.",
+    "tags": [
+      "dark"
+    ],
+    "themes": [
+      "demonic"
+    ],
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Uống canh, chờ ngày khai mạch",
+        "result": {
+          "text": "Canh ngọt lạ. Uống xong người nhẹ bẫng, chân tay lạnh dần.",
+          "effects": {
+            "stat.health": -10,
+            "stat.happiness": 3,
+            "setFlags": [
+              "uong_canh_mau"
+            ],
+            "followUp": {
+              "event": "dem_huyet_te",
+              "afterYears": [
+                0,
+                0
+              ]
+            }
+          }
+        }
+      },
+      {
+        "text": "Lén đổ canh đi",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Ngươi đổ canh vào khe đá. Đêm đó cỏ trong khe héo đen.",
+          "effects": {
+            "stat.intellect": 2,
+            "setFlags": [
+              "tinh_tao"
+            ],
+            "followUp": {
+              "event": "dem_huyet_te",
+              "afterYears": [
+                0,
+                0
+              ]
+            }
+          }
+        },
+        "fail": {
+          "text": "Tiên sứ nhìn ngươi một lúc lâu, rồi múc thêm bát nữa.",
+          "effects": {
+            "stat.health": -5,
+            "setFlags": [
+              "uong_canh_mau"
+            ],
+            "followUp": {
+              "event": "dem_huyet_te",
+              "afterYears": [
+                0,
+                0
+              ]
+            }
+          }
+        }
+      },
+      {
+        "text": "Nhìn kỹ bùa trên ngực",
+        "requires": {
+          "traitsAny": [
+            "mat_tinh",
+            "linh_lung_tam"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Đây không phải bùa khai mạch. Đây là ấn đánh dấu súc vật trước khi mổ.",
+          "effects": {
+            "stat.daoHeart": 3,
+            "setFlags": [
+              "tinh_tao"
+            ],
+            "followUp": {
+              "event": "dem_huyet_te",
+              "afterYears": [
+                0,
+                0
+              ]
+            }
+          }
+        }
+      },
+      {
+        "text": "Rủ người bên cạnh cùng trốn",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Đêm ấy ba người lẻn ra theo lối nước. Ra tới cửa hang, trời vừa sáng.",
+          "effects": {
+            "karma": 10,
+            "stat.happiness": 5,
+            "stat.health": -5,
+            "setFlags": [
+              "ke_thu_u_ha"
+            ]
+          }
+        },
+        "fail": {
+          "text": "Gã bên cạnh mách ngay. Tiên sứ cười: \"Đứa này thịt dai, để cuối.\"",
+          "effects": {
+            "stat.happiness": -10,
+            "setFlags": [
+              "bi_canh_giu"
+            ],
+            "followUp": {
+              "event": "dem_huyet_te",
+              "afterYears": [
+                0,
+                0
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "dem_huyet_te",
+    "category": "mortal",
+    "title": "Đêm huyết tế",
+    "text": "Đêm trăng tròn, chín người bị dẫn ra một trận đồ vẽ bằng máu. Tiên sứ cởi áo choàng: hắn là tu sĩ U Hà Ma Tông. \"Linh căn không có, nhưng máu thịt thì có. Các ngươi góp chút máu, giúp bổn tọa Trúc Cơ, cũng coi như thành tiên.\"",
+    "tags": [
+      "dark",
+      "violence"
+    ],
+    "themes": [
+      "demonic"
+    ],
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Liều mạng bỏ chạy",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Một con dơi bay vào mặt hắn, chậm một nhịp. Đủ cho ngươi lao vào rừng.",
+          "effects": {
+            "stat.health": -10,
+            "stat.daoHeart": 5,
+            "setFlags": [
+              "ke_thu_u_ha"
+            ]
+          }
+        },
+        "fail": {
+          "text": "Một luồng hắc khí quất trúng lưng. Ngươi lăn xuống dốc, sống được là nhờ trời.",
+          "effects": {
+            "stat.health": -40,
+            "stat.daoHeart": 3,
+            "setFlags": [
+              "ke_thu_u_ha"
+            ]
+          }
+        }
+      },
+      {
+        "text": "Đánh với hắn",
+        "result": {
+          "text": "Ngươi lao vào giữa trận đồ.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Ma tu U Hà",
+              "realm": "luyen_khi",
+              "stage": 8,
+              "powerMul": 0.5,
+              "element": "thuy",
+              "lineage": "ma",
+              "intent": "kill"
+            },
+            "win": {
+              "text": "Trận đồ vỡ, máu chảy ngược về người hắn. Tám người còn lại quỳ lạy ngươi.",
+              "effects": {
+                "karma": 15,
+                "reputation": {
+                  "chinh": 15,
+                  "ma": -15
+                },
+                "stat.daoHeart": 8,
+                "addItems": [
+                  "huyet_dan"
+                ],
+                "setFlags": [
+                  "ke_thu_u_ha"
+                ]
+              }
+            },
+            "lose": {
+              "text": "Ngươi gục trên trận đồ. Máu ngươi chảy theo nét vẽ.",
+              "effects": {
+                "stat.health": -60,
+                "setFlags": [
+                  "ke_thu_u_ha"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Phá trận",
+        "requires": {
+          "flagsAll": [
+            "tinh_tao"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Ngươi đã thấy nét vẽ ba đêm liền. Một bàn chân xóa đúng chỗ, trận đồ phản phệ, hắn phun máu bỏ chạy.",
+          "effects": {
+            "karma": 10,
+            "stat.intellect": 3,
+            "stat.daoHeart": 5,
+            "setFlags": [
+              "ke_thu_u_ha"
+            ]
+          }
+        }
+      },
+      {
+        "text": "Quỳ xin tha",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 70
+        },
+        "success": {
+          "text": "Hắn bật cười: \"Thú vị. Ngươi làm tạp dịch cho bổn tọa.\" Ba năm sau ngươi mới trốn được.",
+          "effects": {
+            "stat.happiness": -15,
+            "stat.daoHeart": -5,
+            "karma": -5
+          }
+        },
+        "fail": {
+          "text": "Hắn không đáp, chỉ chấm bút vào máu.",
+          "effects": {
+            "stat.health": -80
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "u_ha_nho_mat",
+    "category": "mortal",
+    "title": "Kẻ nhớ mặt",
+    "text": "Một đêm, có người gõ cửa. Ngoài cửa không ai, chỉ có một con hạc giấy đen. Trên cánh viết: \"Bổn tọa nhớ mặt ngươi.\"",
+    "tags": [
+      "dark"
+    ],
+    "themes": [
+      "demonic"
+    ],
+    "conditions": {
+      "flagsAll": [
+        "ke_thu_u_ha"
+      ],
+      "age": {
+        "min": 16
+      }
+    },
+    "weight": 2,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đốt hạc giấy, dọn nhà đi",
+        "result": {
+          "text": "Ngươi dọn đi ngay trong đêm, bỏ lại nửa gian đồ đạc.",
+          "effects": {
+            "stat.happiness": -5,
+            "silver": -50,
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Mang tới Khâm Thiên Giám",
+        "result": {
+          "text": "Cung phụng Khâm Thiên Giám nhìn hạc giấy, mặt tái đi, rồi cho ngươi một lá bùa hộ thân.",
+          "effects": {
+            "reputation": {
+              "trieu_dinh": 5
+            },
+            "addItems": [
+              "bua_binh_an"
+            ],
+            "stat.daoHeart": 3
+          }
+        }
+      },
+      {
+        "text": "Treo hạc giấy lên cửa, chờ",
+        "result": {
+          "text": "Ba đêm sau hạc giấy biến mất. Trên cửa còn lại một cái tên khắc bằng móng tay: {npc}.",
+          "effects": {
+            "meetNpc": {
+              "role": "ma tu U Hà",
+              "realm": "luyen_khi",
+              "stage": 8,
+              "root": true,
+              "affinity": -40,
+              "grudge": 40
+            },
+            "stat.daoHeart": 5,
+            "stat.happiness": -3
+          }
+        }
+      }
     ]
   },
   {
