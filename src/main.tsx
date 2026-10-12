@@ -14,3 +14,10 @@ try {
   // Broken content should be loud during development, not a blank page.
   render(<pre class="content-error">{(err as Error).message}</pre>, app);
 }
+
+// Offline play + installable app (production builds only).
+if ('serviceWorker' in navigator && import.meta.env.PROD) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`).catch(() => {});
+  });
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Tu Tiên Nhân Sinh",
+  "short_name": "Tu Tiên",
+  "description": "Mô phỏng một đời tu tiên",
+  "lang": "vi",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f1a17",
+  "theme_color": "#0f1a17",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
