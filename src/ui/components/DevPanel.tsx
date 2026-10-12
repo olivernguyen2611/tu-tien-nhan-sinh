@@ -1,6 +1,7 @@
 // Developer mode panel: play-testing cheats. All changes go through systems/dev.
 // Sections fold (details) so the panel stays usable on a phone.
 import type { ComponentChildren } from 'preact';
+import { GroupedSelect, type SelectOption } from './GroupedSelect';
 import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { DeathCause, GameState } from '../../core/types';
@@ -35,6 +36,17 @@ function Pick({ value, onChange, label, children }: { value: string; onChange: (
     </select>
   );
 }
+
+/** A Pick whose options sit under group headings (long lists: items, techniques, events…). */
+function GPick({ value, onChange, label, options }: { value: string; onChange: (v: string) => void; label: string; options: SelectOption[] }) {
+  return <GroupedSelect value={value} onChange={onChange} label={label} options={options} />;
+}
+
+const RARITY_ORDER = ['pham', 'luong', 'uu', 'tuyet', 'thien', 'than', 'ac'];
+const RARITY_NAME: Record<string, string> = { pham: 'Phàm', luong: 'Lương', uu: 'Ưu', tuyet: 'Tuyệt', thien: 'Thiên', than: 'Thần', ac: 'Ác vận' };
+const KIND_ORDER = ['pill', 'artifact', 'talisman', 'array', 'material', 'misc'];
+const GRADE_ORDER = ['hoang', 'huyen', 'dia', 'thien'];
+const byOrder = (order: string[]) => (a: string, b: string) => (order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99);
 
 export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, onClose }: {
   state: GameState;
@@ -120,9 +132,7 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
         <Section title="Linh căn & võ đạo">
           <p class="profile-note">Linh căn: {rootLabel(state, content)} · thể chất: {bodyLabel(state, content)} · võ đạo: {state.martial.stage < 0 ? 'chưa nhập môn' : content.martial.stages[state.martial.stage]?.name}</p>
           <div class="dev-event">
-            <Pick value={rootKey} onChange={setRootKey} label="Linh căn">
-              {roots.map((r) => <option key={r.key} value={r.key}>{r.label}</option>)}
-            </Pick>
+            <GPick value={rootKey} onChange={setRootKey} label="Linh căn" options={roots.map((r) => ({ id: r.key, name: r.label, group: r.group }))} />
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devSetRoot(state, content, roots.find((r) => r.key === rootKey)!.root))}>Đặt</button>
           </div>
           <div class="dev-event">
@@ -158,9 +168,7 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
             {activeCombos(state, content).length > 0 && <> · Tổ hợp: {activeCombos(state, content).map((c) => c.name).join(', ')}</>}
           </p>
           <div class="dev-event">
-            <Pick value={traitId} onChange={setTraitId} label="Khí vận">
-              {content.traits.map((t) => <option key={t.id} value={t.id}>{state.traits.includes(t.id) ? '✓ ' : ''}{t.name} ({t.rarity})</option>)}
-            </Pick>
+            <GPick value={traitId} onChange={setTraitId} label="Khí vận" options={content.traits.slice().sort((a, b) => byOrder(RARITY_ORDER)(a.rarity, b.rarity)).map((t) => ({ id: t.id, name: `${state.traits.includes(t.id) ? '✓ ' : ''}${t.name}`, group: `Khí vận ${RARITY_NAME[t.rarity] ?? t.rarity}` }))} />
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devToggleTrait(state, content, traitId))}>{state.traits.includes(traitId) ? 'Bỏ' : 'Thêm'}</button>
           </div>
           <p class="profile-note">Kim Thủ Chỉ: {finger ? `${finger.name} cấp ${state.goldenFinger!.level}/${finger.levels.length}` : 'không'}</p>
@@ -215,15 +223,11 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
 
         <Section title="Vật phẩm & đánh thử">
           <div class="dev-event">
-            <Pick value={itemId} onChange={setItemId} label="Vật phẩm">
-              {content.items.map((it) => <option key={it.id} value={it.id}>{it.name} ({state.inventory[it.id] ?? 0})</option>)}
-            </Pick>
+            <GPick value={itemId} onChange={setItemId} label="Vật phẩm" options={content.items.slice().sort((a, b) => byOrder(KIND_ORDER)(a.kind, b.kind)).map((it) => ({ id: it.id, name: `${it.name} (${state.inventory[it.id] ?? 0})`, group: content.lifeTexts.familyBond.kindNames[it.kind] ?? it.kind }))} />
             <button class="chip-btn" disabled={!live || !itemId} onClick={() => onChange(devGiveItem(state, content, itemId))}>+1</button>
           </div>
           <div class="dev-event">
-            <Pick value={techId} onChange={setTechId} label="Công pháp">
-              {content.techniques.map((t) => <option key={t.id} value={t.id}>{t.name}{state.cult.technique === t.id ? ' (đang tu)' : state.cult.learned.includes(t.id) ? ' (đã học)' : ''}</option>)}
-            </Pick>
+            <GPick value={techId} onChange={setTechId} label="Công pháp" options={content.techniques.slice().sort((a, b) => byOrder(GRADE_ORDER)(a.grade, b.grade)).map((t) => ({ id: t.id, name: `${t.name}${state.cult.technique === t.id ? ' (đang tu)' : state.cult.learned.includes(t.id) ? ' (đã học)' : ''}`, group: `Công pháp ${content.cultivation.realms.gradeNames[t.grade] ?? t.grade}` }))} />
             <button class="chip-btn" disabled={!live || !techId} onClick={() => onChange(devLearnTechnique(state, content, techId))}>Học ngay</button>
           </div>
           <div class="action-chips">
@@ -239,9 +243,7 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
         <Section title="Sự kiện & cờ">
           <input class="dev-input" type="search" placeholder="Lọc theo id, tên, loại…" value={query} onInput={(e) => setQuery((e.target as HTMLInputElement).value)} aria-label="Lọc sự kiện" />
           <div class="dev-event">
-            <Pick value={picked} onChange={setEventId} label="Sự kiện">
-              {events.map((ev) => <option key={ev.id} value={ev.id}>{ev.title} ({ev.id})</option>)}
-            </Pick>
+            <GPick value={picked} onChange={setEventId} label="Sự kiện" options={events.map((ev) => ({ id: ev.id, name: `${ev.title} (${ev.id})`, group: ev.category }))} />
             <button class="chip-btn" disabled={!live || !picked} onClick={() => { onChange(devTriggerEvent(state, content, picked)); onClose(); }}>Gọi</button>
           </div>
           <p class="profile-note">{events.length} sự kiện. Cờ đang bật: {flags.join(', ') || 'không'}</p>
