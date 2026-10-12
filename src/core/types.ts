@@ -50,6 +50,8 @@ export interface GameState {
   combat: Battle | null;
   /** Task 3.2: market id → this year's bargain result (price multiplier). */
   bargains: Record<string, { age: number; mul: number }>;
+  /** Playtest 2: auction house id → age of the last bid (absent in older saves). */
+  auctions?: Record<string, number>;
   /** Nghịch Thiên Cải Mệnh talents taken (fate-talents.json, task 2.7). */
   talents: string[];
   /** A talent choice waiting for the player (after a big breakthrough); blocks the next year. */

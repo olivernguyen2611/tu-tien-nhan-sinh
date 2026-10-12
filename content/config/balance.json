@@ -322,6 +322,8 @@
     "bargainMax": 0.8,
     "bargainWinMul": 0.85,
     "bargainLoseMul": 1.1,
+    "auctionBids": [1.2, 1.6, 2.2],
+    "auctionRival": [1.0, 2.6],
     "maxDiscount": 0.3
   },
   "clan": {

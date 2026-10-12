@@ -2,6 +2,13 @@
 
 ## [Chưa phát hành]
 
+### Chơi thử 2 — Phường thị theo vùng và hội đấu giá (2026-10-12)
+- Phường thị gắn với vùng (`regions` trong `markets.json`): mỗi đại vực có chợ riêng. Thanh Vân châu: Chợ phiên, Vô Chủ Phường, Hội đấu giá Kim Thiềm; Vạn Thú sơn mạch: Thú Thị Vạn Thú; Đông Hải: Hải thị Thận Lâu, Hội đấu giá Thận Lâu; Bắc Minh: Băng Phách Phường; Trung Châu: Vạn Bảo Phường, Thiên Bảo Lâu. Kim Thiềm Thương Minh có ở mọi vùng.
+- Hàng bày đổi theo năm (`stock`), có đặc sản riêng (`items`) và bán bí tịch công pháp (`techniques`).
+- Hội đấu giá (`auction`): mỗi năm vài lô (đan dược quý, pháp bảo, bí tịch tới Thiên phẩm), ra giá một lần; giá càng cao càng dễ thắng, thua không mất gì (`balance.market.auctionBids`, `auctionRival`).
+- 10 vật phẩm mới: kẹo hồ lô, rượu thuốc, sách vỡ lòng, hộp phấn son, nhân sâm rừng, dao găm phòng thân, trân châu giao nhân, Băng Tâm Liên, yêu huyết tinh luyện, giáp vảy giao long. "Cái bát" không còn bày bán.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Chơi thử 2 — Mục Kim Thủ Chỉ (2026-10-12)
 - Nút 指 trên thanh trên cùng (chỉ hiện khi có Kim Thủ Chỉ, có chấm báo khi còn việc làm được năm nay) mở mục riêng: các tầng thức tỉnh, tầng kế tiếp mở ở cảnh giới nào, và các hành động dùng Kim Thủ Chỉ.
 - 23 hành động cho 7 Kim Thủ Chỉ (`actions` trong `golden-fingers.json`): hỏi lão gia gia, xin đan phương, mượn sức phá bình cảnh; điểm danh hệ thống, vòng quay may mắn; tưới linh dịch, uống một giọt; nhớ lại kiếp trước; đọc tâm ở chợ; tu trong động thiên; xem thiên đạo bảng… Mỗi hành động có tầng tối thiểu và thời gian hồi (năm); dùng từ 6 tuổi (`balance.goldenFinger.actionMinAge`).

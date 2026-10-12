@@ -868,3 +868,7 @@ button { font: inherit; color: inherit; }
 .challenge-result { font-weight: 600; }
 .challenge-result.done { color: var(--jade); }
 .challenge-screen .dev-input, .dev-section > .dev-input { flex: none; }
+
+/* Playtest 2: auction lots */
+.auction-lot { display: flex; flex-direction: column; gap: 6px; padding: 6px 8px; }
+.auction-lot > div:first-child { display: flex; flex-direction: column; min-width: 0; }

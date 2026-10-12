@@ -5,7 +5,7 @@ import type { GameState } from '../core/types';
 import { describeChanges } from '../systems/deltas';
 import { consumeItem } from '../systems/items';
 import { doFingerAction } from '../systems/fingerActions';
-import { bargain, buy, sell } from '../systems/market';
+import { bargain, buy, sell, buyScroll, placeBid } from '../systems/market';
 import { travel } from '../systems/regions';
 import { act, settle } from '../systems/combat';
 import { performFamilyAction } from '../systems/relationships';
@@ -324,6 +324,8 @@ function Screens({ content }: { content: Content }) {
         onMarket={(marketId, action) => {
           const r = action.kind === 'buy' ? buy(life, content, marketId, action.itemId)
             : action.kind === 'sell' ? sell(life, content, marketId, action.itemId)
+            : action.kind === 'scroll' ? buyScroll(life, content, marketId, action.techId)
+            : action.kind === 'bid' ? placeBid(life, content, marketId, action.lot, action.bid)
             : bargain(life, content, marketId);
           setLife(r.state);
           return { text: r.text, tone: r.tone };
