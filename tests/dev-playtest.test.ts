@@ -14,10 +14,9 @@ describe('developer mode for the playtest fixes', () => {
     expect(devSetMartial(adult, content, 4).martial.stage).toBe(4);
   });
 
-  it('offers every grade, variant and body, and sets the root', () => {
+  it('offers every grade and variant, and sets the root', () => {
     const roots = devRootOptions(content);
     expect(roots.some((r) => r.label === 'Biến dị linh căn (Lôi: Kim + Hỏa)')).toBe(true);
-    expect(roots.filter((r) => r.root.body).length).toBe(content.cultivation.roots.bodies.length);
     const lôi = roots.find((r) => r.key === 'bien_di:loi')!;
     expect(devSetRoot(adult, content, lôi.root).cult.root).toEqual(lôi.root);
   });

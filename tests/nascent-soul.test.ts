@@ -12,7 +12,7 @@ const base = createLife({ seed: 'anh', originId: 'nong_dan' }, content);
 const kimDan: GameState = {
   ...base,
   character: { ...base.character, age: 200 },
-  cult: { ...base.cult, realm: 'kim_dan', stage: 3, progress: 100, lifespan: 600, coreGrade: 5, root: { grade: 'song', elements: ['kim', 'hoa'], body: null } },
+  cult: { ...base.cult, realm: 'kim_dan', stage: 3, progress: 100, lifespan: 600, coreGrade: 5, root: { grade: 'song', elements: ['kim', 'hoa'] } },
   paths: Object.fromEntries(content.cultivation.aptitudes.paths.map((p) => [p.id, 10])),
 };
 const form = (s: GameState) => soulFormFor(s, content)?.id;

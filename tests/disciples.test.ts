@@ -15,7 +15,7 @@ function master(realm = 'truc_co', age = 60): GameState {
     aptitudes: { ...b.aptitudes, comprehension: 50 },
     log: [...b.log, { age, lines: [] }],
     events: { ...b.events, pending: null },
-    cult: { ...b.cult, realm, stage: 0, progress: 10, lifespan: 300, root: { grade: 'song', elements: ['kim', 'hoa'], body: null }, technique: 'tang_phong_kiem_kinh', lineage: 'tien' },
+    cult: { ...b.cult, realm, stage: 0, progress: 10, lifespan: 300, root: { grade: 'song', elements: ['kim', 'hoa'] }, technique: 'tang_phong_kiem_kinh', lineage: 'tien' },
   };
 }
 

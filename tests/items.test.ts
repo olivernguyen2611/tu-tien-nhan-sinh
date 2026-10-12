@@ -31,7 +31,7 @@ const content: Content = {
   ],
 };
 
-const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'], body: null };
+const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'] };
 const mortal = createLife({ seed: 'bag', originId: 'nong_dan' }, content);
 const cultivator = (): GameState => {
   const s = { ...mortal, cult: { ...mortal.cult, root: SONG } };

@@ -5,7 +5,7 @@ import type { GameState, SpiritRoot } from '../src/core/types';
 import { auctionBlocked, auctionLots, buyScroll, marketOffers, openMarkets, placeBid, techniqueOffers } from '../src/systems/market';
 
 const content = loadContent();
-const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'], body: null };
+const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'] };
 
 function cultivator(region: string, stones = 3000, age = 30): GameState {
   const b = createLife({ seed: 'phuong-thi' }, content);

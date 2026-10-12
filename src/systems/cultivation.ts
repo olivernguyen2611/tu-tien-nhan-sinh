@@ -27,16 +27,19 @@ import { blessingHooks } from './blessings';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
+/** A root test result: the root, plus the special body that stands in for it (grade the_chat). */
+export interface RootRoll { root: SpiritRoot; bodyId: string | null }
+
 /** One roll: grade by weight, then its elements (or a special body). `floor`: no grade slower than this one. */
-function rollOnce(rng: Rng, content: Content, floor: string | null = null): SpiritRoot {
+function rollOnce(rng: Rng, content: Content, floor: string | null = null): RootRoll {
   const cfg = content.balance.roots;
   const { grades, elements, bodies } = content.cultivation.roots;
   const min = floor ? cfg.gradeSpeed[floor] ?? 0 : 0;
   const grade = rng.weighted(grades, (g) => ((cfg.gradeSpeed[g.id] ?? 0) >= min ? cfg.gradeWeights[g.id] ?? 0 : 0));
   const count = cfg.elementCount[grade.id] ?? 0;
-  if (grade.special === 'body') return { grade: grade.id, elements: [], body: rng.weighted(bodies, (b) => cfg.bodyWeights[b.id] ?? 0).id };
+  if (grade.special === 'body') return { root: { grade: grade.id, elements: [] }, bodyId: rng.weighted(bodies, (b) => cfg.bodyWeights[b.id] ?? 0).id };
   const kind = elements.filter((e) => e.variant === (grade.special === 'variant')).map((e) => e.id);
-  return { grade: grade.id, elements: pickElements(rng, kind, count), body: null };
+  return { root: { grade: grade.id, elements: pickElements(rng, kind, count) }, bodyId: null };
 }
 
 /** `count` distinct elements, kept in content order (Kim Mộc Thủy Hỏa Thổ). */
@@ -48,8 +51,8 @@ function pickElements(rng: Rng, from: string[], count: number): string[] {
 }
 
 /** Roll `rolls` times and keep the root with the highest cultivation speed. */
-export function rollRoot(rng: Rng, content: Content, rolls = 1, floor: string | null = null): SpiritRoot {
-  const speed = (r: SpiritRoot) => content.balance.roots.gradeSpeed[r.grade] ?? 0;
+export function rollRoot(rng: Rng, content: Content, rolls = 1, floor: string | null = null): RootRoll {
+  const speed = (r: RootRoll) => content.balance.roots.gradeSpeed[r.root.grade] ?? 0;
   let best = rollOnce(rng, content, floor);
   for (let i = 1; i < rolls; i++) {
     const next = rollOnce(rng, content, floor);
@@ -96,10 +99,9 @@ export function rootTestAge(seed: string, content: Content): number {
   return new Rng(`${seed}:root-test`).int(lo, hi);
 }
 
-/** "Song linh căn (Kim, Hỏa)", "Cửu Dương Thể"… */
+/** "Song linh căn (Kim, Hỏa)"… (a special body stands in for the root: see `rootNameOf`). */
 export function rootName(root: SpiritRoot, content: Content): string {
-  const { grades, elements, bodies } = content.cultivation.roots;
-  if (root.body) return bodies.find((b) => b.id === root.body)?.name ?? root.body;
+  const { grades, elements } = content.cultivation.roots;
   const grade = grades.find((g) => g.id === root.grade)?.name ?? root.grade;
   // Ngũ linh căn already says "all five".
   if (root.elements.length === 0 || root.elements.length >= 5) return grade;
@@ -117,14 +119,31 @@ export function rootUsable(state: GameState, content: Content): boolean {
   return !!state.cult.root && (content.balance.roots.gradeSpeed[state.cult.root.grade] ?? 0) > 0;
 }
 
-/** What the profile shows for the root. */
+/** Name of a special body ("Cửu Dương Thể"). */
+export function bodyName(bodyId: string, content: Content): string {
+  return content.cultivation.roots.bodies.find((b) => b.id === bodyId)?.name ?? bodyId;
+}
+
+/** The root a person shows: a special body's name when it stands in for the root, else the root's. */
+export function rootNameOf(root: SpiritRoot, bodyId: string | null | undefined, content: Content): string {
+  return bodyId ? bodyName(bodyId, content) : rootName(root, content);
+}
+
+/** What the profile shows for the root: a special body replaces it, so the root line says so. */
 export function rootLabel(state: GameState, content: Content): string {
+  if (state.cult.bodyId) return 'Không cần (thể chất đã thay thế)';
   return state.cult.root ? rootName(state.cult.root, content) : 'Chưa thử';
 }
 
-export function rootDescription(root: SpiritRoot, content: Content): string {
+/** What the profile shows for the body (thể chất): the special body, else an ordinary one once tested. */
+export function bodyLabel(state: GameState, content: Content): string {
+  if (state.cult.bodyId) return bodyName(state.cult.bodyId, content);
+  return state.cult.root ? content.cultivation.roots.plainBody : 'Chưa rõ';
+}
+
+export function rootDescription(root: SpiritRoot, content: Content, bodyId?: string | null): string {
   const { grades, bodies } = content.cultivation.roots;
-  if (root.body) return bodies.find((b) => b.id === root.body)?.description ?? '';
+  if (bodyId) return bodies.find((b) => b.id === bodyId)?.description ?? '';
   return grades.find((g) => g.id === root.grade)?.description ?? '';
 }
 
@@ -155,11 +174,11 @@ function bodyGains(state: GameState, content: Content, bodyId: string | null) {
 export function awakenBody(state: GameState, content: Content, bodyId: string): { state: GameState; text: string } {
   const root = state.cult.root;
   const body = content.cultivation.roots.bodies.find((b) => b.id === bodyId);
-  if (!state.alive || !body || !root || root.body || (content.balance.roots.gradeSpeed[root.grade] ?? 0) <= 0) return { state, text: '' };
+  if (!state.alive || !body || !root || state.cult.bodyId || (content.balance.roots.gradeSpeed[root.grade] ?? 0) <= 0) return { state, text: '' };
   const grade = content.cultivation.roots.grades.find((g) => g.special === 'body')?.id ?? 'the_chat';
   const gains = bodyGains(state, content, bodyId);
   const text = content.cultivation.roots.awakenText.replace('{body}', body.name).replace('{description}', body.description);
-  const next: GameState = { ...state, ...gains, cult: { ...state.cult, root: { grade, elements: [], body: bodyId }, lifespan: gains.lifespan }, log: pushLine(state.log, { text, tone: 'rare' }) };
+  const next: GameState = { ...state, ...gains, cult: { ...state.cult, root: { grade, elements: [] }, bodyId, lifespan: gains.lifespan }, log: pushLine(state.log, { text, tone: 'rare' }) };
   return { state: next, text };
 }
 
@@ -174,14 +193,13 @@ export function revealRoot(state: GameState, content: Content): { state: GameSta
   // Phúc báo Đại thiện nhân (task 5b.8): rootReroll adds rolls, best kept.
   const rolls = (origin?.cultivatorClan ? content.balance.roots.clanDescendantRolls : 1) + Math.max(0, Math.round(hookSum(state, content, 'rootReroll')));
   const floor = traitRootFloor(state, content);
-  const root = rollRoot(rng, content, rolls, floor?.grade ?? null);
+  const { root, bodyId } = rollRoot(rng, content, rolls, floor?.grade ?? null);
 
-  const { stats, aptitudes, lifespan } = bodyGains(state, content, root.body);
+  const { stats, aptitudes, lifespan } = bodyGains(state, content, bodyId);
 
   const speed = content.balance.roots.gradeSpeed[root.grade] ?? 0;
-  const text = content.cultivation.roots.revealText
-    .replace('{root}', rootName(root, content))
-    .replace('{description}', rootDescription(root, content));
+  const text = (bodyId ? content.cultivation.roots.revealBodyText.replace('{body}', bodyName(bodyId, content)) : content.cultivation.roots.revealText.replace('{root}', rootName(root, content)))
+    .replace('{description}', rootDescription(root, content, bodyId));
   const intro = floor ? `${content.cultivation.roots.traitGuaranteeText.replace('{trait}', floor.trait)} ` : '';
   const line: LogLine = { text: intro + text, tone: speed === 0 ? 'bad' : speed >= 1.6 ? 'rare' : speed >= 1 ? 'good' : 'normal' };
 
@@ -189,7 +207,7 @@ export function revealRoot(state: GameState, content: Content): { state: GameSta
   const last = log[log.length - 1];
   if (last) log[log.length - 1] = { ...last, lines: [...last.lines, line] };
   return {
-    state: { ...state, rng: rng.getState(), stats, aptitudes, cult: { ...state.cult, root, lifespan }, log },
+    state: { ...state, rng: rng.getState(), stats, aptitudes, cult: { ...state.cult, root, bodyId, lifespan }, log },
     line,
   };
 }
@@ -212,7 +230,7 @@ export function hookActive(e: Hook, state: GameState, content: Content): boolean
 /** Hooks this life carries from traits, its special body, its career, its technique and its sect. */
 export function lifeHooks(state: GameState, content: Content): Hook[] {
   const fromTraits = state.traits.flatMap((id) => content.traits.find((t) => t.id === id)?.effects ?? []);
-  const body = state.cult.root?.body ? content.cultivation.roots.bodies.find((b) => b.id === state.cult.root!.body) : undefined;
+  const body = state.cult.bodyId ? content.cultivation.roots.bodies.find((b) => b.id === state.cult.bodyId) : undefined;
   return [
     ...fromTraits, ...(body?.effects ?? []), ...careerHooks(state, content),
     ...(currentTechnique(state, content)?.effects ?? []), ...sectHooks(state, content), ...ownSectHooks(state, content),
@@ -665,7 +683,7 @@ export function grantRoot(state: GameState, content: Content): { state: GameStat
     const dead = checkDeath({ ...hurt, rng: rng.getState() }, content, 'ordeal');
     return { state: dead, text: dead.log.at(-1)?.lines.at(-1)?.text ?? '' };
   }
-  const withRoot: GameState = { ...hurt, rng: rng.getState(), cult: { ...hurt.cult, root: { grade, elements, body: null } } };
+  const withRoot: GameState = { ...hurt, rng: rng.getState(), cult: { ...hurt.cult, root: { grade, elements } } };
   const text = content.cultivation.roots.revealText
     .replace('{root}', rootName(withRoot.cult.root!, content))
     .replace('{description}', rootDescription(withRoot.cult.root!, content));

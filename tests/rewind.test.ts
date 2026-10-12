@@ -37,7 +37,7 @@ describe('Trùng sinh (task 5b.10)', () => {
 
   it('Hồi Quang Kính: back to age 6 with the same root, memory flag, new world', () => {
     let s = live(born(), 20);
-    const root = { grade: 'song', elements: ['kim', 'hoa'], body: null };
+    const root = { grade: 'song', elements: ['kim', 'hoa'] };
     s = { ...s, inventory: { ...s.inventory, hoi_quang_kinh: 1 }, cult: { ...s.cult, root } };
     const dead = die(s);
     expect(rewindOffer(dead, content)).toEqual({ target: 'age6', age: 6 });

@@ -117,7 +117,7 @@ function ascend(state: GameState, content: Content): GameState {
   const withRoot: GameState = {
     ...state,
     flags: { ...state.flags, vo_dao_nhap_tien: true },
-    cult: { ...state.cult, root: { grade: 'ngu', elements: basic, body: null } },
+    cult: { ...state.cult, root: { grade: 'ngu', elements: basic } },
   };
   const logged = { ...withRoot, log: addLines(withRoot, [{ text: content.martial.texts.ascend, tone: 'rare' }]) };
   return startCultivating(logged, content).state;

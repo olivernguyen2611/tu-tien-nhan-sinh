@@ -9,7 +9,7 @@ import { meets } from '../src/systems/events/conditions';
 import { makeSave, migrate } from '../src/systems/save';
 
 const content = loadContent();
-const NONE = { grade: 'none', elements: [], body: null };
+const NONE = { grade: 'none', elements: [] };
 
 function mortal(seed: string, age = 16, patch: Partial<GameState> = {}): GameState {
   const b = createLife({ seed }, content);
@@ -109,7 +109,7 @@ describe('Thiên địa kỳ vật (task 2.11)', () => {
 
   it('does nothing for someone who already has a root', () => {
     const s = mortal('has', 20, {});
-    const rooted = { ...s, cult: { ...s.cult, root: { grade: 'tam', elements: ['kim', 'moc', 'thuy'], body: null } } };
+    const rooted = { ...s, cult: { ...s.cult, root: { grade: 'tam', elements: ['kim', 'moc', 'thuy'] } } };
     expect(grantRoot(rooted, content).state).toBe(rooted);
   });
 

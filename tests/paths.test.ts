@@ -8,7 +8,7 @@ import { learnTechnique } from '../src/systems/technique';
 import { migrate } from '../src/systems/save';
 
 const content = loadContent();
-const SONG = { grade: 'song', elements: ['kim', 'hoa'], body: null };
+const SONG = { grade: 'song', elements: ['kim', 'hoa'] };
 
 function cultivator(paths: Record<string, number>, patch: Partial<GameState['cult']> = {}): GameState {
   const b = createLife({ seed: 'paths' }, content);

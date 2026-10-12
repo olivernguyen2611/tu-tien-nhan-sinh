@@ -17,7 +17,7 @@ function withChosen(template: string): GameState {
     character: { ...b.character, age: 80 },
     log: [...b.log, { age: 80, lines: [] }],
     events: { ...b.events, followUps: [] },
-    cult: { ...b.cult, realm: 'kim_dan', lineage: 'tien', root: { grade: 'song', elements: ['kim', 'hoa'], body: null } },
+    cult: { ...b.cult, realm: 'kim_dan', lineage: 'tien', root: { grade: 'song', elements: ['kim', 'hoa'] } },
   };
   return takeChosen(s, content, template);
 }

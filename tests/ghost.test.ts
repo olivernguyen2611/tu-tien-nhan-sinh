@@ -12,7 +12,7 @@ const combat = cfg.causeChance.combat ?? 0;
 
 function life(seed = 'ghost', luck = 50): GameState {
   const b = createLife({ seed }, content);
-  return { ...b, character: { ...b.character, age: 40 }, aptitudes: { ...b.aptitudes, luck, daoHeart: 60 }, log: [...b.log, { age: 40, lines: [] }], cult: { ...b.cult, root: { grade: 'none', elements: [], body: null } } };
+  return { ...b, character: { ...b.character, age: 40 }, aptitudes: { ...b.aptitudes, luck, daoHeart: 60 }, log: [...b.log, { age: 40, lines: [] }], cult: { ...b.cult, root: { grade: 'none', elements: [] } } };
 }
 
 describe('quỷ tu (task 4.12)', () => {

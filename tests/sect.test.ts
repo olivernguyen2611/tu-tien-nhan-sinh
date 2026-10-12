@@ -11,7 +11,7 @@ import {
 import { learnTechnique } from '../src/systems/technique';
 
 const content = loadContent();
-const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'], body: null };
+const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'] };
 
 function disciple(patch: Partial<GameState> = {}, cult: Partial<GameState['cult']> = {}): GameState {
   const b = createLife({ seed: 'sect' }, content);
@@ -41,11 +41,11 @@ describe('sects (task 2.5)', () => {
     expect(sectEligibility(s, content, 'bich_lac_tong')).toBeNull();
     expect(sectEligibility(s, content, 'tang_phong_kiem_cac')).toBeNull(); // Kim root, đạo tâm 50
     expect(sectEligibility({ ...s, aptitudes: { ...s.aptitudes, daoHeart: 40 } }, content, 'tang_phong_kiem_cac')).toContain('Đạo tâm');
-    const water = disciple({}, { root: { grade: 'song', elements: ['thuy', 'moc'], body: null } });
+    const water = disciple({}, { root: { grade: 'song', elements: ['thuy', 'moc'] } });
     expect(sectEligibility(water, content, 'tang_phong_kiem_cac')).toContain('tư chất');
     expect(sectEligibility(s, content, 'vo_uu_tu')).toContain('Đạo tâm 55');
     expect(sectEligibility(s, content, 'van_yeu_dien')).toContain('chưa nhận');
-    expect(sectEligibility(disciple({}, { root: { grade: 'none', elements: [], body: null } }), content, 'u_ha_ma_tong')).toContain('linh căn');
+    expect(sectEligibility(disciple({}, { root: { grade: 'none', elements: [] } }), content, 'u_ha_ma_tong')).toContain('linh căn');
   });
 
   it('the recruitment event locks sects the life cannot join and joins through the choice', () => {

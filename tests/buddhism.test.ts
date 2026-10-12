@@ -8,7 +8,7 @@ import { joinSect, sectEligibility, sectYear } from '../src/systems/sect';
 import { learnTechnique } from '../src/systems/technique';
 
 const content = loadContent();
-const NONE = { grade: 'none', elements: [], body: null };
+const NONE = { grade: 'none', elements: [] };
 
 function rootless(daoHeart: number, patch: Partial<GameState> = {}): GameState {
   const b = createLife({ seed: 'phat' }, content);

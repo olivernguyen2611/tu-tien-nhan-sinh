@@ -9,7 +9,7 @@ import { martialPromote, martialView, trainMartial } from '../src/systems/martia
 import { makeSave, migrate } from '../src/systems/save';
 
 const content = loadContent();
-const NONE = { grade: 'none', elements: [], body: null };
+const NONE = { grade: 'none', elements: [] };
 
 function mortal(age = 12, physique = 60, patch: Partial<GameState> = {}, seed = 'mar'): GameState {
   const b = createLife({ seed }, content);

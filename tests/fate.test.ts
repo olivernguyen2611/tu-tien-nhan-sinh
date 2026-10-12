@@ -18,7 +18,7 @@ function tc(patch: Partial<GameState['cult']> = {}, luck = 50, extra: Partial<Ga
     traits: [],
     log: [...b.log, { age: 30, lines: [] }],
     events: { ...b.events, followUps: [] },
-    cult: { ...b.cult, realm: 'truc_co', root: { grade: 'song', elements: ['kim', 'hoa'], body: null }, technique: 'dan_khi_quyet', lineage: 'tien', learned: [], foundation: 'trung', lifespan: 200, ...patch },
+    cult: { ...b.cult, realm: 'truc_co', root: { grade: 'song', elements: ['kim', 'hoa'] }, technique: 'dan_khi_quyet', lineage: 'tien', learned: [], foundation: 'trung', lifespan: 200, ...patch },
     ...extra,
   };
 }

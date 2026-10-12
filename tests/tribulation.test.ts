@@ -20,7 +20,7 @@ function cultivator(health = 90, physique = 50, elements = ['moc', 'hoa']): Game
     aptitudes: { ...b.aptitudes, physique, luck: 50 },
     traits: [], talents: [], flags: {}, inventory: {},
     log: [...b.log, { age: 80, lines: [] }],
-    cult: { ...b.cult, realm: 'truc_co', stage: 3, progress: 100, lifespan: 220, foundation: 'trung', root: { grade: 'song', elements, body: null }, technique: 'tang_phong_kiem_kinh', lineage: 'tien' },
+    cult: { ...b.cult, realm: 'truc_co', stage: 3, progress: 100, lifespan: 220, foundation: 'trung', root: { grade: 'song', elements }, technique: 'tang_phong_kiem_kinh', lineage: 'tien' },
   };
 }
 

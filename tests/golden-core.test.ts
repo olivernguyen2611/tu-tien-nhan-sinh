@@ -21,7 +21,7 @@ function peak(seed = 'core', patch: Partial<GameState['cult']> = {}): GameState 
     events: { pending: null, history: {}, followUps: [], npc: null },
     paths: {},
     cult: { ...b.cult, realm: 'truc_co', stage: 3, progress: 100, lifespan: 220, foundation: 'trung',
-      root: { grade: 'song', elements: ['moc', 'hoa'], body: null }, technique: 'tang_phong_kiem_kinh', lineage: 'tien', ...patch },
+      root: { grade: 'song', elements: ['moc', 'hoa'] }, technique: 'tang_phong_kiem_kinh', lineage: 'tien', ...patch },
   };
 }
 

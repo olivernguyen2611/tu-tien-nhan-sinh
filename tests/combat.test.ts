@@ -26,7 +26,7 @@ const content: Content = {
   ],
 };
 
-const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'], body: null };
+const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'] };
 const born = createLife({ seed: 'combat', originId: 'nong_dan' }, content);
 const adult: GameState = { ...born, character: { ...born.character, age: 20 } };
 const cultivator = (): GameState => {

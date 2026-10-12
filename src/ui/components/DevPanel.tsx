@@ -7,13 +7,13 @@ import type { DeathCause, GameState } from '../../core/types';
 import { STAT_LABELS } from '../../systems/deltas';
 import { activeCombos } from '../../systems/destiny';
 import { fingerDef } from '../../systems/goldenFinger';
-import { rootLabel } from '../../systems/cultivation';
+import { bodyLabel, rootLabel } from '../../systems/cultivation';
 import { npcById } from '../../systems/npcs';
 import type { SaveMeta } from '../../systems/save';
 import {
   DEV_STATS, devAddKarma, devAddLifespan, devAddMoney, devAddStat, devClearHeartDemon, devFillProgress, devFindEvents, devFoundClan, devFoundSect,
   devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect,
-  devAwakenBody, devMarry, devResetEventHistory, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
+  devAwakenBody, devSetBody, devMarry, devResetEventHistory, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
   devResetItemUse, devResetFingerCooldowns, devSetFingerLevel, devSetFlag, devSetGoldenFinger, devSetRealm, devSkipYears, devStartFight, devTakeChosen, devToggleTrait, devTriggerEvent,
 } from '../../systems/dev';
 
@@ -118,7 +118,7 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
         </Section>
 
         <Section title="Linh căn & võ đạo">
-          <p class="profile-note">Linh căn: {rootLabel(state, content)} · võ đạo: {state.martial.stage < 0 ? 'chưa nhập môn' : content.martial.stages[state.martial.stage]?.name}</p>
+          <p class="profile-note">Linh căn: {rootLabel(state, content)} · thể chất: {bodyLabel(state, content)} · võ đạo: {state.martial.stage < 0 ? 'chưa nhập môn' : content.martial.stages[state.martial.stage]?.name}</p>
           <div class="dev-event">
             <Pick value={rootKey} onChange={setRootKey} label="Linh căn">
               {roots.map((r) => <option key={r.key} value={r.key}>{r.label}</option>)}
@@ -130,6 +130,8 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
               {content.cultivation.roots.bodies.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
             </Pick>
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devAwakenBody(state, content, bodyId))}>Thức tỉnh</button>
+            <button class="chip-btn" disabled={!live} onClick={() => onChange(devSetBody(state, content, bodyId))}>Đặt (không thưởng)</button>
+            <button class="chip-btn" disabled={!live} onClick={() => onChange(devSetBody(state, content, null))}>Về phàm thể</button>
           </div>
           <div class="dev-event">
             <Pick value={martialStage} onChange={setMartialStage} label="Võ đạo">

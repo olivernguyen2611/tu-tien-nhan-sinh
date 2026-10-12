@@ -17,7 +17,7 @@ function elder(): GameState {
     money: { silver: 0, spiritStones: 500 },
     log: [...b.log, { age: 120, lines: [] }],
     events: { ...b.events, followUps: [] },
-    cult: { ...b.cult, realm: 'kim_dan', lineage: 'tien', technique: 'tang_phong_kiem_kinh', root: { grade: 'song', elements: ['kim', 'hoa'], body: null } },
+    cult: { ...b.cult, realm: 'kim_dan', lineage: 'tien', technique: 'tang_phong_kiem_kinh', root: { grade: 'song', elements: ['kim', 'hoa'] } },
   };
 }
 const founded = (members = 50): GameState => {

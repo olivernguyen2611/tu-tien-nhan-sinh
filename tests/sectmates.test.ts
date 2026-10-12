@@ -6,7 +6,7 @@ import { joinSect, requestMaster, sectYear } from '../src/systems/sect';
 import { doTalk, enterTournament, sectmates, sectmateViews, tournamentViews } from '../src/systems/sectmates';
 
 const content = loadContent();
-const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'], body: null };
+const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'] };
 
 function disciple(): GameState {
   const b = createLife({ seed: 'mates' }, content);

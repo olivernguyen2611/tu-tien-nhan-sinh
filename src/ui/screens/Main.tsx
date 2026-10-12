@@ -29,7 +29,7 @@ import { Meter } from '../components/Meter';
 import { Term, TermText } from '../components/Tooltip';
 import { ThemeToggle } from '../components/ThemeToggle';
 import type { ThemePref } from '../theme';
-import { realmLabel, rootLabel } from '../../systems/cultivation';
+import { bodyLabel, realmLabel, rootLabel } from '../../systems/cultivation';
 import { difficultyName } from '../../systems/difficulty';
 import { currentGoal, pendingTip } from '../../systems/tutorial';
 import { careerLabel } from '../../systems/career';
@@ -276,6 +276,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
               ))}
             </div>
             <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>
+            <p class="profile-root"><TermText text={`Thể chất: ${bodyLabel(state, content)}`} /></p>
             {careerLabel(state, content) && <p class="profile-note">Đường đời: {careerLabel(state, content)}</p>}
             {sectLabel(state, content) && <p class="profile-note">Tông môn: {sectLabel(state, content)}</p>}
             {inventoryLabel(state, content) && <p class="profile-note">Mang theo: {inventoryLabel(state, content)}</p>}

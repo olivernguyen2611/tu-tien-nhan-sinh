@@ -19,7 +19,7 @@ import { Rng } from '../src/core/rng';
 const content = loadContent();
 const born = createLife({ seed: 'wiring', originId: 'nong_dan' }, content);
 const life: GameState = { ...born, traits: [], talents: [], character: { ...born.character, age: 20 } };
-const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'], body: null };
+const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'] };
 const cultivator = (traits: string[] = []): GameState => {
   const s = { ...life, traits, cult: { ...life.cult, root: SONG } };
   return enterRealm(s, content, 'luyen_khi', Rng.fromState(s.rng));

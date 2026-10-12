@@ -15,7 +15,7 @@ function cultivator(difficulty: string): GameState {
     ...b,
     aptitudes: { physique: 50, comprehension: 50, luck: 50, daoHeart: 50 },
     traits: [],
-    cult: { ...b.cult, realm: 'luyen_khi', root: { grade: 'song', elements: ['kim', 'hoa'], body: null } },
+    cult: { ...b.cult, realm: 'luyen_khi', root: { grade: 'song', elements: ['kim', 'hoa'] } },
   };
 }
 

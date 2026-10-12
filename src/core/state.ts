@@ -156,7 +156,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     character: { name, gender, originId: origin.id, hometown, age: 0 },
     stats,
     aptitudes,
-    cult: { realm: 'pham_nhan', stage: 0, progress: 0, root: null, lifespan, fails: {}, injuredUntil: null, technique: null, learned: [], scrolls: [], buffs: [], nextBonus: 0, preceptBreaks: 0, lineagesAdopted: [], heartDemon: 0, coreForming: null, coreGrade: null, corePattern: null, soulForm: null, heartDemonTrial: null, foundation: null, lastMajorAttempt: null, lineage: null },
+    cult: { realm: 'pham_nhan', stage: 0, progress: 0, root: null, bodyId: null, lifespan, fails: {}, injuredUntil: null, technique: null, learned: [], scrolls: [], buffs: [], nextBonus: 0, preceptBreaks: 0, lineagesAdopted: [], heartDemon: 0, coreForming: null, coreGrade: null, corePattern: null, soulForm: null, heartDemonTrial: null, foundation: null, lastMajorAttempt: null, lineage: null },
     money: { silver: origin.silver + rebirthTalentBonus(rebirthTalents, content, 'startSilver'), spiritStones: origin.spiritStones },
     social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0, trieu_dinh: 0, giang_ho: 0 } },
     flags: origin.noParents ? { no_parents: true, no_father: true, no_mother: true } : {},

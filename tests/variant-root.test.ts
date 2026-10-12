@@ -5,7 +5,7 @@ import { rootName } from '../src/systems/cultivation';
 import { rootAffinities, techniqueMatches } from '../src/systems/technique';
 
 const content = loadContent();
-const loi: SpiritRoot = { grade: 'bien_di', elements: ['loi'], body: null };
+const loi: SpiritRoot = { grade: 'bien_di', elements: ['loi'] };
 
 describe('linh căn biến dị = tổ hợp 2 hành (playtest 2026-10-12)', () => {
   it('every variant is two distinct basic elements', () => {

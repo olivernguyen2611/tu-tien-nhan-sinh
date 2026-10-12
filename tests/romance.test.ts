@@ -134,7 +134,7 @@ describe('đạo lữ, song tu, sinh con (task 3.7)', () => {
 
   it('song tu: a cultivating đạo lữ multiplies yearly cultivation', () => {
     const { s, id } = couple('nam', 'nu', 'luyen_khi');
-    const rooted = { ...s, cult: { ...s.cult, root: { grade: 'song', elements: ['kim', 'hoa'], body: null } } };
+    const rooted = { ...s, cult: { ...s.cult, root: { grade: 'song', elements: ['kim', 'hoa'] } } };
     const married = applyRomance(rooted, content, id, { marry: {} });
     expect(yearlyGain(married, content) / yearlyGain(rooted, content)).toBeCloseTo(b.dualCultivationMul);
     const partner = npcById(married, id)!;
@@ -168,14 +168,14 @@ describe('đạo lữ, song tu, sinh con (task 3.7)', () => {
     const speed = (g: string) => content.balance.roots.gradeSpeed[g] ?? 0;
     const avg = (state: GameState, p: typeof partner | null) => {
       let sum = 0;
-      for (let i = 0; i < 400; i++) sum += speed(inheritRoot(state, content, p, new Rng(`r${i}`)).grade);
+      for (let i = 0; i < 400; i++) sum += speed(inheritRoot(state, content, p, new Rng(`r${i}`)).root.grade);
       return sum / 400;
     };
-    const mortal = { ...s, cult: { ...s.cult, root: { grade: 'none', elements: [], body: null } } };
-    const rooted = { ...s, cult: { ...s.cult, root: { grade: 'song', elements: ['kim', 'hoa'], body: null } } };
+    const mortal = { ...s, cult: { ...s.cult, root: { grade: 'none', elements: [] } } };
+    const rooted = { ...s, cult: { ...s.cult, root: { grade: 'song', elements: ['kim', 'hoa'] } } };
     expect(avg(rooted, partner)).toBeGreaterThan(avg(mortal, { ...partner, root: false }) + 0.1);
     for (let i = 0; i < 50; i++) {
-      const r = inheritRoot(rooted, content, partner, new Rng(`e${i}`));
+      const { root: r } = inheritRoot(rooted, content, partner, new Rng(`e${i}`));
       if (r.grade === 'song') expect(r.elements).toEqual(['kim', 'hoa']);
     }
   });
@@ -183,7 +183,7 @@ describe('đạo lữ, song tu, sinh con (task 3.7)', () => {
   it('a child shows the root from the test age, and the log tells', () => {
     const { s } = couple('nam', 'nu');
     const testAge = content.balance.roots.testAge[0];
-    const kid = { id: 'child_0', role: 'child' as const, gender: 'nam' as const, name: 'Lâm Tiểu Bảo', age: testAge - 1, alive: true, lifespan: 70, affinity: 70, lastActions: {}, root: { grade: 'don', elements: ['hoa'], body: null } };
+    const kid = { id: 'child_0', role: 'child' as const, gender: 'nam' as const, name: 'Lâm Tiểu Bảo', age: testAge - 1, alive: true, lifespan: 70, affinity: 70, lastActions: {}, root: { grade: 'don', elements: ['hoa'] } };
     expect(childRootLabel(content, kid)).toBeNull();
     const next = advanceYear({ ...s, family: [...s.family, kid] }, content);
     expect(childRootLabel(content, next.family.find((r) => r.id === 'child_0')!)).toContain('Hỏa');

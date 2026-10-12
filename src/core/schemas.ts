@@ -1650,6 +1650,10 @@ export const RootsFileSchema = z
       .min(1),
     /** Log line when the root is revealed: {root} = name with elements, {description}. */
     revealText: z.string().min(1),
+    /** Log line when a special body shows instead of a root: {body}, {description}. */
+    revealBodyText: z.string().min(1),
+    /** Name of the ordinary body shown for everyone without a special one. */
+    plainBody: z.string().min(1),
     /** Playtest 2026-10-12: a cultivation khí vận guaranteed the root. {trait} = its name. */
     traitGuaranteeText: z.string().min(1),
     /** Thức tỉnh thể chất tiềm ẩn ({body}, {description}). */

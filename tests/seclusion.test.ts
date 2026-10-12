@@ -21,7 +21,7 @@ function cultivator(age = 30, patch: Partial<GameState['cult']> = {}): GameState
     log: [...b.log, { age, lines: [] }],
     events: { pending: null, history: {}, followUps: [], npc: null },
     paths: {},
-    cult: { ...b.cult, realm: 'luyen_khi', stage: 0, progress: 0, lifespan: 130, root: { grade: 'ngu', elements: ['kim', 'moc', 'thuy', 'hoa', 'tho'], body: null }, technique: 'dan_khi_quyet', lineage: 'tien', ...patch },
+    cult: { ...b.cult, realm: 'luyen_khi', stage: 0, progress: 0, lifespan: 130, root: { grade: 'ngu', elements: ['kim', 'moc', 'thuy', 'hoa', 'tho'] }, technique: 'dan_khi_quyet', lineage: 'tien', ...patch },
   };
 }
 
@@ -85,7 +85,7 @@ describe('kỳ ngộ break into a seclusion (playtest 2026-10-12)', () => {
     for (let i = 0; i < 40; i++) {
       const b = createLife({ seed: `bq${i}` }, real);
       let s: GameState = { ...b, character: { ...b.character, age: 30 }, destiny: { ...b.destiny, confirmed: true }, log: [...b.log, { age: 30, lines: [] }],
-        events: { pending: null, history: {}, followUps: [], npc: null }, cult: { ...b.cult, realm: 'luyen_khi', stage: 0, progress: 0, root: { grade: 'song', elements: ['kim', 'hoa'], body: null }, lifespan: 120 } };
+        events: { pending: null, history: {}, followUps: [], npc: null }, cult: { ...b.cult, realm: 'luyen_khi', stage: 0, progress: 0, root: { grade: 'song', elements: ['kim', 'hoa'] }, lifespan: 120 } };
       s = seclude(s, real, 5);
       if (s.events.pending) {
         broke++;
