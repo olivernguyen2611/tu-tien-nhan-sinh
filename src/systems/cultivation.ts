@@ -152,6 +152,27 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
   ];
 }
 
+/**
+ * Hooks that change the character once, when gained from something that forms mid-life (đan văn,
+ * Nguyên Anh): stat.<x> is added to the stat, lifespanPct to the current lifespan. Others act through lifeHooks.
+ */
+export function applyGainHooks(state: GameState, effects: EffectHook[]): GameState {
+  const stats = { ...state.stats };
+  const aptitudes = { ...state.aptitudes };
+  let lifespan = state.cult.lifespan;
+  for (const e of effects) {
+    if (e.add === undefined) continue;
+    if (e.hook.startsWith('stat.')) {
+      const k = e.hook.slice(5);
+      if (k in stats) stats[k as keyof typeof stats] = clamp(stats[k as keyof typeof stats] + e.add);
+      else if (k in aptitudes) aptitudes[k as keyof typeof aptitudes] = clamp(aptitudes[k as keyof typeof aptitudes] + e.add);
+    } else if (e.hook === 'lifespanPct') {
+      lifespan = Math.max(state.character.age + 1, Math.round(lifespan * (1 + e.add)));
+    }
+  }
+  return { ...state, stats, aptitudes, cult: { ...state.cult, lifespan } };
+}
+
 /** Sum of an add-hook from traits, special body, extreme states and difficulty. `lineage.<x>.<hook>` counts for the life's lineage. */
 export function hookSum(state: GameState, content: Content, hook: string): number {
   const lineageHook = state.cult.lineage ? `lineage.${state.cult.lineage}.${hook}` : null;

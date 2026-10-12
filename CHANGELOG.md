@@ -11,6 +11,8 @@
   4. **Đan văn biến dị**: có luồng biến dị thì ra Lôi Văn, Hàn Băng, Phong Văn hoặc U Ám.
   5. **Đan văn ngũ hành**: theo hệ dẫn nhiều nhất (Canh Kim, Thanh Mộc, Huyền Thủy, Ly Hỏa, Hậu Thổ); hòa thì lấy luồng sau.
 - Bảng Tu luyện hiện phẩm Kim Đan và đan văn cùng tác dụng. Nhật ký ghi lúc đan văn thành hình.
+- Chỉ số và thọ nguyên của đan văn cộng một lần lúc đan văn thành hình; các tác dụng khác đi qua bộ móc K.6.
+- Móc `element.root.power` và `element.all.power` (đã có ở vài khí vận nhưng trước đây không có tác dụng) giờ được tính khi khắc chế hệ trong trận.
 - **Nội dung do Claude tự soạn** theo lời chủ dự án ("tự quyết định nội dung, mình sẽ xem lại sau"), chưa qua duyệt.
 
 ### Task 4.9 — Thu đồ đệ (cơ bản) (2026-10-12)

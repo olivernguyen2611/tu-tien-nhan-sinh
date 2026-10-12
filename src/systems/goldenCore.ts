@@ -9,7 +9,7 @@ import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { CorePattern } from '../core/schemas';
 import type { GameState, LogLine } from '../core/types';
-import { majorFailure, majorSuccess, type BreakthroughResult } from './cultivation';
+import { applyGainHooks, majorFailure, majorSuccess, type BreakthroughResult } from './cultivation';
 import { currentTechnique } from './technique';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
@@ -153,7 +153,9 @@ export function placeStrand(state: GameState, content: Content, element: string)
     const at = log[log.length - 1];
     const line: LogLine = { text: texts.corePattern.replaceAll('{pattern}', pattern.name).replaceAll('{text}', pattern.text), tone: 'rare' };
     log[log.length - 1] = { ...at, lines: [...at.lines, line] };
-    const withPattern: GameState = { ...formed, log, cult: { ...formed.cult, corePattern: pattern.id } };
+    // Stat and lifespan hooks land once, now; the rest act through lifeHooks.
+    const marked = applyGainHooks({ ...formed, log }, pattern.effects);
+    const withPattern: GameState = { ...marked, cult: { ...marked.cult, corePattern: pattern.id } };
     return { state: withPattern, result: { ...result, state: withPattern, text: `${result.text} ${line.text}` } };
   }
   return { state: result.state, result };
