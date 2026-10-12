@@ -2,6 +2,11 @@
 
 ## [Chưa phát hành]
 
+### Developer mode — công cụ cho đợt góp ý chơi thử (2026-10-12)
+- Mục mới **Linh căn & võ đạo**: đặt linh căn bất kỳ (mọi cấp, từng hệ biến dị, từng thể chất), đặt bậc võ đạo của phàm nhân, bật nhanh cảm ứng Tam hoa / Ngũ khí để thử kỳ ngộ.
+- Mục mới **Phu thê**: thành thân ngay với một người mới, chỉnh thiện cảm bạn đời ±20 (thử nhà ấm / nhà lạnh / bỏ đi).
+- Sự kiện & cờ: nút **Xóa lịch sử sự kiện** (bỏ thời gian chờ và mức giảm do lặp lại).
+
 ### Góp ý chơi thử 6 — Linh căn biến dị là tổ hợp 2 hành (2026-10-12)
 - Mỗi hệ biến dị là 2 hệ ngũ hành dung hợp: **Lôi = Kim + Hỏa**, **Băng = Kim + Thủy**, **Phong = Mộc + Hỏa**, **Ám = Thủy + Thổ** (`components` trong `roots.json`; validator kiểm tra đúng 2 hệ ngũ hành khác nhau).
 - Người có linh căn biến dị tương thích cả 2 hệ gốc: hợp công pháp của 2 hệ đó (và công pháp ngũ hành), đủ điều kiện tông môn đòi hệ gốc, kết đan được cộng như hệ của mình.

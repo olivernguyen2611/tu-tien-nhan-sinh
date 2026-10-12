@@ -7,10 +7,13 @@ import type { DeathCause, GameState } from '../../core/types';
 import { STAT_LABELS } from '../../systems/deltas';
 import { activeCombos } from '../../systems/destiny';
 import { fingerDef } from '../../systems/goldenFinger';
+import { rootLabel } from '../../systems/cultivation';
+import { npcById } from '../../systems/npcs';
 import type { SaveMeta } from '../../systems/save';
 import {
   DEV_STATS, devAddKarma, devAddLifespan, devAddMoney, devAddStat, devClearHeartDemon, devFillProgress, devFindEvents, devFoundClan, devFoundSect,
   devGiveItem, devHeal, devJoinSect, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect,
+  devMarry, devResetEventHistory, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
   devResetItemUse, devSetFingerLevel, devSetFlag, devSetGoldenFinger, devSetRealm, devSkipYears, devStartFight, devTakeChosen, devToggleTrait, devTriggerEvent,
 } from '../../systems/dev';
 
@@ -54,6 +57,10 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
   const [templateId, setTemplateId] = useState(content.chosenOnes.templates[0]?.id ?? '');
   const [sectId, setSectId] = useState(content.sects[0]?.id ?? '');
   const [flag, setFlag] = useState('');
+  const roots = devRootOptions(content);
+  const [rootKey, setRootKey] = useState(roots[0]?.key ?? '');
+  const [martialStage, setMartialStage] = useState('0');
+  const spouse = npcById(state, state.romance.partner);
   const live = state.alive;
   const stats: Record<string, number> = { ...state.stats, ...state.aptitudes };
   const picked = events.some((e) => e.id === eventId) ? eventId : events[0]?.id ?? '';
@@ -108,6 +115,27 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
           </div>
         </Section>
 
+        <Section title="Linh căn & võ đạo">
+          <p class="profile-note">Linh căn: {rootLabel(state, content)} · võ đạo: {state.martial.stage < 0 ? 'chưa nhập môn' : content.martial.stages[state.martial.stage]?.name}</p>
+          <div class="dev-event">
+            <Pick value={rootKey} onChange={setRootKey} label="Linh căn">
+              {roots.map((r) => <option key={r.key} value={r.key}>{r.label}</option>)}
+            </Pick>
+            <button class="chip-btn" disabled={!live} onClick={() => onChange(devSetRoot(state, content, roots.find((r) => r.key === rootKey)!.root))}>Đặt</button>
+          </div>
+          <div class="dev-event">
+            <Pick value={martialStage} onChange={setMartialStage} label="Võ đạo">
+              <option value="-1">Chưa nhập môn</option>
+              {content.martial.stages.map((m, i) => <option key={m.name} value={String(i)}>{m.name}</option>)}
+            </Pick>
+            <button class="chip-btn" disabled={!live || state.cult.realm !== 'pham_nhan'} onClick={() => onChange(devSetMartial(state, content, Number(martialStage)))}>Đặt</button>
+          </div>
+          <div class="action-chips">
+            <button class="chip-btn" disabled={!live} onClick={() => onChange(devSetFlag(state, 'cam_ung_tam_hoa', true))}>Cảm ứng Tam hoa</button>
+            <button class="chip-btn" disabled={!live} onClick={() => onChange(devSetFlag(state, 'cam_ung_ngu_khi', true))}>Cảm ứng Ngũ khí</button>
+          </div>
+        </Section>
+
         <Section title="Khí vận & Kim Thủ Chỉ">
           <p class="profile-note">
             Khí vận: {state.traits.map((id) => content.traits.find((t) => t.id === id)?.name ?? id).join(', ') || 'không'}
@@ -159,6 +187,15 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
           </div>
         </Section>
 
+        <Section title="Phu thê">
+          <p class="profile-note">{spouse ? `Bạn đời: ${spouse.name}, thiện cảm ${spouse.affinity}` : 'Chưa có bạn đời.'}</p>
+          <div class="action-chips">
+            <button class="chip-btn" disabled={!live || !!spouse} onClick={() => onChange(devMarry(state, content))}>Thành thân ngay</button>
+            <button class="chip-btn" disabled={!live || !spouse} onClick={() => onChange(devSpouseAffinity(state, -20))}>Thiện cảm −20</button>
+            <button class="chip-btn" disabled={!live || !spouse} onClick={() => onChange(devSpouseAffinity(state, 20))}>Thiện cảm +20</button>
+          </div>
+        </Section>
+
         <Section title="Vật phẩm & đánh thử">
           <div class="dev-event">
             <Pick value={itemId} onChange={setItemId} label="Vật phẩm">
@@ -187,6 +224,9 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
             <input class="dev-input" placeholder="tên cờ, vd. biet_truoc" value={flag} onInput={(e) => setFlag((e.target as HTMLInputElement).value)} aria-label="Cờ" />
             <button class="chip-btn" disabled={!live || !flag.trim()} onClick={() => onChange(devSetFlag(state, flag, true))}>Bật</button>
             <button class="chip-btn" disabled={!live || !flag.trim()} onClick={() => onChange(devSetFlag(state, flag, false))}>Tắt</button>
+          </div>
+          <div class="action-chips">
+            <button class="chip-btn" disabled={!live} onClick={() => onChange(devResetEventHistory(state))}>Xóa lịch sử sự kiện</button>
           </div>
         </Section>
 
