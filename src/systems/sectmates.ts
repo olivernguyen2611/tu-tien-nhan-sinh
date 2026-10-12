@@ -190,3 +190,83 @@ export function doTalk(state: GameState, content: Content, npcId: string, talkId
   const text = `${talk.name} với ${sectmateTitle(state, content, npc)} ${npc.name}: ${fill(out.text, { npc: npc.name })}`;
   return { state: { ...s, log: addLines(s, [{ text, tone: success ? 'good' : 'bad' }]) }, text, success };
 }
+
+export interface TournamentView { id: string; name: string; text: string; best: number | null; blocked: string | null }
+
+function tournamentOpen(state: GameState, content: Content, id: string): { cfg: Content['balance']['sects']['tournaments'][number]; blocked: string | null } | null {
+  const cfg = content.balance.sects.tournaments.find((t) => t.id === id);
+  if (!cfg) return null;
+  let blocked: string | null = null;
+  if (!state.alive) blocked = 'Đã hết một đời.';
+  else if (state.character.age % cfg.every !== cfg.offset) blocked = 'Năm nay không mở.';
+  else if (state.sect.rank < cfg.minRank) blocked = 'Cần là đệ tử chính thức.';
+  else if (state.sect.tournaments?.[id]?.last === state.character.age) blocked = 'Năm nay đã dự rồi.';
+  else if (opponents(state, cfg.rounds).length === 0) blocked = 'Không có đồng môn nào để đấu.';
+  return { cfg, blocked };
+}
+
+/** Sectmates of the player's generation, closest in strength first. */
+function opponents(state: GameState, rounds: number): Npc[] {
+  const kinds: SectmateKind[] = ['senior', 'peer', 'rival'];
+  return sectmates(state).filter((n) => kinds.includes(n.sectmate!.kind)).slice(0, rounds);
+}
+
+/** Tournaments that open this year (or are listed with the reason they are shut). */
+export function tournamentViews(state: GameState, content: Content): TournamentView[] {
+  const life = content.sectLife;
+  const sect = content.sects.find((s) => s.id === state.sect.id);
+  if (!life || !sect) return [];
+  return life.tournaments.flatMap((t) => {
+    const open = tournamentOpen(state, content, t.id);
+    if (!open) return [];
+    return [{ id: t.id, name: t.name, text: fill(t.text, { sect: sect.name }), best: state.sect.tournaments?.[t.id]?.best ?? null, blocked: open.blocked }];
+  });
+}
+
+/** Enter a tournament: one round per opponent, then a placement by wins. */
+export function enterTournament(state: GameState, content: Content, id: string): { state: GameState; text: string; success: boolean } | null {
+  const life = content.sectLife;
+  const sect = content.sects.find((s) => s.id === state.sect.id);
+  const texts = life?.tournaments.find((t) => t.id === id);
+  const open = tournamentOpen(state, content, id);
+  if (!life || !sect || !texts || !open || open.blocked) return null;
+  const cfg = open.cfg;
+  const rng = Rng.fromState(state.rng);
+  let s: GameState = state;
+  const lines: LogLine[] = [];
+  let wins = 0;
+  for (const foe of opponents(state, cfg.rounds)) {
+    const title = sectmateTitle(state, content, foe);
+    const win = rng.chance(talkChance(state, content, foe, cfg.stat, cfg.difficulty));
+    if (win) wins++;
+    const line = rng.pick(win ? texts.win : texts.lose);
+    lines.push({ text: fill(line, { npc: foe.name, title }), tone: win ? 'good' : 'bad' });
+    // A rival remembers a defeat; the others grow closer through the contest.
+    const rival = foe.sectmate!.kind === 'rival';
+    s = changeNpc(s, content, foe.id, win ? (rival ? { grudge: 5 } : { affinity: 2 }) : (rival ? { affinity: 1 } : { affinity: 3 }));
+  }
+  const reward = cfg.rewards[Math.min(wins, cfg.rewards.length - 1)]!;
+  const stats = { ...s.stats };
+  const aptitudes = { ...s.aptitudes };
+  for (const [k, v] of Object.entries(reward.stats)) {
+    if (k in stats) stats[k as keyof typeof stats] = clamp(stats[k as keyof typeof stats] + v);
+    else aptitudes[k as keyof typeof aptitudes] = clamp(aptitudes[k as keyof typeof aptitudes] + v);
+  }
+  const prev = s.sect.tournaments ?? {};
+  const placement = fill(texts.placements[Math.min(wins, texts.placements.length - 1)]!, { sect: sect.name });
+  s = {
+    ...s,
+    rng: rng.getState(),
+    stats,
+    aptitudes,
+    money: { ...s.money, spiritStones: s.money.spiritStones + reward.spiritStones },
+    cult: reward.progress && s.cult.realm !== 'pham_nhan' ? { ...s.cult, progress: clamp(s.cult.progress + reward.progress) } : s.cult,
+    sect: {
+      ...s.sect,
+      contribution: s.sect.contribution + reward.contribution,
+      tournaments: { ...prev, [id]: { last: s.character.age, best: Math.max(prev[id]?.best ?? 0, wins) } },
+    },
+  };
+  lines.push({ text: `${placement} Cống hiến +${reward.contribution}.`, tone: wins >= 2 ? 'good' : wins === 1 ? 'normal' : 'bad' });
+  return { state: { ...s, log: addLines(s, lines) }, text: lines.map((l) => l.text).join(' '), success: wins >= 2 };
+}

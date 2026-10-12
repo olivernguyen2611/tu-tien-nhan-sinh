@@ -1332,6 +1332,36 @@ export const BalanceSchema = z
         masterCast: z.object({ minRealm: z.number().int().min(0), aboveSelf: z.number().int().min(0), ageOffset: range, affinity: z.number().min(0).max(100) }).strict(),
         /** Task 5c.1: time spent with sectmates a year (each one once a year). */
         talksPerYear: z.number().int().min(1),
+        /**
+         * Task 5c.2: sect tournaments. Open in years where age % every === offset, to members of minRank+;
+         * `rounds` rounds against sectmates (power: Chiến lực; else a check on `stat`); rewards[wins].
+         */
+        tournaments: z
+          .array(
+            z
+              .object({
+                id,
+                every: z.number().int().min(1),
+                offset: z.number().int().min(0),
+                minRank: z.number().int().min(0),
+                rounds: z.number().int().min(1),
+                stat: z.enum([...MORTAL_STATS, ...APTITUDES, 'power']),
+                difficulty: z.number().min(0).max(100),
+                rewards: z.array(
+                  z
+                    .object({
+                      contribution: z.number().min(0),
+                      spiritStones: z.number().int().min(0),
+                      progress: z.number().min(0),
+                      stats: z.record(z.enum([...MORTAL_STATS, ...APTITUDES]), z.number()).refine((r) => Object.values(r).some((v) => v !== 0), 'phải đổi ít nhất một chỉ số'),
+                    })
+                    .strict(),
+                ).min(2),
+              })
+              .strict()
+              .refine((t) => t.rewards.length === t.rounds + 1, 'rewards cần rounds + 1 phần'),
+          )
+          .min(1),
       })
       .strict(),
     /** Task 2.7: Nghịch Thiên Cải Mệnh (fate-talents.md). */
@@ -1884,6 +1914,24 @@ export const SectLifeSchema = z
         rival: z.string().min(1),
       })
       .strict(),
+    /** Task 5c.2: texts of the sect tournaments (numbers in balance.sects.tournaments, matched by id). */
+    tournaments: z
+      .array(
+        z
+          .object({
+            id,
+            name: z.string().min(1),
+            /** {sect}. */
+            text: z.string().min(1),
+            /** {npc}, {title}. */
+            win: z.array(z.string().min(1)).min(1),
+            lose: z.array(z.string().min(1)).min(1),
+            /** By wins, 0..rounds ({sect}). */
+            placements: z.array(z.string().min(1)).min(2),
+          })
+          .strict(),
+      )
+      .min(1),
     /**
      * Task 5c.1: things to do with a sectmate. stat 'power' is a spar: Chiến lực against theirs.
      * Texts take {npc} (name) and {title}.

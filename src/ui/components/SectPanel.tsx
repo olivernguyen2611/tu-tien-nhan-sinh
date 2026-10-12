@@ -6,7 +6,7 @@ import type { GameState } from '../../core/types';
 import {
   currentSect, masterBlocked, masterChance, missionViews, nextRankNeed, sectEligibility, sectTechniques,
 } from '../../systems/sect';
-import { sectmateViews } from '../../systems/sectmates';
+import { sectmateViews, tournamentViews } from '../../systems/sectmates';
 import { learnBlocked, techniqueById } from '../../systems/technique';
 import { TermText } from './Tooltip';
 import { OwnSectSection } from './OwnSectSection';
@@ -17,6 +17,7 @@ export type SectAction =
   | { kind: 'learn'; techniqueId: string }
   | { kind: 'master' }
   | { kind: 'talk'; npcId: string; talkId: string }
+  | { kind: 'tournament'; id: string }
   | { kind: 'leave' }
   | { kind: 'found'; name: string; rules: string[] }
   | { kind: 'decide'; decisionId: string }
@@ -103,6 +104,16 @@ export function SectPanel({ state, content, onAction, onClose }: {
                 </>
               )}
             </div>
+
+            {tournamentViews(state, content).filter((t) => !t.blocked || t.blocked === 'Năm nay đã dự rồi.').map((t) => (
+              <div class="crafts" key={t.id}>
+                <h3 class="panel-sub">{t.name}</h3>
+                <p class="profile-note">{t.text}</p>
+                <button class="chip-btn" disabled={!!t.blocked} onClick={() => act({ kind: 'tournament', id: t.id })}>Ghi danh</button>
+                {t.blocked && <span class="craft-note">{t.blocked}</span>}
+                {t.best !== null && <span class="craft-note">Thành tích tốt nhất: thắng {t.best} trận.</span>}
+              </div>
+            ))}
 
             <div class="crafts">
               <h3 class="panel-sub">Đồng môn</h3>

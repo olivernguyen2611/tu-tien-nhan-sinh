@@ -18,6 +18,50 @@
     "olderM": "Sư huynh", "olderF": "Sư tỷ", "youngerM": "Sư đệ", "youngerF": "Sư muội",
     "rival": "Kình địch"
   },
+  "tournaments": [
+    {
+      "id": "dai_ti",
+      "name": "Đại tỉ nội môn",
+      "text": "Năm năm một lần, {sect} mở lôi đài ở Diễn Võ Trường: đệ tử đấu với đồng môn, ba trận định thứ hạng.",
+      "win": [
+        "Ngươi thắng {title} {npc}; quanh sân vang tiếng vỗ tay.",
+        "{title} {npc} thua nửa chiêu, chắp tay nhận bại.",
+        "Một chiêu dứt điểm, {title} {npc} lùi ba bước."
+      ],
+      "lose": [
+        "{title} {npc} ra tay nhanh hơn, ngươi bị đẩy khỏi lôi đài.",
+        "Thua {title} {npc} một chiêu, ngươi ôm vai xuống đài.",
+        "Đỡ không nổi đòn của {title} {npc}, ngươi nằm lăn ra sân."
+      ],
+      "placements": [
+        "Thua cả ba trận, ngươi lẳng lặng rời sân. Chấp sự vẫn ghi vài điểm cống hiến vì đã dám lên đài.",
+        "Thắng một trận, hạng giữa bảng. Không nổi bật nhưng cũng không bẽ mặt.",
+        "Thắng hai trận, vào nhóm đứng đầu. Có sư đệ xin ngồi cạnh để học lỏm.",
+        "Toàn thắng, đoạt đầu bảng đại tỉ của {sect}! Tên ngươi được khắc lên bia ở Diễn Võ Trường."
+      ]
+    },
+    {
+      "id": "luan_dao_hoi",
+      "name": "Luận đạo hội",
+      "text": "Năm năm một lần, {sect} mở Luận Đạo Đường: đệ tử đối đáp đạo lý với đồng môn, ba lượt định cao thấp.",
+      "win": [
+        "Ngươi bẻ được lý lẽ của {title} {npc}; cả đường lặng đi một lúc.",
+        "{title} {npc} suy nghĩ hồi lâu rồi gật đầu: “Có lý.”",
+        "Một câu hỏi ngược của ngươi khiến {title} {npc} á khẩu."
+      ],
+      "lose": [
+        "{title} {npc} dẫn một câu cổ kinh, ngươi không đáp được.",
+        "Ngươi nói được nửa chừng thì {title} {npc} chỉ ra chỗ hở.",
+        "{title} {npc} nói chậm rãi mà từng chữ đều trúng chỗ yếu của ngươi."
+      ],
+      "placements": [
+        "Không đối đáp nổi lượt nào, ngươi lặng lẽ ngồi nghe hết buổi. Cũng học được ít nhiều.",
+        "Thắng một lượt. Trưởng lão gật gù: “Còn phải đọc thêm.”",
+        "Thắng hai lượt, được trưởng lão khen trước mặt đồng môn.",
+        "Thắng cả ba lượt, đoạt đầu bảng luận đạo của {sect}! Trưởng lão mời ngươi vào Tàng Kinh Các đọc sách quý."
+      ]
+    }
+  ],
   "interactions": [
     {
       "id": "xin_chi_diem",

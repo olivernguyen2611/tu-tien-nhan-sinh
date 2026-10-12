@@ -222,7 +222,23 @@
       { "kind": "rival", "count": 1, "minRealm": 1, "aboveSelf": 0, "ageOffset": [-2, 4], "affinity": 25, "grudge": 15 }
     ],
     "masterCast": { "minRealm": 3, "aboveSelf": 2, "ageOffset": [60, 180], "affinity": 60 },
-    "talksPerYear": 3
+    "talksPerYear": 3,
+    "tournaments": [
+      { "id": "dai_ti", "every": 5, "offset": 0, "minRank": 1, "rounds": 3, "stat": "power", "difficulty": 50,
+        "rewards": [
+          { "contribution": 2, "spiritStones": 0, "progress": 0, "stats": { "health": -8, "happiness": -4 } },
+          { "contribution": 10, "spiritStones": 1, "progress": 1, "stats": { "physique": 1, "happiness": -1 } },
+          { "contribution": 25, "spiritStones": 3, "progress": 2, "stats": { "physique": 1, "happiness": 2 } },
+          { "contribution": 60, "spiritStones": 10, "progress": 4, "stats": { "physique": 2, "happiness": 5, "daoHeart": 1 } }
+        ] },
+      { "id": "luan_dao_hoi", "every": 5, "offset": 2, "minRank": 1, "rounds": 3, "stat": "comprehension", "difficulty": 50,
+        "rewards": [
+          { "contribution": 2, "spiritStones": 0, "progress": 0, "stats": { "happiness": -3 } },
+          { "contribution": 8, "spiritStones": 0, "progress": 2, "stats": { "intellect": 1 } },
+          { "contribution": 20, "spiritStones": 2, "progress": 4, "stats": { "comprehension": 1, "intellect": 1 } },
+          { "contribution": 50, "spiritStones": 8, "progress": 8, "stats": { "comprehension": 2, "intellect": 2, "happiness": 4 } }
+        ] }
+    ]
   },
   "fate": {
     "rarityByFoundation": {

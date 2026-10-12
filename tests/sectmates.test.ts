@@ -3,7 +3,7 @@ import { loadContent } from '../src/core/content';
 import { createLife } from '../src/core/state';
 import type { GameState, SpiritRoot } from '../src/core/types';
 import { joinSect, requestMaster, sectYear } from '../src/systems/sect';
-import { doTalk, sectmates, sectmateViews } from '../src/systems/sectmates';
+import { doTalk, enterTournament, sectmates, sectmateViews, tournamentViews } from '../src/systems/sectmates';
 
 const content = loadContent();
 const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'], body: null };
@@ -58,6 +58,24 @@ describe('đồng môn (task 5c.1)', () => {
     for (const i of content.sectLife!.interactions) {
       expect(Object.values(i.success.stats).some((v) => v !== 0)).toBe(true);
       expect(Object.values(i.fail.stats).some((v) => v !== 0)).toBe(true);
+    }
+  });
+
+  it('tournaments open in their years, run once, reward by wins and every placement moves a stat', () => {
+    const joined = joinSect(disciple(), content, 'bich_lac_tong').state;
+    let s: GameState = { ...joined, character: { ...joined.character, age: 20 }, sect: { ...joined.sect, rank: 1 } };
+    expect(tournamentViews(s, content).find((t) => t.id === 'dai_ti')!.blocked).toBeNull();
+    expect(tournamentViews(s, content).find((t) => t.id === 'luan_dao_hoi')!.blocked).toBe('Năm nay không mở.');
+    const before = s.sect.contribution;
+    const r = enterTournament(s, content, 'dai_ti')!;
+    expect(r.state.sect.contribution).toBeGreaterThan(before);
+    expect(r.state.sect.tournaments!.dai_ti!.last).toBe(20);
+    expect(enterTournament(r.state, content, 'dai_ti')).toBeNull();
+    expect(enterTournament(s, content, 'luan_dao_hoi')).toBeNull();
+    s = { ...s, character: { ...s.character, age: 17 } };
+    expect(enterTournament(s, content, 'luan_dao_hoi')).not.toBeNull();
+    for (const t of content.balance.sects.tournaments) {
+      for (const rw of t.rewards) expect(Object.values(rw.stats).some((v) => v !== 0)).toBe(true);
     }
   });
 });
