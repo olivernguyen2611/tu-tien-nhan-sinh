@@ -2,6 +2,19 @@
 
 ## [Chưa phát hành]
 
+### Task 5b.1 — Tổng kết đời + điểm Luân Hồi (phần code, 2026-10-12)
+- **Màn tổng kết đời đầy đủ hơn**: cảnh giới, tông môn, gia tộc, đạo lữ, con cái, đệ tử, hạng Thiên kiêu bảng, đường đời, linh thạch.
+- **Dấu ấn một đời**: 5 khoảnh khắc hiếm gần nhất trong nhật ký.
+- **Điểm Luân Hồi** (`src/systems/rebirth.ts`, số trong `balance.rebirth`), tính theo:
+  - năm tháng đã sống, cảnh giới (hoặc bậc võ đạo nếu là phàm nhân), nấc đường đời;
+  - số biến cố đã trải, đại thiện/đại ác (nhân quả ±60), con cái;
+  - khai tông lập phái, lập gia tộc, lên Thiên kiêu bảng.
+- Điểm cộng dồn qua các kiếp, lưu trong meta của trình duyệt; màn mở đầu hiện tổng điểm.
+  - Mỗi đời chỉ nhận điểm một lần.
+  - Quỷ tu chết lần nữa chỉ nhận phần chênh lệch.
+- **Bổ sung kỹ thuật** (PLAN và `mortal-path.md` không ghi cách tính điểm): các nguồn điểm và mức điểm ở trên.
+- **Chưa làm**: ✍️ thiên phú luân hồi (dùng điểm để mua), chờ file thiết kế của chủ dự án.
+
 ### Task 5.3 — Sự kiện tông môn (phần engine, 2026-10-12)
 - Điều kiện sự kiện `ownSect`: đã lập tông môn, khoảng số đệ tử, công trình đạt cấp tối thiểu.
 - Hiệu ứng `ownSect`: thêm/bớt đệ tử, kho linh thạch, đà tăng đệ tử năm sau. Validator đòi sự kiện có hiệu ứng này phải có `conditions.ownSect.has = true`.

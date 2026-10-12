@@ -1259,6 +1259,28 @@ export const BalanceSchema = z
         cultivatorStartLevel: z.record(id, z.record(id, z.number().int().min(0).max(100))),
       })
       .strict(),
+    /** Task 5b.1: Luân Hồi points a life earns (rebirth.ts rebirthPoints). */
+    rebirth: z
+      .object({
+        yearsPerPoint: z.number().int().min(1),
+        /** Per realm above Phàm Nhân, plus per stage in the realm reached. */
+        perRealm: z.number().int().min(0),
+        perStage: z.number().int().min(0),
+        /** Mortals only: per martial stage reached. */
+        perMartialStage: z.number().int().min(0),
+        perCareerRung: z.number().int().min(0),
+        eventsPerPoint: z.number().int().min(1),
+        /** |karma| at or above this gives karmaPoints (đại thiện or đại ác). */
+        karmaAt: z.number().int().min(0).max(100),
+        karmaPoints: z.number().int().min(0),
+        perChild: z.number().int().min(0),
+        ownSect: z.number().int().min(0),
+        clan: z.number().int().min(0),
+        ranked: z.number().int().min(0),
+        /** Rare moments of the log shown on the death screen. */
+        highlights: z.number().int().min(0),
+      })
+      .strict(),
   })
   .passthrough(); // later tasks add sections (cultivation, lifespan…)
 

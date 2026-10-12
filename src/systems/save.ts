@@ -15,8 +15,14 @@ const CALM_LINE = 'Một năm bình lặng trôi qua.';
 /** The part of `Storage` the save system uses (tests pass a Map-backed fake). */
 export type KeyValueStore = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
 
-/** Data kept across lives (PLAN.md C.5 `meta`). Grows in later phases. */
-export interface SaveMeta { livesPlayed: number }
+/**
+ * Data kept across lives (PLAN.md C.5 `meta`). Grows in later phases.
+ * rebirthPoints: Luân Hồi points to spend (task 5b.1); credited: life seed → points already
+ * given for it, so a death screen shown twice (or a quỷ tu dying again) is not paid twice.
+ */
+export interface SaveMeta { livesPlayed: number; rebirthPoints: number; credited: Record<string, number> }
+/** Seeds remembered in `credited`; older ones are dropped. */
+const MAX_CREDITED = 30;
 
 export interface SaveFile {
   saveVersion: number;
@@ -266,18 +272,36 @@ export function exportSave(save: SaveFile): { fileName: string; text: string } {
 export function readMeta(store: KeyValueStore): SaveMeta {
   try {
     const m = JSON.parse(store.getItem(META_KEY) ?? '{}') as Partial<SaveMeta>;
-    return { livesPlayed: typeof m.livesPlayed === 'number' ? m.livesPlayed : 0 };
+    return {
+      livesPlayed: typeof m.livesPlayed === 'number' ? m.livesPlayed : 0,
+      rebirthPoints: typeof m.rebirthPoints === 'number' ? m.rebirthPoints : 0,
+      credited: m.credited && typeof m.credited === 'object' ? m.credited : {},
+    };
   } catch {
-    return { livesPlayed: 0 };
+    return { livesPlayed: 0, rebirthPoints: 0, credited: {} };
   }
 }
 
-export function recordNewLife(store: KeyValueStore): SaveMeta {
-  const meta = { ...readMeta(store), livesPlayed: readMeta(store).livesPlayed + 1 };
+function writeMeta(store: KeyValueStore, meta: SaveMeta): SaveMeta {
   try {
     store.setItem(META_KEY, JSON.stringify(meta));
   } catch {
     /* meta is a bonus; the game still runs without it */
   }
   return meta;
+}
+
+export function recordNewLife(store: KeyValueStore): SaveMeta {
+  const meta = readMeta(store);
+  return writeMeta(store, { ...meta, livesPlayed: meta.livesPlayed + 1 });
+}
+
+/** Task 5b.1: add a finished life's Luân Hồi points (only what was not given for this seed yet). */
+export function creditRebirth(store: KeyValueStore, seed: string, points: number): { meta: SaveMeta; gained: number } {
+  const meta = readMeta(store);
+  const gained = Math.max(0, points - (meta.credited[seed] ?? 0));
+  if (gained === 0) return { meta, gained };
+  const kept = Object.entries(meta.credited).filter(([k]) => k !== seed).slice(-(MAX_CREDITED - 1));
+  const credited = Object.fromEntries([...kept, [seed, points]]);
+  return { meta: writeMeta(store, { ...meta, rebirthPoints: meta.rebirthPoints + gained, credited }), gained };
 }
