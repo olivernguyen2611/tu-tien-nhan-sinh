@@ -61,6 +61,8 @@ export interface GameState {
    * realm (without log or these checkpoints), for a rewindOnDeath hook to go back to.
    */
   checkpoints: { age6: Checkpoint | null; realm: Checkpoint | null };
+  /** Task 5b.6: this life is the thử thách tuần of that week (try: the how-manyth attempt on this browser). */
+  challenge: { week: string; id: string; try: number } | null;
   /** Task 5b.2: the Kim Thủ Chỉ of this life (golden-fingers.json), its awakened level, the age it came. */
   goldenFinger: { id: string; level: number; since: number } | null;
   /** Task 5b.1: thiên phú luân hồi this life was born with (id → level), bought in earlier lives. */

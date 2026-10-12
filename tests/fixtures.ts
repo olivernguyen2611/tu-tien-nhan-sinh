@@ -1,4 +1,5 @@
 // Shared parsed content for tests that build a Content object by hand.
+import type { Content } from '../src/core/content';
 import { parseCultivationTables } from '../src/core/content';
 import realms from '../content/realms.json';
 import roots from '../content/roots.json';
@@ -60,4 +61,5 @@ export const legacy = {
   traitCombos: TraitComboFileSchema.parse(traitCombosFile),
   codex: CodexFileSchema.parse(codexFile),
   achievements: AchievementFileSchema.parse(achievementsFile),
+  challenges: [] as Content['challenges'],
 };

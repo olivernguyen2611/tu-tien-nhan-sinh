@@ -132,6 +132,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     ancestry: [],
     blessings,
     rebirthTalents,
+    challenge: null,
     goldenFinger: input.goldenFinger && content.goldenFingers.fingers.some((f) => f.id === input.goldenFinger) ? { id: input.goldenFinger, level: 0, since: 0 } : null,
     checkpoints: { age6: null, realm: null },
     clan: null,

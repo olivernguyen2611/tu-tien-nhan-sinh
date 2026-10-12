@@ -2,6 +2,13 @@
 
 ## [Chưa phát hành]
 
+### Task 5b.6 — Thử thách tuần (2026-10-12)
+- Màn **Thử thách tuần** mở từ màn tiêu đề (sau kiếp đầu). Mỗi tuần (theo tuần ISO) có một thử thách của thế giới, giống nhau với mọi người chơi: cùng hạt giống, cùng xuất thân / độ khó / khí vận định sẵn.
+- 8 thử thách cho Thương Lan (`content/worlds/thuong_lan/challenges.json`), ví dụ "Phàm Nhân Trường Thọ" (nhà nông, sống tới 90), "Tay Trắng Làm Giàu" (cô nhi, để lại 3.000 lượng), "Thuần Linh Kết Đan".
+- Đời thử thách không mang thiên phú luân hồi, Phúc báo hay Kim Thủ Chỉ; khí vận định sẵn bị khóa, không bốc lại (trừ khi luật cho). Phúc báo đang chờ được giữ cho đời thường kế tiếp.
+- Mục tiêu đọc lúc mất; màn tổng kết đời ghi Đạt / Chưa đạt và điểm (điểm Luân Hồi của đời). Meta lưu số lần thử, điểm cao nhất, đã đạt chưa (giữ 12 tuần). Điểm Luân Hồi vẫn được cộng, tính riêng từng lần thử.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Task 5b.5 — Thành tựu, huy hiệu cuối đời, cáo phó (2026-10-12)
 - 30 **thành tựu** lưu vĩnh viễn (`content/achievements.json`): cảnh giới, trăm tuổi, khai tông, lập gia tộc, đạo lữ, Thiên kiêu bảng, đại thiện / đại ác, khí vận chi tử ("Sư phụ của nhân vật chính", "Phản diện bị vả mặt", "Bị đồ đệ gọi là NPC"), Kim Thủ Chỉ, tổ hợp ẩn, trùng sinh, mười / trăm kiếp… Thành tựu ẩn hiện "???" tới khi đạt.
 - 6 thành tựu **mở khóa Kim Thủ Chỉ**: từ đó lúc đầu thai được chọn thẳng Kim Thủ Chỉ ấy với 30 điểm Luân Hồi (`balance.goldenFinger.chooseCost`).

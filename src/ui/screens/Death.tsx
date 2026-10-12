@@ -8,6 +8,7 @@ import { lifeHighlights, lifeRecap, rebirthPoints } from '../../systems/rebirth'
 import { earnedBlessings } from '../../systems/blessings';
 import { rewindOffer } from '../../systems/rewind';
 import { lifeBadges } from '../../systems/achievements';
+import { challengeDef, challengeResult } from '../../systems/challenge';
 import { realmLabel } from '../../systems/cultivation';
 import { shareObituary } from '../obituary';
 import { Meter } from '../components/Meter';
@@ -44,6 +45,8 @@ export function DeathScreen({ state, content, rebirth, lives, onReadLog, onNewLi
   const rewind = rewindOffer(state, content);
   const highlights = lifeHighlights(state, content.balance.rebirth.highlights);
   const badges = lifeBadges(state, content, lives);
+  const challenge = challengeDef(content, state.challenge?.id);
+  const result = challengeResult(state, content);
   const fresh = rebirth.fresh.map((id) => content.achievements.achievements.find((a) => a.id === id)).filter((a) => !!a);
   const obituary = () => shareObituary({
     title: content.achievements.obituary.title,
@@ -68,6 +71,12 @@ export function DeathScreen({ state, content, rebirth, lives, onReadLog, onNewLi
           <ul class="badges" aria-label="Huy hiệu cuối đời">
             {badges.map((b) => <li key={b.id} class="badge"><b>{b.name}</b><span>{b.text}</span></li>)}
           </ul>
+        )}
+        {challenge && result && (
+          <div class="ancestry">
+            <p class="kicker">Thử thách tuần · {challenge.name}</p>
+            <p class={`challenge-result${result.done ? ' done' : ''}`}>{result.done ? 'Đạt' : 'Chưa đạt'}: {challenge.goalText} Điểm: {result.score}.</p>
+          </div>
         )}
         {fresh.length > 0 && (
           <div class="ancestry achievements-new">

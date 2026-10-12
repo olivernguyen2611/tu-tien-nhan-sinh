@@ -365,7 +365,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 5b.3 | [x] Khóa ô khí vận, mở rộng tới 5 ô; nâng khí vận lên ≥60 + ✍️ 10 tổ hợp ẩn |
 | 5b.4 | [x] Thiên Thư (bộ sưu tập khí vận, tổ hợp, truyện khí vận chi tử) |
 | 5b.5 | [x] Thành tựu, huy hiệu cuối đời, cáo phó dạng ảnh để chia sẻ |
-| 5b.6 | [ ] Thử thách tuần (seed chung theo tuần) |
+| 5b.6 | [x] Thử thách tuần (seed chung theo tuần) |
 | 5b.7 | [ ] Gặp lại tông môn đời trước |
 | 5b.8 | [x] Phúc báo đời phàm nhân sang đời sau; móc mới `rootReroll` (`mortal-path.md` mục 3.1) |
 | 5b.9 | [x] Cầu đầu thai: tiêu điểm Luân Hồi chọn xuất thân đời sau (`mortal-path.md` mục 3.2) |

@@ -842,3 +842,8 @@ button { font: inherit; color: inherit; }
 .achievements-new li b { color: var(--rare); }
 .death-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .death-actions .btn-primary { grid-column: 1 / -1; }
+
+/* Thử thách tuần (task 5b.6) */
+.challenge-rules { margin: 0.5rem 0 0; padding-left: 1.1rem; font-size: 0.875rem; }
+.challenge-result { font-weight: 600; }
+.challenge-result.done { color: var(--jade); }

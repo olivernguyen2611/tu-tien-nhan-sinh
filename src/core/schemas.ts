@@ -2456,3 +2456,27 @@ export const AchievementFileSchema = z
   })
   .strict();
 export type AchievementFile = z.infer<typeof AchievementFileSchema>;
+
+/** Task 5b.6: thử thách tuần (one world's file): the same seed and rules for everyone in a week. */
+export const ChallengeFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      text: z.string().min(1),
+      goalText: z.string().min(1),
+      rules: z
+        .object({
+          origin: id.optional(),
+          difficulty: id.optional(),
+          /** Tiên Thiên Khí Vận given (the other slots are rolled). */
+          traits: ids.optional(),
+          /** Rerolls allowed (default none). */
+          rerolls: z.number().int().min(0).optional(),
+        })
+        .strict(),
+      goal: LifeCheckSchema,
+    })
+    .strict(),
+);
+export type ChallengeFile = z.infer<typeof ChallengeFileSchema>;

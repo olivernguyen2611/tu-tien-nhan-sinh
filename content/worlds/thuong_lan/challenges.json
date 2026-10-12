@@ -1,0 +1,10 @@
+[
+  {"id": "pham_nhan_truong_tho", "name": "Phàm Nhân Trường Thọ", "text": "Sinh ra trong nhà nông, không phúc báo, không thiên phú luân hồi. Sống cho thật lâu.", "goalText": "Sống tới 90 tuổi.", "rules": {"origin": "nong_dan"}, "goal": {"ageMin": 90}},
+  {"id": "dao_co_tran_gian", "name": "Đạo Cơ Giữa Trần Gian", "text": "Một đứa trẻ tầm thường, một con đường dài. Thử xem có chạm tới Trúc Cơ không.", "goalText": "Đạt Trúc Cơ.", "rules": {}, "goal": {"realmMin": "truc_co"}},
+  {"id": "kho_tan_cam_lai", "name": "Khổ Tận Cam Lai", "text": "Đảo Môi Tinh chiếu mệnh, người thân lại hay gặp nạn. Vượt qua được thì là của ngươi.", "goalText": "Bước vào Luyện Khí.", "rules": {"traits": ["dao_moi_tinh", "khac_than_menh"]}, "goal": {"realmMin": "luyen_khi"}},
+  {"id": "bo_tat_giua_doi", "name": "Bồ Tát Giữa Đời", "text": "Thế gian nhiều cám dỗ. Đời này, chọn làm người tốt tới cùng.", "goalText": "Nhân quả từ +60 trở lên khi mất.", "rules": {}, "goal": {"karmaMin": 60}},
+  {"id": "tay_trang_lam_giau", "name": "Tay Trắng Làm Giàu", "text": "Cô nhi không cha không mẹ, khởi đầu bằng hai bàn tay trắng.", "goalText": "Để lại 3.000 lượng bạc.", "rules": {"origin": "co_nhi"}, "goal": {"silverMin": 3000}},
+  {"id": "con_dan_chau_dong", "name": "Con Đàn Cháu Đống", "text": "Không cầu thành tiên, chỉ cầu nhà đông vui.", "goalText": "Có ít nhất 3 người con.", "rules": {}, "goal": {"childrenMin": 3}},
+  {"id": "nghich_thien_song_sot", "name": "Nghịch Thiên Sống Sót", "text": "Độ khó Nghịch thiên, không lưu lại được. Một mạng, một đời.", "goalText": "Sống tới 60 tuổi.", "rules": {"difficulty": "hard"}, "goal": {"ageMin": 60}},
+  {"id": "thuan_linh_ket_dan", "name": "Thuần Linh Kết Đan", "text": "Trời ban Thuần Linh, đời này phải kết được Kim Đan mới không phụ.", "goalText": "Kết thành Kim Đan.", "rules": {"traits": ["thuan_linh"]}, "goal": {"realmMin": "kim_dan"}}
+]

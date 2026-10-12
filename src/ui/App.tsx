@@ -12,7 +12,7 @@ import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, lockCost, rerollDestiny, rollDestiny, toggleLock } from '../systems/destiny';
 import {
   deleteSlot, exportSave, firstFreeSlot, latestSlot, listSlots, makeSave, parseSave, readMeta, readSlot, recordNewLife, creditRebirth,
-  slotTaken, writeSlot, buyRebirthTalent, recordCodex, recordAchievements, type SaveFile,
+  slotTaken, writeSlot, buyRebirthTalent, recordCodex, recordAchievements, recordChallenge, type SaveFile,
 } from '../systems/save';
 import { checkDeath } from '../systems/time';
 import { GlossaryProvider } from './components/Tooltip';
@@ -53,10 +53,12 @@ import { RebirthScreen } from './screens/Rebirth';
 import { CodexScreen } from './screens/Codex';
 import { codexOf } from '../systems/codex';
 import { earnedAchievements, unlockedFingers } from '../systems/achievements';
+import { challengeResult, creditKey, startChallenge, weekKey, weeklyChallenge } from '../systems/challenge';
+import { ChallengeScreen } from './screens/Challenge';
 
-type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves' | 'rebirth' | 'codex';
+type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves' | 'rebirth' | 'codex' | 'challenge';
 /** Why the slot list is open in pick mode. */
-type Picking = { purpose: 'new' } | { purpose: 'import'; save: SaveFile } | null;
+type Picking = { purpose: 'new' } | { purpose: 'challenge' } | { purpose: 'import'; save: SaveFile } | null;
 type Message = { text: string; tone: 'good' | 'bad' } | null;
 
 export function App({ content }: { content: Content }) {
@@ -100,7 +102,12 @@ function Screens({ content }: { content: Content }) {
   const [rebirth, setRebirth] = useState<{ gained: number; bank: number; fresh: string[] }>({ gained: 0, bank: 0, fresh: [] });
   useEffect(() => {
     if (screen !== 'death' || !life || life.alive) return;
-    const r = creditRebirth(store, life.seed, rebirthPoints(life, content).total, earnedBlessings(life, content));
+    // Task 5b.6: every try of a weekly challenge shares a seed, so points are credited per try.
+    const key = creditKey(life);
+    const first = !(key in readMeta(store).credited);
+    const r = creditRebirth(store, key, rebirthPoints(life, content).total, life.challenge ? [] : earnedBlessings(life, content));
+    const result = challengeResult(life, content);
+    if (first && result && life.challenge) recordChallenge(store, life.challenge.week, life.challenge.id, result.score, result.done);
     // Task 5b.4: the Thiên Thư keeps what this life saw, and the khí vận chi tử's tale.
     recordCodex(store, codexOf(life, content));
     // Task 5b.5: thành tựu kept across lives; the ones new to this browser are shown.
@@ -114,6 +121,17 @@ function Screens({ content }: { content: Content }) {
 
   const openSaves = (from: Screen) => { setSavesFrom(from); setPicking(null); setMessage(null); setScreen('saves'); };
   const startNewLife = (target: number) => { setSlot(target); setPicking(null); setScreen('create'); };
+  // Task 5b.6: this week's challenge goes straight to the (fixed) destiny roll.
+  const week = weekKey(new Date());
+  const beginChallenge = (target: number) => {
+    const s = startChallenge(content, week, (readMeta(store).weekly[week]?.tries ?? 0) + 1, readMeta(store).livesPlayed === 0);
+    if (!s) return;
+    setSlot(target);
+    setPicking(null);
+    setOriginCost(0);
+    setLife(s);
+    setScreen('destiny');
+  };
 
   const loadSlot = (s: number) => {
     const r = readSlot(store, s, worlds);
@@ -130,7 +148,7 @@ function Screens({ content }: { content: Content }) {
     return (
       <SettingsScreen
         slots={slots}
-        pick={picking ? (picking.purpose === 'new' ? 'đời mới' : 'save vừa nhập') : null}
+        pick={picking ? (picking.purpose === 'new' ? 'đời mới' : picking.purpose === 'challenge' ? 'thử thách tuần' : 'save vừa nhập') : null}
         worldName={(id) => (id === content.world.id ? content.world.name : id)}
         message={message}
         onPlay={loadSlot}
@@ -158,18 +176,31 @@ function Screens({ content }: { content: Content }) {
             setPicking(null);
             setMessage(ok ? { text: `Đã nhập save vào ô ${s}.`, tone: 'good' } : { text: 'Trình duyệt không cho lưu.', tone: 'bad' });
             refresh((n) => n + 1);
+          } else if (picking?.purpose === 'challenge') {
+            beginChallenge(s);
           } else {
             startNewLife(s);
           }
         }}
         onBack={() => {
-          if (picking) { setPicking(null); setMessage(null); if (picking.purpose === 'new') setScreen(savesFrom); return; }
+          if (picking) { setPicking(null); setMessage(null); if (picking.purpose !== 'import') setScreen(savesFrom); return; }
           // The life on screen may have been deleted or replaced.
           setScreen(savesFrom === 'main' && life && slot !== null ? 'main' : 'title');
         }}
         theme={theme}
         onToggleTheme={toggleTheme}
       />
+    );
+  }
+  if (screen === 'challenge') {
+    return (
+      <ChallengeScreen content={content} week={week} challenge={weeklyChallenge(content, week)} record={readMeta(store).weekly[week]}
+        onBack={() => setScreen('title')}
+        onStart={() => {
+          const free = firstFreeSlot(store);
+          if (free !== null) beginChallenge(free);
+          else { openSaves('challenge'); setPicking({ purpose: 'challenge' }); }
+        }} />
     );
   }
   if (screen === 'codex') {
@@ -220,7 +251,7 @@ function Screens({ content }: { content: Content }) {
         onLock={(id) => setLife(toggleLock(life, id))}
         onReroll={() => { setLife(rerollDestiny(life, content, devMode)); setRollCount((n) => n + 1); }}
         onConfirm={() => {
-          recordNewLife(store, originCost + (devMode ? 0 : lockCost(life, content)), !!life.goldenFinger);
+          recordNewLife(store, originCost + (devMode ? 0 : lockCost(life, content)), !!life.goldenFinger, !!life.challenge);
           const born = confirmDestiny(life, content);
           recordCodex(store, codexOf(born, content));
           setLife(born);
@@ -381,6 +412,7 @@ function Screens({ content }: { content: Content }) {
       onSaves={() => openSaves('title')}
       onRebirth={() => openRebirth('title')}
       onCodex={() => setScreen('codex')}
+      onChallenge={() => setScreen('challenge')}
       theme={theme}
       onToggleTheme={toggleTheme}
     />
