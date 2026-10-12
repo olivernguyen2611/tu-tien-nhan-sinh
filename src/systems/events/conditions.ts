@@ -86,6 +86,11 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (c.family.deadAny !== undefined && state.family.some((r) => !r.alive) !== c.family.deadAny) return false;
     if (c.family.parentAlive !== undefined && state.family.some((r) => r.alive && (r.role === 'father' || r.role === 'mother')) !== c.family.parentAlive) return false;
   }
+  if (c.lifespan) {
+    const left = state.cult.lifespan - state.character.age;
+    if (c.lifespan.maxLeft !== undefined && left > c.lifespan.maxLeft) return false;
+    if (c.lifespan.nearEnd !== undefined && content && (left <= state.cult.lifespan * content.balance.lifespan.pressureLeftPct) !== c.lifespan.nearEnd) return false;
+  }
   for (const s of c.stats ?? []) {
     const v = readValue(state, s.stat);
     if (s.gte !== undefined && v < s.gte) return false;
