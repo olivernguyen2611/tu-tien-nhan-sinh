@@ -2,6 +2,23 @@
 
 ## [Chưa phát hành]
 
+### Task 4.1 — Bế quan (2026-10-12)
+- **Bảng Tu luyện có mục Bế quan.** Số năm chọn được theo cảnh giới (`balance.seclusion.options`):
+  - Luyện Khí: 1, 3, 5.
+  - Trúc Cơ: thêm 10.
+  - Kim Đan: 3, 10, 30.
+  - Nguyên Anh và Hóa Thần: 10, 30, 100.
+- **Trong lúc bế quan**:
+  - Tu vi ×1.5 (PLAN G.1).
+  - Không có sự kiện thường; các sự kiện nối chờ tới lúc xuất quan.
+  - Năm tháng vẫn trôi: người thân già đi và có thể qua đời, thế giới và Thiên kiêu bảng vẫn đổi.
+  - Người trong lòng và đạo lữ nhạt dần, thiện cảm −1 mỗi năm.
+  - Nhật ký mỗi năm ghi "Bế quan tĩnh tu", lúc ra ghi tu vi mới.
+- **Xuất quan sớm** khi tu vi đã viên mãn cần đột phá, hoặc khi thọ nguyên chỉ còn 5 năm.
+- **Hiệu ứng sự kiện mới `seclusionYears`**: đóng cửa ngay sau sự kiện, và không dừng vì viên mãn (mục đích là ngồi qua bình cảnh). Sự kiện đã duyệt "Bình cảnh Luyện Khí → Bế quan khổ tu" nay bế quan 3 năm đúng thiết kế; trước đây tạm không trôi thời gian.
+- Save cũ: không đang bế quan.
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "Bế quan X năm"): bảng số năm theo cảnh giới, ngưỡng xuất quan sớm, thiện cảm nhạt dần, và 5 câu nhật ký trong `realms.json`.
+
 ### Task 3.4 — NPC có số mệnh riêng (2026-10-12)
 - **Engine** (phiên làm `task/3.4-npcs`):
   - NPC già đi, tự tu luyện và đột phá, rồi chết.

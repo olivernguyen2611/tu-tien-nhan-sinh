@@ -92,6 +92,8 @@ export function migrate(save: SaveFile): SaveFile {
   if (life.combat === undefined) life = { ...life, combat: null };
   // Task 3.4: no NPCs met yet.
   if (life.npcs === undefined) life = { ...life, npcs: [] };
+  // Task 4.1: not in seclusion.
+  if (life.seclusion === undefined) life = { ...life, seclusion: null };
   // Task 3.9: no tâm ma yet.
   if (life.cult.heartDemon === undefined) life = { ...life, cult: { ...life.cult, heartDemon: 0 } };
   // Task 3.6: nobody courted yet.

@@ -174,10 +174,12 @@ export function yearlyGain(state: GameState, content: Content): number {
   // Song tu with a cultivating đạo lữ (task 3.7, PLAN G.1 ×1.3).
   const partner = state.romance.partner ? state.npcs.find((n) => n.id === state.romance.partner) : undefined;
   const dual = partner?.alive && partner.realm !== 'pham_nhan' ? content.balance.romance.dualCultivationMul : 1;
+  // Bế quan (task 4.1, PLAN G.1 ×1.5).
+  const secluded = state.seclusion ? content.balance.seclusion.speedMul : 1;
   const injured = state.cult.injuredUntil !== null && state.character.age < state.cult.injuredUntil ? cfg.minorFailure.injurySpeedMul : 1;
   const foundation = state.cult.foundation ? content.balance.majorBreakthrough.foundationSpeed[state.cult.foundation] ?? 1 : 1;
   const buffs = state.cult.buffs.filter((b) => state.character.age < b.until).reduce((m, b) => m * b.mul, 1);
-  return realm.speedPct * rootMul * aptitude * qi * techniqueMul(state, content) * bonus * dual * injured * foundation * buffs * bottleneckMul(state, content);
+  return realm.speedPct * rootMul * aptitude * qi * techniqueMul(state, content) * bonus * dual * secluded * injured * foundation * buffs * bottleneckMul(state, content);
 }
 
 /** PLAN G.2 bình cảnh: after N failed big breakthroughs at a realm's peak, cultivation slows. */

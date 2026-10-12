@@ -3,37 +3,75 @@
     {
       "id": "pham_nhan",
       "name": "Phàm Nhân",
-      "stages": ["Tam lưu", "Nhị lưu", "Nhất lưu", "Tuyệt đỉnh", "Hóa cảnh", "Tam hoa tụ đỉnh", "Ngũ khí triều nguyên"],
+      "stages": [
+        "Tam lưu",
+        "Nhị lưu",
+        "Nhất lưu",
+        "Tuyệt đỉnh",
+        "Hóa cảnh",
+        "Tam hoa tụ đỉnh",
+        "Ngũ khí triều nguyên"
+      ],
       "description": "Ăn cơm, cày ruộng, sống bảy mươi năm. Trời cao bao nhiêu, phàm nhân chỉ biết ngẩng đầu mà đoán."
     },
     {
       "id": "luyen_khi",
       "name": "Luyện Khí",
-      "stages": ["tầng 1", "tầng 2", "tầng 3", "tầng 4", "tầng 5", "tầng 6", "tầng 7", "tầng 8", "tầng 9"],
+      "stages": [
+        "tầng 1",
+        "tầng 2",
+        "tầng 3",
+        "tầng 4",
+        "tầng 5",
+        "tầng 6",
+        "tầng 7",
+        "tầng 8",
+        "tầng 9"
+      ],
       "description": "Dẫn linh khí trời đất vào kinh mạch, từng chút một như kiến tha mồi. Đủ sức nhấc cối đá, chưa đủ sức bay."
     },
     {
       "id": "truc_co",
       "name": "Trúc Cơ",
-      "stages": ["sơ kỳ", "trung kỳ", "hậu kỳ", "viên mãn"],
+      "stages": [
+        "sơ kỳ",
+        "trung kỳ",
+        "hậu kỳ",
+        "viên mãn"
+      ],
       "description": "Linh khí hóa lỏng, đắp nền cho đạo đồ. Từ đây mới thật sự bước qua cửa tiên, thọ thêm một đời người."
     },
     {
       "id": "kim_dan",
       "name": "Kim Đan",
-      "stages": ["sơ kỳ", "trung kỳ", "hậu kỳ", "viên mãn"],
+      "stages": [
+        "sơ kỳ",
+        "trung kỳ",
+        "hậu kỳ",
+        "viên mãn"
+      ],
       "description": "Linh lực ngưng thành một viên đan trong đan điền. Ngự kiếm phi hành, một mình giữ được một thành."
     },
     {
       "id": "nguyen_anh",
       "name": "Nguyên Anh",
-      "stages": ["sơ kỳ", "trung kỳ", "hậu kỳ", "viên mãn"],
+      "stages": [
+        "sơ kỳ",
+        "trung kỳ",
+        "hậu kỳ",
+        "viên mãn"
+      ],
       "description": "Đan vỡ thành anh, thân thể có hư đi thì Nguyên Anh vẫn còn. Một tiếng nói làm cả một vùng phải dè chừng."
     },
     {
       "id": "hoa_than",
       "name": "Hóa Thần",
-      "stages": ["sơ kỳ", "trung kỳ", "hậu kỳ", "viên mãn"],
+      "stages": [
+        "sơ kỳ",
+        "trung kỳ",
+        "hậu kỳ",
+        "viên mãn"
+      ],
       "description": "Thần thức trải ngàn dặm, nhất cử nhất động liên quan đến khí vận cả một đại vực."
     }
   ],
@@ -54,15 +92,47 @@
     "bottleneck": "Thất bại liền mấy lần, bình chướng như bức tường đá. Linh khí vào người cũng chậm hẳn: đây là bình cảnh.",
     "learnTechnique": "Ngươi bắt đầu tu {technique} ({grade} phẩm, {lineage}).",
     "switchTechnique": "Tán công trùng tu: bỏ {old}, chuyển sang {technique}. Tu vi tầng này mất đi mấy phần.",
-    "techniqueCap": "{technique} chỉ tu tới {realm} viên mãn. Muốn đi xa hơn phải tìm công pháp tốt hơn."
+    "techniqueCap": "{technique} chỉ tu tới {realm} viên mãn. Muốn đi xa hơn phải tìm công pháp tốt hơn.",
+    "seclusionStart": "Ngươi đóng cửa động phủ, định bế quan {years} năm.",
+    "seclusionYear": "Bế quan tĩnh tu.",
+    "seclusionEnd": "Xuất quan sau {years} năm. Tu vi giờ là {realm} {stage}. Thế gian ngoài kia đã khác.",
+    "seclusionPeak": "Tu vi đã viên mãn, ngồi thêm cũng không lên được nữa. Ngươi xuất quan sớm.",
+    "seclusionLifespan": "Thọ nguyên còn chẳng bao nhiêu, trong lòng bất an. Ngươi xuất quan sớm."
   },
-  "gradeNames": { "hoang": "Hoàng", "huyen": "Huyền", "dia": "Địa", "thien": "Thiên" },
-  "lineageNames": { "tien": "Tiên đạo", "ma": "Ma đạo", "phat": "Phật đạo", "quy": "Quỷ đạo", "yeu": "Yêu đạo" },
+  "gradeNames": {
+    "hoang": "Hoàng",
+    "huyen": "Huyền",
+    "dia": "Địa",
+    "thien": "Thiên"
+  },
+  "lineageNames": {
+    "tien": "Tiên đạo",
+    "ma": "Ma đạo",
+    "phat": "Phật đạo",
+    "quy": "Quỷ đạo",
+    "yeu": "Yêu đạo"
+  },
   "foundations": [
-    { "id": "ha", "name": "hạ phẩm", "description": "Nền móng lỏng lẻo, đi tiếp sẽ vất vả." },
-    { "id": "trung", "name": "trung phẩm", "description": "Nền móng vững vàng như phần lớn tu sĩ." },
-    { "id": "thuong", "name": "thượng phẩm", "description": "Nền móng dày chắc, đồng môn nhìn ngươi bằng ánh mắt khác." },
-    { "id": "hoan_my", "name": "hoàn mỹ", "description": "Nền móng không một vết rạn. Trăm năm mới thấy một người." }
+    {
+      "id": "ha",
+      "name": "hạ phẩm",
+      "description": "Nền móng lỏng lẻo, đi tiếp sẽ vất vả."
+    },
+    {
+      "id": "trung",
+      "name": "trung phẩm",
+      "description": "Nền móng vững vàng như phần lớn tu sĩ."
+    },
+    {
+      "id": "thuong",
+      "name": "thượng phẩm",
+      "description": "Nền móng dày chắc, đồng môn nhìn ngươi bằng ánh mắt khác."
+    },
+    {
+      "id": "hoan_my",
+      "name": "hoàn mỹ",
+      "description": "Nền móng không một vết rạn. Trăm năm mới thấy một người."
+    }
   ],
   "beyond": {
     "name": "???",

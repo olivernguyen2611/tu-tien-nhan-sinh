@@ -329,7 +329,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 
 | # | Task |
 |---|---|
-| 4.1 | [ ] Bế quan X năm (lỡ sự kiện, người thân có thể qua đời) |
+| 4.1 | [x] Bế quan X năm (lỡ sự kiện, người thân có thể qua đời) |
 | 4.2 | [ ] Mini-game kết đan (3 lượt xếp linh khí) → phẩm Kim Đan 1–9 + ✍️ đan văn |
 | 4.3 | [ ] Hình thái Nguyên Anh theo đạo đã tu (✍️ ~8 hình thái) |
 | 4.4 | [ ] Tâm ma chiến: ảo cảnh dựa trên chính những việc bạn đã làm (đọc sổ ân oán) |

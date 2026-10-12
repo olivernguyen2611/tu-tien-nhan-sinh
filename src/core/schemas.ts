@@ -183,6 +183,8 @@ export const EffectsSchema = z
       })
       .strict()
       .optional(),
+    /** Task 4.1: close the door for this many years right after the event. */
+    seclusionYears: z.number().int().min(1).optional(),
     /** Task 3.9: years of lifespan (burning blood: −10). */
     lifespanYears: z.number().int().optional(),
     /** Task 3.9: tâm ma seeds (counted for the heart-demon system to come). */
@@ -223,7 +225,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'heartDemon', 'relativeDies'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'heartDemon', 'relativeDies', 'seclusionYears'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -638,6 +640,18 @@ export const BalanceSchema = z
         revealChance: probability,
         /** Share of a dead NPC's grudge their kin inherits. */
         inheritShare: probability,
+      })
+      .strict(),
+    /** Task 4.1: bế quan (PLAN G.1: ×1.5 speed, no ordinary events). */
+    seclusion: z
+      .object({
+        speedMul: z.number().min(1),
+        /** Year counts offered at each realm (higher realms close the door for longer). */
+        options: z.record(id, z.array(z.number().int().min(1)).min(1)),
+        /** Come out early when this few years of lifespan are left. */
+        lifespanStop: z.number().int().min(0),
+        /** Lover and đạo lữ grow distant: affinity change per year in seclusion. */
+        lonelyAffinity: z.number(),
       })
       .strict(),
     /** Task 3.6: romance (thiện cảm, theo đuổi, tặng quà, tỏ tình). */
@@ -1159,6 +1173,12 @@ export const RealmsFileSchema = z
         learnTechnique: z.string().min(1),
         switchTechnique: z.string().min(1),
         techniqueCap: z.string().min(1),
+    /** Task 4.1. {years}, {realm}, {stage}. */
+    seclusionStart: z.string().min(1),
+    seclusionYear: z.string().min(1),
+    seclusionEnd: z.string().min(1),
+    seclusionPeak: z.string().min(1),
+    seclusionLifespan: z.string().min(1),
       })
       .strict(),
     /** Display names for technique grades and lineages (task 2.4). */

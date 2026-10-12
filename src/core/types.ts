@@ -55,6 +55,11 @@ export interface GameState {
   /** A talent choice waiting for the player (after a big breakthrough); blocks the next year. */
   fate: { offered: string[]; refreshesLeft: number } | null;
   /**
+   * Bế quan (task 4.1): the age the door opens again, and when it closed; null when not in seclusion.
+   * fixed: set by an event, so reaching the peak does not end it early (the point is to sit out the years).
+   */
+  seclusion: { until: number; since: number; fixed?: boolean } | null;
+  /**
    * Romance (task 3.6): the NPC being courted, whether they said yes (couple), the đạo lữ
    * (task 3.7), people who turned the player down or were left, rivals around the lover,
    * and the age each romance action was last done (once a year each).

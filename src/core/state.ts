@@ -112,6 +112,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     combat: null,
     npcs: [],
     ranking: { prodigies: [], rank: null },
+    seclusion: null,
     romance: { lover: null, couple: false, partner: null, exes: [], rivals: 0, lastActions: {} },
     talents: [],
     fate: null,
@@ -153,10 +154,17 @@ export function advanceYear(state: GameState, content: Content): GameState {
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
   const body = checkDeath(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content);
-  const next = body.alive ? rollYearEvent(body, content) : body;
+  // Task 4.1: in seclusion no ordinary event comes (follow-ups wait for the door to open);
+  // the door opens by itself when the years are up.
+  const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;
+  const next = body.alive && !state.seclusion ? rollYearEvent(secluded, content) : secluded;
   // The year's log block exists before family news and the event are added to it.
   const log = next.log.slice();
   const block = log[log.length - 1];
+  if (state.seclusion && block.lines.length === 0) {
+    log[log.length - 1] = { ...block, lines: [{ text: content.cultivation.realms.texts.seclusionYear, tone: 'normal' }] };
+    return { ...next, log };
+  }
   if (!next.events.pending && block.lines.length === 0) {
     log[log.length - 1] = { ...block, lines: [{ text: 'Một năm bình lặng trôi qua.', tone: 'normal' }] };
     // A quiet year eases happiness back toward its resting point.

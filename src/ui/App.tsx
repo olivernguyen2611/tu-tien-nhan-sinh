@@ -34,6 +34,7 @@ import { learnTechnique } from '../systems/technique';
 import { chooseFate, rerollFate } from '../systems/fate';
 import { trainMartial } from '../systems/martial';
 import { romanceAction } from '../systems/romance';
+import { runSeclusion, seclude } from '../systems/seclusion';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -170,8 +171,9 @@ function Screens({ content }: { content: Content }) {
         state={life}
         content={content}
         saveWarning={saveFailed ? 'Không lưu được: trình duyệt đang chặn hoặc đầy bộ nhớ. Hãy xuất file để giữ đời này.' : null}
-        onAdvance={() => setLife(advanceYear(life, content))}
-        onFastForward={() => setLife(fastForward(life, content))}
+        onAdvance={() => setLife(life.seclusion ? runSeclusion(life, content) : advanceYear(life, content))}
+        onFastForward={() => setLife(life.seclusion ? runSeclusion(life, content) : fastForward(life, content))}
+        onSeclude={(years) => setLife(seclude(life, content, years))}
         onFamilyAction={(relId, actionId) => {
           const r = performFamilyAction(life, content, relId, actionId);
           setLife(checkDeath(r.state, content));
@@ -184,9 +186,9 @@ function Screens({ content }: { content: Content }) {
         }}
         onCombat={(action, itemId) => {
           const r = act(life, content, action, itemId);
-          setLife(r.state.combat ? r.state : checkDeath(r.state, content, r.state.stats.health <= 0 ? 'combat' : undefined));
+          setLife(r.state.combat ? r.state : runSeclusion(checkDeath(r.state, content, r.state.stats.health <= 0 ? 'combat' : undefined), content));
         }}
-        onSettle={(choice) => setLife(checkDeath(settle(life, content, choice).state, content))}
+        onSettle={(choice) => setLife(runSeclusion(checkDeath(settle(life, content, choice).state, content), content))}
         onMarket={(marketId, action) => {
           const r = action.kind === 'buy' ? buy(life, content, marketId, action.itemId)
             : action.kind === 'sell' ? sell(life, content, marketId, action.itemId)
@@ -234,7 +236,7 @@ function Screens({ content }: { content: Content }) {
           const good: boolean = 'joined' in r ? (r.joined as boolean) : 'success' in r ? (r.success as boolean) : true;
           return { text: r.text, good };
         }}
-        onFate={(a) => setLife('choose' in a ? chooseFate(life, content, a.choose) : rerollFate(life, content, devMode))}
+        onFate={(a) => setLife('choose' in a ? runSeclusion(chooseFate(life, content, a.choose), content) : rerollFate(life, content, devMode))}
         onTip={(id, off) => setLife(off ? disableTutorial(dismissTip(life, id)) : dismissTip(life, id))}
         onBreakthrough={() => {
           const r = attemptMajorBreakthrough(life, content);
@@ -245,7 +247,8 @@ function Screens({ content }: { content: Content }) {
         onChoose={(i) => {
           const title = findEvent(content, life.events.pending ?? '')?.title ?? '';
           const r = resolveChoice(life, content, i);
-          setLife(checkDeath(r.state, content));
+          // An event may close the door for some years (task 4.1).
+          setLife(runSeclusion(checkDeath(r.state, content), content));
           return { title, text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
         }}
         onNewLife={() => setScreen('create')}

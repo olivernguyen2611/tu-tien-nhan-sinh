@@ -9,10 +9,11 @@ import { currentTechnique, learnBlocked, techniqueById, techniqueSummary } from 
 import { martialView } from '../../systems/martial';
 import { pathsView } from '../../systems/paths';
 import { rankingBoard } from '../../systems/rankings';
+import { seclusionView } from '../../systems/seclusion';
 import { Meter } from './Meter';
 import { TermText } from './Tooltip';
 
-export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onClose }: {
+export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSeclude, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome to show in the sheet. */
@@ -25,6 +26,8 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
   onLearn: (techniqueId: string) => string | null;
   /** A year of martial training (task 3.11); returns the log text, or null. */
   onTrain: () => string | null;
+  /** Task 4.1: bế quan; the sheet closes so the log shows the years. */
+  onSeclude: (years: number) => void;
   onClose: () => void;
 }) {
   const [confirming, setConfirming] = useState(false);
@@ -41,6 +44,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
   const currentCareer = careerLabel(state, content);
   const paths = mortal ? null : pathsView(state, content);
   const board = rankingBoard(state, content);
+  const seclusion = seclusionView(state, content);
   const foundation = content.cultivation.realms.foundations.find((g) => g.id === cult.foundation);
 
   return (
@@ -86,6 +90,22 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
             <div class="stat-row wide"><span class="icon">修</span><Meter label="Tu vi" term="tu_vi" value={cult.progress} color="var(--bar-cult)" text={`${Math.floor(cult.progress)}%`} /></div>
             <p class="profile-note">Mỗi năm tăng khoảng {gain.toFixed(1)}% thanh tu vi.{inBottleneck(state, content) ? ' Đang gặp bình cảnh.' : ''}</p>
           </>
+        )}
+
+        {seclusion.options.length > 0 && (
+          <div class="crafts">
+            <h3 class="panel-sub"><TermText text="Bế quan" /></h3>
+            <p class="profile-note">Tu vi ×{content.balance.seclusion.speedMul}, không có sự kiện. Năm tháng vẫn trôi, người thân vẫn già.</p>
+            <div class="action-chips">
+              {seclusion.options.map((y) => (
+                <button class="chip-btn" key={y} disabled={!!seclusion.blocked} title={seclusion.blocked ?? undefined}
+                  onClick={() => { onSeclude(y); onClose(); }}>
+                  {y} năm
+                </button>
+              ))}
+            </div>
+            {seclusion.blocked && <span class="craft-note">{seclusion.blocked}</span>}
+          </div>
         )}
 
         {info && state.alive && (

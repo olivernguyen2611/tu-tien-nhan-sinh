@@ -43,7 +43,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onRomance, onUseItem, onMarket, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onSeclude, onChoose, onFamilyAction, onRomance, onUseItem, onMarket, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -53,6 +53,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onFastForward: () => void;
   /** Returns the outcome to show on the card. */
   onChoose: (index: number) => PopupResult;
+  /** Task 4.1: bế quan for this many years. */
+  onSeclude: (years: number) => void;
   onFamilyAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
   /** Task 3.6: theo đuổi, tặng quà, tỏ tình. */
   onRomance: (npcId: string, action: RomanceAction) => { text: string; tone: Tone; changes: string };
@@ -211,7 +213,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       {sectOpen && <SectPanel state={state} content={content} onAction={onSectAction} onClose={() => setSectOpen(false)} />}
 
-      {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onTrain={onTrain} onClose={() => setCultivateOpen(false)} />}
+      {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onTrain={onTrain} onSeclude={onSeclude} onClose={() => setCultivateOpen(false)} />}
 
       {marketOpen && <MarketPanel state={state} content={content} onAction={onMarket} onClose={() => setMarketOpen(false)} />}
 
