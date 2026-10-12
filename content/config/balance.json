@@ -46,7 +46,8 @@
   "lifespan": {
     "mortalBase": 70,
     "mortalVariance": 10,
-    "healthAdjustMax": 10
+    "healthAdjustMax": 10,
+    "pressureLeftPct": 0.1
   },
   "fastForward": {
     "maxYears": 10
@@ -120,7 +121,7 @@
     }
   },
   "majorBreakthrough": {
-    "openRealms": ["truc_co", "kim_dan"],
+    "openRealms": ["truc_co", "kim_dan", "nguyen_anh"],
     "failureWeights": { "lose": 40, "injury": 35, "lifespan": 15, "deviation": 7, "death": 3 },
     "deviationHealth": -30,
     "deviationDaoHeart": -10,

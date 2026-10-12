@@ -8,6 +8,7 @@ import { extremeHookSum } from './extremes';
 import { checkDeath } from './time';
 import { difficultyHookSum } from './difficulty';
 import { careerHooks } from './career';
+import { currentRegion, regionQi } from './regions';
 import { currentTechnique, learnTechnique, techniqueCapReason, techniqueMul } from './technique';
 import { sectHooks } from './sect';
 import { ownSectHooks } from './ownSect';
@@ -15,6 +16,7 @@ import { offerFate } from './fate';
 import { breakthroughItem, carriedHooks, removeItems } from './items';
 import { pathSpeedBonus } from './paths';
 import { startCoreForming } from './goldenCore';
+import { soulFormFor } from './nascentSoul';
 import { needsHeartDemonTrial, startHeartDemonTrial } from './heartDemon';
 import { tribulationPreview, undergoTribulation, type TribulationPreview } from './tribulation';
 
@@ -148,7 +150,34 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
     // Võ đạo nhập tiên keeps the body's edge (task 3.11).
     ...(state.flags.vo_dao_nhap_tien ? content.martial.ascendEffects : []),
     ...carriedHooks(state, content),
+    // Đan văn of the golden core (task 4.2).
+    ...(content.corePatterns.find((p) => p.id === state.cult.corePattern)?.effects ?? []),
+    // Hình thái Nguyên Anh (task 4.3).
+    ...(content.nascentSouls.forms.find((f) => f.id === state.cult.soulForm)?.effects ?? []),
+    // Đại vực (task 4.8).
+    ...(currentRegion(state, content)?.effects ?? []),
   ];
+}
+
+/**
+ * Hooks that change the character once, when gained from something that forms mid-life (đan văn,
+ * Nguyên Anh): stat.<x> is added to the stat, lifespanPct to the current lifespan. Others act through lifeHooks.
+ */
+export function applyGainHooks(state: GameState, effects: EffectHook[]): GameState {
+  const stats = { ...state.stats };
+  const aptitudes = { ...state.aptitudes };
+  let lifespan = state.cult.lifespan;
+  for (const e of effects) {
+    if (e.add === undefined) continue;
+    if (e.hook.startsWith('stat.')) {
+      const k = e.hook.slice(5);
+      if (k in stats) stats[k as keyof typeof stats] = clamp(stats[k as keyof typeof stats] + e.add);
+      else if (k in aptitudes) aptitudes[k as keyof typeof aptitudes] = clamp(aptitudes[k as keyof typeof aptitudes] + e.add);
+    } else if (e.hook === 'lifespanPct') {
+      lifespan = Math.max(state.character.age + 1, Math.round(lifespan * (1 + e.add)));
+    }
+  }
+  return { ...state, stats, aptitudes, cult: { ...state.cult, lifespan } };
 }
 
 /** Sum of an add-hook from traits, special body, extreme states and difficulty. `lineage.<x>.<hook>` counts for the life's lineage. */
@@ -173,7 +202,8 @@ export function yearlyGain(state: GameState, content: Content): number {
     rootMul = Math.min(content.balance.techniques.rootlessDaoHeartMax, state.aptitudes.daoHeart / 100);
   }
   const aptitude = cfg.aptitudeBase + (state.aptitudes.physique + state.aptitudes.comprehension) / cfg.aptitudeDivisor;
-  const qi = content.world.qi ?? cfg.regionQi;
+  // Đại vực (task 4.8): the region's linh khí multiplies the world's.
+  const qi = (content.world.qi ?? cfg.regionQi) * regionQi(state, content);
   const bonus = Math.max(0, 1 + hookSum(state, content, 'cultivationSpeed') + pathSpeedBonus(state, content));
   // Song tu with a cultivating đạo lữ (task 3.7, PLAN G.1 ×1.3).
   const partner = state.romance.partner ? state.npcs.find((n) => n.id === state.romance.partner) : undefined;
@@ -456,8 +486,18 @@ export function majorSuccess(before: GameState, s0: GameState, content: Content,
       .replaceAll('{grade}', grade ? `${grade.name}. ${grade.description}` : '');
     tone = foundation === 'hoan_my' || foundation === 'thuong' ? 'rare' : 'good';
   }
+  // Hình thái Nguyên Anh (task 4.3): the shattered core takes a form from the road walked.
+  let log = pushLine(s.log, { text, tone });
+  const form = target.id === content.nascentSouls.realm ? soulFormFor(s, content) : undefined;
+  if (form) {
+    const line = texts.soulForm.replaceAll('{form}', form.name).replaceAll('{text}', form.text);
+    log = pushLine(log, { text: line, tone: 'rare' });
+    // Stat and lifespan hooks land once, now (as for đan văn).
+    s = applyGainHooks({ ...s, cult: { ...s.cult, soulForm: form.id } }, form.effects);
+    text = `${text} ${line}`;
+  }
   // Nghịch Thiên Cải Mệnh: choose a fate talent before the next year (task 2.7).
-  const done = offerFate({ ...s, rng: rng.getState(), log: pushLine(s.log, { text, tone }) }, content);
+  const done = offerFate({ ...s, rng: rng.getState(), log }, content);
   return { state: done, success: true, text, tone };
 }
 

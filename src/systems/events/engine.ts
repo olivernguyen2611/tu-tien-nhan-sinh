@@ -14,6 +14,7 @@ import { addCraftXp } from '../crafts';
 import { forceJoinCareer, leaveCareer, promoteCareer } from '../career';
 import { addMartialYears, martialAttempt, martialPromote } from '../martial';
 import { addPathAffinity } from '../paths';
+import { regionThemeMultiplier } from '../regions';
 import { addContribution, breakPrecept, grantMaster, joinSect, leaveSect, promoteSect } from '../sect';
 import { startBattle } from '../combat';
 import { changeNpc, createNpc, killNpc, npcCalls } from '../npcs';
@@ -33,7 +34,7 @@ export function themeMultiplier(state: GameState, content: Content, event: GameE
     if (!e.hook.startsWith('eventWeight.') || e.mul === undefined || !hookActive(e, state, content)) continue;
     if (event.themes.includes(e.hook.slice('eventWeight.'.length))) mul *= e.mul;
   }
-  return mul * extremeThemeMultiplier(state, content, event.themes);
+  return mul * extremeThemeMultiplier(state, content, event.themes) * regionThemeMultiplier(state, content, event.themes);
 }
 
 /** Weight of an event for this life right now; 0 = cannot happen. */
@@ -63,10 +64,14 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
   let followUps = state.events.followUps;
 
   let npc: string | null = null;
-  const visit = due ? null : npcEvent(state, content, rng);
+  // Task 4.10: an urgent event (đại hạn) skips the roll as soon as it is eligible.
+  const urgent = due ? undefined : content.events.find((e) => e.urgent && eventWeight(state, content, e) > 0);
+  const visit = due || urgent ? null : npcEvent(state, content, rng);
   if (due) {
     picked = due.event;
     followUps = followUps.filter((f) => f !== due);
+  } else if (urgent) {
+    picked = urgent.id;
   } else if (visit) {
     picked = visit.event;
     npc = visit.npc;
@@ -296,6 +301,8 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   }
   // Task 3.9.
   if (fx.lifespanYears) next = { ...next, cult: { ...next.cult, lifespan: Math.max(next.character.age + 1, next.cult.lifespan + fx.lifespanYears) } };
+  // Task 4.10: a share of the lifespan, so a pill or a new body is worth as much to a Nguyên Anh as to a Luyện Khí.
+  if (fx.lifespanPct) next = { ...next, cult: { ...next.cult, lifespan: Math.max(next.character.age + 1, next.cult.lifespan + Math.round(next.cult.lifespan * fx.lifespanPct)) } };
   if (fx.heartDemon) {
     // Task 3.10: heartDemonResist shrinks new tâm ma (a negative resist, Ma Tâm Chủng, makes it grow).
     const gain = fx.heartDemon > 0 ? Math.max(0, Math.round(fx.heartDemon * (1 - hookSum(next, content, 'heartDemonResist')))) : fx.heartDemon;
@@ -336,6 +343,8 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
     next = granted.state;
     if (granted.text) text = `${text} ${granted.text}`;
   }
+  // Task 4.6: the next step opens at once (not after a fight; that goes in win/lose).
+  if (fx.chain && next.alive && findEvent(content, fx.chain)) next = { ...next, events: { ...next.events, pending: fx.chain } };
   return { state: next, text };
 }
 

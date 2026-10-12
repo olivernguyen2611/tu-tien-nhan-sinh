@@ -75,6 +75,70 @@
   - Môn quy nghiêm minh (đột phá +2).
 - Dòng danh hiệu trên đầu hiện "{tên tông} · Chưởng môn". Bảng Tông môn hiện tên, đạo thống, năm khai tông, số đệ tử, các tông quy.
 - **Bổ sung kỹ thuật** (PLAN chỉ ghi "điều kiện, đặt tên, đạo thống, tông quy"): mọi con số, bộ chữ ghép tên, 6 tông quy và câu văn trong `founding.json`.
+### Task 4.8 — Bản đồ đại vực (2026-10-12)
+- **Bản đồ** (nút 圖 trên thanh trên cùng): 6 đại vực của Thương Lan giới, mở dần theo cảnh giới. Mỗi năm đi được một chuyến. Thanh trên cùng hiện vùng đang ở.
+  | Vùng | Mở từ | Linh khí | Đặc điểm |
+  |---|---|---|---|
+  | Thanh Vân châu (quê nhà) | Từ đầu | ×1 | Yên ổn |
+  | Vô Chủ hoang nguyên | Luyện Khí | ×1.1 | Cướp bóc ×2, chiến lợi phẩm +20% |
+  | Vạn Thú sơn mạch | Trúc Cơ | ×1.3 | Yêu thú ×3, linh thảo ×2, chiến lực −5% |
+  | Đông Hải quần đảo | Kim Đan | ×1.5 | Bí cảnh ×2, kỳ ngộ ×1.5, mua rẻ hơn 5% |
+  | Bắc Minh tuyết vực | Nguyên Anh | ×1.8 | Kháng tâm ma +20%, Tốc −10%, ít tình duyên |
+  | Thương Lan Trung Châu | Hóa Thần | ×2 | Đột phá +2, bí cảnh ×2 |
+- **Đại năng trấn giữ**: mỗi vùng có một đại năng (Thanh Vân Tử, Bạch Cốt Bà Bà, Kim Mao Hống, Thương Hải Lão Tổ, Hàn Sơn Kiếm Tôn, Thiên Diễn Đạo Quân). Lần đầu đặt chân tới thì nghe chuyện về họ; ở đó có một sự kiện gặp mặt riêng.
+- Engine (dùng chung mọi thế giới): `content/worlds/<id>/regions.json`; linh khí vùng nhân vào công thức tu luyện (PLAN G.1); điều kiện `region` của sự kiện nay có tác dụng. Validator kiểm tra cảnh giới, id vùng trong sự kiện, và cấm móc `stat.*` cho vùng (móc đó chỉ cộng một lần).
+- Dev mode: đi được mọi vùng, không giới hạn mỗi năm một chuyến.
+- **Nội dung do Claude tự soạn** theo lời chủ dự án, chưa qua duyệt.
+
+### Task 4.6 — Bí cảnh dạng chuỗi nhiều bước (2026-10-12)
+- **Bí cảnh đi liền nhiều bước trong cùng một năm**: chọn xong một bước thì bước sau mở ngay; bước nào cũng có lựa chọn rời bí cảnh. Năm chỉ trôi khi ra khỏi bí cảnh.
+- **Vạn Kiếm Trủng** (Luyện Khí đến Trúc Cơ), 4 bước: Rừng kiếm gãy, Kiếm khí trận, Kiếm hồn canh mộ (đánh thật, hoặc đi khe hở trận nếu đã tính ra quy luật), Mộ kiếm chủ (chọn một: kiếm, kiếm kinh, vò rượu, hoặc khấu đầu).
+- **Long Uyên Thủy Phủ** (từ Kim Đan), 3 bước: Hành lang ngọc trai, Giao hồn, Long châu. Lập đội thì ở bước cuối phải chia đều hoặc ra tay trước với đồng đội.
+- Engine (dùng chung mọi thế giới): hiệu ứng `chain` mở sự kiện kế tiếp ngay lập tức, đặt được trong kết quả thắng/thua của trận đánh. Validator báo chain tới sự kiện không tồn tại, và chain đặt cạnh trận đánh.
+- **Nội dung do Claude tự soạn** theo lời chủ dự án, chưa qua duyệt.
+
+### Task 4.11 — Tàn hồn "lão gia gia" (2026-10-12)
+- **Cửa 2.5 của đường phàm nhân** (`mortal-path.md`): từ 12 tuổi, cực hiếm, mua nhầm chiếc nhẫn biết ho ở chợ hoặc mò được dưới sông. Đeo vào thì có **Nhẫn cổ tàn hồn** (mang theo: tốc độ tu luyện +20%, bình cảnh dễ vượt hơn 10%).
+- **Chuỗi sự kiện** (`content/worlds/thuong_lan/events/remnant-soul.json`):
+  1. **Lão gia gia trong nhẫn** chỉ đường tới ao linh tủy. Đi theo, hỏi vặn lão (thử Trí lực: thấy lão hỏi ngày giờ sinh hơi kỹ), hoặc cất nhẫn đi.
+  2. **Ao linh tủy Hắc Phong** (thiên địa kỳ vật): phàm nhân không linh căn được khai mạch (Tứ hoặc Ngũ linh căn); người đã tu thì hấp thu linh khí; hoặc nhường ao cho lão.
+  3. **Thức hải có khách**, 5–12 năm sau (nhường ao thì 3–6 năm): lão đoạt xá. Có phù trấn hồn nếu đã nhìn ra lão; cố thủ thức hải (Đạo tâm 55, lão đã hồi phục thì 75); hoặc thương lượng tìm xác khác (Mị lực 60). Thua thì thần hồn tổn thương và lão quay lại lần sau.
+- Hệ Kim Thủ Chỉ đầy đủ vẫn ở task 5b.2; lần này lão gia gia đi bằng vật phẩm, cờ và sự kiện, không cần engine mới.
+- **Nội dung do Claude tự soạn** theo lời chủ dự án, chưa qua duyệt.
+
+### Task 4.10 — Áp lực thọ nguyên (2026-10-12)
+- **Đại hạn sắp tới**: khi thọ nguyên còn lại ≤ 10% (`balance.lifespan.pressureLeftPct`), sự kiện bật ngay năm đó, không phải chờ quay ngẫu nhiên. Người tu tiên gặp "Đại hạn sắp tới", phàm nhân gặp "Tuổi già gõ cửa". Mỗi đời một lần.
+  - Người tu tiên chọn: bế quan liều phá cảnh (đột phá kế +15, bế quan 3 năm), đi tìm thọ đan, tìm thân xác trẻ (chỉ khi nghiệp ≤ −20), hoặc thuận theo thiên mệnh (giảm tâm ma).
+  - Phàm nhân chọn: mua sâm trăm năm, lên núi cầu tiên (thử vận may), chép gia phả, rủ bạn cũ uống rượu.
+- **Thọ Nguyên Đan lên sàn**: trả giá 1000 linh thạch, chặn đường cướp (đánh thật), tự luyện (cần luyện đan cấp 3), bán mạng cho lão giàu, hoặc bỏ về. Thọ đan cộng theo **% thọ nguyên** nên có giá trị ở mọi cảnh giới.
+- **Đêm mưa đoạt xá**: thử Đạo tâm; thành thì thọ nguyên +40%, nghiệp −40, tâm ma +20; bại thì thần hồn nứt. Hoặc bỏ đi, để lại linh thạch cho người kia.
+- **Di ngôn**: năm cuối đời, chọn truyền y bát, chôn động phủ cho người hữu duyên, viết thư cho kẻ thù, hoặc không để lại gì.
+- Engine mới (dùng chung mọi thế giới): điều kiện `lifespan` (`nearEnd`, `maxLeft`), hiệu ứng `lifespanPct`, cờ sự kiện `urgent` (bật ngay khi đủ điều kiện, sau follow-up đến hạn).
+- **Nội dung do Claude tự soạn** theo lời chủ dự án, chưa qua duyệt. Ghi chú thiết kế: `docs/design/lifespan-4-10.md`.
+
+### Task 4.3 — Hình thái Nguyên Anh (2026-10-12)
+- **Mở đột phá Nguyên Anh** (`majorBreakthrough.openRealms`). Thiên kiếp 6 đạo lôi và tâm ma chiến của phiên trước áp dụng như các đại cảnh giới khác.
+- **Kim Đan vỡ, hóa thành Nguyên Anh** với hình thái theo con đường đã đi (`content/nascent-souls.json`). Xét theo thứ tự, luật đầu tiên khớp thì lấy:
+  1. Kim Đan Nhất hoặc Nhị phẩm: **Đạo Anh**.
+  2. Theo đạo thống: Ma thì **Huyết Anh**, Phật thì **Xá Lợi Phật Anh**, Quỷ thì **U Hồn Anh**, Yêu thì **Yêu Linh Anh**.
+  3. Theo con đường chiến đấu chính: Kiếm thì **Kiếm Anh**, Thể thì **Bất Hoại Kim Anh**, Pháp thì **Pháp Tướng Anh**, Binh thì **Thần Binh Anh**, Thuật thì **Huyễn Ảnh Anh**.
+  4. Còn lại: **Thanh Liên Anh**.
+- Mỗi hình thái có hiệu ứng riêng qua bộ móc K.6. Bảng Tu luyện hiện hình thái; nhật ký ghi lúc hóa anh.
+- Chỉ số và thọ nguyên của hình thái cộng một lần lúc hóa anh. Chỉ dùng các móc đã có tác dụng (bỏ thần thức, kháng mị thuật, tư chất Ngự thú vì hệ thống của chúng chưa có).
+- **Nội dung do Claude tự soạn** theo lời chủ dự án, chưa qua duyệt.
+
+### Task 4.2 — Đan văn (2026-10-12)
+- **Kim Đan thành thì mặt đan hiện đan văn**, sinh ra từ chính 3 luồng linh khí người chơi đã dẫn khi kết đan. Mỗi đan văn có hiệu ứng riêng qua bộ móc K.6.
+- **12 đan văn** trong `content/core-patterns.json`. Xét theo thứ tự, gặp luật đầu tiên khớp thì lấy:
+  1. **Liệt Văn**: đan từng rạn. Đột phá khó hơn một chút, đổi lại Đạo tâm vững hơn.
+  2. **Tam Sinh Tuần Hoàn**: cả 3 luồng tương sinh nối nhau. Tu nhanh hơn, đột phá dễ hơn.
+  3. **Thuần Nhất Đan Văn**: 3 luồng cùng một hệ.
+  4. **Đan văn biến dị**: có luồng biến dị thì ra Lôi Văn, Hàn Băng, Phong Văn hoặc U Ám.
+  5. **Đan văn ngũ hành**: theo hệ dẫn nhiều nhất (Canh Kim, Thanh Mộc, Huyền Thủy, Ly Hỏa, Hậu Thổ); hòa thì lấy luồng sau.
+- Bảng Tu luyện hiện phẩm Kim Đan và đan văn cùng tác dụng. Nhật ký ghi lúc đan văn thành hình.
+- Chỉ số và thọ nguyên của đan văn cộng một lần lúc đan văn thành hình; các tác dụng khác đi qua bộ móc K.6.
+- Móc `element.root.power` và `element.all.power` (đã có ở vài khí vận nhưng trước đây không có tác dụng) giờ được tính khi khắc chế hệ trong trận.
+- **Nội dung do Claude tự soạn** theo lời chủ dự án ("tự quyết định nội dung, mình sẽ xem lại sau"), chưa qua duyệt.
 
 ### Task 4.9 — Thu đồ đệ (cơ bản) (2026-10-12)
 - **Thu đồ đệ** (tab Người quen):

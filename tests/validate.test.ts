@@ -11,7 +11,7 @@ const balance = {
     fatherAge: [20, 35], motherAge: [17, 30], affinityStart: [55, 85], olderSiblings: [0, 2], olderSiblingGap: [2, 6],
     youngerSiblingChance: 0.12, motherMinAgeForChild: 16, motherMaxAgeForChild: 40, maxSiblings: 4, affinityDecay: 1, grief: { father: [-20, -30], mother: [-20, -30], sibling: [-15, -15], child: [-25, -40], parentDaoHeart: 2 },
   },
-  lifespan: { mortalBase: 70, mortalVariance: 10, healthAdjustMax: 10 },
+  lifespan: { mortalBase: 70, mortalVariance: 10, healthAdjustMax: 10, pressureLeftPct: 0.1 },
   fastForward: { maxYears: 10 },
   aging: { recoverPerYear: 3, recoverCap: 70, declineStartAge: 50, healthDeclinePerYear: 1, illnessStartAge: 60, illnessChancePerYear: 0.008, illnessHealthLoss: [5, 15], illnessHappinessLoss: 5, epitaphKarma: 30, milestoneAges: [60], milestoneHealth: -5, milestoneCharm: -3 },
   realms: realBalance.realms,
@@ -124,6 +124,14 @@ describe('validateContent', () => {
       choices: [{ text: 'Hẹn', result: { text: '...', effects: { followUp: { event: 'khong_co', afterYears: [3, 10] } } } }],
     });
     expect(errors({ 'worlds/w/events/a.json': [ev] }).some((m) => m.includes('khong_co'))).toBe(true);
+  });
+
+  it('reports chains to missing events and chains placed beside a fight', () => {
+    const missing = event({ choices: [{ text: 'Vào', result: { text: '...', effects: { chain: 'khong_co', 'stat.happiness': 1 } } }] });
+    expect(errors({ 'worlds/w/events/a.json': [missing] }).some((m) => m.includes('chain tới sự kiện không tồn tại'))).toBe(true);
+    const fight = { foe: { name: 'Kẻ địch', intent: 'teach' }, win: { text: 'Thắng.', effects: { 'stat.happiness': 1 } }, lose: { text: 'Thua.', effects: { 'stat.happiness': -1 } } };
+    const beside = event({ choices: [{ text: 'Đánh', result: { text: '...', effects: { chain: 'find_old_cave_01' }, fight } }] });
+    expect(errors({ 'worlds/w/events/a.json': [beside] }).some((m) => m.includes('đặt chain trong win/lose'))).toBe(true);
   });
 
   it('blocks mature events for characters under 18', () => {

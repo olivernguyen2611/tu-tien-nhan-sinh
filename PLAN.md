@@ -330,16 +330,16 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | # | Task |
 |---|---|
 | 4.1 | [x] Bế quan X năm (lỡ sự kiện, người thân có thể qua đời) |
-| 4.2 | [ ] Mini-game kết đan (3 lượt xếp linh khí) → phẩm Kim Đan 1–9 + ✍️ đan văn — *code xong, chờ file đan văn* |
-| 4.3 | [ ] Hình thái Nguyên Anh theo đạo đã tu (✍️ ~8 hình thái) |
+| 4.2 | [x] Mini-game kết đan (3 lượt xếp linh khí) → phẩm Kim Đan 1–9 + ✍️ đan văn |
+| 4.3 | [x] Hình thái Nguyên Anh theo đạo đã tu (✍️ ~8 hình thái) |
 | 4.4 | [x] Tâm ma chiến: ảo cảnh dựa trên chính những việc bạn đã làm (đọc sổ ân oán) |
 | 4.5 | [x] Thiên kiếp ở các mốc lớn, cần pháp bảo/trận pháp |
-| 4.6 | [ ] Bí cảnh dạng chuỗi nhiều bước |
+| 4.6 | [x] Bí cảnh dạng chuỗi nhiều bước |
 | 4.7 | [x] Bách nghệ cơ bản: Luyện đan + Luyện khí (các nghề khác để GĐ7) |
-| 4.8 | [ ] Bản đồ đại vực mở dần theo cảnh giới + ✍️ đại năng trấn giữ |
+| 4.8 | [x] Bản đồ đại vực mở dần theo cảnh giới + ✍️ đại năng trấn giữ |
 | 4.9 | [x] Thu đồ đệ (cơ bản) |
-| 4.10 | [ ] Áp lực thọ nguyên: chuỗi sự kiện sắp hết thọ, tìm thọ đan, đoạt xá, di ngôn |
-| 4.11 | [ ] Tàn hồn trong vật cũ: Kim Thủ Chỉ "lão gia gia" dẫn đường tới thiên địa kỳ vật, có thể đoạt xá (`mortal-path.md` mục 2.5) |
+| 4.10 | [x] Áp lực thọ nguyên: chuỗi sự kiện sắp hết thọ, tìm thọ đan, đoạt xá, di ngôn |
+| 4.11 | [x] Tàn hồn trong vật cũ: Kim Thủ Chỉ "lão gia gia" dẫn đường tới thiên địa kỳ vật, có thể đoạt xá (`mortal-path.md` mục 2.5) |
 | 4.12 | [x] Quỷ tu: chết còn chấp niệm thì chơi tiếp bằng Quỷ đạo; móc mới `continueAfterDeath` (`mortal-path.md` mục 2.6) |
 
 **Tiêu chí hoàn thành:** một đời tu tới Nguyên Anh có kết đan mini-game, ít nhất một lần tâm ma và một lần thiên kiếp; sắp hết thọ có lựa chọn liều mạng.

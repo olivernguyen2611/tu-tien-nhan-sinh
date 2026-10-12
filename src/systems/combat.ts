@@ -161,7 +161,9 @@ function sides(state: GameState, content: Content, battle: Battle, action: Comba
   // Element counters (K.3.3); the Pháp path gains and loses more.
   const mine = playerElement(state);
   const counter = path === 'spell' ? paths.spell.elementCounterBonus : b.roots.elementCounterBonus;
-  if (beats(content, mine, battle.foe.element)) a *= 1 + counter + hookSum(state, content, `element.${mine}.power`);
+  // The player's element is their root's, so element.root (and element.all) always count here.
+  const elementBonus = hookSum(state, content, `element.${mine}.power`) + hookSum(state, content, 'element.root.power') + hookSum(state, content, 'element.all.power');
+  if (beats(content, mine, battle.foe.element)) a *= 1 + counter + elementBonus;
   if (beats(content, battle.foe.element, mine)) {
     if (path === 'spell') a *= 1 + paths.spell.elementCounteredPenalty;
     else foe *= 1 + b.roots.elementCounterBonus;

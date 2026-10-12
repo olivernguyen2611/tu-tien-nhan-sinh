@@ -97,6 +97,8 @@ const BaseConditionsSchema = z
       .optional(),
     /** Task 3.9: family state ({deceased} = a relative who has died). */
     family: z.object({ deadAny: z.boolean().optional(), parentAlive: z.boolean().optional() }).strict().optional(),
+    /** Task 4.10: nearEnd = years left ≤ balance.lifespan.pressureLeftPct of the lifespan; maxLeft = at most this many years left. */
+    lifespan: z.object({ nearEnd: z.boolean().optional(), maxLeft: z.number().int().min(0).optional() }).strict().optional(),
     /** Task 3.4: the NPC this event is about (met earlier, or picked by an npcTrigger). */
     npc: z
       .object({
@@ -195,10 +197,14 @@ export const EffectsSchema = z
       .optional(),
     /** Task 5.3: the founded sect gains or loses members, treasury, next year's growth. */
     ownSect: z.object({ members: z.number().int().optional(), treasury: z.number().int().optional(), growthBonus: z.number().optional() }).strict().optional(),
+    /** Task 4.6: the next step of a multi-step event (bí cảnh); it opens right after this one, the same year. */
+    chain: id.optional(),
     /** Task 4.1: close the door for this many years right after the event. */
     seclusionYears: z.number().int().min(1).optional(),
     /** Task 3.9: years of lifespan (burning blood: −10). */
     lifespanYears: z.number().int().optional(),
+    /** Task 4.10: share of the current lifespan added (a seized young body: +0.3); scales with the realm. */
+    lifespanPct: z.number().optional(),
     /** Task 3.9: tâm ma seeds (counted for the heart-demon system to come). */
     /** Tâm ma gained (task 3.9); gains shrink by the heartDemonResist hook (task 3.10), losses do not. */
     heartDemon: z.number().int().optional(),
@@ -238,7 +244,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -333,6 +339,8 @@ export const EventSchema = z
     oncePerLife: z.boolean().default(false),
     /** Task 3.4: not in the yearly pool; fires when an NPC's ledger calls for it (that NPC is the event's NPC). */
     npcTrigger: z.enum(['revenge', 'repay', 'reveal']).optional(),
+    /** Task 4.10: fires as soon as it is eligible, ahead of the yearly roll (due follow-ups still come first). */
+    urgent: z.boolean().default(false),
     choices: z.array(ChoiceSchema).min(1),
   })
   .strict();
@@ -598,6 +606,8 @@ export const BalanceSchema = z
         mortalBase: z.number().int().min(1),
         mortalVariance: z.number().int().min(0),
         healthAdjustMax: z.number().int().min(0),
+        /** Task 4.10: "đại hạn sắp tới" once the years left are at most this share of the lifespan. */
+        pressureLeftPct: probability,
       })
       .strict(),
     /** Task 1.11: "Tua nhanh" stops after at most this many years. */
@@ -1379,6 +1389,10 @@ export const RealmsFileSchema = z
     corePlain: z.string().min(1),
     coreSuccess: z.string().min(1),
     coreShattered: z.string().min(1),
+    /** Task 4.2: the đan văn that formed ({pattern}, {text}). */
+    corePattern: z.string().min(1),
+    /** Task 4.3: the Nguyên Anh's form ({form}, {text}). */
+    soulForm: z.string().min(1),
       })
       .strict(),
     /** Display names for technique grades and lineages (task 2.4). */
@@ -1683,6 +1697,32 @@ export const FateTalentFileSchema = z.array(
     .strict(),
 );
 export type FateTalent = z.infer<typeof FateTalentFileSchema>[number];
+
+/** content/worlds/<id>/regions.json (task 4.8): the đại vực of a world; the first one is home. */
+export const RegionFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      description: z.string().min(1),
+      /** Realm needed to travel there; none = open from birth. */
+      minRealm: id.optional(),
+      /** Linh khí of the region (PLAN G.1, 0.5 to 2.0); multiplies the world's. */
+      qi: z.number().min(0.5).max(2),
+      /** Event theme → weight × while here (yêu thú in the mountains…). */
+      eventWeight: z.record(id, z.number().min(0)).default({}),
+      /** K.6 hooks while here. */
+      effects: z.array(EffectHookSchema).default([]),
+      /** One line for the map: what living here is like. */
+      summary: z.string().min(1),
+      /** Logged on arrival. */
+      enterText: z.string().min(1),
+      /** Đại năng trấn giữ: who keeps this region, shown on the map and met on the first visit. */
+      guardian: z.object({ name: z.string().min(1), title: z.string().min(1), realm: id, text: z.string().min(1) }).strict(),
+    })
+    .strict(),
+);
+export type Region = z.infer<typeof RegionFileSchema>[number];
 
 /** content/worlds/<id>/markets.json (task 3.2): where things are bought and sold. */
 export const MarketFileSchema = z.array(
@@ -2070,3 +2110,43 @@ export const ClanFileSchema = z
   })
   .strict();
 export type ClanFile = z.infer<typeof ClanFileSchema>;
+
+/** content/core-patterns.json (task 4.2): đan văn on a new golden core, first match wins. */
+export const CorePatternSchema = z
+  .object({
+    id,
+    name: z.string().min(1),
+    /** Which strands formed it: cracked once or more, every strand flowed from the last, all one element, a variant strand, or the most placed element. */
+    when: z
+      .object({ cracked: z.boolean().optional(), allFlow: z.boolean().optional(), allSame: z.boolean().optional(), variant: id.optional(), element: id.optional() })
+      .strict(),
+    text: z.string().min(1),
+    summary: z.string().min(1),
+    effects: z.array(EffectHookSchema),
+  })
+  .strict();
+export const CorePatternFileSchema = z.array(CorePatternSchema);
+export type CorePattern = z.infer<typeof CorePatternSchema>;
+
+/** content/nascent-souls.json (task 4.3): the Nguyên Anh's form, first match wins. */
+export const NascentSoulFileSchema = z
+  .object({
+    /** Realm whose breakthrough forms the Nguyên Anh. */
+    realm: id,
+    forms: z.array(
+      z
+        .object({
+          id,
+          name: z.string().min(1),
+          /** Kim Đan grade this good or better (1 = Nhất phẩm), đạo thống, main fighting path; {} always fits. */
+          when: z.object({ maxCoreGrade: z.number().int().min(1).max(9).optional(), lineage: id.optional(), path: id.optional() }).strict(),
+          text: z.string().min(1),
+          summary: z.string().min(1),
+          effects: z.array(EffectHookSchema),
+        })
+        .strict(),
+    ),
+  })
+  .strict();
+export type NascentSoulFile = z.infer<typeof NascentSoulFileSchema>;
+

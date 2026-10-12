@@ -738,6 +738,17 @@ button { font: inherit; color: inherit; }
 .market-row .chip-btn { flex: none; }
 .chip-btn.active { background: var(--jade); color: var(--seal-ink); border-color: var(--jade); }
 
+/* Bản đồ đại vực (task 4.8): one row per region; narrow screens stack the button under the text. */
+.region-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px; }
+.region-row > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.region-row .chip-btn { flex: none; }
+.region-row .profile-note { margin: 0; }
+.region-row.here { border-color: var(--jade); }
+.region-row.locked { opacity: 0.6; }
+@media (max-width: 480px) {
+  .region-row { flex-direction: column; align-items: stretch; }
+}
+
 /* Giao chiến (task 3.3). */
 .combat-score { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 0.875rem; }
 .combat-score .rounds { letter-spacing: 4px; color: var(--jade); font-size: 1rem; }

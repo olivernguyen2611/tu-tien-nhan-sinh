@@ -73,6 +73,8 @@ export interface GameState {
    * fixed: set by an event, so reaching the peak does not end it early (the point is to sit out the years).
    */
   seclusion: { until: number; since: number; fixed?: boolean } | null;
+  /** Task 4.8: the đại vực the player is in (null = the world's first, home), regions seen, last year moved. */
+  region: { id: string | null; visited: string[]; movedAt: number | null };
   /**
    * Romance (task 3.6): the NPC being courted, whether they said yes (couple), the đạo lữ
    * (task 3.7), people who turned the player down or were left, rivals around the lover,
@@ -155,6 +157,10 @@ export interface GameState {
     /** Task 4.2: the core being formed (blocks the year), and the Kim Đan grade 1–9 once formed. */
     coreForming: { round: number; offered: string[]; placed: string[]; purity: number; cracks: number; chancePct: number } | null;
     coreGrade: number | null;
+    /** Đan văn of the golden core (task 4.2, core-patterns.json). */
+    corePattern: string | null;
+    /** Hình thái Nguyên Anh (task 4.3, nascent-souls.json). */
+    soulForm: string | null;
     /** Task 4.4: tâm ma chiến in progress (blocks the year), before the big breakthrough it guards. */
     heartDemonTrial: { illusions: string[]; round: number; wins: number; losses: number; chancePct: number; target: string } | null;
     /** Tâm ma seeds from dark choices (task 3.9; read by the heart-demon system later). */

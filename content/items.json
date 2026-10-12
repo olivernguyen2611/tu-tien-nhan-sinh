@@ -836,5 +836,23 @@
       "spiritStones": 200
     },
     "forSale": false
+  },
+  {
+    "id": "nhan_co_tan_hon",
+    "name": "Nhẫn cổ tàn hồn",
+    "kind": "artifact",
+    "description": "Chiếc nhẫn đồng xỉn màu. Đêm khuya thỉnh thoảng nó lẩm bẩm, phần lớn là chê ngươi.",
+    "summary": "Mang theo: tốc độ tu luyện +20%, bình cảnh dễ vượt hơn 10%. Trong nhẫn có người.",
+    "forSale": false,
+    "carried": [
+      {
+        "hook": "cultivationSpeed",
+        "add": 0.2
+      },
+      {
+        "hook": "bottleneckResist",
+        "add": 0.1
+      }
+    ]
   }
 ]
