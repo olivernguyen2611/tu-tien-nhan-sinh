@@ -3,6 +3,9 @@ import type { Content } from '../core/content';
 import { advanceYear, createLife, fastForward } from '../core/state';
 import type { GameState } from '../core/types';
 import { describeChanges } from '../systems/deltas';
+import { consumeItem } from '../systems/items';
+import { bargain, buy, sell } from '../systems/market';
+import { act, settle } from '../systems/combat';
 import { performFamilyAction } from '../systems/relationships';
 import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, rerollDestiny, rollDestiny } from '../systems/destiny';
@@ -169,6 +172,23 @@ function Screens({ content }: { content: Content }) {
         onFastForward={() => setLife(fastForward(life, content))}
         onFamilyAction={(relId, actionId) => {
           const r = performFamilyAction(life, content, relId, actionId);
+          setLife(checkDeath(r.state, content));
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+        }}
+        onCombat={(action, itemId) => {
+          const r = act(life, content, action, itemId);
+          setLife(r.state.combat ? r.state : checkDeath(r.state, content, r.state.stats.health <= 0 ? 'combat' : undefined));
+        }}
+        onSettle={(choice) => setLife(checkDeath(settle(life, content, choice).state, content))}
+        onMarket={(marketId, action) => {
+          const r = action.kind === 'buy' ? buy(life, content, marketId, action.itemId)
+            : action.kind === 'sell' ? sell(life, content, marketId, action.itemId)
+            : bargain(life, content, marketId);
+          setLife(r.state);
+          return { text: r.text, tone: r.tone };
+        }}
+        onUseItem={(itemId) => {
+          const r = consumeItem(life, content, itemId);
           setLife(checkDeath(r.state, content));
           return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
         }}

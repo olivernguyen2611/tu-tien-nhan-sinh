@@ -1,0 +1,26 @@
+[
+  {
+    "id": "cho_phien", "name": "Chợ phiên huyện",
+    "description": "Năm ngày một phiên. Bán đủ thứ từ cái bát tới bùa xin ở miếu, trả bằng bạc.",
+    "currency": "silver", "kinds": ["pill", "talisman", "misc"],
+    "bargainWin": "Bà bán hàng chép miệng: \"Thôi được, coi như mở hàng.\"",
+    "bargainLose": "Bà bán hàng nhìn ngươi từ đầu tới chân rồi nâng giá."
+  },
+  {
+    "id": "kim_thiem", "name": "Kim Thiềm Thương Minh",
+    "description": "Thương hội lớn nhất Thương Lan giới. Có quy củ, hàng thật, giá cũng thật đắt.",
+    "needsRoot": true, "currency": "spiritStones", "priceMul": 1.2,
+    "kinds": ["pill", "artifact", "array", "talisman", "material"],
+    "bargainWin": "Chưởng quầy cười híp mắt: \"Đạo hữu khéo nói, giảm cho một chút.\"",
+    "bargainLose": "Chưởng quầy vẫn cười, nhưng giá trên bảng vừa nhích lên."
+  },
+  {
+    "id": "vo_chu", "name": "Vô Chủ Phường",
+    "description": "Chợ đen dưới chân núi, không ai quản. Rẻ, nhưng mua phải hàng giả thì tự chịu.",
+    "needsRoot": true, "currency": "spiritStones", "priceMul": 0.7, "fakeChance": 0.15,
+    "kinds": ["pill", "artifact", "talisman", "material"],
+    "bargainWin": "Gã bán hàng trùm mũ gật đầu, không nói một lời.",
+    "bargainLose": "Gã bán hàng khạc nhổ một cái, giá tăng.",
+    "fakeText": "Về tới nơi mới thấy viên đan nhẹ bẫng. Có lẽ đã mua phải hàng giả."
+  }
+]

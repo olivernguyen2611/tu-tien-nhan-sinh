@@ -2,10 +2,12 @@
 // every other system; the UI panel only calls these. Every change is logged
 // with a [Dev] mark so a tested life is never mistaken for a real one.
 import type { Content } from '../core/content';
-import { APTITUDES, MORTAL_STATS } from '../core/schemas';
+import { APTITUDES, FightSchema, MORTAL_STATS } from '../core/schemas';
 import { advanceYear } from '../core/state';
 import type { GameState, LogLine } from '../core/types';
+import { startBattle } from './combat';
 import { STAT_LABELS } from './deltas';
+import { addItems } from './items';
 
 export type DevStat = (typeof MORTAL_STATS)[number] | (typeof APTITUDES)[number];
 export const DEV_STATS: DevStat[] = [...MORTAL_STATS, ...APTITUDES];
@@ -53,7 +55,7 @@ export function devTriggerEvent(state: GameState, content: Content, eventId: str
 export function devSkipYears(state: GameState, content: Content, years: number): GameState {
   let s = devLog(state, `bỏ qua ${years} năm`);
   for (let i = 0; i < years && s.alive; i++) {
-    s = advanceYear({ ...s, events: { ...s.events, pending: null } }, content);
+    s = advanceYear({ ...s, combat: null, events: { ...s.events, pending: null } }, content);
   }
   return { ...s, events: { ...s.events, pending: null } };
 }
@@ -61,4 +63,27 @@ export function devSkipYears(state: GameState, content: Content, years: number):
 /** Full health. */
 export function devHeal(state: GameState): GameState {
   return devLog({ ...state, stats: { ...state.stats, health: 100 } }, 'hồi đầy sức khỏe');
+}
+
+/** Start a test fight against a foe one realm below, the same realm, or one above. */
+export function devStartFight(state: GameState, content: Content, realm: 'below' | 'same' | 'above', intent: 'teach' | 'rob' | 'kill'): GameState {
+  if (!state.alive || state.combat) return state;
+  const fight = FightSchema.parse({
+    foe: { name: 'Hình nhân thử võ', realm, element: 'random', intent },
+    win: { text: 'Hình nhân đổ xuống, mạt cưa bay đầy sân.', effects: { 'stat.happiness': 1 } },
+    lose: { text: 'Bị hình nhân đánh bại, mất mặt vô cùng.', effects: { 'stat.happiness': -1 } },
+  });
+  return startBattle(devLog(state, `đánh thử (${realm}, ${intent})`), content, fight, 'Dev');
+}
+
+/** Put one item in the bag. */
+export function devGiveItem(state: GameState, content: Content, itemId: string): GameState {
+  const item = content.items.find((i) => i.id === itemId);
+  if (!state.alive || !item) return state;
+  return devLog(addItems(state, [itemId]), `nhận ${item.name}`);
+}
+
+/** Forget this year's and this life's item use (kháng thuốc, once-per-life). */
+export function devResetItemUse(state: GameState): GameState {
+  return devLog({ ...state, itemUse: { ...state.itemUse, lastAge: {}, spent: [] } }, 'xóa kháng thuốc');
 }

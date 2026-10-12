@@ -5,6 +5,11 @@ import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
 import { activeExtremes, extremeWarnings } from '../../systems/extremes';
 import { DevPanel } from '../components/DevPanel';
+import { BagPanel } from '../components/BagPanel';
+import { MarketPanel, type MarketAction } from '../components/MarketPanel';
+import { CombatPanel } from '../components/CombatPanel';
+import type { CombatAction } from '../../core/schemas';
+import type { Aftermath } from '../../systems/combat';
 import { FamilyPanel } from '../components/FamilyPanel';
 import { CultivatePanel } from '../components/CultivatePanel';
 import { SectPanel, type SectAction } from '../components/SectPanel';
@@ -37,7 +42,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onBreakthrough, onPractice, onJoinCareer, onLearn, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onUseItem, onMarket, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -48,6 +53,13 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   /** Returns the outcome to show on the card. */
   onChoose: (index: number) => PopupResult;
   onFamilyAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
+  /** Use one item from the bag. */
+  onUseItem: (itemId: string) => { text: string; tone: Tone; changes: string };
+  /** One round of the fight in progress, and the choice after winning (task 3.3). */
+  onCombat: (action: CombatAction, itemId?: string) => void;
+  onSettle: (choice: Aftermath) => void;
+  /** Buy, sell or bargain at a market (Phường thị). */
+  onMarket: (marketId: string, action: MarketAction) => { text: string; tone: Tone };
   /** Practise a craft from the "Tu luyện" sheet. */
   onPractice: (craftId: string) => string | null;
   /** Take up a mortal career from the "Tu luyện" sheet. */
@@ -75,6 +87,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const [profileOpen, setProfileOpen] = useState(false);
   const [result, setResult] = useState<PopupResult | null>(null);
   const [familyOpen, setFamilyOpen] = useState(false);
+  const [bagOpen, setBagOpen] = useState(false);
+  const [marketOpen, setMarketOpen] = useState(false);
   const [cultivateOpen, setCultivateOpen] = useState(false);
   const [sectOpen, setSectOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
@@ -90,7 +104,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
     logRef.current?.scrollTo({ top: logRef.current.scrollHeight, behavior: 'smooth' });
   }, [state.log.length]);
 
-  const dockActions: Record<string, () => void> = { bonds: () => setFamilyOpen(true), cultivate: () => setCultivateOpen(true), sect: () => setSectOpen(true) };
+  const dockActions: Record<string, () => void> = { bonds: () => setFamilyOpen(true), cultivate: () => setCultivateOpen(true), sect: () => setSectOpen(true), explore: () => setMarketOpen(true) };
   const dockItem = (t: { id: string; glyph: string; label: string }) => (
     <button class="dock-item" key={t.id} title={dockActions[t.id] ? t.label : 'Sắp có'} onClick={dockActions[t.id]}>
       <span class="glyph" aria-hidden="true">{t.glyph}</span>
@@ -112,7 +126,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         </div>
         <div class="top-actions">
           {dev && <button class="icon-btn dev-btn" aria-label="Developer mode" title="Developer mode" onClick={() => setDevOpen(true)}>Dev</button>}
-          <button class="icon-btn" aria-label="Túi đồ" title="Túi đồ">囊</button>
+          <button class="icon-btn" aria-label="Túi đồ" title="Túi đồ" onClick={() => setBagOpen(true)}>囊</button>
           <button class="icon-btn" aria-label="Sổ lưu" title="Sổ lưu" onClick={onSaves}>簿</button>
           <span class="desktop-only">
             <ThemeToggle pref={theme} onChange={onToggleTheme} />
@@ -148,12 +162,12 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         {DOCK_LEFT.map(dockItem)}
         {state.alive ? (
           <div class="age-wrap">
-            <button class="age-btn" onClick={onAdvance} aria-label="Qua một năm" disabled={!!state.events.pending || !!state.fate || !!result}>
+            <button class="age-btn" onClick={onAdvance} aria-label="Qua một năm" disabled={!!state.events.pending || !!state.fate || !!state.combat || !!result}>
               <span class="big">+1</span>
               <span class="small">năm</span>
             </button>
             <button class="ff-btn" onClick={onFastForward} aria-label="Tua nhanh tới khi có chuyện" title="Tua nhanh tới khi có chuyện"
-              disabled={!!state.events.pending || !!state.fate || !!result}>»</button>
+              disabled={!!state.events.pending || !!state.fate || !!state.combat || !!result}>»</button>
           </div>
         ) : (
           <button class="age-btn ended" onClick={onSummary} aria-label="Xem tổng kết đời người" disabled={!!result}>
@@ -188,9 +202,15 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
           onChoose={(id) => onFate({ choose: id })} onReroll={() => onFate({ reroll: true })} />
       )}
 
+      {state.combat && !result && <CombatPanel state={state} content={content} onAct={onCombat} onSettle={onSettle} />}
+
       {sectOpen && <SectPanel state={state} content={content} onAction={onSectAction} onClose={() => setSectOpen(false)} />}
 
       {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onClose={() => setCultivateOpen(false)} />}
+
+      {marketOpen && <MarketPanel state={state} content={content} onAction={onMarket} onClose={() => setMarketOpen(false)} />}
+
+      {bagOpen && <BagPanel state={state} content={content} onUse={onUseItem} onClose={() => setBagOpen(false)} />}
 
       {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onClose={() => setFamilyOpen(false)} />}
 

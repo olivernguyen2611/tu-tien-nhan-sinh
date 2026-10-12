@@ -4,7 +4,7 @@ import { BalanceSchema, EventFileSchema, NamesSchema, OriginFileSchema, TraitFil
 import { LifeTextsSchema } from '../src/core/schemas';
 import lifeTexts from '../content/life-texts.json';
 import extremes from '../content/stat-extremes.json';
-import { careers, cultivation, difficulties, fateTalents, items, sectLife, sects, techniques, tutorial } from './fixtures';
+import { careers, cultivation, difficulties, fateTalents, items, sectLife, sects, techniques, tutorial, combat } from './fixtures';
 import { StatExtremesFileSchema } from '../src/core/schemas';
 import { createLife } from '../src/core/state';
 import balance from '../content/config/balance.json';
@@ -38,6 +38,8 @@ const content: Content = {
   sectLife,
   fateTalents,
   items,
+  markets: [],
+  combat,
 };
 
 import { devAddKarma, devAddMoney, devAddStat, devHeal, devSkipYears, devTriggerEvent } from '../src/systems/dev';
@@ -66,5 +68,19 @@ describe('developer mode', () => {
     const s = devSkipYears(base, content, 10);
     expect(s.character.age).toBe(base.character.age + 10);
     expect(s.events.pending).toBeNull();
+  });
+});
+
+describe('dev items', () => {
+  it('gives an item and clears item cooldowns', async () => {
+    const { devGiveItem, devResetItemUse } = await import('../src/systems/dev');
+    const { createLife } = await import('../src/core/state');
+    const { loadContent } = await import('../src/core/content');
+    const c = loadContent();
+    const s = createLife({ seed: 'dev-items', originId: 'nong_dan' }, c);
+    const g = devGiveItem(s, c, 'kiem_gay');
+    expect(g.inventory.kiem_gay).toBe(1);
+    const used = { ...g, itemUse: { ...g.itemUse, lastAge: { x: 0 }, spent: ['x'] } };
+    expect(devResetItemUse(used).itemUse.spent).toEqual([]);
   });
 });
