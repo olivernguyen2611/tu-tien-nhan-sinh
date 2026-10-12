@@ -1,0 +1,79 @@
+[
+  {
+    "id": "pe_ban_dong_song", "category": "social", "title": "Bạn đồng song",
+    "text": "Thư quán đầu trấn có thêm một học trò mới, trạc tuổi {name}, ngồi ngay bàn bên.",
+    "conditions": { "age": { "min": 16, "max": 22 } },
+    "weight": 5, "cooldownYears": 6,
+    "choices": [
+      { "text": "Bắt chuyện, rủ cùng ôn bài", "result": { "text": "Hai đứa chép bài cho nhau, cãi nhau một câu chữ cả buổi chiều. Từ đó thành bạn.", "effects": { "meetNpc": { "role": "bạn đồng song", "affinity": 15, "peer": true }, "stat.intellect": 1, "stat.happiness": 3 } } },
+      { "text": "Mặc kệ, lo học", "result": { "text": "Ngươi học một mình. Chữ vào đầu, nhưng hơi buồn.", "effects": { "stat.intellect": 2, "stat.happiness": -1 } } }
+    ]
+  },
+  {
+    "id": "pe_dong_mon_cung_lua", "category": "sect", "title": "Đồng môn cùng lứa",
+    "text": "Lứa đệ tử mới có một người cùng tuổi {name}, cứ hay ngồi gần ngươi lúc tĩnh tọa.",
+    "conditions": { "age": { "min": 16, "max": 17 }, "sect": { "member": true } },
+    "weight": 5, "oncePerLife": true,
+    "choices": [
+      { "text": "Rủ cùng luyện công", "result": { "text": "Hai người đấu tập mỗi sáng. Đánh nhau nhiều tới mức thành bạn thân.", "effects": { "meetNpc": { "role": "đồng môn", "affinity": 15, "peer": true }, "stat.physique": 1, "stat.happiness": 3 } } },
+      { "text": "Giữ khoảng cách", "result": { "text": "Ngươi chuyển chỗ ngồi. Người kia nhìn theo, không nói gì.", "effects": { "stat.daoHeart": 1 } } }
+    ]
+  },
+  {
+    "id": "pe_hoi_hoa_dang", "category": "romance", "title": "Hội hoa đăng",
+    "text": "Đêm rằm tháng giêng, cả trấn thả đèn hoa sen trên sông. Chiếc đèn của {name} trôi vướng vào chiếc đèn của một người lạ.",
+    "themes": ["romance"],
+    "conditions": { "age": { "min": 18, "max": 40 }, "romance": { "lover": false, "partner": false } },
+    "weight": 5, "cooldownYears": 6,
+    "choices": [
+      { "text": "Gỡ hai chiếc đèn ra giúp người ta", "check": { "stat": "stat.charm", "difficulty": 40 }, "success": { "text": "Gỡ xong thì hai người đã đi dọc bờ sông nửa đêm. Hẹn rằm tháng sau.", "effects": { "meetNpc": { "role": "người gặp ở hội đèn", "affinity": 15 }, "romance": { "pursue": true }, "stat.happiness": 6 } }, "fail": { "text": "Tay vụng, cả hai chiếc đèn lật úp. Người ta bật cười rồi đi mất.", "effects": { "stat.happiness": -2, "stat.charm": 1 } } },
+      { "text": "Để chúng trôi chung", "result": { "text": "Hai chiếc đèn trôi xa dần. Người kia quay sang cười với ngươi một cái.", "effects": { "meetNpc": { "role": "người gặp ở hội đèn", "affinity": 8 }, "romance": { "pursue": true }, "stat.happiness": 4 } } },
+      { "text": "Về nhà ngủ", "result": { "text": "Ngủ ngon. Có lẽ đã bỏ lỡ gì đó.", "effects": { "stat.health": 2 } } }
+    ]
+  },
+  {
+    "id": "pe_cuu_nguoi_song", "category": "romance", "title": "Người rơi xuống sông",
+    "text": "Bến đò đông nghịt, có người trượt chân rơi tõm xuống nước. Không ai nhảy theo.",
+    "themes": ["romance", "justice"],
+    "conditions": { "age": { "min": 18, "max": 45 }, "romance": { "lover": false, "partner": false } },
+    "weight": 4, "cooldownYears": 8,
+    "choices": [
+      { "text": "Nhảy xuống cứu", "check": { "stat": "stat.physique", "difficulty": 45 }, "success": { "text": "Kéo được người lên bờ. Người ấy ho sặc sụa, rồi nắm chặt tay áo ngươi không buông.", "effects": { "meetNpc": { "role": "người được cứu", "affinity": 25, "favor": 1 }, "romance": { "pursue": true }, "karma": 2, "stat.happiness": 4 } }, "fail": { "text": "Nước xiết, cả hai suýt chìm. Người lái đò phải quăng sào kéo hai người lên.", "effects": { "stat.health": -8, "karma": 1 } } },
+      { "text": "Quăng sợi dây thừng", "check": { "stat": "stat.intellect", "difficulty": 40 }, "success": { "text": "Dây vừa tầm tay. Người được cứu cúi đầu cảm tạ, hỏi tên ngươi.", "effects": { "meetNpc": { "role": "người được cứu", "affinity": 15 }, "romance": { "pursue": true }, "stat.intellect": 1 } }, "fail": { "text": "Dây ngắn quá. May có người khác nhảy xuống.", "effects": { "stat.happiness": -3 } } },
+      { "text": "Đứng xem", "result": { "text": "Người ta tự bơi được vào bờ. Lúc đi ngang qua ngươi, ánh mắt lạnh tanh.", "effects": { "stat.daoHeart": -1, "karma": -1 } } }
+    ]
+  },
+  {
+    "id": "pe_doi_tho", "category": "romance", "title": "Đối thơ ở tửu lâu",
+    "text": "Tửu lâu treo một vế đối, ai đối được thì chủ quán mời rượu. Một người cùng lứa đã đứng trước bảng từ lâu.",
+    "themes": ["romance", "study"],
+    "conditions": { "age": { "min": 18, "max": 40 }, "romance": { "lover": false, "partner": false } },
+    "weight": 4, "cooldownYears": 8,
+    "choices": [
+      { "text": "Đối thử một vế", "check": { "stat": "stat.intellect", "difficulty": 50 }, "success": { "text": "Vế đối vừa xong, người kia vỗ tay. Hai người uống cạn ba vò, bàn văn tới khuya.", "effects": { "meetNpc": { "role": "tri âm ở tửu lâu", "affinity": 18 }, "romance": { "pursue": true }, "stat.intellect": 1, "stat.happiness": 4 } }, "fail": { "text": "Vế đối của ngươi khiến cả quán im lặng. Người kia lịch sự quay đi.", "effects": { "stat.charm": -1, "stat.intellect": 1 } } },
+      { "text": "Đứng xem người ta đối", "result": { "text": "Người kia đối được, quay sang mời ngươi một chén. Rượu ngon, người cũng dễ mến.", "effects": { "meetNpc": { "role": "người quen ở tửu lâu", "affinity": 10 }, "romance": { "pursue": true }, "stat.happiness": 3 } } }
+    ]
+  },
+  {
+    "id": "pe_dong_mon_tinh_y", "category": "sect", "title": "Cùng làm nhiệm vụ",
+    "text": "Chấp sự ghép {name} với một đồng môn cùng lứa đi hái thuốc ở vách núi phía tây.",
+    "themes": ["romance"],
+    "conditions": { "age": { "min": 18 }, "sect": { "member": true }, "romance": { "lover": false, "partner": false } },
+    "weight": 4, "cooldownYears": 8,
+    "choices": [
+      { "text": "Đi cùng, giúp đỡ nhau", "check": { "stat": "stat.charm", "difficulty": 40 }, "success": { "text": "Ba ngày trên vách núi, chia nhau cái bánh, nghe nhau kể chuyện nhà. Về tới sơn môn, cả hai cứ ngập ngừng không muốn chia tay.", "effects": { "meetNpc": { "role": "đồng môn", "affinity": 20 }, "romance": { "pursue": true }, "sectContribution": 5, "stat.happiness": 5 } }, "fail": { "text": "Hai người cãi nhau vì đường đi, mỗi người hái một nửa vách rồi về riêng.", "effects": { "sectContribution": 3, "stat.happiness": -2 } } },
+      { "text": "Mỗi người một việc cho nhanh", "result": { "text": "Xong sớm, về sớm. Người kia có vẻ hơi thất vọng.", "effects": { "sectContribution": 5, "stat.daoHeart": 1 } } }
+    ]
+  },
+  {
+    "id": "pe_ban_thoi_tho_au", "category": "romance", "title": "Bạn thuở nhỏ",
+    "text": "Ở chợ, có người gọi đúng tên tục của {name}. Quay lại, là đứa bạn hồi nhỏ cùng trèo cây hái trộm ổi.",
+    "themes": ["romance"],
+    "conditions": { "age": { "min": 20, "max": 35 }, "romance": { "lover": false, "partner": false } },
+    "weight": 3, "oncePerLife": true,
+    "choices": [
+      { "text": "Mời đi ăn một bữa", "result": { "text": "Kể chuyện cũ tới lúc chủ quán dọn hàng. Người ấy giờ khác xưa nhiều, nhưng cười thì vẫn y như cũ.", "effects": { "meetNpc": { "role": "bạn thuở nhỏ", "affinity": 22 }, "romance": { "pursue": true }, "stat.happiness": 6 } } },
+      { "text": "Chào hỏi vài câu rồi đi", "result": { "text": "Hẹn hôm nào gặp lại. Cả hai đều biết sẽ không có hôm nào.", "effects": { "stat.happiness": -1, "stat.daoHeart": 1 } } }
+    ]
+  }
+]

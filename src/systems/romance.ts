@@ -183,7 +183,10 @@ function partnerViews(state: GameState, content: Content, n: Npc, doneThisYear: 
   if (n.affinity < b.reconcileBelow) {
     views.push({ action: 'reconcile', label: 'Làm lành', cost: null, blocked: doneThisYear('reconcile') ? 'Năm nay đã thử' : null });
   }
-  views.push({ action: 'child', label: sameGender(state, n) ? 'Nhận con nuôi' : 'Sinh con', cost: null, blocked: doneThisYear('child') ? 'Năm nay đã thử' : birthBlocked(state, content, n) });
+  views.push({
+    action: 'child', label: sameGender(state, n) ? 'Nhận con nuôi' : `Sinh con · ${Math.round(birthChance(state, content, n) * 100)}%`,
+    cost: null, blocked: doneThisYear('child') ? 'Năm nay đã thử' : birthBlocked(state, content, n),
+  });
   views.push({ action: 'divorce', label: mortal ? 'Hòa ly' : 'Giải trừ đạo lữ', cost: null, blocked: null });
   return views;
 }
@@ -244,15 +247,17 @@ export function romanceAction(state: GameState, content: Content, npcId: string,
     const adopt = sameGender(s, n);
     if (adopt || rng.chance(birthChance(s, content, n))) {
       const child = makeChild(s, content, n, rng, adopt);
-      s = { ...s, family: [...s.family, child], stats: { ...s.stats, happiness: clamp(s.stats.happiness + b.childHappiness) } };
+      s = { ...s, family: [...s.family, child], stats: { ...s.stats, happiness: clamp(s.stats.happiness + b.childHappiness) }, romance: { ...s.romance, birthTries: 0 } };
       lines.push({ text: fill(adopt ? t.adopt : t.child).replace(/\{child\}/g, child.name), tone: 'good' });
     } else {
+      // Playtest 2: each miss makes the next try likelier (thầy thuốc, thuốc bổ, trời thương).
+      s = { ...s, romance: { ...s.romance, birthTries: (s.romance.birthTries ?? 0) + 1 } };
       lines.push({ text: fill(t.noChild), tone: 'normal' });
     }
   } else if (action === 'company') {
     s = changeNpc(s, content, npcId, { affinity: rng.int(b.companyAffinity[0], b.companyAffinity[1]) });
     s = { ...s, stats: { ...s.stats, happiness: clamp(s.stats.happiness + b.companyHappiness) } };
-    lines.push({ text: fill(t.company), tone: 'good' });
+    lines.push({ text: fill(rng.pick(t.company)), tone: 'good' });
   } else if (action === 'dualCult') {
     const pct = Math.round(b.dualCultProgress * (0.5 + n.affinity / 100));
     s = applyRomance(addProgress(s, pct), content, npcId, { partnerProgress: pct });
@@ -321,11 +326,11 @@ function birthBlocked(state: GameState, content: Content, partner: Npc): string 
   return null;
 }
 
-/** Chance of a child this year: cultivators conceive less often. */
+/** Chance of a child this year: cultivators conceive less often; each failed try adds a little (playtest 2). */
 export function birthChance(state: GameState, content: Content, partner: Npc): number {
   const b = content.balance.romance;
   const cultivators = Number(state.cult.realm !== 'pham_nhan') + Number(partner.realm !== 'pham_nhan');
-  return b.birthChance * b.cultivatorFertility ** cultivators;
+  return Math.min(b.birthMax, b.birthChance * b.cultivatorFertility ** cultivators + (state.romance.birthTries ?? 0) * b.birthPityStep);
 }
 
 /**
@@ -420,7 +425,10 @@ function marriageYear(state: GameState, content: Content, lines: LogLine[]): Gam
   let s = state;
   if (!CARE.some((a) => state.romance.lastActions[a] === last)) {
     s = changeNpc(s, content, id, { affinity: b.neglectAffinity });
-    if ((npcById(s, id)?.affinity ?? 0) < b.warmAt) lines.push({ text: fill(t.neglect), tone: 'normal' });
+    // Playtest 2: the cooling is every year, the line only now and then, in different words.
+    const rng = Rng.fromState(s.rng);
+    if ((npcById(s, id)?.affinity ?? 0) < b.warmAt && rng.chance(b.neglectLogChance)) lines.push({ text: fill(rng.pick(t.neglect)), tone: 'normal' });
+    s = { ...s, rng: rng.getState() };
   }
   const affinity = npcById(s, id)?.affinity ?? 0;
   const mood = affinity >= b.warmAt ? b.warmHappiness : affinity < b.coldAt ? b.coldHappiness : 0;

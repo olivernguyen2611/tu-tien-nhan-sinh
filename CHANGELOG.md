@@ -2,6 +2,14 @@
 
 ## [Chưa phát hành]
 
+### Chơi thử 2 — Tình duyên, con cái, bớt nhật ký lặp (2026-10-12)
+- Người gặp trong sự kiện tình duyên giờ cùng lứa với nhân vật (±3 tuổi, `balance.npcs.peerAgeOffset`; `meetNpc.peer`), không còn lớn hơn 10–15 tuổi.
+- 7 sự kiện gặp người cùng lứa (`events/peers.json`): bạn đồng song, đồng môn cùng lứa (16–17 tuổi, chỉ là bạn); hội hoa đăng, cứu người rơi xuống sông, đối thơ ở tửu lâu, cùng làm nhiệm vụ tông môn, gặp lại bạn thuở nhỏ (từ 18 tuổi).
+- "Bà mối tới nhà": xem mặt thành thì có người đính ước thật (trước đây chỉ đặt cờ `da_dinh_than`).
+- Sinh con: nút hiện tỉ lệ năm nay; mỗi lần không thành, lần sau dễ hơn 10% (tối đa 90%); tu sĩ ít bị giảm khả năng sinh nở hơn (`cultivatorFertility` 0.4 → 0.6).
+- Nhật ký bớt lặp: bổng lộc tông môn chỉ ghi năm đầu mỗi cấp rồi mười năm một lần; câu "bỏ bê bạn đời" không phải năm nào cũng hiện và có 5 biến thể; "Bầu bạn" có 6 biến thể.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Chơi thử 2 — Phường thị theo vùng và hội đấu giá (2026-10-12)
 - Phường thị gắn với vùng (`regions` trong `markets.json`): mỗi đại vực có chợ riêng. Thanh Vân châu: Chợ phiên, Vô Chủ Phường, Hội đấu giá Kim Thiềm; Vạn Thú sơn mạch: Thú Thị Vạn Thú; Đông Hải: Hải thị Thận Lâu, Hội đấu giá Thận Lâu; Bắc Minh: Băng Phách Phường; Trung Châu: Vạn Bảo Phường, Thiên Bảo Lâu. Kim Thiềm Thương Minh có ở mọi vùng.
 - Hàng bày đổi theo năm (`stock`), có đặc sản riêng (`items`) và bán bí tịch công pháp (`techniques`).
