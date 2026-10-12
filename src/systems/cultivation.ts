@@ -487,7 +487,8 @@ export function majorSuccess(before: GameState, s0: GameState, content: Content,
   if (form) {
     const line = texts.soulForm.replaceAll('{form}', form.name).replaceAll('{text}', form.text);
     log = pushLine(log, { text: line, tone: 'rare' });
-    s = { ...s, cult: { ...s.cult, soulForm: form.id } };
+    // Stat and lifespan hooks land once, now (as for đan văn).
+    s = applyGainHooks({ ...s, cult: { ...s.cult, soulForm: form.id } }, form.effects);
     text = `${text} ${line}`;
   }
   // Nghịch Thiên Cải Mệnh: choose a fate talent before the next year (task 2.7).
