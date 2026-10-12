@@ -2,6 +2,12 @@
 
 ## [Chưa phát hành]
 
+### Góp ý chơi thử 2 — Kỳ ngộ Tam hoa tụ đỉnh và Ngũ khí triều nguyên (2026-10-12)
+- Bước vào Hóa cảnh thì **cảm ứng Tam hoa**: biết con đường tụ tinh, khí, thần, nhưng "trăm người Hóa cảnh may ra một người".
+- 3 kỳ ngộ hiếm cho Tam hoa tụ đỉnh, mỗi cái thử một tư chất khó: thác băng ngàn năm (Đạo tâm), tiếng mõ nửa đêm (Ngộ tính), sét đánh đỉnh núi (Căn cốt).
+- Tụ Tam hoa xong thì **ngũ tạng cộng minh**. 2 đường tới Ngũ khí triều nguyên: gom đủ 5 khối linh tinh ngũ hành, hoặc gặp đêm ngũ tinh liên châu (cực hiếm). Thành công thì hóa Ngũ linh căn, bước vào Luyện Khí như trước.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Góp ý chơi thử 1 — Luyện võ đột phá theo xác suất (2026-10-12)
 - Bỏ kiểu đếm ngược số năm: năm nào luyện võ cũng có cơ hội đột phá. Tỉ lệ theo Căn cốt và Ngộ tính (mọi bậc đều tính cả hai), tăng dần theo số năm đã luyện tới số năm thường cần của bậc đó (`balance.martial.yearMul` = 0.3 phần tỉ lệ mỗi năm).
 - Bỏ "thất bại lùi năm"; luyện quá lâu mà chưa thành thì nhật ký nhắc xem lại gân cốt, ngộ tính.
