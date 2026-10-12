@@ -1,0 +1,314 @@
+[
+  {
+    "id": "dau_gia_ket_kim",
+    "category": "market",
+    "title": "Đấu giá: đan dược cho người sắp kết đan",
+    "text": "Kim Thiềm Thương Minh mở phiên đấu giá nhỏ, mấy món cuối đều hợp với người đang ở Trúc Cơ. Chưởng quầy cười: \"Tiền ở đâu, hàng ở đó.\"",
+    "tags": [],
+    "themes": ["market"],
+    "conditions": { "realm": { "min": "truc_co", "max": "truc_co" }, "stage": { "min": 2 } },
+    "weight": 3,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Đấu Kết Kim Đan thượng phẩm (900 linh thạch)",
+        "requires": { "stats": [{ "stat": "spiritStones", "gte": 900 }] },
+        "result": { "text": "Búa gõ ba tiếng. Viên đan chín vân về tay ngươi, túi trữ vật nhẹ hẳn.", "effects": { "spiritStones": -900, "addItems": ["ket_kim_dan_thuong_pham"], "stat.happiness": 8 } }
+      },
+      {
+        "text": "Đấu Dịch Cân Tẩy Cốt Đan (800 linh thạch)",
+        "requires": { "stats": [{ "stat": "spiritStones", "gte": 800 }] },
+        "result": { "text": "Có người nâng giá đến lần thứ chín mới chịu thôi. Ngươi mang đan về như mang một quả bom.", "effects": { "spiritStones": -800, "addItems": ["dich_can_tay_cot_dan"], "stat.happiness": 5 } }
+      },
+      {
+        "text": "Ngồi xem cho biết giá",
+        "result": { "text": "Ngươi ngồi hết buổi, học được cách giữ mặt không đổi sắc khi nghe giá.", "effects": { "stat.intellect": 1, "stat.daoHeart": 1 } }
+      }
+    ]
+  },
+  {
+    "id": "dau_gia_nguyen_anh",
+    "category": "market",
+    "title": "Đấu giá: món hiếm cho đại tu sĩ",
+    "text": "Phiên đấu giá lớn nhất Thương Lan giới. Phòng VIP kín mít, người ra giá không lộ mặt. Thứ nào trên đài cũng đủ mua cả một thành nhỏ.",
+    "tags": [],
+    "themes": ["market"],
+    "conditions": { "realm": { "min": "kim_dan" } },
+    "weight": 2,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Đấu Ngưng Anh Đan (1.500 linh thạch)",
+        "requires": { "stats": [{ "stat": "spiritStones", "gte": 1500 }] },
+        "result": { "text": "Người ở phòng bên rút lui lúc giá chạm một nghìn rưỡi. Ngươi nghe rõ tiếng thở dài của họ.", "effects": { "spiritStones": -1500, "addItems": ["ngung_anh_dan"], "stat.happiness": 8 } }
+      },
+      {
+        "text": "Đấu Cửu Chuyển Hoàn Hồn Đan (2.000 linh thạch)",
+        "requires": { "stats": [{ "stat": "spiritStones", "gte": 2000 }] },
+        "result": { "text": "Viên đan bảo mạng về tay. Ngươi ngủ ngon hơn hẳn từ đêm đó.", "effects": { "spiritStones": -2000, "addItems": ["hoan_hon_dan"], "stat.happiness": 6, "stat.daoHeart": 1 } }
+      },
+      {
+        "text": "Đấu Tụ Linh Đại Trận Bàn (2.500 linh thạch)",
+        "requires": { "stats": [{ "stat": "spiritStones", "gte": 2500 }] },
+        "result": { "text": "Trận bàn đặt xuống đất, cả căn nhà đổi mùi hương trầm.", "effects": { "spiritStones": -2500, "addItems": ["tu_linh_dai_tran_ban"], "stat.happiness": 6 } }
+      },
+      {
+        "text": "Đấu Bát Quái Kính (1.000 linh thạch)",
+        "requires": { "stats": [{ "stat": "spiritStones", "gte": 1000 }] },
+        "result": { "text": "Gương đồng soi ra một bóng ngươi hơi khác bình thường. Có lẽ là bóng của thiên kiếp sắp tới.", "effects": { "spiritStones": -1000, "addItems": ["bat_quai_kinh"], "stat.happiness": 5 } }
+      },
+      {
+        "text": "Đấu Tuế Nguyệt Đan (1.200 linh thạch)",
+        "requires": { "stats": [{ "stat": "spiritStones", "gte": 1200 }] },
+        "result": { "text": "Một lão quái tóc bạc trong phòng bên đổ mồ hôi lạnh khi thấy ngươi giơ thẻ.", "effects": { "spiritStones": -1200, "addItems": ["tue_nguyet_dan"], "stat.happiness": 6 } }
+      },
+      {
+        "text": "Không đủ tiền, ngồi xem",
+        "result": { "text": "Ngươi nhìn từng món đi qua tay người khác. Lần sau mang nhiều linh thạch hơn.", "effects": { "stat.intellect": 1, "stat.happiness": -2 } }
+      }
+    ]
+  },
+  {
+    "id": "dau_gia_hoa_than",
+    "category": "market",
+    "title": "Hóa Thần Đan hiện thế",
+    "text": "Cả sảnh đấu giá im phăng phắc khi người dẫn chương trình mở hộp ngọc. Một viên đan, chỉ một. Không ai dám ho.",
+    "tags": ["rare"],
+    "themes": ["market"],
+    "conditions": { "realm": { "min": "nguyen_anh" } },
+    "weight": 0.4,
+    "oncePerLife": true,
+    "luckAffected": true,
+    "choices": [
+      {
+        "text": "Ra giá tới cùng (6.000 linh thạch)",
+        "requires": { "stats": [{ "stat": "spiritStones", "gte": 6000 }] },
+        "result": { "text": "Búa gõ xuống. Cả sảnh quay sang nhìn ngươi, mắt ai cũng có thứ gì đó không phải thiện ý.", "effects": { "spiritStones": -6000, "addItems": ["hoa_than_dan"], "setFlags": ["hoai_bich"], "stat.happiness": 10, "followUp": { "event": "lo_bi_mat", "afterYears": [3, 8] } } }
+      },
+      {
+        "text": "Đợi người thắng ra khỏi sảnh, chặn đường",
+        "result": { "text": "Hắn chưa kịp bước qua bậc cửa thì ngươi đã đứng đó.", "effects": {},
+          "fight": {
+            "foe": { "name": "Đại tu sĩ mua đan", "realm": "same", "powerMul": 1.4, "intent": "kill" },
+            "win": { "text": "Hộp ngọc rơi vào tay ngươi, còn ấm. Ngươi đi trong đêm, không ngoái lại.", "effects": { "addItems": ["hoa_than_dan"], "karma": -25, "heartDemon": 8, "setFlags": ["hoai_bich"], "stat.daoHeart": -5, "followUp": { "event": "lo_bi_mat", "afterYears": [2, 5] } } },
+            "lose": { "text": "Hắn không giết, chỉ nhìn ngươi như nhìn con kiến, rồi bước qua.", "effects": { "stat.health": -40, "stat.happiness": -10 } }
+          } }
+      },
+      {
+        "text": "Không đủ sức, đứng nhìn",
+        "result": { "text": "Ngươi về lúc trời tối, nhớ mãi ánh sáng của viên đan trong hộp ngọc.", "effects": { "stat.happiness": -4, "stat.daoHeart": 2 } }
+      }
+    ]
+  },
+  {
+    "id": "dai_yeu_ngu_dong",
+    "category": "beast",
+    "title": "Đại yêu ngủ đông",
+    "text": "Dưới đáy hang băng nghìn năm, một con đại yêu nằm cuộn tròn, ngủ say tới mức rêu mọc lên vảy. Nội đan trong bụng nó sáng như một mặt trăng nhỏ.",
+    "tags": ["violence"],
+    "themes": ["beast"],
+    "conditions": { "realm": { "min": "nguyen_anh" } },
+    "weight": 0.8,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Đánh thức nó và giao chiến",
+        "result": { "text": "Đại yêu mở một mắt. Chỉ một mắt thôi cũng đủ làm cả hang run.", "effects": {},
+          "fight": {
+            "foe": { "name": "Đại yêu ngủ đông", "realm": "same", "powerMul": 1.4, "lineage": "yeu", "intent": "kill" },
+            "win": { "text": "Đại yêu gục, nội đan lăn ra, nặng bằng cả một thanh kiếm.", "effects": { "addItems": ["noi_dan_4"], "reputation": { "yeu": -30 }, "karma": -8, "stat.physique": 3 } },
+            "lose": { "text": "Một cú quật đuôi, ngươi văng ra khỏi hang, xương sườn gãy mấy cái.", "effects": { "stat.health": -40 } }
+          } }
+      },
+      {
+        "text": "Khoét nội đan khi nó đang ngủ",
+        "check": { "stat": "stat.luck", "difficulty": 70 },
+        "success": { "text": "Ngươi nín thở rút nội đan ra từng chút. Đại yêu thở dài trong mơ nhưng không tỉnh.", "effects": { "addItems": ["noi_dan_4"], "karma": -10, "stat.intellect": 2 } },
+        "fail": { "text": "Đại yêu tỉnh dậy đúng lúc tay ngươi chạm nội đan. Ngươi chạy bán sống bán chết.", "effects": { "stat.health": -30 } }
+      },
+      {
+        "text": "Lặng lẽ rời hang",
+        "result": { "text": "Sau lưng ngươi, hơi thở của đại yêu đều đặn như thủy triều.", "effects": { "stat.daoHeart": 2, "reputation": { "yeu": 5 } } }
+      }
+    ]
+  },
+  {
+    "id": "bang_phong_coc",
+    "category": "fortune",
+    "title": "Băng Phong Cốc",
+    "text": "Giữa mùa hè, một thung lũng nhỏ ở rìa Lan Sơn đóng băng cả năm. Đáy thung có thứ tỏa khói trắng, lạnh hơn cả băng.",
+    "tags": [],
+    "themes": ["fortune", "bi_canh"],
+    "conditions": { "realm": { "min": "truc_co" } },
+    "weight": 1.2,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Xuống tận đáy lấy Huyền Băng Tủy",
+        "check": { "stat": "stat.physique", "difficulty": 60 },
+        "success": { "text": "Lạnh đến mức xương kêu răng rắc, nhưng ngươi đào được một khối tủy băng trong như pha lê.", "effects": { "addItems": ["huyen_bang_tuy"], "stat.health": -8, "stat.physique": 1 } },
+        "fail": { "text": "Băng nứt dưới chân, ngươi rơi xuống nước lạnh. Mãi mới bò lên được.", "effects": { "stat.health": -25 } }
+      },
+      {
+        "text": "Ngồi thiền bên miệng thung",
+        "result": { "text": "Khí lạnh làm tâm tĩnh lại. Ngươi ngồi nửa ngày, tạp niệm rụng như tuyết.", "effects": { "stat.daoHeart": 3, "heartDemon": -2 } }
+      },
+      {
+        "text": "Quay đi, không đáng liều",
+        "result": { "text": "Ngươi quay lưng. Hơi lạnh bám theo áo ngươi cả một đoạn đường.", "effects": { "stat.happiness": -1 } }
+      }
+    ]
+  },
+  {
+    "id": "hon_don_bi_canh",
+    "category": "fortune",
+    "title": "Hỗn Độn bí cảnh",
+    "text": "Giữa hư không, một khoảng trời mở ra: không trên không dưới, không sáng không tối. Mọi hướng đều như nhau. Có thứ gì đó lơ lửng ở giữa.",
+    "tags": ["rare"],
+    "themes": ["fortune", "bi_canh"],
+    "conditions": { "realm": { "min": "nguyen_anh" } },
+    "weight": 0.6,
+    "oncePerLife": true,
+    "luckAffected": true,
+    "choices": [
+      {
+        "text": "Với tay nhặt hòn đá xám",
+        "check": { "stat": "stat.daoHeart", "difficulty": 70 },
+        "success": { "text": "Hòn đá nằm gọn trong lòng bàn tay, không nặng không nhẹ. Từ đây ngươi nghe thấy tiếng thế giới khác.", "effects": { "addItems": ["hon_don_thach"], "stat.daoHeart": 3 } },
+        "fail": { "text": "Tâm ngươi lạc trong hỗn độn một lúc. Khi tỉnh, đã mất mấy năm tuổi thọ.", "effects": { "lifespanYears": -3, "stat.health": -15 } }
+      },
+      {
+        "text": "Ngưng thần, hút lấy viên châu sao",
+        "check": { "stat": "stat.comprehension", "difficulty": 75 },
+        "success": { "text": "Viên châu nhỏ rơi vào lòng bàn tay, mang theo tiếng sao xoay.", "effects": { "addItems": ["tinh_hon_chau"], "stat.comprehension": 2 } },
+        "fail": { "text": "Thần thức quá yếu, viên châu rời xa như cá trượt tay.", "effects": { "stat.happiness": -3 } }
+      },
+      {
+        "text": "Không dám chạm, lùi ra",
+        "result": { "text": "Hỗn độn khép lại sau lưng. Ngươi nhìn lại, chỉ thấy bầu trời bình thường.", "effects": { "stat.daoHeart": 2, "stat.happiness": -2 } }
+      }
+    ]
+  },
+  {
+    "id": "danh_son_ky_ngo",
+    "category": "fortune",
+    "title": "Cổ thụ trên đỉnh danh sơn",
+    "text": "Trên đỉnh một ngọn núi không tên có cây cổ thụ nghìn tuổi, lá mọc chi chít chữ như chữ viết. Dưới gốc cây có quả đỏ óng ánh, một con yêu thú đang nằm canh.",
+    "tags": ["rare"],
+    "themes": ["fortune", "herb"],
+    "conditions": { "realm": { "min": "truc_co" } },
+    "weight": 0.8,
+    "cooldownYears": 20,
+    "luckAffected": true,
+    "choices": [
+      {
+        "text": "Hái một chiếc lá",
+        "result": { "text": "Ngươi cẩn thận hái một chiếc lá. Con yêu thú chỉ mở mắt nhìn, không cản.", "effects": { "addItems": ["ngo_dao_co_thu_la"], "stat.comprehension": 1 } }
+      },
+      {
+        "text": "Đánh con yêu thú, lấy quả đỏ",
+        "result": { "text": "Yêu thú vùng dậy, mắt đỏ rực.", "effects": {},
+          "fight": {
+            "foe": { "name": "Yêu thú canh quả", "realm": "same", "powerMul": 1.3, "lineage": "yeu", "intent": "kill" },
+            "win": { "text": "Yêu thú gục. Quả đỏ ngọt tới mức ngươi quên cả vết thương.", "effects": { "addItems": ["chu_qua_van_nam"], "reputation": { "yeu": -15 }, "karma": -4, "stat.physique": 1 } },
+            "lose": { "text": "Ngươi bị yêu thú quật xuống triền núi.", "effects": { "stat.health": -30 } }
+          } }
+      },
+      {
+        "text": "Ngồi dưới gốc cây cả đêm",
+        "result": { "text": "Gió thổi lá xào xạc như người đọc kinh. Ngươi nghe không hết, nhưng cũng nghe được nhiều.", "effects": { "stat.comprehension": 1, "stat.daoHeart": 2 } }
+      }
+    ]
+  },
+  {
+    "id": "hon_phien_ma_dao",
+    "category": "demonic",
+    "title": "Cờ đen trong miếu hoang",
+    "text": "Trong ngôi miếu đổ nát, trên bàn thờ không có tượng thần nào, chỉ có một lá cờ đen thêu hình khuôn mặt người. Lá cờ khẽ phất dù không có gió.",
+    "tags": ["dark"],
+    "themes": ["demonic"],
+    "conditions": { "realm": { "min": "kim_dan" } },
+    "weight": 1,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận lá cờ",
+        "result": { "text": "Lá cờ nằm yên trong tay ngươi, nhưng đêm đó có tiếng thì thầm trong túi trữ vật.", "effects": { "addItems": ["hon_phien"], "karma": -15, "heartDemon": 5, "stat.daoHeart": -3 } }
+      },
+      {
+        "text": "Đốt miếu, tiêu hủy lá cờ",
+        "result": { "text": "Lửa cháy xanh lè, khuôn mặt trên cờ rên một tiếng dài rồi tan. Ngươi đi, người nhẹ hẳn.", "effects": { "karma": 8, "stat.daoHeart": 3, "stat.happiness": 2 } }
+      },
+      {
+        "text": "Đóng cửa miếu, đi tiếp",
+        "result": { "text": "Ngươi đóng cửa miếu lại, khóa bằng một đạo phù. Tiếng thì thầm tắt sau lưng.", "effects": { "stat.daoHeart": 1 } }
+      }
+    ]
+  },
+  {
+    "id": "kim_cuong_chay_vo_uu",
+    "category": "sect",
+    "title": "Chày đồng của phương trượng",
+    "text": "Phương trượng Vô Ưu Tự gọi riêng {name} vào thiền phòng, đặt trước mặt một cây chày đồng cũ. \"Pháp khí này đã đợi một người chịu im lặng lâu hơn nó.\"",
+    "tags": [],
+    "themes": ["justice"],
+    "conditions": { "sect": { "member": true, "id": "vo_uu_tu" }, "realm": { "min": "kim_dan" }, "stats": [{ "stat": "stat.daoHeart", "gte": 70 }] },
+    "weight": 2,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Chắp tay nhận lấy",
+        "result": { "text": "Chày đồng nặng như núi. Ngươi nắm vào, lòng bỗng yên như mặt hồ lặng.", "effects": { "addItems": ["kim_cuong_chay"], "karma": 5, "stat.daoHeart": 3 } }
+      },
+      {
+        "text": "Từ chối, xin thêm thời gian tu hành",
+        "result": { "text": "Phương trượng mỉm cười: \"Khiêm nhường là cái tâm. Nhưng chày vẫn đợi.\"", "effects": { "karma": 3, "stat.daoHeart": 2 } }
+      }
+    ]
+  },
+  {
+    "id": "thien_co_ban_toan_tinh",
+    "category": "fortune",
+    "title": "Toán Tinh Các tặng bàn",
+    "text": "Một vị tinh sư của Toán Tinh Các tìm tới tận cửa, chắp tay: \"Các chủ đoán rằng đạo hữu sắp gặp một chuyện lớn. Tặng đạo hữu một món vật nhỏ, kết duyên.\"",
+    "tags": [],
+    "themes": ["fortune"],
+    "conditions": { "realm": { "min": "kim_dan" }, "stats": [{ "stat": "stat.luck", "gte": 60 }] },
+    "weight": 0.8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận món quà",
+        "result": { "text": "Mâm đồng nằm yên trong tay, kim chỉ về một hướng nào đó rất xa.", "effects": { "addItems": ["thien_co_ban"], "stat.luck": 2, "stat.happiness": 3 } }
+      },
+      {
+        "text": "Hỏi trước cái giá",
+        "check": { "stat": "stat.intellect", "difficulty": 60 },
+        "success": { "text": "Tinh sư gãi đầu, thú thật: \"Các chủ muốn biết kết cục chuyện lớn kia.\" Ngươi mỉm cười, hứa sẽ kể.", "effects": { "addItems": ["thien_co_ban"], "stat.intellect": 2, "karma": 2 } },
+        "fail": { "text": "Tinh sư chỉ cười bí hiểm. Ngươi không hỏi thêm, và cũng không nhận quà.", "effects": { "stat.intellect": 1 } }
+      }
+    ]
+  },
+  {
+    "id": "phuong_hoang_nip",
+    "category": "fortune",
+    "title": "Phượng hoàng bay qua",
+    "text": "Giữa ban ngày, một vệt lửa vàng xẹt ngang bầu trời. Một giọt huyết rơi xuống, vạch một đường sáng, ngay trước mặt {name}.",
+    "tags": ["rare"],
+    "themes": ["fortune", "ky_vat"],
+    "conditions": { "realm": { "min": "truc_co" }, "stats": [{ "stat": "stat.luck", "gte": 85 }] },
+    "weight": 0.3,
+    "oncePerLife": true,
+    "luckAffected": true,
+    "choices": [
+      {
+        "text": "Đưa tay đón lấy",
+        "result": { "text": "Giọt huyết đỏ vàng đọng lại trong lòng bàn tay, nóng như than hồng mà không bỏng.", "effects": { "addItems": ["phuong_hoang_tinh_huyet"], "stat.luck": 1, "stat.happiness": 10 } }
+      },
+      {
+        "text": "Chắp tay tạ ơn rồi để yên",
+        "result": { "text": "Giọt huyết tan thành làn khói vàng, bay theo hướng phượng hoàng đi. Lòng ngươi nhẹ như được tha.", "effects": { "karma": 6, "stat.daoHeart": 4 } }
+      }
+    ]
+  }
+]

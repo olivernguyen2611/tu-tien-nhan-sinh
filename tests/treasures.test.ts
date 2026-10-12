@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { loadContent } from '../src/core/content';
 import { createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
+import { consumeItem } from '../src/systems/items';
+import { tribulationPreview } from '../src/systems/tribulation';
 import { devGiveAllItems, devGiveAllScrolls, devLearnTechnique } from '../src/systems/dev';
 
 const content = loadContent();
@@ -52,5 +54,37 @@ describe('treasure catalog gaps are closed', () => {
     const uses = (flag: string) => content.events.some((e) => (e.conditions.flagsAll ?? []).includes(flag));
     for (const f of ['hoai_bich', 'trung_doc', 'co_tan_quyen', 'tan_quyen_manh_moi']) expect(uses(f)).toBe(true);
     expect(content.events.some((e) => (e.conditions.itemsAll ?? []).includes('phi_kiem_co_chu'))).toBe(true);
+  });
+});
+
+describe('high-tier items and boosted once-per-life items', () => {
+  const rich: GameState = {
+    ...adult,
+    cult: { ...adult.cult, realm: 'kim_dan', stage: 0, progress: 0, lifespan: 500, heartDemon: 12 },
+    stats: { ...adult.stats, health: 20 },
+  };
+  const use = (s: GameState, id: string) => consumeItem({ ...s, inventory: { ...s.inventory, [id]: 1 } }, content, id).state;
+
+  it('once-per-life items give the boosted amounts', () => {
+    expect(use(rich, 'dien_tho_dan').cult.lifespan).toBe(520);
+    expect(use(rich, 'linh_chi_ngan_nam').cult.lifespan).toBe(515);
+    expect(use(rich, 'khai_tri_dan').stats.intellect).toBe(Math.min(100, rich.stats.intellect + 8));
+    expect(use(rich, 'ngo_dao_co_thu_la').aptitudes.comprehension).toBe(Math.min(100, rich.aptitudes.comprehension + 10));
+  });
+
+  it('new use hooks: heart demon, lifespan share, tribulation guard', () => {
+    expect(use(rich, 'dinh_tam_dan').cult.heartDemon).toBe(2);
+    expect(use(rich, 'tue_nguyet_dan').cult.lifespan).toBe(575);
+    expect(use(rich, 'hoi_xuan_tao_hoa_dan').stats.health).toBe(100);
+    const guarded = use(rich, 'ho_mach_dan');
+    expect(guarded.flags.ho_mach_dan).toBe(true);
+    const plain = tribulationPreview(rich, content, 'nguyen_anh')!;
+    expect(tribulationPreview(guarded, content, 'nguyen_anh')!.reducePct).toBe(plain.reducePct + 20);
+  });
+
+  it('breakthrough pills for Nguyên Anh and Hóa Thần exist', () => {
+    const find = (realm: string) => content.items.filter((i) => i.breakthrough?.realm === realm && i.breakthrough.major).map((i) => i.id);
+    expect(find('kim_dan')).toContain('ngung_anh_dan');
+    expect(find('nguyen_anh')).toContain('hoa_than_dan');
   });
 });

@@ -392,6 +392,7 @@
     "variance": [0.7, 1.3],
     "finalMul": 1.5,
     "physiquePerPoint": 0.005,
+    "hoMachReduce": 0.2,
     "elementReduce": { "loi": 0.1 },
     "maxReduce": 0.8,
     "survivePhysique": 3

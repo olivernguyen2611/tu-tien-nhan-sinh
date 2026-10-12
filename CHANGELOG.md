@@ -10,7 +10,11 @@
 - Giải Độc Hoàn có tác dụng thật: sự kiện **Chén trà lạ vị** đặt cờ `trung_doc`, **Độc cũ phát tác** buộc phải giải (thuốc, vận công, thầy lang, hoặc chịu).
 - Phi kiếm có chủ có cái giá: sự kiện **Kiếm Các hỏi tội** khi mang kiếm này.
 - Developer mode: mục Vật phẩm thêm **Nhận mọi vật phẩm**, **Nhận mọi bí tịch**, chọn công pháp rồi **Học ngay** (bỏ qua điều kiện linh căn, tông môn, Đạo tâm).
-- Nội dung (9 sự kiện, 1 công pháp) do Claude tự soạn, chưa qua duyệt.
+- **Tăng hiệu quả đồ "một lần mỗi đời"**: Khai Trí Đan Trí tuệ +3 → +8; Tẩy Tủy Đan Căn cốt +5 → +12; Ngộ Đạo Trà Ngộ tính +2 → +6; Trú Nhan Đan Mị lực +3 → +8; Diên Thọ Đan thọ +5 → +20 năm; Linh chi nghìn năm thọ +3 → +15 năm và Sức khỏe +20 → +40.
+- **29 món cấp cao mới** (theo `catalog/de-xuat-bo-sung-cap-cao.md`): 11 đan dược (Ngưng Anh Đan, Hóa Thần Đan, Kết Kim Đan thượng phẩm, Cửu Chuyển Hoàn Hồn Đan, Tuế Nguyệt Đan, Hồi Xuân Tạo Hóa Đan, Định Tâm Đan, Tụ Nguyên Đại Đan, Hộ Mạch Đan, Dịch Cân Tẩy Cốt Đan, Thiên Lôi Đan), 10 pháp bảo, trận bàn, bùa, 8 nguyên liệu và kỳ vật (Nội đan cấp 4, Huyền Băng Tủy, Chu Quả Vạn Năm, Lá Ngộ Đạo Cổ Thụ, Hỗn Độn Thạch, Tinh Hồn Châu, Thiên Cơ Bàn, Phượng Hoàng Tinh Huyết).
+- 10 sự kiện nguồn mới (đấu giá, Băng Phong Cốc, Hỗn Độn bí cảnh, Cổ thụ trên đỉnh danh sơn, Cờ đen trong miếu hoang…) và 10 công thức luyện mới.
+- Móc dùng vật phẩm mới: `heartDemon` (giảm tâm ma), `lifespanPct` (thọ theo %), `setFlag.<tên>`; Hộ Mạch Đan giảm thêm 20% sát thương thiên kiếp kế tiếp (`balance.tribulation.hoMachReduce`).
+- Nội dung (19 sự kiện, 30 món đồ, 1 công pháp) do Claude tự soạn theo đề xuất của chủ dự án, chưa qua duyệt chi tiết; chủ dự án đã đồng ý hướng đề xuất.
 
 ### Góp ý chơi thử 7 — Tu luyện nhanh theo tư chất, kỳ ngộ theo khí vận (2026-10-12)
 - Hệ số tư chất trong tốc độ tu luyện đổi từ tuyến tính rất phẳng (0.75–1.25) sang lũy thừa: `3 ^ ((Căn cốt + Ngộ tính − 100) / 100)` (`balance.cultivation.aptitudeGrowth` = 3, tối thiểu 0.3). Người 50/50 giữ nguyên tốc độ; 95/95 nhanh gấp khoảng 2.7 lần (trước 1.2).

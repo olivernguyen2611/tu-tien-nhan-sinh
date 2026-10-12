@@ -151,6 +151,147 @@
       "cost": {
         "spiritStones": 60
       }
+    },
+    {
+      "id": "tu_nguyen_dai_dan",
+      "craft": "alchemy",
+      "product": "tu_nguyen_dai_dan",
+      "count": 1,
+      "minLevel": 55,
+      "materials": {
+        "linh_thao_tram_nam": 2,
+        "noi_dan_1": 1
+      },
+      "cost": {
+        "spiritStones": 30
+      }
+    },
+    {
+      "id": "dinh_tam_dan",
+      "craft": "alchemy",
+      "product": "dinh_tam_dan",
+      "count": 1,
+      "minLevel": 60,
+      "materials": {
+        "huyen_bang_tuy": 1,
+        "linh_thao_tram_nam": 1
+      },
+      "cost": {
+        "spiritStones": 40
+      }
+    },
+    {
+      "id": "thien_loi_dan",
+      "craft": "alchemy",
+      "product": "thien_loi_dan",
+      "count": 1,
+      "minLevel": 65,
+      "materials": {
+        "loi_tinh": 1,
+        "linh_thao_tram_nam": 1
+      },
+      "cost": {
+        "spiritStones": 40
+      }
+    },
+    {
+      "id": "hoi_xuan_tao_hoa_dan",
+      "craft": "alchemy",
+      "product": "hoi_xuan_tao_hoa_dan",
+      "count": 1,
+      "minLevel": 70,
+      "materials": {
+        "linh_thao_tram_nam": 2,
+        "noi_dan_2": 1
+      },
+      "cost": {
+        "spiritStones": 60
+      }
+    },
+    {
+      "id": "ho_mach_dan",
+      "craft": "alchemy",
+      "product": "ho_mach_dan",
+      "count": 1,
+      "minLevel": 75,
+      "materials": {
+        "huyen_bang_tuy": 1,
+        "noi_dan_2": 1
+      },
+      "cost": {
+        "spiritStones": 100
+      }
+    },
+    {
+      "id": "tue_nguyet_dan",
+      "craft": "alchemy",
+      "product": "tue_nguyet_dan",
+      "count": 1,
+      "minLevel": 90,
+      "materials": {
+        "chu_qua_van_nam": 1,
+        "noi_dan_3": 1
+      },
+      "cost": {
+        "spiritStones": 500
+      }
+    },
+    {
+      "id": "ngung_anh_dan",
+      "craft": "alchemy",
+      "product": "ngung_anh_dan",
+      "count": 1,
+      "minLevel": 90,
+      "materials": {
+        "linh_chi_ngan_nam": 1,
+        "noi_dan_3": 1
+      },
+      "cost": {
+        "spiritStones": 600
+      }
+    },
+    {
+      "id": "ket_kim_dan_thuong_pham",
+      "craft": "alchemy",
+      "product": "ket_kim_dan_thuong_pham",
+      "count": 1,
+      "minLevel": 95,
+      "materials": {
+        "linh_chi_ngan_nam": 1,
+        "noi_dan_3": 2
+      },
+      "cost": {
+        "spiritStones": 400
+      }
+    },
+    {
+      "id": "thanh_hong_phi_kiem",
+      "craft": "forging",
+      "product": "thanh_hong_phi_kiem",
+      "count": 1,
+      "minLevel": 70,
+      "materials": {
+        "linh_tinh_kim": 2,
+        "noi_dan_2": 1
+      },
+      "cost": {
+        "spiritStones": 150
+      }
+    },
+    {
+      "id": "huyen_quy_giap",
+      "craft": "forging",
+      "product": "huyen_quy_giap",
+      "count": 1,
+      "minLevel": 80,
+      "materials": {
+        "linh_tinh_tho": 2,
+        "huyen_bang_tuy": 1,
+        "noi_dan_3": 1
+      },
+      "cost": {
+        "spiritStones": 200
+      }
     }
   ]
 }

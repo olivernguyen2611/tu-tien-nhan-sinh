@@ -837,6 +837,8 @@ export const BalanceSchema = z
         finalMul: z.number().min(1),
         /** Reduction: injuryReduce + tribulationDefense hooks + (physique − 50) × physiquePerPoint + root element bonuses, capped at maxReduce. */
         physiquePerPoint: z.number(),
+        /** Hộ Mạch Đan: extra reduction for the next tribulation only. */
+        hoMachReduce: z.number().default(0.2),
         elementReduce: z.record(id, z.number()),
         maxReduce: z.number().min(0).max(1),
         /** Thân thể tôi luyện: physique gained by surviving. */
@@ -1890,7 +1892,7 @@ export type Market = z.infer<typeof MarketFileSchema>[number];
 
 /** What using an item does right away (task 3.1). */
 const ITEM_USE_HOOK = new RegExp(
-  `^(stat\\.(${[...MORTAL_STATS, ...APTITUDES].join('|')})|cultivationProgress|breakthroughNext|lifespanYears|noAgingCharm|clearFlag\\.[a-z0-9_]+|combatPowerNext|escapeNext|karma)$`,
+  `^(stat\\.(${[...MORTAL_STATS, ...APTITUDES].join('|')})|cultivationProgress|breakthroughNext|lifespanYears|noAgingCharm|clearFlag\\.[a-z0-9_]+|combatPowerNext|escapeNext|karma|heartDemon|lifespanPct|setFlag\\.[a-z0-9_]+)$`,
 );
 const ItemUseEffectSchema = z
   .object({ hook: z.string().regex(ITEM_USE_HOOK, 'móc dùng vật phẩm không hợp lệ'), add: z.number().optional() })
