@@ -126,6 +126,8 @@ export interface GameState {
     /** Task 5c.1: the master as an NPC (sect.master keeps the display title), and this year's talks with sectmates. */
     masterId?: string | null;
     talks?: { age: number; count: number };
+    /** Task 5c.2: age of the last entry in each sect tournament (by id) and the best placement (wins) so far. */
+    tournaments?: Record<string, { last: number; best: number }>;
   };
   /** Mortal career (task 2.11): careers.json id, rung index, age the rung was reached. */
   career: { id: string | null; rung: number; since: number };

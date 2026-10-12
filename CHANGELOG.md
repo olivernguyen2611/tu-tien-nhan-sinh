@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### Tông môn 5c.2 — Đại tỉ và Luận đạo hội (2026-10-12)
+- Hai cuộc thi định kỳ của tông, năm năm một lần (đại tỉ ở tuổi chia hết cho 5, luận đạo hội lệch hai năm), cho đệ tử từ Ngoại môn: ba trận với đồng môn cùng lứa. Đại tỉ so Chiến lực, luận đạo hội thử Ngộ tính.
+- Thưởng theo số trận thắng (cống hiến, linh thạch, thanh tu vi, chỉ số; kể cả thua trắng vẫn đổi chỉ số): số trong `balance.sects.tournaments`, lời văn trong `sect-life.json`. Nhớ thành tích tốt nhất mỗi đời; kình địch ghim thù khi bị thắng, đồng môn khác thân hơn sau trận.
+- Nút "Ghi danh" trong bảng Tông môn. Nội dung do Claude tự soạn, chưa qua duyệt.
+
 ### Tông môn 5c.1 — Đồng môn có tên (2026-10-12)
 - Nhập môn là gặp một nhóm đồng môn có tên (`balance.sects.cast`): 1 trưởng lão, 1 chấp sự, 1 sư huynh/tỷ, 2 đồng môn cùng lứa, 1 kình địch. Họ là NPC thường (có tuổi, tu luyện, chết, sổ ân oán), thuộc về đời đó nên mỗi đời một dàn khác.
 - Xin bái sư giờ chọn một trưởng lão thật của tông làm sư phụ (hoặc sinh trưởng lão mới); sư phụ chết thì nhật ký báo và mất sư phụ.
