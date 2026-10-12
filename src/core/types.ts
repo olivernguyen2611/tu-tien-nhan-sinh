@@ -131,6 +131,9 @@ export interface GameState {
     /** Task 5c.3: the chain mission under way (step = next step index, fails = missed steps, npc = the sectmate it names) and the chains finished this life. */
     chain?: { id: string; step: number; fails: number; npc: string | null } | null;
     chainsDone?: string[];
+    /** Task 5c.4: contribution spent at the sect treasury (promotion still counts the total) and what was bought, by treasury id. */
+    spent?: number;
+    bought?: Record<string, number>;
   };
   /** Mortal career (task 2.11): careers.json id, rung index, age the rung was reached. */
   career: { id: string | null; rung: number; since: number };

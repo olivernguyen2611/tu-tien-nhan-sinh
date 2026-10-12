@@ -8,6 +8,10 @@
 
 ## [Chưa phát hành]
 
+### Tông môn 5c.4 — Bảo khố (2026-10-12)
+- Mục "Bảo khố" trong bảng Tông môn: đổi cống hiến lấy 12 món (đan dược, bùa, phi kiếm, ngọc bội, linh thạch, một năm tĩnh tu cạnh linh mạch, tới Trúc Cơ Đan cho Chân truyền). Mỗi món có cấp bậc tối thiểu và số suất mỗi đời.
+- Đổi đồ không làm tụt cấp: tổng cống hiến để thăng cấp giữ nguyên, bảng ghi riêng phần đã tiêu (`sect.spent`). Nội dung do Claude tự soạn, chưa qua duyệt.
+
 ### Tông môn 5c.3 — Nhiệm vụ chuỗi (2026-10-12)
 - Mục "Chuỗi nhiệm vụ" trong bảng Tông môn: nhận một chuỗi 3 bước, mỗi năm làm một bước (dùng suất nhiệm vụ của năm), tiến độ lưu theo đời. Bước hỏng thì thử lại năm sau; hỏng `balance.sects.chainMaxFails` (2) bước thì bị rút lại. Xong chuỗi nhận thưởng lớn và thân hơn với đồng môn được nhắc tên.
 - 3 chuỗi đầu: **Linh dược thất lạc** (chấp sự), **Tấm bia đá nứt** (trưởng lão), **Giúp đồng môn vượt ải** (đồng môn cùng lứa). Mọi kết quả đều đổi chỉ số. Nội dung do Claude tự soạn, chưa qua duyệt.
