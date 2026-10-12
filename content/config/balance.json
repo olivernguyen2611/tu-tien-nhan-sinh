@@ -1,8 +1,10 @@
 {
   "version": 1,
   "events": {
-    "popupChanceLowRealm": 0.5,
-    "popupChanceHighRealm": 0.1,
+    "popupChanceLowRealm": 0.8,
+    "popupChanceHighRealm": 0.5,
+    "highRealmFrom": "nguyen_anh",
+    "sectMemberMul": 2.5,
     "logLineChance": 0.6,
     "luckCategories": ["fortune", "secret_realm"],
     "luckPerPoint": 0.02,
@@ -205,6 +207,7 @@
       { "rank": 3, "contribution": 200, "realm": "truc_co", "stage": 0 }
     ],
     "masterMinRank": 2,
+    "missionBoard": 4,
     "masterChanceBase": 0.25,
     "masterChancePerPoint": 0.01,
     "masterSpeed": 0.1
@@ -435,7 +438,8 @@
       "hoa_than": [10, 30, 100]
     },
     "lifespanStop": 5,
-    "lonelyAffinity": -1
+    "lonelyAffinity": -1,
+    "interruptChance": 0.2
   },
   "romance": {
     "minAge": 18,
@@ -534,7 +538,8 @@
     "perLife": 0.0005,
     "maxChance": 0.01,
     "pityLives": 15,
-    "chooseCost": 30
+    "chooseCost": 30,
+    "actionMinAge": 6
   },
   "badges": {
     "max": 3

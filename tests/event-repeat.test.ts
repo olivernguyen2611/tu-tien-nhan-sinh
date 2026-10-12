@@ -36,3 +36,16 @@ describe('fewer repeats (playtest 2026-10-12)', () => {
     expect(r.events.seen?.[ev.id]).toBe(1);
   });
 });
+
+describe('event frequency (playtest 2026-10-12, round 2)', () => {
+  it('most years bring an event; sect members meet sect events more often', async () => {
+    const { popupChance } = await import('../src/systems/events/engine');
+    const s = createLife({ seed: 'freq' }, content);
+    expect(popupChance(s, content)).toBe(b.popupChanceLowRealm);
+    expect(b.popupChanceLowRealm).toBeGreaterThanOrEqual(0.75);
+    const ev = content.events.find((e) => e.category === 'sect' && e.id === 'bi_vu_oan')!;
+    const member: GameState = { ...s, character: { ...s.character, age: 20 }, sect: { ...s.sect, id: content.sects[0].id } };
+    const w = eventWeight(member, content, ev);
+    expect(w).toBeGreaterThan(ev.weight);
+  });
+});

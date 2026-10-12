@@ -7,6 +7,8 @@ import type { SaveMeta } from '../../systems/save';
 import { activeExtremes, extremeWarnings } from '../../systems/extremes';
 import { DevPanel } from '../components/DevPanel';
 import { BagPanel } from '../components/BagPanel';
+import { GoldenFingerPanel } from '../components/GoldenFingerPanel';
+import { fingerActionViews } from '../../systems/fingerActions';
 import { MarketPanel, type MarketAction } from '../components/MarketPanel';
 import { MapPanel } from '../components/MapPanel';
 import { currentRegion } from '../../systems/regions';
@@ -51,7 +53,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onSeclude, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onUseItem, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onSeclude, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onUseItem, onFingerAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -78,6 +80,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onRomance: (npcId: string, action: RomanceAction) => { text: string; tone: Tone; changes: string };
   /** Use one item from the bag. */
   onUseItem: (itemId: string) => { text: string; tone: Tone; changes: string };
+  /** Playtest 2: one Kim Thủ Chỉ action. */
+  onFingerAction: (actionId: string) => { text: string; tone: Tone; changes: string } | null;
   /** One round of the fight in progress, and the choice after winning (task 3.3). */
   onCombat: (action: CombatAction, itemId?: string) => void;
   onSettle: (choice: Aftermath) => void;
@@ -115,6 +119,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const [result, setResult] = useState<PopupResult | null>(null);
   const [familyOpen, setFamilyOpen] = useState(false);
   const [bagOpen, setBagOpen] = useState(false);
+  const [fingerOpen, setFingerOpen] = useState(false);
   const [marketOpen, setMarketOpen] = useState(false);
   const [mapOpen, setMapOpen] = useState(false);
   const [cultivateOpen, setCultivateOpen] = useState(false);
@@ -161,6 +166,10 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         <div class="top-actions">
           {dev && <button class="icon-btn dev-btn" aria-label="Developer mode" title="Developer mode" onClick={() => setDevOpen(true)}>Dev</button>}
           {content.regions.length > 0 && <button class="icon-btn" aria-label="Bản đồ" title="Bản đồ" onClick={() => setMapOpen(true)}>圖</button>}
+          {finger && (
+            <button class={`icon-btn finger-btn${fingerActionViews(state, content).some((a) => !a.blocked) ? ' ready' : ''}`}
+              aria-label={`Kim Thủ Chỉ: ${finger.name}`} title={`Kim Thủ Chỉ: ${finger.name}`} onClick={() => setFingerOpen(true)}>指</button>
+          )}
           <button class="icon-btn" aria-label="Túi đồ" title="Túi đồ" onClick={() => setBagOpen(true)}>囊</button>
           <button class="icon-btn" aria-label="Sổ lưu" title="Sổ lưu" onClick={onSaves}>簿</button>
           <span class="desktop-only">
@@ -248,6 +257,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
       {marketOpen && <MarketPanel state={state} content={content} onAction={onMarket} onClose={() => setMarketOpen(false)} />}
 
       {bagOpen && <BagPanel state={state} content={content} onUse={onUseItem} onClose={() => setBagOpen(false)} />}
+
+      {fingerOpen && <GoldenFingerPanel state={state} content={content} onAction={onFingerAction} onClose={() => setFingerOpen(false)} />}
 
       {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onRomance={onRomance} onDisciple={onDisciple} onClan={onClan} onClose={() => setFamilyOpen(false)} />}
 

@@ -64,7 +64,8 @@ export interface GameState {
   /** Task 5b.6: this life is the thử thách tuần of that week (try: the how-manyth attempt on this browser). */
   challenge: { week: string; id: string; try: number } | null;
   /** Task 5b.2: the Kim Thủ Chỉ of this life (golden-fingers.json), its awakened level, the age it came. */
-  goldenFinger: { id: string; level: number; since: number } | null;
+  /** used: action id → age last used (playtest 2; absent in older saves). */
+  goldenFinger: { id: string; level: number; since: number; used?: Record<string, number> } | null;
   /** Task 5b.1: thiên phú luân hồi this life was born with (id → level), bought in earlier lives. */
   rebirthTalents: Record<string, number>;
   /** Task 5b.8: Phúc báo brought from the last life (blessings.json id; career = the path that earned it). */

@@ -59,10 +59,32 @@ export function eventWeight(state: GameState, content: Content, event: GameEvent
   // G.4, playtest 2026-10-12: kỳ ngộ come more often to the lucky.
   const ev = content.balance.events;
   if (event.luckAffected || ev.luckCategories.includes(event.category)) w *= Math.max(ev.luckMin, 1 + (state.aptitudes.luck - 50) * ev.luckPerPoint);
+  if (event.category === 'sect' && state.sect.id) w *= ev.sectMemberMul;
   // Playtest 2026-10-12: each time it already happened this life, it grows rarer.
   const seen = state.events.seen?.[event.id] ?? (last !== undefined ? 1 : 0);
   if (seen > 0) w *= content.balance.events.repeatDecay ** seen;
   return Math.max(0, w);
+}
+
+/**
+ * Playtest 2026-10-12: a secluded year may be broken by a kỳ ngộ or trouble (events with the
+ * theme "be_quan"); the seclusion then ends (seclusion.ts).
+ */
+export function rollSeclusionEvent(state: GameState, content: Content): GameState {
+  const rng = Rng.fromState(state.rng);
+  if (!rng.chance(content.balance.seclusion.interruptChance)) return { ...state, rng: rng.getState() };
+  const pool = content.events.filter((e) => e.themes.includes('be_quan')).map((e) => ({ e, w: eventWeight(state, content, e) })).filter((x) => x.w > 0);
+  if (pool.length === 0) return { ...state, rng: rng.getState() };
+  const picked = rng.weighted(pool, (x) => x.w).e.id;
+  return { ...state, rng: rng.getState(), events: { ...state.events, pending: picked, npc: null } };
+}
+
+/** Chance this year brings an event (playtest 2026-10-12: most years do). */
+export function popupChance(state: GameState, content: Content): number {
+  const ev = content.balance.events;
+  const realms = content.cultivation.realms.realms;
+  const high = realms.findIndex((r) => r.id === state.cult.realm) >= realms.findIndex((r) => r.id === ev.highRealmFrom);
+  return high ? ev.popupChanceHighRealm : ev.popupChanceLowRealm;
 }
 
 /** Roll this year's event (after age +1). Follow-ups that are due come first. */
@@ -88,8 +110,10 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
   } else if (visit) {
     picked = visit.event;
     npc = visit.npc;
-  } else if (sure || rng.chance(content.balance.events.popupChanceLowRealm)) {
+  } else if (sure || rng.chance(popupChance(state, content))) {
+    // "be_quan" events only break into a seclusion (rollSeclusionEvent).
     const all = content.events
+      .filter((e) => !e.themes.includes('be_quan'))
       .map((e) => ({ e, w: eventWeight(state, content, e) }))
       .filter((x) => x.w > 0);
     const themed = sure ? all.filter((x) => x.e.themes.includes(sure.tag!)) : [];
@@ -374,7 +398,8 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.grantRoot) {
     const granted = grantRoot(next, content);
     next = granted.state;
-    if (granted.text) text = `${text} ${granted.text}`;
+    // A death is the whole story: no success line before it (playtest 2026-10-12).
+    if (granted.text) text = next.alive ? `${text} ${granted.text}` : granted.text;
   }
   // Task 4.6: the next step opens at once (not after a fight; that goes in win/lose).
   if (fx.chain && next.alive && findEvent(content, fx.chain)) next = { ...next, events: { ...next.events, pending: fx.chain } };

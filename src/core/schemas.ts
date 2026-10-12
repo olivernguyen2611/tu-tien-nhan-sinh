@@ -592,8 +592,12 @@ export const BalanceSchema = z
     version: z.number().int(),
     events: z
       .object({
+        /** Chance a year brings an event; from highRealmFrom on (long lives) the high-realm chance. */
         popupChanceLowRealm: probability,
         popupChanceHighRealm: probability,
+        highRealmFrom: id,
+        /** Playtest 2026-10-12: a sect member meets sect events this many times as often. */
+        sectMemberMul: z.number().min(0),
         logLineChance: probability,
         /** Playtest 2026-10-12: kỳ ngộ (luckAffected or these categories) × max(luckMin, 1 + (khí vận − 50) × luckPerPoint). */
         luckCategories: z.array(id),
@@ -898,6 +902,8 @@ export const BalanceSchema = z
         lifespanStop: z.number().int().min(0),
         /** Lover and đạo lữ grow distant: affinity change per year in seclusion. */
         lonelyAffinity: z.number(),
+        /** Playtest 2026-10-12: chance a secluded year is broken by an event with the theme "be_quan". */
+        interruptChance: probability,
       })
       .strict(),
     /** Task 3.6: romance (thiện cảm, theo đuổi, tặng quà, tỏ tình). */
@@ -1279,6 +1285,8 @@ export const BalanceSchema = z
         masterChancePerPoint: z.number().min(0),
         /** Cultivation speed bonus while having a master. */
         masterSpeed: z.number().min(0),
+        /** Playtest 2: missions posted on the board each year (picked from those the rank allows). */
+        missionBoard: z.number().int().min(1),
       })
       .strict(),
     /** Task 2.7: Nghịch Thiên Cải Mệnh (fate-talents.md). */
@@ -1382,6 +1390,8 @@ export const BalanceSchema = z
         pityLives: z.number().int().min(1),
         /** Task 5b.5: Luân Hồi points to choose a Kim Thủ Chỉ unlocked by a thành tựu. */
         chooseCost: z.number().int().min(0),
+        /** Playtest 2: the finger's panel actions open from this age. */
+        actionMinAge: z.number().int().min(0),
       })
       .strict(),
     /** Task 5b.5: huy hiệu cuối đời shown on the death screen and the obituary card. */
@@ -1471,7 +1481,8 @@ export const LifeTextsSchema = z
     rewindOffer: z.string().min(1),
     rewindAge6: z.string().min(1),
     rewindRealm: z.string().min(1),
-    epitaph: z.object({ good: lines, bad: lines, plain: lines }).strict(),
+    /** plainCultivator: the plain pool for anyone past Phàm Nhân (playtest 2026-10-12). */
+    epitaph: z.object({ good: lines, bad: lines, plain: lines, plainCultivator: lines }).strict(),
   })
   .strict();
 export type LifeTexts = z.infer<typeof LifeTextsSchema>;
@@ -1517,6 +1528,8 @@ export const RealmsFileSchema = z
     seclusionEnd: z.string().min(1),
     seclusionPeak: z.string().min(1),
     seclusionLifespan: z.string().min(1),
+    /** Playtest 2026-10-12: a kỳ ngộ broke into the seclusion. */
+    seclusionInterrupted: z.string().min(1),
     /** Task 4.2 kết đan. {grade} = "Tam phẩm", {element} = an element name. */
     coreStart: z.string().min(1),
     coreRoot: z.string().min(1),
@@ -1806,6 +1819,8 @@ export const SectLifeSchema = z
             id,
             name: z.string().min(1),
             minRank: z.number().int().min(0),
+            /** Playtest 2: only these sects post the mission (omit = every sect). */
+            sects: ids.optional(),
             text: z.string().min(1),
             stat: z.enum([...MORTAL_STATS, ...APTITUDES]),
             difficulty: z.number().min(0).max(100),
@@ -2390,6 +2405,24 @@ export const RebirthTalentFileSchema = z
 export type RebirthTalentFile = z.infer<typeof RebirthTalentFileSchema>;
 
 /** Task 5b.2: Kim Thủ Chỉ, one a life at most, awakening level by level as the realm rises. */
+/** Playtest 2: one Kim Thủ Chỉ action (a check with success/fail, or a sure result). */
+const FingerActionSchema = z
+  .object({
+    id,
+    name: z.string().min(1),
+    text: z.string().min(1),
+    /** Needs the finger awakened to this level. */
+    minLevel: z.number().int().min(1).default(1),
+    /** Years before it can be used again (1 = once a year). */
+    cooldownYears: z.number().int().min(1).default(1),
+    check: z.object({ stat: statKey, difficulty: z.number().min(0).max(100) }).strict().optional(),
+    success: PlainOutcomeSchema.optional(),
+    fail: PlainOutcomeSchema.optional(),
+    result: PlainOutcomeSchema.optional(),
+  })
+  .strict()
+  .refine((a) => (a.check ? !!a.success && !!a.fail && !a.result : !!a.result), 'hành động có "check" cần "success" + "fail"; không có thì cần "result"');
+
 export const GoldenFingerFileSchema = z
   .object({
     fingers: z.array(
@@ -2419,6 +2452,8 @@ export const GoldenFingerFileSchema = z
                 .strict(),
             )
             .min(1),
+          /** Playtest 2: things the player does with it from its panel, each at most once per cooldown. */
+          actions: z.array(FingerActionSchema).default([]),
         })
         .strict(),
     ),
