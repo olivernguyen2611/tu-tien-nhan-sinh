@@ -2,6 +2,14 @@
 
 ## [Chưa phát hành]
 
+### Chơi thử 2 — Các mục nhỏ còn lại (2026-10-12)
+- Tích lũy đột phá: mỗi năm chờ ở đỉnh cảnh giới cộng 1% cho lần đột phá lớn kế tiếp, tối đa 25% (`balance.majorBreakthrough.peakWaitPerYear`, `peakWaitMax`), nên kẹt ở Luyện Khí tầng 9 không còn chờ cả đời.
+- Bế quan bị chặn nói rõ lý do: đang giao chiến, đang chờ Cải Mệnh, hay còn một chuyện chờ quyết định.
+- Xin bái sư bị từ chối nói rõ vì ngộ tính còn kém và hẹn năm sau.
+- Trận đấu: hai bên ghi "lực" thay vì chỉ một con số trông như tầng tu vi.
+- Huy hiệu "Một Đời Bình Thường" chỉ hiện khi đời đó không đạt huy hiệu nào khác.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Chơi thử 2 — Tình duyên, con cái, bớt nhật ký lặp (2026-10-12)
 - Người gặp trong sự kiện tình duyên giờ cùng lứa với nhân vật (±3 tuổi, `balance.npcs.peerAgeOffset`; `meetNpc.peer`), không còn lớn hơn 10–15 tuổi.
 - 7 sự kiện gặp người cùng lứa (`events/peers.json`): bạn đồng song, đồng môn cùng lứa (16–17 tuổi, chỉ là bạn); hội hoa đăng, cứu người rơi xuống sông, đối thơ ở tửu lâu, cùng làm nhiệm vụ tông môn, gặp lại bạn thuở nhỏ (từ 18 tuổi).

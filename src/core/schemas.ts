@@ -1207,6 +1207,9 @@ export const BalanceSchema = z
         /** Failures at a realm's peak before the bottleneck slows cultivation. */
         bottleneckFails: z.number().int().min(1),
         bottleneckSpeedMul: z.number().min(0).max(1),
+        /** Playtest 2: each year waiting at a realm's peak adds this many % to the next big breakthrough, up to Max. */
+        peakWaitPerYear: z.number().min(0),
+        peakWaitMax: z.number().min(0),
         /** Foundation grade score = d100 + (comprehension − 50) × perPoint + (daoHeart − 50) × perPoint. */
         foundationPerPoint: z.number().min(0),
         /** Minimum score for each grade id; grades not listed are the floor. */

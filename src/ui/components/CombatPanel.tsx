@@ -31,11 +31,11 @@ export function CombatPanel({ state, content, onAct, onSettle }: {
         <div class="kicker">Giao chiến{battle.source ? ` · ${battle.source}` : ''}</div>
         <h2>{battle.foe.name}</h2>
         <div class="combat-score">
-          <span>Ngươi <b>{Math.round(combatPower(state, content))}</b></span>
+          <span>Ngươi · lực <b>{Math.round(combatPower(state, content))}</b></span>
           <span class="rounds" aria-label={`Thắng ${battle.won}, thua ${battle.lost}`}>
             {'●'.repeat(battle.won)}{'○'.repeat(battle.lost)}
           </span>
-          <span>{realm} <b>{Math.round(battle.foe.power)}</b></span>
+          <span>{realm ? `${realm} · lực ` : 'Lực '}<b>{Math.round(battle.foe.power)}</b></span>
         </div>
         <p class="profile-note">Sức khỏe {state.stats.health} · ai thắng {content.balance.combat.winRounds} hiệp trước là thắng.</p>
         <div class="combat-lines" role="log">
