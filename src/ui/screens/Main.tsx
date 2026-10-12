@@ -6,6 +6,7 @@ import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
 import type { SaveMeta } from '../../systems/save';
 import type { RewindOption } from '../../systems/timeline';
+import type { ImportSetup, SavedPerson } from '../../systems/npcLibrary';
 import { activeExtremes, extremeWarnings } from '../../systems/extremes';
 import { DevPanel } from '../components/DevPanel';
 import { BagPanel } from '../components/BagPanel';
@@ -57,7 +58,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onSeclude, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onBond, onSaveNpc, onUseItem, onFingerAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onSeclude, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -102,6 +103,9 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onBond: (target: BondTarget, action: BondAction, arg?: string) => { text: string; tone: Tone; changes: string };
   /** Backlog 11: write an NPC into the Sổ nhân vật. */
   onSaveNpc: (npcId: string) => { text: string; tone: Tone };
+  /** Backlog 12: who can be imported as an NPC, and importing them. */
+  getSources: () => SavedPerson[];
+  onImport: (person: SavedPerson, setup: ImportSetup) => { ok: boolean; text: string };
   onQuest: (a: QuestAction) => string | null;
   /** Practise a technique from a scroll (task 2.8). */
   onLearn: (techniqueId: string) => string | null;
@@ -268,7 +272,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       {fingerOpen && <GoldenFingerPanel state={state} content={content} onAction={onFingerAction} onClose={() => setFingerOpen(false)} />}
 
-      {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onRomance={onRomance} onBond={onBond} onSaveNpc={onSaveNpc} onDisciple={onDisciple} onClan={onClan} onClose={() => setFamilyOpen(false)} />}
+      {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onRomance={onRomance} onBond={onBond} onSaveNpc={onSaveNpc} getSources={getSources} onImport={onImport} onDisciple={onDisciple} onClan={onClan} onClose={() => setFamilyOpen(false)} />}
 
       {profileOpen && (
         <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Nhân vật" onClick={(e) => e.target === e.currentTarget && setProfileOpen(false)}>

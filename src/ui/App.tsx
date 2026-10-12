@@ -14,7 +14,7 @@ import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, lockCost, rerollDestiny, rollDestiny, toggleLock } from '../systems/destiny';
 import {
   deleteSlot, exportSave, firstFreeSlot, latestSlot, listSlots, makeSave, parseSave, readMeta, readSlot, recordNewLife, creditRebirth,
-  slotTaken, writeSlot, buyRebirthTalent, recordCodex, recordAchievements, recordChallenge, recordPastSect, recordLibrary, replaceMeta, type SaveFile,
+  slotTaken, writeSlot, SLOT_COUNT, buyRebirthTalent, recordCodex, recordAchievements, recordChallenge, recordPastSect, recordLibrary, replaceMeta, type SaveFile,
 } from '../systems/save';
 import { checkDeath } from '../systems/time';
 import { GlossaryProvider } from './components/Tooltip';
@@ -56,7 +56,7 @@ import { build, decide, donate, foundSect } from '../systems/ownSect';
 import { newLifeCost, rebirthPoints } from '../systems/rebirth';
 import { earnedBlessings } from '../systems/blessings';
 import { rewind } from '../systems/rewind';
-import { addToLibrary, personFromLife, personFromNpc, removeFromLibrary } from '../systems/npcLibrary';
+import { addToLibrary, importPerson, personFromLife, personFromNpc, removeFromLibrary } from '../systems/npcLibrary';
 import { onYearAdvanced, recordSnapshot, rewind as rewindTime, rewindOptions, type Snapshot } from '../systems/timeline';
 import { nextTalentCost } from '../systems/rebirthTalents';
 import { rollBirthFinger } from '../systems/goldenFinger';
@@ -347,6 +347,21 @@ function Screens({ content }: { content: Content }) {
           const r = performFamilyAction(life, content, relId, actionId);
           setLife(checkDeath(r.state, content));
           return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+        }}
+        getSources={() => {
+          // The book first, then the protagonist of every other slot (not the life being played).
+          const book = readMeta(store).library;
+          const fromSlots = Array.from({ length: SLOT_COUNT }, (_, i) => i + 1)
+            .filter((s) => s !== slot)
+            .map((s) => readSlot(store, s, worlds, freshLife))
+            .flatMap((r) => (r && r.ok ? [personFromLife(r.save.life, content)] : []))
+            .filter((p) => !book.some((b) => b.id === p.id));
+          return [...book, ...fromSlots];
+        }}
+        onImport={(person, setup) => {
+          const r = importPerson(life, content, person, setup);
+          if (r.ok) setLife(r.state);
+          return { ok: r.ok, text: r.text };
         }}
         onSaveNpc={(npcId) => {
           const npc = life.npcs.find((n) => n.id === npcId);

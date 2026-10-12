@@ -883,3 +883,10 @@ button { font: inherit; color: inherit; }
 .disciple-acts { align-items: center; }
 .disciple-acts .act-pick { display: inline-flex; gap: 6px; align-items: center; flex-wrap: wrap; }
 .disciple-acts select { max-width: 11rem; padding: 4px 6px; border-radius: 6px; border: 1px solid var(--border, #8884); background: var(--surface, transparent); color: inherit; font: inherit; }
+
+/* Nhập nhân vật (Quan hệ → Người quen) */
+.import-box { display: grid; gap: 8px; margin: 8px 0 12px; }
+.import-field { display: grid; gap: 4px; font-size: 0.875rem; }
+.import-field select, .import-field input[type="text"] { width: 100%; min-height: 40px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: inherit; font: inherit; }
+.import-check { display: flex; gap: 8px; align-items: flex-start; font-size: 0.8125rem; color: var(--muted); }
+.library h2 { margin: 16px 0 8px; font-size: 1rem; }
