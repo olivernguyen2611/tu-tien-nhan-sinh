@@ -5,7 +5,8 @@ import { version as GAME_VERSION } from '../../package.json';
 import type { GameState, LogYear, PastSectRecord } from '../core/types';
 import { EMPTY_CODEX, mergeCodex, type Codex } from './codex';
 
-export const SAVE_VERSION = 1;
+/** v2: after the per-version steps in `migrate`, missing fields are backfilled from a fresh life (`backfillLife`). */
+export const SAVE_VERSION = 2;
 export const SLOT_COUNT = 3;
 const KEY_PREFIX = 'tutien.save.';
 const META_KEY = 'tutien.meta';
@@ -88,8 +89,58 @@ const SaveShape = z
   })
   .passthrough();
 
-/** Upgrade a save written by an older version. Each saveVersion bump adds a step here. */
-export function migrate(save: SaveFile): SaveFile {
+const isPlain = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
+/** Paths whose absence is meaningful (a fresh life's value would be wrong for an old one). */
+const BACKFILL_SKIP = new Set(['events.followUps', 'pastSect', 'log']);
+const BACKFILL_NOTE = 'Game vừa cập nhật: đời này được bổ sung dữ liệu cho các hệ thống mới.';
+
+/**
+ * Copy into `life` every field it lacks (undefined) from `defaults`, a fresh life of the same world,
+ * recursing into plain objects only. Values that exist (even null, 0 or false) are never touched.
+ * Returns the paths added, so a new feature needs no hand-written migration step.
+ */
+export function backfillLife(life: GameState, defaults: GameState): { life: GameState; added: string[] } {
+  const added: string[] = [];
+  const merge = (cur: Record<string, unknown>, def: Record<string, unknown>, path: string): Record<string, unknown> => {
+    let out = cur;
+    for (const [k, dv] of Object.entries(def)) {
+      const at = path ? `${path}.${k}` : k;
+      if (BACKFILL_SKIP.has(at)) continue;
+      const cv = cur[k];
+      if (cv === undefined) {
+        if (out === cur) out = { ...cur };
+        out[k] = structuredClone(dv);
+        added.push(at);
+      } else if (isPlain(cv) && isPlain(dv) && at.split('.').length < 3) {
+        const m = merge(cv, dv, at);
+        if (m !== cv) {
+          if (out === cur) out = { ...cur };
+          out[k] = m;
+        }
+      }
+    }
+    return out;
+  };
+  const merged = merge(life as unknown as Record<string, unknown>, defaults as unknown as Record<string, unknown>, '') as unknown as GameState;
+  return { life: merged, added };
+}
+
+/**
+ * Upgrade a save written by an older version. Each saveVersion bump adds a step here; then, when
+ * `defaults` (a fresh life) is given, whatever fields are still missing are backfilled from it.
+ */
+export function migrate(save: SaveFile, defaults?: GameState): SaveFile {
+  const stepped = migrateSteps(save);
+  if (!defaults) return stepped;
+  const { life, added } = backfillLife(stepped.life, defaults);
+  if (added.length === 0) return stepped;
+  const log = life.log.slice();
+  const last = log[log.length - 1];
+  if (last) log[log.length - 1] = { ...last, lines: [...last.lines, { text: BACKFILL_NOTE, tone: 'normal' }] };
+  return { ...stepped, life: { ...life, log } };
+}
+
+function migrateSteps(save: SaveFile): SaveFile {
   // Fields added within saveVersion 1 get their empty defaults.
   let life = save.life as GameState & { extremes?: GameState['extremes'] };
   if (!life.extremes) life = { ...life, extremes: { streak: {}, active: {}, givenAt: {} } };
@@ -197,13 +248,13 @@ export function migrate(save: SaveFile): SaveFile {
 export type ParseResult = { ok: true; save: SaveFile } | { ok: false; error: string };
 
 /** Check and upgrade raw save data (from a slot or an imported file). */
-export function parseSave(raw: unknown, knownWorlds: string[]): ParseResult {
+export function parseSave(raw: unknown, knownWorlds: string[], defaults?: GameState): ParseResult {
   const parsed = SaveShape.safeParse(raw);
   if (!parsed.success) return { ok: false, error: 'File không phải save của Tu Tiên Nhân Sinh, hoặc đã hỏng.' };
   if (parsed.data.saveVersion > SAVE_VERSION) {
     return { ok: false, error: 'Save này từ bản game mới hơn, hãy tải lại trang để cập nhật.' };
   }
-  const save = migrate(parsed.data as unknown as SaveFile);
+  const save = migrate(parsed.data as unknown as SaveFile, defaults);
   if (!knownWorlds.includes(save.life.worldId)) {
     return { ok: false, error: `Save thuộc thế giới "${save.life.worldId}" mà bản game này chưa có.` };
   }
@@ -227,7 +278,7 @@ function serialize(save: SaveFile): string {
 
 const slotKey = (slot: number) => `${KEY_PREFIX}${slot}`;
 
-export function readSlot(store: KeyValueStore, slot: number, knownWorlds: string[]): ParseResult | null {
+export function readSlot(store: KeyValueStore, slot: number, knownWorlds: string[], defaults?: GameState): ParseResult | null {
   let text: string | null;
   try {
     text = store.getItem(slotKey(slot));
@@ -236,7 +287,7 @@ export function readSlot(store: KeyValueStore, slot: number, knownWorlds: string
   }
   if (text === null) return null;
   try {
-    return parseSave(JSON.parse(text), knownWorlds);
+    return parseSave(JSON.parse(text), knownWorlds, defaults);
   } catch {
     return { ok: false, error: 'Save trong ô này bị hỏng.' };
   }

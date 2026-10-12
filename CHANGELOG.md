@@ -8,6 +8,10 @@
 
 ## [Chưa phát hành]
 
+### Save cũ tự bổ sung hệ thống mới (2026-10-12)
+- `SAVE_VERSION` lên 2. Sau các bước nâng cấp theo phiên bản, `migrate` còn **bổ sung tự động** mọi trường mà đời cũ còn thiếu bằng giá trị của một đời mới tinh (`backfillLife`), nên thêm hệ thống mới không cần viết bước migration tay nữa.
+- Giá trị đã có (kể cả `null`, `0`, `false`) không bao giờ bị đè; lịch trình thử thách gốc (`events.followUps`) và `pastSect` không bị chép từ đời mới.
+- Khi có gì được bổ sung, nhật ký năm hiện tại ghi một dòng "Game vừa cập nhật…". Áp dụng cả khi nạp ô save lẫn nhập file.
 ### Chiêu mộ người quen vào tông 5c.9 (2026-10-12)
 - Chưởng môn có mục "Chiêu mộ người quen" trong bảng Tông môn: mời NPC đã quen (có linh căn, đủ 16 tuổi, thiện cảm từ 55) gia nhập tông. Tốn 20 linh thạch lễ vật từ kho; tỉ lệ nhận lời theo thiện cảm, ân tình, oán hận (hiện ngay trên nút); mỗi người một lần mỗi năm.
 - Nhận lời: thêm một đệ tử, danh vọng +1, thiện cảm tăng, hạnh phúc +2, và mỗi năm người ấy nộp thêm 2 linh thạch vào kho. Từ chối: thiện cảm giảm nhẹ, hạnh phúc −1.
