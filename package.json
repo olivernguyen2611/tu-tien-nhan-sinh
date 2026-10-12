@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "validate": "tsx tools/validate-content.ts"
+    "validate": "tsx tools/validate-content.ts",
+    "simulate": "vite-node tools/simulate.ts --"
   },
   "dependencies": {
     "preact": "^10.29.8",

@@ -386,6 +386,15 @@ Nhìn từ hai phía: **đệ tử** cần thăng cấp, tài nguyên, sư phụ
 
 ### GĐ 6 — Hoàn thiện
 Cân bằng bằng **mô phỏng tự động** (chạy hàng nghìn đời giả lập, xem thống kê tuổi chết/cảnh giới), âm thanh, hiệu ứng, PWA cài lên điện thoại, chơi offline, tối ưu tốc độ, rà soát hiển thị trên nhiều cỡ màn hình.
+| # | Task |
+|---|---|
+| 6.1 | [x] Mô phỏng tự động: người chơi máy sống trọn đời theo seed, chạy hàng loạt, báo tuổi chết, nguyên nhân chết, cảnh giới, linh căn (`npm run simulate`) |
+| 6.2 | [ ] Cân bằng theo kết quả mô phỏng (chỉnh `balance.json`, ghi lại trước/sau) |
+| 6.3 | [ ] PWA: cài lên điện thoại và chơi offline (manifest, service worker, biểu tượng) |
+| 6.4 | [ ] Âm thanh tổng hợp bằng code (không dùng file nhạc), bật/tắt được, mặc định tắt |
+| 6.5 | [ ] Hiệu ứng nhẹ (chuyển cảnh, nổi bật khi đột phá), tôn trọng chế độ giảm chuyển động |
+| 6.6 | [ ] Tối ưu tốc độ (cắt nhỏ gói tải, đo thời gian khởi động và tua năm) |
+| 6.7 | [ ] Rà soát hiển thị nhiều cỡ màn hình (điện thoại nhỏ, máy tính bảng, máy tính) |
 
 ### GĐ 7 — Mở rộng nội dung
 Thêm **thế giới mới** với tuyến cốt truyện riêng (mục C.7) + màn chọn thế giới. Linh giới/Tiên giới, thêm hàng trăm sự kiện, các nghề bách nghệ còn lại (Trận pháp, Phù lục, Linh thực, Ngự thú), thêm mô bản khí vận chi tử, Capacitor nếu muốn lên store.

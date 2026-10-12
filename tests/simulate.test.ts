@@ -1,0 +1,38 @@
+import { describe, expect, it } from 'vitest';
+import { loadContent } from '../src/core/content';
+import { formatReport, simulateLife, simulateMany, summarize } from '../src/systems/simulate';
+
+const content = loadContent();
+
+describe('Mô phỏng tự động (6.1)', () => {
+  it('a life ends in death, never stuck, and is the same for the same seed', () => {
+    const a = simulateLife(content, 'sim-test-1');
+    expect(a.alive).toBe(false);
+    expect(a.stuck).toBe(false);
+    expect(a.age).toBeGreaterThan(0);
+    expect(simulateLife(content, 'sim-test-1')).toEqual(a);
+    expect(simulateLife(content, 'sim-test-2')).not.toEqual(a);
+  });
+
+  it('both bot profiles finish every life', () => {
+    for (const profile of ['random', 'steady'] as const) {
+      const { results, report } = simulateMany(content, 12, `sim-p-${profile}`, { profile });
+      expect(results.every((r) => !r.alive && !r.stuck)).toBe(true);
+      expect(report.count).toBe(12);
+      expect(report.stuck).toBe(0);
+    }
+  });
+
+  it('the report adds up', () => {
+    const { results, report } = simulateMany(content, 20, 'sim-report');
+    expect(Object.values(report.byCause).reduce((a, b) => a + b, 0)).toBe(20);
+    expect(Object.values(report.byRoot).reduce((a, b) => a + b.share, 0)).toBeCloseTo(1);
+    expect(report.reached.pham_nhan).toBe(1);
+    expect(report.age.p10).toBeLessThanOrEqual(report.age.p50);
+    expect(report.age.p50).toBeLessThanOrEqual(report.age.p90);
+    expect(report.age.p90).toBeLessThanOrEqual(report.age.max);
+    expect(summarize([], content).count).toBe(0);
+    expect(formatReport(report, content, 'thử')).toContain('20 đời');
+    expect(results).toHaveLength(20);
+  });
+});
