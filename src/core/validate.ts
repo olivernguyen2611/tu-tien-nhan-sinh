@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World } from './schemas';
 
 export interface Problem {
   file: string;
@@ -36,6 +36,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'techniques.json') return TechniqueFileSchema;
     if (rest === 'fate-talents.json') return FateTalentFileSchema;
     if (rest === 'items.json') return ItemFileSchema;
+    if (rest === 'martial.json') return MartialFileSchema;
     return null;
   }
   // Belongs to one world.
@@ -65,6 +66,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   let techniques: Technique[] | null = null;
   let fateIds: string[] | null = null;
   let itemIds: string[] | null = null;
+  let martialFile: MartialFile | null = null;
   let careerIds: string[] | null = null;
   const sectFiles: { file: string; sects: Sect[] }[] = [];
   const parsedShared: { balance?: Balance; realms?: RealmsFile; roots?: RootsFile; aptitudes?: AptitudesFile } = {};
@@ -148,6 +150,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === WorldSchema && (parsed.data as World).sectRecruitEvent) rootTests.push({ file, event: (parsed.data as World).sectRecruitEvent! });
     if (schema === TechniqueFileSchema) techniques = parsed.data as Technique[];
     if (schema === SectFileSchema) sectFiles.push({ file, sects: parsed.data as Sect[] });
+    if (schema === MartialFileSchema) martialFile = parsed.data as MartialFile;
     if (schema === ItemFileSchema) itemIds = (parsed.data as { id: string }[]).map((x) => x.id);
     if (schema === CareersFileSchema) careerIds = (parsed.data as { careers: { id: string }[] }).careers.map((c) => c.id);
     if (schema === CareersFileSchema) problems.push(...duplicates(file, 'đường đời', (parsed.data as { careers: { id: string }[] }).careers));
@@ -164,6 +167,14 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   }
 
   problems.push(...checkTechniquesAndSects(techniques, sectFiles, parsedShared));
+  if (martialFile && parsedShared.balance) {
+    const m = parsedShared.balance.martial;
+    const n = martialFile.stages.length;
+    if (m.combatPower.length !== n || m.lifespan.length !== n) {
+      problems.push({ file: 'config/balance.json', level: 'error', message: `martial.combatPower và martial.lifespan cần đúng ${n} giá trị (số cảnh giới võ đạo)` });
+    }
+    if (m.steps.length > n) problems.push({ file: 'config/balance.json', level: 'error', message: 'martial.steps nhiều hơn số cảnh giới võ đạo' });
+  }
   if (fateIds && traitIds) {
     for (const id of fateIds) if (traitIds.has(id)) problems.push({ file: 'fate-talents.json', level: 'error', message: `id thiên phú "${id}" trùng id khí vận` });
   }

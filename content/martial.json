@@ -1,0 +1,22 @@
+{
+  "stages": [
+    { "name": "Tam lưu", "description": "Đánh ba tên côn đồ không thở dốc." },
+    { "name": "Nhị lưu", "description": "Được tiêu cục mời áp tiêu, trả lương hậu." },
+    { "name": "Nhất lưu", "description": "Một mình giữ một võ quán, cả huyện kiêng nể." },
+    { "name": "Tuyệt đỉnh", "description": "Đỉnh của người thường. Phần lớn võ giả dừng chân ở đây cả đời." },
+    { "name": "Hóa cảnh", "description": "Thoát thai hoán cốt. Một trong những người mạnh nhất phàm gian; tu sĩ Luyện Khí sơ kỳ cũng phải dè chừng." },
+    { "name": "Tam hoa tụ đỉnh", "description": "Khí tức nội liễm, nhìn như người thường, ra tay như sét đánh." },
+    { "name": "Ngũ khí triều nguyên", "description": "Ngũ khí trong người hóa thành Ngũ linh căn. Từ đây bước vào Luyện Khí tầng 1, tiếp tục như tu sĩ." }
+  ],
+  "teacher": { "flags": ["luc_hop_mon", "co_su_phu"], "careers": ["vo_lam"], "origins": ["vo_lam"] },
+  "ascendEffects": [
+    { "hook": "path.body.affinity", "add": 30 },
+    { "hook": "injuryReduce", "add": 0.15 }
+  ],
+  "texts": {
+    "train": "Một năm luyện võ ({years}/{need} năm cho {next}).",
+    "promote": "Võ công đột phá: {stage}. {description}",
+    "fail": "Xung kích {next} không thành. Gân cốt còn chưa đủ, phải luyện thêm.",
+    "ascend": "Ngũ khí trong ngũ tạng hợp với ngũ hành, hóa thành Ngũ linh căn. Võ đạo đi tới tận cùng, chạm cửa tiên."
+  }
+}

@@ -37,7 +37,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onBreakthrough, onPractice, onJoinCareer, onLearn, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -52,6 +52,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onPractice: (craftId: string) => string | null;
   /** Take up a mortal career from the "Tu luyện" sheet. */
   onJoinCareer: (careerId: string) => string | null;
+  /** A year of martial training (task 3.11). */
+  onTrain: () => string | null;
   /** Practise a technique from a scroll (task 2.8). */
   onLearn: (techniqueId: string) => string | null;
   /** Nghịch Thiên Cải Mệnh: take a talent, or refresh the offer (task 2.7). */
@@ -190,7 +192,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       {sectOpen && <SectPanel state={state} content={content} onAction={onSectAction} onClose={() => setSectOpen(false)} />}
 
-      {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onClose={() => setCultivateOpen(false)} />}
+      {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onTrain={onTrain} onClose={() => setCultivateOpen(false)} />}
 
       {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onClose={() => setFamilyOpen(false)} />}
 

@@ -29,6 +29,7 @@ import { joinCareer } from '../systems/career';
 import { doMission, joinSect, leaveSect, requestMaster } from '../systems/sect';
 import { learnTechnique } from '../systems/technique';
 import { chooseFate, rerollFate } from '../systems/fate';
+import { trainMartial } from '../systems/martial';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -180,6 +181,12 @@ function Screens({ content }: { content: Content }) {
         }}
         onJoinCareer={(careerId) => {
           const r = joinCareer(life, content, careerId);
+          if (!r) return null;
+          setLife(r.state);
+          return r.text;
+        }}
+        onTrain={() => {
+          const r = trainMartial(life, content);
           if (!r) return null;
           setLife(r.state);
           return r.text;

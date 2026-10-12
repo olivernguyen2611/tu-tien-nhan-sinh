@@ -68,6 +68,8 @@ export function migrate(save: SaveFile): SaveFile {
   // Fields added within saveVersion 1 get their empty defaults.
   let life = save.life as GameState & { extremes?: GameState['extremes'] };
   if (!life.extremes) life = { ...life, extremes: { streak: {}, active: {}, givenAt: {} } };
+  // Task 3.11: no martial training yet.
+  if (life.martial === undefined) life = { ...life, martial: { stage: -1, years: 0, bonus: 0, lastTrain: null } };
   // Task 2.8: items, scrolls, buffs, two more factions.
   if (life.inventory === undefined) {
     const c = life.cult as Partial<GameState['cult']> & GameState['cult'];

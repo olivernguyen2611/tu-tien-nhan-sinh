@@ -26,6 +26,7 @@ const balance = {
   techniques: realBalance.techniques,
   sects: realBalance.sects,
   fate: realBalance.fate,
+  martial: realBalance.martial,
   paths: realBalance.paths,
   crafts: realBalance.crafts,
   extremes: { lowAt: 5, highAt: 95, exitLow: 20, exitHigh: 80, karmaLowAt: -80, karmaHighAt: 80, karmaExitLow: -60, karmaExitHigh: 60, years: 3, onceCooldownYears: 10, happinessDrift: 2, happinessRest: 50 },

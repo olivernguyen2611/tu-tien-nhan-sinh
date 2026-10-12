@@ -6,10 +6,11 @@ import { inBottleneck, majorBreakthroughInfo, realmLabel, rootLabel, yearlyGain 
 import { craftViews } from '../../systems/crafts';
 import { careerIncome, careerLabel, careerViews } from '../../systems/career';
 import { currentTechnique, learnBlocked, techniqueById, techniqueSummary } from '../../systems/technique';
+import { martialView } from '../../systems/martial';
 import { Meter } from './Meter';
 import { TermText } from './Tooltip';
 
-export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJoinCareer, onLearn, onClose }: {
+export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome to show in the sheet. */
@@ -20,6 +21,8 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
   onJoinCareer: (careerId: string) => string | null;
   /** Practise a technique from a scroll; returns the log text, or null. */
   onLearn: (techniqueId: string) => string | null;
+  /** A year of martial training (task 3.11); returns the log text, or null. */
+  onTrain: () => string | null;
   onClose: () => void;
 }) {
   const [confirming, setConfirming] = useState(false);
@@ -104,6 +107,20 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
             {result.changes && <span class="changes">{result.changes}</span>}
           </p>
         )}
+        {mortal && state.alive && (() => {
+          const m = martialView(state, content);
+          return (
+            <div class="crafts">
+              <h3 class="panel-sub">Võ đạo</h3>
+              <p class="story">{m.stage ? `Cảnh giới võ đạo: ${m.stage}` : 'Chưa nhập môn võ đạo.'}</p>
+              {m.next && <p class="profile-note">Luyện thêm {Math.max(0, m.need - m.years)} năm để thử lên {m.next} (tỉ lệ khoảng {Math.round(m.chance * 100)}%).</p>}
+              {m.gate && <p class="profile-note">{m.gate}</p>}
+              <button class="chip-btn" disabled={!!m.blocked} onClick={() => setPracticed(onTrain())}>Luyện võ</button>
+              {m.blocked && <span class="craft-note">{m.blocked}</span>}
+            </div>
+          );
+        })()}
+
         {mortal && state.alive && (
           <div class="crafts">
             <h3 class="panel-sub">Đường đời</h3>

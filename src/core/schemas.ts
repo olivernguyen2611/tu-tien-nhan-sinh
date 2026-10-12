@@ -55,6 +55,10 @@ const BaseConditionsSchema = z
     peakFails: z.object({ min: z.number().int().min(0) }).strict().optional(),
     /** Fate talents (task 2.8 hidden choices). */
     talentsAny: ids,
+    /** Martial stage index range (task 3.11; -1 = not yet Tam lưu). */
+    martial: z.object({ min: z.number().int().optional(), max: z.number().int().optional(), ready: z.boolean().optional() }).strict().optional(),
+    /** Born into one of these origins. */
+    origins: ids,
   })
   .strict();
 
@@ -98,6 +102,12 @@ export const EffectsSchema = z
     joinCareer: id.optional(),
     careerPromote: z.boolean().optional(),
     leaveCareer: z.boolean().optional(),
+    /** Task 3.11: martial path. */
+    martialPromote: z.boolean().optional(),
+    martialAttempt: z.boolean().optional(),
+    martialYears: z.number().int().optional(),
+    /** Extra % for the next martial breakthrough. */
+    martialBonus: z.number().optional(),
     /** An elder of the sect takes you as a personal disciple. */
     gainMaster: z.boolean().optional(),
     /** Sect life (task 2.5): join a sect, add contribution, promote one rank, leave. */
@@ -114,7 +124,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -664,6 +674,38 @@ export const BalanceSchema = z
         extraRefreshLuck: z.number(),
       })
       .strict(),
+    /** Task 3.11: martial path for mortals (mortal-path.md 2b). Index i = stage V(i+1). */
+    martial: z
+      .object({
+        minAge: z.number().int().min(0),
+        combatPower: z.array(z.number().min(0)).min(1),
+        /** Lifespan added on reaching each stage. */
+        lifespan: z.array(z.number().int().min(0)).min(1),
+        /** Training into stage i (steps[0] = into Tam lưu). Stages past the list need a kỳ ngộ. */
+        steps: z.array(
+          z
+            .object({
+              years: z.number().int().min(1),
+              /** Averaged for the check. */
+              stats: z.array(z.enum([...MORTAL_STATS, ...APTITUDES])).min(1),
+              difficulty: z.number(),
+              needsTeacher: z.boolean().optional(),
+              minPhysique: z.number().optional(),
+              /** Overrides the default years lost on a failed attempt. */
+              failYearsBack: z.number().int().min(0).optional(),
+            })
+            .strict(),
+        ),
+        chanceBase: probability,
+        chancePerPoint: z.number().min(0),
+        chanceMin: probability,
+        chanceMax: probability,
+        /** Training years lost on a failed attempt. */
+        failYearsBack: z.number().int().min(0),
+        oldAge: z.number().int(),
+        oldAgeMul: z.number().min(0),
+      })
+      .strict(),
     /** Combat path modifiers (realms-roots-paths.md C); keyed by path id. */
     paths: z
       .object({ startAffinity: range })
@@ -1097,3 +1139,17 @@ export const ItemFileSchema = z.array(
     .strict(),
 );
 export type Item = z.infer<typeof ItemFileSchema>[number];
+
+/** content/martial.json: martial stages for mortals (task 3.11, mortal-path.md 2b). */
+export const MartialFileSchema = z
+  .object({
+    stages: z.array(z.object({ name: z.string().min(1), description: z.string().min(1) }).strict()).min(1),
+    /** What counts as "bí kíp hoặc sư phụ" for stages that need a teacher. */
+    teacher: z.object({ flags: ids, careers: ids, origins: ids }).strict(),
+    /** Kept after Ngũ khí triều nguyên brings the life into Luyện Khí. */
+    ascendEffects: z.array(EffectHookSchema),
+    /** {years}, {need}, {next}, {stage}, {description}. */
+    texts: z.object({ train: z.string().min(1), promote: z.string().min(1), fail: z.string().min(1), ascend: z.string().min(1) }).strict(),
+  })
+  .strict();
+export type MartialFile = z.infer<typeof MartialFileSchema>;

@@ -12,6 +12,7 @@ import { gainScroll, learnTechnique } from '../technique';
 import { addItems, removeItems } from '../items';
 import { addCraftXp } from '../crafts';
 import { forceJoinCareer, leaveCareer, promoteCareer } from '../career';
+import { addMartialYears, martialAttempt, martialPromote } from '../martial';
 import { addContribution, grantMaster, joinSect, leaveSect, promoteSect } from '../sect';
 
 type Outcome = NonNullable<GameEvent['choices'][number]['result']>;
@@ -215,6 +216,14 @@ export function resolveChoice(state: GameState, content: Content, choiceIndex: n
     next = { ...next, social: { ...next.social, reputation: rep } };
   }
   next = removeItems(addItems(next, fx.addItems ?? []), fx.removeItems ?? []);
+  if (fx.martialYears) next = addMartialYears(next, fx.martialYears);
+  if (fx.martialBonus) next = { ...next, martial: { ...next.martial, bonus: next.martial.bonus + fx.martialBonus } };
+  if (fx.martialPromote) next = martialPromote(next, content);
+  if (fx.martialAttempt) {
+    const tried = martialAttempt(next, content);
+    next = tried.state;
+    if (tried.text) text = `${text} ${tried.text}`;
+  }
   if (fx.leaveCareer) next = leaveCareer(next);
   if (fx.joinCareer) next = forceJoinCareer(next, content, fx.joinCareer);
   if (fx.careerPromote) next = promoteCareer(next, content);

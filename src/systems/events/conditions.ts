@@ -44,6 +44,13 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (k.maxRung !== undefined && (!state.career.id || state.career.rung > k.maxRung)) return false;
   }
   if (c.peakFails && (state.cult.fails[`${state.cult.realm}:peak`] ?? 0) < c.peakFails.min) return false;
+  if (c.martial?.min !== undefined && state.martial.stage < c.martial.min) return false;
+  if (c.martial?.max !== undefined && state.martial.stage > c.martial.max) return false;
+  if (c.martial?.ready !== undefined && content) {
+    const step = content.balance.martial.steps[state.martial.stage + 1];
+    if ((!!step && state.martial.years >= step.years) !== c.martial.ready) return false;
+  }
+  if (c.origins?.length && !c.origins.includes(state.character.originId)) return false;
   if (c.talentsAny?.length && !c.talentsAny.some((t) => state.talents.includes(t))) return false;
   if (c.sect && content) {
     const s = c.sect;

@@ -44,6 +44,8 @@ export interface GameState {
   talents: string[];
   /** A talent choice waiting for the player (after a big breakthrough); blocks the next year. */
   fate: { offered: string[]; refreshesLeft: number } | null;
+  /** Martial path (task 3.11): stage index (-1 before Tam lưu), training years toward the next, extra % for it. */
+  martial: { stage: number; years: number; bonus: number; lastTrain: number | null };
   /** Sect membership (task 2.5). */
   sect: {
     id: string | null;
