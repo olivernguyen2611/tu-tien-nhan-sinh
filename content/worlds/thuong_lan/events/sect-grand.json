@@ -1,0 +1,1028 @@
+[
+  {
+    "id": "sg_thi_luyen_mo",
+    "category": "sect",
+    "title": "Thí luyện sơn môn",
+    "text": "Mười năm một lần, tông mở Thí Luyện Cốc cho đệ tử có công. Ai vào được tới đỉnh sẽ được ban thưởng lớn, nhưng cũng có người không ra.",
+    "conditions": {
+      "sect": {
+        "member": true,
+        "minRank": 1
+      },
+      "realm": {
+        "min": "luyen_khi"
+      },
+      "stage": {
+        "min": 2
+      }
+    },
+    "weight": 3,
+    "oncePerLife": true,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Ghi danh vào thí luyện",
+        "result": {
+          "text": "Ngươi ký tên, nhận một túi lương khô và tấm ngọc bài thoát hiểm.",
+          "effects": {
+            "chain": "sg_thi_luyen_cua_1",
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Khước từ, tu thêm vài năm",
+        "result": {
+          "text": "Ngươi đứng ngoài sơn môn nhìn đoàn người vào cốc, trong lòng ít nhiều tiếc nuối.",
+          "effects": {
+            "stat.happiness": -2,
+            "stat.comprehension": 1
+          }
+        }
+      }
+    ],
+    "themes": [
+      "sect_grand"
+    ]
+  },
+  {
+    "id": "sg_thi_luyen_cua_1",
+    "category": "sect",
+    "title": "Thí Luyện Cốc · Ải sương mù",
+    "text": "Vào cốc là một vùng sương dày, bước ba bước đã không thấy người đi trước. Có tiếng chuông xa xa, chẳng rõ là chỉ đường hay dụ người.",
+    "conditions": {},
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Đi theo tiếng chuông",
+        "check": {
+          "stat": "stat.daoHeart",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Ngươi bình tâm đi tới, tiếng chuông dẫn đúng ra khỏi sương.",
+          "effects": {
+            "chain": "sg_thi_luyen_cua_2",
+            "stat.daoHeart": 1,
+            "sectContribution": 5
+          }
+        },
+        "fail": {
+          "text": "Tiếng chuông quay ngươi tám vòng giữa sương, đến khi tỉnh thì tay chân lạnh buốt.",
+          "effects": {
+            "chain": "sg_thi_luyen_cua_2",
+            "stat.health": -5
+          }
+        }
+      },
+      {
+        "text": "Bám theo vách đá mà đi",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Ngươi lần theo vách, đếm từng bước, ra khỏi sương gọn gàng.",
+          "effects": {
+            "chain": "sg_thi_luyen_cua_2",
+            "stat.intellect": 1,
+            "sectContribution": 5
+          }
+        },
+        "fail": {
+          "text": "Vách đá trơn, ngươi trượt chân rách cả tay áo.",
+          "effects": {
+            "chain": "sg_thi_luyen_cua_2",
+            "stat.health": -4
+          }
+        }
+      }
+    ],
+    "themes": []
+  },
+  {
+    "id": "sg_thi_luyen_cua_2",
+    "category": "sect",
+    "title": "Thí Luyện Cốc · Hang yêu thú",
+    "text": "Đường lên đỉnh phải qua một hang đá. Trong bóng tối, đôi mắt vàng mở ra, một con yêu thú canh cốc nhe nanh.",
+    "conditions": {},
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Giao chiến",
+        "result": {
+          "text": "Ngươi rút binh khí lao lên.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Yêu thú canh cốc",
+              "realm": "same",
+              "powerMul": 1.0,
+              "element": "random",
+              "lineage": "tien",
+              "intent": "teach",
+              "mercy": 0.8
+            },
+            "win": {
+              "text": "Yêu thú gục xuống, nhả ra một khối linh thạch nó nuốt từ trước.",
+              "effects": {
+                "chain": "sg_thi_luyen_cua_3",
+                "spiritStones": 3,
+                "stat.physique": 1,
+                "sectContribution": 10
+              }
+            },
+            "lose": {
+              "text": "Ngươi bị hất ra khỏi hang, ngọc bài thoát hiểm sáng lên đưa ngươi ra khỏi cốc. Thí luyện hết với ngươi.",
+              "effects": {
+                "stat.health": -12,
+                "stat.happiness": -4
+              }
+            },
+            "fled": {
+              "text": "Ngươi tháo chạy, bóp nát ngọc bài. Thí luyện hết với ngươi.",
+              "effects": {
+                "stat.happiness": -3,
+                "stat.daoHeart": -1
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Luồn theo mép hang",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Yêu thú ngủ gục, ngươi lách qua êm ru.",
+          "effects": {
+            "chain": "sg_thi_luyen_cua_3",
+            "stat.luck": 1,
+            "sectContribution": 6
+          }
+        },
+        "fail": {
+          "text": "Ngươi giẫm trúng một viên đá, yêu thú tỉnh dậy. Ngươi chạy thục mạng nhưng vẫn thoát ra phía bên kia.",
+          "effects": {
+            "chain": "sg_thi_luyen_cua_3",
+            "stat.health": -8
+          }
+        }
+      }
+    ],
+    "themes": []
+  },
+  {
+    "id": "sg_thi_luyen_cua_3",
+    "category": "sect",
+    "title": "Thí Luyện Cốc · Đỉnh Vọng Nguyệt",
+    "text": "Đỉnh cốc là một thạch đài, trên đài có ba món đồ: một bình đan, một quyển cổ thư và một thanh kiếm tre. Chỉ được lấy một.",
+    "conditions": {},
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Lấy bình đan",
+        "result": {
+          "text": "Bình đan thơm nức, tuổi thọ của ngươi lên theo.",
+          "effects": {
+            "addItems": [
+              "huyet_khi_hoan"
+            ],
+            "sectContribution": 20,
+            "stat.health": 4
+          }
+        }
+      },
+      {
+        "text": "Lấy quyển cổ thư",
+        "result": {
+          "text": "Ngươi đọc trọn một đêm trên thạch đài, ngộ ra vài chỗ trước nay bí.",
+          "effects": {
+            "cultProgress": 8,
+            "sectContribution": 20,
+            "stat.comprehension": 2
+          }
+        }
+      },
+      {
+        "text": "Lấy thanh kiếm tre",
+        "result": {
+          "text": "Kiếm tre nhẹ như không, nhưng cầm lên thì thấy tâm tĩnh như nước.",
+          "effects": {
+            "sectContribution": 20,
+            "stat.daoHeart": 2,
+            "stat.charm": 1
+          }
+        }
+      }
+    ],
+    "themes": []
+  },
+  {
+    "id": "sg_ngoai_dich_bao_dong",
+    "category": "sect",
+    "title": "Chuông báo địch",
+    "text": "Chuông sơn môn gióng ba hồi gấp. Có tiếng hô từ ngọn núi ngoài: một đạo thế lực lạ kéo tới, mang theo cờ đen, định công phá hộ sơn đại trận.",
+    "conditions": {
+      "sect": {
+        "member": true,
+        "minRank": 1
+      },
+      "realm": {
+        "min": "luyen_khi"
+      },
+      "stage": {
+        "min": 3
+      }
+    },
+    "weight": 2.5,
+    "oncePerLife": true,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Ra trận tuyến đầu",
+        "result": {
+          "text": "Ngươi xông ra cùng các sư huynh đệ giữ cổng chính.",
+          "effects": {
+            "chain": "sg_ngoai_dich_giao_chien",
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Ở lại giữ đại trận phía sau",
+        "result": {
+          "text": "Ngươi cùng các trưởng lão canh trận nhãn, truyền chân khí cho đại trận.",
+          "effects": {
+            "chain": "sg_ngoai_dich_hau_phuong",
+            "stat.comprehension": 1
+          }
+        }
+      },
+      {
+        "text": "Lẩn vào hậu sơn",
+        "result": {
+          "text": "Ngươi nép sau tảng đá, nghe tiếng giết ngoài cổng mà tim đập thình thịch. Khi tiếng động lắng, mặt ngươi đỏ bừng.",
+          "effects": {
+            "sectContribution": -15,
+            "stat.daoHeart": -2,
+            "stat.happiness": -3
+          }
+        }
+      }
+    ],
+    "themes": [
+      "sect_grand"
+    ]
+  },
+  {
+    "id": "sg_ngoai_dich_giao_chien",
+    "category": "sect",
+    "title": "Giữ sơn môn · Cổng chính",
+    "text": "Một gã mặc áo đen xông qua cổng, nhắm thẳng vào đệ tử đứng đầu hàng. Ngươi chặn đường hắn.",
+    "conditions": {},
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Giao chiến",
+        "result": {
+          "text": "Ngươi rút binh khí chặn đường.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Cờ đen sứ giả",
+              "realm": "same",
+              "powerMul": 1.15,
+              "element": "random",
+              "lineage": "ma",
+              "intent": "kill",
+              "mercy": 0.2
+            },
+            "win": {
+              "text": "Gã áo đen bỏ chạy, ngươi được các trưởng lão nhắc tên trước toàn tông.",
+              "effects": {
+                "chain": "sg_ngoai_dich_hau_qua",
+                "reputation": {
+                  "chinh": 3
+                },
+                "sectContribution": 40,
+                "stat.physique": 1,
+                "stat.charm": 1
+              }
+            },
+            "lose": {
+              "text": "Ngươi bị đánh ngã nhưng sư huynh kịp thời cứu. Trận này ngươi chỉ là kẻ nằm xem.",
+              "effects": {
+                "chain": "sg_ngoai_dich_hau_qua",
+                "sectContribution": 10,
+                "stat.health": -15,
+                "stat.happiness": -3
+              }
+            },
+            "fled": {
+              "text": "Ngươi lùi vào hàng sau, mặt đỏ gay.",
+              "effects": {
+                "chain": "sg_ngoai_dich_hau_qua",
+                "sectContribution": 2,
+                "stat.daoHeart": -1,
+                "stat.happiness": -2
+              }
+            }
+          }
+        }
+      }
+    ],
+    "themes": []
+  },
+  {
+    "id": "sg_ngoai_dich_hau_phuong",
+    "category": "sect",
+    "title": "Giữ sơn môn · Trận nhãn",
+    "text": "Hộ sơn đại trận rung lên từng đợt khi bị đánh. Trưởng lão nói: \"Đệ tử nào dồn thêm chân khí thì dồn, đừng để trận vỡ.\"",
+    "conditions": {},
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Dồn hết chân khí",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Chân khí ngươi hòa vào đại trận. Trận vững như thành đồng, địch không phá nổi.",
+          "effects": {
+            "chain": "sg_ngoai_dich_hau_qua",
+            "sectContribution": 30,
+            "stat.physique": 1,
+            "stat.daoHeart": 1
+          }
+        },
+        "fail": {
+          "text": "Dồn quá sức, ngươi ngã quỵ nhưng trận cũng qua cơn nguy.",
+          "effects": {
+            "chain": "sg_ngoai_dich_hau_qua",
+            "sectContribution": 15,
+            "stat.health": -10
+          }
+        }
+      },
+      {
+        "text": "Chỉ góp vừa phải",
+        "result": {
+          "text": "Ngươi giữ lại chút sức phòng bất trắc. Trận qua được, công ngươi không nhiều.",
+          "effects": {
+            "chain": "sg_ngoai_dich_hau_qua",
+            "sectContribution": 8,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ],
+    "themes": []
+  },
+  {
+    "id": "sg_ngoai_dich_hau_qua",
+    "category": "sect",
+    "title": "Sau trận",
+    "text": "Địch rút, sơn môn đầy dấu cháy. Chưởng môn cho kiểm kê người và của; trưởng lão phát thưởng và tiền tuất cho người đã mất.",
+    "conditions": {},
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Xin phụ giúp chăm người bị thương",
+        "result": {
+          "text": "Ngươi ở Dược Phòng ba ngày ba đêm, nghe không ít lời cảm tạ.",
+          "effects": {
+            "sectContribution": 15,
+            "reputation": {
+              "chinh": 2
+            },
+            "stat.happiness": 3,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Nhận phần thưởng rồi về tu luyện",
+        "result": {
+          "text": "Ngươi cầm linh thạch về động phủ, trong lòng đã khác một chút.",
+          "effects": {
+            "spiritStones": 5,
+            "stat.intellect": 1
+          }
+        }
+      }
+    ],
+    "themes": []
+  },
+  {
+    "id": "sg_noi_loan_phan_do",
+    "category": "sect",
+    "title": "Kẻ nội gián",
+    "text": "Đêm khuya, ngươi vô tình thấy một vị sư huynh lén đưa một cuộn ngọc giản cho người lạ ngoài sơn môn. Hắn nhìn thấy ngươi, sắc mặt trắng bệch.",
+    "conditions": {
+      "sect": {
+        "member": true,
+        "minRank": 1
+      },
+      "realm": {
+        "min": "luyen_khi"
+      }
+    },
+    "weight": 2.5,
+    "oncePerLife": true,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Báo thẳng lên chấp sự",
+        "result": {
+          "text": "Chấp sự trầm ngâm gật đầu, bảo ngươi giữ kín chuyện này.",
+          "effects": {
+            "chain": "sg_noi_loan_dieu_tra",
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Đối chất riêng với hắn",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Hắn quỳ xuống van nài, hứa sẽ lấy lại ngọc giản. Ngươi nhìn người rồi quyết.",
+          "effects": {
+            "chain": "sg_noi_loan_dieu_tra",
+            "stat.charm": 1
+          }
+        },
+        "fail": {
+          "text": "Hắn trở mặt, đẩy ngươi ngã rồi biến mất vào đêm.",
+          "effects": {
+            "chain": "sg_noi_loan_dieu_tra",
+            "stat.health": -6,
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Làm như không thấy",
+        "result": {
+          "text": "Ngươi quay đi. Ba ngày sau tông có chuyện lớn, ngươi tự trách mãi.",
+          "effects": {
+            "sectContribution": -10,
+            "stat.daoHeart": -2,
+            "stat.happiness": -3
+          }
+        }
+      }
+    ],
+    "themes": [
+      "sect_grand"
+    ]
+  },
+  {
+    "id": "sg_noi_loan_dieu_tra",
+    "category": "sect",
+    "title": "Nội loạn · Mật điều tra",
+    "text": "Chấp sự kéo ngươi vào mật thất. \"Trong tông còn mấy kẻ nữa. Ta cần một đệ tử không dính phe phái giúp ta xem xét.\"",
+    "conditions": {},
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Nhận lời, ngầm theo dõi",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Ngươi lần theo dấu vết, vạch ra hai người cùng bè với kẻ phản đồ.",
+          "effects": {
+            "chain": "sg_noi_loan_ket_cuc",
+            "sectContribution": 25,
+            "stat.intellect": 1
+          }
+        },
+        "fail": {
+          "text": "Ngươi để lộ dấu vết, đối phương cảnh giác đổi đường liên lạc.",
+          "effects": {
+            "chain": "sg_noi_loan_ket_cuc",
+            "sectContribution": 5,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Từ chối, sợ mang họa",
+        "result": {
+          "text": "Chấp sự nhìn ngươi lâu, không ép. Ngươi nhẹ người nhưng cũng thấy mình nhỏ đi.",
+          "effects": {
+            "stat.daoHeart": -1,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ],
+    "themes": []
+  },
+  {
+    "id": "sg_noi_loan_ket_cuc",
+    "category": "sect",
+    "title": "Nội loạn · Đêm bắt phản đồ",
+    "text": "Đêm trăng khuyết, những kẻ phản đồ định mở cổng phụ cho người ngoài. Chấp sự dẫn người chặn đường; ngươi đứng ở hàng đầu.",
+    "conditions": {},
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Cùng chấp sự ra tay bắt người",
+        "result": {
+          "text": "Ngươi lao lên chặn kẻ cầm đầu.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Phản đồ cầm đầu",
+              "realm": "same",
+              "powerMul": 1.1,
+              "element": "random",
+              "lineage": "ma",
+              "intent": "kill",
+              "mercy": 0.3
+            },
+            "win": {
+              "text": "Kẻ cầm đầu bị bắt sống. Chưởng môn ban thưởng, ghi tên ngươi vào sổ công trạng.",
+              "effects": {
+                "sectContribution": 50,
+                "spiritStones": 8,
+                "reputation": {
+                  "chinh": 4
+                },
+                "stat.daoHeart": 2,
+                "stat.charm": 1
+              }
+            },
+            "lose": {
+              "text": "Ngươi bị hạ gục nhưng đồng môn kịp tới bắt được hắn. Ngươi nằm dưỡng thương nửa tháng.",
+              "effects": {
+                "sectContribution": 15,
+                "stat.health": -14,
+                "stat.happiness": -2
+              }
+            },
+            "fled": {
+              "text": "Ngươi lùi lại đúng lúc hắn quay đầu nhìn, rồi cố nhìn đi chỗ khác.",
+              "effects": {
+                "sectContribution": 3,
+                "stat.daoHeart": -2,
+                "stat.happiness": -3
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Chỉ canh cổng, để người khác bắt",
+        "result": {
+          "text": "Ngươi đứng canh cổng suốt đêm, vắng trận đánh nhưng cũng có công.",
+          "effects": {
+            "sectContribution": 12,
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ],
+    "themes": []
+  },
+  {
+    "id": "sg_dai_hoi_ba_mua",
+    "category": "sect",
+    "title": "Đại hội tông môn",
+    "text": "Ba năm một lần, tông mở đại hội ba ngày: sáng nghe giảng, chiều so tài, tối uống trà luận đạo. Khách các tông bạn cũng được mời tới dự.",
+    "conditions": {
+      "sect": {
+        "member": true,
+        "minRank": 1
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Lên đài trình diễn công pháp",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Khán giả vỗ tay, một vị khách tông bạn xin ngươi chỉ vài chiêu.",
+          "effects": {
+            "sectContribution": 20,
+            "reputation": {
+              "chinh": 1
+            },
+            "stat.charm": 2,
+            "stat.happiness": 3
+          }
+        },
+        "fail": {
+          "text": "Ngươi quên mất chiêu thứ ba, đứng ngẩn trên đài.",
+          "effects": {
+            "sectContribution": 3,
+            "stat.happiness": -4,
+            "stat.charm": -1
+          }
+        }
+      },
+      {
+        "text": "Ngồi nghe giảng cả ba ngày",
+        "result": {
+          "text": "Ngươi ghi chép đầy ba cuốn sổ, mắt thâm quầng mà lòng vui.",
+          "effects": {
+            "cultProgress": 4,
+            "stat.intellect": 1,
+            "stat.comprehension": 1
+          }
+        }
+      },
+      {
+        "text": "Làm quen khách các tông bạn",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Ngươi gặp được một đạo hữu hợp ý, hẹn qua lại thư từ.",
+          "effects": {
+            "reputation": {
+              "chinh": 2
+            },
+            "stat.charm": 1,
+            "stat.happiness": 3
+          }
+        },
+        "fail": {
+          "text": "Ngươi lỡ lời chê công pháp tông bạn, khách khó chịu bỏ đi.",
+          "effects": {
+            "sectContribution": -4,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Trông quán trà lo hậu cần",
+        "result": {
+          "text": "Ngươi bận từ sáng tới tối, chẳng xem được trận nào, nhưng chấp sự ghi công.",
+          "effects": {
+            "sectContribution": 12,
+            "stat.health": -2,
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ],
+    "themes": [
+      "sect_grand"
+    ]
+  },
+  {
+    "id": "sg_phe_phai",
+    "category": "sect",
+    "title": "Ba phe trong tông",
+    "text": "Sau những buổi họp đại sảnh, ngươi nhận ra tông không phải một khối: phái giữ nếp cũ thì lo giữ môn quy, phái cải cách muốn mở rộng thu đệ tử, phái chuộng thực lực thì chỉ xem ai đánh thắng. Ai cũng chìa tay về phía ngươi.",
+    "conditions": {
+      "sect": {
+        "member": true,
+        "minRank": 2
+      },
+      "flagsNone": [
+        "phe_bao_thu",
+        "phe_cai_cach",
+        "phe_thuc_luc",
+        "da_ke_nhiem"
+      ]
+    },
+    "weight": 3,
+    "oncePerLife": true,
+    "cooldownYears": 10,
+    "themes": [
+      "sect_grand"
+    ],
+    "choices": [
+      {
+        "text": "Theo phái giữ nếp cũ",
+        "result": {
+          "text": "Các trưởng lão già gật gù hài lòng, giao cho ngươi giữ một phần sổ sách môn quy.",
+          "effects": {
+            "setFlags": [
+              "phe_bao_thu"
+            ],
+            "sectContribution": 15,
+            "stat.daoHeart": 2,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Theo phái cải cách",
+        "result": {
+          "text": "Nhóm đệ tử trẻ kéo ngươi vào bàn bạc, nói cười rôm rả tới khuya.",
+          "effects": {
+            "setFlags": [
+              "phe_cai_cach"
+            ],
+            "sectContribution": 10,
+            "stat.charm": 2,
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Theo phái chuộng thực lực",
+        "result": {
+          "text": "Họ chỉ hỏi ngươi một câu: \"Đánh được không?\" Ngươi gật đầu, thế là xong.",
+          "effects": {
+            "setFlags": [
+              "phe_thuc_luc"
+            ],
+            "sectContribution": 10,
+            "stat.physique": 2,
+            "stat.daoHeart": -1
+          }
+        }
+      },
+      {
+        "text": "Đứng ngoài, không theo phe nào",
+        "result": {
+          "text": "Cả ba phe đều chê ngươi cứng đầu, nhưng không ai dám khinh.",
+          "effects": {
+            "sectContribution": -5,
+            "stat.daoHeart": 2,
+            "stat.happiness": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "sg_ngoi_mo",
+    "category": "sect",
+    "title": "Chưởng môn muốn truyền ngôi",
+    "text": "Chưởng môn đã già, linh lực suy dần. Một buổi sáng, ngài triệu các chân truyền vào điện: \"Ta định chọn người kế nhiệm. Ai thấy mình đủ gánh, cứ nói.\"",
+    "conditions": {
+      "sect": {
+        "member": true,
+        "minRank": 3
+      },
+      "realm": {
+        "min": "truc_co"
+      },
+      "flagsNone": [
+        "da_ke_nhiem"
+      ]
+    },
+    "weight": 2,
+    "oncePerLife": true,
+    "cooldownYears": 20,
+    "themes": [
+      "sect_grand"
+    ],
+    "choices": [
+      {
+        "text": "Đứng ra tranh ngôi",
+        "result": {
+          "text": "Cả điện lặng đi. Có người nhìn ngươi với ánh mắt nể, có người nhìn bằng ánh mắt khác.",
+          "effects": {
+            "chain": "sg_ngoi_vong_phieu",
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Ủng hộ người kế nhiệm mà chưởng môn mong",
+        "result": {
+          "text": "Ngươi lên tiếng ủng hộ, chưởng môn mỉm cười. Từ đó ngài coi ngươi như người nhà.",
+          "effects": {
+            "sectContribution": 40,
+            "setFlags": [
+              "ung_ho_ke_nhiem"
+            ],
+            "stat.charm": 1,
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Xin từ chối, chỉ lo tu luyện",
+        "result": {
+          "text": "Chưởng môn nhìn ngươi lâu rồi gật đầu: \"Đạo của mỗi người khác nhau.\"",
+          "effects": {
+            "cultProgress": 6,
+            "stat.daoHeart": 1,
+            "stat.comprehension": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "sg_ngoi_vong_phieu",
+    "category": "sect",
+    "title": "Tranh ngôi · Vòng bàn bạc",
+    "text": "Các trưởng lão họp kín bàn người kế nhiệm. Ngoài đại sảnh, các phe thì thầm. Ngươi phải kiếm đủ người chịu nói tốt cho mình.",
+    "conditions": {},
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Dựa vào phe giữ nếp cũ",
+        "check": {
+          "stat": "stat.daoHeart",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Các trưởng lão già bỏ phiếu cho ngươi, nhưng đòi ngươi hứa sẽ không đổi nếp tông.",
+          "effects": {
+            "chain": "sg_ngoi_luan_vo",
+            "sectContribution": 20,
+            "stat.daoHeart": 1
+          }
+        },
+        "fail": {
+          "text": "Họ nghi ngươi chỉ lợi dụng, quay sang ủng hộ người khác.",
+          "effects": {
+            "chain": "sg_ngoi_luan_vo",
+            "stat.happiness": -3
+          }
+        },
+        "requires": {
+          "flagsAll": [
+            "phe_bao_thu"
+          ]
+        }
+      },
+      {
+        "text": "Dựa vào phe cải cách",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Đám đệ tử trẻ đứng sau lưng ngươi, tiếng hô vang cả đại sảnh.",
+          "effects": {
+            "chain": "sg_ngoi_luan_vo",
+            "sectContribution": 20,
+            "stat.charm": 1
+          }
+        },
+        "fail": {
+          "text": "Họ quá ồn ào, các trưởng lão thấy chướng tai.",
+          "effects": {
+            "chain": "sg_ngoi_luan_vo",
+            "stat.happiness": -3
+          }
+        },
+        "requires": {
+          "flagsAll": [
+            "phe_cai_cach"
+          ]
+        }
+      },
+      {
+        "text": "Dựa vào phe chuộng thực lực",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Ngươi đập nát một tảng đá giữa sân. Phe thực lực reo lên, không ai dám cãi.",
+          "effects": {
+            "chain": "sg_ngoi_luan_vo",
+            "sectContribution": 20,
+            "stat.physique": 1
+          }
+        },
+        "fail": {
+          "text": "Phe thực lực đông mà rối, mấy trưởng lão chê ngươi chỉ biết dùng sức.",
+          "effects": {
+            "chain": "sg_ngoi_luan_vo",
+            "stat.happiness": -3
+          }
+        },
+        "requires": {
+          "flagsAll": [
+            "phe_thuc_luc"
+          ]
+        }
+      },
+      {
+        "text": "Tự mình đi thuyết phục từng trưởng lão",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Ngươi kiên nhẫn qua từng động phủ, nghe từng lời trách móc. Cuối cùng đa số gật đầu.",
+          "effects": {
+            "chain": "sg_ngoi_luan_vo",
+            "sectContribution": 25,
+            "stat.charm": 2,
+            "stat.health": -2
+          }
+        },
+        "fail": {
+          "text": "Có trưởng lão không thèm tiếp, có người tiếp mà chẳng hứa gì.",
+          "effects": {
+            "chain": "sg_ngoi_luan_vo",
+            "stat.happiness": -4
+          }
+        }
+      }
+    ],
+    "themes": []
+  },
+  {
+    "id": "sg_ngoi_luan_vo",
+    "category": "sect",
+    "title": "Tranh ngôi · Luận võ kế vị",
+    "text": "Chưởng môn quyết định: người kế vị phải thắng trong trận cuối trước toàn tông, để không ai còn dị nghị. Đối thủ của ngươi là một chân truyền khác, vẻ mặt lạnh như đá.",
+    "conditions": {},
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Bước lên đài",
+        "result": {
+          "text": "Ngươi bước lên đài, cả tông im phăng phắc.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Chân truyền đối thủ",
+              "realm": "same",
+              "stage": 3,
+              "powerMul": 1.15,
+              "element": "random",
+              "lineage": "tien",
+              "intent": "teach",
+              "mercy": 0.9
+            },
+            "win": {
+              "text": "Đối thủ chắp tay nhận thua. Chưởng môn trao ấn tín, chuông sơn môn gióng chín tiếng. Ngươi là tân chưởng môn.",
+              "effects": {
+                "succeedSect": true,
+                "setFlags": [
+                  "da_ke_nhiem"
+                ],
+                "reputation": {
+                  "chinh": 5
+                },
+                "stat.daoHeart": 2,
+                "stat.charm": 2,
+                "stat.happiness": 5
+              }
+            },
+            "lose": {
+              "text": "Ngươi thua một chiêu. Đối thủ lên ngôi, ngươi được giữ chức trưởng lão nhưng mất mặt không ít.",
+              "effects": {
+                "setFlags": [
+                  "da_ke_nhiem"
+                ],
+                "sectContribution": -20,
+                "stat.health": -10,
+                "stat.happiness": -6,
+                "stat.daoHeart": -1
+              }
+            },
+            "fled": {
+              "text": "Ngươi bỏ đài. Cả tông nhìn ngươi, rồi lặng lẽ nhìn đi chỗ khác.",
+              "effects": {
+                "setFlags": [
+                  "da_ke_nhiem"
+                ],
+                "sectContribution": -30,
+                "stat.daoHeart": -3,
+                "stat.happiness": -6
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Xin nhường đối thủ vì đại cục",
+        "result": {
+          "text": "Ngươi chắp tay nhường ngôi. Đối thủ sững người, cả tông xôn xao rồi lặng đi. Có người nể ngươi.",
+          "effects": {
+            "setFlags": [
+              "da_ke_nhiem"
+            ],
+            "sectContribution": 30,
+            "reputation": {
+              "chinh": 2
+            },
+            "stat.daoHeart": 2,
+            "stat.happiness": -2
+          }
+        }
+      }
+    ],
+    "themes": []
+  }
+]

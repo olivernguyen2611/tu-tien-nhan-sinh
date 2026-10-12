@@ -223,6 +223,7 @@
     ],
     "masterCast": { "minRealm": 3, "aboveSelf": 2, "ageOffset": [60, 180], "affinity": 60 },
     "talksPerYear": 3,
+    "chainMaxFails": 2,
     "tournaments": [
       { "id": "dai_ti", "every": 5, "offset": 0, "minRank": 1, "rounds": 3, "stat": "power", "difficulty": 50,
         "rewards": [
@@ -372,6 +373,8 @@
     "maxRules": 3,
     "nameLength": [2, 24],
     "startMembers": { "kim_dan": 10, "nguyen_anh": 40, "hoa_than": 120 },
+    "inheritMembers": 300,
+    "inheritTreasury": 400,
     "growth": 0.05,
     "baseRecruit": 1,
     "attrition": 0.02,
@@ -380,7 +383,9 @@
     "defensePerLevel": 0.1,
     "maxDefense": 0.5,
     "donation": 50,
-    "decisions": [1, 3]
+    "decisions": [1, 3],
+    "prestige": { "start": 10, "membersFor60": 600, "perBuildingLevel": 3, "approach": 0.2 },
+    "elders": { "count": 3, "rewardCost": 30, "rewardAffinity": 10, "rewardPrestige": 1 }
   },
   "chosen": { "age": [12, 16], "affinity": 55, "progressMul": 1.6, "breakthroughBonus": 0.15 },
   "disciples": {
@@ -391,7 +396,21 @@
     "teachProgress": 30,
     "teachAffinity": 5,
     "teachFavor": 5,
-    "teacherProgress": 3
+    "teacherProgress": 3,
+    "acts": {
+      "sparProgress": 18, "sparLoseMul": 0.5, "sparAffinity": 3,
+      "debateDifficulty": 50, "debateProgress": 14, "debateAffinity": 4,
+      "techniqueProgress": 20, "techniqueAffinity": 10,
+      "techniqueSpeed": { "hoang": 0.05, "huyen": 0.1, "dia": 0.18, "thien": 0.3 },
+      "gift": {
+        "pill": { "progress": 25, "affinity": 8, "favor": 5, "aptitude": 0 },
+        "artifact": { "progress": 5, "affinity": 12, "favor": 8, "aptitude": 1 },
+        "talisman": { "progress": 0, "affinity": 6, "favor": 4, "aptitude": 0 },
+        "array": { "progress": 5, "affinity": 8, "favor": 4, "aptitude": 0 },
+        "material": { "progress": 8, "affinity": 5, "favor": 3, "aptitude": 0 },
+        "misc": { "progress": 0, "affinity": 5, "favor": 2, "aptitude": 0 }
+      }
+    }
   },
   "crafting": {
     "base": 0.6,
