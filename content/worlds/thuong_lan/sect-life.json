@@ -9,8 +9,264 @@
       "masterRefused": "Trưởng lão nhìn ngươi một lúc rồi lắc đầu: \"Ngộ tính còn kém, chưa đủ để thu làm đệ tử. Năm sau lại tới.\"",
       "masterTitle": "Trưởng lão {master}",
       "preceptBroken": "Phá giới sát sinh. Tiếng mõ trong lòng lạc mất một nhịp.",
-      "expelled": "Phá giới quá nhiều lần, {sect} không giữ ngươi nữa."
+      "expelled": "Phá giới quá nhiều lần, {sect} không giữ ngươi nữa.",
+      "castMet": "Những ngày đầu ở {sect}, ngươi lần lượt quen: {names}.",
+      "masterDied": "Tin dữ truyền về: {master} đã qua đời. Từ nay ngươi không còn sư phụ chỉ dạy."
   },
+  "titles": {
+    "master": "Sư phụ", "elder": "Trưởng lão", "steward": "Chấp sự",
+    "olderM": "Sư huynh", "olderF": "Sư tỷ", "youngerM": "Sư đệ", "youngerF": "Sư muội",
+    "rival": "Kình địch"
+  },
+  "interactions": [
+    {
+      "id": "xin_chi_diem",
+      "name": "Xin chỉ điểm",
+      "kinds": [
+        "master",
+        "elder",
+        "senior"
+      ],
+      "text": "Mang một chỗ vướng trong công pháp tới thỉnh giáo {npc}.",
+      "stat": "comprehension",
+      "difficulty": 45,
+      "minAffinity": 40,
+      "success": {
+        "text": "{npc} chỉ đúng một câu, chỗ nghẽn bấy lâu bỗng thông.",
+        "stats": {
+          "comprehension": 1
+        },
+        "affinity": 3,
+        "progress": 4
+      },
+      "fail": {
+        "text": "{npc} nghe xong chỉ phẩy tay: \"Về tự nghĩ thêm.\"",
+        "stats": {
+          "happiness": -2
+        },
+        "affinity": -1
+      }
+    },
+    {
+      "id": "hau_tra_su_phu",
+      "name": "Hầu trà sư phụ",
+      "kinds": [
+        "master"
+      ],
+      "text": "Pha ấm trà, ngồi hầu {npc} dưới gốc tùng cả buổi chiều.",
+      "stat": "charm",
+      "difficulty": 40,
+      "success": {
+        "text": "{npc} nhấp ngụm trà, kể vài chuyện thời trẻ. Ngươi nghe mà ngộ ra nhiều điều.",
+        "stats": {
+          "daoHeart": 1,
+          "happiness": 2
+        },
+        "affinity": 6,
+        "progress": 2
+      },
+      "fail": {
+        "text": "Trà pha quá đặc, {npc} nhíu mày không nói.",
+        "stats": {
+          "happiness": -2
+        },
+        "affinity": -2
+      }
+    },
+    {
+      "id": "thinh_giao_truong_lao",
+      "name": "Dâng quà thỉnh an",
+      "kinds": [
+        "elder",
+        "steward"
+      ],
+      "text": "Biếu {npc} chút linh thạch làm quà, nhân tiện hỏi thăm việc tông môn.",
+      "stat": "charm",
+      "difficulty": 50,
+      "cost": 2,
+      "success": {
+        "text": "{npc} cười hiền, hứa lúc cần sẽ nói đỡ cho ngươi một câu.",
+        "stats": {
+          "happiness": 1,
+          "charm": 1
+        },
+        "affinity": 8,
+        "favor": 8,
+        "contribution": 4
+      },
+      "fail": {
+        "text": "{npc} từ chối khéo, trả lại quà. Ngươi đỏ mặt cầm về.",
+        "stats": {
+          "happiness": -2
+        },
+        "affinity": -2
+      }
+    },
+    {
+      "id": "luan_dao",
+      "name": "Luận đạo",
+      "kinds": [
+        "senior",
+        "peer",
+        "rival"
+      ],
+      "text": "Cùng {npc} ngồi bàn về đạo lý tu hành suốt một đêm.",
+      "stat": "comprehension",
+      "difficulty": 45,
+      "success": {
+        "text": "Hai bên tranh qua cãi lại, mỗi người ngộ thêm một tầng.",
+        "stats": {
+          "comprehension": 1,
+          "intellect": 1
+        },
+        "affinity": 5,
+        "progress": 2
+      },
+      "fail": {
+        "text": "Nói không lại {npc}, ngươi về nằm trằn trọc tới sáng.",
+        "stats": {
+          "happiness": -2
+        },
+        "affinity": 1
+      }
+    },
+    {
+      "id": "ti_thi",
+      "name": "Tỉ thí",
+      "kinds": [
+        "senior",
+        "peer",
+        "rival"
+      ],
+      "text": "Lên Diễn Võ Trường tỉ thí điểm tới với {npc}.",
+      "stat": "power",
+      "difficulty": 50,
+      "success": {
+        "text": "Ngươi thắng nửa chiêu. Quanh sân vang lên tiếng hò reo.",
+        "stats": {
+          "physique": 1,
+          "happiness": 2
+        },
+        "affinity": 2,
+        "progress": 1
+      },
+      "fail": {
+        "text": "Bị {npc} đánh bay khỏi sân, nằm ngửa nhìn trời.",
+        "stats": {
+          "health": -6,
+          "happiness": -2
+        },
+        "affinity": 2
+      }
+    },
+    {
+      "id": "uong_tra_dong_mon",
+      "name": "Mời uống trà",
+      "kinds": [
+        "senior",
+        "peer",
+        "steward"
+      ],
+      "text": "Rủ {npc} ra đình ngoài sơn môn uống chén trà, nói chuyện phiếm.",
+      "stat": "charm",
+      "difficulty": 40,
+      "success": {
+        "text": "Câu chuyện qua lại, hai người thân nhau hơn hẳn.",
+        "stats": {
+          "happiness": 3
+        },
+        "affinity": 8
+      },
+      "fail": {
+        "text": "{npc} bận việc, chỉ ngồi chốc lát rồi cáo từ.",
+        "stats": {
+          "happiness": -1
+        },
+        "affinity": 0
+      }
+    },
+    {
+      "id": "hoa_giai",
+      "name": "Hóa giải hiềm khích",
+      "kinds": [
+        "rival"
+      ],
+      "text": "Chủ động tìm {npc}, mong gác lại chuyện cũ.",
+      "stat": "charm",
+      "difficulty": 55,
+      "success": {
+        "text": "{npc} do dự rồi gật đầu: \"Thôi, đồng môn với nhau cả.\"",
+        "stats": {
+          "happiness": 3,
+          "daoHeart": 1
+        },
+        "affinity": 12,
+        "grudge": -15
+      },
+      "fail": {
+        "text": "{npc} cười khẩy, quay lưng bỏ đi.",
+        "stats": {
+          "happiness": -3
+        },
+        "grudge": 5
+      }
+    },
+    {
+      "id": "doi_dau",
+      "name": "Đối đầu giữa sân",
+      "kinds": [
+        "rival"
+      ],
+      "text": "Không chịu nhún, ngươi cùng {npc} chạm mặt giữa sân trước bao ánh mắt.",
+      "stat": "daoHeart",
+      "difficulty": 50,
+      "success": {
+        "text": "Ngươi đứng vững không lùi nửa bước. {npc} đành xuống nước.",
+        "stats": {
+          "daoHeart": 2,
+          "happiness": 2
+        },
+        "grudge": -6,
+        "contribution": 2
+      },
+      "fail": {
+        "text": "Ngươi nóng giận nói quá lời, bị chấp sự nhắc nhở.",
+        "stats": {
+          "happiness": -3,
+          "daoHeart": -1
+        },
+        "grudge": 8
+      }
+    },
+    {
+      "id": "nho_giup_viec",
+      "name": "Nhờ giúp một tay",
+      "kinds": [
+        "peer",
+        "senior",
+        "steward"
+      ],
+      "text": "Nhờ {npc} cùng làm xong phần việc tông môn còn dang dở.",
+      "stat": "charm",
+      "difficulty": 45,
+      "success": {
+        "text": "Hai người làm chung nhanh gọn, phần cống hiến chia đều.",
+        "stats": {
+          "happiness": 2
+        },
+        "affinity": 5,
+        "favor": 5,
+        "contribution": 5
+      },
+      "fail": {
+        "text": "{npc} đã hứa việc khác, ngươi đành làm một mình.",
+        "stats": {
+          "health": -2
+        },
+        "affinity": -1
+      }
+    }
+  ],
   "missions": [
     {
       "id": "ganh_nuoc", "name": "Gánh nước cho nhà bếp", "minRank": 0,

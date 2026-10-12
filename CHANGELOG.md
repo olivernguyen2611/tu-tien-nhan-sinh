@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### Tông môn 5c.1 — Đồng môn có tên (2026-10-12)
+- Nhập môn là gặp một nhóm đồng môn có tên (`balance.sects.cast`): 1 trưởng lão, 1 chấp sự, 1 sư huynh/tỷ, 2 đồng môn cùng lứa, 1 kình địch. Họ là NPC thường (có tuổi, tu luyện, chết, sổ ân oán), thuộc về đời đó nên mỗi đời một dàn khác.
+- Xin bái sư giờ chọn một trưởng lão thật của tông làm sư phụ (hoặc sinh trưởng lão mới); sư phụ chết thì nhật ký báo và mất sư phụ.
+- Mục "Đồng môn" trong bảng Tông môn: 9 cách đi lại (xin chỉ điểm, hầu trà, dâng quà, luận đạo, tỉ thí, uống trà, hóa giải hiềm khích, đối đầu, nhờ giúp việc) với tỉ lệ hiện sẵn. Mỗi người một lần mỗi năm, tối đa `talksPerYear` người/năm; mọi kết quả đều đổi chỉ số; tỉ thí dùng Chiến lực.
+- NPC tối đa 20 → 30 để chứa đồng môn.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Vá lỗ hổng danh mục công pháp & vật phẩm, Developer mode lấy được mọi thứ (2026-10-12)
 - Nội đan cấp 3 giờ lấy được (sự kiện **Yêu vương hấp hối**, từ Kim Đan), nên công thức Kết Kim Đan luyện được.
 - Thái Sơ Diễn Đạo Kinh (C13): sự kiện **Di tích thượng cổ** (từ Trúc Cơ, khí vận ≥ 75). Cửu Chuyển Kim Cốt Quyết (C14): **Lời lão trong nhẫn** (có Lão gia gia) hoặc **Cao nhân dưới gốc cây** (võ giả Hóa cảnh).

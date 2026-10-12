@@ -5,7 +5,7 @@ import type { Content } from '../core/content';
 import { Rng, hashSeed } from '../core/rng';
 import type { EffectHook, Sect } from '../core/schemas';
 import type { GameState, LogLine } from '../core/types';
-import { makeName } from './names';
+import { chooseMaster, sectmateYear, seedCast } from './sectmates';
 import { rootAffinities } from './technique';
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
@@ -87,7 +87,8 @@ export function joinSect(state: GameState, content: Content, sectId: string): { 
     social: { ...state.social, reputation: rep },
     sect: { ...state.sect, id: sectId, rank: 0, since: state.character.age, contribution: 0, master: null, lastMission: null, lastMasterTry: null },
   };
-  return { state: { ...next, log: addLines(next, [{ text, tone: 'good' }]) }, text, joined: true };
+  const withCast = seedCast({ ...next, log: addLines(next, [{ text, tone: 'good' }]) }, content);
+  return { state: withCast, text, joined: true };
 }
 
 export function leaveSect(state: GameState, content: Content): { state: GameState; text: string } | null {
@@ -96,7 +97,7 @@ export function leaveSect(state: GameState, content: Content): { state: GameStat
   const text = fill(content.sectLife.texts.leave, { sect: sect.name });
   const next: GameState = {
     ...state,
-    sect: { ...state.sect, id: null, rank: 0, contribution: 0, master: null, left: [...state.sect.left, sect.id] },
+    sect: { ...state.sect, id: null, rank: 0, contribution: 0, master: null, masterId: null, left: [...state.sect.left, sect.id] },
   };
   return { state: { ...next, log: addLines(next, [{ text, tone: 'normal' }]) }, text };
 }
@@ -143,6 +144,7 @@ export function sectYear(state: GameState, content: Content): GameState {
   const sect = currentSect(state, content);
   const life = content.sectLife;
   if (!state.alive || !sect || !life) return state;
+  state = sectmateYear(state, content);
   const cfg = content.balance.sects;
   const stones = Math.round((cfg.stipend[sect.id] ?? 0) * (cfg.rankStipendMul[state.sect.rank] ?? 1));
   let s: GameState = {
@@ -253,10 +255,12 @@ export function requestMaster(state: GameState, content: Content): { state: Game
   let next: GameState = { ...state, sect: { ...state.sect, lastMasterTry: state.character.age } };
   let text: string;
   if (success) {
-    const gender = rng.chance(0.5) ? 'nam' : 'nu';
-    const master = fill(texts.masterTitle, { master: makeName(rng, content.names, gender) });
-    next = { ...next, sect: { ...next.sect, master }, flags: { ...next.flags, co_su_phu: true } };
+    next = { ...next, rng: rng.getState() };
+    const chosen = chooseMaster(next, content);
+    const master = chosen.name;
+    next = { ...chosen.state, sect: { ...chosen.state.sect, master }, flags: { ...chosen.state.flags, co_su_phu: true } };
     text = fill(texts.master, { master });
+    return { state: { ...next, log: addLines(next, [{ text, tone: 'good' }]) }, text, success };
   } else {
     text = texts.masterRefused;
   }
@@ -267,9 +271,9 @@ export function requestMaster(state: GameState, content: Content): { state: Game
 /** An elder takes the life as a personal disciple (event effect, task 2.8). */
 export function grantMaster(state: GameState, content: Content): GameState {
   if (!state.sect.id || state.sect.master || !content.sectLife) return state;
-  const rng = Rng.fromState(state.rng);
-  const master = fill(content.sectLife.texts.masterTitle, { master: makeName(rng, content.names, rng.chance(0.5) ? 'nam' : 'nu') });
-  const next: GameState = { ...state, rng: rng.getState(), sect: { ...state.sect, master }, flags: { ...state.flags, co_su_phu: true } };
+  const chosen = chooseMaster(state, content);
+  const master = chosen.name;
+  const next: GameState = { ...chosen.state, sect: { ...chosen.state.sect, master }, flags: { ...chosen.state.flags, co_su_phu: true } };
   return { ...next, log: addLines(next, [{ text: fill(content.sectLife.texts.master, { master }), tone: 'good' }]) };
 }
 

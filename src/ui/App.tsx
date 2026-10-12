@@ -32,6 +32,7 @@ import { disableTutorial, dismissTip } from '../systems/tutorial';
 import { practiceCraft } from '../systems/crafts';
 import { joinCareer } from '../systems/career';
 import { doMission, joinSect, leaveSect, requestMaster } from '../systems/sect';
+import { doTalk } from '../systems/sectmates';
 import { learnTechnique } from '../systems/technique';
 import { chooseFate, rerollFate } from '../systems/fate';
 import { trainMartial } from '../systems/martial';
@@ -376,6 +377,7 @@ function Screens({ content }: { content: Content }) {
             : a.kind === 'mission' ? doMission(life, content, a.missionId)
             : a.kind === 'learn' ? (() => { const l = learnTechnique(life, content, a.techniqueId); return l && { ...l, state: enterFirstRealm(l.state, content) }; })()
             : a.kind === 'master' ? requestMaster(life, content)
+            : a.kind === 'talk' ? doTalk(life, content, a.npcId, a.talkId)
             : a.kind === 'found' ? foundSect(life, content, { name: a.name, rules: a.rules })
             : a.kind === 'decide' ? decide(life, content, a.decisionId)
             : a.kind === 'build' ? build(life, content, a.buildingId)

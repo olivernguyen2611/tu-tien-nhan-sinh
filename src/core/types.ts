@@ -123,6 +123,9 @@ export interface GameState {
     lastMasterTry: number | null;
     /** Sects this life has left (no coming back). */
     left: string[];
+    /** Task 5c.1: the master as an NPC (sect.master keeps the display title), and this year's talks with sectmates. */
+    masterId?: string | null;
+    talks?: { age: number; count: number };
   };
   /** Mortal career (task 2.11): careers.json id, rung index, age the rung was reached. */
   career: { id: string | null; rung: number; since: number };
@@ -319,7 +322,12 @@ export interface Npc {
   disciple?: { since: number; lastTaught: number | null };
   /** Task 5.5: a khí vận chi tử (template id) and the age of the player when they came. */
   chosen?: { template: string; since: number; role?: 'protect' | 'exploit' | 'ignore' };
+  /** Task 5c.1: a member of a sect the player joined (đồng môn), and the age the player last spent time with them. */
+  sectmate?: { sect: string; kind: SectmateKind; lastMet: number | null };
 }
+
+/** Task 5c.1: who a sectmate is to the player. */
+export type SectmateKind = 'master' | 'elder' | 'steward' | 'senior' | 'peer' | 'rival';
 
 /** Task 5b.7: a past life's sect as the save meta keeps it (lives: how many lives ago its master died). */
 export interface PastSectRecord { world: string; name: string; lineage: string; founder: string; members: number; lives: number }

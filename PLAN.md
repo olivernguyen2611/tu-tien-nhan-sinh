@@ -371,6 +371,18 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 5b.9 | [x] Cầu đầu thai: tiêu điểm Luân Hồi chọn xuất thân đời sau (`mortal-path.md` mục 3.2) |
 | 5b.10 | [x] Trùng sinh: Hồi Quang Kính, chết thì quay về năm 6 tuổi giữ ký ức; móc mới `rewindOnDeath` (`mortal-path.md` mục 3.3) |
 
+### GĐ 5c — Tông môn sâu hơn (theo góp ý chủ dự án 2026-10-12)
+Nhìn từ hai phía: **đệ tử** cần thăng cấp, tài nguyên, sư phụ chỉ dạy, bạn và đối thủ, công trạng đổi đồ; **tông chủ** muốn tông thịnh, đệ tử giỏi, kho đầy, danh tiếng. Mỗi task một PR nhỏ, nhánh từ main.
+| # | Task |
+|---|---|
+| 5c.1 | [x] Đồng môn có tên (sư phụ, trưởng lão, chấp sự, sư huynh/tỷ, sư đệ/muội, kình địch) lưu theo từng đời; đi lại, luận đạo, tỉ thí nhẹ, hầu trà, hóa giải hiềm khích |
+| 5c.2 | [ ] Tỉ thí chính thức trong tông (đại tỉ, xếp hạng nội môn) và luận đạo đường |
+| 5c.3 | [ ] Nhiệm vụ chuỗi nhiều bước (nhận ở bảng nhiệm vụ, nhớ tiến độ, thưởng cuối chuỗi) |
+| 5c.4 | [ ] Công trạng đổi đồ: Bảo khố tông môn, cống hiến đổi đan dược, công pháp, linh thạch |
+| 5c.5 | [ ] Sự kiện lớn của tông: đại hội, thí luyện, ngoại địch, nội loạn |
+| 5c.6 | [ ] Tranh ngôi chưởng môn, phe phái trong tông |
+| 5c.7 | [ ] Phía tông chủ: tông môn mình lập có đệ tử NPC, trưởng lão, sự kiện lớn, thịnh suy, danh tiếng |
+
 ### GĐ 6 — Hoàn thiện
 Cân bằng bằng **mô phỏng tự động** (chạy hàng nghìn đời giả lập, xem thống kê tuổi chết/cảnh giới), âm thanh, hiệu ứng, PWA cài lên điện thoại, chơi offline, tối ưu tốc độ, rà soát hiển thị trên nhiều cỡ màn hình.
 
