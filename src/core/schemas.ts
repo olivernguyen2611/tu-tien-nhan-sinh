@@ -1077,6 +1077,10 @@ export const BalanceSchema = z
         /** Price multiplier for the rest of the year after a won / lost bargain. */
         bargainWinMul: z.number().min(0),
         bargainLoseMul: z.number().min(0),
+        /** Playtest 2: auction bids as multiples of a lot's starting price. */
+        auctionBids: z.array(z.number().min(1)).min(1),
+        /** Rivals' top bid is start × a uniform draw in this range. */
+        auctionRival: z.tuple([z.number().min(1), z.number().min(1)]),
         /** Task 3.10: the most the priceDiscount hook (Khéo Mồm, Mắt Tinh…) can take off buying prices. */
         maxDiscount: probability,
       })
@@ -1892,12 +1896,39 @@ export const MarketFileSchema = z.array(
       priceMul: z.number().min(0).default(1),
       /** Chance a bought pill is a fake (Vô Chủ Phường); sets flag `mua_hang_gia`. */
       fakeChance: probability.default(0),
-      /** Item kinds on sale (items priced in this market's currency). */
-      kinds: z.array(id).min(1),
+      /** Item kinds on sale (items priced in this market's currency); an auction house may sell none. */
+      kinds: z.array(id).default([]),
       /** Log lines: a bargain won / lost ({name} = market). */
       bargainWin: z.string().min(1),
       bargainLose: z.string().min(1),
       fakeText: z.string().min(1).optional(),
+      /** Playtest 2: only open in these regions (omit = every region). */
+      regions: ids.optional(),
+      /** Playtest 2: items sold here even when not `forSale` or not of `kinds` (a local speciality). */
+      items: ids,
+      /** Playtest 2: technique scrolls on sale (price in this market's currency). */
+      techniques: z.array(z.object({ id, price: z.number().int().min(1) }).strict()).default([]),
+      /** Playtest 2: only this many wares on the stall each year, picked anew every year (omit = all). */
+      stock: z.number().int().min(1).optional(),
+      /** Playtest 2: an auction house; one bid a year here on one of this year's lots. */
+      auction: z
+        .object({
+          /** Lots shown each year, picked from `lots`. */
+          lotsPerYear: z.number().int().min(1),
+          lots: z
+            .array(
+              z
+                .object({ item: id.optional(), technique: id.optional(), start: z.number().int().min(1) })
+                .strict()
+                .refine((l) => !!l.item !== !!l.technique, 'lô đấu giá cần đúng một trong "item" / "technique"'),
+            )
+            .min(1),
+          /** {lot}, {price}. */
+          winText: z.string().min(1),
+          loseText: z.string().min(1),
+        })
+        .strict()
+        .optional(),
     })
     .strict(),
 );

@@ -3,7 +3,7 @@
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -95,6 +95,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   let foundingPills: { file: string; pills: string[] } | null = null;
   let martialFile: MartialFile | null = null;
   const regionFiles: { file: string; regions: Region[] }[] = [];
+  const marketFiles: { file: string; markets: Market[] }[] = [];
   let chosenIds: string[] | null = null;
   let fingerIds: string[] | null = null;
   const fingerRealms: { file: string; finger: string; realm: string }[] = [];
@@ -232,6 +233,10 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === LineageFileSchema) problems.push(...duplicates(file, 'đạo thống', parsed.data as { id: string }[]));
     if (schema === MartialFileSchema) martialFile = parsed.data as MartialFile;
     if (schema === RegionFileSchema) regionFiles.push({ file, regions: parsed.data as Region[] });
+    if (schema === MarketFileSchema) {
+      problems.push(...duplicates(file, 'phường thị', parsed.data as Market[]));
+      marketFiles.push({ file, markets: parsed.data as Market[] });
+    }
     if (schema === ItemFileSchema) itemIds = (parsed.data as { id: string }[]).map((x) => x.id);
     if (schema === RecipeFileSchema) recipeFile = { file, data: parsed.data as RecipeFile };
     if (schema === ClanFileSchema) {
@@ -249,6 +254,18 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   }
 
   problems.push(...checkCultivationTables(parsedShared));
+  // Playtest 2: market specialities, scrolls, lots and regions must exist.
+  const techIds = new Set((techniques ?? []).map((t) => t.id));
+  for (const { file, markets } of marketFiles) {
+    const regionIds = new Set(regionFiles.filter((r) => r.file.split('/')[1] === file.split('/')[1]).flatMap((r) => r.regions.map((x) => x.id)));
+    for (const m of markets) {
+      const err = (message: string) => problems.push({ file, level: 'error', message: `phường thị "${m.id}": ${message}` });
+      const lots = m.auction?.lots ?? [];
+      for (const it of [...m.items, ...lots.flatMap((l) => (l.item ? [l.item] : []))]) if (itemIds && !itemIds.includes(it)) err(`vật phẩm không tồn tại "${it}"`);
+      for (const t of [...m.techniques.map((x) => x.id), ...lots.flatMap((l) => (l.technique ? [l.technique] : []))]) if (techniques && !techIds.has(t)) err(`công pháp không tồn tại "${t}"`);
+      for (const r of m.regions ?? []) if (!regionIds.has(r)) err(`vùng không tồn tại "${r}"`);
+    }
+  }
   // Task 5.2: Luyện Đan Phòng sends real items.
   for (const it of foundingPills?.pills ?? []) {
     if (itemIds && !itemIds.includes(it)) problems.push({ file: foundingPills!.file, level: 'error', message: `công trình gửi vật phẩm không tồn tại "${it}"` });
