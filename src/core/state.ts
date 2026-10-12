@@ -10,6 +10,8 @@ import { ageBody, checkDeath } from '../systems/time';
 import { makeName, splitName } from '../systems/names';
 import { cultivateYear, rootTestAge } from '../systems/cultivation';
 import { applyJobCrafts } from '../systems/crafts';
+import { careerYear } from '../systems/career';
+import { sectYear } from '../systems/sect';
 
 export interface NewLifeInput {
   seed: string;
@@ -26,8 +28,9 @@ export function randomName(rng: Rng, content: Content, gender: Gender): string {
   return makeName(rng, content.names, gender);
 }
 
-export function fillTemplate(text: string, state: GameState): string {
-  return text.replace(/\{name\}/g, state.character.name).replace(/\{hometown\}/g, state.character.hometown);
+export function fillTemplate(text: string, state: GameState, content?: Content): string {
+  const sect = content?.sects.find((s) => s.id === state.sect.id)?.name ?? 'tông môn';
+  return text.replace(/\{name\}/g, state.character.name).replace(/\{hometown\}/g, state.character.hometown).replace(/\{sect\}/g, sect);
 }
 
 export function createLife(input: NewLifeInput, content: Content): GameState {
@@ -68,6 +71,11 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     difficulty,
     tutorial: { enabled: !!input.tutorial, seen: [] },
     crafts: { skills: {}, lastPractice: null },
+    career: { id: null, rung: 0, since: 0 },
+    inventory: {},
+    talents: [],
+    fate: null,
+    sect: { id: null, rank: 0, since: 0, contribution: 0, master: null, lastMission: null, lastMasterTry: null, left: [] },
     worldId: content.world.id,
     seed: input.seed,
     rng: rng.getState(),
@@ -76,9 +84,9 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     character: { name, gender, originId: origin.id, hometown, age: 0 },
     stats,
     aptitudes,
-    cult: { realm: 'pham_nhan', stage: 0, progress: 0, root: null, lifespan, fails: {}, injuredUntil: null, foundation: null, lastMajorAttempt: null, lineage: null },
+    cult: { realm: 'pham_nhan', stage: 0, progress: 0, root: null, lifespan, fails: {}, injuredUntil: null, technique: null, learned: [], scrolls: [], buffs: [], nextBonus: 0, foundation: null, lastMajorAttempt: null, lineage: null },
     money: { silver: origin.silver, spiritStones: origin.spiritStones },
-    social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0 } },
+    social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0, trieu_dinh: 0, giang_ho: 0 } },
     flags: origin.noParents ? { no_parents: true, no_father: true, no_mother: true } : {},
     destiny: { offered: [], rerollsLeft: Math.max(0, content.balance.traits.rerolls + (content.balance.difficulty[difficulty]?.rerollBonus ?? 0)), confirmed: false },
     traits: [],
@@ -100,10 +108,10 @@ const withYear = (s: GameState): GameState => ({ ...s, log: [...s.log, { age: s.
 
 /** One year passes; at most one event is rolled for the player to answer. */
 export function advanceYear(state: GameState, content: Content): GameState {
-  if (!state.alive || state.events.pending) return state;
+  if (!state.alive || state.events.pending || state.fate) return state;
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageFamily(withYear(aged), content), content), content), content), content), content);
+  const body = checkDeath(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageFamily(withYear(aged), content), content), content), content), content), content), content), content);
   const next = body.alive ? rollYearEvent(body, content) : body;
   // The year's log block exists before family news and the event are added to it.
   const log = next.log.slice();

@@ -4,16 +4,22 @@ import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
 import { inBottleneck, majorBreakthroughInfo, realmLabel, rootLabel, yearlyGain } from '../../systems/cultivation';
 import { craftViews } from '../../systems/crafts';
+import { careerIncome, careerLabel, careerViews } from '../../systems/career';
+import { currentTechnique, learnBlocked, techniqueById, techniqueSummary } from '../../systems/technique';
 import { Meter } from './Meter';
 import { TermText } from './Tooltip';
 
-export function CultivatePanel({ state, content, onBreakthrough, onPractice, onClose }: {
+export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJoinCareer, onLearn, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome to show in the sheet. */
   onBreakthrough: () => { text: string; tone: Tone; changes: string } | null;
   /** Practise a craft this year; returns the log text, or null. */
   onPractice: (craftId: string) => string | null;
+  /** Take up a mortal career; returns the log text, or null. */
+  onJoinCareer: (careerId: string) => string | null;
+  /** Practise a technique from a scroll; returns the log text, or null. */
+  onLearn: (techniqueId: string) => string | null;
   onClose: () => void;
 }) {
   const [confirming, setConfirming] = useState(false);
@@ -24,6 +30,10 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onC
   const info = majorBreakthroughInfo(state, content);
   const crafts = craftViews(state, content);
   const [practiced, setPracticed] = useState<string | null>(null);
+  const [joined, setJoined] = useState<string | null>(null);
+  const [careerOpen, setCareerOpen] = useState(false);
+  const careers = mortal ? careerViews(state, content) : [];
+  const currentCareer = careerLabel(state, content);
   const foundation = content.cultivation.realms.foundations.find((g) => g.id === cult.foundation);
 
   return (
@@ -32,6 +42,33 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onC
         <div class="kicker">Tu luyện</div>
         <h2>{realmLabel(state, content)}</h2>
         <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>
+        {currentTechnique(state, content) && (
+          <div class="technique">
+            <p class="story"><b>Công pháp: {currentTechnique(state, content)!.name}</b></p>
+            <p class="profile-note">{techniqueSummary(state, content)}</p>
+            <p class="profile-note"><TermText text={currentTechnique(state, content)!.flavor} /></p>
+            {currentTechnique(state, content)!.note && <p class="profile-note">{currentTechnique(state, content)!.note}</p>}
+          </div>
+        )}
+        {state.cult.scrolls.length > 0 && state.alive && (
+          <div class="crafts">
+            <h3 class="panel-sub">Bí tịch</h3>
+            {state.cult.scrolls.map((id) => {
+              const tech = techniqueById(content, id);
+              if (!tech) return null;
+              const blocked = learnBlocked(state, content, tech);
+              return (
+                <div class="career-row" key={id}>
+                  <div class="craft-head"><b>{tech.name}</b><span class="muted">{content.cultivation.realms.gradeNames[tech.grade]} phẩm · {content.cultivation.realms.lineageNames[tech.lineage]}</span></div>
+                  <p class="profile-note"><TermText text={tech.flavor} /></p>
+                  <button class="chip-btn" disabled={!!blocked} onClick={() => setPracticed(onLearn(id))}>Tu công pháp này</button>
+                  {blocked ? <span class="craft-note">{blocked}</span>
+                    : state.cult.technique && <span class="craft-note">Đổi công pháp mất {content.balance.techniques.switchLossPct}% thanh tu vi.</span>}
+                </div>
+              );
+            })}
+          </div>
+        )}
         {foundation && <p class="profile-note"><TermText text={`Đạo cơ ${foundation.name}: ${foundation.description}`} /></p>}
         {mortal ? (
           <p class="story">
@@ -67,6 +104,27 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onC
             {result.changes && <span class="changes">{result.changes}</span>}
           </p>
         )}
+        {mortal && state.alive && (
+          <div class="crafts">
+            <h3 class="panel-sub">Đường đời</h3>
+            {currentCareer ? (
+              <p class="story">{currentCareer} · thu nhập {careerIncome(state, content)} lượng bạc mỗi năm.</p>
+            ) : (
+              <p class="profile-note">Chưa theo đường nào. Từ {content.balance.careers.joinAge[0]} tuổi có thể chọn một đường để kiếm sống và tiến thân.</p>
+            )}
+            <button class="chip-btn" aria-expanded={careerOpen} onClick={() => setCareerOpen(!careerOpen)}>{currentCareer ? 'Đổi đường' : 'Chọn đường'}</button>
+            {careerOpen && careers.filter((c) => !c.current).map((c) => (
+              <div class="career-row" key={c.id}>
+                <div class="craft-head"><b>{c.name}</b></div>
+                <p class="profile-note"><TermText text={c.description} /></p>
+                <button class="chip-btn" disabled={!!c.blocked} onClick={() => { setJoined(onJoinCareer(c.id)); setCareerOpen(false); }}>Theo đường này</button>
+                {c.blocked && <span class="craft-note">{c.blocked}</span>}
+              </div>
+            ))}
+            {joined && <p class="action-result good">{joined}</p>}
+          </div>
+        )}
+
         {crafts.length > 0 && (
           <div class="crafts">
             <h3 class="panel-sub"><TermText text="Bách nghệ" /></h3>

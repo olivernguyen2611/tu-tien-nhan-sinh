@@ -7,6 +7,8 @@ import { activeExtremes, extremeWarnings } from '../../systems/extremes';
 import { DevPanel } from '../components/DevPanel';
 import { FamilyPanel } from '../components/FamilyPanel';
 import { CultivatePanel } from '../components/CultivatePanel';
+import { SectPanel, type SectAction } from '../components/SectPanel';
+import { FatePopup } from '../components/FatePopup';
 import { EventPopup, type PopupResult } from '../components/EventPopup';
 import { Meter } from '../components/Meter';
 import { Term, TermText } from '../components/Tooltip';
@@ -15,6 +17,9 @@ import type { ThemePref } from '../theme';
 import { realmLabel, rootLabel } from '../../systems/cultivation';
 import { difficultyName } from '../../systems/difficulty';
 import { currentGoal, pendingTip } from '../../systems/tutorial';
+import { careerLabel } from '../../systems/career';
+import { sectLabel } from '../../systems/sect';
+import { inventoryLabel } from '../../systems/items';
 
 const DOCK_LEFT = [
   { id: 'cultivate', glyph: '修', label: 'Tu luyện' },
@@ -32,7 +37,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onBreakthrough, onPractice, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onBreakthrough, onPractice, onJoinCareer, onLearn, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -45,6 +50,14 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onFamilyAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
   /** Practise a craft from the "Tu luyện" sheet. */
   onPractice: (craftId: string) => string | null;
+  /** Take up a mortal career from the "Tu luyện" sheet. */
+  onJoinCareer: (careerId: string) => string | null;
+  /** Practise a technique from a scroll (task 2.8). */
+  onLearn: (techniqueId: string) => string | null;
+  /** Nghịch Thiên Cải Mệnh: take a talent, or refresh the offer (task 2.7). */
+  onFate: (action: { choose: string } | { reroll: true }) => void;
+  /** Sect sheet actions (task 2.5). */
+  onSectAction: (action: SectAction) => { text: string; good: boolean } | null;
   /** Tutorial tip read ("Đã hiểu") or tips turned off. */
   onTip: (tipId: string, turnOff: boolean) => void;
   /** Big breakthrough from the "Tu luyện" sheet; null when it cannot be tried. */
@@ -63,6 +76,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const [result, setResult] = useState<PopupResult | null>(null);
   const [familyOpen, setFamilyOpen] = useState(false);
   const [cultivateOpen, setCultivateOpen] = useState(false);
+  const [sectOpen, setSectOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
   const logRef = useRef<HTMLElement>(null);
   const { character: c, stats, cult, money } = state;
@@ -76,7 +90,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
     logRef.current?.scrollTo({ top: logRef.current.scrollHeight, behavior: 'smooth' });
   }, [state.log.length]);
 
-  const dockActions: Record<string, () => void> = { bonds: () => setFamilyOpen(true), cultivate: () => setCultivateOpen(true) };
+  const dockActions: Record<string, () => void> = { bonds: () => setFamilyOpen(true), cultivate: () => setCultivateOpen(true), sect: () => setSectOpen(true) };
   const dockItem = (t: { id: string; glyph: string; label: string }) => (
     <button class="dock-item" key={t.id} title={dockActions[t.id] ? t.label : 'Sắp có'} onClick={dockActions[t.id]}>
       <span class="glyph" aria-hidden="true">{t.glyph}</span>
@@ -134,12 +148,12 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         {DOCK_LEFT.map(dockItem)}
         {state.alive ? (
           <div class="age-wrap">
-            <button class="age-btn" onClick={onAdvance} aria-label="Qua một năm" disabled={!!state.events.pending || !!result}>
+            <button class="age-btn" onClick={onAdvance} aria-label="Qua một năm" disabled={!!state.events.pending || !!state.fate || !!result}>
               <span class="big">+1</span>
               <span class="small">năm</span>
             </button>
             <button class="ff-btn" onClick={onFastForward} aria-label="Tua nhanh tới khi có chuyện" title="Tua nhanh tới khi có chuyện"
-              disabled={!!state.events.pending || !!result}>»</button>
+              disabled={!!state.events.pending || !!state.fate || !!result}>»</button>
           </div>
         ) : (
           <button class="age-btn ended" onClick={onSummary} aria-label="Xem tổng kết đời người" disabled={!!result}>
@@ -169,7 +183,14 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
           onDisable={() => { setDevOpen(false); dev.onDisable(); }} />
       )}
 
-      {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onClose={() => setCultivateOpen(false)} />}
+      {state.fate && !cultivateOpen && (
+        <FatePopup state={state} content={content} unlimited={!!dev}
+          onChoose={(id) => onFate({ choose: id })} onReroll={() => onFate({ reroll: true })} />
+      )}
+
+      {sectOpen && <SectPanel state={state} content={content} onAction={onSectAction} onClose={() => setSectOpen(false)} />}
+
+      {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onClose={() => setCultivateOpen(false)} />}
 
       {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onClose={() => setFamilyOpen(false)} />}
 
@@ -187,6 +208,9 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
               ))}
             </div>
             <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>
+            {careerLabel(state, content) && <p class="profile-note">Đường đời: {careerLabel(state, content)}</p>}
+            {sectLabel(state, content) && <p class="profile-note">Tông môn: {sectLabel(state, content)}</p>}
+            {inventoryLabel(state, content) && <p class="profile-note">Mang theo: {inventoryLabel(state, content)}</p>}
             <p class="profile-note"><TermText text="Tư chất tiên thiên định từ lúc sinh, chỉ đổi được nhờ kỳ ngộ hay khí vận." /></p>
             {states.length > 0 && (
               <ul class="trait-chips" aria-label="Trạng thái đặc biệt">
@@ -196,6 +220,14 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
                     <span>{d.text}{d.note ? ` ${d.note}` : ''}</span>
                   </li>
                 ))}
+              </ul>
+            )}
+            {state.talents.length > 0 && (
+              <ul class="trait-chips" aria-label="Thiên phú">
+                {state.talents.map((id) => {
+                  const t = content.fateTalents.find((x) => x.id === id);
+                  return t && <li class={`trait-chip r-${t.rarity}`} key={id}><b>{t.name}</b><span><TermText text={t.summary} /></span></li>;
+                })}
               </ul>
             )}
             {state.traits.length > 0 && (

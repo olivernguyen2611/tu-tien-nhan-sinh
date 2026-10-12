@@ -68,6 +68,29 @@ export function migrate(save: SaveFile): SaveFile {
   // Fields added within saveVersion 1 get their empty defaults.
   let life = save.life as GameState & { extremes?: GameState['extremes'] };
   if (!life.extremes) life = { ...life, extremes: { streak: {}, active: {}, givenAt: {} } };
+  // Task 2.8: items, scrolls, buffs, two more factions.
+  if (life.inventory === undefined) {
+    const c = life.cult as Partial<GameState['cult']> & GameState['cult'];
+    life = {
+      ...life,
+      inventory: {},
+      cult: { ...c, scrolls: c.scrolls ?? [], buffs: c.buffs ?? [], nextBonus: c.nextBonus ?? 0 },
+      social: { ...life.social, reputation: { ...{ trieu_dinh: 0, giang_ho: 0 }, ...(life.social.reputation as Partial<GameState['social']['reputation']>) } as GameState['social']['reputation'] },
+    };
+  }
+  // Task 2.7: no fate talents yet.
+  if (life.talents === undefined) life = { ...life, talents: [], fate: null };
+  // Task 2.5: not in a sect.
+  if (life.sect === undefined) {
+    life = { ...life, sect: { id: null, rank: 0, since: 0, contribution: 0, master: null, lastMission: null, lastMasterTry: null, left: [] } };
+  }
+  // Task 2.4: cultivators from before techniques get the default one.
+  if ((life.cult as Partial<GameState['cult']>).technique === undefined) {
+    const technique = life.cult.realm === 'pham_nhan' ? null : 'dan_khi_quyet';
+    life = { ...life, cult: { ...life.cult, technique, learned: technique ? [technique] : [] } };
+  }
+  // Task 2.11: no career yet.
+  if (life.career === undefined) life = { ...life, career: { id: null, rung: 0, since: 0 } };
   // Task 2.12: no crafts learned yet.
   if (life.crafts === undefined) life = { ...life, crafts: { skills: {}, lastPractice: null } };
   // Task 2.9: older lives get no tips.

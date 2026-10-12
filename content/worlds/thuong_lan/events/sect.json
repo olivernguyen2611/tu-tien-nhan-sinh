@@ -1,0 +1,590 @@
+[
+  {
+    "id": "dong_phu_dau_tien",
+    "category": "sect",
+    "title": "Động phủ đầu tiên",
+    "text": "Chấp sự ném cho {name} ba tấm thẻ gỗ: \"Chọn đi, chọn rồi không đổi.\"",
+    "conditions": {
+      "sect": {
+        "member": true,
+        "maxRank": 1
+      }
+    },
+    "weight": 8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Gần linh mạch (ẩm thấp, chật chội)",
+        "result": {
+          "text": "Linh khí dồi dào, nhưng đêm nào cũng nghe tiếng nước nhỏ giọt.",
+          "effects": {
+            "speedBuff": {
+              "mul": 1.1,
+              "years": 5
+            },
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Gần nhà ăn",
+        "result": {
+          "text": "Ăn no, ngủ kỹ, quen hết các sư huynh nhà bếp.",
+          "effects": {
+            "stat.health": 5,
+            "stat.happiness": 5
+          }
+        }
+      },
+      {
+        "text": "Gần Tàng Kinh Các",
+        "result": {
+          "text": "Tối nào cũng lén đọc sách tới khuya.",
+          "effects": {
+            "stat.comprehension": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "phi_bao_ke",
+    "category": "sect",
+    "title": "Phí bảo kê của sư huynh",
+    "text": "Một gã sư huynh to béo chặn đường: \"Đệ tử mới, mỗi tháng nộp ba khối linh thạch, sư huynh bảo kê cho.\"",
+    "tags": [
+      "funny"
+    ],
+    "conditions": {
+      "sect": {
+        "member": true,
+        "maxRank": 1
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Nộp",
+        "requires": {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 3
+            }
+          ]
+        },
+        "result": {
+          "text": "Ngươi nghèo đi, nhưng yên thân.",
+          "effects": {
+            "spiritStones": -3,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Không nộp, đánh",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Gã nằm đo đất. Từ đó ngoại môn gọi ngươi là \"tân tú\".",
+          "effects": {
+            "sectContribution": 5,
+            "stat.happiness": 5
+          }
+        },
+        "fail": {
+          "text": "Ngươi bị đánh bầm dập, linh thạch vẫn mất.",
+          "effects": {
+            "spiritStones": -3,
+            "stat.health": -10
+          }
+        }
+      },
+      {
+        "text": "Mách chấp sự",
+        "result": {
+          "text": "Chấp sự phạt gã quét sân ba tháng. Gã nhìn ngươi rất lâu.",
+          "effects": {
+            "setFlags": [
+              "ke_thu_su_huynh_beo"
+            ],
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Khen gã một tràng rồi rủ đi ăn",
+        "requires": {
+          "traitsAny": [
+            "kheo_mom"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Gã cảm động, từ đó bảo kê ngươi miễn phí.",
+          "effects": {
+            "stat.happiness": 3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "trong_linh_dien",
+    "category": "sect",
+    "title": "Trông linh điền",
+    "text": "Nhiệm vụ: trông ruộng linh mễ một mùa. Đêm thứ ba, có tiếng sột soạt giữa ruộng.",
+    "themes": [
+      "herb"
+    ],
+    "conditions": {
+      "sect": {
+        "member": true,
+        "maxRank": 1
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 4,
+    "choices": [
+      {
+        "text": "Rình bắt",
+        "check": {
+          "stat": "stat.comprehension",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Một con thỏ trắng mắt đỏ đang gặm linh mễ. Ngươi bắt được, nó là linh thú non.",
+          "effects": {
+            "sectContribution": 10,
+            "setFlags": [
+              "tho_trang_linh_thu"
+            ],
+            "stat.happiness": 5
+          }
+        },
+        "fail": {
+          "text": "Sáng ra mất nửa ruộng. Chấp sự trừ điểm.",
+          "effects": {
+            "sectContribution": -5,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Bày bù nhìn rồi đi ngủ",
+        "result": {
+          "text": "Bù nhìn bị gặm mất đầu.",
+          "effects": {
+            "sectContribution": 2,
+            "stat.health": 2
+          }
+        }
+      },
+      {
+        "text": "Ngửi ra mùi thú, chặn đúng hang",
+        "requires": {
+          "traitsAny": [
+            "linh_ty"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Bắt được cả ổ.",
+          "effects": {
+            "sectContribution": 15,
+            "craftXp": {
+              "farming": 3
+            },
+            "stat.happiness": 3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "dua_thu_xuong_nui",
+    "category": "sect",
+    "title": "Đưa thư xuống núi",
+    "text": "Mang thư của trưởng lão tới Khâm Thiên Giám ở Diên Châu. Đường đi qua quê nhà {hometown}.",
+    "conditions": {
+      "sect": {
+        "member": true,
+        "maxRank": 1
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Đi thẳng, xong việc về ngay",
+        "result": {
+          "text": "Trưởng lão khen ngươi biết điều.",
+          "effects": {
+            "sectContribution": 10,
+            "stat.daoHeart": 1,
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Ghé thăm nhà",
+        "requires": {
+          "flagsNone": [
+            "no_father",
+            "no_mother"
+          ]
+        },
+        "result": {
+          "text": "Mẹ ngươi khóc, cha ngươi giả vờ không khóc. Ngươi về trễ ba ngày.",
+          "effects": {
+            "sectContribution": 3,
+            "stat.happiness": 10
+          }
+        }
+      },
+      {
+        "text": "Ghé Kim Thiềm Thương Minh xem hàng",
+        "result": {
+          "text": "Không mua gì, nhưng biết giá cả.",
+          "effects": {
+            "setFlags": [
+              "biet_gia_phuong_thi"
+            ],
+            "stat.intellect": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "lao_nhan_quet_la",
+    "category": "sect",
+    "title": "Lão nhân quét lá",
+    "text": "Trước Tàng Kinh Các có một lão già quét lá. Lá rụng tới đâu lão quét tới đó, chưa ai thấy lão nghỉ.",
+    "tags": [
+      "rare"
+    ],
+    "conditions": {
+      "sect": {
+        "member": true
+      }
+    },
+    "weight": 1.5,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Giúp lão quét lá",
+        "result": {
+          "text": "Lão nhìn ngươi, nói một câu: \"Quét lá cũng là tu.\" Ngươi nghĩ mãi không hiểu.",
+          "effects": {
+            "setFlags": [
+              "lao_nhan_quet_la"
+            ],
+            "stat.daoHeart": 3
+          }
+        }
+      },
+      {
+        "text": "Hỏi lão có bí kíp gì không",
+        "result": {
+          "text": "Lão đưa ngươi cái chổi.",
+          "effects": {
+            "stat.happiness": 1
+          }
+        }
+      },
+      {
+        "text": "Đi qua",
+        "result": {
+          "text": "Sau lưng ngươi, tiếng chổi ngừng lại một nhịp.",
+          "effects": {
+            "stat.happiness": 1
+          }
+        }
+      },
+      {
+        "text": "Nhìn ra lão không hề đụng chổi xuống đất",
+        "requires": {
+          "traitsAny": [
+            "linh_lung_tam"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Lão cười: \"Mắt tốt.\" Rồi biến mất.",
+          "effects": {
+            "setFlags": [
+              "lao_nhan_quet_la"
+            ],
+            "stat.comprehension": 5
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ngoai_mon_tieu_bi",
+    "category": "sect",
+    "title": "Ngoại môn tiểu bỉ",
+    "text": "Ba năm một lần, ngoại môn tỷ thí. Mười người đứng đầu được vào nội môn.",
+    "conditions": {
+      "sect": {
+        "member": true,
+        "minRank": 1,
+        "maxRank": 1
+      },
+      "realm": {
+        "min": "luyen_khi",
+        "max": "luyen_khi"
+      },
+      "stage": {
+        "min": 3
+      }
+    },
+    "weight": 5,
+    "cooldownYears": 3,
+    "choices": [
+      {
+        "text": "Dốc sức tranh",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Tên ngươi đứng thứ bảy trên bảng.",
+          "effects": {
+            "sectPromote": true,
+            "sectContribution": 10,
+            "stat.happiness": 8
+          }
+        },
+        "fail": {
+          "text": "Thua ở vòng hai. Năm sau làm lại.",
+          "effects": {
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Giấu sức, xem người khác đánh",
+        "result": {
+          "text": "Ngươi học được vài chiêu của người ta.",
+          "effects": {
+            "stat.comprehension": 2
+          }
+        }
+      },
+      {
+        "text": "Một kiếm định thắng",
+        "requires": {
+          "traitsAny": [
+            "kiem_thai"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Đối thủ chưa kịp rút kiếm đã thua. Trưởng lão Tàng Phong Kiếm Các ngồi xem gật gù.",
+          "effects": {
+            "sectPromote": true,
+            "setFlags": [
+              "kiem_cac_chu_y"
+            ],
+            "stat.happiness": 5
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "truong_lao_de_mat",
+    "category": "sect",
+    "title": "Trưởng lão để mắt",
+    "text": "Một vị trưởng lão Trúc Cơ gọi {name} tới, hỏi vài câu rồi im lặng uống trà.",
+    "conditions": {
+      "sect": {
+        "member": true,
+        "minRank": 2
+      },
+      "flagsNone": [
+        "co_su_phu"
+      ]
+    },
+    "weight": 3,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Quỳ xuống xin bái sư",
+        "check": {
+          "stat": "stat.comprehension",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Trưởng lão gật đầu. Từ nay ngươi có sư phụ.",
+          "effects": {
+            "gainMaster": true,
+            "stat.happiness": 5,
+            "stat.comprehension": 2
+          }
+        },
+        "fail": {
+          "text": "Trưởng lão bảo: \"Chưa đủ.\" Ngươi về, lòng nặng trĩu.",
+          "effects": {
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Rót thêm trà, chờ ông nói",
+        "result": {
+          "text": "Ông nói về đạo cả buổi chiều. Ngươi hiểu được một nửa.",
+          "effects": {
+            "stat.comprehension": 3
+          }
+        }
+      },
+      {
+        "text": "Xin phép về tu luyện",
+        "result": {
+          "text": "Trưởng lão nhíu mày, rồi cười.",
+          "effects": {
+            "stat.daoHeart": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bi_vu_oan",
+    "category": "sect",
+    "title": "Bị vu oan trộm đan",
+    "text": "Kho đan dược mất ba viên Tụ Khí Đan. Có người nói thấy {name} lảng vảng gần đó.",
+    "conditions": {
+      "sect": {
+        "member": true
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Tự tìm thủ phạm",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Thủ phạm là gã đã tố cáo ngươi. Chấp sự phạt gã, thưởng ngươi.",
+          "effects": {
+            "sectContribution": 15,
+            "karma": 2,
+            "stat.intellect": 2
+          }
+        },
+        "fail": {
+          "text": "Không tìm ra. Ngươi bị phạt quét sân một năm.",
+          "effects": {
+            "sectContribution": -10,
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Nhận tội thay cho xong",
+        "result": {
+          "text": "Ngươi bị phạt, nhưng một người lặng lẽ ghi nhớ ơn này.",
+          "effects": {
+            "sectContribution": -10,
+            "setFlags": [
+              "an_nhan_bi_mat"
+            ],
+            "stat.daoHeart": 3
+          }
+        }
+      },
+      {
+        "text": "Một sư tỷ đứng ra làm chứng",
+        "requires": {
+          "traitsAny": [
+            "quy_nhan_duyen"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Ngươi trong sạch, có thêm một người bạn.",
+          "effects": {
+            "setFlags": [
+              "ban_su_ty"
+            ],
+            "stat.happiness": 5
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "phat_bong_loc",
+    "category": "sect",
+    "title": "Phát bổng lộc",
+    "text": "Mỗi tháng tông môn phát hai viên Tụ Khí Đan. Tháng này chấp sự phát cho {name} một viên, nói viên kia \"bị chuột ăn\".",
+    "tags": [
+      "funny"
+    ],
+    "conditions": {
+      "sect": {
+        "member": true
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 3,
+    "choices": [
+      {
+        "text": "Đòi lại",
+        "result": {
+          "text": "Chấp sự lườm ngươi, rồi đưa. Tháng sau ngươi lại nhận đủ.",
+          "effects": {
+            "addItems": [
+              "tu_khi_dan"
+            ],
+            "setFlags": [
+              "chap_su_ghet"
+            ],
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Thôi bỏ qua",
+        "result": {
+          "text": "Ngươi thắc mắc chuột nào ăn được đan.",
+          "effects": {
+            "stat.happiness": -2,
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Rủ chấp sự góp vốn buôn đan",
+        "requires": {
+          "talentsAny": [
+            "hoa_khi_sinh_tai"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Chấp sự cảm động, từ đó phát cho ngươi ba viên.",
+          "effects": {
+            "addItems": [
+              "tu_khi_dan",
+              "tu_khi_dan"
+            ],
+            "spiritStones": 2,
+            "stat.charm": 2
+          }
+        }
+      }
+    ]
+  }
+]

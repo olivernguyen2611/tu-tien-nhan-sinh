@@ -1,0 +1,296 @@
+[
+  {
+    "id": "vo_chu_phuong_tan_quyen",
+    "category": "rogue",
+    "title": "Vô Chủ Phường",
+    "text": "Một gã bán hàng rong ở Vô Chủ Phường thì thầm: \"Thượng cổ thần công, ba lạng thôi.\"",
+    "tags": [
+      "funny"
+    ],
+    "conditions": {
+      "root": {
+        "usable": true
+      },
+      "sect": {
+        "member": false
+      }
+    },
+    "weight": 3,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Mua",
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 3
+            }
+          ]
+        },
+        "result": {
+          "text": "Bìa ghi \"Thượng cổ thần công\". Trang cuối ghi \"Giá: ba lạng\".",
+          "effects": {
+            "gainTechnique": "tho_nap_tan_quyen",
+            "silver": -3,
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Mặc cả",
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 2
+            }
+          ]
+        },
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Mua được với giá hai lạng.",
+          "effects": {
+            "gainTechnique": "tho_nap_tan_quyen",
+            "silver": -2,
+            "stat.charm": 1
+          }
+        },
+        "fail": {
+          "text": "Gã đổi ý, đòi năm lạng. Ngươi bỏ đi.",
+          "effects": {
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Bỏ đi",
+        "result": {
+          "text": "Gã gọi với theo: \"Hai lạng! Một lạng rưỡi!\"",
+          "effects": {
+            "stat.intellect": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "loi_moi_u_ha",
+    "category": "rogue",
+    "title": "Lời mời từ U Hà",
+    "text": "Một người áo đen ngồi đối diện {name} trong quán trà: \"Ở tông ngươi bao năm mới tới tầng này? Theo ta, ba năm.\"",
+    "tags": [
+      "dark"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      },
+      "sect": {
+        "notId": "u_ha_ma_tong"
+      },
+      "stats": [
+        {
+          "stat": "karma",
+          "lte": 0
+        }
+      ]
+    },
+    "weight": 2,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Theo hắn",
+        "result": {
+          "text": "Ngươi đổi sang U Hà Huyết Ảnh Công.",
+          "effects": {
+            "leaveSect": true,
+            "learnTechnique": "u_ha_huyet_anh_cong",
+            "reputation": {
+              "ma": 20,
+              "chinh": -20
+            },
+            "stat.daoHeart": -5
+          }
+        }
+      },
+      {
+        "text": "Từ chối",
+        "result": {
+          "text": "Hắn cười, để lại một tấm lệnh bài đen.",
+          "effects": {
+            "setFlags": [
+              "lenh_bai_u_ha"
+            ],
+            "stat.daoHeart": 3
+          }
+        }
+      },
+      {
+        "text": "Báo cho tông môn",
+        "requires": {
+          "sect": {
+            "member": true
+          }
+        },
+        "result": {
+          "text": "Tông môn cử người truy bắt, hắn đã đi mất. Ngươi được ghi công.",
+          "effects": {
+            "sectContribution": 20,
+            "reputation": {
+              "chinh": 5
+            },
+            "stat.daoHeart": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ke_bi_thuong_mang_bao",
+    "category": "rogue",
+    "title": "Kẻ bị thương mang bảo",
+    "text": "Bên đường có một tán tu bị thương nặng, ôm chặt một cái hộp gỗ. Hắn nhìn {name}, ánh mắt vừa cầu cứu vừa đề phòng.",
+    "tags": [
+      "dark",
+      "violence"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      }
+    },
+    "weight": 2,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Cứu hắn",
+        "result": {
+          "text": "Hắn sống, tặng ngươi một viên linh thạch và một lời hứa.",
+          "effects": {
+            "karma": 5,
+            "spiritStones": 1,
+            "setFlags": [
+              "an_nhan_tan_tu"
+            ],
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Giết người đoạt bảo",
+        "result": {
+          "text": "Trong hộp có ba viên đan và một tấm bản đồ.",
+          "effects": {
+            "karma": -15,
+            "addItems": [
+              "tu_khi_dan",
+              "tu_khi_dan",
+              "tu_khi_dan"
+            ],
+            "setFlags": [
+              "ban_do_bi_canh"
+            ],
+            "stat.daoHeart": -5
+          }
+        }
+      },
+      {
+        "text": "Đi tiếp, không dính vào",
+        "result": {
+          "text": "Tiếng rên sau lưng nhỏ dần.",
+          "effects": {
+            "stat.daoHeart": -2,
+            "stat.happiness": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "thien_kieu_han_gia",
+    "category": "rogue",
+    "title": "Thiên kiêu Hàn gia",
+    "text": "Thiếu gia Hàn gia, kiếm tu trẻ nhất Lan Sơn, đứng chắn đường {name}: \"Nghe nói ngươi cũng có chút tiếng tăm. Đấu một trận.\"",
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      },
+      "anyOf": [
+        {
+          "realm": {
+            "min": "truc_co"
+          }
+        },
+        {
+          "stage": {
+            "min": 5
+          }
+        }
+      ]
+    },
+    "weight": 2,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận lời",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Hắn nhìn thanh kiếm gãy làm đôi, mặt trắng bệch. Tên ngươi lan khắp Lan Sơn.",
+          "effects": {
+            "reputation": {
+              "chinh": 10
+            },
+            "setFlags": [
+              "thang_han_gia"
+            ],
+            "stat.happiness": 8,
+            "stat.charm": 3
+          }
+        },
+        "fail": {
+          "text": "Hắn thu kiếm: \"Mười năm sau đấu lại.\"",
+          "effects": {
+            "setFlags": [
+              "thua_han_gia"
+            ],
+            "stat.health": -10
+          }
+        }
+      },
+      {
+        "text": "Từ chối",
+        "result": {
+          "text": "Hắn cười khẩy bỏ đi. Đồng môn bàn tán mấy tháng.",
+          "effects": {
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Đồng ý, rồi chạy",
+        "requires": {
+          "talentsAny": [
+            "kim_thien_thoat_xac"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Lúc hắn rút kiếm, ngươi đã ở chân núi.",
+          "effects": {
+            "setFlags": [
+              "han_gia_truy_tim"
+            ],
+            "stat.happiness": 3
+          }
+        }
+      }
+    ]
+  }
+]

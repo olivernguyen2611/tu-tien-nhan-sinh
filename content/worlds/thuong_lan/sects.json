@@ -1,0 +1,56 @@
+[
+  {
+    "id": "bich_lac_tong", "name": "Bích Lạc Tông", "faction": "chinh", "lineage": "tien", "recruitable": true,
+    "description": "Mây trắng phủ chín ngọn núi, chuông sớm vang tới tận chân núi. Tông môn lớn nhất Thương Lan, quy củ cũng nhiều nhất: đi sai một bước cũng có người ghi sổ.",
+    "ranks": ["Ký danh", "Ngoại môn", "Nội môn", "Chân truyền"],
+    "requires": {},
+    "techniques": [{ "id": "bich_lac_dan_khi_quyet", "rank": 1 }, { "id": "ngu_hanh_luan_chuyen_kinh", "rank": 3 }],
+    "effects": [{ "hook": "breakthroughChance", "add": 5 }],
+    "duty": "Nhiệm vụ tông môn nhiều; vi phạm môn quy bị phạt."
+  },
+  {
+    "id": "tang_phong_kiem_cac", "name": "Tàng Phong Kiếm Các", "faction": "chinh", "lineage": "tien", "recruitable": true,
+    "description": "Một ngọn núi trọc, một mái nhà tranh, trăm thanh kiếm cắm quanh sân. Đệ tử ít, ai cũng nghèo, ai cũng ngông.",
+    "ranks": ["Ký danh", "Ngoại môn", "Nội môn", "Chân truyền"],
+    "requires": { "minStats": { "daoHeart": 50 }, "oneOf": [{ "rootElements": ["kim", "phong"] }, { "minStats": { "physique": 60 } }] },
+    "techniques": [{ "id": "tang_phong_kiem_kinh", "rank": 1 }],
+    "effects": [{ "hook": "path.sword.affinity", "add": 15 }],
+    "duty": "Nghèo; hay bị gọi đi thách đấu."
+  },
+  {
+    "id": "bach_thao_coc", "name": "Bách Thảo Cốc", "faction": "chinh", "lineage": "tien", "recruitable": true,
+    "description": "Cả thung lũng thơm mùi thuốc. Người trong cốc hiền lành, nhưng đắc tội với họ thì cả đời đừng mong mua được viên đan nào.",
+    "ranks": ["Ký danh", "Ngoại môn", "Nội môn", "Chân truyền"],
+    "requires": { "minStats": { "comprehension": 50 } },
+    "techniques": [{ "id": "thanh_moc_truong_sinh_cong", "rank": 1 }],
+    "effects": [{ "hook": "craft.alchemy.affinity", "add": 15 }, { "hook": "craft.farming.affinity", "add": 10 }],
+    "duty": "Phải trông linh điền; chiến lực kém."
+  },
+  {
+    "id": "vo_uu_tu", "name": "Vô Ưu Tự", "faction": "chinh", "lineage": "phat", "recruitable": true,
+    "description": "Chùa cổ trên núi, sư sãi tu tâm trước, tu lực sau. Cơm chay ngon nhất Thương Lan, nhưng không có thịt, tuyệt đối không.",
+    "ranks": ["Ký danh", "Ngoại môn", "Nội môn", "Chân truyền"],
+    "requires": { "minStats": { "daoHeart": 55 } },
+    "techniques": [{ "id": "vo_uu_thien_tam_phap", "rank": 1 }],
+    "effects": [{ "hook": "heartDemonResist", "add": 0.15 }],
+    "duty": "Kiêng sát sinh, kiêng tình duyên."
+  },
+  {
+    "id": "u_ha_ma_tong", "name": "U Hà Ma Tông", "faction": "ma", "lineage": "ma", "recruitable": true,
+    "description": "Cửa tông luôn mở, ai tới cũng nhận. Ra thì khó hơn vào. Đồng môn gọi nhau là huynh đệ, nhưng ngủ vẫn ôm đao.",
+    "ranks": ["Huyết nô", "Huyết vệ", "Huyết sứ", "Huyết tử"],
+    "requires": {},
+    "techniques": [{ "id": "u_ha_huyet_anh_cong", "rank": 1 }],
+    "effects": [],
+    "duty": "Nhân quả xấu dần mỗi năm; chính đạo coi là kẻ thù."
+  },
+  {
+    "id": "van_yeu_dien", "name": "Vạn Yêu Điện", "faction": "yeu", "lineage": "yeu", "recruitable": false,
+    "description": "Người và yêu tộc sống chung một núi. Đệ tử mới đến hôm đầu đã bị khỉ lấy mất giày.",
+    "ranks": ["Ký danh", "Ngoại môn", "Nội môn", "Chân truyền"],
+    "requires": {},
+    "techniques": [{ "id": "van_thu_thong_linh_thuat", "rank": 1 }],
+    "effects": [{ "hook": "craft.beast.affinity", "add": 20 }],
+    "duty": "Yêu đạo: để dành làm sau."
+  }
+]

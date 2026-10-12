@@ -109,7 +109,6 @@
     "aptitudeBase": 0.75,
     "aptitudeDivisor": 400,
     "regionQi": 1.0,
-    "techniqueMul": 1.0,
     "breakthrough": { "comprehensionPerPoint": 0.3, "daoHeartPerPoint": 0.2, "failPenaltyPct": 5, "minPct": 3, "maxPct": 95 },
     "minorFailure": {
       "weights": { "lose": 70, "injury": 25, "lifespan": 5 },
@@ -152,6 +151,64 @@
         { "hook": "illnessChancePct", "add": 25 }
       ]
     }
+  },
+  "careers": {
+    "joinAge": [14, 40],
+    "income": [10, 25, 50, 100, 200],
+    "yearsPerRung": 3,
+    "promoteBase": 0.25,
+    "promotePerPoint": 0.01,
+    "promoteMin": 0.03,
+    "promoteMax": 0.7,
+    "difficulty": [35, 50, 62, 75],
+    "bonusChance": 0.1,
+    "eavesdropChance": 0.2,
+    "longLifeAge": 100
+  },
+  "kyVat": {
+    "tuChance": 0.2,
+    "healthLoss": -30,
+    "safeAge": 30,
+    "deathPerYear": 0.02,
+    "deathMax": 0.6
+  },
+  "techniques": {
+    "default": "dan_khi_quyet",
+    "gradeMul": { "hoang": 1.0, "huyen": 1.2, "dia": 1.5, "thien": 2.0 },
+    "gradeMaxRealm": { "hoang": "truc_co", "huyen": "kim_dan", "dia": "nguyen_anh" },
+    "mismatchMul": 0.7,
+    "lineageMul": { "tien": 1.0, "ma": 1.4, "phat": 0.8, "quy": 1.0, "yeu": 1.0 },
+    "rootlessDaoHeartMax": 0.7,
+    "switchLossPct": 20
+  },
+  "sects": {
+    "stipend": { "bich_lac_tong": 3, "tang_phong_kiem_cac": 1, "bach_thao_coc": 2, "vo_uu_tu": 1, "u_ha_ma_tong": 4, "van_yeu_dien": 2 },
+    "rankStipendMul": [0.5, 1, 2, 4],
+    "karmaPerYear": { "u_ha_ma_tong": -2 },
+    "joinReputation": { "u_ha_ma_tong": { "chinh": -20, "ma": 10 } },
+    "recruitAfterYears": [1, 3],
+    "outerAfterYears": 1,
+    "promotion": [
+      { "rank": 2, "contribution": 60, "realm": "luyen_khi", "stage": 3 },
+      { "rank": 3, "contribution": 200, "realm": "truc_co", "stage": 0 }
+    ],
+    "masterMinRank": 2,
+    "masterChanceBase": 0.25,
+    "masterChancePerPoint": 0.01,
+    "masterSpeed": 0.1
+  },
+  "fate": {
+    "rarityByFoundation": {
+      "ha": { "luong": 60, "uu": 30, "tuyet": 10 },
+      "trung": { "luong": 35, "uu": 40, "tuyet": 20, "thien": 5 },
+      "thuong": { "uu": 40, "tuyet": 40, "thien": 18, "than": 2 },
+      "hoan_my": { "tuyet": 50, "thien": 40, "than": 10 }
+    },
+    "defaultFoundation": "trung",
+    "luckShiftPer10": 2,
+    "slots": 3,
+    "refreshes": 1,
+    "extraRefreshLuck": 70
   },
   "paths": {
     "startAffinity": [5, 30],

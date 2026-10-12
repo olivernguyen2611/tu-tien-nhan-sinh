@@ -12,6 +12,7 @@ const STAT_NAMES: Record<string, string> = {
 
 const CATEGORY_NAMES: Record<string, string> = {
   childhood: 'Tuổi thơ', study: 'Đi học', work: 'Mưu sinh', funny: 'Chuyện lạ', accident: 'Tai ương',
+  cultivation: 'Tu luyện', fortune: 'Kỳ ngộ', sect: 'Tông môn', mortal: 'Đời phàm nhân', rogue: 'Tán tu', fate: 'Thiên mệnh',
 };
 
 /** `changes`: stat deltas line, e.g. "Hạnh phúc −3 · Bạc +10". */
@@ -43,9 +44,9 @@ export function EventPopup({ state, content, result, onChoose, onClose }: {
           <>
             <div class="kicker">{CATEGORY_NAMES[event.category] ?? event.category} · tuổi {state.character.age}</div>
             <h2>{event.title}</h2>
-            <p class="story"><TermText text={fillTemplate(event.text, state)} /></p>
+            <p class="story"><TermText text={fillTemplate(event.text, state, content)} /></p>
             {visibleChoices(state, content, event).map((c) => {
-              const trait = c.traitId ? content.traits.find((t) => t.id === c.traitId) : undefined;
+              const trait = c.traitId ? content.traits.find((t) => t.id === c.traitId) ?? content.fateTalents.find((t) => t.id === c.traitId) : undefined;
               return (
                 <button key={c.index} class={`choice${c.hidden ? ` hidden-choice r-${trait?.rarity ?? 'pham'}` : ''}`}
                   disabled={c.disabled} onClick={() => onChoose(c.index)}>

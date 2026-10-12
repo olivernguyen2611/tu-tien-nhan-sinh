@@ -21,10 +21,14 @@ import { MainScreen } from './screens/Main';
 import { SettingsScreen, type SlotView } from './screens/Settings';
 import { TitleScreen } from './screens/Title';
 import { loadDevMode, saveDevMode } from './devMode';
-import { attemptMajorBreakthrough } from '../systems/cultivation';
+import { attemptMajorBreakthrough, enterFirstRealm } from '../systems/cultivation';
 import { savesLocked } from '../systems/difficulty';
 import { disableTutorial, dismissTip } from '../systems/tutorial';
 import { practiceCraft } from '../systems/crafts';
+import { joinCareer } from '../systems/career';
+import { doMission, joinSect, leaveSect, requestMaster } from '../systems/sect';
+import { learnTechnique } from '../systems/technique';
+import { chooseFate, rerollFate } from '../systems/fate';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -174,6 +178,30 @@ function Screens({ content }: { content: Content }) {
           setLife(r.state);
           return r.text;
         }}
+        onJoinCareer={(careerId) => {
+          const r = joinCareer(life, content, careerId);
+          if (!r) return null;
+          setLife(r.state);
+          return r.text;
+        }}
+        onLearn={(id) => {
+          const r = learnTechnique(life, content, id);
+          if (!r) return null;
+          setLife(enterFirstRealm(r.state, content));
+          return r.text;
+        }}
+        onSectAction={(a) => {
+          const r = a.kind === 'join' ? joinSect(life, content, a.sectId)
+            : a.kind === 'mission' ? doMission(life, content, a.missionId)
+            : a.kind === 'learn' ? learnTechnique(life, content, a.techniqueId)
+            : a.kind === 'master' ? requestMaster(life, content)
+            : leaveSect(life, content);
+          if (!r || !r.text) return null;
+          setLife(r.state);
+          const good: boolean = 'joined' in r ? (r.joined as boolean) : 'success' in r ? (r.success as boolean) : true;
+          return { text: r.text, good };
+        }}
+        onFate={(a) => setLife('choose' in a ? chooseFate(life, content, a.choose) : rerollFate(life, content, devMode))}
         onTip={(id, off) => setLife(off ? disableTutorial(dismissTip(life, id)) : dismissTip(life, id))}
         onBreakthrough={() => {
           const r = attemptMajorBreakthrough(life, content);

@@ -34,10 +34,34 @@ export interface SpiritRoot {
   body: string | null;
 }
 
-export type DeathCause = 'old_age' | 'illness' | 'breakthrough';
+export type DeathCause = 'old_age' | 'illness' | 'breakthrough' | 'ordeal';
 
 export interface GameState {
   version: 1;
+  /** Items carried (items.json id → count); the full bag is task 3.1. */
+  inventory: Record<string, number>;
+  /** Nghịch Thiên Cải Mệnh talents taken (fate-talents.json, task 2.7). */
+  talents: string[];
+  /** A talent choice waiting for the player (after a big breakthrough); blocks the next year. */
+  fate: { offered: string[]; refreshesLeft: number } | null;
+  /** Sect membership (task 2.5). */
+  sect: {
+    id: string | null;
+    /** Index into the sect's ranks. */
+    rank: number;
+    /** Age when the current rank was reached. */
+    since: number;
+    contribution: number;
+    /** Master's name once taken as a personal disciple. */
+    master: string | null;
+    /** Ages of the last mission and the last request to a master (once a year each). */
+    lastMission: number | null;
+    lastMasterTry: number | null;
+    /** Sects this life has left (no coming back). */
+    left: string[];
+  };
+  /** Mortal career (task 2.11): careers.json id, rung index, age the rung was reached. */
+  career: { id: string | null; rung: number; since: number };
   /** Bách nghệ (task 2.12): craft id → level and aptitude 0–100; age of the last practice. */
   crafts: { skills: Record<string, { level: number; affinity: number }>; lastPractice: number | null };
   /** First-life tips (task 2.9): on for the first life; tip ids already shown. */
@@ -72,17 +96,27 @@ export interface GameState {
     fails: Record<string, number>;
     /** Meridian injury slows cultivation until this age (exclusive). */
     injuredUntil: number | null;
+    /** Main technique id (techniques.json); null for mortals. */
+    technique: string | null;
+    /** Every technique learned this life (one-time stat hooks are given once). */
+    learned: string[];
     /** Đạo cơ grade id after Trúc Cơ (realms.json foundations). */
     foundation: string | null;
     /** Age of the last big breakthrough attempt (one per year). */
     lastMajorAttempt: number | null;
+    /** Scrolls found but not yet practised (task 2.8: gainTechnique). */
+    scrolls: string[];
+    /** Temporary speed multipliers until an age (exclusive). */
+    buffs: { mul: number; until: number }[];
+    /** Bonus % for the next big breakthrough only. */
+    nextBonus: number;
     /** Đạo thống (Tiên/Ma/Phật/Quỷ), chosen in GĐ 3; reads lineage.<x>.* hooks. */
     lineage: string | null;
   };
   money: { silver: number; spiritStones: number };
   social: {
     karma: number; // -100 evil … +100 good
-    reputation: Record<'chinh' | 'ma' | 'tan_tu' | 'yeu', number>;
+    reputation: Record<'chinh' | 'ma' | 'tan_tu' | 'yeu' | 'trieu_dinh' | 'giang_ho', number>;
   };
   flags: Record<string, boolean>;
   /** Tiên Thiên Khí Vận: offered at birth, kept after confirming. */

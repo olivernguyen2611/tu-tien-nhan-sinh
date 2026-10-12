@@ -17,6 +17,7 @@ export function tutorialMatches(state: GameState, content: Content, when: Tutori
   if (when.hasRoot !== undefined && (!root || usable !== when.hasRoot)) return false;
   if (when.realm !== undefined && state.cult.realm !== when.realm) return false;
   if (when.atPeak !== undefined && atPeak(state, content) !== when.atPeak) return false;
+  if (when.inSect !== undefined && !!state.sect.id !== when.inSect) return false;
   return true;
 }
 

@@ -1,0 +1,293 @@
+[
+  {
+    "id": "dong_phu_lo_am",
+    "category": "fortune",
+    "title": "Động phủ có lò còn ấm",
+    "text": "Lạc đường trong núi, {name} lách qua khe đá, thấy một động phủ cổ. Lò luyện đan bên trong vẫn còn ấm.",
+    "themes": [
+      "fortune"
+    ],
+    "conditions": {
+      "anyOf": [
+        {
+          "realm": {
+            "min": "luyen_khi"
+          }
+        },
+        {
+          "stats": [
+            {
+              "stat": "stat.luck",
+              "gte": 60
+            }
+          ]
+        }
+      ]
+    },
+    "weight": 1.5,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Phá cấm chế vào trong",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Bên lò có một quyển sách cháy sém.",
+          "effects": {
+            "gainTechnique": "hoa_van_quyet",
+            "spiritStones": 10,
+            "stat.luck": 2
+          }
+        },
+        "fail": {
+          "text": "Cấm chế phản phệ.",
+          "effects": {
+            "stat.health": -20
+          }
+        }
+      },
+      {
+        "text": "Ghi nhớ đường, về báo tông môn",
+        "requires": {
+          "sect": {
+            "member": true
+          }
+        },
+        "result": {
+          "text": "Tông môn thưởng ngươi, rồi cử người tới lấy hết.",
+          "effects": {
+            "sectContribution": 30,
+            "karma": 1,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Đi thôi, sợ có bẫy",
+        "result": {
+          "text": "Đêm đó ngươi trằn trọc mãi.",
+          "effects": {
+            "stat.happiness": -3,
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "xac_tan_tu_duoi_ho",
+    "category": "fortune",
+    "title": "Xác tán tu dưới hồ",
+    "text": "Nước hồ trong vắt. Dưới đáy có một bộ xương ngồi xếp bằng, bên hông đeo túi trữ vật.",
+    "tags": [
+      "dark"
+    ],
+    "themes": [
+      "fortune"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      }
+    },
+    "weight": 1.5,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Lặn xuống lấy túi",
+        "result": {
+          "text": "Nước lạnh buốt. Trong túi có một quyển sách và mấy khối linh thạch.",
+          "effects": {
+            "gainTechnique": "thuy_nguyet_quan_tuong_phap",
+            "spiritStones": 8,
+            "stat.health": -3
+          }
+        }
+      },
+      {
+        "text": "Lấy túi, rồi chôn cất người ấy",
+        "result": {
+          "text": "Ngươi đắp một nấm mồ bên hồ.",
+          "effects": {
+            "gainTechnique": "thuy_nguyet_quan_tuong_phap",
+            "spiritStones": 8,
+            "karma": 3,
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Không đụng tới người chết",
+        "result": {
+          "text": "Ngươi cúi đầu rồi đi.",
+          "effects": {
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "chu_tren_vach_da",
+    "category": "fortune",
+    "title": "Chữ trên vách đá",
+    "text": "Cạo lớp rêu trên vách núi, {name} thấy chữ khắc sâu cả tấc, nét nào cũng như vết quyền.",
+    "themes": [
+      "fortune"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      }
+    },
+    "weight": 1.5,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Ngồi đọc ba ngày",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Đọc tới đâu, xương cốt như được nắn lại tới đó.",
+          "effects": {
+            "gainTechnique": "thach_phu_luyen_the_thien",
+            "stat.physique": 3
+          }
+        },
+        "fail": {
+          "text": "Đọc tới đâu đau xương tới đó. Ngươi bỏ cuộc.",
+          "effects": {
+            "stat.physique": 1
+          }
+        }
+      },
+      {
+        "text": "Chép lại đem bán",
+        "result": {
+          "text": "Có người mua bản chép với giá không tệ.",
+          "effects": {
+            "spiritStones": 10,
+            "stat.intellect": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "lao_gia_trong_mong",
+    "category": "fortune",
+    "title": "Lão giả trong mộng",
+    "text": "Đêm nào cũng mơ thấy một lão già giảng kinh. Giọng quen quen, như ông lão xin ăn năm xưa.",
+    "tags": [
+      "rare"
+    ],
+    "conditions": {
+      "flagsAll": [
+        "nghe_noi_tu_tien"
+      ]
+    },
+    "weight": 2,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Ghi nhớ từng chữ",
+        "check": {
+          "stat": "stat.comprehension",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Sáng ra ngươi chép lại được nửa quyển kinh.",
+          "effects": {
+            "gainTechnique": "mong_trung_tan_kinh",
+            "stat.comprehension": 2
+          }
+        },
+        "fail": {
+          "text": "Sáng ra chỉ nhớ câu cuối: \"Đừng quên ăn sáng.\"",
+          "effects": {
+            "stat.health": 2
+          }
+        }
+      },
+      {
+        "text": "Hỏi lão là ai",
+        "result": {
+          "text": "Lão cười, không đáp, rồi giảng tiếp.",
+          "effects": {
+            "gainTechnique": "mong_trung_tan_kinh",
+            "stat.daoHeart": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kiem_trung",
+    "category": "fortune",
+    "title": "Kiếm trủng",
+    "text": "Sâu trong Lan Sơn có một thung lũng cắm đầy kiếm gãy. Kiếm minh vang lên khi {name} bước vào.",
+    "tags": [
+      "rare"
+    ],
+    "themes": [
+      "fortune"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "truc_co"
+      }
+    },
+    "weight": 0.8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đi tới thanh kiếm ở giữa",
+        "check": {
+          "stat": "stat.daoHeart",
+          "difficulty": 65
+        },
+        "success": {
+          "text": "Người chết vẫn cầm kiếm. Kiếm buông tay khi ngươi tới.",
+          "effects": {
+            "gainTechnique": "nhat_tuyen_thien_kiem_dien",
+            "setFlags": [
+              "hoai_bich"
+            ],
+            "stat.daoHeart": 5
+          }
+        },
+        "fail": {
+          "text": "Kiếm ý ép ngươi quỳ xuống. Ngươi bò ra khỏi thung lũng.",
+          "effects": {
+            "stat.health": -25
+          }
+        }
+      },
+      {
+        "text": "Nhặt một thanh kiếm gãy rồi đi",
+        "result": {
+          "text": "Kiếm gãy nhưng vẫn sắc.",
+          "effects": {
+            "addItems": [
+              "kiem_gay"
+            ],
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Cúi chào rồi đi",
+        "result": {
+          "text": "Kiếm minh lặng xuống sau lưng ngươi.",
+          "effects": {
+            "stat.daoHeart": 3
+          }
+        }
+      }
+    ]
+  }
+]

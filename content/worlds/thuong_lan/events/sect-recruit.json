@@ -1,0 +1,17 @@
+[
+  {
+    "id": "tong_mon_tuyen_do",
+    "category": "cultivation",
+    "title": "Tông môn tuyển đồ",
+    "text": "Tin ngươi có linh căn lan đi nhanh hơn gió. Mấy tông môn quanh Thương Lan cùng phái người tới, ai cũng nói tông mình tốt nhất.",
+    "weight": 0,
+    "choices": [
+      { "text": "Theo Bích Lạc Tông", "requires": { "sect": { "eligible": "bich_lac_tong" } }, "result": { "text": "Mây trắng đưa ngươi lên chín ngọn núi.", "effects": { "joinSect": "bich_lac_tong", "stat.happiness": 5 } } },
+      { "text": "Theo Tàng Phong Kiếm Các", "requires": { "sect": { "eligible": "tang_phong_kiem_cac" } }, "result": { "text": "Vị kiếm tu gầy gò chỉ nói một câu: \"Đi.\"", "effects": { "joinSect": "tang_phong_kiem_cac", "stat.daoHeart": 2 } } },
+      { "text": "Theo Bách Thảo Cốc", "requires": { "sect": { "eligible": "bach_thao_coc" } }, "result": { "text": "Người của Bách Thảo Cốc dúi vào tay ngươi một gói kẹo thuốc.", "effects": { "joinSect": "bach_thao_coc", "stat.health": 3 } } },
+      { "text": "Theo Vô Ưu Tự", "requires": { "sect": { "eligible": "vo_uu_tu" } }, "result": { "text": "Sư thầy chắp tay: \"A Di Đà Phật. Thí chủ có duyên.\"", "effects": { "joinSect": "vo_uu_tu", "stat.daoHeart": 3 } } },
+      { "text": "Theo người áo đen của U Hà", "requires": { "sect": { "eligible": "u_ha_ma_tong" } }, "result": { "text": "Người áo đen cười: \"Lựa chọn khôn ngoan.\"", "effects": { "joinSect": "u_ha_ma_tong", "stat.daoHeart": -3 } } },
+      { "text": "Không theo ai, làm tán tu", "result": { "text": "Tự do, nhưng đường tu từ nay phải tự mình mở.", "effects": { "stat.happiness": 2, "stat.daoHeart": 1 } } }
+    ]
+  }
+]

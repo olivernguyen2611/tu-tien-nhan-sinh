@@ -1,0 +1,59 @@
+{
+  "careers": [
+    {
+      "id": "quan",
+      "name": "Quan lộ",
+      "description": "Đèn sách mười năm, lều chõng đi thi. Đỗ thì làm quan, trượt thì làm thầy đồ.",
+      "mainStats": ["intellect", "charm"],
+      "rungs": ["Tú tài", "Cử nhân", "Tiến sĩ", "Tri phủ", "Tể tướng"],
+      "bonusFlags": ["tu_tai"],
+      "promoteText": "Bảng vàng có tên ngươi: từ nay là {rung}.",
+      "title": "Trạng nguyên khai khoa"
+    },
+    {
+      "id": "thuong",
+      "name": "Thương lộ",
+      "description": "Mua rẻ bán đắt, đi một chuyến hàng bằng người ta làm một năm.",
+      "mainStats": ["charm", "luck"],
+      "rungs": ["Gánh hàng rong", "Chủ tiệm", "Phú hộ", "Đại thương gia", "Hoàng thương"],
+      "bonusFlags": ["nghe_quan"],
+      "promoteText": "Làm ăn phát đạt, người trong nghề gọi ngươi là {rung}.",
+      "title": "Phú giáp một phương"
+    },
+    {
+      "id": "vo_lam",
+      "name": "Võ lâm",
+      "description": "Quyền cước làm cơm ăn, giang hồ làm nhà ở.",
+      "mainStats": ["physique", "health"],
+      "rungs": ["Võ sinh", "Võ sư", "Cao thủ", "Tông sư", "Võ lâm minh chủ"],
+      "bonusFlags": ["nghe_ren"],
+      "bonusOrigins": ["vo_lam"],
+      "promoteText": "Một trận thành danh, giang hồ đồn ngươi đã là {rung}.",
+      "title": "Thiên hạ đệ nhất võ phu"
+    },
+    {
+      "id": "y",
+      "name": "Y lộ",
+      "description": "Bắt mạch, kê đơn, cứu người. Thầy thuốc giỏi thì vua quan cũng phải nhờ.",
+      "mainStats": ["intellect", "comprehension"],
+      "rungs": ["Học việc", "Lang y", "Danh y", "Ngự y", "Thần y"],
+      "bonusFlags": ["nghe_thuoc"],
+      "promoteText": "Chữa khỏi một ca ai cũng lắc đầu. Từ nay ngươi là {rung}.",
+      "title": "Thần y cứu thế"
+    },
+    {
+      "id": "tap_dich",
+      "name": "Tạp dịch tông môn",
+      "description": "Không linh căn, nhưng xin được vào tông môn gánh nước quét sân. Gần tiên duyên, dù chỉ đứng ngoài cửa.",
+      "mainStats": ["comprehension", "daoHeart"],
+      "rungs": ["Tạp dịch", "Quản sự tạp dịch"],
+      "requires": { "rootless": true },
+      "promoteText": "Làm việc chu đáo, ngươi được cất nhắc làm {rung}.",
+      "effects": [{ "hook": "eventWeight.ky_vat", "mul": 3 }]
+    }
+  ],
+  "joinText": "Ngươi bước lên {career}: khởi đầu là {rung}.",
+  "leaveText": "Ngươi bỏ {career}, làm lại từ đầu.",
+  "eavesdropText": "Quét sân ngoài giảng đường, nghe lỏm được vài câu đạo lý. Ngộ tính +1.",
+  "longLifeTitle": "Bình an trăm tuổi"
+}

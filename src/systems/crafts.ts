@@ -120,3 +120,12 @@ export function applyJobCrafts(state: GameState, content: Content): GameState {
   if (s === state) return state;
   return { ...s, rng: rng.getState(), log: addLines(s, lines) };
 }
+
+/** Craft levels from an event (task 2.8); the craft's aptitude is rolled if new. */
+export function addCraftXp(state: GameState, content: Content, craftId: string, levels: number): GameState {
+  if (!craftDef(content, craftId) || levels === 0) return state;
+  const rng = Rng.fromState(state.rng);
+  const skill = skillOf(state, content, craftId, rng);
+  const level = Math.max(0, Math.min(100, skill.level + levels));
+  return { ...state, rng: rng.getState(), crafts: { ...state.crafts, skills: { ...state.crafts.skills, [craftId]: { ...skill, level } } } };
+}

@@ -1,7 +1,7 @@
 // Loads all JSON under content/ at build time and checks it with the same
 // rules as `npm run validate`.
 import {
-  AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile,
+  AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, FateTalentFileSchema, ItemFileSchema, type FateTalent, type Item, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile,
   BalanceSchema, EventFileSchema, FamilyActionFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema,
   type Balance, type FamilyAction, type GameEvent, type Glossary, type LifeTexts, type Names, type Origin, type StatExtremesFile, type Trait, type World,
 } from './schemas';
@@ -31,6 +31,18 @@ export interface Content {
   difficulties: Difficulty[];
   /** Goals and first-life tips (task 2.9). */
   tutorial: TutorialFile;
+  /** Mortal careers (task 2.11). */
+  careers: CareersFile;
+  /** Main cultivation methods (task 2.4), shared by every world. */
+  techniques: Technique[];
+  /** This world's sects (task 2.4). */
+  sects: Sect[];
+  /** Sect texts and missions of this world (task 2.5); null when it has no sects. */
+  sectLife: SectLife | null;
+  /** Nghịch Thiên Cải Mệnh talents (task 2.7). */
+  fateTalents: FateTalent[];
+  /** Items known so far (task 2.8). */
+  items: Item[];
 }
 
 export interface CultivationTables {
@@ -92,5 +104,11 @@ export function loadContent(worldId: string = DEFAULT_WORLD_ID): Content {
     cultivation: parseCultivationTables(files['realms.json'], files['roots.json'], files['aptitudes.json']),
     difficulties: DifficultyFileSchema.parse(files['difficulties.json']),
     tutorial: TutorialFileSchema.parse(files['tutorial.json']),
+    careers: CareersFileSchema.parse(files['careers.json']),
+    techniques: TechniqueFileSchema.parse(files['techniques.json']),
+    sects: SectFileSchema.parse(files[`${dir}sects.json`] ?? []),
+    fateTalents: FateTalentFileSchema.parse(files['fate-talents.json']),
+    items: ItemFileSchema.parse(files['items.json'] ?? []),
+    sectLife: files[`${dir}sect-life.json`] ? SectLifeSchema.parse(files[`${dir}sect-life.json`]) : null,
   };
 }

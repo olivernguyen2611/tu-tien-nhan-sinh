@@ -1,0 +1,116 @@
+[
+  {
+    "id": "tuy_linh_mach",
+    "category": "fortune",
+    "title": "Nước tủy linh mạch",
+    "text": "Đào giếng sau nhà, {name} chạm vào một mạch nước trắng như sữa, lạnh buốt và thơm lạ. Người làm cùng bảo nước độc, mau lấp đi.",
+    "tags": [
+      "rare"
+    ],
+    "themes": [
+      "ky_vat"
+    ],
+    "conditions": {
+      "age": {
+        "min": 14
+      },
+      "root": {
+        "tested": true,
+        "usable": false
+      },
+      "stats": [
+        {
+          "stat": "stat.luck",
+          "gte": 70
+        }
+      ]
+    },
+    "weight": 0.4,
+    "luckAffected": true,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhảy xuống ngâm mình",
+        "result": {
+          "text": "Nước len vào từng lỗ chân lông, tẩy qua tủy xương. Lúc bò lên, ngươi gầy rộc, nhưng có thứ gì đó trong kinh mạch đã khác.",
+          "effects": {
+            "grantRoot": true,
+            "stat.physique": 2
+          }
+        }
+      },
+      {
+        "text": "Múc vài vò đem bán cho thầy thuốc",
+        "result": {
+          "text": "Thầy thuốc nếm một ngụm, tay run run trả bạc. Hôm sau giếng đã cạn.",
+          "effects": {
+            "silver": 120,
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Nghe lời, lấp giếng lại",
+        "result": {
+          "text": "Giếng lấp xong, đêm nào ngươi cũng mơ thấy dòng nước trắng ấy.",
+          "effects": {
+            "stat.happiness": -3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "thien_loi_nhap_the",
+    "category": "fortune",
+    "title": "Sét đánh không chết",
+    "text": "Giữa đồng, trời quang mây tạnh bỗng một tia sét giáng thẳng xuống người {name}. Ngươi chưa chết. Trong ngực có một luồng tê dại đang chạy loạn.",
+    "tags": [
+      "rare",
+      "violence"
+    ],
+    "themes": [
+      "ky_vat"
+    ],
+    "conditions": {
+      "age": {
+        "min": 14
+      },
+      "root": {
+        "tested": true,
+        "usable": false
+      },
+      "stats": [
+        {
+          "stat": "stat.luck",
+          "gte": 70
+        }
+      ]
+    },
+    "weight": 0.3,
+    "luckAffected": true,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Ngồi xuống, dẫn luồng tê dại đi khắp người",
+        "result": {
+          "text": "Lôi khí xé kinh mạch thành từng sợi rồi hàn lại. Ngươi ngất đi giữa đồng, tỉnh dậy thì tóc dựng đứng cả tuần.",
+          "effects": {
+            "grantRoot": true,
+            "stat.charm": -3
+          }
+        }
+      },
+      {
+        "text": "Chạy về nhà trùm chăn",
+        "result": {
+          "text": "Luồng tê dại tan dần. Cả làng kéo đến xem người bị sét đánh mà không chết.",
+          "effects": {
+            "stat.health": -10,
+            "stat.charm": 3
+          }
+        }
+      }
+    ]
+  }
+]

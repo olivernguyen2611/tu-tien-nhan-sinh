@@ -1,0 +1,806 @@
+[
+  {
+    "id": "tien_mon_tuyen_do_truot",
+    "category": "mortal",
+    "title": "Ngày tiên môn tuyển đồ",
+    "text": "Mười năm một lần, Bích Lạc Tông xuống Diên Châu tuyển người. {name} đặt tay lên viên đá thử, đá không sáng. Tiên sư phất tay: \"Người kế tiếp.\"",
+    "conditions": {
+      "age": {
+        "min": 8,
+        "max": 14
+      },
+      "root": {
+        "tested": true,
+        "usable": false
+      }
+    },
+    "weight": 8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Về nhà, theo nghề của mình",
+        "requires": {
+          "flagsNone": [
+            "no_mother"
+          ]
+        },
+        "result": {
+          "text": "Mẹ ngươi nấu một nồi cháo, không hỏi gì.",
+          "effects": {
+            "stat.happiness": -5,
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Xin làm tạp dịch trên núi",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Chấp sự nhìn tay chân ngươi, gật đầu: \"Gánh nước được.\"",
+          "effects": {
+            "joinCareer": "tap_dich",
+            "stat.happiness": 3
+          }
+        },
+        "fail": {
+          "text": "\"Không cần người.\"",
+          "effects": {
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Đứng ngoài cổng không chịu về",
+        "result": {
+          "text": "Ba ngày ba đêm. Một vị sư già đi ngang, nhìn ngươi rất lâu.",
+          "effects": {
+            "setFlags": [
+              "su_gia_de_y"
+            ],
+            "stat.daoHeart": 5
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tien_nhan_bay_ngang",
+    "category": "mortal",
+    "title": "Tiên nhân bay ngang trời",
+    "text": "Một vệt sáng xé trời, có người đứng trên thanh kiếm bay qua làng. Cả làng ngẩng cổ nhìn, gà quên gáy.",
+    "tags": [
+      "funny"
+    ],
+    "conditions": {
+      "root": {
+        "tested": true,
+        "usable": false
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Quỳ xuống lạy",
+        "result": {
+          "text": "Tiên nhân không thấy. Nhưng ngươi thấy lòng yên.",
+          "effects": {
+            "stat.luck": 1
+          }
+        }
+      },
+      {
+        "text": "Chạy theo",
+        "result": {
+          "text": "Chạy tới bờ ruộng thì ngã.",
+          "effects": {
+            "stat.health": -2,
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Làm một bài thơ",
+        "result": {
+          "text": "Bài thơ truyền khắp huyện, còn hay hơn cả tiên nhân.",
+          "effects": {
+            "stat.intellect": 2,
+            "stat.charm": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "thi_huong",
+    "category": "mortal",
+    "title": "Thi Hương",
+    "text": "Kỳ thi ở phủ, ba ngày nhốt trong lều thi chật như lồng gà.",
+    "conditions": {
+      "age": {
+        "min": 17,
+        "max": 35
+      },
+      "career": {
+        "id": "quan",
+        "maxRung": 0
+      },
+      "flagsAll": [
+        "tu_tai"
+      ]
+    },
+    "weight": 6,
+    "cooldownYears": 3,
+    "choices": [
+      {
+        "text": "Dốc sức",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 65
+        },
+        "success": {
+          "text": "Cử nhân! Cả họ mở tiệc.",
+          "effects": {
+            "careerPromote": true,
+            "reputation": {
+              "trieu_dinh": 10
+            },
+            "stat.happiness": 10
+          }
+        },
+        "fail": {
+          "text": "Trượt. Ba năm nữa thi lại.",
+          "effects": {
+            "stat.happiness": -8
+          }
+        }
+      },
+      {
+        "text": "Viết thẳng về tệ nạn quan trường",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 75
+        },
+        "success": {
+          "text": "Quan chủ khảo đỏ mặt, nhưng không dám đánh trượt.",
+          "effects": {
+            "careerPromote": true,
+            "karma": 3,
+            "setFlags": [
+              "thanh_quan"
+            ],
+            "stat.daoHeart": 5
+          }
+        },
+        "fail": {
+          "text": "Bài bị đánh dấu \"cuồng sĩ\".",
+          "effects": {
+            "reputation": {
+              "trieu_dinh": -10
+            },
+            "stat.happiness": -8,
+            "stat.daoHeart": 3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "an_oan_o_huyen",
+    "category": "mortal",
+    "title": "Án oan ở huyện",
+    "text": "Một nông dân bị vu giết người. Kẻ vu oan là con trai một phú hộ, lễ vật đã đặt sẵn sau bình phong.",
+    "themes": [
+      "justice"
+    ],
+    "conditions": {
+      "career": {
+        "id": "quan",
+        "minRung": 2
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Xử công minh",
+        "result": {
+          "text": "Dân cả huyện đốt pháo. Phú hộ viết thư lên trên.",
+          "effects": {
+            "karma": 8,
+            "reputation": {
+              "trieu_dinh": -5
+            },
+            "setFlags": [
+              "ke_thu_phu_ho"
+            ],
+            "stat.daoHeart": 3,
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Nhận lễ vật",
+        "result": {
+          "text": "Bạc nặng tay. Đêm đó ngươi ngủ không yên.",
+          "effects": {
+            "silver": 300,
+            "karma": -10,
+            "stat.daoHeart": -5
+          }
+        }
+      },
+      {
+        "text": "Nghe một câu là biết ai nói dối, lấy luôn lời khai làm bằng",
+        "requires": {
+          "traitsAny": [
+            "linh_lung_tam"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Phú hộ cứng họng.",
+          "effects": {
+            "karma": 8,
+            "reputation": {
+              "trieu_dinh": 5
+            },
+            "stat.charm": 3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "mo_tiem",
+    "category": "mortal",
+    "title": "Mở tiệm",
+    "text": "Một gian hàng mặt phố đang cho thuê. Tứ Phương Thương Hội cũng ngỏ ý cho vay.",
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "career": {
+        "id": "thuong",
+        "maxRung": 0
+      }
+    },
+    "weight": 6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Tự bỏ vốn",
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 50
+            }
+          ]
+        },
+        "result": {
+          "text": "Biển hiệu treo lên, tiệm của ngươi mở cửa.",
+          "effects": {
+            "silver": -50,
+            "careerPromote": true,
+            "stat.happiness": 5
+          }
+        }
+      },
+      {
+        "text": "Vay thương hội",
+        "result": {
+          "text": "Có vốn lớn, nhưng tháng nào cũng phải trả lãi.",
+          "effects": {
+            "careerPromote": true,
+            "setFlags": [
+              "no_thuong_hoi"
+            ],
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Nói chủ nhà giảm nửa tiền thuê",
+        "requires": {
+          "traitsAny": [
+            "kheo_mom"
+          ],
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 25
+            }
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Chủ nhà gật đầu mà không hiểu vì sao mình gật.",
+          "effects": {
+            "silver": -25,
+            "careerPromote": true,
+            "stat.charm": 2
+          }
+        }
+      },
+      {
+        "text": "Nói chủ nhà giảm nửa tiền thuê (hòa khí)",
+        "requires": {
+          "talentsAny": [
+            "hoa_khi_sinh_tai"
+          ],
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 25
+            }
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Chủ nhà gật đầu, còn mời ngươi chén trà.",
+          "effects": {
+            "silver": -25,
+            "careerPromote": true,
+            "stat.charm": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "thuong_chien",
+    "category": "mortal",
+    "title": "Thương chiến",
+    "text": "Tiệm đối diện hạ giá một nửa, quyết dìm chết {name}.",
+    "conditions": {
+      "career": {
+        "id": "thuong",
+        "minRung": 1
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Hạ giá theo",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Tiệm kia đóng cửa trước.",
+          "effects": {
+            "silver": 100,
+            "stat.happiness": 5
+          }
+        },
+        "fail": {
+          "text": "Ngươi lỗ nặng.",
+          "effects": {
+            "silver": -80,
+            "stat.happiness": -8
+          }
+        }
+      },
+      {
+        "text": "Đổi hàng khác, không đấu",
+        "result": {
+          "text": "Ngươi bán thứ họ không có.",
+          "effects": {
+            "silver": 30,
+            "stat.intellect": 2
+          }
+        }
+      },
+      {
+        "text": "Mua luôn tiệm đối diện",
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 300
+            }
+          ]
+        },
+        "result": {
+          "text": "Chủ tiệm kia thành người làm của ngươi.",
+          "effects": {
+            "silver": -300,
+            "careerPromote": true,
+            "karma": -2,
+            "stat.happiness": 5
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "dich_benh_dien_chau",
+    "category": "mortal",
+    "title": "Dịch bệnh Diên Châu",
+    "text": "Dịch lan khắp ba huyện. Hồi Xuân Đường đóng cửa vì thầy thuốc cũng ngã bệnh.",
+    "tags": [
+      "dark"
+    ],
+    "conditions": {
+      "age": {
+        "min": 16
+      },
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "anyOf": [
+        {
+          "career": {
+            "id": "y"
+          }
+        },
+        {
+          "flagsAll": [
+            "nghe_thuoc"
+          ]
+        }
+      ]
+    },
+    "weight": 3,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Ở lại chữa bệnh",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Ngươi tìm ra bài thuốc. Dân gọi ngươi là thần y.",
+          "effects": {
+            "careerPromote": true,
+            "karma": 10,
+            "stat.intellect": 3,
+            "stat.daoHeart": 3
+          }
+        },
+        "fail": {
+          "text": "Ngươi cũng ngã bệnh, may mà qua khỏi.",
+          "effects": {
+            "karma": 5,
+            "stat.health": -20
+          }
+        }
+      },
+      {
+        "text": "Bán thuốc giá cao",
+        "result": {
+          "text": "Bạc chảy vào như nước. Người ta nhìn ngươi bằng ánh mắt khác.",
+          "effects": {
+            "silver": 200,
+            "karma": -10,
+            "stat.daoHeart": -5
+          }
+        }
+      },
+      {
+        "text": "Đưa cả nhà lánh đi",
+        "result": {
+          "text": "Cả nhà bình an. Tin dữ từ Diên Châu cứ dội về mãi.",
+          "effects": {
+            "stat.happiness": -5
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "huong_hoa_hoi",
+    "category": "mortal",
+    "title": "Hương Hỏa Hội",
+    "text": "Người của Hương Hỏa Hội phát bánh trước chợ: \"Tiên Tôn thương người không linh căn. Thành tâm thờ phụng, ba năm khai mạch thành tiên.\"",
+    "tags": [
+      "dark"
+    ],
+    "conditions": {
+      "age": {
+        "min": 14
+      },
+      "root": {
+        "tested": true,
+        "usable": false
+      }
+    },
+    "weight": 3,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Tin theo, nhập hội",
+        "result": {
+          "text": "Ba năm sau, ngươi sẽ được dẫn vào một hang sâu \"để khai mạch\".",
+          "effects": {
+            "setFlags": [
+              "huong_hoa_hoi"
+            ],
+            "stat.happiness": 5
+          }
+        }
+      },
+      {
+        "text": "Hỏi kỹ",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Lời họ có chỗ không khớp. Ngươi để ý thấy người nhập hội cũ không ai quay về.",
+          "effects": {
+            "setFlags": [
+              "nghi_huong_hoa_hoi"
+            ],
+            "followUp": {
+              "event": "huong_hoa_hoi_bao_quan",
+              "afterYears": [
+                0,
+                1
+              ]
+            },
+            "stat.intellect": 2
+          }
+        },
+        "fail": {
+          "text": "Nghe xong, ngươi tin. Ba năm sau, ngươi sẽ được dẫn vào một hang sâu \"để khai mạch\".",
+          "effects": {
+            "setFlags": [
+              "huong_hoa_hoi"
+            ],
+            "stat.happiness": 5
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "huong_hoa_hoi_bao_quan",
+    "category": "mortal",
+    "title": "Hương Hỏa Hội lộ mặt",
+    "text": "Mấy hôm nay ngươi theo dõi Hương Hỏa Hội. Người nhập hội cũ quả nhiên không ai quay về.",
+    "tags": [
+      "dark"
+    ],
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Báo Khâm Thiên Giám",
+        "result": {
+          "text": "Mấy ngày sau, tiên sư Bích Lạc xuống núi. Hương Hỏa Hội biến mất trong một đêm.",
+          "effects": {
+            "reputation": {
+              "trieu_dinh": 10,
+              "chinh": 10
+            },
+            "setFlags": [
+              "ke_thu_u_ha"
+            ],
+            "stat.daoHeart": 3
+          }
+        }
+      },
+      {
+        "text": "Im lặng, tránh xa",
+        "result": {
+          "text": "Ngươi không dính vào. Chợ vẫn có người phát bánh.",
+          "effects": {
+            "stat.daoHeart": -1,
+            "stat.happiness": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "linh_qua_nghin_nam",
+    "category": "mortal",
+    "title": "Linh quả nghìn năm",
+    "text": "Giữa rừng thiêng, một cây nhỏ mang đúng một quả đỏ như máu, tỏa hương khiến muông thú quanh đó nằm rạp.",
+    "tags": [
+      "rare"
+    ],
+    "themes": [
+      "ky_vat"
+    ],
+    "conditions": {
+      "root": {
+        "tested": true,
+        "usable": false
+      },
+      "stats": [
+        {
+          "stat": "stat.luck",
+          "gte": 70
+        }
+      ]
+    },
+    "weight": 0.4,
+    "luckAffected": true,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Ăn ngay",
+        "check": {
+          "stat": "stat.health",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Ba ngày tẩy tủy như lửa đốt. Ngươi tỉnh dậy, cảm được linh khí.",
+          "effects": {
+            "grantRoot": true,
+            "stat.daoHeart": 2
+          }
+        },
+        "fail": {
+          "text": "Thân phàm không chịu nổi.",
+          "effects": {
+            "stat.health": -50
+          }
+        }
+      },
+      {
+        "text": "Mang về cho con",
+        "requires": {
+          "flagsAll": [
+            "co_con"
+          ]
+        },
+        "result": {
+          "text": "Con ngươi có linh căn. Ngươi không có, nhưng thấy đủ.",
+          "effects": {
+            "karma": 5,
+            "stat.happiness": 10
+          }
+        }
+      },
+      {
+        "text": "Bán cho tu sĩ",
+        "result": {
+          "text": "Một tu sĩ Trúc Cơ trả cái giá đủ cho ba đời ăn tiêu.",
+          "effects": {
+            "silver": 5000,
+            "stat.happiness": 5,
+            "stat.daoHeart": -3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ha_vien_vo_uu",
+    "category": "mortal",
+    "title": "Hạ viện Vô Ưu Tự",
+    "text": "Chùa nhỏ dưới chân núi, sư thầy hiền, cơm chay ngon. Sư thầy nhìn {name}: \"Thí chủ có duyên.\"",
+    "conditions": {
+      "root": {
+        "tested": true,
+        "usable": false
+      },
+      "anyOf": [
+        {
+          "stats": [
+            {
+              "stat": "stat.daoHeart",
+              "gte": 70
+            }
+          ]
+        },
+        {
+          "flagsAll": [
+            "su_gia_de_y"
+          ]
+        }
+      ]
+    },
+    "weight": 3,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Quy y",
+        "result": {
+          "text": "Ngươi cạo tóc, học ngồi thiền đếm hơi thở.",
+          "effects": {
+            "learnTechnique": "vo_uu_thien_tam_phap",
+            "leaveCareer": true,
+            "stat.daoHeart": 5
+          }
+        }
+      },
+      {
+        "text": "Ở lại ăn chay một thời gian",
+        "result": {
+          "text": "Mấy tháng ăn chay, người nhẹ hẳn.",
+          "effects": {
+            "stat.daoHeart": 5,
+            "stat.health": 5
+          }
+        }
+      },
+      {
+        "text": "Cảm ơn rồi về",
+        "result": {
+          "text": "Hương trầm theo ngươi về tới tận nhà.",
+          "effects": {
+            "stat.happiness": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "doi_tap_dich",
+    "category": "mortal",
+    "title": "Đời tạp dịch",
+    "text": "Gánh nước, quét sân, trông linh điền. Đệ tử chính thức đi qua không ai nhìn {name}.",
+    "conditions": {
+      "career": {
+        "id": "tap_dich"
+      }
+    },
+    "weight": 5,
+    "cooldownYears": 3,
+    "choices": [
+      {
+        "text": "Nghe lén trưởng lão giảng đạo",
+        "check": {
+          "stat": "stat.comprehension",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Một câu lọt tai, ngẫm cả tháng.",
+          "effects": {
+            "stat.comprehension": 2
+          }
+        },
+        "fail": {
+          "text": "Bị bắt quả tang, phạt quét thêm ba sân.",
+          "effects": {
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Học trồng linh thảo",
+        "result": {
+          "text": "Tay ngươi bắt đầu biết cây nào cần nước, cây nào cần nắng.",
+          "effects": {
+            "craftXp": {
+              "farming": 5
+            },
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Tranh thủ tìm quanh núi",
+        "result": {
+          "text": "Đi khắp các khe núi, chân cứng đá mềm.",
+          "effects": {
+            "stat.physique": 1
+          }
+        }
+      },
+      {
+        "text": "Giúp lão nhân quét lá",
+        "requires": {
+          "flagsAll": [
+            "lao_nhan_quet_la"
+          ]
+        },
+        "result": {
+          "text": "Lão nói: \"Không có linh căn, quét lá vẫn là tu.\"",
+          "effects": {
+            "stat.daoHeart": 5
+          }
+        }
+      }
+    ]
+  }
+]

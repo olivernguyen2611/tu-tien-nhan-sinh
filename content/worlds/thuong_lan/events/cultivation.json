@@ -1,0 +1,545 @@
+[
+  {
+    "id": "don_ngo_trong_mua",
+    "category": "cultivation",
+    "title": "Đốn ngộ trong mưa",
+    "text": "Mưa rơi trên mái động phủ, từng giọt một. {name} ngồi nghe, chợt thấy mỗi giọt như một luồng linh khí.",
+    "tags": [
+      "rare"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      }
+    },
+    "weight": 1.5,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Nhắm mắt cảm ngộ",
+        "check": {
+          "stat": "stat.comprehension",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Ba ngày ba đêm, ngươi tỉnh lại, tu vi đã tiến một bước dài.",
+          "effects": {
+            "cultProgress": 40,
+            "stat.comprehension": 2
+          }
+        },
+        "fail": {
+          "text": "Ngươi ngủ quên, cảm lạnh ba ngày.",
+          "effects": {
+            "stat.health": -3
+          }
+        }
+      },
+      {
+        "text": "Ra ngoài tắm mưa",
+        "result": {
+          "text": "Chẳng ngộ được gì, nhưng rất sảng khoái.",
+          "effects": {
+            "stat.happiness": 5
+          }
+        }
+      },
+      {
+        "text": "Ngủ trưa một giấc là thông",
+        "requires": {
+          "talentsAny": [
+            "ngo_dao_thien_tu"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Tỉnh dậy, tu vi đã tiến xa hơn cả người ngồi ba ngày.",
+          "effects": {
+            "cultProgress": 60,
+            "stat.happiness": 3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "binh_canh_luyen_khi",
+    "category": "cultivation",
+    "title": "Bình cảnh Luyện Khí",
+    "text": "Linh khí đầy tràn mà không qua được cửa. Ngươi đã ngồi trước bức tường này mấy năm.",
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi",
+        "max": "luyen_khi"
+      },
+      "stage": {
+        "min": 8
+      },
+      "peakFails": {
+        "min": 1
+      }
+    },
+    "weight": 6,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Bế quan khổ tu",
+        "result": {
+          "text": "Ngươi đóng cửa ba năm. Bức tường mỏng đi một chút.",
+          "effects": {
+            "reducePeakFails": 1,
+            "stat.daoHeart": 3,
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Xuống núi lịch luyện",
+        "result": {
+          "text": "Thấy nhiều, nghĩ nhiều, lòng tự mở.",
+          "effects": {
+            "setFlags": [
+              "lich_luyen"
+            ],
+            "stat.daoHeart": 3
+          }
+        }
+      },
+      {
+        "text": "Tìm sư phụ chỉ điểm",
+        "requires": {
+          "flagsAll": [
+            "co_su_phu"
+          ]
+        },
+        "result": {
+          "text": "Sư phụ gõ đầu ngươi một cái: \"Nóng vội.\"",
+          "effects": {
+            "nextBreakthroughBonus": 10,
+            "stat.comprehension": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tu_luyen_qua_suc",
+    "category": "cultivation",
+    "title": "Tu luyện quá sức",
+    "text": "Muốn nhanh hơn người, {name} dẫn linh khí quá mạnh. Kinh mạch nóng rát như bị lửa đốt.",
+    "themes": [
+      "mishap"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Dừng ngay, điều tức",
+        "result": {
+          "text": "Thoát nạn, nhưng mất mấy tháng công.",
+          "effects": {
+            "cultProgress": -10,
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Cố thêm chút nữa",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Kinh mạch giãn ra, rộng hơn trước.",
+          "effects": {
+            "cultProgress": 25,
+            "stat.physique": 2
+          }
+        },
+        "fail": {
+          "text": "Tổn thương kinh mạch.",
+          "effects": {
+            "speedBuff": {
+              "mul": 0.5,
+              "years": 5
+            },
+            "stat.health": -20
+          }
+        }
+      },
+      {
+        "text": "Gồng chịu (da dày)",
+        "requires": {
+          "traitsAny": [
+            "hau_bi"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Da dày chịu được cả lửa trong người.",
+          "effects": {
+            "cultProgress": 20,
+            "stat.physique": 2
+          }
+        }
+      },
+      {
+        "text": "Gồng chịu (xương sắt)",
+        "requires": {
+          "talentsAny": [
+            "thiet_cot"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Xương cứng như sắt, chịu được cả lửa trong người.",
+          "effects": {
+            "cultProgress": 20,
+            "stat.physique": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bong_cu_trong_tam",
+    "category": "cultivation",
+    "title": "Bóng cũ trong tâm",
+    "text": "Lúc nhập định, {name} thấy lại một gương mặt cũ, người từng bị ngươi làm hại.",
+    "themes": [
+      "heart_demon"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      },
+      "stats": [
+        {
+          "stat": "karma",
+          "lte": -10
+        }
+      ]
+    },
+    "weight": 3,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Đối mặt, nhận lỗi trong lòng",
+        "check": {
+          "stat": "stat.daoHeart",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Gương mặt tan đi. Lòng nhẹ hẳn.",
+          "effects": {
+            "stat.daoHeart": 5
+          }
+        },
+        "fail": {
+          "text": "Gương mặt cười. Ngươi giật mình tỉnh dậy, mồ hôi ướt áo.",
+          "effects": {
+            "cultProgress": -10,
+            "stat.daoHeart": -5
+          }
+        }
+      },
+      {
+        "text": "Gạt đi, tiếp tục tu",
+        "result": {
+          "text": "Bóng kia lui vào góc, chờ.",
+          "effects": {
+            "setFlags": [
+              "tam_ma_am_i"
+            ],
+            "stat.daoHeart": -3
+          }
+        }
+      },
+      {
+        "text": "Mỉm cười với nó",
+        "requires": {
+          "talentsAny": [
+            "bo_de_tam"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Nó cũng mỉm cười, rồi đi.",
+          "effects": {
+            "stat.daoHeart": 8
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tim_truc_co_dan",
+    "category": "cultivation",
+    "title": "Tìm Trúc Cơ Đan",
+    "text": "Muốn Trúc Cơ, ai cũng cần một viên Trúc Cơ Đan. Mà đan thì ít, người thì nhiều.",
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi",
+        "max": "luyen_khi"
+      },
+      "stage": {
+        "min": 8
+      }
+    },
+    "weight": 5,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Đổi bằng cống hiến",
+        "requires": {
+          "stats": [
+            {
+              "stat": "sect.contribution",
+              "gte": 100
+            }
+          ]
+        },
+        "result": {
+          "text": "Ngươi dốc hết điểm tích mấy năm.",
+          "effects": {
+            "sectContribution": -100,
+            "addItems": [
+              "truc_co_dan"
+            ],
+            "stat.happiness": 5
+          }
+        }
+      },
+      {
+        "text": "Đến đấu giá Kim Thiềm",
+        "requires": {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 50
+            }
+          ]
+        },
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Giành được với giá hời.",
+          "effects": {
+            "spiritStones": -50,
+            "addItems": [
+              "truc_co_dan"
+            ],
+            "stat.happiness": 5
+          }
+        },
+        "fail": {
+          "text": "Bị một thiếu gia Tô gia trả giá cao hơn, còn cười khẩy.",
+          "effects": {
+            "setFlags": [
+              "thu_to_gia_thieu_gia"
+            ],
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Liều đột phá không cần đan",
+        "result": {
+          "text": "Ngươi tin vào bản thân.",
+          "effects": {
+            "stat.daoHeart": 5
+          }
+        }
+      },
+      {
+        "text": "Tự luyện",
+        "requires": {
+          "traitsAny": [
+            "dan_thu"
+          ]
+        },
+        "hidden": true,
+        "check": {
+          "stat": "craft.alchemy",
+          "difficulty": 40
+        },
+        "success": {
+          "text": "Lò mở ra, một viên Trúc Cơ Đan tròn trịa nằm giữa tro.",
+          "effects": {
+            "addItems": [
+              "truc_co_dan"
+            ],
+            "stat.happiness": 5
+          }
+        },
+        "fail": {
+          "text": "Nổ lò.",
+          "effects": {
+            "stat.health": -5
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "linh_khi_trieu_tich",
+    "category": "cultivation",
+    "title": "Linh khí triều tịch",
+    "text": "Hai mươi năm mới có một lần, linh khí trong Lan Sơn dâng lên như thủy triều, đêm trời sáng như ngày.",
+    "tags": [
+      "rare"
+    ],
+    "themes": [
+      "fortune"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      }
+    },
+    "weight": 1,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Lên đỉnh núi hứng trọn",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Linh khí đổ vào người như thác.",
+          "effects": {
+            "cultProgress": 50,
+            "stat.physique": 2
+          }
+        },
+        "fail": {
+          "text": "Quá sức, ngươi ngất trên đỉnh núi.",
+          "effects": {
+            "cultProgress": 15,
+            "stat.health": -10
+          }
+        }
+      },
+      {
+        "text": "Ngồi trong động phủ hấp thu vừa phải",
+        "result": {
+          "text": "Linh khí thấm vào từng chút một.",
+          "effects": {
+            "cultProgress": 20,
+            "stat.health": 2
+          }
+        }
+      },
+      {
+        "text": "Đi gom linh thảo nở rộ đêm đó",
+        "result": {
+          "text": "Linh thảo nở trắng cả sườn núi, ngươi gom không xuể.",
+          "effects": {
+            "spiritStones": 15,
+            "craftXp": {
+              "farming": 3
+            },
+            "stat.happiness": 3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "lo_dan_dau_tien",
+    "category": "cultivation",
+    "title": "Lò đan đầu tiên",
+    "text": "Lần đầu tự mở lò. Lửa lên, thuốc vào, {name} nín thở.",
+    "tags": [
+      "funny"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      },
+      "anyOf": [
+        {
+          "stats": [
+            {
+              "stat": "craft.alchemy",
+              "gte": 1
+            }
+          ]
+        },
+        {
+          "sect": {
+            "id": "bach_thao_coc"
+          }
+        }
+      ]
+    },
+    "weight": 4,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Theo đúng sách",
+        "check": {
+          "stat": "craft.alchemy",
+          "difficulty": 20
+        },
+        "success": {
+          "text": "Ba viên Tụ Khí Đan tròn trịa.",
+          "effects": {
+            "addItems": [
+              "tu_khi_dan",
+              "tu_khi_dan",
+              "tu_khi_dan"
+            ],
+            "craftXp": {
+              "alchemy": 5
+            },
+            "stat.happiness": 5
+          }
+        },
+        "fail": {
+          "text": "Một tiếng nổ. Lông mày ngươi đi đâu mất.",
+          "effects": {
+            "craftXp": {
+              "alchemy": 2
+            },
+            "stat.charm": -3
+          }
+        }
+      },
+      {
+        "text": "Thêm chút sáng tạo",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Ra một viên đan lạ, uống vào thấy người nhẹ bẫng.",
+          "effects": {
+            "cultProgress": 15,
+            "craftXp": {
+              "alchemy": 5
+            },
+            "stat.health": 3
+          }
+        },
+        "fail": {
+          "text": "Ra một cục than biết bốc khói.",
+          "effects": {
+            "craftXp": {
+              "alchemy": 3
+            },
+            "stat.happiness": -2
+          }
+        }
+      }
+    ]
+  }
+]
