@@ -28,6 +28,8 @@ export interface SaveMeta {
   blessings: { from: string; list: GameState['blessings'] } | null;
   /** Task 5b.1: thiên phú luân hồi bought (id → level), given to every new life. */
   rebirthTalents: Record<string, number>;
+  /** Task 5b.2: lives begun since the last one born with a Kim Thủ Chỉ (bảo hiểm). */
+  fingerPity: number;
 }
 /** Seeds remembered in `credited`; older ones are dropped. */
 const MAX_CREDITED = 30;
@@ -117,6 +119,8 @@ export function migrate(save: SaveFile): SaveFile {
   if (life.blessings === undefined) life = { ...life, blessings: [] };
   // Task 5b.1: no thiên phú luân hồi.
   if (life.rebirthTalents === undefined) life = { ...life, rebirthTalents: {} };
+  // Task 5b.2: no Kim Thủ Chỉ.
+  if (life.goldenFinger === undefined) life = { ...life, goldenFinger: null };
   if (life.checkpoints === undefined) life = { ...life, checkpoints: { age6: null, realm: null } };
   // Task 5.1: no sect of one's own.
   if (life.ownSect === undefined) life = { ...life, ownSect: null };
@@ -290,9 +294,10 @@ export function readMeta(store: KeyValueStore): SaveMeta {
       credited: m.credited && typeof m.credited === 'object' ? m.credited : {},
       blessings: m.blessings && Array.isArray(m.blessings.list) ? m.blessings : null,
       rebirthTalents: m.rebirthTalents && typeof m.rebirthTalents === 'object' ? m.rebirthTalents : {},
+      fingerPity: typeof m.fingerPity === 'number' ? m.fingerPity : 0,
     };
   } catch {
-    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {} };
+    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {}, fingerPity: 0 };
   }
 }
 
@@ -309,9 +314,11 @@ function writeMeta(store: KeyValueStore, meta: SaveMeta): SaveMeta {
  * A new life begins: count it; the Phúc báo waiting for it are now spent, and so are the
  * Luân Hồi points paid for its origin (task 5b.9 Cầu đầu thai).
  */
-export function recordNewLife(store: KeyValueStore, cost = 0): SaveMeta {
+export function recordNewLife(store: KeyValueStore, cost = 0, bornWithFinger = false): SaveMeta {
   const meta = readMeta(store);
-  return writeMeta(store, { ...meta, livesPlayed: meta.livesPlayed + 1, blessings: null, rebirthPoints: Math.max(0, meta.rebirthPoints - cost) });
+  // Task 5b.2: the pity count starts again from a life born with a Kim Thủ Chỉ.
+  const fingerPity = bornWithFinger ? 0 : meta.fingerPity + 1;
+  return writeMeta(store, { ...meta, livesPlayed: meta.livesPlayed + 1, blessings: null, rebirthPoints: Math.max(0, meta.rebirthPoints - cost), fingerPity });
 }
 
 /**

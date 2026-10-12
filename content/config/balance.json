@@ -500,5 +500,11 @@
     "clan": 10,
     "ranked": 5,
     "highlights": 5
+  },
+  "goldenFinger": {
+    "birthChance": 0.003,
+    "perLife": 0.0005,
+    "maxChance": 0.01,
+    "pityLives": 15
   }
 }

@@ -51,7 +51,7 @@
         "text": "Lợi dụng: đoạt chiếc nhẫn",
         "result": {
           "text": "Ngươi tháo chiếc nhẫn khỏi tay đồ đệ khi nó đang nhập định. Tàn hồn trong nhẫn im lặng. {npc} mở mắt, không nói gì, chỉ nhìn bàn tay trống trơn.",
-          "effects": { "chosenRole": "exploit", "addItems": ["nhan_co_tan_hon"], "karma": -20, "heartDemon": 10, "stat.daoHeart": -3, "npc": { "affinity": -50, "grudge": 50 }, "followUp": { "event": "kvct_phan_phe", "afterYears": [5, 9] } }
+          "effects": { "chosenRole": "exploit", "addItems": ["nhan_co_tan_hon"], "goldenFinger": "lao_gia_gia", "karma": -20, "heartDemon": 10, "stat.daoHeart": -3, "npc": { "affinity": -50, "grudge": 50 }, "followUp": { "event": "kvct_phan_phe", "afterYears": [5, 9] } }
         }
       },
       {
