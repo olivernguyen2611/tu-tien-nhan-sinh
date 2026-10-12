@@ -2,6 +2,29 @@
 
 ## [Chưa phát hành]
 
+### Task 4.4 — Tâm ma chiến (2026-10-12)
+- **Khi nào xảy ra**: trước khi đột phá Kim Đan, Nguyên Anh hay Hóa Thần, nếu thuộc một trong ba trường hợp (`balance.heartDemon`):
+  - còn hạt tâm ma (từ các lựa chọn đen tối của 3.9);
+  - Đạo tâm dưới 30;
+  - nhân quả từ −50 trở xuống.
+  - Bảng đột phá báo trước: "Lòng còn vướng bận: trước khi đột phá phải qua tâm ma."
+- **3 ảo cảnh dựng từ chính quá khứ** (`content/heart-demon.json`), lấy theo thứ tự ưu tiên:
+  1. Việc ác đã làm: lô đỉnh, giết người đoạt bảo, làm gián điệp cho U Hà, rời bỏ người cũ.
+  2. Người đã chết dưới tay ngươi (có hậu duệ, tra theo sổ ân oán 3.4).
+  3. Kẻ còn ôm oán.
+  4. Người cũ còn sống.
+  5. Người thân đã mất.
+  - Không đủ thì bù bằng nỗi sợ vô danh.
+- **Mỗi ảo cảnh chọn một cách**:
+  - Đối diện, nhận lỗi: thử Đạo tâm; thắng thì Đạo tâm +2.
+  - Chém tan ảo ảnh: thử Ngộ tính.
+  - Nhắm mắt niệm tâm pháp: thử Đạo tâm, cộng kháng tâm ma của công pháp, thiên phú, trạng thái.
+  - Độ khó 50, mỗi hạt tâm ma +5.
+- **Kết quả**:
+  - Qua 2/3 ảo cảnh: xóa 2 hạt tâm ma, đột phá +5% rồi đi tiếp (Kim Đan thì sang kết đan).
+  - Thua: tâm ma phản phệ, Đạo tâm −5, đột phá thất bại như thường.
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "ảo cảnh dựa trên chính những việc bạn đã làm"): luật chơi và con số trên, cùng toàn bộ câu văn trong `heart-demon.json`. Chủ dự án duyệt hoặc sửa thì chỉ cần sửa file JSON này.
+
 ### Task 4.5 — Thiên kiếp (2026-10-12)
 - **Đột phá thành công vào Kim Đan, Nguyên Anh hay Hóa Thần thì phải qua thiên kiếp** trước khi vào cảnh giới mới (`balance.tribulation`):
   - Kim Đan: 3 đạo lôi, mỗi đạo khoảng 15 sức khỏe.

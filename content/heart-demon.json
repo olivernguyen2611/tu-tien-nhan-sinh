@@ -1,0 +1,31 @@
+{
+  "intro": "Bình chướng vừa lung lay, tâm ma đã chờ sẵn. Những chuyện ngươi tưởng đã quên lần lượt hiện về.",
+  "illusions": {
+    "grudge": "{npc} hiện ra giữa cơn nhập định, mắt đỏ ngầu: \"Món nợ năm xưa, ngươi tính trả thế nào?\"",
+    "killed": "Một bóng người đầy máu bước ra từ đáy lòng ngươi. Là {npc}, người đã chết dưới tay ngươi.",
+    "deceased": "{deceased} ngồi bên bậc cửa nhà cũ, vẫy tay gọi ngươi về, như chưa từng đi xa.",
+    "ex": "{npc} đứng dưới gốc cây năm ấy, hỏi vì sao ngươi bỏ đi mà không ngoảnh lại.",
+    "fear": [
+      "Ngươi thấy mình già nua, tóc bạc trắng, ngồi trước bình chướng không bao giờ vỡ.",
+      "Ngươi thấy tông môn cháy rụi, đồng môn chỉ tay về phía ngươi mà gào khóc.",
+      "Ngươi thấy chính mình đứng trên đỉnh núi, một mình, gọi mãi không ai trả lời."
+    ]
+  },
+  "deeds": {
+    "dung_lo_dinh": "Người lô đỉnh năm xưa đứng trước mặt, xiềng xích vẫn còn kêu leng keng.",
+    "da_giet_doat_bao": "Ba người tán tu trong bí cảnh ngồi quanh đài đá, cùng ngẩng lên nhìn ngươi.",
+    "gian_te_u_ha": "Những lá thư ngươi viết cho U Hà bay đầy trời, lá nào cũng ký tên ngươi.",
+    "tam_ma_nguoi_cu": "Người cũ ngồi trong căn nhà nhỏ, tóc đã bạc hết, vẫn để cửa chờ ngươi."
+  },
+  "options": {
+    "face": "Đối diện, nhận lỗi",
+    "slash": "Chém tan ảo ảnh",
+    "chant": "Nhắm mắt niệm tâm pháp"
+  },
+  "results": {
+    "win": "Ảo ảnh tan như sương sớm.",
+    "lose": "Ảo ảnh cười, bám chặt lấy tâm thần ngươi.",
+    "pass": "Tâm ma lui đi. Lòng ngươi sáng như gương, bình chướng ở ngay trước mắt.",
+    "fail": "Tâm ma phản phệ. Linh khí chạy loạn, đột phá đứt gánh giữa chừng."
+  }
+}

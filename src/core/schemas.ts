@@ -644,6 +644,28 @@ export const BalanceSchema = z
         inheritShare: probability,
       })
       .strict(),
+    /** Task 4.4: tâm ma chiến before a big breakthrough into these realms. */
+    heartDemon: z
+      .object({
+        realms: ids,
+        /** It comes when tâm ma seeds ≥ seeds, or đạo tâm < daoHeartBelow, or karma ≤ karmaAtMost. */
+        seeds: z.number().int().min(1),
+        daoHeartBelow: z.number(),
+        karmaAtMost: z.number(),
+        rounds: z.number().int().min(1),
+        /** Rounds won needed to pass. */
+        toPass: z.number().int().min(1),
+        /** Check difficulty: base + seeds × perSeed; chant gets heartDemonResist × 100 as bonus points. */
+        difficulty: z.number(),
+        perSeed: z.number(),
+        /** Passing: seeds cleared by this many, chance bonus; failing: đạo tâm lost (plus a failed breakthrough). */
+        passClears: z.number().int().min(0),
+        passBonusPct: z.number(),
+        failDaoHeart: z.number(),
+        /** Facing a wrong owned up to: đạo tâm gained on a win. */
+        faceDaoHeart: z.number(),
+      })
+      .strict(),
     /** Task 4.5: thiên kiếp when a big breakthrough succeeds into these realms. */
     tribulation: z
       .object({
@@ -1787,3 +1809,24 @@ export const RomanceFileSchema = z
   })
   .strict();
 export type RomanceFile = z.infer<typeof RomanceFileSchema>;
+
+/** content/heart-demon.json (task 4.4): tâm ma illusions built from the life's own past. {npc}, {deceased}. */
+export const HeartDemonFileSchema = z
+  .object({
+    intro: z.string().min(1),
+    illusions: z
+      .object({
+        grudge: z.string().min(1),
+        killed: z.string().min(1),
+        deceased: z.string().min(1),
+        ex: z.string().min(1),
+        fear: z.array(z.string().min(1)).min(1),
+      })
+      .strict(),
+    /** Flag → the dark deed it recalls. */
+    deeds: z.record(id, z.string().min(1)),
+    options: z.object({ face: z.string().min(1), slash: z.string().min(1), chant: z.string().min(1) }).strict(),
+    results: z.object({ win: z.string().min(1), lose: z.string().min(1), pass: z.string().min(1), fail: z.string().min(1) }).strict(),
+  })
+  .strict();
+export type HeartDemonFile = z.infer<typeof HeartDemonFileSchema>;

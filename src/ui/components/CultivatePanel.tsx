@@ -111,6 +111,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
         {info && state.alive && (
           <div class="breakthrough">
             <p class="story"><TermText text={`Đột phá ${info.target.name}: tỉ lệ thành công khoảng ${Math.round(info.chancePct)}%.`} /></p>
+            {info.heartDemon && <p class="profile-note warn-note">Lòng còn vướng bận: trước khi đột phá phải qua tâm ma.</p>}
             {info.tribulation && (
               <p class="profile-note">
                 Thành công thì phải qua thiên kiếp: {info.tribulation.strikes} đạo lôi, tổng cộng khoảng {info.tribulation.damage} sức khỏe

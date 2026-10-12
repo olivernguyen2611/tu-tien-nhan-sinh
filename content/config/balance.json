@@ -307,6 +307,20 @@
     "bargainWinMul": 0.85,
     "bargainLoseMul": 1.1
   },
+  "heartDemon": {
+    "realms": ["kim_dan", "nguyen_anh", "hoa_than"],
+    "seeds": 1,
+    "daoHeartBelow": 30,
+    "karmaAtMost": -50,
+    "rounds": 3,
+    "toPass": 2,
+    "difficulty": 50,
+    "perSeed": 5,
+    "passClears": 2,
+    "passBonusPct": 5,
+    "failDaoHeart": -5,
+    "faceDaoHeart": 2
+  },
   "tribulation": {
     "realms": {
       "kim_dan": { "strikes": 3, "power": 15 },

@@ -762,3 +762,4 @@ button { font: inherit; color: inherit; }
 /* Quỷ tu offer on the death screen (task 4.12) */
 .ghost-offer { margin: 16px 0; padding: 12px; border: 1px dashed var(--rare); border-radius: var(--radius); }
 .ghost-offer .btn-primary { width: 100%; }
+.warn-note { color: var(--bad); }

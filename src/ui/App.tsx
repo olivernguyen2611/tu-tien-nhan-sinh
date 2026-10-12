@@ -37,6 +37,7 @@ import { romanceAction } from '../systems/romance';
 import { runSeclusion, seclude } from '../systems/seclusion';
 import { placeStrand } from '../systems/goldenCore';
 import { becomeGhost } from '../systems/ghost';
+import { meetIllusion } from '../systems/heartDemon';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -180,6 +181,7 @@ function Screens({ content }: { content: Content }) {
         onFastForward={() => setLife(life.seclusion ? runSeclusion(life, content) : fastForward(life, content))}
         onSeclude={(years) => setLife(seclude(life, content, years))}
         onPlaceStrand={(element) => setLife(placeStrand(life, content, element).state)}
+        onMeetIllusion={(option) => setLife(meetIllusion(life, content, option).state)}
         onFamilyAction={(relId, actionId) => {
           const r = performFamilyAction(life, content, relId, actionId);
           setLife(checkDeath(r.state, content));

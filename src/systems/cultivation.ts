@@ -14,6 +14,7 @@ import { offerFate } from './fate';
 import { breakthroughItem, carriedHooks, removeItems } from './items';
 import { pathSpeedBonus } from './paths';
 import { startCoreForming } from './goldenCore';
+import { needsHeartDemonTrial, startHeartDemonTrial } from './heartDemon';
 import { tribulationPreview, undergoTribulation, type TribulationPreview } from './tribulation';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
@@ -354,6 +355,8 @@ export interface MajorBreakthroughInfo {
   blocked: string | null;
   /** Thiên kiếp waiting on success (task 4.5), or null. */
   tribulation: TribulationPreview | null;
+  /** Tâm ma chiến comes first (task 4.4). */
+  heartDemon: boolean;
 }
 
 /** The big breakthrough open to this life now, or null when there is none to show. */
@@ -365,7 +368,7 @@ export function majorBreakthroughInfo(state: GameState, content: Content): Major
   if (!state.alive || !realm || !next || state.cult.realm === 'pham_nhan') return null;
   if (!content.balance.majorBreakthrough.openRealms.includes(next.id)) return null;
   const base = (content.balance.realms[next.id]?.breakthroughChance ?? 0) * 100;
-  const info = { target: { id: next.id, name: next.name }, chancePct: breakthroughPct(state, content, base, true), tribulation: tribulationPreview(state, content, next.id) };
+  const info = { target: { id: next.id, name: next.name }, chancePct: breakthroughPct(state, content, base, true), tribulation: tribulationPreview(state, content, next.id), heartDemon: needsHeartDemonTrial(state, content, next.id) };
   const atPeak = state.cult.stage >= realm.stages.length - 1 && state.cult.progress >= 100;
   if (!atPeak) return { ...info, blocked: `Cần tu tới ${realm.name} ${realm.stages[realm.stages.length - 1]}, đầy thanh tu vi.` };
   const cap = techniqueCapReason(state, content, next.id);
@@ -406,6 +409,11 @@ export function attemptMajorBreakthrough(state: GameState, content: Content): Br
   const pill = breakthroughItem(state, content, true);
   if (pill) s = removeItems(s, [pill.id]);
   s = { ...s, itemUse: { ...s.itemUse, nextBreakthrough: 0 } };
+  // Tâm ma chiến comes first when the heart is clouded (task 4.4).
+  if (needsHeartDemonTrial(s, content, info.target.id)) {
+    const started = startHeartDemonTrial({ ...s, rng: rng.getState() }, content, info.chancePct, info.target.id);
+    return { state: started, success: null, text: content.heartDemon.intro, tone: 'bad' };
+  }
   // Kết đan is played out over three rounds first (task 4.2); the chance is decided at the end.
   if (info.target.id === content.balance.coreForming.realm) {
     const started = startCoreForming({ ...s, rng: rng.getState() }, content, info.chancePct);
