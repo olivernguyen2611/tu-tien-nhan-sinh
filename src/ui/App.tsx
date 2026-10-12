@@ -38,6 +38,7 @@ import { runSeclusion, seclude } from '../systems/seclusion';
 import { placeStrand } from '../systems/goldenCore';
 import { becomeGhost } from '../systems/ghost';
 import { continueAsHeir } from '../systems/heir';
+import { buyProperty, foundClan } from '../systems/clan';
 import { meetIllusion } from '../systems/heartDemon';
 import { craftRecipe } from '../systems/crafting';
 import { recruitDisciple, teachDisciple } from '../systems/disciples';
@@ -187,6 +188,12 @@ function Screens({ content }: { content: Content }) {
         onSeclude={(years) => setLife(seclude(life, content, years))}
         onPlaceStrand={(element) => setLife(placeStrand(life, content, element).state)}
         onMeetIllusion={(option) => setLife(meetIllusion(life, content, option).state)}
+        onClan={(a) => {
+          const r = a.kind === 'found' ? foundClan(life, content, a.rules) : buyProperty(life, content, a.propertyId);
+          if (!r) return null;
+          setLife(r.state);
+          return r.text;
+        }}
         onDisciple={(npcId) => {
           const r = npcId ? teachDisciple(life, content, npcId) : recruitDisciple(life, content);
           if (!r) return null;

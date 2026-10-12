@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -47,6 +47,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'disciples.json') return DisciplesFileSchema;
     if (rest === 'founding.json') return FoundingFileSchema;
     if (rest === 'heir.json') return HeirFileSchema;
+    if (rest === 'clan.json') return ClanFileSchema;
     return null;
   }
   // Belongs to one world.
@@ -168,6 +169,10 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === MartialFileSchema) martialFile = parsed.data as MartialFile;
     if (schema === ItemFileSchema) itemIds = (parsed.data as { id: string }[]).map((x) => x.id);
     if (schema === RecipeFileSchema) recipeFile = { file, data: parsed.data as RecipeFile };
+    if (schema === ClanFileSchema) {
+      const c = parsed.data as { rules: { id: string }[]; properties: { id: string }[] };
+      problems.push(...duplicates(file, 'gia quy', c.rules), ...duplicates(file, 'sản nghiệp', c.properties));
+    }
     if (schema === FoundingFileSchema) {
       const f = parsed.data as FoundingFile;
       problems.push(...duplicates(file, 'tông quy', f.rules), ...duplicates(file, 'công trình', f.buildings), ...duplicates(file, 'quyết định', f.decisions));
@@ -404,6 +409,7 @@ function checkCultivationTables(t: { balance?: Balance; realms?: RealmsFile; roo
       for (const r of mb.openRealms) {
         if (!realmIds.includes(r)) out.push({ file: bal, level: 'error', message: `majorBreakthrough.openRealms: cảnh giới không tồn tại "${r}"` });
       }
+      if (!realmIds.includes(t.balance.clan.minRealm)) out.push({ file: bal, level: 'error', message: `clan.minRealm: cảnh giới không tồn tại "${t.balance.clan.minRealm}"` });
       for (const r of [t.balance.founding.minRealm, ...Object.keys(t.balance.founding.startMembers), ...Object.keys(t.balance.founding.maxMembers)]) {
         if (!realmIds.includes(r)) out.push({ file: bal, level: 'error', message: `founding: cảnh giới không tồn tại "${r}"` });
       }

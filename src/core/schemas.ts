@@ -645,6 +645,16 @@ export const BalanceSchema = z
         inheritShare: probability,
       })
       .strict(),
+    /** Task 5.4: founding a cultivation clan. */
+    clan: z
+      .object({
+        minRealm: id,
+        /** Living children needed, and the spirit stones for the ancestral hall. */
+        minChildren: z.number().int().min(0),
+        cost: z.number().int().min(0),
+        maxRules: z.number().int().min(1),
+      })
+      .strict(),
     /** Task 5.7: going on as an heir. */
     heir: z
       .object({
@@ -2015,3 +2025,31 @@ export const HeirFileSchema = z
   .object({ offer: z.string().min(1), child: z.string().min(1), disciple: z.string().min(1), sect: z.string().min(1) })
   .strict();
 export type HeirFile = z.infer<typeof HeirFileSchema>;
+
+/** content/clan.json (task 5.4): gia tộc tu tiên: gia quy, sản nghiệp, texts. {clan}, {property}, {income}. */
+const moneySpec = z.object({ silver: z.number().int().min(0).optional(), spiritStones: z.number().int().min(0).optional() }).strict();
+export const ClanFileSchema = z
+  .object({
+    rules: z.array(
+      z
+        .object({
+          id,
+          name: z.string().min(1),
+          text: z.string().min(1),
+          /** Extra root rolls for children born into the clan (keep the best). */
+          rootRolls: z.number().int().min(0),
+          /** Property income × this. */
+          incomeMul: z.number().min(0),
+          /** Added to the share of money an heir inherits. */
+          inheritMoney: z.number().min(0).max(1),
+          karmaPerYear: z.number(),
+        })
+        .strict(),
+    ),
+    properties: z.array(
+      z.object({ id, name: z.string().min(1), text: z.string().min(1), cost: moneySpec, income: moneySpec, max: z.number().int().min(1) }).strict(),
+    ),
+    texts: z.object({ founded: z.string().min(1), bought: z.string().min(1), income: z.string().min(1) }).strict(),
+  })
+  .strict();
+export type ClanFile = z.infer<typeof ClanFileSchema>;

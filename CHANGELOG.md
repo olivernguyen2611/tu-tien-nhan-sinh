@@ -2,6 +2,20 @@
 
 ## [Chưa phát hành]
 
+### Task 5.4 — Gia tộc tu tiên (2026-10-12)
+- **Lập gia tộc** (tab Gia đình, mục Gia tộc):
+  - Điều kiện: từ Trúc Cơ, có con, 100 linh thạch dựng từ đường (`balance.clan`).
+  - Tên theo họ, ví dụ "Lâm gia". Chọn tối đa 2 gia quy.
+- **4 gia quy** (`content/clan.json`):
+  - Trọng tu luyện: con sinh trong tộc quay linh căn thêm một lần, lấy kết quả tốt nhất.
+  - Trọng thương nghiệp: sản nghiệp sinh lời ×1.5.
+  - Độc đinh truyền thừa: người kế thừa giữ thêm 20% gia sản.
+  - Tích thiện: nhân quả +2 mỗi năm, sản nghiệp ×0.9.
+- **4 loại sản nghiệp**, mua bằng bạc hoặc linh thạch, mỗi năm sinh lời và ghi vào nhật ký: Ruộng tốt, Cửa hiệu, Linh điền, Mỏ linh thạch nhỏ.
+- **Tộc phả**: các đời trước (5.7), người đang sống, rồi tới con cháu.
+- **Gia tộc truyền sang người kế thừa** cùng gia quy và sản nghiệp.
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "tộc phả, sản nghiệp, gia quy"): điều kiện, 4 gia quy, 4 sản nghiệp, giá, lợi tức, câu văn.
+
 ### Task 5.7 — Chơi tiếp bằng con cháu hoặc đồ đệ (2026-10-12)
 - **Màn hình chết** liệt kê người kế thừa: con còn sống từ 6 tuổi (kèm linh căn nếu đã thử) và đồ đệ còn sống (kèm cảnh giới). Chọn một người thì chơi tiếp bằng người đó.
 - **Con kế thừa**:

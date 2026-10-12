@@ -308,6 +308,12 @@
     "bargainLoseMul": 1.1,
     "maxDiscount": 0.3
   },
+  "clan": {
+    "minRealm": "truc_co",
+    "minChildren": 1,
+    "cost": 100,
+    "maxRules": 2
+  },
   "heir": {
     "minAge": 6,
     "inheritMoney": 0.8,

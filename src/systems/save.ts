@@ -96,6 +96,8 @@ export function migrate(save: SaveFile): SaveFile {
   if (life.cult.heartDemonTrial === undefined) life = { ...life, cult: { ...life.cult, heartDemonTrial: null } };
   // Task 4.2: no core yet.
   if (life.cult.coreGrade === undefined) life = { ...life, cult: { ...life.cult, coreForming: null, coreGrade: null } };
+  // Task 5.4: no clan.
+  if (life.clan === undefined) life = { ...life, clan: null };
   // Task 5.7: no ancestors recorded.
   if (life.ancestry === undefined) life = { ...life, ancestry: [] };
   // Task 5.1: no sect of one's own.

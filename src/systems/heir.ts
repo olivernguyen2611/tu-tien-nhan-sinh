@@ -12,6 +12,7 @@ import type { GameState, LogLine, Relative } from '../core/types';
 import { rollRoot, startCultivating } from './cultivation';
 import { learnTechnique } from './technique';
 import { childRootLabel } from './romance';
+import { clanInheritBonus } from './clan';
 
 export interface HeirOption {
   kind: 'child' | 'disciple';
@@ -74,6 +75,8 @@ export function continueAsHeir(state: GameState, content: Content, heirId: strin
   const noMother = !family.some((r) => r.role === 'mother' && r.alive);
 
   const share = cfg.inheritKarma;
+  // Gia quy Độc đinh truyền thừa lets the heir keep more (task 5.4).
+  const keep = Math.min(1, cfg.inheritMoney + clanInheritBonus(state, content));
   const reputation = Object.fromEntries(Object.entries(state.social.reputation).map(([k, v]) => [k, scale(v, share)])) as GameState['social']['reputation'];
   // Each entry records who died and how the line went on from them.
   const ancestry = [...state.ancestry, {
@@ -87,7 +90,8 @@ export function continueAsHeir(state: GameState, content: Content, heirId: strin
     destiny: { ...base.destiny, confirmed: true },
     family,
     flags: { ...(noFather ? { no_father: true } : {}), ...(noMother ? { no_mother: true } : {}), ...(noFather && noMother ? { no_parents: true } : {}) },
-    money: { silver: scale(state.money.silver, cfg.inheritMoney), spiritStones: scale(state.money.spiritStones, cfg.inheritMoney) },
+    money: { silver: scale(state.money.silver, keep), spiritStones: scale(state.money.spiritStones, keep) },
+    clan: state.clan,
     inventory: { ...state.inventory },
     social: { karma: scale(state.social.karma, share), reputation },
     // The world goes on: NPCs (minus the heir), the prodigies.

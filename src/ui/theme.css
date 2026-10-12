@@ -780,3 +780,4 @@ button { font: inherit; color: inherit; }
 .heir-offer { border-color: var(--jade); }
 .ancestry { margin: 12px 0; text-align: left; font-size: 0.9rem; }
 .ancestry ol { margin: 4px 0; padding-left: 20px; }
+.ancestry li.me { font-weight: 600; }

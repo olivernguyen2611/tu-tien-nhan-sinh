@@ -54,6 +54,8 @@ export interface GameState {
   talents: string[];
   /** A talent choice waiting for the player (after a big breakthrough); blocks the next year. */
   fate: { offered: string[]; refreshesLeft: number } | null;
+  /** Task 5.4: the cultivation clan of this line: gia quy, sản nghiệp (property id → count). Passed on to heirs. */
+  clan: { name: string; founded: number; founder: string; rules: string[]; properties: Record<string, number> } | null;
   /** Task 5.7: lives before this one in the same line (tộc phả), oldest first. */
   ancestry: { name: string; age: number; realm: string; cause: DeathCause; relation: 'child' | 'disciple' | null }[];
   /**
