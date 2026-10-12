@@ -46,7 +46,7 @@ const BaseConditionsSchema = z
       .strict()
       .optional(),
     /** Spirit root (task 2.11): tested or not; usable = can cultivate. */
-    root: z.object({ tested: z.boolean().optional(), usable: z.boolean().optional() }).strict().optional(),
+    root: z.object({ tested: z.boolean().optional(), usable: z.boolean().optional(), minElements: z.number().int().min(1).optional() }).strict().optional(),
     /** Stage within the current realm, 0-based (task 2.8: "Luyện Khí tầng 4+" = min 3). */
     stage: z.object({ min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional(),
     /** Mortal career (task 2.8). */
@@ -1430,6 +1430,23 @@ export const BalanceSchema = z
         yearMul: probability,
         oldAge: z.number().int(),
         oldAgeMul: z.number().min(0),
+        /** Backlog 7: the quest chain toward Tam hoa tụ đỉnh and Ngũ khí triều nguyên. */
+        quest: z
+          .object({
+            /** Years after reaching a stage before its chain begins. */
+            startDelay: z.number().int().min(0),
+            /** `<game>_<level>` (ngu_hanh_2…) → symbols to enter and mistakes allowed. */
+            levels: z.record(id, z.object({ length: z.number().int().min(2), allowed: z.number().int().min(0) }).strict()),
+            /** Health lost on a failed step, Đạo tâm gained on a won one. */
+            loseHealth: z.number().int().min(0),
+            winDaoHeart: z.number().int().min(0),
+            /** A spent aid item gives this many extra mistakes in a mini-game, or this much chance in a check. */
+            aidAllowed: z.number().int().min(0),
+            aidChance: probability,
+            /** A check step: base + (average of its stats − difficulty) × perPoint, clamped. */
+            check: z.object({ base: probability, perPoint: z.number().min(0), min: probability, max: probability }).strict(),
+          })
+          .strict(),
       })
       .strict(),
     /** Combat path modifiers (realms-roots-paths.md C); keyed by path id. */
@@ -2151,6 +2168,37 @@ export const ItemFileSchema = z.array(
 );
 export type Item = z.infer<typeof ItemFileSchema>[number];
 
+const MartialStepSchema = z
+  .object({
+    id,
+    title: z.string().min(1),
+    text: z.string().min(1),
+    win: z.string().min(1),
+    lose: z.string().min(1),
+    /** Exactly one of `game` (a mini-game of `level` 1–3) or `check` (a stat check). */
+    game: z.enum(['ngu_hanh', 'dieu_tuc']).optional(),
+    level: z.number().int().min(1).max(3).optional(),
+    check: z.object({ stats: z.array(z.enum([...MORTAL_STATS, ...APTITUDES])).min(1), difficulty: z.number() }).strict().optional(),
+    /** An item that can be spent to help this step. */
+    aid: z.object({ item: id, text: z.string().min(1) }).strict().optional(),
+  })
+  .strict()
+  .refine((s) => !!s.game !== !!s.check, 'mỗi bước có đúng một trong game hoặc check')
+  .refine((s) => !s.game || s.level !== undefined, 'bước có game cần level');
+export type MartialStep = z.infer<typeof MartialStepSchema>;
+const MartialQuestSchema = z
+  .object({
+    id,
+    name: z.string().min(1),
+    /** The martial stage the chain starts from; finishing it promotes to the next. */
+    fromStage: z.number().int().min(0),
+    start: z.string().min(1),
+    done: z.string().min(1),
+    steps: z.array(MartialStepSchema).min(1),
+  })
+  .strict();
+export type MartialQuestDef = z.infer<typeof MartialQuestSchema>;
+
 /** content/martial.json: martial stages for mortals (task 3.11, mortal-path.md 2b). */
 export const MartialFileSchema = z
   .object({
@@ -2161,6 +2209,18 @@ export const MartialFileSchema = z
     ascendEffects: z.array(EffectHookSchema),
     /** {years}, {need}, {next}, {stage}, {description}. */
     texts: z.object({ train: z.string().min(1), promote: z.string().min(1), fail: z.string().min(1), ascend: z.string().min(1) }).strict(),
+    /** Backlog 7: one chain of steps from a stage to the next; each step is a mini-game or a stat check. */
+    quests: z.array(MartialQuestSchema),
+    /** Mini-game wording: the symbols, and a name and a how-to for each game. */
+    games: z
+      .object({
+        symbols: z.record(id, z.string().min(1)),
+        ngu_hanh: z.object({ name: z.string().min(1), sinh: z.string().min(1), khac: z.string().min(1) }).strict(),
+        dieu_tuc: z.object({ name: z.string().min(1), intro: z.string().min(1), hide: z.string().min(1), recall: z.string().min(1) }).strict(),
+        win: z.string().min(1),
+        lose: z.string().min(1),
+      })
+      .strict(),
   })
   .strict();
 export type MartialFile = z.infer<typeof MartialFileSchema>;

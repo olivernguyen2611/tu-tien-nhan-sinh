@@ -8,6 +8,14 @@
 
 ## [Chưa phát hành]
 
+### Võ đạo: chuỗi nhiệm vụ và mini-game tới Ngũ khí triều nguyên (2026-10-12)
+- Lên **Hóa cảnh** thì sang năm mở chuỗi "Tầm Tam hoa" (4 ải); lên **Tam hoa tụ đỉnh** thì sang năm mở chuỗi "Hợp Ngũ khí" (4 ải). Mỗi năm làm một ải trong bảng Tu luyện, mục Võ đạo; qua ải cuối thì lên cảnh giới kế. Các kỳ ngộ ngẫu nhiên cũ vẫn là đường thứ hai.
+- Ải là **mini-game** hoặc thử sức theo chỉ số. Hai mini-game: **Vòng đá ngũ hành** (chạm đá theo thế tương sinh hay tương khắc, đá đầu cho sẵn) và **Điều tức quan tưởng** (nhớ rồi nhắc lại thứ tự Tinh, Khí, Thần). Sai quá số lần cho phép thì hỏng ải: mất sức khỏe, năm sau thử lại. Có thể dùng vật phẩm hỗ trợ (Ngộ Đạo Trà, Định Tâm Đan…) để được sai thêm một lần hay tăng tỉ lệ. Qua ải được cộng Đạo tâm.
+- **Ngũ khí triều nguyên** tu nhanh hơn ngũ linh căn thường (tốc độ tu luyện +100%, trong `martial.json` `ascendEffects`) và có thêm 3 công pháp cho ngũ linh căn: Ngũ Hành Đồng Tâm Công, Ngũ Khí Triều Nguyên Quyết, Vạn Pháp Quy Nhất Kinh, kèm 3 kỳ ngộ để học (`ngu-linh-can.json`). Điều kiện sự kiện mới `root.minElements`.
+- Số liệu ở `balance.martial.quest`; chuỗi, ải, lời văn ở `martial.json` (`quests`, `games`). Mã: `src/systems/martialQuest.ts`, giao diện `MiniGamePopup.tsx`.
+- Developer mode: bắt đầu chuỗi ngay, qua ải ngay, được thử lại năm nay; đặt cảnh giới võ đạo cũng đặt lại chuỗi.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Khí vận tiên thiên quyết định chỉ số khởi đầu (2026-10-12)
 - Mỗi khí vận được chấm điểm theo độ hiếm (`balance.traits.fate.rarityScore`: Phàm 0, Lương 1, Ưu 2.5, Tuyệt 5, Thiên 8, Thần 12; khí vận Ác 1). Tổng điểm nâng **sàn** của các chỉ số (sức khỏe, trí tuệ, mị lực, căn cốt, ngộ tính, khí vận, đạo tâm) và cộng thêm một khoản cố định, đều tỉ lệ thuận với điểm và có trần. Thiên tài sinh ra không còn chỉ số thấp; khí vận Phàm thì không đổi gì.
 - Làm lúc xác nhận khí vận, sau phần thưởng riêng của từng khí vận; xác định theo seed, không dùng RNG nên không xáo các lần tung khác. Điểm đủ cao thì nhật ký sinh ra ghi một dòng "Khí vận hộ thể…" (`lifeTexts.fateLift`).

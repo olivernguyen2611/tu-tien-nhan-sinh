@@ -7,6 +7,8 @@ import { craftViews } from '../../systems/crafts';
 import { careerIncome, careerLabel, careerViews } from '../../systems/career';
 import { currentTechnique, learnBlocked, techniqueById, techniqueSummary } from '../../systems/technique';
 import { martialView } from '../../systems/martial';
+import { questView } from '../../systems/martialQuest';
+import type { QuestAction } from './MiniGamePopup';
 import { pathsView } from '../../systems/paths';
 import { rankingBoard } from '../../systems/rankings';
 import { seclusionView } from '../../systems/seclusion';
@@ -14,7 +16,7 @@ import { recipeViews } from '../../systems/crafting';
 import { Meter } from './Meter';
 import { TermText } from './Tooltip';
 
-export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSeclude, onCraft, onClose }: {
+export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSeclude, onCraft, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome to show in the sheet. */
@@ -27,6 +29,8 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
   onLearn: (techniqueId: string) => string | null;
   /** A year of martial training (task 3.11); returns the log text, or null. */
   onTrain: () => string | null;
+  /** Backlog 7: do this year's step of the martial quest; returns the log text for a check, or null. */
+  onQuest: (a: QuestAction) => string | null;
   /** Task 4.7: make one batch of a recipe; returns the log text, or null. */
   onCraft: (recipeId: string) => string | null;
   /** Task 4.1: bế quan; the sheet closes so the log shows the years. */
@@ -157,6 +161,20 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
               {m.gate && <p class="profile-note">{m.gate}</p>}
               <button class="chip-btn" disabled={!!m.blocked} onClick={() => setPracticed(onTrain())}>Luyện võ</button>
               {m.blocked && <span class="craft-note">{m.blocked}</span>}
+              {(() => {
+                const q = questView(state, content);
+                if (!q) return null;
+                return (
+                  <div class="quest">
+                    <h3 class="panel-sub">{q.quest.name} · ải {q.stepIndex + 1}/{q.total}</h3>
+                    <p class="story"><b>{q.step.title}.</b> {q.step.text}</p>
+                    {q.chance !== null && <p class="profile-note">Thử sức: khoảng {Math.round(q.chance * 100)}% qua ải (theo {q.step.check!.stats.map((k) => ({ physique: 'Căn cốt', health: 'Sức khỏe', daoHeart: 'Đạo tâm', comprehension: 'Ngộ tính', intellect: 'Trí tuệ', charm: 'Mị lực', luck: 'Khí vận', happiness: 'Vui vẻ' }[k])).join(', ')}).</p>}
+                    <button class="chip-btn" disabled={!!q.blocked} onClick={() => setPracticed(onQuest({ kind: 'step', aid: false }))}>{q.step.game ? 'Vào ải' : 'Thử sức'}</button>
+                    {q.aid && <button class="chip-btn" disabled={!!q.blocked || !q.aid.have} title={q.aid.text} onClick={() => setPracticed(onQuest({ kind: 'step', aid: true }))}>{`${q.aid.text} (${q.aid.name}${q.aid.have ? '' : ', chưa có'})`}</button>}
+                    {q.blocked && <span class="craft-note">{q.blocked}</span>}
+                  </div>
+                );
+              })()}
             </div>
           );
         })()}

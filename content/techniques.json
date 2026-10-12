@@ -1,159 +1,477 @@
 [
   {
-    "id": "dan_khi_quyet", "name": "Dẫn Khí Quyết", "grade": "hoang", "lineage": "tien", "elements": "root",
+    "id": "dan_khi_quyet",
+    "name": "Dẫn Khí Quyết",
+    "grade": "hoang",
+    "lineage": "tien",
+    "elements": "root",
     "flavor": "Một trang giấy, mười hai câu khẩu quyết. Ai cũng tu được, tu tới đâu thì tùy trời.",
     "effects": []
   },
   {
-    "id": "bich_lac_dan_khi_quyet", "name": "Bích Lạc Dẫn Khí Quyết", "grade": "hoang", "lineage": "tien", "elements": "root",
+    "id": "bich_lac_dan_khi_quyet",
+    "name": "Bích Lạc Dẫn Khí Quyết",
+    "grade": "hoang",
+    "lineage": "tien",
+    "elements": "root",
     "flavor": "Công pháp nhập môn ai cũng học. Không nhanh, không chậm, không bao giờ sai. Đệ tử Bích Lạc gọi nó là \"bát cơm trắng\".",
-    "effects": [{ "hook": "breakthroughChance", "add": 5, "activeUntil": { "realm": "truc_co" } }]
+    "effects": [
+      {
+        "hook": "breakthroughChance",
+        "add": 5,
+        "activeUntil": {
+          "realm": "truc_co"
+        }
+      }
+    ]
   },
   {
-    "id": "ngu_hanh_luan_chuyen_kinh", "name": "Ngũ Hành Luân Chuyển Kinh", "grade": "huyen", "lineage": "tien", "elements": "five",
-    "requires": { "minRootElements": 3 },
+    "id": "ngu_hanh_luan_chuyen_kinh",
+    "name": "Ngũ Hành Luân Chuyển Kinh",
+    "grade": "huyen",
+    "lineage": "tien",
+    "elements": "five",
+    "requires": {
+      "minRootElements": 3
+    },
     "flavor": "Bí truyền của Bích Lạc, viết cho kẻ tạp linh căn: năm hệ không đấu nhau mà xoay vòng nuôi nhau.",
     "effects": [
-      { "hook": "cultivationSpeed", "add": 0.15, "activeIf": { "minRootElements": 3 } },
-      { "hook": "element.all.power", "add": 0.1 }
+      {
+        "hook": "cultivationSpeed",
+        "add": 0.15,
+        "activeIf": {
+          "minRootElements": 3
+        }
+      },
+      {
+        "hook": "element.all.power",
+        "add": 0.1
+      }
     ]
   },
   {
-    "id": "tang_phong_kiem_kinh", "name": "Tàng Phong Kiếm Kinh", "grade": "huyen", "lineage": "tien", "elements": ["kim"],
-    "requires": { "minDaoHeart": 50 },
+    "id": "tang_phong_kiem_kinh",
+    "name": "Tàng Phong Kiếm Kinh",
+    "grade": "huyen",
+    "lineage": "tien",
+    "elements": [
+      "kim"
+    ],
+    "requires": {
+      "minDaoHeart": 50
+    },
     "flavor": "Kiếm giấu trong vỏ trăm năm, ra khỏi vỏ một lần. Trang đầu chỉ có một chữ: \"Nhẫn\".",
     "effects": [
-      { "hook": "path.sword.affinity", "add": 15 },
-      { "hook": "path.sword.power", "add": 0.15 },
-      { "hook": "cultivationSpeed", "add": -0.2, "activeIf": { "daoHeartBelow": 50 } }
+      {
+        "hook": "path.sword.affinity",
+        "add": 15
+      },
+      {
+        "hook": "path.sword.power",
+        "add": 0.15
+      },
+      {
+        "hook": "cultivationSpeed",
+        "add": -0.2,
+        "activeIf": {
+          "daoHeartBelow": 50
+        }
+      }
     ]
   },
   {
-    "id": "thanh_moc_truong_sinh_cong", "name": "Thanh Mộc Trường Sinh Công", "grade": "hoang", "lineage": "tien", "elements": ["moc"],
+    "id": "thanh_moc_truong_sinh_cong",
+    "name": "Thanh Mộc Trường Sinh Công",
+    "grade": "hoang",
+    "lineage": "tien",
+    "elements": [
+      "moc"
+    ],
     "flavor": "Tu như cây mọc: chậm, nhưng sống lâu. Đệ tử Bách Thảo Cốc thường già hơn tuổi thật về tính nết, trẻ hơn tuổi thật về dung mạo.",
     "effects": [
-      { "hook": "cultivationSpeed", "add": -0.1 },
-      { "hook": "lifespanPct", "add": 0.1 },
-      { "hook": "craft.alchemy.affinity", "add": 10 },
-      { "hook": "craft.farming.affinity", "add": 10 }
+      {
+        "hook": "cultivationSpeed",
+        "add": -0.1
+      },
+      {
+        "hook": "lifespanPct",
+        "add": 0.1
+      },
+      {
+        "hook": "craft.alchemy.affinity",
+        "add": 10
+      },
+      {
+        "hook": "craft.farming.affinity",
+        "add": 10
+      }
     ]
   },
   {
-    "id": "vo_uu_thien_tam_phap", "name": "Vô Ưu Thiền Tâm Pháp", "grade": "hoang", "lineage": "phat", "elements": ["tho"],
-    "requires": { "rootless": true },
+    "id": "vo_uu_thien_tam_phap",
+    "name": "Vô Ưu Thiền Tâm Pháp",
+    "grade": "hoang",
+    "lineage": "phat",
+    "elements": [
+      "tho"
+    ],
+    "requires": {
+      "rootless": true
+    },
     "flavor": "Ngồi thiền đếm hơi thở. Đếm tới một vạn mà lòng không động, linh khí tự tới.",
     "note": "Không cần linh căn: hệ số tu theo Đạo tâm (tối đa 0.7). Giới luật: giết người thì Đạo tâm −10.",
     "effects": [
-      { "hook": "heartDemonResist", "add": 0.2 },
-      { "hook": "path.body.affinity", "add": 10 }
+      {
+        "hook": "heartDemonResist",
+        "add": 0.2
+      },
+      {
+        "hook": "path.body.affinity",
+        "add": 10
+      }
     ]
   },
   {
-    "id": "u_ha_huyet_anh_cong", "name": "U Hà Huyết Ảnh Công", "grade": "huyen", "lineage": "ma", "elements": ["am", "thuy"],
+    "id": "u_ha_huyet_anh_cong",
+    "name": "U Hà Huyết Ảnh Công",
+    "grade": "huyen",
+    "lineage": "ma",
+    "elements": [
+      "am",
+      "thuy"
+    ],
     "flavor": "Lấy huyết khí kẻ thù bồi cho mình. Tu nhanh như nước lũ, và cũng đục như nước lũ.",
     "note": "Mỗi lần giết người lấy huyết khí: nhân quả −5.",
     "effects": [
-      { "hook": "lifesteal", "add": 0.1 },
-      { "hook": "heartDemonResist", "add": -0.2 }
+      {
+        "hook": "lifesteal",
+        "add": 0.1
+      },
+      {
+        "hook": "heartDemonResist",
+        "add": -0.2
+      }
     ]
   },
   {
-    "id": "van_thu_thong_linh_thuat", "name": "Vạn Thú Thông Linh Thuật", "grade": "hoang", "lineage": "yeu", "elements": ["moc", "phong"],
+    "id": "van_thu_thong_linh_thuat",
+    "name": "Vạn Thú Thông Linh Thuật",
+    "grade": "hoang",
+    "lineage": "yeu",
+    "elements": [
+      "moc",
+      "phong"
+    ],
     "flavor": "Học nghe tiếng thú trước, học nói tiếng người sau. Đệ tử học xong hay quên cách chào hỏi đồng loại.",
     "effects": [
-      { "hook": "craft.beast.affinity", "add": 20 },
-      { "hook": "craft.beast.success", "add": 0.15 },
-      { "hook": "faction.yeu.reputation", "add": 10 }
+      {
+        "hook": "craft.beast.affinity",
+        "add": 20
+      },
+      {
+        "hook": "craft.beast.success",
+        "add": 0.15
+      },
+      {
+        "hook": "faction.yeu.reputation",
+        "add": 10
+      }
     ]
   },
   {
-    "id": "tho_nap_tan_quyen", "name": "Thổ Nạp Tàn Quyển", "grade": "hoang", "lineage": "tien", "elements": "none", "maxRealm": "luyen_khi",
+    "id": "tho_nap_tan_quyen",
+    "name": "Thổ Nạp Tàn Quyển",
+    "grade": "hoang",
+    "lineage": "tien",
+    "elements": "none",
+    "maxRealm": "luyen_khi",
     "flavor": "Bìa ghi \"Thượng cổ thần công\". Trang cuối ghi \"Giá: ba lạng\".",
     "note": "Tàn quyển: chỉ tu tới Luyện Khí viên mãn. Tìm đủ nửa sau thì thành Huyền phẩm.",
     "effects": [
-      { "hook": "cultivationSpeed", "add": -0.1 },
-      { "hook": "unlockChain.tim_tan_quyen" }
+      {
+        "hook": "cultivationSpeed",
+        "add": -0.1
+      },
+      {
+        "hook": "unlockChain.tim_tan_quyen"
+      }
     ]
   },
   {
-    "id": "tho_nap_hoan_quyen", "name": "Thổ Nạp Hoàn Quyển", "grade": "huyen", "lineage": "tien", "elements": "none",
+    "id": "tho_nap_hoan_quyen",
+    "name": "Thổ Nạp Hoàn Quyển",
+    "grade": "huyen",
+    "lineage": "tien",
+    "elements": "none",
     "flavor": "Hai nửa ghép lại, ba lạng bạc hóa ra mua được thật một bộ thần công. Chỉ là không ai ghi tên người viết.",
     "note": "Bản đầy đủ của Thổ Nạp Tàn Quyển (nửa trước tìm qua chuỗi sự kiện Nửa quyển còn lại). Không còn bị phạt tốc độ tu.",
     "effects": [
-      { "hook": "bottleneckResist", "add": 0.05 }
+      {
+        "hook": "bottleneckResist",
+        "add": 0.05
+      }
     ]
   },
   {
-    "id": "hoa_van_quyet", "name": "Hỏa Vân Quyết", "grade": "hoang", "lineage": "tien", "elements": ["hoa"],
+    "id": "hoa_van_quyet",
+    "name": "Hỏa Vân Quyết",
+    "grade": "hoang",
+    "lineage": "tien",
+    "elements": [
+      "hoa"
+    ],
     "flavor": "Chủ động phủ chết đã trăm năm, lò luyện đan vẫn còn ấm. Quyển sách bên lò cháy sém một góc, phần còn lại vẫn đọc được.",
     "effects": [
-      { "hook": "element.hoa.power", "add": 0.1 },
-      { "hook": "craft.forging.affinity", "add": 10 },
-      { "hook": "craft.alchemy.affinity", "add": 5 }
+      {
+        "hook": "element.hoa.power",
+        "add": 0.1
+      },
+      {
+        "hook": "craft.forging.affinity",
+        "add": 10
+      },
+      {
+        "hook": "craft.alchemy.affinity",
+        "add": 5
+      }
     ]
   },
   {
-    "id": "thuy_nguyet_quan_tuong_phap", "name": "Thủy Nguyệt Quan Tưởng Pháp", "grade": "huyen", "lineage": "tien", "elements": ["thuy", "bang"],
+    "id": "thuy_nguyet_quan_tuong_phap",
+    "name": "Thủy Nguyệt Quan Tưởng Pháp",
+    "grade": "huyen",
+    "lineage": "tien",
+    "elements": [
+      "thuy",
+      "bang"
+    ],
     "flavor": "Người tu nó ngắm trăng dưới nước, ngắm lâu tới mức quên đường lên bờ. Ngươi nhặt được túi của người đó.",
     "note": "Nhìn thấu ảo trận cấp thấp. Đạo tâm dưới 40: mỗi năm có tỉ lệ nhỏ mê trong ảo cảnh.",
-    "effects": [{ "hook": "divineSense", "add": 0.15 }]
+    "effects": [
+      {
+        "hook": "divineSense",
+        "add": 0.15
+      }
+    ]
   },
   {
-    "id": "thach_phu_luyen_the_thien", "name": "Thạch Phu Luyện Thể Thiên", "grade": "hoang", "lineage": "tien", "elements": ["tho"],
+    "id": "thach_phu_luyen_the_thien",
+    "name": "Thạch Phu Luyện Thể Thiên",
+    "grade": "hoang",
+    "lineage": "tien",
+    "elements": [
+      "tho"
+    ],
     "flavor": "Ai đó khắc cả bộ công pháp lên vách núi bằng tay không. Chữ cuối cùng khắc lệch, chắc lúc đó tay đã gãy.",
     "note": "Võ giả Tuyệt đỉnh trở lên đọc hiểu được dù chưa có linh căn.",
     "effects": [
-      { "hook": "path.body.affinity", "add": 15 },
-      { "hook": "injuryReduce", "add": 0.1 }
+      {
+        "hook": "path.body.affinity",
+        "add": 15
+      },
+      {
+        "hook": "injuryReduce",
+        "add": 0.1
+      }
     ]
   },
   {
-    "id": "mong_trung_tan_kinh", "name": "Mộng Trung Tàn Kinh", "grade": "huyen", "lineage": "tien", "elements": "none", "maxRealm": "kim_dan",
+    "id": "mong_trung_tan_kinh",
+    "name": "Mộng Trung Tàn Kinh",
+    "grade": "huyen",
+    "lineage": "tien",
+    "elements": "none",
+    "maxRealm": "kim_dan",
     "flavor": "Đêm nào cũng mơ thấy một lão già giảng kinh. Sáng ra chỉ nhớ được một nửa, nhưng nửa đó đủ dùng.",
     "note": "Tàn kinh: tu tới Kim Đan viên mãn.",
     "effects": [
-      { "hook": "stat.comprehension", "add": 5 },
-      { "hook": "bottleneckResist", "add": 0.1 }
+      {
+        "hook": "stat.comprehension",
+        "add": 5
+      },
+      {
+        "hook": "bottleneckResist",
+        "add": 0.1
+      }
     ]
   },
   {
-    "id": "thai_so_dien_dao_kinh", "name": "Thái Sơ Diễn Đạo Kinh", "grade": "thien", "lineage": "tien", "elements": "any",
+    "id": "thai_so_dien_dao_kinh",
+    "name": "Thái Sơ Diễn Đạo Kinh",
+    "grade": "thien",
+    "lineage": "tien",
+    "elements": "any",
     "flavor": "Trang đầu trống trơn. Người đọc ngộ ra tới đâu, chữ hiện tới đó. Ngươi là người thứ hai trong mười vạn năm thấy được chữ.",
     "note": "Cả Thương Lan giới chỉ có một bản. Hoài bích kỳ tội: có kẻ sẽ tìm tới.",
     "effects": [
-      { "hook": "breakthroughChance.major", "add": 10 },
-      { "hook": "heartDemonResist", "add": 0.1 }
+      {
+        "hook": "breakthroughChance.major",
+        "add": 10
+      },
+      {
+        "hook": "heartDemonResist",
+        "add": 0.1
+      }
     ]
   },
   {
-    "id": "cuu_chuyen_kim_cot_quyet", "name": "Cửu Chuyển Kim Cốt Quyết", "grade": "dia", "lineage": "tien", "elements": ["kim", "tho"],
+    "id": "cuu_chuyen_kim_cot_quyet",
+    "name": "Cửu Chuyển Kim Cốt Quyết",
+    "grade": "dia",
+    "lineage": "tien",
+    "elements": [
+      "kim",
+      "tho"
+    ],
     "flavor": "Mỗi lần chuyển là một lần xương cốt vỡ ra rồi liền lại. Chín lần như vậy, thân thể thành pháp bảo.",
     "note": "Mỗi đại cảnh giới là một \"chuyển\": Căn cốt +5. Hoài bích kỳ tội.",
     "effects": [
-      { "hook": "path.body.power", "add": 0.3 },
-      { "hook": "injuryReduce", "add": 0.2 },
-      { "hook": "lifespanPct", "add": 0.1 }
+      {
+        "hook": "path.body.power",
+        "add": 0.3
+      },
+      {
+        "hook": "injuryReduce",
+        "add": 0.2
+      },
+      {
+        "hook": "lifespanPct",
+        "add": 0.1
+      }
     ]
   },
   {
-    "id": "nhat_tuyen_thien_kiem_dien", "name": "Nhất Tuyến Thiên Kiếm Điển", "grade": "dia", "lineage": "tien", "elements": ["kim"],
+    "id": "nhat_tuyen_thien_kiem_dien",
+    "name": "Nhất Tuyến Thiên Kiếm Điển",
+    "grade": "dia",
+    "lineage": "tien",
+    "elements": [
+      "kim"
+    ],
     "flavor": "Một đường kiếm chia trời làm hai. Người viết kiếm điển này chết trong kiếm trủng, tay vẫn cầm kiếm.",
     "note": "Hoài bích kỳ tội.",
     "effects": [
-      { "hook": "path.sword.power", "add": 0.35 },
-      { "hook": "combatPower.vsHigherRealm", "add": 0.2 },
-      { "hook": "injuryReduce", "add": -0.1 }
+      {
+        "hook": "path.sword.power",
+        "add": 0.35
+      },
+      {
+        "hook": "combatPower.vsHigherRealm",
+        "add": 0.2
+      },
+      {
+        "hook": "injuryReduce",
+        "add": -0.1
+      }
     ]
   },
   {
-    "id": "bat_tu_u_minh_luc", "name": "Bất Tử U Minh Lục", "grade": "dia", "lineage": "quy", "elements": ["am"],
-    "requires": { "ghostOnly": true },
+    "id": "bat_tu_u_minh_luc",
+    "name": "Bất Tử U Minh Lục",
+    "grade": "dia",
+    "lineage": "quy",
+    "elements": [
+      "am"
+    ],
+    "requires": {
+      "ghostOnly": true
+    },
     "flavor": "Sách viết cho người chết đọc. Người sống mở ra chỉ thấy giấy trắng.",
     "note": "Chỉ quỷ tu học được (cửa 2.6). Ánh mặt trời gây hại giảm một nửa.",
     "effects": [
-      { "hook": "lifespanPct", "add": 0.5 },
-      { "hook": "divineSense", "add": 0.3 },
-      { "hook": "faction.chinh.reputation", "add": -30 }
+      {
+        "hook": "lifespanPct",
+        "add": 0.5
+      },
+      {
+        "hook": "divineSense",
+        "add": 0.3
+      },
+      {
+        "hook": "faction.chinh.reputation",
+        "add": -30
+      }
+    ]
+  },
+  {
+    "id": "ngu_hanh_dong_tam_cong",
+    "name": "Ngũ Hành Đồng Tâm Công",
+    "grade": "huyen",
+    "lineage": "tien",
+    "elements": "five",
+    "requires": {
+      "minRootElements": 4
+    },
+    "flavor": "Người đời chê ngũ hành tạp, công này lại coi tạp là phúc: năm hệ càng nhiều, tâm càng tròn.",
+    "effects": [
+      {
+        "hook": "cultivationSpeed",
+        "add": 0.2,
+        "activeIf": {
+          "minRootElements": 4
+        }
+      },
+      {
+        "hook": "element.all.power",
+        "add": 0.08
+      }
+    ]
+  },
+  {
+    "id": "ngu_khi_trieu_nguyen_quyet",
+    "name": "Ngũ Khí Triều Nguyên Quyết",
+    "grade": "dia",
+    "lineage": "tien",
+    "elements": "five",
+    "requires": {
+      "minRootElements": 5
+    },
+    "flavor": "Sinh ra cho kẻ đã dùng xác phàm luyện ngũ khí thành căn. Năm luồng khí vốn chảy sẵn trong người, công này chỉ dạy cách cho chúng chảy cùng chiều.",
+    "note": "Hợp nhất với người đi võ đạo tới Ngũ khí triều nguyên, nhưng ngũ linh căn thường cũng tu được.",
+    "effects": [
+      {
+        "hook": "cultivationSpeed",
+        "add": 0.25,
+        "activeIf": {
+          "minRootElements": 5
+        }
+      },
+      {
+        "hook": "element.all.power",
+        "add": 0.15
+      },
+      {
+        "hook": "breakthroughChance",
+        "add": 5
+      }
+    ]
+  },
+  {
+    "id": "van_phap_quy_nhat_kinh",
+    "name": "Vạn Pháp Quy Nhất Kinh",
+    "grade": "dia",
+    "lineage": "tien",
+    "elements": "five",
+    "requires": {
+      "minRootElements": 5
+    },
+    "flavor": "Ngũ hành tương sinh thì thuận, tương khắc thì nghịch; kinh này dạy cách đi cả hai chiều trong một hơi thở.",
+    "effects": [
+      {
+        "hook": "cultivationSpeed",
+        "add": 0.3,
+        "activeIf": {
+          "minRootElements": 5
+        }
+      },
+      {
+        "hook": "element.all.power",
+        "add": 0.12
+      },
+      {
+        "hook": "stat.comprehension",
+        "add": 3
+      }
     ]
   }
 ]

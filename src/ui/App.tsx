@@ -36,6 +36,7 @@ import { doTalk, enterTournament } from '../systems/sectmates';
 import { learnTechnique } from '../systems/technique';
 import { chooseFate, rerollFate } from '../systems/fate';
 import { trainMartial } from '../systems/martial';
+import { beginQuestStep, miniGameHide, miniGameInput, miniGameQuit } from '../systems/martialQuest';
 import { romanceAction } from '../systems/romance';
 import { runSeclusion, seclude } from '../systems/seclusion';
 import { placeStrand } from '../systems/goldenCore';
@@ -367,6 +368,15 @@ function Screens({ content }: { content: Content }) {
           if (!r) return null;
           setLife(r.state);
           return r.text;
+        }}
+        onQuest={(a) => {
+          if (a.kind === 'hide') { setLife(miniGameHide(life)); return null; }
+          if (a.kind === 'input') { const r = miniGameInput(life, content, a.symbol); setLife(r.state); return r.done ? r.text : null; }
+          if (a.kind === 'quit') { const r = miniGameQuit(life, content); setLife(r.state); return r.text; }
+          const r = beginQuestStep(life, content, a.aid);
+          if (!r) return null;
+          setLife(r.state);
+          return r.text || null;
         }}
         onLearn={(id) => {
           const r = learnTechnique(life, content, id);

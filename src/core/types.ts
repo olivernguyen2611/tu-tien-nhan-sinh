@@ -29,6 +29,32 @@ export interface Relative {
   bodyId?: string | null;
 }
 
+/** Quest chain of the martial path: one step a year; `game` is the mini-game being played. */
+export interface MartialQuest {
+  id: string;
+  /** Index of the step to do next. */
+  step: number;
+  startedAt: number;
+  /** Age at the last attempt (one attempt a year). */
+  lastTry: number | null;
+  game: MiniGame | null;
+}
+
+/** A mini-game of the martial quest: enter `target` in order; more than `allowed` mistakes lose. */
+export interface MiniGame {
+  kind: 'ngu_hanh' | 'dieu_tuc';
+  /** ngu_hanh: follow the tương sinh or the tương khắc cycle. */
+  mode?: 'sinh' | 'khac';
+  target: string[];
+  input: string[];
+  mistakes: number;
+  allowed: number;
+  /** dieu_tuc: the pattern is on show until the player has memorised it. */
+  shown: boolean;
+  /** An item was spent for the extra mistake. */
+  aided: boolean;
+}
+
 /** Spirit root found by the test at 6–12 (task 2.2); ids from roots.json. */
 export interface SpiritRoot {
   grade: string;
@@ -107,7 +133,14 @@ export interface GameState {
   /** Base aptitude 0–100 for each combat path (task 3.8); hooks add on top. */
   paths: Record<string, number>;
   /** Martial path (task 3.11): stage index (-1 before Tam lưu), training years toward the next, extra % for it. */
-  martial: { stage: number; years: number; bonus: number; lastTrain: number | null };
+  martial: {
+    stage: number; years: number; bonus: number; lastTrain: number | null;
+    /** Age at which the current stage was reached (the quest chain starts the year after). */
+    reachedAt?: number | null;
+    /** The quest chain toward the next stage (martial.json quests), and the ones finished. */
+    quest?: MartialQuest | null;
+    done?: string[];
+  };
   /** Sect membership (task 2.5). */
   sect: {
     id: string | null;
