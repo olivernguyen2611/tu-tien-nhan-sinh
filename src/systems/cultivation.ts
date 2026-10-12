@@ -11,7 +11,7 @@ import { careerHooks } from './career';
 import { currentTechnique, learnTechnique, techniqueCapReason, techniqueMul } from './technique';
 import { sectHooks } from './sect';
 import { offerFate } from './fate';
-import { breakthroughItem, removeItems } from './items';
+import { breakthroughItem, carriedHooks, removeItems } from './items';
 import { pathSpeedBonus } from './paths';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
@@ -143,6 +143,7 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
     ...(content.lineages.find((l) => l.id === state.cult.lineage)?.effects ?? []),
     // Võ đạo nhập tiên keeps the body's edge (task 3.11).
     ...(state.flags.vo_dao_nhap_tien ? content.martial.ascendEffects : []),
+    ...carriedHooks(state, content),
   ];
 }
 
@@ -198,6 +199,7 @@ export function breakthroughPct(state: GameState, content: Content, basePct: num
     + hookSum(state, content, major ? 'breakthroughChance.major' : 'breakthroughChance.minor')
     + (major ? state.cult.nextBonus : 0)
     + (breakthroughItem(state, content, major)?.breakthrough?.add ?? 0)
+    + state.itemUse.nextBreakthrough
     - b.failPenaltyPct * fails;
   return Math.max(b.minPct, Math.min(b.maxPct, pct));
 }
@@ -303,6 +305,7 @@ export function cultivateYear(state: GameState, content: Content): GameState {
     const chance = breakthroughPct(s, content, base * 100, false) / 100;
     const pill = breakthroughItem(s, content, false);
     if (pill) s = removeItems(s, [pill.id]);
+    s = { ...s, itemUse: { ...s.itemUse, nextBreakthrough: 0 } }; // Phá Chướng Đan is spent on this try
     if (rng.chance(chance)) {
       s = { ...s, cult: { ...s.cult, stage: s.cult.stage + 1, progress: 0 } };
       log = pushLine(log, { text: fillRealm(rng.pick(texts.stageUp), s, content), tone: 'good' });
@@ -391,6 +394,7 @@ export function attemptMajorBreakthrough(state: GameState, content: Content): Br
   let s: GameState = { ...state, cult: { ...state.cult, lastMajorAttempt: state.character.age, nextBonus: 0 } };
   const pill = breakthroughItem(state, content, true);
   if (pill) s = removeItems(s, [pill.id]);
+  s = { ...s, itemUse: { ...s.itemUse, nextBreakthrough: 0 } };
 
   if (rng.chance(info.chancePct / 100)) {
     const foundation = info.target.id === 'truc_co' ? rollFoundation(s, content, rng) : null;

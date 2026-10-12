@@ -86,6 +86,13 @@ export function migrate(save: SaveFile): SaveFile {
       social: { ...life.social, reputation: { ...{ trieu_dinh: 0, giang_ho: 0 }, ...(life.social.reputation as Partial<GameState['social']['reputation']>) } as GameState['social']['reputation'] },
     };
   }
+  // Task 3.2: no bargains yet.
+  if (life.bargains === undefined) life = { ...life, bargains: {} };
+  // Task 3.3: no fight in progress.
+  if (life.combat === undefined) life = { ...life, combat: null };
+  // Task 3.1: no items used yet.
+  if (life.itemUse === undefined) life = { ...life, itemUse: { lastAge: {}, spent: [], nextBreakthrough: 0, nextCombat: 0 } };
+  if (life.itemUse.nextCombat === undefined) life = { ...life, itemUse: { ...life.itemUse, nextCombat: 0 } };
   // Task 2.7: no fate talents yet.
   if (life.talents === undefined) life = { ...life, talents: [], fate: null };
   // Task 2.5: not in a sect.

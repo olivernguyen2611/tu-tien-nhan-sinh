@@ -716,3 +716,29 @@ button { font: inherit; color: inherit; }
 @media (prefers-reduced-motion: reduce) { .meter-warn .bar { animation: none; outline: 2px dashed var(--warn); outline-offset: 1px; } }
 .trait-chip.extreme-low { --rc: var(--bad); }
 .trait-chip.extreme-high { --rc: var(--good); }
+
+/* Túi đồ (task 3.1). */
+.bag-list { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 6px; }
+.bag-item { border: 1px solid var(--line); border-radius: 10px; padding: 4px 8px; background: var(--surface-2); }
+.bag-detail { padding: 4px 2px 8px; }
+.bag-detail .story { margin-bottom: 6px; }
+
+/* Phường thị (task 3.2). */
+.market-head { margin: 14px 0 6px; font-size: 0.875rem; }
+.market-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 8px; }
+.market-row > div { display: flex; flex-direction: column; min-width: 0; }
+.market-row .chip-btn { flex: none; }
+.chip-btn.active { background: var(--jade); color: var(--seal-ink); border-color: var(--jade); }
+
+/* Giao chiến (task 3.3). */
+.combat-score { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 0.875rem; }
+.combat-score .rounds { letter-spacing: 4px; color: var(--jade); font-size: 1rem; }
+.combat-lines { max-height: 30dvh; overflow-y: auto; margin: 8px 0; padding: 8px; border-radius: 8px; background: var(--surface-2); }
+.combat-lines p { margin: 0 0 6px; font-size: 0.9375rem; }
+.combat-lines p.good { color: var(--good); }
+.combat-lines p.bad { color: var(--bad); }
+.combat-lines p.rare { color: var(--rare); }
+.combat-actions { display: flex; flex-direction: column; gap: 6px; }
+.combat-actions .choice { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; text-align: left; }
+.combat-actions .choice small { flex-basis: 100%; opacity: 0.75; font-size: 0.8125rem; }
+.combat-actions .odds { margin-left: auto; font-variant-numeric: tabular-nums; }

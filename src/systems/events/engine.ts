@@ -15,6 +15,7 @@ import { forceJoinCareer, leaveCareer, promoteCareer } from '../career';
 import { addMartialYears, martialAttempt, martialPromote } from '../martial';
 import { addPathAffinity } from '../paths';
 import { addContribution, breakPrecept, grantMaster, joinSect, leaveSect, promoteSect } from '../sect';
+import { startBattle } from '../combat';
 
 type Outcome = NonNullable<GameEvent['choices'][number]['result']>;
 
@@ -192,13 +193,22 @@ export function resolveChoice(state: GameState, content: Content, choiceIndex: n
       history: { ...next.events.history, [event.id]: state.character.age },
     },
   };
-  if (outcome.effects.testRoot) {
+  const extra = applyExtras(next, content, outcome.effects, text);
+  next = extra.state;
+  text = extra.text;
+  if (outcome.fight) next = startBattle(next, content, outcome.fight, event.title);
+  return { state: next, text, tone, success };
+}
+
+/** Effects beyond plain numbers (root test, sect, items, techniques…); returns the state and the text with any extra sentences. */
+function applyExtras(state: GameState, content: Content, fx: Outcome['effects'], text: string): { state: GameState; text: string } {
+  let next = state;
+  if (fx.testRoot) {
     const revealed = revealRoot(next, content);
     const started = startCultivating(revealed.state, content);
     next = started.state;
     for (const line of [revealed.line, started.line]) if (line) text = `${text} ${line.text}`;
   }
-  const fx = outcome.effects;
   if (fx.joinSect) {
     const joined = joinSect(next, content, fx.joinSect);
     next = joined.state;
@@ -240,18 +250,23 @@ export function resolveChoice(state: GameState, content: Content, choiceIndex: n
   }
   if (fx.sectPromote) next = promoteSect(next, content);
   if (fx.leaveSect) next = leaveSect(next, content)?.state ?? next;
-  if (outcome.effects.learnTechnique) {
-    const learned = learnTechnique(next, content, outcome.effects.learnTechnique);
+  if (fx.learnTechnique) {
+    const learned = learnTechnique(next, content, fx.learnTechnique);
     if (learned) {
       // A rootless technique (Phật duyên) brings a mortal into the first realm.
       next = enterFirstRealm(learned.state, content);
       text = `${text} ${learned.text}`;
     }
   }
-  if (outcome.effects.grantRoot) {
+  if (fx.grantRoot) {
     const granted = grantRoot(next, content);
     next = granted.state;
     if (granted.text) text = `${text} ${granted.text}`;
   }
-  return { state: next, text, tone, success };
+  return { state: next, text };
+}
+
+/** Apply an outcome that does not come from a pending event (e.g. the end of a fight). */
+export function applyOutcome(state: GameState, content: Content, outcome: { text: string; effects: Outcome['effects'] }, rng: Rng): { state: GameState; text: string } {
+  return applyExtras(applyEffects(state, outcome.effects, rng), content, outcome.effects, fillTemplate(outcome.text, state, content));
 }

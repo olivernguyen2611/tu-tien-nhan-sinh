@@ -32,7 +32,8 @@ export function ageBody(state: GameState, content: Content): GameState {
   // Old-age milestones (60, 70, 80): a visible blow to health and looks.
   if (cfg.milestoneAges.includes(age)) {
     const dh = clamp(health + cfg.milestoneHealth) - clamp(health);
-    const dc = clamp(charm + cfg.milestoneCharm) - charm;
+    // Trú Nhan Đan keeps the face (flag no_aging_charm).
+    const dc = state.flags.no_aging_charm ? 0 : clamp(charm + cfg.milestoneCharm) - charm;
     health += dh;
     charm += dc;
     const change = [describeDelta('health', dh), describeDelta('charm', dc)].filter(Boolean).join(' · ');
@@ -74,7 +75,7 @@ export function checkDeath(state: GameState, content: Content, forced?: DeathCau
   const texts = content.lifeTexts;
   const rng = Rng.fromState(state.rng);
   const age = state.character.age;
-  const pools = { old_age: texts.deathOldAge, breakthrough: texts.deathBreakthrough, ordeal: texts.deathOrdeal, illness: texts.deathIllness };
+  const pools = { old_age: texts.deathOldAge, breakthrough: texts.deathBreakthrough, ordeal: texts.deathOrdeal, illness: texts.deathIllness, combat: texts.deathCombat };
   const line = rng.pick(pools[cause]);
   const karma = state.social.karma;
   const pool = karma >= cfg.epitaphKarma ? texts.epitaph.good : karma <= -cfg.epitaphKarma ? texts.epitaph.bad : texts.epitaph.plain;
@@ -109,6 +110,7 @@ export function lifeSummary(state: GameState, content: Content): LifeSummary | n
     causeText: cause === 'old_age' ? `Hưởng thọ ${age} tuổi`
       : cause === 'breakthrough' ? `Mất năm ${age} tuổi khi đột phá`
       : cause === 'ordeal' ? `Mất năm ${age} tuổi khi luyện hóa kỳ vật`
+      : cause === 'combat' ? `Tử trận năm ${age} tuổi`
       : `Mất năm ${age} tuổi vì bệnh`,
     epitaph,
     karmaLabel: k >= t ? 'Thiện nhân' : k <= -t ? 'Ác nhân' : 'Người thường',

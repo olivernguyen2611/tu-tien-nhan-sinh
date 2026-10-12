@@ -1,6 +1,6 @@
 // Shared game-state types. Stat layers follow PLAN.md section K.2.
 import type { RngState } from './rng';
-import type { APTITUDES, MORTAL_STATS } from './schemas';
+import type { APTITUDES, Fight, MORTAL_STATS } from './schemas';
 
 export type MortalStat = (typeof MORTAL_STATS)[number];
 export type Aptitude = (typeof APTITUDES)[number];
@@ -34,12 +34,18 @@ export interface SpiritRoot {
   body: string | null;
 }
 
-export type DeathCause = 'old_age' | 'illness' | 'breakthrough' | 'ordeal';
+export type DeathCause = 'old_age' | 'illness' | 'breakthrough' | 'ordeal' | 'combat';
 
 export interface GameState {
   version: 1;
   /** Items carried (items.json id → count); the full bag is task 3.1. */
   inventory: Record<string, number>;
+  /** Task 3.1: item id → age last used (one use a year); ids whose once-per-life effect is spent; bonus for the next breakthrough; combat % for the next fight. */
+  itemUse: { lastAge: Record<string, number>; spent: string[]; nextBreakthrough: number; nextCombat: number };
+  /** Task 3.3: the fight in progress; blocks the next year like a pending event. */
+  combat: Battle | null;
+  /** Task 3.2: market id → this year's bargain result (price multiplier). */
+  bargains: Record<string, { age: number; mul: number }>;
   /** Nghịch Thiên Cải Mệnh talents taken (fate-talents.json, task 2.7). */
   talents: string[];
   /** A talent choice waiting for the player (after a big breakthrough); blocks the next year. */
@@ -153,4 +159,35 @@ export interface GameState {
     givenAt: Record<string, number>;
   };
   log: LogYear[];
+}
+
+/** A foe built from a FoeSpec (task 3.3). */
+export interface Foe {
+  name: string;
+  realm: string;
+  stage: number;
+  power: number;
+  speed: number;
+  element: string | null;
+  path: string | null;
+  lineage: string;
+  intent: 'teach' | 'rob' | 'kill';
+  mercy: number;
+}
+
+/** A fight in progress: up to 3 rounds, first to balance.combat.winRounds. */
+export interface Battle {
+  foe: Foe;
+  won: number;
+  lost: number;
+  /** Blow-by-blow lines of this fight (shown in the fight card, summed up in the log). */
+  lines: LogLine[];
+  /** "won": the player picks spare / loot / kill. */
+  phase: 'fight' | 'won';
+  /** Combat % bonus waiting for the next round (Huyết Khí Hoàn, talismans). */
+  nextBonus: number;
+  /** What ends the fight: from the event outcome. */
+  outcomes: Pick<Fight, 'win' | 'lose' | 'fled'>;
+  /** Event title that started it, for the log. */
+  source: string | null;
 }
