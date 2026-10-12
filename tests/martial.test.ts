@@ -143,10 +143,10 @@ describe('martial path (task 3.11)', () => {
     expect(tried.martial.stage).toBe(5);
     // Ngũ khí: sense, then five linh tinh.
     const five = ['linh_tinh_kim', 'linh_tinh_moc', 'linh_tinh_thuy', 'linh_tinh_hoa', 'linh_tinh_tho'];
-    const tam = { ...tried, flags: { ...tried.flags, cam_ung_ngu_khi: true }, inventory: Object.fromEntries(five.map((id) => [id, 1])) };
+    const tam: GameState = { ...tried, flags: { ...tried.flags, cam_ung_ngu_khi: true }, inventory: Object.fromEntries(five.map((id) => [id, 1])) };
     const gather = findEvent(content, 'vd_ngu_khi_linh_tinh')!;
     expect(eventWeight(tam, content, gather)).toBeGreaterThan(0);
-    let up = tam;
+    let up: GameState = tam;
     for (let i = 0; i < 30 && up.cult.realm === 'pham_nhan'; i++) {
       up = resolveChoice({ ...tam, rng: new Rng(`nk${i}`).getState(), events: { ...tam.events, pending: gather.id } }, content, 0).state;
     }
