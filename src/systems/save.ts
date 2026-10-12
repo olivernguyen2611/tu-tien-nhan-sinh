@@ -35,6 +35,8 @@ export interface SaveMeta {
   codex: Codex;
   /** Task 5b.5: thành tựu held → the life that first earned it (name, and which life it was). */
   achievements: Record<string, { name: string; life: number }>;
+  /** Task 5b.6: thử thách tuần per week: challenge id, tries, best score, goal ever met. */
+  weekly: Record<string, { id: string; tries: number; best: number; done: boolean }>;
 }
 /** Seeds remembered in `credited`; older ones are dropped. */
 const MAX_CREDITED = 30;
@@ -126,6 +128,8 @@ export function migrate(save: SaveFile): SaveFile {
   if (life.rebirthTalents === undefined) life = { ...life, rebirthTalents: {} };
   // Task 5b.3: old lives drew the slots they show, nothing locked.
   if (life.destiny.slots === undefined) life = { ...life, destiny: { ...life.destiny, slots: life.destiny.offered.length || 3, locked: [], maxLocks: 1 } };
+  // Task 5b.6: not a weekly challenge.
+  if (life.challenge === undefined) life = { ...life, challenge: null };
   // Task 5b.2: no Kim Thủ Chỉ.
   if (life.goldenFinger === undefined) life = { ...life, goldenFinger: null };
   if (life.checkpoints === undefined) life = { ...life, checkpoints: { age6: null, realm: null } };
@@ -304,9 +308,10 @@ export function readMeta(store: KeyValueStore): SaveMeta {
       fingerPity: typeof m.fingerPity === 'number' ? m.fingerPity : 0,
       codex: readCodex(m.codex),
       achievements: m.achievements && typeof m.achievements === 'object' ? m.achievements : {},
+      weekly: m.weekly && typeof m.weekly === 'object' ? m.weekly : {},
     };
   } catch {
-    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {}, fingerPity: 0, codex: EMPTY_CODEX, achievements: {} };
+    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {}, fingerPity: 0, codex: EMPTY_CODEX, achievements: {}, weekly: {} };
   }
 }
 
@@ -323,8 +328,10 @@ function writeMeta(store: KeyValueStore, meta: SaveMeta): SaveMeta {
  * A new life begins: count it; the Phúc báo waiting for it are now spent, and so are the
  * Luân Hồi points paid for its origin (task 5b.9 Cầu đầu thai).
  */
-export function recordNewLife(store: KeyValueStore, cost = 0, bornWithFinger = false): SaveMeta {
+export function recordNewLife(store: KeyValueStore, cost = 0, bornWithFinger = false, challenge = false): SaveMeta {
   const meta = readMeta(store);
+  // Task 5b.6: a weekly challenge leaves the Phúc báo and the pity count for the next ordinary life.
+  if (challenge) return writeMeta(store, { ...meta, livesPlayed: meta.livesPlayed + 1, rebirthPoints: Math.max(0, meta.rebirthPoints - cost) });
   // Task 5b.2: the pity count starts again from a life born with a Kim Thủ Chỉ.
   const fingerPity = bornWithFinger ? 0 : meta.fingerPity + 1;
   return writeMeta(store, { ...meta, livesPlayed: meta.livesPlayed + 1, blessings: null, rebirthPoints: Math.max(0, meta.rebirthPoints - cost), fingerPity });
@@ -372,4 +379,14 @@ export function recordAchievements(store: KeyValueStore, ids: string[], name: st
   if (fresh.length === 0) return { meta, fresh };
   const achievements = { ...meta.achievements, ...Object.fromEntries(fresh.map((id) => [id, { name, life: meta.livesPlayed }])) };
   return { meta: writeMeta(store, { ...meta, achievements }), fresh };
+}
+
+/** Task 5b.6: a weekly challenge life ended (once per life seed is the caller's job: call it with creditRebirth's first time). */
+export function recordChallenge(store: KeyValueStore, week: string, id: string, score: number, done: boolean): SaveMeta {
+  const meta = readMeta(store);
+  const prev = meta.weekly[week];
+  const entry = { id, tries: (prev?.tries ?? 0) + 1, best: Math.max(prev?.best ?? 0, score), done: !!prev?.done || done };
+  // Keep the last 12 weeks.
+  const kept = Object.entries(meta.weekly).filter(([k]) => k !== week).sort(([a], [b]) => a.localeCompare(b)).slice(-11);
+  return writeMeta(store, { ...meta, weekly: Object.fromEntries([...kept, [week, entry]]) });
 }

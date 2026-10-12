@@ -56,7 +56,8 @@ export function rerollDestiny(state: GameState, content: Content, unlimited = fa
 /** Task 5b.3: lock or unlock an offered slot before rerolling (up to destiny.maxLocks). */
 export function toggleLock(state: GameState, traitId: string): GameState {
   const d = state.destiny;
-  if (d.confirmed || !d.offered.includes(traitId)) return state;
+  // Task 5b.6: a weekly challenge's given traits stay.
+  if (d.confirmed || state.challenge || !d.offered.includes(traitId)) return state;
   if (d.locked.includes(traitId)) return { ...state, destiny: { ...d, locked: d.locked.filter((x) => x !== traitId) } };
   if (d.locked.length >= d.maxLocks) return state;
   return { ...state, destiny: { ...d, locked: [...d.locked, traitId] } };

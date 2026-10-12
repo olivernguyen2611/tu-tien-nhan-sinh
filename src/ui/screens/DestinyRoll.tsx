@@ -39,7 +39,7 @@ export function DestinyRollScreen({ state, content, rollCount, unlimited, canLoc
       </header>
       <p class="destiny-intro">
         {state.character.name} vừa chào đời. Trời ban {SLOT_WORDS[traits.length] ?? traits.length} đạo khí vận, đổi được thì đổi, đổi rồi không lấy lại được.
-        {state.destiny.maxLocks > 0 && ` Khóa được ${state.destiny.maxLocks} ô để giữ khi quay lại (${lockCost} điểm Luân Hồi mỗi ô).`}
+        {state.destiny.maxLocks > 0 && !state.challenge && ` Khóa được ${state.destiny.maxLocks} ô để giữ khi quay lại (${lockCost} điểm Luân Hồi mỗi ô).`}
       </p>
       {state.blessings.length > 0 && (
         <p class="destiny-intro blessing-note">Phúc báo kiếp trước: <b>{blessingNames(state.blessings, content).join(', ')}</b>.</p>
@@ -59,7 +59,7 @@ export function DestinyRollScreen({ state, content, rollCount, unlimited, canLoc
               </div>
               <div class="trait-face trait-back" aria-hidden="true">命</div>
             </div>
-            {state.destiny.maxLocks > 0 && (
+            {state.destiny.maxLocks > 0 && !state.challenge && (
               <button class={`chip-btn lock-btn${locked.includes(t.id) ? ' on' : ''}`} aria-pressed={locked.includes(t.id)}
                 disabled={!locked.includes(t.id) && !canLock} onClick={() => onLock(t.id)}>
                 {locked.includes(t.id) ? '鎖 Đã khóa' : 'Khóa ô này'}

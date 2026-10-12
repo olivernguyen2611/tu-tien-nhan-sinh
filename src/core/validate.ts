@@ -3,7 +3,7 @@
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -68,6 +68,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
   if (rest === 'sect-life.json') return SectLifeSchema;
   if (rest === 'markets.json') return MarketFileSchema;
   if (rest === 'regions.json') return RegionFileSchema;
+  if (rest === 'challenges.json') return ChallengeFileSchema;
   if (/^events\/[^/]+\.json$/.test(rest)) return EventFileSchema;
   return null;
 }
@@ -99,6 +100,8 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   const fingerRealms: { file: string; finger: string; realm: string }[] = [];
   const comboTraits: { file: string; combo: string; traits: string[] }[] = [];
   const achievementRefs: { file: string; id: string; realm?: string; finger?: string }[] = [];
+  const originIdsByWorld = new Map<string, Set<string>>();
+  const challengeRefs: { file: string; id: string; rules: { origin?: string; difficulty?: string; traits?: string[] }; goal: { realmMin?: string } }[] = [];
   let careerIds: string[] | null = null;
   const sectFiles: { file: string; sects: Sect[] }[] = [];
   const parsedShared: { balance?: Balance; realms?: RealmsFile; roots?: RootsFile; aptitudes?: AptitudesFile } = {};
@@ -127,6 +130,11 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       problems.push(...duplicates(file, 'Kim Thủ Chỉ', fingers));
       fingerIds = fingers.map((f) => f.id);
       fingerRealms.push(...fingers.flatMap((f) => f.levels.map((l) => ({ file, finger: f.id, realm: l.realm }))));
+    }
+    if (schema === ChallengeFileSchema) {
+      const list = parsed.data as { id: string; rules: { origin?: string; difficulty?: string; traits?: string[] }; goal: { realmMin?: string } }[];
+      problems.push(...duplicates(file, 'thử thách tuần', list));
+      challengeRefs.push(...list.map((c) => ({ file, ...c })));
     }
     if (schema === AchievementFileSchema) {
       const a = parsed.data as { achievements: { id: string; unlockFinger?: string; when: { realmMin?: string } }[]; badges: { id: string; when: { realmMin?: string } }[] };
@@ -160,6 +168,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
         if (seenOrigin.has(o.id)) problems.push({ file, level: 'error', message: `trùng id xuất thân "${o.id}"` });
         seenOrigin.add(o.id);
       }
+      originIdsByWorld.set(splitWorldPath(file).worldId ?? '', seenOrigin);
     }
     if (schema === TraitFileSchema) {
       const seenTrait = new Set<string>();
@@ -306,6 +315,15 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   for (const { file, id, realm, finger } of achievementRefs) {
     if (realm && realmIds && !realmIds.has(realm)) problems.push({ file, level: 'error', message: `"${id}" nhắc tới cảnh giới không tồn tại "${realm}"` });
     if (finger && fingerIds && !fingerIds.includes(finger)) problems.push({ file, level: 'error', message: `"${id}" mở khóa Kim Thủ Chỉ không tồn tại "${finger}"` });
+  }
+  // Task 5b.6: a challenge names real origins (of its world), difficulties, traits and realms.
+  for (const c of challengeRefs) {
+    const where = `thử thách "${c.id}"`;
+    const origins = originIdsByWorld.get(splitWorldPath(c.file).worldId ?? '');
+    if (c.rules.origin && origins && !origins.has(c.rules.origin)) problems.push({ file: c.file, level: 'error', message: `${where} nhắc tới xuất thân không tồn tại "${c.rules.origin}"` });
+    if (c.rules.difficulty && parsedShared.balance && !parsedShared.balance.difficulty[c.rules.difficulty]) problems.push({ file: c.file, level: 'error', message: `${where} nhắc tới độ khó không tồn tại "${c.rules.difficulty}"` });
+    for (const t of c.rules.traits ?? []) if (traitIds && !traitIds.has(t)) problems.push({ file: c.file, level: 'error', message: `${where} nhắc tới khí vận không tồn tại "${t}"` });
+    if (c.goal.realmMin && realmIds && !realmIds.has(c.goal.realmMin)) problems.push({ file: c.file, level: 'error', message: `${where} nhắc tới cảnh giới không tồn tại "${c.goal.realmMin}"` });
   }
   // Task 5b.2: Kim Thủ Chỉ named by events must exist; their levels need real realms.
   if (fingerIds) {
