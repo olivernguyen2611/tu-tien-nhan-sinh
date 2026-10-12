@@ -316,6 +316,10 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       problems.push({ file, level: 'error', message: `${where}: nhắc tới {lover} nhưng conditions.romance không yêu cầu có người trong lòng/đạo lữ` });
     }
 
+    // Task 5.3: effects on the founded sect need an event that only comes to a founder.
+    if (event.choices.some((c) => [c.result, c.success, c.fail].some((o) => o?.effects.ownSect)) && event.conditions.ownSect?.has !== true) {
+      problems.push({ file, level: 'error', message: `${where}: có hiệu ứng ownSect nhưng thiếu conditions.ownSect.has = true` });
+    }
     if (/\{deceased\}/.test(`${event.text} ${event.choices.map((c) => [c.text, c.result?.text, c.success?.text, c.fail?.text].join(' ')).join(' ')}`) && !event.conditions.family?.deadAny) {
       problems.push({ file, level: 'error', message: `${where}: nhắc tới {deceased} nhưng thiếu conditions.family.deadAny` });
     }

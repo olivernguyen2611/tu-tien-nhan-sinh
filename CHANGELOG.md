@@ -2,6 +2,13 @@
 
 ## [Chưa phát hành]
 
+### Task 5.3 — Sự kiện tông môn (phần engine, 2026-10-12)
+- Điều kiện sự kiện `ownSect`: đã lập tông môn, khoảng số đệ tử, công trình đạt cấp tối thiểu.
+- Hiệu ứng `ownSect`: thêm/bớt đệ tử, kho linh thạch, đà tăng đệ tử năm sau. Validator đòi sự kiện có hiệu ứng này phải có `conditions.ownSect.has = true`.
+- Đối thủ trận đánh có cờ `againstSect`: mỗi cấp Hộ Sơn Đại Trận làm kẻ công sơn yếu đi 10%, tối đa 50% (`balance.founding`).
+- `{sect}` trong sự kiện nay hiện tên tông môn tự lập khi có.
+- **Chưa làm**: nội dung sự kiện (khiêu khích, phản đồ, đại bỉ, ma đạo công sơn…), chờ file thiết kế của chủ dự án.
+
 ### Task 5.4 — Gia tộc tu tiên (2026-10-12)
 - **Lập gia tộc** (tab Gia đình, mục Gia tộc):
   - Điều kiện: từ Trúc Cơ, có con, 100 linh thạch dựng từ đường (`balance.clan`).

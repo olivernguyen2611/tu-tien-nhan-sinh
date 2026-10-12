@@ -85,6 +85,16 @@ const BaseConditionsSchema = z
       })
       .strict()
       .optional(),
+    /** Task 5.3: the sect this life founded: has one, member range, a building at least this level. */
+    ownSect: z
+      .object({
+        has: z.boolean().optional(),
+        minMembers: z.number().int().optional(),
+        maxMembers: z.number().int().optional(),
+        building: z.object({ id, min: z.number().int().min(1) }).strict().optional(),
+      })
+      .strict()
+      .optional(),
     /** Task 3.9: family state ({deceased} = a relative who has died). */
     family: z.object({ deadAny: z.boolean().optional(), parentAlive: z.boolean().optional() }).strict().optional(),
     /** Task 3.4: the NPC this event is about (met earlier, or picked by an npcTrigger). */
@@ -183,6 +193,8 @@ export const EffectsSchema = z
       })
       .strict()
       .optional(),
+    /** Task 5.3: the founded sect gains or loses members, treasury, next year's growth. */
+    ownSect: z.object({ members: z.number().int().optional(), treasury: z.number().int().optional(), growthBonus: z.number().optional() }).strict().optional(),
     /** Task 4.1: close the door for this many years right after the event. */
     seclusionYears: z.number().int().min(1).optional(),
     /** Task 3.9: years of lifespan (burning blood: −10). */
@@ -226,7 +238,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'heartDemon', 'relativeDies', 'seclusionYears'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -252,6 +264,8 @@ export const FoeSpecSchema = z
     intent: z.enum(['teach', 'rob', 'kill']),
     /** Base chance the foe accepts a plea (balance.combat.pleaIntent when left out). */
     mercy: z.number().min(0).max(1).optional(),
+    /** Task 5.3: the foe attacks the founded sect: Hộ Sơn Đại Trận weakens them (balance.founding.defensePerLevel). */
+    againstSect: z.boolean().default(false),
     /** Task 3.4: the foe is this event's NPC, at their own realm and stage (name, realm, stage are ignored). */
     fromNpc: z.boolean().default(false),
   })
@@ -684,6 +698,9 @@ export const BalanceSchema = z
         tithe: z.number().min(0),
         /** Most members the founder's realm can hold. */
         maxMembers: z.record(id, z.number().int().min(0)),
+        /** Task 5.3: each level of sect defense takes this share off an attacker's power (capped at maxDefense). */
+        defensePerLevel: z.number().min(0),
+        maxDefense: z.number().min(0).max(1),
         /** Spirit stones the master puts into the treasury with one tap. */
         donation: z.number().int().min(1),
         /** How many decisions a yearly report asks for. */

@@ -35,7 +35,8 @@ export function randomName(rng: Rng, content: Content, gender: Gender): string {
 }
 
 export function fillTemplate(text: string, state: GameState, content?: Content): string {
-  const sect = content?.sects.find((s) => s.id === state.sect.id)?.name ?? 'tông môn';
+  // The founded sect (task 5.1) when there is one, else the sect the player belongs to.
+  const sect = state.ownSect?.name ?? content?.sects.find((s) => s.id === state.sect.id)?.name ?? 'tông môn';
   // Task 3.4: {npc} = the event's NPC, {npcRole} = how the player knows them, {npcKin} = the dead relative an heir avenges.
   const npc = npcById(state, state.events.npc);
   const kin = npcById(state, npc?.heirOf);

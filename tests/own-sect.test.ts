@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { loadContent } from '../src/core/content';
-import { advanceYear, createLife } from '../src/core/state';
+import { advanceYear, createLife, fillTemplate } from '../src/core/state';
+import { Rng } from '../src/core/rng';
+import { EventFileSchema, FoeSpecSchema } from '../src/core/schemas';
+import { meets } from '../src/systems/events/conditions';
+import { resolveChoice } from '../src/systems/events/engine';
+import { makeFoe } from '../src/systems/combat';
 import type { GameState } from '../src/core/types';
 import { hookSum } from '../src/systems/cultivation';
 import { build, decide, donate, foundBlocked, foundSect, ownSectYear, sectNameProblem, suggestSectName } from '../src/systems/ownSect';
@@ -102,5 +107,30 @@ describe('công trình và báo cáo tông môn (task 5.2)', () => {
     expect(decide(r, content, 'rut_linh_thach')).toBeNull();
     expect(decide(r, content, 'dai_hoi_thu_do')!.state.ownSect!.members).toBe(r.ownSect!.members + 8);
     expect(decide(r, content, 'cuu_te_dan_lang')).toBeNull();
+  });
+});
+
+describe('engine cho sự kiện tông môn (task 5.3)', () => {
+  it('conditions on the founded sect, effects on it, {sect} names it', () => {
+    const s = foundSect(elder(), content, { name: 'Thanh Tiêu Tông', rules: [] })!.state;
+    expect(meets(s, { ownSect: { has: true, minMembers: 5 } }, content)).toBe(true);
+    expect(meets(elder(), { ownSect: { has: true } }, content)).toBe(false);
+    expect(meets(s, { ownSect: { building: { id: 'ho_son_dai_tran', min: 1 } } }, content)).toBe(false);
+    expect(fillTemplate('Ma đạo kéo tới {sect}.', s, content)).toBe('Ma đạo kéo tới Thanh Tiêu Tông.');
+    const ev = EventFileSchema.parse([{
+      id: 'thu_tong_mon', category: 'sect', title: 'Thử', text: 'Thử.', weight: 0, conditions: { ownSect: { has: true } },
+      choices: [{ text: 'Đánh', result: { text: 'Xong.', effects: { ownSect: { members: -3, treasury: 20 }, 'stat.daoHeart': 1 } } }],
+    }]);
+    const r = resolveChoice({ ...s, events: { ...s.events, pending: 'thu_tong_mon' } }, { ...content, events: [...content.events, ...ev] }, 0).state;
+    expect(r.ownSect!.members).toBe(s.ownSect!.members - 3);
+    expect(r.ownSect!.treasury).toBe(s.ownSect!.treasury + 20);
+  });
+
+  it('Hộ Sơn Đại Trận weakens attackers of the sect', () => {
+    const s = foundSect(elder(), content, { name: 'Thanh Tiêu Tông', rules: [] })!.state;
+    const walled = { ...s, ownSect: { ...s.ownSect!, buildings: { ho_son_dai_tran: 3 } } };
+    const spec = FoeSpecSchema.parse({ name: 'Ma tu', intent: 'rob', againstSect: true });
+    const plain = makeFoe(s, content, spec, new Rng('x')).power;
+    expect(makeFoe(walled, content, spec, new Rng('x')).power).toBeCloseTo(plain * (1 - 3 * content.balance.founding.defensePerLevel), 0);
   });
 });

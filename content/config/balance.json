@@ -330,6 +330,8 @@
     "attrition": 0.02,
     "tithe": 0.5,
     "maxMembers": { "kim_dan": 100, "nguyen_anh": 500, "hoa_than": 2000 },
+    "defensePerLevel": 0.1,
+    "maxDefense": 0.5,
     "donation": 50,
     "decisions": [1, 3]
   },
