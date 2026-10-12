@@ -902,6 +902,8 @@ export const BalanceSchema = z
         lifespanStop: z.number().int().min(0),
         /** Lover and đạo lữ grow distant: affinity change per year in seclusion. */
         lonelyAffinity: z.number(),
+        /** Playtest 2026-10-12: chance a secluded year is broken by an event with the theme "be_quan". */
+        interruptChance: probability,
       })
       .strict(),
     /** Task 3.6: romance (thiện cảm, theo đuổi, tặng quà, tỏ tình). */
@@ -1522,6 +1524,8 @@ export const RealmsFileSchema = z
     seclusionEnd: z.string().min(1),
     seclusionPeak: z.string().min(1),
     seclusionLifespan: z.string().min(1),
+    /** Playtest 2026-10-12: a kỳ ngộ broke into the seclusion. */
+    seclusionInterrupted: z.string().min(1),
     /** Task 4.2 kết đan. {grade} = "Tam phẩm", {element} = an element name. */
     coreStart: z.string().min(1),
     coreRoot: z.string().min(1),

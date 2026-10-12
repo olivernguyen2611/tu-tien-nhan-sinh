@@ -1,0 +1,144 @@
+[
+  {
+    "id": "bq_don_ngo",
+    "category": "cultivation",
+    "title": "Đốn ngộ trong tĩnh thất",
+    "text": "Đang vận công, một giọt nước nhỏ từ trần động rơi xuống. Tiếng \"tách\" ấy như gõ thẳng vào thức hải {name}.",
+    "themes": ["be_quan"],
+    "conditions": { "realm": { "min": "luyen_khi" } },
+    "weight": 4,
+    "cooldownYears": 10,
+    "choices": [
+      { "text": "Thuận theo cảm ngộ, không nghĩ gì khác", "check": { "stat": "stat.comprehension", "difficulty": 55 }, "success": { "text": "Ba ngày ba đêm như một khắc. Lúc mở mắt, kinh mạch thông thêm một đoạn.", "effects": { "cultProgress": 30, "stat.comprehension": 2 } }, "fail": { "text": "Cảm ngộ tuột khỏi tay như cá trơn. Chỉ còn lại một chút dư vị.", "effects": { "cultProgress": 8, "stat.happiness": -2 } } },
+      { "text": "Khắc vội lên vách đá, để sau suy ngẫm", "result": { "text": "Chữ khắc xiêu vẹo, nhưng mỗi lần đọc lại vẫn thấy có ích.", "effects": { "speedBuff": { "mul": 1.15, "years": 5 }, "stat.intellect": 1 } } }
+    ]
+  },
+  {
+    "id": "bq_linh_mach_trao",
+    "category": "cultivation",
+    "title": "Linh mạch dâng trào",
+    "text": "Linh mạch dưới động phủ bỗng sôi lên, linh khí đặc tới mức đọng thành sương trên tóc {name}.",
+    "themes": ["be_quan"],
+    "conditions": { "realm": { "min": "luyen_khi" } },
+    "weight": 3,
+    "cooldownYears": 12,
+    "luckAffected": true,
+    "choices": [
+      { "text": "Hấp thu tới cùng", "check": { "stat": "stat.physique", "difficulty": 55 }, "success": { "text": "Kinh mạch căng như dây đàn rồi giãn ra. Tu vi tăng vọt.", "effects": { "cultProgress": 35, "stat.physique": 1 } }, "fail": { "text": "Linh khí tràn quá sức chứa, ngươi phun ra một ngụm máu.", "effects": { "cultProgress": 10, "stat.health": -15 } } },
+      { "text": "Hấp thu vừa đủ, phần còn lại thu vào ngọc giản", "result": { "text": "Ngươi tích được một ít linh thạch thô từ sương linh khí.", "effects": { "cultProgress": 12, "spiritStones": 15, "stat.intellect": 1 } } },
+      { "text": "Báo cho tông môn", "requires": { "sect": { "member": true } }, "result": { "text": "Trưởng lão tới xem, gật gù ghi công cho ngươi.", "effects": { "sectContribution": 40, "cultProgress": 5, "stat.happiness": 2 } } }
+    ]
+  },
+  {
+    "id": "bq_tam_ma_go_cua",
+    "category": "cultivation",
+    "title": "Tiếng gõ cửa lúc nửa đêm",
+    "text": "Động phủ đã phong kín, vậy mà có tiếng gõ cửa. Ngoài kia là giọng nói giống hệt {name}: \"Mở cửa đi, ngươi biết ta là ai.\"",
+    "themes": ["be_quan"],
+    "conditions": { "realm": { "min": "luyen_khi" } },
+    "weight": 3,
+    "cooldownYears": 15,
+    "choices": [
+      { "text": "Ngồi yên, niệm tĩnh tâm quyết", "check": { "stat": "stat.daoHeart", "difficulty": 55 }, "success": { "text": "Tiếng gõ thưa dần rồi tắt. Lòng ngươi lặng như mặt hồ không gió.", "effects": { "stat.daoHeart": 3, "heartDemon": -5 } }, "fail": { "text": "Ngươi bật dậy mở cửa. Ngoài kia không có ai, chỉ có gió.", "effects": { "heartDemon": 8, "stat.happiness": -4 } } },
+      { "text": "Phá quan đi ra, không ngồi nữa", "result": { "text": "Ra tới nắng, tiếng gõ biến mất. Tu vi dở dang nhưng đầu óc nhẹ đi.", "effects": { "stat.happiness": 3, "cultProgress": -5 } } }
+    ]
+  },
+  {
+    "id": "bq_yeu_thu_pha_cua",
+    "category": "cultivation",
+    "title": "Yêu thú đào hang",
+    "text": "Một con xuyên sơn giáp to như con trâu đào nhầm vào động phủ, mũi khịt khịt ngửi lò đan của {name}.",
+    "themes": ["be_quan", "beast"],
+    "conditions": { "realm": { "min": "luyen_khi" } },
+    "weight": 3,
+    "cooldownYears": 10,
+    "choices": [
+      { "text": "Ra tay bắt sống", "check": { "stat": "stat.physique", "difficulty": 50 }, "success": { "text": "Vảy của nó bán được giá, thịt nó... thôi, ngươi thả nó đi.", "effects": { "spiritStones": 25, "stat.physique": 1 } }, "fail": { "text": "Nó cuộn tròn lăn qua người ngươi rồi chui mất, mang theo cả cái lò.", "effects": { "stat.health": -8, "spiritStones": -10 } } },
+      { "text": "Ném cho nó ít linh quả, mời đi chỗ khác", "result": { "text": "Nó ăn xong, đào ngược ra ngoài, tiện tay lấp luôn cửa hang.", "effects": { "stat.happiness": 3, "karma": 2 } } }
+    ]
+  },
+  {
+    "id": "bq_di_tuong_ngoai_nui",
+    "category": "fortune",
+    "title": "Dị tượng ngoài núi",
+    "text": "Bảy ngày liền, phía tây có cột sáng đỏ rực bắn lên trời. Thần thức của {name} đọc được tiếng người tụ về đó.",
+    "themes": ["be_quan"],
+    "conditions": { "realm": { "min": "luyen_khi" } },
+    "weight": 3,
+    "cooldownYears": 15,
+    "choices": [
+      { "text": "Phá quan đi xem", "check": { "stat": "stat.luck", "difficulty": 55 }, "success": { "text": "Ngươi tới đúng lúc bảo vật rơi xuống, chộp lấy rồi chạy trước khi đám đông kịp nhận ra.", "effects": { "spiritStones": 60, "stat.happiness": 5 } }, "fail": { "text": "Tới nơi chỉ còn cái hố to và ba trăm tu sĩ nhìn nhau.", "effects": { "stat.happiness": -3, "stat.intellect": 1 } } },
+      { "text": "Mặc kệ, bế quan quan trọng hơn", "result": { "text": "Về sau nghe nói ở đó chết mười mấy người. Ngươi gật gù, tiếp tục ngồi.", "effects": { "stat.daoHeart": 2, "cultProgress": 5 } } }
+    ]
+  },
+  {
+    "id": "bq_trom_dong_phu",
+    "category": "cultivation",
+    "title": "Kẻ trộm động phủ",
+    "text": "Trận pháp ngoài cửa rung nhẹ. Có kẻ đang mò mẫm phá cấm chế, nghĩ rằng {name} đã tọa hóa.",
+    "themes": ["be_quan"],
+    "conditions": { "realm": { "min": "luyen_khi" } },
+    "weight": 3,
+    "cooldownYears": 10,
+    "choices": [
+      { "text": "Đợi hắn vào rồi đóng cửa", "check": { "stat": "stat.intellect", "difficulty": 50 }, "success": { "text": "Hắn vào, cửa đóng, hắn khóc. Túi trữ vật của hắn thành của ngươi.", "effects": { "spiritStones": 30, "stat.happiness": 3 } }, "fail": { "text": "Hắn nhanh hơn ngươi tưởng, cuỗm được một túi linh thạch rồi biến mất.", "effects": { "spiritStones": -20, "stat.happiness": -3 } } },
+      { "text": "Lên tiếng cảnh cáo", "result": { "text": "\"Còn sống à?\" Kẻ kia lắp bắp xin lỗi rồi chạy mất dép.", "effects": { "stat.charm": 1, "karma": 1 } } }
+    ]
+  },
+  {
+    "id": "bq_linh_thu_lac",
+    "category": "cultivation",
+    "title": "Vị khách nhỏ",
+    "text": "Một con tiểu hồ ly ướt sũng lạc vào động phủ, cuộn tròn bên đầu gối {name} rồi ngủ luôn.",
+    "themes": ["be_quan"],
+    "conditions": { "realm": { "min": "luyen_khi" } },
+    "weight": 2,
+    "oncePerLife": true,
+    "choices": [
+      { "text": "Để nó ở lại", "result": { "text": "Từ đó động phủ có thêm tiếng thở khe khẽ. Ngồi thiền đỡ cô quạnh.", "effects": { "stat.happiness": 8, "stat.luck": 1 } } },
+      { "text": "Đợi mưa tạnh rồi thả nó đi", "result": { "text": "Nó đi, ngoái lại nhìn ngươi ba lần.", "effects": { "karma": 2, "stat.daoHeart": 1 } } }
+    ]
+  },
+  {
+    "id": "bq_tin_nha",
+    "category": "cultivation",
+    "title": "Phù truyền tin",
+    "text": "Một lá phù truyền tin len qua khe cửa, lóe sáng: người nhà nhắn {name} mau trở về.",
+    "themes": ["be_quan"],
+    "conditions": { "realm": { "min": "luyen_khi" }, "flagsNone": ["no_father", "no_mother"] },
+    "weight": 2,
+    "cooldownYears": 20,
+    "choices": [
+      { "text": "Lập tức xuất quan về nhà", "result": { "text": "Về tới nơi, cha mẹ chỉ muốn nhìn mặt ngươi một chút. Mọi người khóc rồi cười.", "effects": { "stat.happiness": 8, "cultProgress": -5 } } },
+      { "text": "Nhắn lại: bế quan xong sẽ về", "result": { "text": "Lá phù tắt. Ngươi tiếp tục ngồi, lòng có chút nặng.", "effects": { "stat.happiness": -5, "stat.daoHeart": 2 } } }
+    ]
+  },
+  {
+    "id": "bq_kiem_y",
+    "category": "cultivation",
+    "title": "Thanh âm trong tĩnh lặng",
+    "text": "Ngồi lâu tới mức nghe được tiếng bụi rơi. Bỗng {name} hiểu ra một chiêu thức từng luyện mãi không thành.",
+    "themes": ["be_quan"],
+    "conditions": { "realm": { "min": "luyen_khi" } },
+    "weight": 3,
+    "cooldownYears": 15,
+    "choices": [
+      { "text": "Đứng dậy diễn luyện ngay", "result": { "text": "Một chiêu xuất ra, vách đá in một vết sâu ba tấc.", "effects": { "stat.physique": 2, "cultProgress": 5 } } },
+      { "text": "Ghi nhớ trong lòng, tiếp tục tĩnh tọa", "result": { "text": "Chiêu thức chìm vào đáy lòng như hạt giống chờ mưa.", "effects": { "stat.comprehension": 2, "cultProgress": 8 } } }
+    ]
+  },
+  {
+    "id": "bq_dia_chan",
+    "category": "accident",
+    "title": "Địa chấn",
+    "text": "Cả ngọn núi rung chuyển, đá trên trần động phủ của {name} rơi lả tả.",
+    "themes": ["be_quan"],
+    "conditions": { "realm": { "min": "luyen_khi" } },
+    "weight": 2,
+    "cooldownYears": 20,
+    "choices": [
+      { "text": "Dựng hộ thân cương khí, ngồi yên", "check": { "stat": "stat.physique", "difficulty": 50 }, "success": { "text": "Đá rơi quanh người như mưa, ngươi không xây xước. Tâm cảnh cũng vững thêm.", "effects": { "stat.daoHeart": 2, "cultProgress": 5 } }, "fail": { "text": "Một tảng đá rơi trúng vai. Bế quan phải dừng để băng bó.", "effects": { "stat.health": -12 } } },
+      { "text": "Chạy ra ngoài", "result": { "text": "Ra ngoài thì động đất cũng dừng. Ngươi đứng giữa núi, tóc đầy bụi.", "effects": { "stat.happiness": -2, "stat.health": 1 } } }
+    ]
+  }
+]

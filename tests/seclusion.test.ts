@@ -7,7 +7,9 @@ import { resolveChoice } from '../src/systems/events/engine';
 import { migrate } from '../src/systems/save';
 import { runSeclusion, seclude, seclusionView } from '../src/systems/seclusion';
 
-const content = loadContent();
+const real = loadContent();
+// The task 4.1 tests run without the playtest 2026-10-12 interruptions (tested at the end).
+const content = { ...real, balance: { ...real.balance, seclusion: { ...real.balance.seclusion, interruptChance: 0 } } };
 const cfg = content.balance.seclusion;
 
 function cultivator(age = 30, patch: Partial<GameState['cult']> = {}): GameState {
@@ -74,5 +76,24 @@ describe('bế quan (task 4.1)', () => {
   it('old saves are not in seclusion', () => {
     const { seclusion: _s, ...old } = cultivator();
     expect(migrate({ saveVersion: 1, gameVersion: '0', slot: 0, savedAt: '', life: old as unknown as GameState }).life.seclusion).toBeNull();
+  });
+});
+
+describe('kỳ ngộ break into a seclusion (playtest 2026-10-12)', () => {
+  it('sometimes an event comes, the door opens, and only be_quan events come', () => {
+    let broke = 0;
+    for (let i = 0; i < 40; i++) {
+      const b = createLife({ seed: `bq${i}` }, real);
+      let s: GameState = { ...b, character: { ...b.character, age: 30 }, destiny: { ...b.destiny, confirmed: true }, log: [...b.log, { age: 30, lines: [] }],
+        events: { pending: null, history: {}, followUps: [], npc: null }, cult: { ...b.cult, realm: 'luyen_khi', stage: 0, progress: 0, root: { grade: 'song', elements: ['kim', 'hoa'], body: null }, lifespan: 120 } };
+      s = seclude(s, real, 5);
+      if (s.events.pending) {
+        broke++;
+        expect(s.seclusion).toBeNull();
+        expect(real.events.find((e) => e.id === s.events.pending)!.themes).toContain('be_quan');
+      }
+    }
+    expect(broke).toBeGreaterThan(5);
+    expect(broke).toBeLessThan(40);
   });
 });

@@ -66,6 +66,19 @@ export function eventWeight(state: GameState, content: Content, event: GameEvent
   return Math.max(0, w);
 }
 
+/**
+ * Playtest 2026-10-12: a secluded year may be broken by a kỳ ngộ or trouble (events with the
+ * theme "be_quan"); the seclusion then ends (seclusion.ts).
+ */
+export function rollSeclusionEvent(state: GameState, content: Content): GameState {
+  const rng = Rng.fromState(state.rng);
+  if (!rng.chance(content.balance.seclusion.interruptChance)) return { ...state, rng: rng.getState() };
+  const pool = content.events.filter((e) => e.themes.includes('be_quan')).map((e) => ({ e, w: eventWeight(state, content, e) })).filter((x) => x.w > 0);
+  if (pool.length === 0) return { ...state, rng: rng.getState() };
+  const picked = rng.weighted(pool, (x) => x.w).e.id;
+  return { ...state, rng: rng.getState(), events: { ...state.events, pending: picked, npc: null } };
+}
+
 /** Chance this year brings an event (playtest 2026-10-12: most years do). */
 export function popupChance(state: GameState, content: Content): number {
   const ev = content.balance.events;
@@ -98,7 +111,9 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
     picked = visit.event;
     npc = visit.npc;
   } else if (sure || rng.chance(popupChance(state, content))) {
+    // "be_quan" events only break into a seclusion (rollSeclusionEvent).
     const all = content.events
+      .filter((e) => !e.themes.includes('be_quan'))
       .map((e) => ({ e, w: eventWeight(state, content, e) }))
       .filter((x) => x.w > 0);
     const themed = sure ? all.filter((x) => x.e.themes.includes(sure.tag!)) : [];

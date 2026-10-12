@@ -437,7 +437,8 @@
       "hoa_than": [10, 30, 100]
     },
     "lifespanStop": 5,
-    "lonelyAffinity": -1
+    "lonelyAffinity": -1,
+    "interruptChance": 0.2
   },
   "romance": {
     "minAge": 18,

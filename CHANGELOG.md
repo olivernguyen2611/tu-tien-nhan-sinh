@@ -2,6 +2,11 @@
 
 ## [Chưa phát hành]
 
+### Chơi thử 2 — Kỳ ngộ cắt ngang bế quan (2026-10-12)
+- Mỗi năm bế quan có 20% gặp chuyện (`balance.seclusion.interruptChance`): cửa động phủ mở, người chơi trả lời sự kiện rồi tự quyết bế quan tiếp hay không.
+- 10 sự kiện bế quan mới (chủ đề `be_quan`, chỉ đến khi đang bế quan): đốn ngộ, linh mạch dâng trào, tâm ma gõ cửa, yêu thú đào hang, dị tượng ngoài núi, kẻ trộm động phủ, tiểu hồ ly lạc vào, phù truyền tin của người nhà, cảm ngộ chiêu thức, địa chấn.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Chơi thử 2 — Nhiều sự kiện hơn mỗi năm (2026-10-12)
 - Tỉ lệ một năm có sự kiện tăng từ 50% lên 80%. Từ Nguyên Anh (đời dài hàng nghìn năm) là 50% (`balance.events.popupChanceHighRealm`, `highRealmFrom`); trước đây cảnh giới cao vẫn dùng 50%.
 - Đệ tử tông môn gặp sự kiện tông môn nhiều gấp 2,5 lần (`balance.events.sectMemberMul`).
