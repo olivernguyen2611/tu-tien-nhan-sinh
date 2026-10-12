@@ -27,11 +27,12 @@ import { blessingHooks } from './blessings';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
-/** One roll: grade by weight, then its elements (or a special body). */
-function rollOnce(rng: Rng, content: Content): SpiritRoot {
+/** One roll: grade by weight, then its elements (or a special body). `floor`: no grade slower than this one. */
+function rollOnce(rng: Rng, content: Content, floor: string | null = null): SpiritRoot {
   const cfg = content.balance.roots;
   const { grades, elements, bodies } = content.cultivation.roots;
-  const grade = rng.weighted(grades, (g) => cfg.gradeWeights[g.id] ?? 0);
+  const min = floor ? cfg.gradeSpeed[floor] ?? 0 : 0;
+  const grade = rng.weighted(grades, (g) => ((cfg.gradeSpeed[g.id] ?? 0) >= min ? cfg.gradeWeights[g.id] ?? 0 : 0));
   const count = cfg.elementCount[grade.id] ?? 0;
   if (grade.special === 'body') return { grade: grade.id, elements: [], body: rng.weighted(bodies, (b) => cfg.bodyWeights[b.id] ?? 0).id };
   const kind = elements.filter((e) => e.variant === (grade.special === 'variant')).map((e) => e.id);
@@ -47,14 +48,46 @@ function pickElements(rng: Rng, from: string[], count: number): string[] {
 }
 
 /** Roll `rolls` times and keep the root with the highest cultivation speed. */
-export function rollRoot(rng: Rng, content: Content, rolls = 1): SpiritRoot {
+export function rollRoot(rng: Rng, content: Content, rolls = 1, floor: string | null = null): SpiritRoot {
   const speed = (r: SpiritRoot) => content.balance.roots.gradeSpeed[r.grade] ?? 0;
-  let best = rollOnce(rng, content);
+  let best = rollOnce(rng, content, floor);
   for (let i = 1; i < rolls; i++) {
-    const next = rollOnce(rng, content);
+    const next = rollOnce(rng, content, floor);
     if (speed(next) > speed(best)) best = next;
   }
   return best;
+}
+
+/**
+ * Playtest 2026-10-12: the strongest Tiên Thiên Khí Vận that helps cultivation, and the weakest
+ * root it allows (balance.roots.traitFloor by rarity); null when no trait helps cultivation.
+ */
+export function traitRootFloor(state: GameState, content: Content): { trait: string; grade: string } | null {
+  const cfg = content.balance.roots;
+  let best: { trait: string; grade: string } | null = null;
+  for (const id of state.traits) {
+    const grade = traitRootGrade(content, id);
+    if (grade && (!best || (cfg.gradeSpeed[grade] ?? 0) > (cfg.gradeSpeed[best.grade] ?? 0))) {
+      best = { trait: content.traits.find((x) => x.id === id)!.name, grade };
+    }
+  }
+  return best;
+}
+
+/** The weakest root one trait allows, or null when it does not help cultivation. */
+export function traitRootGrade(content: Content, traitId: string): string | null {
+  const cfg = content.balance.roots;
+  const t = content.traits.find((x) => x.id === traitId);
+  const helps = t?.effects.some((e) => (e.add ?? 0) > 0 && cfg.cultivationHooks.some((p) => e.hook.startsWith(p)));
+  return (helps && cfg.traitFloor[t!.rarity]) || null;
+}
+
+/** "Bảo đảm linh căn: Tam linh căn trở lên" for the trait card, or null. */
+export function traitRootNote(content: Content, traitId: string): string | null {
+  const grade = traitRootGrade(content, traitId);
+  if (!grade) return null;
+  const name = content.cultivation.roots.grades.find((g) => g.id === grade)?.name ?? grade;
+  return `Bảo đảm có linh căn, ít nhất ${name}`;
 }
 
 /** Age at which this life meets the root test: from its own seed so other rolls stay unchanged. */
@@ -95,7 +128,8 @@ export function revealRoot(state: GameState, content: Content): { state: GameSta
   const origin = content.origins.find((o) => o.id === state.character.originId);
   // Phúc báo Đại thiện nhân (task 5b.8): rootReroll adds rolls, best kept.
   const rolls = (origin?.cultivatorClan ? content.balance.roots.clanDescendantRolls : 1) + Math.max(0, Math.round(hookSum(state, content, 'rootReroll')));
-  const root = rollRoot(rng, content, rolls);
+  const floor = traitRootFloor(state, content);
+  const root = rollRoot(rng, content, rolls, floor?.grade ?? null);
 
   const stats = { ...state.stats };
   const aptitudes = { ...state.aptitudes };
@@ -117,7 +151,8 @@ export function revealRoot(state: GameState, content: Content): { state: GameSta
   const text = content.cultivation.roots.revealText
     .replace('{root}', rootName(root, content))
     .replace('{description}', rootDescription(root, content));
-  const line: LogLine = { text, tone: speed === 0 ? 'bad' : speed >= 1.6 ? 'rare' : speed >= 1 ? 'good' : 'normal' };
+  const intro = floor ? `${content.cultivation.roots.traitGuaranteeText.replace('{trait}', floor.trait)} ` : '';
+  const line: LogLine = { text: intro + text, tone: speed === 0 ? 'bad' : speed >= 1.6 ? 'rare' : speed >= 1 ? 'good' : 'normal' };
 
   const log = state.log.slice();
   const last = log[log.length - 1];

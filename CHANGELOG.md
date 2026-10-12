@@ -2,6 +2,13 @@
 
 ## [Chưa phát hành]
 
+### Góp ý chơi thử 5 — Khí vận tu hành thì chắc chắn có linh căn (2026-10-12)
+- Tiên Thiên Khí Vận có tác dụng cho tu tiên (tốc độ tu luyện, đột phá, bình cảnh, thiên kiếp, ngũ hành, kiếm/pháp/binh/thuật tu, ma đạo) thì chắc chắn có linh căn. Cấp khí vận càng cao, linh căn tối thiểu càng mạnh: Phàm/Ác vận → Ngũ linh căn, Lương → Tứ, Ưu → Tam, Tuyệt → Song, Thiên → Đơn, Thần → Biến dị hoặc thể chất đặc biệt. Có nhiều khí vận thì lấy mức cao nhất.
+- Khí vận Thể tu không bảo đảm linh căn vì vẫn có ích cho đường võ phàm nhân.
+- Không có khí vận tu hành thì thử linh căn như cũ (khoảng 60% không có).
+- Thẻ khí vận lúc đầu thai ghi rõ "Bảo đảm có linh căn, ít nhất …"; lúc thử linh căn, nhật ký nhắc khí vận nào đã định sẵn.
+- Số liệu ở `balance.roots.cultivationHooks` và `balance.roots.traitFloor`.
+
 ### Góp ý chơi thử 4 — Bớt gặp lại cùng một sự kiện (2026-10-12)
 - Sự kiện lặp lại được giờ phải cách ít nhất 6 năm (`balance.events.minCooldownYears`), kể cả sự kiện trước đây không có thời gian chờ.
 - Mỗi lần đã gặp trong đời này, sự kiện đó hiếm đi: trọng số × 0.3 cho mỗi lần (`balance.events.repeatDecay`). Đời cũ trong save được tính như đã gặp 1 lần.
