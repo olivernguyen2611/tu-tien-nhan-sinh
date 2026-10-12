@@ -1,0 +1,101 @@
+[
+  {
+    "id": "thanh_van_chau",
+    "name": "Thanh Vân châu",
+    "description": "Quê nhà: ruộng lúa, chợ phiên, vài tông môn nhỏ trên núi. Linh khí mỏng, lòng người dày.",
+    "qi": 1.0,
+    "summary": "Linh khí thường. Yên ổn, ít kỳ ngộ.",
+    "enterText": "Ngươi về lại Thanh Vân châu. Khói bếp vẫn bay thẳng, quán mì đầu làng vẫn dở.",
+    "guardian": {
+      "name": "Thanh Vân Tử",
+      "title": "Ẩn sĩ",
+      "realm": "nguyen_anh",
+      "text": "Trên đỉnh Thanh Vân có một lão nhân câu cá trên mây, người ta gọi là Thanh Vân Tử. Ba trăm năm nay, yêu ma nào bén mảng tới châu này đều bị lão câu lên rồi thả xuống biển."
+    }
+  },
+  {
+    "id": "vo_chu_hoang_nguyen",
+    "name": "Vô Chủ hoang nguyên",
+    "description": "Đồng hoang không triều đình, không tông môn. Tán tu tụ ở Vô Chủ Phường, giết người đoạt bảo là chuyện thường ngày.",
+    "minRealm": "luyen_khi",
+    "qi": 1.1,
+    "eventWeight": { "plunder": 2, "demonic": 1.5, "justice": 0.5 },
+    "effects": [{ "hook": "lootPct", "add": 0.2 }],
+    "summary": "Linh khí khá. Cướp bóc gấp đôi, chiến lợi phẩm +20%.",
+    "enterText": "Ngươi bước vào Vô Chủ hoang nguyên. Gió cuốn cát, và mấy ánh mắt từ sau tảng đá.",
+    "guardian": {
+      "name": "Bạch Cốt Bà Bà",
+      "title": "Ma đầu",
+      "realm": "nguyen_anh",
+      "text": "Ở giữa đồng hoang có một ngôi miếu xương. Bạch Cốt Bà Bà không quản ai giết ai, chỉ cấm một điều: không ai được động vào Vô Chủ Phường. Kẻ phá chợ thì thành xương trong miếu."
+    }
+  },
+  {
+    "id": "van_thu_son_mach",
+    "name": "Vạn Thú sơn mạch",
+    "description": "Rừng già ngàn dặm, yêu thú làm chủ. Linh thảo mọc như cỏ dại, chỉ là cỏ dại ở đây biết cắn.",
+    "minRealm": "truc_co",
+    "qi": 1.3,
+    "eventWeight": { "beast": 3, "herb": 2 },
+    "effects": [{ "hook": "combatPower", "add": -0.05 }],
+    "summary": "Linh khí dồi dào. Yêu thú và linh thảo gấp bội; chiến lực −5% vì lạ địa hình.",
+    "enterText": "Ngươi vào Vạn Thú sơn mạch. Cây cao tới mức ban trưa trông như chạng vạng.",
+    "guardian": {
+      "name": "Kim Mao Hống",
+      "title": "Thú vương",
+      "realm": "hoa_than",
+      "text": "Sâu trong núi có một con hống lông vàng đã sống tám nghìn năm. Nó ngủ, và cả sơn mạch đi rón rén. Nghe nói nó không ghét người, chỉ ghét kẻ bắt thú con."
+    }
+  },
+  {
+    "id": "dong_hai",
+    "name": "Đông Hải quần đảo",
+    "description": "Nghìn hòn đảo nổi trên biển xanh. Hải thị đêm nào cũng sáng đèn, dưới đáy biển là phủ cũ của giao long.",
+    "minRealm": "kim_dan",
+    "qi": 1.5,
+    "eventWeight": { "market": 1.5, "bi_canh": 2, "fortune": 1.5 },
+    "effects": [{ "hook": "priceDiscount", "add": 0.05 }],
+    "summary": "Linh khí rất dồi dào. Bí cảnh và kỳ ngộ nhiều hơn; mua bán rẻ hơn 5%.",
+    "enterText": "Thuyền cập Đông Hải. Mùi muối, mùi linh thạch và mùi tiền.",
+    "guardian": {
+      "name": "Thương Hải Lão Tổ",
+      "title": "Đảo chủ",
+      "realm": "hoa_than",
+      "text": "Đảo lớn nhất Đông Hải không có tên, chỉ có một lão già ngồi xem triều lên xuống. Thương Hải Lão Tổ ra tay đúng một lần, khi một tông môn muốn đánh thuế hải thị. Tông môn ấy giờ là một rạn san hô."
+    }
+  },
+  {
+    "id": "bac_minh_tuyet_vuc",
+    "name": "Bắc Minh tuyết vực",
+    "description": "Băng nguyên vô tận ở cực bắc. Lạnh tới mức tâm ma cũng đóng băng, chỉ người chịu nổi cô độc mới ở lâu được.",
+    "minRealm": "nguyen_anh",
+    "qi": 1.8,
+    "eventWeight": { "heart_demon": 0.5, "romance": 0.5, "market": 0.3 },
+    "effects": [{ "hook": "heartDemonResist", "add": 0.2 }, { "hook": "speed", "add": -0.1 }],
+    "summary": "Linh khí cực dày. Tâm ma khó sinh (−20%); rét cóng, Tốc −10%; ít duyên gặp gỡ.",
+    "enterText": "Ngươi đặt chân lên Bắc Minh tuyết vực. Hơi thở vừa ra khỏi miệng đã thành băng rơi lách tách.",
+    "guardian": {
+      "name": "Hàn Sơn Kiếm Tôn",
+      "title": "Kiếm tôn",
+      "realm": "hoa_than",
+      "text": "Trên tuyết vực có một vết kiếm dài trăm dặm, chưa bao giờ bị tuyết lấp. Người chém ra nó, Hàn Sơn Kiếm Tôn, vẫn ngồi ở đầu vết kiếm, không ai biết đang chờ ai."
+    }
+  },
+  {
+    "id": "trung_chau",
+    "name": "Thương Lan Trung Châu",
+    "description": "Trái tim của Thương Lan giới. Đại tông môn, thế gia ngàn năm, đại năng đi lại như người thường đi chợ.",
+    "minRealm": "hoa_than",
+    "qi": 2.0,
+    "eventWeight": { "bi_canh": 2, "plunder": 1.5, "fortune": 1.5 },
+    "effects": [{ "hook": "breakthroughChance", "add": 0.02 }],
+    "summary": "Linh khí đậm nhất Thương Lan. Đột phá +2%, cơ duyên và tranh đoạt đều nhiều.",
+    "enterText": "Ngươi tới Trung Châu. Ở đây Hóa Thần không còn là truyền thuyết, chỉ là hàng xóm.",
+    "guardian": {
+      "name": "Thiên Diễn Đạo Quân",
+      "title": "Đạo quân",
+      "realm": "hoa_than",
+      "text": "Người ta nói Thiên Diễn Đạo Quân đã chạm tới cửa ải trên Hóa Thần, nhưng không bước qua, vì muốn trông Trung Châu thêm vài nghìn năm. Ông ít khi xuất hiện; khi xuất hiện thì trời đổi sắc."
+    }
+  }
+]

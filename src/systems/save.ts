@@ -98,6 +98,8 @@ export function migrate(save: SaveFile): SaveFile {
   if (life.cult.coreGrade === undefined) life = { ...life, cult: { ...life.cult, coreForming: null, coreGrade: null } };
   // Task 4.2: đan văn.
   if (life.cult.corePattern === undefined) life = { ...life, cult: { ...life.cult, corePattern: null } };
+  // Task 4.8: at home.
+  if (life.region === undefined) life = { ...life, region: { id: null, visited: [], movedAt: null } };
   // Task 4.3: Nguyên Anh form.
   if (life.cult.soulForm === undefined) life = { ...life, cult: { ...life.cult, soulForm: null } };
   // Task 4.1: not in seclusion.

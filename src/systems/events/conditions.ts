@@ -5,6 +5,7 @@ import type { GameState } from '../../core/types';
 import { sectEligibility } from '../sect';
 import { actor, isMasked } from '../npcs';
 import { romanceMeets } from '../romance';
+import { currentRegion } from '../regions';
 
 type Conditions = Partial<GameEvent['conditions']>;
 
@@ -35,8 +36,8 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
   if (c.age?.min !== undefined && age < c.age.min) return false;
   if (c.age?.max !== undefined && age > c.age.max) return false;
   if (c.realm && !realmInRange(state, c.realm, content)) return false;
-  // Regions arrive in GĐ 3; until then nobody is in one.
-  if (c.region && c.region.length > 0) return false;
+  // Task 4.8: in one of these đại vực.
+  if (c.region && c.region.length > 0 && (!content || !c.region.includes(currentRegion(state, content)?.id ?? ''))) return false;
   if (c.anyOf && !c.anyOf.some((sub) => meets(state, sub, content))) return false;
   if (c.stage?.min !== undefined && state.cult.stage < c.stage.min) return false;
   if (c.stage?.max !== undefined && state.cult.stage > c.stage.max) return false;

@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -56,6 +56,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
   if (rest === 'sects.json') return SectFileSchema;
   if (rest === 'sect-life.json') return SectLifeSchema;
   if (rest === 'markets.json') return MarketFileSchema;
+  if (rest === 'regions.json') return RegionFileSchema;
   if (/^events\/[^/]+\.json$/.test(rest)) return EventFileSchema;
   return null;
 }
@@ -80,6 +81,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   let itemIds: string[] | null = null;
   let recipeFile: { file: string; data: RecipeFile } | null = null;
   let martialFile: MartialFile | null = null;
+  const regionFiles: { file: string; regions: Region[] }[] = [];
   let careerIds: string[] | null = null;
   const sectFiles: { file: string; sects: Sect[] }[] = [];
   const parsedShared: { balance?: Balance; realms?: RealmsFile; roots?: RootsFile; aptitudes?: AptitudesFile } = {};
@@ -165,6 +167,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === SectFileSchema) sectFiles.push({ file, sects: parsed.data as Sect[] });
     if (schema === LineageFileSchema) problems.push(...duplicates(file, 'đạo thống', parsed.data as { id: string }[]));
     if (schema === MartialFileSchema) martialFile = parsed.data as MartialFile;
+    if (schema === RegionFileSchema) regionFiles.push({ file, regions: parsed.data as Region[] });
     if (schema === ItemFileSchema) itemIds = (parsed.data as { id: string }[]).map((x) => x.id);
     if (schema === RecipeFileSchema) recipeFile = { file, data: parsed.data as RecipeFile };
     if (schema === CareersFileSchema) careerIds = (parsed.data as { careers: { id: string }[] }).careers.map((c) => c.id);
@@ -215,6 +218,28 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     }
   }
   const realmIds = parsedShared.realms ? new Set(parsedShared.realms.realms.map((r) => r.id)) : null;
+
+  // Task 4.8: đại vực name real realms; their hooks act while the player stays, so no one-off stat.<x>.
+  const regionIdsByWorld = new Map<string, Set<string>>();
+  for (const { file, regions } of regionFiles) {
+    problems.push(...duplicates(file, 'vùng', regions));
+    regionIdsByWorld.set(splitWorldPath(file).worldId ?? '', new Set(regions.map((r) => r.id)));
+    for (const r of regions) {
+      for (const realm of [r.minRealm, r.guardian.realm]) {
+        if (realm && realmIds && !realmIds.has(realm)) problems.push({ file, level: 'error', message: `vùng "${r.id}" nhắc tới cảnh giới không tồn tại "${realm}"` });
+      }
+      for (const e of r.effects.filter((x) => x.hook.startsWith('stat.'))) {
+        problems.push({ file, level: 'error', message: `vùng "${r.id}": móc "${e.hook}" chỉ cộng một lần, không dùng được cho vùng` });
+      }
+    }
+  }
+  for (const { file, event } of events) {
+    const known = regionIdsByWorld.get(splitWorldPath(file).worldId ?? '') ?? new Set<string>();
+    const named = [event.conditions, ...event.choices.map((c) => c.requires ?? {})].flatMap((c) => c.region ?? []);
+    for (const r of named) {
+      if (!known.has(r)) problems.push({ file, level: 'error', message: `sự kiện "${event.id}" nhắc tới vùng không tồn tại "${r}"` });
+    }
+  }
 
   // Duplicate event ids across all event files.
   const seen = new Map<string, string>();

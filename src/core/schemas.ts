@@ -1636,6 +1636,32 @@ export const FateTalentFileSchema = z.array(
 );
 export type FateTalent = z.infer<typeof FateTalentFileSchema>[number];
 
+/** content/worlds/<id>/regions.json (task 4.8): the đại vực of a world; the first one is home. */
+export const RegionFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      description: z.string().min(1),
+      /** Realm needed to travel there; none = open from birth. */
+      minRealm: id.optional(),
+      /** Linh khí of the region (PLAN G.1, 0.5 to 2.0); multiplies the world's. */
+      qi: z.number().min(0.5).max(2),
+      /** Event theme → weight × while here (yêu thú in the mountains…). */
+      eventWeight: z.record(id, z.number().min(0)).default({}),
+      /** K.6 hooks while here. */
+      effects: z.array(EffectHookSchema).default([]),
+      /** One line for the map: what living here is like. */
+      summary: z.string().min(1),
+      /** Logged on arrival. */
+      enterText: z.string().min(1),
+      /** Đại năng trấn giữ: who keeps this region, shown on the map and met on the first visit. */
+      guardian: z.object({ name: z.string().min(1), title: z.string().min(1), realm: id, text: z.string().min(1) }).strict(),
+    })
+    .strict(),
+);
+export type Region = z.infer<typeof RegionFileSchema>[number];
+
 /** content/worlds/<id>/markets.json (task 3.2): where things are bought and sold. */
 export const MarketFileSchema = z.array(
   z

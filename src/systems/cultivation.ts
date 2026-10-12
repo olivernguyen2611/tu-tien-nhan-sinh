@@ -8,6 +8,7 @@ import { extremeHookSum } from './extremes';
 import { checkDeath } from './time';
 import { difficultyHookSum } from './difficulty';
 import { careerHooks } from './career';
+import { currentRegion, regionQi } from './regions';
 import { currentTechnique, learnTechnique, techniqueCapReason, techniqueMul } from './technique';
 import { sectHooks } from './sect';
 import { offerFate } from './fate';
@@ -152,6 +153,8 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
     ...(content.corePatterns.find((p) => p.id === state.cult.corePattern)?.effects ?? []),
     // Hình thái Nguyên Anh (task 4.3).
     ...(content.nascentSouls.forms.find((f) => f.id === state.cult.soulForm)?.effects ?? []),
+    // Đại vực (task 4.8).
+    ...(currentRegion(state, content)?.effects ?? []),
   ];
 }
 
@@ -198,7 +201,8 @@ export function yearlyGain(state: GameState, content: Content): number {
     rootMul = Math.min(content.balance.techniques.rootlessDaoHeartMax, state.aptitudes.daoHeart / 100);
   }
   const aptitude = cfg.aptitudeBase + (state.aptitudes.physique + state.aptitudes.comprehension) / cfg.aptitudeDivisor;
-  const qi = content.world.qi ?? cfg.regionQi;
+  // Đại vực (task 4.8): the region's linh khí multiplies the world's.
+  const qi = (content.world.qi ?? cfg.regionQi) * regionQi(state, content);
   const bonus = Math.max(0, 1 + hookSum(state, content, 'cultivationSpeed') + pathSpeedBonus(state, content));
   // Song tu with a cultivating đạo lữ (task 3.7, PLAN G.1 ×1.3).
   const partner = state.romance.partner ? state.npcs.find((n) => n.id === state.romance.partner) : undefined;

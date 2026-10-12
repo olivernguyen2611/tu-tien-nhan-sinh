@@ -43,6 +43,7 @@ const content: Content = {
   heartDemon,
   recipes,
   corePatterns: [],
+  regions: [],
   nascentSouls: { realm: 'nguyen_anh', forms: [] },
   disciples,
   events: [],
