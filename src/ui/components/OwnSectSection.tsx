@@ -5,8 +5,9 @@ import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
 import { buildingViews, decisionViews, foundBlocked, prestigeOf, prestigeTier, sectNameProblem, suggestSectName } from '../../systems/ownSect';
 import { elderViews } from '../../systems/sectElders';
+import { recruitViews, sectMembers } from '../../systems/sectRecruit';
 
-export function OwnSectSection({ state, content, onFound, onDecide, onBuild, onDonate, onElder }: {
+export function OwnSectSection({ state, content, onFound, onDecide, onBuild, onDonate, onElder, onRecruit }: {
   state: GameState;
   content: Content;
   onFound: (name: string, rules: string[]) => void;
@@ -16,6 +17,8 @@ export function OwnSectSection({ state, content, onFound, onDecide, onBuild, onD
   onDonate: () => void;
   /** Task 5c.7: reward a named elder. */
   onElder: (npcId: string) => void;
+  /** Task 5c.9: invite an acquaintance into the sect. */
+  onRecruit: (npcId: string) => void;
 }) {
   const [salt, setSalt] = useState(0);
   const [name, setName] = useState(() => suggestSectName(state, content));
@@ -38,6 +41,20 @@ export function OwnSectSection({ state, content, onFound, onDecide, onBuild, onD
                 <div class="craft-head"><b>{v.npc.name}</b><span class="muted">thiện cảm {v.npc.affinity}</span></div>
                 <p class="profile-note">{v.npc.age} tuổi · {content.cultivation.realms.realms.find((r) => r.id === v.npc.realm)?.name}</p>
                 <button class="chip-btn" disabled={!!v.blocked} onClick={() => onElder(v.npc.id)}>Ban thưởng · {content.balance.founding.elders.rewardCost} linh thạch</button>
+                {v.blocked && <span class="craft-note">{v.blocked}</span>}
+              </div>
+            ))}
+          </div>
+        )}
+        {recruitViews(state, content).length > 0 && (
+          <div class="crafts">
+            <h3 class="panel-sub">Chiêu mộ người quen</h3>
+            <p class="profile-note">Mời cố nhân gia nhập {own.name}, lễ vật {content.balance.founding.recruit.giftCost} linh thạch từ kho. Đã có {sectMembers(state).length} người quen nhập môn.</p>
+            {recruitViews(state, content).map((v) => (
+              <div class="career-row" key={v.npc.id}>
+                <div class="craft-head"><b>{v.npc.name}</b><span class="muted">{v.npc.role} · thiện cảm {v.npc.affinity}</span></div>
+                <p class="profile-note">{v.npc.age} tuổi · {content.cultivation.realms.realms.find((r) => r.id === v.npc.realm)?.name}</p>
+                <button class="chip-btn" disabled={!!v.blocked} onClick={() => onRecruit(v.npc.id)}>Mời nhập môn · khả năng {Math.round(v.chance * 100)}%</button>
                 {v.blocked && <span class="craft-note">{v.blocked}</span>}
               </div>
             ))}
