@@ -120,7 +120,7 @@
     }
   },
   "majorBreakthrough": {
-    "openRealms": ["truc_co"],
+    "openRealms": ["truc_co", "kim_dan"],
     "failureWeights": { "lose": 40, "injury": 35, "lifespan": 15, "deviation": 7, "death": 3 },
     "deviationHealth": -30,
     "deviationDaoHeart": -10,
@@ -307,6 +307,94 @@
     "bargainWinMul": 0.85,
     "bargainLoseMul": 1.1,
     "maxDiscount": 0.3
+  },
+  "disciples": {
+    "maxByRealm": { "truc_co": 1, "kim_dan": 3, "nguyen_anh": 5, "hoa_than": 9 },
+    "age": [12, 16],
+    "aptitude": [30, 85],
+    "affinity": 60,
+    "teachProgress": 30,
+    "teachAffinity": 5,
+    "teachFavor": 5,
+    "teacherProgress": 3
+  },
+  "crafting": {
+    "base": 0.6,
+    "perLevel": 0.02,
+    "perComprehension": 0.005,
+    "min": 0.1,
+    "max": 0.95,
+    "xpSuccess": 3,
+    "xpFail": 1,
+    "failProduct": { "alchemy": "phe_dan" }
+  },
+  "heartDemon": {
+    "realms": ["kim_dan", "nguyen_anh", "hoa_than"],
+    "seeds": 1,
+    "daoHeartBelow": 30,
+    "karmaAtMost": -50,
+    "rounds": 3,
+    "toPass": 2,
+    "difficulty": 50,
+    "perSeed": 5,
+    "passClears": 2,
+    "passBonusPct": 5,
+    "failDaoHeart": -5,
+    "faceDaoHeart": 2
+  },
+  "tribulation": {
+    "realms": {
+      "kim_dan": { "strikes": 3, "power": 15 },
+      "nguyen_anh": { "strikes": 6, "power": 14 },
+      "hoa_than": { "strikes": 9, "power": 13 }
+    },
+    "variance": [0.7, 1.3],
+    "finalMul": 1.5,
+    "physiquePerPoint": 0.005,
+    "elementReduce": { "loi": 0.1 },
+    "maxReduce": 0.8,
+    "survivePhysique": 3
+  },
+  "ghost": {
+    "causeChance": { "old_age": 0, "illness": 0.05, "breakthrough": 0.1, "ordeal": 0.1, "combat": 0.25, "tribulation": 0.1 },
+    "luckPerPoint": 0.004,
+    "maxChance": 0.6,
+    "realm": "luyen_khi",
+    "technique": "bat_tu_u_minh_luc",
+    "health": 60,
+    "lifespanYears": 150
+  },
+  "coreForming": {
+    "realm": "kim_dan",
+    "rounds": 3,
+    "offered": 3,
+    "variantChance": 0.15,
+    "startPurity": 20,
+    "comprehensionPerPoint": 0.3,
+    "foundationBonus": { "ha": -8, "trung": 0, "thuong": 8, "hoan_my": 15 },
+    "baseGain": 6,
+    "rootMatch": 10,
+    "flow": 10,
+    "techniqueMatch": 4,
+    "clashPurity": -10,
+    "crackLimit": 2,
+    "generates": { "moc": "hoa", "hoa": "tho", "tho": "kim", "kim": "thuy", "thuy": "moc" },
+    "purityChancePerPoint": 0.3,
+    "gradeThresholds": [95, 88, 80, 70, 60, 50, 40, 30],
+    "gradeSpeed": [1.3, 1.25, 1.2, 1.1, 1.0, 0.95, 0.9, 0.85, 0.8],
+    "fateTier": ["hoan_my", "hoan_my", "thuong", "thuong", "trung", "trung", "ha", "ha", "ha"]
+  },
+  "seclusion": {
+    "speedMul": 1.5,
+    "options": {
+      "luyen_khi": [1, 3, 5],
+      "truc_co": [1, 3, 5, 10],
+      "kim_dan": [3, 10, 30],
+      "nguyen_anh": [10, 30, 100],
+      "hoa_than": [10, 30, 100]
+    },
+    "lifespanStop": 5,
+    "lonelyAffinity": -1
   },
   "romance": {
     "minAge": 18,

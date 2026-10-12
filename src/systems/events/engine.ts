@@ -284,6 +284,11 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
     if (broke.text) text = `${text} ${broke.text}`;
   }
   if (fx.pathAffinity) next = addPathAffinity(next, fx.pathAffinity);
+  // Task 4.1: the door closes now; the UI runs the years (runSeclusion).
+  if (fx.seclusionYears && next.cult.realm !== 'pham_nhan') {
+    const age = next.character.age;
+    next = { ...next, seclusion: { until: age + fx.seclusionYears, since: age, fixed: true } };
+  }
   // Task 3.9.
   if (fx.lifespanYears) next = { ...next, cult: { ...next.cult, lifespan: Math.max(next.character.age + 1, next.cult.lifespan + fx.lifespanYears) } };
   if (fx.heartDemon) {

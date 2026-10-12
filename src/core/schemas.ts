@@ -183,6 +183,8 @@ export const EffectsSchema = z
       })
       .strict()
       .optional(),
+    /** Task 4.1: close the door for this many years right after the event. */
+    seclusionYears: z.number().int().min(1).optional(),
     /** Task 3.9: years of lifespan (burning blood: −10). */
     lifespanYears: z.number().int().optional(),
     /** Task 3.9: tâm ma seeds (counted for the heart-demon system to come). */
@@ -224,7 +226,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'heartDemon', 'relativeDies'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'heartDemon', 'relativeDies', 'seclusionYears'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -420,6 +422,8 @@ const ADD_HOOK = new RegExp(
       'silverPerYear', 'deathChancePerYear', 'illnessChancePct', 'tribulationPct',
       // Fate talents (fate-talents.md, task 2.7).
       'artifactPct', 'tribulationPower',
+      // Task 4.5: share of each thiên lôi a carried array or artifact takes; task 4.12: chance to linger as a ghost.
+      'tribulationDefense', 'continueAfterDeath',
       // Special bodies (realms-roots-paths.md B5); takes effect from task 2.3.
       'lineage\\.(tien|ma|phat|quy|yeu)\\.cultivationSpeed',
     ].join('|') +
@@ -639,6 +643,133 @@ export const BalanceSchema = z
         revealChance: probability,
         /** Share of a dead NPC's grudge their kin inherits. */
         inheritShare: probability,
+      })
+      .strict(),
+    /** Task 4.9: taking disciples. */
+    disciples: z
+      .object({
+        /** Realm → most disciples at once (realms not listed take none). */
+        maxByRealm: z.record(id, z.number().int().min(0)),
+        /** A new disciple's age and aptitude ranges, and starting affinity. */
+        age: z.tuple([z.number().int(), z.number().int()]),
+        aptitude: z.tuple([z.number().int(), z.number().int()]),
+        affinity: z.number(),
+        /** Teaching once a year: the disciple's progress (+% of a stage × (0.5 + teacher's comprehension / 100)), affinity, favor; the teacher's own progress. */
+        teachProgress: z.number(),
+        teachAffinity: z.number(),
+        teachFavor: z.number(),
+        teacherProgress: z.number(),
+      })
+      .strict(),
+    /** Task 4.7: making pills and artifacts. */
+    crafting: z
+      .object({
+        /** Chance = base + (level − recipe.minLevel) × perLevel + (comprehension − 50) × perComprehension + craft.<id>.success hooks. */
+        base: z.number(),
+        perLevel: z.number(),
+        perComprehension: z.number(),
+        min: probability,
+        max: probability,
+        /** Craft levels gained by a success and by a failure. */
+        xpSuccess: z.number().int().min(0),
+        xpFail: z.number().int().min(0),
+        /** What a failed attempt leaves in the furnace, by craft (Phế Đan for alchemy). */
+        failProduct: z.record(id, id),
+      })
+      .strict(),
+    /** Task 4.4: tâm ma chiến before a big breakthrough into these realms. */
+    heartDemon: z
+      .object({
+        realms: ids,
+        /** It comes when tâm ma seeds ≥ seeds, or đạo tâm < daoHeartBelow, or karma ≤ karmaAtMost. */
+        seeds: z.number().int().min(1),
+        daoHeartBelow: z.number(),
+        karmaAtMost: z.number(),
+        rounds: z.number().int().min(1),
+        /** Rounds won needed to pass. */
+        toPass: z.number().int().min(1),
+        /** Check difficulty: base + seeds × perSeed; chant gets heartDemonResist × 100 as bonus points. */
+        difficulty: z.number(),
+        perSeed: z.number(),
+        /** Passing: seeds cleared by this many, chance bonus; failing: đạo tâm lost (plus a failed breakthrough). */
+        passClears: z.number().int().min(0),
+        passBonusPct: z.number(),
+        failDaoHeart: z.number(),
+        /** Facing a wrong owned up to: đạo tâm gained on a win. */
+        faceDaoHeart: z.number(),
+      })
+      .strict(),
+    /** Task 4.5: thiên kiếp when a big breakthrough succeeds into these realms. */
+    tribulation: z
+      .object({
+        /** Realm → number of thiên lôi and the health each takes before any defense. */
+        realms: z.record(id, z.object({ strikes: z.number().int().min(1), power: z.number().min(0) }).strict()),
+        /** Each strike's power × a random factor in this range; the last strike × finalMul. */
+        variance: z.tuple([z.number().positive(), z.number().positive()]),
+        finalMul: z.number().min(1),
+        /** Reduction: injuryReduce + tribulationDefense hooks + (physique − 50) × physiquePerPoint + root element bonuses, capped at maxReduce. */
+        physiquePerPoint: z.number(),
+        elementReduce: z.record(id, z.number()),
+        maxReduce: z.number().min(0).max(1),
+        /** Thân thể tôi luyện: physique gained by surviving. */
+        survivePhysique: z.number().int(),
+      })
+      .strict(),
+    /** Task 4.12: quỷ tu after death (mortal-path.md 2.6). */
+    ghost: z
+      .object({
+        /** Chance of a lingering obsession by cause of death, + (luck − 50) × luckPerPoint + continueAfterDeath hooks. */
+        causeChance: z.record(z.enum(['old_age', 'illness', 'breakthrough', 'ordeal', 'combat', 'tribulation']), probability),
+        luckPerPoint: z.number(),
+        maxChance: probability,
+        /** The ghost's realm (at least), its technique, health on rising and years of afterlife. */
+        realm: id,
+        technique: id,
+        health: z.number().int().min(1).max(100),
+        lifespanYears: z.number().int().min(1),
+      })
+      .strict(),
+    /** Task 4.2: kết đan, three rounds of placing qi strands into the core. */
+    coreForming: z
+      .object({
+        /** The realm entered through kết đan. */
+        realm: id,
+        rounds: z.number().int().min(1),
+        /** Strands offered each round, and the chance one of them is a variant element. */
+        offered: z.number().int().min(1),
+        variantChance: probability,
+        /** Starting purity: base + (comprehension − 50) × perPoint + the Trúc Cơ foundation's bonus. */
+        startPurity: z.number(),
+        comprehensionPerPoint: z.number(),
+        foundationBonus: z.record(id, z.number()),
+        /** Purity per strand: always, matching the root, flowing from the last (generates), matching the technique. */
+        baseGain: z.number(),
+        rootMatch: z.number(),
+        flow: z.number(),
+        techniqueMatch: z.number(),
+        /** Clashing with the last strand (one beats the other): purity lost and a crack; this many cracks break the core. */
+        clashPurity: z.number(),
+        crackLimit: z.number().int().min(1),
+        /** Ngũ hành tương sinh: element → the element it feeds. */
+        generates: z.record(id, id),
+        /** Breakthrough chance + (purity − 50) × this. */
+        purityChancePerPoint: z.number(),
+        /** Minimum purity for grades 1..8 (else 9); speed × and fate-talent tier (a foundation id) for grades 1..9. */
+        gradeThresholds: z.array(z.number()).length(8),
+        gradeSpeed: z.array(z.number().positive()).length(9),
+        fateTier: z.array(id).length(9),
+      })
+      .strict(),
+    /** Task 4.1: bế quan (PLAN G.1: ×1.5 speed, no ordinary events). */
+    seclusion: z
+      .object({
+        speedMul: z.number().min(1),
+        /** Year counts offered at each realm (higher realms close the door for longer). */
+        options: z.record(id, z.array(z.number().int().min(1)).min(1)),
+        /** Come out early when this few years of lifespan are left. */
+        lifespanStop: z.number().int().min(0),
+        /** Lover and đạo lữ grow distant: affinity change per year in seclusion. */
+        lonelyAffinity: z.number(),
       })
       .strict(),
     /** Task 3.6: romance (thiện cảm, theo đuổi, tặng quà, tỏ tình). */
@@ -1126,7 +1257,12 @@ export const LifeTextsSchema = z
     deathOrdeal: lines,
     /** Task 3.3: killed in a fight. */
     deathCombat: lines,
+    /** Task 4.5: struck down by thiên kiếp. */
+    deathTribulation: lines,
     deathIllness: lines,
+    /** Task 4.12 quỷ tu: the offer on the death screen, and the line when the soul rises. */
+    ghostOffer: z.string().min(1),
+    ghostRise: z.string().min(1),
     epitaph: z.object({ good: lines, bad: lines, plain: lines }).strict(),
   })
   .strict();
@@ -1162,10 +1298,31 @@ export const RealmsFileSchema = z
         learnTechnique: z.string().min(1),
         switchTechnique: z.string().min(1),
         techniqueCap: z.string().min(1),
+    /** Task 4.5 thiên kiếp. {count} = strikes, {n} = this strike, {damage} = health lost. */
+    tribulationStart: z.string().min(1),
+    tribulationStrike: z.array(z.string().min(1)).min(1),
+    tribulationJade: z.string().min(1),
+    tribulationPassed: z.string().min(1),
+    /** Task 4.1. {years}, {realm}, {stage}. */
+    seclusionStart: z.string().min(1),
+    seclusionYear: z.string().min(1),
+    seclusionEnd: z.string().min(1),
+    seclusionPeak: z.string().min(1),
+    seclusionLifespan: z.string().min(1),
+    /** Task 4.2 kết đan. {grade} = "Tam phẩm", {element} = an element name. */
+    coreStart: z.string().min(1),
+    coreRoot: z.string().min(1),
+    coreFlow: z.string().min(1),
+    coreClash: z.string().min(1),
+    corePlain: z.string().min(1),
+    coreSuccess: z.string().min(1),
+    coreShattered: z.string().min(1),
       })
       .strict(),
     /** Display names for technique grades and lineages (task 2.4). */
-    gradeNames: z.record(id, z.string().min(1)),
+    /** Task 4.2: Kim Đan grade names, 1..9. */
+  coreGradeNames: z.array(z.string().min(1)).length(9),
+  gradeNames: z.record(id, z.string().min(1)),
     lineageNames: z.record(id, z.string().min(1)),
     /** Đạo cơ grades after breaking into Trúc Cơ, worst to best (task 2.6). */
     foundations: z.array(z.object({ id, name: z.string().min(1), description: z.string().min(1) }).strict()).min(1),
@@ -1687,3 +1844,60 @@ export const RomanceFileSchema = z
   })
   .strict();
 export type RomanceFile = z.infer<typeof RomanceFileSchema>;
+
+/** content/heart-demon.json (task 4.4): tâm ma illusions built from the life's own past. {npc}, {deceased}. */
+export const HeartDemonFileSchema = z
+  .object({
+    intro: z.string().min(1),
+    illusions: z
+      .object({
+        grudge: z.string().min(1),
+        killed: z.string().min(1),
+        deceased: z.string().min(1),
+        ex: z.string().min(1),
+        fear: z.array(z.string().min(1)).min(1),
+      })
+      .strict(),
+    /** Flag → the dark deed it recalls. */
+    deeds: z.record(id, z.string().min(1)),
+    options: z.object({ face: z.string().min(1), slash: z.string().min(1), chant: z.string().min(1) }).strict(),
+    results: z.object({ win: z.string().min(1), lose: z.string().min(1), pass: z.string().min(1), fail: z.string().min(1) }).strict(),
+  })
+  .strict();
+export type HeartDemonFile = z.infer<typeof HeartDemonFileSchema>;
+
+/** content/recipes.json (task 4.7): Luyện đan and Luyện khí recipes. {product}, {count}. */
+export const RecipeFileSchema = z
+  .object({
+    texts: z.object({ success: z.string().min(1), fail: z.string().min(1), failAlchemy: z.string().min(1) }).strict(),
+    recipes: z.array(
+      z
+        .object({
+          id,
+          craft: z.enum(['alchemy', 'forging']),
+          product: id,
+          count: z.number().int().min(1).default(1),
+          /** Craft level needed. */
+          minLevel: z.number().int().min(0).max(100),
+          /** Item id → how many are used up. */
+          materials: z.record(id, z.number().int().min(1)),
+          cost: z.object({ silver: z.number().int().min(0).optional(), spiritStones: z.number().int().min(0).optional() }).strict(),
+          /** A mortal craftsman can make it (phàm dược). */
+          mortal: z.boolean().default(false),
+        })
+        .strict(),
+    ),
+  })
+  .strict();
+export type RecipeFile = z.infer<typeof RecipeFileSchema>;
+export type Recipe = RecipeFile['recipes'][number];
+
+/** content/disciples.json (task 4.9): texts for taking and teaching disciples. {npc}, {name}. */
+export const DisciplesFileSchema = z
+  .object({
+    role: z.string().min(1),
+    recruit: z.string().min(1),
+    teach: z.array(z.string().min(1)).min(1),
+  })
+  .strict();
+export type DisciplesFile = z.infer<typeof DisciplesFileSchema>;

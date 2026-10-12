@@ -16,7 +16,9 @@ export function talentById(content: Content, id: string): FateTalent | undefined
 /** Rarity weights for this life: the foundation's row, shifted by khí vận. */
 export function fateRarityWeights(state: GameState, content: Content): Record<string, number> {
   const cfg = content.balance.fate;
-  const row = { ...(cfg.rarityByFoundation[state.cult.foundation ?? cfg.defaultFoundation] ?? cfg.rarityByFoundation[cfg.defaultFoundation]) };
+  // From Kim Đan on, the core's grade picks the row (task 4.2); in Trúc Cơ the foundation does.
+  const tier = state.cult.coreGrade !== null ? content.balance.coreForming.fateTier[state.cult.coreGrade - 1] : state.cult.foundation;
+  const row = { ...(cfg.rarityByFoundation[tier ?? cfg.defaultFoundation] ?? cfg.rarityByFoundation[cfg.defaultFoundation]) };
   const order = Object.keys(row).filter((k) => row[k] > 0);
   const steps = Math.max(0, Math.floor((state.aptitudes.luck - 50) / 10));
   const shift = Math.min(row[order[0]] ?? 0, steps * cfg.luckShiftPer10);

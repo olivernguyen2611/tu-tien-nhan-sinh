@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -42,6 +42,9 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'npc-traits.json') return NpcTraitsFileSchema;
     if (rest === 'rankings.json') return RankingTextsSchema;
     if (rest === 'romance.json') return RomanceFileSchema;
+    if (rest === 'heart-demon.json') return HeartDemonFileSchema;
+    if (rest === 'recipes.json') return RecipeFileSchema;
+    if (rest === 'disciples.json') return DisciplesFileSchema;
     return null;
   }
   // Belongs to one world.
@@ -73,6 +76,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   let techniques: Technique[] | null = null;
   let fateIds: string[] | null = null;
   let itemIds: string[] | null = null;
+  let recipeFile: { file: string; data: RecipeFile } | null = null;
   let martialFile: MartialFile | null = null;
   let careerIds: string[] | null = null;
   const sectFiles: { file: string; sects: Sect[] }[] = [];
@@ -160,12 +164,26 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === LineageFileSchema) problems.push(...duplicates(file, 'đạo thống', parsed.data as { id: string }[]));
     if (schema === MartialFileSchema) martialFile = parsed.data as MartialFile;
     if (schema === ItemFileSchema) itemIds = (parsed.data as { id: string }[]).map((x) => x.id);
+    if (schema === RecipeFileSchema) recipeFile = { file, data: parsed.data as RecipeFile };
     if (schema === CareersFileSchema) careerIds = (parsed.data as { careers: { id: string }[] }).careers.map((c) => c.id);
     if (schema === CareersFileSchema) problems.push(...duplicates(file, 'đường đời', (parsed.data as { careers: { id: string }[] }).careers));
     if (schema === DifficultyFileSchema) difficultyIds = (parsed.data as { id: string }[]).map((d) => d.id);
   }
 
   problems.push(...checkCultivationTables(parsedShared));
+  // Task 4.7: recipes use and make real items.
+  if (recipeFile) {
+    const { file, data } = recipeFile;
+    problems.push(...duplicates(file, 'công thức', data.recipes));
+    for (const r of data.recipes) {
+      for (const it of [r.product, ...Object.keys(r.materials)]) {
+        if (itemIds && !itemIds.includes(it)) problems.push({ file, level: 'error', message: `công thức "${r.id}": vật phẩm không tồn tại "${it}"` });
+      }
+    }
+    for (const it of Object.values(parsedShared.balance?.crafting.failProduct ?? {})) {
+      if (itemIds && !itemIds.includes(it)) problems.push({ file: 'config/balance.json', level: 'error', message: `crafting.failProduct: vật phẩm không tồn tại "${it}"` });
+    }
+  }
   if (difficultyIds && parsedShared.balance) {
     const b = parsedShared.balance;
     problems.push(...sameKeys('config/balance.json', 'difficulty', difficultyIds, Object.keys(b.difficulty)));
@@ -374,12 +392,28 @@ function checkCultivationTables(t: { balance?: Balance; realms?: RealmsFile; roo
       for (const r of mb.openRealms) {
         if (!realmIds.includes(r)) out.push({ file: bal, level: 'error', message: `majorBreakthrough.openRealms: cảnh giới không tồn tại "${r}"` });
       }
+      for (const r of Object.keys(t.balance.disciples.maxByRealm)) {
+        if (!realmIds.includes(r)) out.push({ file: bal, level: 'error', message: `disciples.maxByRealm: cảnh giới không tồn tại "${r}"` });
+      }
+      for (const r of Object.keys(t.balance.tribulation.realms)) {
+        if (!realmIds.includes(r)) out.push({ file: bal, level: 'error', message: `tribulation.realms: cảnh giới không tồn tại "${r}"` });
+      }
+      if (!realmIds.includes(t.balance.ghost.realm)) out.push({ file: bal, level: 'error', message: `ghost.realm: cảnh giới không tồn tại "${t.balance.ghost.realm}"` });
+      // Task 4.2: kết đan leads into a real realm; its fate tiers are foundation grades.
+      const cf = t.balance.coreForming;
+      if (!realmIds.includes(cf.realm)) out.push({ file: bal, level: 'error', message: `coreForming.realm: cảnh giới không tồn tại "${cf.realm}"` });
+      for (const g of [...cf.fateTier, ...Object.keys(cf.foundationBonus)]) {
+        if (!grades.includes(g)) out.push({ file: bal, level: 'error', message: `coreForming: phẩm đạo cơ không tồn tại "${g}"` });
+      }
     }
   }
   if (t.roots) {
     const f = 'roots.json';
     out.push(...duplicates(f, 'linh căn', t.roots.grades), ...duplicates(f, 'hệ', t.roots.elements), ...duplicates(f, 'thể chất', t.roots.bodies));
     const elements = new Set(t.roots.elements.map((e) => e.id));
+    for (const [a, b] of Object.entries(t.balance?.coreForming.generates ?? {})) {
+      if (!elements.has(a) || !elements.has(b)) out.push({ file: bal, level: 'error', message: `coreForming.generates: hệ không tồn tại "${a}" → "${b}"` });
+    }
     for (const e of t.roots.elements) {
       for (const b of e.beats) {
         if (!elements.has(b)) out.push({ file: f, level: 'error', message: `hệ "${e.id}" khắc hệ không tồn tại "${b}"` });
@@ -447,6 +481,8 @@ function checkTechniquesAndSects(
     if (t.balance) {
       const tb = t.balance.techniques;
       if (!techniques.some((x) => x.id === tb.default)) out.push({ file: bal, level: 'error', message: `techniques.default "${tb.default}" không có trong techniques.json` });
+      const ghostTech = t.balance.ghost.technique;
+      if (!techniques.some((x) => x.id === ghostTech)) out.push({ file: bal, level: 'error', message: `ghost.technique "${ghostTech}" không có trong techniques.json` });
       for (const g of ['hoang', 'huyen', 'dia', 'thien']) {
         if (tb.gradeMul[g] === undefined) out.push({ file: bal, level: 'error', message: `techniques.gradeMul thiếu phẩm "${g}"` });
       }

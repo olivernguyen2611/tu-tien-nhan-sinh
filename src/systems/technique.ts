@@ -59,8 +59,10 @@ const usableRoot = (state: GameState, content: Content) =>
 /** Why this technique cannot be learned now, or null. */
 export function learnBlocked(state: GameState, content: Content, tech: Technique): string | null {
   const r = tech.requires;
-  if (r.ghostOnly) return 'Chỉ quỷ tu mới đọc được.';
-  if (!usableRoot(state, content) && !r.rootless) return 'Không có linh căn thì không tu được công pháp này.';
+  // Quỷ tu (task 4.12) read the ghost-only method and need no root: they cultivate on âm khí.
+  const ghost = !!state.flags.quy_tu;
+  if (r.ghostOnly && !ghost) return 'Chỉ quỷ tu mới đọc được.';
+  if (!usableRoot(state, content) && !r.rootless && !ghost) return 'Không có linh căn thì không tu được công pháp này.';
   if (r.minDaoHeart !== undefined && state.aptitudes.daoHeart < r.minDaoHeart) return `Cần Đạo tâm ${r.minDaoHeart}.`;
   if (r.minRootElements !== undefined && (state.cult.root?.elements.length ?? 0) < r.minRootElements) return `Cần linh căn từ ${r.minRootElements} hệ trở lên.`;
   return null;

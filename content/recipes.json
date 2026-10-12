@@ -1,0 +1,156 @@
+{
+  "texts": {
+    "success": "Ngươi khai lò luyện {product}. Lửa tắt, trong lò có {count} {product}.",
+    "fail": "Lửa lò bùng sai lúc, nguyên liệu cháy thành tro. Luyện {product} thất bại.",
+    "failAlchemy": "Đan thành mà không thành: trong lò chỉ có một viên Phế Đan, đen như than."
+  },
+  "recipes": [
+    {
+      "id": "bo_khi_tan",
+      "craft": "alchemy",
+      "product": "bo_khi_tan",
+      "count": 1,
+      "minLevel": 0,
+      "materials": {},
+      "cost": {
+        "silver": 15
+      },
+      "mortal": true
+    },
+    {
+      "id": "hoi_xuan_dan",
+      "craft": "alchemy",
+      "product": "hoi_xuan_dan",
+      "count": 1,
+      "minLevel": 10,
+      "materials": {
+        "linh_thao_tram_nam": 1
+      },
+      "cost": {
+        "spiritStones": 5
+      }
+    },
+    {
+      "id": "tu_khi_dan",
+      "craft": "alchemy",
+      "product": "tu_khi_dan",
+      "count": 2,
+      "minLevel": 15,
+      "materials": {
+        "linh_thao_tram_nam": 1
+      },
+      "cost": {
+        "spiritStones": 3
+      }
+    },
+    {
+      "id": "thanh_tam_dan",
+      "craft": "alchemy",
+      "product": "thanh_tam_dan",
+      "count": 1,
+      "minLevel": 25,
+      "materials": {
+        "linh_thao_tram_nam": 1
+      },
+      "cost": {
+        "spiritStones": 10
+      }
+    },
+    {
+      "id": "pha_chuong_dan",
+      "craft": "alchemy",
+      "product": "pha_chuong_dan",
+      "count": 1,
+      "minLevel": 35,
+      "materials": {
+        "linh_thao_tram_nam": 1,
+        "noi_dan_1": 1
+      },
+      "cost": {
+        "spiritStones": 15
+      }
+    },
+    {
+      "id": "truc_co_dan",
+      "craft": "alchemy",
+      "product": "truc_co_dan",
+      "count": 1,
+      "minLevel": 50,
+      "materials": {
+        "linh_chi_ngan_nam": 1,
+        "noi_dan_2": 1
+      },
+      "cost": {
+        "spiritStones": 50
+      }
+    },
+    {
+      "id": "dien_tho_dan",
+      "craft": "alchemy",
+      "product": "dien_tho_dan",
+      "count": 1,
+      "minLevel": 70,
+      "materials": {
+        "linh_chi_ngan_nam": 1,
+        "noi_dan_2": 1
+      },
+      "cost": {
+        "spiritStones": 80
+      }
+    },
+    {
+      "id": "ket_kim_dan",
+      "craft": "alchemy",
+      "product": "ket_kim_dan",
+      "count": 1,
+      "minLevel": 80,
+      "materials": {
+        "linh_chi_ngan_nam": 1,
+        "noi_dan_3": 1
+      },
+      "cost": {
+        "spiritStones": 150
+      }
+    },
+    {
+      "id": "thanh_phong_kiem",
+      "craft": "forging",
+      "product": "thanh_phong_kiem",
+      "count": 1,
+      "minLevel": 20,
+      "materials": {
+        "linh_tinh_kim": 2
+      },
+      "cost": {
+        "spiritStones": 20
+      }
+    },
+    {
+      "id": "huyen_thiet_giap",
+      "craft": "forging",
+      "product": "huyen_thiet_giap",
+      "count": 1,
+      "minLevel": 30,
+      "materials": {
+        "linh_tinh_tho": 2
+      },
+      "cost": {
+        "spiritStones": 30
+      }
+    },
+    {
+      "id": "ho_than_ngoc_boi",
+      "craft": "forging",
+      "product": "ho_than_ngoc_boi",
+      "count": 1,
+      "minLevel": 60,
+      "materials": {
+        "linh_tinh_thuy": 1,
+        "loi_tinh": 1
+      },
+      "cost": {
+        "spiritStones": 60
+      }
+    }
+  ]
+}

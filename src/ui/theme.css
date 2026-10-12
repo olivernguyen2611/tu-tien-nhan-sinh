@@ -382,6 +382,7 @@ button { font: inherit; color: inherit; }
 .choice:hover { border-color: var(--jade); }
 .choice.hidden-choice { border-color: var(--rare); color: var(--rare); font-weight: 600; }
 .choice .hint { display: block; font-size: 0.75rem; color: var(--muted); font-weight: 400; }
+.choice .hint.bad { color: var(--bad); }
 @keyframes fade { from { opacity: 0; } }
 @keyframes rise { from { transform: translateY(16px); opacity: 0; } }
 
@@ -757,3 +758,14 @@ button { font: inherit; color: inherit; }
 .ranking .rank-no { font-weight: 700; text-align: right; }
 .ranking .rank-name { min-width: 0; overflow-wrap: anywhere; }
 .ranking .rank-sub { display: block; font-size: 0.9em; }
+
+/* Quỷ tu offer on the death screen (task 4.12) */
+.ghost-offer { margin: 16px 0; padding: 12px; border: 1px dashed var(--rare); border-radius: var(--radius); }
+.ghost-offer .btn-primary { width: 100%; }
+.warn-note { color: var(--bad); }
+
+/* Luyện chế (task 4.7) */
+.recipes { grid-column: 1 / -1; margin-top: 4px; }
+.recipes summary { cursor: pointer; font-size: 0.85rem; color: var(--jade); }
+.recipe { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 6px 0; }
+.disciples { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 0; }

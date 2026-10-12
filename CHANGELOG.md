@@ -2,6 +2,133 @@
 
 ## [Chưa phát hành]
 
+### Task 4.9 — Thu đồ đệ (cơ bản) (2026-10-12)
+- **Thu đồ đệ** (tab Người quen):
+  - Từ Trúc Cơ, mỗi năm thu được một đồ đệ.
+  - Số đồ đệ tối đa theo cảnh giới: Trúc Cơ 1, Kim Đan 3, Nguyên Anh 5, Hóa Thần 9 (`balance.disciples`).
+  - Đồ đệ là NPC 12–16 tuổi, có linh căn, tư chất 30–85, bái sư xong vào Luyện Khí. Đồ đệ tự tu luyện, già, chết theo hệ NPC 3.4.
+  - Đồ đệ cũng có tính cách bề ngoài/bản chất, nên vẫn có thể lộ bộ mặt thật.
+- **Chỉ điểm**, mỗi đồ đệ mỗi năm một lần:
+  - Đồ đệ được +30% thanh tu vi, nhân với (0.5 + Ngộ tính của thầy / 100).
+  - Thiện cảm +5, ân +5. Ân đủ nhiều thì đồ đệ có thể tới báo ân (sự kiện 3.4).
+  - Người thầy được +3% tu vi ("dạy học tương trưởng").
+- Câu văn ở `content/disciples.json`.
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "Thu đồ đệ (cơ bản)"): mọi con số và câu văn trên.
+- **Chưa làm**: đồ đệ giúp đánh nhau, truyền công pháp, đồ đệ phản sư; để GĐ 5 (tông phái và truyền thừa).
+
+### Task 4.7 — Luyện đan và luyện khí (2026-10-12)
+- Mục Bách nghệ có thêm **Luyện chế** dưới Luyện Đan và Luyện Khí. Luyện một mẻ chiếm lượt luyện nghề của năm đó (như Luyện tập).
+- **Tỉ lệ thành công** = 60% + 2% mỗi cấp trên mức công thức yêu cầu + 0.5% mỗi điểm Ngộ tính trên 50 + móc `craft.<nghề>.success` (Thủ Ổn Tâm Tĩnh, Đan Hỏa Thuần Thanh…). Trong khoảng 10–95%.
+  - Móc `craft.<nghề>.yield` cho thêm sản phẩm.
+- **Thành bại**:
+  - Thành công: cấp nghề +3.
+  - Thất bại: cấp nghề +1, nguyên liệu mất. Lò đan hỏng còn lại một **Phế Đan**, đúng ghi chú đã duyệt của Đ15.
+- **Phàm nhân** chỉ luyện được phàm dược (Bổ Khí Tán).
+- **Công thức** (`content/recipes.json`, số liệu ở `balance.crafting`):
+  - Luyện đan: Bổ Khí Tán, Hồi Xuân Đan, Tụ Khí Đan ×2, Thanh Tâm Đan, Phá Chướng Đan, Trúc Cơ Đan, Diên Thọ Đan, Kết Kim Đan. Dùng linh thảo trăm năm, linh chi nghìn năm, nội đan các cấp, và linh thạch.
+  - Luyện khí: Thanh Phong Kiếm (linh tinh Kim), Huyền Thiết Giáp (linh tinh Thổ), Hộ Thân Ngọc Bội (linh tinh Thủy + Lôi Tinh).
+  - Validator kiểm tra mọi nguyên liệu và sản phẩm đều có trong `items.json`.
+- **Bổ sung kỹ thuật, cần chủ dự án duyệt**: bản duyệt `items.md` chỉ ghi vật phẩm nào là nguyên liệu, chưa có công thức. Toàn bộ công thức, cấp yêu cầu và giá là bổ sung, chỉ dùng vật phẩm đã duyệt. Muốn đổi chỉ cần sửa `recipes.json`.
+- **Chưa làm**: sửa Pháp bảo cổ (V4) vì chưa có món "pháp bảo cổ đã sửa"; các nghề khác để GĐ 7 như PLAN.
+
+### Task 4.4 — Tâm ma chiến (2026-10-12)
+- **Khi nào xảy ra**: trước khi đột phá Kim Đan, Nguyên Anh hay Hóa Thần, nếu thuộc một trong ba trường hợp (`balance.heartDemon`):
+  - còn hạt tâm ma (từ các lựa chọn đen tối của 3.9);
+  - Đạo tâm dưới 30;
+  - nhân quả từ −50 trở xuống.
+  - Bảng đột phá báo trước: "Lòng còn vướng bận: trước khi đột phá phải qua tâm ma."
+- **3 ảo cảnh dựng từ chính quá khứ** (`content/heart-demon.json`), lấy theo thứ tự ưu tiên:
+  1. Việc ác đã làm: lô đỉnh, giết người đoạt bảo, làm gián điệp cho U Hà, rời bỏ người cũ.
+  2. Người đã chết dưới tay ngươi (có hậu duệ, tra theo sổ ân oán 3.4).
+  3. Kẻ còn ôm oán.
+  4. Người cũ còn sống.
+  5. Người thân đã mất.
+  - Không đủ thì bù bằng nỗi sợ vô danh.
+- **Mỗi ảo cảnh chọn một cách**:
+  - Đối diện, nhận lỗi: thử Đạo tâm; thắng thì Đạo tâm +2.
+  - Chém tan ảo ảnh: thử Ngộ tính.
+  - Nhắm mắt niệm tâm pháp: thử Đạo tâm, cộng kháng tâm ma của công pháp, thiên phú, trạng thái.
+  - Độ khó 50, mỗi hạt tâm ma +5.
+- **Kết quả**:
+  - Qua 2/3 ảo cảnh: xóa 2 hạt tâm ma, đột phá +5% rồi đi tiếp (Kim Đan thì sang kết đan).
+  - Thua: tâm ma phản phệ, Đạo tâm −5, đột phá thất bại như thường.
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "ảo cảnh dựa trên chính những việc bạn đã làm"): luật chơi và con số trên, cùng toàn bộ câu văn trong `heart-demon.json`. Chủ dự án duyệt hoặc sửa thì chỉ cần sửa file JSON này.
+
+### Task 4.5 — Thiên kiếp (2026-10-12)
+- **Đột phá thành công vào Kim Đan, Nguyên Anh hay Hóa Thần thì phải qua thiên kiếp** trước khi vào cảnh giới mới (`balance.tribulation`):
+  - Kim Đan: 3 đạo lôi, mỗi đạo khoảng 15 sức khỏe.
+  - Nguyên Anh: 6 đạo, khoảng 14 mỗi đạo.
+  - Hóa Thần: 9 đạo, khoảng 13 mỗi đạo.
+  - Mỗi đạo dao động ×0.7–1.3; đạo cuối nặng ×1.5.
+- **Giảm sát thương** (tối đa 80%):
+  - Giáp và pháp bảo hộ thân (`injuryReduce`).
+  - Móc K.6 mới `tribulationDefense` cho trận pháp hoặc pháp bảo chuyên chống kiếp.
+  - Căn cốt trên 50.
+  - Linh căn hệ Lôi giảm 10% (đúng mô tả đã duyệt trong `realms-roots-paths.md`).
+- **Nặng hơn**: các móc đã có `tribulationPct` (Phúc tinh cao chiếu, Ác quán mãn doanh) và `tribulationPower` (Thiên Mệnh Sở Quy +30%).
+- **Hộ Thân Ngọc Bội** vỡ thay ngươi, đỡ cả phần kiếp còn lại (còn 1 sức khỏe).
+- **Kết quả**:
+  - Qua kiếp: thân thể được tôi luyện, Căn cốt +3.
+  - Không qua: chết, nguyên nhân mới "Mất dưới thiên kiếp", có lời kết riêng. Chết vì thiên kiếp có 10% hóa quỷ tu.
+- **Báo trước**: bảng đột phá và popup kết đan đều ghi số đạo lôi, sát thương ước tính và sức khỏe hiện có, để kịp uống đan hồi sức hoặc mặc giáp.
+- **Popup kết đan**: luồng đúng hệ công pháp nay ghi rõ "Hợp công pháp" thay vì "Bình thường".
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "ở các mốc lớn, cần pháp bảo/trận pháp"): mọi con số trên, 6 câu văn thiên kiếp trong `realms.json` và `life-texts.json`.
+- **Chưa có**: trận pháp hay pháp bảo chuyên chống kiếp. Móc `tribulationDefense` đã sẵn, chờ thêm vật phẩm trong file thiết kế.
+
+### Task 4.12 — Quỷ tu (2026-10-12)
+- **Chấp niệm khi chết** (`mortal-path.md` mục 2.6, số liệu ở `balance.ghost`): tùy cách chết mà có cơ hội hồn không tan.
+  - Tử trận 25%; đột phá hoặc thiên địa kỳ vật 10%; bệnh 5%; chết già 0.
+  - Khí vận mỗi điểm trên 50 cộng 0.4%. Móc K.6 mới `continueAfterDeath` cộng thêm. Tối đa 60%.
+  - Mỗi đời một lần. Dùng dòng ngẫu nhiên riêng theo seed.
+- **Màn hình chết** có thêm lựa chọn "Hóa quỷ tu, tu tiếp bằng Quỷ đạo". Chọn thì chơi tiếp:
+  - Ít nhất Luyện Khí.
+  - Tu Bất Tử U Minh Lục (công pháp chỉ quỷ tu đọc được), theo Quỷ đạo.
+  - Không cần linh căn: tu theo Đạo tâm như Phật duyên.
+  - Sức khỏe về 60, thọ nguyên thêm 150 năm.
+- **Cái giá**:
+  - Sức khỏe không hồi phục, cũng không suy theo tuổi; Quỷ đạo làm Sức khỏe −1 mỗi năm.
+  - Người sống sợ hãi: Mị lực −10 khi theo Quỷ đạo (task 3.8).
+- **Chưa làm**: ánh mặt trời gây hại (chưa có hệ ngày/đêm hay nơi chốn).
+- **Bổ sung kỹ thuật** (thiết kế chỉ mô tả bằng lời): mọi tỉ lệ, cảnh giới, sức khỏe, thọ nguyên trên, và hai câu văn trong `life-texts.json`.
+
+### Task 4.2 — Kết đan (phần code, 2026-10-12)
+- **Mở đột phá Kim Đan** (`majorBreakthrough.openRealms`). Đột phá không còn là một lần quay, mà là **mini-game kết đan 3 lượt**. Năm sau phải chờ kết đan xong.
+- **Mỗi lượt** hiện 3 luồng linh khí, thỉnh thoảng có một luồng biến dị (Lôi, Băng, Phong, Ám). Chọn 1 luồng dẫn vào đan:
+  - +6 độ thuần.
+  - Đúng hệ linh căn: thêm +10.
+  - Tương sinh với luồng trước (Mộc→Hỏa→Thổ→Kim→Thủy→Mộc): thêm +10.
+  - Đúng hệ công pháp: thêm +4.
+  - Tương khắc với luồng trước: −10 và đan rạn. Rạn 2 lần thì đan vỡ, tính là đột phá thất bại.
+  - Nút nào cũng hiện trước hiệu quả.
+- **Độ thuần ban đầu** = 20 + (Ngộ tính − 50) × 0.3 + thưởng theo phẩm đạo cơ Trúc Cơ (hạ −8, thượng +8, hoàn mỹ +15).
+- **Kết quả**:
+  - Tỉ lệ thành công = tỉ lệ đột phá thường + (độ thuần − 50) × 0.3.
+  - Thành công thì độ thuần định phẩm, từ Nhất phẩm (≥ 95) tới Cửu phẩm.
+  - Phẩm Kim Đan thay đạo cơ quyết định tốc độ tu từ Kim Đan trở đi (×1.3 tới ×0.8).
+  - Phẩm trên Ngũ phẩm thì thọ thêm 10 năm mỗi phẩm.
+  - Phẩm cũng quyết định độ hiếm của thiên phú Nghịch Thiên Cải Mệnh lần này.
+- **Mô phỏng**: người chơi cẩn thận (Song linh căn, Ngộ tính 60, đạo cơ trung phẩm) thành công khoảng 31%, phẩm thường là Tam hoặc Tứ phẩm. Nhất, Nhị phẩm cần đạo cơ hoàn mỹ và Ngộ tính cao.
+- **Kỹ thuật**: tách phần thành công/thất bại của đột phá đại cảnh giới thành `majorSuccess` / `majorFailure` để kết đan dùng chung. Validator kiểm tra cảnh giới, hệ và phẩm đạo cơ trong `balance.coreForming`.
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "3 lượt xếp linh khí → phẩm 1–9"): toàn bộ luật chơi và con số trên, tên phẩm, và 7 câu nhật ký trong `realms.json`.
+- **Chưa làm**: ✍️ đan văn, chờ file thiết kế của chủ dự án.
+
+### Task 4.1 — Bế quan (2026-10-12)
+- **Bảng Tu luyện có mục Bế quan.** Số năm chọn được theo cảnh giới (`balance.seclusion.options`):
+  - Luyện Khí: 1, 3, 5.
+  - Trúc Cơ: thêm 10.
+  - Kim Đan: 3, 10, 30.
+  - Nguyên Anh và Hóa Thần: 10, 30, 100.
+- **Trong lúc bế quan**:
+  - Tu vi ×1.5 (PLAN G.1).
+  - Không có sự kiện thường; các sự kiện nối chờ tới lúc xuất quan.
+  - Năm tháng vẫn trôi: người thân già đi và có thể qua đời, thế giới và Thiên kiêu bảng vẫn đổi.
+  - Người trong lòng và đạo lữ nhạt dần, thiện cảm −1 mỗi năm.
+  - Nhật ký mỗi năm ghi "Bế quan tĩnh tu", lúc ra ghi tu vi mới.
+- **Xuất quan sớm** khi tu vi đã viên mãn cần đột phá, hoặc khi thọ nguyên chỉ còn 5 năm.
+- **Hiệu ứng sự kiện mới `seclusionYears`**: đóng cửa ngay sau sự kiện, và không dừng vì viên mãn (mục đích là ngồi qua bình cảnh). Sự kiện đã duyệt "Bình cảnh Luyện Khí → Bế quan khổ tu" nay bế quan 3 năm đúng thiết kế; trước đây tạm không trôi thời gian.
+- Save cũ: không đang bế quan.
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "Bế quan X năm"): bảng số năm theo cảnh giới, ngưỡng xuất quan sớm, thiện cảm nhạt dần, và 5 câu nhật ký trong `realms.json`.
+
 ### Task 3.13 — Ma tu hứa khai mạch + sự kiện con đường đời (2026-10-12)
 - **15 sự kiện** theo bản đã duyệt `docs/design/events-3-13.md`.
 - **Chuỗi Hương Hỏa Hội** (`mortal-path.json`):

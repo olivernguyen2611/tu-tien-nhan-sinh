@@ -5,6 +5,7 @@ import type { DeathCause, GameState, LogLine } from '../core/types';
 import { describeDelta } from './deltas';
 import { extremeHookSum } from './extremes';
 import { difficultyHookSum } from './difficulty';
+import { rollGhostOffer } from './ghost';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 const fill = (text: string, age: number) => text.replaceAll('{age}', String(age));
@@ -27,8 +28,10 @@ export function ageBody(state: GameState, content: Content): GameState {
   let { health, happiness, charm } = state.stats;
   const lines: LogLine[] = [];
 
-  if (age >= cfg.declineStartAge) health -= cfg.healthDeclinePerYear;
-  else if (health < cfg.recoverCap) health = Math.min(cfg.recoverCap, health + cfg.recoverPerYear);
+  // A quỷ tu has no body to mend or to age (task 4.12); Quỷ đạo wears health on its own.
+  if (state.flags.quy_tu) { /* no recovery, no old-age decline */ }
+  else if (age >= cfg.declineStartAge) health -= cfg.healthDeclinePerYear;
+  else if (health < cfg.recoverCap && !state.flags.quy_tu) health = Math.min(cfg.recoverCap, health + cfg.recoverPerYear);
   // Old-age milestones (60, 70, 80): a visible blow to health and looks.
   if (cfg.milestoneAges.includes(age)) {
     const dh = clamp(health + cfg.milestoneHealth) - clamp(health);
@@ -75,7 +78,7 @@ export function checkDeath(state: GameState, content: Content, forced?: DeathCau
   const texts = content.lifeTexts;
   const rng = Rng.fromState(state.rng);
   const age = state.character.age;
-  const pools = { old_age: texts.deathOldAge, breakthrough: texts.deathBreakthrough, ordeal: texts.deathOrdeal, illness: texts.deathIllness, combat: texts.deathCombat };
+  const pools = { old_age: texts.deathOldAge, breakthrough: texts.deathBreakthrough, ordeal: texts.deathOrdeal, illness: texts.deathIllness, combat: texts.deathCombat, tribulation: texts.deathTribulation };
   const line = rng.pick(pools[cause]);
   const karma = state.social.karma;
   const pool = karma >= cfg.epitaphKarma ? texts.epitaph.good : karma <= -cfg.epitaphKarma ? texts.epitaph.bad : texts.epitaph.plain;
@@ -83,7 +86,7 @@ export function checkDeath(state: GameState, content: Content, forced?: DeathCau
     ...state,
     rng: rng.getState(),
     alive: false,
-    death: { age, cause, epitaph: rng.pick(pool) },
+    death: { age, cause, epitaph: rng.pick(pool), ghostOffer: rollGhostOffer(state, content, cause) },
     events: { ...state.events, pending: null },
     log: addLines(state, [{ text: fill(line, age), tone: 'bad' }]),
   };
@@ -111,6 +114,7 @@ export function lifeSummary(state: GameState, content: Content): LifeSummary | n
       : cause === 'breakthrough' ? `Mất năm ${age} tuổi khi đột phá`
       : cause === 'ordeal' ? `Mất năm ${age} tuổi khi luyện hóa kỳ vật`
       : cause === 'combat' ? `Tử trận năm ${age} tuổi`
+      : cause === 'tribulation' ? `Mất năm ${age} tuổi dưới thiên kiếp`
       : `Mất năm ${age} tuổi vì bệnh`,
     epitaph,
     karmaLabel: k >= t ? 'Thiện nhân' : k <= -t ? 'Ác nhân' : 'Người thường',

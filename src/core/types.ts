@@ -36,7 +36,7 @@ export interface SpiritRoot {
   body: string | null;
 }
 
-export type DeathCause = 'old_age' | 'illness' | 'breakthrough' | 'ordeal' | 'combat';
+export type DeathCause = 'old_age' | 'illness' | 'breakthrough' | 'ordeal' | 'combat' | 'tribulation';
 
 export interface GameState {
   version: 1;
@@ -54,6 +54,11 @@ export interface GameState {
   talents: string[];
   /** A talent choice waiting for the player (after a big breakthrough); blocks the next year. */
   fate: { offered: string[]; refreshesLeft: number } | null;
+  /**
+   * Bế quan (task 4.1): the age the door opens again, and when it closed; null when not in seclusion.
+   * fixed: set by an event, so reaching the peak does not end it early (the point is to sit out the years).
+   */
+  seclusion: { until: number; since: number; fixed?: boolean } | null;
   /**
    * Romance (task 3.6): the NPC being courted, whether they said yes (couple), the đạo lữ
    * (task 3.7), people who turned the player down or were left, rivals around the lover,
@@ -96,7 +101,8 @@ export interface GameState {
   rng: RngState;
   alive: boolean;
   /** Set when the life ends. */
-  death: { age: number; cause: DeathCause; epitaph: string } | null;
+  /** ghostOffer: a lingering obsession lets this life go on as a quỷ tu (task 4.12). */
+  death: { age: number; cause: DeathCause; epitaph: string; ghostOffer?: boolean } | null;
   character: {
     name: string;
     gender: Gender;
@@ -132,6 +138,11 @@ export interface GameState {
     buffs: { mul: number; until: number }[];
     /** Bonus % for the next big breakthrough only. */
     nextBonus: number;
+    /** Task 4.2: the core being formed (blocks the year), and the Kim Đan grade 1–9 once formed. */
+    coreForming: { round: number; offered: string[]; placed: string[]; purity: number; cracks: number; chancePct: number } | null;
+    coreGrade: number | null;
+    /** Task 4.4: tâm ma chiến in progress (blocks the year), before the big breakthrough it guards. */
+    heartDemonTrial: { illusions: string[]; round: number; wins: number; losses: number; chancePct: number; target: string } | null;
     /** Tâm ma seeds from dark choices (task 3.9; read by the heart-demon system later). */
     heartDemon: number;
     /** Lineages this life has followed (one-time onAdopt stats, task 3.8). */
@@ -252,4 +263,6 @@ export interface Npc {
   grudge: number;
   /** Id of the NPC whose grudge this one inherited (kin of someone the player killed). */
   heirOf: string | null;
+  /** Task 4.9: the player's disciple, and the age they were last taught. */
+  disciple?: { since: number; lastTaught: number | null };
 }

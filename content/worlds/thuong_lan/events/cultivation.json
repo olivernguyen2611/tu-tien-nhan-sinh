@@ -89,7 +89,8 @@
           "effects": {
             "reducePeakFails": 1,
             "stat.daoHeart": 3,
-            "stat.happiness": -5
+            "stat.happiness": -5,
+            "seclusionYears": 3
           }
         }
       },
