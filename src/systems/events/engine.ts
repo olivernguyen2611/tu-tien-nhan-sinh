@@ -45,7 +45,10 @@ export function eventWeight(state: GameState, content: Content, event: GameEvent
     if (event.oncePerLife) return 0;
     if (event.cooldownYears > 0 && state.character.age - last < event.cooldownYears) return 0;
   }
-  if (!meets(state, event.conditions, content)) return 0;
+  // Task 3.6: a romance event is judged with its lover/partner as the event's NPC.
+  const target = event.conditions.romance?.target;
+  const judged = target ? { ...state, events: { ...state.events, npc: romanceTarget(state, target)?.id ?? null } } : state;
+  if (!meets(judged, event.conditions, content)) return 0;
   let w = event.weight * themeMultiplier(state, content, event);
   if (event.luckAffected) w *= 1 + (state.aptitudes.luck - 50) / 100; // G.4
   return Math.max(0, w);
@@ -124,7 +127,7 @@ export function visibleChoices(state: GameState, content: Content, event: GameEv
     if (c.hidden && !ok) return;
     out.push({
       index,
-      text: c.text,
+      text: fillTemplate(c.text, state, content),
       hidden: c.hidden,
       traitId: c.hidden
         ? c.requires?.traitsAny?.find((t) => state.traits.includes(t)) ?? c.requires?.talentsAny?.find((t) => state.talents.includes(t)) ?? null
@@ -133,7 +136,8 @@ export function visibleChoices(state: GameState, content: Content, event: GameEv
       check: c.check ? { ...c.check, chance: checkChance(state, content, c.check.stat, c.check.difficulty) } : null,
     });
   });
-  return out;
+  // Task 3.9: variants of one choice (same text, exclusive requires) show only the one that applies.
+  return out.filter((v) => !v.disabled || !out.some((o) => o !== v && !o.disabled && o.text === v.text));
 }
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
@@ -178,13 +182,17 @@ export interface ChoiceResult {
 }
 
 /** Player picks a choice of the pending event. */
-export function resolveChoice(state: GameState, content: Content, choiceIndex: number): ChoiceResult {
-  const eventId = state.events.pending;
+export function resolveChoice(given: GameState, content: Content, choiceIndex: number): ChoiceResult {
+  const eventId = given.events.pending;
   const event = eventId ? findEvent(content, eventId) : undefined;
   const choice = event?.choices[choiceIndex];
-  if (!event || !choice || !meets(state, choice.requires, content)) {
-    return { state, text: '', tone: 'normal', success: null };
-  }
+  // Task 3.6: a romance event that came as a follow-up is still about the lover/partner.
+  const target = event?.conditions.romance?.target;
+  const state = target && !given.events.npc
+    ? { ...given, events: { ...given.events, npc: romanceTarget(given, target)?.id ?? null } }
+    : given;
+  if (!event || !choice) return { state: given, text: '', tone: 'normal', success: null };
+  if (!meets(state, choice.requires, content)) return { state: given, text: '', tone: 'normal', success: null };
 
   const rng = Rng.fromState(state.rng);
   let outcome: Outcome;
@@ -232,8 +240,8 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   // Task 3.4: someone new becomes the event's NPC; then the ledger changes for that NPC.
   if (fx.meetNpc) {
     const { role, realm, stage, root, affinity, favor, grudge } = fx.meetNpc;
-    // Someone met to be courted is always of age (PLAN H).
-    const minAge = fx.romance?.pursue ? content.balance.romance.minAge : undefined;
+    // Someone met to be courted, wed, or in a mature event is always of age (PLAN H).
+    const minAge = fx.romance?.pursue || fx.romance?.marry || fx.meetNpc.adult ? content.balance.romance.minAge : undefined;
     const met = createNpc(next, content, { role, realm, stage, root, minAge, affinity: affinity === undefined ? undefined : 50 + affinity, favor, grudge });
     next = { ...met.state, events: { ...met.state.events, npc: met.id } };
   }
@@ -276,6 +284,14 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
     if (broke.text) text = `${text} ${broke.text}`;
   }
   if (fx.pathAffinity) next = addPathAffinity(next, fx.pathAffinity);
+  // Task 3.9.
+  if (fx.lifespanYears) next = { ...next, cult: { ...next.cult, lifespan: Math.max(next.character.age + 1, next.cult.lifespan + fx.lifespanYears) } };
+  if (fx.heartDemon) next = { ...next, cult: { ...next.cult, heartDemon: Math.max(0, next.cult.heartDemon + fx.heartDemon) } };
+  if (fx.relativeDies) {
+    const roles: string[] = fx.relativeDies === 'parent' ? ['father', 'mother'] : [fx.relativeDies];
+    const parent = next.family.filter((r) => r.alive && roles.includes(r.role)).sort((a, b) => b.age - a.age)[0];
+    if (parent) next = { ...next, family: next.family.map((r) => (r.id === parent.id ? { ...r, lifespan: r.age + 1 } : r)) };
+  }
   if (fx.martialYears) next = addMartialYears(next, fx.martialYears);
   if (fx.martialBonus) next = { ...next, martial: { ...next.martial, bonus: next.martial.bonus + fx.martialBonus } };
   if (fx.martialPromote) next = martialPromote(next, content);

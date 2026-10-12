@@ -13,7 +13,9 @@ export const STAT_KEYS = [...MORTAL_STATS, ...APTITUDES].map((k) => `stat.${k}`)
 export const NUMERIC_KEYS = [...STAT_KEYS, 'silver', 'spiritStones', 'karma', 'age'];
 /** Also readable by conditions and skill checks (task 2.8): craft levels and sect contribution. */
 export const CRAFT_KEYS = ['alchemy', 'forging', 'formation', 'talisman', 'farming', 'beast'].map((c) => `craft.${c}`);
-export const READ_KEYS = [...NUMERIC_KEYS, ...CRAFT_KEYS, 'sect.contribution'];
+/** Task 3.9: faction reputation is readable too. */
+export const REPUTATION_KEYS = ['chinh', 'ma', 'tan_tu', 'yeu', 'trieu_dinh', 'giang_ho'].map((f) => `reputation.${f}`);
+export const READ_KEYS = [...NUMERIC_KEYS, ...CRAFT_KEYS, 'sect.contribution', ...REPUTATION_KEYS];
 const statKey = z.string().refine((k) => STAT_KEYS.includes(k) || CRAFT_KEYS.includes(k), (k) => ({ message: `"${k}" không phải chỉ số (dùng stat.<tên> hoặc craft.<nghệ>)` }));
 const numericKey = z.string().refine((k) => READ_KEYS.includes(k), (k) => ({ message: `"${k}" không phải giá trị đọc được` }));
 
@@ -59,6 +61,8 @@ const BaseConditionsSchema = z
     martial: z.object({ min: z.number().int().optional(), max: z.number().int().optional(), ready: z.boolean().optional() }).strict().optional(),
     /** Born into one of these origins. */
     origins: ids,
+    /** Task 3.9: items carried (all of them). */
+    itemsAll: ids,
     /**
      * Task 3.6: romance. Any romance condition also needs the player of age (balance.romance.minAge),
      * not on the Phật đạo, and the target (if any) alive and of age. `target` makes the event about
@@ -66,7 +70,8 @@ const BaseConditionsSchema = z
      */
     romance: z
       .object({
-        target: z.enum(['lover', 'partner', 'beloved']).optional(),
+        /** ex: the most recent person who turned the player down or was left, still alive. */
+        target: z.enum(['lover', 'partner', 'beloved', 'ex']).optional(),
         lover: z.boolean().optional(),
         couple: z.boolean().optional(),
         partner: z.boolean().optional(),
@@ -80,6 +85,8 @@ const BaseConditionsSchema = z
       })
       .strict()
       .optional(),
+    /** Task 3.9: family state ({deceased} = a relative who has died). */
+    family: z.object({ deadAny: z.boolean().optional(), parentAlive: z.boolean().optional() }).strict().optional(),
     /** Task 3.4: the NPC this event is about (met earlier, or picked by an npcTrigger). */
     npc: z
       .object({
@@ -165,6 +172,8 @@ export const EffectsSchema = z
     meetNpc: z
       .object({
         role: z.string().min(1),
+        /** Task 3.9: always an adult (romance.minAge), e.g. someone rescued in a mature event. */
+        adult: z.boolean().optional(),
         realm: z.string().optional(),
         stage: z.number().int().min(0).optional(),
         root: z.boolean().optional(),
@@ -174,6 +183,12 @@ export const EffectsSchema = z
       })
       .strict()
       .optional(),
+    /** Task 3.9: years of lifespan (burning blood: −10). */
+    lifespanYears: z.number().int().optional(),
+    /** Task 3.9: tâm ma seeds (counted for the heart-demon system to come). */
+    heartDemon: z.number().int().optional(),
+    /** Task 3.9: the oldest living parent dies at the end of the year (grief as usual). */
+    relativeDies: z.enum(['mother', 'father', 'parent']).optional(),
     /** Task 3.6: romance with the event's NPC: start courting them, lose them, become a couple; rivals appear or are exposed. */
     romance: z
       .object({
@@ -186,6 +201,8 @@ export const EffectsSchema = z
         marry: z.object({ affinity: z.number().optional() }).strict().optional(),
         /** Task 3.7: the đạo lữ's cultivation progress (+% of a stage). */
         partnerProgress: z.number().optional(),
+        /** Task 3.9: the lover's (else the đạo lữ's) affinity, when the event is about someone else. */
+        loverAffinity: z.number().optional(),
       })
       .strict()
       .optional(),
@@ -206,7 +223,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'heartDemon', 'relativeDies'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });

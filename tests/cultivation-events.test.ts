@@ -7,6 +7,7 @@ import { eventWeight, findEvent, resolveChoice, visibleChoices } from '../src/sy
 import { meets } from '../src/systems/events/conditions';
 import { joinSect } from '../src/systems/sect';
 import { makeSave, migrate } from '../src/systems/save';
+import { act, settle } from '../src/systems/combat';
 
 const content = loadContent();
 const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'], body: null };
@@ -145,6 +146,11 @@ describe('task 2.8 events and their engine', () => {
       s = { ...s, destiny: { ...s.destiny, confirmed: true } };
       for (let n = 0; n < 400 && s.alive; n++) {
         if (s.fate) s = { ...s, fate: null };
+        // Task 3.9 events start fights: fight all out, spare the beaten.
+        if (s.combat) {
+          s = s.combat.phase === 'won' ? settle(s, content, 'spare').state : act(s, content, 'all_out').state;
+          continue;
+        }
         s = s.events.pending ? resolveChoice(s, content, n % 3 === 0 ? 0 : visibleChoices(s, content, findEvent(content, s.events.pending)!).filter((c) => !c.disabled).at(-1)!.index).state : advanceYear(s, content);
       }
       expect(s.alive).toBe(false);

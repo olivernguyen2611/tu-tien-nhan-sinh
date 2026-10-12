@@ -56,11 +56,12 @@ export function schemaFor(path: string): ZodTypeAny | null {
 }
 
 /** Flags the engine sets itself (not via events). */
-export const ENGINE_FLAGS = ['no_aging_charm', 'no_parents', 'no_father', 'no_mother'];
+export const ENGINE_FLAGS = ['no_aging_charm', 'no_parents', 'no_father', 'no_mother', 'mua_hang_gia'];
 /** Words naming a parent in event text, and the flag the engine sets once that parent is gone. */
+// "cha ta", "mẹ hắn", "yêu thú mẹ"… are someone else's parents (task 3.9), not the player's.
 const PARENT_WORDS = [
-  { name: 'cha', flag: 'no_father', word: /(^|[^\p{L}])cha(?![\p{L}])/iu },
-  { name: 'mẹ', flag: 'no_mother', word: /(^|[^\p{L}])mẹ(?![\p{L}])/iu },
+  { name: 'cha', flag: 'no_father', word: /(^|[^\p{L}])(?<!thú\s)cha(?![\p{L}])(?!\s+(ta|hắn|nó|y|của)(?![\p{L}]))/iu },
+  { name: 'mẹ', flag: 'no_mother', word: /(^|[^\p{L}])(?<!thú\s)mẹ(?![\p{L}])(?!\s+(ta|hắn|nó|y|của)(?![\p{L}]))/iu },
 ];
 
 export function validateContent(files: Record<string, unknown>): Problem[] {
@@ -209,6 +210,8 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     for (const choice of event.choices) {
       for (const outcome of [choice.result, choice.success, choice.fail]) {
         outcome?.effects.setFlags.forEach((f) => flagsSet.add(f));
+        // Task 3.3 fights set flags when they end.
+        for (const end of [outcome?.fight?.win, outcome?.fight?.lose, outcome?.fight?.fled]) end?.effects.setFlags.forEach((f) => flagsSet.add(f));
       }
     }
   }
@@ -267,14 +270,19 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
 
     // Task 3.6 / PLAN H: romance and mature events never reach anyone under 18. conditions.romance
     // enforces the age of the player and of the lover; otherwise the event needs age.min ≥ 18.
+    const adultOnly = !!event.conditions.romance || (event.conditions.age?.min ?? 0) >= 18;
     const romantic = event.themes.some((t) => t.startsWith('romance')) || event.tags.includes('mature')
-      || event.choices.some((c) => [c.result, c.success, c.fail].some((o) => o?.effects.romance));
-    if (romantic && !event.conditions.romance && (event.conditions.age?.min ?? 0) < 18) {
+      || event.choices.some((c) => !c.requires?.romance && [c.result, c.success, c.fail].some((o) => o?.effects.romance));
+    if (romantic && !adultOnly) {
       problems.push({ file, level: 'error', message: `${where}: sự kiện tình duyên/mature cần conditions.romance hoặc age.min ≥ 18` });
     }
-    const loverText = /\{lover\}/.test(`${event.title} ${event.text} ${event.choices.map((c) => [c.text, c.result?.text, c.success?.text, c.fail?.text].join(' ')).join(' ')}`);
+    const loverText = /\{lover(Self)?\}/.test(`${event.title} ${event.text} ${event.choices.map((c) => [c.text, c.result?.text, c.success?.text, c.fail?.text].join(' ')).join(' ')}`);
     if (loverText && !event.conditions.romance?.target && !event.conditions.romance?.lover && !event.conditions.romance?.partner) {
       problems.push({ file, level: 'error', message: `${where}: nhắc tới {lover} nhưng conditions.romance không yêu cầu có người trong lòng/đạo lữ` });
+    }
+
+    if (/\{deceased\}/.test(`${event.text} ${event.choices.map((c) => [c.text, c.result?.text, c.success?.text, c.fail?.text].join(' ')).join(' ')}`) && !event.conditions.family?.deadAny) {
+      problems.push({ file, level: 'error', message: `${where}: nhắc tới {deceased} nhưng thiếu conditions.family.deadAny` });
     }
 
     event.choices.forEach((choice, i) => {

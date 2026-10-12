@@ -2,6 +2,48 @@
 
 ## [Chưa phát hành]
 
+### Task 3.9 — 40 sự kiện giang hồ (2026-10-12)
+- **Nhập đủ 40 sự kiện đã duyệt** của `docs/design/events-jianghu.md` vào `content/worlds/thuong_lan/events/`:
+  - `romance.json`: Tình duyên, 10 sự kiện.
+  - `plunder.json`: Giết người đoạt bảo, 8 sự kiện, cộng 1 sự kiện nối cho lựa chọn tiếp của #14.
+  - `demonic.json`: Ma đạo cám dỗ, 8 sự kiện.
+  - `beasts.json`: Yêu thú, 7 sự kiện.
+  - `market.json`: Phường thị, 7 sự kiện.
+- **"⚄ Chiến lực" nay là trận đánh thật** (task 3.3), thắng thua theo kết quả trong thiết kế. Thắng thì vẫn chọn tha, cướp hay giết như mọi trận.
+- **Engine thêm cho bộ này**:
+  - Hiệu ứng: `lifespanYears` (đốt thọ nguyên), `heartDemon` (đếm tâm ma cho hệ tâm ma sau này), `relativeDies` (người thân mất cuối năm), `romance.loverAffinity`, `meetNpc.adult`.
+  - Điều kiện: `family` (có người thân đã mất, cha mẹ còn sống), `itemsAll` (mang theo vật phẩm), `romance.target: "ex"` (người cũ). Danh vọng từng phe đọc được trong điều kiện (`reputation.yeu`…).
+  - Placeholder `{deceased}`, `{loverSelf}` (huynh/muội), `{playerDear}` (chàng/nàng).
+  - Sự kiện tình duyên đến qua đường nối (follow-up) vẫn gắn đúng người trong lòng.
+  - Lựa chọn có hai biến thể cùng chữ, chỉ hiện biến thể đang áp dụng. Chữ trong lựa chọn được thay tên.
+- **Validator**:
+  - Báo `{deceased}` thiếu điều kiện `family.deadAny`.
+  - Đếm cả flag đặt trong kết quả trận đánh.
+  - "cha ta", "mẹ hắn", "yêu thú mẹ" không còn bị coi là cha mẹ của người chơi.
+- **Chỗ xấp xỉ** (engine chưa có hệ thống tương ứng):
+  - Chưa có vùng đất: bỏ điều kiện "ở Lan Sơn, Vạn Yêu Lĩnh, Vô Chủ Phường…".
+  - Chưa có linh thú: dùng flag `co_linh_thu`, `linh_thu_truong_thanh`.
+  - Chưa có món nợ có lãi: chỉ đặt flag `no_kim_thiem`.
+  - Kiểm tra theo chỉ số khác:
+    - "⚄ Tốc độ" tính theo Căn cốt, "⚄ Thần thức" theo Ngộ tính.
+    - "⚄ thiện cảm + Mị lực" (Tỏ tình) tính theo Mị lực.
+    - "⚄ nghề bách nghệ" (Bày sạp) tính theo cấp Luyện Đan.
+  - Điều kiện chuyển sang thứ engine đã có:
+    - "Kẹt bình cảnh ≥ 5 năm" thành "đột phá thất bại ≥ 2 lần".
+    - "Chênh lệch tuổi trông thấy" thành "đã Trúc Cơ".
+    - Bản chất "tham lam/mưu mô" thành "bộ mặt che bản chất khác" (hệ NPC 3.4).
+    - "Người thân bệnh nặng" thành "mẹ còn sống, người chơi ≥ 30 tuổi".
+  - "⚄ thiện cảm 60" (Tình địch) và "⚄ linh thạch so với đối thủ" (Đấu giá) thành hai biến thể theo ngưỡng.
+  - Cấm thuật đốt huyết là sự kiện riêng: kẻ địch mạnh hơn một đại cảnh giới chặn đường. "Chiến lực ×2/×3" quy thành đối thủ yếu đi một nửa hoặc còn một phần ba.
+- **Phần còn thiếu**:
+  - Song tu: chưa xét linh căn hai người khắc nhau.
+  - Người cũ: chưa có lựa chọn "Khuyên quay đầu" (NPC chưa có đạo thống).
+  - Tặng linh thảo: chưa xét sở thích của người trong lòng, dùng thiện cảm +10.
+  - Bốc thăm ở bí cảnh: chưa có 30% bị phục kích.
+  - Phi kiếm có chủ: chưa có 30% bị Kiếm Các hỏi tội.
+  - Quá hạn nợ Kim Thiềm: chưa có người tới đòi.
+- **Câu kết quả tự bổ sung** cho những lựa chọn thiết kế chỉ ghi hiệu ứng, ví dụ "Ngươi rút binh khí…" ở các lựa chọn mở trận đánh.
+
 ### Task 3.7 — Đạo lữ, song tu, sinh con (2026-10-12)
 - **Thành thân / Đạo lữ đại điển**: đã thành đôi thì cưới được. Phàm nhân trả bạc, tu sĩ trả linh thạch; Vui vẻ +20. Người kia thành Bạn đời (phàm nhân) hoặc Đạo lữ (tu sĩ).
 - **Song tu** (PLAN G.1): có đạo lữ đang tu luyện thì tu vi mỗi năm ×1.3.

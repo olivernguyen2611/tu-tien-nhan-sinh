@@ -132,6 +132,8 @@ export interface GameState {
     buffs: { mul: number; until: number }[];
     /** Bonus % for the next big breakthrough only. */
     nextBonus: number;
+    /** Tâm ma seeds from dark choices (task 3.9; read by the heart-demon system later). */
+    heartDemon: number;
     /** Lineages this life has followed (one-time onAdopt stats, task 3.8). */
     lineagesAdopted: string[];
     /** Phật đạo precepts broken (task 3.12). */

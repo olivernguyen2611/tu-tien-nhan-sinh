@@ -36,8 +36,9 @@ function ofAge(content: Content, n: Npc | undefined): n is Npc {
 }
 
 /** Lover, partner, or the partner if there is one (else the lover). */
-export function romanceTarget(state: GameState, target: 'lover' | 'partner' | 'beloved'): Npc | undefined {
+export function romanceTarget(state: GameState, target: 'lover' | 'partner' | 'beloved' | 'ex'): Npc | undefined {
   const r = state.romance;
+  if (target === 'ex') return [...r.exes].reverse().map((id) => npcById(state, id)).find((n) => n?.alive);
   const id = target === 'lover' ? r.lover : target === 'partner' ? r.partner : r.partner ?? r.lover;
   return npcById(state, id);
 }
@@ -65,7 +66,7 @@ export function romanceMeets(state: GameState, c: NonNullable<GameEvent['conditi
 /** Event effects on romance, applied to the event's NPC. */
 export function applyRomance(
   state: GameState, content: Content, npcId: string | null,
-  fx: { pursue?: boolean; lose?: boolean; couple?: boolean; rival?: number; rivalExposed?: boolean; marry?: { affinity?: number }; partnerProgress?: number },
+  fx: { pursue?: boolean; lose?: boolean; couple?: boolean; rival?: number; rivalExposed?: boolean; marry?: { affinity?: number }; partnerProgress?: number; loverAffinity?: number },
 ): GameState {
   let s = state;
   // Task 3.7: a match (political or not) with the event's NPC; the progress of the đạo lữ.
@@ -77,9 +78,13 @@ export function applyRomance(
     const id = s.romance.partner;
     s = { ...s, npcs: s.npcs.map((n) => (n.id === id && n.realm !== 'pham_nhan' ? { ...n, progress: Math.max(0, n.progress + fx.partnerProgress!) } : n)) };
   }
+  const beloved = romanceTarget(s, 'beloved');
+  if (fx.loverAffinity && beloved?.alive) s = changeNpc(s, content, beloved.id, { affinity: fx.loverAffinity });
   state = s;
   let r = state.romance;
-  if (fx.pursue && npcId && !r.lover && !r.partner && !romanceBlocked(state, content) && ofAge(content, npcById(state, npcId))) r = { ...r, lover: npcId, couple: false, rivals: 0 };
+  if (fx.pursue && npcId && !r.lover && !r.partner && !romanceBlocked(state, content) && ofAge(content, npcById(state, npcId))) {
+    r = { ...r, lover: npcId, couple: false, exes: r.exes.filter((x) => x !== npcId) };
+  }
   if (fx.couple && npcId && r.lover === npcId) r = { ...r, couple: true };
   if (fx.rival) r = { ...r, rivals: Math.max(0, r.rivals + fx.rival) };
   if (fx.rivalExposed) r = { ...r, rivals: 0 };

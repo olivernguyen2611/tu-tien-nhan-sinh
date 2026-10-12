@@ -45,7 +45,21 @@ export function fillTemplate(text: string, state: GameState, content?: Content):
     .replace(/\{npcRole\}/g, npc?.role ?? 'người quen')
     .replace(/\{npcKin\}/g, kin?.name ?? 'người thân')
     // Task 3.6: {lover} = the đạo lữ, else the one being courted.
-    .replace(/\{lover\}/g, romanceTarget(state, 'beloved')?.name ?? 'người ấy');
+    .replace(/\{lover\}/g, romanceTarget(state, 'beloved')?.name ?? 'người ấy')
+    // Task 3.9: forms of address by gender: the lover calls themself muội/huynh, calls the player chàng/nàng.
+    .replace(/\{loverSelf\}/g, romanceTarget(state, 'beloved')?.gender === 'nam' ? 'huynh' : 'muội')
+    .replace(/\{playerDear\}/g, state.character.gender === 'nam' ? 'chàng' : 'nàng')
+    // Task 3.9: {deceased} = a parent who has died, else any relative.
+    .replace(/\{deceased\}/g, deceasedName(state));
+}
+
+function deceasedName(state: GameState): string {
+  const dead = state.family.filter((r) => !r.alive);
+  const parent = dead.find((r) => r.role === 'father' || r.role === 'mother');
+  const r = parent ?? dead[0];
+  if (!r) return 'người đã khuất';
+  const call = r.role === 'father' ? 'cha' : r.role === 'mother' ? 'mẹ' : r.role === 'child' ? 'đứa con' : 'người thân';
+  return `${call} ${r.name}`;
 }
 
 export function createLife(input: NewLifeInput, content: Content): GameState {
@@ -107,7 +121,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     character: { name, gender, originId: origin.id, hometown, age: 0 },
     stats,
     aptitudes,
-    cult: { realm: 'pham_nhan', stage: 0, progress: 0, root: null, lifespan, fails: {}, injuredUntil: null, technique: null, learned: [], scrolls: [], buffs: [], nextBonus: 0, preceptBreaks: 0, lineagesAdopted: [], foundation: null, lastMajorAttempt: null, lineage: null },
+    cult: { realm: 'pham_nhan', stage: 0, progress: 0, root: null, lifespan, fails: {}, injuredUntil: null, technique: null, learned: [], scrolls: [], buffs: [], nextBonus: 0, preceptBreaks: 0, lineagesAdopted: [], heartDemon: 0, foundation: null, lastMajorAttempt: null, lineage: null },
     money: { silver: origin.silver, spiritStones: origin.spiritStones },
     social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0, trieu_dinh: 0, giang_ho: 0 } },
     flags: origin.noParents ? { no_parents: true, no_father: true, no_mother: true } : {},

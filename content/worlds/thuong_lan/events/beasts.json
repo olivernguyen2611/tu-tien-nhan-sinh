@@ -1,0 +1,724 @@
+[
+  {
+    "id": "yeu_thu_ha_son",
+    "category": "beast",
+    "title": "Yêu thú xuống làng",
+    "text": "Đêm qua, một con hổ to bằng con trâu ba mắt tha mất hai con bò. Làng đổ xô tới nhà {name}, vì \"nhà ngươi có người biết võ\".",
+    "tags": [
+      "violence"
+    ],
+    "themes": [
+      "beast"
+    ],
+    "conditions": {
+      "age": {
+        "min": 14
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Cầm đao đi săn",
+        "result": {
+          "text": "Ngươi lần theo vết máu vào rừng.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Hổ ba mắt",
+              "realm": "same",
+              "intent": "teach"
+            },
+            "win": {
+              "text": "Cả làng ăn thịt hổ ba ngày.",
+              "effects": {
+                "addItems": [
+                  "noi_dan_1"
+                ],
+                "reputation": {
+                  "giang_ho": 5,
+                  "yeu": -3
+                },
+                "stat.happiness": 5,
+                "stat.physique": 1
+              }
+            },
+            "lose": {
+              "text": "Ngươi được dân làng khiêng về.",
+              "effects": {
+                "stat.health": -10,
+                "stat.happiness": -3
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Bày bẫy",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Hổ sa bẫy, cả làng kéo tới xem.",
+          "effects": {
+            "stat.intellect": 2,
+            "stat.happiness": 3
+          }
+        },
+        "fail": {
+          "text": "Bẫy bắt được trưởng thôn.",
+          "effects": {
+            "stat.charm": -2,
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Đưa cả làng lên miếu Thành Hoàng tránh",
+        "result": {
+          "text": "Cả làng ngủ chen trong miếu ba đêm. Không ai mất mạng.",
+          "effects": {
+            "karma": 3,
+            "stat.daoHeart": 2,
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Ngửi thấy mùi máu non, nó đang nuôi con: đuổi đi chứ không giết",
+        "requires": {
+          "traitsAny": [
+            "linh_ty"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Ngươi đốt lửa đuổi nó về rừng sâu. Con hổ ngoái lại nhìn ngươi một lần.",
+          "effects": {
+            "reputation": {
+              "yeu": 5
+            },
+            "karma": 3,
+            "stat.daoHeart": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "trung_yeu_thu",
+    "category": "beast",
+    "title": "Ổ trứng trong hang",
+    "text": "Trong hang có một quả trứng to bằng đầu người, vỏ đỏ như than hồng. Ngoài cửa hang có dấu chân to bằng cái nong.",
+    "tags": [
+      "violence"
+    ],
+    "themes": [
+      "beast"
+    ],
+    "conditions": {
+      "root": {
+        "usable": true
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Ôm trứng chạy",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Ngươi chạy tới khi tiếng gầm sau lưng tắt hẳn.",
+          "effects": {
+            "addItems": [
+              "trung_linh_thu"
+            ],
+            "setFlags": [
+              "co_linh_thu"
+            ],
+            "reputation": {
+              "yeu": -5
+            },
+            "stat.happiness": 5
+          }
+        },
+        "fail": {
+          "text": "Yêu thú mẹ về kịp.",
+          "effects": {
+            "stat.health": -25,
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Để trứng lại, xem từ xa",
+        "result": {
+          "text": "Yêu thú mẹ về, ấp trứng, nhìn về phía ngươi rất lâu rồi thôi.",
+          "effects": {
+            "reputation": {
+              "yeu": 3
+            },
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Mang trứng đi bán",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Trứng bán được giá hời ở phường thị.",
+          "effects": {
+            "spiritStones": 40,
+            "reputation": {
+              "yeu": -5
+            },
+            "stat.happiness": 2
+          }
+        },
+        "fail": {
+          "text": "Yêu thú mẹ về kịp.",
+          "effects": {
+            "stat.health": -25,
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Để lại một viên linh đan thay trứng",
+        "requires": {
+          "stats": [
+            {
+              "stat": "craft.beast",
+              "gte": 2
+            }
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Yêu thú mẹ không đuổi theo.",
+          "effects": {
+            "addItems": [
+              "trung_linh_thu"
+            ],
+            "setFlags": [
+              "co_linh_thu"
+            ],
+            "reputation": {
+              "yeu": 2
+            },
+            "craftXp": {
+              "beast": 5
+            },
+            "stat.luck": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "yeu_ho_bi_thuong",
+    "category": "beast",
+    "title": "Hồ ly bị thương",
+    "text": "Bên bụi cỏ có một con hồ ly trắng dính bẫy, chân đầm máu. Nó nhìn {name}, không kêu.",
+    "themes": [
+      "beast"
+    ],
+    "conditions": {
+      "root": {
+        "usable": true
+      }
+    },
+    "weight": 3,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Gỡ bẫy, băng bó",
+        "result": {
+          "text": "Hồ ly khập khiễng đi mất. Mấy năm sau, có kẻ trộm ghé nhà ngươi, sáng ra thấy hắn nằm ngất ngoài cổng, trên người toàn vết cào.",
+          "effects": {
+            "reputation": {
+              "yeu": 8
+            },
+            "karma": 5,
+            "setFlags": [
+              "ho_ly_bao_an"
+            ],
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Giết lấy nội đan",
+        "result": {
+          "text": "Nội đan có hai trăm năm tu vi. Nó là con của một trưởng lão Vạn Yêu Điện.",
+          "effects": {
+            "addItems": [
+              "noi_dan_2"
+            ],
+            "reputation": {
+              "yeu": -25
+            },
+            "karma": -8,
+            "setFlags": [
+              "ke_thu_van_yeu_dien"
+            ],
+            "stat.daoHeart": -3
+          }
+        }
+      },
+      {
+        "text": "Mang về nuôi",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Hồ ly cuộn tròn trong tay áo ngươi, ngủ một mạch.",
+          "effects": {
+            "setFlags": [
+              "co_linh_thu",
+              "linh_thu_ho_ly"
+            ],
+            "stat.charm": 2
+          }
+        },
+        "fail": {
+          "text": "Nó cắn ngươi rồi chạy.",
+          "effects": {
+            "stat.health": -3,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Mang về nuôi (đã quen thú)",
+        "requires": {
+          "stats": [
+            {
+              "stat": "craft.beast",
+              "gte": 1
+            }
+          ]
+        },
+        "result": {
+          "text": "Hồ ly ngửi tay ngươi, rồi để yên cho ngươi bế.",
+          "effects": {
+            "setFlags": [
+              "co_linh_thu",
+              "linh_thu_ho_ly"
+            ],
+            "stat.charm": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "doi_san_yeu",
+    "category": "beast",
+    "title": "Đội săn yêu",
+    "text": "Năm tán tu lập đội săn một con hùng yêu sắp hóa hình. Họ cần thêm một người.",
+    "tags": [
+      "violence"
+    ],
+    "themes": [
+      "beast"
+    ],
+    "conditions": {
+      "anyOf": [
+        {
+          "realm": {
+            "min": "truc_co"
+          }
+        },
+        {
+          "realm": {
+            "min": "luyen_khi",
+            "max": "luyen_khi"
+          },
+          "stage": {
+            "min": 4
+          }
+        }
+      ]
+    },
+    "weight": 4,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Đánh tiền tuyến",
+        "result": {
+          "text": "Ngươi đứng đầu đội hình, đối mặt với móng vuốt to bằng cánh cửa.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Hùng yêu",
+              "realm": "same",
+              "intent": "teach",
+              "powerMul": 1.1
+            },
+            "win": {
+              "text": "Hùng yêu gục. Nội đan chia đều, phần ngươi to nhất.",
+              "effects": {
+                "addItems": [
+                  "noi_dan_2"
+                ],
+                "spiritStones": 20,
+                "stat.physique": 2
+              }
+            },
+            "lose": {
+              "text": "Ngươi bị hùng yêu tát văng vào vách đá.",
+              "effects": {
+                "stat.health": -15
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Đứng sau yểm trợ",
+        "result": {
+          "text": "Ít công thì ít phần, nhưng còn nguyên tay chân.",
+          "effects": {
+            "spiritStones": 10,
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Trước khi đánh, lén thăm dò hang",
+        "check": {
+          "stat": "stat.comprehension",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Hùng yêu đang canh một gốc linh chi nghìn năm.",
+          "effects": {
+            "addItems": [
+              "linh_chi_ngan_nam"
+            ],
+            "stat.luck": 2
+          }
+        },
+        "fail": {
+          "text": "Hùng yêu đánh hơi thấy ngươi.",
+          "effects": {
+            "stat.health": -5
+          }
+        }
+      },
+      {
+        "text": "Báo cho hùng yêu bỏ chạy",
+        "requires": {
+          "stats": [
+            {
+              "stat": "reputation.yeu",
+              "gte": 30
+            }
+          ]
+        },
+        "result": {
+          "text": "Đêm ấy hang trống không. Đội săn chửi tới sáng.",
+          "effects": {
+            "reputation": {
+              "yeu": 15,
+              "tan_tu": -10
+            },
+            "stat.daoHeart": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "thu_trieu",
+    "category": "beast",
+    "title": "Thú triều",
+    "text": "Trống đồng trên tường thành đánh ba hồi. Từ bìa rừng, đàn yêu thú tràn ra như nước vỡ đê.",
+    "tags": [
+      "violence"
+    ],
+    "themes": [
+      "beast"
+    ],
+    "conditions": {
+      "age": {
+        "min": 14
+      }
+    },
+    "weight": 2,
+    "cooldownYears": 30,
+    "choices": [
+      {
+        "text": "Lên tường thành giữ thành",
+        "result": {
+          "text": "Ngươi đứng giữa hàng thủ thành, trước mặt là biển mắt đỏ.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Đàn yêu thú",
+              "realm": "same",
+              "intent": "teach",
+              "powerMul": 1.2
+            },
+            "win": {
+              "text": "Thú triều rút. Quan phủ khắc tên ngươi lên bia.",
+              "effects": {
+                "reputation": {
+                  "trieu_dinh": 15
+                },
+                "addItems": [
+                  "noi_dan_1",
+                  "noi_dan_1",
+                  "noi_dan_1"
+                ],
+                "stat.physique": 2
+              }
+            },
+            "lose": {
+              "text": "Ngươi bị khiêng xuống tường thành.",
+              "effects": {
+                "stat.health": -20
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Che chở phàm nhân rút vào nội thành",
+        "result": {
+          "text": "Ngươi dắt từng đoàn người già trẻ nhỏ qua cổng thành.",
+          "effects": {
+            "karma": 10,
+            "stat.daoHeart": 3,
+            "stat.health": -5
+          }
+        }
+      },
+      {
+        "text": "Chạy trước",
+        "result": {
+          "text": "Ngươi ra khỏi thành trước khi cổng đóng. Sau lưng, tiếng trống vẫn đánh.",
+          "effects": {
+            "reputation": {
+              "trieu_dinh": -10
+            },
+            "stat.happiness": -5,
+            "stat.daoHeart": -5
+          }
+        }
+      },
+      {
+        "text": "Nấu cháo cho người giữ thành",
+        "requires": {
+          "realm": {
+            "max": "pham_nhan"
+          },
+          "martial": {
+            "max": -1
+          }
+        },
+        "result": {
+          "text": "Nồi cháo của ngươi đi khắp tường thành, về tay không.",
+          "effects": {
+            "karma": 3,
+            "stat.happiness": 3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "yeu_tu_hoa_hinh",
+    "category": "beast",
+    "title": "Khách lạ không có bóng",
+    "text": "Một người khách trọ cùng quán với {name} không có bóng dưới ánh nến. Nửa đêm, y gõ cửa phòng ngươi: \"Đội săn yêu đang tới. Cho ta nấp một đêm.\"",
+    "themes": [
+      "beast"
+    ],
+    "conditions": {
+      "root": {
+        "usable": true
+      },
+      "age": {
+        "min": 18
+      }
+    },
+    "weight": 2,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Cho nấp",
+        "result": {
+          "text": "Sáng ra y đã đi, để lại một chiếc vảy bạc.",
+          "effects": {
+            "reputation": {
+              "yeu": 10
+            },
+            "addItems": [
+              "vay_ho_than"
+            ],
+            "stat.daoHeart": 2,
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Báo đội săn yêu",
+        "result": {
+          "text": "Đội săn yêu trả công. Tiếng thét ngoài sân kéo dài tới gần sáng.",
+          "effects": {
+            "spiritStones": 20,
+            "reputation": {
+              "yeu": -15
+            },
+            "stat.daoHeart": -2
+          }
+        }
+      },
+      {
+        "text": "Hỏi vì sao bị săn",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Y chưa từng hại ai, chỉ là nội đan quá giá trị.",
+          "effects": {
+            "reputation": {
+              "yeu": 5
+            },
+            "meetNpc": {
+              "role": "yêu tu",
+              "root": true,
+              "adult": true,
+              "affinity": 15
+            },
+            "stat.intellect": 2
+          }
+        },
+        "fail": {
+          "text": "Y bỏ đi qua cửa sổ.",
+          "effects": {
+            "stat.happiness": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "linh_thu_tien_hoa",
+    "category": "beast",
+    "title": "Linh thú trưởng thành",
+    "text": "Linh thú của {name} biếng ăn ba ngày, rồi phát sáng cả một đêm.",
+    "themes": [
+      "beast"
+    ],
+    "conditions": {
+      "anyOf": [
+        {
+          "flagsAll": [
+            "co_linh_thu"
+          ]
+        },
+        {
+          "flagsAll": [
+            "tho_trang_linh_thu"
+          ]
+        }
+      ],
+      "flagsNone": [
+        "linh_thu_truong_thanh"
+      ]
+    },
+    "weight": 3,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Canh bên cạnh suốt đêm",
+        "result": {
+          "text": "Sáng ra nó lớn gấp đôi, liếm tay ngươi.",
+          "effects": {
+            "setFlags": [
+              "linh_thu_truong_thanh"
+            ],
+            "stat.happiness": 8,
+            "stat.health": -2
+          }
+        }
+      },
+      {
+        "text": "Cho nuốt nội đan yêu thú",
+        "requires": {
+          "itemsAll": [
+            "noi_dan_1"
+          ]
+        },
+        "result": {
+          "text": "Nội đan tan trong bụng nó như đường. Hai lần lột xác trong một đêm.",
+          "effects": {
+            "removeItems": [
+              "noi_dan_1"
+            ],
+            "setFlags": [
+              "linh_thu_truong_thanh"
+            ],
+            "reputation": {
+              "yeu": -3
+            },
+            "stat.luck": 2
+          }
+        }
+      },
+      {
+        "text": "Mời ngự thú sư Vạn Yêu Điện xem",
+        "requires": {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 10
+            }
+          ]
+        },
+        "result": {
+          "text": "Ngự thú sư bấm huyệt cho nó, chỉ ngươi cách dưỡng.",
+          "effects": {
+            "spiritStones": -10,
+            "craftXp": {
+              "beast": 5
+            },
+            "setFlags": [
+              "linh_thu_truong_thanh"
+            ],
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Con thỏ trắng thì sao?",
+        "requires": {
+          "flagsAll": [
+            "tho_trang_linh_thu"
+          ]
+        },
+        "result": {
+          "text": "Con thỏ trắng giờ to bằng con nghé, vẫn gặm linh mễ.",
+          "effects": {
+            "setFlags": [
+              "linh_thu_truong_thanh"
+            ],
+            "stat.happiness": 11
+          }
+        }
+      }
+    ]
+  }
+]

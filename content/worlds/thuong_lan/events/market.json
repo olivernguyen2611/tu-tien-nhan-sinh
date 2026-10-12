@@ -1,0 +1,786 @@
+[
+  {
+    "id": "dau_gia_kim_thiem",
+    "category": "market",
+    "title": "Đấu giá Kim Thiềm",
+    "text": "Món cuối cùng: một viên Trúc Cơ Đan thượng phẩm. Ở phòng VIP bên cạnh, có người nâng giá đúng lúc {name} giơ thẻ.",
+    "themes": [
+      "market"
+    ],
+    "conditions": {
+      "root": {
+        "usable": true
+      },
+      "stats": [
+        {
+          "stat": "spiritStones",
+          "gte": 50
+        }
+      ]
+    },
+    "weight": 3,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Theo tới cùng",
+        "requires": {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 100
+            }
+          ]
+        },
+        "result": {
+          "text": "Phòng bên im lặng. Búa gõ ba tiếng, đan về tay ngươi.",
+          "effects": {
+            "addItems": [
+              "truc_co_dan_thuong_pham"
+            ],
+            "spiritStones": -100,
+            "setFlags": [
+              "ke_thu_doi_thu_dau_gia"
+            ],
+            "stat.happiness": 5
+          }
+        }
+      },
+      {
+        "text": "Theo tới cùng",
+        "requires": {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "lte": 99
+            }
+          ]
+        },
+        "result": {
+          "text": "Túi ngươi cạn trước. Người phòng bên cười khẽ qua vách.",
+          "effects": {
+            "stat.happiness": -3,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Nâng giá rồi bỏ đúng lúc",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Đối thủ mua với giá gấp ba.",
+          "effects": {
+            "stat.intellect": 2,
+            "stat.happiness": 5
+          }
+        },
+        "fail": {
+          "text": "Không ai theo nữa. Ngươi phải mua.",
+          "effects": {
+            "addItems": [
+              "truc_co_dan_thuong_pham"
+            ],
+            "spiritStones": -50,
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Chỉ xem, ghi chép giá cả",
+        "result": {
+          "text": "Cuốn sổ của ngươi dày thêm mười trang.",
+          "effects": {
+            "setFlags": [
+              "biet_gia_phuong_thi"
+            ],
+            "stat.intellect": 2
+          }
+        }
+      },
+      {
+        "text": "Gặp riêng đối thủ, mua lại sau buổi đấu giá",
+        "requires": {
+          "talentsAny": [
+            "hoa_khi_sinh_tai"
+          ],
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 40
+            }
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Hai bên cười nói vui vẻ, giá rẻ hơn trên sàn một nửa.",
+          "effects": {
+            "addItems": [
+              "truc_co_dan"
+            ],
+            "spiritStones": -40,
+            "stat.charm": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "do_thach",
+    "category": "market",
+    "title": "Đổ thạch",
+    "text": "Chủ sạp đập đá cười toe: \"Năm khối linh thạch một viên. Trong đá có linh tinh hay chỉ có đá, trời biết.\"",
+    "tags": [
+      "funny"
+    ],
+    "themes": [
+      "market"
+    ],
+    "conditions": {
+      "root": {
+        "usable": true
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 3,
+    "choices": [
+      {
+        "text": "Mua một viên",
+        "requires": {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 5
+            }
+          ]
+        },
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 80
+        },
+        "success": {
+          "text": "Bên trong là một khối Lôi Tinh.",
+          "effects": {
+            "spiritStones": -5,
+            "addItems": [
+              "loi_tinh"
+            ],
+            "stat.happiness": 10,
+            "stat.luck": 1
+          }
+        },
+        "fail": {
+          "text": "Đá.",
+          "effects": {
+            "spiritStones": -5,
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Mua mười viên",
+        "requires": {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 50
+            }
+          ]
+        },
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 85
+        },
+        "success": {
+          "text": "Viên thứ chín nứt ra ánh tím.",
+          "effects": {
+            "spiritStones": -50,
+            "addItems": [
+              "loi_tinh"
+            ],
+            "stat.happiness": 10
+          }
+        },
+        "fail": {
+          "text": "Mười viên đá.",
+          "effects": {
+            "spiritStones": -50,
+            "stat.happiness": -8,
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Đứng xem người khác đập",
+        "result": {
+          "text": "Một gã đập trúng linh tinh, cả phường thị reo hò. Ngươi tức anh ách.",
+          "effects": {
+            "stat.happiness": -1,
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Quét thần thức qua từng viên",
+        "requires": {
+          "talentsAny": [
+            "than_thuc_so_khai"
+          ],
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 5
+            }
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Chủ sạp đuổi ngươi đi, nhưng ngươi đã chọn được một viên.",
+          "effects": {
+            "spiritStones": -5,
+            "addItems": [
+              "linh_tinh_hoa"
+            ],
+            "stat.luck": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hang_gia_phuong_thi",
+    "category": "market",
+    "title": "Đan dược hàng giả",
+    "text": "Viên Tụ Khí Đan mua hôm qua, cắn ra bên trong là bột mì trộn mật ong. Khá ngon.",
+    "tags": [
+      "funny"
+    ],
+    "themes": [
+      "market"
+    ],
+    "conditions": {
+      "flagsAll": [
+        "mua_hang_gia"
+      ]
+    },
+    "weight": 8,
+    "choices": [
+      {
+        "text": "Quay lại đòi tiền",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Chủ sạp trả lại tiền, miệng lầm bầm.",
+          "effects": {
+            "spiritStones": 5,
+            "clearFlags": [
+              "mua_hang_gia"
+            ],
+            "stat.happiness": 3
+          }
+        },
+        "fail": {
+          "text": "Sạp đã dọn đi.",
+          "effects": {
+            "clearFlags": [
+              "mua_hang_gia"
+            ],
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Ăn hết cho đỡ phí",
+        "result": {
+          "text": "No, nhưng không tăng tu vi.",
+          "effects": {
+            "clearFlags": [
+              "mua_hang_gia"
+            ],
+            "stat.health": 2,
+            "stat.happiness": 1
+          }
+        }
+      },
+      {
+        "text": "Đi rao khắp phường thị",
+        "result": {
+          "text": "Từ nay ai mua đan cũng hỏi ngươi trước.",
+          "effects": {
+            "reputation": {
+              "tan_tu": 3
+            },
+            "clearFlags": [
+              "mua_hang_gia"
+            ],
+            "setFlags": [
+              "ke_thu_ban_hang_gia"
+            ],
+            "stat.charm": 1
+          }
+        }
+      },
+      {
+        "text": "Học cách phân biệt",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Ngươi biết ngửi mùi, nhìn vân, bóp thử. Sau này khó bị lừa.",
+          "effects": {
+            "craftXp": {
+              "alchemy": 3
+            },
+            "clearFlags": [
+              "mua_hang_gia"
+            ],
+            "stat.intellect": 2
+          }
+        },
+        "fail": {
+          "text": "Đan giả với đan thật, ngươi vẫn thấy giống nhau.",
+          "effects": {
+            "clearFlags": [
+              "mua_hang_gia"
+            ],
+            "stat.intellect": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "vay_kim_thiem",
+    "category": "market",
+    "title": "Vay linh thạch",
+    "text": "Quầy cho vay của Kim Thiềm Thương Minh có treo con cóc vàng ngậm đồng xu. Lãi ba phần mỗi năm.",
+    "themes": [
+      "market"
+    ],
+    "conditions": {
+      "root": {
+        "usable": true
+      },
+      "anyOf": [
+        {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "lte": 19
+            }
+          ]
+        },
+        {
+          "flagsAll": [
+            "no_kim_thiem"
+          ]
+        }
+      ],
+      "flagsNone": [
+        "bi_kim_thiem_truy_no"
+      ]
+    },
+    "weight": 3,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Vay 100",
+        "requires": {
+          "flagsNone": [
+            "no_kim_thiem"
+          ]
+        },
+        "result": {
+          "text": "Túi nặng hẳn. Con cóc vàng như đang cười.",
+          "effects": {
+            "spiritStones": 100,
+            "setFlags": [
+              "no_kim_thiem"
+            ],
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Vay, thế chấp pháp bảo",
+        "requires": {
+          "flagsNone": [
+            "no_kim_thiem",
+            "the_chap_phap_bao"
+          ]
+        },
+        "result": {
+          "text": "Pháp bảo vào kho Kim Thiềm, có giấy hẹn chuộc.",
+          "effects": {
+            "spiritStones": 60,
+            "setFlags": [
+              "the_chap_phap_bao"
+            ],
+            "stat.happiness": -2,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Không vay, nhận việc của thương minh trả công",
+        "result": {
+          "text": "Khuân hàng ba tháng, đổi hai mươi khối linh thạch.",
+          "effects": {
+            "spiritStones": 20,
+            "stat.physique": 1,
+            "stat.health": -3
+          }
+        }
+      },
+      {
+        "text": "Trốn nợ",
+        "requires": {
+          "flagsAll": [
+            "no_kim_thiem"
+          ]
+        },
+        "result": {
+          "text": "Ngươi đổi đường đi. Kim Thiềm treo thưởng tìm ngươi.",
+          "effects": {
+            "reputation": {
+              "tan_tu": -10
+            },
+            "setFlags": [
+              "bi_kim_thiem_truy_no"
+            ],
+            "stat.happiness": -5,
+            "stat.luck": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bay_sap_phuong_thi",
+    "category": "market",
+    "title": "Bày sạp",
+    "text": "{name} trải tấm vải ra đất, bày ra mấy món tự làm. Hàng xóm bên trái bán phù, bên phải bán thịt yêu thú nướng.",
+    "themes": [
+      "market"
+    ],
+    "conditions": {
+      "anyOf": [
+        {
+          "stats": [
+            {
+              "stat": "craft.alchemy",
+              "gte": 1
+            }
+          ]
+        },
+        {
+          "stats": [
+            {
+              "stat": "craft.forging",
+              "gte": 1
+            }
+          ]
+        },
+        {
+          "stats": [
+            {
+              "stat": "craft.formation",
+              "gte": 1
+            }
+          ]
+        },
+        {
+          "stats": [
+            {
+              "stat": "craft.talisman",
+              "gte": 1
+            }
+          ]
+        },
+        {
+          "stats": [
+            {
+              "stat": "craft.farming",
+              "gte": 1
+            }
+          ]
+        },
+        {
+          "stats": [
+            {
+              "stat": "craft.beast",
+              "gte": 1
+            }
+          ]
+        }
+      ]
+    },
+    "weight": 4,
+    "cooldownYears": 3,
+    "choices": [
+      {
+        "text": "Bán rẻ lấy tiếng",
+        "result": {
+          "text": "Hàng hết trước trưa, người ta nhớ mặt ngươi.",
+          "effects": {
+            "spiritStones": 5,
+            "reputation": {
+              "tan_tu": 5
+            },
+            "stat.charm": 2
+          }
+        }
+      },
+      {
+        "text": "Bán đắt, nói là hàng của đại sư",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Khách tin sái cổ.",
+          "effects": {
+            "spiritStones": 25,
+            "stat.charm": 1
+          }
+        },
+        "fail": {
+          "text": "Có người nhận ra ngươi không phải đại sư.",
+          "effects": {
+            "stat.charm": -2,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Làm tại chỗ cho khách xem",
+        "check": {
+          "stat": "craft.alchemy",
+          "difficulty": 20
+        },
+        "success": {
+          "text": "Khách vây kín, mua hết cả mẻ vừa ra lò.",
+          "effects": {
+            "craftXp": {
+              "alchemy": 3
+            },
+            "spiritStones": 15,
+            "stat.happiness": 3
+          }
+        },
+        "fail": {
+          "text": "Lò đan nổ, khói bay sang sạp thịt nướng.",
+          "effects": {
+            "stat.health": -3,
+            "stat.happiness": 1
+          }
+        }
+      },
+      {
+        "text": "Rao hàng",
+        "requires": {
+          "traitsAny": [
+            "kheo_mom"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Sạp ngươi đông nhất phố.",
+          "effects": {
+            "spiritStones": 20,
+            "stat.happiness": 3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bau_vat_lop_bui",
+    "category": "market",
+    "title": "Báu vật dưới lớp bụi",
+    "text": "Trên sạp đồ cũ có một cái bát mẻ đựng đinh. Lúc {name} chạm vào, bát ấm lên.",
+    "tags": [
+      "rare"
+    ],
+    "themes": [
+      "market",
+      "fortune"
+    ],
+    "conditions": {
+      "root": {
+        "usable": true
+      }
+    },
+    "weight": 1,
+    "luckAffected": true,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Mua luôn cả bát lẫn đinh",
+        "requires": {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 2
+            }
+          ]
+        },
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Là pháp bảo cổ, đã mất linh nhưng sửa được.",
+          "effects": {
+            "spiritStones": -2,
+            "addItems": [
+              "phap_bao_co"
+            ],
+            "stat.luck": 2
+          }
+        },
+        "fail": {
+          "text": "Là cái bát.",
+          "effects": {
+            "spiritStones": -2,
+            "addItems": [
+              "cai_bat"
+            ],
+            "stat.happiness": 1
+          }
+        }
+      },
+      {
+        "text": "Nói thật với ông chủ",
+        "requires": {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 1
+            }
+          ]
+        },
+        "result": {
+          "text": "Ông lão nhìn ngươi, rồi bán cho ngươi với giá một khối.",
+          "effects": {
+            "spiritStones": -1,
+            "addItems": [
+              "phap_bao_co"
+            ],
+            "karma": 5,
+            "meetNpc": {
+              "role": "ông lão bán đồ cũ",
+              "affinity": 15
+            },
+            "stat.daoHeart": 3
+          }
+        }
+      },
+      {
+        "text": "Hỏi nguồn gốc",
+        "result": {
+          "text": "Đào từ một ngôi mộ ở Bắc Mạc.",
+          "effects": {
+            "setFlags": [
+              "mo_co_bac_mac"
+            ],
+            "stat.intellect": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "toan_menh",
+    "category": "market",
+    "title": "Toán mệnh ở Toán Tinh Các",
+    "text": "Thầy bói của Toán Tinh Các chống cằm: \"Một quẻ mười khối. Không chuẩn không lấy tiền. Mà quẻ nào ta cũng chuẩn.\"",
+    "themes": [
+      "market"
+    ],
+    "conditions": {
+      "root": {
+        "usable": true
+      },
+      "stats": [
+        {
+          "stat": "spiritStones",
+          "gte": 10
+        }
+      ]
+    },
+    "weight": 3,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Hỏi tu đồ",
+        "result": {
+          "text": "\"Năm năm tới, đi về phía có nước, sẽ gặp cơ duyên.\" Lão nói chắc như đinh đóng cột.",
+          "effects": {
+            "spiritStones": -10,
+            "stat.luck": 3,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Hỏi nhân duyên",
+        "requires": {
+          "romance": {
+            "lover": true
+          }
+        },
+        "result": {
+          "text": "\"Người ấy đã ở gần ngươi, ngươi chỉ chưa nhìn kỹ.\"",
+          "effects": {
+            "spiritStones": -10,
+            "romance": {
+              "loverAffinity": 10
+            },
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Hỏi thọ nguyên",
+        "result": {
+          "text": "Thầy bói nhìn lâu, rồi trả lại tiền.",
+          "effects": {
+            "stat.happiness": -5,
+            "stat.daoHeart": 3
+          }
+        }
+      },
+      {
+        "text": "Không hỏi, mà xem thầy bói tự bói cho mình",
+        "result": {
+          "text": "Lão đánh rơi mai rùa. Hôm sau Toán Tinh Các đóng cửa sạp.",
+          "effects": {
+            "stat.intellect": 2,
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Ngồi xuống",
+        "requires": {
+          "traitsAny": [
+            "thien_vong_huu_lau"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Lão bói ba lần, ba lần quẻ trắng. Lão cúi chào ngươi.",
+          "effects": {
+            "stat.luck": 3,
+            "stat.charm": 2
+          }
+        }
+      }
+    ]
+  }
+]

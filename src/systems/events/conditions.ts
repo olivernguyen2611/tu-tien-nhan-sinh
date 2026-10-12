@@ -23,6 +23,8 @@ export function readValue(state: GameState, key: string): number {
     case 'spiritStones': return state.money.spiritStones;
     case 'karma': return state.social.karma;
     case 'age': return state.character.age;
+    case 'reputation.chinh': case 'reputation.ma': case 'reputation.tan_tu': case 'reputation.yeu': case 'reputation.trieu_dinh': case 'reputation.giang_ho':
+      return state.social.reputation[key.slice(11) as keyof GameState['social']['reputation']];
     default: return 0;
   }
 }
@@ -72,6 +74,7 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     }
   }
   if (c.flagsAll?.some((f) => !state.flags[f])) return false;
+  if (c.itemsAll?.some((i) => !(state.inventory[i] > 0))) return false;
   if (c.flagsNone?.some((f) => state.flags[f])) return false;
   if (c.traitsAny?.length && !c.traitsAny.some((t) => state.traits.includes(t))) return false;
   if (c.traitsAll?.some((t) => !state.traits.includes(t))) return false;
@@ -79,6 +82,10 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
   if (c.goldenFinger) return false;
   if (c.npc && !npcMeets(state, c.npc, content)) return false;
   if (c.romance && (!content || !romanceMeets(state, c.romance, content))) return false;
+  if (c.family) {
+    if (c.family.deadAny !== undefined && state.family.some((r) => !r.alive) !== c.family.deadAny) return false;
+    if (c.family.parentAlive !== undefined && state.family.some((r) => r.alive && (r.role === 'father' || r.role === 'mother')) !== c.family.parentAlive) return false;
+  }
   for (const s of c.stats ?? []) {
     const v = readValue(state, s.stat);
     if (s.gte !== undefined && v < s.gte) return false;
