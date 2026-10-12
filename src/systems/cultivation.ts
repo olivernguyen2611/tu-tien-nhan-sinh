@@ -13,6 +13,7 @@ import { currentTechnique, learnTechnique, techniqueCapReason, techniqueMul } fr
 import { sectHooks } from './sect';
 import { ownSectHooks } from './ownSect';
 import { chosenHooks } from './chosen';
+import { rebirthTalentHooks } from './rebirthTalents';
 import { offerFate } from './fate';
 import { breakthroughItem, carriedHooks, removeItems } from './items';
 import { pathSpeedBonus } from './paths';
@@ -163,6 +164,8 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
     ...chosenHooks(state, content),
     // Phúc báo from the last life (task 5b.8).
     ...blessingHooks(state, content),
+    // Thiên phú luân hồi (task 5b.1).
+    ...rebirthTalentHooks(state, content),
   ];
 }
 

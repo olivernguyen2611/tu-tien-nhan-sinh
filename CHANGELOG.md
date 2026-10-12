@@ -2,6 +2,18 @@
 
 ## [Chưa phát hành]
 
+### Task 5b.1 — Thiên phú luân hồi, Luân Hồi Đài (2026-10-12)
+- 11 thiên phú luân hồi trong `content/rebirth-talents.json`, mỗi cái 2–3 tầng, giá tăng dần.
+  - Thêm lượt bốc mệnh, ngộ tính, khí vận, căn cốt, đạo tâm.
+  - Thử linh căn thêm lần (`rootReroll`), thọ nguyên, tốc độ tu luyện.
+  - Bạc lúc chào đời, lượt làm mới Nghịch Thiên Cải Mệnh, kỳ ngộ dễ gặp hơn.
+- Màn **Luân Hồi Đài**: mở từ màn tiêu đề (sau kiếp đầu) và màn tổng kết đời. Tiêu điểm Luân Hồi để mở hoặc nâng tầng; thiên phú theo mọi kiếp sau.
+- Tầng n cho trọn hiệu ứng của tầng ấy (không cộng dồn với tầng dưới).
+  - `stat.*` và `lifespanPct` cộng một lần lúc chào đời.
+  - Các móc khác có tác dụng suốt đời qua `lifeHooks`.
+- Meta có thêm `rebirthTalents`; GameState có `rebirthTalents` (save cũ nhận `{}`).
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Task 5.6 — Hộ đạo / Lợi dụng / Mặc kệ (2026-10-12)
 - Cuối chuỗi của mỗi mô bản là một ngã rẽ sư đồ có ba lựa chọn (hiệu ứng `chosenRole`, điều kiện `chosen.role`):
   - **Hộ đạo**: khí vận lan sang sư phụ (kỳ ngộ ×1.3, đột phá +3%). Vài năm sau đồ đệ thành danh về báo đáp: lễ vật, danh tiếng, hoặc làm khách khanh cho tông môn tự lập.

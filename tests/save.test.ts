@@ -1,3 +1,4 @@
+import { legacy } from './fixtures';
 import { describe, expect, it } from 'vitest';
 import type { Content } from '../src/core/content';
 import { BalanceSchema, LifeTextsSchema, NamesSchema, OriginFileSchema, WorldSchema } from '../src/core/schemas';
@@ -53,6 +54,7 @@ const content: Content = {
   glossary: [],
   familyActions: [],
   traits: [],
+  ...legacy,
 };
 const WORLDS = ['thuong_lan'];
 

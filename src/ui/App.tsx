@@ -12,7 +12,7 @@ import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, rerollDestiny, rollDestiny } from '../systems/destiny';
 import {
   deleteSlot, exportSave, firstFreeSlot, latestSlot, listSlots, makeSave, parseSave, readMeta, readSlot, recordNewLife, creditRebirth,
-  slotTaken, writeSlot, type SaveFile,
+  slotTaken, writeSlot, buyRebirthTalent, type SaveFile,
 } from '../systems/save';
 import { checkDeath } from '../systems/time';
 import { GlossaryProvider } from './components/Tooltip';
@@ -47,8 +47,10 @@ import { build, decide, donate, foundSect } from '../systems/ownSect';
 import { newLifeCost, rebirthPoints } from '../systems/rebirth';
 import { earnedBlessings } from '../systems/blessings';
 import { rewind } from '../systems/rewind';
+import { nextTalentCost } from '../systems/rebirthTalents';
+import { RebirthScreen } from './screens/Rebirth';
 
-type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
+type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves' | 'rebirth';
 /** Why the slot list is open in pick mode. */
 type Picking = { purpose: 'new' } | { purpose: 'import'; save: SaveFile } | null;
 type Message = { text: string; tone: 'good' | 'bad' } | null;
@@ -97,6 +99,10 @@ function Screens({ content }: { content: Content }) {
     const r = creditRebirth(store, life.seed, rebirthPoints(life, content).total, earnedBlessings(life, content));
     setRebirth({ gained: r.gained, bank: r.meta.rebirthPoints });
   }, [screen, life]);
+
+  /** Where the Luân Hồi đài returns to. */
+  const [rebirthFrom, setRebirthFrom] = useState<Screen>('title');
+  const openRebirth = (from: Screen) => { setRebirthFrom(from); setScreen('rebirth'); };
 
   const openSaves = (from: Screen) => { setSavesFrom(from); setPicking(null); setMessage(null); setScreen('saves'); };
   const startNewLife = (target: number) => { setSlot(target); setPicking(null); setScreen('create'); };
@@ -158,6 +164,17 @@ function Screens({ content }: { content: Content }) {
       />
     );
   }
+  if (screen === 'rebirth') {
+    const meta = readMeta(store);
+    return (
+      <RebirthScreen content={content} points={meta.rebirthPoints} owned={meta.rebirthTalents}
+        onBuy={(id) => {
+          const cost = nextTalentCost(content, meta.rebirthTalents, id);
+          if (cost !== null && buyRebirthTalent(store, id, cost)) refresh((n) => n + 1);
+        }}
+        onBack={() => setScreen(rebirthFrom === 'death' && life && !life.alive ? 'death' : 'title')} />
+    );
+  }
   if (screen === 'create') {
     return (
       <CreateCharacterScreen
@@ -170,7 +187,7 @@ function Screens({ content }: { content: Content }) {
           if (cost > readMeta(store).rebirthPoints) return;
           setOriginCost(cost);
           // Tips only for the very first life on this browser.
-          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list }, content), content));
+          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list, rebirthTalents: readMeta(store).rebirthTalents }, content), content));
           setScreen('destiny');
         }}
       />
@@ -194,7 +211,8 @@ function Screens({ content }: { content: Content }) {
       <DeathScreen state={life} content={content} rebirth={rebirth} onReadLog={() => setScreen('main')} onNewLife={() => setScreen('create')}
         onGhost={() => { setLife(becomeGhost(life, content)); setScreen('main'); }}
         onHeir={(id) => { setLife(continueAsHeir(life, content, id)); setScreen('main'); }}
-        onRewind={() => { setLife(rewind(life, content)); setScreen('main'); }} />
+        onRewind={() => { setLife(rewind(life, content)); setScreen('main'); }}
+        onRebirth={() => openRebirth('death')} />
     );
   }
   if (screen === 'main' && life) {
@@ -337,6 +355,7 @@ function Screens({ content }: { content: Content }) {
         else { openSaves('title'); setPicking({ purpose: 'new' }); }
       }}
       onSaves={() => openSaves('title')}
+      onRebirth={() => openRebirth('title')}
       theme={theme}
       onToggleTheme={toggleTheme}
     />

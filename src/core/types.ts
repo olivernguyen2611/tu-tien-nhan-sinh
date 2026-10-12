@@ -61,6 +61,8 @@ export interface GameState {
    * realm (without log or these checkpoints), for a rewindOnDeath hook to go back to.
    */
   checkpoints: { age6: Checkpoint | null; realm: Checkpoint | null };
+  /** Task 5b.1: thiên phú luân hồi this life was born with (id → level), bought in earlier lives. */
+  rebirthTalents: Record<string, number>;
   /** Task 5b.8: Phúc báo brought from the last life (blessings.json id; career = the path that earned it). */
   blessings: { id: string; career?: string }[];
   /** Task 5.7: lives before this one in the same line (tộc phả), oldest first. */

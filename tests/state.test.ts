@@ -1,3 +1,4 @@
+import { legacy } from './fixtures';
 import { describe, expect, it } from 'vitest';
 import type { Content } from '../src/core/content';
 import { advanceYear, createLife } from '../src/core/state';
@@ -50,6 +51,7 @@ const content: Content = {
   clan,
   blessings,
   traits: [],
+  ...legacy,
 };
 
 describe('createLife', () => {

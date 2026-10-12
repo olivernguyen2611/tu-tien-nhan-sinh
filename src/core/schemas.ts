@@ -2263,3 +2263,35 @@ export const BlessingFileSchema = z
   })
   .strict();
 export type BlessingFile = z.infer<typeof BlessingFileSchema>;
+
+/** Task 5b.1: thiên phú luân hồi, bought with Luân Hồi points and kept for every later life. */
+export const RebirthTalentFileSchema = z
+  .object({
+    talents: z.array(
+      z
+        .object({
+          id,
+          name: z.string().min(1),
+          text: z.string().min(1),
+          /** Level n (1-based) gives levels[n-1] in full (not added to the levels below). */
+          levels: z
+            .array(
+              z
+                .object({
+                  cost: z.number().int().min(1),
+                  summary: z.string().min(1),
+                  /** stat.* and lifespanPct are given once at birth; other hooks last the whole life. */
+                  effects: z.array(EffectHookSchema).default([]),
+                  destinyRerolls: z.number().int().min(0).optional(),
+                  fateRefreshes: z.number().int().min(0).optional(),
+                  startSilver: z.number().int().min(0).optional(),
+                })
+                .strict(),
+            )
+            .min(1),
+        })
+        .strict(),
+    ),
+  })
+  .strict();
+export type RebirthTalentFile = z.infer<typeof RebirthTalentFileSchema>;

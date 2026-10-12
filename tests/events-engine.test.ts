@@ -1,3 +1,4 @@
+import { legacy } from './fixtures';
 import { describe, expect, it } from 'vitest';
 import type { Content } from '../src/core/content';
 import { BalanceSchema, EventFileSchema, NamesSchema, OriginFileSchema, TraitFileSchema, WorldSchema } from '../src/core/schemas';
@@ -58,6 +59,7 @@ const content: Content = {
   heir,
   clan,
   blessings,
+  ...legacy,
 };
 const ev = (id: string) => findEvent(content, id)!;
 const at = (s: GameState, age: number, patch: Partial<GameState> = {}): GameState =>

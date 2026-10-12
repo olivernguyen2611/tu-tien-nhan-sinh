@@ -5,6 +5,7 @@ import { Rng } from '../core/rng';
 import type { Trait } from '../core/schemas';
 import type { GameState } from '../core/types';
 import { blessingGains, blessingNames } from './blessings';
+import { rebirthTalentGains, rebirthTalentNames } from './rebirthTalents';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -54,7 +55,7 @@ export function confirmDestiny(state: GameState, content: Content): GameState {
   let lifespanPct = 0;
 
   // Phúc báo from the last life (task 5b.8) give their one-time gains with the traits.
-  const gains = [...chosen.map((t) => t.effects), blessingGains(state, content)];
+  const gains = [...chosen.map((t) => t.effects), blessingGains(state, content), rebirthTalentGains(state, content)];
   for (const effects of gains) {
     for (const e of effects) {
       if (e.hook.startsWith('stat.') && e.add !== undefined) {
@@ -69,6 +70,7 @@ export function confirmDestiny(state: GameState, content: Content): GameState {
   }
 
   const lifespan = Math.max(1, Math.round(state.cult.lifespan * (1 + lifespanPct)));
+  const talentNames = rebirthTalentNames(state, content);
   const notable = chosen.filter((t) => t.rarity === 'thien' || t.rarity === 'than');
   const birth = state.log[0];
   const lines = [
@@ -76,6 +78,7 @@ export function confirmDestiny(state: GameState, content: Content): GameState {
     { text: `Tiên thiên khí vận: ${chosen.map((t) => t.name).join(', ')}.`, tone: notable.length ? ('rare' as const) : ('normal' as const) },
     ...notable.map((t) => ({ text: t.flavor, tone: 'rare' as const })),
     ...(state.blessings.length > 0 ? [{ text: `Phúc báo kiếp trước: ${blessingNames(state.blessings, content).join(', ')}.`, tone: 'rare' as const }] : []),
+    ...(talentNames.length > 0 ? [{ text: `Thiên phú luân hồi: ${talentNames.join(', ')}.`, tone: 'good' as const }] : []),
   ];
 
   return {
