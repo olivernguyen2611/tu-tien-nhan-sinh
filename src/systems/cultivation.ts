@@ -15,6 +15,7 @@ import { ownSectHooks } from './ownSect';
 import { chosenHooks } from './chosen';
 import { rebirthTalentHooks } from './rebirthTalents';
 import { goldenFingerHooks } from './goldenFinger';
+import { comboHooks } from './destiny';
 import { offerFate } from './fate';
 import { breakthroughItem, carriedHooks, removeItems } from './items';
 import { pathSpeedBonus } from './paths';
@@ -169,6 +170,8 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
     ...rebirthTalentHooks(state, content),
     // Kim Thủ Chỉ (task 5b.2).
     ...goldenFingerHooks(state, content),
+    // Tổ hợp ẩn (task 5b.3).
+    ...comboHooks(state, content),
   ];
 }
 

@@ -2,6 +2,14 @@
 
 ## [Chưa phát hành]
 
+### Task 5b.3 — Khóa ô, 5 ô khí vận, tổ hợp ẩn (2026-10-12)
+- **Khóa ô**: ở màn bốc mệnh, bấm "Khóa ô này" để giữ một khí vận khi quay lại. Mỗi ô khóa tốn 3 điểm Luân Hồi, trừ khi xác nhận (`balance.traits.locks`, `lockCost`). Developer mode khóa miễn phí.
+- **Thêm ô**: thiên phú luân hồi mới Mệnh Bàn Thêm Ô (4 rồi 5 ô, tối đa `balance.traits.maxSlots`) và Định Mệnh Ấn (khóa được 2 ô).
+- **60 khí vận** (thêm 20): 5 Phàm, 4 Lương, 3 Ưu, 3 Tuyệt, 2 Thiên, 1 Thần, 2 Ác vận. Chỉ dùng móc đã có tác dụng.
+- **12 tổ hợp ẩn** trong `content/trait-combos.json`: có đủ 2–3 khí vận nhất định thì lúc xác nhận hiện dòng "Tổ hợp ẩn" và nhận hiệu ứng bí mật (chỉ số cộng một lần, các móc khác suốt đời). Ví dụ: Truy Phong, Đèn Cạn Gặp Dầu, Gian Thương Trời Sinh. Validator kiểm tra id khí vận trong tổ hợp.
+- GameState `destiny` có thêm `slots`, `locked`, `maxLocks` (save cũ được bù mặc định).
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Task 5b.2 — Kim Thủ Chỉ (2026-10-12)
 - 7 loại trong `content/golden-fingers.json`: Lão gia gia trong nhẫn, Hệ thống, Bình nhỏ thần bí, Ký ức kiếp trước, Đọc tâm, Tùy thân động thiên, Thiên đạo bảng. Mỗi loại 3–4 cấp thức tỉnh theo cảnh giới (cấp sau cộng thêm vào cấp trước) và một rủi ro.
 - Cách nhận:

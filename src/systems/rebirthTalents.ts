@@ -26,7 +26,7 @@ function activeLevels(owned: Owned, content: Content): { t: Talent; level: Level
 }
 
 /** Sum of a numeric bonus (extra destiny rerolls, fate refreshes, silver at birth). */
-export function rebirthTalentBonus(owned: Owned, content: Content, key: 'destinyRerolls' | 'fateRefreshes' | 'startSilver'): number {
+export function rebirthTalentBonus(owned: Owned, content: Content, key: 'destinyRerolls' | 'fateRefreshes' | 'startSilver' | 'destinySlots' | 'destinyLocks'): number {
   return activeLevels(owned, content).reduce((n, { level }) => n + (level[key] ?? 0), 0);
 }
 

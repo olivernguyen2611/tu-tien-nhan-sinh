@@ -3,7 +3,7 @@
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, TraitComboFileSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -55,6 +55,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'blessings.json') return BlessingFileSchema;
     if (rest === 'rebirth-talents.json') return RebirthTalentFileSchema;
     if (rest === 'golden-fingers.json') return GoldenFingerFileSchema;
+    if (rest === 'trait-combos.json') return TraitComboFileSchema;
     return null;
   }
   // Belongs to one world.
@@ -94,6 +95,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   let chosenIds: string[] | null = null;
   let fingerIds: string[] | null = null;
   const fingerRealms: { file: string; finger: string; realm: string }[] = [];
+  const comboTraits: { file: string; combo: string; traits: string[] }[] = [];
   let careerIds: string[] | null = null;
   const sectFiles: { file: string; sects: Sect[] }[] = [];
   const parsedShared: { balance?: Balance; realms?: RealmsFile; roots?: RootsFile; aptitudes?: AptitudesFile } = {};
@@ -122,6 +124,11 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       problems.push(...duplicates(file, 'Kim Thủ Chỉ', fingers));
       fingerIds = fingers.map((f) => f.id);
       fingerRealms.push(...fingers.flatMap((f) => f.levels.map((l) => ({ file, finger: f.id, realm: l.realm }))));
+    }
+    if (schema === TraitComboFileSchema) {
+      const combos = (parsed.data as { combos: { id: string; traits: string[] }[] }).combos;
+      problems.push(...duplicates(file, 'tổ hợp ẩn', combos));
+      comboTraits.push(...combos.map((c) => ({ file, combo: c.id, traits: c.traits })));
     }
     if (schema === RebirthTalentFileSchema) problems.push(...duplicates(file, 'thiên phú luân hồi', (parsed.data as { talents: { id: string }[] }).talents));
     if (schema === StatExtremesFileSchema) {
@@ -281,6 +288,11 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       ].filter((x): x is string => !!x);
       for (const t of named) if (!chosenIds.includes(t)) problems.push({ file, level: 'error', message: `sự kiện "${event.id}" nhắc tới mô bản khí vận chi tử không tồn tại "${t}"` });
     }
+  }
+  // Task 5b.3: a tổ hợp ẩn needs real, different Tiên Thiên Khí Vận.
+  for (const { file, combo, traits } of comboTraits) {
+    if (new Set(traits).size !== traits.length) problems.push({ file, level: 'error', message: `tổ hợp "${combo}" có khí vận lặp lại` });
+    for (const t of traits) if (traitIds && !traitIds.has(t)) problems.push({ file, level: 'error', message: `tổ hợp "${combo}" nhắc tới khí vận không tồn tại "${t}"` });
   }
   // Task 5b.2: Kim Thủ Chỉ named by events must exist; their levels need real realms.
   if (fingerIds) {

@@ -9,7 +9,7 @@ import { travel } from '../systems/regions';
 import { act, settle } from '../systems/combat';
 import { performFamilyAction } from '../systems/relationships';
 import { findEvent, resolveChoice } from '../systems/events/engine';
-import { confirmDestiny, rerollDestiny, rollDestiny } from '../systems/destiny';
+import { confirmDestiny, lockCost, rerollDestiny, rollDestiny, toggleLock } from '../systems/destiny';
 import {
   deleteSlot, exportSave, firstFreeSlot, latestSlot, listSlots, makeSave, parseSave, readMeta, readSlot, recordNewLife, creditRebirth,
   slotTaken, writeSlot, buyRebirthTalent, type SaveFile,
@@ -202,8 +202,12 @@ function Screens({ content }: { content: Content }) {
         content={content}
         rollCount={rollCount}
         unlimited={devMode}
+        lockCost={devMode ? 0 : content.balance.traits.lockCost}
+        canLock={life.destiny.locked.length < life.destiny.maxLocks
+          && (devMode || originCost + lockCost(life, content) + content.balance.traits.lockCost <= readMeta(store).rebirthPoints)}
+        onLock={(id) => setLife(toggleLock(life, id))}
         onReroll={() => { setLife(rerollDestiny(life, content, devMode)); setRollCount((n) => n + 1); }}
-        onConfirm={() => { recordNewLife(store, originCost, !!life.goldenFinger); setLife(confirmDestiny(life, content)); setScreen('main'); }}
+        onConfirm={() => { recordNewLife(store, originCost + (devMode ? 0 : lockCost(life, content)), !!life.goldenFinger); setLife(confirmDestiny(life, content)); setScreen('main'); }}
       />
     );
   }
