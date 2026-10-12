@@ -207,6 +207,7 @@
       { "rank": 3, "contribution": 200, "realm": "truc_co", "stage": 0 }
     ],
     "masterMinRank": 2,
+    "missionBoard": 4,
     "masterChanceBase": 0.25,
     "masterChancePerPoint": 0.01,
     "masterSpeed": 0.1

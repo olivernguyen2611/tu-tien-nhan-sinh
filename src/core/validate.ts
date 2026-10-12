@@ -104,6 +104,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   const challengeRefs: { file: string; id: string; rules: { origin?: string; difficulty?: string; traits?: string[] }; goal: { realmMin?: string } }[] = [];
   let careerIds: string[] | null = null;
   const sectFiles: { file: string; sects: Sect[] }[] = [];
+  const missionSects: { file: string; missions: SectLife['missions'] }[] = [];
   const parsedShared: { balance?: Balance; realms?: RealmsFile; roots?: RootsFile; aptitudes?: AptitudesFile } = {};
 
   for (const [file, raw] of Object.entries(files)) {
@@ -210,7 +211,10 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       problems.push(...duplicates(file, 'thiên phú', list));
       fateIds = list.map((x) => x.id);
     }
-    if (schema === SectLifeSchema) problems.push(...duplicates(file, 'nhiệm vụ', (parsed.data as SectLife).missions));
+    if (schema === SectLifeSchema) {
+      problems.push(...duplicates(file, 'nhiệm vụ', (parsed.data as SectLife).missions));
+      missionSects.push({ file, missions: (parsed.data as SectLife).missions });
+    }
     if (schema === WorldSchema && (parsed.data as World).sectRecruitEvent) rootTests.push({ file, event: (parsed.data as World).sectRecruitEvent! });
     if (schema === TechniqueFileSchema) techniques = parsed.data as Technique[];
     if (schema === SectFileSchema) sectFiles.push({ file, sects: parsed.data as Sect[] });
@@ -260,6 +264,12 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   }
 
   problems.push(...checkTechniquesAndSects(techniques, sectFiles, parsedShared));
+  const knownSects = new Set(sectFiles.flatMap((f) => f.sects.map((x) => x.id)));
+  for (const { file, missions } of missionSects) {
+    for (const m of missions) for (const sid of m.sects ?? []) {
+      if (!knownSects.has(sid)) problems.push({ file, level: 'error', message: `nhiệm vụ "${m.id}": tông môn không tồn tại "${sid}"` });
+    }
+  }
   if (martialFile && parsedShared.balance) {
     const m = parsedShared.balance.martial;
     const n = martialFile.stages.length;

@@ -1285,6 +1285,8 @@ export const BalanceSchema = z
         masterChancePerPoint: z.number().min(0),
         /** Cultivation speed bonus while having a master. */
         masterSpeed: z.number().min(0),
+        /** Playtest 2: missions posted on the board each year (picked from those the rank allows). */
+        missionBoard: z.number().int().min(1),
       })
       .strict(),
     /** Task 2.7: Nghịch Thiên Cải Mệnh (fate-talents.md). */
@@ -1815,6 +1817,8 @@ export const SectLifeSchema = z
             id,
             name: z.string().min(1),
             minRank: z.number().int().min(0),
+            /** Playtest 2: only these sects post the mission (omit = every sect). */
+            sects: ids.optional(),
             text: z.string().min(1),
             stat: z.enum([...MORTAL_STATS, ...APTITUDES]),
             difficulty: z.number().min(0).max(100),

@@ -2,6 +2,12 @@
 
 ## [Chưa phát hành]
 
+### Chơi thử 2 — Nhiệm vụ và sự kiện tông môn (2026-10-12)
+- Bảng nhiệm vụ tông môn: mỗi năm hiện 4 việc (`balance.sects.missionBoard`) chọn từ các việc cấp bậc cho phép, đổi theo năm. Nhiệm vụ có thể chỉ riêng một số tông (`sects`).
+- 21 nhiệm vụ mới (tổng 26), đủ bốn cấp Ký danh → Chân truyền, có việc riêng cho Bách Thảo Cốc, Vô Ưu Tự, Tàng Phong Kiếm Các, U Hà Ma Tông.
+- 12 sự kiện tông môn mới (`events/sect-life.json`): ngoại môn đại bỉ, trưởng lão giảng đạo, khảo hạch cuối năm, tranh chỗ tu luyện, lễ tế tổ, linh thú sổng chuồng, đồng môn hỏi vay, yêu thú công sơn, bí cảnh luyện thí, chưởng môn triệu kiến, nhà bếp thiếu người, tin đồn nội gián.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Chơi thử 2 — Kỳ ngộ cắt ngang bế quan (2026-10-12)
 - Mỗi năm bế quan có 20% gặp chuyện (`balance.seclusion.interruptChance`): cửa động phủ mở, người chơi trả lời sự kiện rồi tự quyết bế quan tiếp hay không.
 - 10 sự kiện bế quan mới (chủ đề `be_quan`, chỉ đến khi đang bế quan): đốn ngộ, linh mạch dâng trào, tâm ma gõ cửa, yêu thú đào hang, dị tượng ngoài núi, kẻ trộm động phủ, tiểu hồ ly lạc vào, phù truyền tin của người nhà, cảm ngộ chiêu thức, địa chấn.
