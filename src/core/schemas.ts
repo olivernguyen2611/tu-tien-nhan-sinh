@@ -203,6 +203,8 @@ export const EffectsSchema = z
         role: z.string().min(1),
         /** Task 3.9: always an adult (romance.minAge), e.g. someone rescued in a mature event. */
         adult: z.boolean().optional(),
+        /** Playtest 2: about the player's age (balance.npcs.peerAgeOffset). */
+        peer: z.boolean().optional(),
         realm: z.string().optional(),
         stage: z.number().int().min(0).optional(),
         root: z.boolean().optional(),
@@ -691,6 +693,8 @@ export const BalanceSchema = z
         max: z.number().int().min(1),
         /** New NPC's age = player's age + a value in this range (never under minAge). */
         ageOffset: z.tuple([z.number().int(), z.number().int()]),
+        /** Playtest 2: the same for someone of the player's generation (meetNpc.peer, romance meetings). */
+        peerAgeOffset: z.tuple([z.number().int(), z.number().int()]),
         minAge: z.number().int().min(0),
         /** Chance a new NPC has a spirit root, and their aptitude range (0–100). */
         rootChance: probability,
@@ -963,6 +967,11 @@ export const BalanceSchema = z
         dualCultProgress: z.number().min(0),
         /** A year with no care (Bầu bạn, quà, song tu, làm lành, con cái) cools the spouse. */
         neglectAffinity: z.number(),
+        /** Playtest 2: chance the neglect line is logged in a neglected year (the cooling always happens). */
+        neglectLogChance: probability,
+        /** Playtest 2: each failed try at a child adds this to the next try, up to birthMax. */
+        birthPityStep: z.number().min(0),
+        birthMax: probability,
         /** Yearly joy from a warm marriage (affinity ≥ warmAt) or gloom from a cold one (< coldAt). */
         warmAt: z.number(),
         warmHappiness: z.number(),
@@ -1198,6 +1207,9 @@ export const BalanceSchema = z
         /** Failures at a realm's peak before the bottleneck slows cultivation. */
         bottleneckFails: z.number().int().min(1),
         bottleneckSpeedMul: z.number().min(0).max(1),
+        /** Playtest 2: each year waiting at a realm's peak adds this many % to the next big breakthrough, up to Max. */
+        peakWaitPerYear: z.number().min(0),
+        peakWaitMax: z.number().min(0),
         /** Foundation grade score = d100 + (comprehension − 50) × perPoint + (daoHeart − 50) × perPoint. */
         foundationPerPoint: z.number().min(0),
         /** Minimum score for each grade id; grades not listed are the floor. */
@@ -1289,6 +1301,8 @@ export const BalanceSchema = z
         masterChancePerPoint: z.number().min(0),
         /** Cultivation speed bonus while having a master. */
         masterSpeed: z.number().min(0),
+        /** Playtest 2: after the first year at a rank, the stipend is logged only every this many years. */
+        stipendLogEvery: z.number().int().min(1),
         /** Playtest 2: missions posted on the board each year (picked from those the rank allows). */
         missionBoard: z.number().int().min(1),
       })
@@ -2126,12 +2140,13 @@ export const RomanceFileSchema = z
         childRoot: z.string().min(1),
         childNoRoot: z.string().min(1),
         /** Playtest 2026-10-12, phu thê. */
-        company: z.string().min(1),
+        /** Playtest 2: several lines, one picked at random. */
+        company: z.array(z.string().min(1)).min(1),
         dualCult: z.string().min(1),
         reconcileYes: z.string().min(1),
         reconcileNo: z.string().min(1),
         divorce: z.string().min(1),
-        neglect: z.string().min(1),
+        neglect: z.array(z.string().min(1)).min(1),
         spouseLeft: z.string().min(1),
       })
       .strict(),

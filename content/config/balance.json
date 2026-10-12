@@ -140,6 +140,8 @@
     "deviationDaoHeart": -10,
     "bottleneckFails": 2,
     "bottleneckSpeedMul": 0.3,
+    "peakWaitPerYear": 1,
+    "peakWaitMax": 25,
     "foundationPerPoint": 0.2,
     "foundationThresholds": { "trung": 40, "thuong": 75, "hoan_my": 95 },
     "foundationSpeed": { "ha": 0.9, "trung": 1.0, "thuong": 1.1, "hoan_my": 1.2 }
@@ -208,6 +210,7 @@
     ],
     "masterMinRank": 2,
     "missionBoard": 4,
+    "stipendLogEvery": 10,
     "masterChanceBase": 0.25,
     "masterChancePerPoint": 0.01,
     "masterSpeed": 0.1
@@ -258,6 +261,7 @@
   "npcs": {
     "max": 20,
     "ageOffset": [-5, 15],
+    "peerAgeOffset": [-3, 3],
     "minAge": 6,
     "rootChance": 0.4,
     "aptitude": [20, 80],
@@ -471,7 +475,9 @@
     "weddingHappiness": 20,
     "dualCultivationMul": 1.3,
     "birthChance": 0.5,
-    "cultivatorFertility": 0.4,
+    "cultivatorFertility": 0.6,
+    "birthPityStep": 0.1,
+    "birthMax": 0.9,
     "motherMaxAge": 45,
     "cultivatorMotherMaxAge": 300,
     "maxChildren": 6,
@@ -483,6 +489,7 @@
     "companyHappiness": 5,
     "dualCultProgress": 8,
     "neglectAffinity": -4,
+    "neglectLogChance": 0.35,
     "warmAt": 70,
     "warmHappiness": 3,
     "coldAt": 30,

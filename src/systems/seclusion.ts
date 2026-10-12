@@ -20,7 +20,9 @@ function atPeak(state: GameState, content: Content): boolean {
 export function seclusionView(state: GameState, content: Content): SeclusionView {
   const options = content.balance.seclusion.options[state.cult.realm] ?? [];
   if (!state.alive || options.length === 0) return { options: [], blocked: 'Chưa vào Luyện Khí' };
-  if (state.events.pending || state.fate || state.combat) return { options, blocked: 'Còn việc chưa xong' };
+  if (state.combat) return { options, blocked: 'Đang giao chiến' };
+  if (state.fate) return { options, blocked: 'Đang chờ Nghịch Thiên Cải Mệnh' };
+  if (state.events.pending) return { options, blocked: 'Còn một chuyện đang chờ ngươi quyết định' };
   if (atPeak(state, content)) return { options, blocked: 'Tu vi đã viên mãn, cần đột phá' };
   return { options, blocked: null };
 }

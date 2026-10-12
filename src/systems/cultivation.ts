@@ -412,6 +412,11 @@ export function cultivateYear(state: GameState, content: Content): GameState {
   if (progress >= 100 && lastStage) {
     // Peak of the realm: waits for the big breakthrough (task 2.6). Say it once.
     if (!wasFull) log = pushLine(log, { text: fillRealm(texts.peak, s, content), tone: 'good' });
+    // Playtest 2: each year spent at the peak builds up a little for the big breakthrough (tích lũy), capped.
+    const mb = content.balance.majorBreakthrough;
+    if (mb.openRealms.includes(s.cult.realm) || s.cult.realm === 'luyen_khi') {
+      s = { ...s, cult: { ...s.cult, nextBonus: Math.min(mb.peakWaitMax, s.cult.nextBonus + mb.peakWaitPerYear) } };
+    }
   } else if (progress >= 100) {
     const base = s.cult.realm === 'luyen_khi'
       ? content.balance.realmStages.luyenKhiLevelUpChance

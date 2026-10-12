@@ -288,10 +288,12 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   let next = state;
   // Task 3.4: someone new becomes the event's NPC; then the ledger changes for that NPC.
   if (fx.meetNpc) {
-    const { role, realm, stage, root, affinity, favor, grudge } = fx.meetNpc;
+    const { role, realm, stage, root, affinity, favor, grudge, peer } = fx.meetNpc;
     // Someone met to be courted, wed, or in a mature event is always of age (PLAN H).
     const minAge = fx.romance?.pursue || fx.romance?.marry || fx.meetNpc.adult ? content.balance.romance.minAge : undefined;
-    const met = createNpc(next, content, { role, realm, stage, root, minAge, affinity: affinity === undefined ? undefined : 50 + affinity, favor, grudge });
+    // Playtest 2: someone to court is of the player's generation, not 10–15 years older.
+    const peerAge = peer || !!fx.romance?.pursue || !!fx.romance?.marry;
+    const met = createNpc(next, content, { role, realm, stage, root, minAge, peer: peerAge, affinity: affinity === undefined ? undefined : 50 + affinity, favor, grudge });
     next = { ...met.state, events: { ...met.state.events, npc: met.id } };
   }
   const npcId = next.events.npc;

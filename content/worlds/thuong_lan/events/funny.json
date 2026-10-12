@@ -78,9 +78,17 @@
           "difficulty": 50
         },
         "success": {
-          "text": "Hai người nhìn nhau, đỏ mặt. Bà mối thu tiền công rất nhanh.",
+          "text": "Hai người nhìn nhau, đỏ mặt. Bà mối thu tiền công rất nhanh. Từ nay {npc} là người đã đính ước với ngươi.",
           "effects": {
             "stat.happiness": 8,
+            "meetNpc": {
+              "role": "người đã đính ước",
+              "affinity": 20,
+              "peer": true
+            },
+            "romance": {
+              "pursue": true
+            },
             "setFlags": [
               "da_dinh_than"
             ]

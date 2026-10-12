@@ -150,7 +150,11 @@ export function sectYear(state: GameState, content: Content): GameState {
     money: { ...state.money, spiritStones: state.money.spiritStones + stones },
     social: { ...state.social, karma: clamp(state.social.karma + (cfg.karmaPerYear[sect.id] ?? 0), -100, 100) },
   };
-  if (stones > 0) s = { ...s, log: addLines(s, [{ text: fill(life.texts.stipend, { sect: sect.name, stones }), tone: 'normal' }]) };
+  // Playtest 2: the stipend line shows when the amount is new (first year at a rank) and then once a decade, not every year.
+  const yearsAtRank = state.character.age - state.sect.since;
+  if (stones > 0 && (yearsAtRank <= 1 || yearsAtRank % cfg.stipendLogEvery === 0)) {
+    s = { ...s, log: addLines(s, [{ text: fill(life.texts.stipend, { sect: sect.name, stones }), tone: 'normal' }]) };
+  }
 
   if (s.sect.rank === 0) {
     if (s.character.age - s.sect.since >= cfg.outerAfterYears) s = promoteSect(s, content);
