@@ -87,6 +87,8 @@ const BaseConditionsSchema = z
       .optional(),
     /** Task 3.9: family state ({deceased} = a relative who has died). */
     family: z.object({ deadAny: z.boolean().optional(), parentAlive: z.boolean().optional() }).strict().optional(),
+    /** Task 4.10: nearEnd = years left ≤ balance.lifespan.pressureLeftPct of the lifespan; maxLeft = at most this many years left. */
+    lifespan: z.object({ nearEnd: z.boolean().optional(), maxLeft: z.number().int().min(0).optional() }).strict().optional(),
     /** Task 3.4: the NPC this event is about (met earlier, or picked by an npcTrigger). */
     npc: z
       .object({
@@ -187,6 +189,8 @@ export const EffectsSchema = z
     seclusionYears: z.number().int().min(1).optional(),
     /** Task 3.9: years of lifespan (burning blood: −10). */
     lifespanYears: z.number().int().optional(),
+    /** Task 4.10: share of the current lifespan added (a seized young body: +0.3); scales with the realm. */
+    lifespanPct: z.number().optional(),
     /** Task 3.9: tâm ma seeds (counted for the heart-demon system to come). */
     /** Tâm ma gained (task 3.9); gains shrink by the heartDemonResist hook (task 3.10), losses do not. */
     heartDemon: z.number().int().optional(),
@@ -226,7 +230,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'heartDemon', 'relativeDies', 'seclusionYears'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'heartDemon', 'relativeDies', 'seclusionYears'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -319,6 +323,8 @@ export const EventSchema = z
     oncePerLife: z.boolean().default(false),
     /** Task 3.4: not in the yearly pool; fires when an NPC's ledger calls for it (that NPC is the event's NPC). */
     npcTrigger: z.enum(['revenge', 'repay', 'reveal']).optional(),
+    /** Task 4.10: fires as soon as it is eligible, ahead of the yearly roll (due follow-ups still come first). */
+    urgent: z.boolean().default(false),
     choices: z.array(ChoiceSchema).min(1),
   })
   .strict();
@@ -584,6 +590,8 @@ export const BalanceSchema = z
         mortalBase: z.number().int().min(1),
         mortalVariance: z.number().int().min(0),
         healthAdjustMax: z.number().int().min(0),
+        /** Task 4.10: "đại hạn sắp tới" once the years left are at most this share of the lifespan. */
+        pressureLeftPct: probability,
       })
       .strict(),
     /** Task 1.11: "Tua nhanh" stops after at most this many years. */

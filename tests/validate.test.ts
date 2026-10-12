@@ -11,7 +11,7 @@ const balance = {
     fatherAge: [20, 35], motherAge: [17, 30], affinityStart: [55, 85], olderSiblings: [0, 2], olderSiblingGap: [2, 6],
     youngerSiblingChance: 0.12, motherMinAgeForChild: 16, motherMaxAgeForChild: 40, maxSiblings: 4, affinityDecay: 1, grief: { father: [-20, -30], mother: [-20, -30], sibling: [-15, -15], child: [-25, -40], parentDaoHeart: 2 },
   },
-  lifespan: { mortalBase: 70, mortalVariance: 10, healthAdjustMax: 10 },
+  lifespan: { mortalBase: 70, mortalVariance: 10, healthAdjustMax: 10, pressureLeftPct: 0.1 },
   fastForward: { maxYears: 10 },
   aging: { recoverPerYear: 3, recoverCap: 70, declineStartAge: 50, healthDeclinePerYear: 1, illnessStartAge: 60, illnessChancePerYear: 0.008, illnessHealthLoss: [5, 15], illnessHappinessLoss: 5, epitaphKarma: 30, milestoneAges: [60], milestoneHealth: -5, milestoneCharm: -3 },
   realms: realBalance.realms,

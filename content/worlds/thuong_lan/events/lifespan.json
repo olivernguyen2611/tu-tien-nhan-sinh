@@ -1,0 +1,237 @@
+[
+  {
+    "id": "di_ngon",
+    "category": "lifespan",
+    "title": "Di ngôn",
+    "text": "Ngọn đèn trong phòng cháy đến tim. Ngươi biết đây là năm cuối cùng, không cần ai bói.",
+    "themes": ["lifespan"],
+    "conditions": {
+      "lifespan": { "maxLeft": 1 },
+      "age": { "min": 40 }
+    },
+    "weight": 1,
+    "urgent": true,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Gọi hậu bối, truyền lại y bát",
+        "result": {
+          "text": "Ngươi nói ba canh giờ liền, từ khẩu quyết đến chỗ giấu tiền. Người nghe khóc, rồi ghi chép rất chăm.",
+          "effects": { "stat.happiness": 15, "karma": 5, "setFlags": ["di_ngon_truyen_y_bat"] }
+        }
+      },
+      {
+        "text": "Chôn hết gia sản, để lại tấm bản đồ cho người hữu duyên",
+        "result": {
+          "text": "Tấm bản đồ vẽ rất xấu, cố ý. Trăm năm sau sẽ có kẻ vì nó mà đánh nhau sứt đầu.",
+          "effects": { "stat.happiness": 10, "stat.intellect": 2, "karma": 3, "setFlags": ["di_ngon_dong_phu"] }
+        }
+      },
+      {
+        "text": "Viết một bức thư cho kẻ thù",
+        "result": {
+          "text": "Thư chỉ một dòng: \"Ta đi trước, ngươi cứ thong thả.\" Viết xong ngươi cười cả đêm.",
+          "effects": { "stat.happiness": 20, "stat.daoHeart": 3, "setFlags": ["di_ngon_thu_ke_thu"] }
+        }
+      },
+      {
+        "text": "Không để lại gì",
+        "result": {
+          "text": "Đến tay không, đi tay không. Ngươi pha một ấm trà, uống hết, không chừa ai.",
+          "effects": { "stat.daoHeart": 5, "stat.happiness": 5, "heartDemon": -10 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "dai_han_sap_toi",
+    "category": "lifespan",
+    "title": "Đại hạn sắp tới",
+    "text": "Sáng nay vận công, sợi tóc bạc bên thái dương không chịu đen lại. Đan điền vẫn đầy, nhưng thọ nguyên thì đã thấy đáy.",
+    "themes": ["lifespan"],
+    "conditions": {
+      "lifespan": { "nearEnd": true },
+      "realm": { "min": "luyen_khi" }
+    },
+    "weight": 1,
+    "urgent": true,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Bế quan liều một phen phá cảnh",
+        "result": {
+          "text": "Ngươi đóng cửa động phủ, khắc lên vách: \"Không thành thì thôi.\" Khắc xong lại thấy hơi xui, nhưng không xóa.",
+          "effects": { "nextBreakthroughBonus": 15, "seclusionYears": 3, "stat.daoHeart": 3, "heartDemon": 5, "stat.happiness": -5, "setFlags": ["dai_han"] }
+        }
+      },
+      {
+        "text": "Đi khắp nơi dò tin thọ đan",
+        "result": {
+          "text": "Ngươi gửi thư cho mọi người quen, kể cả mấy kẻ từng muốn giết ngươi. Lần này cũng phải hạ mình.",
+          "effects": { "followUp": { "event": "tho_dan_dau_gia", "afterYears": [1, 2] }, "stat.happiness": -5, "stat.charm": -2, "setFlags": ["dai_han"] }
+        }
+      },
+      {
+        "text": "Tìm một thân xác trẻ",
+        "requires": { "stats": [{ "stat": "karma", "lte": -20 }] },
+        "result": {
+          "text": "Ngươi bắt đầu nhìn người trẻ bằng ánh mắt của kẻ đi chợ chọn áo.",
+          "effects": { "followUp": { "event": "doat_xa_dem_mua", "afterYears": [1, 1] }, "karma": -5, "heartDemon": 5, "stat.charm": -3, "setFlags": ["dai_han"] }
+        }
+      },
+      {
+        "text": "Thuận theo thiên mệnh",
+        "result": {
+          "text": "Ngươi về thăm chỗ cũ, ăn bát mì ở quán đầu làng. Mì vẫn dở như năm mười tuổi. Lòng bỗng nhẹ hẳn.",
+          "effects": { "stat.daoHeart": 5, "stat.happiness": 10, "heartDemon": -10, "setFlags": ["dai_han", "thuan_thien"] }
+        }
+      }
+    ]
+  },
+  {
+    "id": "dai_han_pham_nhan",
+    "category": "lifespan",
+    "title": "Tuổi già gõ cửa",
+    "text": "Gối mỏi, mắt mờ, ăn bát cơm cũng phải nghỉ hai lần. Thầy lang bắt mạch xong thì im lặng hơi lâu.",
+    "themes": ["lifespan"],
+    "conditions": {
+      "lifespan": { "nearEnd": true },
+      "realm": { "max": "pham_nhan" },
+      "age": { "min": 40 }
+    },
+    "weight": 1,
+    "urgent": true,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Bán ruộng mua củ sâm trăm năm",
+        "requires": { "stats": [{ "stat": "silver", "gte": 200 }] },
+        "result": {
+          "text": "Sâm đắng như mật. Ngươi khỏe ra trông thấy, ruộng thì không còn.",
+          "effects": { "silver": -200, "lifespanYears": 3, "stat.health": 10, "stat.happiness": -3 }
+        }
+      },
+      {
+        "text": "Lên núi cầu tiên",
+        "check": { "stat": "stat.luck", "difficulty": 75 },
+        "success": {
+          "text": "Một lão đạo sĩ đi ngang, thấy ngươi leo núi cực khổ thì cho một viên thuốc, bảo \"nể cái chân\".",
+          "effects": { "lifespanYears": 8, "stat.health": 10, "stat.happiness": 10 }
+        },
+        "fail": {
+          "text": "Trên núi chỉ có gió và một con dê. Xuống núi ngươi trẹo chân.",
+          "effects": { "stat.health": -10, "stat.happiness": -5 }
+        }
+      },
+      {
+        "text": "Chép gia phả, dặn dò con cháu",
+        "result": {
+          "text": "Gia phả chép đến đời thứ chín thì hết giấy. Ngươi dặn đời sau mua giấy tốt hơn.",
+          "effects": { "stat.happiness": 10, "stat.intellect": 2, "karma": 3 }
+        }
+      },
+      {
+        "text": "Rủ bạn cũ uống một trận",
+        "result": {
+          "text": "Hai lão già say khướt, cãi nhau xem năm xưa ai thắng trận vật ở hội làng. Không ai nhớ, nên cả hai cùng thắng.",
+          "effects": { "stat.happiness": 20, "stat.health": -3 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tho_dan_dau_gia",
+    "category": "lifespan",
+    "title": "Thọ Nguyên Đan lên sàn",
+    "text": "Đấu giá hội Thương Lan đem ra một viên Thọ Nguyên Đan, giá khởi điểm một nghìn linh thạch. Cả sảnh toàn lão quái tóc bạc, không ai nhìn ai.",
+    "themes": ["lifespan"],
+    "conditions": {},
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Trả giá tới cùng",
+        "requires": { "stats": [{ "stat": "spiritStones", "gte": 1000 }] },
+        "result": {
+          "text": "Giá lên tới đâu ngươi theo tới đó. Viên đan về tay ngươi, túi trữ vật thì nhẹ hẳn.",
+          "effects": { "spiritStones": -1000, "lifespanPct": 0.15, "stat.happiness": 10 }
+        }
+      },
+      {
+        "text": "Chặn đường kẻ mua được",
+        "result": {
+          "text": "Ngươi chờ ở khúc sông vắng. Kẻ mua được đan cũng già, nhưng chưa chắc đã yếu.",
+          "effects": { "karma": -15 },
+          "fight": {
+            "foe": { "name": "Lão quái mua đan", "realm": "same", "intent": "kill" },
+            "win": {
+              "text": "Viên đan còn ấm trong tay áo hắn. Ngươi nuốt luôn, không kịp nghĩ.",
+              "effects": { "lifespanPct": 0.15, "heartDemon": 5, "stat.happiness": 5 }
+            },
+            "lose": {
+              "text": "Hắn đánh ngươi một chưởng rồi đi, còn ngoái lại lắc đầu.",
+              "effects": { "stat.health": -20, "stat.happiness": -10 }
+            }
+          }
+        }
+      },
+      {
+        "text": "Tự lò luyện một viên",
+        "requires": { "stats": [{ "stat": "craft.alchemy", "gte": 3 }] },
+        "check": { "stat": "stat.comprehension", "difficulty": 60 },
+        "success": {
+          "text": "Lò nổ hai lần, lần thứ ba ra một viên méo. Méo nhưng công hiệu.",
+          "effects": { "lifespanPct": 0.1, "craftXp": { "alchemy": 30 }, "stat.happiness": 10 }
+        },
+        "fail": {
+          "text": "Lò nổ lần thứ ba. Ngươi mất nửa hàng lông mày và chút hy vọng.",
+          "effects": { "craftXp": { "alchemy": 15 }, "stat.health": -5, "stat.happiness": -5 }
+        }
+      },
+      {
+        "text": "Bán mạng cho kẻ giàu nhất sảnh",
+        "result": {
+          "text": "Lão ta mua đan, chia ngươi một nửa, đổi lấy một lời hứa: khi lão gọi, ngươi phải đến.",
+          "effects": { "lifespanPct": 0.07, "stat.happiness": -5, "stat.daoHeart": -2, "setFlags": ["no_mang_dau_gia"] }
+        }
+      },
+      {
+        "text": "Đứng dậy đi về",
+        "result": {
+          "text": "Ngươi ra khỏi sảnh, trời vẫn xanh. Sống thêm vài năm hay không, bầu trời cũng chẳng quan tâm.",
+          "effects": { "stat.daoHeart": 3, "stat.happiness": -5 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "doat_xa_dem_mua",
+    "category": "lifespan",
+    "title": "Đêm mưa đoạt xá",
+    "text": "Ngươi đã chọn được: một tán tu trẻ, linh căn khá, ngủ một mình trong miếu hoang. Mưa rất to, không ai nghe thấy gì.",
+    "themes": ["lifespan", "demonic"],
+    "tags": ["dark"],
+    "conditions": {},
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Xuất hồn, đoạt xá",
+        "check": { "stat": "stat.daoHeart", "difficulty": 60 },
+        "success": {
+          "text": "Sáng ra, một thanh niên bước khỏi miếu, đi đứng hơi lóng ngóng. Thân xác cũ nằm lại, như ngủ.",
+          "effects": { "lifespanPct": 0.4, "karma": -40, "heartDemon": 20, "stat.health": 10, "stat.charm": 5, "reputation": { "ma": 10 }, "setFlags": ["doat_xa"] }
+        },
+        "fail": {
+          "text": "Hồn kẻ kia cứng hơn ngươi tưởng. Ngươi bị đẩy văng về thân cũ, thần hồn nứt một đường.",
+          "effects": { "lifespanYears": -5, "stat.health": -30, "heartDemon": 15, "karma": -20 }
+        }
+      },
+      {
+        "text": "Đứng ngoài mưa rất lâu, rồi đi",
+        "result": {
+          "text": "Ngươi để lại cho hắn một túi linh thạch và một tấm áo khô. Hắn sẽ không bao giờ biết đêm đó suýt xảy ra chuyện gì.",
+          "effects": { "karma": 15, "stat.daoHeart": 5, "heartDemon": -5, "spiritStones": -50 }
+        }
+      }
+    ]
+  }
+]
