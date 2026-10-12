@@ -8,6 +8,10 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6.7: rà soát nhiều cỡ màn hình (2026-10-12)
+- Chạy bản build trong Chromium ở 320×568 (điện thoại nhỏ), 390×844, 768×1024 (máy tính bảng), 1366×768 (máy tính): màn hình tên, tạo nhân vật, màn chính và các bảng Tu luyện, Tông môn, Quan hệ, Khám phá, Bản đồ, Túi, Sổ. Không có trang nào tràn ngang, không lỗi console.
+- Sửa: ô avatar ở đầu màn chính cắt chữ khi họ dài (ví dụ "Thượng"); nay chỉ hiện chữ cái đầu, cỡ chữ lớn hơn.
+
 ### GĐ 6.6: tối ưu tốc độ (2026-10-12)
 - Trước: một gói JS 1163 kB (gzip 331 kB). Sau: 4 gói tách theo vai trò, `vendor` 68 kB, `index` 165 kB, `systems` 284 kB, `content` 653 kB (gzip tổng ≈ 334 kB). Tách để bản cập nhật chỉ code không bắt tải lại nội dung và trình duyệt tải song song.
 - Lệnh mới `npm run perf`: nạp nội dung ≈ 200 ms, tạo nhân vật ≈ 3 ms, tua 1 năm ≈ 9 ms (máy dev). Màn hình đầu tiên hiện sau ≈ 1.3 giây trên Chromium giả lập điện thoại (kể cả khởi động trình duyệt).

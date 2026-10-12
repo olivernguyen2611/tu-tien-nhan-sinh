@@ -394,7 +394,7 @@ Cân bằng bằng **mô phỏng tự động** (chạy hàng nghìn đời gi�
 | 6.4 | [x] Âm thanh tổng hợp bằng code (không dùng file nhạc), bật/tắt được, mặc định tắt |
 | 6.5 | [x] Hiệu ứng nhẹ (chuyển cảnh, nổi bật khi đột phá), tôn trọng chế độ giảm chuyển động |
 | 6.6 | [x] Tối ưu tốc độ (cắt nhỏ gói tải, đo thời gian khởi động và tua năm) |
-| 6.7 | [ ] Rà soát hiển thị nhiều cỡ màn hình (điện thoại nhỏ, máy tính bảng, máy tính) |
+| 6.7 | [x] Rà soát hiển thị nhiều cỡ màn hình (điện thoại nhỏ, máy tính bảng, máy tính) |
 
 ### GĐ 7 — Mở rộng nội dung
 Thêm **thế giới mới** với tuyến cốt truyện riêng (mục C.7) + màn chọn thế giới. Linh giới/Tiên giới, thêm hàng trăm sự kiện, các nghề bách nghệ còn lại (Trận pháp, Phù lục, Linh thực, Ngự thú), thêm mô bản khí vận chi tử, Capacitor nếu muốn lên store.
