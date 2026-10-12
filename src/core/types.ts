@@ -297,4 +297,6 @@ export interface Npc {
   heirOf: string | null;
   /** Task 4.9: the player's disciple, and the age they were last taught. */
   disciple?: { since: number; lastTaught: number | null };
+  /** Task 5.5: a khí vận chi tử (template id) and the age of the player when they came. */
+  chosen?: { template: string; since: number };
 }

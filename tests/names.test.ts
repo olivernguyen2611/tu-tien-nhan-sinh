@@ -42,6 +42,7 @@ const content: Content = {
   recipes,
   corePatterns: [],
   regions: [],
+  chosenOnes: { templates: [] },
   nascentSouls: { realm: 'nguyen_anh', forms: [] },
   disciples,
   founding,

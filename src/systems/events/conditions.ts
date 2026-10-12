@@ -6,6 +6,7 @@ import { sectEligibility } from '../sect';
 import { actor, isMasked } from '../npcs';
 import { romanceMeets } from '../romance';
 import { currentRegion } from '../regions';
+import { chosenMeets } from '../chosen';
 
 type Conditions = Partial<GameEvent['conditions']>;
 
@@ -83,6 +84,7 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
   if (c.goldenFinger) return false;
   if (c.npc && !npcMeets(state, c.npc, content)) return false;
   if (c.romance && (!content || !romanceMeets(state, c.romance, content))) return false;
+  if (c.chosen && !chosenMeets(state, c.chosen)) return false;
   if (c.ownSect) {
     const own = state.ownSect;
     if (c.ownSect.has !== undefined && !!own !== c.ownSect.has) return false;

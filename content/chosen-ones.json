@@ -1,0 +1,25 @@
+{
+  "templates": [
+    {
+      "id": "xuyen_khong",
+      "name": "Người xuyên không",
+      "summary": "Nói câu khó hiểu, \"phát minh\" thứ lạ, đôi khi coi thế giới là trò chơi.",
+      "aptitude": [55, 80],
+      "recruit": "{npc} dập đầu bái sư, rồi hỏi nhỏ: \"Sư phụ, ở đây có… bảng thuộc tính không?\" Ngươi coi như không nghe thấy."
+    },
+    {
+      "id": "phe_vat_nghich_tap",
+      "name": "Phế vật nghịch tập",
+      "summary": "Bị coi là phế vật, bị khinh, bị từ hôn; mỗi lần bị khinh là một lần bùng nổ.",
+      "aptitude": [20, 40],
+      "recruit": "{npc} bị cả trấn gọi là phế vật. Ngươi nhận đứa trẻ ấy làm đồ đệ, có kẻ cười ngươi mắt mờ."
+    },
+    {
+      "id": "trong_sinh",
+      "name": "Trọng sinh giả",
+      "summary": "Sống lại từ tương lai, cực kỳ toan tính, biết trước cơ duyên, có khi biết cả bí mật của sư phụ.",
+      "aptitude": [50, 75],
+      "recruit": "{npc} quỳ xuống bái sư, động tác thuần thục như đã làm cả trăm lần. Ánh mắt đứa trẻ nhìn ngươi già hơn tuổi nó nhiều."
+    }
+  ]
+}

@@ -41,6 +41,7 @@ const balance = {
   heartDemon: realBalance.heartDemon,
   crafting: realBalance.crafting,
   disciples: realBalance.disciples,
+  chosen: realBalance.chosen,
   founding: realBalance.founding,
   heir: realBalance.heir,
   clan: realBalance.clan,

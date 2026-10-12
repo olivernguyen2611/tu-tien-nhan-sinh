@@ -65,6 +65,11 @@ export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, o
                     <b>{n.name}</b>
                     <span class="relative-age">{n.alive ? `${n.age} tuổi` : `mất năm ${n.age} tuổi`}</span>
                   </div>
+                  {n.chosen && (
+                    <p class="profile-note npc-line chosen-line">
+                      Khí vận chi tử · {content.chosenOnes.templates.find((t) => t.id === n.chosen!.template)?.name ?? n.chosen.template}
+                    </p>
+                  )}
                   <p class="profile-note npc-line">
                     {l.realm}
                     {l.surface && ` · ${l.surface}`}

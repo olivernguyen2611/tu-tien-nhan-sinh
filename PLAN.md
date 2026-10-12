@@ -351,7 +351,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 5.2 | [x] Công trình + báo cáo tông môn hằng năm (1–3 quyết định, còn lại tự chạy) |
 | 5.3 | [x] Sự kiện tông môn (khiêu khích, phản đồ, đại bỉ, ma đạo công sơn…) |
 | 5.4 | [x] Gia tộc tu tiên: tộc phả, sản nghiệp, gia quy |
-| 5.5 | [ ] Khí vận chi tử làm đệ tử: ✍️ 3 mô bản đầu (Xuyên không, Phế vật nghịch tập, Trọng sinh giả) |
+| 5.5 | [x] Khí vận chi tử làm đệ tử: ✍️ 3 mô bản đầu (Xuyên không, Phế vật nghịch tập, Trọng sinh giả) |
 | 5.6 | [ ] Vai trò Hộ đạo / Lợi dụng / Mặc kệ và hệ quả |
 | 5.7 | [x] Chơi tiếp bằng con cháu hoặc đồ đệ khi chết |
 
