@@ -359,6 +359,18 @@
         {
           "item": "ha_thu_o_ngan_nam",
           "start": 130
+        },
+        {
+          "technique": "ho_anh_thanh_lien_quyet",
+          "start": 900
+        },
+        {
+          "technique": "van_kiem_quy_tong_quyet",
+          "start": 1100
+        },
+        {
+          "technique": "hu_khong_hoa_than_kinh",
+          "start": 2400
         }
       ],
       "winText": "Tiếng búa ngọc vang lên. Cả sảnh quay lại nhìn ngươi: {lot}, {price}.",

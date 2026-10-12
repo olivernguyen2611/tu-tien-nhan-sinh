@@ -164,7 +164,7 @@
     }
   },
   "majorBreakthrough": {
-    "openRealms": ["truc_co", "kim_dan", "nguyen_anh"],
+    "openRealms": ["truc_co", "kim_dan", "nguyen_anh", "hoa_than"],
     "failureWeights": { "lose": 40, "injury": 35, "lifespan": 15, "deviation": 7, "death": 3 },
     "deviationHealth": -30,
     "deviationDaoHeart": -10,
@@ -225,7 +225,8 @@
     "mismatchMul": 0.7,
     "lineageMul": { "tien": 1.0, "ma": 1.4, "phat": 0.8, "quy": 1.0, "yeu": 1.0 },
     "rootlessDaoHeartMax": 0.7,
-    "switchLossPct": 20
+    "switchLossPct": 20,
+    "adaptive": { "rootGrade": { "ngu": 0.5, "tu": 0.4, "tam": 0.3, "song": 0.2, "don": 0.1, "bien_di": 0.1, "the_chat": 0.1 }, "body": 0.25 }
   },
   "sects": {
     "stipend": { "bich_lac_tong": 3, "tang_phong_kiem_cac": 1, "bach_thao_coc": 2, "vo_uu_tu": 1, "u_ha_ma_tong": 4, "van_yeu_dien": 2 },

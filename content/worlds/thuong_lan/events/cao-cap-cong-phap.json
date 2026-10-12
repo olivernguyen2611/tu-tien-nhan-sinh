@@ -1,0 +1,334 @@
+[
+  {
+    "id": "cc_thanh_lien_dai",
+    "category": "cultivation",
+    "title": "Đài sen trong mộng",
+    "text": "Đêm kết đan, {name} mơ thấy một đài sen xanh nổi trên mặt nước lặng. Trên đài có một tiểu sa di không nhìn rõ mặt, đưa ra một cuộn kinh mỏng.",
+    "tags": [
+      "rare"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "kim_dan"
+      },
+      "flagsNone": [
+        "da_thanh_lien"
+      ]
+    },
+    "weight": 3,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận lấy và tu thử",
+        "result": {
+          "text": "Tỉnh dậy, cuộn kinh đã nằm trong tay áo, mực còn ướt. Ngươi đọc một lần là thuộc.",
+          "effects": {
+            "setFlags": [
+              "da_thanh_lien"
+            ],
+            "gainTechnique": "ho_anh_thanh_lien_quyet",
+            "stat.comprehension": 2
+          }
+        }
+      },
+      {
+        "text": "Từ chối, giữ đạo cũ",
+        "result": {
+          "text": "Ngươi cúi đầu tạ lễ rồi tỉnh dậy. Trong tay áo trống không, nhưng lòng nhẹ hẳn.",
+          "effects": {
+            "setFlags": [
+              "da_thanh_lien"
+            ],
+            "stat.daoHeart": 2,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "cc_huyet_hai_tan_quyen",
+    "category": "cultivation",
+    "title": "Huyết Hải tàn quyển",
+    "text": "Trong xác một lão ma đầu chết đã lâu, {name} tìm thấy tấm da dê viết kín chữ đỏ như máu. Cuối trang có một dòng: \"Ai đọc tờ này, mười năm sau trả mạng\".",
+    "tags": [
+      "rare"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "kim_dan"
+      },
+      "flagsNone": [
+        "da_huyet_hai"
+      ]
+    },
+    "weight": 2,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận lấy và tu thử",
+        "result": {
+          "text": "Ngươi nhếch mép, đọc hết. Mười năm sau thì mười năm sau, hiện tại sức mạnh mới là thật.",
+          "effects": {
+            "setFlags": [
+              "da_huyet_hai"
+            ],
+            "gainTechnique": "huyet_hai_phan_anh_cong",
+            "stat.comprehension": 2
+          }
+        }
+      },
+      {
+        "text": "Từ chối, giữ đạo cũ",
+        "result": {
+          "text": "Ngươi ném tấm da vào lò lửa. Nó cháy xanh lè và kêu như người.",
+          "effects": {
+            "setFlags": [
+              "da_huyet_hai"
+            ],
+            "stat.daoHeart": 2,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "cc_van_kiem_trung",
+    "category": "cultivation",
+    "title": "Kiếm trủng ngàn thanh",
+    "text": "Dưới đáy một khe núi, hàng ngàn thanh kiếm gỉ cắm thẳng đứng. Khi {name} bước vào, tất cả cùng rung lên. Giữa trủng có một phiến đá khắc kiếm quyết.",
+    "tags": [
+      "rare"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "nguyen_anh"
+      },
+      "flagsNone": [
+        "da_van_kiem"
+      ],
+      "root": {
+        "minElements": 1
+      }
+    },
+    "weight": 3,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận lấy và tu thử",
+        "result": {
+          "text": "Ngàn thanh kiếm cùng hướng về ngươi rồi lại im bặt. Phiến đá nứt ra, kiếm quyết đã thuộc lòng.",
+          "effects": {
+            "setFlags": [
+              "da_van_kiem"
+            ],
+            "gainTechnique": "van_kiem_quy_tong_quyet",
+            "stat.comprehension": 2
+          }
+        }
+      },
+      {
+        "text": "Từ chối, giữ đạo cũ",
+        "result": {
+          "text": "Ngươi cúi chào ngàn thanh kiếm rồi lui ra. Sau lưng, kiếm rung thêm một lúc mới chịu yên.",
+          "effects": {
+            "setFlags": [
+              "da_van_kiem"
+            ],
+            "stat.daoHeart": 2,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "cc_kim_than_co_tu",
+    "category": "cultivation",
+    "title": "Cổ tự bất động",
+    "text": "Trong một ngôi cổ tự bỏ hoang, tượng La Hán sừng sững không bụi bám. Phía sau tượng có khắc một đoạn khẩu quyết, {name} đọc thử thì thấy cơ thể nặng như đá.",
+    "tags": [
+      "rare"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "nguyen_anh"
+      },
+      "flagsNone": [
+        "da_kim_than"
+      ]
+    },
+    "weight": 3,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận lấy và tu thử",
+        "result": {
+          "text": "Ngươi ngồi suốt ba ngày dưới chân tượng. Đứng dậy, bước chân lún sâu xuống nền đá.",
+          "effects": {
+            "setFlags": [
+              "da_kim_than"
+            ],
+            "gainTechnique": "bat_dong_kim_than_quyet",
+            "stat.comprehension": 2
+          }
+        }
+      },
+      {
+        "text": "Từ chối, giữ đạo cũ",
+        "result": {
+          "text": "Ngươi thắp một nén hương rồi rời đi. Tượng La Hán dường như gật đầu.",
+          "effects": {
+            "setFlags": [
+              "da_kim_than"
+            ],
+            "stat.daoHeart": 2,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "cc_hu_khong_ngo",
+    "category": "cultivation",
+    "title": "Hư không ngộ đạo",
+    "text": "Giữa một trận thiên tượng hiếm gặp, {name} chợt thấy thần thức mình trải ra ngoài thân, ra khỏi động phủ, ra khỏi núi, rồi chạm vào một trang kinh lơ lửng giữa hư không.",
+    "tags": [
+      "rare"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "nguyen_anh"
+      },
+      "flagsNone": [
+        "da_hu_khong"
+      ]
+    },
+    "weight": 2,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận lấy và tu thử",
+        "result": {
+          "text": "Ngươi nắm lấy trang kinh. Thần thức trở về thân, mang theo cả một quyển kinh thuộc lòng.",
+          "effects": {
+            "setFlags": [
+              "da_hu_khong"
+            ],
+            "gainTechnique": "hu_khong_hoa_than_kinh",
+            "stat.comprehension": 2
+          }
+        }
+      },
+      {
+        "text": "Từ chối, giữ đạo cũ",
+        "result": {
+          "text": "Ngươi để trang kinh trôi đi. Thần thức thu về, đầu óc trống rỗng mà thanh tịnh lạ thường.",
+          "effects": {
+            "setFlags": [
+              "da_hu_khong"
+            ],
+            "stat.daoHeart": 2,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "cc_thien_ma_tan_dien",
+    "category": "cultivation",
+    "title": "Thiên Ma tàn điển",
+    "text": "Một đạo nhân xưng là \"người nhặt ma điển\" chặn {name} giữa đường, dâng lên một quyển sách bọc da người và hỏi: \"Đạo hữu có gan không?\"",
+    "tags": [
+      "rare"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "nguyen_anh"
+      },
+      "flagsNone": [
+        "da_thien_ma"
+      ]
+    },
+    "weight": 2,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận lấy và tu thử",
+        "result": {
+          "text": "Ngươi nhận lấy. Đạo nhân cười rồi tan thành khói đen, chỉ còn quyển sách là thật.",
+          "effects": {
+            "setFlags": [
+              "da_thien_ma"
+            ],
+            "gainTechnique": "thien_ma_giai_the_dai_phap",
+            "stat.comprehension": 2
+          }
+        }
+      },
+      {
+        "text": "Từ chối, giữ đạo cũ",
+        "result": {
+          "text": "Ngươi khoát tay bỏ đi. Sau lưng, tiếng cười của đạo nhân vọng theo rất lâu.",
+          "effects": {
+            "setFlags": [
+              "da_thien_ma"
+            ],
+            "stat.daoHeart": 2,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "cc_van_yeu_hoa_hinh",
+    "category": "cultivation",
+    "title": "Lão yêu dâng pháp",
+    "text": "Một con hồ ly già ngàn năm chắn đường {name}, hóa thành lão ông chống gậy. Lão nói đã chờ người tới Nguyên Anh từ rất lâu, vì chỉ người mới có đủ thần thức nhận lấy pháp của yêu tộc.",
+    "tags": [
+      "rare"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "nguyen_anh"
+      },
+      "flagsNone": [
+        "da_van_yeu"
+      ]
+    },
+    "weight": 2,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận pháp, hứa không phụ yêu tộc",
+        "result": {
+          "text": "Lão yêu gật đầu, đưa ngươi một mảnh ngọc khắc đầy vân thú. Ngươi áp lên trán là hiểu hết.",
+          "effects": {
+            "setFlags": [
+              "da_van_yeu"
+            ],
+            "gainTechnique": "van_yeu_hoa_hinh_phap",
+            "stat.comprehension": 2
+          }
+        }
+      },
+      {
+        "text": "Từ chối, đạo người khác đạo yêu",
+        "result": {
+          "text": "Lão yêu thở dài, hóa lại thành hồ ly rồi biến mất vào rừng. Ngươi đứng yên rất lâu.",
+          "effects": {
+            "setFlags": [
+              "da_van_yeu"
+            ],
+            "stat.daoHeart": 2,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  }
+]

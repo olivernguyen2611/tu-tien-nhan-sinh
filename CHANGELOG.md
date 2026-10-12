@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### Công pháp Nguyên Anh / Hóa Thần và Thái Sơ Diễn Đạo Kinh (2026-10-12)
+- **Mở cửa đột phá lên Hóa Thần** (`majorBreakthrough.openRealms`): trước đây không ai lên được vì cửa đóng. Công pháp Địa phẩm vẫn dừng ở Nguyên Anh, muốn lên Hóa Thần phải có công pháp Thiên phẩm hoặc không giới hạn.
+- **Thái Sơ Diễn Đạo Kinh tự thích ứng** (`adaptive`): hợp mọi linh căn; linh căn càng yếu càng được bù thêm tốc độ tu (ngũ linh căn +50%, đơn linh căn +10%), thể chất đặc biệt (thay linh căn) được +25%. Mở tới Hóa Thần trước; các chương sau để niêm phong, về sau mở dần bằng cách nâng `maxRealm` khi thêm cảnh giới mới. Số ở `balance.techniques.adaptive`.
+- **7 công pháp mới**: Địa phẩm cho Nguyên Anh (Hộ Anh Thanh Liên Quyết, Huyết Hải Phần Anh Công, Vạn Kiếm Quy Tông Quyết, Bất Động Kim Thân Quyết, Vạn Yêu Hóa Hình Pháp) và Thiên phẩm cho Hóa Thần (Hư Không Hóa Thần Kinh, Thiên Ma Giải Thể Đại Pháp).
+- 6 kỳ ngộ mới (`cao-cap-cong-phap.json`) để có chúng, và 3 lô đấu giá ở Thiên Bảo Lâu.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Developer mode: tua ngược thời gian (2026-10-12)
 - Bảng Dev có thêm hai nút **Tua ngược 1 năm** và **Tua ngược 10 năm**: về lại đầu năm đó (trước khi chọn gì), để làm lại các lựa chọn và sự kiện. Nút chỉ sáng khi đã có ảnh chụp của năm ấy.
 - Khi bật Dev mode, game chụp trạng thái đầu mỗi năm (giữ 12 năm gần nhất, kể cả khi bỏ qua nhiều năm hay bế quan). Ảnh chụp chỉ nằm trong bộ nhớ, không vào file lưu; đổi kiếp thì chụp lại từ đầu. Nhật ký ghi dòng `[Dev]`.
