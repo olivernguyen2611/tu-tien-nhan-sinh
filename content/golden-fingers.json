@@ -24,8 +24,8 @@
      "summary": "Linh dịch làm linh thảo chín nhanh, luyện đan dễ thành; về sau tưới cả cho người.",
      "risk": "Linh thảo của ngươi tốt bất thường, kẻ tinh mắt sẽ tò mò.",
      "levels": [
-       {"realm": "pham_nhan", "name": "Giọt đầu", "text": "Một giọt linh dịch rơi xuống luống rau, sáng mai rau cao hơn đầu gối.", "effects": [{"hook": "craft.farming.yield", "add": 0.5}, {"hook": "craft.farming.success", "add": 0.15}, {"hook": "stat.health", "add": 5}]},
-       {"realm": "luyen_khi", "name": "Linh dịch", "text": "Bình rỉ nhiều hơn. Đan luyện từ linh thảo tưới linh dịch hiếm khi hỏng.", "effects": [{"hook": "craft.alchemy.success", "add": 0.15}, {"hook": "craft.alchemy.yield", "add": 0.2}]},
+       {"realm": "pham_nhan", "name": "Giọt đầu", "text": "Một giọt linh dịch rơi xuống luống rau, sáng mai rau cao hơn đầu gối.", "effects": [{"hook": "craft.farming.yield", "add": 1}, {"hook": "craft.farming.success", "add": 0.15}, {"hook": "stat.health", "add": 5}]},
+       {"realm": "luyen_khi", "name": "Linh dịch", "text": "Bình rỉ nhiều hơn. Đan luyện từ linh thảo tưới linh dịch hiếm khi hỏng.", "effects": [{"hook": "craft.alchemy.success", "add": 0.15}, {"hook": "craft.alchemy.yield", "add": 1}]},
        {"realm": "kim_dan", "name": "Tẩy tủy", "text": "Ngươi uống thử một giọt. Xương cốt kêu răng rắc cả đêm, sáng ra nhẹ bẫng.", "effects": [{"hook": "stat.physique", "add": 5}, {"hook": "lifespanPct", "add": 0.1}, {"hook": "cultivationSpeed", "add": 0.1}]}
      ]},
     {"id": "ky_uc_kiep_truoc", "name": "Ký ức kiếp trước", "weight": 3,
@@ -52,7 +52,7 @@
      "risk": "Động thiên là bảo vật ai cũng thèm; lộ ra thì cả tu chân giới tìm tới.",
      "levels": [
        {"realm": "pham_nhan", "name": "Một mẫu đất", "text": "Tiểu thế giới chỉ bằng cái sân, nhưng ngồi trong đó thở thôi cũng thấy khỏe.", "effects": [{"hook": "cultivationSpeed", "add": 0.15}, {"hook": "stat.health", "add": 3}]},
-       {"realm": "truc_co", "name": "Suối linh", "text": "Động thiên nở rộng, có suối, có ruộng, có cả mấy con thỏ không rõ từ đâu ra.", "effects": [{"hook": "cultivationSpeed", "add": 0.1}, {"hook": "craft.farming.yield", "add": 0.3}]},
+       {"realm": "truc_co", "name": "Suối linh", "text": "Động thiên nở rộng, có suối, có ruộng, có cả mấy con thỏ không rõ từ đâu ra.", "effects": [{"hook": "cultivationSpeed", "add": 0.1}, {"hook": "craft.farming.yield", "add": 1}]},
        {"realm": "nguyen_anh", "name": "Tiểu thiên địa", "text": "Động thiên thành một phương trời đất nhỏ, có ngày đêm, có mưa nắng.", "effects": [{"hook": "cultivationSpeed", "add": 0.15}, {"hook": "lifespanPct", "add": 0.1}]}
      ]},
     {"id": "thien_dao_bang", "name": "Thiên đạo bảng", "weight": 2,
