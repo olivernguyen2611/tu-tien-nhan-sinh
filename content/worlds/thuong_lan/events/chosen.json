@@ -1,0 +1,387 @@
+[
+  {
+    "id": "kvct_xk_di_tuong",
+    "category": "chosen",
+    "title": "Đứa trẻ rơi từ trời",
+    "text": "Đêm qua có một tia sáng trắng rơi xuống bãi tha ma ngoài trấn. Sáng ra người ta thấy một đứa trẻ ngồi giữa mộ, nhìn quanh rồi lẩm bẩm: \"Không có tín hiệu…\". Nó thấy {name} thì mắt sáng rỡ: \"Cao thủ! Nhận con làm đồ đệ đi!\"",
+    "themes": ["fortune"],
+    "tags": ["funny", "rare"],
+    "conditions": { "realm": { "min": "truc_co" }, "chosen": { "has": false } },
+    "weight": 0.25,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận làm đồ đệ",
+        "result": {
+          "text": "Ngươi gật đầu. Đứa trẻ reo lên một tiếng lạ tai, như vừa trúng thưởng.",
+          "effects": { "chosenOne": "xuyen_khong", "stat.happiness": 3, "followUp": { "event": "kvct_xk_mon_an_la", "afterYears": [1, 2] } }
+        }
+      },
+      {
+        "text": "Cho ít bạc rồi đi",
+        "result": {
+          "text": "Đứa trẻ nhìn nén bạc, lẩm bẩm \"phần thưởng nhiệm vụ ít thế\", rồi chạy mất. Nhiều năm sau ngươi còn nghe đồn về nó.",
+          "effects": { "silver": -10, "karma": 1, "stat.luck": -1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kvct_xk_mon_an_la",
+    "category": "chosen",
+    "title": "Món mì kỳ lạ",
+    "text": "{npc} lấy bột mì, chiên giòn, phơi khô, đóng thành bánh. \"Sư phụ, đổ nước sôi vào, chờ một nén nhang là ăn được!\" Ngoài chợ, người ta đã xếp hàng mua.",
+    "themes": ["funny"],
+    "tags": ["funny"],
+    "conditions": { "chosen": { "template": ["xuyen_khong"] } },
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Cho nó mở sạp",
+        "result": {
+          "text": "Sạp mì đông nghịt. {npc} gửi ngươi một phần lời, kèm mẩu giấy: \"Phí bản quyền cho sư phụ.\"",
+          "effects": { "silver": 80, "stat.happiness": 3, "npc": { "affinity": 5 }, "followUp": { "event": "kvct_xk_bai_tho", "afterYears": [2, 3] } }
+        }
+      },
+      {
+        "text": "Ăn thử một gói",
+        "result": {
+          "text": "Mặn, nhiều dầu, mà ngon lạ. Ngươi ăn ba gói liền, rồi nằm ôm bụng cả đêm.",
+          "effects": { "stat.happiness": 5, "stat.health": -3, "followUp": { "event": "kvct_xk_bai_tho", "afterYears": [2, 3] } }
+        }
+      },
+      {
+        "text": "Cấm. Tu sĩ không buôn mì",
+        "result": {
+          "text": "{npc} xếp bánh mì vào rương, thở dài: \"Đúng là người cổ đại.\" Ngươi không hiểu câu ấy, nhưng thấy bị xúc phạm.",
+          "effects": { "stat.daoHeart": 1, "npc": { "affinity": -5 }, "followUp": { "event": "kvct_xk_bai_tho", "afterYears": [2, 3] } }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kvct_xk_bai_tho",
+    "category": "chosen",
+    "title": "Bài thơ chấn động",
+    "text": "Ở yến tiệc của thành chủ, {npc} cầm chén rượu ngâm một bài thơ. Cả sảnh lặng đi, có lão tú tài khóc. Riêng ngươi thấy đồ đệ ngâm xong thì đỏ mặt, như vừa lấy đồ của ai.",
+    "themes": ["study"],
+    "conditions": { "chosen": { "template": ["xuyen_khong"] } },
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Đứng dậy nâng chén khen",
+        "result": {
+          "text": "Đồ đệ của ngươi thành \"thi tiên\" một đêm. Danh tiếng thầy trò bay khắp giang hồ.",
+          "effects": { "reputation": { "giang_ho": 8 }, "stat.happiness": 3, "npc": { "affinity": 5 }, "followUp": { "event": "kvct_xk_npc", "afterYears": [2, 4] } }
+        }
+      },
+      {
+        "text": "Về nhà hỏi thẳng bài thơ của ai",
+        "check": { "stat": "stat.intellect", "difficulty": 50 },
+        "success": {
+          "text": "{npc} cúi đầu thú nhận: \"Là của một người ở quê con, chết cả nghìn năm rồi.\" Ngươi dạy nó một câu: chép thơ thì được, nhận là của mình thì không.",
+          "effects": { "karma": 2, "stat.intellect": 1, "npc": { "favor": 5 }, "followUp": { "event": "kvct_xk_npc", "afterYears": [2, 4] } }
+        },
+        "fail": {
+          "text": "{npc} lảng sang chuyện khác, nói một tràng toàn chữ lạ. Ngươi nghe chóng mặt, quên mất mình định hỏi gì.",
+          "effects": { "stat.happiness": -1, "stat.intellect": 1, "followUp": { "event": "kvct_xk_npc", "afterYears": [2, 4] } }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kvct_xk_npc",
+    "category": "chosen",
+    "title": "\"Sư phụ là NPC\"",
+    "text": "Đang luyện công, {npc} bỗng hỏi: \"Sư phụ, có bao giờ người nghĩ mình chỉ là một nhân vật phụ trong câu chuyện của người khác không?\" Rồi nó nhìn ngươi bằng ánh mắt thương hại.",
+    "themes": ["funny"],
+    "tags": ["funny"],
+    "conditions": { "chosen": { "template": ["xuyen_khong"] } },
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Giảng cho nó về Đạo",
+        "check": { "stat": "stat.comprehension", "difficulty": 55 },
+        "success": {
+          "text": "\"Ai là chính, ai là phụ, trời biết. Tu là để mình không cần biết.\" {npc} ngồi im rất lâu, rồi lần đầu tiên dập đầu thật lòng.",
+          "effects": { "stat.daoHeart": 3, "npc": { "affinity": 10, "favor": 5 } }
+        },
+        "fail": {
+          "text": "Ngươi giảng mãi, càng giảng càng thấy câu hỏi của nó có lý. Đêm đó ngươi nằm nhìn trần nhà tới sáng.",
+          "effects": { "heartDemon": 5, "stat.happiness": -3 }
+        }
+      },
+      {
+        "text": "Cho nó một trận để biết ai là nhân vật phụ",
+        "result": {
+          "text": "Ngươi chắp tay sau lưng: \"Ra tay đi.\"",
+          "effects": {},
+          "fight": {
+            "foe": { "name": "Đồ đệ", "intent": "teach", "fromNpc": true },
+            "win": {
+              "text": "{npc} nằm sõng soài, nhìn trời: \"Được rồi, con sửa lại: sư phụ là trùm cuối.\"",
+              "effects": { "stat.happiness": 4, "npc": { "affinity": 3 } }
+            },
+            "lose": {
+              "text": "Ngươi thua đồ đệ. Nó đỡ ngươi dậy, an ủi: \"Không sao, nhân vật phụ thua là bình thường.\"",
+              "effects": { "stat.happiness": -6, "stat.daoHeart": -1 }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kvct_pv_di_tuong",
+    "category": "chosen",
+    "title": "Phế vật nhà họ Lâm",
+    "text": "Ở trấn bên, có một đứa trẻ bị cả họ gọi là phế vật: đo linh căn ba lần, lần nào bia đá cũng chỉ hơi ấm lên. Đứa trẻ ấy đứng ngoài cửa luyện võ trường, nhìn vào, không khóc. {name} đi ngang, thấy ngón tay nó đeo một chiếc nhẫn cũ kỳ lạ.",
+    "themes": ["fortune"],
+    "tags": ["rare"],
+    "conditions": { "realm": { "min": "truc_co" }, "chosen": { "has": false } },
+    "weight": 0.25,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận làm đồ đệ",
+        "result": {
+          "text": "Cả họ cười ngươi mắt mờ. Đứa trẻ thì quỳ xuống, dập đầu tới chảy máu.",
+          "effects": { "chosenOne": "phe_vat_nghich_tap", "karma": 2, "stat.happiness": 2, "followUp": { "event": "kvct_pv_huy_hon", "afterYears": [2, 3] } }
+        }
+      },
+      {
+        "text": "Lắc đầu đi tiếp",
+        "result": {
+          "text": "Ngươi đi qua. Sau lưng có tiếng gì đó rất nhỏ, như tiếng một lão già trong chiếc nhẫn thở dài.",
+          "effects": { "stat.luck": -1, "stat.daoHeart": 1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kvct_pv_huy_hon",
+    "category": "chosen",
+    "title": "Hủy hôn ước",
+    "text": "Gia tộc từng định hôn ước cho {npc} từ lúc còn nằm nôi nay kéo tới tận cửa, ném tờ hôn thư xuống đất: \"Phế vật không xứng với con gái nhà ta.\" Kẻ đi cùng là một tu sĩ trẻ, cười khẩy nhìn sư phụ của phế vật.",
+    "themes": ["justice"],
+    "conditions": { "chosen": { "template": ["phe_vat_nghich_tap"] } },
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Đứng ra nói lý thay đồ đệ",
+        "check": { "stat": "stat.charm", "difficulty": 55 },
+        "success": {
+          "text": "Ngươi nói ba câu, tu sĩ trẻ đỏ mặt, gia tộc kia lủi thủi nhặt hôn thư về. Đồ đệ nhìn lưng ngươi rất lâu.",
+          "effects": { "stat.charm": 1, "reputation": { "giang_ho": 3 }, "npc": { "affinity": 10, "favor": 10 }, "followUp": { "event": "kvct_pv_chiec_nhan", "afterYears": [1, 3] } }
+        },
+        "fail": {
+          "text": "Họ cười to hơn. Ngươi bị gọi là \"sư phụ của phế vật\" suốt mấy năm sau.",
+          "effects": { "stat.happiness": -4, "npc": { "affinity": 5 }, "followUp": { "event": "kvct_pv_chiec_nhan", "afterYears": [1, 3] } }
+        }
+      },
+      {
+        "text": "Để đồ đệ tự đáp",
+        "result": {
+          "text": "{npc} nhặt hôn thư lên, xé đôi: \"Ba mươi năm hà đông, ba mươi năm hà tây. Đừng khinh thiếu niên nghèo.\" Câu ấy về sau cả trấn truyền tai.",
+          "effects": { "stat.happiness": 3, "npc": { "affinity": 5 }, "followUp": { "event": "kvct_pv_chiec_nhan", "afterYears": [1, 3] } }
+        }
+      },
+      {
+        "text": "Im lặng, chuyện nhà người ta",
+        "result": {
+          "text": "Ngươi đứng nhìn. Tối đó {npc} luyện kiếm tới rách tay, không nói với ngươi câu nào.",
+          "effects": { "stat.daoHeart": -1, "npc": { "affinity": -10 }, "followUp": { "event": "kvct_pv_chiec_nhan", "afterYears": [1, 3] } }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kvct_pv_chiec_nhan",
+    "category": "chosen",
+    "title": "Giọng nói trong chiếc nhẫn",
+    "text": "Đêm khuya, ngươi nghe trong phòng {npc} có tiếng hai người nói chuyện, mà chỉ có một người ở đó. Thần thức quét qua, ngươi chạm phải một tàn hồn già cỗi trong chiếc nhẫn cũ. Tàn hồn ấy cũng vừa phát hiện ra ngươi.",
+    "themes": ["fortune"],
+    "tags": ["rare"],
+    "conditions": { "chosen": { "template": ["phe_vat_nghich_tap"] } },
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Truyền âm chào vị tiền bối",
+        "check": { "stat": "stat.daoHeart", "difficulty": 50 },
+        "success": {
+          "text": "Tàn hồn im một lúc rồi cười: \"Thằng nhóc gặp được sư phụ không tham. Hiếm.\" Lão chỉ cho ngươi một chỗ bế tắc trong công pháp.",
+          "effects": { "stat.comprehension": 2, "nextBreakthroughBonus": 5, "followUp": { "event": "kvct_pv_thieu_chu", "afterYears": [2, 4] } }
+        },
+        "fail": {
+          "text": "Tàn hồn hừ một tiếng, ép thần thức ngươi lùi lại. Đầu ngươi đau ba ngày.",
+          "effects": { "stat.health": -5, "followUp": { "event": "kvct_pv_thieu_chu", "afterYears": [2, 4] } }
+        }
+      },
+      {
+        "text": "Giả như chưa biết gì",
+        "result": {
+          "text": "Ngươi rút thần thức về. Sáng hôm sau đồ đệ dâng trà, tay hơi run. Hai thầy trò đều biết, mà không ai nói.",
+          "effects": { "stat.daoHeart": 2, "npc": { "favor": 5 }, "followUp": { "event": "kvct_pv_thieu_chu", "afterYears": [2, 4] } }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kvct_pv_thieu_chu",
+    "category": "chosen",
+    "title": "Thiếu chủ bị vả mặt",
+    "text": "{npc} đánh bại thiếu chủ một thế gia ở phường thị, trước mặt trăm người. Ba ngày sau, cha của thiếu chủ, một lão quái vật cảnh giới cao hơn ngươi, đứng trước cửa: \"Dạy đồ đệ không nghiêm, sư phụ trả nợ.\"",
+    "themes": ["justice"],
+    "tags": ["violence"],
+    "conditions": { "chosen": { "template": ["phe_vat_nghich_tap"] } },
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Đứng chắn trước đồ đệ",
+        "result": {
+          "text": "Lão quái vật ra tay, không lưu tình.",
+          "effects": {},
+          "fight": {
+            "foe": { "name": "Gia chủ thế gia", "realm": "above", "powerMul": 0.6, "intent": "kill" },
+            "win": {
+              "text": "Lão quái vật bỏ chạy, để lại một cánh tay áo. Đồ đệ quỳ xuống, lần đầu khóc trước mặt ngươi.",
+              "effects": { "stat.happiness": 5, "reputation": { "giang_ho": 8 }, "npc": { "affinity": 15, "favor": 15 } }
+            },
+            "lose": {
+              "text": "Ngươi ngã xuống. Đúng lúc ấy chiếc nhẫn trên tay đồ đệ lóe sáng, lão quái vật bị đánh bật ra xa. Hào quang của nó cứu cả ngươi.",
+              "effects": { "stat.health": -25, "npc": { "affinity": 10, "favor": 10 } }
+            }
+          }
+        }
+      },
+      {
+        "text": "Bồi thường cho êm chuyện",
+        "result": {
+          "text": "Ngươi dâng linh thạch, cúi đầu. Lão quái vật đi. Đồ đệ đứng sau lưng, nắm tay chặt tới bật máu.",
+          "effects": { "spiritStones": -100, "stat.happiness": -3, "npc": { "affinity": -5 } }
+        }
+      },
+      {
+        "text": "Giao đồ đệ cho họ xử",
+        "result": {
+          "text": "Họ mang {npc} đi. Nửa tháng sau, nó tự về, người đầy thương tích, ánh mắt nhìn ngươi đã khác.",
+          "effects": { "karma": -10, "stat.daoHeart": -3, "npc": { "affinity": -30, "grudge": 30 } }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kvct_ts_di_tuong",
+    "category": "chosen",
+    "title": "Đứa trẻ biết tên ngươi",
+    "text": "Một đứa trẻ chặn đường {name}, gọi đúng tên ngươi, đúng cả pháp hiệu ngươi chưa từng nói với ai. \"Sư phụ, lần này con tới sớm.\" Mắt nó đỏ hoe, như vừa đi một quãng đường rất dài.",
+    "themes": ["fortune"],
+    "tags": ["rare"],
+    "conditions": { "realm": { "min": "truc_co" }, "chosen": { "has": false } },
+    "weight": 0.25,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận làm đồ đệ",
+        "result": {
+          "text": "Ngươi chưa kịp nói hết câu, đứa trẻ đã quỳ xuống dâng trà. Chén trà đúng loại ngươi thích.",
+          "effects": { "chosenOne": "trong_sinh", "stat.luck": 2, "followUp": { "event": "kvct_ts_co_duyen", "afterYears": [1, 2] } }
+        }
+      },
+      {
+        "text": "Thấy rợn, đi đường khác",
+        "result": {
+          "text": "Đứa trẻ không đuổi theo. Nó chỉ nói vọng theo: \"Ba mươi năm nữa, đừng vào Hắc Phong Cốc.\" Câu ấy làm ngươi mất ngủ mấy đêm.",
+          "effects": { "stat.happiness": -2, "stat.intellect": 1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kvct_ts_co_duyen",
+    "category": "chosen",
+    "title": "Cơ duyên được báo trước",
+    "text": "{npc} kéo tay ngươi lên núi, chỉ vào một vách đá trơn nhẵn: \"Sau vách này có một gốc linh chi ba trăm năm. Năm sau sẽ có kẻ khác tìm thấy.\" Nó nói chắc như đã từng thấy tận mắt.",
+    "themes": ["fortune", "herb"],
+    "conditions": { "chosen": { "template": ["trong_sinh"] } },
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Đập vách đá",
+        "result": {
+          "text": "Vách đá vỡ. Gốc linh chi ở đúng chỗ nó nói, không lệch một tấc. Ngươi ăn một nửa, nửa kia đưa đồ đệ. Nó lắc đầu: \"Kiếp này con không cần.\"",
+          "effects": { "cultProgress": 15, "stat.health": 5, "npc": { "affinity": 5 }, "followUp": { "event": "kvct_ts_bi_mat", "afterYears": [2, 3] } }
+        }
+      },
+      {
+        "text": "Hỏi sao nó biết",
+        "check": { "stat": "stat.intellect", "difficulty": 60 },
+        "success": {
+          "text": "Ngươi hỏi khéo. {npc} lỡ lời một câu: \"Kiếp trước…\" rồi im bặt. Ngươi hiểu đủ, không hỏi nữa, vẫn đập vách lấy linh chi.",
+          "effects": { "cultProgress": 10, "stat.intellect": 1, "followUp": { "event": "kvct_ts_bi_mat", "afterYears": [2, 3] } }
+        },
+        "fail": {
+          "text": "{npc} cười: \"Con nằm mơ.\" Ngươi không tin, nó cũng biết ngươi không tin. Linh chi vẫn đào lên được.",
+          "effects": { "cultProgress": 10, "stat.happiness": -1, "npc": { "affinity": -3 }, "followUp": { "event": "kvct_ts_bi_mat", "afterYears": [2, 3] } }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kvct_ts_bi_mat",
+    "category": "chosen",
+    "title": "Đồ đệ biết bí mật",
+    "text": "Uống say, {npc} nói ra một chuyện ngươi giấu kín cả đời, chuyện chưa từng kể với ai. Rồi nó tỉnh rượu ngay, mặt trắng bệch.",
+    "themes": ["heart_demon"],
+    "conditions": { "chosen": { "template": ["trong_sinh"] } },
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Hỏi kiếp trước nó là gì của ngươi",
+        "result": {
+          "text": "Rất lâu sau nó mới nói: \"Kiếp trước con cũng là đồ đệ của người. Chỉ là con tới muộn.\" Nó không nói muộn cho chuyện gì.",
+          "effects": { "stat.happiness": -3, "stat.daoHeart": 2, "npc": { "affinity": 10, "favor": 5 }, "followUp": { "event": "kvct_ts_dai_kiep", "afterYears": [2, 4] } }
+        }
+      },
+      {
+        "text": "Coi như chưa nghe gì",
+        "result": {
+          "text": "Ngươi rót thêm rượu cho nó, nói chuyện thời tiết. Nó thở ra một hơi rất dài.",
+          "effects": { "stat.daoHeart": 1, "npc": { "favor": 5 }, "followUp": { "event": "kvct_ts_dai_kiep", "afterYears": [2, 4] } }
+        }
+      },
+      {
+        "text": "Từ đó đề phòng nó",
+        "result": {
+          "text": "Ngươi thay trận pháp động phủ, cất kỹ mọi thứ. Đồ đệ thấy hết, không nói gì, chỉ ít cười hơn.",
+          "effects": { "heartDemon": 3, "stat.intellect": 1, "npc": { "affinity": -10 }, "followUp": { "event": "kvct_ts_dai_kiep", "afterYears": [2, 4] } }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kvct_ts_dai_kiep",
+    "category": "chosen",
+    "title": "Lời cảnh báo",
+    "text": "{npc} quỳ trước mặt ngươi: \"Sư phụ, kiếp trước người chết trong một lần đột phá. Con không muốn thấy lần thứ hai.\" Nó dâng lên một cuốn sổ chép tay dày cộp, ghi toàn những chỗ người từng sai.",
+    "themes": ["cultivation"],
+    "conditions": { "chosen": { "template": ["trong_sinh"] } },
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Đọc kỹ cuốn sổ",
+        "result": {
+          "text": "Chữ của đồ đệ, mà giọng văn là của chính ngươi. Ngươi đọc ba đêm, sửa lại mấy chỗ trong công pháp.",
+          "effects": { "nextBreakthroughBonus": 10, "stat.comprehension": 2, "npc": { "affinity": 5 } }
+        }
+      },
+      {
+        "text": "Đốt cuốn sổ: đường của ta, ta tự đi",
+        "result": {
+          "text": "Ngọn lửa liếm qua từng trang. Đồ đệ nhìn, không ngăn. \"Kiếp trước người cũng nói đúng câu này.\"",
+          "effects": { "stat.daoHeart": 5, "heartDemon": -5, "npc": { "favor": 5 } }
+        }
+      }
+    ]
+  }
+]

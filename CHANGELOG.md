@@ -2,6 +2,23 @@
 
 ## [Chưa phát hành]
 
+### Task 5.5 — Khí vận chi tử làm đệ tử (2026-10-12)
+- Mô bản trong `content/chosen-ones.json`: Người xuyên không, Phế vật nghịch tập, Trọng sinh giả.
+- Từ Trúc Cơ có thể gặp dị tượng báo trước (mỗi mô bản một sự kiện, hiếm, mỗi đời chỉ một người).
+- Nhận làm đồ đệ thì có thêm một đồ đệ, vượt cả giới hạn đồ đệ của cảnh giới.
+- Mỗi mô bản có chuỗi 3 sự kiện riêng nối nhau bằng follow-up (`content/worlds/thuong_lan/events/chosen.json`). Sự kiện tự gắn với đồ đệ ấy ({npc}, hiệu ứng `npc`, đánh với đồ đệ bằng `fromNpc`).
+- Hào quang nhân vật chính (`balance.chosen`):
+  - tu nhanh ×1.6;
+  - đột phá +15%;
+  - không bao giờ chết vì tai nạn;
+  - rắc rối kéo tới sư phụ (Phế vật: gia chủ thế gia tới đòi nợ).
+- Engine:
+  - điều kiện `chosen {has, template, minYears}`;
+  - hiệu ứng `chosenOne`;
+  - validator kiểm tra id mô bản;
+  - danh sách quan hệ hiện nhãn "Khí vận chi tử · <mô bản>".
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Task 5.3 — Sự kiện tông môn (phần nội dung, 2026-10-12)
 - 12 sự kiện cho tông môn tự lập (`content/worlds/thuong_lan/events/own-sect.json`, nhóm "Bổn tông"):
   - láng giềng khiêu khích;

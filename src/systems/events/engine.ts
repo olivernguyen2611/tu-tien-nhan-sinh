@@ -15,6 +15,7 @@ import { forceJoinCareer, leaveCareer, promoteCareer } from '../career';
 import { addMartialYears, martialAttempt, martialPromote } from '../martial';
 import { addPathAffinity } from '../paths';
 import { regionThemeMultiplier } from '../regions';
+import { chosenDisciple, isChosenEvent, takeChosen } from '../chosen';
 import { addContribution, breakPrecept, grantMaster, joinSect, leaveSect, promoteSect } from '../sect';
 import { startBattle } from '../combat';
 import { changeNpc, createNpc, killNpc, npcCalls } from '../npcs';
@@ -92,6 +93,10 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
       if (target) npc = romanceTarget(state, target)?.id ?? null;
     }
   }
+
+  // Task 5.5: an event of the khí vận chi tử's story is about them.
+  const pickedEvent = picked ? findEvent(content, picked) : undefined;
+  if (pickedEvent && isChosenEvent(pickedEvent)) npc = chosenDisciple(state)?.id ?? npc;
 
   return {
     ...state,
@@ -295,6 +300,8 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   }
   if (fx.pathAffinity) next = addPathAffinity(next, fx.pathAffinity);
   // Task 5.3: the founded sect.
+  // Task 5.5: a khí vận chi tử comes to the player.
+  if (fx.chosenOne) next = takeChosen(next, content, fx.chosenOne);
   if (fx.ownSect && next.ownSect) {
     const o = next.ownSect;
     next = { ...next, ownSect: { ...o, members: Math.max(0, o.members + (fx.ownSect.members ?? 0)), treasury: Math.max(0, o.treasury + (fx.ownSect.treasury ?? 0)), growthBonus: (o.growthBonus ?? 0) + (fx.ownSect.growthBonus ?? 0) } };

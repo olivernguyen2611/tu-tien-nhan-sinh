@@ -84,7 +84,8 @@ export function createNpc(state: GameState, content: Content, spec: NpcSpec): { 
 function forgetExtra(npcs: Npc[], max: number): Npc[] {
   const out = npcs.slice();
   while (out.length > max) {
-    const weight = (n: Npc) => (n.alive ? 1000 : 0) + Math.abs(n.affinity - 50) + n.favor + n.grudge;
+    // Disciples and a khí vận chi tử are never forgotten.
+    const weight = (n: Npc) => (n.alive ? 1000 : 0) + (n.disciple || n.chosen ? 5000 : 0) + Math.abs(n.affinity - 50) + n.favor + n.grudge;
     let low = 0;
     for (let i = 1; i < out.length - 1; i++) if (weight(out[i]) < weight(out[low])) low = i;
     out.splice(low, 1);
@@ -183,7 +184,9 @@ export function ageNpcs(state: GameState, content: Content): GameState {
     if (n.root) {
       if (n.realm === 'pham_nhan' && n.age >= 16) n = { ...n, realm: realms[1]?.id ?? n.realm, stage: 0, progress: 0 };
       const speed = content.balance.realms[n.realm]?.speedPct ?? 0;
-      n = { ...n, progress: n.progress + speed * (cfg.speedBase + n.aptitude / cfg.speedDivisor) * (nat?.speedMul ?? 1) };
+      // Hào quang (task 5.5): a khí vận chi tử climbs faster.
+      const halo = n.chosen ? content.balance.chosen.progressMul : 1;
+      n = { ...n, progress: n.progress + speed * (cfg.speedBase + n.aptitude / cfg.speedDivisor) * (nat?.speedMul ?? 1) * halo };
       while (n.progress >= 100) {
         const ri = realms.findIndex((r) => r.id === n.realm);
         const stages = realms[ri]?.stages.length ?? 1;
@@ -192,7 +195,7 @@ export function ageNpcs(state: GameState, content: Content): GameState {
           continue;
         }
         const next = realms[ri + 1];
-        const chance = next ? content.balance.realms[next.id]?.breakthroughChance ?? 0 : 0;
+        const chance = next ? (content.balance.realms[next.id]?.breakthroughChance ?? 0) + (n.chosen ? content.balance.chosen.breakthroughBonus : 0) : 0;
         if (next && rng.chance(chance)) {
           const lifespan = Math.max(n.lifespan, lifespanFor(content, next.id, rng));
           n = { ...n, realm: next.id, stage: 0, progress: 0, lifespan };
@@ -204,7 +207,8 @@ export function ageNpcs(state: GameState, content: Content): GameState {
       }
     }
 
-    const sudden = rng.chance(cfg.deathPerYear + (nat?.riskPerYear ?? 0));
+    // Hào quang: a khí vận chi tử always finds a way out of a mishap.
+    const sudden = !n.chosen && rng.chance(cfg.deathPerYear + (nat?.riskPerYear ?? 0));
     if (n.age >= n.lifespan || sudden) {
       n = { ...n, alive: false };
       if (close(content, n)) {

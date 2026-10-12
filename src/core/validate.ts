@@ -2,7 +2,8 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema } from './schemas';
+import { isChosenEvent } from '../systems/chosen';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, ChosenFileSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -49,6 +50,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'disciples.json') return DisciplesFileSchema;
     if (rest === 'founding.json') return FoundingFileSchema;
     if (rest === 'heir.json') return HeirFileSchema;
+    if (rest === 'chosen-ones.json') return ChosenFileSchema;
     if (rest === 'clan.json') return ClanFileSchema;
     return null;
   }
@@ -86,6 +88,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   let foundingPills: { file: string; pills: string[] } | null = null;
   let martialFile: MartialFile | null = null;
   const regionFiles: { file: string; regions: Region[] }[] = [];
+  let chosenIds: string[] | null = null;
   let careerIds: string[] | null = null;
   const sectFiles: { file: string; sects: Sect[] }[] = [];
   const parsedShared: { balance?: Balance; realms?: RealmsFile; roots?: RootsFile; aptitudes?: AptitudesFile } = {};
@@ -103,6 +106,11 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
         problems.push({ file, level: 'error', message: `${issue.path.join('.') || '(gốc)'}: ${issue.message}` });
       }
       continue;
+    }
+    if (schema === ChosenFileSchema) {
+      const templates = (parsed.data as { templates: { id: string }[] }).templates;
+      problems.push(...duplicates(file, 'mô bản khí vận chi tử', templates));
+      chosenIds = templates.map((t) => t.id);
     }
     if (schema === StatExtremesFileSchema) {
       const ids = new Set<string>();
@@ -251,6 +259,17 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       }
     }
   }
+  // Task 5.5: khí vận chi tử templates named by events must exist.
+  if (chosenIds) {
+    for (const { file, event } of events) {
+      const outcomes = event.choices.flatMap((c) => [c.result, c.success, c.fail]).filter((o) => o !== undefined);
+      const named = [
+        ...(event.conditions.chosen?.template ?? []),
+        ...outcomes.flatMap((o) => [o.effects.chosenOne, o.fight?.win.effects.chosenOne, o.fight?.lose.effects.chosenOne]),
+      ].filter((x): x is string => !!x);
+      for (const t of named) if (!chosenIds.includes(t)) problems.push({ file, level: 'error', message: `sự kiện "${event.id}" nhắc tới mô bản khí vận chi tử không tồn tại "${t}"` });
+    }
+  }
   for (const { file, event } of events) {
     const known = regionIdsByWorld.get(splitWorldPath(file).worldId ?? '') ?? new Set<string>();
     const named = [event.conditions, ...event.choices.map((c) => c.requires ?? {})].flatMap((c) => c.region ?? []);
@@ -381,7 +400,9 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
           problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: công pháp không tồn tại "${tech}"` });
         }
         // Task 3.4: {npc}, npc effects and a foe fromNpc need an NPC: picked by npcTrigger, required by conditions, or met here.
-        const hasNpc = !!event.npcTrigger || !!event.conditions.npc || !!event.conditions.romance?.target || !!choice.requires?.npc || !!fx?.meetNpc;
+        const hasNpc = !!event.npcTrigger || !!event.conditions.npc || !!event.conditions.romance?.target || !!choice.requires?.npc || !!fx?.meetNpc
+          // Task 5.5: the khí vận chi tử of the story.
+          || isChosenEvent(event);
         const npcText = /\{npc(Role|Kin)?\}/.test(`${event.text} ${choice.text} ${outcome?.text ?? ''} ${outcome?.fight?.win.text ?? ''} ${outcome?.fight?.lose.text ?? ''}`);
         const usesNpc = npcText || !!fx?.npc || !!outcome?.fight?.foe.fromNpc || !!outcome?.fight?.win.effects.npc || !!outcome?.fight?.lose.effects.npc;
         if (usesNpc && !hasNpc) {

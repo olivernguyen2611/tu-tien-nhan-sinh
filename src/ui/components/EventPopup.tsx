@@ -13,7 +13,7 @@ const STAT_NAMES: Record<string, string> = {
 const CATEGORY_NAMES: Record<string, string> = {
   childhood: 'Tuổi thơ', study: 'Đi học', work: 'Mưu sinh', funny: 'Chuyện lạ', accident: 'Tai ương',
   cultivation: 'Tu luyện', fortune: 'Kỳ ngộ', sect: 'Tông môn', mortal: 'Đời phàm nhân', rogue: 'Tán tu', fate: 'Thiên mệnh',
-  npc: 'Ân oán', romance: 'Tình duyên', plunder: 'Đoạt bảo', demonic: 'Ma đạo', beast: 'Yêu thú', market: 'Phường thị', secret_realm: 'Bí cảnh', lifespan: 'Thọ nguyên', own_sect: 'Bổn tông',
+  npc: 'Ân oán', romance: 'Tình duyên', plunder: 'Đoạt bảo', demonic: 'Ma đạo', beast: 'Yêu thú', market: 'Phường thị', secret_realm: 'Bí cảnh', lifespan: 'Thọ nguyên', own_sect: 'Bổn tông', chosen: 'Khí vận chi tử',
 };
 
 /** `changes`: stat deltas line, e.g. "Hạnh phúc −3 · Bạc +10". */

@@ -95,6 +95,15 @@ const BaseConditionsSchema = z
       })
       .strict()
       .optional(),
+    /** Task 5.5: the khí vận chi tử disciple: this life has (had) one; alive, of these templates, taken at least minYears ago. */
+    chosen: z
+      .object({
+        has: z.boolean().optional(),
+        template: ids.optional(),
+        minYears: z.number().int().min(0).optional(),
+      })
+      .strict()
+      .optional(),
     /** Task 3.9: family state ({deceased} = a relative who has died). */
     family: z.object({ deadAny: z.boolean().optional(), parentAlive: z.boolean().optional() }).strict().optional(),
     /** Task 4.10: nearEnd = years left ≤ balance.lifespan.pressureLeftPct of the lifespan; maxLeft = at most this many years left. */
@@ -197,6 +206,8 @@ export const EffectsSchema = z
       .optional(),
     /** Task 5.3: the founded sect gains or loses members, treasury, next year's growth. */
     ownSect: z.object({ members: z.number().int().optional(), treasury: z.number().int().optional(), growthBonus: z.number().optional() }).strict().optional(),
+    /** Task 5.5: take a khí vận chi tử of this template as a disciple (beyond the realm's disciple limit). */
+    chosenOne: id.optional(),
     /** Task 4.6: the next step of a multi-step event (bí cảnh); it opens right after this one, the same year. */
     chain: id.optional(),
     /** Task 4.1: close the door for this many years right after the event. */
@@ -244,7 +255,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -733,6 +744,15 @@ export const BalanceSchema = z
         teachAffinity: z.number(),
         teachFavor: z.number(),
         teacherProgress: z.number(),
+      })
+      .strict(),
+    /** Task 5.5: khí vận chi tử. Hào quang: faster cultivation, an easier breakthrough, no sudden death. */
+    chosen: z
+      .object({
+        age: z.tuple([z.number().int(), z.number().int()]),
+        affinity: z.number(),
+        progressMul: z.number().min(1),
+        breakthroughBonus: probability,
       })
       .strict(),
     /** Task 4.7: making pills and artifacts. */
@@ -2080,6 +2100,26 @@ export const FoundingFileSchema = z
   })
   .strict();
 export type FoundingFile = z.infer<typeof FoundingFileSchema>;
+
+/** content/chosen-ones.json (task 5.5): khí vận chi tử templates. Their stories are world events (conditions.chosen). */
+export const ChosenFileSchema = z
+  .object({
+    templates: z.array(
+      z
+        .object({
+          id,
+          name: z.string().min(1),
+          /** One line for the disciple list. */
+          summary: z.string().min(1),
+          aptitude: z.tuple([z.number().int().min(0).max(100), z.number().int().min(0).max(100)]),
+          /** Log line when taken in; {npc}, {name}. */
+          recruit: z.string().min(1),
+        })
+        .strict(),
+    ),
+  })
+  .strict();
+export type ChosenFile = z.infer<typeof ChosenFileSchema>;
 
 /** content/heir.json (task 5.7): going on as a child or disciple. {name} = heir, {parent} = the one who died, {sect}. */
 export const HeirFileSchema = z
