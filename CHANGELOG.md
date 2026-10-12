@@ -2,6 +2,23 @@
 
 ## [Chưa phát hành]
 
+### Task 5.3 — Sự kiện tông môn (phần nội dung, 2026-10-12)
+- 12 sự kiện cho tông môn tự lập (`content/worlds/thuong_lan/events/own-sect.json`, nhóm "Bổn tông"):
+  - láng giềng khiêu khích;
+  - phản đồ trộm công pháp;
+  - đại bỉ nội môn;
+  - ma đạo công sơn (đánh có Hộ Sơn Đại Trận đỡ; trận cấp 2 thì cố thủ được);
+  - tán tu xin nương nhờ, kéo theo gián tế;
+  - linh mạch suy yếu;
+  - thánh chỉ sắc phong;
+  - tranh ngôi chân truyền;
+  - Luyện Đan Phòng nổ;
+  - đại bỉ liên tông;
+  - tượng tổ sư.
+- Mọi sự kiện cần `ownSect.has`. Sự kiện lớn đòi số đệ tử tối thiểu.
+- Nhãn nhóm sự kiện "Thọ nguyên" và "Bổn tông" trên popup.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Sửa móc hiệu ứng sai đơn vị và nối móc còn treo (rà soát sau GĐ 4, 2026-10-12)
 - Sửa 10 móc viết sai đơn vị: Long tượng chi lực chiến lực +10% (trước là +1000%), Thân như liễu yếu thương tích +20%, Khuynh quốc khuynh thành mua rẻ 10%, Đạo tâm như bàn thạch kháng tâm ma 20% (trước là miễn hoàn toàn); Độ Kiếp Thể và Đại Khí Vãn Thành đột phá đại cảnh giới +5% / +15% (trước gần như 0); Trung Châu đột phá +2%; trạng thái cực hạn cộng thọ nguyên theo tỉ lệ như mọi nơi khác.
 - Validator báo lỗi khi móc tính theo tỉ lệ (0.2 = 20%) mang số lớn hơn 2, hoặc móc tính theo điểm phần trăm (đột phá, thiên kiếp, bệnh) mang số dưới 1.

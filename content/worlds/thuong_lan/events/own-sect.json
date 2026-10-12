@@ -1,0 +1,452 @@
+[
+  {
+    "id": "bt_lang_gieng_khieu_khich",
+    "category": "own_sect",
+    "title": "Láng giềng tới gõ cửa",
+    "text": "Mấy đệ tử của {sect} xuống núi mua gạo, về tới nơi mặt mũi bầm dập. Kẻ ra tay là người của tông môn bên kia sông, còn nhắn: \"Tông mới lập thì nên học cách cúi đầu.\"",
+    "themes": ["justice"],
+    "tags": ["violence"],
+    "conditions": { "ownSect": { "has": true } },
+    "weight": 1.2,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Đích thân sang bên kia sông",
+        "result": {
+          "text": "Trưởng lão bên kia ra đón, mặt cười mà tay đã đặt lên chuôi kiếm.",
+          "effects": {},
+          "fight": {
+            "foe": { "name": "Trưởng lão tông láng giềng", "realm": "same", "intent": "teach" },
+            "win": {
+              "text": "Trưởng lão lùi ba bước, chắp tay xin lỗi. Tin đồn qua sông nhanh hơn thuyền: chưởng môn {sect} không dễ chọc.",
+              "effects": { "ownSect": { "members": 5, "growthBonus": 0.05 }, "stat.happiness": 5, "reputation": { "chinh": 3 } }
+            },
+            "lose": {
+              "text": "Ngươi về núi với vạt áo rách. Đệ tử không nói gì, nhưng tối đó vài người lặng lẽ thu dọn hành lý.",
+              "effects": { "ownSect": { "members": -3 }, "stat.happiness": -5, "stat.health": -10 }
+            }
+          }
+        }
+      },
+      {
+        "text": "Gửi lễ giảng hòa",
+        "result": {
+          "text": "Hai rương linh thạch qua sông. Bên kia nhận, lần sau đệ tử {sect} xuống núi được chào hỏi tử tế. Lời chào nghe hơi chua.",
+          "effects": { "ownSect": { "treasury": -60 }, "stat.daoHeart": -1, "karma": 1 }
+        }
+      },
+      {
+        "text": "Bảo đệ tử nhẫn, tự lo luyện công",
+        "result": {
+          "text": "\"Nhẫn một lúc, trời yên biển lặng.\" Đệ tử gật đầu. Có đứa gật mạnh quá, như muốn gãy cổ.",
+          "effects": { "ownSect": { "members": -2 }, "stat.daoHeart": 2, "stat.happiness": -3 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bt_phan_do",
+    "category": "own_sect",
+    "title": "Phản đồ",
+    "text": "Nửa đêm, Tàng Kinh của {sect} mất một cuốn công pháp. Sáng ra, đệ tử đứng đầu sổ điểm danh cũng mất theo.",
+    "themes": ["justice", "plunder"],
+    "conditions": { "ownSect": { "has": true, "minMembers": 8 } },
+    "weight": 1,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Đích thân truy bắt",
+        "result": {
+          "text": "Ba ngày sau ngươi chặn được hắn ở bến đò. Hắn rút kiếm, tay run mà mắt không run.",
+          "effects": {},
+          "fight": {
+            "foe": { "name": "Phản đồ", "realm": "same", "powerMul": 0.7, "intent": "kill" },
+            "win": {
+              "text": "Ngươi mang cuốn công pháp về, treo kiếm của phản đồ trước sơn môn. Không ai cần nghe giảng thêm về môn quy.",
+              "effects": { "ownSect": { "growthBonus": 0.03 }, "stat.daoHeart": 1, "stat.happiness": 2 }
+            },
+            "lose": {
+              "text": "Hắn nhảy xuống sông, mất hút. Cuốn công pháp giờ thành của tông khác.",
+              "effects": { "ownSect": { "members": -2 }, "stat.happiness": -5, "stat.health": -5 }
+            },
+            "fled": {
+              "text": "Ngươi để hắn đi. Trên đường về núi, ngươi tự hỏi mình đã dạy hắn sai điều gì.",
+              "effects": { "stat.daoHeart": -1 }
+            }
+          }
+        }
+      },
+      {
+        "text": "Treo thưởng truy nã khắp giang hồ",
+        "result": {
+          "text": "Tán tu thích tiền hơn thích nghĩa khí. Tháng sau phản đồ bị trói gô đưa về, kèm hóa đơn.",
+          "effects": { "ownSect": { "treasury": -80, "growthBonus": 0.02 }, "reputation": { "tan_tu": 3 }, "stat.happiness": 1 }
+        }
+      },
+      {
+        "text": "Thôi, người muốn đi thì giữ sao được",
+        "result": {
+          "text": "Ngươi xóa tên hắn khỏi sổ. Đệ tử ở lại thấy chưởng môn rộng lượng, nhưng cũng thấy kho kinh không ai canh.",
+          "effects": { "karma": 2, "ownSect": { "members": -1, "growthBonus": -0.02 }, "stat.daoHeart": 1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bt_dai_bi_noi_mon",
+    "category": "own_sect",
+    "title": "Đại bỉ nội môn",
+    "text": "{sect} đã đủ đông để mở đại bỉ nội môn. Đệ tử luyện đêm luyện ngày, sân tập không lúc nào tắt đèn. Chưởng môn định thưởng thế nào?",
+    "themes": ["study"],
+    "conditions": { "ownSect": { "has": true, "minMembers": 20 } },
+    "weight": 1,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Thưởng hậu: người đứng đầu được một bình đan",
+        "result": {
+          "text": "Đại bỉ đánh tới gãy hai cây cột. Người thắng ôm bình đan khóc, kẻ thua hẹn năm sau.",
+          "effects": { "ownSect": { "treasury": -100, "growthBonus": 0.08 }, "stat.happiness": 4 }
+        }
+      },
+      {
+        "text": "Tự mình xuống sân chỉ điểm từng người",
+        "result": {
+          "text": "Ngươi chỉ điểm từ sáng tới tối. Đệ tử tiến bộ thấy rõ, còn ngươi thấy cả những chỗ hổng của chính mình.",
+          "effects": { "ownSect": { "growthBonus": 0.05 }, "cultProgress": -5, "stat.comprehension": 2 }
+        }
+      },
+      {
+        "text": "Để trưởng lão chủ trì",
+        "result": {
+          "text": "Đại bỉ diễn ra bình thường. Ngươi ngồi trên đài cao, ngủ gật một chút, không ai dám đánh thức.",
+          "effects": { "ownSect": { "growthBonus": 0.02 }, "stat.happiness": 2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bt_ma_dao_cong_son",
+    "category": "own_sect",
+    "title": "Ma đạo công sơn",
+    "text": "Trời tối sầm giữa trưa. Một đám ma tu áo đen vây kín chân núi {sect}, kẻ cầm đầu cười: \"Linh mạch tốt thế này, để cho bọn nhãi giữ thì phí.\"",
+    "themes": ["demonic"],
+    "tags": ["violence"],
+    "conditions": { "ownSect": { "has": true, "minMembers": 15 } },
+    "weight": 0.8,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Mở đại trận, dẫn đệ tử nghênh chiến",
+        "result": {
+          "text": "Ma tu xông vào chân núi. Kẻ cầm đầu nhắm thẳng vào ngươi.",
+          "effects": {},
+          "fight": {
+            "foe": { "name": "Ma đầu công sơn", "realm": "same", "powerMul": 1.3, "lineage": "ma", "intent": "kill", "againstSect": true },
+            "win": {
+              "text": "Ma đầu bỏ chạy, để lại nửa đám thuộc hạ và một túi linh thạch. Danh tiếng {sect} vang khắp chính đạo.",
+              "effects": { "ownSect": { "members": 10, "treasury": 150, "growthBonus": 0.1 }, "reputation": { "chinh": 10, "ma": -5 }, "stat.happiness": 8, "stat.health": -10 }
+            },
+            "lose": {
+              "text": "Đại trận vỡ, sơn môn cháy. Ma tu cướp sạch kho rồi đi, như cơn mưa đá qua ruộng lúa.",
+              "effects": { "ownSect": { "members": -10, "treasury": -200 }, "stat.happiness": -10, "stat.health": -20 }
+            }
+          }
+        }
+      },
+      {
+        "text": "Đóng đại trận cố thủ",
+        "requires": { "ownSect": { "building": { "id": "ho_son_dai_tran", "min": 2 } } },
+        "result": {
+          "text": "Ma tu đập vào trận suốt bảy ngày, trận rung mà không vỡ. Ngày thứ tám, chúng chửi một tràng rồi bỏ đi.",
+          "effects": { "ownSect": { "treasury": -50 }, "stat.daoHeart": 2, "stat.happiness": 3 }
+        }
+      },
+      {
+        "text": "Nộp linh thạch mua yên",
+        "result": {
+          "text": "Ma đầu cân túi linh thạch, gật gù: \"Biết điều.\" Hắn đi, nhưng ngươi biết hắn sẽ quay lại.",
+          "effects": { "ownSect": { "treasury": -150, "members": -5 }, "reputation": { "chinh": -5 }, "stat.daoHeart": -3, "stat.happiness": -5 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bt_tan_tu_nuong_nho",
+    "category": "own_sect",
+    "title": "Tán tu xin nương nhờ",
+    "text": "Mười mấy tán tu dắt díu nhau tới trước sơn môn {sect}. Kẻ đứng đầu chắp tay: \"Bọn ta bị truy đuổi, xin chưởng môn cho chỗ dung thân. Bọn ta làm gì cũng được.\"",
+    "themes": ["benefactor"],
+    "conditions": { "ownSect": { "has": true } },
+    "weight": 1,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Nhận cả",
+        "result": {
+          "text": "Núi đông hẳn lên. Tán tu quen sống tự do, ăn uống ồn ào, nhưng làm việc thì chịu khó.",
+          "effects": { "ownSect": { "members": 12 }, "karma": 2, "stat.happiness": 3, "followUp": { "event": "bt_gian_te", "afterYears": [1, 3] } }
+        }
+      },
+      {
+        "text": "Hỏi rõ ai đang truy đuổi họ",
+        "check": { "stat": "stat.intellect", "difficulty": 50 },
+        "success": {
+          "text": "Hỏi ba câu, ngươi lọc ra hai kẻ nói dối. Số còn lại được nhận, hai kẻ kia bị tiễn xuống núi.",
+          "effects": { "ownSect": { "members": 10 }, "karma": 1, "stat.intellect": 1 }
+        },
+        "fail": {
+          "text": "Câu chuyện của họ nghe hợp lý. Ngươi nhận hết.",
+          "effects": { "ownSect": { "members": 12 }, "karma": 1, "stat.happiness": 2, "followUp": { "event": "bt_gian_te", "afterYears": [1, 3] } }
+        }
+      },
+      {
+        "text": "Từ chối, cho chút lộ phí",
+        "result": {
+          "text": "Họ cúi đầu đi. Ngươi nghe tiếng thở dài lẫn trong tiếng bước chân.",
+          "effects": { "ownSect": { "treasury": -20 }, "stat.happiness": -2, "stat.daoHeart": 1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bt_gian_te",
+    "category": "own_sect",
+    "title": "Gián tế trong núi",
+    "text": "Một đệ tử báo: có người lén vẽ bản đồ trận pháp của {sect}. Dấu vết dẫn về nhóm tán tu nhận vào mấy năm trước.",
+    "themes": ["justice"],
+    "conditions": { "ownSect": { "has": true } },
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Bí mật điều tra",
+        "check": { "stat": "stat.intellect", "difficulty": 55 },
+        "success": {
+          "text": "Gián tế bị bắt khi đang thả chim đưa thư. Tấm bản đồ trong tay hắn vẽ sai be bét. Ngươi gửi trả nó cho chủ hắn, kèm lời nhắn.",
+          "effects": { "ownSect": { "growthBonus": 0.03 }, "stat.intellect": 1, "stat.happiness": 3 }
+        },
+        "fail": {
+          "text": "Gián tế đánh hơi được, bỏ trốn trong đêm, mang theo nửa tấm bản đồ và vài chục linh thạch.",
+          "effects": { "ownSect": { "treasury": -60, "members": -2 }, "stat.happiness": -4 }
+        }
+      },
+      {
+        "text": "Tập hợp cả nhóm tán tu lại tra hỏi",
+        "result": {
+          "text": "Gián tế lộ mặt, nhưng nhóm tán tu thấy bị nghi oan, kéo nhau bỏ đi quá nửa.",
+          "effects": { "ownSect": { "members": -6 }, "stat.daoHeart": 1, "stat.happiness": -2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bt_linh_mach_suy",
+    "category": "own_sect",
+    "title": "Linh mạch suy yếu",
+    "text": "Linh khí trên núi {sect} mỏng dần. Linh điền héo úa, đệ tử ngồi thiền cả ngày mà tu vi nhích như rùa bò.",
+    "themes": ["cultivation"],
+    "conditions": { "ownSect": { "has": true, "minMembers": 20 } },
+    "weight": 0.8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đổ linh thạch bồi linh mạch",
+        "result": {
+          "text": "Linh thạch chôn xuống, linh khí trở lại. Kho mỏng đi trông thấy.",
+          "effects": { "ownSect": { "treasury": -150, "growthBonus": 0.03 }, "stat.happiness": 1 }
+        }
+      },
+      {
+        "text": "Đích thân xuống đáy mạch tìm nguyên nhân",
+        "check": { "stat": "stat.luck", "difficulty": 50 },
+        "success": {
+          "text": "Dưới đáy mạch có một con linh thử béo múp đang hút linh khí. Ngươi tóm cổ nó lên làm linh sủng hộ sơn.",
+          "effects": { "ownSect": { "growthBonus": 0.05 }, "stat.luck": 2, "stat.happiness": 5 }
+        },
+        "fail": {
+          "text": "Ngươi đào ba tháng, chỉ thấy đá. Linh mạch tự hồi một ít, nhưng ngươi lỡ mất mấy tháng tu luyện.",
+          "effects": { "cultProgress": -8, "stat.health": -5, "stat.happiness": -2 }
+        }
+      },
+      {
+        "text": "Mặc kệ, linh mạch nào cũng có lúc lên xuống",
+        "result": {
+          "text": "Linh mạch không hồi. Vài đệ tử xin sang tông khác học tiếp.",
+          "effects": { "ownSect": { "members": -4, "growthBonus": -0.03 }, "stat.happiness": -3 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bt_trieu_dinh_sac_phong",
+    "category": "own_sect",
+    "title": "Thánh chỉ tới núi",
+    "text": "Một viên quan mặc áo gấm, mặt trắng như bột, leo tới sơn môn {sect} thở không ra hơi, giơ thánh chỉ: triều đình muốn phong {sect} làm Hộ Quốc Tông, đổi lại mỗi năm nộp cống.",
+    "themes": ["fortune"],
+    "conditions": { "ownSect": { "has": true, "minMembers": 30 } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận phong",
+        "result": {
+          "text": "Biển vàng treo trước sơn môn. Đệ tử ra đường được dân chào, quan phủ dâng trà. Linh thạch thì mỗi năm phải gửi xuống núi.",
+          "effects": { "ownSect": { "members": 15, "growthBonus": 0.05, "treasury": -50 }, "reputation": { "trieu_dinh": 15, "tan_tu": -5 }, "stat.happiness": 3 }
+        }
+      },
+      {
+        "text": "Khéo léo từ chối",
+        "check": { "stat": "stat.charm", "difficulty": 55 },
+        "success": {
+          "text": "Viên quan về triều nói tốt cho {sect}: \"Thanh cao, không màng danh lợi.\" Từ đó triều đình nể mà không phiền.",
+          "effects": { "reputation": { "trieu_dinh": 5 }, "stat.charm": 1, "stat.daoHeart": 2 }
+        },
+        "fail": {
+          "text": "Viên quan đỏ mặt bỏ về. Năm sau thuế ruộng dưới chân núi tăng gấp đôi.",
+          "effects": { "reputation": { "trieu_dinh": -10 }, "ownSect": { "treasury": -40 }, "stat.happiness": -3 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bt_chan_truyen_tranh_vi",
+    "category": "own_sect",
+    "title": "Tranh ngôi chân truyền",
+    "text": "Hai đệ tử giỏi nhất {sect} đều muốn làm chân truyền. Một người thiên tư hơn người mà kiêu ngạo, một người chậm hơn mà được lòng đồng môn. Cả núi chờ chưởng môn lên tiếng.",
+    "themes": ["study"],
+    "conditions": { "ownSect": { "has": true, "minMembers": 12 } },
+    "weight": 0.8,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Chọn người thiên tư",
+        "result": {
+          "text": "Chân truyền mới tiến bộ thần tốc, nhưng sân tập vắng hẳn tiếng cười. Có người đã xuống núi.",
+          "effects": { "ownSect": { "members": -3, "growthBonus": 0.04 }, "stat.happiness": -1, "stat.intellect": 1 }
+        }
+      },
+      {
+        "text": "Chọn người được lòng người",
+        "result": {
+          "text": "Cả núi vui vẻ. Kẻ thiên tư cười nhạt, ba năm sau bỏ sang tông khác, mang theo một chút danh tiếng của {sect}.",
+          "effects": { "ownSect": { "members": 2, "growthBonus": 0.02 }, "stat.happiness": 2, "karma": 1 }
+        }
+      },
+      {
+        "text": "Cho hai người tỷ thí, ai thắng người ấy làm",
+        "result": {
+          "text": "Trận tỷ thí đánh từ sáng tới chiều. Kẻ thiên tư thắng nửa chiêu, người kia bái phục. Ai cũng thấy công bằng.",
+          "effects": { "ownSect": { "growthBonus": 0.05 }, "stat.daoHeart": 1, "stat.happiness": 2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bt_dan_phong_no",
+    "category": "own_sect",
+    "title": "Luyện Đan Phòng nổ tung",
+    "text": "\"Ầm!\" Mái Luyện Đan Phòng của {sect} bay lên trời rồi rơi xuống ao cá. Từ trong khói đen, một đệ tử bò ra, tóc dựng đứng: \"Sư phụ, con nghĩ con suýt luyện ra một loại đan mới.\"",
+    "themes": ["funny"],
+    "tags": ["funny"],
+    "conditions": { "ownSect": { "has": true, "building": { "id": "luyen_dan_phong", "min": 1 } } },
+    "weight": 0.8,
+    "cooldownYears": 12,
+    "choices": [
+      {
+        "text": "Phạt nó quét dọn ba tháng",
+        "result": {
+          "text": "Đệ tử quét dọn ba tháng, vừa quét vừa ghi chép. Mái nhà thì phải lợp lại.",
+          "effects": { "ownSect": { "treasury": -40 }, "stat.happiness": 1 }
+        }
+      },
+      {
+        "text": "Hỏi kỹ nó đã cho gì vào lò",
+        "check": { "stat": "stat.comprehension", "difficulty": 60 },
+        "success": {
+          "text": "Nghe xong, mắt ngươi sáng lên. Thứ suýt thành kia không phải đan, nhưng là một mẹo luyện đan hay. Đệ tử được thưởng, mái nhà vẫn phải lợp lại.",
+          "effects": { "ownSect": { "treasury": -40, "growthBonus": 0.04 }, "craftXp": { "alchemy": 5 }, "stat.happiness": 4 }
+        },
+        "fail": {
+          "text": "Ngươi nghe mãi không hiểu. Đệ tử cũng không hiểu. Hai thầy trò nhìn cái ao cá, cá nổi trắng bụng.",
+          "effects": { "ownSect": { "treasury": -40 }, "stat.happiness": -1, "stat.comprehension": 1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bt_lien_tong_dai_bi",
+    "category": "own_sect",
+    "title": "Đại bỉ liên tông",
+    "text": "Thư mời từ các đại tông gửi tới {sect}: đại bỉ liên tông mười năm một lần sắp mở. Tông nào xếp hạng cao thì đệ tử khắp nơi đổ về xin nhập môn.",
+    "themes": ["study", "fortune"],
+    "conditions": { "ownSect": { "has": true, "minMembers": 40 } },
+    "weight": 0.8,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Cử đệ tử giỏi nhất đi",
+        "check": { "stat": "stat.luck", "difficulty": 55 },
+        "success": {
+          "text": "Đệ tử {sect} vào tới tứ cường. Tên tông được xướng lên trước mặt cả Thương Lan.",
+          "effects": { "ownSect": { "members": 15, "growthBonus": 0.08 }, "reputation": { "chinh": 5 }, "stat.happiness": 6 }
+        },
+        "fail": {
+          "text": "Đệ tử thua ngay vòng đầu, gặp phải người của đại tông. Về núi, nó quỳ ba ngày không dậy.",
+          "effects": { "ownSect": { "growthBonus": -0.02 }, "stat.happiness": -3, "stat.daoHeart": 1 }
+        }
+      },
+      {
+        "text": "Chưởng môn tự mình lên đài biểu diễn",
+        "result": {
+          "text": "Ngươi bước lên đài. Đối thủ là chưởng môn một tông lâu đời, cười nhẹ: \"Chỉ giáo.\"",
+          "effects": {},
+          "fight": {
+            "foe": { "name": "Chưởng môn đại tông", "realm": "same", "powerMul": 1.1, "intent": "teach" },
+            "win": {
+              "text": "Ngươi thắng trước mặt muôn người. Năm đó sơn môn {sect} người xin vào đứng tới chân núi.",
+              "effects": { "ownSect": { "members": 25, "growthBonus": 0.1 }, "reputation": { "chinh": 8 }, "stat.happiness": 8 }
+            },
+            "lose": {
+              "text": "Thua mà không mất mặt: ngươi đỡ được chín mươi chiêu. Người ta nhớ tên {sect}, dù là tên kẻ thua.",
+              "effects": { "ownSect": { "members": 5 }, "stat.health": -10, "stat.happiness": -2 }
+            }
+          }
+        }
+      },
+      {
+        "text": "Không đi, lo việc trong nhà",
+        "result": {
+          "text": "Đại bỉ qua đi, không ai nhắc tới {sect}. Đệ tử luyện công yên ổn, chỉ hơi buồn.",
+          "effects": { "stat.daoHeart": 1, "stat.happiness": -2, "ownSect": { "growthBonus": -0.01 } }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bt_tuong_to_su",
+    "category": "own_sect",
+    "title": "Tượng tổ sư",
+    "text": "Đệ tử {sect} góp tiền dựng một pho tượng chưởng môn trước sơn môn. Tượng cao ba trượng, mặt thì... không giống lắm. Họ hồi hộp chờ ngươi tới xem.",
+    "themes": ["funny"],
+    "tags": ["funny"],
+    "conditions": { "ownSect": { "has": true, "minMembers": 40 } },
+    "weight": 0.6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Khen đẹp",
+        "result": {
+          "text": "Đệ tử vỡ òa. Từ đó khách tới núi ai cũng hỏi: \"Tượng này là ai?\" Ngươi tập nói \"ta\" mà không đỏ mặt.",
+          "effects": { "ownSect": { "growthBonus": 0.03 }, "stat.happiness": 5, "stat.charm": -1 }
+        }
+      },
+      {
+        "text": "Nói thật là không giống",
+        "result": {
+          "text": "Thợ đẽo lại mũi. Lần hai giống hơn. Đệ tử phục chưởng môn thẳng tính, chỉ thợ là hơi giận.",
+          "effects": { "ownSect": { "treasury": -20 }, "stat.daoHeart": 1, "stat.happiness": 2 }
+        }
+      }
+    ]
+  }
+]
