@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6.5: hiệu ứng nhẹ (2026-10-12)
+- Mỗi màn hình trượt nhẹ vào khi chuyển cảnh.
+- Đột phá/lên tầng: viền vàng loé quanh màn hình khoảng 1.6 giây; qua đời: viền tối dần (qua `<html data-fx>`, không đụng logic game).
+- Tôn trọng `prefers-reduced-motion`: tắt mọi animation/transition (gồm cả hiệu ứng cũ như hiện popup) và ẩn viền loé.
+
 ### GĐ 6.4: âm thanh tổng hợp (2026-10-12)
 - `src/ui/audio.ts`: chuông/mõ tạo bằng Web Audio (không dùng file âm thanh). 4 tiếng: qua năm (nhẹ), có sự kiện, đột phá/lên tầng, qua đời. Không có thiết bị âm thanh thì im lặng.
 - **Mặc định tắt.** Bật/tắt ở Sổ lưu → "Âm thanh", ghi nhớ trong trình duyệt (`tutien.sound`).

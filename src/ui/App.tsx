@@ -122,7 +122,17 @@ function Screens({ content }: { content: Content }) {
     const cue = cueFor(lastLife.current, life);
     lastLife.current = life;
     if (sound && cue) playCue(cue);
+    if (cue === 'breakthrough' || cue === 'death') setFx({ cue, n: Date.now() });
   }, [life]);
+  /** Edge glow after a breakthrough or a death, shown through <html data-fx>. */
+  const [fx, setFx] = useState<{ cue: 'breakthrough' | 'death'; n: number } | null>(null);
+  useEffect(() => {
+    if (!fx) return;
+    const root = document.documentElement;
+    root.dataset.fx = fx.cue;
+    const t = setTimeout(() => { delete root.dataset.fx; setFx(null); }, 2400);
+    return () => { clearTimeout(t); delete root.dataset.fx; };
+  }, [fx]);
 
   useEffect(() => applyThemePref(theme), [theme]);
   const toggleTheme = () => setTheme(nextThemePref);
