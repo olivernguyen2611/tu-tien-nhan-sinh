@@ -20,6 +20,7 @@ import { startCoreForming } from './goldenCore';
 import { soulFormFor } from './nascentSoul';
 import { needsHeartDemonTrial, startHeartDemonTrial } from './heartDemon';
 import { tribulationPreview, undergoTribulation, type TribulationPreview } from './tribulation';
+import { blessingHooks } from './blessings';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -89,7 +90,8 @@ export function revealRoot(state: GameState, content: Content): { state: GameSta
   if (state.cult.root) return { state, line: null };
   const rng = Rng.fromState(state.rng);
   const origin = content.origins.find((o) => o.id === state.character.originId);
-  const rolls = origin?.cultivatorClan ? content.balance.roots.clanDescendantRolls : 1;
+  // Phúc báo Đại thiện nhân (task 5b.8): rootReroll adds rolls, best kept.
+  const rolls = (origin?.cultivatorClan ? content.balance.roots.clanDescendantRolls : 1) + Math.max(0, Math.round(hookSum(state, content, 'rootReroll')));
   const root = rollRoot(rng, content, rolls);
 
   const stats = { ...state.stats };
@@ -159,6 +161,8 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
     ...(currentRegion(state, content)?.effects ?? []),
     // The master's role towards a khí vận chi tử (task 5.6).
     ...chosenHooks(state, content),
+    // Phúc báo from the last life (task 5b.8).
+    ...blessingHooks(state, content),
   ];
 }
 
