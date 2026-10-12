@@ -50,7 +50,8 @@ export function takeChosen(state: GameState, content: Content, templateId: strin
   const line: LogLine = { text: t.recruit.replaceAll('{npc}', npc.name).replaceAll('{name}', state.character.name), tone: 'rare' };
   const log = met.state.log.slice();
   const last = log[log.length - 1];
-  log[log.length - 1] = { ...last, lines: [...last.lines, line] };
+  if (last) log[log.length - 1] = { ...last, lines: [...last.lines, line] };
+  else log.push({ age: state.character.age, lines: [line] });
   return { ...met.state, npcs, log, events: { ...met.state.events, npc: met.id } };
 }
 

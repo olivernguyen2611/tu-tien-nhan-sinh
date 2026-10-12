@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### Developer mode: sửa các nút không làm gì (2026-10-12)
+- **Nhận khí vận chi tử làm đệ tử** giờ bấm lúc nào cũng được: trước đây nếu đời này đã có một khí vận chi tử (còn sống hay đã mất) thì nút im lặng không làm gì. Nay người cũ được thả ra (vẫn là người quen, không còn là chi tử hay đồ đệ) và người mới vào thay. Cũng sửa lỗi sập khi nhật ký còn trống.
+- Mọi nút cheat không làm đổi gì (thành thân khi chưa đủ tuổi hay theo Phật đạo, học công pháp đang tu, đặt võ đạo khi đã tu tiên, chuỗi võ đạo ở giai đoạn không có…) giờ **báo lý do** ngay trên bảng Dev thay vì im lặng.
+- Test `dev-buttons` chạy từng nút Dev trên một đời mà nút ấy được bật và kiểm tra đời thật sự đổi.
+
 ### Developer mode: cheat cho người có quan hệ (2026-10-12)
 - Mục mới **Người có quan hệ** trong bảng Dev: chọn tên trong danh sách thả (chia nhóm Gia đình / Người quen) rồi chỉnh người đó, không chỉ nhân vật chính.
 - Người quen: thiện cảm, ân, oán, tư chất, tuổi, thọ nguyên, cho chết hoặc sống lại, cho hoặc bỏ linh căn, đặt cảnh giới, lên tầng, xóa khỏi thế giới (không xóa được đạo lữ và đồ đệ). Người thân: thiện cảm, tuổi, thọ nguyên, sống chết, linh căn. Mọi thay đổi ghi `[Dev]` trong nhật ký.

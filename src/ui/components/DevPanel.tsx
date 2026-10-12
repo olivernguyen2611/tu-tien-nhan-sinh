@@ -10,6 +10,7 @@ import { activeCombos } from '../../systems/destiny';
 import { fingerDef } from '../../systems/goldenFinger';
 import { bodyLabel, rootLabel } from '../../systems/cultivation';
 import { npcById } from '../../systems/npcs';
+import { romanceBlocked } from '../../systems/romance';
 import { devPeople, devPersonCheat, personCheatsAvailable, type PersonCheat } from '../../systems/devPeople';
 import type { SaveMeta } from '../../systems/save';
 import type { RewindOption } from '../../systems/timeline';
@@ -50,7 +51,7 @@ const KIND_ORDER = ['pill', 'artifact', 'talisman', 'array', 'material', 'misc']
 const GRADE_ORDER = ['hoang', 'huyen', 'dia', 'thien'];
 const byOrder = (order: string[]) => (a: string, b: string) => (order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99);
 
-export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange, onMeta, onDisable, onClose }: {
+export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange: onApply, onMeta, onDisable, onClose }: {
   state: GameState;
   content: Content;
   /** Save meta (Luân Hồi points, thiên phú, Thiên Thư, thành tựu). */
@@ -80,6 +81,13 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
   const [bodyId, setBodyId] = useState(content.cultivation.roots.bodies[0]?.id ?? '');
   const [martialStage, setMartialStage] = useState('0');
   const spouse = npcById(state, state.romance.partner);
+  // A cheat that changes nothing says why, instead of looking like a dead button.
+  const [notice, setNotice] = useState<string | null>(null);
+  const onChange = (next: GameState, why?: string | null) => {
+    if (next === state) { setNotice(why ?? 'Không có gì thay đổi: điều kiện của nút này chưa đủ lúc này.'); return; }
+    setNotice(null);
+    onApply(next);
+  };
   const people = devPeople(state);
   const [personKey, setPersonKey] = useState('');
   const person = people.find((p) => p.key === personKey) ?? people[0];
@@ -100,6 +108,7 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
         <div class="kicker">Developer mode</div>
         <h2>Bảng thử nghiệm</h2>
         <p class="profile-note">Seed <code>{state.seed}</code> · mọi thay đổi ghi [Dev] trong nhật ký.</p>
+        {notice && <p class="action-result bad dev-notice" role="status">{notice}</p>}
 
         <Section title="Chỉ số" open>
           <ul class="dev-stats">
@@ -162,10 +171,10 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
               <option value="-1">Chưa nhập môn</option>
               {content.martial.stages.map((m, i) => <option key={m.name} value={String(i)}>{m.name}</option>)}
             </Pick>
-            <button class="chip-btn" disabled={!live || state.cult.realm !== 'pham_nhan'} onClick={() => onChange(devSetMartial(state, content, Number(martialStage)))}>Đặt</button>
+            <button class="chip-btn" disabled={!live || state.cult.realm !== 'pham_nhan'} onClick={() => onChange(devSetMartial(state, content, Number(martialStage)), 'Chỉ phàm nhân mới có võ đạo.')}>Đặt</button>
           </div>
           <div class="action-chips">
-            <button class="chip-btn" disabled={!live || state.cult.realm !== 'pham_nhan'} onClick={() => onChange(devStartMartialQuest(state, content))}>Bắt đầu chuỗi võ đạo</button>
+            <button class="chip-btn" disabled={!live || state.cult.realm !== 'pham_nhan'} onClick={() => onChange(devStartMartialQuest(state, content), 'Giai đoạn võ đạo này không có chuỗi nhiệm vụ (chỉ Hóa cảnh và Tam hoa tụ đỉnh có).')}>Bắt đầu chuỗi võ đạo</button>
             <button class="chip-btn" disabled={!live || !state.martial.quest} onClick={() => onChange(devQuestStep(state, content, 'win'))}>Qua ải ngay</button>
             <button class="chip-btn" disabled={!live || !state.martial.quest} onClick={() => onChange(devQuestStep(state, content, 'retry'))}>Được thử lại năm nay</button>
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devResetBond(state))}>Gia đạo: làm lại trong năm</button>
@@ -268,7 +277,7 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
         <Section title="Phu thê">
           <p class="profile-note">{spouse ? `Bạn đời: ${spouse.name}, thiện cảm ${spouse.affinity}` : 'Chưa có bạn đời.'}</p>
           <div class="action-chips">
-            <button class="chip-btn" disabled={!live || !!spouse} onClick={() => onChange(devMarry(state, content))}>Thành thân ngay</button>
+            <button class="chip-btn" disabled={!live || !!spouse} onClick={() => onChange(devMarry(state, content), romanceBlocked(state, content) ?? 'Đã có bạn đời.')}>Thành thân ngay</button>
             <button class="chip-btn" disabled={!live || !spouse} onClick={() => onChange(devSpouseAffinity(state, -20))}>Thiện cảm −20</button>
             <button class="chip-btn" disabled={!live || !spouse} onClick={() => onChange(devSpouseAffinity(state, 20))}>Thiện cảm +20</button>
           </div>
@@ -281,13 +290,13 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
           </div>
           <div class="dev-event">
             <GPick value={techId} onChange={setTechId} label="Công pháp" options={content.techniques.slice().sort((a, b) => byOrder(GRADE_ORDER)(a.grade, b.grade)).map((t) => ({ id: t.id, name: `${t.name}${state.cult.technique === t.id ? ' (đang tu)' : state.cult.learned.includes(t.id) ? ' (đã học)' : ''}`, group: `Công pháp ${content.cultivation.realms.gradeNames[t.grade] ?? t.grade}` }))} />
-            <button class="chip-btn" disabled={!live || !techId} onClick={() => onChange(devLearnTechnique(state, content, techId))}>Học ngay</button>
+            <button class="chip-btn" disabled={!live || !techId} onClick={() => onChange(devLearnTechnique(state, content, techId), state.cult.technique === techId ? 'Đang tu công pháp này rồi.' : undefined)}>Học ngay</button>
           </div>
           <div class="action-chips">
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devGiveAllItems(state, content))}>Nhận mọi vật phẩm</button>
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devGiveAllScrolls(state, content))}>Nhận mọi bí tịch</button>
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devResetItemUse(state))}>Xóa kháng thuốc</button>
-            <button class="chip-btn" disabled={!live || !!state.combat} onClick={() => { onChange(devStartFight(state, content, 'below', 'rob')); onClose(); }}>Đánh kẻ yếu hơn</button>
+            <button class="chip-btn" disabled={!live || !!state.combat} onClick={() => { onChange(devStartFight(state, content, 'below', 'rob'), 'Đang trong một trận đấu.'); onClose(); }}>Đánh kẻ yếu hơn</button>
             <button class="chip-btn" disabled={!live || !!state.combat} onClick={() => { onChange(devStartFight(state, content, 'same', 'teach')); onClose(); }}>Đánh ngang sức</button>
             <button class="chip-btn" disabled={!live || !!state.combat} onClick={() => { onChange(devStartFight(state, content, 'above', 'kill')); onClose(); }}>Đánh kẻ mạnh hơn</button>
           </div>
