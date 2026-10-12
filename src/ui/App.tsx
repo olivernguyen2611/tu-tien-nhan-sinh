@@ -19,6 +19,7 @@ import {
 import { checkDeath } from '../systems/time';
 import { GlossaryProvider } from './components/Tooltip';
 import { browserStore, downloadText, readJsonFile } from './storage';
+import { cueFor, loadSoundPref, playCue, saveSoundPref } from './audio';
 import { applyThemePref, loadThemePref, nextThemePref, type ThemePref } from './theme';
 import { CreateCharacterScreen } from './screens/CreateCharacter';
 import { DeathScreen } from './screens/Death';
@@ -113,6 +114,15 @@ function Screens({ content }: { content: Content }) {
     // The age the life stands at when dev mode starts to watch it is the first snapshot.
     if (devMode && life && !history.current.some((h) => h.state.seed === life.seed)) history.current = recordSnapshot([], life, content.balance.dev.rewindKeepYears);
   }, [devMode, life?.seed]);
+
+  const [sound, setSound] = useState(loadSoundPref);
+  const toggleSound = () => { saveSoundPref(!sound); setSound(!sound); if (!sound) playCue('event'); };
+  const lastLife = useRef<GameState | null>(null);
+  useEffect(() => {
+    const cue = cueFor(lastLife.current, life);
+    lastLife.current = life;
+    if (sound && cue) playCue(cue);
+  }, [life]);
 
   useEffect(() => applyThemePref(theme), [theme]);
   const toggleTheme = () => setTheme(nextThemePref);
@@ -232,6 +242,8 @@ function Screens({ content }: { content: Content }) {
         }}
         theme={theme}
         onToggleTheme={toggleTheme}
+        sound={sound}
+        onToggleSound={toggleSound}
       />
     );
   }
