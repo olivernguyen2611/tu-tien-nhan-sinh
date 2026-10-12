@@ -1,0 +1,698 @@
+[
+  {
+    "id": "pt_ky_niem",
+    "category": "romance",
+    "title": "Ngày cưới năm xưa",
+    "text": "Sáng nay {lover} dậy sớm khác thường, cứ đi qua đi lại trước mặt {name}, như đang đợi ngươi nhớ ra chuyện gì.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "target": "partner"
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Hôm nay là ngày cưới, ta đã đặt bàn ở tửu lâu",
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 15
+            }
+          ]
+        },
+        "result": {
+          "text": "{lover} giả vờ chê đắt, ăn hết ba đĩa.",
+          "effects": {
+            "silver": -15,
+            "npc": {
+              "affinity": 10
+            },
+            "stat.happiness": 6
+          }
+        }
+      },
+      {
+        "text": "Tự tay nấu một bữa cơm",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Cơm hơi khê, nhưng người ăn cười suốt bữa.",
+          "effects": {
+            "npc": {
+              "affinity": 8
+            },
+            "stat.happiness": 5
+          }
+        },
+        "fail": {
+          "text": "Bếp suýt cháy. {lover} vừa dập lửa vừa cười chảy nước mắt.",
+          "effects": {
+            "npc": {
+              "affinity": 4
+            },
+            "stat.happiness": 3,
+            "stat.health": -1
+          }
+        }
+      },
+      {
+        "text": "Hôm nay là ngày gì nhỉ?",
+        "result": {
+          "text": "{lover} đóng cửa phòng. Đêm ấy ngươi ngủ ở thư phòng.",
+          "effects": {
+            "npc": {
+              "affinity": -10
+            },
+            "stat.happiness": -4
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "pt_than_thich",
+    "category": "romance",
+    "title": "Thân thích bên nhà",
+    "text": "Một đoàn họ hàng bên {lover} kéo tới, mang theo hai gói bánh và một câu chuyện rất dài về chuyện làm ăn thua lỗ.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "target": "partner"
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Cho mượn tiền, coi như mất",
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 30
+            }
+          ]
+        },
+        "result": {
+          "text": "Họ hàng về vui vẻ. {lover} nắm tay ngươi rất lâu.",
+          "effects": {
+            "silver": -30,
+            "npc": {
+              "affinity": 8
+            },
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Từ chối khéo léo",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Ngươi nói ba câu, họ hàng gật gù về tay không mà còn cảm ơn.",
+          "effects": {
+            "stat.charm": 1,
+            "npc": {
+              "affinity": 2
+            }
+          }
+        },
+        "fail": {
+          "text": "Lời từ chối nghe như lời mắng. {lover} ngượng chín mặt.",
+          "effects": {
+            "npc": {
+              "affinity": -6
+            },
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Đóng cửa tiễn khách",
+        "result": {
+          "text": "Cả họ bên kia từ nay gọi ngươi là \"cái người ấy\".",
+          "effects": {
+            "npc": {
+              "affinity": -12
+            },
+            "stat.daoHeart": 2,
+            "stat.happiness": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "pt_ghen",
+    "category": "romance",
+    "title": "Hũ giấm bị đổ",
+    "text": "{lover} hỏi như không: \"Hôm qua người đứng nói chuyện với {name} ở đầu ngõ là ai thế?\" Giọng nhẹ tênh, tay bóp nát quả quýt.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "target": "partner"
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Giải thích rõ ràng",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Hiểu lầm tan, {lover} đưa ngươi nửa quả quýt còn lại.",
+          "effects": {
+            "npc": {
+              "affinity": 5
+            },
+            "stat.happiness": 3
+          }
+        },
+        "fail": {
+          "text": "Càng giải thích càng giống có chuyện thật.",
+          "effects": {
+            "npc": {
+              "affinity": -6
+            },
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Trêu lại: \"Ghen à?\"",
+        "result": {
+          "text": "{lover} đỏ mặt đuổi đánh ngươi quanh sân.",
+          "effects": {
+            "npc": {
+              "affinity": 3
+            },
+            "stat.happiness": 4,
+            "stat.health": -1
+          }
+        }
+      },
+      {
+        "text": "Mặc kệ, việc ai nấy làm",
+        "result": {
+          "text": "Bữa tối im lặng tới mức nghe được tiếng nhai.",
+          "effects": {
+            "npc": {
+              "affinity": -8
+            },
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "pt_om_nang",
+    "category": "romance",
+    "title": "{lover} lâm bệnh",
+    "text": "{lover} sốt cao mấy hôm liền, môi nứt nẻ, vẫn cố nói \"không sao\".",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "target": "partner"
+      }
+    },
+    "weight": 2,
+    "cooldownYears": 12,
+    "choices": [
+      {
+        "text": "Thức trắng bên giường",
+        "result": {
+          "text": "Bệnh lui. Người ốm khỏe lại, người chăm gầy đi một vòng.",
+          "effects": {
+            "stat.health": -5,
+            "npc": {
+              "affinity": 12
+            },
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Mời danh y về chữa",
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 25
+            }
+          ]
+        },
+        "result": {
+          "text": "Danh y kê ba thang thuốc, thu một túi bạc.",
+          "effects": {
+            "silver": -25,
+            "npc": {
+              "affinity": 5
+            },
+            "stat.happiness": 1
+          }
+        }
+      },
+      {
+        "text": "Truyền linh khí trị thương",
+        "requires": {
+          "root": {
+            "usable": true
+          },
+          "realm": {
+            "min": "luyen_khi"
+          }
+        },
+        "result": {
+          "text": "Linh khí đi một vòng, bệnh tà tan như sương sớm.",
+          "effects": {
+            "cultProgress": -5,
+            "npc": {
+              "affinity": 10
+            },
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Việc bận, nhờ hàng xóm trông giúp",
+        "result": {
+          "text": "Lúc ngươi về, bệnh đã khỏi. Người kia cũng không hỏi ngươi đi đâu.",
+          "effects": {
+            "npc": {
+              "affinity": -10
+            },
+            "stat.intellect": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "pt_cai_va",
+    "category": "romance",
+    "title": "Chuyện bé xé ra to",
+    "text": "Bắt đầu từ cái chén để sai chỗ, kết thúc bằng chuyện mười năm trước. {name} và {lover} cãi nhau một trận ra trò.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "target": "partner",
+        "maxAffinity": 75
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Nhận lỗi trước",
+        "result": {
+          "text": "Một câu xin lỗi, nửa ngày giận dỗi, rồi cũng qua.",
+          "effects": {
+            "npc": {
+              "affinity": 6
+            },
+            "stat.daoHeart": -1,
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Lý lẽ tới cùng",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Ngươi thắng. Rồi nhận ra thắng cũng chẳng vui.",
+          "effects": {
+            "stat.intellect": 1,
+            "npc": {
+              "affinity": -3
+            }
+          }
+        },
+        "fail": {
+          "text": "Ngươi thua, lại còn bị nhắc thêm hai chuyện cũ.",
+          "effects": {
+            "npc": {
+              "affinity": -6
+            },
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Ra ngoài đi dạo cho nguôi",
+        "result": {
+          "text": "Đi hết ba con phố, về nhà thấy bát cơm vẫn để phần.",
+          "effects": {
+            "stat.health": 1,
+            "npc": {
+              "affinity": -1
+            },
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "pt_dao_lu_dot_pha",
+    "category": "romance",
+    "title": "Đạo lữ tới bình cảnh",
+    "text": "{lover} bế quan đã lâu mà bình cảnh vẫn không lay. Một tối, người ấy ra ngoài, ngồi cạnh {name} thở dài.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "target": "partner",
+        "targetRooted": true
+      },
+      "root": {
+        "usable": true
+      },
+      "realm": {
+        "min": "luyen_khi"
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Hộ pháp cho người ấy đột phá",
+        "result": {
+          "text": "Ngươi canh cửa bảy ngày. Ngày thứ tám, linh khí trong động phủ bùng lên.",
+          "effects": {
+            "cultProgress": -5,
+            "romance": {
+              "partnerProgress": 30
+            },
+            "npc": {
+              "affinity": 10
+            },
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Mua đan dược trợ giúp",
+        "requires": {
+          "stats": [
+            {
+              "stat": "spiritStones",
+              "gte": 20
+            }
+          ]
+        },
+        "result": {
+          "text": "Viên đan vào miệng, bình cảnh nứt ra một khe.",
+          "effects": {
+            "spiritStones": -20,
+            "romance": {
+              "partnerProgress": 40
+            },
+            "npc": {
+              "affinity": 8
+            },
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Cùng luận đạo suốt đêm",
+        "check": {
+          "stat": "stat.comprehension",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Ngươi nói một câu, người ấy ngộ ra, ngươi cũng ngộ ra theo.",
+          "effects": {
+            "cultProgress": 8,
+            "romance": {
+              "partnerProgress": 20
+            },
+            "npc": {
+              "affinity": 5
+            },
+            "stat.comprehension": 1
+          }
+        },
+        "fail": {
+          "text": "Hai người luận tới sáng, chỉ ngộ ra là trời đã sáng.",
+          "effects": {
+            "stat.comprehension": 1,
+            "npc": {
+              "affinity": 2
+            },
+            "stat.happiness": 1
+          }
+        }
+      },
+      {
+        "text": "Đường ai nấy tu, đừng làm phiền ta",
+        "result": {
+          "text": "{lover} gật đầu, đứng dậy, không ngồi xuống lần nào nữa.",
+          "effects": {
+            "cultProgress": 3,
+            "npc": {
+              "affinity": -12
+            },
+            "stat.happiness": -3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "pt_du_ngoan",
+    "category": "romance",
+    "title": "Cùng nhau du ngoạn",
+    "text": "Hoa đào đầu núi nở rộ. {lover} hỏi {name} có muốn đi xem không, rồi đã khoác áo sẵn trước khi ngươi kịp trả lời.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "target": "partner",
+        "minAffinity": 55
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Đi xa một chuyến, ở lại vài hôm",
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 15
+            }
+          ]
+        },
+        "result": {
+          "text": "Ba ngày không nghĩ tới tu luyện. Lúc về, lòng nhẹ như mây.",
+          "effects": {
+            "silver": -15,
+            "npc": {
+              "affinity": 6
+            },
+            "stat.happiness": 10
+          }
+        }
+      },
+      {
+        "text": "Ngắm trăng ngay sân nhà",
+        "result": {
+          "text": "Hoa đào ở xa, trăng thì ngay trên đầu.",
+          "effects": {
+            "npc": {
+              "affinity": 3
+            },
+            "stat.happiness": 5
+          }
+        }
+      },
+      {
+        "text": "Để năm sau, giờ đang bận",
+        "result": {
+          "text": "{lover} cởi áo khoác treo lại lên móc.",
+          "effects": {
+            "npc": {
+              "affinity": -5
+            },
+            "stat.intellect": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "pt_lanh_nhat",
+    "category": "romance",
+    "title": "Chung nhà, khác lòng",
+    "text": "Đã lâu {name} và {lover} không nói với nhau câu nào quá ba chữ. Chén trà rót ra rồi nguội.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "target": "partner",
+        "maxAffinity": 35
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 4,
+    "choices": [
+      {
+        "text": "Ngồi xuống nói thật lòng",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Nói tới khuya, khóc một trận, rồi cười. Như lại quen nhau lần nữa.",
+          "effects": {
+            "npc": {
+              "affinity": 15
+            },
+            "stat.happiness": 6
+          }
+        },
+        "fail": {
+          "text": "Lời ra khỏi miệng thành lời trách. Cửa phòng lại đóng.",
+          "effects": {
+            "npc": {
+              "affinity": -5
+            },
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Thôi, mỗi người một ngả",
+        "result": {
+          "text": "Hòa ly cũng là một cách buông tha cho nhau.",
+          "effects": {
+            "romance": {
+              "lose": true
+            },
+            "stat.happiness": -10,
+            "stat.daoHeart": 3
+          }
+        }
+      },
+      {
+        "text": "Để thời gian giải quyết",
+        "result": {
+          "text": "Thời gian không giải quyết gì cả, chỉ làm mọi thứ cũ đi.",
+          "effects": {
+            "stat.happiness": -4,
+            "npc": {
+              "affinity": -2
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "pt_hoan_nan",
+    "category": "romance",
+    "title": "Hoạn nạn có nhau",
+    "text": "{name} nằm liệt giường. Mở mắt ra lần nào cũng thấy {lover} ngồi bên, tay cầm bát thuốc.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "target": "partner",
+        "minAffinity": 40
+      },
+      "stats": [
+        {
+          "stat": "stat.health",
+          "lte": 40
+        }
+      ]
+    },
+    "weight": 4,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Để người ấy chăm",
+        "result": {
+          "text": "Thuốc đắng, người cho uống thuốc thì ngọt.",
+          "effects": {
+            "stat.health": 10,
+            "npc": {
+              "affinity": 5
+            },
+            "stat.happiness": 5
+          }
+        }
+      },
+      {
+        "text": "Gượng dậy, không muốn làm khổ người ta",
+        "result": {
+          "text": "Ngươi cố đi lại, ngã một cái. {lover} vừa đỡ vừa mắng.",
+          "effects": {
+            "stat.health": -2,
+            "stat.daoHeart": 2,
+            "npc": {
+              "affinity": 3
+            }
+          }
+        }
+      }
+    ]
+  }
+]

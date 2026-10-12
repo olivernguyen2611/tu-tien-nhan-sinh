@@ -158,7 +158,7 @@ describe('đạo lữ, song tu, sinh con (task 3.7)', () => {
     expect(born / 30).toBeLessThan(b.birthChance + 0.3);
     let g = couple('nu', 'nu');
     g.s = romanceAction(g.s, content, g.id, 'wed').state;
-    expect(romanceViews(g.s, content, g.id)[0].label).toBe('Nhận con nuôi');
+    expect(romanceViews(g.s, content, g.id).find((v) => v.action === 'child')!.label).toBe('Nhận con nuôi');
     expect(romanceAction(g.s, content, g.id, 'child').state.family.some((x) => x.role === 'child')).toBe(true);
   });
 

@@ -8,14 +8,17 @@ import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameEvent } from '../core/schemas';
 import type { GameState, LogLine, Npc, Relative, SpiritRoot, Tone } from '../core/types';
-import { rollRoot, rootName } from './cultivation';
+import { addProgress, rollRoot, rootName } from './cultivation';
 import { changeNpc, isMasked, npcById } from './npcs';
 import { clanRootRolls } from './clan';
 import { makeName, splitName } from './names';
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
 
-export type RomanceAction = 'pursue' | 'giveUp' | 'gift' | 'confess' | 'wed' | 'child';
+export type RomanceAction = 'pursue' | 'giveUp' | 'gift' | 'confess' | 'wed' | 'child' | 'company' | 'dualCult' | 'reconcile' | 'divorce';
+
+/** Playtest 2026-10-12: what counts as caring for the spouse this year (else the spouse cools). */
+const CARE: RomanceAction[] = ['company', 'gift', 'dualCult', 'reconcile', 'child', 'wed'];
 
 export function affinityTier(content: Content, affinity: number): string {
   let name = content.romance.tiers[0].name;
@@ -124,10 +127,7 @@ export function romanceViews(state: GameState, content: Content, npcId: string):
   const r = state.romance;
   const b = content.balance.romance;
   const doneThisYear = (a: RomanceAction) => r.lastActions[a] === state.character.age;
-  if (r.partner === npcId) {
-    const birth = birthBlocked(state, content, n);
-    return [{ action: 'child', label: sameGender(state, n) ? 'Nhận con nuôi' : 'Sinh con', cost: null, blocked: doneThisYear('child') ? 'Năm nay đã thử' : birth }];
-  }
+  if (r.partner === npcId) return partnerViews(state, content, n, doneThisYear);
   if (r.lover !== npcId) {
     if (r.partner || r.exes.includes(npcId)) return [];
     return [{ action: 'pursue', label: 'Theo đuổi', cost: null, blocked: r.lover ? 'Đang theo đuổi người khác' : null }];
@@ -158,6 +158,39 @@ export function romanceViews(state: GameState, content: Content, npcId: string):
   }
   views.push({ action: 'giveUp', label: r.couple ? 'Chia tay' : 'Thôi theo đuổi', cost: null, blocked: null });
   return views;
+}
+
+/** Phu thê (playtest 2026-10-12): bầu bạn, quà, song tu, làm lành, con cái, hòa ly. */
+function partnerViews(state: GameState, content: Content, n: Npc, doneThisYear: (a: RomanceAction) => boolean): RomanceView[] {
+  const b = content.balance.romance;
+  const mortal = state.cult.realm === 'pham_nhan';
+  const cost = giftCost(state, content);
+  const poor = state.money.silver < cost.silver || state.money.spiritStones < cost.stones;
+  const views: RomanceView[] = [
+    { action: 'company', label: 'Bầu bạn', cost: null, blocked: doneThisYear('company') ? 'Năm nay đã bầu bạn' : null },
+    {
+      action: 'gift', label: 'Tặng quà',
+      cost: cost.stones ? `${cost.stones} linh thạch` : `${cost.silver} bạc`,
+      blocked: doneThisYear('gift') ? 'Năm nay đã tặng' : poor ? 'Không đủ tiền' : null,
+    },
+  ];
+  if (!mortal || n.realm !== 'pham_nhan') {
+    views.push({
+      action: 'dualCult', label: 'Song tu', cost: null,
+      blocked: mortal ? 'Ngươi chưa tu hành' : n.realm === 'pham_nhan' ? 'Đạo lữ không tu hành' : doneThisYear('dualCult') ? 'Năm nay đã song tu' : null,
+    });
+  }
+  if (n.affinity < b.reconcileBelow) {
+    views.push({ action: 'reconcile', label: 'Làm lành', cost: null, blocked: doneThisYear('reconcile') ? 'Năm nay đã thử' : null });
+  }
+  views.push({ action: 'child', label: sameGender(state, n) ? 'Nhận con nuôi' : 'Sinh con', cost: null, blocked: doneThisYear('child') ? 'Năm nay đã thử' : birthBlocked(state, content, n) });
+  views.push({ action: 'divorce', label: mortal ? 'Hòa ly' : 'Giải trừ đạo lữ', cost: null, blocked: null });
+  return views;
+}
+
+export function reconcileChance(state: GameState, content: Content): number {
+  const b = content.balance.romance;
+  return Math.max(0.05, Math.min(0.95, b.reconcileBase + (state.stats.charm - 50) * b.reconcilePerCharm));
 }
 
 export function confessChance(state: GameState, content: Content, n: Npc): number {
@@ -216,6 +249,32 @@ export function romanceAction(state: GameState, content: Content, npcId: string,
     } else {
       lines.push({ text: fill(t.noChild), tone: 'normal' });
     }
+  } else if (action === 'company') {
+    s = changeNpc(s, content, npcId, { affinity: rng.int(b.companyAffinity[0], b.companyAffinity[1]) });
+    s = { ...s, stats: { ...s.stats, happiness: clamp(s.stats.happiness + b.companyHappiness) } };
+    lines.push({ text: fill(t.company), tone: 'good' });
+  } else if (action === 'dualCult') {
+    const pct = Math.round(b.dualCultProgress * (0.5 + n.affinity / 100));
+    s = applyRomance(addProgress(s, pct), content, npcId, { partnerProgress: pct });
+    s = changeNpc(s, content, npcId, { affinity: 2 });
+    lines.push({ text: fill(t.dualCult), tone: 'good' });
+  } else if (action === 'reconcile') {
+    if (rng.chance(reconcileChance(s, content))) {
+      s = changeNpc(s, content, npcId, { affinity: b.reconcileAffinity });
+      lines.push({ text: fill(t.reconcileYes), tone: 'good' });
+    } else {
+      s = changeNpc(s, content, npcId, { affinity: b.reconcileFailAffinity });
+      s = { ...s, stats: { ...s.stats, happiness: clamp(s.stats.happiness - 3) } };
+      lines.push({ text: fill(t.reconcileNo), tone: 'bad' });
+    }
+  } else if (action === 'divorce') {
+    s = {
+      ...s,
+      romance: loseRomance(s.romance, npcId),
+      stats: { ...s.stats, happiness: clamp(s.stats.happiness + b.divorceHappiness) },
+      aptitudes: { ...s.aptitudes, daoHeart: clamp(s.aptitudes.daoHeart + b.divorceDaoHeart) },
+    };
+    lines.push({ text: fill(t.divorce), tone: 'bad' });
   } else if (action === 'confess') {
     if (rng.chance(confessChance(s, content, n))) {
       s = { ...s, romance: { ...s.romance, couple: true }, stats: { ...s.stats, happiness: clamp(s.stats.happiness + b.confessHappiness) } };
@@ -327,6 +386,7 @@ export function romanceYear(state: GameState, content: Content): GameState {
     lines.push({ text: t.died.replace(/\{npc\}/g, n.name), tone: 'bad' });
   }
   if (s.romance.lover && s.romance.rivals > 0) s = changeNpc(s, content, s.romance.lover, { affinity: b.rivalAffinityPerYear * s.romance.rivals });
+  s = marriageYear(s, content, lines);
   // Task 3.7: children meet the root test at the same age as the player once did.
   const testAge = content.balance.roots.testAge[0];
   for (const c of s.family) {
@@ -340,6 +400,37 @@ export function romanceYear(state: GameState, content: Content): GameState {
   const last = log[log.length - 1];
   log[log.length - 1] = { ...last, lines: [...last.lines, ...lines] };
   return { ...s, log };
+}
+
+/**
+ * Phu thê (playtest 2026-10-12): a spouse left alone all year cools; a warm home lifts the
+ * mood every year, a cold one weighs on it; a spouse long ignored may walk out.
+ */
+function marriageYear(state: GameState, content: Content, lines: LogLine[]): GameState {
+  const id = state.romance.partner;
+  const n = npcById(state, id);
+  if (!id || !n?.alive) return state;
+  const b = content.balance.romance;
+  const t = content.romance.texts;
+  const last = state.character.age - 1;
+  const fill = (text: string) => text.replace(/\{npc\}/g, n.name);
+  let s = state;
+  if (!CARE.some((a) => state.romance.lastActions[a] === last)) {
+    s = changeNpc(s, content, id, { affinity: b.neglectAffinity });
+    if ((npcById(s, id)?.affinity ?? 0) < b.warmAt) lines.push({ text: fill(t.neglect), tone: 'normal' });
+  }
+  const affinity = npcById(s, id)?.affinity ?? 0;
+  const mood = affinity >= b.warmAt ? b.warmHappiness : affinity < b.coldAt ? b.coldHappiness : 0;
+  if (mood) s = { ...s, stats: { ...s.stats, happiness: clamp(s.stats.happiness + mood) } };
+  if (affinity < b.leaveBelow) {
+    const rng = Rng.fromState(s.rng);
+    if (rng.chance(b.leaveChance)) {
+      s = { ...s, romance: loseRomance(s.romance, id), stats: { ...s.stats, happiness: clamp(s.stats.happiness + b.leaveHappiness) } };
+      lines.push({ text: fill(t.spouseLeft), tone: 'bad' });
+    }
+    s = { ...s, rng: rng.getState() };
+  }
+  return s;
 }
 
 /** Label for the Người quen tab: Người trong lòng / Người yêu / Người cũ, plus the affinity tier. */

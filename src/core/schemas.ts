@@ -943,6 +943,31 @@ export const BalanceSchema = z
         /** Chance the child mutates into a variant root, or inherits the player's special body. */
         mutationChance: probability,
         bodyInheritChance: probability,
+        /** Playtest 2026-10-12, phu thê: Bầu bạn once a year (affinity range, joy). */
+        companyAffinity: z.tuple([z.number(), z.number()]),
+        companyHappiness: z.number(),
+        /** Song tu action: cultivation progress % for both, × (0.5 + affinity/100). */
+        dualCultProgress: z.number().min(0),
+        /** A year with no care (Bầu bạn, quà, song tu, làm lành, con cái) cools the spouse. */
+        neglectAffinity: z.number(),
+        /** Yearly joy from a warm marriage (affinity ≥ warmAt) or gloom from a cold one (< coldAt). */
+        warmAt: z.number(),
+        warmHappiness: z.number(),
+        coldAt: z.number(),
+        coldHappiness: z.number(),
+        /** Below leaveBelow the spouse may leave (chance a year). */
+        leaveBelow: z.number(),
+        leaveChance: probability,
+        leaveHappiness: z.number(),
+        /** Làm lành when affinity < reconcileBelow: base + (charm − 50) × perCharm. */
+        reconcileBelow: z.number(),
+        reconcileBase: probability,
+        reconcilePerCharm: z.number(),
+        reconcileAffinity: z.number(),
+        reconcileFailAffinity: z.number(),
+        /** Hòa ly: chosen by the player. */
+        divorceHappiness: z.number(),
+        divorceDaoHeart: z.number(),
       })
       .strict(),
     /** Task 3.5: Thiên kiêu bảng, the world's young prodigies. */
@@ -2033,6 +2058,14 @@ export const RomanceFileSchema = z
         noChild: z.string().min(1),
         childRoot: z.string().min(1),
         childNoRoot: z.string().min(1),
+        /** Playtest 2026-10-12, phu thê. */
+        company: z.string().min(1),
+        dualCult: z.string().min(1),
+        reconcileYes: z.string().min(1),
+        reconcileNo: z.string().min(1),
+        divorce: z.string().min(1),
+        neglect: z.string().min(1),
+        spouseLeft: z.string().min(1),
       })
       .strict(),
     /** Labels for the Người quen tab (partner: a cultivator's đạo lữ; spouse: a mortal's). */
