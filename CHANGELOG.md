@@ -2,6 +2,15 @@
 
 ## [Chưa phát hành]
 
+### Task 4.11 — Tàn hồn "lão gia gia" (2026-10-12)
+- **Cửa 2.5 của đường phàm nhân** (`mortal-path.md`): từ 12 tuổi, cực hiếm, mua nhầm chiếc nhẫn biết ho ở chợ hoặc mò được dưới sông. Đeo vào thì có **Nhẫn cổ tàn hồn** (mang theo: tốc độ tu luyện +20%, bình cảnh dễ vượt hơn 10%).
+- **Chuỗi sự kiện** (`content/worlds/thuong_lan/events/remnant-soul.json`):
+  1. **Lão gia gia trong nhẫn** chỉ đường tới ao linh tủy. Đi theo, hỏi vặn lão (thử Trí lực: thấy lão hỏi ngày giờ sinh hơi kỹ), hoặc cất nhẫn đi.
+  2. **Ao linh tủy Hắc Phong** (thiên địa kỳ vật): phàm nhân không linh căn được khai mạch (Tứ hoặc Ngũ linh căn); người đã tu thì hấp thu linh khí; hoặc nhường ao cho lão.
+  3. **Thức hải có khách**, 5–12 năm sau (nhường ao thì 3–6 năm): lão đoạt xá. Có phù trấn hồn nếu đã nhìn ra lão; cố thủ thức hải (Đạo tâm 55, lão đã hồi phục thì 75); hoặc thương lượng tìm xác khác (Mị lực 60). Thua thì thần hồn tổn thương và lão quay lại lần sau.
+- Hệ Kim Thủ Chỉ đầy đủ vẫn ở task 5b.2; lần này lão gia gia đi bằng vật phẩm, cờ và sự kiện, không cần engine mới.
+- **Nội dung do Claude tự soạn** theo lời chủ dự án, chưa qua duyệt.
+
 ### Task 4.10 — Áp lực thọ nguyên (2026-10-12)
 - **Đại hạn sắp tới**: khi thọ nguyên còn lại ≤ 10% (`balance.lifespan.pressureLeftPct`), sự kiện bật ngay năm đó, không phải chờ quay ngẫu nhiên. Người tu tiên gặp "Đại hạn sắp tới", phàm nhân gặp "Tuổi già gõ cửa". Mỗi đời một lần.
   - Người tu tiên chọn: bế quan liều phá cảnh (đột phá kế +15, bế quan 3 năm), đi tìm thọ đan, tìm thân xác trẻ (chỉ khi nghiệp ≤ −20), hoặc thuận theo thiên mệnh (giảm tâm ma).

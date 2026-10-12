@@ -339,7 +339,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 4.8 | [ ] Bản đồ đại vực mở dần theo cảnh giới + ✍️ đại năng trấn giữ |
 | 4.9 | [x] Thu đồ đệ (cơ bản) |
 | 4.10 | [x] Áp lực thọ nguyên: chuỗi sự kiện sắp hết thọ, tìm thọ đan, đoạt xá, di ngôn |
-| 4.11 | [ ] Tàn hồn trong vật cũ: Kim Thủ Chỉ "lão gia gia" dẫn đường tới thiên địa kỳ vật, có thể đoạt xá (`mortal-path.md` mục 2.5) |
+| 4.11 | [x] Tàn hồn trong vật cũ: Kim Thủ Chỉ "lão gia gia" dẫn đường tới thiên địa kỳ vật, có thể đoạt xá (`mortal-path.md` mục 2.5) |
 | 4.12 | [x] Quỷ tu: chết còn chấp niệm thì chơi tiếp bằng Quỷ đạo; móc mới `continueAfterDeath` (`mortal-path.md` mục 2.6) |
 
 **Tiêu chí hoàn thành:** một đời tu tới Nguyên Anh có kết đan mini-game, ít nhất một lần tâm ma và một lần thiên kiếp; sắp hết thọ có lựa chọn liều mạng.
