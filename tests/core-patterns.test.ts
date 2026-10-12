@@ -4,7 +4,7 @@ import { loadContent } from '../src/core/content';
 import { createLife } from '../src/core/state';
 import { validateContent } from '../src/core/validate';
 import corePatterns from '../content/core-patterns.json';
-import { hookSum } from '../src/systems/cultivation';
+import { applyGainHooks, hookSum } from '../src/systems/cultivation';
 import { corePatternFor } from '../src/systems/goldenCore';
 
 const content = loadContent();
@@ -38,6 +38,20 @@ describe('đan văn (task 4.2)', () => {
     const before = hookSum(life, content, 'cultivationSpeed');
     const withPattern = { ...life, cult: { ...life.cult, corePattern: 'tam_sinh_tuan_hoan' } };
     expect(hookSum(withPattern, content, 'cultivationSpeed')).toBeCloseTo(before + 0.1);
+  });
+
+  it('stat and lifespan hooks land once, when the pattern forms', () => {
+    const life = createLife({ seed: 'dv', originId: 'nong_dan' }, content);
+    const liet = content.corePatterns.find((p) => p.id === 'liet_van')!;
+    expect(applyGainHooks(life, liet.effects).aptitudes.daoHeart).toBe(Math.min(100, life.aptitudes.daoHeart + 5));
+    const moc = content.corePatterns.find((p) => p.id === 'thanh_moc_van')!;
+    expect(applyGainHooks(life, moc.effects).cult.lifespan).toBe(Math.round(life.cult.lifespan * 1.1));
+  });
+
+  it('breakthrough hooks are in percentage points, like every other source', () => {
+    for (const p of content.corePatterns) {
+      for (const e of p.effects.filter((x) => x.hook.startsWith('breakthroughChance'))) expect(Math.abs(e.add ?? 0)).toBeGreaterThanOrEqual(1);
+    }
   });
 
   it('every basic element has a pattern and the file validates', () => {
