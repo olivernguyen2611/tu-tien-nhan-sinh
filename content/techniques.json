@@ -76,6 +76,14 @@
     ]
   },
   {
+    "id": "tho_nap_hoan_quyen", "name": "Thổ Nạp Hoàn Quyển", "grade": "huyen", "lineage": "tien", "elements": "none",
+    "flavor": "Hai nửa ghép lại, ba lạng bạc hóa ra mua được thật một bộ thần công. Chỉ là không ai ghi tên người viết.",
+    "note": "Bản đầy đủ của Thổ Nạp Tàn Quyển (nửa trước tìm qua chuỗi sự kiện Nửa quyển còn lại). Không còn bị phạt tốc độ tu.",
+    "effects": [
+      { "hook": "bottleneckResist", "add": 0.05 }
+    ]
+  },
+  {
     "id": "hoa_van_quyet", "name": "Hỏa Vân Quyết", "grade": "hoang", "lineage": "tien", "elements": ["hoa"],
     "flavor": "Chủ động phủ chết đã trăm năm, lò luyện đan vẫn còn ấm. Quyển sách bên lò cháy sém một góc, phần còn lại vẫn đọc được.",
     "effects": [
