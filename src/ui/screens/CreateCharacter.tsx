@@ -4,13 +4,16 @@ import type { Content } from '../../core/content';
 import { Rng } from '../../core/rng';
 import { randomName, type NewLifeInput } from '../../core/state';
 import type { Gender } from '../../core/types';
+import { originOptions } from '../../systems/rebirth';
 
 function newSeed(): string {
   return `${Date.now().toString(36)}-${Math.floor(Math.random() * 1e9).toString(36)}`;
 }
 
-export function CreateCharacterScreen({ content, onCreate, onBack }: {
+export function CreateCharacterScreen({ content, rebirthPoints, onCreate, onBack }: {
   content: Content;
+  /** Task 5b.9 Cầu đầu thai: Luân Hồi points to pay for a rare origin. */
+  rebirthPoints: number;
   onCreate: (input: NewLifeInput) => void;
   onBack: () => void;
 }) {
@@ -18,6 +21,7 @@ export function CreateCharacterScreen({ content, onCreate, onBack }: {
   const [gender, setGender] = useState<Gender | undefined>(undefined);
   const [originId, setOriginId] = useState<string | undefined>(undefined);
   const [difficulty, setDifficulty] = useState(content.balance.defaultDifficulty);
+  const options = originOptions(content, rebirthPoints);
   const chosen = content.difficulties.find((d) => d.id === difficulty);
 
   const rollName = () => {
@@ -70,12 +74,17 @@ export function CreateCharacterScreen({ content, onCreate, onBack }: {
             <b>Để trời định</b>
             <span>Đầu thai ngẫu nhiên, nhà nông thì nhiều, thế gia thì hiếm.</span>
           </button>
-          {content.origins.map((o) => (
-            <button role="radio" aria-checked={originId === o.id} class={`origin${originId === o.id ? ' on' : ''}`} key={o.id} onClick={() => setOriginId(o.id)}>
-              <b>{o.name}</b>
-              <span>{o.description}</span>
-            </button>
-          ))}
+          {content.origins.map((o, i) => {
+            const opt = options[i];
+            return (
+              <button role="radio" aria-checked={originId === o.id} class={`origin${originId === o.id ? ' on' : ''}`} key={o.id}
+                disabled={!opt.affordable} onClick={() => setOriginId(o.id)}>
+                <b>{o.name}</b>
+                <span>{o.description}</span>
+                {opt.cost > 0 && <span class="origin-cost">Cầu đầu thai: {opt.cost} điểm Luân Hồi{!opt.affordable && ` (đang có ${rebirthPoints})`}</span>}
+              </button>
+            );
+          })}
         </div>
       </section>
 

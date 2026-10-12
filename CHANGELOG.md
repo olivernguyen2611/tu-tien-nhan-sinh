@@ -2,6 +2,15 @@
 
 ## [Chưa phát hành]
 
+### Task 5b.9 — Cầu đầu thai (2026-10-12)
+- Theo `mortal-path.md` mục 3.2 và quyết định của chủ dự án (cách 2):
+  - Xuất thân thường vẫn chọn miễn phí.
+  - Xuất thân hiếm phải tiêu điểm Luân Hồi mỗi lần chọn: Con nhà quan 10 điểm, Hậu duệ gia tộc tu tiên 30 điểm (trường `rebirthCost` trong `origins.json`).
+  - "Để trời định" vẫn miễn phí và vẫn có thể quay ra xuất thân hiếm.
+- Màn tạo nhân vật ghi giá dưới xuất thân hiếm. Không đủ điểm thì nút bị khóa và hiện số điểm đang có.
+- Điểm chỉ bị trừ khi xác nhận khí vận ("Thuận theo thiên ý"); quay lại giữa chừng thì không mất.
+- **Bổ sung kỹ thuật**: chọn xuất thân nào có giá, và giá bao nhiêu điểm.
+
 ### Task 5b.10 — Trùng sinh (phần code, 2026-10-12)
 - Móc `rewindOnDeath` nay có tác dụng: khi chết, màn tổng kết đời có nút **Trùng sinh** (`src/systems/rewind.ts`).
   - **Hồi Quang Kính** (vật phẩm mới, `{ "hook": "rewindOnDeath", "at": 6 }`): quay về năm 6 tuổi (`mortal-path.md` 3.3).
