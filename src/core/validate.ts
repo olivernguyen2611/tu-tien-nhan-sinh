@@ -374,6 +374,7 @@ function checkCultivationTables(t: { balance?: Balance; realms?: RealmsFile; roo
       for (const r of mb.openRealms) {
         if (!realmIds.includes(r)) out.push({ file: bal, level: 'error', message: `majorBreakthrough.openRealms: cảnh giới không tồn tại "${r}"` });
       }
+      if (!realmIds.includes(t.balance.ghost.realm)) out.push({ file: bal, level: 'error', message: `ghost.realm: cảnh giới không tồn tại "${t.balance.ghost.realm}"` });
       // Task 4.2: kết đan leads into a real realm; its fate tiers are foundation grades.
       const cf = t.balance.coreForming;
       if (!realmIds.includes(cf.realm)) out.push({ file: bal, level: 'error', message: `coreForming.realm: cảnh giới không tồn tại "${cf.realm}"` });
@@ -456,6 +457,8 @@ function checkTechniquesAndSects(
     if (t.balance) {
       const tb = t.balance.techniques;
       if (!techniques.some((x) => x.id === tb.default)) out.push({ file: bal, level: 'error', message: `techniques.default "${tb.default}" không có trong techniques.json` });
+      const ghostTech = t.balance.ghost.technique;
+      if (!techniques.some((x) => x.id === ghostTech)) out.push({ file: bal, level: 'error', message: `ghost.technique "${ghostTech}" không có trong techniques.json` });
       for (const g of ['hoang', 'huyen', 'dia', 'thien']) {
         if (tb.gradeMul[g] === undefined) out.push({ file: bal, level: 'error', message: `techniques.gradeMul thiếu phẩm "${g}"` });
       }

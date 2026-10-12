@@ -307,6 +307,15 @@
     "bargainWinMul": 0.85,
     "bargainLoseMul": 1.1
   },
+  "ghost": {
+    "causeChance": { "old_age": 0, "illness": 0.05, "breakthrough": 0.1, "ordeal": 0.1, "combat": 0.25 },
+    "luckPerPoint": 0.004,
+    "maxChance": 0.6,
+    "realm": "luyen_khi",
+    "technique": "bat_tu_u_minh_luc",
+    "health": 60,
+    "lifespanYears": 150
+  },
   "coreForming": {
     "realm": "kim_dan",
     "rounds": 3,

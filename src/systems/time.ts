@@ -5,6 +5,7 @@ import type { DeathCause, GameState, LogLine } from '../core/types';
 import { describeDelta } from './deltas';
 import { extremeHookSum } from './extremes';
 import { difficultyHookSum } from './difficulty';
+import { rollGhostOffer } from './ghost';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 const fill = (text: string, age: number) => text.replaceAll('{age}', String(age));
@@ -27,8 +28,10 @@ export function ageBody(state: GameState, content: Content): GameState {
   let { health, happiness, charm } = state.stats;
   const lines: LogLine[] = [];
 
-  if (age >= cfg.declineStartAge) health -= cfg.healthDeclinePerYear;
-  else if (health < cfg.recoverCap) health = Math.min(cfg.recoverCap, health + cfg.recoverPerYear);
+  // A quỷ tu has no body to mend or to age (task 4.12); Quỷ đạo wears health on its own.
+  if (state.flags.quy_tu) { /* no recovery, no old-age decline */ }
+  else if (age >= cfg.declineStartAge) health -= cfg.healthDeclinePerYear;
+  else if (health < cfg.recoverCap && !state.flags.quy_tu) health = Math.min(cfg.recoverCap, health + cfg.recoverPerYear);
   // Old-age milestones (60, 70, 80): a visible blow to health and looks.
   if (cfg.milestoneAges.includes(age)) {
     const dh = clamp(health + cfg.milestoneHealth) - clamp(health);
@@ -83,7 +86,7 @@ export function checkDeath(state: GameState, content: Content, forced?: DeathCau
     ...state,
     rng: rng.getState(),
     alive: false,
-    death: { age, cause, epitaph: rng.pick(pool) },
+    death: { age, cause, epitaph: rng.pick(pool), ghostOffer: rollGhostOffer(state, content, cause) },
     events: { ...state.events, pending: null },
     log: addLines(state, [{ text: fill(line, age), tone: 'bad' }]),
   };

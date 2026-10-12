@@ -101,7 +101,8 @@ export interface GameState {
   rng: RngState;
   alive: boolean;
   /** Set when the life ends. */
-  death: { age: number; cause: DeathCause; epitaph: string } | null;
+  /** ghostOffer: a lingering obsession lets this life go on as a quỷ tu (task 4.12). */
+  death: { age: number; cause: DeathCause; epitaph: string; ghostOffer?: boolean } | null;
   character: {
     name: string;
     gender: Gender;

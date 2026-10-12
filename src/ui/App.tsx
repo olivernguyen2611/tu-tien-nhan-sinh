@@ -36,6 +36,7 @@ import { trainMartial } from '../systems/martial';
 import { romanceAction } from '../systems/romance';
 import { runSeclusion, seclude } from '../systems/seclusion';
 import { placeStrand } from '../systems/goldenCore';
+import { becomeGhost } from '../systems/ghost';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -164,7 +165,10 @@ function Screens({ content }: { content: Content }) {
   }
   if (screen === 'death' && life) {
     // A new life from here reuses this slot, as when abandoning a life.
-    return <DeathScreen state={life} content={content} onReadLog={() => setScreen('main')} onNewLife={() => setScreen('create')} />;
+    return (
+      <DeathScreen state={life} content={content} onReadLog={() => setScreen('main')} onNewLife={() => setScreen('create')}
+        onGhost={() => { setLife(becomeGhost(life, content)); setScreen('main'); }} />
+    );
   }
   if (screen === 'main' && life) {
     return (

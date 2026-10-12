@@ -642,6 +642,20 @@ export const BalanceSchema = z
         inheritShare: probability,
       })
       .strict(),
+    /** Task 4.12: quỷ tu after death (mortal-path.md 2.6). */
+    ghost: z
+      .object({
+        /** Chance of a lingering obsession by cause of death, + (luck − 50) × luckPerPoint + continueAfterDeath hooks. */
+        causeChance: z.record(z.enum(['old_age', 'illness', 'breakthrough', 'ordeal', 'combat']), probability),
+        luckPerPoint: z.number(),
+        maxChance: probability,
+        /** The ghost's realm (at least), its technique, health on rising and years of afterlife. */
+        realm: id,
+        technique: id,
+        health: z.number().int().min(1).max(100),
+        lifespanYears: z.number().int().min(1),
+      })
+      .strict(),
     /** Task 4.2: kết đan, three rounds of placing qi strands into the core. */
     coreForming: z
       .object({
@@ -1169,6 +1183,9 @@ export const LifeTextsSchema = z
     /** Task 3.3: killed in a fight. */
     deathCombat: lines,
     deathIllness: lines,
+    /** Task 4.12 quỷ tu: the offer on the death screen, and the line when the soul rises. */
+    ghostOffer: z.string().min(1),
+    ghostRise: z.string().min(1),
     epitaph: z.object({ good: lines, bad: lines, plain: lines }).strict(),
   })
   .strict();

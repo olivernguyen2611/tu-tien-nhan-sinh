@@ -12,11 +12,13 @@ const STAT_LABELS = [
   ['charm', 'Mị lực', '貌'],
 ] as const;
 
-export function DeathScreen({ state, content, onReadLog, onNewLife }: {
+export function DeathScreen({ state, content, onReadLog, onNewLife, onGhost }: {
   state: GameState;
   content: Content;
   onReadLog: () => void;
   onNewLife: () => void;
+  /** Task 4.12: go on as a quỷ tu (only when the death left a lingering obsession). */
+  onGhost: () => void;
 }) {
   const s = lifeSummary(state, content);
   if (!s) return null;
@@ -52,6 +54,13 @@ export function DeathScreen({ state, content, onReadLog, onNewLife }: {
               return t && <li class={`trait-chip r-${t.rarity}`} key={id}><b>{t.name}</b><span>{t.summary}</span></li>;
             })}
           </ul>
+        )}
+
+        {state.death?.ghostOffer && (
+          <div class="ghost-offer">
+            <p class="story">{content.lifeTexts.ghostOffer}</p>
+            <button class="btn-primary" onClick={onGhost}>Hóa quỷ tu, tu tiếp bằng Quỷ đạo</button>
+          </div>
         )}
 
         <div class="death-actions">

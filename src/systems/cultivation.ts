@@ -165,8 +165,8 @@ export function yearlyGain(state: GameState, content: Content): number {
   if (!realm || state.cult.realm === 'pham_nhan') return 0;
   const cfg = content.balance.cultivation;
   let rootMul = root ? content.balance.roots.gradeSpeed[root.grade] ?? 0 : 0;
-  // Rootless techniques (Phật duyên) cultivate on đạo tâm instead of a root.
-  if (rootMul <= 0 && currentTechnique(state, content)?.requires.rootless) {
+  // Rootless techniques (Phật duyên) and quỷ tu (task 4.12) cultivate on đạo tâm instead of a root.
+  if (rootMul <= 0 && (currentTechnique(state, content)?.requires.rootless || state.flags.quy_tu)) {
     rootMul = Math.min(content.balance.techniques.rootlessDaoHeartMax, state.aptitudes.daoHeart / 100);
   }
   const aptitude = cfg.aptitudeBase + (state.aptitudes.physique + state.aptitudes.comprehension) / cfg.aptitudeDivisor;

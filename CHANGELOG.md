@@ -2,6 +2,22 @@
 
 ## [Chưa phát hành]
 
+### Task 4.12 — Quỷ tu (2026-10-12)
+- **Chấp niệm khi chết** (`mortal-path.md` mục 2.6, số liệu ở `balance.ghost`): tùy cách chết mà có cơ hội hồn không tan.
+  - Tử trận 25%; đột phá hoặc thiên địa kỳ vật 10%; bệnh 5%; chết già 0.
+  - Khí vận mỗi điểm trên 50 cộng 0.4%. Móc K.6 mới `continueAfterDeath` cộng thêm. Tối đa 60%.
+  - Mỗi đời một lần. Dùng dòng ngẫu nhiên riêng theo seed.
+- **Màn hình chết** có thêm lựa chọn "Hóa quỷ tu, tu tiếp bằng Quỷ đạo". Chọn thì chơi tiếp:
+  - Ít nhất Luyện Khí.
+  - Tu Bất Tử U Minh Lục (công pháp chỉ quỷ tu đọc được), theo Quỷ đạo.
+  - Không cần linh căn: tu theo Đạo tâm như Phật duyên.
+  - Sức khỏe về 60, thọ nguyên thêm 150 năm.
+- **Cái giá**:
+  - Sức khỏe không hồi phục, cũng không suy theo tuổi; Quỷ đạo làm Sức khỏe −1 mỗi năm.
+  - Người sống sợ hãi: Mị lực −10 khi theo Quỷ đạo (task 3.8).
+- **Chưa làm**: ánh mặt trời gây hại (chưa có hệ ngày/đêm hay nơi chốn).
+- **Bổ sung kỹ thuật** (thiết kế chỉ mô tả bằng lời): mọi tỉ lệ, cảnh giới, sức khỏe, thọ nguyên trên, và hai câu văn trong `life-texts.json`.
+
 ### Task 4.2 — Kết đan (phần code, 2026-10-12)
 - **Mở đột phá Kim Đan** (`majorBreakthrough.openRealms`). Đột phá không còn là một lần quay, mà là **mini-game kết đan 3 lượt**. Năm sau phải chờ kết đan xong.
 - **Mỗi lượt** hiện 3 luồng linh khí, thỉnh thoảng có một luồng biến dị (Lôi, Băng, Phong, Ám). Chọn 1 luồng dẫn vào đan:
