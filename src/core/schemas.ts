@@ -182,6 +182,10 @@ export const EffectsSchema = z
         couple: z.boolean().optional(),
         rival: z.number().int().optional(),
         rivalExposed: z.boolean().optional(),
+        /** Task 3.7: wed the event's NPC (a political match starts at this affinity). */
+        marry: z.object({ affinity: z.number().optional() }).strict().optional(),
+        /** Task 3.7: the đạo lữ's cultivation progress (+% of a stage). */
+        partnerProgress: z.number().optional(),
       })
       .strict()
       .optional(),
@@ -549,7 +553,7 @@ export const BalanceSchema = z
         affinityDecay: z.number().min(0),
         /** When a relative dies: happiness [distant, close] scaled by affinity, plus Đạo tâm for a parent. */
         grief: z
-          .object({ father: griefRange, mother: griefRange, sibling: griefRange, parentDaoHeart: z.number() })
+          .object({ father: griefRange, mother: griefRange, sibling: griefRange, child: griefRange, parentDaoHeart: z.number() })
           .strict(),
       })
       .strict(),
@@ -651,6 +655,24 @@ export const BalanceSchema = z
         griefHappiness: z.number(),
         /** Each rival costs this much affinity a year with the lover. */
         rivalAffinityPerYear: z.number(),
+        /** Task 3.7: wedding cost (silver for a mortal, spirit stones for a cultivator) and joy. */
+        weddingSilver: z.number().int().min(0),
+        weddingStones: z.number().int().min(0),
+        weddingHappiness: z.number(),
+        /** Song tu with a cultivating đạo lữ: yearly cultivation × this (PLAN G.1). */
+        dualCultivationMul: z.number().min(1),
+        /** Trying for a child once a year: base chance, × cultivatorFertility per cultivating parent; the mother's age limit. */
+        birthChance: probability,
+        cultivatorFertility: z.number().min(0).max(1),
+        motherMaxAge: z.number().int(),
+        cultivatorMotherMaxAge: z.number().int(),
+        maxChildren: z.number().int().min(0),
+        childHappiness: z.number(),
+        /** Inheritance: roll the root this many extra times per rooted parent and keep the best; elements come from the player's first. */
+        rootRollsPerParent: z.number().int().min(0),
+        /** Chance the child mutates into a variant root, or inherits the player's special body. */
+        mutationChance: probability,
+        bodyInheritChance: probability,
       })
       .strict(),
     /** Task 3.5: Thiên kiêu bảng, the world's young prodigies. */
@@ -1036,7 +1058,7 @@ export const FamilyActionSchema = z
     minAge: z.number().int().min(0).default(0),
     maxAge: z.number().int().optional(),
     /** Only for these roles; empty = everyone. */
-    roles: z.array(z.enum(['father', 'mother', 'sibling'])).default([]),
+    roles: z.array(z.enum(['father', 'mother', 'sibling', 'child'])).default([]),
     minTargetAge: z.number().int().optional(),
     /** Silver spent. */
     cost: z.number().int().min(0).default(0),
@@ -1628,10 +1650,18 @@ export const RomanceFileSchema = z
         lost: z.string().min(1),
         died: z.string().min(1),
         rivals: z.string().min(1),
+        /** Task 3.7. {npc}, {child} = the child's name, {root} = the child's spirit root. */
+        wedMortal: z.string().min(1),
+        wedCultivator: z.string().min(1),
+        child: z.string().min(1),
+        adopt: z.string().min(1),
+        noChild: z.string().min(1),
+        childRoot: z.string().min(1),
+        childNoRoot: z.string().min(1),
       })
       .strict(),
-    /** Labels for the Người quen tab. */
-    labels: z.object({ lover: z.string().min(1), couple: z.string().min(1), ex: z.string().min(1) }).strict(),
+    /** Labels for the Người quen tab (partner: a cultivator's đạo lữ; spouse: a mortal's). */
+    labels: z.object({ lover: z.string().min(1), couple: z.string().min(1), ex: z.string().min(1), partner: z.string().min(1), spouse: z.string().min(1) }).strict(),
   })
   .strict();
 export type RomanceFile = z.infer<typeof RomanceFileSchema>;

@@ -2,6 +2,23 @@
 
 ## [Chưa phát hành]
 
+### Task 3.7 — Đạo lữ, song tu, sinh con (2026-10-12)
+- **Thành thân / Đạo lữ đại điển**: đã thành đôi thì cưới được. Phàm nhân trả bạc, tu sĩ trả linh thạch; Vui vẻ +20. Người kia thành Bạn đời (phàm nhân) hoặc Đạo lữ (tu sĩ).
+- **Song tu** (PLAN G.1): có đạo lữ đang tu luyện thì tu vi mỗi năm ×1.3.
+- **Sinh con**: mỗi năm thử một lần.
+  - Tỉ lệ cơ bản 50%; mỗi bên là tu sĩ thì nhân 0.4 (tu sĩ khó có con).
+  - Mẹ phàm nhân quá 45 tuổi thì thôi, mẹ tu sĩ tới 300 tuổi. Tối đa 6 con.
+  - Hai người cùng giới thì nhận con nuôi.
+  - Con mang họ cha, vào tab Gia đình (Con trai/Con gái), dùng chung các hành động gia đình.
+  - Con qua đời thì Vui vẻ −25 tới −40.
+- **Di truyền linh căn**:
+  - Mỗi bên cha mẹ có linh căn cho con thêm một lần quay, giữ lần tốt nhất.
+  - Hệ của con ưu tiên lấy hệ của người chơi.
+  - Có 20% truyền lại thể chất đặc biệt, và 3% đột biến thành biến dị linh căn (Lôi, Băng, Phong, Ám).
+  - Con lên tuổi thử linh căn (6) thì nhật ký báo kết quả và tab Gia đình hiện linh căn. Con có linh căn dùng được thì sống lâu như tu sĩ Luyện Khí.
+- **Cho sự kiện** (dùng ở 3.9): hiệu ứng `romance.marry` (cưới người của sự kiện, có thể đặt thiện cảm ban đầu cho hôn nhân chính trị) và `romance.partnerProgress` (tu vi của đạo lữ).
+- **Bổ sung kỹ thuật** (PLAN chỉ liệt kê tính năng): mọi con số mới trong `balance.romance` và `balance.family.grief.child`, cùng câu nhật ký cưới, sinh con, thử linh căn của con.
+
 ### Task 3.6 — Tình duyên (2026-10-12)
 - **Thiện cảm nhiều nấc** (`content/romance.json`): Chán ghét, Lạnh nhạt, Quen biết, Có cảm tình, Tâm đầu ý hợp, Khắc cốt ghi tâm. Tab Người quen hiện nấc bên thanh thiện cảm.
 - **Hành động với người quen**, mỗi việc một lần mỗi năm, số liệu ở `balance.romance`:

@@ -312,7 +312,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 3.4 | [ ] NPC có số mệnh riêng: tự tu luyện, già, chết; tính cách bề ngoài/bản chất; sổ ân oán |
 | 3.5 | [x] Thiên kiêu bảng cập nhật mỗi năm |
 | 3.6 | [x] Tình duyên: thiện cảm nhiều nấc, theo đuổi, tặng quà, bị từ chối, bị lợi dụng |
-| 3.7 | [ ] Đạo lữ đại điển, song tu, sinh con (di truyền linh căn, đột biến) |
+| 3.7 | [x] Đạo lữ đại điển, song tu, sinh con (di truyền linh căn, đột biến) |
 | 3.8 | [x] Đạo thống (Tiên/Ma/Phật/Quỷ) × con đường (Kiếm/Thể/Pháp/Binh/Thuật) theo K.3 |
 | 3.9 | [ ] ✍️ 40 sự kiện: tình duyên, giết người đoạt bảo, ma đạo cám dỗ, yêu thú, phường thị — **đã duyệt**: `docs/design/events-jianghu.md` |
 | 3.10 | [ ] Tăng Tiên Thiên Khí Vận lên ~40, thêm tag cho sự kiện dùng |

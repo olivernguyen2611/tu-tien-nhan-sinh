@@ -1,16 +1,20 @@
 // Tình duyên (task 3.6): court an NPC met along the way, give gifts, confess.
 // Affinity has named tiers (romance.json); a gift may be turned down, a masked
-// lover may use the player; a yes makes a couple (task 3.7 adds the đạo lữ).
+// lover may use the player; a yes makes a couple.
+// Đạo lữ (task 3.7): a couple weds; a cultivating đạo lữ speeds cultivation
+// (song tu, in cultivation.ts); children inherit spirit roots, sometimes mutated.
 // Nobody under balance.romance.minAge takes part, and Phật đạo keeps its precept.
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameEvent } from '../core/schemas';
-import type { GameState, LogLine, Npc, Tone } from '../core/types';
+import type { GameState, LogLine, Npc, Relative, SpiritRoot, Tone } from '../core/types';
+import { rollRoot, rootName } from './cultivation';
 import { changeNpc, isMasked, npcById } from './npcs';
+import { makeName, splitName } from './names';
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
 
-export type RomanceAction = 'pursue' | 'giveUp' | 'gift' | 'confess';
+export type RomanceAction = 'pursue' | 'giveUp' | 'gift' | 'confess' | 'wed' | 'child';
 
 export function affinityTier(content: Content, affinity: number): string {
   let name = content.romance.tiers[0].name;
@@ -59,7 +63,21 @@ export function romanceMeets(state: GameState, c: NonNullable<GameEvent['conditi
 }
 
 /** Event effects on romance, applied to the event's NPC. */
-export function applyRomance(state: GameState, content: Content, npcId: string | null, fx: { pursue?: boolean; lose?: boolean; couple?: boolean; rival?: number; rivalExposed?: boolean }): GameState {
+export function applyRomance(
+  state: GameState, content: Content, npcId: string | null,
+  fx: { pursue?: boolean; lose?: boolean; couple?: boolean; rival?: number; rivalExposed?: boolean; marry?: { affinity?: number }; partnerProgress?: number },
+): GameState {
+  let s = state;
+  // Task 3.7: a match (political or not) with the event's NPC; the progress of the đạo lữ.
+  if (fx.marry && npcId && !s.romance.partner && !romanceBlocked(s, content) && ofAge(content, npcById(s, npcId))) {
+    s = wed(s, npcId);
+    if (fx.marry.affinity !== undefined) s = { ...s, npcs: s.npcs.map((n) => (n.id === npcId ? { ...n, affinity: clamp(fx.marry!.affinity!) } : n)) };
+  }
+  if (fx.partnerProgress && s.romance.partner) {
+    const id = s.romance.partner;
+    s = { ...s, npcs: s.npcs.map((n) => (n.id === id && n.realm !== 'pham_nhan' ? { ...n, progress: Math.max(0, n.progress + fx.partnerProgress!) } : n)) };
+  }
+  state = s;
   let r = state.romance;
   if (fx.pursue && npcId && !r.lover && !r.partner && !romanceBlocked(state, content) && ofAge(content, npcById(state, npcId))) r = { ...r, lover: npcId, couple: false, rivals: 0 };
   if (fx.couple && npcId && r.lover === npcId) r = { ...r, couple: true };
@@ -67,6 +85,11 @@ export function applyRomance(state: GameState, content: Content, npcId: string |
   if (fx.rivalExposed) r = { ...r, rivals: 0 };
   if (fx.lose && npcId) r = loseRomance(r, npcId);
   return { ...state, romance: r };
+}
+
+function wed(state: GameState, id: string): GameState {
+  const r = state.romance;
+  return { ...state, romance: { ...r, partner: id, lover: r.lover === id ? null : r.lover, couple: r.lover === id ? false : r.couple, rivals: 0 } };
 }
 
 function loseRomance(r: GameState['romance'], id: string): GameState['romance'] {
@@ -95,7 +118,10 @@ export function romanceViews(state: GameState, content: Content, npcId: string):
   const r = state.romance;
   const b = content.balance.romance;
   const doneThisYear = (a: RomanceAction) => r.lastActions[a] === state.character.age;
-  if (r.partner === npcId) return [];
+  if (r.partner === npcId) {
+    const birth = birthBlocked(state, content, n);
+    return [{ action: 'child', label: sameGender(state, n) ? 'Nhận con nuôi' : 'Sinh con', cost: null, blocked: doneThisYear('child') ? 'Năm nay đã thử' : birth }];
+  }
   if (r.lover !== npcId) {
     if (r.partner || r.exes.includes(npcId)) return [];
     return [{ action: 'pursue', label: 'Theo đuổi', cost: null, blocked: r.lover ? 'Đang theo đuổi người khác' : null }];
@@ -109,6 +135,15 @@ export function romanceViews(state: GameState, content: Content, npcId: string):
       blocked: doneThisYear('gift') ? 'Năm nay đã tặng' : poor ? 'Không đủ tiền' : null,
     },
   ];
+  if (r.couple && !r.partner) {
+    const wedCost = weddingCost(state, content);
+    const short = state.money.silver < wedCost.silver || state.money.spiritStones < wedCost.stones;
+    views.push({
+      action: 'wed', label: state.cult.realm === 'pham_nhan' ? 'Thành thân' : 'Đạo lữ đại điển',
+      cost: wedCost.stones ? `${wedCost.stones} linh thạch` : `${wedCost.silver} bạc`,
+      blocked: short ? 'Không đủ tiền' : null,
+    });
+  }
   if (!r.couple) {
     views.push({
       action: 'confess', label: 'Tỏ tình', cost: null,
@@ -161,6 +196,20 @@ export function romanceAction(state: GameState, content: Content, npcId: string,
         lines.push({ text: fill(t.used), tone: 'bad' });
       }
     }
+  } else if (action === 'wed') {
+    const cost = weddingCost(s, content);
+    s = wed({ ...s, money: { ...s.money, silver: s.money.silver - cost.silver, spiritStones: s.money.spiritStones - cost.stones } }, npcId);
+    s = { ...s, stats: { ...s.stats, happiness: clamp(s.stats.happiness + b.weddingHappiness) } };
+    lines.push({ text: fill(state.cult.realm === 'pham_nhan' ? t.wedMortal : t.wedCultivator), tone: 'rare' });
+  } else if (action === 'child') {
+    const adopt = sameGender(s, n);
+    if (adopt || rng.chance(birthChance(s, content, n))) {
+      const child = makeChild(s, content, n, rng, adopt);
+      s = { ...s, family: [...s.family, child], stats: { ...s.stats, happiness: clamp(s.stats.happiness + b.childHappiness) } };
+      lines.push({ text: fill(adopt ? t.adopt : t.child).replace(/\{child\}/g, child.name), tone: 'good' });
+    } else {
+      lines.push({ text: fill(t.noChild), tone: 'normal' });
+    }
   } else if (action === 'confess') {
     if (rng.chance(confessChance(s, content, n))) {
       s = { ...s, romance: { ...s.romance, couple: true }, stats: { ...s.stats, happiness: clamp(s.stats.happiness + b.confessHappiness) } };
@@ -182,6 +231,78 @@ export function romanceAction(state: GameState, content: Content, npcId: string,
   return { state: { ...s, log }, text: lines.map((l) => l.text).join(' '), tone: lines[0]?.tone ?? 'normal' };
 }
 
+function weddingCost(state: GameState, content: Content): { silver: number; stones: number } {
+  const b = content.balance.romance;
+  return state.cult.realm === 'pham_nhan' ? { silver: b.weddingSilver, stones: 0 } : { silver: 0, stones: b.weddingStones };
+}
+
+function sameGender(state: GameState, n: Npc): boolean {
+  return state.character.gender === n.gender;
+}
+
+function childCount(state: GameState): number {
+  return state.family.filter((r) => r.role === 'child').length;
+}
+
+/** Why no child can come this year, or null. Same-gender couples adopt. */
+function birthBlocked(state: GameState, content: Content, partner: Npc): string | null {
+  const b = content.balance.romance;
+  if (childCount(state) >= b.maxChildren) return 'Đã đủ con';
+  if (sameGender(state, partner)) return null;
+  const mother = state.character.gender === 'nu'
+    ? { age: state.character.age, cultivator: state.cult.realm !== 'pham_nhan' }
+    : { age: partner.age, cultivator: partner.realm !== 'pham_nhan' };
+  if (mother.age > (mother.cultivator ? b.cultivatorMotherMaxAge : b.motherMaxAge)) return 'Đã qua tuổi sinh nở';
+  return null;
+}
+
+/** Chance of a child this year: cultivators conceive less often. */
+export function birthChance(state: GameState, content: Content, partner: Npc): number {
+  const b = content.balance.romance;
+  const cultivators = Number(state.cult.realm !== 'pham_nhan') + Number(partner.realm !== 'pham_nhan');
+  return b.birthChance * b.cultivatorFertility ** cultivators;
+}
+
+/**
+ * A child's spirit root (task 3.7): each rooted parent adds rolls (keep the best), elements lean
+ * to the player's, a special body may pass on, and a rare mutation gives a variant root.
+ */
+export function inheritRoot(state: GameState, content: Content, partner: Npc | null, rng: Rng): SpiritRoot {
+  const b = content.balance.romance;
+  const mine = state.cult.root;
+  const rooted = Number(!!mine && (content.balance.roots.gradeSpeed[mine.grade] ?? 0) > 0) + Number(!!partner?.root);
+  if (mine?.body && rng.chance(b.bodyInheritChance)) return { ...mine };
+  if (rooted > 0 && rng.chance(b.mutationChance)) {
+    const variants = content.cultivation.roots.elements.filter((e) => e.variant);
+    if (variants.length > 0) return { grade: 'bien_di', elements: [rng.pick(variants).id], body: null };
+  }
+  const root = rollRoot(rng, content, 1 + rooted * b.rootRollsPerParent);
+  const own = (mine?.elements ?? []).filter((e) => !root.elements.includes(e));
+  if (root.body || root.elements.length === 0 || own.length === 0 || root.grade === 'bien_di') return root;
+  // Keep the count, take the player's elements first.
+  const pool = [...(mine?.elements ?? []), ...root.elements.filter((e) => !(mine?.elements ?? []).includes(e))];
+  return { ...root, elements: pool.slice(0, root.elements.length) };
+}
+
+function makeChild(state: GameState, content: Content, partner: Npc, rng: Rng, adopted: boolean): Relative {
+  const gender = rng.chance(0.5) ? 'nam' : 'nu';
+  const father = state.character.gender === 'nam' ? state.character.name : partner.gender === 'nam' ? partner.name : state.character.name;
+  const { surname } = splitName(father, content.names);
+  const name = makeName(rng, content.names, gender, { surname, taken: [state.character.name, partner.name, ...state.family.map((r) => r.name)] });
+  const root = adopted ? rollRoot(rng, content, 1) : inheritRoot(state, content, partner, rng);
+  const l = content.balance.lifespan;
+  const usable = (content.balance.roots.gradeSpeed[root.grade] ?? 0) > 0;
+  // A child with a usable root grows up to cultivate and lives about as long as a Luyện Khí cultivator.
+  const lifespan = usable ? content.balance.realms.luyen_khi?.lifespan ?? l.mortalBase : l.mortalBase + rng.int(-l.mortalVariance, l.mortalVariance);
+  return {
+    id: `child_${childCount(state)}_${state.character.age}`,
+    role: 'child', gender, name, age: 0, alive: true, lifespan,
+    affinity: rng.int(content.balance.family.affinityStart[0], content.balance.family.affinityStart[1]),
+    lastActions: {},
+    root,
+  };
+}
+
 /** Yearly: rivals cool the lover; a lover or partner who died is mourned and let go. */
 export function romanceYear(state: GameState, content: Content): GameState {
   const b = content.balance.romance;
@@ -199,6 +320,14 @@ export function romanceYear(state: GameState, content: Content): GameState {
     lines.push({ text: t.died.replace(/\{npc\}/g, n.name), tone: 'bad' });
   }
   if (s.romance.lover && s.romance.rivals > 0) s = changeNpc(s, content, s.romance.lover, { affinity: b.rivalAffinityPerYear * s.romance.rivals });
+  // Task 3.7: children meet the root test at the same age as the player once did.
+  const testAge = content.balance.roots.testAge[0];
+  for (const c of s.family) {
+    if (c.role !== 'child' || !c.alive || c.age !== testAge || !c.root) continue;
+    const usable = (content.balance.roots.gradeSpeed[c.root.grade] ?? 0) > 0;
+    const text = (usable ? t.childRoot : t.childNoRoot).replace(/\{child\}/g, c.name).replace(/\{age\}/g, String(c.age)).replace(/\{root\}/g, rootName(c.root, content));
+    lines.push({ text, tone: usable ? 'rare' : 'normal' });
+  }
   if (lines.length === 0) return s;
   const log = s.log.slice();
   const last = log[log.length - 1];
@@ -210,6 +339,13 @@ export function romanceYear(state: GameState, content: Content): GameState {
 export function romanceLabel(state: GameState, content: Content, n: Npc): { role: string | null; tier: string } {
   const r = state.romance;
   const l = content.romance.labels;
-  const role = r.lover === n.id ? (r.couple ? l.couple : l.lover) : r.exes.includes(n.id) ? l.ex : null;
+  const role = r.partner === n.id ? (state.cult.realm === 'pham_nhan' ? l.spouse : l.partner)
+    : r.lover === n.id ? (r.couple ? l.couple : l.lover) : r.exes.includes(n.id) ? l.ex : null;
   return { role, tier: affinityTier(content, n.affinity) };
+}
+
+/** "Linh căn: …" for a child old enough to have been tested, else null. */
+export function childRootLabel(content: Content, r: Relative): string | null {
+  if (r.role !== 'child' || !r.root || r.age < content.balance.roots.testAge[0]) return null;
+  return `Linh căn: ${rootName(r.root, content)}`;
 }

@@ -12,7 +12,7 @@ export interface LogYear { age: number; lines: LogLine[] }
 
 export interface Relative {
   id: string;
-  role: 'father' | 'mother' | 'sibling';
+  role: 'father' | 'mother' | 'sibling' | 'child';
   gender: Gender;
   name: string;
   age: number;
@@ -23,6 +23,8 @@ export interface Relative {
   affinity: number;
   /** Family action id → player's age when last done (each once a year). */
   lastActions: Record<string, number>;
+  /** Task 3.7: a child's spirit root, rolled at birth and shown from the root-test age. */
+  root?: SpiritRoot | null;
 }
 
 /** Spirit root found by the test at 6–12 (task 2.2); ids from roots.json. */

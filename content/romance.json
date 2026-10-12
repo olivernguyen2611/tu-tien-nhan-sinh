@@ -35,11 +35,20 @@
     "confessNo": "Ngươi nói hết lòng mình. {npc} cúi đầu: \"Xin lỗi.\" Đường về hôm ấy dài hơn mọi ngày.",
     "lost": "Ngươi và {npc} đường ai nấy đi.",
     "died": "{npc} đã không còn. Chỗ ngồi bên cạnh ngươi từ nay để trống.",
-    "rivals": "Quanh {npc} lại có thêm người để ý. Ngươi phải cố hơn."
+    "rivals": "Quanh {npc} lại có thêm người để ý. Ngươi phải cố hơn.",
+    "wedMortal": "Ngươi và {npc} bái đường thành thân. Cả xóm ăn cỗ ba ngày, gà trong làng vắng hẳn.",
+    "wedCultivator": "Đạo lữ đại điển: ngươi và {npc} cùng thề trước trời đất, từ nay chung một con đường.",
+    "child": "Nhà có thêm một đứa trẻ: {child}. Tiếng khóc đầu tiên làm ngươi luống cuống cả buổi.",
+    "adopt": "Ngươi và {npc} nhận nuôi một đứa trẻ mồ côi, đặt tên là {child}.",
+    "noChild": "Năm nay vẫn chưa có tin vui. Duyên con cái, cưỡng cầu không được.",
+    "childRoot": "{child} lên {age} tuổi, thử linh căn: {root}.",
+    "childNoRoot": "{child} lên {age} tuổi, thử linh căn: không có. Làm phàm nhân cũng tốt."
   },
   "labels": {
     "lover": "Người trong lòng",
     "couple": "Người yêu",
-    "ex": "Người cũ"
+    "ex": "Người cũ",
+    "partner": "Đạo lữ",
+    "spouse": "Bạn đời"
   }
 }

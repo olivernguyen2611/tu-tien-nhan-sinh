@@ -4,7 +4,9 @@ import { advanceYear, createLife, fillTemplate } from '../src/core/state';
 import type { GameState } from '../src/core/types';
 import { meets } from '../src/systems/events/conditions';
 import { createNpc, npcById } from '../src/systems/npcs';
-import { affinityTier, applyRomance, confessChance, romanceAction, romanceBlocked, romanceViews } from '../src/systems/romance';
+import { affinityTier, applyRomance, childRootLabel, confessChance, inheritRoot, romanceAction, romanceBlocked, romanceViews } from '../src/systems/romance';
+import { yearlyGain } from '../src/systems/cultivation';
+import { Rng } from '../src/core/rng';
 import { migrate } from '../src/systems/save';
 import { validateContent } from '../src/core/validate';
 
@@ -107,5 +109,84 @@ describe('tình duyên (task 3.6)', () => {
     const s = adult();
     const { romance: _r, ...old } = s;
     expect(migrate({ saveVersion: 1, gameVersion: '0', slot: 0, savedAt: '', life: old as unknown as GameState }).life.romance.lover).toBeNull();
+  });
+});
+
+describe('đạo lữ, song tu, sinh con (task 3.7)', () => {
+  function couple(gender: 'nam' | 'nu', partnerGender: 'nam' | 'nu', realm = 'pham_nhan') {
+    const base = adult(25);
+    const s0 = { ...base, character: { ...base.character, gender }, money: { silver: 500, spiritStones: 500 }, cult: { ...base.cult, realm } };
+    const r = createNpc(s0, content, { role: 'bằng hữu', age: 24, affinity: 85, gender: partnerGender, root: realm !== 'pham_nhan', realm: realm === 'pham_nhan' ? undefined : realm });
+    let s = applyRomance(r.state, content, r.id, { pursue: true, couple: true });
+    return { s, id: r.id };
+  }
+
+  it('a couple weds (silver for mortals, spirit stones for cultivators) and becomes partners', () => {
+    let { s, id } = couple('nam', 'nu');
+    expect(romanceViews(s, content, id).find((v) => v.action === 'wed')!.label).toBe('Thành thân');
+    s = romanceAction(s, content, id, 'wed').state;
+    expect(s.romance).toMatchObject({ partner: id, lover: null });
+    expect(s.money.silver).toBe(500 - b.weddingSilver);
+    const c = couple('nu', 'nam', 'luyen_khi');
+    expect(romanceViews(c.s, content, c.id).find((v) => v.action === 'wed')!.label).toBe('Đạo lữ đại điển');
+    expect(romanceAction(c.s, content, c.id, 'wed').state.money.spiritStones).toBe(500 - b.weddingStones);
+  });
+
+  it('song tu: a cultivating đạo lữ multiplies yearly cultivation', () => {
+    const { s, id } = couple('nam', 'nu', 'luyen_khi');
+    const rooted = { ...s, cult: { ...s.cult, root: { grade: 'song', elements: ['kim', 'hoa'], body: null } } };
+    const married = applyRomance(rooted, content, id, { marry: {} });
+    expect(yearlyGain(married, content) / yearlyGain(rooted, content)).toBeCloseTo(b.dualCultivationMul);
+    const partner = npcById(married, id)!;
+    expect(npcById(applyRomance(married, content, id, { partnerProgress: 40 }), id)!.progress).toBe(partner.progress + 40);
+  });
+
+  it('children: born with a chance, named after the father, root inherited; same-gender couples adopt', () => {
+    let { s, id } = couple('nam', 'nu');
+    s = romanceAction(s, content, id, 'wed').state;
+    let born = 0;
+    for (let i = 0; i < 30; i++) {
+      const r = romanceAction({ ...s, rng: createLife({ seed: `b${i}` }, content).rng }, content, id, 'child').state;
+      const kid = r.family.find((x) => x.role === 'child');
+      if (kid) {
+        born++;
+        expect(kid.name.split(' ')[0]).toBe(s.character.name.split(' ')[0]);
+        expect(kid.root).toBeTruthy();
+      }
+    }
+    expect(born / 30).toBeGreaterThan(b.birthChance - 0.3);
+    expect(born / 30).toBeLessThan(b.birthChance + 0.3);
+    let g = couple('nu', 'nu');
+    g.s = romanceAction(g.s, content, g.id, 'wed').state;
+    expect(romanceViews(g.s, content, g.id)[0].label).toBe('Nhận con nuôi');
+    expect(romanceAction(g.s, content, g.id, 'child').state.family.some((x) => x.role === 'child')).toBe(true);
+  });
+
+  it('inheritance: rooted parents give better roots on average; the player’s elements lead', () => {
+    const { s, id } = couple('nam', 'nu', 'luyen_khi');
+    const partner = npcById(s, id)!;
+    const speed = (g: string) => content.balance.roots.gradeSpeed[g] ?? 0;
+    const avg = (state: GameState, p: typeof partner | null) => {
+      let sum = 0;
+      for (let i = 0; i < 400; i++) sum += speed(inheritRoot(state, content, p, new Rng(`r${i}`)).grade);
+      return sum / 400;
+    };
+    const mortal = { ...s, cult: { ...s.cult, root: { grade: 'none', elements: [], body: null } } };
+    const rooted = { ...s, cult: { ...s.cult, root: { grade: 'song', elements: ['kim', 'hoa'], body: null } } };
+    expect(avg(rooted, partner)).toBeGreaterThan(avg(mortal, { ...partner, root: false }) + 0.1);
+    for (let i = 0; i < 50; i++) {
+      const r = inheritRoot(rooted, content, partner, new Rng(`e${i}`));
+      if (r.grade === 'song') expect(r.elements).toEqual(['kim', 'hoa']);
+    }
+  });
+
+  it('a child shows the root from the test age, and the log tells', () => {
+    const { s } = couple('nam', 'nu');
+    const testAge = content.balance.roots.testAge[0];
+    const kid = { id: 'child_0', role: 'child' as const, gender: 'nam' as const, name: 'Lâm Tiểu Bảo', age: testAge - 1, alive: true, lifespan: 70, affinity: 70, lastActions: {}, root: { grade: 'don', elements: ['hoa'], body: null } };
+    expect(childRootLabel(content, kid)).toBeNull();
+    const next = advanceYear({ ...s, family: [...s.family, kid] }, content);
+    expect(childRootLabel(content, next.family.find((r) => r.id === 'child_0')!)).toContain('Hỏa');
+    expect(next.log.at(-1)!.lines.some((l) => l.text.includes('Lâm Tiểu Bảo'))).toBe(true);
   });
 });

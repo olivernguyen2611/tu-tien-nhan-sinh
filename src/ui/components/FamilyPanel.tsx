@@ -5,7 +5,7 @@ import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
 import { availableActions, relationLabel } from '../../systems/relationships';
 import { npcLabel } from '../../systems/npcs';
-import { romanceLabel, romanceViews, type RomanceAction } from '../../systems/romance';
+import { childRootLabel, romanceLabel, romanceViews, type RomanceAction } from '../../systems/romance';
 import { Meter } from './Meter';
 
 export function FamilyPanel({ state, content, onAction, onRomance, onClose }: {
@@ -95,6 +95,7 @@ export function FamilyPanel({ state, content, onAction, onRomance, onClose }: {
                   <b>{r.name}</b>
                   <span class="relative-age">{r.alive ? `${r.age} tuổi` : `mất năm ${r.age} tuổi`}</span>
                 </button>
+                {childRootLabel(content, r) && <p class="profile-note npc-line">{childRootLabel(content, r)}</p>}
                 {r.alive && <Meter label="Thiện cảm" value={r.affinity} tone="auto" />}
                 {r.alive && open === r.id && (
                   <div class="action-chips">

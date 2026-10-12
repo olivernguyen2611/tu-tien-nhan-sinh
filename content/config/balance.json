@@ -41,7 +41,7 @@
     "motherMaxAgeForChild": 40,
     "maxSiblings": 4,
     "affinityDecay": 1,
-    "grief": { "father": [-20, -30], "mother": [-20, -30], "sibling": [-15, -15], "parentDaoHeart": 2 }
+    "grief": { "father": [-20, -30], "mother": [-20, -30], "sibling": [-15, -15], "child": [-25, -40], "parentDaoHeart": 2 }
   },
   "lifespan": {
     "mortalBase": 70,
@@ -329,7 +329,20 @@
     "rejectHappiness": -15,
     "rejectDaoHeart": 3,
     "griefHappiness": -30,
-    "rivalAffinityPerYear": -2
+    "rivalAffinityPerYear": -2,
+    "weddingSilver": 50,
+    "weddingStones": 30,
+    "weddingHappiness": 20,
+    "dualCultivationMul": 1.3,
+    "birthChance": 0.5,
+    "cultivatorFertility": 0.4,
+    "motherMaxAge": 45,
+    "cultivatorMotherMaxAge": 300,
+    "maxChildren": 6,
+    "childHappiness": 15,
+    "rootRollsPerParent": 1,
+    "mutationChance": 0.03,
+    "bodyInheritChance": 0.2
   },
   "rankings": {
     "count": 12,
