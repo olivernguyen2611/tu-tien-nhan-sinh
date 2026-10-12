@@ -76,6 +76,7 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
       const usable = !!root && (content?.balance.roots.gradeSpeed[root.grade] ?? 0) > 0;
       if (!root || usable !== c.root.usable) return false;
     }
+    if (c.root.minElements !== undefined && (root?.elements.length ?? 0) < c.root.minElements) return false;
   }
   if (c.flagsAll?.some((f) => !state.flags[f])) return false;
   if (c.itemsAll?.some((i) => !(state.inventory[i] > 0))) return false;

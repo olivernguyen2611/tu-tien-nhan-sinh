@@ -284,7 +284,23 @@
     "chanceMax": 0.9,
     "yearMul": 0.3,
     "oldAge": 50,
-    "oldAgeMul": 0.5
+    "oldAgeMul": 0.5,
+    "quest": {
+      "startDelay": 1,
+      "levels": {
+        "ngu_hanh_1": { "length": 3, "allowed": 2 },
+        "ngu_hanh_2": { "length": 4, "allowed": 2 },
+        "ngu_hanh_3": { "length": 5, "allowed": 1 },
+        "dieu_tuc_1": { "length": 4, "allowed": 2 },
+        "dieu_tuc_2": { "length": 6, "allowed": 2 },
+        "dieu_tuc_3": { "length": 8, "allowed": 2 }
+      },
+      "loseHealth": 4,
+      "winDaoHeart": 1,
+      "aidAllowed": 1,
+      "aidChance": 0.15,
+      "check": { "base": 0.5, "perPoint": 0.012, "min": 0.15, "max": 0.9 }
+    }
   },
   "paths": {
     "startAffinity": [5, 30],

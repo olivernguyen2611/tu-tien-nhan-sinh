@@ -103,7 +103,7 @@ export function martialPromote(state: GameState, content: Content): GameState {
   const add = content.balance.martial.lifespan[stage] ?? 0;
   let s: GameState = {
     ...state,
-    martial: { ...state.martial, stage, years: 0, bonus: 0 },
+    martial: { ...state.martial, stage, years: 0, bonus: 0, reachedAt: state.character.age, quest: null },
     cult: { ...state.cult, lifespan: state.cult.lifespan + add },
   };
   s = { ...s, log: addLines(s, [{ text: content.martial.texts.promote.replaceAll('{stage}', def.name).replaceAll('{description}', def.description), tone: 'good' }]) };

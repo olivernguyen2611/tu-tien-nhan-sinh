@@ -18,6 +18,7 @@ import { takeChosen } from './chosen';
 import { suggestSectName } from './ownSect';
 import { clanName } from './clan';
 import { sectById } from './sect';
+import { finishStep, questForStage } from './martialQuest';
 import { Rng } from '../core/rng';
 import type { DeathCause } from '../core/types';
 import type { SaveMeta } from './save';
@@ -320,8 +321,24 @@ export function devMetaFingerPity(meta: SaveMeta, content: Content): SaveMeta {
 /** Martial stage (-1 = none … 6); stages 5–6 skip their kỳ ngộ. A mortal only. */
 export function devSetMartial(state: GameState, content: Content, stage: number): GameState {
   if (!state.alive || state.cult.realm !== 'pham_nhan') return state;
-  const s = { ...state, martial: { ...state.martial, stage, years: 0, lastTrain: null } };
+  const s = { ...state, martial: { ...state.martial, stage, years: 0, lastTrain: null, reachedAt: state.character.age, quest: null } };
   return devLog(s, `võ đạo → ${stage < 0 ? 'chưa nhập môn' : content.martial.stages[stage]?.name ?? stage}`);
+}
+
+/** Backlog 7: begin the quest chain of the current martial stage now, with this year's try free. */
+export function devStartMartialQuest(state: GameState, content: Content): GameState {
+  const def = questForStage(state, content);
+  if (!state.alive || state.cult.realm !== 'pham_nhan' || !def) return state;
+  const quest = { id: def.id, step: 0, startedAt: state.character.age, lastTry: null, game: null };
+  return devLog({ ...state, martial: { ...state.martial, quest } }, `chuỗi võ đạo → ${def.name}`);
+}
+
+/** Backlog 7: win (or lose) the current quest step at once, or free this year's try again. */
+export function devQuestStep(state: GameState, content: Content, what: 'win' | 'lose' | 'retry'): GameState {
+  const q = state.martial.quest;
+  if (!state.alive || !q) return state;
+  if (what === 'retry') return devLog({ ...state, martial: { ...state.martial, quest: { ...q, lastTry: null, game: null } } }, 'ải võ đạo: được thử lại');
+  return devLog(finishStep(state, content, what === 'win').state, `ải võ đạo → ${what === 'win' ? 'qua' : 'hỏng'}`);
 }
 
 /** Every root the dev panel can set: grades (elements from the first ones) and each variant. Bodies are set apart (`devSetBody`). */

@@ -13,7 +13,7 @@ import type { SaveMeta } from '../../systems/save';
 import {
   DEV_STATS, devAddKarma, devAddLifespan, devAddMoney, devAddStat, devClearHeartDemon, devFillProgress, devFindEvents, devFoundClan, devFoundSect,
   devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect,
-  devAwakenBody, devSetBody, devMarry, devResetEventHistory, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
+  devAwakenBody, devSetBody, devStartMartialQuest, devQuestStep, devMarry, devResetEventHistory, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
   devResetItemUse, devResetFingerCooldowns, devSetFingerLevel, devSetFlag, devSetGoldenFinger, devSetRealm, devSkipYears, devStartFight, devTakeChosen, devToggleTrait, devTriggerEvent,
 } from '../../systems/dev';
 
@@ -141,6 +141,9 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
             <button class="chip-btn" disabled={!live || state.cult.realm !== 'pham_nhan'} onClick={() => onChange(devSetMartial(state, content, Number(martialStage)))}>Đặt</button>
           </div>
           <div class="action-chips">
+            <button class="chip-btn" disabled={!live || state.cult.realm !== 'pham_nhan'} onClick={() => onChange(devStartMartialQuest(state, content))}>Bắt đầu chuỗi võ đạo</button>
+            <button class="chip-btn" disabled={!live || !state.martial.quest} onClick={() => onChange(devQuestStep(state, content, 'win'))}>Qua ải ngay</button>
+            <button class="chip-btn" disabled={!live || !state.martial.quest} onClick={() => onChange(devQuestStep(state, content, 'retry'))}>Được thử lại năm nay</button>
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devSetFlag(state, 'cam_ung_tam_hoa', true))}>Cảm ứng Tam hoa</button>
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devSetFlag(state, 'cam_ung_ngu_khi', true))}>Cảm ứng Ngũ khí</button>
           </div>

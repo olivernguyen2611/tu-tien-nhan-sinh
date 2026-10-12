@@ -1,22 +1,218 @@
 {
   "stages": [
-    { "name": "Tam lưu", "description": "Đánh ba tên côn đồ không thở dốc." },
-    { "name": "Nhị lưu", "description": "Được tiêu cục mời áp tiêu, trả lương hậu." },
-    { "name": "Nhất lưu", "description": "Một mình giữ một võ quán, cả huyện kiêng nể." },
-    { "name": "Tuyệt đỉnh", "description": "Đỉnh của người thường. Phần lớn võ giả dừng chân ở đây cả đời." },
-    { "name": "Hóa cảnh", "description": "Thoát thai hoán cốt. Một trong những người mạnh nhất phàm gian; tu sĩ Luyện Khí sơ kỳ cũng phải dè chừng." },
-    { "name": "Tam hoa tụ đỉnh", "description": "Khí tức nội liễm, nhìn như người thường, ra tay như sét đánh." },
-    { "name": "Ngũ khí triều nguyên", "description": "Ngũ khí trong người hóa thành Ngũ linh căn. Từ đây bước vào Luyện Khí tầng 1, tiếp tục như tu sĩ." }
+    {
+      "name": "Tam lưu",
+      "description": "Đánh ba tên côn đồ không thở dốc."
+    },
+    {
+      "name": "Nhị lưu",
+      "description": "Được tiêu cục mời áp tiêu, trả lương hậu."
+    },
+    {
+      "name": "Nhất lưu",
+      "description": "Một mình giữ một võ quán, cả huyện kiêng nể."
+    },
+    {
+      "name": "Tuyệt đỉnh",
+      "description": "Đỉnh của người thường. Phần lớn võ giả dừng chân ở đây cả đời."
+    },
+    {
+      "name": "Hóa cảnh",
+      "description": "Thoát thai hoán cốt. Một trong những người mạnh nhất phàm gian; tu sĩ Luyện Khí sơ kỳ cũng phải dè chừng."
+    },
+    {
+      "name": "Tam hoa tụ đỉnh",
+      "description": "Khí tức nội liễm, nhìn như người thường, ra tay như sét đánh."
+    },
+    {
+      "name": "Ngũ khí triều nguyên",
+      "description": "Ngũ khí trong người hóa thành Ngũ linh căn. Từ đây bước vào Luyện Khí tầng 1, tiếp tục như tu sĩ."
+    }
   ],
-  "teacher": { "flags": ["luc_hop_mon", "co_su_phu"], "careers": ["vo_lam"], "origins": ["vo_lam"] },
+  "teacher": {
+    "flags": [
+      "luc_hop_mon",
+      "co_su_phu"
+    ],
+    "careers": [
+      "vo_lam"
+    ],
+    "origins": [
+      "vo_lam"
+    ]
+  },
   "ascendEffects": [
-    { "hook": "path.body.affinity", "add": 30 },
-    { "hook": "injuryReduce", "add": 0.15 }
+    {
+      "hook": "path.body.affinity",
+      "add": 30
+    },
+    {
+      "hook": "injuryReduce",
+      "add": 0.15
+    },
+    {
+      "hook": "cultivationSpeed",
+      "add": 1.0
+    }
   ],
   "texts": {
     "train": "Một năm luyện võ, đã {years} năm hướng tới {next}.",
     "promote": "Võ công đột phá: {stage}. {description}",
     "fail": "Luyện đã lâu mà {next} vẫn chưa tới. Phải xem lại gân cốt và ngộ tính.",
     "ascend": "Ngũ khí trong ngũ tạng hợp với ngũ hành, hóa thành Ngũ linh căn. Võ đạo đi tới tận cùng, chạm cửa tiên."
+  },
+  "quests": [
+    {
+      "id": "tam_hoa",
+      "name": "Tầm Tam hoa",
+      "fromStage": 4,
+      "start": "Hóa cảnh đã thành, nhưng ba đốm lửa tinh, khí, thần cứ chập chờn không chịu tụ. Sách cổ chép: muốn Tam hoa tụ đỉnh phải luyện qua bốn ải. Mỗi năm một ải, vào bảng Tu luyện, mục Võ đạo mà làm.",
+      "done": "Bốn ải đã qua. Tinh, khí, thần dồn về một mối, ba đóa hoa nở trên đỉnh đầu.",
+      "steps": [
+        {
+          "id": "tam_hoa_quan_tuong",
+          "title": "Quan tưởng tinh khí thần",
+          "text": "Ngồi tĩnh, thấy ba đốm lửa trước trán lúc sáng lúc tối. Phải nhớ đúng thứ tự chúng bùng lên rồi lặp lại, một nhịp sai là tâm đã loạn.",
+          "game": "dieu_tuc",
+          "level": 1,
+          "win": "Ba đốm lửa theo nhịp thở mà sáng đều. Tâm lặng hơn hẳn.",
+          "lose": "Nhịp thở rối, đốm lửa tắt phụt. Ngươi choáng váng cả buổi.",
+          "aid": {
+            "item": "ngo_dao_tra",
+            "text": "Pha một chén Ngộ Đạo Trà trước khi tĩnh tọa"
+          }
+        },
+        {
+          "id": "tam_hoa_thuan_hanh",
+          "title": "Thuận theo ngũ hành",
+          "text": "Năm viên đá đặt thành vòng tròn trước mặt. Muốn khí huyết thuận chiều trời đất, phải chạm vào chúng đúng thế tương sinh hay tương khắc mà vòng đá đòi hỏi.",
+          "game": "ngu_hanh",
+          "level": 1,
+          "win": "Vòng đá ấm lên dưới tay. Khí huyết chảy thuận, không còn chỗ nghẽn.",
+          "lose": "Chạm sai thế, khí huyết dội ngược. Ngươi phải nằm nghỉ.",
+          "aid": {
+            "item": "khai_tri_dan",
+            "text": "Uống một viên Khai Trí Đan cho đầu óc sáng"
+          }
+        },
+        {
+          "id": "tam_hoa_ren_than",
+          "title": "Tôi luyện thân cốt",
+          "text": "Ngâm mình trong suối lạnh, đứng tấn suốt đêm, để xác phàm chịu nổi sức nặng của ba hoa. Gân cốt không đủ vững thì chưa nên nghĩ tới bước sau.",
+          "check": {
+            "stats": [
+              "physique",
+              "health"
+            ],
+            "difficulty": 65
+          },
+          "win": "Đêm qua đi, thân cốt nóng ran như vừa rèn lại trong lò.",
+          "lose": "Chưa đến canh ba đã run bần bật, đành bỏ dở.",
+          "aid": {
+            "item": "huyet_khi_hoan",
+            "text": "Nuốt một viên Huyết Khí Hoàn giữ khí huyết"
+          }
+        },
+        {
+          "id": "tam_hoa_hop_nhat",
+          "title": "Tinh khí thần hợp nhất",
+          "text": "Ải cuối. Tinh, khí, thần phải bùng lên và hợp lại theo một chuỗi dài. Nhớ cho đúng, lặp lại cho đúng, rồi Tam hoa sẽ tự tụ.",
+          "game": "dieu_tuc",
+          "level": 2,
+          "win": "Ba đốm lửa hợp làm một, bùng sáng.",
+          "lose": "Chuỗi quá dài, tâm thần tản mất giữa chừng.",
+          "aid": {
+            "item": "dinh_tam_dan",
+            "text": "Ngậm Định Tâm Đan để thần không tản"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ngu_khi",
+      "name": "Hợp Ngũ khí",
+      "fromStage": 5,
+      "start": "Tam hoa đã tụ, ngũ tạng vang lên năm tiếng khác nhau mà chưa chịu hòa nhịp. Muốn Ngũ khí triều nguyên phải đi qua bốn ải nữa, mỗi năm một ải, ở mục Võ đạo trong bảng Tu luyện.",
+      "done": "Bốn ải đã qua. Năm luồng khí trong ngũ tạng cùng chảy về một nguồn.",
+      "steps": [
+        {
+          "id": "ngu_khi_nghe_tang",
+          "title": "Nghe tiếng ngũ tạng",
+          "text": "Tim như lửa, gan như cây, phổi như kim, thận như nước, tỳ như đất. Vòng đá ngũ hành lại hiện ra, lần này thế đi khó hơn.",
+          "game": "ngu_hanh",
+          "level": 2,
+          "win": "Năm tiếng trong ngực đã nghe rõ từng tiếng một.",
+          "lose": "Tiếng này át tiếng kia, ngực nặng như đè đá.",
+          "aid": {
+            "item": "thanh_tam_dan",
+            "text": "Dùng Thanh Tâm Đan lọc tạp niệm"
+          }
+        },
+        {
+          "id": "ngu_khi_dan_khi",
+          "title": "Dẫn khí qua ngũ tạng",
+          "text": "Dẫn một hơi khí đi qua từng tạng theo nhịp tinh, khí, thần. Chuỗi nhịp dài hơn ải trước, nhớ đúng mới không lạc đường.",
+          "game": "dieu_tuc",
+          "level": 2,
+          "win": "Hơi khí đi trọn một vòng mà không vướng.",
+          "lose": "Lạc nhịp giữa đường, khí tản vào kinh mạch lạ.",
+          "aid": {
+            "item": "ngo_dao_tra",
+            "text": "Pha Ngộ Đạo Trà cho dễ nhập định"
+          }
+        },
+        {
+          "id": "ngu_khi_can_bang",
+          "title": "Cân bằng âm dương",
+          "text": "Ngũ khí chỉ hợp khi lòng không nghiêng. Ngồi suốt đêm giữa núi, tự hỏi mình đã bỏ lại những gì để đứng ở đây.",
+          "check": {
+            "stats": [
+              "daoHeart",
+              "comprehension"
+            ],
+            "difficulty": 70
+          },
+          "win": "Sáng ra, lòng nhẹ như gió. Ngũ khí không còn đối đầu nhau.",
+          "lose": "Một ý nghĩ cũ trồi lên giữa đêm, quấy cả canh.",
+          "aid": {
+            "item": "khai_tri_dan",
+            "text": "Uống Khai Trí Đan cho tâm sáng"
+          }
+        },
+        {
+          "id": "ngu_khi_trieu_nguyen",
+          "title": "Ngũ khí triều nguyên",
+          "text": "Ải cuối: vòng đá ngũ hành với thế đi dài nhất. Đi hết một vòng không sai, năm luồng khí sẽ cùng đổ về đan điền.",
+          "game": "ngu_hanh",
+          "level": 3,
+          "win": "Vòng đá sáng rực. Năm luồng khí cùng đổ về một chỗ.",
+          "lose": "Một bước sai, năm luồng khí đồng loạt phản lại.",
+          "aid": {
+            "item": "tay_tuy_dan",
+            "text": "Dùng Tẩy Tủy Đan để kinh mạch thông suốt"
+          }
+        }
+      ]
+    }
+  ],
+  "games": {
+    "symbols": {
+      "tinh": "Tinh",
+      "khi": "Khí",
+      "than": "Thần"
+    },
+    "ngu_hanh": {
+      "name": "Vòng đá ngũ hành",
+      "sinh": "Vòng đá đòi thế tương sinh: mỗi viên đá phải sinh ra viên kế tiếp. Chạm viên đá đúng thứ tự.",
+      "khac": "Vòng đá đòi thế tương khắc: mỗi viên đá phải khắc viên kế tiếp. Chạm viên đá đúng thứ tự."
+    },
+    "dieu_tuc": {
+      "name": "Điều tức quan tưởng",
+      "intro": "Ghi nhớ thứ tự ba đốm lửa Tinh, Khí, Thần sẽ bùng lên. Khi đã nhớ, bấm để che lại rồi nhắc đúng thứ tự.",
+      "hide": "Đã nhớ, che lại",
+      "recall": "Nhắc lại thứ tự đã thấy."
+    },
+    "win": "Qua ải.",
+    "lose": "Hỏng ải."
   }
 }

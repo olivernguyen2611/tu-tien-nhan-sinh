@@ -74,7 +74,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
 }
 
 /** Flags the engine sets itself (not via events). */
-export const ENGINE_FLAGS = ['no_aging_charm', 'no_parents', 'no_father', 'no_mother', 'mua_hang_gia'];
+export const ENGINE_FLAGS = ['no_aging_charm', 'no_parents', 'no_father', 'no_mother', 'mua_hang_gia', 'vo_dao_nhap_tien'];
 /** Words naming a parent in event text, and the flag the engine sets once that parent is gone. */
 // "cha ta", "mẹ hắn", "yêu thú mẹ"… are someone else's parents (task 3.9), not the player's.
 const PARENT_WORDS = [
@@ -305,6 +305,16 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       problems.push({ file: 'config/balance.json', level: 'error', message: `martial.combatPower và martial.lifespan cần đúng ${n} giá trị (số cảnh giới võ đạo)` });
     }
     if (m.steps.length > n) problems.push({ file: 'config/balance.json', level: 'error', message: 'martial.steps nhiều hơn số cảnh giới võ đạo' });
+    // Backlog 7: the quest chains lead out of a stage that has a next one, and every step has its level and aid item.
+    const levels = m.quest.levels;
+    for (const q of martialFile.quests) {
+      const file = 'martial.json';
+      if (q.fromStage >= n - 1) problems.push({ file, level: 'error', message: `chuỗi "${q.id}": cảnh giới ${q.fromStage} không có cảnh giới kế tiếp` });
+      for (const st of q.steps) {
+        if (st.game && !levels[`${st.game}_${st.level}`]) problems.push({ file, level: 'error', message: `chuỗi "${q.id}", bước "${st.id}": thiếu balance.martial.quest.levels.${st.game}_${st.level}` });
+        if (st.aid && itemIds && !itemIds.includes(st.aid.item)) problems.push({ file, level: 'error', message: `chuỗi "${q.id}", bước "${st.id}": vật phẩm hỗ trợ không tồn tại "${st.aid.item}"` });
+      }
+    }
   }
   if (fateIds && traitIds) {
     for (const id of fateIds) if (traitIds.has(id)) problems.push({ file: 'fate-talents.json', level: 'error', message: `id thiên phú "${id}" trùng id khí vận` });

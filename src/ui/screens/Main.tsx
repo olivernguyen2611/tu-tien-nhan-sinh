@@ -22,6 +22,7 @@ import { CultivatePanel } from '../components/CultivatePanel';
 import { SectPanel, type SectAction } from '../components/SectPanel';
 import { FatePopup } from '../components/FatePopup';
 import { CorePopup } from '../components/CorePopup';
+import { MiniGamePopup, type QuestAction } from '../components/MiniGamePopup';
 import { HeartDemonPopup } from '../components/HeartDemonPopup';
 import type { HeartDemonOption } from '../../systems/heartDemon';
 import type { ClanAction } from '../components/ClanSection';
@@ -54,7 +55,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onSeclude, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onUseItem, onFingerAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onSeclude, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onUseItem, onFingerAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -96,6 +97,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onJoinCareer: (careerId: string) => string | null;
   /** A year of martial training (task 3.11). */
   onTrain: () => string | null;
+  onQuest: (a: QuestAction) => string | null;
   /** Practise a technique from a scroll (task 2.8). */
   onLearn: (techniqueId: string) => string | null;
   /** Nghịch Thiên Cải Mệnh: take a talent, or refresh the offer (task 2.7). */
@@ -126,8 +128,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const [cultivateOpen, setCultivateOpen] = useState(false);
   // Kết đan and tâm ma take over the screen; the Tu luyện sheet steps aside so its outcome shows in the log (task 4.2).
   useEffect(() => {
-    if (state.cult.coreForming || state.cult.heartDemonTrial) setCultivateOpen(false);
-  }, [!!state.cult.coreForming, !!state.cult.heartDemonTrial]);
+    if (state.cult.coreForming || state.cult.heartDemonTrial || state.martial.quest?.game) setCultivateOpen(false);
+  }, [!!state.cult.coreForming, !!state.cult.heartDemonTrial, !!state.martial.quest?.game]);
   const [sectOpen, setSectOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
   const logRef = useRef<HTMLElement>(null);
@@ -251,7 +253,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       {sectOpen && <SectPanel state={state} content={content} onAction={onSectAction} onClose={() => setSectOpen(false)} />}
 
-      {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onTrain={onTrain} onSeclude={onSeclude} onCraft={onCraft} onClose={() => setCultivateOpen(false)} />}
+      {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onCraft={onCraft} onClose={() => setCultivateOpen(false)} />}
 
       {mapOpen && <MapPanel state={state} content={content} unlimited={!!dev} onTravel={onTravel} onClose={() => setMapOpen(false)} />}
 
@@ -323,6 +325,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
       )}
       {/* Kết đan sits above every sheet: the year waits for it (task 4.2). */}
       {state.cult.coreForming && <CorePopup state={state} content={content} onPlace={onPlaceStrand} />}
+      {state.martial.quest?.game && <MiniGamePopup state={state} content={content} onAction={onQuest} />}
       {state.cult.heartDemonTrial && <HeartDemonPopup state={state} content={content} onMeet={onMeetIllusion} />}
     </div>
   );

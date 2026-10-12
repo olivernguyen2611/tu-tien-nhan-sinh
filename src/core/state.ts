@@ -18,6 +18,7 @@ import { rankingYear } from '../systems/rankings';
 import { romanceYear, romanceTarget } from '../systems/romance';
 import { ownSectYear } from '../systems/ownSect';
 import { clanYear } from '../systems/clan';
+import { martialQuestYear } from '../systems/martialQuest';
 import { blessingRerolls } from '../systems/blessings';
 import { withCheckpoints } from '../systems/rewind';
 import { awakenGoldenFinger } from '../systems/goldenFinger';
@@ -183,14 +184,14 @@ const withYear = (s: GameState): GameState => ({ ...s, log: [...s.log, { age: s.
 
 /** One year passes; at most one event is rolled for the player to answer. */
 export function advanceYear(state: GameState, content: Content): GameState {
-  if (!state.alive || state.events.pending || state.fate || state.combat || state.cult.coreForming || state.cult.heartDemonTrial) return state;
+  if (!state.alive || state.events.pending || state.fate || state.combat || state.cult.coreForming || state.cult.heartDemonTrial || state.martial.quest?.game) return state;
   // Task 5b.10: moments a Trùng sinh can go back to.
   state = withCheckpoints(state);
   // Task 5b.2: the Kim Thủ Chỉ awakens further once the realm allows.
   state = awakenGoldenFinger(state, content);
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content), content), content);
+  const body = checkDeath(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content);
   // Task 4.1: in seclusion no ordinary event comes (follow-ups wait for the door to open);
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;
