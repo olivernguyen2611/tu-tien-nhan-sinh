@@ -39,6 +39,7 @@ const content: Content = {
   items,
   markets: [],
   combat,
+  npcTraits: { surface: [], nature: [], goals: [] },
 };
 
 describe('family', () => {

@@ -40,6 +40,7 @@ const content: Content = {
   items,
   markets: [],
   combat,
+  npcTraits: { surface: [], nature: [], goals: [] },
 };
 
 import { devAddKarma, devAddMoney, devAddStat, devHeal, devSkipYears, devTriggerEvent } from '../src/systems/dev';

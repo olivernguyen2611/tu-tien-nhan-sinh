@@ -40,6 +40,7 @@ const content: Content = {
   items,
   markets: [],
   combat,
+  npcTraits: { surface: [], nature: [], goals: [] },
 };
 
 import { ageExtremes, extremeHookSum, extremeWarnings } from '../src/systems/extremes';

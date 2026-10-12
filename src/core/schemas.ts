@@ -491,6 +491,38 @@ export const BalanceSchema = z
         milestoneCharm: z.number(),
       })
       .strict(),
+    /** Task 3.4: NPCs with their own fate. */
+    npcs: z
+      .object({
+        /** Most NPCs remembered; past that the least important one is forgotten. */
+        max: z.number().int().min(1),
+        /** New NPC's age = player's age + a value in this range (never under minAge). */
+        ageOffset: z.tuple([z.number().int(), z.number().int()]),
+        minAge: z.number().int().min(0),
+        /** Chance a new NPC has a spirit root, and their aptitude range (0–100). */
+        rootChance: probability,
+        aptitude: z.tuple([z.number().int(), z.number().int()]),
+        /** NPC cultivation: % of a stage a year = realm speedPct × (speedBase + aptitude / speedDivisor). */
+        speedBase: z.number().min(0),
+        speedDivisor: z.number().positive(),
+        /** Chance of a sudden death each year (before old age). */
+        deathPerYear: probability,
+        /** Ân and oán fade by this much a year. */
+        fadePerYear: z.number().min(0),
+        /** Nature shows once affinity reaches this. */
+        revealAffinity: z.number(),
+        /** The log reports big news only for NPCs this close, or with a grudge. */
+        newsAffinity: z.number(),
+        /** Revenge: grudge at least revengeAt; chance a year (higher if the NPC is stronger). */
+        revengeAt: z.number(),
+        revengeChance: probability,
+        /** Repaying a kindness: favor at least repayAt; chance a year. */
+        repayAt: z.number(),
+        repayChance: probability,
+        /** Share of a dead NPC's grudge their kin inherits. */
+        inheritShare: probability,
+      })
+      .strict(),
     /** Task 3.3: fights (PLAN.md K.4). */
     combat: z
       .object({
@@ -1308,3 +1340,27 @@ export type CombatTexts = z.infer<typeof CombatTextsSchema>;
 export type FoeSpec = z.infer<typeof FoeSpecSchema>;
 export type Fight = z.infer<typeof FightSchema>;
 export type CombatAction = (typeof COMBAT_ACTIONS)[number];
+
+/** content/npc-traits.json (task 3.4): NPC personalities and life goals. */
+const npcTrait = z.object({ id, name: z.string().min(1), text: z.string().min(1) }).strict();
+export const NpcTraitsFileSchema = z
+  .object({
+    /** Bề ngoài: what the player sees. */
+    surface: z.array(npcTrait),
+    /** Bản chất: hidden until affinity is high or an event shows it. */
+    nature: z.array(
+      npcTrait.extend({
+        /** Grudge fades at this × balance.npcs.fadePerYear (0: never forgets). */
+        grudgeFade: z.number().min(0).default(1),
+        /** Cultivation speed multiplier. */
+        speedMul: z.number().positive().default(1),
+        /** Extra chance of a sudden death each year. */
+        riskPerYear: z.number().min(0).max(1).default(0),
+        /** Surface id this nature always comes with (Chân thành: what you see is what you get). */
+        surface: id.optional(),
+      }).strict(),
+    ),
+    goals: z.array(npcTrait),
+  })
+  .strict();
+export type NpcTraitsFile = z.infer<typeof NpcTraitsFileSchema>;

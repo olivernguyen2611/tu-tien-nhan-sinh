@@ -82,6 +82,8 @@ export function migrate(save: SaveFile): SaveFile {
   if (life.bargains === undefined) life = { ...life, bargains: {} };
   // Task 3.3: no fight in progress.
   if (life.combat === undefined) life = { ...life, combat: null };
+  // Task 3.4: no NPCs met yet.
+  if (life.npcs === undefined) life = { ...life, npcs: [] };
   // Task 3.1: no items used yet.
   if (life.itemUse === undefined) life = { ...life, itemUse: { lastAge: {}, spent: [], nextBreakthrough: 0, nextCombat: 0 } };
   if (life.itemUse.nextCombat === undefined) life = { ...life, itemUse: { ...life.itemUse, nextCombat: 0 } };

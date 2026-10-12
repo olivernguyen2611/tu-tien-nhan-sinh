@@ -36,6 +36,7 @@ const content: Content = {
   items,
   markets: [],
   combat,
+  npcTraits: { surface: [], nature: [], goals: [] },
 };
 const born = (seed: string) => rollDestiny(createLife({ seed }, content), content);
 

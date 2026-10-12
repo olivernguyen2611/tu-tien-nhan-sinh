@@ -1,4 +1,5 @@
 // Creating a new life. Pure: same seed + same input → same character.
+import { ageNpcs } from '../systems/npcs';
 import type { Content } from './content';
 import { Rng } from './rng';
 import { APTITUDES, MORTAL_STATS } from './schemas';
@@ -76,6 +77,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     itemUse: { lastAge: {}, spent: [], nextBreakthrough: 0, nextCombat: 0 },
     bargains: {},
     combat: null,
+    npcs: [],
     talents: [],
     fate: null,
     sect: { id: null, rank: 0, since: 0, contribution: 0, master: null, lastMission: null, lastMasterTry: null, left: [] },
@@ -114,7 +116,7 @@ export function advanceYear(state: GameState, content: Content): GameState {
   if (!state.alive || state.events.pending || state.fate || state.combat) return state;
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageFamily(withYear(aged), content), content), content), content), content), content), content), content);
+  const body = checkDeath(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content);
   const next = body.alive ? rollYearEvent(body, content) : body;
   // The year's log block exists before family news and the event are added to it.
   const log = next.log.slice();
