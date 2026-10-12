@@ -128,6 +128,9 @@ export interface GameState {
     talks?: { age: number; count: number };
     /** Task 5c.2: age of the last entry in each sect tournament (by id) and the best placement (wins) so far. */
     tournaments?: Record<string, { last: number; best: number }>;
+    /** Task 5c.3: the chain mission under way (step = next step index, fails = missed steps, npc = the sectmate it names) and the chains finished this life. */
+    chain?: { id: string; step: number; fails: number; npc: string | null } | null;
+    chainsDone?: string[];
   };
   /** Mortal career (task 2.11): careers.json id, rung index, age the rung was reached. */
   career: { id: string | null; rung: number; since: number };

@@ -8,6 +8,10 @@
 
 ## [Chưa phát hành]
 
+### Tông môn 5c.3 — Nhiệm vụ chuỗi (2026-10-12)
+- Mục "Chuỗi nhiệm vụ" trong bảng Tông môn: nhận một chuỗi 3 bước, mỗi năm làm một bước (dùng suất nhiệm vụ của năm), tiến độ lưu theo đời. Bước hỏng thì thử lại năm sau; hỏng `balance.sects.chainMaxFails` (2) bước thì bị rút lại. Xong chuỗi nhận thưởng lớn và thân hơn với đồng môn được nhắc tên.
+- 3 chuỗi đầu: **Linh dược thất lạc** (chấp sự), **Tấm bia đá nứt** (trưởng lão), **Giúp đồng môn vượt ải** (đồng môn cùng lứa). Mọi kết quả đều đổi chỉ số. Nội dung do Claude tự soạn, chưa qua duyệt.
+
 ### Tông môn 5c.2 — Đại tỉ và Luận đạo hội (2026-10-12)
 - Hai cuộc thi định kỳ của tông, năm năm một lần (đại tỉ ở tuổi chia hết cho 5, luận đạo hội lệch hai năm), cho đệ tử từ Ngoại môn: ba trận với đồng môn cùng lứa. Đại tỉ so Chiến lực, luận đạo hội thử Ngộ tính.
 - Thưởng theo số trận thắng (cống hiến, linh thạch, thanh tu vi, chỉ số; kể cả thua trắng vẫn đổi chỉ số): số trong `balance.sects.tournaments`, lời văn trong `sect-life.json`. Nhớ thành tích tốt nhất mỗi đời; kình địch ghim thù khi bị thắng, đồng môn khác thân hơn sau trận.

@@ -6,6 +6,7 @@ import type { GameState } from '../../core/types';
 import {
   currentSect, masterBlocked, masterChance, missionViews, nextRankNeed, sectEligibility, sectTechniques,
 } from '../../systems/sect';
+import { chainViews } from '../../systems/sectChains';
 import { sectmateViews, tournamentViews } from '../../systems/sectmates';
 import { learnBlocked, techniqueById } from '../../systems/technique';
 import { TermText } from './Tooltip';
@@ -18,6 +19,7 @@ export type SectAction =
   | { kind: 'master' }
   | { kind: 'talk'; npcId: string; talkId: string }
   | { kind: 'tournament'; id: string }
+  | { kind: 'chain'; id: string; start: boolean }
   | { kind: 'leave' }
   | { kind: 'found'; name: string; rules: string[] }
   | { kind: 'decide'; decisionId: string }
@@ -71,6 +73,21 @@ export function SectPanel({ state, content, onAction, onClose }: {
                 </div>
               ))}
             </div>
+
+            {chainViews(state, content).length > 0 && (
+              <div class="crafts">
+                <h3 class="panel-sub">Chuỗi nhiệm vụ</h3>
+                <p class="profile-note">Việc dài nhiều bước, mỗi năm làm một bước (tính vào nhiệm vụ của năm). Hỏng hai bước thì bị rút lại.</p>
+                {chainViews(state, content).map((c) => (
+                  <div class="career-row" key={c.id}>
+                    <div class="craft-head"><b>{c.name}</b><span class="muted">{c.active ? `bước ${c.step + 1}/${c.steps} · ${Math.round((c.chance ?? 0) * 100)}%` : `${c.steps} bước`}</span></div>
+                    <p class="profile-note">{c.text}</p>
+                    <button class="chip-btn" disabled={!!c.blocked} onClick={() => act({ kind: 'chain', id: c.id, start: !c.active })}>{c.active ? 'Làm bước này' : 'Nhận chuỗi'}</button>
+                    {c.blocked && <span class="craft-note">{c.blocked}</span>}
+                  </div>
+                ))}
+              </div>
+            )}
 
             <div class="crafts">
               <h3 class="panel-sub"><TermText text="Công pháp" /> của tông môn</h3>

@@ -85,7 +85,7 @@ export function joinSect(state: GameState, content: Content, sectId: string): { 
   const next: GameState = {
     ...state,
     social: { ...state.social, reputation: rep },
-    sect: { ...state.sect, id: sectId, rank: 0, since: state.character.age, contribution: 0, master: null, lastMission: null, lastMasterTry: null },
+    sect: { ...state.sect, id: sectId, rank: 0, since: state.character.age, contribution: 0, master: null, lastMission: null, lastMasterTry: null, chain: null },
   };
   const withCast = seedCast({ ...next, log: addLines(next, [{ text, tone: 'good' }]) }, content);
   return { state: withCast, text, joined: true };
