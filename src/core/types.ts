@@ -142,6 +142,8 @@ export interface GameState {
     history: Record<string, number>;
     /** Follow-up events booked by earlier choices. */
     followUps: { event: string; atAge: number }[];
+    /** Task 3.4: id of the NPC the pending event is about ({npc}). */
+    npc: string | null;
   };
   /** Stats stuck at an extreme (stat-extremes.json). */
   extremes: {
@@ -184,6 +186,8 @@ export interface Battle {
   outcomes: Pick<Fight, 'win' | 'lose' | 'fled'>;
   /** Event title that started it, for the log. */
   source: string | null;
+  /** Task 3.4: the foe is this NPC (killing them goes through killNpc). */
+  npcId: string | null;
 }
 
 /** Task 3.4: an NPC who lives, cultivates, ages and remembers what the player did. */

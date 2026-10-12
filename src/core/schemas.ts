@@ -55,6 +55,23 @@ const BaseConditionsSchema = z
     peakFails: z.object({ min: z.number().int().min(0) }).strict().optional(),
     /** Fate talents (task 2.8 hidden choices). */
     talentsAny: ids,
+    /** Task 3.4: the NPC this event is about (met earlier, or picked by an npcTrigger). */
+    npc: z
+      .object({
+        present: z.boolean().optional(),
+        minGrudge: z.number().optional(),
+        minFavor: z.number().optional(),
+        /** Kin of someone the player killed. */
+        heir: z.boolean().optional(),
+        natureKnown: z.boolean().optional(),
+        /** Their hidden nature does not match the face they show. */
+        masked: z.boolean().optional(),
+        /** Their realm compared to the player's: -1 lower, 0 same, 1 higher. */
+        minRealmGap: z.number().int().optional(),
+        maxRealmGap: z.number().int().optional(),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 
@@ -109,12 +126,37 @@ export const EffectsSchema = z
     learnTechnique: id.optional(),
     /** Thiên địa kỳ vật (task 2.11): a rootless mortal gains a root (balance.kyVat). */
     grantRoot: z.boolean().optional(),
+    /** Task 3.4: meet someone new; they become this event's NPC ({npc} in texts). affinity is added to a stranger's 50. */
+    meetNpc: z
+      .object({
+        role: z.string().min(1),
+        realm: z.string().optional(),
+        stage: z.number().int().min(0).optional(),
+        root: z.boolean().optional(),
+        affinity: z.number().optional(),
+        favor: z.number().optional(),
+        grudge: z.number().optional(),
+      })
+      .strict()
+      .optional(),
+    /** Task 3.4: change this event's NPC (sổ ân oán); kill passes the grudge on to kin. */
+    npc: z
+      .object({
+        affinity: z.number().optional(),
+        favor: z.number().optional(),
+        grudge: z.number().optional(),
+        reveal: z.boolean().optional(),
+        kill: z.boolean().optional(),
+        role: z.string().min(1).optional(),
+      })
+      .strict()
+      .optional(),
   })
   .catchall(z.number())
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'meetNpc', 'npc'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -140,6 +182,8 @@ export const FoeSpecSchema = z
     intent: z.enum(['teach', 'rob', 'kill']),
     /** Base chance the foe accepts a plea (balance.combat.pleaIntent when left out). */
     mercy: z.number().min(0).max(1).optional(),
+    /** Task 3.4: the foe is this event's NPC, at their own realm and stage (name, realm, stage are ignored). */
+    fromNpc: z.boolean().default(false),
   })
   .strict();
 
@@ -203,6 +247,8 @@ export const EventSchema = z
     luckAffected: z.boolean().default(false),
     cooldownYears: z.number().int().min(0).default(0),
     oncePerLife: z.boolean().default(false),
+    /** Task 3.4: not in the yearly pool; fires when an NPC's ledger calls for it (that NPC is the event's NPC). */
+    npcTrigger: z.enum(['revenge', 'repay', 'reveal']).optional(),
     choices: z.array(ChoiceSchema).min(1),
   })
   .strict();
@@ -519,6 +565,10 @@ export const BalanceSchema = z
         /** Repaying a kindness: favor at least repayAt; chance a year. */
         repayAt: z.number(),
         repayChance: probability,
+        /** Revenge chance × this when the NPC's realm is above the player's. */
+        revengeStrongerMul: z.number().min(0),
+        /** Chance a year that a masked NPC (nature ≠ surface) shows their true face. */
+        revealChance: probability,
         /** Share of a dead NPC's grudge their kin inherits. */
         inheritShare: probability,
       })
@@ -1358,6 +1408,12 @@ export const NpcTraitsFileSchema = z
         riskPerYear: z.number().min(0).max(1).default(0),
         /** Surface id this nature always comes with (Chân thành: what you see is what you get). */
         surface: id.optional(),
+        /** Surfaces that hide this nature (Ôn hòa hiding Tham lam): such an NPC may show their true face (npcTrigger "reveal"). */
+        masks: ids,
+        /** Revenge / repay chance multipliers and how fast affinity grows. */
+        revengeMul: z.number().min(0).default(1),
+        repayMul: z.number().min(0).default(1),
+        affinityMul: z.number().min(0).default(1),
       }).strict(),
     ),
     goals: z.array(npcTrait),

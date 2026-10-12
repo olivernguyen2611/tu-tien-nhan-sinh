@@ -1,5 +1,5 @@
 // Creating a new life. Pure: same seed + same input → same character.
-import { ageNpcs } from '../systems/npcs';
+import { ageNpcs, npcById } from '../systems/npcs';
 import type { Content } from './content';
 import { Rng } from './rng';
 import { APTITUDES, MORTAL_STATS } from './schemas';
@@ -31,7 +31,16 @@ export function randomName(rng: Rng, content: Content, gender: Gender): string {
 
 export function fillTemplate(text: string, state: GameState, content?: Content): string {
   const sect = content?.sects.find((s) => s.id === state.sect.id)?.name ?? 'tông môn';
-  return text.replace(/\{name\}/g, state.character.name).replace(/\{hometown\}/g, state.character.hometown).replace(/\{sect\}/g, sect);
+  // Task 3.4: {npc} = the event's NPC, {npcRole} = how the player knows them, {npcKin} = the dead relative an heir avenges.
+  const npc = npcById(state, state.events.npc);
+  const kin = npcById(state, npc?.heirOf);
+  return text
+    .replace(/\{name\}/g, state.character.name)
+    .replace(/\{hometown\}/g, state.character.hometown)
+    .replace(/\{sect\}/g, sect)
+    .replace(/\{npc\}/g, npc?.name ?? 'người kia')
+    .replace(/\{npcRole\}/g, npc?.role ?? 'người quen')
+    .replace(/\{npcKin\}/g, kin?.name ?? 'người thân');
 }
 
 export function createLife(input: NewLifeInput, content: Content): GameState {
@@ -101,6 +110,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
       history: {},
       // Every life meets the world's root test once, at an age in balance.roots.testAge.
       followUps: content.world.rootTestEvent ? [{ event: content.world.rootTestEvent, atAge: rootTestAge(input.seed, content) }] : [],
+      npc: null,
     },
     extremes: { streak: {}, active: {}, givenAt: {} },
     log: [],

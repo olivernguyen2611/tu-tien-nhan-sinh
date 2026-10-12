@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { loadContent, type Content } from '../src/core/content';
-import { advanceYear, createLife } from '../src/core/state';
-import { NpcTraitsFileSchema } from '../src/core/schemas';
+import { advanceYear, createLife, fillTemplate } from '../src/core/state';
+import { EventSchema, NpcTraitsFileSchema } from '../src/core/schemas';
+import { eventWeight, resolveChoice, rollYearEvent } from '../src/systems/events/engine';
+import { meets } from '../src/systems/events/conditions';
+import { settle } from '../src/systems/combat';
 import type { GameState } from '../src/core/types';
 import { ageNpcs, changeNpc, createNpc, killNpc, npcById, npcLabel } from '../src/systems/npcs';
 
@@ -76,5 +79,75 @@ describe('NPCs (task 3.4)', () => {
     const ages = s.npcs.map((n) => n.age);
     s = advanceYear(s, content);
     expect(s.npcs.map((n) => n.age).filter((_, i) => s.npcs[i].alive)).toEqual(ages.map((a) => a + 1).filter((_, i) => s.npcs[i].alive));
+  });
+});
+
+describe('NPCs in events and fights (task 3.4)', () => {
+  const ev = (raw: unknown) => EventSchema.parse(raw);
+  const meet = ev({
+    id: 't_meet', category: 'test', title: 'Gặp', text: 'Gặp người.', weight: 0,
+    choices: [{ text: 'Cướp', result: { text: '{npc} hận ngươi.', effects: { 'stat.happiness': 1, meetNpc: { role: 'kẻ thù', realm: 'pham_nhan', root: false }, npc: { grudge: 40 } } } }],
+  });
+  const revenge = ev({
+    id: 't_revenge', category: 'test', title: 'Báo thù', text: '{npc} tìm tới.', weight: 1, npcTrigger: 'revenge',
+    conditions: { npc: { minGrudge: 30 } },
+    choices: [{
+      text: 'Đánh',
+      result: {
+        text: 'Ra tay.',
+        fight: {
+          foe: { name: 'x', intent: 'kill', fromNpc: true },
+          win: { text: 'Thắng {npc}.', effects: { 'stat.happiness': 1, npc: { grudge: 10 } } },
+          lose: { text: 'Thua.', effects: { 'stat.happiness': -1 } },
+        },
+      },
+    }],
+  });
+  const c2: Content = { ...content, events: [meet, revenge] };
+  const pend = (s: GameState, id: string) => ({ ...s, events: { ...s.events, pending: id } });
+
+  it('meetNpc creates the NPC, the ledger change hits them, {npc} names them', () => {
+    const r = resolveChoice(pend(life, 't_meet'), c2, 0);
+    const n = r.state.npcs[0];
+    expect(n.grudge).toBe(40);
+    expect(r.text).toContain(n.name);
+    expect(r.state.events.npc).toBeNull();
+  });
+
+  it('npcTrigger events stay out of the random pool and fire from the ledger', () => {
+    expect(eventWeight(life, c2, revenge)).toBe(0);
+    let s = resolveChoice(pend(life, 't_meet'), c2, 0).state;
+    s = { ...s, npcs: s.npcs.map((n) => ({ ...n, grudge: 100 })) };
+    const c3: Content = { ...c2, balance: { ...c2.balance, npcs: { ...c2.balance.npcs, revengeChance: 1 } } };
+    const rolled = rollYearEvent(s, c3);
+    expect(rolled.events.pending).toBe('t_revenge');
+    expect(rolled.events.npc).toBe(s.npcs[0].id);
+    expect(fillTemplate('{npc} tìm tới.', rolled, c3)).toBe(`${s.npcs[0].name} tìm tới.`);
+  });
+
+  it('a fight fromNpc is against that NPC; killing them leaves an heir', () => {
+    let s = resolveChoice(pend(life, 't_meet'), c2, 0).state;
+    const id = s.npcs[0].id;
+    s = { ...s, events: { ...s.events, pending: 't_revenge', npc: id } };
+    s = resolveChoice(s, c2, 0).state;
+    expect(s.combat!.foe.name).toBe(s.npcs[0].name);
+    expect(s.combat!.npcId).toBe(id);
+    expect(s.events.npc).toBeNull();
+    // Skip to the aftermath and kill.
+    s = { ...s, combat: { ...s.combat!, phase: 'won', won: 2 } };
+    s = settle(s, c2, 'kill').state;
+    expect(npcById(s, id)!.alive).toBe(false);
+    expect(s.npcs.some((n) => n.heirOf === id)).toBe(true);
+    expect(s.combat).toBeNull();
+  });
+
+  it('conditions.npc reads the event NPC', () => {
+    const s = resolveChoice(pend(life, 't_meet'), c2, 0).state;
+    const id = s.npcs[0].id;
+    const withNpc = { ...s, events: { ...s.events, npc: id } };
+    expect(meets(withNpc, { npc: { minGrudge: 30 } }, c2)).toBe(true);
+    expect(meets(withNpc, { npc: { minFavor: 1 } }, c2)).toBe(false);
+    expect(meets(s, { npc: { present: false } }, c2)).toBe(true);
+    expect(meets(withNpc, { npc: { heir: true } }, c2)).toBe(false);
   });
 });

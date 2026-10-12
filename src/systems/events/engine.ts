@@ -14,6 +14,7 @@ import { addCraftXp } from '../crafts';
 import { forceJoinCareer, leaveCareer, promoteCareer } from '../career';
 import { addContribution, grantMaster, joinSect, leaveSect, promoteSect } from '../sect';
 import { startBattle } from '../combat';
+import { changeNpc, createNpc, killNpc, npcCalls } from '../npcs';
 
 type Outcome = NonNullable<GameEvent['choices'][number]['result']>;
 
@@ -34,6 +35,7 @@ export function themeMultiplier(state: GameState, content: Content, event: GameE
 
 /** Weight of an event for this life right now; 0 = cannot happen. */
 export function eventWeight(state: GameState, content: Content, event: GameEvent): number {
+  if (event.npcTrigger) return 0;
   if (event.weight <= 0) return 0; // follow-up only
   const last = state.events.history[event.id];
   if (last !== undefined) {
@@ -54,9 +56,14 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
   let picked: string | null = null;
   let followUps = state.events.followUps;
 
+  let npc: string | null = null;
+  const visit = due ? null : npcEvent(state, content, rng);
   if (due) {
     picked = due.event;
     followUps = followUps.filter((f) => f !== due);
+  } else if (visit) {
+    picked = visit.event;
+    npc = visit.npc;
   } else if (rng.chance(content.balance.events.popupChanceLowRealm)) {
     const pool = content.events
       .map((e) => ({ e, w: eventWeight(state, content, e) }))
@@ -67,8 +74,19 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
   return {
     ...state,
     rng: rng.getState(),
-    events: { ...state.events, followUps, pending: picked },
+    events: { ...state.events, followUps, pending: picked, npc },
   };
+}
+
+/** Task 3.4: an NPC whose ledger calls for a visit, and an event for it whose conditions hold. */
+function npcEvent(state: GameState, content: Content, rng: Rng): { npc: string; event: string } | null {
+  for (const call of npcCalls(state, content, rng)) {
+    const withNpc = { ...state, events: { ...state.events, npc: call.id } };
+    const pool = content.events.filter((e) => e.npcTrigger === call.trigger && e.weight > 0 && meets(withNpc, e.conditions, content));
+    if (pool.length === 0) continue;
+    return { npc: call.id, event: rng.weighted(pool, (e) => e.weight).id };
+  }
+  return null;
 }
 
 export interface ChoiceView {
@@ -170,21 +188,11 @@ export function resolveChoice(state: GameState, content: Content, choiceIndex: n
   }
 
   let next = applyEffects(state, outcome.effects, rng);
-  let text = fillTemplate(outcome.text, state, content);
+  let text = outcome.text;
   const tone: Tone = event.tags.includes('rare') ? 'rare' : success === true ? 'good' : success === false ? 'bad' : 'normal';
-  const lines: LogLine[] = [
-    { text: `${event.title}: ${fillTemplate(choice.text, state, content)}.`, tone: 'normal' },
-    { text, tone },
-  ];
-  const log = next.log.slice();
-  const last = log[log.length - 1];
-  if (last && last.age === state.character.age) log[log.length - 1] = { ...last, lines: [...last.lines, ...lines] };
-  else log.push({ age: state.character.age, lines });
-
   next = {
     ...next,
     rng: rng.getState(),
-    log,
     events: {
       ...next.events,
       pending: null,
@@ -193,14 +201,38 @@ export function resolveChoice(state: GameState, content: Content, choiceIndex: n
   };
   const extra = applyExtras(next, content, outcome.effects, text);
   next = extra.state;
-  text = extra.text;
+  // Filled after the effects so {npc} names someone just met.
+  text = fillTemplate(extra.text, next, content);
+  const lines: LogLine[] = [
+    { text: `${event.title}: ${fillTemplate(choice.text, state, content)}.`, tone: 'normal' },
+    { text, tone },
+  ];
+  const log = next.log.slice();
+  const last = log[log.length - 1];
+  if (last && last.age === state.character.age) log[log.length - 1] = { ...last, lines: [...last.lines, ...lines] };
+  else log.push({ age: state.character.age, lines });
+  next = { ...next, log };
   if (outcome.fight) next = startBattle(next, content, outcome.fight, event.title);
+  next = { ...next, events: { ...next.events, npc: null } };
   return { state: next, text, tone, success };
 }
 
 /** Effects beyond plain numbers (root test, sect, items, techniques…); returns the state and the text with any extra sentences. */
 function applyExtras(state: GameState, content: Content, fx: Outcome['effects'], text: string): { state: GameState; text: string } {
   let next = state;
+  // Task 3.4: someone new becomes the event's NPC; then the ledger changes for that NPC.
+  if (fx.meetNpc) {
+    const { role, realm, stage, root, affinity, favor, grudge } = fx.meetNpc;
+    const met = createNpc(next, content, { role, realm, stage, root, affinity: affinity === undefined ? undefined : 50 + affinity, favor, grudge });
+    next = { ...met.state, events: { ...met.state.events, npc: met.id } };
+  }
+  const npcId = next.events.npc;
+  if (fx.npc && npcId) {
+    const { affinity, favor, grudge, reveal, kill, role } = fx.npc;
+    next = changeNpc(next, content, npcId, { affinity, favor, grudge, reveal });
+    if (role) next = { ...next, npcs: next.npcs.map((n) => (n.id === npcId ? { ...n, role } : n)) };
+    if (kill) next = killNpc(next, content, npcId);
+  }
   if (fx.testRoot) {
     const revealed = revealRoot(next, content);
     const started = startCultivating(revealed.state, content);
@@ -252,5 +284,6 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
 
 /** Apply an outcome that does not come from a pending event (e.g. the end of a fight). */
 export function applyOutcome(state: GameState, content: Content, outcome: { text: string; effects: Outcome['effects'] }, rng: Rng): { state: GameState; text: string } {
-  return applyExtras(applyEffects(state, outcome.effects, rng), content, outcome.effects, fillTemplate(outcome.text, state, content));
+  const r = applyExtras(applyEffects(state, outcome.effects, rng), content, outcome.effects, outcome.text);
+  return { state: r.state, text: fillTemplate(r.text, r.state, content) };
 }

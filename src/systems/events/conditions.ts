@@ -3,6 +3,7 @@ import type { Content } from '../../core/content';
 import type { GameEvent } from '../../core/schemas';
 import type { GameState } from '../../core/types';
 import { sectEligibility } from '../sect';
+import { actor, isMasked } from '../npcs';
 
 type Conditions = Partial<GameEvent['conditions']>;
 
@@ -68,10 +69,31 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
   if (c.traitsAll?.some((t) => !state.traits.includes(t))) return false;
   if (c.traitsNone?.some((t) => state.traits.includes(t))) return false;
   if (c.goldenFinger) return false;
+  if (c.npc && !npcMeets(state, c.npc, content)) return false;
   for (const s of c.stats ?? []) {
     const v = readValue(state, s.stat);
     if (s.gte !== undefined && v < s.gte) return false;
     if (s.lte !== undefined && v > s.lte) return false;
+  }
+  return true;
+}
+
+/** Task 3.4: conditions on the event's NPC. */
+function npcMeets(state: GameState, c: NonNullable<Conditions['npc']>, content?: Content): boolean {
+  const n = actor(state);
+  const here = !!n && n.alive;
+  if (c.present !== undefined) return here === c.present && (!here || npcMeets(state, { ...c, present: undefined }, content));
+  if (!n || !here) return false;
+  if (c.minGrudge !== undefined && n.grudge < c.minGrudge) return false;
+  if (c.minFavor !== undefined && n.favor < c.minFavor) return false;
+  if (c.heir !== undefined && !!n.heirOf !== c.heir) return false;
+  if (c.natureKnown !== undefined && n.natureKnown !== c.natureKnown) return false;
+  if (c.masked !== undefined && (!content || isMasked(content, n) !== c.masked)) return false;
+  if (c.minRealmGap !== undefined || c.maxRealmGap !== undefined) {
+    const order = content?.cultivation.realms.realms.map((r) => r.id) ?? ['pham_nhan'];
+    const gap = order.indexOf(n.realm) - order.indexOf(state.cult.realm);
+    if (c.minRealmGap !== undefined && gap < c.minRealmGap) return false;
+    if (c.maxRealmGap !== undefined && gap > c.maxRealmGap) return false;
   }
   return true;
 }

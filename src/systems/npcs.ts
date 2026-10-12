@@ -99,7 +99,8 @@ export function changeNpc(state: GameState, content: Content, id: string, d: { a
     ...state,
     npcs: state.npcs.map((n) => {
       if (n.id !== id) return n;
-      const affinity = clamp(n.affinity + (d.affinity ?? 0));
+      const gain = d.affinity ?? 0;
+      const affinity = clamp(n.affinity + (gain > 0 ? gain * (natureOf(content, n)?.affinityMul ?? 1) : gain));
       return {
         ...n,
         affinity,
@@ -111,7 +112,44 @@ export function changeNpc(state: GameState, content: Content, id: string, d: { a
   };
 }
 
-const natureOf = (content: Content, n: Npc) => content.npcTraits.nature.find((x) => x.id === n.nature);
+function natureOf(content: Content, n: Npc) {
+  return content.npcTraits.nature.find((x) => x.id === n.nature);
+}
+
+/** The face they show hides a different nature, not yet seen through. */
+export function isMasked(content: Content, n: Npc): boolean {
+  return !n.natureKnown && !!n.surface && (natureOf(content, n)?.masks ?? []).includes(n.surface);
+}
+
+/** NPC the current event is about. */
+export function actor(state: GameState): Npc | undefined {
+  return npcById(state, state.events.npc);
+}
+
+export type NpcTrigger = 'revenge' | 'repay' | 'reveal';
+
+/**
+ * This year's NPC-driven visit, if any: someone with a grudge comes for revenge,
+ * someone owing a kindness repays it, a masked friend shows their true face.
+ * Returns the NPCs whose roll came up, most pressing first.
+ */
+export function npcCalls(state: GameState, content: Content, rng: Rng): { trigger: NpcTrigger; id: string }[] {
+  const cfg = content.balance.npcs;
+  const order = realmList(content).map((r) => r.id);
+  const out: { trigger: NpcTrigger; id: string }[] = [];
+  for (const n of state.npcs) {
+    if (!n.alive) continue;
+    const nat = natureOf(content, n);
+    if (n.grudge >= cfg.revengeAt) {
+      const stronger = order.indexOf(n.realm) > order.indexOf(state.cult.realm) ? cfg.revengeStrongerMul : 1;
+      if (rng.chance(Math.min(1, cfg.revengeChance * stronger * (nat?.revengeMul ?? 1)))) out.push({ trigger: 'revenge', id: n.id });
+    }
+    if (n.favor >= cfg.repayAt && rng.chance(Math.min(1, cfg.repayChance * (nat?.repayMul ?? 1)))) out.push({ trigger: 'repay', id: n.id });
+    if (isMasked(content, n) && rng.chance(cfg.revealChance)) out.push({ trigger: 'reveal', id: n.id });
+  }
+  const rank: Record<NpcTrigger, number> = { revenge: 0, reveal: 1, repay: 2 };
+  return out.sort((a, b) => rank[a.trigger] - rank[b.trigger]);
+}
 
 /** Is the NPC someone whose news the player hears about? */
 function close(content: Content, n: Npc): boolean {

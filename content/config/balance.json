@@ -234,6 +234,8 @@
     "revengeChance": 0.2,
     "repayAt": 30,
     "repayChance": 0.15,
+    "revengeStrongerMul": 2,
+    "revealChance": 0.05,
     "inheritShare": 0.5
   },
   "combat": {

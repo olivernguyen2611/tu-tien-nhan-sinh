@@ -278,6 +278,13 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
         if (tech && techniques && !techniques.some((x) => x.id === tech)) {
           problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: công pháp không tồn tại "${tech}"` });
         }
+        // Task 3.4: {npc}, npc effects and a foe fromNpc need an NPC: picked by npcTrigger, required by conditions, or met here.
+        const hasNpc = !!event.npcTrigger || !!event.conditions.npc || !!choice.requires?.npc || !!fx?.meetNpc;
+        const npcText = /\{npc(Role|Kin)?\}/.test(`${event.text} ${choice.text} ${outcome?.text ?? ''} ${outcome?.fight?.win.text ?? ''} ${outcome?.fight?.lose.text ?? ''}`);
+        const usesNpc = npcText || !!fx?.npc || !!outcome?.fight?.foe.fromNpc || !!outcome?.fight?.win.effects.npc || !!outcome?.fight?.lose.effects.npc;
+        if (usesNpc && !hasNpc) {
+          problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: nhắc tới NPC ({npc}, npc, fromNpc) nhưng sự kiện không có NPC (cần npcTrigger, conditions.npc hoặc meetNpc)` });
+        }
         const target = outcome?.effects.followUp?.event;
         if (target && !seen.has(target)) {
           problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: followUp tới sự kiện không tồn tại "${target}"` });
