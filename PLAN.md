@@ -334,7 +334,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 4.3 | [x] Hình thái Nguyên Anh theo đạo đã tu (✍️ ~8 hình thái) |
 | 4.4 | [x] Tâm ma chiến: ảo cảnh dựa trên chính những việc bạn đã làm (đọc sổ ân oán) |
 | 4.5 | [x] Thiên kiếp ở các mốc lớn, cần pháp bảo/trận pháp |
-| 4.6 | [ ] Bí cảnh dạng chuỗi nhiều bước |
+| 4.6 | [x] Bí cảnh dạng chuỗi nhiều bước |
 | 4.7 | [x] Bách nghệ cơ bản: Luyện đan + Luyện khí (các nghề khác để GĐ7) |
 | 4.8 | [ ] Bản đồ đại vực mở dần theo cảnh giới + ✍️ đại năng trấn giữ |
 | 4.9 | [x] Thu đồ đệ (cơ bản) |
