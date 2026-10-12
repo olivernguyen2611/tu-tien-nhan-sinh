@@ -1332,6 +1332,8 @@ export const BalanceSchema = z
         masterCast: z.object({ minRealm: z.number().int().min(0), aboveSelf: z.number().int().min(0), ageOffset: range, affinity: z.number().min(0).max(100) }).strict(),
         /** Task 5c.1: time spent with sectmates a year (each one once a year). */
         talksPerYear: z.number().int().min(1),
+        /** Task 5c.3: a chain mission is given up after this many missed steps. */
+        chainMaxFails: z.number().int().min(1),
         /**
          * Task 5c.2: sect tournaments. Open in years where age % every === offset, to members of minRank+;
          * `rounds` rounds against sectmates (power: Chiến lực; else a check on `stat`); rewards[wins].
@@ -1952,6 +1954,44 @@ export const SectLifeSchema = z
             cost: z.number().int().min(0).optional(),
             success: TalkOutcomeSchema,
             fail: TalkOutcomeSchema,
+          })
+          .strict(),
+      )
+      .min(1),
+    /**
+     * Task 5c.3: chain missions. One step a year (it uses the year's mission); a failed step can be
+     * retried next year; after balance.sects.chainMaxFails misses the chain is dropped. Texts take
+     * {npc} (a sectmate of `npcKind`, if given) and {title}.
+     */
+    chains: z
+      .array(
+        z
+          .object({
+            id,
+            name: z.string().min(1),
+            minRank: z.number().int().min(0),
+            sects: ids.optional(),
+            npcKind: z.enum(['master', 'elder', 'steward', 'senior', 'peer', 'rival']).optional(),
+            /** Shown when the chain is taken. */
+            intro: z.string().min(1),
+            /** Shown when it is dropped after too many misses. */
+            abandon: z.string().min(1),
+            steps: z
+              .array(
+                z
+                  .object({
+                    text: z.string().min(1),
+                    stat: z.enum([...MORTAL_STATS, ...APTITUDES]),
+                    difficulty: z.number().min(0).max(100),
+                    success: MissionOutcomeSchema,
+                    fail: MissionOutcomeSchema,
+                  })
+                  .strict(),
+              )
+              .min(2),
+            reward: MissionOutcomeSchema,
+            /** Thiện cảm gained with the named sectmate when the chain is finished. */
+            affinity: z.number().optional(),
           })
           .strict(),
       )

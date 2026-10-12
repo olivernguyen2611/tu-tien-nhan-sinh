@@ -223,6 +223,7 @@
     ],
     "masterCast": { "minRealm": 3, "aboveSelf": 2, "ageOffset": [60, 180], "affinity": 60 },
     "talksPerYear": 3,
+    "chainMaxFails": 2,
     "tournaments": [
       { "id": "dai_ti", "every": 5, "offset": 0, "minRank": 1, "rounds": 3, "stat": "power", "difficulty": 50,
         "rewards": [

@@ -311,6 +311,260 @@
       }
     }
   ],
+  "chains": [
+    {
+      "id": "chuoi_linh_duoc_that_lac",
+      "name": "Linh dược thất lạc",
+      "minRank": 1,
+      "npcKind": "steward",
+      "intro": "{title} {npc} gọi ngươi vào phòng: \"Một lô linh dược Dược Phòng gửi đi bỗng mất dấu giữa đường. Ngươi lần theo xem sao.\"",
+      "abandon": "Hai lần lần theo đều hụt, {title} {npc} thở dài rút lại việc: \"Thôi, để người khác lo.\"",
+      "steps": [
+        {
+          "text": "Hỏi lại những người từng chuyển lô hàng, tìm xem nó mất ở đoạn nào.",
+          "stat": "charm",
+          "difficulty": 40,
+          "success": {
+            "text": "Mấy gã khuân vác khai ra: xe hàng rẽ sang đường mòn phía đông.",
+            "contribution": 4,
+            "spiritStones": 0,
+            "stats": {
+              "charm": 1
+            }
+          },
+          "fail": {
+            "text": "Ai cũng ngậm miệng, ngươi mất cả buổi mà chẳng thu được gì.",
+            "contribution": 1,
+            "spiritStones": 0,
+            "stats": {
+              "happiness": -2
+            }
+          }
+        },
+        {
+          "text": "Theo đường mòn phía đông, tìm dấu bánh xe và vết giày.",
+          "stat": "intellect",
+          "difficulty": 45,
+          "success": {
+            "text": "Dấu giày lẫn trong cỏ dẫn ngươi tới một hang đá bỏ hoang.",
+            "contribution": 6,
+            "spiritStones": 0,
+            "stats": {
+              "intellect": 1
+            }
+          },
+          "fail": {
+            "text": "Mưa đêm xóa sạch dấu vết, ngươi lạc giữa rừng cả ngày.",
+            "contribution": 1,
+            "spiritStones": 0,
+            "stats": {
+              "health": -4
+            }
+          }
+        },
+        {
+          "text": "Vào hang, đối mặt với kẻ đã giấu lô hàng.",
+          "stat": "physique",
+          "difficulty": 50,
+          "success": {
+            "text": "Một tên đệ tử ngoại môn sa cơ giấu hàng để đổi lấy thuốc cho mẹ. Ngươi bắt gặp, hắn quỳ xuống nhận tội.",
+            "contribution": 8,
+            "spiritStones": 0,
+            "stats": {
+              "physique": 1,
+              "daoHeart": 1
+            }
+          },
+          "fail": {
+            "text": "Hắn quăng bột thuốc vào mặt ngươi rồi chạy thoát, ngươi ho sặc sụa mấy ngày.",
+            "contribution": 1,
+            "spiritStones": 0,
+            "stats": {
+              "health": -8
+            }
+          }
+        }
+      ],
+      "reward": {
+        "text": "Lô linh dược về đủ. {title} {npc} lặng lẽ xin tha cho kẻ lỡ dại, ghi công lớn cho ngươi.",
+        "contribution": 30,
+        "spiritStones": 3,
+        "stats": {
+          "daoHeart": 2,
+          "happiness": 3
+        }
+      },
+      "affinity": 10
+    },
+    {
+      "id": "chuoi_bia_da_vo",
+      "name": "Tấm bia đá nứt",
+      "minRank": 1,
+      "npcKind": "elder",
+      "intro": "{title} {npc} chỉ vào tấm bia ghi môn quy trước điện: \"Bia nứt từ đêm qua. Tìm xem vì sao.\"",
+      "abandon": "Ngươi tìm mãi không ra manh mối, {title} {npc} cho người khác tiếp quản.",
+      "steps": [
+        {
+          "text": "Xem xét vết nứt và hỏi những người gác đêm.",
+          "stat": "intellect",
+          "difficulty": 45,
+          "success": {
+            "text": "Vết nứt không do gió mưa mà do một luồng kiếm khí cực mảnh.",
+            "contribution": 6,
+            "spiritStones": 0,
+            "stats": {
+              "intellect": 1
+            }
+          },
+          "fail": {
+            "text": "Người gác đêm ngủ say từ canh hai, chẳng ai thấy gì.",
+            "contribution": 1,
+            "spiritStones": 0,
+            "stats": {
+              "happiness": -2
+            }
+          }
+        },
+        {
+          "text": "Lần theo dư khí kiếm đến một ngọn núi phụ ít người lui tới.",
+          "stat": "comprehension",
+          "difficulty": 50,
+          "success": {
+            "text": "Dư khí nhạt dần rồi dẫn ngươi tới một thạch động bị phong bế từ lâu.",
+            "contribution": 8,
+            "spiritStones": 0,
+            "stats": {
+              "comprehension": 1
+            }
+          },
+          "fail": {
+            "text": "Dư khí tan mất giữa chừng, ngươi đứng nhìn rừng thông mà chẳng biết đi đâu.",
+            "contribution": 1,
+            "spiritStones": 0,
+            "stats": {
+              "happiness": -2
+            }
+          }
+        },
+        {
+          "text": "Phá cấm chế, xem thứ gì đã thức tỉnh bên trong.",
+          "stat": "daoHeart",
+          "difficulty": 55,
+          "success": {
+            "text": "Bên trong chỉ có một thanh kiếm gãy của tiền bối, kiếm ý vẫn chưa tan. Ngươi bình tâm ngồi xuống lắng nghe.",
+            "contribution": 10,
+            "spiritStones": 0,
+            "stats": {
+              "daoHeart": 2
+            }
+          },
+          "fail": {
+            "text": "Kiếm ý ập tới khiến ngươi choáng váng, phải nằm nghỉ cả tuần.",
+            "contribution": 1,
+            "spiritStones": 0,
+            "stats": {
+              "health": -6,
+              "daoHeart": -1
+            }
+          }
+        }
+      ],
+      "reward": {
+        "text": "{title} {npc} gật đầu hài lòng: tấm bia sẽ được sửa, thanh kiếm gãy được cất vào kho tông. Ngươi được thưởng.",
+        "contribution": 35,
+        "spiritStones": 4,
+        "stats": {
+          "comprehension": 2,
+          "happiness": 3
+        }
+      },
+      "affinity": 10
+    },
+    {
+      "id": "chuoi_do_de_giup_dong_mon",
+      "name": "Giúp đồng môn vượt ải",
+      "minRank": 0,
+      "npcKind": "peer",
+      "intro": "{title} {npc} ngập ngừng nhờ: \"Kỳ khảo hạch tới gần mà đệ vẫn kẹt ở một chỗ. Huynh giúp đệ được không?\"",
+      "abandon": "Hai lần không tiến triển, {title} {npc} đành nói: \"Thôi, cảm ơn huynh, đệ tự lo vậy.\"",
+      "steps": [
+        {
+          "text": "Ngồi nghe {npc} kể mình kẹt ở đâu.",
+          "stat": "charm",
+          "difficulty": 35,
+          "success": {
+            "text": "Nói ra được, mặt {npc} nhẹ hẳn đi một nửa.",
+            "contribution": 3,
+            "spiritStones": 0,
+            "stats": {
+              "charm": 1
+            }
+          },
+          "fail": {
+            "text": "Hai người nói chuyện lạc đề, đến tối vẫn chưa vào việc chính.",
+            "contribution": 1,
+            "spiritStones": 0,
+            "stats": {
+              "happiness": -1
+            }
+          }
+        },
+        {
+          "text": "Cùng luyện đi luyện lại chiêu thức hay chỗ vướng ấy suốt vài tháng.",
+          "stat": "physique",
+          "difficulty": 40,
+          "success": {
+            "text": "Mồ hôi đổ nhiều, nhưng cuối cùng {npc} đã làm được.",
+            "contribution": 5,
+            "spiritStones": 0,
+            "stats": {
+              "physique": 1
+            }
+          },
+          "fail": {
+            "text": "Tập quá sức, ngươi bong gân, {npc} cuống quýt đỡ ngươi về phòng.",
+            "contribution": 1,
+            "spiritStones": 0,
+            "stats": {
+              "health": -5
+            }
+          }
+        },
+        {
+          "text": "Đứng ngoài khảo hạch, nhìn {npc} bước vào.",
+          "stat": "daoHeart",
+          "difficulty": 40,
+          "success": {
+            "text": "{npc} qua ải một cách thong dong, ngoái lại nháy mắt với ngươi.",
+            "contribution": 6,
+            "spiritStones": 0,
+            "stats": {
+              "happiness": 3
+            }
+          },
+          "fail": {
+            "text": "Ngươi lo đến mức quên cả hít thở, {npc} thì qua ải còn ngươi suýt ngất.",
+            "contribution": 2,
+            "spiritStones": 0,
+            "stats": {
+              "health": -2,
+              "happiness": 1
+            }
+          }
+        }
+      ],
+      "reward": {
+        "text": "{title} {npc} qua khảo hạch, nhất định đòi mời ngươi một bữa. Cả sân đồng môn đều biết ngươi là người nghĩa khí.",
+        "contribution": 20,
+        "spiritStones": 2,
+        "stats": {
+          "happiness": 4,
+          "charm": 1
+        }
+      },
+      "affinity": 18
+    }
+  ],
   "missions": [
     {
       "id": "ganh_nuoc", "name": "Gánh nước cho nhà bếp", "minRank": 0,
