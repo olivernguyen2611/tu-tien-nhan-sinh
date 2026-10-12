@@ -4,7 +4,8 @@ import { createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
 import { consumeItem } from '../src/systems/items';
 import { tribulationPreview } from '../src/systems/tribulation';
-import { devGiveAllItems, devGiveAllScrolls, devLearnTechnique } from '../src/systems/dev';
+import { awakenBody } from '../src/systems/cultivation';
+import { devAwakenBody, devGiveAllItems, devGiveAllScrolls, devLearnTechnique } from '../src/systems/dev';
 
 const content = loadContent();
 const base = createLife({ seed: 'treasures' }, content);
@@ -86,5 +87,24 @@ describe('high-tier items and boosted once-per-life items', () => {
     const find = (realm: string) => content.items.filter((i) => i.breakthrough?.realm === realm && i.breakthrough.major).map((i) => i.id);
     expect(find('kim_dan')).toContain('ngung_anh_dan');
     expect(find('nguyen_anh')).toContain('hoa_than_dan');
+  });
+});
+
+describe('thức tỉnh thể chất', () => {
+  it('events awaken real bodies and every body is reachable by dev mode', () => {
+    const ids = content.cultivation.roots.bodies.map((b) => b.id);
+    const awaken = content.events.flatMap((e) => effectsOf(e)).map((fx) => fx.awakenBody).filter(Boolean) as string[];
+    expect(awaken.length).toBeGreaterThanOrEqual(8);
+    for (const b of awaken) expect(ids).toContain(b);
+    for (const id of ids) {
+      const s = devAwakenBody(adult, content, id);
+      expect(s.cult.root?.body).toBe(id);
+    }
+  });
+  it('never gives a body to a rootless mortal', () => {
+    const rootless = { ...adult, cult: { ...adult.cult, root: { grade: 'none', elements: [], body: null } } } as GameState;
+    expect(awakenBody(rootless, content, 'cuu_duong_the').state.cult.root?.body).toBeNull();
+    const rooted = { ...adult, cult: { ...adult.cult, root: { grade: 'don', elements: ['kim'], body: null } } } as GameState;
+    expect(awakenBody(rooted, content, 'ban_thach_thanh_cot').state.cult.root?.body).toBe('ban_thach_thanh_cot');
   });
 });

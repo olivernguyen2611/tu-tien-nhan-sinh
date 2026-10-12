@@ -13,7 +13,7 @@ import type { SaveMeta } from '../../systems/save';
 import {
   DEV_STATS, devAddKarma, devAddLifespan, devAddMoney, devAddStat, devClearHeartDemon, devFillProgress, devFindEvents, devFoundClan, devFoundSect,
   devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect,
-  devMarry, devResetEventHistory, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
+  devAwakenBody, devMarry, devResetEventHistory, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
   devResetItemUse, devSetFingerLevel, devSetFlag, devSetGoldenFinger, devSetRealm, devSkipYears, devStartFight, devTakeChosen, devToggleTrait, devTriggerEvent,
 } from '../../systems/dev';
 
@@ -60,6 +60,7 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
   const [flag, setFlag] = useState('');
   const roots = devRootOptions(content);
   const [rootKey, setRootKey] = useState(roots[0]?.key ?? '');
+  const [bodyId, setBodyId] = useState(content.cultivation.roots.bodies[0]?.id ?? '');
   const [martialStage, setMartialStage] = useState('0');
   const spouse = npcById(state, state.romance.partner);
   const live = state.alive;
@@ -123,6 +124,12 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
               {roots.map((r) => <option key={r.key} value={r.key}>{r.label}</option>)}
             </Pick>
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devSetRoot(state, content, roots.find((r) => r.key === rootKey)!.root))}>Đặt</button>
+          </div>
+          <div class="dev-event">
+            <Pick value={bodyId} onChange={setBodyId} label="Thể chất">
+              {content.cultivation.roots.bodies.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
+            </Pick>
+            <button class="chip-btn" disabled={!live} onClick={() => onChange(devAwakenBody(state, content, bodyId))}>Thức tỉnh</button>
           </div>
           <div class="dev-event">
             <Pick value={martialStage} onChange={setMartialStage} label="Võ đạo">

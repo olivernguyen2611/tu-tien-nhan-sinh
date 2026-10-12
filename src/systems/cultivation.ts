@@ -123,6 +123,41 @@ export function rootDescription(root: SpiritRoot, content: Content): string {
   return grades.find((g) => g.id === root.grade)?.description ?? '';
 }
 
+/** A special body's one-time stat and lifespan gains (its other hooks are read by their systems later). */
+function bodyGains(state: GameState, content: Content, bodyId: string | null) {
+  const stats = { ...state.stats };
+  const aptitudes = { ...state.aptitudes };
+  let lifespan = state.cult.lifespan;
+  const body = bodyId ? content.cultivation.roots.bodies.find((b) => b.id === bodyId) : undefined;
+  for (const e of body?.effects ?? []) {
+    if (e.add === undefined) continue;
+    if (e.hook.startsWith('stat.')) {
+      const k = e.hook.slice(5);
+      if (k in stats) stats[k as keyof typeof stats] = clamp(stats[k as keyof typeof stats] + e.add);
+      else if (k in aptitudes) aptitudes[k as keyof typeof aptitudes] = clamp(aptitudes[k as keyof typeof aptitudes] + e.add);
+    } else if (e.hook === 'lifespanPct') {
+      // Never below next year, so the reveal itself does not kill.
+      lifespan = Math.max(state.character.age + 1, Math.round(lifespan * (1 + e.add)));
+    }
+  }
+  return { stats, aptitudes, lifespan };
+}
+
+/**
+ * Thức tỉnh thể chất: a latent body wakes in someone who already has a usable root (never in a
+ * rootless mortal: roots stay innate). The element root is replaced by the body.
+ */
+export function awakenBody(state: GameState, content: Content, bodyId: string): { state: GameState; text: string } {
+  const root = state.cult.root;
+  const body = content.cultivation.roots.bodies.find((b) => b.id === bodyId);
+  if (!state.alive || !body || !root || root.body || (content.balance.roots.gradeSpeed[root.grade] ?? 0) <= 0) return { state, text: '' };
+  const grade = content.cultivation.roots.grades.find((g) => g.special === 'body')?.id ?? 'the_chat';
+  const gains = bodyGains(state, content, bodyId);
+  const text = content.cultivation.roots.awakenText.replace('{body}', body.name).replace('{description}', body.description);
+  const next: GameState = { ...state, ...gains, cult: { ...state.cult, root: { grade, elements: [], body: bodyId }, lifespan: gains.lifespan }, log: pushLine(state.log, { text, tone: 'rare' }) };
+  return { state: next, text };
+}
+
 /**
  * Reveal the spirit root (once per life). A special body's stat and lifespan
  * hooks apply now; its other hooks are read by their systems later.
@@ -136,21 +171,7 @@ export function revealRoot(state: GameState, content: Content): { state: GameSta
   const floor = traitRootFloor(state, content);
   const root = rollRoot(rng, content, rolls, floor?.grade ?? null);
 
-  const stats = { ...state.stats };
-  const aptitudes = { ...state.aptitudes };
-  let lifespan = state.cult.lifespan;
-  const body = root.body ? content.cultivation.roots.bodies.find((b) => b.id === root.body) : undefined;
-  for (const e of body?.effects ?? []) {
-    if (e.add === undefined) continue;
-    if (e.hook.startsWith('stat.')) {
-      const k = e.hook.slice(5);
-      if (k in stats) stats[k as keyof typeof stats] = clamp(stats[k as keyof typeof stats] + e.add);
-      else if (k in aptitudes) aptitudes[k as keyof typeof aptitudes] = clamp(aptitudes[k as keyof typeof aptitudes] + e.add);
-    } else if (e.hook === 'lifespanPct') {
-      // Never below next year, so the reveal itself does not kill.
-      lifespan = Math.max(state.character.age + 1, Math.round(lifespan * (1 + e.add)));
-    }
-  }
+  const { stats, aptitudes, lifespan } = bodyGains(state, content, root.body);
 
   const speed = content.balance.roots.gradeSpeed[root.grade] ?? 0;
   const text = content.cultivation.roots.revealText

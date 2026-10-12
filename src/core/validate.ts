@@ -459,7 +459,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
         const fx = outcome?.effects;
         const changesStat = (e: typeof fx) => !!e && Object.entries(e).some(([k, v]) => k.startsWith('stat.') && typeof v === 'number' && v !== 0);
         // A fight always costs or gives something; its win and lose outcomes are checked instead.
-        if (fx && !fx.testRoot && !fx.grantRoot && !outcome?.fight && !changesStat(fx)) {
+        if (fx && !fx.testRoot && !fx.grantRoot && !fx.awakenBody && !outcome?.fight && !changesStat(fx)) {
           problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: kết quả không đổi chỉ số nào (mỗi lựa chọn phải ảnh hưởng ít nhất một trong 8 chỉ số)` });
         }
         if (outcome?.fight) problems.push(...checkFight(file, `${where}, lựa chọn ${i + 1}`, outcome.fight, parsedShared, itemIds, changesStat));

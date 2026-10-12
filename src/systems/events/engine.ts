@@ -7,7 +7,7 @@ import { fillTemplate } from '../../core/state';
 import { extremeThemeMultiplier } from '../extremes';
 import type { GameState, LogLine, Tone } from '../../core/types';
 import { meets, readValue } from './conditions';
-import { addProgress, addSpeedBuff, enterFirstRealm, grantRoot, hookActive, hookSum, lifeHooks, reducePeakFails, revealRoot, startCultivating } from '../cultivation';
+import { addProgress, addSpeedBuff, enterFirstRealm, awakenBody, grantRoot, hookActive, hookSum, lifeHooks, reducePeakFails, revealRoot, startCultivating } from '../cultivation';
 import { gainScroll, learnTechnique } from '../technique';
 import { addItems, removeItems } from '../items';
 import { addCraftXp } from '../crafts';
@@ -375,6 +375,11 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
     const granted = grantRoot(next, content);
     next = granted.state;
     if (granted.text) text = `${text} ${granted.text}`;
+  }
+  if (fx.awakenBody) {
+    const awakened = awakenBody(next, content, fx.awakenBody);
+    next = awakened.state;
+    if (awakened.text) text = `${text} ${awakened.text}`;
   }
   // Task 4.6: the next step opens at once (not after a fight; that goes in win/lose).
   if (fx.chain && next.alive && findEvent(content, fx.chain)) next = { ...next, events: { ...next.events, pending: fx.chain } };

@@ -11,7 +11,7 @@ import { addItems } from './items';
 import { gainScroll, learnTechnique } from './technique';
 import { createNpc, npcById } from './npcs';
 import { applyRomance, romanceBlocked } from './romance';
-import { enterRealm, rootName, startCultivating } from './cultivation';
+import { awakenBody, enterRealm, rootName, startCultivating } from './cultivation';
 import { checkDeath } from './time';
 import { gainGoldenFinger, loseGoldenFinger, fingerDef } from './goldenFinger';
 import { takeChosen } from './chosen';
@@ -346,6 +346,15 @@ export function devRootOptions(content: Content): { key: string; label: string; 
 export function devSetRoot(state: GameState, content: Content, root: SpiritRoot): GameState {
   if (!state.alive) return state;
   return devLog({ ...state, cult: { ...state.cult, root } }, `linh căn → ${rootName(root, content)}`);
+}
+
+/** Awaken a special body at once (its one-time gains apply), even for a rootless or already-bodied character. */
+export function devAwakenBody(state: GameState, content: Content, bodyId: string): GameState {
+  if (!state.alive || !content.cultivation.roots.bodies.some((b) => b.id === bodyId)) return state;
+  const base: GameState = state.cult.root && !state.cult.root.body && (content.balance.roots.gradeSpeed[state.cult.root.grade] ?? 0) > 0
+    ? state
+    : { ...state, cult: { ...state.cult, root: { grade: 'bien_di', elements: [content.cultivation.roots.elements[0].id], body: null } } };
+  return devLog(awakenBody(base, content, bodyId).state, `thức tỉnh thể chất → ${bodyId}`);
 }
 
 /** Wed a new adult at once (affinity 80), cultivating at the player's realm when the player does. */

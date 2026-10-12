@@ -197,6 +197,8 @@ export const EffectsSchema = z
     learnTechnique: id.optional(),
     /** Thiên địa kỳ vật (task 2.11): a rootless mortal gains a root (balance.kyVat). */
     grantRoot: z.boolean().optional(),
+    /** Thức tỉnh thể chất tiềm ẩn: a cultivator who already has a usable root awakens this special body (id in roots.json). */
+    awakenBody: id.optional(),
     /** Task 3.4: meet someone new; they become this event's NPC ({npc} in texts). affinity is added to a stranger's 50. */
     meetNpc: z
       .object({
@@ -269,7 +271,7 @@ export const EffectsSchema = z
   })
   .catchall(z.number())
   .superRefine((e, ctx) => {
-    const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
+    const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
       'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect'];
     for (const key of Object.keys(e)) {
@@ -1566,6 +1568,8 @@ export const RootsFileSchema = z
     revealText: z.string().min(1),
     /** Playtest 2026-10-12: a cultivation khí vận guaranteed the root. {trait} = its name. */
     traitGuaranteeText: z.string().min(1),
+    /** Thức tỉnh thể chất tiềm ẩn ({body}, {description}). */
+    awakenText: z.string().min(1),
     elements: z
       .array(
         z

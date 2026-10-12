@@ -1,5 +1,11 @@
 # Nhật ký thay đổi
 
+
+## Thức tỉnh thể chất đặc biệt (2026-10-12)
+- Hiệu ứng sự kiện mới `awakenBody`: người đã có linh căn dùng được (chưa có thể chất) thức tỉnh một thể chất tiềm ẩn, thay linh căn ngũ hành bằng thể chất và nhận chỉ số một lần. Người không linh căn không bao giờ nhận được (giữ luật linh căn trời sinh).
+- 8 kỳ ngộ mới (`body-awakening.json`) cho Cửu Dương, Thái Âm, Kim Cương, Bàn Thạch, Vạn Độc, U Minh, Tiên Thiên Đạo Cốt, Thiên Sinh Ma Thể; mỗi kỳ ngộ có điều kiện chỉ số riêng, hao sức khỏe, có thể từ chối. Lưu Ly, Hỗn Độn, Thiên Tuyệt Mạch vẫn chỉ trời sinh.
+- Developer mode: chọn thể chất + nút "Thức tỉnh" (áp dụng cả khi không linh căn).
+
 ## [Chưa phát hành]
 
 ### Vá lỗ hổng danh mục công pháp & vật phẩm, Developer mode lấy được mọi thứ (2026-10-12)
