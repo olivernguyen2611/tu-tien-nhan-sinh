@@ -229,7 +229,11 @@ export function devSetFingerLevel(state: GameState, content: Content, level: num
 /** A khí vận chi tử of this template becomes a disciple now. */
 export function devTakeChosen(state: GameState, content: Content, templateId: string): GameState {
   if (!state.alive) return state;
-  const next = takeChosen(state, content, templateId);
+  // takeChosen takes in one at a time; a dev test wants a new one on demand, so the old one is let go
+  // (still an acquaintance, no longer the chosen one nor a disciple).
+  const freed: GameState = { ...state, npcs: state.npcs.map((n) => (n.chosen ? { ...n, chosen: undefined, disciple: undefined } : n)) };
+  const next = takeChosen(freed, content, templateId);
+  if (next === freed) return state;
   return next === state ? state : devLog(next, `nhận khí vận chi tử (${templateId})`);
 }
 
