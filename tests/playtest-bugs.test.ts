@@ -14,7 +14,7 @@ describe('playtest 2026-10-12 bugs', () => {
 
   it('a cultivator is not mourned as a mortal', () => {
     const b = createLife({ seed: 'b9' }, content);
-    const dead = checkDeath({ ...b, cult: { ...b.cult, realm: 'truc_co', lifespan: 0 }, karma: 0 }, content, 'old_age');
+    const dead = checkDeath({ ...b, cult: { ...b.cult, realm: 'truc_co', lifespan: 0 } }, content, 'old_age');
     expect(content.lifeTexts.epitaph.plainCultivator).toContain(dead.death!.epitaph);
   });
 });
