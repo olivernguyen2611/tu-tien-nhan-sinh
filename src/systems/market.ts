@@ -5,6 +5,7 @@ import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { Item, Market } from '../core/schemas';
 import type { GameState, LogLine, Tone } from '../core/types';
+import { hookSum } from './cultivation';
 import { addItems, itemById, removeItems } from './items';
 
 export type Currency = 'silver' | 'spiritStones';
@@ -33,7 +34,9 @@ const basePrice = (item: Item, currency: Currency) => item.price?.[currency];
 export function marketOffers(state: GameState, content: Content, marketId: string): Offer[] {
   const m = content.markets.find((x) => x.id === marketId);
   if (!m) return [];
-  const mul = m.priceMul * bargainMul(state, marketId);
+  // Task 3.10: priceDiscount hooks (Khéo Mồm, Mắt Tinh) make buying cheaper, up to balance.market.maxDiscount.
+  const discount = Math.max(0, Math.min(content.balance.market.maxDiscount, hookSum(state, content, 'priceDiscount')));
+  const mul = m.priceMul * bargainMul(state, marketId) * (1 - discount);
   return content.items
     .filter((i) => i.forSale && m.kinds.includes(i.kind) && basePrice(i, m.currency) !== undefined)
     .map((item) => ({ item, price: Math.max(1, Math.round(basePrice(item, m.currency)! * mul)) }));

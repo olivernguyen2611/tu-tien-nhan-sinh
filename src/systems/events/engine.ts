@@ -7,7 +7,7 @@ import { fillTemplate } from '../../core/state';
 import { extremeThemeMultiplier } from '../extremes';
 import type { GameState, LogLine, Tone } from '../../core/types';
 import { meets, readValue } from './conditions';
-import { addProgress, addSpeedBuff, enterFirstRealm, grantRoot, hookActive, lifeHooks, reducePeakFails, revealRoot, startCultivating } from '../cultivation';
+import { addProgress, addSpeedBuff, enterFirstRealm, grantRoot, hookActive, hookSum, lifeHooks, reducePeakFails, revealRoot, startCultivating } from '../cultivation';
 import { gainScroll, learnTechnique } from '../technique';
 import { addItems, removeItems } from '../items';
 import { addCraftXp } from '../crafts';
@@ -286,7 +286,11 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.pathAffinity) next = addPathAffinity(next, fx.pathAffinity);
   // Task 3.9.
   if (fx.lifespanYears) next = { ...next, cult: { ...next.cult, lifespan: Math.max(next.character.age + 1, next.cult.lifespan + fx.lifespanYears) } };
-  if (fx.heartDemon) next = { ...next, cult: { ...next.cult, heartDemon: Math.max(0, next.cult.heartDemon + fx.heartDemon) } };
+  if (fx.heartDemon) {
+    // Task 3.10: heartDemonResist shrinks new tâm ma (a negative resist, Ma Tâm Chủng, makes it grow).
+    const gain = fx.heartDemon > 0 ? Math.max(0, Math.round(fx.heartDemon * (1 - hookSum(next, content, 'heartDemonResist')))) : fx.heartDemon;
+    next = { ...next, cult: { ...next.cult, heartDemon: Math.max(0, next.cult.heartDemon + gain) } };
+  }
   if (fx.relativeDies) {
     const roles: string[] = fx.relativeDies === 'parent' ? ['father', 'mother'] : [fx.relativeDies];
     const parent = next.family.filter((r) => r.alive && roles.includes(r.role)).sort((a, b) => b.age - a.age)[0];
