@@ -8,6 +8,7 @@ import { romanceMeets } from '../romance';
 import { currentRegion } from '../regions';
 import { chosenMeets } from '../chosen';
 import { goldenFingerMeets } from '../goldenFinger';
+import { pastSectMeets } from '../pastSect';
 
 type Conditions = Partial<GameEvent['conditions']>;
 
@@ -83,6 +84,7 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
   if (c.traitsAll?.some((t) => !state.traits.includes(t))) return false;
   if (c.traitsNone?.some((t) => state.traits.includes(t))) return false;
   if (c.goldenFinger && !goldenFingerMeets(state, c.goldenFinger)) return false;
+  if (c.pastSect && !pastSectMeets(state, c.pastSect)) return false;
   if (c.npc && !npcMeets(state, c.npc, content)) return false;
   if (c.romance && (!content || !romanceMeets(state, c.romance, content))) return false;
   if (c.chosen && !chosenMeets(state, c.chosen)) return false;

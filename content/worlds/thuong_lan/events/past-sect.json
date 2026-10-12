@@ -1,0 +1,168 @@
+[
+  {
+    "id": "tm_cu_nghe_ten",
+    "category": "fortune",
+    "title": "Cái tên quen tai",
+    "text": "Người kể chuyện ở quán trà nhắc tới {pastSect}, một tông môn {pastFounder} lập ra năm xưa. {name} nghe mà ngực nhói lên, như ai gọi tên mình từ rất xa.",
+    "conditions": { "age": { "min": 8 }, "pastSect": { "status": ["unknown"] } },
+    "weight": 0.6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Hỏi cho ra đường tới sơn môn",
+        "result": { "text": "Lão kể chuyện vẽ cho ngươi một tấm bản đồ nguệch ngoạc, lấy của ngươi ba lượng tiền trà. Đêm ấy ngươi mơ thấy một ngọn núi lạ mà quen.", "effects": { "silver": -3, "stat.comprehension": 1, "stat.luck": 2 } }
+      },
+      {
+        "text": "Chuyện xưa tích cũ, nghe rồi bỏ",
+        "result": { "text": "Ngươi uống cạn chén trà rồi đi. Cái nhói trong ngực mấy hôm sau mới hết.", "effects": { "stat.happiness": -2, "stat.daoHeart": 1 } }
+      }
+    ]
+  },
+  {
+    "id": "tm_cu_son_mon",
+    "category": "fortune",
+    "title": "Sơn môn đời trước",
+    "text": "Lạc bước qua một dãy núi, {name} gặp tấm bia đá đề ba chữ {pastSect}. Dưới bia khắc tên tổ sư khai sơn: {pastFounder}. Tay ngươi tự run lên lúc nào không hay.",
+    "tags": ["rare"],
+    "conditions": { "age": { "min": 14 }, "pastSect": { "status": ["unknown"] } },
+    "weight": 0.4,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Gõ cửa xin vào thăm",
+        "check": { "stat": "stat.luck", "difficulty": 45 },
+        "success": { "text": "Một trưởng lão râu tóc bạc trắng ra đón, nhìn ngươi rất lâu rồi lặng lẽ dẫn vào Tàng Kinh Các: \"Tổ sư dặn, ai tới mà nhận ra tấm bia thì cho đọc ba ngày.\"", "effects": { "pastSect": "met", "cultProgress": 25, "stat.comprehension": 3, "stat.happiness": 5 } },
+        "fail": { "text": "Đệ tử gác cổng chê ngươi lai lịch không rõ, đóng sập cửa. Ngươi đứng ngoài nghe tiếng chuông chiều, lòng vừa tức vừa buồn cười.", "effects": { "pastSect": "met", "stat.happiness": -3, "stat.daoHeart": 2 } }
+      },
+      {
+        "text": "Nói thẳng: \"Ta là {pastFounder} chuyển thế.\"",
+        "check": { "stat": "stat.charm", "difficulty": 60 },
+        "success": { "text": "Cả sơn môn xôn xao. Người không tin vẫn nhiều, nhưng vị trưởng lão già nhất quỳ xuống trước ngươi mà khóc như đứa trẻ.", "effects": { "pastSect": "met", "reputation": { "chinh": 3 }, "stat.happiness": 8, "spiritStones": 20 } },
+        "fail": { "text": "Họ cười lăn, rồi đuổi ngươi xuống núi kèm lời dặn: \"Tháng trước có ba người tự xưng tổ sư rồi.\"", "effects": { "pastSect": "met", "stat.charm": -2, "stat.happiness": -5 } }
+      },
+      {
+        "text": "Đứng nhìn một lúc rồi đi",
+        "result": { "text": "Có những cánh cửa không cần mở lần thứ hai. Ngươi xuống núi, thấy lòng nhẹ hơn.", "effects": { "pastSect": "spurned", "stat.daoHeart": 4, "heartDemon": -1 } }
+      }
+    ]
+  },
+  {
+    "id": "tm_cu_suy_tan",
+    "category": "fortune",
+    "title": "Tông môn tàn lụi",
+    "text": "{pastSect} bây giờ chỉ còn dăm ba ông lão quét lá. Mái điện dột, bảng hiệu rêu phong, chẳng ai nhớ {pastFounder} từng một thời lẫy lừng.",
+    "conditions": { "age": { "min": 16 }, "pastSect": { "status": ["unknown"] } },
+    "weight": 0.3,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Góp bạc sửa mái điện",
+        "requires": { "stats": [{ "stat": "silver", "gte": 50 }] },
+        "result": { "text": "Mái mới lợp xong, một ông lão đem ra chiếc hộp gỗ: \"Tổ sư dặn để lại cho người sửa mái.\" Bên trong là một viên đan đã cũ.", "effects": { "pastSect": "met", "silver": -50, "karma": 5, "addItems": ["truc_co_dan"], "stat.happiness": 4 } }
+      },
+      {
+        "text": "Thắp nén nhang cho tổ sư",
+        "result": { "text": "Khói nhang bay thẳng lên, không chút lay động. Đám ông lão nhìn nhau, không ai nói gì.", "effects": { "pastSect": "met", "stat.daoHeart": 2, "karma": 1 } }
+      },
+      {
+        "text": "Thịnh suy có số, quay lưng đi",
+        "result": { "text": "Ngươi đi. Sau lưng, tiếng chổi tre quét lá vẫn đều đều như đếm thời gian.", "effects": { "pastSect": "spurned", "stat.happiness": -3 } }
+      }
+    ]
+  },
+  {
+    "id": "tm_cu_mo_to_su",
+    "category": "fortune",
+    "title": "Viếng mộ chính mình",
+    "text": "Sau núi {pastSect} có một ngôi mộ đá, bia đề: \"Tổ sư {pastFounder} chi mộ\". {name} đứng trước mộ của chính mình kiếp trước.",
+    "conditions": { "age": { "min": 16 }, "pastSect": { "status": ["met", "claimed"] } },
+    "weight": 0.5,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Ngồi tĩnh tọa trước mộ",
+        "result": { "text": "Gió núi thổi qua, ngươi chợt nhớ lại vài chiêu thức mình chưa từng học kiếp này.", "effects": { "cultProgress": 20, "stat.comprehension": 2, "heartDemon": -1 } }
+      },
+      {
+        "text": "Đào lên xem kiếp trước chôn gì theo",
+        "check": { "stat": "stat.luck", "difficulty": 50 },
+        "success": { "text": "Trong quan tài có một túi trữ vật. Kiếp trước ngươi quả nhiên biết lo cho kiếp sau.", "effects": { "spiritStones": 60, "addItems": ["tui_tru_vat"], "karma": -2, "stat.happiness": 6 } },
+        "fail": { "text": "Quan tài trống trơn, chỉ có mảnh giấy: \"Biết ngay mà.\" Đệ tử tuần núi bắt gặp, ngươi chạy mất dép.", "effects": { "stat.happiness": -4, "reputation": { "chinh": -2 }, "karma": -2 } }
+      },
+      {
+        "text": "Cúi đầu ba lạy rồi đi",
+        "result": { "text": "Lạy người xưa, cũng là lạy chính mình. Lòng ngươi tĩnh lại như mặt hồ.", "effects": { "stat.daoHeart": 3, "stat.happiness": 3 } }
+      }
+    ]
+  },
+  {
+    "id": "tm_cu_de_tu_cu",
+    "category": "fortune",
+    "title": "Đồ đệ năm xưa",
+    "text": "Một trưởng lão {pastSect} nhìn {name} luyện kiếm, bỗng sững người: đường kiếm ấy là do sư phụ {pastFounder} dạy riêng cho ông năm nào.",
+    "conditions": { "age": { "min": 14 }, "realm": { "min": "luyen_khi" }, "pastSect": { "status": ["met"] } },
+    "weight": 0.5,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Gọi ông bằng tên tục ngày nhỏ",
+        "result": {
+          "text": "Ông lão quỳ sụp, nước mắt chảy dài. Từ đó, {npc} lúc nào cũng âm thầm che chở cho ngươi.",
+          "effects": { "meetNpc": { "role": "đồ đệ kiếp trước", "realm": "truc_co", "adult": true, "affinity": 40, "favor": 2 }, "stat.happiness": 6, "cultProgress": 15 }
+        }
+      },
+      {
+        "text": "Giả vờ không hiểu",
+        "result": { "text": "Ông lão lắc đầu cười khổ, bảo chắc mình già lẩn thẩn. Nhưng hôm sau ngươi nhận được một bình đan không rõ ai gửi.", "effects": { "addItems": ["tu_khi_dan"], "stat.daoHeart": 1 } }
+      }
+    ]
+  },
+  {
+    "id": "tm_cu_nguy_nan",
+    "category": "fortune",
+    "title": "Tông cũ gặp nạn",
+    "text": "Tin dữ truyền tới: {pastSect} bị cường địch vây núi, đại trận sắp vỡ. Đệ tử của tông chạy khắp nơi cầu viện, có người còn nhớ tới {name}.",
+    "tags": ["violence"],
+    "conditions": { "age": { "min": 18 }, "realm": { "min": "truc_co" }, "pastSect": { "status": ["met"] } },
+    "weight": 0.4,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Lên núi giữ trận",
+        "result": {
+          "text": "Ngươi chen vào giữa hai phe, đối diện kẻ cầm đầu.",
+          "effects": {},
+          "fight": {
+            "foe": { "name": "Kẻ cầm đầu vây núi", "realm": "same", "intent": "kill" },
+            "win": { "text": "Kẻ địch tháo chạy. Cả {pastSect} đứng trên tường thành hô vang tên ngươi.", "effects": { "reputation": { "chinh": 5 }, "spiritStones": 80, "karma": 4, "stat.happiness": 8 } },
+            "lose": { "text": "Ngươi bị đánh bật xuống núi, may còn giữ được mạng. Tông cũ mất nửa sơn môn.", "effects": { "stat.health": -15, "stat.happiness": -6 } }
+          }
+        }
+      },
+      {
+        "text": "Kiếp này là kiếp này, không dính vào",
+        "result": { "text": "Ngươi đóng cửa không ra. Ba tháng sau nghe tin {pastSect} mất đi nửa số đệ tử; đêm nào cũng mơ thấy tiếng chuông vỡ.", "effects": { "pastSect": "spurned", "heartDemon": 2, "karma": -3, "stat.happiness": -5 } }
+      }
+    ]
+  },
+  {
+    "id": "tm_cu_ke_vi",
+    "category": "fortune",
+    "title": "Ghế chưởng môn để trống",
+    "text": "Trưởng lão {pastSect} cùng nhau tới tìm {name}: \"Ghế chưởng môn để trống từ ngày tổ sư {pastFounder} quy tiên. Nay người đã trở về, xin người ngồi lại.\"",
+    "tags": ["rare"],
+    "conditions": { "realm": { "min": "kim_dan" }, "ownSect": { "has": false }, "pastSect": { "status": ["met"] } },
+    "weight": 1,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận lại sơn môn",
+        "result": { "text": "Ngươi nhận ấn chưởng môn từ tay trưởng lão già nhất.", "effects": { "pastSect": "claimed", "stat.happiness": 10, "reputation": { "chinh": 3 } } }
+      },
+      {
+        "text": "Người đời trước có đường của người đời trước",
+        "result": { "text": "Ngươi để lại một bộ tâm pháp chép tay rồi từ biệt. Các trưởng lão cúi đầu tiễn ngươi tới chân núi.", "effects": { "pastSect": "spurned", "stat.daoHeart": 5, "karma": 3 } }
+      }
+    ]
+  }
+]

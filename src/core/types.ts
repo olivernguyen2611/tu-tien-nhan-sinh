@@ -82,6 +82,11 @@ export interface GameState {
     report?: { age: number; text: string; decisions: string[]; done: string[] } | null;
   } | null;
   /**
+   * Task 5b.7: the sect a past life ran, still standing in this world ({pastSect}, {pastFounder}):
+   * members left, and how far this life went with it.
+   */
+  pastSect: PastSect | null;
+  /**
    * Bế quan (task 4.1): the age the door opens again, and when it closed; null when not in seclusion.
    * fixed: set by an event, so reaching the peak does not end it early (the point is to sit out the years).
    */
@@ -310,3 +315,7 @@ export interface Npc {
   /** Task 5.5: a khí vận chi tử (template id) and the age of the player when they came. */
   chosen?: { template: string; since: number; role?: 'protect' | 'exploit' | 'ignore' };
 }
+
+/** Task 5b.7: a past life's sect as the save meta keeps it (lives: how many lives ago its master died). */
+export interface PastSectRecord { world: string; name: string; lineage: string; founder: string; members: number; lives: number }
+export interface PastSect { name: string; lineage: string; founder: string; members: number; status: 'unknown' | 'met' | 'claimed' | 'spurned' }

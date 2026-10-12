@@ -441,6 +441,13 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       problems.push({ file, level: 'error', message: `${where}: nhắc tới {deceased} nhưng thiếu conditions.family.deadAny` });
     }
 
+    // Task 5b.7: {pastSect}, {pastFounder} and the pastSect effect need a past sect known to this life.
+    const pastNeeded = /\{past(Sect|Founder)\}/.test(`${event.title} ${event.text} ${event.choices.map((c) => [c.text, c.result?.text, c.success?.text, c.fail?.text, c.result?.fight?.win.text, c.result?.fight?.lose.text].join(' ')).join(' ')}`)
+      || event.choices.some((c) => [c.result, c.success, c.fail, c.result?.fight?.win, c.result?.fight?.lose].some((o) => o?.effects.pastSect));
+    if (pastNeeded && event.conditions.pastSect?.has !== true && !event.conditions.pastSect?.status) {
+      problems.push({ file, level: 'error', message: `${where}: nhắc tới tông môn đời trước nhưng thiếu conditions.pastSect (has = true hoặc status)` });
+    }
+
     event.choices.forEach((choice, i) => {
       const texts = [choice.text, choice.result?.text, choice.success?.text, choice.fail?.text].filter(Boolean).join(' ');
       for (const p of needsParent(texts, choice.requires?.flagsNone ?? [])) {

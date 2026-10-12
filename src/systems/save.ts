@@ -2,7 +2,7 @@
 // as .json files, and `migrate` so old saves keep working after updates.
 import { z } from 'zod';
 import { version as GAME_VERSION } from '../../package.json';
-import type { GameState, LogYear } from '../core/types';
+import type { GameState, LogYear, PastSectRecord } from '../core/types';
 import { EMPTY_CODEX, mergeCodex, type Codex } from './codex';
 
 export const SAVE_VERSION = 1;
@@ -37,6 +37,8 @@ export interface SaveMeta {
   achievements: Record<string, { name: string; life: number }>;
   /** Task 5b.6: thử thách tuần per week: challenge id, tries, best score, goal ever met. */
   weekly: Record<string, { id: string; tries: number; best: number; done: boolean }>;
+  /** Task 5b.7: the sect a past life ran, for later lives to meet again. */
+  pastSect: PastSectRecord | null;
 }
 /** Seeds remembered in `credited`; older ones are dropped. */
 const MAX_CREDITED = 30;
@@ -135,6 +137,7 @@ export function migrate(save: SaveFile): SaveFile {
   if (life.checkpoints === undefined) life = { ...life, checkpoints: { age6: null, realm: null } };
   // Task 5.1: no sect of one's own.
   if (life.ownSect === undefined) life = { ...life, ownSect: null };
+  if (life.pastSect === undefined) life = { ...life, pastSect: null };
   // Task 4.2: đan văn.
   if (life.cult.corePattern === undefined) life = { ...life, cult: { ...life.cult, corePattern: null } };
   // Task 4.8: at home.
@@ -309,9 +312,10 @@ export function readMeta(store: KeyValueStore): SaveMeta {
       codex: readCodex(m.codex),
       achievements: m.achievements && typeof m.achievements === 'object' ? m.achievements : {},
       weekly: m.weekly && typeof m.weekly === 'object' ? m.weekly : {},
+      pastSect: m.pastSect && typeof m.pastSect.name === 'string' ? m.pastSect : null,
     };
   } catch {
-    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {}, fingerPity: 0, codex: EMPTY_CODEX, achievements: {}, weekly: {} };
+    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {}, fingerPity: 0, codex: EMPTY_CODEX, achievements: {}, weekly: {}, pastSect: null };
   }
 }
 
@@ -389,4 +393,9 @@ export function recordChallenge(store: KeyValueStore, week: string, id: string, 
   // Keep the last 12 weeks.
   const kept = Object.entries(meta.weekly).filter(([k]) => k !== week).sort(([a], [b]) => a.localeCompare(b)).slice(-11);
   return writeMeta(store, { ...meta, weekly: Object.fromEntries([...kept, [week, entry]]) });
+}
+
+/** Task 5b.7: keep the sect a past life ran (pastSect.nextPastSectRecord decides what), once per life. */
+export function recordPastSect(store: KeyValueStore, record: PastSectRecord | null): SaveMeta {
+  return writeMeta(store, { ...readMeta(store), pastSect: record });
 }
