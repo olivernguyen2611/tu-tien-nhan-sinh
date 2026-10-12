@@ -10,7 +10,7 @@ import { Rng } from '../core/rng';
 import type { CorePattern } from '../core/schemas';
 import type { GameState, LogLine } from '../core/types';
 import { applyGainHooks, majorFailure, majorSuccess, type BreakthroughResult } from './cultivation';
-import { currentTechnique } from './technique';
+import { currentTechnique, rootAffinities } from './technique';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -67,7 +67,7 @@ export function strandEffect(state: GameState, content: Content, element: string
   const beats = (a: string, b: string) => elements.find((e) => e.id === a)?.beats.includes(b) ?? false;
   const view = { element, name: elementName(content, element) };
   if (prev && (beats(prev, element) || beats(element, prev))) return { ...view, purity: cfg.clashPurity, crack: true, kind: 'clash' };
-  const rooted = state.cult.root?.elements.includes(element) ?? false;
+  const rooted = rootAffinities(state.cult.root, content).includes(element);
   const flows = !!prev && cfg.generates[prev] === element;
   const tech = currentTechnique(state, content);
   const techMatch = !!tech && Array.isArray(tech.elements) && tech.elements.includes(element);

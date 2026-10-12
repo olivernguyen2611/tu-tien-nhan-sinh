@@ -338,8 +338,11 @@ export function inheritRoot(state: GameState, content: Content, partner: Npc | n
   const rooted = Number(!!mine && (content.balance.roots.gradeSpeed[mine.grade] ?? 0) > 0) + Number(!!partner?.root);
   if (mine?.body && rng.chance(b.bodyInheritChance)) return { ...mine };
   if (rooted > 0 && rng.chance(b.mutationChance)) {
+    // A variant fuses two basic elements: one of the player's own leans the mutation its way.
     const variants = content.cultivation.roots.elements.filter((e) => e.variant);
-    if (variants.length > 0) return { grade: 'bien_di', elements: [rng.pick(variants).id], body: null };
+    const near = variants.filter((v) => (v.components ?? []).some((c) => mine?.elements.includes(c)));
+    const pool = near.length > 0 ? near : variants;
+    if (pool.length > 0) return { grade: 'bien_di', elements: [rng.pick(pool).id], body: null };
   }
   // Gia quy Trọng tu luyện adds rolls (task 5.4).
   const root = rollRoot(rng, content, 1 + rooted * b.rootRollsPerParent + clanRootRolls(state, content));

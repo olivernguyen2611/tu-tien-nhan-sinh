@@ -6,6 +6,7 @@ import { Rng } from '../core/rng';
 import type { EffectHook, Sect } from '../core/schemas';
 import type { GameState, LogLine } from '../core/types';
 import { makeName } from './names';
+import { rootAffinities } from './technique';
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
 
@@ -60,7 +61,7 @@ export function sectEligibility(state: GameState, content: Content, sectId: stri
   if (missing) return missing;
   if (sect.requires.oneOf) {
     const ok = sect.requires.oneOf.some((o) =>
-      (!o.rootElements || root.elements.some((e) => o.rootElements!.includes(e))) && !statsShort(state, o.minStats));
+      (!o.rootElements || rootAffinities(root, content).some((e) => o.rootElements!.includes(e))) && !statsShort(state, o.minStats));
     if (!ok) return 'tư chất không hợp yêu cầu nhập môn';
   }
   return null;

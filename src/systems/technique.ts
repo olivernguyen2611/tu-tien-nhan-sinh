@@ -17,6 +17,17 @@ export function currentTechnique(state: GameState, content: Content): Technique 
   return techniqueById(content, state.cult.technique);
 }
 
+/**
+ * Playtest 2026-10-12: every element the root fits: its own, plus the two basic elements each
+ * variant is fused from (Lôi = Kim + Hỏa…).
+ */
+export function rootAffinities(root: SpiritRoot | null | undefined, content: Content): string[] {
+  if (!root) return [];
+  const out = new Set(root.elements);
+  for (const id of root.elements) for (const c of content.cultivation.roots.elements.find((e) => e.id === id)?.components ?? []) out.add(c);
+  return [...out];
+}
+
 /** Does the technique fit this root? A mismatch slows cultivation (×mismatchMul). */
 export function techniqueMatches(tech: Technique, root: SpiritRoot | null, content: Content): boolean {
   if (!root || tech.elements === 'root' || tech.elements === 'any' || tech.elements === 'none') return true;
@@ -24,8 +35,10 @@ export function techniqueMatches(tech: Technique, root: SpiritRoot | null, conte
   if ((content.balance.roots.gradeSpeed[root.grade] ?? 0) <= 0) return true;
   if (root.body) return !!content.cultivation.roots.bodies.find((b) => b.id === root.body)?.anyTechnique;
   const basic = new Set(content.cultivation.roots.elements.filter((e) => !e.variant).map((e) => e.id));
-  if (tech.elements === 'five') return root.elements.some((e) => basic.has(e));
-  return root.elements.some((e) => (tech.elements as string[]).includes(e));
+  // A variant root also fits its two basic elements (playtest 2026-10-12).
+  const fits = rootAffinities(root, content);
+  if (tech.elements === 'five') return fits.some((e) => basic.has(e));
+  return fits.some((e) => (tech.elements as string[]).includes(e));
 }
 
 /** Grade × element match × lineage (PLAN G.1); 1 without a technique. */

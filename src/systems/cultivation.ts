@@ -103,7 +103,12 @@ export function rootName(root: SpiritRoot, content: Content): string {
   const grade = grades.find((g) => g.id === root.grade)?.name ?? root.grade;
   // Ngũ linh căn already says "all five".
   if (root.elements.length === 0 || root.elements.length >= 5) return grade;
-  const names = root.elements.map((id) => elements.find((e) => e.id === id)?.name ?? id);
+  const name = (id: string) => elements.find((e) => e.id === id)?.name ?? id;
+  // A variant shows what it is fused from: "Biến dị linh căn (Lôi: Kim + Hỏa)".
+  const names = root.elements.map((id) => {
+    const parts = elements.find((e) => e.id === id)?.components;
+    return parts?.length ? `${name(id)}: ${parts.map(name).join(' + ')}` : name(id);
+  });
   return `${grade} (${names.join(', ')})`;
 }
 
