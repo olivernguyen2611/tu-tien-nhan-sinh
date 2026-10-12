@@ -12,6 +12,7 @@ import { currentRegion, regionQi } from './regions';
 import { currentTechnique, learnTechnique, techniqueCapReason, techniqueMul } from './technique';
 import { sectHooks } from './sect';
 import { ownSectHooks } from './ownSect';
+import { chosenHooks } from './chosen';
 import { offerFate } from './fate';
 import { breakthroughItem, carriedHooks, removeItems } from './items';
 import { pathSpeedBonus } from './paths';
@@ -156,6 +157,8 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
     ...(content.nascentSouls.forms.find((f) => f.id === state.cult.soulForm)?.effects ?? []),
     // Đại vực (task 4.8).
     ...(currentRegion(state, content)?.effects ?? []),
+    // The master's role towards a khí vận chi tử (task 5.6).
+    ...chosenHooks(state, content),
   ];
 }
 

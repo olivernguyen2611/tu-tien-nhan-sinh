@@ -4,7 +4,7 @@
 // cultivate faster, break through more easily and never die by mishap.
 // Numbers in balance.chosen, templates in chosen-ones.json.
 import type { Content } from '../core/content';
-import type { GameEvent } from '../core/schemas';
+import type { EffectHook, GameEvent } from '../core/schemas';
 import type { GameState, LogLine, Npc } from '../core/types';
 import { Rng } from '../core/rng';
 import { createNpc } from './npcs';
@@ -18,17 +18,18 @@ export function chosenDisciple(state: GameState): Npc | undefined {
 export function chosenMeets(state: GameState, c: NonNullable<GameEvent['conditions']['chosen']>): boolean {
   const n = chosenDisciple(state);
   if (c.has !== undefined && !!n !== c.has) return false;
-  if (c.template === undefined && c.minYears === undefined) return true;
+  if (c.template === undefined && c.minYears === undefined && c.role === undefined) return true;
   if (!n?.alive) return false;
   if (c.template && !c.template.includes(n.chosen!.template)) return false;
   if (c.minYears !== undefined && state.character.age - n.chosen!.since < c.minYears) return false;
+  if (c.role && !c.role.includes(n.chosen!.role ?? 'none')) return false;
   return true;
 }
 
 /** An event about the chosen one speaks of them as {npc}. */
 export function isChosenEvent(e: GameEvent): boolean {
   const c = e.conditions.chosen;
-  return !!c && (c.has === true || c.template !== undefined || c.minYears !== undefined);
+  return !!c && (c.has === true || c.template !== undefined || c.minYears !== undefined || c.role !== undefined);
 }
 
 /** Take in a khí vận chi tử of this template (once a life; destiny ignores the disciple limit). */
@@ -51,4 +52,29 @@ export function takeChosen(state: GameState, content: Content, templateId: strin
   const last = log[log.length - 1];
   log[log.length - 1] = { ...last, lines: [...last.lines, line] };
   return { ...met.state, npcs, log, events: { ...met.state.events, npc: met.id } };
+}
+
+export type ChosenRole = 'protect' | 'exploit' | 'ignore';
+
+/**
+ * Task 5.6: the master picks a role once. Hộ đạo keeps them close; Lợi dụng takes their fortune (the
+ * event gives the spoils); Mặc kệ lets them walk their own road (no longer a disciple, the story goes on).
+ */
+export function setChosenRole(state: GameState, content: Content, role: ChosenRole): GameState {
+  const n = chosenDisciple(state);
+  if (!n?.alive || n.chosen!.role) return state;
+  const npcs = state.npcs.map((x) => (x.id === n.id
+    ? { ...x, chosen: { ...x.chosen!, role }, disciple: role === 'ignore' ? undefined : x.disciple }
+    : x));
+  const line: LogLine = { text: content.chosenOnes.roles[role].text.replaceAll('{npc}', n.name), tone: role === 'exploit' ? 'bad' : 'rare' };
+  const log = state.log.slice();
+  const last = log[log.length - 1];
+  log[log.length - 1] = { ...last, lines: [...last.lines, line] };
+  return { ...state, npcs, log };
+}
+
+/** Hooks the master carries from their role while the chosen one lives (khí vận lan sang, thiên đạo phản phệ). */
+export function chosenHooks(state: GameState, content: Content): EffectHook[] {
+  const n = chosenDisciple(state);
+  return n?.alive && n.chosen!.role ? content.chosenOnes.roles[n.chosen!.role].effects : [];
 }

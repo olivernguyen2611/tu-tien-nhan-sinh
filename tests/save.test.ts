@@ -42,7 +42,7 @@ const content: Content = {
   recipes,
   corePatterns: [],
   regions: [],
-  chosenOnes: { templates: [] },
+  chosenOnes: { templates: [], roles: { protect: { name: 'x', text: 'x', effects: [] }, exploit: { name: 'x', text: 'x', effects: [] }, ignore: { name: 'x', text: 'x', effects: [] } } },
   nascentSouls: { realm: 'nguyen_anh', forms: [] },
   disciples,
   founding,

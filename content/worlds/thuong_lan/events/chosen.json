@@ -104,11 +104,11 @@
         "check": { "stat": "stat.comprehension", "difficulty": 55 },
         "success": {
           "text": "\"Ai là chính, ai là phụ, trời biết. Tu là để mình không cần biết.\" {npc} ngồi im rất lâu, rồi lần đầu tiên dập đầu thật lòng.",
-          "effects": { "stat.daoHeart": 3, "npc": { "affinity": 10, "favor": 5 } }
+          "effects": { "followUp": { "event": "kvct_xk_nga_re", "afterYears": [1, 2] }, "stat.daoHeart": 3, "npc": { "affinity": 10, "favor": 5 } }
         },
         "fail": {
           "text": "Ngươi giảng mãi, càng giảng càng thấy câu hỏi của nó có lý. Đêm đó ngươi nằm nhìn trần nhà tới sáng.",
-          "effects": { "heartDemon": 5, "stat.happiness": -3 }
+          "effects": { "followUp": { "event": "kvct_xk_nga_re", "afterYears": [1, 2] }, "heartDemon": 5, "stat.happiness": -3 }
         }
       },
       {
@@ -120,11 +120,11 @@
             "foe": { "name": "Đồ đệ", "intent": "teach", "fromNpc": true },
             "win": {
               "text": "{npc} nằm sõng soài, nhìn trời: \"Được rồi, con sửa lại: sư phụ là trùm cuối.\"",
-              "effects": { "stat.happiness": 4, "npc": { "affinity": 3 } }
+              "effects": { "followUp": { "event": "kvct_xk_nga_re", "afterYears": [1, 2] }, "stat.happiness": 4, "npc": { "affinity": 3 } }
             },
             "lose": {
               "text": "Ngươi thua đồ đệ. Nó đỡ ngươi dậy, an ủi: \"Không sao, nhân vật phụ thua là bình thường.\"",
-              "effects": { "stat.happiness": -6, "stat.daoHeart": -1 }
+              "effects": { "followUp": { "event": "kvct_xk_nga_re", "afterYears": [1, 2] }, "stat.happiness": -6, "stat.daoHeart": -1 }
             }
           }
         }
@@ -245,11 +245,11 @@
             "foe": { "name": "Gia chủ thế gia", "realm": "above", "powerMul": 0.6, "intent": "kill" },
             "win": {
               "text": "Lão quái vật bỏ chạy, để lại một cánh tay áo. Đồ đệ quỳ xuống, lần đầu khóc trước mặt ngươi.",
-              "effects": { "stat.happiness": 5, "reputation": { "giang_ho": 8 }, "npc": { "affinity": 15, "favor": 15 } }
+              "effects": { "followUp": { "event": "kvct_pv_nga_re", "afterYears": [1, 2] }, "stat.happiness": 5, "reputation": { "giang_ho": 8 }, "npc": { "affinity": 15, "favor": 15 } }
             },
             "lose": {
               "text": "Ngươi ngã xuống. Đúng lúc ấy chiếc nhẫn trên tay đồ đệ lóe sáng, lão quái vật bị đánh bật ra xa. Hào quang của nó cứu cả ngươi.",
-              "effects": { "stat.health": -25, "npc": { "affinity": 10, "favor": 10 } }
+              "effects": { "followUp": { "event": "kvct_pv_nga_re", "afterYears": [1, 2] }, "stat.health": -25, "npc": { "affinity": 10, "favor": 10 } }
             }
           }
         }
@@ -258,14 +258,14 @@
         "text": "Bồi thường cho êm chuyện",
         "result": {
           "text": "Ngươi dâng linh thạch, cúi đầu. Lão quái vật đi. Đồ đệ đứng sau lưng, nắm tay chặt tới bật máu.",
-          "effects": { "spiritStones": -100, "stat.happiness": -3, "npc": { "affinity": -5 } }
+          "effects": { "followUp": { "event": "kvct_pv_nga_re", "afterYears": [1, 2] }, "spiritStones": -100, "stat.happiness": -3, "npc": { "affinity": -5 } }
         }
       },
       {
         "text": "Giao đồ đệ cho họ xử",
         "result": {
           "text": "Họ mang {npc} đi. Nửa tháng sau, nó tự về, người đầy thương tích, ánh mắt nhìn ngươi đã khác.",
-          "effects": { "karma": -10, "stat.daoHeart": -3, "npc": { "affinity": -30, "grudge": 30 } }
+          "effects": { "followUp": { "event": "kvct_pv_nga_re", "afterYears": [1, 2] }, "karma": -10, "stat.daoHeart": -3, "npc": { "affinity": -30, "grudge": 30 } }
         }
       }
     ]
@@ -372,14 +372,14 @@
         "text": "Đọc kỹ cuốn sổ",
         "result": {
           "text": "Chữ của đồ đệ, mà giọng văn là của chính ngươi. Ngươi đọc ba đêm, sửa lại mấy chỗ trong công pháp.",
-          "effects": { "nextBreakthroughBonus": 10, "stat.comprehension": 2, "npc": { "affinity": 5 } }
+          "effects": { "followUp": { "event": "kvct_ts_nga_re", "afterYears": [1, 2] }, "nextBreakthroughBonus": 10, "stat.comprehension": 2, "npc": { "affinity": 5 } }
         }
       },
       {
         "text": "Đốt cuốn sổ: đường của ta, ta tự đi",
         "result": {
           "text": "Ngọn lửa liếm qua từng trang. Đồ đệ nhìn, không ngăn. \"Kiếp trước người cũng nói đúng câu này.\"",
-          "effects": { "stat.daoHeart": 5, "heartDemon": -5, "npc": { "favor": 5 } }
+          "effects": { "followUp": { "event": "kvct_ts_nga_re", "afterYears": [1, 2] }, "stat.daoHeart": 5, "heartDemon": -5, "npc": { "favor": 5 } }
         }
       }
     ]

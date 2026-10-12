@@ -101,6 +101,8 @@ const BaseConditionsSchema = z
         has: z.boolean().optional(),
         template: ids.optional(),
         minYears: z.number().int().min(0).optional(),
+        /** Task 5.6: the master's role so far ("none" = not chosen yet). */
+        role: z.array(z.enum(['protect', 'exploit', 'ignore', 'none'])).optional(),
       })
       .strict()
       .optional(),
@@ -208,6 +210,8 @@ export const EffectsSchema = z
     ownSect: z.object({ members: z.number().int().optional(), treasury: z.number().int().optional(), growthBonus: z.number().optional() }).strict().optional(),
     /** Task 5.5: take a khí vận chi tử of this template as a disciple (beyond the realm's disciple limit). */
     chosenOne: id.optional(),
+    /** Task 5.6: the master's role towards the khí vận chi tử; "ignore" lets them leave the master's door. */
+    chosenRole: z.enum(['protect', 'exploit', 'ignore']).optional(),
     /** Task 4.6: the next step of a multi-step event (bí cảnh); it opens right after this one, the same year. */
     chain: id.optional(),
     /** Task 4.1: close the door for this many years right after the event. */
@@ -255,7 +259,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -2101,6 +2105,8 @@ export const FoundingFileSchema = z
   .strict();
 export type FoundingFile = z.infer<typeof FoundingFileSchema>;
 
+const ChosenRoleSchema = z.object({ name: z.string().min(1), text: z.string().min(1), effects: z.array(EffectHookSchema) }).strict();
+
 /** content/chosen-ones.json (task 5.5): khí vận chi tử templates. Their stories are world events (conditions.chosen). */
 export const ChosenFileSchema = z
   .object({
@@ -2117,6 +2123,8 @@ export const ChosenFileSchema = z
         })
         .strict(),
     ),
+    /** Task 5.6: Hộ đạo / Lợi dụng / Mặc kệ: name, log line ({npc}), K.6 hooks on the master while the chosen one lives. */
+    roles: z.object({ protect: ChosenRoleSchema, exploit: ChosenRoleSchema, ignore: ChosenRoleSchema }).strict(),
   })
   .strict();
 export type ChosenFile = z.infer<typeof ChosenFileSchema>;
