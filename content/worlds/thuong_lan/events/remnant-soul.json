@@ -1,0 +1,195 @@
+[
+  {
+    "id": "tan_hon_cho_phien",
+    "category": "fortune",
+    "title": "Chiếc nhẫn ở sạp đồ cũ",
+    "text": "Sạp đồ cũ cuối chợ bán toàn thứ vô dụng. Riêng chiếc nhẫn đồng xỉn màu, lúc {name} chạm tay vào, hình như vừa ho một tiếng.",
+    "tags": ["rare"],
+    "themes": ["fortune", "market"],
+    "conditions": {
+      "age": { "min": 12 },
+      "flagsNone": ["lao_gia_gia"]
+    },
+    "weight": 0.15,
+    "luckAffected": true,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Mua về, đeo thử",
+        "requires": { "stats": [{ "stat": "silver", "gte": 5 }] },
+        "result": {
+          "text": "Năm văn tiền. Đêm đó có giọng già khọm vang trong đầu: \"Tiểu tử, đừng la. Lão phu ở đây ba nghìn năm rồi, không vội.\"",
+          "effects": { "silver": -5, "addItems": ["nhan_co_tan_hon"], "setFlags": ["lao_gia_gia"], "followUp": { "event": "lao_gia_gia_chi_duong", "afterYears": [1, 3] }, "stat.happiness": 5 }
+        }
+      },
+      {
+        "text": "Thứ biết ho thì không nên mua",
+        "result": {
+          "text": "Ngươi đặt nhẫn xuống. Sau lưng có tiếng thở dài, rất người.",
+          "effects": { "stat.intellect": 1, "stat.daoHeart": 1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tan_hon_day_song",
+    "category": "fortune",
+    "title": "Thứ lấp lánh dưới đáy sông",
+    "text": "Mò cá dưới sông, {name} nhặt được một chiếc nhẫn đồng mắc trong khe đá. Nước chảy xiết, mà nhẫn khô cong.",
+    "tags": ["rare"],
+    "themes": ["fortune"],
+    "conditions": {
+      "age": { "min": 12 },
+      "flagsNone": ["lao_gia_gia"]
+    },
+    "weight": 0.15,
+    "luckAffected": true,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đeo vào tay",
+        "result": {
+          "text": "Một giọng già vang lên trong đầu: \"Cuối cùng cũng có đứa chịu xuống nước.\" Ngươi suýt chết đuối.",
+          "effects": { "addItems": ["nhan_co_tan_hon"], "setFlags": ["lao_gia_gia"], "followUp": { "event": "lao_gia_gia_chi_duong", "afterYears": [1, 3] }, "stat.health": -3, "stat.happiness": 5 }
+        }
+      },
+      {
+        "text": "Ném lại xuống sông",
+        "result": {
+          "text": "Nhẫn chìm nghỉm. Mấy ngày sau, cá ở khúc sông ấy bơi thành vòng tròn.",
+          "effects": { "stat.luck": -1, "stat.daoHeart": 1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "lao_gia_gia_chi_duong",
+    "category": "fortune",
+    "title": "Lão gia gia trong nhẫn",
+    "text": "Lão già trong nhẫn tự xưng từng là một phương đại năng, bị kẻ thù đánh cho chỉ còn một sợi tàn hồn. Lão bảo cách đây ba trăm dặm, trong khe núi Hắc Phong, có một ao linh tủy vạn năm chưa ai động tới.",
+    "themes": ["fortune", "ky_vat"],
+    "conditions": {},
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Đi theo lời lão",
+        "result": {
+          "text": "Ngươi khăn gói lên đường. Lão chỉ đường rất giỏi, chỉ có điều cứ mỗi khúc quanh lại kể một chuyện năm xưa lão oai thế nào.",
+          "effects": { "followUp": { "event": "lao_gia_gia_ky_vat", "afterYears": [1, 1] }, "stat.physique": 1, "stat.happiness": 3 }
+        }
+      },
+      {
+        "text": "Hỏi lão vì sao lại giúp mình",
+        "check": { "stat": "stat.intellect", "difficulty": 65 },
+        "success": {
+          "text": "Lão nói quanh co. Ngươi để ý lão hỏi về ngày sinh, giờ sinh của ngươi hơi kỹ. Ngươi vẫn đi, nhưng lén ghi nhớ chuyện ấy.",
+          "effects": { "followUp": { "event": "lao_gia_gia_ky_vat", "afterYears": [1, 1] }, "setFlags": ["lao_gia_gia_lo_mat"], "stat.intellect": 2 }
+        },
+        "fail": {
+          "text": "\"Vì lão phu thấy ngươi có duyên.\" Nghe cũng có lý. Ngươi lên đường.",
+          "effects": { "followUp": { "event": "lao_gia_gia_ky_vat", "afterYears": [1, 1] }, "stat.happiness": 3 }
+        }
+      },
+      {
+        "text": "Tháo nhẫn, cất vào đáy rương",
+        "result": {
+          "text": "Lão chửi ba ngày ba đêm, rồi im. Nhẫn vẫn ấm, ngươi biết lão còn đó.",
+          "effects": { "stat.daoHeart": 3, "stat.happiness": -3, "removeItems": ["nhan_co_tan_hon"], "clearFlags": ["lao_gia_gia"] }
+        }
+      }
+    ]
+  },
+  {
+    "id": "lao_gia_gia_ky_vat",
+    "category": "fortune",
+    "title": "Ao linh tủy Hắc Phong",
+    "text": "Trong khe núi có một ao nhỏ, nước trắng đục như sữa, khí lạnh bốc lên làm cỏ quanh bờ đóng băng. Lão trong nhẫn bỗng im bặt, như đang nuốt nước bọt.",
+    "tags": ["rare"],
+    "themes": ["ky_vat"],
+    "conditions": {},
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Nhảy xuống, tẩy kinh mạch",
+        "requires": { "root": { "usable": false } },
+        "result": {
+          "text": "Linh tủy xộc vào xương, đau như bị nghiền. Lúc bò lên bờ, kinh mạch ngươi thông suốt như sông sau lũ. Lão cười khà khà: \"Giờ thì tu được rồi.\"",
+          "effects": { "grantRoot": true, "stat.physique": 3, "stat.health": -10, "followUp": { "event": "lao_gia_gia_doat_xa", "afterYears": [5, 12] } }
+        }
+      },
+      {
+        "text": "Ngồi bên ao hấp thu linh khí",
+        "requires": { "root": { "usable": true } },
+        "result": {
+          "text": "Ngươi ngồi suốt bốn mươi chín ngày. Ao cạn dần, đan điền ngươi đầy dần.",
+          "effects": { "cultProgress": 60, "speedBuff": { "mul": 1.3, "years": 10 }, "stat.physique": 2, "followUp": { "event": "lao_gia_gia_doat_xa", "afterYears": [5, 12] } }
+        }
+      },
+      {
+        "text": "Nhường ao cho lão gia gia",
+        "result": {
+          "text": "Ngươi thả nhẫn xuống ao. Nước cạn sạch trong một hơi thở. Lão nói giọng khỏe hẳn: \"Tốt, tốt lắm. Lão phu sẽ không quên.\" Câu ấy nghe hơi rợn.",
+          "effects": { "karma": 5, "stat.happiness": 3, "stat.comprehension": 3, "setFlags": ["lao_gia_gia_hoi_phuc"], "followUp": { "event": "lao_gia_gia_doat_xa", "afterYears": [3, 6] } }
+        }
+      }
+    ]
+  },
+  {
+    "id": "lao_gia_gia_doat_xa",
+    "category": "fortune",
+    "title": "Thức hải có khách",
+    "text": "Nửa đêm, đầu ngươi đau như búa bổ. Giọng lão gia gia không còn già nữa: \"Thân xác này lão phu nuôi bao năm, giờ đến lúc thu hoạch.\"",
+    "tags": ["dark"],
+    "themes": ["fortune", "demonic"],
+    "conditions": {},
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Rút phù trấn hồn đã giấu sẵn",
+        "requires": { "flagsAll": ["lao_gia_gia_lo_mat"] },
+        "result": {
+          "text": "Ngươi đã chuẩn bị từ năm ấy. Lá phù dán lên trán, tàn hồn kêu thét rồi tan như sương. Ký ức vụn của lão để lại không ít thứ hay.",
+          "effects": { "stat.comprehension": 5, "stat.daoHeart": 5, "stat.happiness": 5, "removeItems": ["nhan_co_tan_hon"], "clearFlags": ["lao_gia_gia"], "setFlags": ["nuot_tan_hon"] }
+        }
+      },
+      {
+        "text": "Cố thủ thức hải",
+        "requires": { "flagsNone": ["lao_gia_gia_hoi_phuc"] },
+        "check": { "stat": "stat.daoHeart", "difficulty": 55 },
+        "success": {
+          "text": "Hai linh hồn giằng co tới sáng. Cuối cùng chỉ còn một, là ngươi. Ngươi nuốt luôn phần còn lại của lão.",
+          "effects": { "stat.comprehension": 5, "stat.daoHeart": 3, "stat.health": -10, "removeItems": ["nhan_co_tan_hon"], "clearFlags": ["lao_gia_gia"], "setFlags": ["nuot_tan_hon"] }
+        },
+        "fail": {
+          "text": "Ngươi giữ được thân xác, nhưng thần hồn rách một mảng. Lão vẫn trong nhẫn, cười khẩy, chờ lần sau.",
+          "effects": { "stat.health": -40, "stat.daoHeart": -5, "heartDemon": 15, "followUp": { "event": "lao_gia_gia_doat_xa", "afterYears": [3, 6] } }
+        }
+      },
+      {
+        "text": "Cố thủ thức hải",
+        "requires": { "flagsAll": ["lao_gia_gia_hoi_phuc"] },
+        "check": { "stat": "stat.daoHeart", "difficulty": 75 },
+        "success": {
+          "text": "Lão đã khỏe lại nhờ ao linh tủy, nhưng vẫn không thắng nổi chủ nhà. Lão tan biến, để lại ký ức của một đời đại năng.",
+          "effects": { "stat.comprehension": 8, "stat.daoHeart": 5, "stat.health": -15, "removeItems": ["nhan_co_tan_hon"], "clearFlags": ["lao_gia_gia", "lao_gia_gia_hoi_phuc"], "setFlags": ["nuot_tan_hon"] }
+        },
+        "fail": {
+          "text": "Lão mạnh hơn ngươi tưởng. Ngươi giữ được nửa thức hải, nửa kia lão chiếm. Từ đó có những ngày ngươi tỉnh dậy ở nơi lạ, tay dính máu.",
+          "effects": { "stat.health": -40, "stat.daoHeart": -10, "heartDemon": 25, "karma": -10, "followUp": { "event": "lao_gia_gia_doat_xa", "afterYears": [2, 4] } }
+        }
+      },
+      {
+        "text": "Thương lượng: giúp lão tìm thân xác khác",
+        "check": { "stat": "stat.charm", "difficulty": 60 },
+        "success": {
+          "text": "Lão im lâu, rồi đồng ý. Ngươi đưa nhẫn tới bãi tha ma, lão chọn một xác vừa tắt thở. Lão đi, để lại một câu: \"Ngươi khá hơn lão tưởng.\"",
+          "effects": { "karma": -5, "stat.happiness": 5, "stat.charm": 2, "removeItems": ["nhan_co_tan_hon"], "clearFlags": ["lao_gia_gia"], "setFlags": ["lao_gia_gia_ra_di"] }
+        },
+        "fail": {
+          "text": "\"Lão phu chọn ngươi là vì ngươi.\" Cuộc thương lượng kết thúc bằng một cơn đau xé óc.",
+          "effects": { "stat.health": -30, "heartDemon": 10, "followUp": { "event": "lao_gia_gia_doat_xa", "afterYears": [2, 4] } }
+        }
+      }
+    ]
+  }
+]
