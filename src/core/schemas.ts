@@ -37,7 +37,8 @@ const BaseConditionsSchema = z
     traitsAny: ids,
     traitsAll: ids,
     traitsNone: ids,
-    goldenFinger: id.nullable().optional(),
+    /** Task 5b.2: Kim Thủ Chỉ: has one (or not), one of these, awakened to at least this level. */
+    goldenFinger: z.object({ has: z.boolean().optional(), id: ids.optional(), minLevel: z.number().int().min(1).optional() }).strict().optional(),
     stats: z.array(StatConditionSchema).default([]),
     /** Sect membership (task 2.5): in a sect (or this one), rank range, or able to join `eligible`. */
     sect: z
@@ -210,6 +211,10 @@ export const EffectsSchema = z
     ownSect: z.object({ members: z.number().int().optional(), treasury: z.number().int().optional(), growthBonus: z.number().optional() }).strict().optional(),
     /** Task 5.5: take a khí vận chi tử of this template as a disciple (beyond the realm's disciple limit). */
     chosenOne: id.optional(),
+    /** Task 5b.2: gain this Kim Thủ Chỉ ("random": any), only when the life has none yet. */
+    goldenFinger: id.optional(),
+    /** Task 5b.2: the Kim Thủ Chỉ is gone (given up, taken, or the remnant soul driven out). */
+    loseGoldenFinger: z.boolean().optional(),
     /** Task 5.6: the master's role towards the khí vận chi tử; "ignore" lets them leave the master's door. */
     chosenRole: z.enum(['protect', 'exploit', 'ignore']).optional(),
     /** Task 4.6: the next step of a multi-step event (bí cảnh); it opens right after this one, the same year. */
@@ -259,7 +264,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -473,7 +478,7 @@ const ADD_HOOK = new RegExp(
     ')$',
 );
 const MUL_HOOK = /^eventWeight\.[a-z0-9_]+$/;
-const FLAG_HOOK = /^(agingSlow|unlockChain\.[a-z0-9_]+|cannotWork|noLineageChange|blockEvent\.[a-z0-9_]+|ignoreElementWeakness|rewindOnDeath)$/;
+const FLAG_HOOK = /^(agingSlow|unlockChain\.[a-z0-9_]+|cannotWork|noLineageChange|blockEvent\.[a-z0-9_]+|ignoreElementWeakness|rewindOnDeath|readMind)$/;
 
 export const EffectHookSchema = z
   .object({
@@ -1313,6 +1318,15 @@ export const BalanceSchema = z
         ranked: z.number().int().min(0),
         /** Rare moments of the log shown on the death screen. */
         highlights: z.number().int().min(0),
+      })
+      .strict(),
+    /** Task 5b.2: Kim Thủ Chỉ at birth: chance + per life played (capped), sure after pityLives lives without one. */
+    goldenFinger: z
+      .object({
+        birthChance: probability,
+        perLife: probability,
+        maxChance: probability,
+        pityLives: z.number().int().min(1),
       })
       .strict(),
   })
@@ -2295,3 +2309,40 @@ export const RebirthTalentFileSchema = z
   })
   .strict();
 export type RebirthTalentFile = z.infer<typeof RebirthTalentFileSchema>;
+
+/** Task 5b.2: Kim Thủ Chỉ, one a life at most, awakening level by level as the realm rises. */
+export const GoldenFingerFileSchema = z
+  .object({
+    fingers: z.array(
+      z
+        .object({
+          id,
+          name: z.string().min(1),
+          flavor: z.string().min(1),
+          summary: z.string().min(1),
+          /** The risk it carries (shown with it; the exposure events carry it out). */
+          risk: z.string().min(1),
+          /** Chance among the fingers when one is drawn at random. */
+          weight: z.number().min(0),
+          /** Level n is reached at levels[n-1].realm; each level adds its hooks to the ones below. */
+          levels: z
+            .array(
+              z
+                .object({
+                  realm: id,
+                  name: z.string().min(1),
+                  /** Logged when this level awakens. */
+                  text: z.string().min(1),
+                  /** stat.* and lifespanPct are given once on awakening; other hooks last while it is kept. */
+                  effects: z.array(EffectHookSchema).default([]),
+                  setFlags: ids,
+                })
+                .strict(),
+            )
+            .min(1),
+        })
+        .strict(),
+    ),
+  })
+  .strict();
+export type GoldenFingerFile = z.infer<typeof GoldenFingerFileSchema>;

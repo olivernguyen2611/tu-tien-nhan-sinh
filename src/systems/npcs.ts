@@ -247,14 +247,14 @@ export function killNpc(state: GameState, content: Content, id: string): GameSta
   }).state;
 }
 
-/** Labels for the relations panel. */
-export function npcLabel(content: Content, n: Npc): { surface: string | null; nature: string | null; goal: string | null; realm: string } {
+/** Labels for the relations panel; readMind (Kim Thủ Chỉ Đọc tâm, task 5b.2) sees every nature. */
+export function npcLabel(content: Content, n: Npc, readMind = false): { surface: string | null; nature: string | null; goal: string | null; realm: string } {
   const t = content.npcTraits;
   const realm = realmList(content).find((r) => r.id === n.realm);
   const stageName = realm && n.realm !== 'pham_nhan' ? ` ${realm.stages[n.stage] ?? ''}`.trimEnd() : '';
   return {
     surface: t.surface.find((x) => x.id === n.surface)?.name ?? null,
-    nature: n.natureKnown ? t.nature.find((x) => x.id === n.nature)?.name ?? null : null,
+    nature: n.natureKnown || readMind ? t.nature.find((x) => x.id === n.nature)?.name ?? null : null,
     goal: t.goals.find((x) => x.id === n.goal)?.name ?? null,
     realm: `${realm?.name ?? ''}${stageName}`,
   };

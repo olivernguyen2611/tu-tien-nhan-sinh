@@ -20,6 +20,7 @@ import { ownSectYear } from '../systems/ownSect';
 import { clanYear } from '../systems/clan';
 import { blessingRerolls } from '../systems/blessings';
 import { withCheckpoints } from '../systems/rewind';
+import { awakenGoldenFinger } from '../systems/goldenFinger';
 import { ownedRebirthTalents, rebirthTalentBonus } from '../systems/rebirthTalents';
 
 export interface NewLifeInput {
@@ -33,6 +34,8 @@ export interface NewLifeInput {
   blessings?: GameState['blessings'];
   /** Task 5b.1: thiên phú luân hồi owned (id → level). */
   rebirthTalents?: Record<string, number>;
+  /** Task 5b.2: a Kim Thủ Chỉ drawn at birth (rollBirthFinger), awakened when the destiny is confirmed. */
+  goldenFinger?: string | null;
 }
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
@@ -129,6 +132,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     ancestry: [],
     blessings,
     rebirthTalents,
+    goldenFinger: input.goldenFinger && content.goldenFingers.fingers.some((f) => f.id === input.goldenFinger) ? { id: input.goldenFinger, level: 0, since: 0 } : null,
     checkpoints: { age6: null, realm: null },
     clan: null,
     region: { id: null, visited: [], movedAt: null },
@@ -172,6 +176,8 @@ export function advanceYear(state: GameState, content: Content): GameState {
   if (!state.alive || state.events.pending || state.fate || state.combat || state.cult.coreForming || state.cult.heartDemonTrial) return state;
   // Task 5b.10: moments a Trùng sinh can go back to.
   state = withCheckpoints(state);
+  // Task 5b.2: the Kim Thủ Chỉ awakens further once the realm allows.
+  state = awakenGoldenFinger(state, content);
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
   const body = checkDeath(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content), content), content);

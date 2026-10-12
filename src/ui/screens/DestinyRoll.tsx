@@ -3,6 +3,7 @@ import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
 import { TermText } from '../components/Tooltip';
 import { blessingNames } from '../../systems/blessings';
+import { fingerDef } from '../../systems/goldenFinger';
 
 const RARITY_LABEL: Record<string, string> = {
   pham: 'Phàm', luong: 'Lương', uu: 'Ưu', tuyet: 'Tuyệt', thien: 'Thiên', than: 'Thần', ac: 'Ác vận',
@@ -20,6 +21,8 @@ export function DestinyRollScreen({ state, content, rollCount, unlimited, onRero
 }) {
   const traits = state.destiny.offered.map((id) => content.traits.find((t) => t.id === id)!);
   const left = state.destiny.rerollsLeft;
+  // Task 5b.2: drawn once at birth, rerolls do not touch it.
+  const finger = fingerDef(content, state.goldenFinger?.id);
 
   return (
     <main class="destiny-screen">
@@ -50,6 +53,16 @@ export function DestinyRollScreen({ state, content, rollCount, unlimited, onRero
           </div>
         ))}
       </div>
+
+      {finger && (
+        <div class="golden-finger-card" role="note">
+          <p class="kicker">Kim Thủ Chỉ</p>
+          <b>{finger.name}</b>
+          <p class="trait-flavor">{finger.flavor}</p>
+          <p class="trait-summary"><TermText text={finger.summary} /></p>
+          <p class="trait-summary risk">Rủi ro: {finger.risk}</p>
+        </div>
+      )}
 
       <div class="destiny-actions">
         <button class="btn-secondary" onClick={onReroll} disabled={!unlimited && left <= 0}>

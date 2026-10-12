@@ -5,6 +5,7 @@ import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
 import { availableActions, relationLabel } from '../../systems/relationships';
 import { npcLabel } from '../../systems/npcs';
+import { hasHook } from '../../systems/cultivation';
 import { childRootLabel, romanceLabel, romanceViews, type RomanceAction } from '../../systems/romance';
 import { disciples, maxDisciples, recruitBlocked, teachBlocked } from '../../systems/disciples';
 import { ClanSection, type ClanAction } from './ClanSection';
@@ -55,7 +56,7 @@ export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, o
         ) : (
           <ul class="family-list">
             {npcs.map((n) => {
-              const l = npcLabel(content, n);
+              const l = npcLabel(content, n, hasHook(state, content, 'readMind'));
               const love = romanceLabel(state, content, n);
               const views = n.alive ? romanceViews(state, content, n.id) : [];
               return (

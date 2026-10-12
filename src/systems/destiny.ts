@@ -5,6 +5,7 @@ import { Rng } from '../core/rng';
 import type { Trait } from '../core/schemas';
 import type { GameState } from '../core/types';
 import { blessingGains, blessingNames } from './blessings';
+import { awakenGoldenFinger, fingerDef } from './goldenFinger';
 import { rebirthTalentGains, rebirthTalentNames } from './rebirthTalents';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
@@ -81,7 +82,9 @@ export function confirmDestiny(state: GameState, content: Content): GameState {
     ...(talentNames.length > 0 ? [{ text: `Thiên phú luân hồi: ${talentNames.join(', ')}.`, tone: 'good' as const }] : []),
   ];
 
-  return {
+  const finger = fingerDef(content, state.goldenFinger?.id);
+  if (finger) lines.push({ text: `Kim Thủ Chỉ · ${finger.name}: ${finger.flavor}`, tone: 'rare' as const });
+  return awakenGoldenFinger({
     ...state,
     stats,
     aptitudes,
@@ -89,5 +92,5 @@ export function confirmDestiny(state: GameState, content: Content): GameState {
     traits: chosen.map((t) => t.id),
     destiny: { ...state.destiny, confirmed: true },
     log: [{ ...birth, lines }, ...state.log.slice(1)],
-  };
+  }, content);
 }

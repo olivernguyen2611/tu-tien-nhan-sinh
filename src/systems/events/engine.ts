@@ -20,6 +20,7 @@ import { addContribution, breakPrecept, grantMaster, joinSect, leaveSect, promot
 import { startBattle } from '../combat';
 import { changeNpc, createNpc, killNpc, npcCalls } from '../npcs';
 import { applyRomance, romanceTarget } from '../romance';
+import { gainGoldenFinger, loseGoldenFinger } from '../goldenFinger';
 
 type Outcome = NonNullable<GameEvent['choices'][number]['result']>;
 
@@ -304,6 +305,9 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.chosenOne) next = takeChosen(next, content, fx.chosenOne);
   // Task 5.6: the master's role.
   if (fx.chosenRole) next = setChosenRole(next, content, fx.chosenRole);
+  // Task 5b.2: Kim Thủ Chỉ gained or lost.
+  if (fx.loseGoldenFinger) next = loseGoldenFinger(next, content);
+  if (fx.goldenFinger) next = gainGoldenFinger(next, content, fx.goldenFinger);
   if (fx.ownSect && next.ownSect) {
     const o = next.ownSect;
     next = { ...next, ownSect: { ...o, members: Math.max(0, o.members + (fx.ownSect.members ?? 0)), treasury: Math.max(0, o.treasury + (fx.ownSect.treasury ?? 0)), growthBonus: (o.growthBonus ?? 0) + (fx.ownSect.growthBonus ?? 0) } };

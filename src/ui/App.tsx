@@ -48,6 +48,7 @@ import { newLifeCost, rebirthPoints } from '../systems/rebirth';
 import { earnedBlessings } from '../systems/blessings';
 import { rewind } from '../systems/rewind';
 import { nextTalentCost } from '../systems/rebirthTalents';
+import { rollBirthFinger } from '../systems/goldenFinger';
 import { RebirthScreen } from './screens/Rebirth';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves' | 'rebirth';
@@ -187,7 +188,8 @@ function Screens({ content }: { content: Content }) {
           if (cost > readMeta(store).rebirthPoints) return;
           setOriginCost(cost);
           // Tips only for the very first life on this browser.
-          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list, rebirthTalents: readMeta(store).rebirthTalents }, content), content));
+          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list, rebirthTalents: readMeta(store).rebirthTalents,
+            goldenFinger: rollBirthFinger(input.seed, content, readMeta(store).livesPlayed, readMeta(store).fingerPity) }, content), content));
           setScreen('destiny');
         }}
       />
@@ -201,7 +203,7 @@ function Screens({ content }: { content: Content }) {
         rollCount={rollCount}
         unlimited={devMode}
         onReroll={() => { setLife(rerollDestiny(life, content, devMode)); setRollCount((n) => n + 1); }}
-        onConfirm={() => { recordNewLife(store, originCost); setLife(confirmDestiny(life, content)); setScreen('main'); }}
+        onConfirm={() => { recordNewLife(store, originCost, !!life.goldenFinger); setLife(confirmDestiny(life, content)); setScreen('main'); }}
       />
     );
   }

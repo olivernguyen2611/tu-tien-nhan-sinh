@@ -19,7 +19,7 @@
         "requires": { "stats": [{ "stat": "silver", "gte": 5 }] },
         "result": {
           "text": "Năm văn tiền. Đêm đó có giọng già khọm vang trong đầu: \"Tiểu tử, đừng la. Lão phu ở đây ba nghìn năm rồi, không vội.\"",
-          "effects": { "silver": -5, "addItems": ["nhan_co_tan_hon"], "setFlags": ["lao_gia_gia"], "followUp": { "event": "lao_gia_gia_chi_duong", "afterYears": [1, 3] }, "stat.happiness": 5 }
+          "effects": { "silver": -5, "addItems": ["nhan_co_tan_hon"], "setFlags": ["lao_gia_gia"], "goldenFinger": "lao_gia_gia", "followUp": { "event": "lao_gia_gia_chi_duong", "afterYears": [1, 3] }, "stat.happiness": 5 }
         }
       },
       {
@@ -50,7 +50,7 @@
         "text": "Đeo vào tay",
         "result": {
           "text": "Một giọng già vang lên trong đầu: \"Cuối cùng cũng có đứa chịu xuống nước.\" Ngươi suýt chết đuối.",
-          "effects": { "addItems": ["nhan_co_tan_hon"], "setFlags": ["lao_gia_gia"], "followUp": { "event": "lao_gia_gia_chi_duong", "afterYears": [1, 3] }, "stat.health": -3, "stat.happiness": 5 }
+          "effects": { "addItems": ["nhan_co_tan_hon"], "setFlags": ["lao_gia_gia"], "goldenFinger": "lao_gia_gia", "followUp": { "event": "lao_gia_gia_chi_duong", "afterYears": [1, 3] }, "stat.health": -3, "stat.happiness": 5 }
         }
       },
       {
@@ -94,7 +94,7 @@
         "text": "Tháo nhẫn, cất vào đáy rương",
         "result": {
           "text": "Lão chửi ba ngày ba đêm, rồi im. Nhẫn vẫn ấm, ngươi biết lão còn đó.",
-          "effects": { "stat.daoHeart": 3, "stat.happiness": -3, "removeItems": ["nhan_co_tan_hon"], "clearFlags": ["lao_gia_gia"] }
+          "effects": { "stat.daoHeart": 3, "stat.happiness": -3, "removeItems": ["nhan_co_tan_hon"], "clearFlags": ["lao_gia_gia"], "loseGoldenFinger": true }
         }
       }
     ]
@@ -149,7 +149,7 @@
         "requires": { "flagsAll": ["lao_gia_gia_lo_mat"] },
         "result": {
           "text": "Ngươi đã chuẩn bị từ năm ấy. Lá phù dán lên trán, tàn hồn kêu thét rồi tan như sương. Ký ức vụn của lão để lại không ít thứ hay.",
-          "effects": { "stat.comprehension": 5, "stat.daoHeart": 5, "stat.happiness": 5, "removeItems": ["nhan_co_tan_hon"], "clearFlags": ["lao_gia_gia"], "setFlags": ["nuot_tan_hon"] }
+          "effects": { "stat.comprehension": 5, "stat.daoHeart": 5, "stat.happiness": 5, "removeItems": ["nhan_co_tan_hon"], "clearFlags": ["lao_gia_gia"], "loseGoldenFinger": true, "setFlags": ["nuot_tan_hon"] }
         }
       },
       {
@@ -158,7 +158,7 @@
         "check": { "stat": "stat.daoHeart", "difficulty": 55 },
         "success": {
           "text": "Hai linh hồn giằng co tới sáng. Cuối cùng chỉ còn một, là ngươi. Ngươi nuốt luôn phần còn lại của lão.",
-          "effects": { "stat.comprehension": 5, "stat.daoHeart": 3, "stat.health": -10, "removeItems": ["nhan_co_tan_hon"], "clearFlags": ["lao_gia_gia"], "setFlags": ["nuot_tan_hon"] }
+          "effects": { "stat.comprehension": 5, "stat.daoHeart": 3, "stat.health": -10, "removeItems": ["nhan_co_tan_hon"], "clearFlags": ["lao_gia_gia"], "loseGoldenFinger": true, "setFlags": ["nuot_tan_hon"] }
         },
         "fail": {
           "text": "Ngươi giữ được thân xác, nhưng thần hồn rách một mảng. Lão vẫn trong nhẫn, cười khẩy, chờ lần sau.",
@@ -171,7 +171,7 @@
         "check": { "stat": "stat.daoHeart", "difficulty": 75 },
         "success": {
           "text": "Lão đã khỏe lại nhờ ao linh tủy, nhưng vẫn không thắng nổi chủ nhà. Lão tan biến, để lại ký ức của một đời đại năng.",
-          "effects": { "stat.comprehension": 8, "stat.daoHeart": 5, "stat.health": -15, "removeItems": ["nhan_co_tan_hon"], "clearFlags": ["lao_gia_gia", "lao_gia_gia_hoi_phuc"], "setFlags": ["nuot_tan_hon"] }
+          "effects": { "stat.comprehension": 8, "stat.daoHeart": 5, "stat.health": -15, "removeItems": ["nhan_co_tan_hon"], "clearFlags": ["lao_gia_gia", "lao_gia_gia_hoi_phuc"], "loseGoldenFinger": true, "setFlags": ["nuot_tan_hon"] }
         },
         "fail": {
           "text": "Lão mạnh hơn ngươi tưởng. Ngươi giữ được nửa thức hải, nửa kia lão chiếm. Từ đó có những ngày ngươi tỉnh dậy ở nơi lạ, tay dính máu.",
@@ -183,7 +183,7 @@
         "check": { "stat": "stat.charm", "difficulty": 60 },
         "success": {
           "text": "Lão im lâu, rồi đồng ý. Ngươi đưa nhẫn tới bãi tha ma, lão chọn một xác vừa tắt thở. Lão đi, để lại một câu: \"Ngươi khá hơn lão tưởng.\"",
-          "effects": { "karma": -5, "stat.happiness": 5, "stat.charm": 2, "removeItems": ["nhan_co_tan_hon"], "clearFlags": ["lao_gia_gia"], "setFlags": ["lao_gia_gia_ra_di"] }
+          "effects": { "karma": -5, "stat.happiness": 5, "stat.charm": 2, "removeItems": ["nhan_co_tan_hon"], "clearFlags": ["lao_gia_gia"], "loseGoldenFinger": true, "setFlags": ["lao_gia_gia_ra_di"] }
         },
         "fail": {
           "text": "\"Lão phu chọn ngươi là vì ngươi.\" Cuộc thương lượng kết thúc bằng một cơn đau xé óc.",

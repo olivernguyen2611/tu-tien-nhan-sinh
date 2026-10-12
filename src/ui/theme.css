@@ -811,3 +811,12 @@ button { font: inherit; color: inherit; }
 .talent-level { font-size: 0.8125rem; color: var(--muted); }
 .talent-now { font-size: 0.875rem; margin: 0.25rem 0 0.5rem; }
 .talent-row .chip-btn { white-space: normal; text-align: left; }
+
+/* Kim Thủ Chỉ (task 5b.2) */
+.golden-finger-card {
+  max-width: 560px; margin: 0 auto 1rem; padding: 0.75rem 1rem;
+  border: 1px solid var(--rare); border-radius: var(--radius); background: var(--surface);
+  box-shadow: 0 0 0 1px var(--rare) inset;
+}
+.golden-finger-card b { font-family: var(--font-story); font-size: 1.125rem; }
+.golden-finger-card .risk { color: var(--muted); }

@@ -2,6 +2,25 @@
 
 ## [Chưa phát hành]
 
+### Task 5b.2 — Kim Thủ Chỉ (2026-10-12)
+- 7 loại trong `content/golden-fingers.json`: Lão gia gia trong nhẫn, Hệ thống, Bình nhỏ thần bí, Ký ức kiếp trước, Đọc tâm, Tùy thân động thiên, Thiên đạo bảng. Mỗi loại 3–4 cấp thức tỉnh theo cảnh giới (cấp sau cộng thêm vào cấp trước) và một rủi ro.
+- Cách nhận:
+  - lúc chào đời: 0.3% + 0.05% mỗi kiếp đã chơi (tối đa 1%); **bảo hiểm**: 15 kiếp liền không có thì kiếp sau chắc chắn có (`balance.goldenFinger`, meta `fingerPity`);
+  - kỳ ngộ hiếm "Sao băng rơi sau núi" (khí vận ≥ 70);
+  - chiếc nhẫn có tàn hồn (task 4.11) giờ chính là Lão gia gia; tháo nhẫn hay đuổi tàn hồn thì mất. Đoạt nhẫn của Phế vật nghịch tập (task 5.6) cũng được.
+- Mỗi đời tối đa một. Màn bốc mệnh và hồ sơ nhân vật hiện Kim Thủ Chỉ, cấp hiện tại và rủi ro.
+- Sự kiện riêng (`events/golden-finger.json`):
+  - Hệ thống giao nhiệm vụ 3 năm một lần (gà gáy giờ Tý, ngâm thơ giữa chợ, khiêu chiến vượt cấp), làm hỏng hay từ chối đều bị phạt;
+  - sự kiện "lộ bí mật" cho Bình nhỏ, Ký ức kiếp trước, Đọc tâm, Động thiên (có thể mất Kim Thủ Chỉ), Thiên đạo bảng.
+- Engine:
+  - điều kiện `goldenFinger {has, id, minLevel}`;
+  - hiệu ứng `goldenFinger` (id hoặc `random`) và `loseGoldenFinger`;
+  - móc mới `readMind` (Đọc tâm: thấy bản chất mọi người quen);
+  - validator kiểm tra id Kim Thủ Chỉ và cảnh giới của từng cấp.
+- Ký ức kiếp trước bật cờ `biet_truoc`, dùng cho lựa chọn ẩn "Ta biết chuyện này" (task 5b.10).
+- Mở khóa Kim Thủ Chỉ bằng thành tựu để chọn thẳng lúc tạo nhân vật: làm ở task 5b.5.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Task 5b.1 — Thiên phú luân hồi, Luân Hồi Đài (2026-10-12)
 - 11 thiên phú luân hồi trong `content/rebirth-talents.json`, mỗi cái 2–3 tầng, giá tăng dần.
   - Thêm lượt bốc mệnh, ngộ tính, khí vận, căn cốt, đạo tâm.

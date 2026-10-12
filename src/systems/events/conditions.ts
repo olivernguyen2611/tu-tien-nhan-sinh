@@ -7,6 +7,7 @@ import { actor, isMasked } from '../npcs';
 import { romanceMeets } from '../romance';
 import { currentRegion } from '../regions';
 import { chosenMeets } from '../chosen';
+import { goldenFingerMeets } from '../goldenFinger';
 
 type Conditions = Partial<GameEvent['conditions']>;
 
@@ -81,7 +82,7 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
   if (c.traitsAny?.length && !c.traitsAny.some((t) => state.traits.includes(t))) return false;
   if (c.traitsAll?.some((t) => !state.traits.includes(t))) return false;
   if (c.traitsNone?.some((t) => state.traits.includes(t))) return false;
-  if (c.goldenFinger) return false;
+  if (c.goldenFinger && !goldenFingerMeets(state, c.goldenFinger)) return false;
   if (c.npc && !npcMeets(state, c.npc, content)) return false;
   if (c.romance && (!content || !romanceMeets(state, c.romance, content))) return false;
   if (c.chosen && !chosenMeets(state, c.chosen)) return false;

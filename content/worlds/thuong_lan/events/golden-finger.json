@@ -1,0 +1,253 @@
+[
+  {
+    "id": "ktc_sao_bang_sau_nui",
+    "category": "fortune",
+    "title": "Sao băng rơi sau núi",
+    "text": "Nửa đêm, một vệt sáng xé trời rơi xuống sau núi. Cả làng ngủ say, chỉ {name} trằn trọc nhìn thấy.",
+    "tags": ["rare"],
+    "themes": ["fortune"],
+    "conditions": { "age": { "min": 10 }, "goldenFinger": { "has": false }, "stats": [{ "stat": "stat.luck", "gte": 70 }] },
+    "weight": 0.05,
+    "luckAffected": true,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Lần mò lên núi tìm",
+        "result": {
+          "text": "Giữa hố cháy xém có một thứ đang phát sáng. Ngươi vừa chạm vào, nó đã chui tọt vào người ngươi.",
+          "effects": { "goldenFinger": "random", "stat.happiness": 5, "stat.health": -3 }
+        }
+      },
+      {
+        "text": "Sao rơi là điềm gở, trùm chăn ngủ tiếp",
+        "result": {
+          "text": "Sáng ra, sau núi chỉ còn một hố đất. Cả đời ngươi thỉnh thoảng lại nghĩ về đêm ấy.",
+          "effects": { "stat.happiness": -3, "stat.daoHeart": 1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ktc_ht_ga_gay",
+    "category": "golden_finger",
+    "title": "[Hệ thống] Nhiệm vụ định kỳ",
+    "text": "[Hệ thống] Nhiệm vụ: khiến con gà trống nhà bên gáy đúng giờ Tý ba đêm liền. Thời hạn: ba ngày. Thất bại: trừng phạt ngẫu nhiên.",
+    "tags": ["funny"],
+    "themes": ["he_thong"],
+    "conditions": { "goldenFinger": { "id": ["he_thong"] } },
+    "weight": 0.01,
+    "cooldownYears": 2,
+    "choices": [
+      {
+        "text": "Thức ba đêm dạy gà",
+        "check": { "stat": "stat.intellect", "difficulty": 45 },
+        "success": { "text": "Đêm thứ ba con gà gáy đúng giờ Tý, cả xóm chửi. [Hệ thống] Nhiệm vụ hoàn thành. Thưởng: ngộ tính.", "effects": { "stat.comprehension": 2, "cultProgress": 15, "stat.happiness": 3 } },
+        "fail": { "text": "Gà không hợp tác. [Hệ thống] Trừng phạt: ba ngày nói gì cũng thành tiếng gà.", "effects": { "stat.charm": -3, "stat.happiness": -3 } }
+      },
+      {
+        "text": "Mặc kệ hệ thống",
+        "result": { "text": "[Hệ thống] Ký chủ từ chối nhiệm vụ. Trừng phạt: đau đầu bảy ngày.", "effects": { "stat.health": -5, "stat.happiness": -2 } }
+      }
+    ]
+  },
+  {
+    "id": "ktc_ht_ngam_tho",
+    "category": "golden_finger",
+    "title": "[Hệ thống] Nhiệm vụ định kỳ",
+    "text": "[Hệ thống] Nhiệm vụ: đứng giữa chợ ngâm ba bài thơ tự sáng tác, có ít nhất một người vỗ tay.",
+    "tags": ["funny"],
+    "themes": ["he_thong"],
+    "conditions": { "goldenFinger": { "id": ["he_thong"] } },
+    "weight": 0.01,
+    "cooldownYears": 2,
+    "choices": [
+      {
+        "text": "Hắng giọng, bắt đầu",
+        "check": { "stat": "stat.charm", "difficulty": 50 },
+        "success": { "text": "Một bà bán cá vỗ tay, có lẽ để đuổi ruồi. [Hệ thống] Hợp lệ. Thưởng: linh thạch.", "effects": { "spiritStones": 10, "silver": 20, "stat.happiness": 4 } },
+        "fail": { "text": "Chợ im phăng phắc. Có đứa trẻ khóc. [Hệ thống] Thất bại. Trừng phạt: mất mặt (đã tự động áp dụng).", "effects": { "stat.charm": -2, "stat.happiness": -4 } }
+      },
+      {
+        "text": "Nhờ người quen vỗ tay hộ",
+        "result": { "text": "[Hệ thống] Phát hiện gian lận. Phần thưởng giảm một nửa, kèm lời chê.", "effects": { "silver": 10, "stat.intellect": 1, "stat.happiness": -1 } }
+      }
+    ]
+  },
+  {
+    "id": "ktc_ht_khieu_chien",
+    "category": "golden_finger",
+    "title": "[Hệ thống] Nhiệm vụ định kỳ",
+    "text": "[Hệ thống] Nhiệm vụ: khiêu chiến một kẻ cao hơn ngươi một đại cảnh giới. Thưởng: hậu. Thất bại: tự chịu.",
+    "tags": ["violence"],
+    "themes": ["he_thong"],
+    "conditions": { "goldenFinger": { "id": ["he_thong"], "minLevel": 2 }, "realm": { "min": "luyen_khi" } },
+    "weight": 0.01,
+    "cooldownYears": 3,
+    "choices": [
+      {
+        "text": "Đi tìm người mà khiêu chiến",
+        "result": {
+          "text": "Ngươi tìm được một vị tu sĩ đang uống trà, bước tới chắp tay: \"Xin chỉ giáo.\"",
+          "effects": { "stat.daoHeart": 1 },
+          "fight": {
+            "foe": { "name": "Tu sĩ uống trà", "realm": "above", "intent": "teach" },
+            "win": { "text": "Ngươi thắng, đối phương ngỡ ngàng. [Hệ thống] Nhiệm vụ hoàn thành. Thưởng: tu vi.", "effects": { "cultProgress": 40, "nextBreakthroughBonus": 5, "stat.happiness": 6 } },
+            "lose": { "text": "Ngươi bị đánh bay ra khỏi quán. [Hệ thống] Ghi nhận tinh thần. Không có thưởng.", "effects": { "stat.health": -10, "stat.daoHeart": 2 } }
+          }
+        }
+      },
+      {
+        "text": "Sống quan trọng hơn thưởng",
+        "result": { "text": "[Hệ thống] Ký chủ nhát gan. Trừng phạt: tu vi tụt một đoạn.", "effects": { "cultProgress": -15, "stat.happiness": -3 } }
+      }
+    ]
+  },
+  {
+    "id": "ktc_binh_lo_linh_thao",
+    "category": "golden_finger",
+    "title": "Linh thảo tốt bất thường",
+    "text": "Linh thảo ngươi đem bán quá tốt, tốt tới mức một lão tu sĩ áo xám đứng nhìn rất lâu, rồi hỏi ngươi trồng ở đâu.",
+    "themes": ["market"],
+    "conditions": { "goldenFinger": { "id": ["binh_nho_than_bi"], "minLevel": 2 } },
+    "weight": 0.4,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Bịa một câu chuyện về mảnh ruộng gia truyền",
+        "check": { "stat": "stat.intellect", "difficulty": 55 },
+        "success": { "text": "Lão nghe xong gật gù bỏ đi. Từ đó ngươi bán ít đi, mỗi lần một ít.", "effects": { "stat.intellect": 1, "stat.happiness": -1 } },
+        "fail": { "text": "Lão cười nhạt. Đêm đó nhà ngươi có trộm, lục tung cả lên mà không thấy gì. Ngươi ôm bình ngủ ngoài bãi tha ma.", "effects": { "silver": -50, "stat.health": -5, "stat.happiness": -5 } }
+      },
+      {
+        "text": "Bán rẻ cho lão cả gánh, coi như bịt miệng",
+        "result": { "text": "Lão nhận, đi mất. Ngươi lỗ một mớ, nhưng giữ được bình.", "effects": { "silver": -30, "stat.daoHeart": 1 } }
+      },
+      {
+        "text": "Lão hỏi nhiều quá, rút kiếm",
+        "result": {
+          "text": "Lão tu sĩ áo xám thở dài: \"Tuổi trẻ nóng nảy.\"",
+          "effects": { "stat.happiness": -1 },
+          "fight": {
+            "foe": { "name": "Lão tu sĩ áo xám", "realm": "above", "intent": "rob" },
+            "win": { "text": "Lão bỏ chạy, để lại cái túi càn khôn rách.", "effects": { "spiritStones": 20, "stat.happiness": 5, "karma": -2 } },
+            "lose": { "text": "Lão lục người ngươi, không thấy bình (nó tự trốn vào tay áo trong). Lão đi, mang theo túi tiền.", "effects": { "silver": -80, "stat.health": -10 } }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ktc_ky_uc_lech_huong",
+    "category": "golden_finger",
+    "title": "Thế giới lệch khỏi ký ức",
+    "text": "Theo ký ức kiếp trước, năm nay vị sư huynh kia phải chết trong bí cảnh. Hắn không chết. Hắn còn chào ngươi rất thân. Những gì ngươi nhớ bắt đầu không đúng nữa.",
+    "themes": ["heart_demon"],
+    "conditions": { "goldenFinger": { "id": ["ky_uc_kiep_truoc"], "minLevel": 2 } },
+    "weight": 0.4,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Ký ức chỉ là bản đồ cũ, đường thì phải tự đi",
+        "check": { "stat": "stat.daoHeart", "difficulty": 55 },
+        "success": { "text": "Ngươi thôi dò từng bước theo ký ức. Lòng nhẹ hẳn.", "effects": { "stat.daoHeart": 4, "stat.happiness": 3 } },
+        "fail": { "text": "Ngươi thử tự nhủ vậy, nhưng đêm nào cũng mơ thấy hai đời chồng lên nhau.", "effects": { "heartDemon": 8, "stat.happiness": -4 } }
+      },
+      {
+        "text": "Ghi lại từng điều còn nhớ, so từng năm",
+        "result": { "text": "Cuốn sổ dày dần. Có chỗ khớp, có chỗ lệch. Ngươi bắt đầu nghi cả chính mình.", "effects": { "stat.intellect": 2, "heartDemon": 4, "stat.happiness": -2 } }
+      }
+    ]
+  },
+  {
+    "id": "ktc_doc_tam_bi_lo",
+    "category": "golden_finger",
+    "title": "Kẻ biết ngươi nghe được",
+    "text": "Một vị khách trong tửu lâu nghĩ thầm một câu rất bẩn về ngươi. Ngươi lỡ nhíu mày. Hắn khựng lại, nhìn ngươi chằm chằm: hắn vừa hiểu ra.",
+    "tags": ["violence"],
+    "conditions": { "goldenFinger": { "id": ["doc_tam"] }, "age": { "min": 16 } },
+    "weight": 0.3,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Giả như không có gì, uống cạn chén rồi đi",
+        "check": { "stat": "stat.charm", "difficulty": 50 },
+        "success": { "text": "Hắn nghi ngờ một lúc rồi thôi. Từ đó ngươi tập không nhíu mày.", "effects": { "stat.daoHeart": 2, "stat.happiness": -1 } },
+        "fail": { "text": "Hắn bám theo ngươi ba con phố. Ngươi phải bỏ quê đi một thời gian.", "effects": { "silver": -30, "stat.happiness": -5 } }
+      },
+      {
+        "text": "Ra tay trước khi hắn đi báo ai",
+        "result": {
+          "text": "Hắn cũng có cùng ý nghĩ. Ngươi nghe thấy rõ từng chữ.",
+          "effects": { "stat.happiness": -2 },
+          "fight": {
+            "foe": { "name": "Vị khách tửu lâu", "realm": "same", "intent": "kill" },
+            "win": { "text": "Bí mật của ngươi được giữ, bằng một cái giá.", "effects": { "karma": -8, "heartDemon": 3, "stat.happiness": -3 } },
+            "lose": { "text": "Ngươi trốn được, nhưng giờ có một kẻ biết bí mật của ngươi.", "effects": { "stat.health": -15, "stat.happiness": -5 } }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ktc_dong_thien_bi_dom",
+    "category": "golden_finger",
+    "title": "Có kẻ dòm động thiên",
+    "text": "Một vị đại tu sĩ đi ngang, bỗng dừng lại hít hà: \"Linh khí trên người tiểu bối này… có mùi một phương trời đất.\" Lão giơ tay ra, nụ cười rất hiền.",
+    "tags": ["violence"],
+    "conditions": { "goldenFinger": { "id": ["tuy_than_dong_thien"], "minLevel": 2 } },
+    "weight": 0.4,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Trốn vào động thiên, đóng cửa lại",
+        "check": { "stat": "stat.luck", "difficulty": 55 },
+        "success": { "text": "Ngươi ngồi trong động thiên ba tháng. Lão đi rồi. Ngươi tu thêm được một đoạn.", "effects": { "cultProgress": 20, "stat.happiness": 2 } },
+        "fail": { "text": "Lão đứng chờ bên ngoài cả năm. Ra là gặp lão. Ngươi phải dâng phần lớn gia tài mới đi được.", "effects": { "spiritStones": -50, "silver": -100, "stat.happiness": -6 } }
+      },
+      {
+        "text": "Dâng động thiên đổi lấy mạng",
+        "result": { "text": "Lão rút động thiên ra khỏi thức hải ngươi như rút sợi chỉ. Đau thấu xương. Lão để lại một bình đan, coi như trả công.", "effects": { "loseGoldenFinger": true, "lifespanYears": 20, "spiritStones": 30, "stat.health": -10, "stat.happiness": -10 } }
+      },
+      {
+        "text": "Liều mạng một phen",
+        "result": {
+          "text": "Ngươi rút binh khí. Lão thôi cười.",
+          "effects": { "stat.daoHeart": 1 },
+          "fight": {
+            "foe": { "name": "Đại tu sĩ tham lam", "realm": "above", "intent": "kill" },
+            "win": { "text": "Không ai ngờ, kể cả ngươi. Lão chạy, mang thương nặng.", "effects": { "stat.happiness": 8, "reputation": { "giang_ho": 5 } } },
+            "lose": { "text": "Lão đánh ngươi gần chết, rồi chán, vì động thiên không lấy ra được khi chủ còn tỉnh. Lão bỏ đi.", "effects": { "stat.health": -30, "cultProgress": -30 } }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ktc_bang_kieu_ngao",
+    "category": "golden_finger",
+    "title": "Tên trên bảng nhảy hạng",
+    "text": "Tên ngươi trên Thiên đạo bảng vừa vọt lên ba trăm bậc. Ngay trên ngươi là một kẻ cùng trấn, nghe nói kiêu căng, đánh được.",
+    "themes": ["ranking"],
+    "conditions": { "goldenFinger": { "id": ["thien_dao_bang"], "minLevel": 2 } },
+    "weight": 0.4,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đi vượt hắn một bậc",
+        "result": {
+          "text": "Ngươi tìm tới tận cửa. Tiếc là bảng không ghi hắn có ông nội là trưởng lão.",
+          "effects": { "stat.happiness": 1 },
+          "fight": {
+            "foe": { "name": "Kẻ đứng trên một bậc", "realm": "same", "intent": "teach" },
+            "win": { "text": "Ngươi thắng. Bảng nhảy thêm một bậc. Ông nội hắn ghi nhớ tên ngươi.", "effects": { "stat.happiness": 5, "reputation": { "giang_ho": 3 }, "karma": -2 } },
+            "lose": { "text": "Bảng không ghi luôn là hắn mới đột phá hôm qua.", "effects": { "stat.health": -10, "stat.daoHeart": 2 } }
+          }
+        }
+      },
+      {
+        "text": "Thứ hạng chỉ là con số",
+        "result": { "text": "Ngươi tắt bảng (nếu tắt được). Tâm lặng hơn một chút.", "effects": { "stat.daoHeart": 3 } }
+      }
+    ]
+  }
+]

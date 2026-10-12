@@ -32,6 +32,7 @@ import { currentGoal, pendingTip } from '../../systems/tutorial';
 import { careerLabel } from '../../systems/career';
 import { sectLabel } from '../../systems/sect';
 import { inventoryLabel } from '../../systems/items';
+import { fingerDef } from '../../systems/goldenFinger';
 
 const DOCK_LEFT = [
   { id: 'cultivate', glyph: '修', label: 'Tu luyện' },
@@ -126,6 +127,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const { character: c, stats, cult, money } = state;
   const origin = content.origins.find((o) => o.id === c.originId);
   const warn = extremeWarnings(state, content);
+  const finger = fingerDef(content, state.goldenFinger?.id);
   const states = activeExtremes(state, content);
   const goal = currentGoal(state, content);
   const tip = pendingTip(state, content);
@@ -274,6 +276,14 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
                     <span>{d.text}{d.note ? ` ${d.note}` : ''}</span>
                   </li>
                 ))}
+              </ul>
+            )}
+            {finger && (
+              <ul class="trait-chips" aria-label="Kim Thủ Chỉ">
+                <li class="trait-chip r-than golden-finger">
+                  <b>{finger.name} · {finger.levels[state.goldenFinger!.level - 1]?.name ?? 'Chưa thức tỉnh'}</b>
+                  <span><TermText text={`${finger.summary} Rủi ro: ${finger.risk}`} /></span>
+                </li>
               </ul>
             )}
             {state.talents.length > 0 && (
