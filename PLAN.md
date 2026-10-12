@@ -368,7 +368,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 5b.6 | [ ] Thử thách tuần (seed chung theo tuần) |
 | 5b.7 | [ ] Gặp lại tông môn đời trước |
 | 5b.8 | [x] Phúc báo đời phàm nhân sang đời sau; móc mới `rootReroll` (`mortal-path.md` mục 3.1) |
-| 5b.9 | [ ] Cầu đầu thai: tiêu điểm Luân Hồi chọn xuất thân đời sau (`mortal-path.md` mục 3.2) |
+| 5b.9 | [x] Cầu đầu thai: tiêu điểm Luân Hồi chọn xuất thân đời sau (`mortal-path.md` mục 3.2) |
 | 5b.10 | [ ] Trùng sinh: Hồi Quang Kính, chết thì quay về năm 6 tuổi giữ ký ức; móc mới `rewindOnDeath` (`mortal-path.md` mục 3.3) (✓ phần code; chờ ✍️ sự kiện nhận Hồi Quang Kính + lựa chọn ẩn) |
 
 ### GĐ 6 — Hoàn thiện
