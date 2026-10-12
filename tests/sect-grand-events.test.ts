@@ -7,7 +7,7 @@ import { joinSect } from '../src/systems/sect';
 import { succeedSect } from '../src/systems/ownSect';
 
 const content = loadContent();
-const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'], body: null };
+const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'] };
 const GRAND = content.events.filter((e) => e.id.startsWith('sg_'));
 
 function member(): GameState {
