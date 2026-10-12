@@ -1,0 +1,131 @@
+[
+  {
+    "id": "sd_dai_bi_ngoai_mon", "category": "sect", "title": "Ngoại môn đại bỉ",
+    "text": "Ba năm một lần, đệ tử ngoại môn lên lôi đài tranh mười suất vào nội môn. Tên {name} nằm trong bảng.",
+    "conditions": { "sect": { "member": true, "minRank": 1, "maxRank": 1 } },
+    "weight": 6, "cooldownYears": 3,
+    "choices": [
+      { "text": "Lên đài, đánh hết sức", "check": { "stat": "stat.physique", "difficulty": 55 }, "success": { "text": "Bảy trận thắng sáu. Trưởng lão nội môn ghi tên ngươi vào sổ.", "effects": { "sectContribution": 25, "stat.happiness": 5 } }, "fail": { "text": "Trận thứ ba gặp cao thủ, bị đánh văng khỏi đài.", "effects": { "sectContribution": 5, "stat.health": -10 } } },
+      { "text": "Đứng dưới xem người khác đánh", "result": { "text": "Xem kỹ ba ngày, học lỏm được vài chiêu.", "effects": { "stat.comprehension": 1, "stat.happiness": -1 } } }
+    ]
+  },
+  {
+    "id": "sd_giang_dao", "category": "sect", "title": "Trưởng lão giảng đạo",
+    "text": "Đầu tháng, trưởng lão mở đàn giảng đạo ở quảng trường. Đệ tử ngồi chật kín.",
+    "conditions": { "sect": { "member": true } },
+    "weight": 6, "cooldownYears": 4,
+    "choices": [
+      { "text": "Chăm chú nghe giảng", "check": { "stat": "stat.comprehension", "difficulty": 50 }, "success": { "text": "Một câu của trưởng lão đánh trúng chỗ ngươi vướng đã lâu.", "effects": { "speedBuff": { "mul": 1.15, "years": 3 }, "stat.comprehension": 1 } }, "fail": { "text": "Nghe như vịt nghe sấm, nhưng ít ra ngồi đủ giờ.", "effects": { "stat.intellect": 1 } } },
+      { "text": "Ngủ gật", "result": { "text": "Ngươi ngáy to tới mức trưởng lão dừng giảng. Cả quảng trường quay lại nhìn.", "effects": { "stat.health": 2, "stat.charm": -2, "sectContribution": -2 } } },
+      { "text": "Đứng dậy hỏi một câu thật khó", "check": { "stat": "stat.intellect", "difficulty": 60 }, "success": { "text": "Trưởng lão vuốt râu cười: \"Hỏi hay.\" Từ đó lão nhớ mặt ngươi.", "effects": { "sectContribution": 10, "stat.charm": 2 } }, "fail": { "text": "Câu hỏi ngớ ngẩn tới mức cả quảng trường cười ồ.", "effects": { "stat.happiness": -4 } } }
+    ]
+  },
+  {
+    "id": "sd_khao_hach", "category": "sect", "title": "Khảo hạch cuối năm",
+    "text": "Chấp sự đường kiểm tra tu vi từng đệ tử. Ai chậm tiến sẽ bị cắt bổng lộc.",
+    "conditions": { "sect": { "member": true } },
+    "weight": 5, "cooldownYears": 5,
+    "choices": [
+      { "text": "Vận công cho chấp sự xem", "check": { "stat": "stat.daoHeart", "difficulty": 50 }, "success": { "text": "Chân khí vững vàng. Chấp sự gật đầu, ghi chữ \"ưu\".", "effects": { "sectContribution": 12, "spiritStones": 3, "stat.happiness": 3 } }, "fail": { "text": "Run tay, chân khí lệch một nhịp. Bị ghi chữ \"kém\".", "effects": { "spiritStones": -2, "stat.happiness": -4 } } },
+      { "text": "Nhét linh thạch cho chấp sự", "requires": { "stats": [{ "stat": "spiritStones", "gte": 5 }] }, "result": { "text": "Chấp sự nhìn quanh rồi ghi chữ \"khá\". Lòng ngươi hơi gợn.", "effects": { "spiritStones": -5, "stat.daoHeart": -1, "karma": -1 } } }
+    ]
+  },
+  {
+    "id": "sd_tranh_linh_mach", "category": "sect", "title": "Tranh chỗ tu luyện",
+    "text": "Mạch linh khí sau núi chỉ đủ cho một người. Một đồng môn đã ngồi sẵn ở đó, liếc ngươi đầy thách thức.",
+    "conditions": { "sect": { "member": true, "minRank": 1 } },
+    "weight": 4, "cooldownYears": 5,
+    "choices": [
+      { "text": "Thách đấu, ai thắng người ấy ngồi", "check": { "stat": "stat.physique", "difficulty": 55 }, "success": { "text": "Ngươi thắng. Linh khí chỗ này đậm thật.", "effects": { "cultProgress": 15, "stat.happiness": 3 } }, "fail": { "text": "Thua, bị đuổi đi. Hắn còn cười với theo.", "effects": { "stat.health": -8, "stat.happiness": -3 } } },
+      { "text": "Đề nghị chia ca, mỗi người nửa ngày", "check": { "stat": "stat.charm", "difficulty": 45 }, "success": { "text": "Hắn đồng ý. Về sau hai người thành bạn đồng tu.", "effects": { "cultProgress": 8, "stat.happiness": 4 } }, "fail": { "text": "Hắn khinh khỉnh lắc đầu.", "effects": { "stat.happiness": -2 } } },
+      { "text": "Nhường, tìm chỗ khác", "result": { "text": "Chỗ khác linh khí loãng, nhưng lòng thì nhẹ.", "effects": { "stat.daoHeart": 1, "karma": 1 } } }
+    ]
+  },
+  {
+    "id": "sd_le_te_to", "category": "sect", "title": "Đại lễ tế tổ",
+    "text": "Ngày tế tổ sư, cả tông môn treo đèn kết hoa. Nhà bếp nấu ba ngày, rượu linh quả chất đầy kho.",
+    "conditions": { "sect": { "member": true } },
+    "weight": 4, "cooldownYears": 6,
+    "choices": [
+      { "text": "Xung phong lo việc lễ", "result": { "text": "Bận tối mắt, nhưng chấp sự ghi công đầy đủ.", "effects": { "sectContribution": 10, "stat.health": -3 } } },
+      { "text": "Lẻn vào kho uống trộm rượu linh quả", "check": { "stat": "stat.luck", "difficulty": 50 }, "success": { "text": "Ba vò rượu vào bụng, chân khí ấm sực. Không ai phát hiện.", "effects": { "cultProgress": 10, "stat.happiness": 6 } }, "fail": { "text": "Bị bắt quả tang lúc đang ôm vò. Phạt quét nhà vệ sinh ba tháng.", "effects": { "sectContribution": -5, "stat.happiness": -4, "stat.charm": -1 } } },
+      { "text": "Thành tâm thắp nhang trước bài vị tổ sư", "result": { "text": "Khói nhang thẳng tắp. Không biết tổ sư có nghe không, nhưng lòng ngươi yên.", "effects": { "stat.daoHeart": 2 } } }
+    ]
+  },
+  {
+    "id": "sd_linh_thu_tron", "category": "sect", "title": "Linh thú của trưởng lão sổng chuồng",
+    "text": "Con Hỏa Vân Hạc mà trưởng lão cưng như con bay mất. Ai bắt được về có thưởng.",
+    "tags": ["funny"],
+    "conditions": { "sect": { "member": true } },
+    "weight": 4, "cooldownYears": 6,
+    "choices": [
+      { "text": "Đi tìm", "check": { "stat": "stat.luck", "difficulty": 50 }, "success": { "text": "Thấy nó đang trộm cá trong ao nhà bếp. Trưởng lão thưởng hậu.", "effects": { "sectContribution": 12, "spiritStones": 5, "stat.happiness": 3 } }, "fail": { "text": "Tìm ba ngày, chỉ nhặt được một nắm lông và một trận mổ vào đầu.", "effects": { "stat.health": -4, "stat.happiness": -2 } } },
+      { "text": "Mặc kệ, tu luyện tiếp", "result": { "text": "Ngoài kia cả tông môn chạy loạn. Trong phòng ngươi yên tĩnh lạ thường.", "effects": { "cultProgress": 5, "stat.charm": -1 } } }
+    ]
+  },
+  {
+    "id": "sd_dong_mon_vay", "category": "sect", "title": "Đồng môn hỏi vay",
+    "text": "Một sư đệ cùng viện đỏ mặt hỏi vay năm khối linh thạch, hứa cuối năm trả.",
+    "conditions": { "sect": { "member": true }, "stats": [{ "stat": "spiritStones", "gte": 5 }] },
+    "weight": 4, "cooldownYears": 6,
+    "choices": [
+      { "text": "Cho vay", "check": { "stat": "stat.luck", "difficulty": 45 }, "success": { "text": "Cuối năm sư đệ trả đủ, còn biếu thêm một gói trà.", "effects": { "spiritStones": 1, "stat.happiness": 3, "karma": 1 } }, "fail": { "text": "Sư đệ xuống núi làm nhiệm vụ rồi không thấy về. Linh thạch cũng vậy.", "effects": { "spiritStones": -5, "stat.happiness": -4 } } },
+      { "text": "Từ chối khéo", "result": { "text": "Sư đệ gượng cười bỏ đi. Mấy hôm sau gặp nhau hơi ngượng.", "effects": { "stat.charm": -1 } } },
+      { "text": "Cho luôn, khỏi trả", "result": { "text": "Sư đệ ôm ngươi khóc. Cả viện bảo ngươi là người tốt.", "effects": { "spiritStones": -5, "stat.charm": 2, "karma": 2 } } }
+    ]
+  },
+  {
+    "id": "sd_yeu_thu_cong_son", "category": "sect", "title": "Yêu thú công sơn",
+    "text": "Nửa đêm chuông báo động vang dội. Một bầy yêu thú đang húc vào đại trận hộ sơn.",
+    "conditions": { "sect": { "member": true }, "realm": { "min": "luyen_khi" } },
+    "weight": 4, "cooldownYears": 8,
+    "choices": [
+      { "text": "Xông lên tuyến đầu", "check": { "stat": "stat.physique", "difficulty": 55 }, "success": { "text": "Ngươi chém ngã con đầu đàn. Sáng ra cả tông môn nhắc tên ngươi.", "effects": { "sectContribution": 25, "spiritStones": 6, "stat.happiness": 4 } }, "fail": { "text": "Bị một con húc văng vào vách đá. Đánh xong thì ngươi nằm phòng thuốc.", "effects": { "sectContribution": 8, "stat.health": -15 } } },
+      { "text": "Giúp sửa trận từ phía sau", "check": { "stat": "stat.comprehension", "difficulty": 50 }, "success": { "text": "Vá kịp chỗ trận hở. Trận sư vỗ vai ngươi.", "effects": { "sectContribution": 15, "stat.intellect": 1 } }, "fail": { "text": "Vá nhầm chỗ, cả đoạn trận tắt ngấm. May có người kịp sửa.", "effects": { "stat.happiness": -4 } } },
+      { "text": "Trốn dưới gầm giường", "result": { "text": "Không ai thấy ngươi đêm ấy. Sáng ra cũng không ai muốn nhìn ngươi.", "effects": { "sectContribution": -5, "stat.charm": -2, "stat.daoHeart": -1 } } }
+    ]
+  },
+  {
+    "id": "sd_bi_canh_luyen_thi", "category": "sect", "title": "Bí cảnh luyện thí của tông môn",
+    "text": "Tông môn mở tiểu bí cảnh tổ tiên để lại, cho đệ tử nội môn vào luyện thí một tháng.",
+    "themes": ["fortune"],
+    "conditions": { "sect": { "member": true, "minRank": 2 } },
+    "weight": 4, "cooldownYears": 8, "luckAffected": true,
+    "choices": [
+      { "text": "Đi sâu vào trong", "check": { "stat": "stat.luck", "difficulty": 55 }, "success": { "text": "Trong cùng có một gốc linh dược trăm năm. Ăn xong, tu vi tăng vọt.", "effects": { "cultProgress": 35, "spiritStones": 10, "stat.happiness": 5 } }, "fail": { "text": "Lạc vào mê trận, mãi tới khi bí cảnh đóng mới được kéo ra.", "effects": { "cultProgress": 5, "stat.health": -8 } } },
+      { "text": "Ở vòng ngoài hái thuốc cho chắc", "result": { "text": "Không có gì lớn, nhưng túi cũng nặng thêm.", "effects": { "spiritStones": 8, "stat.happiness": 2 } } }
+    ]
+  },
+  {
+    "id": "sd_chuong_mon_trieu_kien", "category": "sect", "title": "Chưởng môn triệu kiến",
+    "text": "Đạo đồng truyền lời: chưởng môn muốn gặp {name} ở đỉnh chính phong.",
+    "conditions": { "sect": { "member": true, "minRank": 3 } },
+    "weight": 5, "oncePerLife": true,
+    "choices": [
+      { "text": "Đối đáp thẳng thắn", "check": { "stat": "stat.intellect", "difficulty": 55 }, "success": { "text": "Chưởng môn hỏi ba câu, ngươi đáp đủ ba. Trước khi về, người tặng ngươi một câu khẩu quyết.", "effects": { "sectContribution": 40, "speedBuff": { "mul": 1.2, "years": 5 }, "stat.happiness": 5 } }, "fail": { "text": "Câu thứ ba ngươi ấp úng. Chưởng môn chỉ cười, không nói gì.", "effects": { "sectContribution": 10, "stat.daoHeart": -1 } } },
+      { "text": "Khiêm tốn, nói ít nghe nhiều", "result": { "text": "Chưởng môn nói về những năm tông môn suýt diệt vong. Ngươi về, ngồi im cả đêm.", "effects": { "sectContribution": 15, "stat.daoHeart": 2 } } }
+    ]
+  },
+  {
+    "id": "sd_bep_thieu_nguoi", "category": "sect", "title": "Nhà bếp thiếu người",
+    "text": "Đầu bếp chính bế quan đột ngột. Cả tông môn sắp ăn cháo trắng.",
+    "tags": ["funny"],
+    "conditions": { "sect": { "member": true, "maxRank": 2 } },
+    "weight": 3, "cooldownYears": 8,
+    "choices": [
+      { "text": "Xắn tay vào bếp", "check": { "stat": "stat.intellect", "difficulty": 45 }, "success": { "text": "Món linh mễ hầm của ngươi nổi tiếng ba viện. Có người xin bái ngươi làm sư phụ nấu ăn.", "effects": { "sectContribution": 10, "stat.charm": 3, "stat.happiness": 3 } }, "fail": { "text": "Nửa tông môn đau bụng. Từ đó không ai dám ăn đồ ngươi nấu.", "effects": { "sectContribution": -3, "stat.charm": -2 } } },
+      { "text": "Ăn cháo trắng cùng mọi người", "result": { "text": "Cháo trắng ba tháng, ai cũng gầy đi, lòng cũng thanh đạm hơn.", "effects": { "stat.health": -2, "stat.daoHeart": 1 } } }
+    ]
+  },
+  {
+    "id": "sd_tin_don_noi_gian", "category": "sect", "title": "Tin đồn nội gián",
+    "text": "Trong tông có kẻ bán tin cho ma đạo. Mấy đêm liền, ngươi thấy một bóng người lén ra sau núi.",
+    "conditions": { "sect": { "member": true, "minRank": 1, "notId": "u_ha_ma_tong" } },
+    "weight": 3, "cooldownYears": 10,
+    "choices": [
+      { "text": "Bám theo", "check": { "stat": "stat.luck", "difficulty": 55 }, "success": { "text": "Bắt quả tang gã đang trao thư. Tông môn trọng thưởng.", "effects": { "sectContribution": 30, "spiritStones": 8, "stat.daoHeart": 1 } }, "fail": { "text": "Bị phát hiện, ăn một chưởng vào ngực. Gã biến mất trong đêm.", "effects": { "stat.health": -15, "heartDemon": 3 } } },
+      { "text": "Báo chấp sự đường", "result": { "text": "Chấp sự ghi lại, bảo ngươi đừng nói với ai. Mấy tháng sau có một đệ tử biến mất khỏi danh sách.", "effects": { "sectContribution": 8, "stat.intellect": 1 } } },
+      { "text": "Coi như không thấy", "result": { "text": "Chuyện của người khác. Nhưng đêm nào ngươi cũng ngủ không yên.", "effects": { "stat.happiness": -2 } } }
+    ]
+  }
+]

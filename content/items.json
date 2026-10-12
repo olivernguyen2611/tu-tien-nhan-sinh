@@ -666,7 +666,8 @@
     "summary": "Không có tác dụng gì. Có thể đựng cơm.",
     "price": {
       "silver": 1
-    }
+    },
+    "forSale": false
   },
   {
     "id": "linh_thao_tram_nam",
@@ -861,7 +862,215 @@
     "kind": "artifact",
     "description": "Gương đồng cổ, soi vào chỉ thấy chính mình lúc còn bé. Không ai biết nó soi ngược thời gian hay soi ngược lòng người.",
     "summary": "Mang theo: chết thì trùng sinh về năm 6 tuổi, giữ ký ức kiếp trước, linh căn giữ nguyên. Một lần mỗi đời.",
-    "carried": [{ "hook": "rewindOnDeath", "at": 6 }]
+    "carried": [
+      {
+        "hook": "rewindOnDeath",
+        "at": 6
+      }
+    ]
+  },
+  {
+    "id": "keo_ho_lo",
+    "name": "Kẹo hồ lô",
+    "kind": "misc",
+    "description": "Một xâu sơn tra bọc đường, đỏ au, dính tay.",
+    "summary": "Hạnh phúc +3.",
+    "price": {
+      "silver": 2
+    },
+    "use": {
+      "text": "Chua chua ngọt ngọt, như hồi còn bé.",
+      "effects": [
+        {
+          "hook": "stat.happiness",
+          "add": 3
+        }
+      ],
+      "mortalOk": true
+    }
+  },
+  {
+    "id": "ruou_thuoc",
+    "name": "Rượu thuốc ngâm rắn",
+    "kind": "misc",
+    "description": "Bình rượu có con rắn cuộn tròn bên trong, nhìn thôi đã thấy khỏe.",
+    "summary": "Sức khỏe +6.",
+    "price": {
+      "silver": 25
+    },
+    "use": {
+      "text": "Một ngụm cay xè, người nóng ran.",
+      "effects": [
+        {
+          "hook": "stat.health",
+          "add": 6
+        }
+      ],
+      "mortalOk": true
+    }
+  },
+  {
+    "id": "sach_vo_long",
+    "name": "Sách vỡ lòng",
+    "kind": "misc",
+    "description": "Quyển sách chữ to, mép giấy quăn vì qua tay mấy đời học trò.",
+    "summary": "Trí tuệ +2. Chỉ có tác dụng lần đầu trong đời.",
+    "price": {
+      "silver": 15
+    },
+    "use": {
+      "text": "Đọc xong, mặt chữ không còn như con giun.",
+      "effects": [
+        {
+          "hook": "stat.intellect",
+          "add": 2
+        }
+      ],
+      "mortalOk": true,
+      "oncePerLife": true
+    }
+  },
+  {
+    "id": "phan_son",
+    "name": "Hộp phấn son",
+    "kind": "misc",
+    "description": "Hộp gỗ khắc hoa, phấn thơm mùi hoa nhài.",
+    "summary": "Mị lực +3.",
+    "price": {
+      "silver": 30
+    },
+    "use": {
+      "text": "Soi gương, tự thấy mình đẹp hơn hôm qua.",
+      "effects": [
+        {
+          "hook": "stat.charm",
+          "add": 3
+        }
+      ],
+      "mortalOk": true
+    }
+  },
+  {
+    "id": "nhan_sam_rung",
+    "name": "Nhân sâm rừng",
+    "kind": "pill",
+    "description": "Củ sâm hình người, rễ dài như râu ông lão.",
+    "summary": "Sức khỏe +12, Căn cốt +1.",
+    "price": {
+      "silver": 120
+    },
+    "use": {
+      "text": "Vị đắng rồi ngọt hậu. Đêm ấy ngủ một mạch tới sáng.",
+      "effects": [
+        {
+          "hook": "stat.health",
+          "add": 12
+        },
+        {
+          "hook": "stat.physique",
+          "add": 1
+        }
+      ],
+      "mortalOk": true
+    }
+  },
+  {
+    "id": "dao_gam",
+    "name": "Dao găm phòng thân",
+    "kind": "artifact",
+    "description": "Lưỡi ngắn, cán quấn dây thừng, giắt ủng vừa vặn.",
+    "summary": "Mang theo: bỏ chạy dễ hơn một chút.",
+    "price": {
+      "silver": 40
+    },
+    "carried": [
+      {
+        "hook": "escapeChance",
+        "add": 0.05
+      }
+    ]
+  },
+  {
+    "id": "tran_chau_giao_nhan",
+    "name": "Trân châu giao nhân",
+    "kind": "material",
+    "description": "Hạt châu tròn trĩnh, nghe nói là nước mắt giao nhân Đông Hải.",
+    "summary": "Nghiền làm phấn: Mị lực +3. Bán được giá ở nơi khác.",
+    "price": {
+      "spiritStones": 45
+    },
+    "use": {
+      "text": "Bột châu mịn như sương, thoa lên da sáng hẳn.",
+      "effects": [
+        {
+          "hook": "stat.charm",
+          "add": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "bang_tam_lien",
+    "name": "Băng Tâm Liên",
+    "kind": "pill",
+    "description": "Đóa sen trắng mọc trong băng nghìn năm, cánh lạnh buốt tay.",
+    "summary": "Đạo tâm +3, Hạnh phúc −2.",
+    "price": {
+      "spiritStones": 70
+    },
+    "use": {
+      "text": "Một luồng lạnh chạy thẳng vào tâm. Mọi ham muốn lắng xuống.",
+      "effects": [
+        {
+          "hook": "stat.daoHeart",
+          "add": 3
+        },
+        {
+          "hook": "stat.happiness",
+          "add": -2
+        }
+      ]
+    }
+  },
+  {
+    "id": "yeu_thu_huyet",
+    "name": "Yêu huyết tinh luyện",
+    "kind": "pill",
+    "description": "Lọ máu yêu thú đã lọc tạp chất, sánh như mật.",
+    "summary": "Căn cốt +2, Sức khỏe −5.",
+    "price": {
+      "spiritStones": 35
+    },
+    "use": {
+      "text": "Máu yêu sôi trong huyết quản. Xương cốt kêu răng rắc.",
+      "effects": [
+        {
+          "hook": "stat.physique",
+          "add": 2
+        },
+        {
+          "hook": "stat.health",
+          "add": -5
+        }
+      ]
+    }
+  },
+  {
+    "id": "giap_vay_giao",
+    "name": "Giáp vảy giao long",
+    "kind": "artifact",
+    "description": "Áo giáp kết từ vảy giao long Đông Hải, nhẹ như lụa, cứng như sắt.",
+    "summary": "Mang theo: thương tích nhận vào −25%.",
+    "price": {
+      "spiritStones": 260
+    },
+    "forSale": false,
+    "carried": [
+      {
+        "hook": "injuryReduce",
+        "add": 0.25
+      }
+    ]
   },
   {
     "id": "ngung_anh_dan",

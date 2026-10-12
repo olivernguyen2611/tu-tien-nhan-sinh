@@ -110,7 +110,7 @@
     "weight": 0,
     "choices": [
       {
-        "text": "Nhảy xuống, tẩy kinh mạch",
+        "text": "Nhảy xuống, tẩy kinh mạch (càng lớn tuổi càng dễ mất mạng)",
         "requires": { "root": { "usable": false } },
         "result": {
           "text": "Linh tủy xộc vào xương, đau như bị nghiền. Lúc bò lên bờ, kinh mạch ngươi thông suốt như sông sau lũ. Lão cười khà khà: \"Giờ thì tu được rồi.\"",

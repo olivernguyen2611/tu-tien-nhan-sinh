@@ -3,7 +3,7 @@
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -95,6 +95,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   let foundingPills: { file: string; pills: string[] } | null = null;
   let martialFile: MartialFile | null = null;
   const regionFiles: { file: string; regions: Region[] }[] = [];
+  const marketFiles: { file: string; markets: Market[] }[] = [];
   let chosenIds: string[] | null = null;
   let fingerIds: string[] | null = null;
   const fingerRealms: { file: string; finger: string; realm: string }[] = [];
@@ -104,6 +105,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   const challengeRefs: { file: string; id: string; rules: { origin?: string; difficulty?: string; traits?: string[] }; goal: { realmMin?: string } }[] = [];
   let careerIds: string[] | null = null;
   const sectFiles: { file: string; sects: Sect[] }[] = [];
+  const missionSects: { file: string; missions: SectLife['missions'] }[] = [];
   const parsedShared: { balance?: Balance; realms?: RealmsFile; roots?: RootsFile; aptitudes?: AptitudesFile } = {};
 
   for (const [file, raw] of Object.entries(files)) {
@@ -126,8 +128,19 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       chosenIds = templates.map((t) => t.id);
     }
     if (schema === GoldenFingerFileSchema) {
-      const fingers = (parsed.data as { fingers: { id: string; levels: { realm: string }[] }[] }).fingers;
+      const fingers = (parsed.data as GoldenFingerFile).fingers;
       problems.push(...duplicates(file, 'Kim Thủ Chỉ', fingers));
+      for (const f of fingers) {
+        problems.push(...duplicates(file, `hành động của ${f.id}`, f.actions));
+        for (const a of f.actions) {
+          if (a.minLevel > f.levels.length) problems.push({ file, level: 'error', message: `${f.id} / ${a.id}: minLevel vượt số tầng` });
+          for (const o of [a.success, a.fail, a.result]) {
+            if (o && !Object.entries(o.effects).some(([k, v]) => k.startsWith('stat.') && typeof v === 'number' && v !== 0)) {
+              problems.push({ file, level: 'error', message: `${f.id} / ${a.id}: kết quả không đổi chỉ số nào` });
+            }
+          }
+        }
+      }
       fingerIds = fingers.map((f) => f.id);
       fingerRealms.push(...fingers.flatMap((f) => f.levels.map((l) => ({ file, finger: f.id, realm: l.realm }))));
     }
@@ -210,13 +223,20 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       problems.push(...duplicates(file, 'thiên phú', list));
       fateIds = list.map((x) => x.id);
     }
-    if (schema === SectLifeSchema) problems.push(...duplicates(file, 'nhiệm vụ', (parsed.data as SectLife).missions));
+    if (schema === SectLifeSchema) {
+      problems.push(...duplicates(file, 'nhiệm vụ', (parsed.data as SectLife).missions));
+      missionSects.push({ file, missions: (parsed.data as SectLife).missions });
+    }
     if (schema === WorldSchema && (parsed.data as World).sectRecruitEvent) rootTests.push({ file, event: (parsed.data as World).sectRecruitEvent! });
     if (schema === TechniqueFileSchema) techniques = parsed.data as Technique[];
     if (schema === SectFileSchema) sectFiles.push({ file, sects: parsed.data as Sect[] });
     if (schema === LineageFileSchema) problems.push(...duplicates(file, 'đạo thống', parsed.data as { id: string }[]));
     if (schema === MartialFileSchema) martialFile = parsed.data as MartialFile;
     if (schema === RegionFileSchema) regionFiles.push({ file, regions: parsed.data as Region[] });
+    if (schema === MarketFileSchema) {
+      problems.push(...duplicates(file, 'phường thị', parsed.data as Market[]));
+      marketFiles.push({ file, markets: parsed.data as Market[] });
+    }
     if (schema === ItemFileSchema) itemIds = (parsed.data as { id: string }[]).map((x) => x.id);
     if (schema === RecipeFileSchema) recipeFile = { file, data: parsed.data as RecipeFile };
     if (schema === ClanFileSchema) {
@@ -234,6 +254,18 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   }
 
   problems.push(...checkCultivationTables(parsedShared));
+  // Playtest 2: market specialities, scrolls, lots and regions must exist.
+  const techIds = new Set((techniques ?? []).map((t) => t.id));
+  for (const { file, markets } of marketFiles) {
+    const regionIds = new Set(regionFiles.filter((r) => r.file.split('/')[1] === file.split('/')[1]).flatMap((r) => r.regions.map((x) => x.id)));
+    for (const m of markets) {
+      const err = (message: string) => problems.push({ file, level: 'error', message: `phường thị "${m.id}": ${message}` });
+      const lots = m.auction?.lots ?? [];
+      for (const it of [...m.items, ...lots.flatMap((l) => (l.item ? [l.item] : []))]) if (itemIds && !itemIds.includes(it)) err(`vật phẩm không tồn tại "${it}"`);
+      for (const t of [...m.techniques.map((x) => x.id), ...lots.flatMap((l) => (l.technique ? [l.technique] : []))]) if (techniques && !techIds.has(t)) err(`công pháp không tồn tại "${t}"`);
+      for (const r of m.regions ?? []) if (!regionIds.has(r)) err(`vùng không tồn tại "${r}"`);
+    }
+  }
   // Task 5.2: Luyện Đan Phòng sends real items.
   for (const it of foundingPills?.pills ?? []) {
     if (itemIds && !itemIds.includes(it)) problems.push({ file: foundingPills!.file, level: 'error', message: `công trình gửi vật phẩm không tồn tại "${it}"` });
@@ -260,6 +292,12 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   }
 
   problems.push(...checkTechniquesAndSects(techniques, sectFiles, parsedShared));
+  const knownSects = new Set(sectFiles.flatMap((f) => f.sects.map((x) => x.id)));
+  for (const { file, missions } of missionSects) {
+    for (const m of missions) for (const sid of m.sects ?? []) {
+      if (!knownSects.has(sid)) problems.push({ file, level: 'error', message: `nhiệm vụ "${m.id}": tông môn không tồn tại "${sid}"` });
+    }
+  }
   if (martialFile && parsedShared.balance) {
     const m = parsedShared.balance.martial;
     const n = martialFile.stages.length;

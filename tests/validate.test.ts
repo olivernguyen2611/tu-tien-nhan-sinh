@@ -4,7 +4,7 @@ import realBalance from '../content/config/balance.json';
 
 const balance = {
   version: 1,
-  events: { popupChanceLowRealm: 0.2, popupChanceHighRealm: 0.1, logLineChance: 0.6, minCooldownYears: 6, repeatDecay: 0.3, luckCategories: ["fortune"], luckPerPoint: 0.02, luckMin: 0.2, check: { base: 0.5, perPoint: 0.015, min: 0.05, max: 0.95 } },
+  events: { popupChanceLowRealm: 0.2, popupChanceHighRealm: 0.1, highRealmFrom: "nguyen_anh", sectMemberMul: 2, logLineChance: 0.6, minCooldownYears: 6, repeatDecay: 0.3, luckCategories: ["fortune"], luckPerPoint: 0.02, luckMin: 0.2, check: { base: 0.5, perPoint: 0.015, min: 0.05, max: 0.95 } },
   traits: { slots: 3, rerolls: 3, badLuckChance: 0.12, rarityWeights: { pham: 45 }, maxSlots: 5, locks: 1, lockCost: 3 },
   character: { mortalStatRange: [30, 80], aptitudeRange: [10, 90], aptitudeRolls: 2 },
   family: {

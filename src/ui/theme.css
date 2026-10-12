@@ -228,6 +228,12 @@ button { font: inherit; color: inherit; }
 .top-actions { display: flex; gap: 6px; flex: none; }
 .top-bar .icon-btn { min-width: 40px; min-height: 40px; }
 .purse { flex: none; }
+/* Playtest 2: on phones the name keeps the first row; purse and buttons share the second. */
+@media (max-width: 479px) {
+  .top-bar { flex-wrap: wrap; row-gap: 6px; }
+  .who { flex: 1 1 calc(100% - 60px); }
+  .purse { flex-direction: row; align-items: center; gap: 10px; margin-right: auto; }
+}
 .desktop-only { display: none; }
 @media (min-width: 900px) { .desktop-only { display: contents; } }
 
@@ -826,6 +832,14 @@ button { font: inherit; color: inherit; }
 }
 .golden-finger-card b { font-family: var(--font-story); font-size: 1.125rem; }
 .golden-finger-card .risk { color: var(--muted); }
+/* Playtest 2: Kim Thủ Chỉ panel and its top-bar button */
+.finger-levels { list-style: none; padding: 0; margin: 0 0 0.75rem; display: grid; gap: 4px; }
+.finger-levels .asleep { opacity: 0.6; }
+.finger-btn { position: relative; color: var(--rare); border-color: var(--rare); }
+.finger-btn.ready::after {
+  content: ''; position: absolute; top: 4px; right: 4px; width: 8px; height: 8px;
+  border-radius: 50%; background: var(--rare);
+}
 
 /* Task 5b.3: locked destiny slots; up to 5 slots wrap on wide screens. */
 .trait-card { display: flex; flex-direction: column; gap: 6px; }
@@ -854,3 +868,7 @@ button { font: inherit; color: inherit; }
 .challenge-result { font-weight: 600; }
 .challenge-result.done { color: var(--jade); }
 .challenge-screen .dev-input, .dev-section > .dev-input { flex: none; }
+
+/* Playtest 2: auction lots */
+.auction-lot { display: flex; flex-direction: column; gap: 6px; padding: 6px 8px; }
+.auction-lot > div:first-child { display: flex; flex-direction: column; min-width: 0; }

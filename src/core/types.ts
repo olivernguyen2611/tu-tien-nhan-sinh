@@ -50,6 +50,8 @@ export interface GameState {
   combat: Battle | null;
   /** Task 3.2: market id → this year's bargain result (price multiplier). */
   bargains: Record<string, { age: number; mul: number }>;
+  /** Playtest 2: auction house id → age of the last bid (absent in older saves). */
+  auctions?: Record<string, number>;
   /** Nghịch Thiên Cải Mệnh talents taken (fate-talents.json, task 2.7). */
   talents: string[];
   /** A talent choice waiting for the player (after a big breakthrough); blocks the next year. */
@@ -64,7 +66,8 @@ export interface GameState {
   /** Task 5b.6: this life is the thử thách tuần of that week (try: the how-manyth attempt on this browser). */
   challenge: { week: string; id: string; try: number } | null;
   /** Task 5b.2: the Kim Thủ Chỉ of this life (golden-fingers.json), its awakened level, the age it came. */
-  goldenFinger: { id: string; level: number; since: number } | null;
+  /** used: action id → age last used (playtest 2; absent in older saves). */
+  goldenFinger: { id: string; level: number; since: number; used?: Record<string, number> } | null;
   /** Task 5b.1: thiên phú luân hồi this life was born with (id → level), bought in earlier lives. */
   rebirthTalents: Record<string, number>;
   /** Task 5b.8: Phúc báo brought from the last life (blessings.json id; career = the path that earned it). */
@@ -98,7 +101,7 @@ export interface GameState {
    * (task 3.7), people who turned the player down or were left, rivals around the lover,
    * and the age each romance action was last done (once a year each).
    */
-  romance: { lover: string | null; couple: boolean; partner: string | null; exes: string[]; rivals: number; lastActions: Record<string, number> };
+  romance: { lover: string | null; couple: boolean; partner: string | null; exes: string[]; rivals: number; lastActions: Record<string, number>; /** Playtest 2: failed tries at a child since the last one (absent in older saves). */ birthTries?: number };
   /** Thiên kiêu bảng (task 3.5): the world's prodigies and the player's rank last year (null = not on the board). */
   ranking: { prodigies: Prodigy[]; rank: number | null };
   /** Base aptitude 0–100 for each combat path (task 3.8); hooks add on top. */

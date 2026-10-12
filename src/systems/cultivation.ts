@@ -112,6 +112,11 @@ export function rootName(root: SpiritRoot, content: Content): string {
   return `${grade} (${names.join(', ')})`;
 }
 
+/** The root can cultivate (any grade with speed > 0). */
+export function rootUsable(state: GameState, content: Content): boolean {
+  return !!state.cult.root && (content.balance.roots.gradeSpeed[state.cult.root.grade] ?? 0) > 0;
+}
+
 /** What the profile shows for the root. */
 export function rootLabel(state: GameState, content: Content): string {
   return state.cult.root ? rootName(state.cult.root, content) : 'Chưa thử';
@@ -428,6 +433,11 @@ export function cultivateYear(state: GameState, content: Content): GameState {
   if (progress >= 100 && lastStage) {
     // Peak of the realm: waits for the big breakthrough (task 2.6). Say it once.
     if (!wasFull) log = pushLine(log, { text: fillRealm(texts.peak, s, content), tone: 'good' });
+    // Playtest 2: each year spent at the peak builds up a little for the big breakthrough (tích lũy), capped.
+    const mb = content.balance.majorBreakthrough;
+    if (mb.openRealms.includes(s.cult.realm) || s.cult.realm === 'luyen_khi') {
+      s = { ...s, cult: { ...s.cult, nextBonus: Math.min(mb.peakWaitMax, s.cult.nextBonus + mb.peakWaitPerYear) } };
+    }
   } else if (progress >= 100) {
     const base = s.cult.realm === 'luyen_khi'
       ? content.balance.realmStages.luyenKhiLevelUpChance

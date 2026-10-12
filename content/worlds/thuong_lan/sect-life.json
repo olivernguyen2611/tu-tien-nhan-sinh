@@ -1,46 +1,172 @@
 {
   "texts": {
-    "join": "Ngươi bái nhập {sect}, làm đệ tử {rank}.",
-    "refused": "{sect} không nhận ngươi: {reason}",
-    "promote": "Ngươi được thăng làm đệ tử {rank} của {sect}.",
-    "stipend": "Nhận bổng lộc của {sect}: {stones} linh thạch.",
-    "leave": "Ngươi rời {sect}. Sau lưng, sơn môn khép lại.",
-    "master": "{master} nhận ngươi làm đệ tử thân truyền. Từ nay ngươi có sư phụ.",
-    "masterRefused": "Trưởng lão nhìn ngươi một lúc rồi lắc đầu: \"Chưa đủ.\"",
-    "masterTitle": "Trưởng lão {master}",
-    "preceptBroken": "Phá giới sát sinh. Tiếng mõ trong lòng lạc mất một nhịp.",
-    "expelled": "Phá giới quá nhiều lần, {sect} không giữ ngươi nữa."
+      "join": "Ngươi bái nhập {sect}, làm đệ tử {rank}.",
+      "refused": "{sect} không nhận ngươi: {reason}",
+      "promote": "Ngươi được thăng làm đệ tử {rank} của {sect}.",
+      "stipend": "Nhận bổng lộc của {sect}: {stones} linh thạch.",
+      "leave": "Ngươi rời {sect}. Sau lưng, sơn môn khép lại.",
+      "master": "{master} nhận ngươi làm đệ tử thân truyền. Từ nay ngươi có sư phụ.",
+      "masterRefused": "Trưởng lão nhìn ngươi một lúc rồi lắc đầu: \"Ngộ tính còn kém, chưa đủ để thu làm đệ tử. Năm sau lại tới.\"",
+      "masterTitle": "Trưởng lão {master}",
+      "preceptBroken": "Phá giới sát sinh. Tiếng mõ trong lòng lạc mất một nhịp.",
+      "expelled": "Phá giới quá nhiều lần, {sect} không giữ ngươi nữa."
   },
   "missions": [
     {
       "id": "ganh_nuoc", "name": "Gánh nước cho nhà bếp", "minRank": 0,
       "text": "Ba trăm gánh nước từ suối lên núi.", "stat": "physique", "difficulty": 30,
-      "success": { "text": "Vai sưng vù nhưng xong việc. Nhà bếp cho thêm một bát cơm.", "contribution": 5, "spiritStones": 0, "stats": { "physique": 1 } },
-      "fail": { "text": "Gánh tới gánh thứ hai trăm thì trượt chân lăn xuống dốc.", "contribution": 1, "spiritStones": 0, "stats": { "health": -5 } }
+      "success": {"text": "Vai sưng vù nhưng xong việc. Nhà bếp cho thêm một bát cơm.", "contribution": 5, "spiritStones": 0, "stats": {"physique": 1}},
+      "fail": {"text": "Gánh tới gánh thứ hai trăm thì trượt chân lăn xuống dốc.", "contribution": 1, "spiritStones": 0, "stats": {"health": -5}}
     },
     {
       "id": "hai_thuoc", "name": "Hái thuốc trong núi", "minRank": 1,
       "text": "Tông môn cần mười gốc Ngưng Huyết Thảo mọc ở vách đá.", "stat": "luck", "difficulty": 45,
-      "success": { "text": "Tìm đủ mười gốc, còn nhặt thêm được một viên linh thạch vụn.", "contribution": 10, "spiritStones": 1, "stats": { "happiness": 2 } },
-      "fail": { "text": "Lạc đường hai ngày, về tay không, bị trừ điểm.", "contribution": 2, "spiritStones": 0, "stats": { "happiness": -3 } }
+      "success": {"text": "Tìm đủ mười gốc, còn nhặt thêm được một viên linh thạch vụn.", "contribution": 10, "spiritStones": 1, "stats": {"happiness": 2}},
+      "fail": {"text": "Lạc đường hai ngày, về tay không, bị trừ điểm.", "contribution": 2, "spiritStones": 0, "stats": {"happiness": -3}}
     },
     {
       "id": "tuan_son", "name": "Tuần núi ban đêm", "minRank": 1,
       "text": "Gác một đêm ở rìa đại trận hộ sơn.", "stat": "daoHeart", "difficulty": 45,
-      "success": { "text": "Một đêm yên ả. Nhìn sao lâu, lòng cũng tĩnh hơn.", "contribution": 8, "spiritStones": 0, "stats": { "daoHeart": 1 } },
-      "fail": { "text": "Ngủ gật lúc canh ba, bị chấp sự bắt được.", "contribution": 0, "spiritStones": 0, "stats": { "happiness": -3 } }
+      "success": {"text": "Một đêm yên ả. Nhìn sao lâu, lòng cũng tĩnh hơn.", "contribution": 8, "spiritStones": 0, "stats": {"daoHeart": 1}},
+      "fail": {"text": "Ngủ gật lúc canh ba, bị chấp sự bắt được.", "contribution": 0, "spiritStones": 0, "stats": {"happiness": -3}}
     },
     {
       "id": "diet_yeu_thu", "name": "Diệt yêu thú quấy làng", "minRank": 2,
       "text": "Một con lang yêu cấp thấp quấy nhiễu làng dưới chân núi.", "stat": "physique", "difficulty": 55,
-      "success": { "text": "Lang yêu bị diệt, dân làng đem gà tới tận sơn môn cảm tạ.", "contribution": 20, "spiritStones": 3, "stats": { "happiness": 3 } },
-      "fail": { "text": "Lang yêu chạy mất, để lại trên tay ngươi ba vết cào.", "contribution": 3, "spiritStones": 0, "stats": { "health": -12 } }
+      "success": {"text": "Lang yêu bị diệt, dân làng đem gà tới tận sơn môn cảm tạ.", "contribution": 20, "spiritStones": 3, "stats": {"happiness": 3}},
+      "fail": {"text": "Lang yêu chạy mất, để lại trên tay ngươi ba vết cào.", "contribution": 3, "spiritStones": 0, "stats": {"health": -12}}
     },
     {
       "id": "ho_tong_thuong_doi", "name": "Hộ tống thương đội", "minRank": 2,
       "text": "Một thương đội thân với tông môn cần người hộ tống qua đèo.", "stat": "charm", "difficulty": 50,
-      "success": { "text": "Thương đội tới nơi bình an, chủ hàng còn biếu thêm.", "contribution": 15, "spiritStones": 4, "stats": { "charm": 1 } },
-      "fail": { "text": "Gặp cướp, mất nửa xe hàng. Chủ hàng mặt nặng mày nhẹ.", "contribution": 3, "spiritStones": 0, "stats": { "happiness": -4 } }
+      "success": {"text": "Thương đội tới nơi bình an, chủ hàng còn biếu thêm.", "contribution": 15, "spiritStones": 4, "stats": {"charm": 1}},
+      "fail": {"text": "Gặp cướp, mất nửa xe hàng. Chủ hàng mặt nặng mày nhẹ.", "contribution": 3, "spiritStones": 0, "stats": {"happiness": -4}}
+    },
+    {
+      "id": "quet_san", "name": "Quét sân Diễn Võ Trường", "minRank": 0,
+      "text": "Sân rộng trăm trượng, lá rụng không ngớt.", "stat": "daoHeart", "difficulty": 25,
+      "success": {"text": "Quét tới đâu sạch tới đó. Lão chấp sự gật gù, ghi thêm một nét.", "contribution": 4, "spiritStones": 0, "stats": {"daoHeart": 1}},
+      "fail": {"text": "Vừa quét xong thì gió nổi, lá lại đầy sân. Chấp sự chỉ thấy sân bẩn.", "contribution": 1, "spiritStones": 0, "stats": {"happiness": -2}}
+    },
+    {
+      "id": "bo_cui", "name": "Bổ củi cho phòng luyện đan", "minRank": 0,
+      "text": "Lò đan đỏ lửa quanh năm, củi bao nhiêu cũng không đủ.", "stat": "physique", "difficulty": 30,
+      "success": {"text": "Một mùa bổ xong ba nghìn bó, cánh tay rắn như gỗ lim.", "contribution": 5, "spiritStones": 0, "stats": {"physique": 1}},
+      "fail": {"text": "Rìu bật vào chân. Củi chưa đủ, chân đã khập khiễng.", "contribution": 1, "spiritStones": 0, "stats": {"health": -6}}
+    },
+    {
+      "id": "cho_linh_thu", "name": "Cho linh thú ăn", "minRank": 0,
+      "text": "Chuồng linh hạc, linh lộc sau núi thiếu người chăm.", "stat": "charm", "difficulty": 30,
+      "success": {"text": "Bầy linh hạc quen hơi ngươi, sáng nào cũng ra đón.", "contribution": 5, "spiritStones": 0, "stats": {"happiness": 3}},
+      "fail": {"text": "Một con linh lộc giận dỗi, húc ngươi lăn vào máng cỏ.", "contribution": 1, "spiritStones": 0, "stats": {"health": -3, "happiness": -2}}
+    },
+    {
+      "id": "chep_kinh", "name": "Chép kinh văn", "minRank": 0,
+      "text": "Tàng Kinh Các cần chép lại mấy quyển cổ tịch đã mục.", "stat": "intellect", "difficulty": 30,
+      "success": {"text": "Chép xong, chữ đẹp hơn, đầu óc cũng sáng hơn.", "contribution": 4, "spiritStones": 0, "stats": {"intellect": 2}},
+      "fail": {"text": "Chép sai ba chỗ, bị phạt chép lại từ đầu.", "contribution": 1, "spiritStones": 0, "stats": {"happiness": -3}}
+    },
+    {
+      "id": "tuoi_linh_dien", "name": "Tưới linh điền", "minRank": 0,
+      "text": "Linh mễ sắp trổ bông, cần người dẫn nước sớm tối.", "stat": "luck", "difficulty": 30,
+      "success": {"text": "Năm ấy linh mễ được mùa, ngươi được chia một túi.", "contribution": 5, "spiritStones": 1, "stats": {"health": 3}},
+      "fail": {"text": "Sâu linh cắn nửa ruộng. Chấp sự bảo do ngươi xui.", "contribution": 1, "spiritStones": 0, "stats": {"happiness": -3}}
+    },
+    {
+      "id": "trong_tang_kinh", "name": "Trông coi Tàng Kinh Các", "minRank": 1,
+      "text": "Ngồi một năm giữa ngàn quyển sách, cấm đệ tử lén mang ra ngoài.", "stat": "comprehension", "difficulty": 45,
+      "success": {"text": "Rảnh tay đọc trộm vài quyển, ngộ ra đôi điều.", "contribution": 10, "spiritStones": 0, "stats": {"comprehension": 1}},
+      "fail": {"text": "Một quyển bí lục bị mất ngay ca trực của ngươi.", "contribution": 2, "spiritStones": 0, "stats": {"happiness": -4}}
+    },
+    {
+      "id": "canh_lo_dan", "name": "Canh lò đan", "minRank": 1, "sects": ["bach_thao_coc", "bich_lac_tong"],
+      "text": "Lò Cửu Chuyển của trưởng lão cần người giữ lửa bốn mươi chín ngày.", "stat": "daoHeart", "difficulty": 45,
+      "success": {"text": "Lửa đều suốt bốn mươi chín ngày. Trưởng lão thưởng cho một viên đan thừa.", "contribution": 12, "spiritStones": 2, "stats": {"health": 3}},
+      "fail": {"text": "Ngủ quên một khắc, cả lò thành than. Trưởng lão im lặng rất đáng sợ.", "contribution": 2, "spiritStones": 0, "stats": {"happiness": -5}}
+    },
+    {
+      "id": "khat_thuc", "name": "Khất thực dưới núi", "minRank": 1, "sects": ["vo_uu_tu"],
+      "text": "Ôm bát đi qua mười làng, nhận gì ăn nấy.", "stat": "daoHeart", "difficulty": 40,
+      "success": {"text": "Đi một vòng, bát đầy, lòng cũng đầy. Mấy đứa trẻ trong làng chạy theo xin kể chuyện.", "contribution": 10, "spiritStones": 0, "stats": {"daoHeart": 2}},
+      "fail": {"text": "Bị chó đuổi chạy ba dặm, bát vỡ mất một góc.", "contribution": 2, "spiritStones": 0, "stats": {"happiness": -3}}
+    },
+    {
+      "id": "mai_kiem", "name": "Mài kiếm cho Kiếm Trủng", "minRank": 1, "sects": ["tang_phong_kiem_cac"],
+      "text": "Ba trăm thanh kiếm cũ trong Kiếm Trủng cần mài lại.", "stat": "physique", "difficulty": 45,
+      "success": {"text": "Mài tới thanh cuối, ngươi chợt nghe kiếm ngân.", "contribution": 10, "spiritStones": 0, "stats": {"comprehension": 1}},
+      "fail": {"text": "Mài sứt mẻ một thanh kiếm của tổ sư. Bị phạt quỳ ba ngày.", "contribution": 2, "spiritStones": 0, "stats": {"health": -4}}
+    },
+    {
+      "id": "thu_huyet_thao", "name": "Thu huyết thảo", "minRank": 1, "sects": ["u_ha_ma_tong"],
+      "text": "Ven sông U Hà mọc thứ cỏ đỏ hút máu người qua đường. Hái về luyện công.", "stat": "luck", "difficulty": 45,
+      "success": {"text": "Hái đủ một giỏ, chỉ mất chút máu ngón tay.", "contribution": 12, "spiritStones": 2, "stats": {"physique": 1}},
+      "fail": {"text": "Huyết thảo quấn chân kéo xuống nước. Ngoi lên thì giỏ đã trôi.", "contribution": 2, "spiritStones": 0, "stats": {"health": -8}}
+    },
+    {
+      "id": "mua_vat_lieu", "name": "Xuống phường thị mua vật liệu", "minRank": 1,
+      "text": "Trong tay một túi linh thạch, phải mua đủ danh sách dài ba thước.", "stat": "charm", "difficulty": 45,
+      "success": {"text": "Trả giá khéo, còn dư vài viên. Chấp sự không hỏi, ngươi cũng không nói.", "contribution": 8, "spiritStones": 3, "stats": {"charm": 1}},
+      "fail": {"text": "Bị lừa mua phải hàng giả. Về núi bị mắng một trận.", "contribution": 1, "spiritStones": 0, "stats": {"happiness": -4}}
+    },
+    {
+      "id": "sua_tran_ky", "name": "Sửa trận kỳ hộ sơn", "minRank": 1,
+      "text": "Mấy lá trận kỳ của đại trận hộ sơn bị sét đánh hỏng.", "stat": "comprehension", "difficulty": 50,
+      "success": {"text": "Trận kỳ sửa xong, đại trận sáng hơn trước. Trận sư khen một câu.", "contribution": 12, "spiritStones": 0, "stats": {"intellect": 1}},
+      "fail": {"text": "Cắm nhầm vị trí, đại trận kêu ầm ầm cả đêm, cả núi không ai ngủ được.", "contribution": 2, "spiritStones": 0, "stats": {"happiness": -4}}
+    },
+    {
+      "id": "tham_do_hang_dong", "name": "Thám hiểm hang động mới", "minRank": 2,
+      "text": "Sau trận địa chấn, vách núi lộ ra một hang động sâu hun hút.", "stat": "luck", "difficulty": 55,
+      "success": {"text": "Đáy hang có mạch khoáng nhỏ. Ngươi được chia phần.", "contribution": 18, "spiritStones": 5, "stats": {"happiness": 3}},
+      "fail": {"text": "Hang sập một nửa, ngươi đào đường ra mất bảy ngày.", "contribution": 3, "spiritStones": 0, "stats": {"health": -10}}
+    },
+    {
+      "id": "truy_bat_phan_do", "name": "Truy bắt phản đồ", "minRank": 2,
+      "text": "Một đệ tử trộm bí tịch bỏ trốn. Tông môn lệnh truy bắt.", "stat": "physique", "difficulty": 60,
+      "success": {"text": "Bắt được gã ở bến đò. Bí tịch còn nguyên, gã thì không.", "contribution": 22, "spiritStones": 3, "stats": {"daoHeart": 1}},
+      "fail": {"text": "Gã thoát được, còn để lại cho ngươi một vết kiếm.", "contribution": 3, "spiritStones": 0, "stats": {"health": -12}}
+    },
+    {
+      "id": "thi_kiem", "name": "Thử kiếm với kiếm khách giang hồ", "minRank": 2, "sects": ["tang_phong_kiem_cac"],
+      "text": "Một kiếm khách lên núi khiêu chiến. Tông môn cử ngươi ra tiếp.", "stat": "physique", "difficulty": 60,
+      "success": {"text": "Ba mươi chiêu, ngươi thắng nửa chiêu. Kiếm khách cúi chào rồi xuống núi.", "contribution": 22, "spiritStones": 0, "stats": {"physique": 1, "happiness": 3}},
+      "fail": {"text": "Thua một chiêu. Kiếm khách cười: \"Kiếm Các chỉ thế thôi sao?\"", "contribution": 3, "spiritStones": 0, "stats": {"happiness": -6}}
+    },
+    {
+      "id": "phuc_kich", "name": "Phục kích đệ tử chính đạo", "minRank": 2, "sects": ["u_ha_ma_tong"],
+      "text": "Một toán đệ tử chính đạo đi ngang lãnh địa U Hà. Ma tông muốn dạy chúng một bài học.", "stat": "physique", "difficulty": 55,
+      "success": {"text": "Chúng chạy tán loạn, để lại túi trữ vật.", "contribution": 20, "spiritStones": 6, "stats": {"happiness": 2}},
+      "fail": {"text": "Chúng đông hơn tin báo. Ngươi lết về tông môn với ba vết thương.", "contribution": 3, "spiritStones": 0, "stats": {"health": -14}}
+    },
+    {
+      "id": "tri_benh_dich", "name": "Trị bệnh dịch dưới núi", "minRank": 2, "sects": ["bach_thao_coc", "vo_uu_tu", "bich_lac_tong"],
+      "text": "Dịch lạ lan khắp ba trấn, dân chết như rạ.", "stat": "intellect", "difficulty": 55,
+      "success": {"text": "Tìm ra nguồn dịch ở giếng nước. Ba trấn lập bài vị trường sinh cho ngươi.", "contribution": 22, "spiritStones": 2, "stats": {"daoHeart": 2}},
+      "fail": {"text": "Dịch không dứt, ngươi còn nhiễm bệnh nằm liệt một tháng.", "contribution": 3, "spiritStones": 0, "stats": {"health": -12}}
+    },
+    {
+      "id": "tran_thu_bien_canh", "name": "Trấn thủ biên cảnh", "minRank": 3,
+      "text": "Một năm canh giữ cửa ải giáp ranh yêu vực.", "stat": "physique", "difficulty": 65,
+      "success": {"text": "Ba lần yêu triều kéo tới, ba lần lui về. Tên ngươi được khắc lên bia đá cửa ải.", "contribution": 40, "spiritStones": 10, "stats": {"physique": 1, "daoHeart": 1}},
+      "fail": {"text": "Một đêm yêu triều phá ải. Ngươi giữ được mạng, không giữ được mặt mũi.", "contribution": 5, "spiritStones": 0, "stats": {"health": -18}}
+    },
+    {
+      "id": "di_su", "name": "Đi sứ tông môn khác", "minRank": 3,
+      "text": "Mang thư của chưởng môn sang tông bạn bàn chuyện liên minh.", "stat": "charm", "difficulty": 60,
+      "success": {"text": "Tiệc rượu ba ngày, liên minh thành. Tông bạn còn tặng quà.", "contribution": 35, "spiritStones": 8, "stats": {"charm": 2}},
+      "fail": {"text": "Nói hớ một câu, tiệc tan trong im lặng.", "contribution": 5, "spiritStones": 0, "stats": {"happiness": -6}}
+    },
+    {
+      "id": "day_de_tu_moi", "name": "Dạy đệ tử mới", "minRank": 3,
+      "text": "Một lứa đệ tử ký danh cần người chỉ điểm nhập môn.", "stat": "comprehension", "difficulty": 55,
+      "success": {"text": "Dạy người rồi mới hiểu mình. Có đứa còn gọi ngươi là \"tiểu sư phụ\".", "contribution": 30, "spiritStones": 0, "stats": {"comprehension": 1, "happiness": 3}},
+      "fail": {"text": "Lứa ấy nghịch như quỷ, đứa thì tẩu hỏa, đứa thì leo nóc điện.", "contribution": 5, "spiritStones": 0, "stats": {"happiness": -5}}
+    },
+    {
+      "id": "dieu_tra_ma_tung", "name": "Điều tra dấu vết ma tu", "minRank": 3, "sects": ["bich_lac_tong", "tang_phong_kiem_cac", "bach_thao_coc", "vo_uu_tu"],
+      "text": "Mấy làng ven núi mất người không rõ nguyên do.", "stat": "intellect", "difficulty": 65,
+      "success": {"text": "Lần theo tới một hang động, phá được một tế đàn tà dị.", "contribution": 40, "spiritStones": 6, "stats": {"daoHeart": 2}},
+      "fail": {"text": "Manh mối đứt giữa chừng. Đêm về ngươi nằm mơ thấy tiếng cười.", "contribution": 5, "spiritStones": 0, "stats": {"happiness": -6, "daoHeart": -1}}
     }
   ]
 }

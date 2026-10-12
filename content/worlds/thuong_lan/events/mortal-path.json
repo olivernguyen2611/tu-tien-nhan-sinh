@@ -997,7 +997,7 @@
     "oncePerLife": true,
     "choices": [
       {
-        "text": "Ăn ngay",
+        "text": "Ăn ngay (càng lớn tuổi càng dễ mất mạng)",
         "check": {
           "stat": "stat.health",
           "difficulty": 50

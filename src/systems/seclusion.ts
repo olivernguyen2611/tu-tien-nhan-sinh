@@ -1,5 +1,5 @@
 // Bế quan (task 4.1): close the door for some years. Cultivation runs ×1.5
-// (PLAN G.1) and no ordinary event comes, but the years still pass: family
+// (PLAN G.1) and no ordinary event comes (only a rare "be_quan" kỳ ngộ that opens the door), but the years pass: family
 // age and may die, lover and đạo lữ grow distant. The door opens early when
 // the realm's peak is reached or lifespan runs short.
 import type { Content } from '../core/content';
@@ -20,7 +20,9 @@ function atPeak(state: GameState, content: Content): boolean {
 export function seclusionView(state: GameState, content: Content): SeclusionView {
   const options = content.balance.seclusion.options[state.cult.realm] ?? [];
   if (!state.alive || options.length === 0) return { options: [], blocked: 'Chưa vào Luyện Khí' };
-  if (state.events.pending || state.fate || state.combat) return { options, blocked: 'Còn việc chưa xong' };
+  if (state.combat) return { options, blocked: 'Đang giao chiến' };
+  if (state.fate) return { options, blocked: 'Đang chờ Nghịch Thiên Cải Mệnh' };
+  if (state.events.pending) return { options, blocked: 'Còn một chuyện đang chờ ngươi quyết định' };
   if (atPeak(state, content)) return { options, blocked: 'Tu vi đã viên mãn, cần đột phá' };
   return { options, blocked: null };
 }
@@ -70,6 +72,10 @@ export function runSeclusion(state: GameState, content: Content): GameState {
     s = next;
     for (const id of [s.romance.lover, s.romance.partner]) if (id) s = changeNpc(s, content, id, { affinity: cfg.lonelyAffinity });
     if (s.fate || s.combat) return s;
+    // Playtest 2026-10-12: a kỳ ngộ or trouble broke in; the door opens to answer it.
+    if (s.events.pending) {
+      return line({ ...s, seclusion: null }, { text: fill(texts.seclusionInterrupted, s, content, s.character.age - since), tone: 'rare' });
+    }
     if (!fixed && atPeak(s, content)) { early = texts.seclusionPeak; break; }
     if (s.cult.lifespan - s.character.age <= cfg.lifespanStop) { early = texts.seclusionLifespan; break; }
   }

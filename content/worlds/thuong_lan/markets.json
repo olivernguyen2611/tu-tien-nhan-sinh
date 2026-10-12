@@ -1,26 +1,362 @@
 [
   {
-    "id": "cho_phien", "name": "Chợ phiên huyện",
-    "description": "Năm ngày một phiên. Bán đủ thứ từ cái bát tới bùa xin ở miếu, trả bằng bạc.",
-    "currency": "silver", "kinds": ["pill", "talisman", "misc"],
+    "id": "cho_phien",
+    "name": "Chợ phiên huyện",
+    "description": "Năm ngày một phiên. Bán đủ thứ từ kẹo hồ lô tới bùa xin ở miếu, trả bằng bạc.",
+    "currency": "silver",
+    "kinds": [
+      "pill",
+      "talisman",
+      "misc",
+      "artifact"
+    ],
     "bargainWin": "Bà bán hàng chép miệng: \"Thôi được, coi như mở hàng.\"",
-    "bargainLose": "Bà bán hàng nhìn ngươi từ đầu tới chân rồi nâng giá."
+    "bargainLose": "Bà bán hàng nhìn ngươi từ đầu tới chân rồi nâng giá.",
+    "regions": [
+      "thanh_van_chau"
+    ]
   },
   {
-    "id": "kim_thiem", "name": "Kim Thiềm Thương Minh",
-    "description": "Thương hội lớn nhất Thương Lan giới. Có quy củ, hàng thật, giá cũng thật đắt.",
-    "needsRoot": true, "currency": "spiritStones", "priceMul": 1.2,
-    "kinds": ["pill", "artifact", "array", "talisman", "material"],
+    "id": "kim_thiem",
+    "name": "Kim Thiềm Thương Minh",
+    "description": "Thương hội lớn nhất Thương Lan giới, châu nào cũng có chi nhánh. Có quy củ, hàng thật, giá cũng thật đắt. Hàng bày đổi theo năm.",
+    "needsRoot": true,
+    "currency": "spiritStones",
+    "priceMul": 1.2,
+    "kinds": [
+      "pill",
+      "artifact",
+      "array",
+      "talisman",
+      "material"
+    ],
     "bargainWin": "Chưởng quầy cười híp mắt: \"Đạo hữu khéo nói, giảm cho một chút.\"",
-    "bargainLose": "Chưởng quầy vẫn cười, nhưng giá trên bảng vừa nhích lên."
+    "bargainLose": "Chưởng quầy vẫn cười, nhưng giá trên bảng vừa nhích lên.",
+    "stock": 8
   },
   {
-    "id": "vo_chu", "name": "Vô Chủ Phường",
+    "id": "vo_chu",
+    "name": "Vô Chủ Phường",
     "description": "Chợ đen dưới chân núi, không ai quản. Rẻ, nhưng mua phải hàng giả thì tự chịu.",
-    "needsRoot": true, "currency": "spiritStones", "priceMul": 0.7, "fakeChance": 0.15,
-    "kinds": ["pill", "artifact", "talisman", "material"],
+    "needsRoot": true,
+    "currency": "spiritStones",
+    "priceMul": 0.7,
+    "fakeChance": 0.15,
+    "kinds": [
+      "pill",
+      "artifact",
+      "talisman",
+      "material"
+    ],
     "bargainWin": "Gã bán hàng trùm mũ gật đầu, không nói một lời.",
     "bargainLose": "Gã bán hàng khạc nhổ một cái, giá tăng.",
-    "fakeText": "Về tới nơi mới thấy viên đan nhẹ bẫng. Có lẽ đã mua phải hàng giả."
+    "fakeText": "Về tới nơi mới thấy viên đan nhẹ bẫng. Có lẽ đã mua phải hàng giả.",
+    "regions": [
+      "thanh_van_chau",
+      "vo_chu_hoang_nguyen"
+    ],
+    "stock": 6,
+    "techniques": [
+      {
+        "id": "tho_nap_tan_quyen",
+        "price": 20
+      },
+      {
+        "id": "hoa_van_quyet",
+        "price": 90
+      },
+      {
+        "id": "u_ha_huyet_anh_cong",
+        "price": 260
+      }
+    ]
+  },
+  {
+    "id": "van_thu_thi",
+    "name": "Thú Thị Vạn Thú",
+    "description": "Chợ dựng giữa rừng, bán từ nội đan tới trứng linh thú. Mùi máu và mùi lông thú nồng nặc.",
+    "needsRoot": true,
+    "currency": "spiritStones",
+    "priceMul": 0.9,
+    "regions": [
+      "van_thu_son_mach"
+    ],
+    "kinds": [
+      "material"
+    ],
+    "items": [
+      "trung_linh_thu",
+      "noi_dan_3",
+      "yeu_thu_huyet",
+      "huyet_khi_hoan",
+      "vay_ho_than"
+    ],
+    "stock": 6,
+    "techniques": [
+      {
+        "id": "van_thu_thong_linh_thuat",
+        "price": 200
+      },
+      {
+        "id": "thach_phu_luyen_the_thien",
+        "price": 70
+      }
+    ],
+    "bargainWin": "Gã thợ săn gãi đầu: \"Thôi, lấy rẻ cho, còn đi săn tiếp.\"",
+    "bargainLose": "Gã thợ săn đặt tay lên chuôi đao. Giá tăng."
+  },
+  {
+    "id": "hai_thi",
+    "name": "Hải thị Thận Lâu",
+    "description": "Chợ họp trên mấy trăm chiếc thuyền buộc vào nhau ngoài khơi. Sáng mai có khi đã trôi đi chỗ khác.",
+    "needsRoot": true,
+    "currency": "spiritStones",
+    "regions": [
+      "dong_hai"
+    ],
+    "kinds": [
+      "material",
+      "artifact"
+    ],
+    "items": [
+      "tran_chau_giao_nhan",
+      "loi_tinh",
+      "noi_dan_2"
+    ],
+    "stock": 6,
+    "techniques": [
+      {
+        "id": "thuy_nguyet_quan_tuong_phap",
+        "price": 160
+      }
+    ],
+    "bargainWin": "Lão chủ thuyền cười khà khà: \"Gió thuận, bán rẻ.\"",
+    "bargainLose": "Lão chủ thuyền nhìn trời: \"Sắp bão, giá lên.\""
+  },
+  {
+    "id": "bang_phach_phuong",
+    "name": "Băng Phách Phường",
+    "description": "Phường thị đục trong lòng sông băng. Hàng ít mà quý, giá lạnh như gió Bắc Minh.",
+    "needsRoot": true,
+    "currency": "spiritStones",
+    "priceMul": 1.1,
+    "regions": [
+      "bac_minh_tuyet_vuc"
+    ],
+    "kinds": [
+      "pill"
+    ],
+    "items": [
+      "bang_tam_lien",
+      "linh_chi_ngan_nam"
+    ],
+    "stock": 6,
+    "techniques": [
+      {
+        "id": "mong_trung_tan_kinh",
+        "price": 280
+      }
+    ],
+    "bargainWin": "Bà chủ quầy hà hơi vào tay: \"Lạnh quá, bán nhanh cho xong.\"",
+    "bargainLose": "Bà chủ quầy không nói gì. Giá trên bảng phủ thêm một lớp sương."
+  },
+  {
+    "id": "van_bao_phuong",
+    "name": "Vạn Bảo Phường",
+    "description": "Phường thị lớn nhất Trung Châu, mười dặm phố toàn cửa hàng. Thứ gì cũng có, chỉ sợ không đủ linh thạch.",
+    "needsRoot": true,
+    "currency": "spiritStones",
+    "regions": [
+      "trung_chau"
+    ],
+    "kinds": [
+      "pill",
+      "artifact",
+      "array",
+      "talisman",
+      "material"
+    ],
+    "stock": 10,
+    "techniques": [
+      {
+        "id": "ngu_hanh_luan_chuyen_kinh",
+        "price": 320
+      },
+      {
+        "id": "tang_phong_kiem_kinh",
+        "price": 300
+      },
+      {
+        "id": "thanh_moc_truong_sinh_cong",
+        "price": 120
+      }
+    ],
+    "bargainWin": "Tiểu nhị chạy vào hỏi chưởng quỹ rồi chạy ra: \"Được, giảm cho đạo hữu.\"",
+    "bargainLose": "Tiểu nhị lắc đầu: \"Vạn Bảo Phường không trả giá.\" Rồi đổi bảng giá mới."
+  },
+  {
+    "id": "dau_gia_kim_thiem",
+    "name": "Hội đấu giá Kim Thiềm",
+    "description": "Mỗi năm Kim Thiềm Thương Minh mở một phiên đấu giá trong thành. Hàng không lớn, nhưng thỉnh thoảng có món lạ.",
+    "needsRoot": true,
+    "currency": "spiritStones",
+    "regions": [
+      "thanh_van_chau"
+    ],
+    "auction": {
+      "lotsPerYear": 3,
+      "lots": [
+        {
+          "item": "truc_co_dan",
+          "start": 180
+        },
+        {
+          "item": "trung_linh_thu",
+          "start": 70
+        },
+        {
+          "item": "huyet_dan",
+          "start": 35
+        },
+        {
+          "item": "linh_chi_ngan_nam",
+          "start": 130
+        },
+        {
+          "item": "tu_linh_tran_ban",
+          "start": 90
+        },
+        {
+          "technique": "thuy_nguyet_quan_tuong_phap",
+          "start": 130
+        },
+        {
+          "technique": "hoa_van_quyet",
+          "start": 80
+        },
+        {
+          "technique": "thach_phu_luyen_the_thien",
+          "start": 60
+        }
+      ],
+      "winText": "Búa gõ ba tiếng. {lot} về tay ngươi với giá {price}.",
+      "loseText": "Một gã mập ở hàng ghế đầu hô {price}. {lot} vuột khỏi tay ngươi."
+    },
+    "bargainWin": "Người giữ sổ gật đầu: \"Khách quen, bớt cho chút phí.\"",
+    "bargainLose": "Người giữ sổ cười nhạt, ghi thêm một khoản phí."
+  },
+  {
+    "id": "than_lau_dau_gia",
+    "name": "Hội đấu giá Thận Lâu",
+    "description": "Phiên đấu giá ngầm trên chiếc lâu thuyền lớn nhất Đông Hải. Không hỏi nguồn hàng, không hỏi tên người mua.",
+    "needsRoot": true,
+    "currency": "spiritStones",
+    "regions": [
+      "dong_hai"
+    ],
+    "auction": {
+      "lotsPerYear": 3,
+      "lots": [
+        {
+          "item": "giap_vay_giao",
+          "start": 220
+        },
+        {
+          "item": "loi_tinh",
+          "start": 180
+        },
+        {
+          "item": "noi_dan_3",
+          "start": 420
+        },
+        {
+          "item": "ket_kim_dan",
+          "start": 350
+        },
+        {
+          "item": "tran_chau_giao_nhan",
+          "start": 40
+        },
+        {
+          "technique": "thuy_nguyet_quan_tuong_phap",
+          "start": 140
+        },
+        {
+          "technique": "u_ha_huyet_anh_cong",
+          "start": 220
+        }
+      ],
+      "winText": "Người dẫn phiên che mặt nghiêng đầu: \"{lot}, {price}, thuộc về vị khách này.\"",
+      "loseText": "Từ một gian phòng kín vọng ra giá {price}. {lot} đã có chủ."
+    },
+    "bargainWin": "Kẻ che mặt khẽ gật.",
+    "bargainLose": "Kẻ che mặt im lặng. Phí vào cửa tăng gấp đôi."
+  },
+  {
+    "id": "thien_bao_lau",
+    "name": "Thiên Bảo Lâu",
+    "description": "Hội đấu giá danh tiếng nhất Thương Lan giới. Nghe nói từng có người bán cả một tiểu thế giới ở đây.",
+    "needsRoot": true,
+    "currency": "spiritStones",
+    "regions": [
+      "trung_chau"
+    ],
+    "auction": {
+      "lotsPerYear": 4,
+      "lots": [
+        {
+          "item": "truc_co_dan_thuong_pham",
+          "start": 450
+        },
+        {
+          "item": "dien_tho_dan",
+          "start": 280
+        },
+        {
+          "item": "tay_tuy_dan",
+          "start": 110
+        },
+        {
+          "item": "linh_chi_ngan_nam",
+          "start": 140
+        },
+        {
+          "item": "noi_dan_3",
+          "start": 450
+        },
+        {
+          "item": "ho_than_ngoc_boi",
+          "start": 140
+        },
+        {
+          "item": "giap_vay_giao",
+          "start": 240
+        },
+        {
+          "technique": "thai_so_dien_dao_kinh",
+          "start": 1800
+        },
+        {
+          "technique": "cuu_chuyen_kim_cot_quyet",
+          "start": 750
+        },
+        {
+          "technique": "nhat_tuyen_thien_kiem_dien",
+          "start": 850
+        },
+        {
+          "technique": "mong_trung_tan_kinh",
+          "start": 240
+        },
+        {
+          "technique": "ngu_hanh_luan_chuyen_kinh",
+          "start": 280
+        }
+      ],
+      "winText": "Tiếng búa ngọc vang lên. Cả sảnh quay lại nhìn ngươi: {lot}, {price}.",
+      "loseText": "Một lão giả trong nhã gian số ba hô {price}. Không ai theo nổi. {lot} đã có chủ."
+    },
+    "bargainWin": "Quản sự cúi đầu: \"Quý khách, phí ghế giảm một phần.\"",
+    "bargainLose": "Quản sự mỉm cười: \"Thiên Bảo Lâu không mặc cả.\""
   }
 ]

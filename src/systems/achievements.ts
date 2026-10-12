@@ -60,10 +60,12 @@ export function earnedAchievements(state: GameState, content: Content, lives: nu
 /** Huy hiệu cuối đời: the best-fitting few (balance.badges.max), highest priority first. */
 export function lifeBadges(state: GameState, content: Content, lives: number): Badge[] {
   if (state.alive || !state.death) return [];
-  return content.achievements.badges
+  const earned = content.achievements.badges
     .filter((b) => lifeMeets(state, content, b.when, lives))
-    .sort((a, b) => b.priority - a.priority)
-    .slice(0, content.balance.badges.max);
+    .sort((a, b) => b.priority - a.priority);
+  // Playtest 2: the priority-0 fallback ("Một Đời Bình Thường") only shows when nothing else fits.
+  const real = earned.filter((b) => b.priority > 0);
+  return (real.length > 0 ? real : earned).slice(0, content.balance.badges.max);
 }
 
 /** Kim Thủ Chỉ that held thành tựu let a new life choose (task 5b.5). */

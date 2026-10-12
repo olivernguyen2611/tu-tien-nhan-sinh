@@ -2,7 +2,7 @@
 // truyền), yearly stipend, one mission a year for contribution, sect techniques
 // by rank, and asking an elder to be one's master.
 import type { Content } from '../core/content';
-import { Rng } from '../core/rng';
+import { Rng, hashSeed } from '../core/rng';
 import type { EffectHook, Sect } from '../core/schemas';
 import type { GameState, LogLine } from '../core/types';
 import { makeName } from './names';
@@ -150,7 +150,11 @@ export function sectYear(state: GameState, content: Content): GameState {
     money: { ...state.money, spiritStones: state.money.spiritStones + stones },
     social: { ...state.social, karma: clamp(state.social.karma + (cfg.karmaPerYear[sect.id] ?? 0), -100, 100) },
   };
-  if (stones > 0) s = { ...s, log: addLines(s, [{ text: fill(life.texts.stipend, { sect: sect.name, stones }), tone: 'normal' }]) };
+  // Playtest 2: the stipend line shows when the amount is new (first year at a rank) and then once a decade, not every year.
+  const yearsAtRank = state.character.age - state.sect.since;
+  if (stones > 0 && (yearsAtRank <= 1 || yearsAtRank % cfg.stipendLogEvery === 0)) {
+    s = { ...s, log: addLines(s, [{ text: fill(life.texts.stipend, { sect: sect.name, stones }), tone: 'normal' }]) };
+  }
 
   if (s.sect.rank === 0) {
     if (s.character.age - s.sect.since >= cfg.outerAfterYears) s = promoteSect(s, content);
@@ -168,15 +172,24 @@ function checkChance(state: GameState, content: Content, stat: string, difficult
   return Math.max(c.min, Math.min(c.max, c.base + (statValue(state, stat) - difficulty) * c.perPoint));
 }
 
+/**
+ * This year's mission board (playtest 2): from the missions this sect posts and the rank allows,
+ * a fixed handful chosen by hashing seed + age + id, so the board changes yearly without using the RNG.
+ */
 export function missionViews(state: GameState, content: Content): MissionView[] {
-  if (!state.sect.id || !content.sectLife) return [];
-  return content.sectLife.missions.map((m) => ({
+  const sectId = state.sect.id;
+  if (!sectId || !content.sectLife) return [];
+  const key = (id: string) => hashSeed(`${state.seed}|${state.character.age}|${id}`);
+  const board = content.sectLife.missions
+    .filter((m) => m.minRank <= state.sect.rank && (!m.sects || m.sects.includes(sectId)))
+    .sort((a, b) => key(a.id) - key(b.id))
+    .slice(0, content.balance.sects.missionBoard);
+  return board.map((m) => ({
     id: m.id,
     name: m.name,
     text: m.text,
     chance: checkChance(state, content, m.stat, m.difficulty),
     blocked: !state.alive ? 'Đã hết một đời.'
-      : state.sect.rank < m.minRank ? `Cần là đệ tử ${currentSect(state, content)?.ranks[m.minRank] ?? ''}.`
       : state.sect.lastMission === state.character.age ? 'Năm nay đã làm một nhiệm vụ rồi.'
       : null,
   }));

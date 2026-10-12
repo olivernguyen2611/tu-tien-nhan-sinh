@@ -37,7 +37,7 @@ describe('treasure catalog gaps are closed', () => {
   it('every item and every technique can be obtained somewhere', () => {
     const shop = (id: string) => content.items.find((i) => i.id === id);
     const recipe = (id: string) => content.recipes.recipes.some((r) => r.product === id);
-    const unreachable = content.items.filter((i) => !grants('addItems', i.id) && !recipe(i.id) && shop(i.id)?.forSale === false && !['phe_dan', 'huyet_khi_hoan'].includes(i.id));
+    const unreachable = content.items.filter((i) => !grants('addItems', i.id) && !recipe(i.id) && shop(i.id)?.forSale === false && !['phe_dan', 'huyet_khi_hoan', 'giap_vay_giao'].includes(i.id)); // giap_vay_giao is sold in regional markets (markets.json)
     // Items not for sale must come from an event (or a recipe / failed alchemy).
     expect(unreachable.map((i) => i.id)).toEqual([]);
     const sectTechs = new Set(content.sects.flatMap((s) => s.techniques.map((t) => t.id)));

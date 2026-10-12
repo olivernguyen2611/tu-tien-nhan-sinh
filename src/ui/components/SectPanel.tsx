@@ -58,7 +58,7 @@ export function SectPanel({ state, content, onAction, onClose }: {
 
             <div class="crafts">
               <h3 class="panel-sub">Nhiệm vụ tông môn</h3>
-              <p class="profile-note">Mỗi năm nhận được một nhiệm vụ.</p>
+              <p class="profile-note">Bảng nhiệm vụ đổi mỗi năm, lên cấp thì có việc lớn hơn. Mỗi năm nhận được một việc.</p>
               {missionViews(state, content).map((m) => (
                 <div class="career-row" key={m.id}>
                   <div class="craft-head"><b>{m.name}</b><span class="muted">{Math.round(m.chance * 100)}%</span></div>

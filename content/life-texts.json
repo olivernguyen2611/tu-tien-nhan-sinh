@@ -1,10 +1,10 @@
 {
   "illness": [
-    "Trời trở lạnh, bạn nhiễm phong hàn, nằm liệt giường cả tháng.",
+    "Trời trở lạnh, ngươi nhiễm phong hàn, nằm liệt giường cả tháng.",
     "Lưng đau gối mỏi, thầy lang bắt mạch xong chỉ lắc đầu thở dài.",
     "Bạn ho suốt mùa đông, thuốc sắc uống đến đắng cả lưỡi.",
     "Một trận sốt cao kéo đến, tỉnh lại thấy người gầy rộc.",
-    "Mắt mờ tai lãng, bạn bắt đầu gọi nhầm tên con cháu."
+    "Mắt mờ tai lãng, ngươi bắt đầu gọi nhầm tên con cháu."
   ],
   "agingMilestone": [
     "Tuổi {age}, soi gương thấy tóc bạc thêm một nửa.",
@@ -20,9 +20,9 @@
     "Thuốc tốt chỉ linh nghiệm một lần, lần hai chỉ còn vị đắng."
   ],
   "deathOldAge": [
-    "Năm {age} tuổi, bạn ngồi phơi nắng trước hiên, thiếp đi rồi không tỉnh lại nữa.",
-    "Năm {age} tuổi, thọ nguyên đã cạn, bạn nhắm mắt trong tiếng gió thu.",
-    "Năm {age} tuổi, bạn dặn dò mấy câu, cười một tiếng rồi ra đi thanh thản."
+    "Năm {age} tuổi, ngươi ngồi phơi nắng trước hiên, thiếp đi rồi không tỉnh lại nữa.",
+    "Năm {age} tuổi, thọ nguyên đã cạn, ngươi nhắm mắt trong tiếng gió thu.",
+    "Năm {age} tuổi, ngươi dặn dò mấy câu, cười một tiếng rồi ra đi thanh thản."
   ],
   "deathBreakthrough": [
     "Năm {age} tuổi, đột phá thất bại, linh khí nổ tung trong kinh mạch. Thân tử đạo tiêu.",
@@ -40,8 +40,8 @@
     "Năm {age} tuổi, ngươi không qua được thiên kiếp. Trời cao không nói, chỉ có tiếng sấm xa dần."
   ],
   "deathIllness": [
-    "Năm {age} tuổi, bệnh nặng không qua khỏi, bạn trút hơi thở cuối cùng.",
-    "Năm {age} tuổi, thân thể suy kiệt, thuốc thang vô hiệu, bạn lìa trần.",
+    "Năm {age} tuổi, bệnh nặng không qua khỏi, ngươi trút hơi thở cuối cùng.",
+    "Năm {age} tuổi, thân thể suy kiệt, thuốc thang vô hiệu, ngươi lìa trần.",
     "Năm {age} tuổi, một trận bạo bệnh cướp đi mạng sống của bạn."
   ],
   "ghostOffer": "Hồn phách chưa chịu tan. Mối hận chưa báo, việc dở chưa xong, cứ níu lấy ngươi ở lại nhân gian.",
@@ -61,6 +61,11 @@
     "plain": [
       "Một kiếp phàm nhân, như hạt bụi giữa hồng trần.",
       "Sinh ra, lớn lên, già đi, rồi về với cát bụi."
+    ],
+    "plainCultivator": [
+      "Tu đạo một đời, rốt cuộc cũng chưa thoát khỏi vòng sinh tử.",
+      "Động phủ đóng cửa, đèn tắt, trên vách còn dòng chữ chưa khắc xong.",
+      "Cầu trường sinh mà chẳng được, thôi thì đi trước một bước."
     ]
   }
 }

@@ -23,6 +23,64 @@
 - **Buff 7 Kim Thủ Chỉ** (trước đó yếu hơn cả khí vận Thiên/Thần phẩm dù hiếm hơn nhiều): mọi hiệu ứng bậc 1–3 tăng khoảng 30–100%, thêm bậc 4 cho mỗi cái (Nguyên Anh hoặc Hóa Thần), Hệ thống thêm bậc 5. Ví dụ Lão gia gia khi đủ bậc: tốc độ tu +25%, đột phá đại cảnh +8, Chiến lực +20%, bình cảnh +20%; Bình nhỏ thần bí bậc 3: Căn cốt +8, thọ +15%. Tùy thân động thiên giữ nguyên (đã mạnh nhất), chỉ thêm bậc cuối.
 - Nội dung (19 sự kiện, 30 món đồ, 1 công pháp) do Claude tự soạn theo đề xuất của chủ dự án, chưa qua duyệt chi tiết; chủ dự án đã đồng ý hướng đề xuất.
 
+### Chơi thử 2 — Các mục nhỏ còn lại (2026-10-12)
+- Tích lũy đột phá: mỗi năm chờ ở đỉnh cảnh giới cộng 1% cho lần đột phá lớn kế tiếp, tối đa 25% (`balance.majorBreakthrough.peakWaitPerYear`, `peakWaitMax`), nên kẹt ở Luyện Khí tầng 9 không còn chờ cả đời.
+- Bế quan bị chặn nói rõ lý do: đang giao chiến, đang chờ Cải Mệnh, hay còn một chuyện chờ quyết định.
+- Xin bái sư bị từ chối nói rõ vì ngộ tính còn kém và hẹn năm sau.
+- Trận đấu: hai bên ghi "lực" thay vì chỉ một con số trông như tầng tu vi.
+- Huy hiệu "Một Đời Bình Thường" chỉ hiện khi đời đó không đạt huy hiệu nào khác.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
+### Chơi thử 2 — Tình duyên, con cái, bớt nhật ký lặp (2026-10-12)
+- Người gặp trong sự kiện tình duyên giờ cùng lứa với nhân vật (±3 tuổi, `balance.npcs.peerAgeOffset`; `meetNpc.peer`), không còn lớn hơn 10–15 tuổi.
+- 7 sự kiện gặp người cùng lứa (`events/peers.json`): bạn đồng song, đồng môn cùng lứa (16–17 tuổi, chỉ là bạn); hội hoa đăng, cứu người rơi xuống sông, đối thơ ở tửu lâu, cùng làm nhiệm vụ tông môn, gặp lại bạn thuở nhỏ (từ 18 tuổi).
+- "Bà mối tới nhà": xem mặt thành thì có người đính ước thật (trước đây chỉ đặt cờ `da_dinh_than`).
+- Sinh con: nút hiện tỉ lệ năm nay; mỗi lần không thành, lần sau dễ hơn 10% (tối đa 90%); tu sĩ ít bị giảm khả năng sinh nở hơn (`cultivatorFertility` 0.4 → 0.6).
+- Nhật ký bớt lặp: bổng lộc tông môn chỉ ghi năm đầu mỗi cấp rồi mười năm một lần; câu "bỏ bê bạn đời" không phải năm nào cũng hiện và có 5 biến thể; "Bầu bạn" có 6 biến thể.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
+### Chơi thử 2 — Phường thị theo vùng và hội đấu giá (2026-10-12)
+- Phường thị gắn với vùng (`regions` trong `markets.json`): mỗi đại vực có chợ riêng. Thanh Vân châu: Chợ phiên, Vô Chủ Phường, Hội đấu giá Kim Thiềm; Vạn Thú sơn mạch: Thú Thị Vạn Thú; Đông Hải: Hải thị Thận Lâu, Hội đấu giá Thận Lâu; Bắc Minh: Băng Phách Phường; Trung Châu: Vạn Bảo Phường, Thiên Bảo Lâu. Kim Thiềm Thương Minh có ở mọi vùng.
+- Hàng bày đổi theo năm (`stock`), có đặc sản riêng (`items`) và bán bí tịch công pháp (`techniques`).
+- Hội đấu giá (`auction`): mỗi năm vài lô (đan dược quý, pháp bảo, bí tịch tới Thiên phẩm), ra giá một lần; giá càng cao càng dễ thắng, thua không mất gì (`balance.market.auctionBids`, `auctionRival`).
+- 10 vật phẩm mới: kẹo hồ lô, rượu thuốc, sách vỡ lòng, hộp phấn son, nhân sâm rừng, dao găm phòng thân, trân châu giao nhân, Băng Tâm Liên, yêu huyết tinh luyện, giáp vảy giao long. "Cái bát" không còn bày bán.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
+### Chơi thử 2 — Mục Kim Thủ Chỉ (2026-10-12)
+- Nút 指 trên thanh trên cùng (chỉ hiện khi có Kim Thủ Chỉ, có chấm báo khi còn việc làm được năm nay) mở mục riêng: các tầng thức tỉnh, tầng kế tiếp mở ở cảnh giới nào, và các hành động dùng Kim Thủ Chỉ.
+- 23 hành động cho 7 Kim Thủ Chỉ (`actions` trong `golden-fingers.json`): hỏi lão gia gia, xin đan phương, mượn sức phá bình cảnh; điểm danh hệ thống, vòng quay may mắn; tưới linh dịch, uống một giọt; nhớ lại kiếp trước; đọc tâm ở chợ; tu trong động thiên; xem thiên đạo bảng… Mỗi hành động có tầng tối thiểu và thời gian hồi (năm); dùng từ 6 tuổi (`balance.goldenFinger.actionMinAge`).
+- Điện thoại: thanh trên cùng xuống hai dòng (tên và cảnh giới không còn bị cắt).
+- Dev mode: nút "Dùng lại hành động" cho Kim Thủ Chỉ.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
+### Chơi thử 2 — Nhiệm vụ và sự kiện tông môn (2026-10-12)
+- Bảng nhiệm vụ tông môn: mỗi năm hiện 4 việc (`balance.sects.missionBoard`) chọn từ các việc cấp bậc cho phép, đổi theo năm. Nhiệm vụ có thể chỉ riêng một số tông (`sects`).
+- 21 nhiệm vụ mới (tổng 26), đủ bốn cấp Ký danh → Chân truyền, có việc riêng cho Bách Thảo Cốc, Vô Ưu Tự, Tàng Phong Kiếm Các, U Hà Ma Tông.
+- 12 sự kiện tông môn mới (`events/sect-life.json`): ngoại môn đại bỉ, trưởng lão giảng đạo, khảo hạch cuối năm, tranh chỗ tu luyện, lễ tế tổ, linh thú sổng chuồng, đồng môn hỏi vay, yêu thú công sơn, bí cảnh luyện thí, chưởng môn triệu kiến, nhà bếp thiếu người, tin đồn nội gián.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
+### Chơi thử 2 — Kỳ ngộ cắt ngang bế quan (2026-10-12)
+- Mỗi năm bế quan có 20% gặp chuyện (`balance.seclusion.interruptChance`): cửa động phủ mở, người chơi trả lời sự kiện rồi tự quyết bế quan tiếp hay không.
+- 10 sự kiện bế quan mới (chủ đề `be_quan`, chỉ đến khi đang bế quan): đốn ngộ, linh mạch dâng trào, tâm ma gõ cửa, yêu thú đào hang, dị tượng ngoài núi, kẻ trộm động phủ, tiểu hồ ly lạc vào, phù truyền tin của người nhà, cảm ngộ chiêu thức, địa chấn.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
+### Chơi thử 2 — Nhiều sự kiện hơn mỗi năm (2026-10-12)
+- Tỉ lệ một năm có sự kiện tăng từ 50% lên 80%. Từ Nguyên Anh (đời dài hàng nghìn năm) là 50% (`balance.events.popupChanceHighRealm`, `highRealmFrom`); trước đây cảnh giới cao vẫn dùng 50%.
+- Đệ tử tông môn gặp sự kiện tông môn nhiều gấp 2,5 lần (`balance.events.sectMemberMul`).
+
+### Chơi thử 2 — Tu sĩ không già như phàm nhân (2026-10-12)
+- Thân thể già theo thọ nguyên: quá thọ phàm nhân (`balance.lifespan.mortalBase` = 70) thì đồng hồ thân thể chạy chậm theo tỉ lệ 70 / thọ nguyên. Trúc Cơ thọ 200 ở tuổi 62 có thân thể như người 22 tuổi; suy yếu, đổ bệnh và các mốc 60/70/80 chỉ tới gần cuối thọ nguyên.
+- Trước đây 9/10 đời tu sĩ trong lần chơi thử chết bệnh ở 62–80 tuổi và không đủ sức khỏe vượt thiên kiếp.
+
+### Chơi thử 2 — Sửa lỗi hiển thị và cái chết ẩn (2026-10-12)
+- Tiêu đề sự kiện điền tên người (trước hiện nguyên "{lover} lâm bệnh").
+- Ăn linh quả / ngâm linh mạch mà chết thì chỉ còn câu chết, không kèm câu thành công. Các lựa chọn đó ghi rõ "càng lớn tuổi càng dễ mất mạng".
+- Bỏ ghi chú cũ "(GĐ 3–4)" trong Cải mệnh; câu già yếu, qua đời xưng "ngươi" thay vì "bạn".
+- Bạn đời / người thương qua đời không còn bị gọi là "người quen".
+- Có linh căn mà chưa nhập đạo thì bảng Tu luyện nói rõ cần công pháp, tông môn hoặc tiên sư (trước ghi "Không có linh căn").
+- Tu sĩ chết có văn bia riêng, không còn "Một kiếp phàm nhân".
+- "Động phủ có lò còn ấm" không xảy ra trước 14 tuổi.
+
 ### Góp ý chơi thử 7 — Tu luyện nhanh theo tư chất, kỳ ngộ theo khí vận (2026-10-12)
 - Hệ số tư chất trong tốc độ tu luyện đổi từ tuyến tính rất phẳng (0.75–1.25) sang lũy thừa: `3 ^ ((Căn cốt + Ngộ tính − 100) / 100)` (`balance.cultivation.aptitudeGrowth` = 3, tối thiểu 0.3). Người 50/50 giữ nguyên tốc độ; 95/95 nhanh gấp khoảng 2.7 lần (trước 1.2).
 - Ví dụ thiên tài (Đơn linh căn, Căn cốt và Ngộ tính 95, khí vận Hỗn Độn Linh Thể): Luyện Khí khoảng 6 năm, Trúc Cơ 8, Kim Đan 22, Nguyên Anh 55 (trước 13 / 18 / 49 / 121), chưa tính đột phá thất bại.

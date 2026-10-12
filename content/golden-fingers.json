@@ -9,6 +9,12 @@
        {"realm": "truc_co", "name": "Truyền thụ", "text": "Lão chịu dạy thật: mẹo vượt bình cảnh, cách canh lửa luyện đan.", "effects": [{"hook": "breakthroughChance.major", "add": 8}, {"hook": "craft.alchemy.success", "add": 0.15}, {"hook": "bottleneckResist", "add": 0.1}]},
        {"realm": "kim_dan", "name": "Đại năng hiển linh", "text": "Lúc nguy, lão mượn tay ngươi đánh ra một chiêu của ba nghìn năm trước.", "effects": [{"hook": "combatPower", "add": 0.2}, {"hook": "escapeChance", "add": 0.15}, {"hook": "breakthroughChance", "add": 3}]},
        {"realm": "nguyen_anh", "name": "Tàn hồn hợp lực", "text": "Lão và ngươi nghĩ chung một nhịp đến mức không còn phân biệt ai nghĩ trước. Lão thở dài: \"Ta hết gì để dạy rồi, từ nay ta chỉ xem.\"", "effects": [{"hook": "cultivationSpeed", "add": 0.1}, {"hook": "stat.comprehension", "add": 5}, {"hook": "bottleneckResist", "add": 0.1}]}
+     ],
+     "actions": [
+       {"id": "hoi_lao", "name": "Hỏi lão về tu luyện", "text": "Gõ nhẹ vào nhẫn, hỏi lão chỗ mình còn vướng.", "minLevel": 1, "check": {"stat": "stat.comprehension", "difficulty": 45}, "success": {"text": "Lão mắng một tràng rồi chỉ đúng chỗ. Ngươi tỉnh ra như được dội nước lạnh.", "effects": {"stat.comprehension": 1, "cultProgress": 10}}, "fail": {"text": "Lão giảng ba canh giờ, ngươi hiểu được ba câu. Lão thở dài: \"Gỗ mục.\"", "effects": {"stat.happiness": -2, "stat.intellect": 1}}},
+       {"id": "nghe_lao_ke", "name": "Nghe lão kể chuyện xưa", "text": "Rót chén trà đặt cạnh nhẫn, xin lão kể chuyện ba nghìn năm trước.", "minLevel": 1, "cooldownYears": 2, "result": {"text": "Lão kể chuyện tông môn đã diệt, kẻ thù đã chết, người thương đã thành tro. Cuối cùng lão im lặng rất lâu.", "effects": {"stat.daoHeart": 2, "stat.intellect": 1}}},
+       {"id": "xin_dan_phuong", "name": "Xin lão một đan phương", "text": "Lão từng là đại tông sư luyện đan. Có lẽ lão chịu truyền một hai phương.", "minLevel": 2, "cooldownYears": 3, "check": {"stat": "stat.intellect", "difficulty": 55}, "success": {"text": "Lão đọc chậm từng vị thuốc. Ngươi chép đầy ba tờ giấy.", "effects": {"craftXp": {"alchemy": 2}, "stat.intellect": 1}}, "fail": {"text": "Lão đọc nhanh như gió. Ngươi chép sai một vị, lò đầu tiên nổ tung.", "effects": {"stat.health": -6, "craftXp": {"alchemy": 1}}}},
+       {"id": "muon_luc_lao", "name": "Mượn sức lão phá bình cảnh", "text": "Để lão rót một đạo thần thức vào kinh mạch trước kỳ đột phá. Lão đòi trả bằng hồn lực.", "minLevel": 3, "cooldownYears": 5, "result": {"text": "Thần thức của lão như thác lũ. Bình cảnh nứt ra một khe. Đổi lại, ngươi mệt rã rời cả tháng.", "effects": {"nextBreakthroughBonus": 10, "stat.health": -8}}}
      ]},
     {"id": "he_thong", "name": "Hệ thống", "weight": 2,
      "flavor": "Một giọng nói không cảm xúc vang trong đầu: \"Ký chủ đã liên kết. Nhiệm vụ tân thủ: sống sót.\"",
@@ -20,6 +26,11 @@
        {"realm": "truc_co", "name": "Thăng cấp", "text": "[Hệ thống] Thăng cấp thành công. Hệ thống tự thấy mình đẹp trai hơn.", "effects": [{"hook": "cultivationSpeed", "add": 0.15}, {"hook": "stat.luck", "add": 5}, {"hook": "incomePct", "add": 0.2}]},
        {"realm": "nguyen_anh", "name": "Chung cực", "text": "[Hệ thống] Chúc mừng ký chủ. Từ nay nhiệm vụ do ký chủ tự đặt.", "effects": [{"hook": "breakthroughChance", "add": 8}, {"hook": "lifespanPct", "add": 0.1}]},
        {"realm": "hoa_than", "name": "Vượt thẩm quyền", "text": "[Hệ thống] Cảnh báo: ký chủ đã vượt quá thẩm quyền của hệ thống. Hệ thống xin được làm công cho ký chủ.", "effects": [{"hook": "cultivationSpeed", "add": 0.15}, {"hook": "breakthroughChance.major", "add": 5}, {"hook": "stat.luck", "add": 5}]}
+     ],
+     "actions": [
+       {"id": "diem_danh", "name": "Điểm danh hằng ngày", "text": "[Hệ thống] Ký chủ điểm danh đủ một năm sẽ được quà.", "minLevel": 1, "check": {"stat": "stat.luck", "difficulty": 40}, "success": {"text": "[Hệ thống] Điểm danh thành công. Phần thưởng: một túi linh thạch và một câu khen.", "effects": {"spiritStones": 5, "stat.happiness": 3}}, "fail": {"text": "[Hệ thống] Ký chủ quên điểm danh ngày rằm. Phần thưởng: một lời nhắc nhở.", "effects": {"stat.happiness": -2, "stat.daoHeart": 1}}},
+       {"id": "vong_quay", "name": "Vòng quay may mắn", "text": "[Hệ thống] Một vòng quay miễn phí mỗi ba năm. Hệ thống không chịu trách nhiệm.", "minLevel": 2, "cooldownYears": 3, "check": {"stat": "stat.luck", "difficulty": 55}, "success": {"text": "[Hệ thống] Chúc mừng ký chủ trúng giải đặc biệt.", "effects": {"addItems": ["truc_co_dan"], "stat.luck": 1}}, "fail": {"text": "[Hệ thống] Chúc ký chủ may mắn lần sau. Giải an ủi: một cái bát.", "effects": {"addItems": ["cai_bat"], "stat.happiness": -2}}},
+       {"id": "doi_diem", "name": "Đổi điểm lấy thuộc tính", "text": "[Hệ thống] Quy đổi kinh nghiệm sống thành điểm thuộc tính. Tỉ giá do hệ thống định.", "minLevel": 3, "cooldownYears": 4, "result": {"text": "[Hệ thống] Đổi thành công. Ký chủ cảm thấy mình thông minh hơn, đẹp hơn, hoặc cả hai.", "effects": {"stat.comprehension": 2, "stat.charm": 2}}}
      ]},
     {"id": "binh_nho_than_bi", "name": "Bình nhỏ thần bí", "weight": 3,
      "flavor": "Cái bình sứ bằng ngón tay cái, mỗi đêm trăng lại rỉ ra một giọt nước xanh biếc.",
@@ -30,6 +41,11 @@
        {"realm": "luyen_khi", "name": "Linh dịch", "text": "Bình rỉ nhiều hơn. Đan luyện từ linh thảo tưới linh dịch hiếm khi hỏng.", "effects": [{"hook": "craft.alchemy.success", "add": 0.2}, {"hook": "craft.alchemy.yield", "add": 1}, {"hook": "cultivationSpeed", "add": 0.05}]},
        {"realm": "kim_dan", "name": "Tẩy tủy", "text": "Ngươi uống thử một giọt. Xương cốt kêu răng rắc cả đêm, sáng ra nhẹ bẫng.", "effects": [{"hook": "stat.physique", "add": 8}, {"hook": "lifespanPct", "add": 0.15}, {"hook": "cultivationSpeed", "add": 0.15}]},
        {"realm": "nguyen_anh", "name": "Linh dịch hóa hải", "text": "Giọt nước xanh biếc hóa thành cả một hồ nhỏ trong bình. Linh thảo, đan dược, thân thể, thứ gì dính vào cũng tốt lên.", "effects": [{"hook": "craft.alchemy.yield", "add": 1}, {"hook": "lifespanPct", "add": 0.1}, {"hook": "cultivationSpeed", "add": 0.1}, {"hook": "breakthroughChance", "add": 5}]}
+     ],
+     "actions": [
+       {"id": "tuoi_vuon", "name": "Tưới linh dịch cho vườn thuốc", "text": "Một giọt cho cả luống. Sáng mai đi xem.", "minLevel": 1, "result": {"text": "Linh thảo mọc vượt rào. Hái một mớ đem bán, còn dư để ăn.", "effects": {"craftXp": {"farming": 1}, "spiritStones": 4, "stat.happiness": 2}}},
+       {"id": "uong_mot_giot", "name": "Uống một giọt", "text": "Linh dịch đậm quá, người thường uống có khi không chịu nổi.", "minLevel": 1, "cooldownYears": 2, "check": {"stat": "stat.physique", "difficulty": 50}, "success": {"text": "Một luồng mát lạnh chạy khắp kinh mạch. Cả người nhẹ bẫng.", "effects": {"stat.health": 8, "stat.physique": 1}}, "fail": {"text": "Linh dịch bốc lên đầu, ngươi sốt mê man ba ngày.", "effects": {"stat.health": -6, "stat.physique": 1}}},
+       {"id": "ngam_dan", "name": "Ngâm đan vào linh dịch", "text": "Thả lò đan mới ra vào bình một đêm, dược lực sẽ đậm thêm.", "minLevel": 2, "cooldownYears": 3, "result": {"text": "Sáng ra đan dược bóng như ngọc, mùi thơm bay khắp phòng.", "effects": {"addItems": ["tu_khi_dan"], "craftXp": {"alchemy": 1}, "stat.happiness": 2}}}
      ]},
     {"id": "ky_uc_kiep_truoc", "name": "Ký ức kiếp trước", "weight": 3,
      "flavor": "Ngươi nhớ một đời khác: những năm ấy, ai lên ai xuống, cơ duyên nằm ở đâu.",
@@ -40,6 +56,11 @@
        {"realm": "truc_co", "name": "Tỏ tường", "text": "Ký ức kiếp trước rõ dần: chỗ nào có bẫy, kẻ nào sẽ trở mặt.", "effects": [{"hook": "escapeChance", "add": 0.2}, {"hook": "breakthroughChance", "add": 5}, {"hook": "eventWeight.bi_canh", "mul": 1.3}]},
        {"realm": "nguyen_anh", "name": "Vượt kiếp", "text": "Ngươi đã đi xa hơn kiếp trước. Từ đây, chẳng còn gì để nhớ, chỉ còn đường để đi.", "effects": [{"hook": "stat.daoHeart", "add": 12}, {"hook": "cultivationSpeed", "add": 0.15}]},
        {"realm": "hoa_than", "name": "Tiên tri", "text": "Ngươi nhớ ra điều kiếp trước cũng chưa từng biết: chuyện sắp tới. Ký ức đã cạn, còn lại là trực giác không bao giờ sai.", "effects": [{"hook": "breakthroughChance.major", "add": 8}, {"hook": "escapeChance", "add": 0.1}]}
+     ],
+     "actions": [
+       {"id": "hoi_tuong", "name": "Ngồi nhớ lại kiếp trước", "text": "Nhắm mắt, lần theo những mảnh ký ức vụn.", "minLevel": 1, "check": {"stat": "stat.daoHeart", "difficulty": 45}, "success": {"text": "Nhớ ra một chỗ cất giấu của kiếp trước. Đào lên, còn nguyên.", "effects": {"spiritStones": 8, "stat.intellect": 1}}, "fail": {"text": "Ký ức trộn với ác mộng. Ngươi tỉnh dậy, mồ hôi ướt gối.", "effects": {"heartDemon": 4, "stat.happiness": -3}}},
+       {"id": "tranh_kiep", "name": "Tránh một kiếp nạn đã biết", "text": "Kiếp trước, năm nay có họa. Kiếp này đi đường vòng.", "minLevel": 2, "cooldownYears": 3, "result": {"text": "Ngươi tránh được tai họa kiếp trước. Nghe tin người khác gặp phải, lòng chùng xuống.", "effects": {"stat.health": 5, "stat.daoHeart": 1}}},
+       {"id": "cong_phap_kiep_truoc", "name": "Ôn lại công pháp kiếp trước", "text": "Kiếp trước ngươi tu tới đâu? Cứ thử luyện lại xem.", "minLevel": 2, "cooldownYears": 2, "check": {"stat": "stat.comprehension", "difficulty": 50}, "success": {"text": "Đường cũ đi lại, nhanh như trượt dốc.", "effects": {"cultProgress": 20, "stat.comprehension": 1}}, "fail": {"text": "Kinh mạch kiếp này khác kiếp trước. Luyện ngược một đoạn, đau tê người.", "effects": {"stat.health": -6, "cultProgress": -5}}}
      ]},
     {"id": "doc_tam", "name": "Đọc tâm", "weight": 2,
      "flavor": "Người ta nói một đằng, ngươi nghe thấy cả đằng kia.",
@@ -50,6 +71,11 @@
        {"realm": "luyen_khi", "name": "Đoán ý", "text": "Ngươi biết người ta muốn gì trước cả khi họ mở miệng. Mặc cả chưa bao giờ dễ vậy.", "effects": [{"hook": "priceDiscount", "add": 0.15}, {"hook": "stat.charm", "add": 5}, {"hook": "charmResist", "add": 0.15}]},
        {"realm": "kim_dan", "name": "Thấu tâm", "text": "Đấu pháp, ngươi nghe được chiêu kế tiếp của đối thủ.", "effects": [{"hook": "combatPower", "add": 0.15}, {"hook": "heartDemonResist", "add": 0.2}]},
        {"realm": "nguyen_anh", "name": "Vạn tâm hợp nhất", "text": "Ngươi nghe được lòng cả một thành người cùng lúc mà không loạn. Ý đồ của kẻ địch lộ ra trước khi họ kịp nghĩ.", "effects": [{"hook": "combatPower", "add": 0.1}, {"hook": "escapeChance", "add": 0.15}, {"hook": "bottleneckResist", "add": 0.15}]}
+     ],
+     "actions": [
+       {"id": "nghe_long_cho", "name": "Đi chợ nghe lòng người", "text": "Đứng giữa chợ, nghe hết những điều người ta không nói.", "minLevel": 1, "result": {"text": "Biết ai bán hàng giả, ai đang túng tiền bán rẻ. Ngươi mua được món hời.", "effects": {"silver": 20, "stat.intellect": 1}}},
+       {"id": "dong_tai", "name": "Đóng tai một năm", "text": "Nghe nhiều quá thì mệt. Thử bịt lại một năm cho lòng yên.", "minLevel": 1, "cooldownYears": 2, "check": {"stat": "stat.daoHeart", "difficulty": 50}, "success": {"text": "Một năm yên tĩnh lạ thường. Ngươi ngủ ngon như hồi bé.", "effects": {"stat.happiness": 6, "heartDemon": -3}}, "fail": {"text": "Tiếng lòng người vẫn rỉ vào như nước qua khe. Ngươi càng mệt hơn.", "effects": {"stat.happiness": -3, "stat.daoHeart": 1}}},
+       {"id": "doc_doi_thu", "name": "Dò tâm đối thủ", "text": "Đứng trước kẻ thù, nghe xem hắn đang tính gì.", "minLevel": 2, "cooldownYears": 2, "result": {"text": "Hắn mạnh ngoài, yếu trong. Ngươi biết chỗ nào đánh vào thì đau.", "effects": {"pathAffinity": {"arts": 1}, "stat.intellect": 1, "stat.charm": 1}}}
      ]},
     {"id": "tuy_than_dong_thien", "name": "Tùy thân động thiên", "weight": 2,
      "flavor": "Nhắm mắt là thấy một tiểu thế giới riêng: một mẫu đất, một suối nước, linh khí đặc như sương.",
@@ -60,6 +86,11 @@
        {"realm": "truc_co", "name": "Suối linh", "text": "Động thiên nở rộng, có suối, có ruộng, có cả mấy con thỏ không rõ từ đâu ra.", "effects": [{"hook": "cultivationSpeed", "add": 0.1}, {"hook": "craft.farming.yield", "add": 1}]},
        {"realm": "nguyen_anh", "name": "Tiểu thiên địa", "text": "Động thiên thành một phương trời đất nhỏ, có ngày đêm, có mưa nắng.", "effects": [{"hook": "cultivationSpeed", "add": 0.15}, {"hook": "lifespanPct", "add": 0.1}]},
        {"realm": "hoa_than", "name": "Thiên địa vẹn toàn", "text": "Động thiên khép lại thành một vòng tròn, không còn trong ngoài. Ngươi đứng ở đâu, nơi ấy là động thiên.", "effects": [{"hook": "cultivationSpeed", "add": 0.05}, {"hook": "breakthroughChance.major", "add": 5}, {"hook": "lifespanPct", "add": 0.1}]}
+     ],
+     "actions": [
+       {"id": "tu_trong_dong_thien", "name": "Tu luyện trong động thiên", "text": "Vào động thiên ngồi một tháng, ngoài kia mới qua mấy ngày.", "minLevel": 1, "result": {"text": "Linh khí trong động thiên đặc như sương. Ra ngoài, da dẻ hồng hào.", "effects": {"cultProgress": 8, "stat.health": 3}}},
+       {"id": "trong_linh_thao", "name": "Trồng linh thảo trong động thiên", "text": "Đất động thiên tốt lạ, gieo gì cũng lên.", "minLevel": 2, "cooldownYears": 2, "check": {"stat": "stat.luck", "difficulty": 45}, "success": {"text": "Một gốc linh thảo trăm năm mọc trong hai năm.", "effects": {"addItems": ["linh_thao_tram_nam"], "craftXp": {"farming": 1}, "stat.happiness": 3}}, "fail": {"text": "Mấy con thỏ không rõ từ đâu ra gặm sạch.", "effects": {"craftXp": {"farming": 1}, "stat.happiness": -3}}},
+       {"id": "tinh_duong", "name": "Tĩnh dưỡng trong động thiên", "text": "Không tu, không làm gì. Chỉ nằm nghe suối chảy.", "minLevel": 2, "cooldownYears": 3, "result": {"text": "Ba tháng nằm nghe suối, vết thương cũ lành hẳn, lòng cũng dịu đi.", "effects": {"stat.health": 12, "stat.happiness": 4, "heartDemon": -3}}}
      ]},
     {"id": "thien_dao_bang", "name": "Thiên đạo bảng", "weight": 2,
      "flavor": "Trước mắt ngươi lơ lửng một tấm bảng vàng chỉ mình ngươi thấy: tên, cảnh giới, thứ hạng của thiên hạ.",
@@ -70,6 +101,11 @@
        {"realm": "luyen_khi", "name": "Bảng tu sĩ", "text": "Bảng hiện cả tu vi và sở trường của người đối diện. Đánh nhau mà như đọc sách.", "effects": [{"hook": "combatPower.vsHigherRealm", "add": 0.25}, {"hook": "lootPct", "add": 0.15}]},
        {"realm": "kim_dan", "name": "Bảng thiên hạ", "text": "Bảng hiện cả những lão quái ẩn thế trăm năm. Có vài cái tên nhìn lại ngươi.", "effects": [{"hook": "combatPower", "add": 0.15}, {"hook": "breakthroughChance", "add": 5}]},
        {"realm": "nguyen_anh", "name": "Bảng chấn thiên hạ", "text": "Tên ngươi leo lên đầu bảng. Kẻ nào nhìn thấy cũng tự cân lại mình trước khi ra tay.", "effects": [{"hook": "combatPower.vsHigherRealm", "add": 0.15}, {"hook": "combatPower", "add": 0.1}, {"hook": "escapeChance", "add": 0.1}]}
+     ],
+     "actions": [
+       {"id": "xem_bang", "name": "Xem thứ hạng trên bảng", "text": "Tấm bảng vàng lại đổi. Xem mình đứng thứ mấy.", "minLevel": 1, "check": {"stat": "stat.daoHeart", "difficulty": 45}, "success": {"text": "Thứ hạng nhích lên một chút. Ngươi gật đầu rồi quay về tu luyện.", "effects": {"stat.daoHeart": 1, "speedBuff": {"mul": 1.1, "years": 1}}}, "fail": {"text": "Thứ hạng tụt mười bậc. Ngươi mất ngủ ba đêm.", "effects": {"stat.happiness": -4, "heartDemon": 2}}},
+       {"id": "do_cao_thu", "name": "Dò tìm cao thủ ẩn thế", "text": "Lật bảng tìm những cái tên lạ, xem có ai ẩn gần đây.", "minLevel": 2, "cooldownYears": 3, "check": {"stat": "stat.luck", "difficulty": 55}, "success": {"text": "Một lão nhân bán trà đầu ngõ là cao thủ hạng ba trăm. Ngươi tới uống trà, lão chỉ điểm vài câu.", "effects": {"stat.comprehension": 2, "cultProgress": 10}}, "fail": {"text": "Cái tên ngươi tìm thấy cũng đang nhìn ngươi. Ngươi vội gập bảng lại.", "effects": {"stat.daoHeart": -1, "stat.happiness": -2}}},
+       {"id": "tranh_ke_manh", "name": "Lánh kẻ mạnh trong vùng", "text": "Bảng cho biết ai không nên đụng vào. Năm nay đi đường vòng.", "minLevel": 1, "cooldownYears": 2, "result": {"text": "Đường xa hơn, nhưng về tới nhà lành lặn.", "effects": {"stat.health": 4, "stat.intellect": 1}}}
      ]}
   ]
 }

@@ -76,12 +76,33 @@ describe('sects (task 2.5)', () => {
 
   it('missions: one a year, rank-gated, give contribution', () => {
     let s = joinSect(disciple(), content, 'bich_lac_tong').state;
-    expect(missionViews(s, content).find((m) => m.id === 'hai_thuoc')?.blocked).toContain('Ngoại môn');
-    const r = doMission(s, content, 'ganh_nuoc')!;
+    const board = missionViews(s, content);
+    expect(board.length).toBe(content.balance.sects.missionBoard);
+    expect(board.some((m) => m.id === 'hai_thuoc')).toBe(false); // Ngoại môn and up
+    const first = board[0].id;
+    const r = doMission(s, content, first)!;
     expect(r.state.sect.contribution).toBeGreaterThan(0);
-    expect(doMission(r.state, content, 'ganh_nuoc')).toBeNull();
+    expect(doMission(r.state, content, first)).toBeNull();
     s = { ...r.state, character: { ...r.state.character, age: 15 } };
-    expect(doMission(s, content, 'ganh_nuoc')).not.toBeNull();
+    const next = missionViews(s, content)[0].id;
+    expect(doMission(s, content, next)).not.toBeNull();
+  });
+
+  it('the mission board rotates yearly and only shows the sect\'s own missions', () => {
+    const joined = joinSect(disciple(), content, 'bich_lac_tong').state;
+    const s = { ...joined, sect: { ...joined.sect, rank: 3 } };
+    const boards = new Set<string>();
+    const seen = new Set<string>();
+    for (let age = 20; age < 40; age++) {
+      const ids = missionViews({ ...s, character: { ...s.character, age } }, content).map((m) => m.id);
+      boards.add(ids.join());
+      ids.forEach((id) => seen.add(id));
+    }
+    expect(boards.size).toBeGreaterThan(5);
+    expect(seen.has('canh_lo_dan')).toBe(true);
+    expect(seen.has('khat_thuc')).toBe(false); // Vô Ưu Tự only
+    expect(seen.has('phuc_kich')).toBe(false); // U Hà only
+    expect(seen.has('thi_kiem')).toBe(false); // Kiếm Các only
   });
 
   it('the sect teaches its technique by rank and its perks apply', () => {

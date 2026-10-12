@@ -4,7 +4,7 @@ import type { Content } from './content';
 import { Rng } from './rng';
 import { APTITUDES, MORTAL_STATS } from './schemas';
 import type { GameState, Gender, PastSectRecord } from './types';
-import { rollYearEvent } from '../systems/events/engine';
+import { rollSeclusionEvent, rollYearEvent } from '../systems/events/engine';
 import { ageFamily, createFamily } from '../systems/relationships';
 import { ageExtremes } from '../systems/extremes';
 import { ageBody, checkDeath } from '../systems/time';
@@ -194,7 +194,7 @@ export function advanceYear(state: GameState, content: Content): GameState {
   // Task 4.1: in seclusion no ordinary event comes (follow-ups wait for the door to open);
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;
-  const next = body.alive && !state.seclusion ? rollYearEvent(secluded, content) : secluded;
+  const next = !body.alive ? secluded : state.seclusion ? rollSeclusionEvent(secluded, content) : rollYearEvent(secluded, content);
   // The year's log block exists before family news and the event are added to it.
   const log = next.log.slice();
   const block = log[log.length - 1];

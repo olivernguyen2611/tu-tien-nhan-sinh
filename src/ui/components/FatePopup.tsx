@@ -37,7 +37,6 @@ export function FatePopup({ state, content, unlimited, onChoose, onReroll }: {
             </button>
           ))}
         </div>
-        <p class="profile-note">Hiệu ứng về chiến đấu, thoát chết, thiên kiếp, giá cả… có tác dụng khi các hệ thống đó hoàn thành (GĐ 3–4).</p>
         <button class="btn-secondary" onClick={onReroll} disabled={!unlimited && fate.refreshesLeft <= 0}>
           Làm mới ({unlimited ? '∞' : fate.refreshesLeft})
         </button>

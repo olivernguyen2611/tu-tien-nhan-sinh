@@ -98,6 +98,7 @@
     "seclusionEnd": "Xuất quan sau {years} năm. Tu vi giờ là {realm} {stage}. Thế gian ngoài kia đã khác.",
     "seclusionPeak": "Tu vi đã viên mãn, ngồi thêm cũng không lên được nữa. Ngươi xuất quan sớm.",
     "seclusionLifespan": "Thọ nguyên còn chẳng bao nhiêu, trong lòng bất an. Ngươi xuất quan sớm.",
+    "seclusionInterrupted": "Bế quan được {years} năm thì có biến, cửa động phủ phải mở.",
     "coreStart": "Linh lực trong đan điền xoáy lại, chờ được nén thành đan. Ba lần dẫn linh khí, ba lần quyết định.",
     "coreRoot": "Luồng {element} hợp linh căn, chảy vào đan điền như về nhà.",
     "coreFlow": "Luồng {element} nối tiếp luồng trước, tương sinh, đan sáng thêm một tầng.",

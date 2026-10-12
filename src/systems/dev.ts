@@ -378,6 +378,12 @@ export function devSpouseAffinity(state: GameState, delta: number): GameState {
 }
 
 /** Forget which events happened (cooldowns, once-per-life, repeat decay). */
+/** Playtest 2: every Kim Thủ Chỉ action usable again this year. */
+export function devResetFingerCooldowns(state: GameState): GameState {
+  if (!state.goldenFinger) return state;
+  return devLog({ ...state, goldenFinger: { ...state.goldenFinger, used: {} } }, 'Kim Thủ Chỉ: dùng lại được');
+}
+
 export function devResetEventHistory(state: GameState): GameState {
   return devLog({ ...state, events: { ...state.events, history: {}, seen: {} } }, 'xóa lịch sử sự kiện');
 }
