@@ -20,7 +20,7 @@ type Pending = { kind: 'delete' | 'overwrite'; slot: number } | null;
 
 const when = (iso: string) => new Date(iso).toLocaleString('vi-VN', { dateStyle: 'short', timeStyle: 'short' });
 
-export function SettingsScreen({ slots, library, realmName, onSavePlayer, onRemovePerson, pick, worldName, message, onPlay, onExport, onDelete, onImport, onPick, onBack, theme, onToggleTheme }: {
+export function SettingsScreen({ slots, library, realmName, onSavePlayer, onRemovePerson, pick, worldName, message, onPlay, onExport, onDelete, onImport, onPick, onBack, theme, onToggleTheme, sound, onToggleSound }: {
   slots: SlotView[];
   /** Backlog 11: the Sổ nhân vật, and writing a slot's protagonist into it. */
   library: SavedPerson[];
@@ -39,6 +39,8 @@ export function SettingsScreen({ slots, library, realmName, onSavePlayer, onRemo
   onBack: () => void;
   theme: ThemePref;
   onToggleTheme: () => void;
+  sound: boolean;
+  onToggleSound: () => void;
 }) {
   const [pending, setPending] = useState<Pending>(null);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -123,6 +125,10 @@ export function SettingsScreen({ slots, library, realmName, onSavePlayer, onRemo
           <div class="settings-row">
             <span>Giao diện</span>
             <ThemeToggle pref={theme} onChange={onToggleTheme} />
+          </div>
+          <div class="settings-row">
+            <span>Âm thanh (chuông, mõ)</span>
+            <button class="chip-btn" role="switch" aria-checked={sound} onClick={onToggleSound}>{sound ? 'Bật' : 'Tắt'}</button>
           </div>
         </>
       )}

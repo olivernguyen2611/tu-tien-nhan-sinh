@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6.4: âm thanh tổng hợp (2026-10-12)
+- `src/ui/audio.ts`: chuông/mõ tạo bằng Web Audio (không dùng file âm thanh). 4 tiếng: qua năm (nhẹ), có sự kiện, đột phá/lên tầng, qua đời. Không có thiết bị âm thanh thì im lặng.
+- **Mặc định tắt.** Bật/tắt ở Sổ lưu → "Âm thanh", ghi nhớ trong trình duyệt (`tutien.sound`).
+- Chọn tiếng nào do hàm `cueFor` (có test), UI chỉ phát.
+
 ### GĐ 6.3: PWA, cài lên điện thoại và chơi offline (2026-10-12)
 - `manifest.webmanifest` + biểu tượng chữ 仙 (192/512, maskable, apple-touch-icon) để "Thêm vào màn hình chính".
 - `public/sw.js`: trang tải qua mạng trước (ra bản mới), có bản lưu làm dự phòng khi mất mạng; file build và font cache-first. Chỉ đăng ký ở bản production.

@@ -391,7 +391,7 @@ Cân bằng bằng **mô phỏng tự động** (chạy hàng nghìn đời gi�
 | 6.1 | [x] Mô phỏng tự động: người chơi máy sống trọn đời theo seed, chạy hàng loạt, báo tuổi chết, nguyên nhân chết, cảnh giới, linh căn (`npm run simulate`) |
 | 6.2 | [x] Cân bằng theo kết quả mô phỏng (chỉnh `balance.json`, ghi lại trước/sau) |
 | 6.3 | [x] PWA: cài lên điện thoại và chơi offline (manifest, service worker, biểu tượng) |
-| 6.4 | [ ] Âm thanh tổng hợp bằng code (không dùng file nhạc), bật/tắt được, mặc định tắt |
+| 6.4 | [x] Âm thanh tổng hợp bằng code (không dùng file nhạc), bật/tắt được, mặc định tắt |
 | 6.5 | [ ] Hiệu ứng nhẹ (chuyển cảnh, nổi bật khi đột phá), tôn trọng chế độ giảm chuyển động |
 | 6.6 | [ ] Tối ưu tốc độ (cắt nhỏ gói tải, đo thời gian khởi động và tua năm) |
 | 6.7 | [ ] Rà soát hiển thị nhiều cỡ màn hình (điện thoại nhỏ, máy tính bảng, máy tính) |
