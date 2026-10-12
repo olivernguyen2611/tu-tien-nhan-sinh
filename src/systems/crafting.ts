@@ -28,7 +28,7 @@ export function craftChance(state: GameState, content: Content, recipe: Recipe):
   const cfg = content.balance.crafting;
   const p = cfg.base + (level(state, recipe.craft) - recipe.minLevel) * cfg.perLevel
     + (state.aptitudes.comprehension - 50) * cfg.perComprehension
-    + hookSum(state, content, `craft.${recipe.craft}.success`);
+    + hookSum(state, content, `craft.${recipe.craft}.success`) + hookSum(state, content, 'craft.all.success');
   return Math.max(cfg.min, Math.min(cfg.max, p));
 }
 

@@ -2,6 +2,12 @@
 
 ## [Chưa phát hành]
 
+### Sửa móc hiệu ứng sai đơn vị và nối móc còn treo (rà soát sau GĐ 4, 2026-10-12)
+- Sửa 10 móc viết sai đơn vị: Long tượng chi lực chiến lực +10% (trước là +1000%), Thân như liễu yếu thương tích +20%, Khuynh quốc khuynh thành mua rẻ 10%, Đạo tâm như bàn thạch kháng tâm ma 20% (trước là miễn hoàn toàn); Độ Kiếp Thể và Đại Khí Vãn Thành đột phá đại cảnh giới +5% / +15% (trước gần như 0); Trung Châu đột phá +2%; trạng thái cực hạn cộng thọ nguyên theo tỉ lệ như mọi nơi khác.
+- Validator báo lỗi khi móc tính theo tỉ lệ (0.2 = 20%) mang số lớn hơn 2, hoặc móc tính theo điểm phần trăm (đột phá, thiên kiếp, bệnh) mang số dưới 1.
+- Nối các móc nội dung đã hứa mà engine chưa đọc: `npcAffinityStart` (thiện cảm khởi đầu với người mới), `ignoreElementWeakness` (bị khắc hệ không bị phạt), `divineSense` (thần thức giúp chạy trốn, `balance.combat.divineSenseEscape`), `craft.all.success`, `agingSlow` (già chậm `balance.aging.slowAgingYears` năm), `cannotWork` (liệt giường không đi làm được), `noLineageChange` (không đổi đạo thống), `trigger.everyNYears` (Tử Khí Đông Lai: mỗi 10 năm chắc có kỳ ngộ).
+- **Còn treo**: `charmResist` (chưa có hệ thống mị thuật), `counter` của Đảo Môi Tinh, `rewindOnDeath` của Nhất Niệm Hồi Quang, `trigger.cheatDeath` từ trạng thái Phúc tinh cao chiếu.
+
 ### Task 5.3 — Sự kiện tông môn (phần engine, 2026-10-12)
 - Điều kiện sự kiện `ownSect`: đã lập tông môn, khoảng số đệ tử, công trình đạt cấp tối thiểu.
 - Hiệu ứng `ownSect`: thêm/bớt đệ tử, kho linh thạch, đà tăng đệ tử năm sau. Validator đòi sự kiện có hiệu ứng này phải có `conditions.ownSect.has = true`.

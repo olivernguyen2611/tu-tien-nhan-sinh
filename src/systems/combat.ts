@@ -5,7 +5,7 @@ import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { CombatAction, Fight, FoeSpec } from '../core/schemas';
 import type { Battle, Foe, GameState, LogLine, Tone } from '../core/types';
-import { hookSum } from './cultivation';
+import { hasHook, hookSum } from './cultivation';
 import { applyOutcome } from './events/engine';
 import { itemById, removeItems } from './items';
 import { mainPath as mainPathOf } from './paths';
@@ -164,7 +164,7 @@ function sides(state: GameState, content: Content, battle: Battle, action: Comba
   // The player's element is their root's, so element.root (and element.all) always count here.
   const elementBonus = hookSum(state, content, `element.${mine}.power`) + hookSum(state, content, 'element.root.power') + hookSum(state, content, 'element.all.power');
   if (beats(content, mine, battle.foe.element)) a *= 1 + counter + elementBonus;
-  if (beats(content, battle.foe.element, mine)) {
+  if (beats(content, battle.foe.element, mine) && !hasHook(state, content, 'ignoreElementWeakness')) {
     if (path === 'spell') a *= 1 + paths.spell.elementCounteredPenalty;
     else foe *= 1 + b.roots.elementCounterBonus;
   }
@@ -185,7 +185,9 @@ export function fleeChance(state: GameState, content: Content, extra = 0): numbe
   if (!battle) return 0;
   const c = content.balance.combat;
   const mine = combatSpeed(state, content);
-  const p = mine / (mine + battle.foe.speed) + hookSum(state, content, 'escapeChance') + extra;
+  const p = mine / (mine + battle.foe.speed) + hookSum(state, content, 'escapeChance')
+    // Thần thức feels the way out before the foe closes it.
+    + hookSum(state, content, 'divineSense') * content.balance.combat.divineSenseEscape + extra;
   return Math.max(c.fleeMin, Math.min(c.fleeMax, p));
 }
 

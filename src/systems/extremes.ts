@@ -40,6 +40,11 @@ export function extremeHookSum(state: GameState, content: Content, hook: string)
   return sum;
 }
 
+/** An active state carries this flag hook (cannotWork, noLineageChange…). */
+export function extremeHasHook(state: GameState, content: Content, hook: string): boolean {
+  return activeExtremes(state, content).some((d) => d.effects.some((e) => e.hook === hook));
+}
+
 /** Product of eventWeight.<theme> multipliers from active states for these themes. */
 export function extremeThemeMultiplier(state: GameState, content: Content, themes: string[]): number {
   let mul = 1;
@@ -65,7 +70,7 @@ export function extremeWarnings(state: GameState, content: Content): string[] {
 /** Add to a stat/aptitude ("stat.<name>"), or lifespan by percent; returns the new state. */
 function applyOnce(state: GameState, hook: string, add: number): GameState {
   if (hook === 'lifespanPct') {
-    return { ...state, cult: { ...state.cult, lifespan: Math.round(state.cult.lifespan * (1 + add / 100)) } };
+    return { ...state, cult: { ...state.cult, lifespan: Math.round(state.cult.lifespan * (1 + add)) } };
   }
   return addToStat(state, hook.slice('stat.'.length), add);
 }

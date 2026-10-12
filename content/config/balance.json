@@ -64,7 +64,8 @@
     "epitaphKarma": 30,
     "milestoneAges": [60, 70, 80],
     "milestoneHealth": -5,
-    "milestoneCharm": -3
+    "milestoneCharm": -3,
+    "slowAgingYears": 30
   },
   "extremes": {
     "lowAt": 5,
@@ -269,6 +270,7 @@
     "k": 1.5,
     "winRounds": 2,
     "allOutMul": 1.3,
+    "divineSenseEscape": 0.5,
     "allOutInjuryMul": 1.5,
     "defendMul": 0.75,
     "defendInjuryMul": 0.5,

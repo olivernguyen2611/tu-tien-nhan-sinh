@@ -6,6 +6,7 @@ import { describeDelta } from './deltas';
 import { extremeHookSum } from './extremes';
 import { difficultyHookSum } from './difficulty';
 import { rollGhostOffer } from './ghost';
+import { hasHook } from './cultivation';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 const fill = (text: string, age: number) => text.replaceAll('{age}', String(age));
@@ -25,15 +26,17 @@ export function ageBody(state: GameState, content: Content): GameState {
   const cfg = content.balance.aging;
   const rng = Rng.fromState(state.rng);
   const age = state.character.age;
+  // Trường Xuân Thể and the like (agingSlow): the body wears as if this many years younger.
+  const bodyAge = age - (hasHook(state, content, 'agingSlow') ? cfg.slowAgingYears : 0);
   let { health, happiness, charm } = state.stats;
   const lines: LogLine[] = [];
 
   // A quỷ tu has no body to mend or to age (task 4.12); Quỷ đạo wears health on its own.
   if (state.flags.quy_tu) { /* no recovery, no old-age decline */ }
-  else if (age >= cfg.declineStartAge) health -= cfg.healthDeclinePerYear;
+  else if (bodyAge >= cfg.declineStartAge) health -= cfg.healthDeclinePerYear;
   else if (health < cfg.recoverCap && !state.flags.quy_tu) health = Math.min(cfg.recoverCap, health + cfg.recoverPerYear);
   // Old-age milestones (60, 70, 80): a visible blow to health and looks.
-  if (cfg.milestoneAges.includes(age)) {
+  if (cfg.milestoneAges.includes(bodyAge)) {
     const dh = clamp(health + cfg.milestoneHealth) - clamp(health);
     // Trú Nhan Đan keeps the face (flag no_aging_charm).
     const dc = state.flags.no_aging_charm ? 0 : clamp(charm + cfg.milestoneCharm) - charm;
@@ -44,7 +47,7 @@ export function ageBody(state: GameState, content: Content): GameState {
   }
   // Extreme states can make illness likelier or rule it out (illnessChancePct).
   const illnessMul = Math.max(0, 1 + (extremeHookSum(state, content, 'illnessChancePct') + difficultyHookSum(state, content, 'illnessChancePct')) / 100);
-  const illnessChance = (age - cfg.illnessStartAge) * cfg.illnessChancePerYear * illnessMul;
+  const illnessChance = (bodyAge - cfg.illnessStartAge) * cfg.illnessChancePerYear * illnessMul;
   if (illnessChance > 0 && rng.chance(illnessChance)) {
     health -= rng.int(cfg.illnessHealthLoss[0], cfg.illnessHealthLoss[1]);
     happiness -= cfg.illnessHappinessLoss;

@@ -625,6 +625,8 @@ export const BalanceSchema = z
         illnessChancePerYear: probability,
         illnessHealthLoss: range,
         illnessHappinessLoss: z.number().min(0),
+        /** agingSlow hook: decline, illness and milestones come this many years later. */
+        slowAgingYears: z.number().int().min(0),
         /** |karma| at or above this picks a good/bad epitaph. */
         epitaphKarma: z.number().min(0).max(100),
         /** At these ages the body takes a visible blow (stat-extremes-approved.md §3). */
@@ -929,6 +931,8 @@ export const BalanceSchema = z
         lineagePower: z.record(z.number().positive()),
         /** Round win chance A^k / (A^k + B^k). */
         k: z.number().positive(),
+        /** Escape chance + divineSense × this. */
+        divineSenseEscape: z.number().min(0),
         /** Rounds to win the fight (of 3). */
         winRounds: z.number().int().min(1),
         allOutMul: z.number().positive(),
