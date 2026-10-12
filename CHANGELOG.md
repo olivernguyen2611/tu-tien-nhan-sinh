@@ -8,6 +8,9 @@
 
 ## [Chưa phát hành]
 
+### 9 ô lưu (2026-10-12)
+- Sổ lưu tăng từ 3 lên **9 ô**. Save cũ ở ô 1 đến 3 giữ nguyên.
+
 ### Công pháp Nguyên Anh / Hóa Thần và Thái Sơ Diễn Đạo Kinh (2026-10-12)
 - **Mở cửa đột phá lên Hóa Thần** (`majorBreakthrough.openRealms`): trước đây không ai lên được vì cửa đóng. Công pháp Địa phẩm vẫn dừng ở Nguyên Anh, muốn lên Hóa Thần phải có công pháp Thiên phẩm hoặc không giới hạn.
 - **Thái Sơ Diễn Đạo Kinh tự thích ứng** (`adaptive`): hợp mọi linh căn; linh căn càng yếu càng được bù thêm tốc độ tu (ngũ linh căn +50%, đơn linh căn +10%), thể chất đặc biệt (thay linh căn) được +25%. Mở tới Hóa Thần trước; các chương sau để niêm phong, về sau mở dần bằng cách nâng `maxRealm` khi thêm cảnh giới mới. Số ở `balance.techniques.adaptive`.
