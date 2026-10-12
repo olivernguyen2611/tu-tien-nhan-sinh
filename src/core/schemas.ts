@@ -645,6 +645,16 @@ export const BalanceSchema = z
         inheritShare: probability,
       })
       .strict(),
+    /** Task 5.7: going on as an heir. */
+    heir: z
+      .object({
+        /** Youngest heir who can carry on. */
+        minAge: z.number().int().min(0),
+        /** Share of silver and spirit stones passed on; share of karma and reputation (phúc ấm). */
+        inheritMoney: probability,
+        inheritKarma: probability,
+      })
+      .strict(),
     /** Task 5.1: founding one's own sect. */
     founding: z
       .object({
@@ -1999,3 +2009,9 @@ export const FoundingFileSchema = z
   })
   .strict();
 export type FoundingFile = z.infer<typeof FoundingFileSchema>;
+
+/** content/heir.json (task 5.7): going on as a child or disciple. {name} = heir, {parent} = the one who died, {sect}. */
+export const HeirFileSchema = z
+  .object({ offer: z.string().min(1), child: z.string().min(1), disciple: z.string().min(1), sect: z.string().min(1) })
+  .strict();
+export type HeirFile = z.infer<typeof HeirFileSchema>;

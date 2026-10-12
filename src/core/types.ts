@@ -54,6 +54,8 @@ export interface GameState {
   talents: string[];
   /** A talent choice waiting for the player (after a big breakthrough); blocks the next year. */
   fate: { offered: string[]; refreshesLeft: number } | null;
+  /** Task 5.7: lives before this one in the same line (tộc phả), oldest first. */
+  ancestry: { name: string; age: number; realm: string; cause: DeathCause; relation: 'child' | 'disciple' | null }[];
   /**
    * Task 5.1: the sect this life founded (it is its master). Members, treasury and buildings
    * grow from task 5.2 on.

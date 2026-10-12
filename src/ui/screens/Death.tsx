@@ -3,6 +3,7 @@ import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
 import { lifeSummary } from '../../systems/time';
 import { careerLabel, lifeTitles } from '../../systems/career';
+import { heirOptions } from '../../systems/heir';
 import { Meter } from '../components/Meter';
 
 const STAT_LABELS = [
@@ -12,13 +13,15 @@ const STAT_LABELS = [
   ['charm', 'Mị lực', '貌'],
 ] as const;
 
-export function DeathScreen({ state, content, onReadLog, onNewLife, onGhost }: {
+export function DeathScreen({ state, content, onReadLog, onNewLife, onGhost, onHeir }: {
   state: GameState;
   content: Content;
   onReadLog: () => void;
   onNewLife: () => void;
   /** Task 4.12: go on as a quỷ tu (only when the death left a lingering obsession). */
   onGhost: () => void;
+  /** Task 5.7: go on as a child or disciple. */
+  onHeir: (heirId: string) => void;
 }) {
   const s = lifeSummary(state, content);
   if (!s) return null;
@@ -60,6 +63,27 @@ export function DeathScreen({ state, content, onReadLog, onNewLife, onGhost }: {
           <div class="ghost-offer">
             <p class="story">{content.lifeTexts.ghostOffer}</p>
             <button class="btn-primary" onClick={onGhost}>Hóa quỷ tu, tu tiếp bằng Quỷ đạo</button>
+          </div>
+        )}
+
+        {heirOptions(state, content).length > 0 && (
+          <div class="ghost-offer heir-offer">
+            <p class="story">{content.heir.offer}</p>
+            {heirOptions(state, content).map((h) => (
+              <button class="choice" key={h.id} onClick={() => onHeir(h.id)}>
+                {h.name}, {h.age} tuổi
+                <span class="hint">{h.label}</span>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {state.ancestry.length > 0 && (
+          <div class="ancestry">
+            <p class="kicker">Tộc phả · đời thứ {state.ancestry.length + 1}</p>
+            <ol>
+              {state.ancestry.map((a, i) => <li key={i}>{a.name}, {a.realm}, mất năm {a.age} tuổi</li>)}
+            </ol>
           </div>
         )}
 

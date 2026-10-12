@@ -5,7 +5,7 @@ import { BalanceSchema, WorldSchema, NamesSchema, OriginFileSchema } from '../sr
 import { LifeTextsSchema } from '../src/core/schemas';
 import lifeTexts from '../content/life-texts.json';
 import extremes from '../content/stat-extremes.json';
-import { careers, cultivation, difficulties, fateTalents, items, martial, lineages, rankings, romance, heartDemon, recipes, disciples, founding, sectLife, sects, techniques, tutorial, combat } from './fixtures';
+import { careers, cultivation, difficulties, fateTalents, items, martial, lineages, rankings, romance, heartDemon, recipes, disciples, founding, heir, sectLife, sects, techniques, tutorial, combat } from './fixtures';
 import { StatExtremesFileSchema } from '../src/core/schemas';
 import world from '../content/worlds/thuong_lan/world.json';
 import balance from '../content/config/balance.json';
@@ -42,6 +42,7 @@ const content: Content = {
   recipes,
   disciples,
   founding,
+  heir,
   traits: [],
 };
 

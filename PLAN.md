@@ -353,7 +353,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 5.4 | [ ] Gia tộc tu tiên: tộc phả, sản nghiệp, gia quy |
 | 5.5 | [ ] Khí vận chi tử làm đệ tử: ✍️ 3 mô bản đầu (Xuyên không, Phế vật nghịch tập, Trọng sinh giả) |
 | 5.6 | [ ] Vai trò Hộ đạo / Lợi dụng / Mặc kệ và hệ quả |
-| 5.7 | [ ] Chơi tiếp bằng con cháu hoặc đồ đệ khi chết |
+| 5.7 | [x] Chơi tiếp bằng con cháu hoặc đồ đệ khi chết |
 
 **Tiêu chí hoàn thành:** lập được tông môn, nhận báo cáo năm; thu một khí vận chi tử và thấy chuỗi sự kiện riêng; chết rồi chơi tiếp bằng con.
 

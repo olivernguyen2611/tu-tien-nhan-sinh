@@ -2,6 +2,21 @@
 
 ## [Chưa phát hành]
 
+### Task 5.7 — Chơi tiếp bằng con cháu hoặc đồ đệ (2026-10-12)
+- **Màn hình chết** liệt kê người kế thừa: con còn sống từ 6 tuổi (kèm linh căn nếu đã thử) và đồ đệ còn sống (kèm cảnh giới). Chọn một người thì chơi tiếp bằng người đó.
+- **Con kế thừa**:
+  - Giữ linh căn di truyền đã quay lúc sinh (3.7); đủ tuổi thử linh căn thì vào Luyện Khí ngay.
+  - Người vừa mất thành cha/mẹ đã khuất; đạo lữ còn sống thành cha/mẹ; các con khác thành anh chị em.
+- **Đồ đệ kế thừa**: giữ cảnh giới, tầng và tu vi; có linh căn dùng được và Dẫn Khí Quyết.
+- **Kế thừa** (`balance.heir`):
+  - 80% bạc và linh thạch, toàn bộ túi đồ.
+  - Tông môn tự lập (5.1): người kế thừa thành chưởng môn.
+  - 30% nhân quả và danh vọng (phúc ấm).
+  - Thế giới giữ nguyên: NPC và sổ ân oán, nên kẻ thù cũ sẽ tìm tới người kế thừa; Thiên kiêu bảng cũng giữ nguyên.
+- **Tộc phả**: mỗi đời ghi tên, cảnh giới, tuổi mất, nguyên nhân, và ai kế thừa. Màn hình chết hiện tộc phả và "đời thứ N". Phần này dùng tiếp cho gia tộc ở 5.4.
+- Câu văn ở `content/heir.json`.
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "chơi tiếp bằng con cháu hoặc đồ đệ khi chết"): tỉ lệ kế thừa, tuổi tối thiểu, câu văn.
+
 ### Task 5.2 — Công trình và báo cáo tông môn (2026-10-12)
 - **Tông môn tự chạy mỗi năm** (`balance.founding`):
   - Đệ tử mới = số đệ tử × (5% + công trình + quyết định năm trước), ít nhất 1, nhân hệ số tông quy.

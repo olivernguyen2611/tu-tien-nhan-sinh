@@ -37,6 +37,7 @@ import { romanceAction } from '../systems/romance';
 import { runSeclusion, seclude } from '../systems/seclusion';
 import { placeStrand } from '../systems/goldenCore';
 import { becomeGhost } from '../systems/ghost';
+import { continueAsHeir } from '../systems/heir';
 import { meetIllusion } from '../systems/heartDemon';
 import { craftRecipe } from '../systems/crafting';
 import { recruitDisciple, teachDisciple } from '../systems/disciples';
@@ -171,7 +172,8 @@ function Screens({ content }: { content: Content }) {
     // A new life from here reuses this slot, as when abandoning a life.
     return (
       <DeathScreen state={life} content={content} onReadLog={() => setScreen('main')} onNewLife={() => setScreen('create')}
-        onGhost={() => { setLife(becomeGhost(life, content)); setScreen('main'); }} />
+        onGhost={() => { setLife(becomeGhost(life, content)); setScreen('main'); }}
+        onHeir={(id) => { setLife(continueAsHeir(life, content, id)); setScreen('main'); }} />
     );
   }
   if (screen === 'main' && life) {

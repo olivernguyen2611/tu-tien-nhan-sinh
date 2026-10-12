@@ -308,6 +308,11 @@
     "bargainLoseMul": 1.1,
     "maxDiscount": 0.3
   },
+  "heir": {
+    "minAge": 6,
+    "inheritMoney": 0.8,
+    "inheritKarma": 0.3
+  },
   "founding": {
     "minRealm": "kim_dan",
     "cost": 300,
