@@ -2,6 +2,13 @@
 
 ## [Chưa phát hành]
 
+### Góp ý chơi thử 3 — Phu thê có chiều sâu (2026-10-12)
+- Với bạn đời / đạo lữ giờ có: **Bầu bạn** (thiện cảm và vui vẻ, mỗi năm một lần), **Tặng quà**, **Song tu** (cả hai cùng tu hành: tu vi hai người cùng tăng, nhiều hơn khi tình cảm sâu), **Làm lành** (khi thiện cảm dưới 50, tỉ lệ theo Mị lực), **Sinh con / Nhận con nuôi**, **Hòa ly / Giải trừ đạo lữ**.
+- Mỗi năm: cả năm không chăm sóc (không bầu bạn, quà, song tu, làm lành, con cái) thì bạn đời nguội dần. Nhà ấm (thiện cảm ≥ 70) thêm vui vẻ mỗi năm; nhà lạnh (< 30) mỗi năm buồn thêm; dưới 15 thì bạn đời có thể bỏ đi.
+- 9 sự kiện hôn nhân mới: ngày cưới năm xưa, thân thích bên nhà, ghen, bạn đời lâm bệnh, cãi vã, đạo lữ tới bình cảnh, du ngoạn, chung nhà khác lòng, hoạn nạn có nhau.
+- Số liệu mới trong `balance.romance` (companyAffinity, dualCultProgress, neglectAffinity, warmAt/coldAt, leaveBelow, reconcile*, divorce*).
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Góp ý chơi thử 2 — Kỳ ngộ Tam hoa tụ đỉnh và Ngũ khí triều nguyên (2026-10-12)
 - Bước vào Hóa cảnh thì **cảm ứng Tam hoa**: biết con đường tụ tinh, khí, thần, nhưng "trăm người Hóa cảnh may ra một người".
 - 3 kỳ ngộ hiếm cho Tam hoa tụ đỉnh, mỗi cái thử một tư chất khó: thác băng ngàn năm (Đạo tâm), tiếng mõ nửa đêm (Ngộ tính), sét đánh đỉnh núi (Căn cốt).

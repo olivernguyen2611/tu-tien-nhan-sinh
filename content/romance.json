@@ -42,7 +42,14 @@
     "adopt": "Ngươi và {npc} nhận nuôi một đứa trẻ mồ côi, đặt tên là {child}.",
     "noChild": "Năm nay vẫn chưa có tin vui. Duyên con cái, cưỡng cầu không được.",
     "childRoot": "{child} lên {age} tuổi, thử linh căn: {root}.",
-    "childNoRoot": "{child} lên {age} tuổi, thử linh căn: không có. Làm phàm nhân cũng tốt."
+    "childNoRoot": "{child} lên {age} tuổi, thử linh căn: không có. Làm phàm nhân cũng tốt.",
+    "company": "Ngươi gác việc một hôm, cùng {npc} pha ấm trà, nói chuyện trên trời dưới biển. Hóa ra người ấy vẫn nhớ chuyện ngươi kể từ mười năm trước.",
+    "dualCult": "Ngươi và {npc} ngồi đối diện, linh khí hai người quấn lấy nhau như hai sợi chỉ cùng một cuộn. Cả hai đều tiến thêm một bước.",
+    "reconcileYes": "Ngươi nấu bát canh người ấy thích, đặt xuống bàn, nói một câu \"Là ta sai\". {npc} cầm thìa lên. Thế là xong.",
+    "reconcileNo": "Ngươi muốn làm lành, {npc} chỉ \"ừ\" một tiếng rồi quay đi. Tường trong nhà dường như dày thêm.",
+    "divorce": "Ngươi và {npc} viết thư hòa ly, mỗi người cầm một bản. Không ai khóc, cũng không ai nói câu nào thừa.",
+    "neglect": "Cả năm ngươi chẳng mấy khi ở nhà. {npc} không trách, chỉ là bữa cơm dọn ra ngày càng ít món.",
+    "spouseLeft": "Một sáng ngươi dậy, chỗ bên cạnh đã lạnh. {npc} để lại một lá thư: \"Ở cùng một người không nhìn thấy mình, còn cô đơn hơn ở một mình.\""
   },
   "labels": {
     "lover": "Người trong lòng",
