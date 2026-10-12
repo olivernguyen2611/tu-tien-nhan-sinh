@@ -307,6 +307,16 @@
     "bargainWinMul": 0.85,
     "bargainLoseMul": 1.1
   },
+  "crafting": {
+    "base": 0.6,
+    "perLevel": 0.02,
+    "perComprehension": 0.005,
+    "min": 0.1,
+    "max": 0.95,
+    "xpSuccess": 3,
+    "xpFail": 1,
+    "failProduct": { "alchemy": "phe_dan" }
+  },
   "heartDemon": {
     "realms": ["kim_dan", "nguyen_anh", "hoa_than"],
     "seeds": 1,

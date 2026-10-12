@@ -2,6 +2,21 @@
 
 ## [Chưa phát hành]
 
+### Task 4.7 — Luyện đan và luyện khí (2026-10-12)
+- Mục Bách nghệ có thêm **Luyện chế** dưới Luyện Đan và Luyện Khí. Luyện một mẻ chiếm lượt luyện nghề của năm đó (như Luyện tập).
+- **Tỉ lệ thành công** = 60% + 2% mỗi cấp trên mức công thức yêu cầu + 0.5% mỗi điểm Ngộ tính trên 50 + móc `craft.<nghề>.success` (Thủ Ổn Tâm Tĩnh, Đan Hỏa Thuần Thanh…). Trong khoảng 10–95%.
+  - Móc `craft.<nghề>.yield` cho thêm sản phẩm.
+- **Thành bại**:
+  - Thành công: cấp nghề +3.
+  - Thất bại: cấp nghề +1, nguyên liệu mất. Lò đan hỏng còn lại một **Phế Đan**, đúng ghi chú đã duyệt của Đ15.
+- **Phàm nhân** chỉ luyện được phàm dược (Bổ Khí Tán).
+- **Công thức** (`content/recipes.json`, số liệu ở `balance.crafting`):
+  - Luyện đan: Bổ Khí Tán, Hồi Xuân Đan, Tụ Khí Đan ×2, Thanh Tâm Đan, Phá Chướng Đan, Trúc Cơ Đan, Diên Thọ Đan, Kết Kim Đan. Dùng linh thảo trăm năm, linh chi nghìn năm, nội đan các cấp, và linh thạch.
+  - Luyện khí: Thanh Phong Kiếm (linh tinh Kim), Huyền Thiết Giáp (linh tinh Thổ), Hộ Thân Ngọc Bội (linh tinh Thủy + Lôi Tinh).
+  - Validator kiểm tra mọi nguyên liệu và sản phẩm đều có trong `items.json`.
+- **Bổ sung kỹ thuật, cần chủ dự án duyệt**: bản duyệt `items.md` chỉ ghi vật phẩm nào là nguyên liệu, chưa có công thức. Toàn bộ công thức, cấp yêu cầu và giá là bổ sung, chỉ dùng vật phẩm đã duyệt. Muốn đổi chỉ cần sửa `recipes.json`.
+- **Chưa làm**: sửa Pháp bảo cổ (V4) vì chưa có món "pháp bảo cổ đã sửa"; các nghề khác để GĐ 7 như PLAN.
+
 ### Task 4.4 — Tâm ma chiến (2026-10-12)
 - **Khi nào xảy ra**: trước khi đột phá Kim Đan, Nguyên Anh hay Hóa Thần, nếu thuộc một trong ba trường hợp (`balance.heartDemon`):
   - còn hạt tâm ma (từ các lựa chọn đen tối của 3.9);

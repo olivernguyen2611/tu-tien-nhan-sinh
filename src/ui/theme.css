@@ -763,3 +763,8 @@ button { font: inherit; color: inherit; }
 .ghost-offer { margin: 16px 0; padding: 12px; border: 1px dashed var(--rare); border-radius: var(--radius); }
 .ghost-offer .btn-primary { width: 100%; }
 .warn-note { color: var(--bad); }
+
+/* Luyện chế (task 4.7) */
+.recipes { grid-column: 1 / -1; margin-top: 4px; }
+.recipes summary { cursor: pointer; font-size: 0.85rem; color: var(--jade); }
+.recipe { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 6px 0; }

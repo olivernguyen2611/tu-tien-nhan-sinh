@@ -4,7 +4,7 @@ import { BalanceSchema, EventFileSchema, NamesSchema, OriginFileSchema, TraitFil
 import { LifeTextsSchema } from '../src/core/schemas';
 import lifeTexts from '../content/life-texts.json';
 import extremes from '../content/stat-extremes.json';
-import { careers, cultivation, difficulties, fateTalents, items, martial, lineages, rankings, romance, heartDemon, sectLife, sects, techniques, tutorial, combat } from './fixtures';
+import { careers, cultivation, difficulties, fateTalents, items, martial, lineages, rankings, romance, heartDemon, recipes, sectLife, sects, techniques, tutorial, combat } from './fixtures';
 import { StatExtremesFileSchema } from '../src/core/schemas';
 import { advanceYear, createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
@@ -48,6 +48,7 @@ const content: Content = {
   rankings,
   romance,
   heartDemon,
+  recipes,
 };
 const ev = (id: string) => findEvent(content, id)!;
 const at = (s: GameState, age: number, patch: Partial<GameState> = {}): GameState =>

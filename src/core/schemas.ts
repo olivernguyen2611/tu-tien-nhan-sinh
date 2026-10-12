@@ -644,6 +644,22 @@ export const BalanceSchema = z
         inheritShare: probability,
       })
       .strict(),
+    /** Task 4.7: making pills and artifacts. */
+    crafting: z
+      .object({
+        /** Chance = base + (level − recipe.minLevel) × perLevel + (comprehension − 50) × perComprehension + craft.<id>.success hooks. */
+        base: z.number(),
+        perLevel: z.number(),
+        perComprehension: z.number(),
+        min: probability,
+        max: probability,
+        /** Craft levels gained by a success and by a failure. */
+        xpSuccess: z.number().int().min(0),
+        xpFail: z.number().int().min(0),
+        /** What a failed attempt leaves in the furnace, by craft (Phế Đan for alchemy). */
+        failProduct: z.record(id, id),
+      })
+      .strict(),
     /** Task 4.4: tâm ma chiến before a big breakthrough into these realms. */
     heartDemon: z
       .object({
@@ -1830,3 +1846,29 @@ export const HeartDemonFileSchema = z
   })
   .strict();
 export type HeartDemonFile = z.infer<typeof HeartDemonFileSchema>;
+
+/** content/recipes.json (task 4.7): Luyện đan and Luyện khí recipes. {product}, {count}. */
+export const RecipeFileSchema = z
+  .object({
+    texts: z.object({ success: z.string().min(1), fail: z.string().min(1), failAlchemy: z.string().min(1) }).strict(),
+    recipes: z.array(
+      z
+        .object({
+          id,
+          craft: z.enum(['alchemy', 'forging']),
+          product: id,
+          count: z.number().int().min(1).default(1),
+          /** Craft level needed. */
+          minLevel: z.number().int().min(0).max(100),
+          /** Item id → how many are used up. */
+          materials: z.record(id, z.number().int().min(1)),
+          cost: z.object({ silver: z.number().int().min(0).optional(), spiritStones: z.number().int().min(0).optional() }).strict(),
+          /** A mortal craftsman can make it (phàm dược). */
+          mortal: z.boolean().default(false),
+        })
+        .strict(),
+    ),
+  })
+  .strict();
+export type RecipeFile = z.infer<typeof RecipeFileSchema>;
+export type Recipe = RecipeFile['recipes'][number];

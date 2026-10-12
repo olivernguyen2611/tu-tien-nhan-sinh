@@ -8,7 +8,7 @@ import balance from '../content/config/balance.json';
 import familyActions from '../content/family-actions.json';
 import lifeTexts from '../content/life-texts.json';
 import extremes from '../content/stat-extremes.json';
-import { careers, cultivation, difficulties, fateTalents, items, martial, lineages, rankings, romance, heartDemon, sectLife, sects, techniques, tutorial, combat } from './fixtures';
+import { careers, cultivation, difficulties, fateTalents, items, martial, lineages, rankings, romance, heartDemon, recipes, sectLife, sects, techniques, tutorial, combat } from './fixtures';
 import { StatExtremesFileSchema } from '../src/core/schemas';
 import traits from '../content/traits.json';
 import world from '../content/worlds/thuong_lan/world.json';
@@ -41,6 +41,7 @@ const content: Content = {
   rankings,
   romance,
   heartDemon,
+  recipes,
   events: [],
   glossary: [],
 };

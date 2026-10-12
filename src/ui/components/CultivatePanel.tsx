@@ -10,10 +10,11 @@ import { martialView } from '../../systems/martial';
 import { pathsView } from '../../systems/paths';
 import { rankingBoard } from '../../systems/rankings';
 import { seclusionView } from '../../systems/seclusion';
+import { recipeViews } from '../../systems/crafting';
 import { Meter } from './Meter';
 import { TermText } from './Tooltip';
 
-export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSeclude, onClose }: {
+export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSeclude, onCraft, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome to show in the sheet. */
@@ -26,6 +27,8 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
   onLearn: (techniqueId: string) => string | null;
   /** A year of martial training (task 3.11); returns the log text, or null. */
   onTrain: () => string | null;
+  /** Task 4.7: make one batch of a recipe; returns the log text, or null. */
+  onCraft: (recipeId: string) => string | null;
   /** Task 4.1: bế quan; the sheet closes so the log shows the years. */
   onSeclude: (years: number) => void;
   onClose: () => void;
@@ -208,6 +211,19 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
                   Luyện tập{c.cost > 0 && <span class="chip-cost"> · {c.cost} bạc</span>}
                 </button>
                 {c.blocked && <span class="craft-note">{c.blocked}</span>}
+                {recipeViews(state, content, c.id).length > 0 && (
+                  <details class="recipes">
+                    <summary>Luyện chế</summary>
+                    {recipeViews(state, content, c.id).map((r) => (
+                      <div class="recipe" key={r.id}>
+                        <button class="chip-btn" disabled={!!r.blocked} title={r.blocked ?? undefined} onClick={() => setPracticed(onCraft(r.id))}>
+                          {r.product}{r.count > 1 && ` ×${r.count}`} · {Math.round(r.chance * 100)}%
+                        </button>
+                        <span class="craft-note">{r.needs}{r.blocked && ` · ${r.blocked}`}</span>
+                      </div>
+                    ))}
+                  </details>
+                )}
               </div>
             ))}
             {practiced && <p class="action-result good">{practiced}</p>}

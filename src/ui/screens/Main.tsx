@@ -46,7 +46,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onSeclude, onPlaceStrand, onMeetIllusion, onChoose, onFamilyAction, onRomance, onUseItem, onMarket, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onSeclude, onPlaceStrand, onMeetIllusion, onCraft, onChoose, onFamilyAction, onRomance, onUseItem, onMarket, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -56,6 +56,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onFastForward: () => void;
   /** Returns the outcome to show on the card. */
   onChoose: (index: number) => PopupResult;
+  /** Task 4.7: luyện đan / luyện khí; returns the log text, or null. */
+  onCraft: (recipeId: string) => string | null;
   /** Task 4.4: meet the current tâm ma illusion. */
   onMeetIllusion: (option: HeartDemonOption) => void;
   /** Task 4.2: place one qi strand while forming the golden core. */
@@ -224,7 +226,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       {sectOpen && <SectPanel state={state} content={content} onAction={onSectAction} onClose={() => setSectOpen(false)} />}
 
-      {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onTrain={onTrain} onSeclude={onSeclude} onClose={() => setCultivateOpen(false)} />}
+      {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onTrain={onTrain} onSeclude={onSeclude} onCraft={onCraft} onClose={() => setCultivateOpen(false)} />}
 
       {marketOpen && <MarketPanel state={state} content={content} onAction={onMarket} onClose={() => setMarketOpen(false)} />}
 

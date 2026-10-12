@@ -38,6 +38,7 @@ import { runSeclusion, seclude } from '../systems/seclusion';
 import { placeStrand } from '../systems/goldenCore';
 import { becomeGhost } from '../systems/ghost';
 import { meetIllusion } from '../systems/heartDemon';
+import { craftRecipe } from '../systems/crafting';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -182,6 +183,12 @@ function Screens({ content }: { content: Content }) {
         onSeclude={(years) => setLife(seclude(life, content, years))}
         onPlaceStrand={(element) => setLife(placeStrand(life, content, element).state)}
         onMeetIllusion={(option) => setLife(meetIllusion(life, content, option).state)}
+        onCraft={(recipeId) => {
+          const r = craftRecipe(life, content, recipeId);
+          if (!r) return null;
+          setLife(r.state);
+          return r.text;
+        }}
         onFamilyAction={(relId, actionId) => {
           const r = performFamilyAction(life, content, relId, actionId);
           setLife(checkDeath(r.state, content));

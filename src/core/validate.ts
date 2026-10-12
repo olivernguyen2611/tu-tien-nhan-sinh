@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile } from './schemas';
 
 export interface Problem {
   file: string;
@@ -43,6 +43,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'rankings.json') return RankingTextsSchema;
     if (rest === 'romance.json') return RomanceFileSchema;
     if (rest === 'heart-demon.json') return HeartDemonFileSchema;
+    if (rest === 'recipes.json') return RecipeFileSchema;
     return null;
   }
   // Belongs to one world.
@@ -74,6 +75,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   let techniques: Technique[] | null = null;
   let fateIds: string[] | null = null;
   let itemIds: string[] | null = null;
+  let recipeFile: { file: string; data: RecipeFile } | null = null;
   let martialFile: MartialFile | null = null;
   let careerIds: string[] | null = null;
   const sectFiles: { file: string; sects: Sect[] }[] = [];
@@ -161,12 +163,26 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === LineageFileSchema) problems.push(...duplicates(file, 'đạo thống', parsed.data as { id: string }[]));
     if (schema === MartialFileSchema) martialFile = parsed.data as MartialFile;
     if (schema === ItemFileSchema) itemIds = (parsed.data as { id: string }[]).map((x) => x.id);
+    if (schema === RecipeFileSchema) recipeFile = { file, data: parsed.data as RecipeFile };
     if (schema === CareersFileSchema) careerIds = (parsed.data as { careers: { id: string }[] }).careers.map((c) => c.id);
     if (schema === CareersFileSchema) problems.push(...duplicates(file, 'đường đời', (parsed.data as { careers: { id: string }[] }).careers));
     if (schema === DifficultyFileSchema) difficultyIds = (parsed.data as { id: string }[]).map((d) => d.id);
   }
 
   problems.push(...checkCultivationTables(parsedShared));
+  // Task 4.7: recipes use and make real items.
+  if (recipeFile) {
+    const { file, data } = recipeFile;
+    problems.push(...duplicates(file, 'công thức', data.recipes));
+    for (const r of data.recipes) {
+      for (const it of [r.product, ...Object.keys(r.materials)]) {
+        if (itemIds && !itemIds.includes(it)) problems.push({ file, level: 'error', message: `công thức "${r.id}": vật phẩm không tồn tại "${it}"` });
+      }
+    }
+    for (const it of Object.values(parsedShared.balance?.crafting.failProduct ?? {})) {
+      if (itemIds && !itemIds.includes(it)) problems.push({ file: 'config/balance.json', level: 'error', message: `crafting.failProduct: vật phẩm không tồn tại "${it}"` });
+    }
+  }
   if (difficultyIds && parsedShared.balance) {
     const b = parsedShared.balance;
     problems.push(...sameKeys('config/balance.json', 'difficulty', difficultyIds, Object.keys(b.difficulty)));
