@@ -93,8 +93,8 @@
     "maxYears": 10
   },
   "aging": {
-    "recoverPerYear": 3,
-    "recoverCap": 70,
+    "recoverPerYear": 4,
+    "recoverCap": 80,
     "declineStartAge": 50,
     "healthDeclinePerYear": 1,
     "illnessStartAge": 60,
@@ -365,7 +365,7 @@
     "allOutInjuryMul": 1.5,
     "defendMul": 0.75,
     "defendInjuryMul": 0.5,
-    "roundInjury": [6, 12],
+    "roundInjury": [4, 9],
     "speedBase": 10,
     "pathSpeed": { "sword": 0.1, "body": -0.1 },
     "fleeMin": 0.05,

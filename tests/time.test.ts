@@ -74,8 +74,8 @@ function liveOut(seed: string): GameState {
 describe('aging', () => {
   it('the young heal up to recoverCap but not beyond', () => {
     const base = createLife({ seed: 'young' }, content);
-    expect(ageBody(at(base, 30, 40), content).stats.health).toBe(43);
-    expect(ageBody(at(base, 30, 69), content).stats.health).toBe(70);
+    expect(ageBody(at(base, 30, 40), content).stats.health).toBe(44);
+    expect(ageBody(at(base, 30, 79), content).stats.health).toBe(80);
     expect(ageBody(at(base, 30, 85), content).stats.health).toBe(85);
   });
 
