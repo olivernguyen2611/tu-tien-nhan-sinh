@@ -24,6 +24,32 @@
 - `SAVE_VERSION` lên 2. Sau các bước nâng cấp theo phiên bản, `migrate` còn **bổ sung tự động** mọi trường mà đời cũ còn thiếu bằng giá trị của một đời mới tinh (`backfillLife`), nên thêm hệ thống mới không cần viết bước migration tay nữa.
 - Giá trị đã có (kể cả `null`, `0`, `false`) không bao giờ bị đè; lịch trình thử thách gốc (`events.followUps`) và `pastSect` không bị chép từ đời mới.
 - Khi có gì được bổ sung, nhật ký năm hiện tại ghi một dòng "Game vừa cập nhật…". Áp dụng cả khi nạp ô save lẫn nhập file.
+### Sư phụ – đồ đệ 5c.8 (2026-10-12)
+- Ngoài "Chỉ điểm", mỗi đồ đệ có thêm 4 việc, mỗi việc một lần mỗi năm: **Luận bàn** (tỉ lệ theo Chiến lực; thắng hay thua đồ đệ đều tiến bộ, thầy đổi chỉ số), **Luận đạo** (thử Ngộ tính), **Truyền công pháp** (chọn công pháp mình đã học; đồ đệ tu nhanh hơn theo phẩm: Hoàng +5% … Thiên +30%) và **Tặng vật phẩm** (chọn đồ đang giữ; đan dược cộng tu vi, pháp bảo cộng căn cốt…).
+- Mọi việc đều đổi chỉ số của thầy. Số trong `balance.disciples.acts`, lời văn trong `disciples.json`. Nội dung do Claude tự soạn, chưa qua duyệt.
+- Save cũ vẫn chạy: các trường mới đều tùy chọn.
+
+### Tông môn 5c.7 — Phía tông chủ (2026-10-12)
+- **Trưởng lão có tên**: tông mình (lập, kế vị hoặc đòi lại) có 3 trưởng lão là NPC thật (có tuổi, tu luyện, nhớ ơn). Chưởng môn ban thưởng từ kho (30 linh thạch, mỗi người một lần mỗi năm) để tăng thiện cảm và danh vọng.
+- **Danh vọng** 0–100 với 5 bậc (Vô danh, Có tiếng, Danh môn, Đại tông, Thánh địa): mỗi năm tiến dần về mức tương ứng số đệ tử và công trình; bậc cao thì người đến bái sư đông hơn. Số trong `balance.founding.prestige`, bậc trong `founding.json`.
+- 4 sự kiện của chưởng môn (`events/own-sect-life.json`): Tông bạn đến thăm, Đệ tử xin xuống núi lịch luyện, Trưởng lão bất mãn, Đại điển thu đồ. Hiệu ứng `ownSect` thêm `prestige`. Nội dung do Claude tự soạn, chưa qua duyệt.
+
+### Tông môn 5c.6 — Tranh ngôi chưởng môn, phe phái (2026-10-12)
+- **Ba phe trong tông** (giữ nếp cũ, cải cách, chuộng thực lực): từ Nội môn, đệ tử chọn theo một phe (hoặc đứng ngoài). Chọn phe lưu bằng cờ và mở lối đi riêng ở vòng bàn bạc kế vị.
+- **Tranh ngôi**: Chân truyền (từ Trúc Cơ) gặp chưởng môn muốn truyền ngôi; được tranh ngôi, ủng hộ người khác hoặc từ chối. Tranh ngôi qua vòng bàn bạc rồi luận võ kế vị với một chân truyền khác. Thắng thì thành chưởng môn thật của tông đó.
+- Hiệu ứng sự kiện mới `succeedSect`: người thuộc tông nhận ghế chưởng môn của chính tông ấy (không tốn phí khai tông), tông thành `ownSect` với `balance.founding.inheritMembers` đệ tử và `inheritTreasury` linh thạch, mở khóa báo cáo năm, xây dựng, quyết định của chưởng môn. Nội dung do Claude tự soạn, chưa qua duyệt.
+
+### Tông môn 5c.5 — Sự kiện lớn của tông (2026-10-12)
+- 12 sự kiện mới (`events/sect-grand.json`): **Thí luyện sơn môn** (3 ải, có đánh yêu thú canh cốc, chọn một phần thưởng ở đỉnh), **Chuông báo địch** (ngoại địch tập kích, ra trận hay giữ trận nhãn hay lẩn trốn, rồi sau trận), **Kẻ nội gián** (nội loạn, tố cáo hay đối chất, mật điều tra, đêm bắt phản đồ có đánh) và **Đại hội tông môn** (nhiều lựa chọn, ba năm một lần).
+- Mỗi lựa chọn đều đổi chỉ số; thí luyện, ngoại địch, nội loạn chỉ xảy ra một lần mỗi đời. Nội dung do Claude tự soạn, chưa qua duyệt.
+
+### Tông môn 5c.4 — Bảo khố (2026-10-12)
+- Mục "Bảo khố" trong bảng Tông môn: đổi cống hiến lấy 12 món (đan dược, bùa, phi kiếm, ngọc bội, linh thạch, một năm tĩnh tu cạnh linh mạch, tới Trúc Cơ Đan cho Chân truyền). Mỗi món có cấp bậc tối thiểu và số suất mỗi đời.
+- Đổi đồ không làm tụt cấp: tổng cống hiến để thăng cấp giữ nguyên, bảng ghi riêng phần đã tiêu (`sect.spent`). Nội dung do Claude tự soạn, chưa qua duyệt.
+
+### Tông môn 5c.3 — Nhiệm vụ chuỗi (2026-10-12)
+- Mục "Chuỗi nhiệm vụ" trong bảng Tông môn: nhận một chuỗi 3 bước, mỗi năm làm một bước (dùng suất nhiệm vụ của năm), tiến độ lưu theo đời. Bước hỏng thì thử lại năm sau; hỏng `balance.sects.chainMaxFails` (2) bước thì bị rút lại. Xong chuỗi nhận thưởng lớn và thân hơn với đồng môn được nhắc tên.
+- 3 chuỗi đầu: **Linh dược thất lạc** (chấp sự), **Tấm bia đá nứt** (trưởng lão), **Giúp đồng môn vượt ải** (đồng môn cùng lứa). Mọi kết quả đều đổi chỉ số. Nội dung do Claude tự soạn, chưa qua duyệt.
 
 ### Tông môn 5c.2 — Đại tỉ và Luận đạo hội (2026-10-12)
 - Hai cuộc thi định kỳ của tông, năm năm một lần (đại tỉ ở tuổi chia hết cho 5, luận đạo hội lệch hai năm), cho đệ tử từ Ngoại môn: ba trận với đồng môn cùng lứa. Đại tỉ so Chiến lực, luận đạo hội thử Ngộ tính.

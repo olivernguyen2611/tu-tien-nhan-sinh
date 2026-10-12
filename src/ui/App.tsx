@@ -32,6 +32,9 @@ import { disableTutorial, dismissTip } from '../systems/tutorial';
 import { practiceCraft } from '../systems/crafts';
 import { joinCareer } from '../systems/career';
 import { doMission, joinSect, leaveSect, requestMaster } from '../systems/sect';
+import { rewardElder } from '../systems/sectElders';
+import { buyTreasury } from '../systems/sectTreasury';
+import { doChainStep, startChain } from '../systems/sectChains';
 import { doTalk, enterTournament } from '../systems/sectmates';
 import { learnTechnique } from '../systems/technique';
 import { chooseFate, rerollFate } from '../systems/fate';
@@ -44,6 +47,7 @@ import { continueAsHeir } from '../systems/heir';
 import { buyProperty, foundClan } from '../systems/clan';
 import { meetIllusion } from '../systems/heartDemon';
 import { craftRecipe } from '../systems/crafting';
+import { doDiscipleAct } from '../systems/discipleActs';
 import { recruitDisciple, teachDisciple } from '../systems/disciples';
 import { build, decide, donate, foundSect } from '../systems/ownSect';
 import { newLifeCost, rebirthPoints } from '../systems/rebirth';
@@ -297,8 +301,8 @@ function Screens({ content }: { content: Content }) {
           setLife(r.state);
           return r.text;
         }}
-        onDisciple={(npcId) => {
-          const r = npcId ? teachDisciple(life, content, npcId) : recruitDisciple(life, content);
+        onDisciple={(npcId, act) => {
+          const r = npcId && act ? doDiscipleAct(life, content, npcId, act) : npcId ? teachDisciple(life, content, npcId) : recruitDisciple(life, content);
           if (!r) return null;
           setLife(r.state);
           return { text: r.text, tone: 'good', changes: describeChanges(life, r.state) };
@@ -379,12 +383,15 @@ function Screens({ content }: { content: Content }) {
             : a.kind === 'mission' ? doMission(life, content, a.missionId)
             : a.kind === 'learn' ? (() => { const l = learnTechnique(life, content, a.techniqueId); return l && { ...l, state: enterFirstRealm(l.state, content) }; })()
             : a.kind === 'master' ? requestMaster(life, content)
+            : a.kind === 'buy' ? buyTreasury(life, content, a.id)
+            : a.kind === 'chain' ? (a.start ? startChain(life, content, a.id) : doChainStep(life, content, a.id))
             : a.kind === 'tournament' ? enterTournament(life, content, a.id)
             : a.kind === 'talk' ? doTalk(life, content, a.npcId, a.talkId)
             : a.kind === 'found' ? foundSect(life, content, { name: a.name, rules: a.rules })
             : a.kind === 'decide' ? decide(life, content, a.decisionId)
             : a.kind === 'build' ? build(life, content, a.buildingId)
             : a.kind === 'donate' ? donate(life, content)
+            : a.kind === 'elder' ? rewardElder(life, content, a.npcId)
             : leaveSect(life, content);
           if (!r || !r.text) return null;
           setLife(r.state);

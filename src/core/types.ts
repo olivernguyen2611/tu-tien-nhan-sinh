@@ -80,6 +80,9 @@ export interface GameState {
    */
   ownSect: {
     name: string; lineage: string; rules: string[]; founded: number; members: number; treasury: number; buildings: Record<string, number>;
+    /** Task 5c.7: danh vọng 0–100 (the sect's standing) and the named elders (NPC ids). */
+    prestige?: number;
+    elders?: string[];
     /** Task 5.2: next year's growth bonus from decisions, and this year's report (decisions still open, decisions taken). */
     growthBonus?: number;
     report?: { age: number; text: string; decisions: string[]; done: string[] } | null;
@@ -128,6 +131,12 @@ export interface GameState {
     talks?: { age: number; count: number };
     /** Task 5c.2: age of the last entry in each sect tournament (by id) and the best placement (wins) so far. */
     tournaments?: Record<string, { last: number; best: number }>;
+    /** Task 5c.3: the chain mission under way (step = next step index, fails = missed steps, npc = the sectmate it names) and the chains finished this life. */
+    chain?: { id: string; step: number; fails: number; npc: string | null } | null;
+    chainsDone?: string[];
+    /** Task 5c.4: contribution spent at the sect treasury (promotion still counts the total) and what was bought, by treasury id. */
+    spent?: number;
+    bought?: Record<string, number>;
   };
   /** Mortal career (task 2.11): careers.json id, rung index, age the rung was reached. */
   career: { id: string | null; rung: number; since: number };
@@ -323,7 +332,9 @@ export interface Npc {
   /** Id of the NPC whose grudge this one inherited (kin of someone the player killed). */
   heirOf: string | null;
   /** Task 4.9: the player's disciple, and the age they were last taught. */
-  disciple?: { since: number; lastTaught: number | null };
+  disciple?: { since: number; lastTaught: number | null; /** Task 5c.8: age of the last time each extra act was done (once a year each). */ acts?: Record<string, number> };
+  /** Task 5c.8: the technique a master handed down to this NPC (speeds their cultivation by its grade). */
+  technique?: string;
   /** Task 5.5: a khí vận chi tử (template id) and the age of the player when they came. */
   chosen?: { template: string; since: number; role?: 'protect' | 'exploit' | 'ignore' };
   /** Task 5c.1: a member of a sect the player joined (đồng môn), and the age the player last spent time with them. */
