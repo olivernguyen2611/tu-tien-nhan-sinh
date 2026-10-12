@@ -86,6 +86,20 @@ export function foundSect(state: GameState, content: Content, input: { name: str
   return { state: pushLines(s, lines), text: lines.map((l) => l.text).join(' ') };
 }
 
+/** Task 5c.6: take the master's seat of the sect the player belongs to. It becomes ownSect, at no cost; the membership ends. */
+export function succeedSect(state: GameState, content: Content): GameState {
+  const old = sectById(content, state.sect.id);
+  if (!old || state.ownSect) return state;
+  const cfg = content.balance.founding;
+  const text = content.founding.texts.succeeded.replaceAll('{sect}', old.name).replaceAll('{members}', String(cfg.inheritMembers));
+  const s: GameState = {
+    ...state,
+    sect: { ...state.sect, id: null, rank: 0, contribution: 0, master: null, masterId: null, chain: null, left: [...state.sect.left, old.id] },
+    ownSect: { name: old.name, lineage: old.lineage, rules: [], founded: state.character.age, members: cfg.inheritMembers, treasury: cfg.inheritTreasury, buildings: {} },
+  };
+  return pushLines(s, [{ text, tone: 'rare' }]);
+}
+
 /** Hooks from the founder's own tông quy and buildings (× level), part of lifeHooks. */
 export function ownSectHooks(state: GameState, content: Content): EffectHook[] {
   const own = state.ownSect;

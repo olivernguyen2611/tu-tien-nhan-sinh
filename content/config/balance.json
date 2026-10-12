@@ -373,6 +373,8 @@
     "maxRules": 3,
     "nameLength": [2, 24],
     "startMembers": { "kim_dan": 10, "nguyen_anh": 40, "hoa_than": 120 },
+    "inheritMembers": 300,
+    "inheritTreasury": 400,
     "growth": 0.05,
     "baseRecruit": 1,
     "attrition": 0.02,

@@ -380,7 +380,7 @@ Nhìn từ hai phía: **đệ tử** cần thăng cấp, tài nguyên, sư phụ
 | 5c.3 | [x] Nhiệm vụ chuỗi nhiều bước (nhận ở bảng nhiệm vụ, nhớ tiến độ, thưởng cuối chuỗi) |
 | 5c.4 | [x] Công trạng đổi đồ: Bảo khố tông môn, cống hiến đổi đan dược, công pháp, linh thạch |
 | 5c.5 | [x] Sự kiện lớn của tông: đại hội, thí luyện, ngoại địch, nội loạn |
-| 5c.6 | [ ] Tranh ngôi chưởng môn, phe phái trong tông |
+| 5c.6 | [x] Tranh ngôi chưởng môn, phe phái trong tông (hiệu ứng mới `succeedSect`) |
 | 5c.7 | [ ] Phía tông chủ: tông môn mình lập có đệ tử NPC, trưởng lão, sự kiện lớn, thịnh suy, danh tiếng |
 
 ### GĐ 6 — Hoàn thiện

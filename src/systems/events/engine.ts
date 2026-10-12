@@ -22,6 +22,7 @@ import { changeNpc, createNpc, killNpc, npcCalls } from '../npcs';
 import { applyRomance, romanceTarget } from '../romance';
 import { gainGoldenFinger, loseGoldenFinger } from '../goldenFinger';
 import { applyPastSect } from '../pastSect';
+import { succeedSect } from '../ownSect';
 
 type Outcome = NonNullable<GameEvent['choices'][number]['result']>;
 
@@ -344,6 +345,7 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.loseGoldenFinger) next = loseGoldenFinger(next, content);
   if (fx.goldenFinger) next = gainGoldenFinger(next, content, fx.goldenFinger);
   // Task 5b.7: the past life's sect (claimed: it becomes this life's ownSect before fx.ownSect applies).
+  if (fx.succeedSect) next = succeedSect(next, content);
   if (fx.pastSect) {
     const r = applyPastSect(next, content, fx.pastSect);
     next = r.state;

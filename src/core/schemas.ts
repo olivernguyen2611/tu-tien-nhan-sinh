@@ -226,6 +226,8 @@ export const EffectsSchema = z
     loseGoldenFinger: z.boolean().optional(),
     /** Task 5b.7: the past life's sect: met, claimed back (becomes this life's ownSect) or turned away from. */
     pastSect: z.enum(['met', 'claimed', 'spurned']).optional(),
+    /** Task 5c.6: the member takes the master's seat of the sect they belong to (it becomes ownSect, no founding cost). */
+    succeedSect: z.boolean().optional(),
     /** Task 5.6: the master's role towards the khí vận chi tử; "ignore" lets them leave the master's door. */
     chosenRole: z.enum(['protect', 'exploit', 'ignore']).optional(),
     /** Task 4.6: the next step of a multi-step event (bí cảnh); it opens right after this one, the same year. */
@@ -275,7 +277,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -757,6 +759,9 @@ export const BalanceSchema = z
         nameLength: z.tuple([z.number().int().min(1), z.number().int().min(1)]),
         /** Members on the founding day: base + reputation of the founder's realm. */
         startMembers: z.record(id, z.number().int().min(0)),
+        /** Task 5c.6: an inherited sect starts with this many members (rank 3 member counts), and treasury. */
+        inheritMembers: z.number().int().min(1),
+        inheritTreasury: z.number().int().min(0),
         /** Task 5.2 yearly running: growth = members × growth (+ buildings, rules), at least baseRecruit; attrition share leaves. */
         growth: z.number().min(0),
         baseRecruit: z.number().int().min(0),
@@ -2471,6 +2476,8 @@ export const FoundingFileSchema = z
         donated: z.string().min(1),
         /** Task 5b.7: the past life's sect taken back ({sect}, {members}). */
         claimed: z.string().min(1),
+        /** Task 5c.6: {sect}, {members}. */
+        succeeded: z.string().min(1),
       })
       .strict(),
   })
