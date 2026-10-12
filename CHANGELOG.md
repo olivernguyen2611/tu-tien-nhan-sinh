@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6.6: tối ưu tốc độ (2026-10-12)
+- Trước: một gói JS 1163 kB (gzip 331 kB). Sau: 4 gói tách theo vai trò, `vendor` 68 kB, `index` 165 kB, `systems` 284 kB, `content` 653 kB (gzip tổng ≈ 334 kB). Tách để bản cập nhật chỉ code không bắt tải lại nội dung và trình duyệt tải song song.
+- Lệnh mới `npm run perf`: nạp nội dung ≈ 200 ms, tạo nhân vật ≈ 3 ms, tua 1 năm ≈ 9 ms (máy dev). Màn hình đầu tiên hiện sau ≈ 1.3 giây trên Chromium giả lập điện thoại (kể cả khởi động trình duyệt).
+- Nạp nội dung chậm theo từng thế giới sẽ cần engine nạp bất đồng bộ; để dành cho GĐ 7 khi có thế giới thứ hai.
+
 ### GĐ 6.5: hiệu ứng nhẹ (2026-10-12)
 - Mỗi màn hình trượt nhẹ vào khi chuyển cảnh.
 - Đột phá/lên tầng: viền vàng loé quanh màn hình khoảng 1.6 giây; qua đời: viền tối dần (qua `<html data-fx>`, không đụng logic game).

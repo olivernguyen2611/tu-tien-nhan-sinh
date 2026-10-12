@@ -393,7 +393,7 @@ Cân bằng bằng **mô phỏng tự động** (chạy hàng nghìn đời gi�
 | 6.3 | [x] PWA: cài lên điện thoại và chơi offline (manifest, service worker, biểu tượng) |
 | 6.4 | [x] Âm thanh tổng hợp bằng code (không dùng file nhạc), bật/tắt được, mặc định tắt |
 | 6.5 | [x] Hiệu ứng nhẹ (chuyển cảnh, nổi bật khi đột phá), tôn trọng chế độ giảm chuyển động |
-| 6.6 | [ ] Tối ưu tốc độ (cắt nhỏ gói tải, đo thời gian khởi động và tua năm) |
+| 6.6 | [x] Tối ưu tốc độ (cắt nhỏ gói tải, đo thời gian khởi động và tua năm) |
 | 6.7 | [ ] Rà soát hiển thị nhiều cỡ màn hình (điện thoại nhỏ, máy tính bảng, máy tính) |
 
 ### GĐ 7 — Mở rộng nội dung
