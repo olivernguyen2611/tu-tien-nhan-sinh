@@ -2,13 +2,15 @@
 import type { Content } from '../../core/content';
 import type { ChallengeFile } from '../../core/schemas';
 
-export function ChallengeScreen({ content, week, challenge, record, onStart, onBack }: {
+export function ChallengeScreen({ content, week, challenge, record, onStart, onBack, devPick }: {
   content: Content;
   week: string;
   challenge: ChallengeFile[number] | null;
   record: { tries: number; best: number; done: boolean } | undefined;
   onStart: () => void;
   onBack: () => void;
+  /** Developer mode: try any challenge of the world. */
+  devPick?: ((id: string) => void) | null;
 }) {
   const origin = content.origins.find((o) => o.id === challenge?.rules.origin);
   const difficulty = content.difficulties.find((d) => d.id === challenge?.rules.difficulty);
@@ -24,6 +26,11 @@ export function ChallengeScreen({ content, week, challenge, record, onStart, onB
       ) : (
         <>
           <p class="kicker">Tuần {week.replace('-W', ' · tuần ')}</p>
+          {devPick && (
+            <select class="dev-input" value={challenge.id} aria-label="Dev: chọn thử thách" onChange={(e) => devPick((e.target as HTMLSelectElement).value)}>
+              {content.challenges.map((c) => <option key={c.id} value={c.id}>[Dev] {c.name}</option>)}
+            </select>
+          )}
           <div class="golden-finger-card">
             <b>{challenge.name}</b>
             <p class="trait-flavor">{challenge.text}</p>

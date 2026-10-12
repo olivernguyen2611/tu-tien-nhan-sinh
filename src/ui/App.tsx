@@ -12,7 +12,7 @@ import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, lockCost, rerollDestiny, rollDestiny, toggleLock } from '../systems/destiny';
 import {
   deleteSlot, exportSave, firstFreeSlot, latestSlot, listSlots, makeSave, parseSave, readMeta, readSlot, recordNewLife, creditRebirth,
-  slotTaken, writeSlot, buyRebirthTalent, recordCodex, recordAchievements, recordChallenge, recordPastSect, type SaveFile,
+  slotTaken, writeSlot, buyRebirthTalent, recordCodex, recordAchievements, recordChallenge, recordPastSect, replaceMeta, type SaveFile,
 } from '../systems/save';
 import { checkDeath } from '../systems/time';
 import { GlossaryProvider } from './components/Tooltip';
@@ -53,7 +53,7 @@ import { RebirthScreen } from './screens/Rebirth';
 import { CodexScreen } from './screens/Codex';
 import { codexOf } from '../systems/codex';
 import { earnedAchievements, unlockedFingers } from '../systems/achievements';
-import { challengeResult, creditKey, startChallenge, weekKey, weeklyChallenge } from '../systems/challenge';
+import { challengeDef, challengeResult, creditKey, startChallenge, weekKey, weeklyChallenge } from '../systems/challenge';
 import { ChallengeScreen } from './screens/Challenge';
 import { nextPastSectRecord } from '../systems/pastSect';
 
@@ -126,8 +126,10 @@ function Screens({ content }: { content: Content }) {
   const startNewLife = (target: number) => { setSlot(target); setPicking(null); setScreen('create'); };
   // Task 5b.6: this week's challenge goes straight to the (fixed) destiny roll.
   const week = weekKey(new Date());
+  // Developer mode may pick any challenge instead of this week's.
+  const [challengePick, setChallengePick] = useState<string | null>(null);
   const beginChallenge = (target: number) => {
-    const s = startChallenge(content, week, (readMeta(store).weekly[week]?.tries ?? 0) + 1, readMeta(store).livesPlayed === 0);
+    const s = startChallenge(content, week, (readMeta(store).weekly[week]?.tries ?? 0) + 1, readMeta(store).livesPlayed === 0, devMode ? challengePick : null);
     if (!s) return;
     setSlot(target);
     setPicking(null);
@@ -197,7 +199,8 @@ function Screens({ content }: { content: Content }) {
   }
   if (screen === 'challenge') {
     return (
-      <ChallengeScreen content={content} week={week} challenge={weeklyChallenge(content, week)} record={readMeta(store).weekly[week]}
+      <ChallengeScreen content={content} week={week} challenge={(devMode && challengeDef(content, challengePick ?? undefined)) || weeklyChallenge(content, week)} record={readMeta(store).weekly[week]}
+        devPick={devMode ? setChallengePick : null}
         onBack={() => setScreen('title')}
         onStart={() => {
           const free = firstFreeSlot(store);
@@ -392,7 +395,7 @@ function Screens({ content }: { content: Content }) {
         onNewLife={() => setScreen('create')}
         onSummary={() => setScreen('death')}
         onSaves={() => openSaves('main')}
-        dev={devMode ? { onChange: (next) => setLife(checkDeath(next, content)), onDisable: () => toggleDev(false) } : null}
+        dev={devMode ? { meta: readMeta(store), onChange: (next) => setLife(checkDeath(next, content)), onMeta: (m) => { replaceMeta(store, m); refresh((n) => n + 1); }, onDisable: () => toggleDev(false) } : null}
         theme={theme}
         onToggleTheme={toggleTheme}
       />

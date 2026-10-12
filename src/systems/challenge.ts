@@ -34,8 +34,9 @@ export function challengeDef(content: Content, id: string | undefined): Challeng
 }
 
 /** The challenge life, rolled and ready to confirm: the week's seed, given traits locked in place. */
-export function startChallenge(content: Content, week: string, attempt = 1, tutorial = false): GameState | null {
-  const c = weeklyChallenge(content, week);
+export function startChallenge(content: Content, week: string, attempt = 1, tutorial = false, pick: string | null = null): GameState | null {
+  // `pick`: developer mode tries another challenge of the world.
+  const c = challengeDef(content, pick ?? undefined) ?? weeklyChallenge(content, week);
   if (!c) return null;
   const life = createLife({ seed: `tuan-${week}`, originId: c.rules.origin, difficulty: c.rules.difficulty, tutorial }, content);
   const given = (c.rules.traits ?? []).filter((t) => content.traits.some((x) => x.id === t));
