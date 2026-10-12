@@ -2,6 +2,10 @@
 
 ## [Chưa phát hành]
 
+### Chơi thử 2 — Nhiều sự kiện hơn mỗi năm (2026-10-12)
+- Tỉ lệ một năm có sự kiện tăng từ 50% lên 80%. Từ Nguyên Anh (đời dài hàng nghìn năm) là 50% (`balance.events.popupChanceHighRealm`, `highRealmFrom`); trước đây cảnh giới cao vẫn dùng 50%.
+- Đệ tử tông môn gặp sự kiện tông môn nhiều gấp 2,5 lần (`balance.events.sectMemberMul`).
+
 ### Chơi thử 2 — Tu sĩ không già như phàm nhân (2026-10-12)
 - Thân thể già theo thọ nguyên: quá thọ phàm nhân (`balance.lifespan.mortalBase` = 70) thì đồng hồ thân thể chạy chậm theo tỉ lệ 70 / thọ nguyên. Trúc Cơ thọ 200 ở tuổi 62 có thân thể như người 22 tuổi; suy yếu, đổ bệnh và các mốc 60/70/80 chỉ tới gần cuối thọ nguyên.
 - Trước đây 9/10 đời tu sĩ trong lần chơi thử chết bệnh ở 62–80 tuổi và không đủ sức khỏe vượt thiên kiếp.

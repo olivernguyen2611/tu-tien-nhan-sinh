@@ -59,10 +59,19 @@ export function eventWeight(state: GameState, content: Content, event: GameEvent
   // G.4, playtest 2026-10-12: kỳ ngộ come more often to the lucky.
   const ev = content.balance.events;
   if (event.luckAffected || ev.luckCategories.includes(event.category)) w *= Math.max(ev.luckMin, 1 + (state.aptitudes.luck - 50) * ev.luckPerPoint);
+  if (event.category === 'sect' && state.sect.id) w *= ev.sectMemberMul;
   // Playtest 2026-10-12: each time it already happened this life, it grows rarer.
   const seen = state.events.seen?.[event.id] ?? (last !== undefined ? 1 : 0);
   if (seen > 0) w *= content.balance.events.repeatDecay ** seen;
   return Math.max(0, w);
+}
+
+/** Chance this year brings an event (playtest 2026-10-12: most years do). */
+export function popupChance(state: GameState, content: Content): number {
+  const ev = content.balance.events;
+  const realms = content.cultivation.realms.realms;
+  const high = realms.findIndex((r) => r.id === state.cult.realm) >= realms.findIndex((r) => r.id === ev.highRealmFrom);
+  return high ? ev.popupChanceHighRealm : ev.popupChanceLowRealm;
 }
 
 /** Roll this year's event (after age +1). Follow-ups that are due come first. */
@@ -88,7 +97,7 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
   } else if (visit) {
     picked = visit.event;
     npc = visit.npc;
-  } else if (sure || rng.chance(content.balance.events.popupChanceLowRealm)) {
+  } else if (sure || rng.chance(popupChance(state, content))) {
     const all = content.events
       .map((e) => ({ e, w: eventWeight(state, content, e) }))
       .filter((x) => x.w > 0);

@@ -592,8 +592,12 @@ export const BalanceSchema = z
     version: z.number().int(),
     events: z
       .object({
+        /** Chance a year brings an event; from highRealmFrom on (long lives) the high-realm chance. */
         popupChanceLowRealm: probability,
         popupChanceHighRealm: probability,
+        highRealmFrom: id,
+        /** Playtest 2026-10-12: a sect member meets sect events this many times as often. */
+        sectMemberMul: z.number().min(0),
         logLineChance: probability,
         /** Playtest 2026-10-12: kỳ ngộ (luckAffected or these categories) × max(luckMin, 1 + (khí vận − 50) × luckPerPoint). */
         luckCategories: z.array(id),
