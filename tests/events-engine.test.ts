@@ -49,6 +49,7 @@ const content: Content = {
   romance,
   heartDemon,
   recipes,
+  corePatterns: [],
   disciples,
 };
 const ev = (id: string) => findEvent(content, id)!;

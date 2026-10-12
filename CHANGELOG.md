@@ -2,6 +2,17 @@
 
 ## [Chưa phát hành]
 
+### Task 4.2 — Đan văn (2026-10-12)
+- **Kim Đan thành thì mặt đan hiện đan văn**, sinh ra từ chính 3 luồng linh khí người chơi đã dẫn khi kết đan. Mỗi đan văn có hiệu ứng riêng qua bộ móc K.6.
+- **12 đan văn** trong `content/core-patterns.json`. Xét theo thứ tự, gặp luật đầu tiên khớp thì lấy:
+  1. **Liệt Văn**: đan từng rạn. Đột phá khó hơn một chút, đổi lại Đạo tâm vững hơn.
+  2. **Tam Sinh Tuần Hoàn**: cả 3 luồng tương sinh nối nhau. Tu nhanh hơn, đột phá dễ hơn.
+  3. **Thuần Nhất Đan Văn**: 3 luồng cùng một hệ.
+  4. **Đan văn biến dị**: có luồng biến dị thì ra Lôi Văn, Hàn Băng, Phong Văn hoặc U Ám.
+  5. **Đan văn ngũ hành**: theo hệ dẫn nhiều nhất (Canh Kim, Thanh Mộc, Huyền Thủy, Ly Hỏa, Hậu Thổ); hòa thì lấy luồng sau.
+- Bảng Tu luyện hiện phẩm Kim Đan và đan văn cùng tác dụng. Nhật ký ghi lúc đan văn thành hình.
+- **Nội dung do Claude tự soạn** theo lời chủ dự án ("tự quyết định nội dung, mình sẽ xem lại sau"), chưa qua duyệt.
+
 ### Task 4.9 — Thu đồ đệ (cơ bản) (2026-10-12)
 - **Thu đồ đệ** (tab Người quen):
   - Từ Trúc Cơ, mỗi năm thu được một đồ đệ.

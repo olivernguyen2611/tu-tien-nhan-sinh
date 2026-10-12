@@ -147,6 +147,8 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
     // Võ đạo nhập tiên keeps the body's edge (task 3.11).
     ...(state.flags.vo_dao_nhap_tien ? content.martial.ascendEffects : []),
     ...carriedHooks(state, content),
+    // Đan văn of the golden core (task 4.2).
+    ...(content.corePatterns.find((p) => p.id === state.cult.corePattern)?.effects ?? []),
   ];
 }
 
