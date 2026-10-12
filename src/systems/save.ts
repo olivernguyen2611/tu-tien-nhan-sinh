@@ -3,6 +3,7 @@
 import { z } from 'zod';
 import { version as GAME_VERSION } from '../../package.json';
 import type { GameState, LogYear } from '../core/types';
+import { EMPTY_CODEX, mergeCodex, type Codex } from './codex';
 
 export const SAVE_VERSION = 1;
 export const SLOT_COUNT = 3;
@@ -30,6 +31,8 @@ export interface SaveMeta {
   rebirthTalents: Record<string, number>;
   /** Task 5b.2: lives begun since the last one born with a Kim Thủ Chỉ (bảo hiểm). */
   fingerPity: number;
+  /** Task 5b.4: Thiên Thư. */
+  codex: Codex;
 }
 /** Seeds remembered in `credited`; older ones are dropped. */
 const MAX_CREDITED = 30;
@@ -297,9 +300,10 @@ export function readMeta(store: KeyValueStore): SaveMeta {
       blessings: m.blessings && Array.isArray(m.blessings.list) ? m.blessings : null,
       rebirthTalents: m.rebirthTalents && typeof m.rebirthTalents === 'object' ? m.rebirthTalents : {},
       fingerPity: typeof m.fingerPity === 'number' ? m.fingerPity : 0,
+      codex: readCodex(m.codex),
     };
   } catch {
-    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {}, fingerPity: 0 };
+    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {}, fingerPity: 0, codex: EMPTY_CODEX };
   }
 }
 
@@ -344,4 +348,16 @@ export function buyRebirthTalent(store: KeyValueStore, id: string, cost: number)
   if (cost > meta.rebirthPoints) return null;
   const rebirthTalents = { ...meta.rebirthTalents, [id]: (meta.rebirthTalents[id] ?? 0) + 1 };
   return writeMeta(store, { ...meta, rebirthPoints: meta.rebirthPoints - cost, rebirthTalents });
+}
+
+function readCodex(raw: unknown): Codex {
+  const c = (raw && typeof raw === 'object' ? raw : {}) as Partial<Codex>;
+  const list = (v: unknown) => (Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : []);
+  return { traits: list(c.traits), combos: list(c.combos), fingers: list(c.fingers), stories: Array.isArray(c.stories) ? c.stories : [] };
+}
+
+/** Task 5b.4: fold what a life saw into the Thiên Thư (codex.ts codexOf). */
+export function recordCodex(store: KeyValueStore, add: Codex): SaveMeta {
+  const meta = readMeta(store);
+  return writeMeta(store, { ...meta, codex: mergeCodex(meta.codex, add) });
 }

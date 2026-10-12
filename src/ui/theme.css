@@ -827,3 +827,9 @@ button { font: inherit; color: inherit; }
 .lock-btn { align-self: flex-start; }
 .lock-btn.on { border-color: var(--rare); color: var(--rare); font-weight: 600; }
 @media (min-width: 900px) { .destiny-cards { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); } }
+
+/* Thiên Thư (task 5b.4) */
+.codex-tabs { flex-wrap: wrap; }
+.codex-tabs .tab { flex: 1 1 40%; font-size: 0.9375rem; }
+.codex-list { margin-bottom: 2rem; }
+.trait-chip.unknown { opacity: 0.55; }

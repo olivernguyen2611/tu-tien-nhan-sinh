@@ -2,6 +2,16 @@
 
 ## [Chưa phát hành]
 
+### Task 5b.4 — Thiên Thư (2026-10-12)
+- Màn **Thiên Thư** mở từ màn tiêu đề (sau kiếp đầu), có 4 mục:
+  - Khí vận: đã mang / tổng số; cái chưa gặp hiện "???" kèm phẩm cấp.
+  - Tổ hợp ẩn: đã thức tỉnh thì hiện tên, khí vận cần có và hiệu ứng; chưa thì chỉ báo cần mấy khí vận.
+  - Kim Thủ Chỉ: đã từng có / tổng số.
+  - Truyện khí vận chi tử: mỗi đời có đồ đệ khí vận chi tử để lại một đoạn kết theo vai trò (Hộ đạo, Lợi dụng rồi diệt, Lợi dụng mà nó còn sống, Mặc kệ, chết sớm, chưa chọn).
+- Ghi lúc xác nhận khí vận và lúc đời kết thúc (meta `codex`, giữ 50 truyện gần nhất).
+- Lời dẫn và đoạn kết trong `content/codex.json`.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Task 5b.3 — Khóa ô, 5 ô khí vận, tổ hợp ẩn (2026-10-12)
 - **Khóa ô**: ở màn bốc mệnh, bấm "Khóa ô này" để giữ một khí vận khi quay lại. Mỗi ô khóa tốn 3 điểm Luân Hồi, trừ khi xác nhận (`balance.traits.locks`, `lockCost`). Developer mode khóa miễn phí.
 - **Thêm ô**: thiên phú luân hồi mới Mệnh Bàn Thêm Ô (4 rồi 5 ô, tối đa `balance.traits.maxSlots`) và Định Mệnh Ấn (khóa được 2 ô).
