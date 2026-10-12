@@ -188,6 +188,7 @@ export const EffectsSchema = z
     /** Task 3.9: years of lifespan (burning blood: −10). */
     lifespanYears: z.number().int().optional(),
     /** Task 3.9: tâm ma seeds (counted for the heart-demon system to come). */
+    /** Tâm ma gained (task 3.9); gains shrink by the heartDemonResist hook (task 3.10), losses do not. */
     heartDemon: z.number().int().optional(),
     /** Task 3.9: the oldest living parent dies at the end of the year (grief as usual). */
     relativeDies: z.enum(['mother', 'father', 'parent']).optional(),
@@ -915,6 +916,8 @@ export const BalanceSchema = z
         /** Price multiplier for the rest of the year after a won / lost bargain. */
         bargainWinMul: z.number().min(0),
         bargainLoseMul: z.number().min(0),
+        /** Task 3.10: the most the priceDiscount hook (Khéo Mồm, Mắt Tinh…) can take off buying prices. */
+        maxDiscount: probability,
       })
       .strict(),
     /** Stats stuck at an extreme (stat-extremes-approved.md). */

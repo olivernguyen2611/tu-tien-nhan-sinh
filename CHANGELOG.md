@@ -129,6 +129,42 @@
 - Save cũ: không đang bế quan.
 - **Bổ sung kỹ thuật** (PLAN chỉ ghi "Bế quan X năm"): bảng số năm theo cảnh giới, ngưỡng xuất quan sớm, thiện cảm nhạt dần, và 5 câu nhật ký trong `realms.json`.
 
+### Task 3.13 — Ma tu hứa khai mạch + sự kiện con đường đời (2026-10-12)
+- **15 sự kiện** theo bản đã duyệt `docs/design/events-3-13.md`.
+- **Chuỗi Hương Hỏa Hội** (`mortal-path.json`):
+  - Hang khai mạch → Đêm huyết tế → Kẻ nhớ mặt.
+  - Không kết cục nào khai mạch thật: chỉ có nhận ra, trốn thoát, hoặc chết.
+  - Đánh ma tu U Hà là trận thật với Luyện Khí tầng 9 (chiến lực ×0.5).
+  - Lựa chọn "Phá trận" chỉ hiện khi có flag `tinh_tao`.
+  - Lựa chọn "Treo hạc giấy" ghi một kẻ thù vào sổ ân oán (task 3.4).
+- **12 sự kiện con đường đời** (`careers.json` mới), mỗi đường 3 sự kiện ở bậc giữa và cao:
+  - Quan lộ: Thi Hội, Hạn hán ba năm, Gian thần trong triều.
+  - Thương lộ: Chuyến hàng qua núi, Khách hàng đeo kiếm bay, Tuyển hoàng thương.
+  - Võ lâm: Mở võ quán, Thư hẹn đỉnh núi, Huyết án võ lâm.
+  - Y lộ: Bệnh lạ, Khách nửa đêm, Hoàng hậu lâm bệnh.
+- **Phần bổ sung kỹ thuật** (bản duyệt chưa ghi chi tiết):
+  - Nối chuỗi:
+    - "Tin theo, nhập hội" của sự kiện đã duyệt có thêm `followUp` tới Hang khai mạch sau 3 năm. Nhánh thất bại của "Hỏi kỹ" (cũng nhập hội) có cùng `followUp`.
+    - "Nối tiếp ngay" được làm thành `followUp` sau 0 năm, nên Đêm huyết tế tới vào năm kế.
+    - Kẻ nhớ mặt là sự kiện ngẫu nhiên cho người có flag `ke_thu_u_ha`, một lần mỗi đời. Thiết kế ghi "2–10 năm sau" nhưng không ghi cách hẹn giờ.
+  - Lựa chọn tốn bạc (Mua đề 500, Thuê tiêu cục 200, Đút lót 2000, Mở quán 100) đòi đủ bạc mới chọn được.
+  - Thêm văn bản kết quả ngắn cho những lựa chọn mà bản duyệt chỉ ghi hiệu ứng.
+  - Tuổi tối thiểu 16 cho Kẻ nhớ mặt.
+
+### Task 3.10 — Tiên Thiên Khí Vận lên 40 (2026-10-12)
+- **20 khí vận mới** theo bản đã duyệt `docs/design/traits-2.md`, nâng tổng lên 40. Phân bố: Phàm 5, Lương 4, Ưu 4, Tuyệt 2, Thiên 1, Thần 1, Ác vận 3.
+  - Lấp các trục bản 1 còn trống: con đường Pháp/Binh/Thuật; nghề Khí, Trận, Phù, Linh thực, Ngự thú; tâm ma; thiên kiếp; ma đạo.
+- **Tag sự kiện:** gắn thêm `justice` cho Án oan ở huyện, Hương Hỏa Hội lộ mặt, Đại hội võ lâm, Bảng treo thưởng (lựa chọn tiếp) và Rủ rê phục kích. Nhờ vậy Hiệp Cốt có tác dụng.
+- **Lựa chọn ẩn cho khí vận mới:**
+  - Mắt Tinh: cùng Thông Minh Vặt mở lựa chọn "Thấy mực trên bản đồ còn mới" ở Bản đồ giá rẻ.
+  - Hiệp Cốt: lựa chọn mới "tự mình đi bắt kẻ vu oan" ở Án oan ở huyện.
+  - Thú Duyên, Chiêu Yêu Thể: lựa chọn mới "Ngồi xuống, chìa tay ra" ở Hồ ly bị thương, và "nhìn thẳng vào mắt hổ" ở Yêu thú xuống làng.
+  - Văn bản 3 lựa chọn mới là **phần bổ sung**, vì bản duyệt chỉ ghi chỗ đặt.
+- **Nối 2 móc đã có trong K.6:**
+  - `priceDiscount`: Khéo Mồm, Mắt Tinh làm giá mua ở phường thị rẻ hơn, tối đa `balance.market.maxDiscount` (30%).
+  - `heartDemonResist`: tâm ma nhận vào giảm theo tỉ lệ. Kháng âm (Ma Tâm Chủng) thì tâm ma tăng thêm.
+- **Chưa có tác dụng:** `divineSense`, `charmResist`, `tribulationPower` chờ hệ thống thần thức và thiên kiếp ở giai đoạn 4.
+
 ### Task 3.4 — NPC có số mệnh riêng (2026-10-12)
 - **Engine** (phiên làm `task/3.4-npcs`):
   - NPC già đi, tự tu luyện và đột phá, rồi chết.
