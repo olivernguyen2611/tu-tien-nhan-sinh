@@ -432,7 +432,8 @@
     "donation": 50,
     "decisions": [1, 3],
     "prestige": { "start": 10, "membersFor60": 600, "perBuildingLevel": 3, "approach": 0.2 },
-    "elders": { "count": 3, "rewardCost": 30, "rewardAffinity": 10, "rewardPrestige": 1 }
+    "elders": { "count": 3, "rewardCost": 30, "rewardAffinity": 10, "rewardPrestige": 1 },
+    "recruit": { "minAffinity": 55, "minAge": 16, "giftCost": 20, "base": 0.45, "affinityWeight": 0.01, "favorWeight": 0.004, "grudgeWeight": 0.01, "joinAffinity": 8, "refuseAffinity": -2, "joinPrestige": 1, "memberTithe": 2 }
   },
   "chosen": { "age": [12, 16], "affinity": 55, "progressMul": 1.6, "breakthroughBonus": 0.15 },
   "disciples": {
