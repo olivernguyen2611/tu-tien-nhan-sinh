@@ -29,7 +29,7 @@ describe('lão gia gia (task 4.11)', () => {
   });
 
   it('the pool opens the meridians of a rootless mortal and books the possession', () => {
-    const rootless: GameState = { ...adult, cult: { ...adult.cult, root: { grade: 'none', elements: [], tested: true } as unknown as GameState['cult']['root'] } };
+    const rootless: GameState = { ...adult, cult: { ...adult.cult, root: { grade: 'none', elements: [], body: null } } };
     expect(shown(rootless, 'lao_gia_gia_ky_vat')).toContain('Nhảy xuống, tẩy kinh mạch');
     expect(shown(rootless, 'lao_gia_gia_ky_vat')).not.toContain('Ngồi bên ao hấp thu linh khí');
     const s = resolveChoice(at(rootless, 'lao_gia_gia_ky_vat'), content, 0).state;
