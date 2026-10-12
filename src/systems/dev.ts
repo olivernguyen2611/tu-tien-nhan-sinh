@@ -361,18 +361,18 @@ export function devChildrenRoot(state: GameState, content: Content, rootless: bo
 }
 
 /** Every root the dev panel can set: grades (elements from the first ones) and each variant. Bodies are set apart (`devSetBody`). */
-export function devRootOptions(content: Content): { key: string; label: string; root: SpiritRoot }[] {
+export function devRootOptions(content: Content): { key: string; label: string; root: SpiritRoot; group: string }[] {
   const { grades, elements } = content.cultivation.roots;
   const basic = elements.filter((e) => !e.variant).map((e) => e.id);
-  const out: { key: string; label: string; root: SpiritRoot }[] = [];
+  const out: { key: string; label: string; root: SpiritRoot; group: string }[] = [];
   for (const g of grades) {
     if (g.special) continue;
     const root = { grade: g.id, elements: basic.slice(0, content.balance.roots.elementCount[g.id] ?? 0) };
-    out.push({ key: g.id, label: rootName(root, content), root });
+    out.push({ key: g.id, label: rootName(root, content), root, group: 'Linh căn thường' });
   }
   for (const e of elements.filter((x) => x.variant)) {
     const root = { grade: 'bien_di', elements: [e.id] };
-    out.push({ key: `bien_di:${e.id}`, label: rootName(root, content), root });
+    out.push({ key: `bien_di:${e.id}`, label: rootName(root, content), root, group: 'Biến dị linh căn' });
   }
   return out;
 }

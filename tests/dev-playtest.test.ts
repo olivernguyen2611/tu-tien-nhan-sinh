@@ -17,6 +17,8 @@ describe('developer mode for the playtest fixes', () => {
   it('offers every grade and variant, and sets the root', () => {
     const roots = devRootOptions(content);
     expect(roots.some((r) => r.label === 'Biến dị linh căn (Lôi: Kim + Hỏa)')).toBe(true);
+    // The picker groups them under headings.
+    expect(new Set(roots.map((r) => r.group))).toEqual(new Set(['Linh căn thường', 'Biến dị linh căn']));
     const lôi = roots.find((r) => r.key === 'bien_di:loi')!;
     expect(devSetRoot(adult, content, lôi.root).cult.root).toEqual(lôi.root);
   });

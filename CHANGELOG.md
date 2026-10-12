@@ -8,6 +8,10 @@
 
 ## [Chưa phát hành]
 
+### Danh sách thả có đề mục (2026-10-12)
+- Developer mode: các danh sách chọn dài giờ chia nhóm bằng đề mục (`optgroup`) cho dễ tìm: **Vật phẩm** theo loại (đan dược, pháp khí, phù lục, trận bàn, linh vật, khác), **Công pháp** theo phẩm (Hoàng, Huyền, Địa, Thiên), **Khí vận** theo độ hiếm, **Linh căn** (thường / biến dị), **Sự kiện** theo loại.
+- Thành phần dùng chung `GroupedSelect` (cũng dùng trong tab Gia đạo cho danh sách công pháp và vật phẩm tặng). Danh sách ngắn (cảnh giới, thể chất, tông môn…) giữ nguyên.
+
 ### Gia đạo: tương tác với con cái và đạo lữ (2026-10-12)
 - Tab mới **Gia đạo** trong bảng Quan hệ: với mỗi người con và đạo lữ có bốn việc, mỗi việc một lần mỗi năm: **Luận bàn**, **Luận đạo** (cần Ngộ tính 40), **Truyền công pháp** (chọn một công pháp mình đã học; cần có linh căn) và **Tặng vật phẩm** (chọn trong túi, danh sách chia nhóm theo loại). Mọi việc đều cộng thiện cảm và đổi chỉ số của mình một chút.
 - Con cái tích **ngộ** (0–100) qua các việc ấy, nhớ công pháp được truyền. Khi con nối nghiệp, nhận Ngộ tính tương ứng (tối đa +12) và học luôn công pháp cha mẹ truyền, nhật ký ghi rõ. Đạo lữ đang tu thì tiến độ tu luyện nhích lên.
