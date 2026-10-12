@@ -801,3 +801,13 @@ button { font: inherit; color: inherit; }
 .rebirth-points ul { list-style: none; margin: 4px 0; padding: 0; }
 .rebirth-points li { display: flex; justify-content: space-between; gap: 8px; padding: 2px 0; border-bottom: 1px dotted var(--line); }
 .rebirth-total { margin: 6px 0 0; text-align: right; }
+
+/* Luân Hồi đài (task 5b.1) */
+.talent-shop { list-style: none; padding: 0; margin: 0 0 2rem; display: grid; gap: 0.75rem; }
+.talent-row { border: 1px solid var(--line); border-radius: var(--radius); padding: 0.75rem 0.875rem; background: var(--surface); }
+.talent-row.owned { border-color: var(--rare); }
+.talent-head { display: flex; justify-content: space-between; gap: 0.5rem; align-items: baseline; flex-wrap: wrap; }
+.talent-head b { font-family: var(--font-story); }
+.talent-level { font-size: 0.8125rem; color: var(--muted); }
+.talent-now { font-size: 0.875rem; margin: 0.25rem 0 0.5rem; }
+.talent-row .chip-btn { white-space: normal; text-align: left; }

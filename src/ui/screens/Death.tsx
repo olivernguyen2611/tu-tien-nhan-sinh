@@ -16,7 +16,7 @@ const STAT_LABELS = [
   ['charm', 'Mị lực', '貌'],
 ] as const;
 
-export function DeathScreen({ state, content, rebirth, onReadLog, onNewLife, onGhost, onHeir, onRewind }: {
+export function DeathScreen({ state, content, rebirth, onReadLog, onNewLife, onGhost, onHeir, onRewind, onRebirth }: {
   state: GameState;
   content: Content;
   /** Task 5b.1: Luân Hồi points paid now for this life, and the total kept across lives. */
@@ -29,6 +29,8 @@ export function DeathScreen({ state, content, rebirth, onReadLog, onNewLife, onG
   onHeir: (heirId: string) => void;
   /** Task 5b.10: Trùng sinh, back to an earlier moment of this life. */
   onRewind: () => void;
+  /** Task 5b.1: open the Luân Hồi đài. */
+  onRebirth: () => void;
 }) {
   const s = lifeSummary(state, content);
   if (!s) return null;
@@ -87,6 +89,7 @@ export function DeathScreen({ state, content, rebirth, onReadLog, onNewLife, onG
             {rebirth.gained > 0 && rebirth.gained !== points.total && <> (nhận thêm {rebirth.gained})</>}
             {' · '}Tích lũy: <b>{rebirth.bank}</b>
           </p>
+          <button class="link-btn" onClick={onRebirth}>Lên Luân Hồi Đài</button>
         </div>
 
         {blessings.length > 0 && (

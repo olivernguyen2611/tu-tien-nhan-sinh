@@ -26,6 +26,8 @@ export interface SaveMeta {
   credited: Record<string, number>;
   /** Task 5b.8: Phúc báo waiting for the next new life (from: the seed of the life that earned them). */
   blessings: { from: string; list: GameState['blessings'] } | null;
+  /** Task 5b.1: thiên phú luân hồi bought (id → level), given to every new life. */
+  rebirthTalents: Record<string, number>;
 }
 /** Seeds remembered in `credited`; older ones are dropped. */
 const MAX_CREDITED = 30;
@@ -113,6 +115,8 @@ export function migrate(save: SaveFile): SaveFile {
   // Task 5.7: no ancestors recorded.
   if (life.ancestry === undefined) life = { ...life, ancestry: [] };
   if (life.blessings === undefined) life = { ...life, blessings: [] };
+  // Task 5b.1: no thiên phú luân hồi.
+  if (life.rebirthTalents === undefined) life = { ...life, rebirthTalents: {} };
   if (life.checkpoints === undefined) life = { ...life, checkpoints: { age6: null, realm: null } };
   // Task 5.1: no sect of one's own.
   if (life.ownSect === undefined) life = { ...life, ownSect: null };
@@ -285,9 +289,10 @@ export function readMeta(store: KeyValueStore): SaveMeta {
       rebirthPoints: typeof m.rebirthPoints === 'number' ? m.rebirthPoints : 0,
       credited: m.credited && typeof m.credited === 'object' ? m.credited : {},
       blessings: m.blessings && Array.isArray(m.blessings.list) ? m.blessings : null,
+      rebirthTalents: m.rebirthTalents && typeof m.rebirthTalents === 'object' ? m.rebirthTalents : {},
     };
   } catch {
-    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null };
+    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {} };
   }
 }
 
@@ -322,4 +327,12 @@ export function creditRebirth(store: KeyValueStore, seed: string, points: number
   const credited = Object.fromEntries([...kept, [seed, Math.max(points, meta.credited[seed] ?? 0)]]);
   const pending = first ? (blessings.length > 0 ? { from: seed, list: blessings } : null) : meta.blessings;
   return { meta: writeMeta(store, { ...meta, rebirthPoints: meta.rebirthPoints + gained, credited, blessings: pending }), gained };
+}
+
+/** Task 5b.1: buy the next level of a thiên phú luân hồi (cost from rebirthTalents.nextTalentCost); null when too poor. */
+export function buyRebirthTalent(store: KeyValueStore, id: string, cost: number): SaveMeta | null {
+  const meta = readMeta(store);
+  if (cost > meta.rebirthPoints) return null;
+  const rebirthTalents = { ...meta.rebirthTalents, [id]: (meta.rebirthTalents[id] ?? 0) + 1 };
+  return writeMeta(store, { ...meta, rebirthPoints: meta.rebirthPoints - cost, rebirthTalents });
 }

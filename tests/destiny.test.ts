@@ -1,3 +1,4 @@
+import { legacy } from './fixtures';
 import { describe, expect, it } from 'vitest';
 import type { Content } from '../src/core/content';
 import { BalanceSchema, WorldSchema, NamesSchema, OriginFileSchema, TraitFileSchema } from '../src/core/schemas';
@@ -52,6 +53,7 @@ const content: Content = {
   heir,
   clan,
   blessings,
+  ...legacy,
 };
 const born = (seed: string) => rollDestiny(createLife({ seed }, content), content);
 

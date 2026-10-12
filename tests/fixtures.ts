@@ -46,3 +46,10 @@ export const heir = HeirFileSchema.parse(heirFile);
 export const clan = ClanFileSchema.parse(clanFile);
 export const blessings = BlessingFileSchema.parse(blessingsFile);
 export const combat = CombatTextsSchema.parse(combatFile);
+
+// GĐ 5b content (task 5b.1 on): spread `...legacy` into hand-built Content objects.
+import { RebirthTalentFileSchema } from '../src/core/schemas';
+import rebirthTalentsFile from '../content/rebirth-talents.json';
+export const legacy = {
+  rebirthTalents: RebirthTalentFileSchema.parse(rebirthTalentsFile),
+};

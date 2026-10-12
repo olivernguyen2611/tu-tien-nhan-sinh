@@ -6,6 +6,7 @@ import { Rng } from '../core/rng';
 import type { FateTalent } from '../core/schemas';
 import type { GameState, LogLine } from '../core/types';
 import { lifeHooks } from './cultivation';
+import { rebirthTalentBonus } from './rebirthTalents';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -73,7 +74,7 @@ export function offerFate(state: GameState, content: Content): GameState {
   const offered = drawFate(state, content, rng);
   if (offered.length === 0) return { ...state, rng: rng.getState() };
   const cfg = content.balance.fate;
-  const refreshesLeft = cfg.refreshes + (state.aptitudes.luck >= cfg.extraRefreshLuck ? 1 : 0);
+  const refreshesLeft = cfg.refreshes + (state.aptitudes.luck >= cfg.extraRefreshLuck ? 1 : 0) + rebirthTalentBonus(state.rebirthTalents ?? {}, content, 'fateRefreshes');
   return { ...state, rng: rng.getState(), fate: { offered, refreshesLeft } };
 }
 

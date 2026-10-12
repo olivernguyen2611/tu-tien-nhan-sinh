@@ -3,7 +3,7 @@ import { ThemeToggle } from '../components/ThemeToggle';
 import { DEV_TAP_GAP_MS, DEV_TAPS } from '../devMode';
 import type { ThemePref } from '../theme';
 
-export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, onDevUnlock, onContinue, onStart, onSaves, theme, onToggleTheme }: {
+export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, onDevUnlock, onContinue, onStart, onSaves, onRebirth, theme, onToggleTheme }: {
   canContinue: boolean;
   livesPlayed: number;
   /** Task 5b.1: Luân Hồi points kept across lives. */
@@ -14,6 +14,8 @@ export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, 
   onContinue: () => void;
   onStart: () => void;
   onSaves: () => void;
+  /** Task 5b.1: the Luân Hồi đài (shown once a life has ended). */
+  onRebirth: () => void;
   theme: ThemePref;
   onToggleTheme: () => void;
 }) {
@@ -48,6 +50,7 @@ export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, 
       {canContinue && <button class="btn-primary start" onClick={onContinue}>Tiếp tục</button>}
       <button class={canContinue ? 'btn-secondary start' : 'btn-primary start'} onClick={onStart}>Nhập thế</button>
       <button class="link-btn" onClick={onSaves}>Sổ lưu</button>
+      {(livesPlayed > 0 || rebirthPoints > 0) && <button class="link-btn" onClick={onRebirth}>Luân Hồi Đài</button>}
       <p class="note">{livesPlayed > 0 ? `Đã trải ${livesPlayed} kiếp · ` : ''}{rebirthPoints > 0 ? `${rebirthPoints} điểm Luân Hồi · ` : ''}Bản dựng khung · đang xây dựng</p>
     </main>
   );

@@ -20,6 +20,7 @@ import { ownSectYear } from '../systems/ownSect';
 import { clanYear } from '../systems/clan';
 import { blessingRerolls } from '../systems/blessings';
 import { withCheckpoints } from '../systems/rewind';
+import { ownedRebirthTalents, rebirthTalentBonus } from '../systems/rebirthTalents';
 
 export interface NewLifeInput {
   seed: string;
@@ -30,6 +31,8 @@ export interface NewLifeInput {
   tutorial?: boolean;  // show first-life tips
   /** Task 5b.8: Phúc báo earned by the last life. */
   blessings?: GameState['blessings'];
+  /** Task 5b.1: thiên phú luân hồi owned (id → level). */
+  rebirthTalents?: Record<string, number>;
 }
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
@@ -104,6 +107,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
   const lifespan = life.mortalBase + rng.int(-life.mortalVariance, life.mortalVariance) + healthShift;
 
   const blessings = (input.blessings ?? []).filter((b) => content.blessings.blessings.some((x) => x.id === b.id));
+  const rebirthTalents = ownedRebirthTalents(input.rebirthTalents ?? {}, content);
   const family = createFamily(rng, content, splitName(name, content.names).surname, !!origin.noParents, name);
 
   const state: GameState = {
@@ -124,6 +128,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     ownSect: null,
     ancestry: [],
     blessings,
+    rebirthTalents,
     checkpoints: { age6: null, realm: null },
     clan: null,
     region: { id: null, visited: [], movedAt: null },
@@ -140,10 +145,10 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     stats,
     aptitudes,
     cult: { realm: 'pham_nhan', stage: 0, progress: 0, root: null, lifespan, fails: {}, injuredUntil: null, technique: null, learned: [], scrolls: [], buffs: [], nextBonus: 0, preceptBreaks: 0, lineagesAdopted: [], heartDemon: 0, coreForming: null, coreGrade: null, corePattern: null, soulForm: null, heartDemonTrial: null, foundation: null, lastMajorAttempt: null, lineage: null },
-    money: { silver: origin.silver, spiritStones: origin.spiritStones },
+    money: { silver: origin.silver + rebirthTalentBonus(rebirthTalents, content, 'startSilver'), spiritStones: origin.spiritStones },
     social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0, trieu_dinh: 0, giang_ho: 0 } },
     flags: origin.noParents ? { no_parents: true, no_father: true, no_mother: true } : {},
-    destiny: { offered: [], rerollsLeft: Math.max(0, content.balance.traits.rerolls + (content.balance.difficulty[difficulty]?.rerollBonus ?? 0) + blessingRerolls(blessings, content)), confirmed: false },
+    destiny: { offered: [], rerollsLeft: Math.max(0, content.balance.traits.rerolls + (content.balance.difficulty[difficulty]?.rerollBonus ?? 0) + blessingRerolls(blessings, content) + rebirthTalentBonus(rebirthTalents, content, 'destinyRerolls')), confirmed: false },
     traits: [],
     family,
     events: {

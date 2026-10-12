@@ -1,3 +1,4 @@
+import { legacy } from './fixtures';
 import { describe, expect, it } from 'vitest';
 import type { Content } from '../src/core/content';
 import { Rng } from '../src/core/rng';
@@ -53,6 +54,7 @@ const content: Content = {
   events: [],
   glossary: [],
   traits: [],
+  ...legacy,
 };
 
 describe('names', () => {
