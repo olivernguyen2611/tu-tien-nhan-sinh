@@ -6,6 +6,7 @@ import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameState, LogLine, Npc } from '../core/types';
 import { makeName } from './names';
+import { hookSum } from './cultivation';
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
 
@@ -69,7 +70,8 @@ export function createNpc(state: GameState, content: Content, spec: NpcSpec): { 
     nature: nature?.id ?? null,
     natureKnown: nature !== null && (nature.surface !== undefined || nature.honest),
     goal: traits.goals.length > 0 ? rng.pick(traits.goals).id : null,
-    affinity: clamp(spec.affinity ?? 50),
+    // Quý nhân duyên or a face that scares children: how strangers first take to the player.
+    affinity: clamp((spec.affinity ?? 50) + hookSum(state, content, 'npcAffinityStart')),
     favor: clamp(spec.favor ?? 0),
     grudge: clamp(spec.grudge ?? 0),
     heirOf: spec.heirOf ?? null,

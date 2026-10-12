@@ -97,6 +97,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       problems.push({ file, level: 'warning', message: 'chưa có schema cho file này, bỏ qua' });
       continue;
     }
+    problems.push(...checkHookUnits(file, raw));
     const parsed = schema.safeParse(raw);
     if (!parsed.success) {
       for (const issue of parsed.error.issues) {
@@ -410,6 +411,33 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
 }
 
 /** Duplicate ids in a list, as messages. */
+/** Hooks read as a share (0.2 = +20%): a value past ±FRACTION_MAX is almost surely written in percent. */
+const FRACTION_HOOK = /^(cultivationSpeed|speed|combatPower(\.vsHigherRealm)?|escapeChance|injuryReduce|lifesteal|heartDemonResist|charmResist|divineSense|bottleneckResist|priceDiscount|incomePct|lootPct|lifespanPct|artifactPct|tribulationPower|tribulationDefense|(element|path)\.[a-z_]+\.power|craft\.[a-z_]+\.success|lineage\.[a-z_]+\.cultivationSpeed)$/;
+const FRACTION_MAX = 2;
+/** Hooks read in percentage points (5 = +5%): a value under 1 is almost surely written as a share. */
+const POINTS_HOOK = /^(breakthroughChance(\.major|\.minor)?|tribulationPct|illnessChancePct)$/;
+
+/** Every { hook, add } anywhere in a file, checked against the unit its hook is read in. */
+function checkHookUnits(file: string, raw: unknown): Problem[] {
+  const out: Problem[] = [];
+  const walk = (v: unknown): void => {
+    if (Array.isArray(v)) { v.forEach(walk); return; }
+    if (!v || typeof v !== 'object') return;
+    const o = v as Record<string, unknown>;
+    if (typeof o.hook === 'string' && typeof o.add === 'number') {
+      if (FRACTION_HOOK.test(o.hook) && Math.abs(o.add) > FRACTION_MAX) {
+        out.push({ file, level: 'error', message: `móc "${o.hook}" tính theo tỉ lệ (0.2 = 20%), không phải ${o.add}` });
+      }
+      if (POINTS_HOOK.test(o.hook) && o.add !== 0 && Math.abs(o.add) < 1) {
+        out.push({ file, level: 'error', message: `móc "${o.hook}" tính theo điểm phần trăm (5 = 5%), không phải ${o.add}` });
+      }
+    }
+    Object.values(o).forEach(walk);
+  };
+  walk(raw);
+  return out;
+}
+
 function duplicates(file: string, what: string, list: { id: string }[]): Problem[] {
   const seen = new Set<string>();
   const out: Problem[] = [];

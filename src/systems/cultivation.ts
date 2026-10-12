@@ -4,7 +4,7 @@ import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { EffectHook } from '../core/schemas';
 import type { GameState, LogLine, SpiritRoot } from '../core/types';
-import { extremeHookSum } from './extremes';
+import { extremeHasHook, extremeHookSum } from './extremes';
 import { checkDeath } from './time';
 import { difficultyHookSum } from './difficulty';
 import { careerHooks } from './career';
@@ -192,6 +192,11 @@ export function hookSum(state: GameState, content: Content, hook: string): numbe
     if ((e.hook === hook || e.hook === lineageHook) && e.add !== undefined && hookActive(e, state, content)) sum += e.add;
   }
   return sum;
+}
+
+/** A flag hook (no number: agingSlow, ignoreElementWeakness…) this life carries now, from anywhere hookSum reads. */
+export function hasHook(state: GameState, content: Content, hook: string): boolean {
+  return lifeHooks(state, content).some((e) => e.hook === hook && hookActive(e, state, content)) || extremeHasHook(state, content, hook);
 }
 
 /** PLAN.md G.1: percent of the current stage's bar gained in one year. */

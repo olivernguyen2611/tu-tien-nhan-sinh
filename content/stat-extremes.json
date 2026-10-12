@@ -23,7 +23,7 @@
       "name": "Thân cường thể tráng",
       "text": "Mười năm không hắt hơi một lần.",
       "effects": [{ "hook": "illnessChancePct", "add": -100 }],
-      "onceEffects": [{ "hook": "lifespanPct", "add": 5 }, { "hook": "stat.physique", "add": 3 }],
+      "onceEffects": [{ "hook": "lifespanPct", "add": 0.05 }, { "hook": "stat.physique", "add": 3 }],
       "note": "Hay bị nhờ khiêng đồ."
     },
     {
@@ -45,7 +45,7 @@
         { "hook": "statPerYear.health", "add": 3 },
         { "hook": "cultivationSpeed", "add": -0.1 }
       ],
-      "onceEffects": [{ "hook": "lifespanPct", "add": 3 }],
+      "onceEffects": [{ "hook": "lifespanPct", "add": 0.03 }],
       "note": "Vui quá quên tu."
     },
     {
@@ -84,7 +84,7 @@
       "text": "Đi qua cầu, người trên cầu quên đường về.",
       "effects": [
         { "hook": "npcAffinityStart", "add": 15 },
-        { "hook": "priceDiscount", "add": 10 },
+        { "hook": "priceDiscount", "add": 0.1 },
         { "hook": "eventWeight.romance_trouble", "mul": 2 }
       ],
       "note": "Từ 18 tuổi: tình địch, bị kẻ quyền thế để ý."
@@ -94,7 +94,7 @@
       "name": "Thân như liễu yếu",
       "text": "Gió thổi mạnh cũng phải bám cột.",
       "effects": [
-        { "hook": "injuryReduce", "add": -20 },
+        { "hook": "injuryReduce", "add": -0.2 },
         { "hook": "illnessChancePct", "add": 100 }
       ],
       "note": "Lối ra: luyện võ, thuốc bổ, thầy võ thương tình."
@@ -104,7 +104,7 @@
       "name": "Long tượng chi lực",
       "text": "Một tay nhấc cối đá, tay kia còn cầm bánh.",
       "effects": [
-        { "hook": "combatPower", "add": 10 },
+        { "hook": "combatPower", "add": 0.1 },
         { "hook": "breakthroughChance", "add": 10 },
         { "hook": "silverPerYear", "add": -5 }
       ],
@@ -159,9 +159,9 @@
       "name": "Đạo tâm như bàn thạch",
       "text": "Núi sập trước mặt, sắc mặt không đổi.",
       "effects": [
-        { "hook": "charmResist", "add": 100 },
+        { "hook": "charmResist", "add": 1 },
         { "hook": "breakthroughChance.major", "add": 5 },
-        { "hook": "heartDemonResist", "add": 20 },
+        { "hook": "heartDemonResist", "add": 0.2 },
         { "hook": "noLineageChange" }
       ],
       "note": "Khó thay đổi: không thể đổi đạo thống."

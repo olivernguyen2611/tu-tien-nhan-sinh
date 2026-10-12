@@ -88,7 +88,7 @@
     "minRealm": "hoa_than",
     "qi": 2.0,
     "eventWeight": { "bi_canh": 2, "plunder": 1.5, "fortune": 1.5 },
-    "effects": [{ "hook": "breakthroughChance", "add": 0.02 }],
+    "effects": [{ "hook": "breakthroughChance", "add": 2 }],
     "summary": "Linh khí đậm nhất Thương Lan. Đột phá +2%, cơ duyên và tranh đoạt đều nhiều.",
     "enterText": "Ngươi tới Trung Châu. Ở đây Hóa Thần không còn là truyền thuyết, chỉ là hàng xóm.",
     "guardian": {

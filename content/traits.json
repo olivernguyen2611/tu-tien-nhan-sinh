@@ -289,7 +289,7 @@
     "effects": [
       { "hook": "tribulationPower", "add": 0.3 },
       { "hook": "element.loi.power", "add": 0.2 },
-      { "hook": "breakthroughChance.major", "add": 0.05 }
+      { "hook": "breakthroughChance.major", "add": 5 }
     ]
   },
   {
@@ -298,7 +298,7 @@
     "summary": "Trước Trúc Cơ tu luyện chậm hơn 20%. Đổi lại: đột phá đại cảnh giới +15%, bình cảnh dễ vượt hơn 30%, thọ nguyên +20%.",
     "effects": [
       { "hook": "cultivationSpeed", "add": -0.2, "activeUntil": { "realm": "truc_co" } },
-      { "hook": "breakthroughChance.major", "add": 0.15 },
+      { "hook": "breakthroughChance.major", "add": 15 },
       { "hook": "bottleneckResist", "add": 0.3 },
       { "hook": "lifespanPct", "add": 0.2 }
     ]

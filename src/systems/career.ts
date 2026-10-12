@@ -6,6 +6,7 @@ import { Rng } from '../core/rng';
 import type { EffectHook } from '../core/schemas';
 import type { GameState, LogLine } from '../core/types';
 import { hookSum } from './cultivation';
+import { extremeHasHook } from './extremes';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -41,6 +42,7 @@ export function careerViews(state: GameState, content: Content): CareerView[] {
     if (!state.alive) blocked = 'Đã hết một đời.';
     else if (state.cult.realm !== 'pham_nhan') blocked = 'Đã bước vào tu tiên, chuyện phàm trần gác lại.';
     else if (current) blocked = null;
+    else if (extremeHasHook(state, content, 'cannotWork')) blocked = 'Thân thể thế này, chưa làm nổi việc gì.';
     else if (state.character.age < minAge) blocked = `Đủ ${minAge} tuổi mới chọn được đường đời.`;
     else if (state.character.age > maxAge) blocked = 'Tuổi đã cao, khó bắt đầu lại.';
     else if (c.requires.rootless && (!state.cult.root || usableRoot(state, content))) blocked = 'Chỉ dành cho người đã thử mà không có linh căn.';

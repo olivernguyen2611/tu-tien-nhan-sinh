@@ -66,7 +66,10 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
   let npc: string | null = null;
   // Task 4.10: an urgent event (đại hạn) skips the roll as soon as it is eligible.
   const urgent = due ? undefined : content.events.find((e) => e.urgent && eventWeight(state, content, e) > 0);
-  const visit = due || urgent ? null : npcEvent(state, content, rng);
+  // Tử Khí Đông Lai (trigger.everyNYears): every N years of age an event of that theme is sure to come.
+  const sure = due || urgent ? undefined : lifeHooks(state, content)
+    .find((h) => h.hook === 'trigger.everyNYears' && h.years && h.tag && age > 0 && age % h.years === 0 && hookActive(h, state, content));
+  const visit = due || urgent || sure ? null : npcEvent(state, content, rng);
   if (due) {
     picked = due.event;
     followUps = followUps.filter((f) => f !== due);
@@ -75,10 +78,12 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
   } else if (visit) {
     picked = visit.event;
     npc = visit.npc;
-  } else if (rng.chance(content.balance.events.popupChanceLowRealm)) {
-    const pool = content.events
+  } else if (sure || rng.chance(content.balance.events.popupChanceLowRealm)) {
+    const all = content.events
       .map((e) => ({ e, w: eventWeight(state, content, e) }))
       .filter((x) => x.w > 0);
+    const themed = sure ? all.filter((x) => x.e.themes.includes(sure.tag!)) : [];
+    const pool = themed.length > 0 ? themed : all;
     if (pool.length > 0) {
       const e = rng.weighted(pool, (x) => x.w).e;
       picked = e.id;

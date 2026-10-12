@@ -5,6 +5,7 @@ import type { Content } from '../core/content';
 import type { Technique } from '../core/schemas';
 import type { GameState, LogLine, SpiritRoot } from '../core/types';
 import { adoptLineage } from './paths';
+import { extremeHasHook } from './extremes';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -63,6 +64,7 @@ export function learnBlocked(state: GameState, content: Content, tech: Technique
   const ghost = !!state.flags.quy_tu;
   if (r.ghostOnly && !ghost) return 'Chỉ quỷ tu mới đọc được.';
   if (!usableRoot(state, content) && !r.rootless && !ghost) return 'Không có linh căn thì không tu được công pháp này.';
+  if (state.cult.lineage && tech.lineage !== state.cult.lineage && extremeHasHook(state, content, 'noLineageChange')) return 'Đạo tâm như bàn thạch: không đổi đạo thống được.';
   if (r.minDaoHeart !== undefined && state.aptitudes.daoHeart < r.minDaoHeart) return `Cần Đạo tâm ${r.minDaoHeart}.`;
   if (r.minRootElements !== undefined && (state.cult.root?.elements.length ?? 0) < r.minRootElements) return `Cần linh căn từ ${r.minRootElements} hệ trở lên.`;
   return null;
