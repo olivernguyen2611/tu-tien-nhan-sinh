@@ -1,0 +1,225 @@
+[
+  {
+    "id": "kvct_xk_nga_re",
+    "category": "chosen",
+    "title": "Ngã rẽ sư đồ",
+    "text": "{npc} đã lớn. Những thứ nó \"phát minh\" giờ cả phường thị bắt chước, những câu nó nói giờ có người chép thành sách. Đêm qua nó hỏi ngươi: \"Sư phụ, rốt cuộc người muốn con thành ai?\" Ngươi biết câu trả lời sẽ quyết định cả hai đời người.",
+    "themes": ["fortune"],
+    "conditions": { "chosen": { "template": ["xuyen_khong"], "role": ["none"] } },
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Hộ đạo: \"Con cứ đi, sư phụ đi phía trước.\"",
+        "result": {
+          "text": "{npc} cười, nụ cười của người lần đầu thấy thế giới này là thật.",
+          "effects": { "chosenRole": "protect", "stat.happiness": 4, "npc": { "affinity": 15, "favor": 10 }, "followUp": { "event": "kvct_bao_dap", "afterYears": [6, 10] } }
+        }
+      },
+      {
+        "text": "Lợi dụng: chiếm hết phát minh của nó về tay mình",
+        "result": {
+          "text": "Ngươi lấy sổ ghi chép của nó, đóng ấn của mình lên mọi thứ nó làm ra. Linh thạch đổ về như nước. {npc} nhìn ngươi, rồi bật cười: \"Hóa ra sư phụ là phản diện.\"",
+          "effects": { "chosenRole": "exploit", "spiritStones": 200, "cultProgress": 20, "karma": -15, "heartDemon": 8, "stat.daoHeart": -3, "npc": { "affinity": -40, "grudge": 40 }, "followUp": { "event": "kvct_phan_phe", "afterYears": [5, 9] } }
+        }
+      },
+      {
+        "text": "Mặc kệ: \"Đường của con, con tự chọn.\"",
+        "result": {
+          "text": "{npc} lặng người, rồi cúi đầu. Sáng hôm sau trên bàn có một gói mì và mẩu giấy: \"Tạm biệt, NPC tốt nhất con từng gặp.\"",
+          "effects": { "chosenRole": "ignore", "stat.daoHeart": 2, "stat.happiness": -2, "followUp": { "event": "kvct_tro_ve", "afterYears": [8, 14] } }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kvct_pv_nga_re",
+    "category": "chosen",
+    "title": "Chiếc nhẫn và người thầy",
+    "text": "Tàn hồn trong chiếc nhẫn của {npc} tìm tới ngươi trong mộng: \"Thằng nhóc sắp vượt qua ngươi. Ngươi định làm gì? Giữ nó, đoạt ta, hay buông tay?\" Ngươi tỉnh dậy, đồ đệ đang đứng ngoài cửa chờ dâng trà.",
+    "themes": ["fortune"],
+    "conditions": { "chosen": { "template": ["phe_vat_nghich_tap"], "role": ["none"] } },
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Hộ đạo: dặn nó giữ nhẫn cho kỹ",
+        "result": {
+          "text": "Ngươi chỉ vào chiếc nhẫn: \"Giữ lấy. Ai muốn lấy, bước qua xác sư phụ trước.\" Đồ đệ cúi đầu rất lâu.",
+          "effects": { "chosenRole": "protect", "stat.daoHeart": 2, "npc": { "affinity": 15, "favor": 15 }, "followUp": { "event": "kvct_bao_dap", "afterYears": [6, 10] } }
+        }
+      },
+      {
+        "text": "Lợi dụng: đoạt chiếc nhẫn",
+        "result": {
+          "text": "Ngươi tháo chiếc nhẫn khỏi tay đồ đệ khi nó đang nhập định. Tàn hồn trong nhẫn im lặng. {npc} mở mắt, không nói gì, chỉ nhìn bàn tay trống trơn.",
+          "effects": { "chosenRole": "exploit", "addItems": ["nhan_co_tan_hon"], "karma": -20, "heartDemon": 10, "stat.daoHeart": -3, "npc": { "affinity": -50, "grudge": 50 }, "followUp": { "event": "kvct_phan_phe", "afterYears": [5, 9] } }
+        }
+      },
+      {
+        "text": "Mặc kệ: để nó tự ra đời rèn luyện",
+        "result": {
+          "text": "\"Phế vật\" năm xưa xuống núi một mình, lưng thẳng. Cả trấn cũ đã quên tên nó. Họ sẽ sớm nhớ lại.",
+          "effects": { "chosenRole": "ignore", "stat.happiness": -2, "stat.luck": 1, "followUp": { "event": "kvct_tro_ve", "afterYears": [8, 14] } }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kvct_ts_nga_re",
+    "category": "chosen",
+    "title": "Kiếp này chọn khác",
+    "text": "{npc} nói: \"Kiếp trước, sư phụ có ba cách đối với con. Con biết kết cục của cả ba. Lần này con để sư phụ chọn.\" Nó không nói kết cục nào tốt hơn.",
+    "themes": ["fortune"],
+    "conditions": { "chosen": { "template": ["trong_sinh"], "role": ["none"] } },
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Hộ đạo: đi cùng nó đến cuối",
+        "result": {
+          "text": "{npc} quỳ xuống, lần này dập đầu thật mạnh: \"Kiếp trước người cũng chọn thế. Chỉ là con tới muộn.\"",
+          "effects": { "chosenRole": "protect", "stat.happiness": 5, "npc": { "affinity": 15, "favor": 10 }, "followUp": { "event": "kvct_bao_dap", "afterYears": [6, 10] } }
+        }
+      },
+      {
+        "text": "Lợi dụng: ép nó khai hết cơ duyên kiếp trước",
+        "result": {
+          "text": "Ngươi hỏi, nó trả lời, từng chỗ một. Ngươi đi lấy hết. {npc} cười buồn: \"Kiếp trước người cũng chọn thế này. Lần này con không ở lại.\"",
+          "effects": { "chosenRole": "exploit", "cultProgress": 40, "nextBreakthroughBonus": 10, "karma": -15, "heartDemon": 8, "stat.daoHeart": -2, "npc": { "affinity": -40, "grudge": 40 }, "followUp": { "event": "kvct_phan_phe", "afterYears": [5, 9] } }
+        }
+      },
+      {
+        "text": "Mặc kệ: kiếp này nó nên sống cho nó",
+        "result": {
+          "text": "Ngươi bảo nó đi. Nó đứng ở cổng rất lâu, như chờ ngươi đổi ý. Ngươi không đổi.",
+          "effects": { "chosenRole": "ignore", "stat.daoHeart": 3, "stat.happiness": -3, "followUp": { "event": "kvct_tro_ve", "afterYears": [8, 14] } }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kvct_bao_dap",
+    "category": "chosen",
+    "title": "Đồ đệ thành danh",
+    "text": "Tên {npc} giờ đứng trên Thiên Kiêu Bảng. Hôm nay nó về núi, trước mặt bao người quỳ xuống trước {name}: \"Không có sư phụ, không có con hôm nay.\" Phía sau nó là mấy rương lễ vật.",
+    "themes": ["fortune"],
+    "tags": ["rare"],
+    "conditions": { "chosen": { "role": ["protect"] } },
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Nhận lễ",
+        "result": {
+          "text": "Trong rương có linh thạch, có đan dược, và một cuốn tâm đắc nó tự viết. Cuốn sổ là thứ quý nhất.",
+          "effects": { "spiritStones": 300, "cultProgress": 25, "stat.happiness": 8, "npc": { "favor": 10 } }
+        }
+      },
+      {
+        "text": "Đỡ nó dậy: \"Một lạy là đủ.\"",
+        "result": {
+          "text": "Cả sảnh lặng đi rồi vỗ tay. Người ta nói thầy nào trò nấy, câu ấy lần đầu có nghĩa tốt.",
+          "effects": { "stat.daoHeart": 5, "karma": 5, "reputation": { "chinh": 8 }, "npc": { "affinity": 10, "favor": 20 } }
+        }
+      },
+      {
+        "text": "Nhờ nó trông nom tông môn",
+        "requires": { "ownSect": { "has": true } },
+        "result": {
+          "text": "Tin thiên kiêu số một làm khách khanh của {sect} lan đi. Người xin nhập môn xếp hàng tới chân núi.",
+          "effects": { "ownSect": { "members": 30, "growthBonus": 0.1 }, "stat.happiness": 5 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kvct_phan_phe",
+    "category": "chosen",
+    "title": "Phản phệ",
+    "text": "Ngày {name} xuất quan, trời đổ mưa máu. {npc} đứng giữa sân, khí tức đã khác hẳn năm xưa: \"Sư phụ, năm đó người lấy của con một thứ. Hôm nay con tới lấy lại, cả vốn lẫn lời.\"",
+    "themes": ["justice"],
+    "tags": ["violence", "dark"],
+    "conditions": { "chosen": { "role": ["exploit"] } },
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Đánh. Thầy không thua trò",
+        "result": {
+          "text": "Hai thầy trò lao vào nhau. Hào quang quanh người nó sáng tới chói mắt.",
+          "effects": {},
+          "fight": {
+            "foe": { "name": "Đồ đệ phản sư", "intent": "kill", "fromNpc": true, "powerMul": 1.6 },
+            "win": {
+              "text": "{npc} ngã xuống, mắt vẫn mở. Trời thôi mưa. Ngươi thắng, mà thấy như thiên đạo vừa quay mặt đi.",
+              "effects": { "karma": -10, "heartDemon": 10, "stat.happiness": -8, "npc": { "kill": true } }
+            },
+            "lose": {
+              "text": "Nó không giết ngươi. Nó chỉ lấy lại thứ của nó và một nửa tu vi của ngươi. \"Sống đi, sư phụ. Sống để nhìn con.\"",
+              "effects": { "cultProgress": -50, "stat.health": -30, "stat.happiness": -10, "lifespanYears": -20 }
+            }
+          }
+        }
+      },
+      {
+        "text": "Quỳ xuống nhận lỗi",
+        "check": { "stat": "stat.daoHeart", "difficulty": 60 },
+        "success": {
+          "text": "Ngươi quỳ, thật lòng. {npc} đứng rất lâu, rồi quay đi: \"Nợ còn đó. Nhưng hôm nay con không đòi.\"",
+          "effects": { "karma": 10, "stat.happiness": -5, "stat.daoHeart": 3, "npc": { "grudge": -30 } }
+        },
+        "fail": {
+          "text": "Nó nhìn ra lời xin lỗi của ngươi nửa thật nửa giả. Nó lấy lại thứ của nó, cùng một vết thương sâu.",
+          "effects": { "stat.health": -25, "stat.happiness": -8, "npc": { "grudge": -10 } }
+        }
+      },
+      {
+        "text": "Bỏ chạy",
+        "result": {
+          "text": "Ngươi chạy. Giang hồ biết chuyện, kể lại thành truyện: sư phụ phản diện bị nhân vật chính vả mặt.",
+          "effects": { "reputation": { "chinh": -10, "giang_ho": -10 }, "stat.happiness": -10, "stat.charm": -2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kvct_tro_ve",
+    "category": "chosen",
+    "title": "Thiên kiêu trở về",
+    "text": "Người đứng đầu Thiên Kiêu Bảng năm nay tên là {npc}. Một chiều, người ấy ghé ngang động phủ cũ, đứng ngoài cổng hỏi vọng vào: \"Sư phụ còn nhớ con không?\"",
+    "themes": ["fortune"],
+    "tags": ["rare"],
+    "conditions": { "chosen": { "role": ["ignore"] } },
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Mời vào uống trà",
+        "result": {
+          "text": "Hai thầy trò ngồi tới khuya, kể chuyện mấy chục năm. Trước khi đi, nó để lại trên bàn một viên đan, không nói là gì.",
+          "effects": { "stat.happiness": 6, "stat.luck": 2, "nextBreakthroughBonus": 5, "npc": { "affinity": 10 } }
+        }
+      },
+      {
+        "text": "Đi khắp nơi khoe đó là đồ đệ cũ",
+        "result": {
+          "text": "Từ đó tửu quán nào cũng có một lão già kể chuyện \"năm xưa ta dạy thiên kiêu số một cầm kiếm\". Không ai tin, ngươi vẫn kể.",
+          "effects": { "reputation": { "giang_ho": 10 }, "stat.happiness": 5, "stat.charm": -1 }
+        }
+      },
+      {
+        "text": "Xin so chiêu một lần",
+        "result": {
+          "text": "{npc} cười, rút kiếm, nhường ngươi ra tay trước.",
+          "effects": {},
+          "fight": {
+            "foe": { "name": "Thiên kiêu số một", "intent": "teach", "fromNpc": true },
+            "win": {
+              "text": "Ngươi thắng nửa chiêu. Nó cúi đầu, cười như năm mười bốn tuổi. Không ai biết nó có nhường không.",
+              "effects": { "stat.happiness": 8, "reputation": { "giang_ho": 5 }, "npc": { "affinity": 5 } }
+            },
+            "lose": {
+              "text": "Ngươi thua, thua đẹp. Nó đỡ ngươi dậy: \"Con đi xa được là nhờ năm đó sư phụ không giữ con lại.\"",
+              "effects": { "stat.daoHeart": 3, "stat.happiness": 2, "npc": { "affinity": 5 } }
+            }
+          }
+        }
+      }
+    ]
+  }
+]

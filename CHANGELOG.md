@@ -2,6 +2,18 @@
 
 ## [Chưa phát hành]
 
+### Task 5.6 — Hộ đạo / Lợi dụng / Mặc kệ (2026-10-12)
+- Cuối chuỗi của mỗi mô bản là một ngã rẽ sư đồ có ba lựa chọn (hiệu ứng `chosenRole`, điều kiện `chosen.role`):
+  - **Hộ đạo**: khí vận lan sang sư phụ (kỳ ngộ ×1.3, đột phá +3%). Vài năm sau đồ đệ thành danh về báo đáp: lễ vật, danh tiếng, hoặc làm khách khanh cho tông môn tự lập.
+  - **Lợi dụng**: lợi lớn ngay (Phế vật: đoạt luôn chiếc nhẫn có tàn hồn), nhưng nhân quả nặng.
+    - Thiên kiếp +25%, kháng tâm ma −10%, kỳ ngộ ×0.7.
+    - Đồ đệ ôm hận rồi quay về báo thù với hào quang ×1.6.
+    - Thắng cũng mang tâm ma; thua mất nửa tu vi và 20 năm thọ.
+  - **Mặc kệ**: đồ đệ rời sư môn, về sau trở lại thành thiên kiêu số một (uống trà, khoe khoang, hoặc so chiêu).
+- Móc của vai trò chỉ còn tác dụng khi khí vận chi tử còn sống. Danh sách quan hệ hiện vai trò đã chọn.
+- Validator chấp nhận hiệu ứng `ownSect` khi chính lựa chọn ấy yêu cầu `ownSect.has`.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Task 5.5 — Khí vận chi tử làm đệ tử (2026-10-12)
 - Mô bản trong `content/chosen-ones.json`: Người xuyên không, Phế vật nghịch tập, Trọng sinh giả.
 - Từ Trúc Cơ có thể gặp dị tượng báo trước (mỗi mô bản một sự kiện, hiếm, mỗi đời chỉ một người).

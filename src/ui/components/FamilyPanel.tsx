@@ -68,6 +68,7 @@ export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, o
                   {n.chosen && (
                     <p class="profile-note npc-line chosen-line">
                       Khí vận chi tử · {content.chosenOnes.templates.find((t) => t.id === n.chosen!.template)?.name ?? n.chosen.template}
+                      {n.chosen.role && ` · ${content.chosenOnes.roles[n.chosen.role].name}`}
                     </p>
                   )}
                   <p class="profile-note npc-line">

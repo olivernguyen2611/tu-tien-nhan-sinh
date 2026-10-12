@@ -298,5 +298,5 @@ export interface Npc {
   /** Task 4.9: the player's disciple, and the age they were last taught. */
   disciple?: { since: number; lastTaught: number | null };
   /** Task 5.5: a khí vận chi tử (template id) and the age of the player when they came. */
-  chosen?: { template: string; since: number };
+  chosen?: { template: string; since: number; role?: 'protect' | 'exploit' | 'ignore' };
 }

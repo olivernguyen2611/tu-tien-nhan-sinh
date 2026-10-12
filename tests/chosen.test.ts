@@ -49,6 +49,7 @@ describe('khí vận chi tử (task 5.5)', () => {
       let steps = 0;
       while (id) {
         const e = findEvent(content, id)!;
+        if (e.conditions.chosen?.role) break; // task 5.6: the fork and its outcomes
         expect(e.conditions.chosen?.template).toEqual([template]);
         expect(e.weight).toBe(0);
         steps++;
