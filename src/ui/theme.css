@@ -875,3 +875,8 @@ button { font: inherit; color: inherit; }
 /* Playtest 2: auction lots */
 .auction-lot { display: flex; flex-direction: column; gap: 6px; padding: 6px 8px; }
 .auction-lot > div:first-child { display: flex; flex-direction: column; min-width: 0; }
+
+/* Task 5c.8: sư phụ – đồ đệ */
+.disciple-acts { align-items: center; }
+.disciple-acts .act-pick { display: inline-flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.disciple-acts select { max-width: 11rem; padding: 4px 6px; border-radius: 6px; border: 1px solid var(--border, #8884); background: var(--surface, transparent); color: inherit; font: inherit; }

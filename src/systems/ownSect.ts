@@ -13,6 +13,7 @@ import type { EffectHook } from '../core/schemas';
 import type { GameState, LogLine } from '../core/types';
 import { addItems, itemById } from './items';
 import { sectById } from './sect';
+import { seedElders } from './sectElders';
 
 function realmIndex(content: Content, id: string): number {
   return content.cultivation.realms.realms.findIndex((r) => r.id === id);
@@ -83,7 +84,32 @@ export function foundSect(state: GameState, content: Content, input: { name: str
   };
   const text = t.founded.replaceAll('{sect}', name).replaceAll('{lineage}', lineageName).replaceAll('{members}', String(members));
   lines.push({ text, tone: 'rare' });
-  return { state: pushLines(s, lines), text: lines.map((l) => l.text).join(' ') };
+  return { state: seedElders(pushLines(s, lines), content), text: lines.map((l) => l.text).join(' ') };
+}
+
+/** Task 5c.6: take the master's seat of the sect the player belongs to. It becomes ownSect, at no cost; the membership ends. */
+export function succeedSect(state: GameState, content: Content): GameState {
+  const old = sectById(content, state.sect.id);
+  if (!old || state.ownSect) return state;
+  const cfg = content.balance.founding;
+  const text = content.founding.texts.succeeded.replaceAll('{sect}', old.name).replaceAll('{members}', String(cfg.inheritMembers));
+  const s: GameState = {
+    ...state,
+    sect: { ...state.sect, id: null, rank: 0, contribution: 0, master: null, masterId: null, chain: null, left: [...state.sect.left, old.id] },
+    ownSect: { name: old.name, lineage: old.lineage, rules: [], founded: state.character.age, members: cfg.inheritMembers, treasury: cfg.inheritTreasury, buildings: {} },
+  };
+  return seedElders(pushLines(s, [{ text, tone: 'rare' }]), content);
+}
+
+/** Danh vọng (task 5c.7). */
+export function prestigeOf(state: GameState, content: Content): number {
+  return state.ownSect?.prestige ?? content.balance.founding.prestige.start;
+}
+
+/** The standing tier for the sect's danh vọng. */
+export function prestigeTier(state: GameState, content: Content) {
+  const p = prestigeOf(state, content);
+  return [...content.founding.prestigeTiers].reverse().find((t) => p >= t.min) ?? content.founding.prestigeTiers[0]!;
 }
 
 /** Hooks from the founder's own tông quy and buildings (× level), part of lifeHooks. */
@@ -153,7 +179,8 @@ export function ownSectYear(state: GameState, content: Content): GameState {
   const rng = new Rng(`${state.seed}:own-sect:${state.character.age}`);
   const rules = own.rules.map((id) => content.founding.rules.find((r) => r.id === id)).filter((r) => r !== undefined);
   const recruitMul = rules.reduce((m, r) => m * r.recruitMul, 1);
-  const rate = cfg.growth + sum(content, own, 'growth') + (own.growthBonus ?? 0);
+  const tier = prestigeTier(state, content);
+  const rate = cfg.growth + tier.growth + sum(content, own, 'growth') + (own.growthBonus ?? 0);
   const joined = Math.round(Math.max(cfg.baseRecruit, own.members * rate) * recruitMul);
   const left = Math.round(own.members * cfg.attrition);
   const cap = cfg.maxMembers[state.cult.realm] ?? own.members;
@@ -161,6 +188,11 @@ export function ownSectYear(state: GameState, content: Content): GameState {
   const income = Math.round(members * cfg.tithe + sum(content, own, 'income') - sum(content, own, 'upkeep'));
   const treasury = Math.max(0, own.treasury + income);
 
+  // Danh vọng drifts towards what the sect has built: many disciples and many buildings.
+  const levels = Object.values(own.buildings).reduce((n, l) => n + l, 0);
+  const target = Math.min(100, members / cfg.prestige.membersFor60 * 60 + levels * cfg.prestige.perBuildingLevel);
+  const before = prestigeOf(state, content);
+  const prestige = Math.max(0, Math.min(100, Math.round((before + (target - before) * cfg.prestige.approach) * 10) / 10));
   const lines: LogLine[] = [];
   let s: GameState = state;
   // Luyện Đan Phòng sends its pills to the master.
@@ -186,7 +218,7 @@ export function ownSectYear(state: GameState, content: Content): GameState {
   s = {
     ...s,
     social: { ...s.social, karma: Math.max(-100, Math.min(100, s.social.karma + karma)) },
-    ownSect: { ...own, members, treasury, growthBonus: 0, report: { age: state.character.age, text, decisions, done: [] } },
+    ownSect: { ...own, members, treasury, growthBonus: 0, prestige, report: { age: state.character.age, text, decisions, done: [] } },
   };
   return pushLines(s, lines);
 }

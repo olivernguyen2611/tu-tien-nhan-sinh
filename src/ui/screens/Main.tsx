@@ -1,5 +1,6 @@
 // Main screen in a BitLife-style layout: who-you-are bar on top, life log in the
 // middle, a dock with the big age button, and stat bars underneath.
+import type { DiscipleAct } from '../../systems/discipleActs';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
@@ -67,7 +68,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   /** Task 5.4: gia tộc. */
   onClan: (action: ClanAction) => string | null;
   /** Task 4.9: take a disciple (null) or teach one. */
-  onDisciple: (npcId: string | null) => { text: string; tone: Tone; changes: string } | null;
+  onDisciple: (npcId: string | null, act?: DiscipleAct) => { text: string; tone: Tone; changes: string } | null;
   /** Task 4.7: luyện đan / luyện khí; returns the log text, or null. */
   onCraft: (recipeId: string) => string | null;
   /** Task 4.4: meet the current tâm ma illusion. */

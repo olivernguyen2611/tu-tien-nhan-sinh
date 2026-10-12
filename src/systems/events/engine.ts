@@ -22,6 +22,7 @@ import { changeNpc, createNpc, killNpc, npcCalls } from '../npcs';
 import { applyRomance, romanceTarget } from '../romance';
 import { gainGoldenFinger, loseGoldenFinger } from '../goldenFinger';
 import { applyPastSect } from '../pastSect';
+import { succeedSect } from '../ownSect';
 
 type Outcome = NonNullable<GameEvent['choices'][number]['result']>;
 
@@ -344,6 +345,7 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.loseGoldenFinger) next = loseGoldenFinger(next, content);
   if (fx.goldenFinger) next = gainGoldenFinger(next, content, fx.goldenFinger);
   // Task 5b.7: the past life's sect (claimed: it becomes this life's ownSect before fx.ownSect applies).
+  if (fx.succeedSect) next = succeedSect(next, content);
   if (fx.pastSect) {
     const r = applyPastSect(next, content, fx.pastSect);
     next = r.state;
@@ -351,7 +353,7 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   }
   if (fx.ownSect && next.ownSect) {
     const o = next.ownSect;
-    next = { ...next, ownSect: { ...o, members: Math.max(0, o.members + (fx.ownSect.members ?? 0)), treasury: Math.max(0, o.treasury + (fx.ownSect.treasury ?? 0)), growthBonus: (o.growthBonus ?? 0) + (fx.ownSect.growthBonus ?? 0) } };
+    next = { ...next, ownSect: { ...o, members: Math.max(0, o.members + (fx.ownSect.members ?? 0)), treasury: Math.max(0, o.treasury + (fx.ownSect.treasury ?? 0)), growthBonus: (o.growthBonus ?? 0) + (fx.ownSect.growthBonus ?? 0), prestige: Math.max(0, Math.min(100, (o.prestige ?? content.balance.founding.prestige.start) + (fx.ownSect.prestige ?? 0))) } };
   }
   // Task 4.1: the door closes now; the UI runs the years (runSeclusion).
   if (fx.seclusionYears && next.cult.realm !== 'pham_nhan') {
