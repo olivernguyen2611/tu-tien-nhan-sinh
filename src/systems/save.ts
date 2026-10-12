@@ -399,3 +399,8 @@ export function recordChallenge(store: KeyValueStore, week: string, id: string, 
 export function recordPastSect(store: KeyValueStore, record: PastSectRecord | null): SaveMeta {
   return writeMeta(store, { ...readMeta(store), pastSect: record });
 }
+
+/** Developer mode: write a changed meta back (systems/dev builds it). */
+export function replaceMeta(store: KeyValueStore, meta: SaveMeta): SaveMeta {
+  return writeMeta(store, meta);
+}

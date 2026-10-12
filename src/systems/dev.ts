@@ -9,6 +9,16 @@ import { startBattle } from './combat';
 import { STAT_LABELS } from './deltas';
 import { addItems } from './items';
 import { createNpc } from './npcs';
+import { enterRealm, startCultivating } from './cultivation';
+import { checkDeath } from './time';
+import { gainGoldenFinger, loseGoldenFinger, fingerDef } from './goldenFinger';
+import { takeChosen } from './chosen';
+import { suggestSectName } from './ownSect';
+import { clanName } from './clan';
+import { sectById } from './sect';
+import { Rng } from '../core/rng';
+import type { DeathCause } from '../core/types';
+import type { SaveMeta } from './save';
 
 export type DevStat = (typeof MORTAL_STATS)[number] | (typeof APTITUDES)[number];
 export const DEV_STATS: DevStat[] = [...MORTAL_STATS, ...APTITUDES];
@@ -104,4 +114,176 @@ export function devGiveItem(state: GameState, content: Content, itemId: string):
 /** Forget this year's and this life's item use (kháng thuốc, once-per-life). */
 export function devResetItemUse(state: GameState): GameState {
   return devLog({ ...state, itemUse: { ...state.itemUse, lastAge: {}, spent: [] } }, 'xóa kháng thuốc');
+}
+
+// ---------- Task 5b dev overhaul: realm, death, destiny, Kim Thủ Chỉ, sect, clan, flags ----------
+
+/** Jump to a major realm (first stage). A mortal gets a usable root (Song linh căn) and starts cultivating first. */
+export function devSetRealm(state: GameState, content: Content, realmId: string): GameState {
+  const realms = content.cultivation.realms.realms;
+  const target = realms.findIndex((r) => r.id === realmId);
+  if (!state.alive || target < 0) return state;
+  let s = state;
+  if (target === 0) {
+    s = { ...s, cult: { ...s.cult, realm: realms[0].id, stage: 0, progress: 0 } };
+  } else {
+    if (s.cult.realm === realms[0].id) {
+      const root = s.cult.root && (content.balance.roots.gradeSpeed[s.cult.root.grade] ?? 0) > 0 ? s.cult.root : { grade: 'song', elements: ['kim', 'moc'], body: null };
+      s = startCultivating({ ...s, cult: { ...s.cult, root } }, content).state;
+    }
+    const rng = Rng.fromState(s.rng);
+    let at = realms.findIndex((r) => r.id === s.cult.realm);
+    if (at > target) s = { ...s, cult: { ...s.cult, realm: realmId, stage: 0, progress: 0 } };
+    while (at < target) s = enterRealm(s, content, realms[++at].id, rng);
+    s = { ...s, rng: rng.getState() };
+  }
+  return devLog(s, `cảnh giới → ${realms[target].name}`);
+}
+
+/** Next stage of the current realm (stops at the peak); the bar empties. */
+export function devNextStage(state: GameState, content: Content): GameState {
+  const realm = content.cultivation.realms.realms.find((r) => r.id === state.cult.realm);
+  if (!state.alive || !realm || state.cult.stage >= realm.stages.length - 1) return state;
+  return devLog({ ...state, cult: { ...state.cult, stage: state.cult.stage + 1, progress: 0 } }, `lên ${realm.name} ${realm.stages[state.cult.stage + 1]}`);
+}
+
+/** Fill the cultivation bar (the next year tries the next stage, or the peak waits for a big breakthrough). */
+export function devFillProgress(state: GameState): GameState {
+  if (!state.alive || state.cult.realm === 'pham_nhan') return state;
+  return devLog({ ...state, cult: { ...state.cult, progress: 100 } }, 'đầy thanh tu vi');
+}
+
+export function devAddLifespan(state: GameState, years: number): GameState {
+  if (!state.alive) return state;
+  return devLog({ ...state, cult: { ...state.cult, lifespan: Math.max(state.character.age + 1, state.cult.lifespan + years) } }, `thọ nguyên ${years > 0 ? '+' : ''}${years}`);
+}
+
+/** Tâm ma back to zero. */
+export function devClearHeartDemon(state: GameState): GameState {
+  return devLog({ ...state, cult: { ...state.cult, heartDemon: 0 } }, 'xóa tâm ma');
+}
+
+/** End the life now, for this cause (death screen, badges, obituary, rebirth, ghost path). */
+export function devKill(state: GameState, content: Content, cause: DeathCause): GameState {
+  if (!state.alive) return state;
+  return checkDeath(devLog(state, `chết ngay (${cause})`), content, cause);
+}
+
+/** Add or remove a Tiên Thiên Khí Vận after birth (tổ hợp ẩn follow; one-time stat gains are not given). */
+export function devToggleTrait(state: GameState, content: Content, traitId: string): GameState {
+  const t = content.traits.find((x) => x.id === traitId);
+  if (!state.alive || !t) return state;
+  const has = state.traits.includes(traitId);
+  const traits = has ? state.traits.filter((x) => x !== traitId) : [...state.traits, traitId];
+  return devLog({ ...state, traits }, `${has ? 'bỏ' : 'thêm'} khí vận ${t.name}`);
+}
+
+/** Replace the Kim Thủ Chỉ (null: take it away). It awakens as far as the realm allows. */
+export function devSetGoldenFinger(state: GameState, content: Content, id: string | null): GameState {
+  if (!state.alive) return state;
+  const s = state.goldenFinger ? loseGoldenFinger(state, content) : state;
+  if (!id) return devLog(s, 'bỏ Kim Thủ Chỉ');
+  const f = fingerDef(content, id);
+  return f ? devLog(gainGoldenFinger(s, content, id), `Kim Thủ Chỉ → ${f.name}`) : state;
+}
+
+/** Force the Kim Thủ Chỉ to a level, whatever the realm (hooks of that level; one-time gains are not given). */
+export function devSetFingerLevel(state: GameState, content: Content, level: number): GameState {
+  const g = state.goldenFinger;
+  const f = fingerDef(content, g?.id);
+  if (!state.alive || !g || !f) return state;
+  const lv = Math.max(1, Math.min(f.levels.length, level));
+  const flags = { ...state.flags };
+  for (const l of f.levels.slice(0, lv)) for (const fl of l.setFlags) flags[fl] = true;
+  return devLog({ ...state, flags, goldenFinger: { ...g, level: lv } }, `${f.name} cấp ${lv}`);
+}
+
+/** A khí vận chi tử of this template becomes a disciple now. */
+export function devTakeChosen(state: GameState, content: Content, templateId: string): GameState {
+  if (!state.alive) return state;
+  const next = takeChosen(state, content, templateId);
+  return next === state ? state : devLog(next, `nhận khí vận chi tử (${templateId})`);
+}
+
+/** Found a sect for free, skipping realm and cost (members as at Kim Đan). */
+export function devFoundSect(state: GameState, content: Content): GameState {
+  if (!state.alive || state.ownSect) return state;
+  const cfg = content.balance.founding;
+  const name = suggestSectName(state, content);
+  const members = cfg.startMembers[state.cult.realm] ?? cfg.startMembers[cfg.minRealm] ?? 10;
+  const s: GameState = { ...state, ownSect: { name, lineage: state.cult.lineage ?? 'tien', rules: [], founded: state.character.age, members, treasury: 100, buildings: {} } };
+  return devLog(s, `khai tông ${name}`);
+}
+
+/** Found the clan for free. */
+export function devFoundClan(state: GameState, content: Content): GameState {
+  if (!state.alive || state.clan) return state;
+  const name = clanName(state, content);
+  return devLog({ ...state, clan: { name, founded: state.character.age, founder: state.character.name, rules: [], properties: {} } }, `lập ${name}`);
+}
+
+/** Put the player in a sect of the world, skipping its entry rules. */
+export function devJoinSect(state: GameState, content: Content, sectId: string): GameState {
+  const sect = sectById(content, sectId);
+  if (!state.alive || !sect) return state;
+  return devLog({ ...state, sect: { ...state.sect, id: sectId, rank: 0, since: state.character.age, contribution: 0, master: null, left: state.sect.left.filter((x) => x !== sectId) } }, `vào ${sect.name}`);
+}
+
+/** Task 5b.7: a made-up sect of a past life, not met yet, to test its events. */
+export function devPastSect(state: GameState): GameState {
+  if (!state.alive) return state;
+  return devLog({ ...state, pastSect: { name: 'Thử Nghiệm Tông', lineage: 'tien', founder: 'Tiền Bối Dev', members: 40, status: 'unknown' } }, 'có tông môn đời trước');
+}
+
+/** Set or clear a flag. */
+export function devSetFlag(state: GameState, flag: string, on: boolean): GameState {
+  const id = flag.trim();
+  if (!id) return state;
+  const flags = { ...state.flags };
+  if (on) flags[id] = true;
+  else delete flags[id];
+  return devLog({ ...state, flags }, `cờ ${id} ${on ? 'bật' : 'tắt'}`);
+}
+
+/** Events matching a filter (id, title or category), for the dev picker. */
+export function devFindEvents(content: Content, query: string): Content['events'] {
+  const q = query.trim().toLowerCase();
+  if (!q) return content.events;
+  return content.events.filter((e) => e.id.includes(q) || e.title.toLowerCase().includes(q) || e.category.includes(q));
+}
+
+// ---------- Save meta (Luân Hồi): pure functions on SaveMeta; the App writes them back ----------
+
+export function devMetaPoints(meta: SaveMeta, delta: number): SaveMeta {
+  return { ...meta, rebirthPoints: Math.max(0, meta.rebirthPoints + delta) };
+}
+
+/** Set a thiên phú luân hồi to a level (0 removes it). */
+export function devMetaTalent(meta: SaveMeta, content: Content, id: string, level: number): SaveMeta {
+  const t = content.rebirthTalents.talents.find((x) => x.id === id);
+  if (!t) return meta;
+  const rebirthTalents = { ...meta.rebirthTalents };
+  const lv = Math.max(0, Math.min(t.levels.length, level));
+  if (lv === 0) delete rebirthTalents[id];
+  else rebirthTalents[id] = lv;
+  return { ...meta, rebirthTalents };
+}
+
+/** Thiên Thư and every thành tựu (so every unlockable Kim Thủ Chỉ can be chosen). */
+export function devMetaUnlockAll(meta: SaveMeta, content: Content): SaveMeta {
+  return {
+    ...meta,
+    codex: {
+      ...meta.codex,
+      traits: content.traits.map((t) => t.id),
+      combos: content.traitCombos.combos.map((c) => c.id),
+      fingers: content.goldenFingers.fingers.map((f) => f.id),
+    },
+    achievements: { ...Object.fromEntries(content.achievements.achievements.map((a) => [a.id, { name: 'Dev', life: meta.livesPlayed }])), ...meta.achievements },
+  };
+}
+
+/** Bảo hiểm Kim Thủ Chỉ full: the next ordinary life is sure to be born with one. */
+export function devMetaFingerPity(meta: SaveMeta, content: Content): SaveMeta {
+  return { ...meta, fingerPity: content.balance.goldenFinger.pityLives };
 }

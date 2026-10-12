@@ -721,6 +721,11 @@ button { font: inherit; color: inherit; }
 .dev-event select { flex: 1; min-width: 0; font: inherit; padding: 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
 .dev-foot { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; margin-top: 16px; }
 .dev-foot .choice { width: auto; flex: 1; }
+/* Task 5b dev overhaul: folding sections, text inputs. */
+.dev-section { border-top: 1px solid var(--line); padding: 8px 0; }
+.dev-section summary { cursor: pointer; font-weight: 700; font-size: 0.875rem; padding: 4px 0; }
+.dev-section > * + * { margin-top: 8px; }
+.dev-input { flex: 1; min-width: 0; width: 100%; box-sizing: border-box; font: inherit; padding: 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
 
 /* A stat about to tip into a special state blinks (stat-extremes). */
 .meter-warn .bar { animation: meter-blink 1s ease-in-out infinite; }
@@ -847,3 +852,4 @@ button { font: inherit; color: inherit; }
 .challenge-rules { margin: 0.5rem 0 0; padding-left: 1.1rem; font-size: 0.875rem; }
 .challenge-result { font-weight: 600; }
 .challenge-result.done { color: var(--jade); }
+.challenge-screen .dev-input, .dev-section > .dev-input { flex: none; }

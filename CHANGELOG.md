@@ -2,6 +2,16 @@
 
 ## [Chưa phát hành]
 
+### Developer mode — cập nhật toàn diện sau GĐ 5b (2026-10-12)
+- Bảng Dev chia thành mục gập được (dễ dùng trên điện thoại): Chỉ số · Tu luyện & thời gian · Khí vận & Kim Thủ Chỉ · Tông môn, gia tộc, người quen · Vật phẩm & đánh thử · Sự kiện & cờ · Kết thúc đời · Luân hồi.
+- Mới: đặt cảnh giới bất kỳ (phàm nhân được cấp linh căn), lên 1 tầng, đầy tu vi, thọ +50, xóa tâm ma, +500 linh thạch.
+- Thêm / bỏ từng Tiên Thiên Khí Vận (thấy ngay tổ hợp ẩn), nhận / bỏ Kim Thủ Chỉ, ép cấp thức tỉnh.
+- Vào tông môn bất kỳ, khai tông và lập gia tộc miễn phí, tạo tông môn đời trước để thử 5b.7, nhận khí vận chi tử theo mô bản.
+- Lọc sự kiện theo id / tên / loại; bật tắt cờ bất kỳ (vd. `biet_truoc` để thấy lựa chọn "Ta biết chuyện này sẽ xảy ra").
+- Chết ngay theo từng nguyên nhân để thử màn tổng kết, huy hiệu, cáo phó, trùng sinh, quỷ tu.
+- Luân hồi: ± điểm Luân Hồi, chỉnh cấp từng thiên phú luân hồi, mở hết Thiên Thư và thành tựu (chọn được mọi Kim Thủ Chỉ khi đầu thai), làm đầy bảo hiểm Kim Thủ Chỉ.
+- Thử thách tuần: ở chế độ Dev chọn được thử thách bất kỳ; Thiên Thư và Thử thách tuần hiện ngay từ kiếp đầu.
+
 ### Task 5b.10 — Trùng sinh: nội dung (2026-10-12)
 - 2 kỳ ngộ hiếm cho **Hồi Quang Kính**: gương đồng ở tiệm cầm đồ (mua / mặc cả) và đáy giếng miếu hoang (từ Luyện Khí, thử đạo tâm).
 - Lựa chọn ẩn **"Ta biết chuyện này sẽ xảy ra"** trong 8 sự kiện có sẵn: Lũ quét, Cha lâm bệnh, Bóng người sau lưng, Bản đồ giá rẻ, Hang khai mạch, Thú triều, Đổ thạch, Yêu thú xuống làng. Vài lựa chọn có thử thách nhỏ, vì thế giới đổi khác một chút nên ký ức không phải lúc nào cũng đúng.
