@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
 import type { SaveMeta } from '../../systems/save';
+import type { RewindOption } from '../../systems/timeline';
 import { activeExtremes, extremeWarnings } from '../../systems/extremes';
 import { DevPanel } from '../components/DevPanel';
 import { BagPanel } from '../components/BagPanel';
@@ -116,7 +117,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   /** Open the save slots (Sổ lưu). */
   onSaves: () => void;
   /** Set when developer mode is on: apply a cheat, or turn the mode off. */
-  dev: { meta: SaveMeta; onChange: (next: GameState) => void; onMeta: (next: SaveMeta) => void; onDisable: () => void } | null;
+  dev: { rewinds: RewindOption[]; onRewindTime: (years: number) => void; meta: SaveMeta; onChange: (next: GameState) => void; onMeta: (next: SaveMeta) => void; onDisable: () => void } | null;
   theme: ThemePref;
   onToggleTheme: () => void;
 }) {
@@ -242,7 +243,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         onChoose={(i) => setResult(onChoose(i))} onClose={() => setResult(null)} />
 
       {dev && devOpen && (
-        <DevPanel state={state} content={content} meta={dev.meta} onChange={dev.onChange} onMeta={dev.onMeta} onClose={() => setDevOpen(false)}
+        <DevPanel state={state} content={content} meta={dev.meta} onChange={dev.onChange} rewinds={dev.rewinds} onRewindTime={dev.onRewindTime} onMeta={dev.onMeta} onClose={() => setDevOpen(false)}
           onDisable={() => { setDevOpen(false); dev.onDisable(); }} />
       )}
 

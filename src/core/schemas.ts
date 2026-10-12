@@ -669,6 +669,8 @@ export const BalanceSchema = z
           .strict(),
       })
       .strict(),
+    /** Backlog 6: developer mode's rewind: snapshots kept (years back) and the steps offered. */
+    dev: z.object({ rewindKeepYears: z.number().int().min(1), rewindSteps: z.array(z.number().int().min(1)).min(1) }).strict(),
     /** Backlog 2: Gia đạo, what a parent or spouse does with a child or the đạo lữ. */
     familyBond: z
       .object({

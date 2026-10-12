@@ -28,6 +28,7 @@ const balance = {
   fate: realBalance.fate,
   martial: realBalance.martial,
   familyBond: realBalance.familyBond,
+  dev: realBalance.dev,
   buddhism: realBalance.buddhism,
   paths: realBalance.paths,
   crafts: realBalance.crafts,

@@ -19,6 +19,7 @@ import { romanceYear, romanceTarget } from '../systems/romance';
 import { ownSectYear } from '../systems/ownSect';
 import { clanYear } from '../systems/clan';
 import { martialQuestYear } from '../systems/martialQuest';
+import { notifyYear } from '../systems/timeline';
 import { blessingRerolls } from '../systems/blessings';
 import { withCheckpoints } from '../systems/rewind';
 import { awakenGoldenFinger } from '../systems/goldenFinger';
@@ -184,6 +185,13 @@ const withYear = (s: GameState): GameState => ({ ...s, log: [...s.log, { age: s.
 
 /** One year passes; at most one event is rolled for the player to answer. */
 export function advanceYear(state: GameState, content: Content): GameState {
+  const next = advanceYearOnce(state, content);
+  // Developer mode records a snapshot of every year (backlog 6).
+  if (next !== state) notifyYear(next);
+  return next;
+}
+
+function advanceYearOnce(state: GameState, content: Content): GameState {
   if (!state.alive || state.events.pending || state.fate || state.combat || state.cult.coreForming || state.cult.heartDemonTrial || state.martial.quest?.game) return state;
   // Task 5b.10: moments a Trùng sinh can go back to.
   state = withCheckpoints(state);

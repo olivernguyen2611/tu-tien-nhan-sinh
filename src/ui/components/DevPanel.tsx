@@ -11,6 +11,7 @@ import { fingerDef } from '../../systems/goldenFinger';
 import { bodyLabel, rootLabel } from '../../systems/cultivation';
 import { npcById } from '../../systems/npcs';
 import type { SaveMeta } from '../../systems/save';
+import type { RewindOption } from '../../systems/timeline';
 import {
   DEV_STATS, devAddKarma, devAddLifespan, devAddMoney, devAddStat, devClearHeartDemon, devFillProgress, devFindEvents, devFoundClan, devFoundSect,
   devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect,
@@ -48,12 +49,15 @@ const KIND_ORDER = ['pill', 'artifact', 'talisman', 'array', 'material', 'misc']
 const GRADE_ORDER = ['hoang', 'huyen', 'dia', 'thien'];
 const byOrder = (order: string[]) => (a: string, b: string) => (order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99);
 
-export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, onClose }: {
+export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange, onMeta, onDisable, onClose }: {
   state: GameState;
   content: Content;
   /** Save meta (Luân Hồi points, thiên phú, Thiên Thư, thành tựu). */
   meta: SaveMeta;
   onChange: (next: GameState) => void;
+  /** Rewinds on offer (only where a snapshot exists) and the action. */
+  rewinds: RewindOption[];
+  onRewindTime: (years: number) => void;
   onMeta: (next: SaveMeta) => void;
   onDisable: () => void;
   onClose: () => void;
@@ -126,6 +130,9 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devSkipYears(state, content, 1))}>Qua 1 năm</button>
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devSkipYears(state, content, 10))}>Qua 10 năm</button>
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devHeal(state))}>Hồi đầy sức khỏe</button>
+            {content.balance.dev.rewindSteps.map((y) => (
+              <button key={y} class="chip-btn" disabled={!rewinds.some((r) => r.years === y)} title="Về lại đầu năm đó, làm lại các lựa chọn" onClick={() => onRewindTime(y)}>Tua ngược {y} năm</button>
+            ))}
           </div>
         </Section>
 
