@@ -360,14 +360,14 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 ### GĐ 5b — Luân hồi & giữ chân
 | # | Task |
 |---|---|
-| 5b.1 | [ ] Tổng kết đời đầy đủ + điểm Luân Hồi + ✍️ thiên phú luân hồi |
+| 5b.1 | [ ] Tổng kết đời đầy đủ + điểm Luân Hồi (✓ phần code) + ✍️ thiên phú luân hồi (chờ file thiết kế) |
 | 5b.2 | [ ] Kim Thủ Chỉ (✍️ 6–8 loại, cấp thức tỉnh, rủi ro) + bảo hiểm pity |
 | 5b.3 | [ ] Khóa ô khí vận, mở rộng tới 5 ô; nâng khí vận lên ≥60 + ✍️ 10 tổ hợp ẩn |
 | 5b.4 | [ ] Thiên Thư (bộ sưu tập khí vận, tổ hợp, truyện khí vận chi tử) |
 | 5b.5 | [ ] Thành tựu, huy hiệu cuối đời, cáo phó dạng ảnh để chia sẻ |
 | 5b.6 | [ ] Thử thách tuần (seed chung theo tuần) |
 | 5b.7 | [ ] Gặp lại tông môn đời trước |
-| 5b.8 | [ ] Phúc báo đời phàm nhân sang đời sau; móc mới `rootReroll` (`mortal-path.md` mục 3.1) |
+| 5b.8 | [x] Phúc báo đời phàm nhân sang đời sau; móc mới `rootReroll` (`mortal-path.md` mục 3.1) |
 | 5b.9 | [ ] Cầu đầu thai: tiêu điểm Luân Hồi chọn xuất thân đời sau (`mortal-path.md` mục 3.2) |
 | 5b.10 | [ ] Trùng sinh: Hồi Quang Kính, chết thì quay về năm 6 tuổi giữ ký ức; móc mới `rewindOnDeath` (`mortal-path.md` mục 3.3) |
 

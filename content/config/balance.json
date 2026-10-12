@@ -484,5 +484,20 @@
     "practiceCost": { "alchemy": 5, "forging": 10, "formation": 0, "talisman": 3, "farming": 0, "beast": 2 },
     "mortalStartLevel": { "nghe_thuoc": { "alchemy": 10 } },
     "cultivatorStartLevel": { "nghe_ren": { "forging": 10 } }
+  },
+  "rebirth": {
+    "yearsPerPoint": 10,
+    "perRealm": 10,
+    "perStage": 1,
+    "perMartialStage": 2,
+    "perCareerRung": 2,
+    "eventsPerPoint": 10,
+    "karmaAt": 60,
+    "karmaPoints": 5,
+    "perChild": 1,
+    "ownSect": 10,
+    "clan": 10,
+    "ranked": 5,
+    "highlights": 5
   }
 }

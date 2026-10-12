@@ -24,6 +24,32 @@
 - Validator báo lỗi khi móc tính theo tỉ lệ (0.2 = 20%) mang số lớn hơn 2, hoặc móc tính theo điểm phần trăm (đột phá, thiên kiếp, bệnh) mang số dưới 1.
 - Nối các móc nội dung đã hứa mà engine chưa đọc: `npcAffinityStart` (thiện cảm khởi đầu với người mới), `ignoreElementWeakness` (bị khắc hệ không bị phạt), `divineSense` (thần thức giúp chạy trốn, `balance.combat.divineSenseEscape`), `craft.all.success`, `agingSlow` (già chậm `balance.aging.slowAgingYears` năm), `cannotWork` (liệt giường không đi làm được), `noLineageChange` (không đổi đạo thống), `trigger.everyNYears` (Tử Khí Đông Lai: mỗi 10 năm chắc có kỳ ngộ).
 - **Còn treo**: `charmResist` (chưa có hệ thống mị thuật), `counter` của Đảo Môi Tinh, `rewindOnDeath` của Nhất Niệm Hồi Quang, `trigger.cheatDeath` từ trạng thái Phúc tinh cao chiếu.
+### Task 5b.8 — Phúc báo (2026-10-12)
+- Theo `mortal-path.md` mục 3.1, dữ liệu trong `content/blessings.json`. Đời kết thúc khi còn là phàm nhân thì nhận Phúc báo cho kiếp sau:
+  - **Đại thiện nhân** (nhân quả ≥ +60): đo linh căn quay 2 lần, lấy kết quả tốt hơn. Dùng móc mới `rootReroll`.
+  - **Danh chấn một nghề** (lên nấc 5 của một con đường đời): +5 chỉ số chính của đường đó.
+  - **Bách tuế** (sống tới 100): thọ nguyên kiếp sau +10%.
+  - **Xả thân cứu người** (chết trong trận ra tay cứu người): thêm một lần quay khí vận.
+- Phúc báo hiện ở màn tổng kết đời, rồi ở màn quay khí vận và dòng đầu nhật ký của kiếp sau.
+- Phúc báo chỉ trao cho lần **đầu thai kiếp mới** kế tiếp. Chơi tiếp bằng con cháu thì Phúc báo vẫn chờ.
+- Trận đánh có cờ `rescue`; chết trong trận ấy thì bật cờ `chet_vi_cuu_nguoi`. Đã gắn cho trận "Ra tay giết ma tu, cứu người" (sự kiện `lo_dinh_cam_do`).
+- "Con cháu ≥ 5 → chơi tiếp bằng con cháu": task 5.7 đã cho chơi tiếp bằng con đã lớn mà không cần đủ 5, nên không thêm gì.
+- **Bổ sung kỹ thuật**:
+  - "Chỉ số chính" lấy chỉ số đầu tiên trong `mainStats` của con đường.
+  - Câu chữ ngắn trên màn hình cho 4 Phúc báo.
+
+### Task 5b.1 — Tổng kết đời + điểm Luân Hồi (phần code, 2026-10-12)
+- **Màn tổng kết đời đầy đủ hơn**: cảnh giới, tông môn, gia tộc, đạo lữ, con cái, đệ tử, hạng Thiên kiêu bảng, đường đời, linh thạch.
+- **Dấu ấn một đời**: 5 khoảnh khắc hiếm gần nhất trong nhật ký.
+- **Điểm Luân Hồi** (`src/systems/rebirth.ts`, số trong `balance.rebirth`), tính theo:
+  - năm tháng đã sống, cảnh giới (hoặc bậc võ đạo nếu là phàm nhân), nấc đường đời;
+  - số biến cố đã trải, đại thiện/đại ác (nhân quả ±60), con cái;
+  - khai tông lập phái, lập gia tộc, lên Thiên kiêu bảng.
+- Điểm cộng dồn qua các kiếp, lưu trong meta của trình duyệt; màn mở đầu hiện tổng điểm.
+  - Mỗi đời chỉ nhận điểm một lần.
+  - Quỷ tu chết lần nữa chỉ nhận phần chênh lệch.
+- **Bổ sung kỹ thuật** (PLAN và `mortal-path.md` không ghi cách tính điểm): các nguồn điểm và mức điểm ở trên.
+- **Chưa làm**: ✍️ thiên phú luân hồi (dùng điểm để mua), chờ file thiết kế của chủ dự án.
 
 ### Task 5.3 — Sự kiện tông môn (phần engine, 2026-10-12)
 - Điều kiện sự kiện `ownSect`: đã lập tông môn, khoảng số đệ tử, công trình đạt cấp tối thiểu.

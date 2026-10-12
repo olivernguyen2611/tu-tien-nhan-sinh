@@ -2,8 +2,10 @@
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
 import { lifeSummary } from '../../systems/time';
-import { careerLabel, lifeTitles } from '../../systems/career';
+import { lifeTitles } from '../../systems/career';
 import { heirOptions } from '../../systems/heir';
+import { lifeHighlights, lifeRecap, rebirthPoints } from '../../systems/rebirth';
+import { earnedBlessings } from '../../systems/blessings';
 import { Meter } from '../components/Meter';
 
 const STAT_LABELS = [
@@ -13,9 +15,11 @@ const STAT_LABELS = [
   ['charm', 'Mị lực', '貌'],
 ] as const;
 
-export function DeathScreen({ state, content, onReadLog, onNewLife, onGhost, onHeir }: {
+export function DeathScreen({ state, content, rebirth, onReadLog, onNewLife, onGhost, onHeir }: {
   state: GameState;
   content: Content;
+  /** Task 5b.1: Luân Hồi points paid now for this life, and the total kept across lives. */
+  rebirth: { gained: number; bank: number };
   onReadLog: () => void;
   onNewLife: () => void;
   /** Task 4.12: go on as a quỷ tu (only when the death left a lingering obsession). */
@@ -26,6 +30,9 @@ export function DeathScreen({ state, content, onReadLog, onNewLife, onGhost, onH
   const s = lifeSummary(state, content);
   if (!s) return null;
   const c = state.character;
+  const points = rebirthPoints(state, content);
+  const highlights = lifeHighlights(state, content.balance.rebirth.highlights);
+  const blessings = earnedBlessings(state, content).map((b) => content.blessings.blessings.find((x) => x.id === b.id)!);
   return (
     <main class="death-screen">
       <div class="tablet">
@@ -37,8 +44,8 @@ export function DeathScreen({ state, content, onReadLog, onNewLife, onGhost, onH
         {lifeTitles(state, content).map((t) => <p class="life-title" key={t}>{t}</p>)}
 
         <dl class="facts">
+          {lifeRecap(state, content).map((l) => <div key={l.label}><dt>{l.label}</dt><dd>{l.value}</dd></div>)}
           <div><dt>Thiện ác</dt><dd>{s.karmaLabel}</dd></div>
-          {careerLabel(state, content) && <div><dt>Đường đời</dt><dd>{careerLabel(state, content)}</dd></div>}
           <div><dt>Gia tài</dt><dd>{state.money.silver} lượng bạc</dd></div>
           <div><dt>Biến cố đã trải</dt><dd>{s.eventsLived}</dd></div>
           <div><dt>Người thân còn sống</dt><dd>{s.relativesAlive}</dd></div>
@@ -57,6 +64,32 @@ export function DeathScreen({ state, content, onReadLog, onNewLife, onGhost, onH
               return t && <li class={`trait-chip r-${t.rarity}`} key={id}><b>{t.name}</b><span>{t.summary}</span></li>;
             })}
           </ul>
+        )}
+
+        {highlights.length > 0 && (
+          <div class="ancestry">
+            <p class="kicker">Dấu ấn một đời</p>
+            <ol>{highlights.map((h, i) => <li key={i}>{h}</li>)}</ol>
+          </div>
+        )}
+
+        <div class="rebirth-points">
+          <p class="kicker">Điểm Luân Hồi</p>
+          <ul>
+            {points.lines.map((l) => <li key={l.label}><span>{l.label}</span><b>+{l.points}</b></li>)}
+          </ul>
+          <p class="rebirth-total">
+            Kiếp này: <b>{points.total}</b>
+            {rebirth.gained > 0 && rebirth.gained !== points.total && <> (nhận thêm {rebirth.gained})</>}
+            {' · '}Tích lũy: <b>{rebirth.bank}</b>
+          </p>
+        </div>
+
+        {blessings.length > 0 && (
+          <div class="ancestry">
+            <p class="kicker">Phúc báo cho kiếp sau</p>
+            <ul>{blessings.map((b) => <li key={b.id}><b>{b.name}</b>: {b.earned} {b.text}</li>)}</ul>
+          </div>
         )}
 
         {state.death?.ghostOffer && (
