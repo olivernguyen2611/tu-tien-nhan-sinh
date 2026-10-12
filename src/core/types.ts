@@ -80,6 +80,9 @@ export interface GameState {
    */
   ownSect: {
     name: string; lineage: string; rules: string[]; founded: number; members: number; treasury: number; buildings: Record<string, number>;
+    /** Task 5c.7: danh vọng 0–100 (the sect's standing) and the named elders (NPC ids). */
+    prestige?: number;
+    elders?: string[];
     /** Task 5.2: next year's growth bonus from decisions, and this year's report (decisions still open, decisions taken). */
     growthBonus?: number;
     report?: { age: number; text: string; decisions: string[]; done: string[] } | null;

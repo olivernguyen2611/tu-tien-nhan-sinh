@@ -217,7 +217,7 @@ export const EffectsSchema = z
       .strict()
       .optional(),
     /** Task 5.3: the founded sect gains or loses members, treasury, next year's growth. */
-    ownSect: z.object({ members: z.number().int().optional(), treasury: z.number().int().optional(), growthBonus: z.number().optional() }).strict().optional(),
+    ownSect: z.object({ members: z.number().int().optional(), treasury: z.number().int().optional(), growthBonus: z.number().optional(), prestige: z.number().optional() }).strict().optional(),
     /** Task 5.5: take a khí vận chi tử of this template as a disciple (beyond the realm's disciple limit). */
     chosenOne: id.optional(),
     /** Task 5b.2: gain this Kim Thủ Chỉ ("random": any), only when the life has none yet. */
@@ -777,6 +777,13 @@ export const BalanceSchema = z
         donation: z.number().int().min(1),
         /** How many decisions a yearly report asks for. */
         decisions: z.tuple([z.number().int().min(0), z.number().int().min(0)]),
+        /**
+         * Task 5c.7: danh vọng. Each year it moves `approach` of the way to
+         * members/membersFor60 × 60 + building levels × perBuildingLevel (capped 100); starts at `start`.
+         */
+        prestige: z.object({ start: z.number().min(0).max(100), membersFor60: z.number().int().min(1), perBuildingLevel: z.number().min(0), approach: probability }).strict(),
+        /** Named elders: how many, what a reward costs from the treasury, and the bond it buys. */
+        elders: z.object({ count: z.number().int().min(0), rewardCost: z.number().int().min(0), rewardAffinity: z.number(), rewardPrestige: z.number() }).strict(),
       })
       .strict(),
     /** Task 4.9: taking disciples. */
@@ -2460,8 +2467,14 @@ export const FoundingFileSchema = z
         })
         .strict(),
     ),
+    /** Task 5c.7: standing tiers by danh vọng (ascending min); growth is added to the yearly recruit rate. */
+    prestigeTiers: z.array(z.object({ min: z.number().min(0).max(100), name: z.string().min(1), growth: z.number().min(0) }).strict()).min(1),
     texts: z
       .object({
+        /** {sect}, {names}. */
+        eldersMet: z.string().min(1),
+        /** {title}, {npc}. */
+        elderRewarded: z.string().min(1),
         founded: z.string().min(1),
         leftOld: z.string().min(1),
         /** {sect}, {members}, {membersDelta}, {treasury}, {treasuryDelta}. */

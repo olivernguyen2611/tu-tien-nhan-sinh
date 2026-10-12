@@ -353,7 +353,7 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   }
   if (fx.ownSect && next.ownSect) {
     const o = next.ownSect;
-    next = { ...next, ownSect: { ...o, members: Math.max(0, o.members + (fx.ownSect.members ?? 0)), treasury: Math.max(0, o.treasury + (fx.ownSect.treasury ?? 0)), growthBonus: (o.growthBonus ?? 0) + (fx.ownSect.growthBonus ?? 0) } };
+    next = { ...next, ownSect: { ...o, members: Math.max(0, o.members + (fx.ownSect.members ?? 0)), treasury: Math.max(0, o.treasury + (fx.ownSect.treasury ?? 0)), growthBonus: (o.growthBonus ?? 0) + (fx.ownSect.growthBonus ?? 0), prestige: Math.max(0, Math.min(100, (o.prestige ?? content.balance.founding.prestige.start) + (fx.ownSect.prestige ?? 0))) } };
   }
   // Task 4.1: the door closes now; the UI runs the years (runSeclusion).
   if (fx.seclusionYears && next.cult.realm !== 'pham_nhan') {
