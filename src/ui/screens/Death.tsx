@@ -7,6 +7,9 @@ import { heirOptions } from '../../systems/heir';
 import { lifeHighlights, lifeRecap, rebirthPoints } from '../../systems/rebirth';
 import { earnedBlessings } from '../../systems/blessings';
 import { rewindOffer } from '../../systems/rewind';
+import { lifeBadges } from '../../systems/achievements';
+import { realmLabel } from '../../systems/cultivation';
+import { shareObituary } from '../obituary';
 import { Meter } from '../components/Meter';
 
 const STAT_LABELS = [
@@ -16,11 +19,13 @@ const STAT_LABELS = [
   ['charm', 'Mị lực', '貌'],
 ] as const;
 
-export function DeathScreen({ state, content, rebirth, onReadLog, onNewLife, onGhost, onHeir, onRewind, onRebirth }: {
+export function DeathScreen({ state, content, rebirth, lives, onReadLog, onNewLife, onGhost, onHeir, onRewind, onRebirth }: {
   state: GameState;
   content: Content;
   /** Task 5b.1: Luân Hồi points paid now for this life, and the total kept across lives. */
-  rebirth: { gained: number; bank: number };
+  rebirth: { gained: number; bank: number; fresh: string[] };
+  /** Lives begun on this browser (thành tựu, the obituary card). */
+  lives: number;
   onReadLog: () => void;
   onNewLife: () => void;
   /** Task 4.12: go on as a quỷ tu (only when the death left a lingering obsession). */
@@ -38,6 +43,17 @@ export function DeathScreen({ state, content, rebirth, onReadLog, onNewLife, onG
   const points = rebirthPoints(state, content);
   const rewind = rewindOffer(state, content);
   const highlights = lifeHighlights(state, content.balance.rebirth.highlights);
+  const badges = lifeBadges(state, content, lives);
+  const fresh = rebirth.fresh.map((id) => content.achievements.achievements.find((a) => a.id === id)).filter((a) => !!a);
+  const obituary = () => shareObituary({
+    title: content.achievements.obituary.title,
+    name: c.name,
+    cause: s.causeText,
+    realm: realmLabel(state, content),
+    epitaph: s.epitaph,
+    badges: badges.map((b) => ({ name: b.name, text: b.text })),
+    footer: content.achievements.obituary.footer.replaceAll('{lives}', String(lives)),
+  }, `cao-pho-${state.seed}.png`);
   const blessings = earnedBlessings(state, content).map((b) => content.blessings.blessings.find((x) => x.id === b.id)!);
   return (
     <main class="death-screen">
@@ -48,6 +64,17 @@ export function DeathScreen({ state, content, rebirth, onReadLog, onNewLife, onG
         <p class="cause">{s.causeText}</p>
         <p class="epitaph">“{s.epitaph}”</p>
         {lifeTitles(state, content).map((t) => <p class="life-title" key={t}>{t}</p>)}
+        {badges.length > 0 && (
+          <ul class="badges" aria-label="Huy hiệu cuối đời">
+            {badges.map((b) => <li key={b.id} class="badge"><b>{b.name}</b><span>{b.text}</span></li>)}
+          </ul>
+        )}
+        {fresh.length > 0 && (
+          <div class="ancestry achievements-new">
+            <p class="kicker">Thành tựu mới</p>
+            <ul>{fresh.map((a) => <li key={a.id}><b>{a.name}</b>: {a.text}{a.unlockFinger && ' Mở khóa một Kim Thủ Chỉ để chọn lúc đầu thai.'}</li>)}</ul>
+          </div>
+        )}
 
         <dl class="facts">
           {lifeRecap(state, content).map((l) => <div key={l.label}><dt>{l.label}</dt><dd>{l.value}</dd></div>)}
@@ -138,6 +165,7 @@ export function DeathScreen({ state, content, rebirth, onReadLog, onNewLife, onG
 
         <div class="death-actions">
           <button class="btn-secondary" onClick={onReadLog}>Xem lại nhật ký</button>
+          <button class="btn-secondary" onClick={obituary}>Lưu cáo phó</button>
           <button class="btn-primary" onClick={onNewLife}>Đầu thai kiếp mới</button>
         </div>
       </div>

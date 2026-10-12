@@ -12,7 +12,7 @@ import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, lockCost, rerollDestiny, rollDestiny, toggleLock } from '../systems/destiny';
 import {
   deleteSlot, exportSave, firstFreeSlot, latestSlot, listSlots, makeSave, parseSave, readMeta, readSlot, recordNewLife, creditRebirth,
-  slotTaken, writeSlot, buyRebirthTalent, recordCodex, type SaveFile,
+  slotTaken, writeSlot, buyRebirthTalent, recordCodex, recordAchievements, type SaveFile,
 } from '../systems/save';
 import { checkDeath } from '../systems/time';
 import { GlossaryProvider } from './components/Tooltip';
@@ -52,6 +52,7 @@ import { rollBirthFinger } from '../systems/goldenFinger';
 import { RebirthScreen } from './screens/Rebirth';
 import { CodexScreen } from './screens/Codex';
 import { codexOf } from '../systems/codex';
+import { earnedAchievements, unlockedFingers } from '../systems/achievements';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves' | 'rebirth' | 'codex';
 /** Why the slot list is open in pick mode. */
@@ -96,13 +97,15 @@ function Screens({ content }: { content: Content }) {
   }, [life, slot]);
 
   // Task 5b.1: a finished life pays its Luân Hồi points once (creditRebirth skips what was paid).
-  const [rebirth, setRebirth] = useState<{ gained: number; bank: number }>({ gained: 0, bank: 0 });
+  const [rebirth, setRebirth] = useState<{ gained: number; bank: number; fresh: string[] }>({ gained: 0, bank: 0, fresh: [] });
   useEffect(() => {
     if (screen !== 'death' || !life || life.alive) return;
     const r = creditRebirth(store, life.seed, rebirthPoints(life, content).total, earnedBlessings(life, content));
     // Task 5b.4: the Thiên Thư keeps what this life saw, and the khí vận chi tử's tale.
     recordCodex(store, codexOf(life, content));
-    setRebirth({ gained: r.gained, bank: r.meta.rebirthPoints });
+    // Task 5b.5: thành tựu kept across lives; the ones new to this browser are shown.
+    const a = recordAchievements(store, earnedAchievements(life, content, r.meta.livesPlayed).map((x) => x.id), life.character.name);
+    setRebirth({ gained: r.gained, bank: r.meta.rebirthPoints, fresh: a.fresh });
   }, [screen, life]);
 
   /** Where the Luân Hồi đài returns to. */
@@ -170,7 +173,7 @@ function Screens({ content }: { content: Content }) {
     );
   }
   if (screen === 'codex') {
-    return <CodexScreen content={content} codex={readMeta(store).codex} onBack={() => setScreen('title')} />;
+    return <CodexScreen content={content} codex={readMeta(store).codex} achievements={readMeta(store).achievements} onBack={() => setScreen('title')} />;
   }
   if (screen === 'rebirth') {
     const meta = readMeta(store);
@@ -189,14 +192,16 @@ function Screens({ content }: { content: Content }) {
         content={content}
         onBack={() => setScreen('title')}
         rebirthPoints={readMeta(store).rebirthPoints}
+        fingers={unlockedFingers(content, Object.keys(readMeta(store).achievements))}
         onCreate={(input) => {
-          // Task 5b.9: a chosen origin with a price is paid in Luân Hồi points when the life is confirmed.
-          const cost = newLifeCost(content, input.originId);
+          // Task 5b.9: a chosen origin with a price is paid in Luân Hồi points when the life is confirmed;
+          // so is a Kim Thủ Chỉ chosen from those thành tựu unlocked (task 5b.5).
+          const cost = newLifeCost(content, input.originId) + (input.goldenFinger ? content.balance.goldenFinger.chooseCost : 0);
           if (cost > readMeta(store).rebirthPoints) return;
           setOriginCost(cost);
           // Tips only for the very first life on this browser.
           setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list, rebirthTalents: readMeta(store).rebirthTalents,
-            goldenFinger: rollBirthFinger(input.seed, content, readMeta(store).livesPlayed, readMeta(store).fingerPity) }, content), content));
+            goldenFinger: input.goldenFinger ?? rollBirthFinger(input.seed, content, readMeta(store).livesPlayed, readMeta(store).fingerPity) }, content), content));
           setScreen('destiny');
         }}
       />
@@ -227,7 +232,7 @@ function Screens({ content }: { content: Content }) {
   if (screen === 'death' && life) {
     // A new life from here reuses this slot, as when abandoning a life.
     return (
-      <DeathScreen state={life} content={content} rebirth={rebirth} onReadLog={() => setScreen('main')} onNewLife={() => setScreen('create')}
+      <DeathScreen state={life} content={content} rebirth={rebirth} lives={readMeta(store).livesPlayed} onReadLog={() => setScreen('main')} onNewLife={() => setScreen('create')}
         onGhost={() => { setLife(becomeGhost(life, content)); setScreen('main'); }}
         onHeir={(id) => { setLife(continueAsHeir(life, content, id)); setScreen('main'); }}
         onRewind={() => { setLife(rewind(life, content)); setScreen('main'); }}

@@ -33,6 +33,8 @@ export interface SaveMeta {
   fingerPity: number;
   /** Task 5b.4: Thiên Thư. */
   codex: Codex;
+  /** Task 5b.5: thành tựu held → the life that first earned it (name, and which life it was). */
+  achievements: Record<string, { name: string; life: number }>;
 }
 /** Seeds remembered in `credited`; older ones are dropped. */
 const MAX_CREDITED = 30;
@@ -301,9 +303,10 @@ export function readMeta(store: KeyValueStore): SaveMeta {
       rebirthTalents: m.rebirthTalents && typeof m.rebirthTalents === 'object' ? m.rebirthTalents : {},
       fingerPity: typeof m.fingerPity === 'number' ? m.fingerPity : 0,
       codex: readCodex(m.codex),
+      achievements: m.achievements && typeof m.achievements === 'object' ? m.achievements : {},
     };
   } catch {
-    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {}, fingerPity: 0, codex: EMPTY_CODEX };
+    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {}, fingerPity: 0, codex: EMPTY_CODEX, achievements: {} };
   }
 }
 
@@ -360,4 +363,13 @@ function readCodex(raw: unknown): Codex {
 export function recordCodex(store: KeyValueStore, add: Codex): SaveMeta {
   const meta = readMeta(store);
   return writeMeta(store, { ...meta, codex: mergeCodex(meta.codex, add) });
+}
+
+/** Task 5b.5: keep the thành tựu a finished life earned; returns the ids new to this browser. */
+export function recordAchievements(store: KeyValueStore, ids: string[], name: string): { meta: SaveMeta; fresh: string[] } {
+  const meta = readMeta(store);
+  const fresh = ids.filter((id) => !(id in meta.achievements));
+  if (fresh.length === 0) return { meta, fresh };
+  const achievements = { ...meta.achievements, ...Object.fromEntries(fresh.map((id) => [id, { name, life: meta.livesPlayed }])) };
+  return { meta: writeMeta(store, { ...meta, achievements }), fresh };
 }
