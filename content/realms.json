@@ -105,6 +105,7 @@
     "corePlain": "Luồng {element} hòa vào, không nhanh không chậm.",
     "coreSuccess": "Kim Đan thành hình, xoay chậm trong đan điền: {grade} Kim Đan. Thọ nguyên dài thêm, linh lực cuồn cuộn.",
     "coreShattered": "Vết rạn lan ra, đan chưa kịp thành đã vỡ.",
+    "corePattern": "Mặt đan hiện {pattern}. {text}",
     "tribulationStart": "Mây đen kéo tới che kín trời, sấm rền không dứt. Thiên kiếp: {count} đạo lôi đang chờ.",
     "tribulationStrike": [
       "Đạo lôi thứ {n} giáng xuống, cả người tê dại. Sức khỏe −{damage}.",

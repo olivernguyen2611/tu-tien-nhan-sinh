@@ -43,6 +43,7 @@ const content: Content = {
   romance,
   heartDemon,
   recipes,
+  corePatterns: [],
   disciples,
 };
 const born = (seed: string) => rollDestiny(createLife({ seed }, content), content);

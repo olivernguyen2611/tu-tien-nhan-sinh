@@ -1,0 +1,123 @@
+[
+  {
+    "id": "liet_van", "name": "Liệt Văn",
+    "when": { "cracked": true },
+    "text": "Một vết rạn chạy ngang mặt đan, như sợi tóc trên chén ngọc. Mỗi lần nhập định, ngươi lại nhớ suýt nữa đã mất tất cả.",
+    "summary": "Đột phá đại cảnh giới −5; Đạo tâm +5; kháng tâm ma +10%.",
+    "effects": [
+      { "hook": "breakthroughChance.major", "add": -5 },
+      { "hook": "stat.daoHeart", "add": 5 },
+      { "hook": "heartDemonResist", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "tam_sinh_tuan_hoan", "name": "Tam Sinh Tuần Hoàn",
+    "when": { "allFlow": true },
+    "text": "Ba luồng linh khí nối đuôi nhau thành vòng, sinh không dứt. Kim Đan tự xoay, ngươi ngủ cũng tu.",
+    "summary": "Tu luyện +10%; đột phá đại cảnh giới +5.",
+    "effects": [
+      { "hook": "cultivationSpeed", "add": 0.1 },
+      { "hook": "breakthroughChance.major", "add": 5 }
+    ]
+  },
+  {
+    "id": "thuan_nhat", "name": "Thuần Nhất Đan Văn",
+    "when": { "allSame": true },
+    "text": "Cả ba luồng cùng một hệ, mặt đan trơn như gương, không một gợn văn. Đơn giản tới cực điểm, cũng là một loại văn.",
+    "summary": "Uy lực hệ linh căn +20%; bình cảnh dễ vượt hơn 10%.",
+    "effects": [
+      { "hook": "element.root.power", "add": 0.2 },
+      { "hook": "bottleneckResist", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "loi_van", "name": "Lôi Văn",
+    "when": { "variant": "loi" },
+    "text": "Trên đan có tia sét nhỏ xíu chạy vòng quanh, lúc tắt lúc sáng. Mèo trong nhà không dám lại gần ngươi nữa.",
+    "summary": "Uy lực hệ Lôi +20%; chống thiên kiếp +10%.",
+    "effects": [
+      { "hook": "element.loi.power", "add": 0.2 },
+      { "hook": "tribulationDefense", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "han_bang_van", "name": "Hàn Băng Đan Văn",
+    "when": { "variant": "bang" },
+    "text": "Mặt đan phủ một lớp sương mỏng, giữa mùa hè cũng không tan. Lòng ngươi lạnh và tĩnh như mặt hồ đông.",
+    "summary": "Uy lực hệ Băng +20%; kháng tâm ma +10%.",
+    "effects": [
+      { "hook": "element.bang.power", "add": 0.2 },
+      { "hook": "heartDemonResist", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "phong_van", "name": "Phong Văn",
+    "when": { "variant": "phong" },
+    "text": "Văn trên đan cuộn như gió xoáy. Bước chân ngươi nhẹ hẳn, đi qua đâu lá rơi theo.",
+    "summary": "Tốc +15%; bỏ chạy thành công +10%.",
+    "effects": [
+      { "hook": "speed", "add": 0.15 },
+      { "hook": "escapeChance", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "am_van", "name": "U Ám Đan Văn",
+    "when": { "variant": "am" },
+    "text": "Mặt đan tối như mực, nhìn lâu thấy bóng mình trong đó cười trước mình một nhịp.",
+    "summary": "Uy lực hệ Ám +20%; uy lực con đường Thuật +10%.",
+    "effects": [
+      { "hook": "element.am.power", "add": 0.2 },
+      { "hook": "path.arts.power", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "canh_kim_van", "name": "Canh Kim Đan Văn",
+    "when": { "element": "kim" },
+    "text": "Văn trên đan sắc như lưỡi kiếm. Cầm đũa ăn cơm, đũa cũng muốn chém.",
+    "summary": "Uy lực hệ Kim +15%; uy lực con đường Kiếm +10%.",
+    "effects": [
+      { "hook": "element.kim.power", "add": 0.15 },
+      { "hook": "path.sword.power", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "thanh_moc_van", "name": "Thanh Mộc Đan Văn",
+    "when": { "element": "moc" },
+    "text": "Văn trên đan như gân lá non. Ngươi ngồi thiền ở đâu, cỏ ở đó mọc dày.",
+    "summary": "Thọ nguyên +10%; tu luyện +5%.",
+    "effects": [
+      { "hook": "lifespanPct", "add": 0.1 },
+      { "hook": "cultivationSpeed", "add": 0.05 }
+    ]
+  },
+  {
+    "id": "huyen_thuy_van", "name": "Huyền Thủy Đan Văn",
+    "when": { "element": "thuy" },
+    "text": "Văn trên đan lăn tăn như sóng nước, không bao giờ đứng yên. Tâm cũng thế: động mà không loạn.",
+    "summary": "Bình cảnh dễ vượt hơn 10%; kháng tâm ma +10%.",
+    "effects": [
+      { "hook": "bottleneckResist", "add": 0.1 },
+      { "hook": "heartDemonResist", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "ly_hoa_van", "name": "Ly Hỏa Đan Văn",
+    "when": { "element": "hoa" },
+    "text": "Văn trên đan đỏ như than hồng. Lò đan nào qua tay ngươi cũng cháy đều lửa.",
+    "summary": "Uy lực hệ Hỏa +15%; luyện đan thành công +10%.",
+    "effects": [
+      { "hook": "element.hoa.power", "add": 0.15 },
+      { "hook": "craft.alchemy.success", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "hau_tho_van", "name": "Hậu Thổ Đan Văn",
+    "when": { "element": "tho" },
+    "text": "Văn trên đan dày và nặng như núi. Bị đánh một chưởng, ngươi chỉ lùi nửa bước.",
+    "summary": "Thương tích nhận vào −10%; uy lực con đường Thể +10%.",
+    "effects": [
+      { "hook": "injuryReduce", "add": 0.1 },
+      { "hook": "path.body.power", "add": 0.1 }
+    ]
+  }
+]

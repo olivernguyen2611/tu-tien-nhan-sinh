@@ -7,8 +7,9 @@
 // balance.coreForming, texts in realms.json.
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
+import type { CorePattern } from '../core/schemas';
 import type { GameState, LogLine } from '../core/types';
-import { majorFailure, majorSuccess, type BreakthroughResult } from './cultivation';
+import { applyGainHooks, majorFailure, majorSuccess, type BreakthroughResult } from './cultivation';
 import { currentTechnique } from './technique';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
@@ -89,6 +90,27 @@ export function coreChancePct(state: GameState, content: Content): number {
   return Math.max(b.minPct, Math.min(b.maxPct, pct));
 }
 
+/**
+ * The đan văn a finished core takes from the strands placed: the first entry of
+ * core-patterns.json whose rule fits (cracked, all flowing, all one element, a
+ * variant strand, then the element placed most, ties going to the later strand).
+ */
+export function corePatternFor(content: Content, placed: string[], cracks: number): CorePattern | null {
+  const gen = content.balance.coreForming.generates;
+  const allFlow = placed.length > 1 && placed.every((e, i) => i === 0 || gen[placed[i - 1]] === e);
+  const allSame = placed.length > 1 && placed.every((e) => e === placed[0]);
+  const variants = content.cultivation.roots.elements.filter((e) => e.variant).map((e) => e.id);
+  const variant = [...placed].reverse().find((e) => variants.includes(e));
+  const count = (e: string) => placed.filter((x) => x === e).length;
+  const main = [...placed].reverse().reduce<string | undefined>((best, e) => (best === undefined || count(e) > count(best) ? e : best), undefined);
+  return content.corePatterns.find(({ when: w }) =>
+    (w.cracked === undefined || (cracks > 0) === w.cracked)
+    && (w.allFlow === undefined || allFlow === w.allFlow)
+    && (w.allSame === undefined || allSame === w.allSame)
+    && (w.variant === undefined || variant === w.variant)
+    && (w.element === undefined || main === w.element)) ?? null;
+}
+
 /** Place one of the offered strands; after the last round the core forms or shatters. */
 export function placeStrand(state: GameState, content: Content, element: string): { state: GameState; result: BreakthroughResult | null } {
   const f = state.cult.coreForming;
@@ -123,5 +145,18 @@ export function placeStrand(state: GameState, content: Content, element: string)
   const result = rng.chance(chance / 100)
     ? majorSuccess(state, s, content, rng, { id: target.id, name: target.name }, coreGradeFor(content, next.purity))
     : majorFailure(state, s, content, rng);
+  // Đan văn: the strands leave their mark on a core that formed.
+  const pattern = result.success ? corePatternFor(content, next.placed, next.cracks) : null;
+  if (pattern) {
+    const formed = result.state;
+    const log = formed.log.slice();
+    const at = log[log.length - 1];
+    const line: LogLine = { text: texts.corePattern.replaceAll('{pattern}', pattern.name).replaceAll('{text}', pattern.text), tone: 'rare' };
+    log[log.length - 1] = { ...at, lines: [...at.lines, line] };
+    // Stat and lifespan hooks land once, now; the rest act through lifeHooks.
+    const marked = applyGainHooks({ ...formed, log }, pattern.effects);
+    const withPattern: GameState = { ...marked, cult: { ...marked.cult, corePattern: pattern.id } };
+    return { state: withPattern, result: { ...result, state: withPattern, text: `${result.text} ${line.text}` } };
+  }
   return { state: result.state, result };
 }

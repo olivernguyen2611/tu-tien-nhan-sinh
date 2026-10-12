@@ -1317,6 +1317,8 @@ export const RealmsFileSchema = z
     corePlain: z.string().min(1),
     coreSuccess: z.string().min(1),
     coreShattered: z.string().min(1),
+    /** Task 4.2: the đan văn that formed ({pattern}, {text}). */
+    corePattern: z.string().min(1),
       })
       .strict(),
     /** Display names for technique grades and lineages (task 2.4). */
@@ -1901,3 +1903,21 @@ export const DisciplesFileSchema = z
   })
   .strict();
 export type DisciplesFile = z.infer<typeof DisciplesFileSchema>;
+
+/** content/core-patterns.json (task 4.2): đan văn on a new golden core, first match wins. */
+export const CorePatternSchema = z
+  .object({
+    id,
+    name: z.string().min(1),
+    /** Which strands formed it: cracked once or more, every strand flowed from the last, all one element, a variant strand, or the most placed element. */
+    when: z
+      .object({ cracked: z.boolean().optional(), allFlow: z.boolean().optional(), allSame: z.boolean().optional(), variant: id.optional(), element: id.optional() })
+      .strict(),
+    text: z.string().min(1),
+    summary: z.string().min(1),
+    effects: z.array(EffectHookSchema),
+  })
+  .strict();
+export const CorePatternFileSchema = z.array(CorePatternSchema);
+export type CorePattern = z.infer<typeof CorePatternSchema>;
+

@@ -1,7 +1,7 @@
 // Loads all JSON under content/ at build time and checks it with the same
 // rules as `npm run validate`.
 import {
-  AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, CombatTextsSchema, type CombatTexts, type Market, type FateTalent, type Item, type Lineage, type MartialFile, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile, NpcTraitsFileSchema, RankingTextsSchema, type RankingTexts, RomanceFileSchema, type RomanceFile, HeartDemonFileSchema, type HeartDemonFile, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, type DisciplesFile, type NpcTraitsFile,
+  AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, CombatTextsSchema, type CombatTexts, type Market, type FateTalent, type Item, type Lineage, type MartialFile, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile, NpcTraitsFileSchema, RankingTextsSchema, type RankingTexts, RomanceFileSchema, type RomanceFile, HeartDemonFileSchema, type HeartDemonFile, RecipeFileSchema, type RecipeFile, CorePatternFileSchema, type CorePattern, DisciplesFileSchema, type DisciplesFile, type NpcTraitsFile,
   BalanceSchema, EventFileSchema, FamilyActionFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema,
   type Balance, type FamilyAction, type GameEvent, type Glossary, type LifeTexts, type Names, type Origin, type StatExtremesFile, type Trait, type World,
 } from './schemas';
@@ -48,6 +48,8 @@ export interface Content {
   disciples: DisciplesFile;
   /** Luyện đan / Luyện khí recipes (task 4.7). */
   recipes: RecipeFile;
+  /** Đan văn on a new golden core (task 4.2). */
+  corePatterns: CorePattern[];
   /** Tâm ma illusions (task 4.4). */
   heartDemon: HeartDemonFile;
   /** Romance tiers and texts (task 3.6). */
@@ -137,6 +139,7 @@ export function loadContent(worldId: string = DEFAULT_WORLD_ID): Content {
     romance: RomanceFileSchema.parse(files['romance.json']),
     heartDemon: HeartDemonFileSchema.parse(files['heart-demon.json']),
     recipes: RecipeFileSchema.parse(files['recipes.json']),
+    corePatterns: CorePatternFileSchema.parse(files['core-patterns.json'] ?? []),
     disciples: DisciplesFileSchema.parse(files['disciples.json']),
     npcTraits: NpcTraitsFileSchema.parse(files['npc-traits.json'] ?? { surface: [], nature: [], goals: [] }),
   };

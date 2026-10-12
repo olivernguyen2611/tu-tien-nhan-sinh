@@ -141,6 +141,8 @@ export interface GameState {
     /** Task 4.2: the core being formed (blocks the year), and the Kim Đan grade 1–9 once formed. */
     coreForming: { round: number; offered: string[]; placed: string[]; purity: number; cracks: number; chancePct: number } | null;
     coreGrade: number | null;
+    /** Đan văn of the golden core (task 4.2, core-patterns.json). */
+    corePattern: string | null;
     /** Task 4.4: tâm ma chiến in progress (blocks the year), before the big breakthrough it guards. */
     heartDemonTrial: { illusions: string[]; round: number; wins: number; losses: number; chancePct: number; target: string } | null;
     /** Tâm ma seeds from dark choices (task 3.9; read by the heart-demon system later). */

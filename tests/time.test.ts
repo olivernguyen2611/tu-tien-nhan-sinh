@@ -42,6 +42,7 @@ const content: Content = {
   romance,
   heartDemon,
   recipes,
+  corePatterns: [],
   disciples,
   events: [],
   glossary: [],
