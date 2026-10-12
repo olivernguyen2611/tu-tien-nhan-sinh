@@ -99,3 +99,26 @@ describe('bag (task 3.1)', () => {
     expect(useBlocker(addItems(s, ['t_hoa_cau']), content, 't_hoa_cau')).toBe('Chỉ dùng khi giao chiến');
   });
 });
+
+describe('approved items (task 3.1)', () => {
+  it('no item can open a spirit root, and Nội đan is for ma tu only', () => {
+    for (const it of base.items) {
+      const hooks = [...(it.use?.effects ?? []), ...it.carried].map((e) => e.hook);
+      expect(hooks.some((h) => /root/i.test(h))).toBe(false);
+    }
+    const s = addItems(cultivator(), ['noi_dan_1']);
+    expect(useBlocker(s, base, 'noi_dan_1')).toContain('Ma đạo');
+  });
+
+  it('Huyết Đan hits karma and works harder for ma tu', () => {
+    const s = addItems(cultivator(), ['huyet_dan']);
+    const r = consumeItem(s, base, 'huyet_dan');
+    expect(r.state.social.karma).toBe(s.social.karma - 10);
+    expect(r.state.cult.progress).toBeGreaterThan(s.cult.progress);
+  });
+
+  it('the better Trúc Cơ pill is the one spent', () => {
+    const s = addItems(cultivator(), ['truc_co_dan', 'truc_co_dan_thuong_pham']);
+    expect(breakthroughPct(s, base, 30, true)).toBe(breakthroughPct(addItems(cultivator(), ['truc_co_dan']), base, 30, true) + 10);
+  });
+});

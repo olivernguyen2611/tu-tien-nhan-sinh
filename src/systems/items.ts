@@ -6,6 +6,10 @@ import { Rng } from '../core/rng';
 import type { EffectHook, Item } from '../core/schemas';
 import type { GameState, LogLine, Tone } from '../core/types';
 import { describeChanges } from './deltas';
+import { currentTechnique } from './technique';
+
+/** Đạo thống of this life: chosen lineage, else the main technique's. */
+const lineageOf = (state: GameState, content: Content) => state.cult.lineage ?? currentTechnique(state, content)?.lineage ?? null;
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -63,6 +67,7 @@ export function useBlocker(state: GameState, content: Content, id: string): stri
   if (!item?.use) return item?.kind === 'material' ? 'Nguyên liệu, không dùng trực tiếp' : 'Mang theo là có tác dụng';
   if ((state.inventory[id] ?? 0) <= 0) return 'Không còn trong túi';
   if (item.use.combatOnly) return 'Chỉ dùng khi giao chiến';
+  if (item.use.lineage && lineageOf(state, content) !== item.use.lineage) return `Chỉ người tu ${content.cultivation.realms.lineageNames[item.use.lineage] ?? item.use.lineage} dùng được`;
   if (state.itemUse.lastAge[id] === state.character.age) return 'Năm nay đã dùng (kháng thuốc)';
   return null;
 }
@@ -95,6 +100,7 @@ function applyUseEffect(state: GameState, e: UseEffect): GameState {
   switch (e.hook) {
     case 'cultivationProgress': return addProgress(state, add);
     case 'breakthroughNext': return { ...state, itemUse: { ...state.itemUse, nextBreakthrough: state.itemUse.nextBreakthrough + add } };
+    case 'karma': return { ...state, social: { ...state.social, karma: Math.max(-100, Math.min(100, state.social.karma + add)) } };
     case 'lifespanYears': return { ...state, cult: { ...state.cult, lifespan: state.cult.lifespan + add } };
     case 'noAgingCharm': return { ...state, flags: { ...state.flags, no_aging_charm: true } };
     // Taken before a fight: lasts the whole next fight. Used during a fight it is the current round (combat.ts).
@@ -122,7 +128,8 @@ export function consumeItem(state: GameState, content: Content, id: string): Use
 
   let text = use.text;
   let tone: Tone = 'good';
-  let effects: UseEffect[] = use.effects;
+  const own = lineageOf(state, content);
+  let effects: UseEffect[] = (own && use.lineageEffects[own]) || use.effects;
   const rootless = state.cult.realm === 'pham_nhan' && !state.cult.root;
   if (rootless && !use.mortalOk) {
     // A mortal swallowing a cultivator's pill: nothing happens.

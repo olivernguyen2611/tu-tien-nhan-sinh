@@ -2,6 +2,14 @@
 
 ## [Chưa phát hành]
 
+### Task 3.1 — Đan dược và vật phẩm (2026-10-12)
+- Nhập 45 món theo bản duyệt `docs/design/items.md` (bản 2): 18 đan dược, pháp bảo, bùa, trận bàn, nguyên liệu (Nội đan 3 cấp, Linh tinh 5 hệ, Lôi Tinh…).
+- Đan có tác dụng khi dùng từ túi; pháp bảo, bùa, trận bàn có tác dụng khi mang theo. Có giá bạc hoặc linh thạch để mua bán ở phường thị.
+- Không món nào mở được linh căn.
+- Vật phẩm mới có thể chỉ dành cho một đạo thống (Nội đan: ma tu hấp thu) hoặc mạnh hơn với một đạo thống (Huyết Đan). Thêm móc dùng `karma`.
+- Món hiếm (`forSale: false`) không bày bán ở chợ nhưng vẫn bán lại được.
+- Developer mode: tặng vật phẩm bất kỳ, xóa kháng thuốc.
+
 ### Task 3.3 — Giao chiến (2026-10-11)
 - **Chiến lực** theo K.4.1: nền cảnh giới × tầng × Căn cốt × phẩm công pháp × đạo thống × (1 + pháp bảo, thiên phú, con đường). Chênh một đại cảnh giới gần như thua chắc.
 - **Trận đánh** tối đa 3 hiệp, ai thắng 2 hiệp trước là thắng. Mỗi hiệp chọn 1 trong 5 hành động, có hiện tỉ lệ:

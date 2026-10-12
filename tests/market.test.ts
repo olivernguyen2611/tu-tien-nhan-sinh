@@ -10,7 +10,6 @@ const base = loadContent();
 const content: Content = {
   ...base,
   items: [
-    ...base.items,
     ...ItemFileSchema.parse([
       { id: 't_bo_khi', name: 'Bổ Khí Tán', kind: 'pill', description: '.', price: { silver: 30 } },
       { id: 't_hoi_xuan', name: 'Hồi Xuân Đan', kind: 'pill', description: '.', price: { spiritStones: 15 } },

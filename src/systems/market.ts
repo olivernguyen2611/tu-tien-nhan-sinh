@@ -35,7 +35,7 @@ export function marketOffers(state: GameState, content: Content, marketId: strin
   if (!m) return [];
   const mul = m.priceMul * bargainMul(state, marketId);
   return content.items
-    .filter((i) => m.kinds.includes(i.kind) && basePrice(i, m.currency) !== undefined)
+    .filter((i) => i.forSale && m.kinds.includes(i.kind) && basePrice(i, m.currency) !== undefined)
     .map((item) => ({ item, price: Math.max(1, Math.round(basePrice(item, m.currency)! * mul)) }));
 }
 

@@ -1226,7 +1226,7 @@ export type Market = z.infer<typeof MarketFileSchema>[number];
 
 /** What using an item does right away (task 3.1). */
 const ITEM_USE_HOOK = new RegExp(
-  `^(stat\\.(${[...MORTAL_STATS, ...APTITUDES].join('|')})|cultivationProgress|breakthroughNext|lifespanYears|noAgingCharm|clearFlag\\.[a-z0-9_]+|combatPowerNext|escapeNext)$`,
+  `^(stat\\.(${[...MORTAL_STATS, ...APTITUDES].join('|')})|cultivationProgress|breakthroughNext|lifespanYears|noAgingCharm|clearFlag\\.[a-z0-9_]+|combatPowerNext|escapeNext|karma)$`,
 );
 const ItemUseEffectSchema = z
   .object({ hook: z.string().regex(ITEM_USE_HOOK, 'móc dùng vật phẩm không hợp lệ'), add: z.number().optional() })
@@ -1243,8 +1243,12 @@ const ItemUseSchema = z
     repeatEffects: z.array(ItemUseEffectSchema).default([]),
     /** Works for someone without a spirit root. */
     mortalOk: z.boolean().default(false),
-    /** Kept for combat (task 3.3): cannot be used from the bag yet. */
+    /** Burnt during a fight (task 3.3), not from the bag. */
     combatOnly: z.boolean().default(false),
+    /** Only this lineage (đạo thống) can use it (Nội đan: ma tu hấp thu). */
+    lineage: id.optional(),
+    /** Lineage id → effects that replace `effects` for that lineage (Huyết Đan ×1.5 for ma tu). */
+    lineageEffects: z.record(z.array(ItemUseEffectSchema)).default({}),
   })
   .strict();
 
@@ -1261,6 +1265,8 @@ export const ItemFileSchema = z.array(
       summary: z.string().min(1).optional(),
       /** Base price for the market (task 3.2); none = not for sale. */
       price: z.object({ silver: z.number().int().min(0).optional(), spiritStones: z.number().int().min(0).optional() }).strict().optional(),
+      /** False: markets buy it but never put it on the stall (rare finds). */
+      forSale: z.boolean().default(true),
       /** Used up automatically on a breakthrough out of `realm`: a stage (major false) or into the next realm (major true). */
       breakthrough: z.object({ realm: id, major: z.boolean(), add: z.number() }).strict().optional(),
       use: ItemUseSchema.optional(),
