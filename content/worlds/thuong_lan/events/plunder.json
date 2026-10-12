@@ -425,7 +425,8 @@
     "title": "Bảng treo thưởng",
     "text": "Kẻ trộm đan quỳ dưới chân {name}, tay vẫn ôm gói thuốc: \"Con ta sốt ba ngày rồi.\"",
     "themes": [
-      "plunder"
+      "plunder",
+      "justice"
     ],
     "weight": 0,
     "choices": [
@@ -465,7 +466,8 @@
       "dark"
     ],
     "themes": [
-      "plunder"
+      "plunder",
+      "justice"
     ],
     "conditions": {
       "realm": {
@@ -886,7 +888,8 @@
         "text": "Thấy mực trên bản đồ còn mới",
         "requires": {
           "traitsAny": [
-            "thong_minh_vat"
+            "thong_minh_vat",
+            "mat_tinh"
           ]
         },
         "hidden": true,

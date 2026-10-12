@@ -103,6 +103,29 @@
             "stat.daoHeart": 2
           }
         }
+      },
+      {
+        "text": "Đứng giữa đường, nhìn thẳng vào mắt hổ",
+        "requires": {
+          "traitsAny": [
+            "thu_duyen",
+            "chieu_yeu_the"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Con hổ gầm một tiếng, rồi nằm xuống liếm giày ngươi. Cả làng không ai dám tin.",
+          "effects": {
+            "setFlags": [
+              "co_linh_thu"
+            ],
+            "reputation": {
+              "yeu": 10
+            },
+            "karma": 2,
+            "stat.charm": 3
+          }
+        }
       }
     ]
   },
@@ -315,6 +338,27 @@
               "linh_thu_ho_ly"
             ],
             "stat.charm": 2
+          }
+        }
+      },
+      {
+        "text": "Ngồi xuống, chìa tay ra",
+        "requires": {
+          "traitsAny": [
+            "thu_duyen",
+            "chieu_yeu_the"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Hồ ly liếm vết máu trên tay ngươi, rồi tự chui vào tay áo.",
+          "effects": {
+            "setFlags": [
+              "co_linh_thu",
+              "linh_thu_ho_ly"
+            ],
+            "stat.charm": 2,
+            "stat.happiness": 2
           }
         }
       }

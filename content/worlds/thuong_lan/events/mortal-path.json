@@ -251,6 +251,29 @@
             "stat.charm": 3
           }
         }
+      },
+      {
+        "text": "Cởi mũ quan, đêm đó tự mình đi bắt kẻ vu oan",
+        "requires": {
+          "traitsAny": [
+            "hiep_cot"
+          ]
+        },
+        "hidden": true,
+        "result": {
+          "text": "Gà gáy, gã công tử bị trói trước cổng huyện nha, cổ đeo tấm bảng \"ta giết người\".",
+          "effects": {
+            "karma": 8,
+            "reputation": {
+              "giang_ho": 10,
+              "trieu_dinh": -5
+            },
+            "setFlags": [
+              "ke_thu_phu_ho"
+            ],
+            "stat.daoHeart": 5
+          }
+        }
       }
     ]
   },
@@ -596,6 +619,9 @@
           }
         }
       }
+    ],
+    "themes": [
+      "justice"
     ]
   },
   {
@@ -1110,6 +1136,9 @@
           }
         }
       }
+    ],
+    "themes": [
+      "justice"
     ]
   }
 ]

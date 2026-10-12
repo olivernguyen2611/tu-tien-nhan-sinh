@@ -2,6 +2,20 @@
 
 ## [Chưa phát hành]
 
+### Task 3.10 — Tiên Thiên Khí Vận lên 40 (2026-10-12)
+- **20 khí vận mới** theo bản đã duyệt `docs/design/traits-2.md`, nâng tổng lên 40. Phân bố: Phàm 5, Lương 4, Ưu 4, Tuyệt 2, Thiên 1, Thần 1, Ác vận 3.
+  - Lấp các trục bản 1 còn trống: con đường Pháp/Binh/Thuật; nghề Khí, Trận, Phù, Linh thực, Ngự thú; tâm ma; thiên kiếp; ma đạo.
+- **Tag sự kiện:** gắn thêm `justice` cho Án oan ở huyện, Hương Hỏa Hội lộ mặt, Đại hội võ lâm, Bảng treo thưởng (lựa chọn tiếp) và Rủ rê phục kích. Nhờ vậy Hiệp Cốt có tác dụng.
+- **Lựa chọn ẩn cho khí vận mới:**
+  - Mắt Tinh: cùng Thông Minh Vặt mở lựa chọn "Thấy mực trên bản đồ còn mới" ở Bản đồ giá rẻ.
+  - Hiệp Cốt: lựa chọn mới "tự mình đi bắt kẻ vu oan" ở Án oan ở huyện.
+  - Thú Duyên, Chiêu Yêu Thể: lựa chọn mới "Ngồi xuống, chìa tay ra" ở Hồ ly bị thương, và "nhìn thẳng vào mắt hổ" ở Yêu thú xuống làng.
+  - Văn bản 3 lựa chọn mới là **phần bổ sung**, vì bản duyệt chỉ ghi chỗ đặt.
+- **Nối 2 móc đã có trong K.6:**
+  - `priceDiscount`: Khéo Mồm, Mắt Tinh làm giá mua ở phường thị rẻ hơn, tối đa `balance.market.maxDiscount` (30%).
+  - `heartDemonResist`: tâm ma nhận vào giảm theo tỉ lệ. Kháng âm (Ma Tâm Chủng) thì tâm ma tăng thêm.
+- **Chưa có tác dụng:** `divineSense`, `charmResist`, `tribulationPower` chờ hệ thống thần thức và thiên kiếp ở giai đoạn 4.
+
 ### Task 3.4 — NPC có số mệnh riêng (2026-10-12)
 - **Engine** (phiên làm `task/3.4-npcs`):
   - NPC già đi, tự tu luyện và đột phá, rồi chết.

@@ -305,7 +305,8 @@
     "bargainMin": 0.1,
     "bargainMax": 0.8,
     "bargainWinMul": 0.85,
-    "bargainLoseMul": 1.1
+    "bargainLoseMul": 1.1,
+    "maxDiscount": 0.3
   },
   "romance": {
     "minAge": 18,
