@@ -800,6 +800,27 @@ export const BalanceSchema = z
         teachAffinity: z.number(),
         teachFavor: z.number(),
         teacherProgress: z.number(),
+        /**
+         * Task 5c.8: other acts between master and disciple, each once a year. Spar (luận bàn): chance is the
+         * master's Chiến lực share; the disciple gains sparProgress (×sparLoseMul if the master wins), the
+         * master gains/loses stats. Debate (luận đạo): a comprehension check vs debateDifficulty.
+         * Technique (truyền công): the disciple's progress +techniqueProgress and cultivation speed
+         * +techniqueSpeed[grade] (share). Gift (tặng vật): per item kind progress/affinity/aptitude.
+         */
+        acts: z
+          .object({
+            sparProgress: z.number(),
+            sparLoseMul: z.number(),
+            sparAffinity: z.number(),
+            debateDifficulty: z.number().min(0).max(100),
+            debateProgress: z.number(),
+            debateAffinity: z.number(),
+            techniqueProgress: z.number(),
+            techniqueAffinity: z.number(),
+            techniqueSpeed: z.record(id, z.number().min(0)),
+            gift: z.record(id, z.object({ progress: z.number(), affinity: z.number(), favor: z.number(), aptitude: z.number() }).strict()),
+          })
+          .strict(),
       })
       .strict(),
     /** Task 5.5: khí vận chi tử. Hào quang: faster cultivation, an easier breakthrough, no sudden death. */
@@ -2410,6 +2431,17 @@ export const DisciplesFileSchema = z
     role: z.string().min(1),
     recruit: z.string().min(1),
     teach: z.array(z.string().min(1)).min(1),
+    /** Task 5c.8: {npc}, {name}, {technique}, {item}. */
+    acts: z
+      .object({
+        sparWin: z.array(z.string().min(1)).min(1),
+        sparLose: z.array(z.string().min(1)).min(1),
+        debateWin: z.array(z.string().min(1)).min(1),
+        debateFail: z.array(z.string().min(1)).min(1),
+        technique: z.array(z.string().min(1)).min(1),
+        gift: z.array(z.string().min(1)).min(1),
+      })
+      .strict(),
   })
   .strict();
 export type DisciplesFile = z.infer<typeof DisciplesFileSchema>;

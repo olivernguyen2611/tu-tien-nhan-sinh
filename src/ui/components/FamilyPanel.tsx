@@ -1,5 +1,7 @@
 // "Quan hệ" sheet: family members with affinity (tap one to act together), and people met
 // along the way (task 3.4: Người quen with realm, character and the favor/grudge ledger).
+import { DiscipleActs } from './DiscipleActs';
+import type { DiscipleAct } from '../../systems/discipleActs';
 import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
@@ -19,7 +21,7 @@ export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, o
   /** Task 3.6: courting someone met along the way. */
   onRomance: (npcId: string, action: RomanceAction) => { text: string; tone: Tone; changes: string };
   /** Task 4.9: take a disciple (no id) or teach one. */
-  onDisciple: (npcId: string | null) => { text: string; tone: Tone; changes: string } | null;
+  onDisciple: (npcId: string | null, act?: DiscipleAct) => { text: string; tone: Tone; changes: string } | null;
   /** Task 5.4: found the clan or buy a property; returns the log text. */
   onClan: (action: ClanAction) => string | null;
   onClose: () => void;
@@ -85,6 +87,9 @@ export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, o
                         Chỉ điểm
                       </button>
                     </div>
+                  )}
+                  {n.alive && n.disciple && (
+                    <DiscipleActs state={state} content={content} npc={n} onAct={(act) => { const r = onDisciple(n.id, act); if (r) setResult({ id: n.id, ...r }); }} />
                   )}
                   {views.length > 0 && (
                     <div class="action-chips">

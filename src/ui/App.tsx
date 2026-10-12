@@ -47,6 +47,7 @@ import { continueAsHeir } from '../systems/heir';
 import { buyProperty, foundClan } from '../systems/clan';
 import { meetIllusion } from '../systems/heartDemon';
 import { craftRecipe } from '../systems/crafting';
+import { doDiscipleAct } from '../systems/discipleActs';
 import { recruitDisciple, teachDisciple } from '../systems/disciples';
 import { build, decide, donate, foundSect } from '../systems/ownSect';
 import { newLifeCost, rebirthPoints } from '../systems/rebirth';
@@ -298,8 +299,8 @@ function Screens({ content }: { content: Content }) {
           setLife(r.state);
           return r.text;
         }}
-        onDisciple={(npcId) => {
-          const r = npcId ? teachDisciple(life, content, npcId) : recruitDisciple(life, content);
+        onDisciple={(npcId, act) => {
+          const r = npcId && act ? doDiscipleAct(life, content, npcId, act) : npcId ? teachDisciple(life, content, npcId) : recruitDisciple(life, content);
           if (!r) return null;
           setLife(r.state);
           return { text: r.text, tone: 'good', changes: describeChanges(life, r.state) };

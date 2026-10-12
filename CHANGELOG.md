@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### Sư phụ – đồ đệ 5c.8 (2026-10-12)
+- Ngoài "Chỉ điểm", mỗi đồ đệ có thêm 4 việc, mỗi việc một lần mỗi năm: **Luận bàn** (tỉ lệ theo Chiến lực; thắng hay thua đồ đệ đều tiến bộ, thầy đổi chỉ số), **Luận đạo** (thử Ngộ tính), **Truyền công pháp** (chọn công pháp mình đã học; đồ đệ tu nhanh hơn theo phẩm: Hoàng +5% … Thiên +30%) và **Tặng vật phẩm** (chọn đồ đang giữ; đan dược cộng tu vi, pháp bảo cộng căn cốt…).
+- Mọi việc đều đổi chỉ số của thầy. Số trong `balance.disciples.acts`, lời văn trong `disciples.json`. Nội dung do Claude tự soạn, chưa qua duyệt.
+- Save cũ vẫn chạy: các trường mới đều tùy chọn.
+
 ### Tông môn 5c.7 — Phía tông chủ (2026-10-12)
 - **Trưởng lão có tên**: tông mình (lập, kế vị hoặc đòi lại) có 3 trưởng lão là NPC thật (có tuổi, tu luyện, nhớ ơn). Chưởng môn ban thưởng từ kho (30 linh thạch, mỗi người một lần mỗi năm) để tăng thiện cảm và danh vọng.
 - **Danh vọng** 0–100 với 5 bậc (Vô danh, Có tiếng, Danh môn, Đại tông, Thánh địa): mỗi năm tiến dần về mức tương ứng số đệ tử và công trình; bậc cao thì người đến bái sư đông hơn. Số trong `balance.founding.prestige`, bậc trong `founding.json`.

@@ -5,5 +5,31 @@
     "Ngươi giảng cho {npc} một đoạn khẩu quyết. Giảng cho người khác, chính mình cũng thông thêm một chỗ.",
     "{npc} hỏi một câu ngươi chưa từng nghĩ tới. Hai thầy trò ngồi tới sáng.",
     "Ngươi dẫn {npc} ra suối luyện khí. Đồ đệ ngã xuống nước ba lần, lần thứ tư thì đứng vững."
-  ]
+  ],
+  "acts": {
+    "sparWin": [
+      "Ngươi ra tay nhẹ, đồ đệ {npc} vẫn thua nửa chiêu. Ngươi chỉ cho chỗ sơ hở, {npc} gật gù nhớ kỹ.",
+      "Hai thầy trò đấu ba hiệp. {npc} bại, nhưng chiêu cuối đã có mùi vị riêng."
+    ],
+    "sparLose": [
+      "{npc} bất ngờ phản đòn trúng vai ngươi. Ngươi cười khổ, thầm nhận đồ đệ đã khá hơn nhiều.",
+      "Ngươi sơ ý lộ một chỗ hở, {npc} lập tức nắm lấy. Ngươi thua nửa chiêu, thấy vui nhiều hơn thấy xấu hổ."
+    ],
+    "debateWin": [
+      "Ngươi cùng {npc} luận đạo suốt đêm. Mỗi người bẻ một câu hỏi, cuối cùng cùng thông một chỗ trước nay vướng.",
+      "{npc} hỏi vì sao đạo phải đi con đường này. Ngươi trả lời đến câu thứ ba thì chính mình cũng thấy thêm một tầng."
+    ],
+    "debateFail": [
+      "Hai thầy trò tranh luận mãi mà chẳng ra kết luận. Trời sáng, cả hai ngáp dài.",
+      "{npc} hỏi một câu ngươi chưa nghĩ ra. Ngươi nhờ vậy biết mình còn thiếu chỗ nào."
+    ],
+    "technique": [
+      "Ngươi truyền lại {technique} cho {npc}, từng câu khẩu quyết, từng thế vận khí. {npc} quỳ xuống bái tạ.",
+      "{npc} nhận lấy {technique} bằng cả hai tay. Ngươi nhìn bóng lưng đồ đệ mà thấy mình già đi một chút."
+    ],
+    "gift": [
+      "Ngươi trao {item} cho {npc}. Đồ đệ ngập ngừng rồi nhận lấy, mắt đỏ lên.",
+      "{npc} cầm {item} mà không nói được lời nào, cuối cùng chỉ cúi đầu thật sâu."
+    ]
+  }
 }
