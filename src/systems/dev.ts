@@ -8,9 +8,10 @@ import type { GameState, LogLine, SpiritRoot } from '../core/types';
 import { startBattle } from './combat';
 import { STAT_LABELS } from './deltas';
 import { addItems } from './items';
+import { gainScroll, learnTechnique } from './technique';
 import { createNpc, npcById } from './npcs';
 import { applyRomance, romanceBlocked } from './romance';
-import { enterRealm, rootName, startCultivating } from './cultivation';
+import { awakenBody, enterRealm, rootName, startCultivating } from './cultivation';
 import { checkDeath } from './time';
 import { gainGoldenFinger, loseGoldenFinger, fingerDef } from './goldenFinger';
 import { takeChosen } from './chosen';
@@ -110,6 +111,31 @@ export function devGiveItem(state: GameState, content: Content, itemId: string):
   const item = content.items.find((i) => i.id === itemId);
   if (!state.alive || !item) return state;
   return devLog(addItems(state, [itemId]), `nhận ${item.name}`);
+}
+
+/** One of every item in the game (the whole catalog), for testing recipes, sales and carried effects. */
+export function devGiveAllItems(state: GameState, content: Content): GameState {
+  if (!state.alive) return state;
+  return devLog(addItems(state, content.items.map((i) => i.id)), `nhận mỗi vật phẩm một món (${content.items.length} món)`);
+}
+
+/** Learn a technique now, ignoring root, sect and Đạo tâm requirements. */
+export function devLearnTechnique(state: GameState, content: Content, techId: string): GameState {
+  if (!state.alive) return state;
+  const learned = learnTechnique(state, content, techId, { force: true });
+  return learned ? devLog(learned.state, `học ${content.techniques.find((t) => t.id === techId)?.name ?? techId}`) : state;
+}
+
+/** Keep every technique as a scroll to study later from the Tu luyện sheet. */
+export function devGiveAllScrolls(state: GameState, content: Content): GameState {
+  if (!state.alive) return state;
+  let s = state;
+  let n = 0;
+  for (const t of content.techniques) {
+    const got = gainScroll(s, content, t.id);
+    if (got) { s = got.state; n++; }
+  }
+  return devLog(s, `nhận ${n} bí tịch công pháp`);
 }
 
 /** Forget this year's and this life's item use (kháng thuốc, once-per-life). */
@@ -320,6 +346,15 @@ export function devRootOptions(content: Content): { key: string; label: string; 
 export function devSetRoot(state: GameState, content: Content, root: SpiritRoot): GameState {
   if (!state.alive) return state;
   return devLog({ ...state, cult: { ...state.cult, root } }, `linh căn → ${rootName(root, content)}`);
+}
+
+/** Awaken a special body at once (its one-time gains apply), even for a rootless or already-bodied character. */
+export function devAwakenBody(state: GameState, content: Content, bodyId: string): GameState {
+  if (!state.alive || !content.cultivation.roots.bodies.some((b) => b.id === bodyId)) return state;
+  const base: GameState = state.cult.root && !state.cult.root.body && (content.balance.roots.gradeSpeed[state.cult.root.grade] ?? 0) > 0
+    ? state
+    : { ...state, cult: { ...state.cult, root: { grade: 'bien_di', elements: [content.cultivation.roots.elements[0].id], body: null } } };
+  return devLog(awakenBody(base, content, bodyId).state, `thức tỉnh thể chất → ${bodyId}`);
 }
 
 /** Wed a new adult at once (affinity 80), cultivating at the player's realm when the player does. */

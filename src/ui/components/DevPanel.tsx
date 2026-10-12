@@ -12,8 +12,8 @@ import { npcById } from '../../systems/npcs';
 import type { SaveMeta } from '../../systems/save';
 import {
   DEV_STATS, devAddKarma, devAddLifespan, devAddMoney, devAddStat, devClearHeartDemon, devFillProgress, devFindEvents, devFoundClan, devFoundSect,
-  devGiveItem, devHeal, devJoinSect, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect,
-  devMarry, devResetEventHistory, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
+  devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect,
+  devAwakenBody, devMarry, devResetEventHistory, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
   devResetItemUse, devResetFingerCooldowns, devSetFingerLevel, devSetFlag, devSetGoldenFinger, devSetRealm, devSkipYears, devStartFight, devTakeChosen, devToggleTrait, devTriggerEvent,
 } from '../../systems/dev';
 
@@ -50,6 +50,7 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
   const events = devFindEvents(content, query);
   const [eventId, setEventId] = useState(content.events[0]?.id ?? '');
   const [itemId, setItemId] = useState(content.items[0]?.id ?? '');
+  const [techId, setTechId] = useState(content.techniques[0]?.id ?? '');
   const [realmId, setRealmId] = useState(content.cultivation.realms.realms[1]?.id ?? '');
   const [traitId, setTraitId] = useState(content.traits[0]?.id ?? '');
   const [fingerId, setFingerId] = useState(content.goldenFingers.fingers[0]?.id ?? '');
@@ -59,6 +60,7 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
   const [flag, setFlag] = useState('');
   const roots = devRootOptions(content);
   const [rootKey, setRootKey] = useState(roots[0]?.key ?? '');
+  const [bodyId, setBodyId] = useState(content.cultivation.roots.bodies[0]?.id ?? '');
   const [martialStage, setMartialStage] = useState('0');
   const spouse = npcById(state, state.romance.partner);
   const live = state.alive;
@@ -122,6 +124,12 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
               {roots.map((r) => <option key={r.key} value={r.key}>{r.label}</option>)}
             </Pick>
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devSetRoot(state, content, roots.find((r) => r.key === rootKey)!.root))}>Đặt</button>
+          </div>
+          <div class="dev-event">
+            <Pick value={bodyId} onChange={setBodyId} label="Thể chất">
+              {content.cultivation.roots.bodies.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
+            </Pick>
+            <button class="chip-btn" disabled={!live} onClick={() => onChange(devAwakenBody(state, content, bodyId))}>Thức tỉnh</button>
           </div>
           <div class="dev-event">
             <Pick value={martialStage} onChange={setMartialStage} label="Võ đạo">
@@ -204,7 +212,15 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
             </Pick>
             <button class="chip-btn" disabled={!live || !itemId} onClick={() => onChange(devGiveItem(state, content, itemId))}>+1</button>
           </div>
+          <div class="dev-event">
+            <Pick value={techId} onChange={setTechId} label="Công pháp">
+              {content.techniques.map((t) => <option key={t.id} value={t.id}>{t.name}{state.cult.technique === t.id ? ' (đang tu)' : state.cult.learned.includes(t.id) ? ' (đã học)' : ''}</option>)}
+            </Pick>
+            <button class="chip-btn" disabled={!live || !techId} onClick={() => onChange(devLearnTechnique(state, content, techId))}>Học ngay</button>
+          </div>
           <div class="action-chips">
+            <button class="chip-btn" disabled={!live} onClick={() => onChange(devGiveAllItems(state, content))}>Nhận mọi vật phẩm</button>
+            <button class="chip-btn" disabled={!live} onClick={() => onChange(devGiveAllScrolls(state, content))}>Nhận mọi bí tịch</button>
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devResetItemUse(state))}>Xóa kháng thuốc</button>
             <button class="chip-btn" disabled={!live || !!state.combat} onClick={() => { onChange(devStartFight(state, content, 'below', 'rob')); onClose(); }}>Đánh kẻ yếu hơn</button>
             <button class="chip-btn" disabled={!live || !!state.combat} onClick={() => { onChange(devStartFight(state, content, 'same', 'teach')); onClose(); }}>Đánh ngang sức</button>

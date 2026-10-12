@@ -33,7 +33,10 @@
           "effects": {
             "gainTechnique": "tho_nap_tan_quyen",
             "silver": -3,
-            "stat.happiness": 3
+            "stat.happiness": 3,
+            "setFlags": [
+              "co_tan_quyen"
+            ]
           }
         }
       },
@@ -56,7 +59,10 @@
           "effects": {
             "gainTechnique": "tho_nap_tan_quyen",
             "silver": -2,
-            "stat.charm": 1
+            "stat.charm": 1,
+            "setFlags": [
+              "co_tan_quyen"
+            ]
           }
         },
         "fail": {

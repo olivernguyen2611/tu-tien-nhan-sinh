@@ -21,6 +21,7 @@ function reduction(state: GameState, content: Content): number {
   const cfg = content.balance.tribulation;
   const elements = state.cult.root?.elements ?? [];
   const r = hookSum(state, content, 'injuryReduce') + hookSum(state, content, 'tribulationDefense')
+    + (state.flags.ho_mach_dan ? cfg.hoMachReduce : 0)
     + (state.aptitudes.physique - 50) * cfg.physiquePerPoint
     + elements.reduce((sum, e) => sum + (cfg.elementReduce[e] ?? 0), 0);
   return Math.max(0, Math.min(cfg.maxReduce, r));
@@ -74,5 +75,7 @@ export function undergoTribulation(state: GameState, content: Content, realmId: 
   }
   const physique = Math.min(100, s.aptitudes.physique + cfg.survivePhysique);
   s = { ...s, aptitudes: { ...s.aptitudes, physique } };
+  // Hộ Mạch Đan guards one tribulation only.
+  if (s.flags.ho_mach_dan) { const flags = { ...s.flags }; delete flags.ho_mach_dan; s = { ...s, flags }; }
   return { state: pushLine(s, { text: texts.tribulationPassed, tone: 'good' }), survived: true };
 }

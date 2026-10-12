@@ -1,0 +1,429 @@
+[
+  {
+    "id": "thuc_tinh_cuu_duong",
+    "category": "fortune",
+    "title": "Địa hỏa dưới chân",
+    "text": "Tu luyện bên một khe núi nóng rực, {name} thấy dưới chân có luồng địa hỏa chảy ngầm. Khí nóng cứ chui vào kinh mạch, đuổi cũng không đi.",
+    "tags": [
+      "rare"
+    ],
+    "themes": [
+      "ky_vat"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      },
+      "root": {
+        "usable": true
+      },
+      "stats": [
+        {
+          "stat": "stat.physique",
+          "gte": 60
+        }
+      ]
+    },
+    "weight": 0.4,
+    "cooldownYears": 0,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Ngồi yên, mặc địa hỏa tôi luyện",
+        "result": {
+          "text": "Lửa đốt ba ngày ba đêm. Khi tàn, linh căn cũ đã cháy sạch, chỗ ấy mọc lên một lò lửa không bao giờ tắt.",
+          "effects": {
+            "stat.health": -20,
+            "stat.physique": 3,
+            "awakenBody": "cuu_duong_the"
+          }
+        }
+      },
+      {
+        "text": "Rút lui, không dám mạo hiểm",
+        "result": {
+          "text": "Ngươi lùi ra. Khe núi vẫn nóng, ngươi vẫn là ngươi.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "thuc_tinh_thai_am",
+    "category": "fortune",
+    "title": "Đầm hàn dưới trăng rằm",
+    "text": "Đêm rằm, {name} đi ngang một đầm nước lạnh như băng. Ánh trăng rơi xuống mặt nước, kéo theo một luồng khí âm nhu vào người.",
+    "tags": [
+      "rare"
+    ],
+    "themes": [
+      "ky_vat"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      },
+      "root": {
+        "usable": true
+      },
+      "stats": [
+        {
+          "stat": "stat.intellect",
+          "gte": 55
+        }
+      ]
+    },
+    "weight": 0.4,
+    "cooldownYears": 0,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Xuống nước ngồi thiền dưới trăng",
+        "result": {
+          "text": "Băng kết quanh người đến sáng. Khi tan, sương đọng trên mi, và linh căn cũ chỉ còn là chuyện cũ.",
+          "effects": {
+            "stat.health": -15,
+            "stat.charm": 3,
+            "awakenBody": "thai_am_the"
+          }
+        }
+      },
+      {
+        "text": "Giữ nguyên, ngắm trăng rồi về",
+        "result": {
+          "text": "Trăng đẹp, nước lạnh. Ngươi về nhà ngủ một giấc ngon lành.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "thuc_tinh_kim_cuong",
+    "category": "fortune",
+    "title": "Rèn thân đến cùng cực",
+    "text": "Nhiều năm rèn thân, xương cốt {name} cứng đến mức đại phu gõ vào cũng phải rụt tay. Một đêm, toàn thân nóng ran như có thứ gì muốn phá vỏ chui ra.",
+    "tags": [
+      "rare"
+    ],
+    "themes": [
+      "ky_vat"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      },
+      "root": {
+        "usable": true
+      },
+      "stats": [
+        {
+          "stat": "stat.physique",
+          "gte": 85
+        }
+      ]
+    },
+    "weight": 0.4,
+    "cooldownYears": 0,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Dốc toàn lực, bức nó ra",
+        "result": {
+          "text": "Xương kêu răng rắc cả đêm. Sáng ra, ngươi đấm vào tường, tường nứt, tay không sao.",
+          "effects": {
+            "stat.health": -15,
+            "stat.daoHeart": 2,
+            "awakenBody": "kim_cuong_than"
+          }
+        }
+      },
+      {
+        "text": "Ghìm lại, tu luyện bình thường",
+        "result": {
+          "text": "Ngươi nén cơn nóng xuống. Thân thể vẫn mạnh, chỉ thiếu một bước.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "thuc_tinh_ban_thach",
+    "category": "fortune",
+    "title": "Núi đá đáp lời",
+    "text": "Ngồi nghỉ bên vách đá cổ, {name} áp lưng vào đá thì nghe tiếng núi vọng lại, trầm đục như tim đập. Xương sống nặng dần.",
+    "tags": [
+      "rare"
+    ],
+    "themes": [
+      "ky_vat"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      },
+      "root": {
+        "usable": true
+      },
+      "stats": [
+        {
+          "stat": "stat.physique",
+          "gte": 75
+        },
+        {
+          "stat": "stat.daoHeart",
+          "gte": 55
+        }
+      ]
+    },
+    "weight": 0.4,
+    "cooldownYears": 0,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Tựa vào đá, hòa nhịp với núi",
+        "result": {
+          "text": "Ngươi ngồi cả mùa, người nặng như đá. Đứng dậy thì đất lún một tấc.",
+          "effects": {
+            "stat.health": -10,
+            "stat.happiness": -2,
+            "awakenBody": "ban_thach_thanh_cot"
+          }
+        }
+      },
+      {
+        "text": "Đứng dậy bỏ đi",
+        "result": {
+          "text": "Núi vẫn im lặng sau lưng ngươi.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "thuc_tinh_van_doc",
+    "category": "fortune",
+    "title": "Sống sót sau kịch độc",
+    "text": "Độc phát tác, {name} tưởng không qua nổi đêm nay. Nhưng độc vào máu rồi lại lặng im, như gặp đồng loại.",
+    "tags": [
+      "rare"
+    ],
+    "themes": [
+      "ky_vat"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      },
+      "root": {
+        "usable": true
+      },
+      "flagsAll": [
+        "trung_doc"
+      ]
+    },
+    "weight": 1.0,
+    "cooldownYears": 0,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Mặc độc hòa vào máu",
+        "result": {
+          "text": "Ba ngày sau ngươi tỉnh dậy. Chén thuốc giải còn nguyên, ruồi đậu vào ngươi thì ngã lăn.",
+          "effects": {
+            "stat.health": -20,
+            "stat.intellect": 2,
+            "awakenBody": "van_doc_the"
+          }
+        }
+      },
+      {
+        "text": "Uống thuốc giải, ép độc ra",
+        "result": {
+          "text": "Thuốc giải hữu hiệu. Ngươi sống, và chẳng hiểu mình vừa bỏ lỡ điều gì.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "thuc_tinh_u_minh",
+    "category": "fortune",
+    "title": "Đêm gặp người cũ",
+    "text": "Đi qua nghĩa địa cổ, {name} nghe có người gọi tên mình, giọng quen mà không nhớ là ai. Đèn lồng xanh lập lòe.",
+    "tags": [
+      "rare"
+    ],
+    "themes": [
+      "ky_vat"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      },
+      "root": {
+        "usable": true
+      },
+      "stats": [
+        {
+          "stat": "stat.luck",
+          "gte": 55
+        },
+        {
+          "stat": "stat.daoHeart",
+          "gte": 60
+        }
+      ]
+    },
+    "weight": 0.4,
+    "cooldownYears": 0,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đáp lời người gọi",
+        "result": {
+          "text": "Ngươi nói chuyện với bóng tối đến sáng. Từ đó, ban đêm chưa bao giờ còn vắng.",
+          "effects": {
+            "stat.health": -10,
+            "stat.charm": -2,
+            "stat.intellect": 2,
+            "awakenBody": "u_minh_hon_the"
+          }
+        }
+      },
+      {
+        "text": "Bịt tai, đi nhanh",
+        "result": {
+          "text": "Ngươi chạy một mạch về nhà, thắp ba nén hương.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "thuc_tinh_dao_cot",
+    "category": "fortune",
+    "title": "Một khoảnh khắc thông suốt",
+    "text": "Ngồi nhìn mây, {name} bất chợt thấy mọi đạo lý đều nằm sẵn trong lòng, chỉ chờ gọi tên.",
+    "tags": [
+      "rare"
+    ],
+    "themes": [
+      "ky_vat"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      },
+      "root": {
+        "usable": true
+      },
+      "stats": [
+        {
+          "stat": "stat.comprehension",
+          "gte": 90
+        }
+      ]
+    },
+    "weight": 0.4,
+    "cooldownYears": 0,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Buông tâm, đón nhận đạo ý",
+        "result": {
+          "text": "Mây tan, ngươi mở mắt, thấy mình đã khác. Đạo cốt tự thành, chẳng cần ai dạy.",
+          "effects": {
+            "stat.happiness": 4,
+            "stat.daoHeart": 2,
+            "awakenBody": "tien_thien_dao_cot"
+          }
+        }
+      },
+      {
+        "text": "Giữ tâm bình thường",
+        "result": {
+          "text": "Mây trôi, ngươi cũng đứng dậy. Cơ duyên đến rồi lại đi.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "thuc_tinh_ma_the",
+    "category": "fortune",
+    "title": "Máu nóng khi gặp huyết nguyệt",
+    "text": "Huyết nguyệt lên cao, {name} thấy máu trong người sôi lên, tiếng thì thầm trong tai như mời gọi.",
+    "tags": [
+      "rare"
+    ],
+    "themes": [
+      "ky_vat"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "luyen_khi"
+      },
+      "root": {
+        "usable": true
+      },
+      "stats": [
+        {
+          "stat": "reputation.ma",
+          "gte": 30
+        },
+        {
+          "stat": "stat.daoHeart",
+          "gte": 50
+        }
+      ]
+    },
+    "weight": 0.4,
+    "cooldownYears": 0,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Thuận theo tiếng gọi",
+        "result": {
+          "text": "Ngươi cười một mình trong đêm. Gương soi thấy mắt mình đẹp đến đáng ngờ.",
+          "effects": {
+            "stat.health": -10,
+            "stat.daoHeart": -2,
+            "stat.charm": 2,
+            "awakenBody": "thien_sinh_ma_the"
+          }
+        }
+      },
+      {
+        "text": "Niệm tĩnh tâm chú",
+        "result": {
+          "text": "Tiếng thì thầm tắt dần. Ngươi toát mồ hôi lạnh.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  }
+]

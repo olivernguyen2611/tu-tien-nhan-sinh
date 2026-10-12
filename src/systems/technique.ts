@@ -88,9 +88,9 @@ export function learnBlocked(state: GameState, content: Content, tech: Technique
  * the lineage follows the technique; lifespanPct moves with the technique; one-time
  * stat hooks are given only the first time a technique is learned.
  */
-export function learnTechnique(state: GameState, content: Content, techId: string, opts: { quiet?: boolean } = {}): { state: GameState; text: string } | null {
+export function learnTechnique(state: GameState, content: Content, techId: string, opts: { quiet?: boolean; force?: boolean } = {}): { state: GameState; text: string } | null {
   const tech = techniqueById(content, techId);
-  if (!tech || state.cult.technique === techId || learnBlocked(state, content, tech)) return null;
+  if (!tech || state.cult.technique === techId || (!opts.force && learnBlocked(state, content, tech))) return null;
   const texts = content.cultivation.realms.texts;
   const names = content.cultivation.realms;
   const old = currentTechnique(state, content);

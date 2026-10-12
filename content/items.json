@@ -179,7 +179,7 @@
     "name": "Khai Trí Đan",
     "kind": "pill",
     "description": "Uống xong nhớ ra cả tên thầy đồ năm sáu tuổi.",
-    "summary": "Trí tuệ +3. Chỉ có tác dụng lần đầu trong đời.",
+    "summary": "Trí tuệ +8. Chỉ có tác dụng lần đầu trong đời.",
     "price": {
       "spiritStones": 40
     },
@@ -188,7 +188,7 @@
       "effects": [
         {
           "hook": "stat.intellect",
-          "add": 3
+          "add": 8
         }
       ],
       "oncePerLife": true
@@ -199,7 +199,7 @@
     "name": "Tẩy Tủy Đan",
     "kind": "pill",
     "description": "Uống vào đau thấu xương, toát ra một lớp mồ hôi đen. Rửa được tủy, không mở được linh căn.",
-    "summary": "Căn cốt +5, Sức khỏe −10. Chỉ có tác dụng lần đầu trong đời.",
+    "summary": "Căn cốt +12, Sức khỏe −10. Chỉ có tác dụng lần đầu trong đời.",
     "price": {
       "spiritStones": 120
     },
@@ -208,7 +208,7 @@
       "effects": [
         {
           "hook": "stat.physique",
-          "add": 5
+          "add": 12
         },
         {
           "hook": "stat.health",
@@ -229,7 +229,7 @@
     "name": "Ngộ Đạo Trà",
     "kind": "pill",
     "description": "Một nhúm lá trà, nghe nói mọc bên cạnh một tảng đá có người từng ngộ đạo.",
-    "summary": "Ngộ tính +2. Chỉ có tác dụng lần đầu trong đời.",
+    "summary": "Ngộ tính +6. Chỉ có tác dụng lần đầu trong đời.",
     "price": {
       "spiritStones": 80
     },
@@ -238,7 +238,7 @@
       "effects": [
         {
           "hook": "stat.comprehension",
-          "add": 2
+          "add": 6
         }
       ],
       "oncePerLife": true
@@ -249,7 +249,7 @@
     "name": "Trú Nhan Đan",
     "kind": "pill",
     "description": "Giữ dung nhan, mặc kệ năm tháng.",
-    "summary": "Mị lực +3, không còn bị trừ Mị lực ở mốc tuổi già. Chỉ có tác dụng lần đầu trong đời.",
+    "summary": "Mị lực +8, không còn bị trừ Mị lực ở mốc tuổi già. Chỉ có tác dụng lần đầu trong đời.",
     "price": {
       "spiritStones": 100
     },
@@ -258,7 +258,7 @@
       "effects": [
         {
           "hook": "stat.charm",
-          "add": 3
+          "add": 8
         },
         {
           "hook": "noAgingCharm"
@@ -272,7 +272,7 @@
     "name": "Diên Thọ Đan",
     "kind": "pill",
     "description": "Viên đan sẫm màu, mùi gỗ trầm trăm năm.",
-    "summary": "Thọ nguyên +5 năm. Chỉ có tác dụng lần đầu trong đời.",
+    "summary": "Thọ nguyên +20 năm. Chỉ có tác dụng lần đầu trong đời.",
     "price": {
       "spiritStones": 300
     },
@@ -281,7 +281,7 @@
       "effects": [
         {
           "hook": "lifespanYears",
-          "add": 5
+          "add": 20
         }
       ],
       "oncePerLife": true
@@ -693,7 +693,7 @@
     "name": "Linh chi nghìn năm",
     "kind": "material",
     "description": "Tán nấm to như cái quạt, vân đỏ sẫm như gỗ trắc.",
-    "summary": "Ăn: Thọ nguyên +3 năm, Sức khỏe +20. Chỉ có tác dụng lần đầu trong đời.",
+    "summary": "Ăn: Thọ nguyên +15 năm, Sức khỏe +40. Chỉ có tác dụng lần đầu trong đời.",
     "price": {
       "spiritStones": 150
     },
@@ -703,11 +703,11 @@
       "effects": [
         {
           "hook": "lifespanYears",
-          "add": 3
+          "add": 15
         },
         {
           "hook": "stat.health",
-          "add": 20
+          "add": 40
         }
       ],
       "oncePerLife": true,
@@ -1071,5 +1071,587 @@
         "add": 0.25
       }
     ]
+  },
+  {
+    "id": "ngung_anh_dan",
+    "name": "Ngưng Anh Đan",
+    "kind": "pill",
+    "description": "Viên đan tròn như hạt châu, bên trong có một bóng người nhỏ xíu đang ngồi thiền.",
+    "summary": "Tự dùng khi đột phá Nguyên Anh (+20).",
+    "price": {
+      "spiritStones": 1500
+    },
+    "breakthrough": {
+      "realm": "kim_dan",
+      "major": true,
+      "add": 20
+    }
+  },
+  {
+    "id": "hoa_than_dan",
+    "name": "Hóa Thần Đan",
+    "kind": "pill",
+    "description": "Đan chưa mở lò đã nghe tiếng thần thức người luyện vọng lại.",
+    "summary": "Tự dùng khi đột phá Hóa Thần (+20). Chỉ đại năng luyện được.",
+    "price": {
+      "spiritStones": 6000
+    },
+    "forSale": false,
+    "breakthrough": {
+      "realm": "nguyen_anh",
+      "major": true,
+      "add": 20
+    }
+  },
+  {
+    "id": "ket_kim_dan_thuong_pham",
+    "name": "Kết Kim Đan thượng phẩm",
+    "kind": "pill",
+    "description": "Chín vân đan quấn quanh, nặng như đã kết xong một viên Kim Đan.",
+    "summary": "Tự dùng khi đột phá Kim Đan (+30, thay cho Kết Kim Đan thường).",
+    "price": {
+      "spiritStones": 900
+    },
+    "forSale": false,
+    "breakthrough": {
+      "realm": "truc_co",
+      "major": true,
+      "add": 30
+    }
+  },
+  {
+    "id": "hoan_hon_dan",
+    "name": "Cửu Chuyển Hoàn Hồn Đan",
+    "kind": "pill",
+    "description": "Đan chín lần luyện, chín lần nứt rồi liền. Giữ trong người lúc nào cũng thấy ấm.",
+    "summary": "Mang theo: thoát chết một lần (trong trận, thiên kiếp), rồi tan.",
+    "price": {
+      "spiritStones": 2000
+    },
+    "forSale": false,
+    "carried": [
+      {
+        "hook": "trigger.cheatDeath",
+        "add": 1
+      }
+    ]
+  },
+  {
+    "id": "tue_nguyet_dan",
+    "name": "Tuế Nguyệt Đan",
+    "kind": "pill",
+    "description": "Viên đan màu đồng cổ, uống vào nghe tiếng đồng hồ nước nhỏ giọt ngược.",
+    "summary": "Thọ nguyên +15%. Chỉ có tác dụng lần đầu trong đời.",
+    "price": {
+      "spiritStones": 1200
+    },
+    "use": {
+      "text": "Năm tháng như chảy ngược một đoạn, sợi tóc bạc cuối cùng cũng đen trở lại.",
+      "effects": [
+        {
+          "hook": "lifespanPct",
+          "add": 0.15
+        }
+      ],
+      "oncePerLife": true
+    }
+  },
+  {
+    "id": "hoi_xuan_tao_hoa_dan",
+    "name": "Hồi Xuân Tạo Hóa Đan",
+    "kind": "pill",
+    "description": "Đan xanh như lá non đầu xuân, nghe nói cải tử hoàn sinh được, nhưng chưa ai dám thử.",
+    "summary": "Sức khỏe về đầy, gỡ trúng độc.",
+    "price": {
+      "spiritStones": 250
+    },
+    "use": {
+      "text": "Sinh khí ùa vào như xuân tràn về núi, vết thương cũ khép lại.",
+      "effects": [
+        {
+          "hook": "stat.health",
+          "add": 100
+        },
+        {
+          "hook": "clearFlag.trung_doc"
+        }
+      ]
+    }
+  },
+  {
+    "id": "dinh_tam_dan",
+    "name": "Định Tâm Đan",
+    "kind": "pill",
+    "description": "Đan trong như giọt sương, ngậm vào thì trong đầu chỉ còn tiếng gió.",
+    "summary": "Tâm ma −10, Đạo tâm +2.",
+    "price": {
+      "spiritStones": 180
+    },
+    "use": {
+      "text": "Ma niệm trong lòng lắng xuống như cặn trong chén nước để lâu.",
+      "effects": [
+        {
+          "hook": "heartDemon",
+          "add": -10
+        },
+        {
+          "hook": "stat.daoHeart",
+          "add": 2
+        }
+      ]
+    }
+  },
+  {
+    "id": "tu_nguyen_dai_dan",
+    "name": "Tụ Nguyên Đại Đan",
+    "kind": "pill",
+    "description": "Viên đan to bằng quả nhãn, nặng tay, linh khí bên trong cuồn cuộn như sắp vỡ.",
+    "summary": "Tu vi +25% tầng hiện tại.",
+    "price": {
+      "spiritStones": 120
+    },
+    "use": {
+      "text": "Linh khí tràn vào đan điền như thủy triều lên.",
+      "effects": [
+        {
+          "hook": "cultivationProgress",
+          "add": 25
+        }
+      ]
+    }
+  },
+  {
+    "id": "ho_mach_dan",
+    "name": "Hộ Mạch Đan",
+    "kind": "pill",
+    "description": "Đan đen óng, uống vào thấy kinh mạch như được quấn một lớp lụa.",
+    "summary": "Thiên kiếp kế tiếp: giảm sát thương thêm 20%.",
+    "price": {
+      "spiritStones": 400
+    },
+    "use": {
+      "text": "Kinh mạch được bọc lại một lớp, lôi khí sẽ khó xuyên qua.",
+      "effects": [
+        {
+          "hook": "setFlag.ho_mach_dan"
+        }
+      ]
+    }
+  },
+  {
+    "id": "dich_can_tay_cot_dan",
+    "name": "Dịch Cân Tẩy Cốt Đan",
+    "kind": "pill",
+    "description": "Đan vàng sẫm, uống vào nghe tiếng xương kêu răng rắc như bẻ củi.",
+    "summary": "Căn cốt +20, Sức khỏe −15. Chỉ có tác dụng lần đầu trong đời.",
+    "price": {
+      "spiritStones": 800
+    },
+    "forSale": false,
+    "use": {
+      "text": "Gân cốt bị vặn ra rồi nắn lại, đau đến mức ngươi quên cả kêu.",
+      "effects": [
+        {
+          "hook": "stat.physique",
+          "add": 20
+        },
+        {
+          "hook": "stat.health",
+          "add": -15
+        }
+      ],
+      "oncePerLife": true,
+      "repeatEffects": [
+        {
+          "hook": "stat.health",
+          "add": -15
+        }
+      ]
+    }
+  },
+  {
+    "id": "thien_loi_dan",
+    "name": "Thiên Lôi Đan",
+    "kind": "pill",
+    "description": "Đan nhỏ màu tím, thỉnh thoảng nháy tia điện. Dùng xong ba ngày không dám chạm kim loại.",
+    "summary": "Chiến lực +40% cả trận kế tiếp, Sức khỏe −10.",
+    "price": {
+      "spiritStones": 90
+    },
+    "use": {
+      "text": "Tia điện chạy dọc sống lưng, tóc dựng đứng, tay run lên vì muốn đánh nhau.",
+      "effects": [
+        {
+          "hook": "combatPowerNext",
+          "add": 40
+        },
+        {
+          "hook": "stat.health",
+          "add": -10
+        }
+      ]
+    }
+  },
+  {
+    "id": "thanh_hong_phi_kiem",
+    "name": "Thanh Hồng Phi Kiếm",
+    "kind": "artifact",
+    "description": "Phi kiếm trung phẩm, thân kiếm xanh như cầu vồng sau mưa.",
+    "summary": "Mang theo: Chiến lực +30%, Tốc +10%.",
+    "price": {
+      "spiritStones": 600
+    },
+    "carried": [
+      {
+        "hook": "combatPower",
+        "add": 0.3
+      },
+      {
+        "hook": "speed",
+        "add": 0.1
+      }
+    ]
+  },
+  {
+    "id": "huyen_quy_giap",
+    "name": "Huyền Quy Giáp",
+    "kind": "artifact",
+    "description": "Giáp làm từ mai rùa nghìn năm, nặng nhưng gõ vào không nghe tiếng.",
+    "summary": "Mang theo: thương tích nhận vào −30%, chịu thiên kiếp tốt hơn (10%).",
+    "price": {
+      "spiritStones": 800
+    },
+    "carried": [
+      {
+        "hook": "injuryReduce",
+        "add": 0.3
+      },
+      {
+        "hook": "tribulationDefense",
+        "add": 0.1
+      }
+    ]
+  },
+  {
+    "id": "bat_quai_kinh",
+    "name": "Bát Quái Kính",
+    "kind": "artifact",
+    "description": "Gương đồng khắc tám quẻ, soi vào thấy bóng mình ngược chiều.",
+    "summary": "Mang theo: thương tích nhận vào −15%, giảm 15% sát thương thiên kiếp.",
+    "price": {
+      "spiritStones": 1000
+    },
+    "forSale": false,
+    "carried": [
+      {
+        "hook": "injuryReduce",
+        "add": 0.15
+      },
+      {
+        "hook": "tribulationDefense",
+        "add": 0.15
+      }
+    ]
+  },
+  {
+    "id": "pha_kiep_tran_ban",
+    "name": "Phá Kiếp Trận Bàn",
+    "kind": "array",
+    "description": "Đĩa ngọc khắc chín tầng trận văn, đặt dưới chân thì sấm sét cũng phải đi vòng.",
+    "summary": "Mang theo: giảm 25% sát thương thiên kiếp.",
+    "price": {
+      "spiritStones": 1500
+    },
+    "carried": [
+      {
+        "hook": "tribulationDefense",
+        "add": 0.25
+      }
+    ]
+  },
+  {
+    "id": "tu_linh_dai_tran_ban",
+    "name": "Tụ Linh Đại Trận Bàn",
+    "kind": "array",
+    "description": "Trận bàn lớn bằng cái mâm, đặt xuống là cả căn phòng ngập sương linh khí.",
+    "summary": "Mang theo: tu vi mỗi năm +25% (không cộng dồn với trận bàn khác).",
+    "price": {
+      "spiritStones": 2500
+    },
+    "forSale": false,
+    "carried": [
+      {
+        "hook": "cultivationSpeed",
+        "add": 0.25
+      }
+    ]
+  },
+  {
+    "id": "ho_than_linh_phu",
+    "name": "Hộ Thân Linh Phù",
+    "kind": "talisman",
+    "description": "Bùa vẽ bằng máu chu sa trên giấy vàng, nét bút tròn đầy như vòng bảo hộ.",
+    "summary": "Đốt trong trận: Chiến lực +30% cả trận, hồi 20 Sức khỏe.",
+    "price": {
+      "spiritStones": 300
+    },
+    "use": {
+      "text": "Bùa hóa vòng sáng quanh người, vết thương khép lại.",
+      "effects": [
+        {
+          "hook": "combatPowerNext",
+          "add": 30
+        },
+        {
+          "hook": "stat.health",
+          "add": 20
+        }
+      ],
+      "combatOnly": true
+    }
+  },
+  {
+    "id": "thien_loi_phu",
+    "name": "Thiên Lôi Phù",
+    "kind": "talisman",
+    "description": "Bùa tím, cầm lâu thấy tê tay.",
+    "summary": "Đốt trong trận: Chiến lực +100% một hiệp.",
+    "price": {
+      "spiritStones": 250
+    },
+    "use": {
+      "text": "Tia sét bổ xuống từ lá bùa, cả sân sáng như ban ngày.",
+      "effects": [
+        {
+          "hook": "combatPowerNext",
+          "add": 100
+        }
+      ],
+      "combatOnly": true
+    }
+  },
+  {
+    "id": "pha_khong_phu",
+    "name": "Phá Không Phù",
+    "kind": "talisman",
+    "description": "Bùa xé không gian, đốt rồi thì người đã ở nơi khác.",
+    "summary": "Đốt trong trận: bỏ chạy chắc chắn.",
+    "price": {
+      "spiritStones": 500
+    },
+    "use": {
+      "text": "Không gian rách một đường, ngươi bước qua rồi nó khép lại.",
+      "effects": [
+        {
+          "hook": "escapeNext",
+          "add": 100
+        }
+      ],
+      "combatOnly": true
+    }
+  },
+  {
+    "id": "hon_phien",
+    "name": "Hồn Phiên",
+    "kind": "artifact",
+    "description": "Lá cờ đen thêu mặt người, gió thổi qua nghe tiếng thì thầm.",
+    "summary": "Mang theo: Chiến lực +20%, hút máu 10%, nhưng kháng tâm ma −20%.",
+    "forSale": false,
+    "carried": [
+      {
+        "hook": "combatPower",
+        "add": 0.2
+      },
+      {
+        "hook": "lifesteal",
+        "add": 0.1
+      },
+      {
+        "hook": "heartDemonResist",
+        "add": -0.2
+      }
+    ]
+  },
+  {
+    "id": "kim_cuong_chay",
+    "name": "Kim Cương Chày",
+    "kind": "artifact",
+    "description": "Chày đồng cổ, tay cầm khắc hạt chuỗi. Cầm lên thấy lòng bình lặng lạ thường.",
+    "summary": "Mang theo: Chiến lực +15%, kháng tâm ma +30%.",
+    "forSale": false,
+    "carried": [
+      {
+        "hook": "combatPower",
+        "add": 0.15
+      },
+      {
+        "hook": "heartDemonResist",
+        "add": 0.3
+      }
+    ]
+  },
+  {
+    "id": "noi_dan_4",
+    "name": "Nội đan cấp 4",
+    "kind": "material",
+    "description": "Viên tròn to bằng nắm tay, nóng như than hồng, văng vẳng tiếng gầm của đại yêu.",
+    "summary": "Nguyên liệu luyện đan. Ma tu hấp thu: tu vi +80%.",
+    "price": {
+      "spiritStones": 2000
+    },
+    "forSale": false,
+    "use": {
+      "text": "Nội đan tan ra như dung nham, yêu khí đại yêu xuyên suốt kinh mạch.",
+      "effects": [
+        {
+          "hook": "cultivationProgress",
+          "add": 80
+        }
+      ],
+      "lineage": "ma"
+    }
+  },
+  {
+    "id": "huyen_bang_tuy",
+    "name": "Huyền Băng Tủy",
+    "kind": "material",
+    "description": "Khối tủy trong như pha lê, lạnh đến mức bốc khói trắng giữa mùa hè.",
+    "summary": "Nguyên liệu luyện đan, luyện khí hệ Băng.",
+    "price": {
+      "spiritStones": 600
+    },
+    "forSale": false
+  },
+  {
+    "id": "chu_qua_van_nam",
+    "name": "Chu Quả Vạn Năm",
+    "kind": "material",
+    "description": "Quả đỏ thắm, vỏ óng ánh như đá quý, hương thơm ba dặm còn ngửi thấy.",
+    "summary": "Ăn: Thọ nguyên +30 năm, Sức khỏe +40. Chỉ có tác dụng lần đầu trong đời.",
+    "price": {
+      "spiritStones": 1000
+    },
+    "forSale": false,
+    "use": {
+      "text": "Ăn xong ngủ bảy ngày, tỉnh dậy thấy xương cốt như trẻ ra mấy chục tuổi.",
+      "effects": [
+        {
+          "hook": "lifespanYears",
+          "add": 30
+        },
+        {
+          "hook": "stat.health",
+          "add": 40
+        }
+      ],
+      "oncePerLife": true,
+      "mortalOk": true
+    }
+  },
+  {
+    "id": "ngo_dao_co_thu_la",
+    "name": "Lá Ngộ Đạo Cổ Thụ",
+    "kind": "material",
+    "description": "Chiếc lá to như bàn tay, gân lá hiện ra những nét giống chữ.",
+    "summary": "Ăn: Ngộ tính +10. Chỉ có tác dụng lần đầu trong đời.",
+    "price": {
+      "spiritStones": 700
+    },
+    "forSale": false,
+    "use": {
+      "text": "Nhai lá, vị đắng rồi ngọt, mấy câu kinh xưa bỗng sáng nghĩa.",
+      "effects": [
+        {
+          "hook": "stat.comprehension",
+          "add": 10
+        }
+      ],
+      "oncePerLife": true
+    }
+  },
+  {
+    "id": "hon_don_thach",
+    "name": "Hỗn Độn Thạch",
+    "kind": "misc",
+    "description": "Hòn đá xám không ra màu gì, nhìn lâu thấy đầu óc quay cuồng.",
+    "summary": "Mang theo: tốc độ tu +15%, đột phá đại cảnh +5, nhưng dễ bị kẻ khác nhòm ngó.",
+    "forSale": false,
+    "carried": [
+      {
+        "hook": "cultivationSpeed",
+        "add": 0.15
+      },
+      {
+        "hook": "breakthroughChance.major",
+        "add": 5
+      },
+      {
+        "hook": "eventWeight.plunder",
+        "mul": 1.5
+      }
+    ]
+  },
+  {
+    "id": "tinh_hon_chau",
+    "name": "Tinh Hồn Châu",
+    "kind": "misc",
+    "description": "Viên châu nhỏ chứa một dải ngân hà thu nhỏ, đặt gần tai nghe tiếng sao xoay.",
+    "summary": "Mang theo: thần thức +30%, kháng tâm ma −10%.",
+    "forSale": false,
+    "carried": [
+      {
+        "hook": "divineSense",
+        "add": 0.3
+      },
+      {
+        "hook": "heartDemonResist",
+        "add": -0.1
+      }
+    ]
+  },
+  {
+    "id": "thien_co_ban",
+    "name": "Thiên Cơ Bàn",
+    "kind": "misc",
+    "description": "Mâm đồng quay nhẹ, kim chỉ về phía có chuyện sắp xảy ra.",
+    "summary": "Mang theo: kỳ ngộ dễ gặp hơn (30%), chuyện xui ít hơn (30%).",
+    "forSale": false,
+    "carried": [
+      {
+        "hook": "eventWeight.fortune",
+        "mul": 1.3
+      },
+      {
+        "hook": "eventWeight.mishap",
+        "mul": 0.7
+      }
+    ]
+  },
+  {
+    "id": "phuong_hoang_tinh_huyet",
+    "name": "Phượng Hoàng Tinh Huyết",
+    "kind": "misc",
+    "description": "Giọt huyết đỏ vàng, trong suốt như hổ phách, bên trong có bóng chim đang múa.",
+    "summary": "Dùng: Căn cốt +10, Sức khỏe +30, Thọ nguyên +40 năm. Chỉ có tác dụng lần đầu trong đời.",
+    "forSale": false,
+    "use": {
+      "text": "Lửa chạy khắp kinh mạch, xương cốt cháy rồi sinh lại, ngươi như chết đi một lần.",
+      "effects": [
+        {
+          "hook": "stat.physique",
+          "add": 10
+        },
+        {
+          "hook": "stat.health",
+          "add": 30
+        },
+        {
+          "hook": "lifespanYears",
+          "add": 40
+        }
+      ],
+      "oncePerLife": true,
+      "mortalOk": true
+    }
   }
 ]

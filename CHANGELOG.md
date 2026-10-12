@@ -1,6 +1,27 @@
 # Nhật ký thay đổi
 
+
+## Thức tỉnh thể chất đặc biệt (2026-10-12)
+- Hiệu ứng sự kiện mới `awakenBody`: người đã có linh căn dùng được (chưa có thể chất) thức tỉnh một thể chất tiềm ẩn, thay linh căn ngũ hành bằng thể chất và nhận chỉ số một lần. Người không linh căn không bao giờ nhận được (giữ luật linh căn trời sinh).
+- 8 kỳ ngộ mới (`body-awakening.json`) cho Cửu Dương, Thái Âm, Kim Cương, Bàn Thạch, Vạn Độc, U Minh, Tiên Thiên Đạo Cốt, Thiên Sinh Ma Thể; mỗi kỳ ngộ có điều kiện chỉ số riêng, hao sức khỏe, có thể từ chối. Lưu Ly, Hỗn Độn, Thiên Tuyệt Mạch vẫn chỉ trời sinh.
+- Developer mode: chọn thể chất + nút "Thức tỉnh" (áp dụng cả khi không linh căn).
+
 ## [Chưa phát hành]
+
+### Vá lỗ hổng danh mục công pháp & vật phẩm, Developer mode lấy được mọi thứ (2026-10-12)
+- Nội đan cấp 3 giờ lấy được (sự kiện **Yêu vương hấp hối**, từ Kim Đan), nên công thức Kết Kim Đan luyện được.
+- Thái Sơ Diễn Đạo Kinh (C13): sự kiện **Di tích thượng cổ** (từ Trúc Cơ, khí vận ≥ 75). Cửu Chuyển Kim Cốt Quyết (C14): **Lời lão trong nhẫn** (có Lão gia gia) hoặc **Cao nhân dưới gốc cây** (võ giả Hóa cảnh).
+- Cái giá "hoài bích kỳ tội": cờ `hoai_bich` (đã đặt từ Kiếm trủng nhưng chưa ai dùng) giờ mở sự kiện **Hoài bích kỳ tội** (kẻ đoạt bảo tìm tới: đánh, mua bình yên, trốn, nhờ chính đạo).
+- Thổ Nạp Tàn Quyển: chuỗi **Nửa quyển còn lại** → **Lão thầy bói và trang sách cũ**, tìm đủ thì học Thổ Nạp Hoàn Quyển (Huyền phẩm, mới).
+- Giải Độc Hoàn có tác dụng thật: sự kiện **Chén trà lạ vị** đặt cờ `trung_doc`, **Độc cũ phát tác** buộc phải giải (thuốc, vận công, thầy lang, hoặc chịu).
+- Phi kiếm có chủ có cái giá: sự kiện **Kiếm Các hỏi tội** khi mang kiếm này.
+- Developer mode: mục Vật phẩm thêm **Nhận mọi vật phẩm**, **Nhận mọi bí tịch**, chọn công pháp rồi **Học ngay** (bỏ qua điều kiện linh căn, tông môn, Đạo tâm).
+- **Tăng hiệu quả đồ "một lần mỗi đời"**: Khai Trí Đan Trí tuệ +3 → +8; Tẩy Tủy Đan Căn cốt +5 → +12; Ngộ Đạo Trà Ngộ tính +2 → +6; Trú Nhan Đan Mị lực +3 → +8; Diên Thọ Đan thọ +5 → +20 năm; Linh chi nghìn năm thọ +3 → +15 năm và Sức khỏe +20 → +40.
+- **29 món cấp cao mới** (theo `catalog/de-xuat-bo-sung-cap-cao.md`): 11 đan dược (Ngưng Anh Đan, Hóa Thần Đan, Kết Kim Đan thượng phẩm, Cửu Chuyển Hoàn Hồn Đan, Tuế Nguyệt Đan, Hồi Xuân Tạo Hóa Đan, Định Tâm Đan, Tụ Nguyên Đại Đan, Hộ Mạch Đan, Dịch Cân Tẩy Cốt Đan, Thiên Lôi Đan), 10 pháp bảo, trận bàn, bùa, 8 nguyên liệu và kỳ vật (Nội đan cấp 4, Huyền Băng Tủy, Chu Quả Vạn Năm, Lá Ngộ Đạo Cổ Thụ, Hỗn Độn Thạch, Tinh Hồn Châu, Thiên Cơ Bàn, Phượng Hoàng Tinh Huyết).
+- 10 sự kiện nguồn mới (đấu giá, Băng Phong Cốc, Hỗn Độn bí cảnh, Cổ thụ trên đỉnh danh sơn, Cờ đen trong miếu hoang…) và 10 công thức luyện mới.
+- Móc dùng vật phẩm mới: `heartDemon` (giảm tâm ma), `lifespanPct` (thọ theo %), `setFlag.<tên>`; Hộ Mạch Đan giảm thêm 20% sát thương thiên kiếp kế tiếp (`balance.tribulation.hoMachReduce`).
+- **Buff 7 Kim Thủ Chỉ** (trước đó yếu hơn cả khí vận Thiên/Thần phẩm dù hiếm hơn nhiều): mọi hiệu ứng bậc 1–3 tăng khoảng 30–100%, thêm bậc 4 cho mỗi cái (Nguyên Anh hoặc Hóa Thần), Hệ thống thêm bậc 5. Ví dụ Lão gia gia khi đủ bậc: tốc độ tu +25%, đột phá đại cảnh +8, Chiến lực +20%, bình cảnh +20%; Bình nhỏ thần bí bậc 3: Căn cốt +8, thọ +15%. Tùy thân động thiên giữ nguyên (đã mạnh nhất), chỉ thêm bậc cuối.
+- Nội dung (19 sự kiện, 30 món đồ, 1 công pháp) do Claude tự soạn theo đề xuất của chủ dự án, chưa qua duyệt chi tiết; chủ dự án đã đồng ý hướng đề xuất.
 
 ### Chơi thử 2 — Các mục nhỏ còn lại (2026-10-12)
 - Tích lũy đột phá: mỗi năm chờ ở đỉnh cảnh giới cộng 1% cho lần đột phá lớn kế tiếp, tối đa 25% (`balance.majorBreakthrough.peakWaitPerYear`, `peakWaitMax`), nên kẹt ở Luyện Khí tầng 9 không còn chờ cả đời.

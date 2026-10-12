@@ -10,6 +10,7 @@
     { "id": "the_chat", "name": "Thể chất đặc biệt", "special": "body", "description": "Trời sinh dị thể, trăm năm khó gặp." }
   ],
   "revealText": "Linh căn: {root}. {description}",
+  "awakenText": "Linh căn cũ vỡ ra, một thứ khác trồi lên từ tận xương tủy: {body}. {description}",
   "traitGuaranteeText": "Khí vận {trait} đã định từ lúc sinh: đá thử linh căn vừa chạm tay đã sáng lên.",
   "elements": [
     { "id": "kim", "name": "Kim", "variant": false, "beats": ["moc", "phong"], "description": "Sắc bén, cương trực. Hợp kiếm, hợp binh khí." },

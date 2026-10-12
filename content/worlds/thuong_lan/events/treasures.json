@@ -1,0 +1,402 @@
+[
+  {
+    "id": "yeu_vuong_hap_hoi",
+    "category": "beast",
+    "title": "Yêu vương hấp hối",
+    "text": "Trong hang sâu, một con yêu vương nằm thở như bễ rèn. Vết thương cũ chưa lành, nhưng nội đan trong bụng nó còn sáng.",
+    "tags": ["violence"],
+    "themes": ["beast"],
+    "conditions": { "realm": { "min": "kim_dan" } },
+    "weight": 1.2,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Ra tay lấy nội đan",
+        "result": {
+          "text": "Yêu vương mở mắt. Hấp hối không có nghĩa là hiền.",
+          "effects": {},
+          "fight": {
+            "foe": { "name": "Yêu vương hấp hối", "realm": "same", "powerMul": 1.3, "lineage": "yeu", "intent": "kill" },
+            "win": {
+              "text": "Yêu vương gục xuống. Viên nội đan còn nóng, nặng tay như quả tim.",
+              "effects": { "addItems": ["noi_dan_3"], "reputation": { "yeu": -20 }, "karma": -5, "stat.physique": 2 }
+            },
+            "lose": { "text": "Một cú đập đuôi, ngươi văng ra tận cửa hang.", "effects": { "stat.health": -30 } }
+          }
+        }
+      },
+      {
+        "text": "Đợi nó tắt thở rồi mới lấy",
+        "check": { "stat": "stat.luck", "difficulty": 60 },
+        "success": {
+          "text": "Ngươi ngồi chờ ba ngày. Yêu vương tắt thở trong yên lặng, nội đan vẫn còn nguyên.",
+          "effects": { "addItems": ["noi_dan_3"], "stat.daoHeart": 1, "stat.luck": 1 }
+        },
+        "fail": {
+          "text": "Có kẻ đến trước. Ngươi chỉ kịp nhìn thấy bóng lưng cõng nội đan chạy mất.",
+          "effects": { "stat.happiness": -3 }
+        }
+      },
+      {
+        "text": "Để nó yên",
+        "result": {
+          "text": "Ngươi lùi ra. Tiếng thở nặng nề trong hang theo ngươi cả quãng đường về.",
+          "effects": { "reputation": { "yeu": 5 }, "karma": 2, "stat.daoHeart": 2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "di_tich_thuong_co",
+    "category": "fortune",
+    "title": "Di tích thượng cổ",
+    "text": "Trong bí cảnh, một đài đá chìm dưới rêu hiện ra khi {name} đi ngang. Trên đài có một quyển sách mở sẵn, trang đầu trắng trơn.",
+    "tags": ["rare"],
+    "themes": ["fortune", "bi_canh"],
+    "conditions": { "realm": { "min": "truc_co" }, "stats": [{ "stat": "stat.luck", "gte": 75 }] },
+    "weight": 0.5,
+    "oncePerLife": true,
+    "luckAffected": true,
+    "choices": [
+      {
+        "text": "Đặt tay lên trang giấy",
+        "result": {
+          "text": "Ngươi đọc tới đâu, chữ hiện tới đó. Khi ngẩng lên, nắng ngoài bí cảnh đã đổi ba lần.",
+          "effects": { "gainTechnique": "thai_so_dien_dao_kinh", "setFlags": ["hoai_bich"], "stat.comprehension": 3, "stat.daoHeart": 2, "followUp": { "event": "lo_bi_mat", "afterYears": [3, 8] } }
+        }
+      },
+      {
+        "text": "Chép lại vài dòng rồi đi",
+        "result": {
+          "text": "Ngươi chép được mấy câu mở đầu. Chữ chép xong thì mờ dần, chỉ còn lại trong đầu.",
+          "effects": { "stat.comprehension": 2, "stat.daoHeart": 1 }
+        }
+      },
+      {
+        "text": "Không dám chạm vào",
+        "result": {
+          "text": "Của trời cho mà đến tay mình thì lạnh. Ngươi lùi ra khỏi đài, lòng yên mà tiếc.",
+          "effects": { "stat.daoHeart": 3, "stat.happiness": -2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tan_hon_chi_kim_cot",
+    "category": "fortune",
+    "title": "Lời lão trong nhẫn",
+    "text": "Đêm ấy lão gia gia trong nhẫn bỗng nghiêm giọng: \"Tiểu tử, có một thứ lão giấu ba nghìn năm. Giờ lão chỉ cho ngươi chỗ.\"",
+    "tags": ["rare"],
+    "themes": ["fortune", "ky_vat"],
+    "conditions": { "flagsAll": ["lao_gia_gia"], "realm": { "min": "luyen_khi" } },
+    "weight": 1.5,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Theo lão tới nơi cất giấu",
+        "result": {
+          "text": "Dưới một tảng đá không tên, ngươi đào được một hộp ngọc. Bên trong là một quyển kinh viết bằng chữ cổ: chín lần xương vỡ, chín lần xương liền.",
+          "effects": { "gainTechnique": "cuu_chuyen_kim_cot_quyet", "setFlags": ["hoai_bich"], "stat.physique": 2, "followUp": { "event": "lo_bi_mat", "afterYears": [3, 8] } }
+        }
+      },
+      {
+        "text": "Hỏi vì sao lão chịu cho không",
+        "check": { "stat": "stat.intellect", "difficulty": 60 },
+        "success": {
+          "text": "Lão im lặng một lúc lâu. \"Vì thân xác này của ngươi chịu được chín lần. Còn chuyện kia thì để sau.\" Ngươi ghi nhớ chữ \"để sau\".",
+          "effects": { "gainTechnique": "cuu_chuyen_kim_cot_quyet", "setFlags": ["hoai_bich", "lao_gia_gia_lo_mat"], "stat.intellect": 2, "followUp": { "event": "lo_bi_mat", "afterYears": [3, 8] } }
+        },
+        "fail": {
+          "text": "\"Vì lão thương ngươi.\" Nghe cứ như lão đang nói dối, mà ngươi không bắt được chỗ sai.",
+          "effects": { "stat.intellect": 1 }
+        }
+      },
+      {
+        "text": "Từ chối, không muốn nợ lão",
+        "result": {
+          "text": "Lão chửi một trận dài, rồi lẩm bẩm: \"Hạng cứng đầu.\" Ngươi ngủ rất ngon.",
+          "effects": { "stat.daoHeart": 3 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "cao_nhan_chi_diem",
+    "category": "fortune",
+    "title": "Cao nhân dưới gốc cây",
+    "text": "Một ông lão ngồi câu cá bên khe cạn. Cần câu không mồi. Ông ngước nhìn gân cốt của {name} rồi hỏi: \"Luyện võ đến Hóa cảnh rồi à?\"",
+    "tags": ["rare"],
+    "themes": ["fortune"],
+    "conditions": { "martial": { "min": 4, "max": 6 } },
+    "weight": 1.5,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Cúi đầu thưa phải",
+        "result": {
+          "text": "Ông cười, cắm cần xuống đất, dạy ngươi cả ngày một thế đứng. Lúc chia tay ông để lại một quyển kinh mỏng, bìa dính vảy cá.",
+          "effects": { "gainTechnique": "cuu_chuyen_kim_cot_quyet", "setFlags": ["hoai_bich"], "stat.physique": 3, "pathAffinity": { "body": 5 }, "followUp": { "event": "lo_bi_mat", "afterYears": [3, 8] } }
+        }
+      },
+      {
+        "text": "Xin được thử vài chiêu",
+        "result": {
+          "text": "Ông nhấc cần câu, một chiêu đã gạt ngươi ngã. \"Gân cốt khá, tâm còn nôn nóng.\" Ông chỉ cho ngươi thế đứng rồi tiếp tục câu cá.",
+          "effects": { "stat.physique": 2, "stat.health": -5, "pathAffinity": { "body": 3 } }
+        }
+      },
+      {
+        "text": "Chắp tay chào rồi đi",
+        "result": {
+          "text": "Ông gật đầu, không giữ. Khe cạn sau lưng ngươi lại có tiếng cá quẫy.",
+          "effects": { "stat.daoHeart": 2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "lo_bi_mat",
+    "category": "fortune",
+    "title": "Hoài bích kỳ tội",
+    "text": "Không biết từ đâu, tin đồn lan ra: {name} đang giữ một bộ công pháp đáng giá cả một tông môn. Đêm nay có người đứng ngoài cửa, đứng rất lâu.",
+    "tags": ["violence"],
+    "themes": ["plunder"],
+    "conditions": { "flagsAll": ["hoai_bich"] },
+    "weight": 3,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Mở cửa, đối mặt",
+        "result": {
+          "text": "Kẻ ngoài cửa không đến để nói chuyện.",
+          "effects": {},
+          "fight": {
+            "foe": { "name": "Kẻ đoạt bảo", "realm": "same", "powerMul": 1.35, "intent": "kill" },
+            "win": { "text": "Kẻ ấy ngã xuống. Ngươi dọn xác trước khi trời sáng, và không ai hỏi gì nữa.", "effects": { "clearFlags": ["hoai_bich"], "karma": -5, "stat.daoHeart": 2 } },
+            "lose": { "text": "Ngươi giữ được mạng, nhưng mất một túi linh thạch và nằm liệt mấy ngày.", "effects": { "clearFlags": ["hoai_bich"], "stat.health": -30, "spiritStones": -50 } }
+          }
+        }
+      },
+      {
+        "text": "Bỏ tiền mua bình yên",
+        "requires": { "stats": [{ "stat": "spiritStones", "gte": 150 }] },
+        "result": {
+          "text": "Một túi linh thạch qua khe cửa, một cái gật đầu trong bóng tối. Tin đồn đổi hướng sang người khác.",
+          "effects": { "spiritStones": -150, "clearFlags": ["hoai_bich"], "stat.happiness": -3 }
+        }
+      },
+      {
+        "text": "Đổi tên đổi họ, trốn đi",
+        "check": { "stat": "stat.luck", "difficulty": 55 },
+        "success": { "text": "Sáng ra ngươi đã cách đó ba trăm dặm. Tin đồn tìm không thấy chủ.", "effects": { "clearFlags": ["hoai_bich"], "stat.intellect": 1 } },
+        "fail": { "text": "Chạy chưa xa thì bị chặn đường, mất mấy món đồ mới thoát được.", "effects": { "stat.health": -15, "spiritStones": -20 } }
+      },
+      {
+        "text": "Nhờ chính đạo che chở",
+        "requires": { "stats": [{ "stat": "reputation.chinh", "gte": 30 }] },
+        "result": {
+          "text": "Người của chính đạo đến đứng trước cửa nhà ngươi một đêm. Từ đó không ai dám tới nữa, nhưng ngươi nợ một ân tình.",
+          "effects": { "clearFlags": ["hoai_bich"], "reputation": { "chinh": -5 }, "karma": 2, "stat.happiness": 2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tan_quyen_loi_don",
+    "category": "rogue",
+    "title": "Nửa quyển còn lại",
+    "text": "Một lão tán tu say rượu ở Vô Chủ Phường liếc vào quyển Thổ Nạp Tàn Quyển của {name}, cười khùng khục: \"Thượng cổ thần công thật đấy. Mà ngươi chỉ có nửa sau, nửa trước ở chỗ khác.\"",
+    "tags": ["funny"],
+    "themes": ["fortune"],
+    "conditions": { "flagsAll": ["co_tan_quyen"], "flagsNone": ["tan_quyen_manh_moi"] },
+    "weight": 3,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Mời lão một bữa rượu để hỏi tiếp",
+        "requires": { "stats": [{ "stat": "silver", "gte": 5 }] },
+        "result": {
+          "text": "Rượu vào lời ra: nửa trước từng nằm trong một quán trọ ở chân núi, rồi bị bán lại cho một lão thầy bói.",
+          "effects": { "silver": -5, "setFlags": ["tan_quyen_manh_moi"], "followUp": { "event": "tan_quyen_nua_truoc", "afterYears": [2, 5] }, "stat.intellect": 1 }
+        }
+      },
+      {
+        "text": "Nghe cho vui rồi thôi",
+        "result": {
+          "text": "Lão ngủ gục ngay trên bàn. Ngươi không biết lời nào là thật.",
+          "effects": { "stat.happiness": 1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tan_quyen_nua_truoc",
+    "category": "rogue",
+    "title": "Lão thầy bói và trang sách cũ",
+    "text": "Ở góc chợ, lão thầy bói đang dùng một xấp giấy ố vàng lót chân bàn cho khỏi cập kênh. Nét chữ trên giấy trông quen quen.",
+    "tags": ["funny"],
+    "themes": ["fortune"],
+    "conditions": { "flagsAll": ["tan_quyen_manh_moi"] },
+    "weight": 6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Mua lại xấp giấy với giá một lạng",
+        "requires": { "stats": [{ "stat": "silver", "gte": 1 }] },
+        "result": {
+          "text": "Lão thầy bói tiếc rẻ cái chân bàn, nhưng nhận bạc. Ghép hai nửa lại, ngươi thấy cả bộ công pháp hiện ra đầy đủ, và nó hay hơn tên gọi của nó.",
+          "effects": { "silver": -1, "learnTechnique": "tho_nap_hoan_quyen", "clearFlags": ["co_tan_quyen", "tan_quyen_manh_moi"], "stat.comprehension": 2, "stat.happiness": 5 }
+        }
+      },
+      {
+        "text": "Xin lão cho xem rồi chép lại",
+        "check": { "stat": "stat.intellect", "difficulty": 55 },
+        "success": {
+          "text": "Ngươi chép trọn từng nét, lão thầy bói còn khen chữ ngươi đẹp. Hai nửa ghép lại vừa khít.",
+          "effects": { "learnTechnique": "tho_nap_hoan_quyen", "clearFlags": ["co_tan_quyen", "tan_quyen_manh_moi"], "stat.intellect": 2, "stat.happiness": 4 }
+        },
+        "fail": {
+          "text": "Chép được nửa chừng thì lão thầy bói giật lại: \"Chân bàn của ta!\" Ngươi mất cả buổi mà chưa đâu vào đâu.",
+          "effects": { "stat.happiness": -2 }
+        }
+      },
+      {
+        "text": "Để lại, chưa phải lúc",
+        "result": {
+          "text": "Ngươi đi. Lão thầy bói vẫn dùng xấp giấy ấy lót chân bàn, chắc còn lâu mới dùng việc khác.",
+          "effects": { "followUp": { "event": "tan_quyen_nua_truoc", "afterYears": [2, 4] }, "stat.daoHeart": 1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "bi_ha_doc",
+    "category": "accident",
+    "title": "Chén trà lạ vị",
+    "text": "Chén trà do người lạ mời hơi chát, hậu vị lại ngọt gắt. {name} đặt chén xuống thì thấy ngón tay tê dần.",
+    "tags": ["dark"],
+    "themes": ["poisoning", "mishap"],
+    "conditions": { "age": { "min": 14 }, "flagsNone": ["trung_doc"] },
+    "weight": 1,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Nôn ngay, rồi tìm thầy lang",
+        "requires": { "stats": [{ "stat": "silver", "gte": 30 }] },
+        "result": {
+          "text": "Thầy lang bắt mạch, lắc đầu rồi kê một thang thuốc đắng. Tốn bạc, nhưng độc không kịp ngấm.",
+          "effects": { "silver": -30, "stat.health": -5 }
+        }
+      },
+      {
+        "text": "Tự bắt mạch, tự chữa",
+        "check": { "stat": "stat.intellect", "difficulty": 50 },
+        "success": { "text": "Ngươi nhận ra vị độc, ép nó ra qua mười đầu ngón tay. Tay còn tê một buổi.", "effects": { "stat.health": -3, "stat.intellect": 1 } },
+        "fail": { "text": "Ngươi đoán sai vị độc, uống nhầm thuốc giải. Độc chưa lui mà bụng đã quặn.", "effects": { "stat.health": -10, "setFlags": ["trung_doc"], "followUp": { "event": "doc_phat_tac", "afterYears": [1, 2] } } }
+      },
+      {
+        "text": "Chịu đựng, nghĩ chắc không sao",
+        "result": {
+          "text": "Đêm đến, người nóng như lửa, rồi lạnh như băng. Sáng ra thì đỡ, nhưng độc vẫn còn ẩn trong người.",
+          "effects": { "stat.health": -10, "setFlags": ["trung_doc"], "followUp": { "event": "doc_phat_tac", "afterYears": [1, 2] } }
+        }
+      },
+      {
+        "text": "Uống Giải Độc Hoàn",
+        "requires": { "itemsAll": ["giai_doc_hoan"] },
+        "result": {
+          "text": "Viên hoàn xanh rêu trôi xuống họng, mồ hôi xanh lè toát ra. Độc tan, người nhẹ.",
+          "effects": { "removeItems": ["giai_doc_hoan"], "stat.health": 2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "doc_phat_tac",
+    "category": "accident",
+    "title": "Độc cũ phát tác",
+    "text": "Vết độc năm xưa lại nổi lên: tay chân tê dại, mắt thấy hai bóng. {name} nhớ ra mình chưa từng giải sạch.",
+    "tags": ["dark"],
+    "themes": ["poisoning"],
+    "conditions": { "flagsAll": ["trung_doc"] },
+    "weight": 20,
+    "urgent": true,
+    "choices": [
+      {
+        "text": "Uống Giải Độc Hoàn",
+        "requires": { "itemsAll": ["giai_doc_hoan"] },
+        "result": {
+          "text": "Độc theo mồ hôi xanh mà ra. Lần này sạch hẳn.",
+          "effects": { "removeItems": ["giai_doc_hoan"], "clearFlags": ["trung_doc"], "stat.health": 5 }
+        }
+      },
+      {
+        "text": "Vận công ép độc",
+        "requires": { "realm": { "min": "luyen_khi" } },
+        "check": { "stat": "stat.daoHeart", "difficulty": 50 },
+        "success": { "text": "Linh lực đi hết một vòng, độc bị dồn ra đầu ngón tay. Ngươi thở dài một hơi dài.", "effects": { "clearFlags": ["trung_doc"], "stat.health": -3, "stat.daoHeart": 1 } },
+        "fail": { "text": "Tâm không tĩnh, linh lực lệch đường. Độc chưa ra mà kinh mạch đã đau.", "effects": { "stat.health": -15, "followUp": { "event": "doc_phat_tac", "afterYears": [1, 2] } } }
+      },
+      {
+        "text": "Tìm thầy lang giải độc",
+        "requires": { "stats": [{ "stat": "silver", "gte": 50 }] },
+        "result": {
+          "text": "Thầy lang châm cứu ba ngày, độc rút theo từng mũi kim. Ví tiền nhẹ đi trông thấy.",
+          "effects": { "silver": -50, "clearFlags": ["trung_doc"], "stat.health": 3 }
+        }
+      },
+      {
+        "text": "Nghiến răng chịu",
+        "check": { "stat": "stat.physique", "difficulty": 45 },
+        "success": { "text": "Ngươi nằm liệt ba ngày, nhưng thân thể thắng được độc. Lần này thật sự hết.", "effects": { "clearFlags": ["trung_doc"], "stat.health": -8, "stat.physique": 1 } },
+        "fail": { "text": "Thân thể không chịu nổi, độc ăn sâu thêm một tầng.", "effects": { "stat.health": -15, "followUp": { "event": "doc_phat_tac", "afterYears": [1, 2] } } }
+      }
+    ]
+  },
+  {
+    "id": "kiem_cac_hoi_toi",
+    "category": "plunder",
+    "title": "Kiếm Các hỏi tội",
+    "text": "Một kiếm tu áo xám chặn đường {name}, mắt không nhìn mặt mà nhìn thanh phi kiếm bên hông. \"Kiếm này khắc tên sư đệ ta. Giải thích đi.\"",
+    "tags": ["violence"],
+    "themes": ["mishap", "justice"],
+    "conditions": { "itemsAll": ["phi_kiem_co_chu"], "flagsNone": ["kiem_duoc_giu"] },
+    "weight": 6,
+    "cooldownYears": 3,
+    "choices": [
+      {
+        "text": "Trả kiếm, nhận lỗi",
+        "result": {
+          "text": "Kiếm tu cầm kiếm, im lặng rất lâu, rồi gật đầu: \"Ngươi còn biết điều.\" Hắn không hỏi thêm.",
+          "effects": { "removeItems": ["phi_kiem_co_chu"], "karma": 5, "reputation": { "chinh": 5 }, "stat.daoHeart": 1 }
+        }
+      },
+      {
+        "text": "Kể rõ đầu đuôi vết thương trên xác",
+        "requires": { "flagsAll": ["dau_vet_u_ha"] },
+        "result": {
+          "text": "Ngươi tả lại vết thương do U Hà Huyết Ảnh Công. Kiếm tu nghe xong, nắm chặt chuôi kiếm: \"Kẻ giết sư đệ ta còn ở gần đây. Kiếm này ngươi cứ giữ, coi như tiền công dẫn đường.\"",
+          "effects": { "setFlags": ["kiem_duoc_giu"], "reputation": { "chinh": 10 }, "karma": 5, "stat.intellect": 1 }
+        }
+      },
+      {
+        "text": "Nói là nhặt được, không biết gì",
+        "check": { "stat": "stat.charm", "difficulty": 55 },
+        "success": { "text": "Kiếm tu nhìn ngươi từ đầu tới chân, rồi quay đi. Hắn không tin, nhưng không có chứng cứ.", "effects": { "stat.charm": 1, "karma": -2 } },
+        "fail": { "text": "Lời nói dối vụng về. Kiếm tu cười nhạt: \"Ba ngày nữa ta quay lại.\"", "effects": { "reputation": { "chinh": -8 }, "stat.happiness": -3 } }
+      },
+      {
+        "text": "Rút kiếm, không trả",
+        "result": {
+          "text": "Hai thanh kiếm cùng ra khỏi vỏ.",
+          "effects": {},
+          "fight": {
+            "foe": { "name": "Kiếm tu Tàng Phong", "realm": "same", "powerMul": 1.2, "path": "sword", "intent": "teach" },
+            "win": { "text": "Kiếm tu thu kiếm, mặt không đổi sắc: \"Kiếm Các sẽ nhớ chuyện này.\" Hắn đi.", "effects": { "setFlags": ["kiem_duoc_giu"], "reputation": { "chinh": -15 }, "karma": -3, "pathAffinity": { "sword": 3 }, "stat.daoHeart": 1 } },
+            "lose": { "text": "Kiếm tu hạ kiếm, lấy lại thanh phi kiếm, để lại cho ngươi một vết trên vai.", "effects": { "removeItems": ["phi_kiem_co_chu"], "stat.health": -20, "reputation": { "chinh": -5 } } }
+          }
+        }
+      }
+    ]
+  }
+]
