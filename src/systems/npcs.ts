@@ -213,7 +213,9 @@ export function ageNpcs(state: GameState, content: Content): GameState {
       n = { ...n, alive: false };
       if (close(content, n)) {
         const how = sudden ? 'gặp nạn qua đời' : `qua đời, hưởng thọ ${n.age} tuổi`;
-        lines.push({ text: `Nghe tin ${n.role} ${n.name} ${how}.`, tone: n.grudge > 0 ? 'normal' : 'bad' });
+        // The spouse or lover is not "người quen" (playtest 2026-10-12).
+        const who = state.romance.partner === n.id ? 'bạn đời' : state.romance.lover === n.id ? 'người thương' : n.role;
+        lines.push({ text: `Nghe tin ${who} ${n.name} ${how}.`, tone: n.grudge > 0 ? 'normal' : 'bad' });
       }
     }
     out.push(n);

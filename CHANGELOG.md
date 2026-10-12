@@ -2,6 +2,15 @@
 
 ## [Chưa phát hành]
 
+### Chơi thử 2 — Sửa lỗi hiển thị và cái chết ẩn (2026-10-12)
+- Tiêu đề sự kiện điền tên người (trước hiện nguyên "{lover} lâm bệnh").
+- Ăn linh quả / ngâm linh mạch mà chết thì chỉ còn câu chết, không kèm câu thành công. Các lựa chọn đó ghi rõ "càng lớn tuổi càng dễ mất mạng".
+- Bỏ ghi chú cũ "(GĐ 3–4)" trong Cải mệnh; câu già yếu, qua đời xưng "ngươi" thay vì "bạn".
+- Bạn đời / người thương qua đời không còn bị gọi là "người quen".
+- Có linh căn mà chưa nhập đạo thì bảng Tu luyện nói rõ cần công pháp, tông môn hoặc tiên sư (trước ghi "Không có linh căn").
+- Tu sĩ chết có văn bia riêng, không còn "Một kiếp phàm nhân".
+- "Động phủ có lò còn ấm" không xảy ra trước 14 tuổi.
+
 ### Góp ý chơi thử 7 — Tu luyện nhanh theo tư chất, kỳ ngộ theo khí vận (2026-10-12)
 - Hệ số tư chất trong tốc độ tu luyện đổi từ tuyến tính rất phẳng (0.75–1.25) sang lũy thừa: `3 ^ ((Căn cốt + Ngộ tính − 100) / 100)` (`balance.cultivation.aptitudeGrowth` = 3, tối thiểu 0.3). Người 50/50 giữ nguyên tốc độ; 95/95 nhanh gấp khoảng 2.7 lần (trước 1.2).
 - Ví dụ thiên tài (Đơn linh căn, Căn cốt và Ngộ tính 95, khí vận Hỗn Độn Linh Thể): Luyện Khí khoảng 6 năm, Trúc Cơ 8, Kim Đan 22, Nguyên Anh 55 (trước 13 / 18 / 49 / 121), chưa tính đột phá thất bại.

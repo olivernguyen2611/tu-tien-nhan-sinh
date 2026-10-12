@@ -1471,7 +1471,8 @@ export const LifeTextsSchema = z
     rewindOffer: z.string().min(1),
     rewindAge6: z.string().min(1),
     rewindRealm: z.string().min(1),
-    epitaph: z.object({ good: lines, bad: lines, plain: lines }).strict(),
+    /** plainCultivator: the plain pool for anyone past Phàm Nhân (playtest 2026-10-12). */
+    epitaph: z.object({ good: lines, bad: lines, plain: lines, plainCultivator: lines }).strict(),
   })
   .strict();
 export type LifeTexts = z.infer<typeof LifeTextsSchema>;

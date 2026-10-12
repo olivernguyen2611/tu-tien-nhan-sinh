@@ -112,6 +112,11 @@ export function rootName(root: SpiritRoot, content: Content): string {
   return `${grade} (${names.join(', ')})`;
 }
 
+/** The root can cultivate (any grade with speed > 0). */
+export function rootUsable(state: GameState, content: Content): boolean {
+  return !!state.cult.root && (content.balance.roots.gradeSpeed[state.cult.root.grade] ?? 0) > 0;
+}
+
 /** What the profile shows for the root. */
 export function rootLabel(state: GameState, content: Content): string {
   return state.cult.root ? rootName(state.cult.root, content) : 'Chưa thử';

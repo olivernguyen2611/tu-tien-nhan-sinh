@@ -374,7 +374,8 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.grantRoot) {
     const granted = grantRoot(next, content);
     next = granted.state;
-    if (granted.text) text = `${text} ${granted.text}`;
+    // A death is the whole story: no success line before it (playtest 2026-10-12).
+    if (granted.text) text = next.alive ? `${text} ${granted.text}` : granted.text;
   }
   // Task 4.6: the next step opens at once (not after a fight; that goes in win/lose).
   if (fx.chain && next.alive && findEvent(content, fx.chain)) next = { ...next, events: { ...next.events, pending: fx.chain } };

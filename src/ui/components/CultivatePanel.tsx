@@ -2,7 +2,7 @@
 import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
-import { inBottleneck, majorBreakthroughInfo, realmLabel, rootLabel, yearlyGain } from '../../systems/cultivation';
+import { inBottleneck, majorBreakthroughInfo, realmLabel, rootLabel, rootUsable, yearlyGain } from '../../systems/cultivation';
 import { craftViews } from '../../systems/crafts';
 import { careerIncome, careerLabel, careerViews } from '../../systems/career';
 import { currentTechnique, learnBlocked, techniqueById, techniqueSummary } from '../../systems/technique';
@@ -91,7 +91,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
         {soul && <p class="profile-note"><TermText text={`Nguyên Anh: ${soul.name}. ${soul.summary}`} /></p>}
         {mortal ? (
           <p class="story">
-            <TermText text={cult.root ? 'Không có linh căn, linh khí không đọng lại trong người. Đường tu tiên tạm thời khép cửa.' : 'Chưa thử linh căn. Có khi một ngày tiên sư sẽ ghé qua quê nhà.'} />
+            <TermText text={rootUsable(state, content) ? 'Có linh căn nhưng chưa nhập đạo: cần một công pháp nhập môn, tông môn hoặc tiên sư dẫn đường.' : cult.root ? 'Không có linh căn, linh khí không đọng lại trong người. Đường tu tiên tạm thời khép cửa.' : 'Chưa thử linh căn. Có khi một ngày tiên sư sẽ ghé qua quê nhà.'} />
           </p>
         ) : (
           <>

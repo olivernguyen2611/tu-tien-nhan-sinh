@@ -7,7 +7,7 @@
     "themes": [
       "fortune"
     ],
-    "conditions": {
+    "conditions": { "age": { "min": 14 }, 
       "anyOf": [
         {
           "realm": {

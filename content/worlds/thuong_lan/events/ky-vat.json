@@ -30,7 +30,7 @@
     "oncePerLife": true,
     "choices": [
       {
-        "text": "Nhảy xuống ngâm mình",
+        "text": "Nhảy xuống ngâm mình (càng lớn tuổi càng dễ mất mạng)",
         "result": {
           "text": "Nước len vào từng lỗ chân lông, tẩy qua tủy xương. Lúc bò lên, ngươi gầy rộc, nhưng có thứ gì đó trong kinh mạch đã khác.",
           "effects": {
@@ -92,7 +92,7 @@
     "oncePerLife": true,
     "choices": [
       {
-        "text": "Ngồi xuống, dẫn luồng tê dại đi khắp người",
+        "text": "Ngồi xuống, dẫn luồng tê dại đi khắp người (càng lớn tuổi càng dễ mất mạng)",
         "result": {
           "text": "Lôi khí xé kinh mạch thành từng sợi rồi hàn lại. Ngươi ngất đi giữa đồng, tỉnh dậy thì tóc dựng đứng cả tuần.",
           "effects": {

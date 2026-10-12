@@ -31,7 +31,7 @@ export function EventPopup({ state, content, result, onChoose, onClose }: {
   if (!result && !event) return null;
 
   return (
-    <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label={result?.title ?? event?.title}>
+    <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label={result?.title ?? (event && fillTemplate(event.title, state, content))}>
       <div class="event-card">
         {result ? (
           <>
@@ -44,7 +44,7 @@ export function EventPopup({ state, content, result, onChoose, onClose }: {
         ) : event && (
           <>
             <div class="kicker">{CATEGORY_NAMES[event.category] ?? event.category} · tuổi {state.character.age}</div>
-            <h2>{event.title}</h2>
+            <h2>{fillTemplate(event.title, state, content)}</h2>
             <p class="story"><TermText text={fillTemplate(event.text, state, content)} /></p>
             {visibleChoices(state, content, event).map((c) => {
               const trait = c.traitId ? content.traits.find((t) => t.id === c.traitId) ?? content.fateTalents.find((t) => t.id === c.traitId) : undefined;

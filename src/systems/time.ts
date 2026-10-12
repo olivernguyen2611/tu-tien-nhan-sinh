@@ -84,7 +84,7 @@ export function checkDeath(state: GameState, content: Content, forced?: DeathCau
   const pools = { old_age: texts.deathOldAge, breakthrough: texts.deathBreakthrough, ordeal: texts.deathOrdeal, illness: texts.deathIllness, combat: texts.deathCombat, tribulation: texts.deathTribulation };
   const line = rng.pick(pools[cause]);
   const karma = state.social.karma;
-  const pool = karma >= cfg.epitaphKarma ? texts.epitaph.good : karma <= -cfg.epitaphKarma ? texts.epitaph.bad : texts.epitaph.plain;
+  const pool = karma >= cfg.epitaphKarma ? texts.epitaph.good : karma <= -cfg.epitaphKarma ? texts.epitaph.bad : state.cult.realm !== 'pham_nhan' ? texts.epitaph.plainCultivator : texts.epitaph.plain;
   return {
     ...state,
     rng: rng.getState(),
