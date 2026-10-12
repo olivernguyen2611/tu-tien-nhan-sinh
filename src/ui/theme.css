@@ -382,6 +382,7 @@ button { font: inherit; color: inherit; }
 .choice:hover { border-color: var(--jade); }
 .choice.hidden-choice { border-color: var(--rare); color: var(--rare); font-weight: 600; }
 .choice .hint { display: block; font-size: 0.75rem; color: var(--muted); font-weight: 400; }
+.choice .hint.bad { color: var(--bad); }
 @keyframes fade { from { opacity: 0; } }
 @keyframes rise { from { transform: translateY(16px); opacity: 0; } }
 

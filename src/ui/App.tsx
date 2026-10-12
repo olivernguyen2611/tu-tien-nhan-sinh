@@ -35,6 +35,7 @@ import { chooseFate, rerollFate } from '../systems/fate';
 import { trainMartial } from '../systems/martial';
 import { romanceAction } from '../systems/romance';
 import { runSeclusion, seclude } from '../systems/seclusion';
+import { placeStrand } from '../systems/goldenCore';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -174,6 +175,7 @@ function Screens({ content }: { content: Content }) {
         onAdvance={() => setLife(life.seclusion ? runSeclusion(life, content) : advanceYear(life, content))}
         onFastForward={() => setLife(life.seclusion ? runSeclusion(life, content) : fastForward(life, content))}
         onSeclude={(years) => setLife(seclude(life, content, years))}
+        onPlaceStrand={(element) => setLife(placeStrand(life, content, element).state)}
         onFamilyAction={(relId, actionId) => {
           const r = performFamilyAction(life, content, relId, actionId);
           setLife(checkDeath(r.state, content));

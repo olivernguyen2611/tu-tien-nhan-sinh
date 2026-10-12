@@ -15,6 +15,7 @@ import { FamilyPanel } from '../components/FamilyPanel';
 import { CultivatePanel } from '../components/CultivatePanel';
 import { SectPanel, type SectAction } from '../components/SectPanel';
 import { FatePopup } from '../components/FatePopup';
+import { CorePopup } from '../components/CorePopup';
 import { EventPopup, type PopupResult } from '../components/EventPopup';
 import { Meter } from '../components/Meter';
 import { Term, TermText } from '../components/Tooltip';
@@ -43,7 +44,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onSeclude, onChoose, onFamilyAction, onRomance, onUseItem, onMarket, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onSeclude, onPlaceStrand, onChoose, onFamilyAction, onRomance, onUseItem, onMarket, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -53,6 +54,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onFastForward: () => void;
   /** Returns the outcome to show on the card. */
   onChoose: (index: number) => PopupResult;
+  /** Task 4.2: place one qi strand while forming the golden core. */
+  onPlaceStrand: (element: string) => void;
   /** Task 4.1: bế quan for this many years. */
   onSeclude: (years: number) => void;
   onFamilyAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
@@ -97,6 +100,10 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const [bagOpen, setBagOpen] = useState(false);
   const [marketOpen, setMarketOpen] = useState(false);
   const [cultivateOpen, setCultivateOpen] = useState(false);
+  // Kết đan takes over the screen; the Tu luyện sheet steps aside so its outcome shows in the log (task 4.2).
+  useEffect(() => {
+    if (state.cult.coreForming) setCultivateOpen(false);
+  }, [!!state.cult.coreForming]);
   const [sectOpen, setSectOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
   const logRef = useRef<HTMLElement>(null);
@@ -270,6 +277,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
           </div>
         </div>
       )}
+      {/* Kết đan sits above every sheet: the year waits for it (task 4.2). */}
+      {state.cult.coreForming && <CorePopup state={state} content={content} onPlace={onPlaceStrand} />}
     </div>
   );
 }

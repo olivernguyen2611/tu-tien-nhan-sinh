@@ -97,8 +97,26 @@
     "seclusionYear": "Bế quan tĩnh tu.",
     "seclusionEnd": "Xuất quan sau {years} năm. Tu vi giờ là {realm} {stage}. Thế gian ngoài kia đã khác.",
     "seclusionPeak": "Tu vi đã viên mãn, ngồi thêm cũng không lên được nữa. Ngươi xuất quan sớm.",
-    "seclusionLifespan": "Thọ nguyên còn chẳng bao nhiêu, trong lòng bất an. Ngươi xuất quan sớm."
+    "seclusionLifespan": "Thọ nguyên còn chẳng bao nhiêu, trong lòng bất an. Ngươi xuất quan sớm.",
+    "coreStart": "Linh lực trong đan điền xoáy lại, chờ được nén thành đan. Ba lần dẫn linh khí, ba lần quyết định.",
+    "coreRoot": "Luồng {element} hợp linh căn, chảy vào đan điền như về nhà.",
+    "coreFlow": "Luồng {element} nối tiếp luồng trước, tương sinh, đan sáng thêm một tầng.",
+    "coreClash": "Luồng {element} khắc với luồng trước. Một tiếng rạn khẽ trong đan điền.",
+    "corePlain": "Luồng {element} hòa vào, không nhanh không chậm.",
+    "coreSuccess": "Kim Đan thành hình, xoay chậm trong đan điền: {grade} Kim Đan. Thọ nguyên dài thêm, linh lực cuồn cuộn.",
+    "coreShattered": "Vết rạn lan ra, đan chưa kịp thành đã vỡ."
   },
+  "coreGradeNames": [
+    "Nhất phẩm",
+    "Nhị phẩm",
+    "Tam phẩm",
+    "Tứ phẩm",
+    "Ngũ phẩm",
+    "Lục phẩm",
+    "Thất phẩm",
+    "Bát phẩm",
+    "Cửu phẩm"
+  ],
   "gradeNames": {
     "hoang": "Hoàng",
     "huyen": "Huyền",

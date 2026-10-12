@@ -374,12 +374,21 @@ function checkCultivationTables(t: { balance?: Balance; realms?: RealmsFile; roo
       for (const r of mb.openRealms) {
         if (!realmIds.includes(r)) out.push({ file: bal, level: 'error', message: `majorBreakthrough.openRealms: cảnh giới không tồn tại "${r}"` });
       }
+      // Task 4.2: kết đan leads into a real realm; its fate tiers are foundation grades.
+      const cf = t.balance.coreForming;
+      if (!realmIds.includes(cf.realm)) out.push({ file: bal, level: 'error', message: `coreForming.realm: cảnh giới không tồn tại "${cf.realm}"` });
+      for (const g of [...cf.fateTier, ...Object.keys(cf.foundationBonus)]) {
+        if (!grades.includes(g)) out.push({ file: bal, level: 'error', message: `coreForming: phẩm đạo cơ không tồn tại "${g}"` });
+      }
     }
   }
   if (t.roots) {
     const f = 'roots.json';
     out.push(...duplicates(f, 'linh căn', t.roots.grades), ...duplicates(f, 'hệ', t.roots.elements), ...duplicates(f, 'thể chất', t.roots.bodies));
     const elements = new Set(t.roots.elements.map((e) => e.id));
+    for (const [a, b] of Object.entries(t.balance?.coreForming.generates ?? {})) {
+      if (!elements.has(a) || !elements.has(b)) out.push({ file: bal, level: 'error', message: `coreForming.generates: hệ không tồn tại "${a}" → "${b}"` });
+    }
     for (const e of t.roots.elements) {
       for (const b of e.beats) {
         if (!elements.has(b)) out.push({ file: f, level: 'error', message: `hệ "${e.id}" khắc hệ không tồn tại "${b}"` });

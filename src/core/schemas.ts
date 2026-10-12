@@ -642,6 +642,37 @@ export const BalanceSchema = z
         inheritShare: probability,
       })
       .strict(),
+    /** Task 4.2: kết đan, three rounds of placing qi strands into the core. */
+    coreForming: z
+      .object({
+        /** The realm entered through kết đan. */
+        realm: id,
+        rounds: z.number().int().min(1),
+        /** Strands offered each round, and the chance one of them is a variant element. */
+        offered: z.number().int().min(1),
+        variantChance: probability,
+        /** Starting purity: base + (comprehension − 50) × perPoint + the Trúc Cơ foundation's bonus. */
+        startPurity: z.number(),
+        comprehensionPerPoint: z.number(),
+        foundationBonus: z.record(id, z.number()),
+        /** Purity per strand: always, matching the root, flowing from the last (generates), matching the technique. */
+        baseGain: z.number(),
+        rootMatch: z.number(),
+        flow: z.number(),
+        techniqueMatch: z.number(),
+        /** Clashing with the last strand (one beats the other): purity lost and a crack; this many cracks break the core. */
+        clashPurity: z.number(),
+        crackLimit: z.number().int().min(1),
+        /** Ngũ hành tương sinh: element → the element it feeds. */
+        generates: z.record(id, id),
+        /** Breakthrough chance + (purity − 50) × this. */
+        purityChancePerPoint: z.number(),
+        /** Minimum purity for grades 1..8 (else 9); speed × and fate-talent tier (a foundation id) for grades 1..9. */
+        gradeThresholds: z.array(z.number()).length(8),
+        gradeSpeed: z.array(z.number().positive()).length(9),
+        fateTier: z.array(id).length(9),
+      })
+      .strict(),
     /** Task 4.1: bế quan (PLAN G.1: ×1.5 speed, no ordinary events). */
     seclusion: z
       .object({
@@ -1179,10 +1210,20 @@ export const RealmsFileSchema = z
     seclusionEnd: z.string().min(1),
     seclusionPeak: z.string().min(1),
     seclusionLifespan: z.string().min(1),
+    /** Task 4.2 kết đan. {grade} = "Tam phẩm", {element} = an element name. */
+    coreStart: z.string().min(1),
+    coreRoot: z.string().min(1),
+    coreFlow: z.string().min(1),
+    coreClash: z.string().min(1),
+    corePlain: z.string().min(1),
+    coreSuccess: z.string().min(1),
+    coreShattered: z.string().min(1),
       })
       .strict(),
     /** Display names for technique grades and lineages (task 2.4). */
-    gradeNames: z.record(id, z.string().min(1)),
+    /** Task 4.2: Kim Đan grade names, 1..9. */
+  coreGradeNames: z.array(z.string().min(1)).length(9),
+  gradeNames: z.record(id, z.string().min(1)),
     lineageNames: z.record(id, z.string().min(1)),
     /** Đạo cơ grades after breaking into Trúc Cơ, worst to best (task 2.6). */
     foundations: z.array(z.object({ id, name: z.string().min(1), description: z.string().min(1) }).strict()).min(1),

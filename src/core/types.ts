@@ -137,6 +137,9 @@ export interface GameState {
     buffs: { mul: number; until: number }[];
     /** Bonus % for the next big breakthrough only. */
     nextBonus: number;
+    /** Task 4.2: the core being formed (blocks the year), and the Kim Đan grade 1–9 once formed. */
+    coreForming: { round: number; offered: string[]; placed: string[]; purity: number; cracks: number; chancePct: number } | null;
+    coreGrade: number | null;
     /** Tâm ma seeds from dark choices (task 3.9; read by the heart-demon system later). */
     heartDemon: number;
     /** Lineages this life has followed (one-time onAdopt stats, task 3.8). */

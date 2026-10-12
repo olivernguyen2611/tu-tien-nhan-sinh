@@ -2,6 +2,27 @@
 
 ## [Chưa phát hành]
 
+### Task 4.2 — Kết đan (phần code, 2026-10-12)
+- **Mở đột phá Kim Đan** (`majorBreakthrough.openRealms`). Đột phá không còn là một lần quay, mà là **mini-game kết đan 3 lượt**. Năm sau phải chờ kết đan xong.
+- **Mỗi lượt** hiện 3 luồng linh khí, thỉnh thoảng có một luồng biến dị (Lôi, Băng, Phong, Ám). Chọn 1 luồng dẫn vào đan:
+  - +6 độ thuần.
+  - Đúng hệ linh căn: thêm +10.
+  - Tương sinh với luồng trước (Mộc→Hỏa→Thổ→Kim→Thủy→Mộc): thêm +10.
+  - Đúng hệ công pháp: thêm +4.
+  - Tương khắc với luồng trước: −10 và đan rạn. Rạn 2 lần thì đan vỡ, tính là đột phá thất bại.
+  - Nút nào cũng hiện trước hiệu quả.
+- **Độ thuần ban đầu** = 20 + (Ngộ tính − 50) × 0.3 + thưởng theo phẩm đạo cơ Trúc Cơ (hạ −8, thượng +8, hoàn mỹ +15).
+- **Kết quả**:
+  - Tỉ lệ thành công = tỉ lệ đột phá thường + (độ thuần − 50) × 0.3.
+  - Thành công thì độ thuần định phẩm, từ Nhất phẩm (≥ 95) tới Cửu phẩm.
+  - Phẩm Kim Đan thay đạo cơ quyết định tốc độ tu từ Kim Đan trở đi (×1.3 tới ×0.8).
+  - Phẩm trên Ngũ phẩm thì thọ thêm 10 năm mỗi phẩm.
+  - Phẩm cũng quyết định độ hiếm của thiên phú Nghịch Thiên Cải Mệnh lần này.
+- **Mô phỏng**: người chơi cẩn thận (Song linh căn, Ngộ tính 60, đạo cơ trung phẩm) thành công khoảng 31%, phẩm thường là Tam hoặc Tứ phẩm. Nhất, Nhị phẩm cần đạo cơ hoàn mỹ và Ngộ tính cao.
+- **Kỹ thuật**: tách phần thành công/thất bại của đột phá đại cảnh giới thành `majorSuccess` / `majorFailure` để kết đan dùng chung. Validator kiểm tra cảnh giới, hệ và phẩm đạo cơ trong `balance.coreForming`.
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "3 lượt xếp linh khí → phẩm 1–9"): toàn bộ luật chơi và con số trên, tên phẩm, và 7 câu nhật ký trong `realms.json`.
+- **Chưa làm**: ✍️ đan văn, chờ file thiết kế của chủ dự án.
+
 ### Task 4.1 — Bế quan (2026-10-12)
 - **Bảng Tu luyện có mục Bế quan.** Số năm chọn được theo cảnh giới (`balance.seclusion.options`):
   - Luyện Khí: 1, 3, 5.

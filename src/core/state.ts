@@ -125,7 +125,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     character: { name, gender, originId: origin.id, hometown, age: 0 },
     stats,
     aptitudes,
-    cult: { realm: 'pham_nhan', stage: 0, progress: 0, root: null, lifespan, fails: {}, injuredUntil: null, technique: null, learned: [], scrolls: [], buffs: [], nextBonus: 0, preceptBreaks: 0, lineagesAdopted: [], heartDemon: 0, foundation: null, lastMajorAttempt: null, lineage: null },
+    cult: { realm: 'pham_nhan', stage: 0, progress: 0, root: null, lifespan, fails: {}, injuredUntil: null, technique: null, learned: [], scrolls: [], buffs: [], nextBonus: 0, preceptBreaks: 0, lineagesAdopted: [], heartDemon: 0, coreForming: null, coreGrade: null, foundation: null, lastMajorAttempt: null, lineage: null },
     money: { silver: origin.silver, spiritStones: origin.spiritStones },
     social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0, trieu_dinh: 0, giang_ho: 0 } },
     flags: origin.noParents ? { no_parents: true, no_father: true, no_mother: true } : {},
@@ -150,7 +150,7 @@ const withYear = (s: GameState): GameState => ({ ...s, log: [...s.log, { age: s.
 
 /** One year passes; at most one event is rolled for the player to answer. */
 export function advanceYear(state: GameState, content: Content): GameState {
-  if (!state.alive || state.events.pending || state.fate || state.combat) return state;
+  if (!state.alive || state.events.pending || state.fate || state.combat || state.cult.coreForming) return state;
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
   const body = checkDeath(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content);

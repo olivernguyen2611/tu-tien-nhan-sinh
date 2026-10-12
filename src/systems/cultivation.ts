@@ -13,6 +13,7 @@ import { sectHooks } from './sect';
 import { offerFate } from './fate';
 import { breakthroughItem, carriedHooks, removeItems } from './items';
 import { pathSpeedBonus } from './paths';
+import { startCoreForming } from './goldenCore';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -177,7 +178,11 @@ export function yearlyGain(state: GameState, content: Content): number {
   // Bế quan (task 4.1, PLAN G.1 ×1.5).
   const secluded = state.seclusion ? content.balance.seclusion.speedMul : 1;
   const injured = state.cult.injuredUntil !== null && state.character.age < state.cult.injuredUntil ? cfg.minorFailure.injurySpeedMul : 1;
-  const foundation = state.cult.foundation ? content.balance.majorBreakthrough.foundationSpeed[state.cult.foundation] ?? 1 : 1;
+  // The Trúc Cơ foundation sets the pace in Trúc Cơ; from Kim Đan on, the core's grade does (task 4.2).
+  const coreGrade = state.cult.coreGrade;
+  const foundation = state.cult.realm === 'truc_co' && state.cult.foundation
+    ? content.balance.majorBreakthrough.foundationSpeed[state.cult.foundation] ?? 1
+    : coreGrade !== null ? content.balance.coreForming.gradeSpeed[coreGrade - 1] ?? 1 : 1;
   const buffs = state.cult.buffs.filter((b) => state.character.age < b.until).reduce((m, b) => m * b.mul, 1);
   return realm.speedPct * rootMul * aptitude * qi * techniqueMul(state, content) * bonus * dual * secluded * injured * foundation * buffs * bottleneckMul(state, content);
 }
@@ -368,7 +373,8 @@ export function majorBreakthroughInfo(state: GameState, content: Content): Major
 
 export interface BreakthroughResult {
   state: GameState;
-  success: boolean;
+  /** null: kết đan started, the outcome comes after its rounds (task 4.2). */
+  success: boolean | null;
   text: string;
   tone: 'good' | 'bad' | 'rare';
 }
@@ -392,32 +398,58 @@ function rollFoundation(state: GameState, content: Content, rng: Rng): string {
 export function attemptMajorBreakthrough(state: GameState, content: Content): BreakthroughResult | null {
   const info = majorBreakthroughInfo(state, content);
   if (!info || info.blocked) return null;
-  const texts = content.cultivation.realms.texts;
-  const cfg = content.balance.majorBreakthrough;
-  const minor = content.balance.cultivation.minorFailure;
   const rng = Rng.fromState(state.rng);
   let s: GameState = { ...state, cult: { ...state.cult, lastMajorAttempt: state.character.age, nextBonus: 0 } };
   const pill = breakthroughItem(state, content, true);
   if (pill) s = removeItems(s, [pill.id]);
   s = { ...s, itemUse: { ...s.itemUse, nextBreakthrough: 0 } };
-
-  if (rng.chance(info.chancePct / 100)) {
-    const foundation = info.target.id === 'truc_co' ? rollFoundation(s, content, rng) : null;
-    s = enterRealm(s, content, info.target.id, rng);
-    const perfect = foundation === 'hoan_my' ? content.balance.realmStages.perfectFoundationLifespan : 0;
-    const fails = Object.fromEntries(Object.entries(s.cult.fails).filter(([k]) => !k.startsWith(`${state.cult.realm}:`)));
-    s = { ...s, cult: { ...s.cult, foundation, fails, lifespan: s.cult.lifespan + perfect } };
-    const grade = content.cultivation.realms.foundations.find((g) => g.id === foundation);
-    const text = texts.majorSuccess
-      .replaceAll('{realm}', info.target.name)
-      .replaceAll('{grade}', grade ? `${grade.name}. ${grade.description}` : '');
-    const tone = foundation === 'hoan_my' || foundation === 'thuong' ? 'rare' : 'good';
-    // Nghịch Thiên Cải Mệnh: choose a fate talent before the next year (task 2.7).
-    const done = offerFate({ ...s, rng: rng.getState(), log: pushLine(s.log, { text, tone }) }, content);
-    return { state: done, success: true, text, tone };
+  // Kết đan is played out over three rounds first (task 4.2); the chance is decided at the end.
+  if (info.target.id === content.balance.coreForming.realm) {
+    const started = startCoreForming({ ...s, rng: rng.getState() }, content, info.chancePct);
+    return { state: started, success: null, text: content.cultivation.realms.texts.coreStart, tone: 'good' };
   }
+  if (rng.chance(info.chancePct / 100)) return majorSuccess(state, s, content, rng, info.target, null);
+  return majorFailure(state, s, content, rng);
+}
 
-  const key = `${state.cult.realm}:peak`;
+/**
+ * Into the next realm after a successful big breakthrough: Trúc Cơ rolls its foundation, Kim Đan takes
+ * the grade from kết đan. Then Nghịch Thiên Cải Mệnh (task 2.7).
+ */
+export function majorSuccess(before: GameState, s0: GameState, content: Content, rng: Rng, target: { id: string; name: string }, coreGrade: number | null): BreakthroughResult {
+  const texts = content.cultivation.realms.texts;
+  let s = s0;
+  const foundation = target.id === 'truc_co' ? rollFoundation(s, content, rng) : null;
+  s = enterRealm(s, content, target.id, rng);
+  const perfect = foundation === 'hoan_my' ? content.balance.realmStages.perfectFoundationLifespan : 0;
+  // Kim Đan above Ngũ phẩm lives longer (realmStages.goldenCoreLifespanPerGradeAbove5).
+  const coreLife = coreGrade !== null ? Math.max(0, 5 - coreGrade) * content.balance.realmStages.goldenCoreLifespanPerGradeAbove5 : 0;
+  const fails = Object.fromEntries(Object.entries(s.cult.fails).filter(([k]) => !k.startsWith(`${before.cult.realm}:`)));
+  s = { ...s, cult: { ...s.cult, foundation: foundation ?? s.cult.foundation, coreGrade: coreGrade ?? s.cult.coreGrade, fails, lifespan: s.cult.lifespan + perfect + coreLife } };
+  let text: string;
+  let tone: BreakthroughResult['tone'];
+  if (coreGrade !== null) {
+    text = texts.coreSuccess.replaceAll('{grade}', content.cultivation.realms.coreGradeNames[coreGrade - 1]);
+    tone = coreGrade <= 3 ? 'rare' : 'good';
+  } else {
+    const grade = content.cultivation.realms.foundations.find((g) => g.id === foundation);
+    text = texts.majorSuccess
+      .replaceAll('{realm}', target.name)
+      .replaceAll('{grade}', grade ? `${grade.name}. ${grade.description}` : '');
+    tone = foundation === 'hoan_my' || foundation === 'thuong' ? 'rare' : 'good';
+  }
+  // Nghịch Thiên Cải Mệnh: choose a fate talent before the next year (task 2.7).
+  const done = offerFate({ ...s, rng: rng.getState(), log: pushLine(s.log, { text, tone }) }, content);
+  return { state: done, success: true, text, tone };
+}
+
+/** A failed big breakthrough: lose progress, injury, lifespan, deviation or death (G.2). */
+export function majorFailure(before: GameState, s0: GameState, content: Content, rng: Rng, lead?: string): BreakthroughResult {
+  const texts = content.cultivation.realms.texts;
+  const cfg = content.balance.majorBreakthrough;
+  const minor = content.balance.cultivation.minorFailure;
+  let s = s0;
+  const key = `${before.cult.realm}:peak`;
   const failCount = (s.cult.fails[key] ?? 0) + 1;
   s = { ...s, cult: { ...s.cult, fails: { ...s.cult.fails, [key]: failCount } } };
   const kind = rng.weighted(['lose', 'injury', 'lifespan', 'deviation', 'death'] as const, (k) => cfg.failureWeights[k]);
@@ -442,10 +474,11 @@ export function attemptMajorBreakthrough(state: GameState, content: Content): Br
     };
     text = texts.majorDeviation;
   } else {
-    const dead = checkDeath({ ...s, rng: rng.getState() }, content, 'breakthrough');
+    const dead = checkDeath({ ...s, rng: rng.getState(), log: lead ? pushLine(s.log, { text: lead, tone: 'bad' }) : s.log }, content, 'breakthrough');
     const line = dead.log.at(-1)?.lines.at(-1)?.text ?? '';
     return { state: dead, success: false, text: line, tone: 'bad' };
   }
+  if (lead) text = `${lead} ${text}`;
   let log = pushLine(s.log, { text, tone: 'bad' });
   if (failCount === cfg.bottleneckFails) {
     log = pushLine(log, { text: texts.bottleneck, tone: 'bad' });
