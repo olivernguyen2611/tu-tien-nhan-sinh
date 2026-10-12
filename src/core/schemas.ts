@@ -1129,6 +1129,13 @@ export const BalanceSchema = z
         testAge: range,
         /** Combat bonus when your element beats the enemy's (K.3.3). */
         elementCounterBonus: z.number().min(0),
+        /**
+         * Playtest 2026-10-12: a Tiên Thiên Khí Vận that helps cultivation (an effect hook starting
+         * with one of cultivationHooks, add > 0) guarantees a spirit root no weaker than
+         * traitFloor[its rarity]; the highest floor among the traits wins.
+         */
+        cultivationHooks: z.array(z.string().min(1)).min(1),
+        traitFloor: z.record(id, id),
       })
       .strict(),
     /** PLAN.md G.1 / G.2: yearly cultivation and minor breakthroughs (task 2.3). */
@@ -1548,6 +1555,8 @@ export const RootsFileSchema = z
       .min(1),
     /** Log line when the root is revealed: {root} = name with elements, {description}. */
     revealText: z.string().min(1),
+    /** Playtest 2026-10-12: a cultivation khí vận guaranteed the root. {trait} = its name. */
+    traitGuaranteeText: z.string().min(1),
     elements: z
       .array(
         z

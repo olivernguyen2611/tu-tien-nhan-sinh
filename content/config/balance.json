@@ -110,7 +110,9 @@
     },
     "clanDescendantRolls": 2,
     "testAge": [6, 12],
-    "elementCounterBonus": 0.2
+    "elementCounterBonus": 0.2,
+    "cultivationHooks": ["cultivationSpeed", "breakthroughChance", "bottleneckResist", "tribulation", "element.", "path.sword.", "path.spell.", "path.weapon.", "path.arts.", "lineage."],
+    "traitFloor": { "ac": "ngu", "pham": "ngu", "luong": "tu", "uu": "tam", "tuyet": "song", "thien": "don", "than": "bien_di" }
   },
   "cultivation": {
     "aptitudeBase": 0.75,

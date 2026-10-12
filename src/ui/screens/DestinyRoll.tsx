@@ -4,6 +4,7 @@ import type { GameState } from '../../core/types';
 import { TermText } from '../components/Tooltip';
 import { blessingNames } from '../../systems/blessings';
 import { fingerDef } from '../../systems/goldenFinger';
+import { traitRootNote } from '../../systems/cultivation';
 
 const SLOT_WORDS: Record<number, string> = { 1: 'một', 2: 'hai', 3: 'ba', 4: 'bốn', 5: 'năm' };
 
@@ -56,6 +57,7 @@ export function DestinyRollScreen({ state, content, rollCount, unlimited, canLoc
                 </div>
                 <p class="trait-flavor">{t.flavor}</p>
                 <p class="trait-summary"><TermText text={t.summary} /></p>
+                {traitRootNote(content, t.id) && <p class="trait-summary root-note">{traitRootNote(content, t.id)}</p>}
               </div>
               <div class="trait-face trait-back" aria-hidden="true">命</div>
             </div>
