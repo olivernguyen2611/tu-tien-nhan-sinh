@@ -4,6 +4,8 @@
     "popupChanceLowRealm": 0.5,
     "popupChanceHighRealm": 0.1,
     "logLineChance": 0.6,
+    "minCooldownYears": 6,
+    "repeatDecay": 0.3,
     "check": { "base": 0.5, "perPoint": 0.015, "min": 0.05, "max": 0.95 }
   },
   "traits": {

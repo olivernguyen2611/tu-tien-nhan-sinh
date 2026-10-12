@@ -2,6 +2,11 @@
 
 ## [Chưa phát hành]
 
+### Góp ý chơi thử 4 — Bớt gặp lại cùng một sự kiện (2026-10-12)
+- Sự kiện lặp lại được giờ phải cách ít nhất 6 năm (`balance.events.minCooldownYears`), kể cả sự kiện trước đây không có thời gian chờ.
+- Mỗi lần đã gặp trong đời này, sự kiện đó hiếm đi: trọng số × 0.3 cho mỗi lần (`balance.events.repeatDecay`). Đời cũ trong save được tính như đã gặp 1 lần.
+- Chạy thử 60 đời: số sự kiện gặp từ 3 lần trở lên trong một đời giảm từ 14 xuống 6, số sự kiện khác nhau xuất hiện tăng nhẹ.
+
 ### Góp ý chơi thử 3 — Phu thê có chiều sâu (2026-10-12)
 - Với bạn đời / đạo lữ giờ có: **Bầu bạn** (thiện cảm và vui vẻ, mỗi năm một lần), **Tặng quà**, **Song tu** (cả hai cùng tu hành: tu vi hai người cùng tăng, nhiều hơn khi tình cảm sâu), **Làm lành** (khi thiện cảm dưới 50, tỉ lệ theo Mị lực), **Sinh con / Nhận con nuôi**, **Hòa ly / Giải trừ đạo lữ**.
 - Mỗi năm: cả năm không chăm sóc (không bầu bạn, quà, song tu, làm lành, con cái) thì bạn đời nguội dần. Nhà ấm (thiện cảm ≥ 70) thêm vui vẻ mỗi năm; nhà lạnh (< 30) mỗi năm buồn thêm; dưới 15 thì bạn đời có thể bỏ đi.
