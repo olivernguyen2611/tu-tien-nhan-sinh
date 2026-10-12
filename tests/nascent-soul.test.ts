@@ -43,4 +43,22 @@ describe('Hình thái Nguyên Anh (task 4.3)', () => {
     expect(r.text).toContain('Kiếm Anh');
     expect(hookSum(r.state, content, 'path.sword.power')).toBeGreaterThanOrEqual(0.25);
   });
+
+  it('a Phật soul adds its Đạo tâm once, when it forms', () => {
+    const calm: Content = { ...content, balance: { ...content.balance, tribulation: { ...content.balance.tribulation, realms: {} } } };
+    const monk: GameState = { ...kimDan, aptitudes: { ...kimDan.aptitudes, daoHeart: 60 }, cult: { ...kimDan.cult, lineage: 'phat' } };
+    const r = majorSuccess(monk, monk, calm, Rng.fromState(monk.rng), { id: 'nguyen_anh', name: 'Nguyên Anh' }, null);
+    expect(r.state.cult.soulForm).toBe('xa_loi_anh');
+    expect(r.state.aptitudes.daoHeart).toBe(70);
+  });
+
+  it('every hook a soul form uses has an effect in the game', () => {
+    const inert = ['divineSense', 'charmResist'];
+    for (const f of content.nascentSouls.forms) {
+      for (const e of f.effects) {
+        expect(inert).not.toContain(e.hook);
+        if (e.hook.startsWith('breakthroughChance')) expect(Math.abs(e.add ?? 0)).toBeGreaterThanOrEqual(1);
+      }
+    }
+  });
 });
