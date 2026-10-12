@@ -1,7 +1,7 @@
 // Tiên Thiên Khí Vận (PLAN.md task 1.3, spec 4.9.1): roll trait slots at birth,
 // reroll a limited number of times, then apply the chosen traits' stat hooks.
 import type { Content } from '../core/content';
-import { Rng } from '../core/rng';
+import { Rng, hashSeed } from '../core/rng';
 import type { EffectHook, Trait, TraitComboFile } from '../core/schemas';
 import type { GameState } from '../core/types';
 import { blessingGains, blessingNames } from './blessings';
@@ -81,14 +81,42 @@ export function comboHooks(state: GameState, content: Content): EffectHook[] {
 }
 
 /** Accept the offered traits and apply their immediate hooks (stats, lifespan). */
+/** Points the chosen khí vận add up to (balance.traits.fate.rarityScore). */
+export function fateScore(traits: Trait[], content: Content): number {
+  const score = content.balance.traits.fate.rarityScore;
+  return traits.reduce((sum, t) => sum + (score[t.rarity] ?? 0), 0);
+}
+
+/**
+ * Backlog 5: a better tiên thiên khí vận means higher starting stats, in proportion. Every listed stat
+ * is lifted to a floor that grows with the score (so a born genius never rolls low), then gets a flat
+ * bonus. Deterministic from the seed: no RNG is consumed.
+ */
+export function applyFateLift(state: GameState, traits: Trait[], content: Content): { stats: GameState['stats']; aptitudes: GameState['aptitudes']; lifted: boolean } {
+  const cfg = content.balance.traits.fate;
+  const score = fateScore(traits, content);
+  const stats = { ...state.stats };
+  const aptitudes = { ...state.aptitudes };
+  if (score <= 0) return { stats, aptitudes, lifted: false };
+  const floor = Math.min(cfg.floorMax, score * cfg.floorPerPoint);
+  const bonus = Math.min(cfg.bonusMax, score * cfg.bonusPerPoint);
+  for (const key of cfg.stats) {
+    const jitter = cfg.floorJitter > 0 ? hashSeed(`${state.seed}|fate|${key}`) % (cfg.floorJitter + 1) : 0;
+    const target = Math.min(100, floor + jitter * Math.min(1, floor / cfg.floorMax));
+    if (key in stats) stats[key as keyof typeof stats] = clamp(Math.max(stats[key as keyof typeof stats], target) + bonus);
+    else if (key in aptitudes) aptitudes[key as keyof typeof aptitudes] = clamp(Math.max(aptitudes[key as keyof typeof aptitudes], target) + bonus);
+  }
+  return { stats, aptitudes, lifted: score >= cfg.noteFrom };
+}
+
 export function confirmDestiny(state: GameState, content: Content): GameState {
   if (state.destiny.confirmed) return state;
   const chosen = state.destiny.offered
     .map((id) => content.traits.find((t) => t.id === id))
     .filter((t): t is Trait => !!t);
 
-  const stats = { ...state.stats };
-  const aptitudes = { ...state.aptitudes };
+  let stats = { ...state.stats };
+  let aptitudes = { ...state.aptitudes };
   let lifespanPct = 0;
 
   // Phúc báo from the last life (task 5b.8) give their one-time gains with the traits.
@@ -107,6 +135,11 @@ export function confirmDestiny(state: GameState, content: Content): GameState {
     }
   }
 
+  // Backlog 5: the khí vận lifts the starting stats after the traits' own gains.
+  const lift = applyFateLift({ ...state, stats, aptitudes }, chosen, content);
+  stats = lift.stats;
+  aptitudes = lift.aptitudes;
+
   const lifespan = Math.max(1, Math.round(state.cult.lifespan * (1 + lifespanPct)));
   const talentNames = rebirthTalentNames(state, content);
   const notable = chosen.filter((t) => t.rarity === 'thien' || t.rarity === 'than');
@@ -115,6 +148,7 @@ export function confirmDestiny(state: GameState, content: Content): GameState {
     ...birth.lines,
     { text: `Tiên thiên khí vận: ${chosen.map((t) => t.name).join(', ')}.`, tone: notable.length ? ('rare' as const) : ('normal' as const) },
     ...notable.map((t) => ({ text: t.flavor, tone: 'rare' as const })),
+    ...(lift.lifted ? [{ text: content.lifeTexts.fateLift, tone: 'rare' as const }] : []),
     ...combos.map((c) => ({ text: `Tổ hợp ẩn · ${c.name}: ${c.text}`, tone: 'rare' as const })),
     ...(state.blessings.length > 0 ? [{ text: `Phúc báo kiếp trước: ${blessingNames(state.blessings, content).join(', ')}.`, tone: 'rare' as const }] : []),
     ...(talentNames.length > 0 ? [{ text: `Thiên phú luân hồi: ${talentNames.join(', ')}.`, tone: 'good' as const }] : []),

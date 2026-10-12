@@ -627,6 +627,24 @@ export const BalanceSchema = z
         /** Task 5b.3: slots one may lock before rerolling, and the Luân Hồi points each lock costs (paid on confirming). */
         locks: z.number().int().min(0),
         lockCost: z.number().int().min(0),
+        /**
+         * Backlog 5: tiên thiên khí vận shapes the starting stats. Each trait adds rarityScore[rarity]
+         * points; the score lifts every stat in `stats` to at least floorPerPoint × score (capped at floorMax,
+         * plus 0..floorJitter per stat from the seed) and adds bonusPerPoint × score (capped at bonusMax).
+         */
+        fate: z
+          .object({
+            rarityScore: z.record(id, z.number().min(0)),
+            stats: z.array(z.enum([...MORTAL_STATS, ...APTITUDES])).min(1),
+            floorPerPoint: z.number().min(0),
+            floorMax: z.number().min(0).max(100),
+            floorJitter: z.number().int().min(0),
+            bonusPerPoint: z.number().min(0),
+            bonusMax: z.number().min(0),
+            /** The lift is mentioned in the birth log from this score on. */
+            noteFrom: z.number().min(0),
+          })
+          .strict(),
       })
       .strict(),
     character: z
@@ -1551,6 +1569,8 @@ export const LifeTextsSchema = z
     deathIllness: lines,
     /** Task 4.12 quỷ tu: the offer on the death screen, and the line when the soul rises. */
     ghostOffer: z.string().min(1),
+    /** Backlog 5: the khí vận lifted the starting stats (see balance.traits.fate). */
+    fateLift: z.string().min(1),
     ghostRise: z.string().min(1),
     /** Task 5b.10 Trùng sinh: the offer on the death screen, and the line on going back ({age} died, {back} back to). */
     rewindOffer: z.string().min(1),

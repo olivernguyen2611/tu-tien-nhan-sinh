@@ -105,8 +105,9 @@ describe('destiny roll', () => {
     const forced = { ...s, destiny: { ...s.destiny, offered: ['menh_nhu_dang_hoa', 'tu_khi_dong_lai', 'kheo_mom'] } };
     const done = confirmDestiny(forced, content);
     expect(done.traits).toEqual(['menh_nhu_dang_hoa', 'tu_khi_dong_lai', 'kheo_mom']);
-    expect(done.aptitudes.luck).toBe(Math.min(100, s.aptitudes.luck + 25));
-    expect(done.stats.charm).toBe(Math.min(100, s.stats.charm + 5));
+    // The khí vận only ever lifts stats on top of the traits' own gains (backlog 5).
+    expect(done.aptitudes.luck).toBeGreaterThanOrEqual(Math.min(100, s.aptitudes.luck + 25));
+    expect(done.stats.charm).toBeGreaterThanOrEqual(Math.min(100, s.stats.charm + 5));
     expect(done.cult.lifespan).toBe(Math.round(s.cult.lifespan * 0.7));
     expect(done.log[0].lines.some((l) => l.tone === 'rare')).toBe(true);
     expect(confirmDestiny(done, content)).toBe(done);

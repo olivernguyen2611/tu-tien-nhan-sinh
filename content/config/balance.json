@@ -27,7 +27,17 @@
     },
     "maxSlots": 5,
     "locks": 1,
-    "lockCost": 3
+    "lockCost": 3,
+    "fate": {
+      "rarityScore": { "pham": 0, "luong": 1, "uu": 2.5, "tuyet": 5, "thien": 8, "than": 12, "ac": 1 },
+      "stats": ["health", "intellect", "charm", "physique", "comprehension", "luck", "daoHeart"],
+      "floorPerPoint": 3.5,
+      "floorMax": 68,
+      "floorJitter": 8,
+      "bonusPerPoint": 0.6,
+      "bonusMax": 12,
+      "noteFrom": 5
+    }
   },
   "character": {
     "mortalStatRange": [
