@@ -40,7 +40,20 @@
 - Sửa 10 móc viết sai đơn vị: Long tượng chi lực chiến lực +10% (trước là +1000%), Thân như liễu yếu thương tích +20%, Khuynh quốc khuynh thành mua rẻ 10%, Đạo tâm như bàn thạch kháng tâm ma 20% (trước là miễn hoàn toàn); Độ Kiếp Thể và Đại Khí Vãn Thành đột phá đại cảnh giới +5% / +15% (trước gần như 0); Trung Châu đột phá +2%; trạng thái cực hạn cộng thọ nguyên theo tỉ lệ như mọi nơi khác.
 - Validator báo lỗi khi móc tính theo tỉ lệ (0.2 = 20%) mang số lớn hơn 2, hoặc móc tính theo điểm phần trăm (đột phá, thiên kiếp, bệnh) mang số dưới 1.
 - Nối các móc nội dung đã hứa mà engine chưa đọc: `npcAffinityStart` (thiện cảm khởi đầu với người mới), `ignoreElementWeakness` (bị khắc hệ không bị phạt), `divineSense` (thần thức giúp chạy trốn, `balance.combat.divineSenseEscape`), `craft.all.success`, `agingSlow` (già chậm `balance.aging.slowAgingYears` năm), `cannotWork` (liệt giường không đi làm được), `noLineageChange` (không đổi đạo thống), `trigger.everyNYears` (Tử Khí Đông Lai: mỗi 10 năm chắc có kỳ ngộ).
-- **Còn treo**: `charmResist` (chưa có hệ thống mị thuật), `counter` của Đảo Môi Tinh, `rewindOnDeath` của Nhất Niệm Hồi Quang, `trigger.cheatDeath` từ trạng thái Phúc tinh cao chiếu.
+- **Còn treo**: `charmResist` (chưa có hệ thống mị thuật), `counter` của Đảo Môi Tinh, `trigger.cheatDeath` từ trạng thái Phúc tinh cao chiếu.
+### Task 5b.10 — Trùng sinh (phần code, 2026-10-12)
+- Móc `rewindOnDeath` nay có tác dụng: khi chết, màn tổng kết đời có nút **Trùng sinh** (`src/systems/rewind.ts`).
+  - **Hồi Quang Kính** (vật phẩm mới, `{ "hook": "rewindOnDeath", "at": 6 }`): quay về năm 6 tuổi (`mortal-path.md` 3.3).
+  - Thiên phú **Nhất Niệm Hồi Quang** (F23, đã có từ 2.7): quay về lúc mới vào đại cảnh giới hiện tại (`fate-talents.md`).
+- Sau khi trùng sinh:
+  - Linh căn giữ nguyên.
+  - Bật cờ `ky_uc_kiep_truoc`, nên sự kiện có thể có lựa chọn ẩn "Ta biết chuyện này sẽ xảy ra" (`requires.flags`).
+  - Mỗi đời chỉ một lần.
+  - Bộ sinh ngẫu nhiên đổi hạt, nên những năm về sau không lặp lại y như cũ ("con bướm vỗ cánh").
+- Game tự lưu hai mốc để quay về: lúc 6 tuổi, và lúc mới vào mỗi đại cảnh giới. Save cũ được bổ sung mốc rỗng.
+- **Bổ sung kỹ thuật**: mô tả Hồi Quang Kính, câu chữ lúc trùng sinh (`life-texts.json`: `rewindOffer`, `rewindAge6`, `rewindRealm`).
+- **Chưa làm** (nội dung ✍️, chờ file của chủ dự án): sự kiện kỳ ngộ nhận Hồi Quang Kính, các lựa chọn ẩn "Ta biết chuyện này sẽ xảy ra", thiên phú luân hồi trùng sinh (5b.1).
+
 ### Task 5b.8 — Phúc báo (2026-10-12)
 - Theo `mortal-path.md` mục 3.1, dữ liệu trong `content/blessings.json`. Đời kết thúc khi còn là phàm nhân thì nhận Phúc báo cho kiếp sau:
   - **Đại thiện nhân** (nhân quả ≥ +60): đo linh căn quay 2 lần, lấy kết quả tốt hơn. Dùng móc mới `rootReroll`.

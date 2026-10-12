@@ -854,5 +854,13 @@
         "add": 0.1
       }
     ]
+  },
+  {
+    "id": "hoi_quang_kinh",
+    "name": "Hồi Quang Kính",
+    "kind": "artifact",
+    "description": "Gương đồng cổ, soi vào chỉ thấy chính mình lúc còn bé. Không ai biết nó soi ngược thời gian hay soi ngược lòng người.",
+    "summary": "Mang theo: chết thì trùng sinh về năm 6 tuổi, giữ ký ức kiếp trước, linh căn giữ nguyên. Một lần mỗi đời.",
+    "carried": [{ "hook": "rewindOnDeath", "at": 6 }]
   }
 ]
