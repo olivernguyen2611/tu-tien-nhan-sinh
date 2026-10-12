@@ -50,7 +50,12 @@ export function sectEligibility(state: GameState, content: Content, sectId: stri
   if (state.sect.id) return 'đang là đệ tử tông môn khác';
   if (state.sect.left.includes(sectId)) return 'đã từng rời đi, không được quay lại';
   const root = state.cult.root;
-  if (!root || (content.balance.roots.gradeSpeed[root.grade] ?? 0) <= 0) return 'cần có linh căn';
+  if (!root || (content.balance.roots.gradeSpeed[root.grade] ?? 0) <= 0) {
+    // Phật duyên (task 3.12): some sects take the rootless with a strong đạo tâm.
+    const need = sect.requires.rootlessMinDaoHeart;
+    if (need === undefined) return 'cần có linh căn';
+    return state.aptitudes.daoHeart >= need ? null : `không linh căn thì cần Đạo tâm ${need}`;
+  }
   const missing = statsShort(state, sect.requires.minStats);
   if (missing) return missing;
   if (sect.requires.oneOf) {
@@ -258,4 +263,23 @@ export function grantMaster(state: GameState, content: Content): GameState {
 export function sectLabel(state: GameState, content: Content): string | null {
   const sect = currentSect(state, content);
   return sect ? `${sect.name} · ${sect.ranks[state.sect.rank]}` : null;
+}
+
+/** Phật đạo precepts (task 3.12): a kill costs đạo tâm; too many breaks and a Phật sect expels you. */
+export function breakPrecept(state: GameState, content: Content): { state: GameState; text: string } {
+  if (state.cult.lineage !== 'phat' || !content.sectLife) return { state, text: '' };
+  const cfg = content.balance.buddhism.precepts;
+  const breaks = state.cult.preceptBreaks + 1;
+  let s: GameState = {
+    ...state,
+    aptitudes: { ...state.aptitudes, daoHeart: clamp(state.aptitudes.daoHeart + cfg.killDaoHeart) },
+    cult: { ...state.cult, preceptBreaks: breaks },
+  };
+  const lines: LogLine[] = [{ text: content.sectLife.texts.preceptBroken, tone: 'bad' }];
+  const sect = currentSect(s, content);
+  if (sect?.lineage === 'phat' && breaks >= cfg.maxBreaks) {
+    lines.push({ text: fill(content.sectLife.texts.expelled, { sect: sect.name }), tone: 'bad' });
+    s = { ...s, sect: { ...s.sect, id: null, rank: 0, contribution: 0, master: null, left: [...s.sect.left, sect.id] } };
+  }
+  return { state: { ...s, log: addLines(s, lines) }, text: lines.map((l) => l.text).join(' ') };
 }

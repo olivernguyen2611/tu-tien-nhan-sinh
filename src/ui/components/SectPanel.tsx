@@ -110,7 +110,7 @@ export function SectPanel({ state, content, onAction, onClose }: {
         ) : (
           <>
             <h2>Chưa có tông môn</h2>
-            <p class="profile-note">Có linh căn thì có thể lên núi xin bái nhập.</p>
+            <p class="profile-note">Có linh căn thì có thể lên núi xin bái nhập. Không linh căn mà Đạo tâm vững, cửa chùa vẫn mở.</p>
             {content.sects.filter((s) => s.recruitable).map((s) => {
               const reason = sectEligibility(state, content, s.id);
               return (

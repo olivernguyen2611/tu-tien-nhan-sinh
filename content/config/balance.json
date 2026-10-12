@@ -210,6 +210,9 @@
     "refreshes": 1,
     "extraRefreshLuck": 70
   },
+  "buddhism": {
+    "precepts": { "killDaoHeart": -10, "maxBreaks": 3 }
+  },
   "martial": {
     "minAge": 10,
     "combatPower": [1, 1.5, 2, 3, 5, 7, 9],

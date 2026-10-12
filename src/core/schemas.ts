@@ -102,6 +102,8 @@ export const EffectsSchema = z
     joinCareer: id.optional(),
     careerPromote: z.boolean().optional(),
     leaveCareer: z.boolean().optional(),
+    /** Task 3.12: this choice kills someone (Phật đạo precepts). */
+    kill: z.boolean().optional(),
     /** Task 3.11: martial path. */
     martialPromote: z.boolean().optional(),
     martialAttempt: z.boolean().optional(),
@@ -124,7 +126,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -674,6 +676,10 @@ export const BalanceSchema = z
         extraRefreshLuck: z.number(),
       })
       .strict(),
+    /** Task 3.12: Phật đạo precepts (techniques.md C5): killing costs đạo tâm; too many breaks and the temple expels you. */
+    buddhism: z
+      .object({ precepts: z.object({ killDaoHeart: z.number(), maxBreaks: z.number().int().min(1) }).strict() })
+      .strict(),
     /** Task 3.11: martial path for mortals (mortal-path.md 2b). Index i = stage V(i+1). */
     martial: z
       .object({
@@ -1047,6 +1053,8 @@ export const SectFileSchema = z.array(
       ranks: z.array(z.string().min(1)).min(2),
       requires: z
         .object({
+          /** Phật duyên (task 3.12): takes people without a usable root when đạo tâm reaches this. */
+          rootlessMinDaoHeart: z.number().optional(),
           minStats: SectStatsSchema.optional(),
           /** At least one must hold. */
           oneOf: z.array(z.object({ rootElements: z.array(id).optional(), minStats: SectStatsSchema.optional() }).strict()).optional(),
@@ -1084,6 +1092,9 @@ export const SectLifeSchema = z
         master: z.string().min(1),
         masterRefused: z.string().min(1),
         masterTitle: z.string().min(1),
+        /** Task 3.12: a Phật đạo cultivator kills; expelled after too many breaks ({sect}). */
+        preceptBroken: z.string().min(1),
+        expelled: z.string().min(1),
       })
       .strict(),
     missions: z

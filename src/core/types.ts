@@ -112,6 +112,8 @@ export interface GameState {
     buffs: { mul: number; until: number }[];
     /** Bonus % for the next big breakthrough only. */
     nextBonus: number;
+    /** Phật đạo precepts broken (task 3.12). */
+    preceptBreaks: number;
     /** Đạo thống (Tiên/Ma/Phật/Quỷ), chosen in GĐ 3; reads lineage.<x>.* hooks. */
     lineage: string | null;
   };

@@ -200,7 +200,7 @@ function Screens({ content }: { content: Content }) {
         onSectAction={(a) => {
           const r = a.kind === 'join' ? joinSect(life, content, a.sectId)
             : a.kind === 'mission' ? doMission(life, content, a.missionId)
-            : a.kind === 'learn' ? learnTechnique(life, content, a.techniqueId)
+            : a.kind === 'learn' ? (() => { const l = learnTechnique(life, content, a.techniqueId); return l && { ...l, state: enterFirstRealm(l.state, content) }; })()
             : a.kind === 'master' ? requestMaster(life, content)
             : leaveSect(life, content);
           if (!r || !r.text) return null;
