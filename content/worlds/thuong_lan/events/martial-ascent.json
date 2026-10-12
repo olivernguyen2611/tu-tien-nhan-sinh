@@ -1,0 +1,152 @@
+[
+  {
+    "id": "vd_cam_ung_tam_hoa",
+    "category": "mortal",
+    "title": "Cảm ứng Tam hoa",
+    "text": "Từ ngày bước vào Hóa cảnh, mỗi lần tĩnh tọa {name} lại thấy trên đỉnh đầu như có ba đốm lửa mờ: tinh, khí, thần. Chúng chực tụ lại rồi tan. Sách cũ chép: trăm người Hóa cảnh, may ra một người tụ được Tam hoa.",
+    "tags": ["rare"],
+    "conditions": { "realm": { "max": "pham_nhan" }, "martial": { "min": 4, "max": 4 }, "flagsNone": ["cam_ung_tam_hoa"] },
+    "weight": 8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đi tìm con đường ấy",
+        "result": { "text": "Ngươi biết mình cần ba thứ: thân thể tinh khiết, khí huyết sung mãn, tâm thần tĩnh lặng. Và một cơ duyên trời cho.", "effects": { "setFlags": ["cam_ung_tam_hoa"], "stat.daoHeart": 3, "stat.happiness": 3 } }
+      },
+      {
+        "text": "Hóa cảnh đã là đỉnh phàm gian, đủ rồi",
+        "result": { "text": "Ngươi thu tâm, sống nốt đời một tông sư. Ba đốm lửa thỉnh thoảng vẫn hiện về trong mộng.", "effects": { "setFlags": ["cam_ung_tam_hoa"], "stat.happiness": 6, "stat.daoHeart": -2 } }
+      }
+    ]
+  },
+  {
+    "id": "vd_tam_hoa_thac_bang",
+    "category": "mortal",
+    "title": "Thác băng ngàn năm",
+    "text": "Sâu trong núi tuyết có ngọn thác đóng băng ngàn năm, dưới chân là một vũng nước không bao giờ đông. Người ta đồn ai ngồi được dưới đó bảy ngày, tinh khí sẽ tự tinh thuần.",
+    "tags": ["rare"],
+    "conditions": { "realm": { "max": "pham_nhan" }, "martial": { "min": 4, "max": 4 }, "flagsAll": ["cam_ung_tam_hoa"] },
+    "weight": 0.25,
+    "luckAffected": true,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Ngồi dưới thác bảy ngày",
+        "check": { "stat": "stat.daoHeart", "difficulty": 82 },
+        "success": { "text": "Đêm thứ bảy, ba đốm lửa trên đỉnh đầu bùng lên rồi hợp làm một. Băng quanh ngươi tan thành hơi nước.", "effects": { "martialPromote": true, "stat.daoHeart": 5, "reputation": { "giang_ho": 20 } } },
+        "fail": { "text": "Ngày thứ năm, tâm thần ngươi loạn, phải bò ra khỏi vũng nước. Tinh khí vẫn được gột rửa đôi phần.", "effects": { "stat.daoHeart": 1, "stat.health": -15, "stat.physique": 1 } }
+      },
+      {
+        "text": "Ghi nhớ chỗ này, lúc khác quay lại",
+        "result": { "text": "Ngươi khắc dấu lên vách đá. Ngọn thác vẫn ở đó, nhưng cơ duyên thì không chờ ai.", "effects": { "stat.comprehension": 1, "stat.happiness": -1 } }
+      }
+    ]
+  },
+  {
+    "id": "vd_tam_hoa_lao_tang",
+    "category": "mortal",
+    "title": "Tiếng mõ nửa đêm",
+    "text": "Nghỉ chân ở ngôi chùa hoang, nửa đêm {name} nghe tiếng mõ đều đều. Một lão tăng không rõ từ đâu tới, gõ mõ mà không tụng kinh.",
+    "tags": ["rare"],
+    "conditions": { "realm": { "max": "pham_nhan" }, "martial": { "min": 4, "max": 4 }, "flagsAll": ["cam_ung_tam_hoa"] },
+    "weight": 0.25,
+    "luckAffected": true,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Ngồi nghe tới sáng",
+        "check": { "stat": "stat.comprehension", "difficulty": 80 },
+        "success": { "text": "Tiếng mõ thứ chín nghìn chín trăm chín mươi chín, thần của ngươi tĩnh tới mức nghe được tiếng tim mình ngừng đập. Rồi Tam hoa tụ đỉnh. Lão tăng đã đi tự lúc nào.", "effects": { "martialPromote": true, "stat.comprehension": 3, "karma": 3 } },
+        "fail": { "text": "Ngươi ngủ gật lúc canh tư. Sáng ra lão tăng biến mất, để lại một câu khắc trên mõ: \"Chưa tới lúc.\"", "effects": { "stat.daoHeart": 2, "stat.comprehension": 1 } }
+      },
+      {
+        "text": "Hỏi thẳng lão tăng con đường Tam hoa",
+        "result": { "text": "Lão tăng gõ thêm một tiếng: \"Hỏi thì đã xa.\" Rồi không nói gì nữa.", "effects": { "stat.daoHeart": 1, "stat.happiness": -2 } }
+      }
+    ]
+  },
+  {
+    "id": "vd_tam_hoa_loi_dinh",
+    "category": "mortal",
+    "title": "Sét đánh đỉnh núi",
+    "text": "Giông lớn kéo về. Sét liên tiếp đánh xuống đỉnh núi nơi {name} luyện công. Khí huyết trong người sôi lên như muốn đáp lời trời.",
+    "tags": ["rare", "violence"],
+    "conditions": { "realm": { "max": "pham_nhan" }, "martial": { "min": 4, "max": 4 }, "flagsAll": ["cam_ung_tam_hoa"] },
+    "weight": 0.2,
+    "luckAffected": true,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Đứng giữa đỉnh núi đón sét",
+        "check": { "stat": "stat.physique", "difficulty": 85 },
+        "success": { "text": "Tia sét thứ ba đánh trúng đỉnh đầu. Ngươi không chết. Tinh, khí, thần bị sét nung thành một khối.", "effects": { "martialPromote": true, "stat.physique": 3, "stat.health": -10 } },
+        "fail": { "text": "Ngươi bị đánh văng xuống sườn núi, tóc cháy xém, nằm liệt ba tháng.", "effects": { "stat.health": -30, "stat.daoHeart": 1 } }
+      },
+      {
+        "text": "Tìm hang trú mưa",
+        "result": { "text": "Ngươi ngồi trong hang nhìn trời đất nổi giận, thấy mình nhỏ bé lạ thường.", "effects": { "stat.daoHeart": 2 } }
+      }
+    ]
+  },
+  {
+    "id": "vd_cam_ung_ngu_khi",
+    "category": "mortal",
+    "title": "Ngũ tạng cộng minh",
+    "text": "Tam hoa đã tụ. Giờ {name} nghe được tiếng ngũ tạng: tim như lửa, gan như cây, phổi như kim, thận như nước, tỳ như đất. Chúng chỉ thiếu một lần hợp với ngũ hành trời đất là hóa linh căn.",
+    "tags": ["rare"],
+    "conditions": { "realm": { "max": "pham_nhan" }, "martial": { "min": 5, "max": 5 }, "flagsNone": ["cam_ung_ngu_khi"] },
+    "weight": 8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đi tìm đủ ngũ hành",
+        "result": { "text": "Ngươi biết cần năm khối linh tinh đủ ngũ hành, hoặc một đêm ngũ tinh liên châu.", "effects": { "setFlags": ["cam_ung_ngu_khi"], "stat.daoHeart": 3, "stat.happiness": 4 } }
+      }
+    ]
+  },
+  {
+    "id": "vd_ngu_khi_linh_tinh",
+    "category": "mortal",
+    "title": "Ngũ hành tề tụ",
+    "text": "Năm khối linh tinh kim, mộc, thủy, hỏa, thổ đặt quanh {name} thành vòng tròn, phát sáng như đáp lời ngũ tạng.",
+    "tags": ["rare"],
+    "conditions": { "realm": { "max": "pham_nhan" }, "martial": { "min": 5, "max": 5 }, "flagsAll": ["cam_ung_ngu_khi"], "itemsAll": ["linh_tinh_kim", "linh_tinh_moc", "linh_tinh_thuy", "linh_tinh_hoa", "linh_tinh_tho"] },
+    "weight": 5,
+    "cooldownYears": 2,
+    "choices": [
+      {
+        "text": "Dẫn ngũ hành nhập thể",
+        "check": { "stat": "stat.daoHeart", "difficulty": 70 },
+        "success": { "text": "Năm khối linh tinh vỡ vụn, năm luồng sáng chui vào ngũ tạng.", "effects": { "removeItems": ["linh_tinh_kim", "linh_tinh_moc", "linh_tinh_thuy", "linh_tinh_hoa", "linh_tinh_tho"], "martialPromote": true, "stat.happiness": 10 } },
+        "fail": { "text": "Ngũ hành xung khắc trong người, ngươi thổ huyết. Một khối linh tinh nứt toác.", "effects": { "removeItems": ["linh_tinh_tho"], "stat.health": -20, "stat.daoHeart": 1 } }
+      },
+      {
+        "text": "Đợi tâm thật tĩnh rồi mới thử",
+        "result": { "text": "Ngươi cất linh tinh vào túi, tĩnh tọa thêm một năm.", "effects": { "stat.daoHeart": 3 } }
+      }
+    ]
+  },
+  {
+    "id": "vd_ngu_khi_lien_chau",
+    "category": "mortal",
+    "title": "Ngũ tinh liên châu",
+    "text": "Đêm nay năm ngôi sao Kim, Mộc, Thủy, Hỏa, Thổ xếp thành một hàng trên trời. Trăm năm mới có một lần. Ngũ tạng của {name} rung lên theo.",
+    "tags": ["rare"],
+    "conditions": { "realm": { "max": "pham_nhan" }, "martial": { "min": 5, "max": 5 }, "flagsAll": ["cam_ung_ngu_khi"] },
+    "weight": 0.15,
+    "luckAffected": true,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Lên đỉnh núi cao nhất, mở lòng đón sao",
+        "check": { "stat": "stat.daoHeart", "difficulty": 80 },
+        "success": { "text": "Ánh sao rót xuống như suối. Đến lúc mặt trời mọc, ngũ khí đã triều nguyên.", "effects": { "martialPromote": true, "stat.daoHeart": 5 } },
+        "fail": { "text": "Mây kéo tới che mất hai ngôi sao. Ngươi chỉ hấp thụ được chút ít.", "effects": { "stat.daoHeart": 1, "stat.happiness": -5 } }
+      },
+      {
+        "text": "Ngắm sao thôi, không dám cưỡng cầu",
+        "result": { "text": "Đẹp. Trăm năm mới có một lần, và ngươi đã thấy.", "effects": { "stat.happiness": 5 } }
+      }
+    ]
+  }
+]

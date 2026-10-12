@@ -122,4 +122,36 @@ describe('martial path (task 3.11)', () => {
     const { martial: _m, ...old } = createLife({ seed: 'old' }, content);
     expect(migrate(makeSave(old as GameState, 1)).life.martial.stage).toBe(-1);
   });
+
+  it('playtest 2026-10-12: Hóa cảnh senses Tam hoa; kỳ ngộ lead to Tam hoa tụ đỉnh and Ngũ khí triều nguyên', () => {
+    const hoa = mortal(45, 90, { martial: { stage: 4, years: 0, bonus: 0, lastTrain: null } });
+    const sense = findEvent(content, 'vd_cam_ung_tam_hoa')!;
+    expect(eventWeight(hoa, content, sense)).toBeGreaterThan(0);
+    // The kỳ ngộ need the sensing first, and are rare.
+    const falls = findEvent(content, 'vd_tam_hoa_thac_bang')!;
+    expect(eventWeight(hoa, content, falls)).toBe(0);
+    const sensed = resolveChoice({ ...hoa, events: { ...hoa.events, pending: sense.id } }, content, 0).state;
+    expect(sensed.flags.cam_ung_tam_hoa).toBe(true);
+    expect(eventWeight(sensed, content, falls)).toBeGreaterThan(0);
+    expect(falls.weight).toBeLessThan(1);
+    // A success makes Tam hoa tụ đỉnh.
+    const strong = { ...sensed, aptitudes: { ...sensed.aptitudes, daoHeart: 100 } };
+    let tried = strong;
+    for (let i = 0; i < 30 && tried.martial.stage < 5; i++) {
+      tried = resolveChoice({ ...strong, rng: new Rng(`th${i}`).getState(), events: { ...strong.events, pending: falls.id } }, content, 0).state;
+    }
+    expect(tried.martial.stage).toBe(5);
+    // Ngũ khí: sense, then five linh tinh.
+    const five = ['linh_tinh_kim', 'linh_tinh_moc', 'linh_tinh_thuy', 'linh_tinh_hoa', 'linh_tinh_tho'];
+    const tam = { ...tried, flags: { ...tried.flags, cam_ung_ngu_khi: true }, inventory: Object.fromEntries(five.map((id) => [id, 1])) };
+    const gather = findEvent(content, 'vd_ngu_khi_linh_tinh')!;
+    expect(eventWeight(tam, content, gather)).toBeGreaterThan(0);
+    let up = tam;
+    for (let i = 0; i < 30 && up.cult.realm === 'pham_nhan'; i++) {
+      up = resolveChoice({ ...tam, rng: new Rng(`nk${i}`).getState(), events: { ...tam.events, pending: gather.id } }, content, 0).state;
+    }
+    expect(up.cult.realm).toBe('luyen_khi');
+    expect(up.cult.root?.grade).toBe('ngu');
+    expect(up.inventory.linh_tinh_kim ?? 0).toBe(0);
+  });
 });
