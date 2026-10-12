@@ -842,7 +842,7 @@
     "name": "Nhẫn cổ tàn hồn",
     "kind": "artifact",
     "description": "Chiếc nhẫn đồng xỉn màu. Đêm khuya thỉnh thoảng nó lẩm bẩm, phần lớn là chê ngươi.",
-    "summary": "Mang theo: tốc độ tu luyện +20%, Ngộ tính +5. Trong nhẫn có người.",
+    "summary": "Mang theo: tốc độ tu luyện +20%, bình cảnh dễ vượt hơn 10%. Trong nhẫn có người.",
     "forSale": false,
     "carried": [
       {
@@ -850,8 +850,8 @@
         "add": 0.2
       },
       {
-        "hook": "stat.comprehension",
-        "add": 5
+        "hook": "bottleneckResist",
+        "add": 0.1
       }
     ]
   }
