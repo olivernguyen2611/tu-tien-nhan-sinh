@@ -1344,6 +1344,8 @@ export const BalanceSchema = z
         rootlessDaoHeartMax: z.number().positive(),
         /** Switching techniques loses this % of the current bar. */
         switchLossPct: z.number().min(0).max(100),
+        /** Backlog 8: an adaptive technique (Thái Sơ Diễn Đạo Kinh) reshapes itself to its owner: extra speed share by root grade, or by a special body. */
+        adaptive: z.object({ rootGrade: z.record(id, z.number().min(0)), body: z.number().min(0) }).strict(),
       })
       .strict(),
     /** Task 2.4/2.5: sect numbers keyed by sect id (worlds/<id>/sects.json). */
@@ -1921,8 +1923,10 @@ export const TechniqueFileSchema = z.array(
         })
         .strict()
         .default({}),
-      /** Overrides balance.techniques.gradeMaxRealm (tàn quyển). */
+      /** Overrides balance.techniques.gradeMaxRealm (tàn quyển). Also how far an unfinished technique is opened so far (backlog 8). */
       maxRealm: id.optional(),
+      /** Backlog 8: follows its owner's root and body (balance.techniques.adaptive). */
+      adaptive: z.boolean().optional(),
       flavor: z.string().min(1),
       /** Rules the engine does not apply yet, shown to the player. */
       note: z.string().optional(),

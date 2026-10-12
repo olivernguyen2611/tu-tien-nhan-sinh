@@ -47,7 +47,17 @@ export function techniqueMul(state: GameState, content: Content): number {
   if (!tech) return 1;
   const cfg = content.balance.techniques;
   const match = techniqueMatches(tech, state.cult.root, content, state.cult.bodyId) ? 1 : cfg.mismatchMul;
-  return (cfg.gradeMul[tech.grade] ?? 1) * match * (cfg.lineageMul[tech.lineage] ?? 1);
+  return (cfg.gradeMul[tech.grade] ?? 1) * match * (cfg.lineageMul[tech.lineage] ?? 1) * adaptiveMul(tech, state, content);
+}
+
+/**
+ * Backlog 8: a technique that follows its owner (Thái Sơ Diễn Đạo Kinh) fits any root and gives extra
+ * speed the weaker the root is; a special body, which replaces the root, gets a flat share.
+ */
+export function adaptiveMul(tech: Technique, state: GameState, content: Content): number {
+  if (!tech.adaptive || !state.cult.root) return 1;
+  const cfg = content.balance.techniques.adaptive;
+  return 1 + (state.cult.bodyId ? cfg.body : cfg.rootGrade[state.cult.root.grade] ?? 0);
 }
 
 /** Highest realm this technique reaches, or null for no limit. */
@@ -148,8 +158,9 @@ export function techniqueSummary(state: GameState, content: Content): string | n
     `${names.gradeNames[tech.grade] ?? tech.grade} phẩm`,
     names.lineageNames[tech.lineage] ?? tech.lineage,
     techniqueMatches(tech, state.cult.root, content, state.cult.bodyId) ? 'hợp linh căn' : 'không hợp linh căn',
+    tech.adaptive ? 'tự thích ứng thể chất, linh căn' : '',
     maxName ? `tu tới ${maxName}` : 'không giới hạn cảnh giới',
-  ].join(' · ');
+  ].filter(Boolean).join(' · ');
 }
 
 /** Keep a technique scroll to practise later (task 2.8). */

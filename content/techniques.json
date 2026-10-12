@@ -301,8 +301,8 @@
     "grade": "thien",
     "lineage": "tien",
     "elements": "any",
-    "flavor": "Trang đầu trống trơn. Người đọc ngộ ra tới đâu, chữ hiện tới đó. Ngươi là người thứ hai trong mười vạn năm thấy được chữ.",
-    "note": "Cả Thương Lan giới chỉ có một bản. Hoài bích kỳ tội: có kẻ sẽ tìm tới.",
+    "flavor": "Trang đầu trống trơn. Người đọc ngộ ra tới đâu, chữ hiện tới đó. Ngươi là người thứ hai trong mười vạn năm thấy được chữ. Chương nào chưa hiện, chỉ là chưa tới lúc.",
+    "note": "Cả Thương Lan giới chỉ có một bản. Hoài bích kỳ tội: có kẻ sẽ tìm tới. Công pháp tự đổi theo người tu: linh căn càng yếu càng được bù, thể chất đặc biệt cũng vừa vặn. Các chương sau Hóa Thần còn niêm phong, mở dần theo từng bản cập nhật.",
     "effects": [
       {
         "hook": "breakthroughChance.major",
@@ -312,7 +312,9 @@
         "hook": "heartDemonResist",
         "add": 0.1
       }
-    ]
+    ],
+    "adaptive": true,
+    "maxRealm": "hoa_than"
   },
   {
     "id": "cuu_chuyen_kim_cot_quyet",
@@ -473,5 +475,178 @@
         "add": 3
       }
     ]
+  },
+  {
+    "id": "ho_anh_thanh_lien_quyet",
+    "name": "Hộ Anh Thanh Liên Quyết",
+    "grade": "dia",
+    "lineage": "phat",
+    "elements": "any",
+    "flavor": "Nguyên Anh như hài nhi ngồi trên đài sen, gió thổi không lay, lửa đốt không cháy. Chỉ cần lòng ngươi đừng động.",
+    "note": "Hợp với người đã thành Kim Đan, chuẩn bị kết anh.",
+    "effects": [
+      {
+        "hook": "heartDemonResist",
+        "add": 0.25
+      },
+      {
+        "hook": "lifespanPct",
+        "add": 0.15
+      },
+      {
+        "hook": "bottleneckResist",
+        "add": 0.2
+      }
+    ],
+    "requires": {}
+  },
+  {
+    "id": "huyet_hai_phan_anh_cong",
+    "name": "Huyết Hải Phần Anh Công",
+    "grade": "dia",
+    "lineage": "ma",
+    "elements": [
+      "hoa",
+      "am"
+    ],
+    "flavor": "Đốt cháy chính Nguyên Anh để mượn sức mười năm. Kẻ luyện công này không bao giờ sống lâu, nhưng chẳng ai dám bảo họ yếu.",
+    "note": "Hung hiểm: tâm ma dễ xâm nhập.",
+    "effects": [
+      {
+        "hook": "cultivationSpeed",
+        "add": 0.15
+      },
+      {
+        "hook": "lifesteal",
+        "add": 0.12
+      },
+      {
+        "hook": "heartDemonResist",
+        "add": -0.15
+      }
+    ],
+    "requires": {}
+  },
+  {
+    "id": "van_kiem_quy_tong_quyet",
+    "name": "Vạn Kiếm Quy Tông Quyết",
+    "grade": "dia",
+    "lineage": "tien",
+    "elements": [
+      "kim"
+    ],
+    "flavor": "Một kiếm thành vạn kiếm, vạn kiếm về một kiếm. Kiếm tu tới Nguyên Anh mới hiểu: kiếm ra khỏi vỏ hay trở về vỏ cũng đều là kiếm.",
+    "effects": [
+      {
+        "hook": "path.sword.power",
+        "add": 0.3
+      },
+      {
+        "hook": "combatPower.vsHigherRealm",
+        "add": 0.15
+      },
+      {
+        "hook": "divineSense",
+        "add": 0.1
+      }
+    ],
+    "requires": {}
+  },
+  {
+    "id": "bat_dong_kim_than_quyet",
+    "name": "Bất Động Kim Thân Quyết",
+    "grade": "dia",
+    "lineage": "phat",
+    "elements": [
+      "kim",
+      "tho"
+    ],
+    "flavor": "Thân thể và Nguyên Anh luyện chung một lò. Thân bất động thì anh bất động, trời sập cũng chỉ là chuyện của trời.",
+    "effects": [
+      {
+        "hook": "path.body.power",
+        "add": 0.3
+      },
+      {
+        "hook": "injuryReduce",
+        "add": 0.25
+      },
+      {
+        "hook": "lifespanPct",
+        "add": 0.1
+      }
+    ],
+    "requires": {}
+  },
+  {
+    "id": "van_yeu_hoa_hinh_phap",
+    "name": "Vạn Yêu Hóa Hình Pháp",
+    "grade": "dia",
+    "lineage": "yeu",
+    "elements": "root",
+    "flavor": "Yêu tộc hóa hình là một kiếp nạn, người học pháp này mượn kiếp nạn ấy để rèn thần thức: thấy được thứ mà cả người lẫn yêu đều chưa thấy.",
+    "effects": [
+      {
+        "hook": "craft.beast.affinity",
+        "add": 0.3
+      },
+      {
+        "hook": "divineSense",
+        "add": 0.25
+      },
+      {
+        "hook": "faction.yeu.reputation",
+        "add": 15
+      }
+    ],
+    "requires": {}
+  },
+  {
+    "id": "hu_khong_hoa_than_kinh",
+    "name": "Hư Không Hóa Thần Kinh",
+    "grade": "thien",
+    "lineage": "tien",
+    "elements": "any",
+    "flavor": "Thần thức tản ra thành hư không, hư không lại ngưng về thành thần thức. Kinh này không dạy thuật, chỉ dạy cách làm cho một ý niệm lớn bằng một đại vực.",
+    "note": "Công pháp cho người đã thành Nguyên Anh, đi tiếp con đường Hóa Thần.",
+    "effects": [
+      {
+        "hook": "divineSense",
+        "add": 0.4
+      },
+      {
+        "hook": "breakthroughChance.major",
+        "add": 6
+      },
+      {
+        "hook": "cultivationSpeed",
+        "add": 0.1
+      }
+    ],
+    "requires": {}
+  },
+  {
+    "id": "thien_ma_giai_the_dai_phap",
+    "name": "Thiên Ma Giải Thể Đại Pháp",
+    "grade": "thien",
+    "lineage": "ma",
+    "elements": "any",
+    "flavor": "Giải thể là tháo từng mảnh thân xác ra rồi lắp lại bằng ma khí. Kẻ luyện thành rồi khó mà bảo mình còn là người.",
+    "note": "Hung hiểm: tâm ma dễ xâm nhập.",
+    "effects": [
+      {
+        "hook": "cultivationSpeed",
+        "add": 0.2
+      },
+      {
+        "hook": "lifesteal",
+        "add": 0.15
+      },
+      {
+        "hook": "heartDemonResist",
+        "add": -0.2
+      }
+    ],
+    "requires": {}
   }
 ]
