@@ -56,6 +56,11 @@ export interface GameState {
   fate: { offered: string[]; refreshesLeft: number } | null;
   /** Task 5.4: the cultivation clan of this line: gia quy, sản nghiệp (property id → count). Passed on to heirs. */
   clan: { name: string; founded: number; founder: string; rules: string[]; properties: Record<string, number> } | null;
+  /**
+   * Task 5b.10 Trùng sinh: the life as it was at age 6 and at the start of the current major
+   * realm (without log or these checkpoints), for a rewindOnDeath hook to go back to.
+   */
+  checkpoints: { age6: Checkpoint | null; realm: Checkpoint | null };
   /** Task 5b.8: Phúc báo brought from the last life (blessings.json id; career = the path that earned it). */
   blessings: { id: string; career?: string }[];
   /** Task 5.7: lives before this one in the same line (tộc phả), oldest first. */
@@ -209,6 +214,9 @@ export interface GameState {
   };
   log: LogYear[];
 }
+
+/** A saved moment of the life (task 5b.10). */
+export type Checkpoint = Omit<GameState, 'log' | 'checkpoints'>;
 
 /** A foe built from a FoeSpec (task 3.3). */
 export interface Foe {
