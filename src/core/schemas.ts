@@ -645,6 +645,19 @@ export const BalanceSchema = z
         inheritShare: probability,
       })
       .strict(),
+    /** Task 5.1: founding one's own sect. */
+    founding: z
+      .object({
+        minRealm: id,
+        /** Spirit stones to open a mountain gate. */
+        cost: z.number().int().min(0),
+        /** How many tông quy to pick, and how long a name may be. */
+        maxRules: z.number().int().min(1),
+        nameLength: z.tuple([z.number().int().min(1), z.number().int().min(1)]),
+        /** Members on the founding day: base + reputation of the founder's realm. */
+        startMembers: z.record(id, z.number().int().min(0)),
+      })
+      .strict(),
     /** Task 4.9: taking disciples. */
     disciples: z
       .object({
@@ -1901,3 +1914,28 @@ export const DisciplesFileSchema = z
   })
   .strict();
 export type DisciplesFile = z.infer<typeof DisciplesFileSchema>;
+
+/** content/founding.json (task 5.1): founding one's own sect: name parts, tông quy, texts. */
+export const FoundingFileSchema = z
+  .object({
+    nameParts: z.object({ first: z.array(z.string().min(1)).min(1), second: z.array(z.string().min(1)).min(1), suffix: z.array(z.string().min(1)).min(1) }).strict(),
+    rules: z.array(
+      z
+        .object({
+          id,
+          name: z.string().min(1),
+          text: z.string().min(1),
+          /** New members a year × this. */
+          recruitMul: z.number().min(0),
+          karmaPerYear: z.number(),
+          /** Faction reputation changed once on founding. */
+          reputation: z.record(z.enum(['chinh', 'ma', 'tan_tu', 'yeu', 'trieu_dinh', 'giang_ho']), z.number()),
+          /** K.6 hooks on the founder while the rule stands. */
+          effects: z.array(EffectHookSchema),
+        })
+        .strict(),
+    ),
+    texts: z.object({ founded: z.string().min(1), leftOld: z.string().min(1) }).strict(),
+  })
+  .strict();
+export type FoundingFile = z.infer<typeof FoundingFileSchema>;

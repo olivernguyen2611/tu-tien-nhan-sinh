@@ -308,6 +308,13 @@
     "bargainLoseMul": 1.1,
     "maxDiscount": 0.3
   },
+  "founding": {
+    "minRealm": "kim_dan",
+    "cost": 300,
+    "maxRules": 3,
+    "nameLength": [2, 24],
+    "startMembers": { "kim_dan": 10, "nguyen_anh": 40, "hoa_than": 120 }
+  },
   "disciples": {
     "maxByRealm": { "truc_co": 1, "kim_dan": 3, "nguyen_anh": 5, "hoa_than": 9 },
     "age": [12, 16],

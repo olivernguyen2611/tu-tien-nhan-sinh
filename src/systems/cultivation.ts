@@ -10,6 +10,7 @@ import { difficultyHookSum } from './difficulty';
 import { careerHooks } from './career';
 import { currentTechnique, learnTechnique, techniqueCapReason, techniqueMul } from './technique';
 import { sectHooks } from './sect';
+import { ownSectHooks } from './ownSect';
 import { offerFate } from './fate';
 import { breakthroughItem, carriedHooks, removeItems } from './items';
 import { pathSpeedBonus } from './paths';
@@ -140,7 +141,7 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
   const body = state.cult.root?.body ? content.cultivation.roots.bodies.find((b) => b.id === state.cult.root!.body) : undefined;
   return [
     ...fromTraits, ...(body?.effects ?? []), ...careerHooks(state, content),
-    ...(currentTechnique(state, content)?.effects ?? []), ...sectHooks(state, content),
+    ...(currentTechnique(state, content)?.effects ?? []), ...sectHooks(state, content), ...ownSectHooks(state, content),
     ...state.talents.flatMap((id) => content.fateTalents.find((t) => t.id === id)?.effects ?? []),
     // Đạo thống (task 3.8).
     ...(content.lineages.find((l) => l.id === state.cult.lineage)?.effects ?? []),

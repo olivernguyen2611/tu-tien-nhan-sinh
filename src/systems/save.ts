@@ -96,6 +96,8 @@ export function migrate(save: SaveFile): SaveFile {
   if (life.cult.heartDemonTrial === undefined) life = { ...life, cult: { ...life.cult, heartDemonTrial: null } };
   // Task 4.2: no core yet.
   if (life.cult.coreGrade === undefined) life = { ...life, cult: { ...life.cult, coreForming: null, coreGrade: null } };
+  // Task 5.1: no sect of one's own.
+  if (life.ownSect === undefined) life = { ...life, ownSect: null };
   // Task 4.1: not in seclusion.
   if (life.seclusion === undefined) life = { ...life, seclusion: null };
   // Task 3.9: no tâm ma yet.

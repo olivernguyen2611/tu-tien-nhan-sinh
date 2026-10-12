@@ -347,7 +347,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 ### GĐ 5 — Tông phái & truyền thừa
 | # | Task |
 |---|---|
-| 5.1 | [ ] Lập tông phái: điều kiện, đặt tên, đạo thống, tông quy |
+| 5.1 | [x] Lập tông phái: điều kiện, đặt tên, đạo thống, tông quy |
 | 5.2 | [ ] Công trình + báo cáo tông môn hằng năm (1–3 quyết định, còn lại tự chạy) |
 | 5.3 | [ ] Sự kiện tông môn (khiêu khích, phản đồ, đại bỉ, ma đạo công sơn…) |
 | 5.4 | [ ] Gia tộc tu tiên: tộc phả, sản nghiệp, gia quy |

@@ -769,3 +769,8 @@ button { font: inherit; color: inherit; }
 .recipes summary { cursor: pointer; font-size: 0.85rem; color: var(--jade); }
 .recipe { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 6px 0; }
 .disciples { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 0; }
+
+/* Khai tông lập phái (task 5.1) */
+.sect-rules { margin: 4px 0; padding-left: 18px; font-size: 0.9rem; }
+.rule-option { display: flex; gap: 8px; align-items: flex-start; margin: 6px 0; font-size: 0.9rem; }
+.rule-option input { margin-top: 3px; }

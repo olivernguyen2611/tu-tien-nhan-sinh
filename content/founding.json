@@ -1,0 +1,128 @@
+{
+  "nameParts": {
+    "first": [
+      "Thanh",
+      "Huyền",
+      "Tử",
+      "Vân",
+      "Thiên",
+      "Lăng",
+      "Bích",
+      "Hàn",
+      "Kim",
+      "Minh",
+      "Thái",
+      "Vô"
+    ],
+    "second": [
+      "Tiêu",
+      "Hà",
+      "Phong",
+      "Nguyệt",
+      "Lôi",
+      "Sơn",
+      "Hư",
+      "Dương",
+      "Uyên",
+      "Tinh"
+    ],
+    "suffix": [
+      "Tông",
+      "Môn",
+      "Các",
+      "Cung",
+      "Điện",
+      "Phái"
+    ]
+  },
+  "rules": [
+    {
+      "id": "cam_sat_sinh",
+      "name": "Cấm sát sinh",
+      "text": "Đệ tử không được giết người, kể cả kẻ thù.",
+      "recruitMul": 0.8,
+      "karmaPerYear": 1,
+      "reputation": {
+        "chinh": 5
+      },
+      "effects": [
+        {
+          "hook": "heartDemonResist",
+          "add": 0.05
+        }
+      ]
+    },
+    {
+      "id": "manh_lam_vua",
+      "name": "Kẻ mạnh làm vua",
+      "text": "Ai mạnh thì nói, yếu thì nghe. Không cần lý lẽ.",
+      "recruitMul": 1.2,
+      "karmaPerYear": -1,
+      "reputation": {
+        "ma": 5
+      },
+      "effects": [
+        {
+          "hook": "combatPower",
+          "add": 0.05
+        }
+      ]
+    },
+    {
+      "id": "trong_nghia",
+      "name": "Trọng tình nghĩa",
+      "text": "Đồng môn có nạn, cả tông cùng gánh.",
+      "recruitMul": 1.0,
+      "karmaPerYear": 0,
+      "reputation": {
+        "giang_ho": 10
+      },
+      "effects": []
+    },
+    {
+      "id": "mo_cua_tan_tu",
+      "name": "Mở cửa cho tán tu",
+      "text": "Không hỏi xuất thân, chỉ hỏi chí hướng.",
+      "recruitMul": 1.5,
+      "karmaPerYear": 0,
+      "reputation": {
+        "tan_tu": 10
+      },
+      "effects": []
+    },
+    {
+      "id": "be_mon_tu_thu",
+      "name": "Bế môn tự thủ",
+      "text": "Không tranh với đời, chỉ lo tu luyện.",
+      "recruitMul": 0.5,
+      "karmaPerYear": 0,
+      "reputation": {},
+      "effects": [
+        {
+          "hook": "cultivationSpeed",
+          "add": 0.05
+        }
+      ]
+    },
+    {
+      "id": "mon_quy_nghiem",
+      "name": "Môn quy nghiêm minh",
+      "text": "Phạm quy một lần, phế tu vi đuổi khỏi núi.",
+      "recruitMul": 0.9,
+      "karmaPerYear": 0,
+      "reputation": {
+        "chinh": 3
+      },
+      "effects": [
+        {
+          "hook": "breakthroughChance",
+          "add": 2
+        }
+      ]
+    }
+  ],
+  "texts": {
+    "founded": "Ngươi khai tông lập phái trên một ngọn núi có linh mạch: {sect}, theo {lineage}. Ngày khai tông, {members} người tới bái sơn môn.",
+    "leftOld": "Ngươi rời {old} để tự mở môn hộ."
+  }
+}

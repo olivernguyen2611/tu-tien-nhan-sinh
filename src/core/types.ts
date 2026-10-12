@@ -55,6 +55,11 @@ export interface GameState {
   /** A talent choice waiting for the player (after a big breakthrough); blocks the next year. */
   fate: { offered: string[]; refreshesLeft: number } | null;
   /**
+   * Task 5.1: the sect this life founded (it is its master). Members, treasury and buildings
+   * grow from task 5.2 on.
+   */
+  ownSect: { name: string; lineage: string; rules: string[]; founded: number; members: number; treasury: number; buildings: Record<string, number> } | null;
+  /**
    * Bế quan (task 4.1): the age the door opens again, and when it closed; null when not in seclusion.
    * fixed: set by an event, so reaching the peak does not end it early (the point is to sit out the years).
    */

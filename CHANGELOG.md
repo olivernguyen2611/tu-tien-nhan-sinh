@@ -2,6 +2,24 @@
 
 ## [Chưa phát hành]
 
+### Task 5.1 — Khai tông lập phái (2026-10-12)
+- **Điều kiện**: từ Kim Đan, có 300 linh thạch (`balance.founding`). Bảng Tông môn có mục **Khai tông lập phái**.
+- **Khi khai tông**:
+  - Đặt tên tông môn, có nút gợi ý tên ghép từ `content/founding.json`, ví dụ "Thanh Tiêu Tông".
+  - Tông môn theo đạo thống của người chơi.
+  - Chọn tối đa 3 tông quy.
+  - Đang ở tông môn nào thì rời đi (không quay lại được).
+  - Ngày khai tông có 10 đệ tử ở Kim Đan, 40 ở Nguyên Anh, 120 ở Hóa Thần.
+- **6 tông quy**, mỗi quy đổi tốc độ thu đệ tử (dùng ở 5.2), nhân quả mỗi năm, danh vọng lúc khai tông và móc K.6 cho chưởng môn:
+  - Cấm sát sinh;
+  - Kẻ mạnh làm vua;
+  - Trọng tình nghĩa;
+  - Mở cửa cho tán tu;
+  - Bế môn tự thủ (tu luyện +5%);
+  - Môn quy nghiêm minh (đột phá +2).
+- Dòng danh hiệu trên đầu hiện "{tên tông} · Chưởng môn". Bảng Tông môn hiện tên, đạo thống, năm khai tông, số đệ tử, các tông quy.
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "điều kiện, đặt tên, đạo thống, tông quy"): mọi con số, bộ chữ ghép tên, 6 tông quy và câu văn trong `founding.json`.
+
 ### Task 4.9 — Thu đồ đệ (cơ bản) (2026-10-12)
 - **Thu đồ đệ** (tab Người quen):
   - Từ Trúc Cơ, mỗi năm thu được một đồ đệ.
