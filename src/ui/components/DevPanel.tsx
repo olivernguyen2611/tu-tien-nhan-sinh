@@ -10,6 +10,7 @@ import { activeCombos } from '../../systems/destiny';
 import { fingerDef } from '../../systems/goldenFinger';
 import { bodyLabel, rootLabel } from '../../systems/cultivation';
 import { npcById } from '../../systems/npcs';
+import { devPeople, devPersonCheat, personCheatsAvailable, type PersonCheat } from '../../systems/devPeople';
 import type { SaveMeta } from '../../systems/save';
 import type { RewindOption } from '../../systems/timeline';
 import {
@@ -79,6 +80,12 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
   const [bodyId, setBodyId] = useState(content.cultivation.roots.bodies[0]?.id ?? '');
   const [martialStage, setMartialStage] = useState('0');
   const spouse = npcById(state, state.romance.partner);
+  const people = devPeople(state);
+  const [personKey, setPersonKey] = useState('');
+  const person = people.find((p) => p.key === personKey) ?? people[0];
+  const [personRealm, setPersonRealm] = useState(content.cultivation.realms.realms[1]?.id ?? '');
+  const can = (k: PersonCheat['kind']) => !!person && personCheatsAvailable(person).includes(k);
+  const cheat = (c: PersonCheat) => person && onChange(devPersonCheat(state, content, person.key, c));
   const live = state.alive;
   const stats: Record<string, number> = { ...state.stats, ...state.aptitudes };
   const picked = events.some((e) => e.id === eventId) ? eventId : events[0]?.id ?? '';
@@ -217,6 +224,45 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devMeetNpc(state, content, 'enemy'))}>Gặp kẻ thù (oán 40)</button>
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devMeetNpc(state, content, 'debtor'))}>Gặp người mang ơn (ân 40)</button>
           </div>
+        </Section>
+
+        <Section title="Người có quan hệ">
+          <p class="profile-note">Chọn tên một người thân hoặc người quen rồi chỉnh họ. Người thân không có sổ ân oán, cảnh giới hay tư chất.</p>
+          {people.length === 0 ? <p class="profile-note">Chưa có ai.</p> : (
+            <>
+              <div class="dev-event">
+                <GPick value={person?.key ?? ''} onChange={setPersonKey} label="Người có quan hệ" options={people.map((p) => ({ id: p.key, name: p.name, group: p.group }))} />
+              </div>
+              {person && (
+                <>
+                  <div class="action-chips">
+                    {can('affinity') && <button class="chip-btn" disabled={!live} onClick={() => cheat({ kind: 'affinity', delta: -20 })}>Thiện cảm −20</button>}
+                    {can('affinity') && <button class="chip-btn" disabled={!live} onClick={() => cheat({ kind: 'affinity', delta: 20 })}>Thiện cảm +20</button>}
+                    {can('favor') && <button class="chip-btn" disabled={!live} onClick={() => cheat({ kind: 'favor', delta: 20 })}>Ân +20</button>}
+                    {can('grudge') && <button class="chip-btn" disabled={!live} onClick={() => cheat({ kind: 'grudge', delta: 20 })}>Oán +20</button>}
+                    {can('aptitude') && <button class="chip-btn" disabled={!live} onClick={() => cheat({ kind: 'aptitude', delta: 10 })}>Tư chất +10</button>}
+                    <button class="chip-btn" disabled={!live} onClick={() => cheat({ kind: 'age', delta: -10 })}>Tuổi −10</button>
+                    <button class="chip-btn" disabled={!live} onClick={() => cheat({ kind: 'age', delta: 10 })}>Tuổi +10</button>
+                    <button class="chip-btn" disabled={!live} onClick={() => cheat({ kind: 'lifespan', delta: 50 })}>Thọ +50</button>
+                    <button class="chip-btn" disabled={!live || !person.alive} onClick={() => cheat({ kind: 'alive', on: false })}>Cho chết</button>
+                    <button class="chip-btn" disabled={!live || person.alive} onClick={() => cheat({ kind: 'alive', on: true })}>Cho sống lại</button>
+                    <button class="chip-btn" disabled={!live} onClick={() => cheat({ kind: 'root', on: true })}>Cho linh căn</button>
+                    <button class="chip-btn" disabled={!live} onClick={() => cheat({ kind: 'root', on: false })}>Bỏ linh căn</button>
+                    {can('stage') && <button class="chip-btn" disabled={!live} onClick={() => cheat({ kind: 'stage' })}>Lên 1 tầng</button>}
+                    {can('remove') && <button class="chip-btn danger" disabled={!live} onClick={() => cheat({ kind: 'remove' })}>Xóa khỏi thế giới</button>}
+                  </div>
+                  {can('realm') && (
+                    <div class="dev-event">
+                      <Pick value={personRealm} onChange={setPersonRealm} label="Cảnh giới của người này">
+                        {content.cultivation.realms.realms.map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}
+                      </Pick>
+                      <button class="chip-btn" disabled={!live} onClick={() => cheat({ kind: 'realm', realmId: personRealm })}>Đặt cảnh giới</button>
+                    </div>
+                  )}
+                </>
+              )}
+            </>
+          )}
         </Section>
 
         <Section title="Phu thê">
