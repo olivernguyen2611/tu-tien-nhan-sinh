@@ -97,7 +97,7 @@ describe('techniques (task 2.4)', () => {
       choices: [{ text: 'a', result: { text: 'b', effects: { learnTechnique: 'khong_co', 'stat.happiness': 1 } } }],
     }] };
     expect(validateContent(files).map((p) => p.message).join()).toContain('công pháp không tồn tại "khong_co"');
-    const s = { ...cultivator('dan_khi_quyet'), events: { pending: 'x', history: {}, followUps: [] } };
+    const s = { ...cultivator('dan_khi_quyet'), events: { pending: 'x', history: {}, followUps: [], npc: null } };
     const event = EventFileSchema.parse([{ ...files['worlds/w/events/a.json'][0],
       choices: [{ text: 'a', result: { text: 'b', effects: { learnTechnique: 'hoa_van_quyet', 'stat.happiness': 1 } } }] }]);
     const withEvent = { ...content, events: event };

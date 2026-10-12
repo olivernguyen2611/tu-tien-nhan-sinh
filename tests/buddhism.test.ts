@@ -19,7 +19,7 @@ function rootless(daoHeart: number, patch: Partial<GameState> = {}): GameState {
     paths: {},
     traits: [],
     log: [...b.log, { age: 20, lines: [] }],
-    events: { pending: null, history: {}, followUps: [] },
+    events: { pending: null, history: {}, followUps: [], npc: null },
     cult: { ...b.cult, root: NONE },
     ...patch,
   };

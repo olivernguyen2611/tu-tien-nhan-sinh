@@ -42,6 +42,8 @@ export interface GameState {
   inventory: Record<string, number>;
   /** Task 3.1: item id → age last used (one use a year); ids whose once-per-life effect is spent; bonus for the next breakthrough; combat % for the next fight. */
   itemUse: { lastAge: Record<string, number>; spent: string[]; nextBreakthrough: number; nextCombat: number };
+  /** Task 3.4: people met outside the family, each with their own fate. */
+  npcs: Npc[];
   /** Task 3.3: the fight in progress; blocks the next year like a pending event. */
   combat: Battle | null;
   /** Task 3.2: market id → this year's bargain result (price multiplier). */
@@ -148,6 +150,8 @@ export interface GameState {
     history: Record<string, number>;
     /** Follow-up events booked by earlier choices. */
     followUps: { event: string; atAge: number }[];
+    /** Task 3.4: id of the NPC the pending event is about ({npc}). */
+    npc: string | null;
   };
   /** Stats stuck at an extreme (stat-extremes.json). */
   extremes: {
@@ -190,4 +194,36 @@ export interface Battle {
   outcomes: Pick<Fight, 'win' | 'lose' | 'fled'>;
   /** Event title that started it, for the log. */
   source: string | null;
+  /** Task 3.4: the foe is this NPC (killing them goes through killNpc). */
+  npcId: string | null;
+}
+
+/** Task 3.4: an NPC who lives, cultivates, ages and remembers what the player did. */
+export interface Npc {
+  id: string;
+  name: string;
+  gender: Gender;
+  age: number;
+  lifespan: number;
+  alive: boolean;
+  /** How the player knows them: bằng hữu, ân nhân, kẻ thù, đồng môn… (free text from the event). */
+  role: string;
+  /** Cultivation; root false = a mortal who never cultivates. */
+  root: boolean;
+  aptitude: number;
+  realm: string;
+  stage: number;
+  progress: number;
+  /** npc-traits.json ids; nature stays hidden until natureKnown. */
+  surface: string | null;
+  nature: string | null;
+  natureKnown: boolean;
+  goal: string | null;
+  /** Thiện cảm 0–100. */
+  affinity: number;
+  /** Sổ ân oán: kindness owed to the player and grudge held against them (0–100 each). */
+  favor: number;
+  grudge: number;
+  /** Id of the NPC whose grudge this one inherited (kin of someone the player killed). */
+  heirOf: string | null;
 }

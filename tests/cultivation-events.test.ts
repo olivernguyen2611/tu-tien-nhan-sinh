@@ -23,7 +23,7 @@ function life(cult: Partial<GameState['cult']> = {}, patch: Partial<GameState> =
     traits: [],
     flags: {},
     log: [...b.log, { age, lines: [] }],
-    events: { pending: null, history: {}, followUps: [] },
+    events: { pending: null, history: {}, followUps: [], npc: null },
     cult: { ...b.cult, realm: 'luyen_khi', root: SONG, technique: 'dan_khi_quyet', lineage: 'tien', learned: ['dan_khi_quyet'], lifespan: 130, ...cult },
     ...patch,
   };

@@ -10,6 +10,7 @@ import { applyOutcome } from './events/engine';
 import { itemById, removeItems } from './items';
 import { mainPath as mainPathOf } from './paths';
 import { breakPrecept } from './sect';
+import { actor, killNpc } from './npcs';
 import { currentTechnique } from './technique';
 
 export interface CombatResult { state: GameState; text: string; tone: Tone }
@@ -86,6 +87,8 @@ export function combatSpeed(state: GameState, content: Content): number {
 export function makeFoe(state: GameState, content: Content, spec: FoeSpec, rng: Rng): Foe {
   const c = content.balance.combat;
   const here = realmIndex(content, state.cult.realm);
+  const npc = spec.fromNpc ? actor(state) : undefined;
+  if (npc) spec = { ...spec, name: npc.name, realm: npc.realm, stage: npc.stage };
   const realm = spec.realm === 'same' ? state.cult.realm
     : spec.realm === 'above' ? realmAt(content, here + 1)
     : spec.realm === 'below' ? realmAt(content, here - 1)
@@ -123,6 +126,7 @@ export function startBattle(state: GameState, content: Content, fight: Fight, so
     nextBonus: state.itemUse.nextCombat,
     outcomes: { win: fight.win, lose: fight.lose, fled: fight.fled },
     source,
+    npcId: fight.foe.fromNpc ? state.events.npc : null,
   };
   return { ...state, rng: rng.getState(), combat: battle, itemUse: { ...state.itemUse, nextCombat: 0 } };
 }
@@ -312,12 +316,12 @@ function end(s: GameState, content: Content, battle: Battle, how: 'lost' | 'fled
     next = lost.state;
     lines.push(...lost.lines);
     if (next.stats.health > 0) {
-      const o = applyOutcome({ ...next, rng: rng.getState() }, content, battle.outcomes.lose, rng);
+      const o = applyOutcome({ ...next, rng: rng.getState(), events: { ...next.events, npc: battle.npcId } }, content, battle.outcomes.lose, rng);
       next = o.state;
       lines.push({ text: o.text, tone: 'bad' });
     }
   } else if (how === 'fled' && battle.outcomes.fled) {
-    const o = applyOutcome({ ...next, rng: rng.getState() }, content, battle.outcomes.fled, rng);
+    const o = applyOutcome({ ...next, rng: rng.getState(), events: { ...next.events, npc: battle.npcId } }, content, battle.outcomes.fled, rng);
     next = o.state;
     lines.push({ text: o.text, tone: 'normal' });
   }
@@ -327,7 +331,7 @@ function end(s: GameState, content: Content, battle: Battle, how: 'lost' | 'fled
 /** Close the fight: sum it up in the year's log and free the year. */
 function finish(s: GameState, battle: Battle, lines: LogLine[], rng: Rng, tone: Tone): CombatResult {
   const head: LogLine = { text: `Giao chiến với ${battle.foe.name}${battle.source ? ` (${battle.source})` : ''}: thắng ${battle.won}, thua ${battle.lost} hiệp.`, tone: 'normal' };
-  const state: GameState = { ...s, rng: rng.getState(), combat: null, log: logLines(s, [head, ...lines]) };
+  const state: GameState = { ...s, rng: rng.getState(), combat: null, events: { ...s.events, npc: null }, log: logLines(s, [head, ...lines]) };
   return { state, text: lines.map((l) => l.text).join(' '), tone };
 }
 
@@ -354,7 +358,12 @@ export function settle(state: GameState, content: Content, choice: Aftermath): C
     s = breakPrecept({ ...s, social: karma(w.killKarma) }, content).state;
   }
   const lines: LogLine[] = [{ text: fill(content.combat.after[choice], foe, s), tone: choice === 'kill' ? 'bad' : 'good' }];
-  const o = applyOutcome({ ...s, rng: rng.getState() }, content, battle.outcomes.win, rng);
+  const o = applyOutcome({ ...s, rng: rng.getState(), events: { ...s.events, npc: battle.npcId } }, content, battle.outcomes.win, rng);
   lines.push({ text: o.text, tone: 'good' });
+  // Task 3.4: a named NPC killed leaves kin who remember.
+  if (choice === 'kill' && battle.npcId) {
+    const after = killNpc({ ...o.state, rng: rng.getState() }, content, battle.npcId);
+    return finish(after, battle, lines, Rng.fromState(after.rng), 'good');
+  }
   return finish(o.state, battle, lines, rng, 'good');
 }

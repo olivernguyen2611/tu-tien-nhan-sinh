@@ -8,6 +8,7 @@ import type { GameState, LogLine } from '../core/types';
 import { startBattle } from './combat';
 import { STAT_LABELS } from './deltas';
 import { addItems } from './items';
+import { createNpc } from './npcs';
 
 export type DevStat = (typeof MORTAL_STATS)[number] | (typeof APTITUDES)[number];
 export const DEV_STATS: DevStat[] = [...MORTAL_STATS, ...APTITUDES];
@@ -47,8 +48,25 @@ export function devAddKarma(state: GameState, delta: number): GameState {
 
 /** Open any event now, ignoring its conditions. */
 export function devTriggerEvent(state: GameState, content: Content, eventId: string): GameState {
-  if (!state.alive || !content.events.some((e) => e.id === eventId)) return state;
-  return devLog({ ...state, events: { ...state.events, pending: eventId } }, `gọi sự kiện ${eventId}`);
+  const event = content.events.find((e) => e.id === eventId);
+  if (!state.alive || !event) return state;
+  // An NPC-driven event needs its NPC: take the first living one with a matching ledger, else anyone alive.
+  const cfg = content.balance.npcs;
+  const alive = state.npcs.filter((n) => n.alive);
+  const fits = alive.find((n) => (event.npcTrigger === 'revenge' ? n.grudge >= cfg.revengeAt : event.npcTrigger === 'repay' ? n.favor >= cfg.repayAt : true));
+  const npc = event.npcTrigger ? (fits ?? alive[0])?.id ?? null : null;
+  return devLog({ ...state, events: { ...state.events, pending: eventId, npc } }, `gọi sự kiện ${eventId}`);
+}
+
+/** Meet a test NPC (task 3.4): a friend, an enemy with a grudge, or someone owing a kindness. */
+export function devMeetNpc(state: GameState, content: Content, kind: 'friend' | 'enemy' | 'debtor'): GameState {
+  if (!state.alive) return state;
+  const spec = kind === 'enemy' ? { role: 'kẻ thù', affinity: 10, grudge: 40 }
+    : kind === 'debtor' ? { role: 'người mang ơn', affinity: 70, favor: 40 }
+    : { role: 'bằng hữu', affinity: 75 };
+  const met = createNpc(state, content, { ...spec, realm: state.cult.realm, stage: state.cult.stage });
+  const n = met.state.npcs.find((x) => x.id === met.id)!;
+  return devLog(met.state, `gặp ${spec.role} ${n.name}`);
 }
 
 /** Skip `years` years; events that come up are dismissed unanswered. */

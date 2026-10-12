@@ -575,6 +575,13 @@ button { font: inherit; color: inherit; }
 .relative-age { margin-left: auto; font-size: 0.75rem; color: var(--muted); }
 .chip-btn { min-height: 34px; padding: 0 12px; border: 1px solid var(--jade); border-radius: 999px; background: none; color: var(--jade); font-weight: 600; cursor: pointer; white-space: nowrap; }
 .chip-btn:disabled { opacity: 0.5; cursor: default; }
+.tabs { display: flex; gap: 6px; margin: 4px 0 10px; }
+.tab { flex: 1; min-height: 40px; border: 1px solid var(--line); border-radius: var(--radius); background: none; color: var(--muted); font: inherit; font-family: var(--font-story); font-size: 1.0625rem; cursor: pointer; }
+.tab.on { border-color: var(--seal); color: var(--ink); font-weight: 700; }
+.npc-line { margin: 0 0 6px; }
+.npc-ledger { display: flex; gap: 12px; margin: 6px 0 0; font-size: 0.8125rem; font-weight: 600; }
+.npc-ledger .good { color: var(--good); }
+.npc-ledger .bad { color: var(--bad); }
 
 /* ---------- Death screen ---------- */
 .death-screen {

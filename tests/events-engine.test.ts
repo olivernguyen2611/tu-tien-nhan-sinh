@@ -44,6 +44,7 @@ const content: Content = {
   lineages,
   markets: [],
   combat,
+  npcTraits: { surface: [], nature: [], goals: [] },
 };
 const ev = (id: string) => findEvent(content, id)!;
 const at = (s: GameState, age: number, patch: Partial<GameState> = {}): GameState =>

@@ -240,6 +240,26 @@
     "weapon": { "artifactBonusMul": 1.5, "cultivationSpeed": 0 },
     "arts": { "itemActionMul": 2, "unarmedCombatPower": -0.2, "cultivationSpeed": 0 }
   },
+  "npcs": {
+    "max": 20,
+    "ageOffset": [-5, 15],
+    "minAge": 6,
+    "rootChance": 0.4,
+    "aptitude": [20, 80],
+    "speedBase": 0.5,
+    "speedDivisor": 100,
+    "deathPerYear": 0.004,
+    "fadePerYear": 1,
+    "revealAffinity": 70,
+    "newsAffinity": 60,
+    "revengeAt": 30,
+    "revengeChance": 0.2,
+    "repayAt": 30,
+    "repayChance": 0.15,
+    "revengeStrongerMul": 2,
+    "revealChance": 0.05,
+    "inheritShare": 0.5
+  },
   "combat": {
     "stagePct": 0.1,
     "physiqueBase": 0.8,

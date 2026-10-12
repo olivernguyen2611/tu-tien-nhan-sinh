@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -39,6 +39,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'martial.json') return MartialFileSchema;
     if (rest === 'lineages.json') return LineageFileSchema;
     if (rest === 'combat.json') return CombatTextsSchema;
+    if (rest === 'npc-traits.json') return NpcTraitsFileSchema;
     return null;
   }
   // Belongs to one world.
@@ -289,6 +290,13 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
         const tech = outcome?.effects.learnTechnique;
         if (tech && techniques && !techniques.some((x) => x.id === tech)) {
           problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: công pháp không tồn tại "${tech}"` });
+        }
+        // Task 3.4: {npc}, npc effects and a foe fromNpc need an NPC: picked by npcTrigger, required by conditions, or met here.
+        const hasNpc = !!event.npcTrigger || !!event.conditions.npc || !!choice.requires?.npc || !!fx?.meetNpc;
+        const npcText = /\{npc(Role|Kin)?\}/.test(`${event.text} ${choice.text} ${outcome?.text ?? ''} ${outcome?.fight?.win.text ?? ''} ${outcome?.fight?.lose.text ?? ''}`);
+        const usesNpc = npcText || !!fx?.npc || !!outcome?.fight?.foe.fromNpc || !!outcome?.fight?.win.effects.npc || !!outcome?.fight?.lose.effects.npc;
+        if (usesNpc && !hasNpc) {
+          problems.push({ file, level: 'error', message: `${where}, lựa chọn ${i + 1}: nhắc tới NPC ({npc}, npc, fromNpc) nhưng sự kiện không có NPC (cần npcTrigger, conditions.npc hoặc meetNpc)` });
         }
         const target = outcome?.effects.followUp?.event;
         if (target && !seen.has(target)) {

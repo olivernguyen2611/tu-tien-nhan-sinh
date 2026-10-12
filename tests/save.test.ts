@@ -35,6 +35,7 @@ const content: Content = {
   lineages,
   markets: [],
   combat,
+  npcTraits: { surface: [], nature: [], goals: [] },
   events: [],
   glossary: [],
   familyActions: [],
