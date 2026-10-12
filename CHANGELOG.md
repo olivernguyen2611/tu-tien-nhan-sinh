@@ -2,6 +2,14 @@
 
 ## [Chưa phát hành]
 
+### Task 3.5 — Thiên kiêu bảng (2026-10-12)
+- Thế giới có 12 thiên kiêu riêng (`balance.rankings`). Họ tự tu luyện nhanh hơn người thường, tự đột phá, có thể vẫn lạc. Ai quá 100 tuổi thì rời bảng, người trẻ mới lên thay.
+- Mỗi năm bảng xếp 10 người theo cảnh giới, tầng và tu vi. Người chơi có tên trên bảng nếu đã tu luyện và chưa quá 100 tuổi.
+- Nhật ký ghi khi người chơi lên bảng, lên hạng, đứng đầu, rớt bảng, quá tuổi, và khi một thiên kiêu trên bảng vẫn lạc.
+- Bảng Tu luyện có mục **Thiên kiêu bảng** (tên, cảnh giới, tông môn, tuổi; dòng của người chơi được tô).
+- Bảng được tạo vào năm đầu cần tới, kể cả save cũ. Thiên kiêu lớn tuổi hơn sẽ tu bù những năm đã qua. Bảng dùng dòng ngẫu nhiên riêng theo seed, không làm đổi các lần quay khác của kiếp.
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "cập nhật mỗi năm"): các con số trong `balance.rankings` và 8 câu văn trong `content/rankings.json`.
+
 ### Task 3.8 — Đạo thống × con đường (2026-10-12)
 - **Đạo thống** (PLAN K.3.1, file mới `content/lineages.json`): do công pháp chính quyết định, đổi công pháp là đổi đạo thống.
   - Tiên đạo: đột phá +3%.

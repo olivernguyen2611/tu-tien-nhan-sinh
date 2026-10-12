@@ -307,6 +307,19 @@
     "bargainWinMul": 0.85,
     "bargainLoseMul": 1.1
   },
+  "rankings": {
+    "count": 12,
+    "size": 10,
+    "ageOffset": [-2, 8],
+    "newAge": [12, 18],
+    "startAge": 10,
+    "maxAge": 100,
+    "aptitude": [70, 100],
+    "speedBase": 0.6,
+    "speedDivisor": 100,
+    "breakthroughMul": 1.5,
+    "deathPerYear": 0.01
+  },
   "crafts": {
     "minAge": 10,
     "startAffinity": [5, 30],

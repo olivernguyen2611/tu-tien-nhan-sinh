@@ -14,6 +14,7 @@ import { applyJobCrafts } from '../systems/crafts';
 import { careerYear } from '../systems/career';
 import { sectYear } from '../systems/sect';
 import { lineageYear, rollPaths } from '../systems/paths';
+import { rankingYear } from '../systems/rankings';
 
 export interface NewLifeInput {
   seed: string;
@@ -90,6 +91,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     bargains: {},
     combat: null,
     npcs: [],
+    ranking: { prodigies: [], rank: null },
     talents: [],
     fate: null,
     sect: { id: null, rank: 0, since: 0, contribution: 0, master: null, lastMission: null, lastMasterTry: null, left: [] },
@@ -129,7 +131,7 @@ export function advanceYear(state: GameState, content: Content): GameState {
   if (!state.alive || state.events.pending || state.fate || state.combat) return state;
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content);
+  const body = checkDeath(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content);
   const next = body.alive ? rollYearEvent(body, content) : body;
   // The year's log block exists before family news and the event are added to it.
   const log = next.log.slice();

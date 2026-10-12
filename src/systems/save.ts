@@ -92,6 +92,8 @@ export function migrate(save: SaveFile): SaveFile {
   if (life.combat === undefined) life = { ...life, combat: null };
   // Task 3.4: no NPCs met yet.
   if (life.npcs === undefined) life = { ...life, npcs: [] };
+  // Task 3.5: an empty board; rankingYear fills it next year.
+  if (life.ranking === undefined) life = { ...life, ranking: { prodigies: [], rank: null } };
   if (life.events.npc === undefined) life = { ...life, events: { ...life.events, npc: null } };
   if (life.combat && life.combat.npcId === undefined) life = { ...life, combat: { ...life.combat, npcId: null } };
   // Task 3.1: no items used yet.

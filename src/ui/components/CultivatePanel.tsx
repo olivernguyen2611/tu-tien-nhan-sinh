@@ -8,6 +8,7 @@ import { careerIncome, careerLabel, careerViews } from '../../systems/career';
 import { currentTechnique, learnBlocked, techniqueById, techniqueSummary } from '../../systems/technique';
 import { martialView } from '../../systems/martial';
 import { pathsView } from '../../systems/paths';
+import { rankingBoard } from '../../systems/rankings';
 import { Meter } from './Meter';
 import { TermText } from './Tooltip';
 
@@ -39,6 +40,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
   const careers = mortal ? careerViews(state, content) : [];
   const currentCareer = careerLabel(state, content);
   const paths = mortal ? null : pathsView(state, content);
+  const board = rankingBoard(state, content);
   const foundation = content.cultivation.realms.foundations.find((g) => g.id === cult.foundation);
 
   return (
@@ -182,6 +184,24 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
               </div>
             ))}
             {practiced && <p class="action-result good">{practiced}</p>}
+          </div>
+        )}
+
+        {board.length > 0 && (
+          <div class="crafts">
+            <h3 class="panel-sub">{content.rankings.title}</h3>
+            <p class="profile-note">{content.rankings.note}</p>
+            <ol class="ranking">
+              {board.map((r) => (
+                <li key={r.rank} class={r.player ? 'me' : undefined}>
+                  <span class="rank-no">{r.rank}</span>
+                  <span class="rank-name">
+                    <b>{r.name}</b> · {r.realm}
+                    <span class="muted rank-sub">{r.sect} · {r.age} tuổi</span>
+                  </span>
+                </li>
+              ))}
+            </ol>
           </div>
         )}
 

@@ -1,0 +1,10 @@
+{
+  "title": "Thiên kiêu bảng",
+  "note": "Xếp hạng tu sĩ trẻ dưới trăm tuổi của cả vùng, mỗi năm cập nhật một lần.",
+  "enter": "Thiên kiêu bảng năm nay có tên {name}, xếp hạng {rank}. Người trong tông nhìn ngươi khác hẳn.",
+  "rise": "Thiên kiêu bảng: {name} lên hạng {rank}.",
+  "top": "Thiên kiêu bảng: {name} đứng đầu. Từ nay ra đường phải đề phòng kẻ muốn thách đấu.",
+  "drop": "Thiên kiêu bảng năm nay không còn tên {name}. Người mới lên nhanh như măng sau mưa.",
+  "age": "Quá trăm tuổi, {name} không còn được tính là thiên kiêu nữa.",
+  "fallen": "Nghe tin thiên kiêu {prodigy} ({realm}) vẫn lạc. Thiên tài chết sớm, bảng lại đổi tên."
+}

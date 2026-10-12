@@ -587,6 +587,27 @@ export const BalanceSchema = z
         inheritShare: probability,
       })
       .strict(),
+    /** Task 3.5: Thiên kiêu bảng, the world's young prodigies. */
+    rankings: z
+      .object({
+        /** Prodigies the world keeps; size of the board shown. */
+        count: z.number().int().min(1),
+        size: z.number().int().min(1),
+        /** First prodigies' age = player's age + this; replacements start at newAge. */
+        ageOffset: z.tuple([z.number().int(), z.number().int()]),
+        newAge: z.tuple([z.number().int(), z.number().int()]),
+        /** Age they start cultivating; past maxAge nobody counts as a prodigy (the player neither). */
+        startAge: z.number().int().min(0),
+        maxAge: z.number().int().min(1),
+        aptitude: z.tuple([z.number().int(), z.number().int()]),
+        /** % of a stage a year = realm speedPct × (speedBase + aptitude / speedDivisor). */
+        speedBase: z.number().min(0),
+        speedDivisor: z.number().positive(),
+        /** Big breakthrough chance = balance.realms breakthroughChance × this. */
+        breakthroughMul: z.number().min(0),
+        deathPerYear: probability,
+      })
+      .strict(),
     /** Task 3.3: fights (PLAN.md K.4). */
     combat: z
       .object({
@@ -1508,3 +1529,18 @@ export const NpcTraitsFileSchema = z
   })
   .strict();
 export type NpcTraitsFile = z.infer<typeof NpcTraitsFileSchema>;
+
+/** content/rankings.json: Thiên kiêu bảng texts (task 3.5). {name}, {rank}, {prodigy}, {realm}. */
+export const RankingTextsSchema = z
+  .object({
+    title: z.string().min(1),
+    note: z.string().min(1),
+    enter: z.string().min(1),
+    rise: z.string().min(1),
+    top: z.string().min(1),
+    drop: z.string().min(1),
+    age: z.string().min(1),
+    fallen: z.string().min(1),
+  })
+  .strict();
+export type RankingTexts = z.infer<typeof RankingTextsSchema>;

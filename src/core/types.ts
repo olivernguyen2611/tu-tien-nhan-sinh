@@ -52,6 +52,8 @@ export interface GameState {
   talents: string[];
   /** A talent choice waiting for the player (after a big breakthrough); blocks the next year. */
   fate: { offered: string[]; refreshesLeft: number } | null;
+  /** Thiên kiêu bảng (task 3.5): the world's prodigies and the player's rank last year (null = not on the board). */
+  ranking: { prodigies: Prodigy[]; rank: number | null };
   /** Base aptitude 0–100 for each combat path (task 3.8); hooks add on top. */
   paths: Record<string, number>;
   /** Martial path (task 3.11): stage index (-1 before Tam lưu), training years toward the next, extra % for it. */
@@ -196,6 +198,20 @@ export interface Battle {
   source: string | null;
   /** Task 3.4: the foe is this NPC (killing them goes through killNpc). */
   npcId: string | null;
+}
+
+/** Task 3.5: a young prodigy on the Thiên kiêu bảng (not someone the player has met). */
+export interface Prodigy {
+  id: string;
+  name: string;
+  gender: Gender;
+  age: number;
+  /** Sect id of this world, or null for a tán tu. */
+  sect: string | null;
+  aptitude: number;
+  realm: string;
+  stage: number;
+  progress: number;
 }
 
 /** Task 3.4: an NPC who lives, cultivates, ages and remembers what the player did. */
