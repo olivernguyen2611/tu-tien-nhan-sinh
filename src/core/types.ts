@@ -330,7 +330,9 @@ export interface Npc {
   /** Id of the NPC whose grudge this one inherited (kin of someone the player killed). */
   heirOf: string | null;
   /** Task 4.9: the player's disciple, and the age they were last taught. */
-  disciple?: { since: number; lastTaught: number | null };
+  disciple?: { since: number; lastTaught: number | null; /** Task 5c.8: age of the last time each extra act was done (once a year each). */ acts?: Record<string, number> };
+  /** Task 5c.8: the technique a master handed down to this NPC (speeds their cultivation by its grade). */
+  technique?: string;
   /** Task 5.5: a khí vận chi tử (template id) and the age of the player when they came. */
   chosen?: { template: string; since: number; role?: 'protect' | 'exploit' | 'ignore' };
   /** Task 5c.1: a member of a sect the player joined (đồng môn), and the age the player last spent time with them. */
