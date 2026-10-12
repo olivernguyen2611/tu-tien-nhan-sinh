@@ -10,8 +10,8 @@ import { makeSave, migrate } from '../src/systems/save';
 import { act, settle } from '../src/systems/combat';
 
 const content = loadContent();
-const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'], body: null };
-const NONE: SpiritRoot = { grade: 'none', elements: [], body: null };
+const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'] };
+const NONE: SpiritRoot = { grade: 'none', elements: [] };
 
 function life(cult: Partial<GameState['cult']> = {}, patch: Partial<GameState> = {}, age = 20): GameState {
   const b = createLife({ seed: 'ev28' }, content);

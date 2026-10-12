@@ -25,15 +25,15 @@ export interface Relative {
   lastActions: Record<string, number>;
   /** Task 3.7: a child's spirit root, rolled at birth and shown from the root-test age. */
   root?: SpiritRoot | null;
+  /** A child's special body (thể chất đặc biệt), separate from the root; it stands in for the root when set. */
+  bodyId?: string | null;
 }
 
 /** Spirit root found by the test at 6–12 (task 2.2); ids from roots.json. */
 export interface SpiritRoot {
   grade: string;
-  /** Element ids; empty for no root or a special body. */
+  /** Element ids; empty for no root or when a special body stands in (grade the_chat; the body is `cult.bodyId`). */
   elements: string[];
-  /** Special body id when grade is a body. */
-  body: string | null;
 }
 
 export type DeathCause = 'old_age' | 'illness' | 'breakthrough' | 'ordeal' | 'combat' | 'tribulation';
@@ -170,6 +170,8 @@ export interface GameState {
     stage: number;
     progress: number;  // % of current stage
     root: SpiritRoot | null; // null until tested at 6–12
+    /** Special body (roots.json bodies), independent of the root; when set it replaces the root (grade the_chat). */
+    bodyId: string | null;
     lifespan: number;  // max age
     /** Failed breakthroughs per milestone ("<realm>:<stage>"), for the G.2 penalty. */
     fails: Record<string, number>;

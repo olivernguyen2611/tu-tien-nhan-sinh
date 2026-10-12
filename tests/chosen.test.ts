@@ -18,7 +18,7 @@ function master(): GameState {
     character: { ...b.character, age: 60 },
     log: [...b.log, { age: 60, lines: [] }],
     events: { ...b.events, followUps: [] },
-    cult: { ...b.cult, realm: 'truc_co', lineage: 'tien', root: { grade: 'song', elements: ['kim', 'hoa'], body: null } },
+    cult: { ...b.cult, realm: 'truc_co', lineage: 'tien', root: { grade: 'song', elements: ['kim', 'hoa'] } },
   };
 }
 

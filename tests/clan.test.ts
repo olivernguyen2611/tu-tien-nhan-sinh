@@ -21,7 +21,7 @@ function parent(children = 1, realm = 'truc_co'): GameState {
     money: { silver: 1000, spiritStones: 1000 },
     family: [...b.family, ...kids],
     log: [...b.log, { age: 60, lines: [] }],
-    cult: { ...b.cult, realm, root: { grade: 'song', elements: ['kim', 'hoa'], body: null } },
+    cult: { ...b.cult, realm, root: { grade: 'song', elements: ['kim', 'hoa'] } },
   };
 }
 
@@ -51,7 +51,7 @@ describe('gia tộc tu tiên (task 5.4)', () => {
     const speed = (g: string) => content.balance.roots.gradeSpeed[g] ?? 0;
     const avg = (s: GameState) => {
       let sum = 0;
-      for (let i = 0; i < 300; i++) sum += speed(inheritRoot(s, content, null, new Rng(`k${i}`)).grade);
+      for (let i = 0; i < 300; i++) sum += speed(inheritRoot(s, content, null, new Rng(`k${i}`)).root.grade);
       return sum / 300;
     };
     expect(avg(clan)).toBeGreaterThan(avg(plain) + 0.05);

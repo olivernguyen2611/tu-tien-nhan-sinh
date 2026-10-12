@@ -20,7 +20,7 @@ function crafter(alchemy: number, forging = 0, realm = 'luyen_khi'): GameState {
     money: { silver: 100, spiritStones: 200 },
     log: [...b.log, { age: 30, lines: [] }],
     crafts: { skills: { alchemy: { level: alchemy, affinity: 20 }, forging: { level: forging, affinity: 20 } }, lastPractice: null },
-    cult: { ...b.cult, realm, root: { grade: 'song', elements: ['moc', 'hoa'], body: null }, technique: 'dan_khi_quyet', lineage: 'tien' },
+    cult: { ...b.cult, realm, root: { grade: 'song', elements: ['moc', 'hoa'] }, technique: 'dan_khi_quyet', lineage: 'tien' },
   };
 }
 

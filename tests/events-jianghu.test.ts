@@ -27,7 +27,7 @@ function cultivator(age = 25, patch: Partial<GameState> = {}): GameState {
     money: { silver: 100, spiritStones: 200 },
     log: [...b.log, { age, lines: [] }],
     events: { pending: null, history: {}, followUps: [], npc: null },
-    cult: { ...b.cult, realm: 'luyen_khi', stage: 5, root: { grade: 'song', elements: ['kim', 'hoa'], body: null }, technique: 'dan_khi_quyet', lineage: 'tien' },
+    cult: { ...b.cult, realm: 'luyen_khi', stage: 5, root: { grade: 'song', elements: ['kim', 'hoa'] }, technique: 'dan_khi_quyet', lineage: 'tien' },
     ...patch,
   };
 }

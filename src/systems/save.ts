@@ -140,6 +140,24 @@ export function migrate(save: SaveFile, defaults?: GameState): SaveFile {
   return { ...stepped, life: { ...life, log } };
 }
 
+/** Before saveVersion 2 a special body lived in `root.body`; it is now `cult.bodyId` (children: `bodyId`). */
+function splitBody(life: GameState): GameState {
+  type OldRoot = { grade: string; elements: string[]; body?: string | null };
+  const old = life.cult.root as OldRoot | null;
+  const strip = (r: OldRoot) => ({ grade: r.grade, elements: r.elements });
+  let out = life;
+  if ((life.cult as Partial<GameState['cult']>).bodyId === undefined) {
+    out = { ...out, cult: { ...out.cult, root: old ? strip(old) : null, bodyId: old?.body ?? null } };
+  }
+  if (out.family.some((r) => (r.root as OldRoot | null | undefined)?.body)) {
+    out = { ...out, family: out.family.map((r) => {
+      const root = r.root as OldRoot | null | undefined;
+      return root?.body ? { ...r, root: strip(root), bodyId: root.body } : r;
+    }) };
+  }
+  return out;
+}
+
 function migrateSteps(save: SaveFile): SaveFile {
   // Fields added within saveVersion 1 get their empty defaults.
   let life = save.life as GameState & { extremes?: GameState['extremes'] };
@@ -242,6 +260,7 @@ function migrateSteps(save: SaveFile): SaveFile {
       },
     };
   }
+  life = splitBody(life);
   return life === save.life ? save : { ...save, life };
 }
 

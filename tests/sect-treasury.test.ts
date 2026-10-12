@@ -6,7 +6,7 @@ import { joinSect, nextRankNeed } from '../src/systems/sect';
 import { buyTreasury, merit, treasuryViews } from '../src/systems/sectTreasury';
 
 const content = loadContent();
-const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'], body: null };
+const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'] };
 
 function member(contribution: number): GameState {
   const b = createLife({ seed: 'treasury' }, content);

@@ -14,7 +14,7 @@ const fresh = createLife({ seed: 'dai-vuc', originId: 'nong_dan' }, content);
 const at = (realm: string, age = 30): GameState => ({
   ...fresh,
   character: { ...fresh.character, age },
-  cult: { ...fresh.cult, realm, root: { grade: 'song', elements: ['kim', 'hoa'], body: null } },
+  cult: { ...fresh.cult, realm, root: { grade: 'song', elements: ['kim', 'hoa'] } },
   events: { ...fresh.events, followUps: [] },
 });
 

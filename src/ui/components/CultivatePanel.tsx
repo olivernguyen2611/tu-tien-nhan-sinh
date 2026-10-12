@@ -2,7 +2,7 @@
 import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
-import { inBottleneck, majorBreakthroughInfo, realmLabel, rootLabel, rootUsable, yearlyGain } from '../../systems/cultivation';
+import { bodyLabel, inBottleneck, majorBreakthroughInfo, realmLabel, rootLabel, rootUsable, yearlyGain } from '../../systems/cultivation';
 import { craftViews } from '../../systems/crafts';
 import { careerIncome, careerLabel, careerViews } from '../../systems/career';
 import { currentTechnique, learnBlocked, techniqueById, techniqueSummary } from '../../systems/technique';
@@ -59,6 +59,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
         <div class="kicker">Tu luyện</div>
         <h2>{realmLabel(state, content)}</h2>
         <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>
+        <p class="profile-root"><TermText text={`Thể chất: ${bodyLabel(state, content)}`} /></p>
         {currentTechnique(state, content) && (
           <div class="technique">
             <p class="story"><b>Công pháp: {currentTechnique(state, content)!.name}</b></p>

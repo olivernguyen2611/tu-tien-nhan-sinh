@@ -29,11 +29,11 @@ export function rootAffinities(root: SpiritRoot | null | undefined, content: Con
 }
 
 /** Does the technique fit this root? A mismatch slows cultivation (×mismatchMul). */
-export function techniqueMatches(tech: Technique, root: SpiritRoot | null, content: Content): boolean {
+export function techniqueMatches(tech: Technique, root: SpiritRoot | null, content: Content, bodyId: string | null = null): boolean {
   if (!root || tech.elements === 'root' || tech.elements === 'any' || tech.elements === 'none') return true;
   // No usable root (Phật duyên): nothing to clash with.
   if ((content.balance.roots.gradeSpeed[root.grade] ?? 0) <= 0) return true;
-  if (root.body) return !!content.cultivation.roots.bodies.find((b) => b.id === root.body)?.anyTechnique;
+  if (bodyId) return !!content.cultivation.roots.bodies.find((b) => b.id === bodyId)?.anyTechnique;
   const basic = new Set(content.cultivation.roots.elements.filter((e) => !e.variant).map((e) => e.id));
   // A variant root also fits its two basic elements (playtest 2026-10-12).
   const fits = rootAffinities(root, content);
@@ -46,7 +46,7 @@ export function techniqueMul(state: GameState, content: Content): number {
   const tech = currentTechnique(state, content);
   if (!tech) return 1;
   const cfg = content.balance.techniques;
-  const match = techniqueMatches(tech, state.cult.root, content) ? 1 : cfg.mismatchMul;
+  const match = techniqueMatches(tech, state.cult.root, content, state.cult.bodyId) ? 1 : cfg.mismatchMul;
   return (cfg.gradeMul[tech.grade] ?? 1) * match * (cfg.lineageMul[tech.lineage] ?? 1);
 }
 
@@ -147,7 +147,7 @@ export function techniqueSummary(state: GameState, content: Content): string | n
   return [
     `${names.gradeNames[tech.grade] ?? tech.grade} phẩm`,
     names.lineageNames[tech.lineage] ?? tech.lineage,
-    techniqueMatches(tech, state.cult.root, content) ? 'hợp linh căn' : 'không hợp linh căn',
+    techniqueMatches(tech, state.cult.root, content, state.cult.bodyId) ? 'hợp linh căn' : 'không hợp linh căn',
     maxName ? `tu tới ${maxName}` : 'không giới hạn cảnh giới',
   ].join(' · ');
 }

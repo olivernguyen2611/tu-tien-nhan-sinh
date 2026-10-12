@@ -22,7 +22,7 @@ function elder(realm = 'kim_dan', stones = 500): GameState {
     money: { silver: 0, spiritStones: stones },
     log: [...b.log, { age: 120, lines: [] }],
     sect: { ...b.sect, id: 'bich_lac_tong', rank: 2, contribution: 50 },
-    cult: { ...b.cult, realm, lineage: 'tien', technique: 'tang_phong_kiem_kinh', root: { grade: 'song', elements: ['kim', 'hoa'], body: null } },
+    cult: { ...b.cult, realm, lineage: 'tien', technique: 'tang_phong_kiem_kinh', root: { grade: 'song', elements: ['kim', 'hoa'] } },
   };
 }
 

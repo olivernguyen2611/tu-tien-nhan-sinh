@@ -7,8 +7,8 @@
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameEvent } from '../core/schemas';
-import type { GameState, LogLine, Npc, Relative, SpiritRoot, Tone } from '../core/types';
-import { addProgress, rollRoot, rootName } from './cultivation';
+import type { GameState, LogLine, Npc, Relative, Tone } from '../core/types';
+import { addProgress, rollRoot, rootName, rootNameOf, type RootRoll } from './cultivation';
 import { changeNpc, isMasked, npcById } from './npcs';
 import { clanRootRolls } from './clan';
 import { makeName, splitName } from './names';
@@ -337,25 +337,26 @@ export function birthChance(state: GameState, content: Content, partner: Npc): n
  * A child's spirit root (task 3.7): each rooted parent adds rolls (keep the best), elements lean
  * to the player's, a special body may pass on, and a rare mutation gives a variant root.
  */
-export function inheritRoot(state: GameState, content: Content, partner: Npc | null, rng: Rng): SpiritRoot {
+export function inheritRoot(state: GameState, content: Content, partner: Npc | null, rng: Rng): RootRoll {
   const b = content.balance.romance;
   const mine = state.cult.root;
   const rooted = Number(!!mine && (content.balance.roots.gradeSpeed[mine.grade] ?? 0) > 0) + Number(!!partner?.root);
-  if (mine?.body && rng.chance(b.bodyInheritChance)) return { ...mine };
+  if (mine && state.cult.bodyId && rng.chance(b.bodyInheritChance)) return { root: { ...mine }, bodyId: state.cult.bodyId };
   if (rooted > 0 && rng.chance(b.mutationChance)) {
     // A variant fuses two basic elements: one of the player's own leans the mutation its way.
     const variants = content.cultivation.roots.elements.filter((e) => e.variant);
     const near = variants.filter((v) => (v.components ?? []).some((c) => mine?.elements.includes(c)));
     const pool = near.length > 0 ? near : variants;
-    if (pool.length > 0) return { grade: 'bien_di', elements: [rng.pick(pool).id], body: null };
+    if (pool.length > 0) return { root: { grade: 'bien_di', elements: [rng.pick(pool).id] }, bodyId: null };
   }
   // Gia quy Trọng tu luyện adds rolls (task 5.4).
-  const root = rollRoot(rng, content, 1 + rooted * b.rootRollsPerParent + clanRootRolls(state, content));
+  const rolled = rollRoot(rng, content, 1 + rooted * b.rootRollsPerParent + clanRootRolls(state, content));
+  const root = rolled.root;
   const own = (mine?.elements ?? []).filter((e) => !root.elements.includes(e));
-  if (root.body || root.elements.length === 0 || own.length === 0 || root.grade === 'bien_di') return root;
+  if (rolled.bodyId || root.elements.length === 0 || own.length === 0 || root.grade === 'bien_di') return rolled;
   // Keep the count, take the player's elements first.
   const pool = [...(mine?.elements ?? []), ...root.elements.filter((e) => !(mine?.elements ?? []).includes(e))];
-  return { ...root, elements: pool.slice(0, root.elements.length) };
+  return { root: { ...root, elements: pool.slice(0, root.elements.length) }, bodyId: null };
 }
 
 function makeChild(state: GameState, content: Content, partner: Npc, rng: Rng, adopted: boolean): Relative {
@@ -363,7 +364,7 @@ function makeChild(state: GameState, content: Content, partner: Npc, rng: Rng, a
   const father = state.character.gender === 'nam' ? state.character.name : partner.gender === 'nam' ? partner.name : state.character.name;
   const { surname } = splitName(father, content.names);
   const name = makeName(rng, content.names, gender, { surname, taken: [state.character.name, partner.name, ...state.family.map((r) => r.name)] });
-  const root = adopted ? rollRoot(rng, content, 1) : inheritRoot(state, content, partner, rng);
+  const { root, bodyId } = adopted ? rollRoot(rng, content, 1) : inheritRoot(state, content, partner, rng);
   const l = content.balance.lifespan;
   const usable = (content.balance.roots.gradeSpeed[root.grade] ?? 0) > 0;
   // A child with a usable root grows up to cultivate and lives about as long as a Luyện Khí cultivator.
@@ -374,6 +375,7 @@ function makeChild(state: GameState, content: Content, partner: Npc, rng: Rng, a
     affinity: rng.int(content.balance.family.affinityStart[0], content.balance.family.affinityStart[1]),
     lastActions: {},
     root,
+    bodyId,
   };
 }
 
@@ -400,7 +402,7 @@ export function romanceYear(state: GameState, content: Content): GameState {
   for (const c of s.family) {
     if (c.role !== 'child' || !c.alive || c.age !== testAge || !c.root) continue;
     const usable = (content.balance.roots.gradeSpeed[c.root.grade] ?? 0) > 0;
-    const text = (usable ? t.childRoot : t.childNoRoot).replace(/\{child\}/g, c.name).replace(/\{age\}/g, String(c.age)).replace(/\{root\}/g, rootName(c.root, content));
+    const text = (usable ? t.childRoot : t.childNoRoot).replace(/\{child\}/g, c.name).replace(/\{age\}/g, String(c.age)).replace(/\{root\}/g, rootNameOf(c.root, c.bodyId, content));
     lines.push({ text, tone: usable ? 'rare' : 'normal' });
   }
   if (lines.length === 0) return s;
@@ -456,5 +458,5 @@ export function romanceLabel(state: GameState, content: Content, n: Npc): { role
 /** "Linh căn: …" for a child old enough to have been tested, else null. */
 export function childRootLabel(content: Content, r: Relative): string | null {
   if (r.role !== 'child' || !r.root || r.age < content.balance.roots.testAge[0]) return null;
-  return `Linh căn: ${rootName(r.root, content)}`;
+  return r.bodyId ? `Thể chất: ${rootNameOf(r.root, r.bodyId, content)}` : `Linh căn: ${rootName(r.root, content)}`;
 }

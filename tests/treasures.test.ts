@@ -98,13 +98,13 @@ describe('thức tỉnh thể chất', () => {
     for (const b of awaken) expect(ids).toContain(b);
     for (const id of ids) {
       const s = devAwakenBody(adult, content, id);
-      expect(s.cult.root?.body).toBe(id);
+      expect(s.cult.bodyId).toBe(id);
     }
   });
   it('never gives a body to a rootless mortal', () => {
-    const rootless = { ...adult, cult: { ...adult.cult, root: { grade: 'none', elements: [], body: null } } } as GameState;
-    expect(awakenBody(rootless, content, 'cuu_duong_the').state.cult.root?.body).toBeNull();
-    const rooted = { ...adult, cult: { ...adult.cult, root: { grade: 'don', elements: ['kim'], body: null } } } as GameState;
-    expect(awakenBody(rooted, content, 'ban_thach_thanh_cot').state.cult.root?.body).toBe('ban_thach_thanh_cot');
+    const rootless = { ...adult, cult: { ...adult.cult, root: { grade: 'none', elements: [] } } } as GameState;
+    expect(awakenBody(rootless, content, 'cuu_duong_the').state.cult.bodyId).toBeNull();
+    const rooted = { ...adult, cult: { ...adult.cult, root: { grade: 'don', elements: ['kim'] } } } as GameState;
+    expect(awakenBody(rooted, content, 'ban_thach_thanh_cot').state.cult.bodyId).toBe('ban_thach_thanh_cot');
   });
 });

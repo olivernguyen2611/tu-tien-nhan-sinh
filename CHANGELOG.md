@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### Tách linh căn và thể chất (2026-10-12)
+- Thể chất đặc biệt không còn nằm trong linh căn: mỗi người có `cult.bodyId` riêng (con cái có `bodyId` riêng). Có thể chất đặc biệt thì thể chất **thay thế** linh căn (linh căn giữ chỗ `the_chat`, không cần ngũ hành); không có thì là **Phàm thể** (hiện sau khi thử linh căn).
+- Bảng nhân vật và bảng Tu luyện hiện hai dòng riêng "Linh căn" và "Thể chất"; thể chất thay thế thì dòng linh căn ghi rõ. Lời báo kết quả thử linh căn có câu riêng cho thể chất (`revealBodyText`, `plainBody` trong `roots.json`).
+- Hàm đổi: `rollRoot` trả `{root, bodyId}`; `techniqueMatches` nhận thêm `bodyId`; `inheritRoot` trả `{root, bodyId}`.
+- Save cũ: `root.body` được chuyển sang `cult.bodyId` (cả con cái) khi nạp.
+- Developer mode: đặt linh căn và đặt thể chất riêng (đặt không thưởng, hoặc về phàm thể); đặt linh căn ngũ hành sẽ bỏ thể chất đặc biệt.
+
 ### Save cũ tự bổ sung hệ thống mới (2026-10-12)
 - `SAVE_VERSION` lên 2. Sau các bước nâng cấp theo phiên bản, `migrate` còn **bổ sung tự động** mọi trường mà đời cũ còn thiếu bằng giá trị của một đời mới tinh (`backfillLife`), nên thêm hệ thống mới không cần viết bước migration tay nữa.
 - Giá trị đã có (kể cả `null`, `0`, `false`) không bao giờ bị đè; lịch trình thử thách gốc (`events.followUps`) và `pastSect` không bị chép từ đời mới.

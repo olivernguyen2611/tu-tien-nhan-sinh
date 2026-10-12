@@ -10,6 +10,8 @@
     { "id": "the_chat", "name": "Thể chất đặc biệt", "special": "body", "description": "Trời sinh dị thể, trăm năm khó gặp." }
   ],
   "revealText": "Linh căn: {root}. {description}",
+  "revealBodyText": "Đá thử linh căn không sáng theo ngũ hành nào, mà cả thân người nóng lên: thể chất {body}. {description}",
+  "plainBody": "Phàm thể",
   "awakenText": "Linh căn cũ vỡ ra, một thứ khác trồi lên từ tận xương tủy: {body}. {description}",
   "traitGuaranteeText": "Khí vận {trait} đã định từ lúc sinh: đá thử linh căn vừa chạm tay đã sáng lên.",
   "elements": [

@@ -54,7 +54,7 @@ describe('romance and children (playtest 2)', () => {
   });
 
   it('the stipend line is not logged every year', () => {
-    let s = joinSect({ ...adult(14), cult: { ...adult().cult, root: { grade: 'song', elements: ['kim', 'hoa'], body: null }, realm: 'luyen_khi' } }, content, 'bich_lac_tong').state;
+    let s = joinSect({ ...adult(14), cult: { ...adult().cult, root: { grade: 'song', elements: ['kim', 'hoa'] }, realm: 'luyen_khi' } }, content, 'bich_lac_tong').state;
     let lines = 0;
     for (let age = 15; age < 40; age++) {
       s = sectYear({ ...s, character: { ...s.character, age }, log: [...s.log, { age, lines: [] }] }, content);

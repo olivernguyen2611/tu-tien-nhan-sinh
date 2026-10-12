@@ -13,7 +13,7 @@ function peak(): GameState {
   return {
     ...b,
     character: { ...b.character, age: 40 },
-    cult: { ...b.cult, realm: 'luyen_khi', stage: 8, progress: 100, root: { grade: 'song', elements: ['kim', 'hoa'], body: null }, lifespan: 150 },
+    cult: { ...b.cult, realm: 'luyen_khi', stage: 8, progress: 100, root: { grade: 'song', elements: ['kim', 'hoa'] }, lifespan: 150 },
     log: [...b.log, { age: 40, lines: [] }],
   };
 }

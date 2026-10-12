@@ -9,13 +9,13 @@ const content = loadContent();
 const life = (tutorial = true) => createLife({ seed: 'tut', tutorial }, content);
 const withCult = (s: GameState, cult: Partial<GameState['cult']>, age = 20): GameState =>
   ({ ...s, character: { ...s.character, age }, cult: { ...s.cult, ...cult } });
-const song = { grade: 'song', elements: ['kim', 'hoa'], body: null };
+const song = { grade: 'song', elements: ['kim', 'hoa'] };
 
 describe('goals and tips (task 2.9)', () => {
   it('the goal follows the life: test, mortal, Luyện Khí, peak, Trúc Cơ', () => {
     const s = life();
     expect(currentGoal(s, content)).toContain('thử linh căn');
-    expect(currentGoal(withCult(s, { root: { grade: 'none', elements: [], body: null } }), content)).toContain('phàm nhân');
+    expect(currentGoal(withCult(s, { root: { grade: 'none', elements: [] } }), content)).toContain('phàm nhân');
     expect(currentGoal(withCult(s, { root: song, realm: 'luyen_khi', stage: 3 }), content)).toBe('Tu tới Luyện Khí tầng 9.');
     expect(currentGoal(withCult(s, { root: song, realm: 'luyen_khi', stage: 8, progress: 100 }), content)).toContain('Đột phá Trúc Cơ');
     expect(currentGoal(withCult(s, { root: song, realm: 'truc_co' }), content)).toContain('Trúc Cơ viên mãn');

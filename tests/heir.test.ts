@@ -20,9 +20,9 @@ function elder(): GameState {
     money: { silver: 100, spiritStones: 1000 },
     inventory: { hoi_xuan_dan: 2 },
     social: { karma: 50, reputation: { ...b.social.reputation, chinh: 40 } },
-    family: [...b.family.map((r) => ({ ...r, alive: false })), kid('child_0', 'Lâm Tiểu Bảo', 20, { grade: 'don', elements: ['hoa'], body: null }), kid('child_1', 'Lâm Tiểu Ngọc', 3, null)],
+    family: [...b.family.map((r) => ({ ...r, alive: false })), kid('child_0', 'Lâm Tiểu Bảo', 20, { grade: 'don', elements: ['hoa'] }), kid('child_1', 'Lâm Tiểu Ngọc', 3, null)],
     log: [...b.log, { age: 90, lines: [] }],
-    cult: { ...b.cult, realm: 'kim_dan', stage: 1, lifespan: 300, root: { grade: 'song', elements: ['kim', 'hoa'], body: null }, technique: 'tang_phong_kiem_kinh', lineage: 'tien' },
+    cult: { ...b.cult, realm: 'kim_dan', stage: 1, lifespan: 300, root: { grade: 'song', elements: ['kim', 'hoa'] }, technique: 'tang_phong_kiem_kinh', lineage: 'tien' },
   };
 }
 
@@ -46,7 +46,7 @@ describe('chơi tiếp bằng con cháu hoặc đồ đệ (task 5.7)', () => {
     expect(h.alive).toBe(true);
     expect(h.character.name).toBe('Lâm Tiểu Bảo');
     expect(h.character.age).toBe(20);
-    expect(h.cult.root).toEqual({ grade: 'don', elements: ['hoa'], body: null });
+    expect(h.cult.root).toEqual({ grade: 'don', elements: ['hoa'] });
     expect(h.cult.realm).toBe('luyen_khi');
     expect(h.family.find((r) => r.role === 'father')).toMatchObject({ name: dead.character.name, alive: false });
     expect(h.family.find((r) => r.role === 'sibling')!.name).toBe('Lâm Tiểu Ngọc');

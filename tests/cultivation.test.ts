@@ -3,7 +3,7 @@ import { loadContent } from '../src/core/content';
 import { Rng } from '../src/core/rng';
 import { advanceYear, createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
-import { attemptMajorBreakthrough, breakthroughPct, cultivateYear, inBottleneck, majorBreakthroughInfo, enterRealm, hookActive, realmLabel, revealRoot, rollRoot, rootName, rootTestAge, startCultivating, yearlyGain } from '../src/systems/cultivation';
+import { attemptMajorBreakthrough, breakthroughPct, cultivateYear, inBottleneck, majorBreakthroughInfo, enterRealm, hookActive, realmLabel, revealRoot, rollRoot, rootName, rootNameOf, rootTestAge, startCultivating, yearlyGain } from '../src/systems/cultivation';
 import { migrate, makeSave } from '../src/systems/save';
 import { resolveChoice } from '../src/systems/events/engine';
 
@@ -50,7 +50,7 @@ describe('spirit root (task 2.2)', () => {
   it('roughly follows the grade table (60% no root)', () => {
     const rng = new Rng('grades');
     let none = 0;
-    for (let i = 0; i < 4000; i++) if (rollRoot(rng, content).grade === 'none') none++;
+    for (let i = 0; i < 4000; i++) if (rollRoot(rng, content).root.grade === 'none') none++;
     expect(none / 4000).toBeGreaterThan(0.56);
     expect(none / 4000).toBeLessThan(0.64);
   });
@@ -59,9 +59,11 @@ describe('spirit root (task 2.2)', () => {
     const rng = new Rng('elements');
     const variant = content.cultivation.roots.elements.filter((e) => e.variant).map((e) => e.id);
     for (let i = 0; i < 3000; i++) {
-      const r = rollRoot(rng, content);
+      const { root: r, bodyId } = rollRoot(rng, content);
       expect(new Set(r.elements).size).toBe(r.elements.length);
-      if (r.grade === 'the_chat') expect(r.body).not.toBeNull();
+      if (r.grade === 'the_chat') expect(bodyId).not.toBeNull();
+      else expect(bodyId).toBeNull();
+      if (r.grade === 'the_chat') continue;
       else expect(r.elements).toHaveLength(content.balance.roots.elementCount[r.grade]);
       if (r.grade === 'bien_di') expect(variant).toContain(r.elements[0]);
     }
@@ -71,17 +73,17 @@ describe('spirit root (task 2.2)', () => {
     const avg = (rolls: number) => {
       const rng = new Rng(`clan${rolls}`);
       let sum = 0;
-      for (let i = 0; i < 3000; i++) sum += speed(rollRoot(rng, content, rolls).grade);
+      for (let i = 0; i < 3000; i++) sum += speed(rollRoot(rng, content, rolls).root.grade);
       return sum / 3000;
     };
     expect(avg(2)).toBeGreaterThan(avg(1) * 1.3);
   });
 
   it('names roots with their elements', () => {
-    expect(rootName({ grade: 'song', elements: ['kim', 'hoa'], body: null }, content)).toBe('Song linh căn (Kim, Hỏa)');
-    expect(rootName({ grade: 'ngu', elements: ['kim', 'moc', 'thuy', 'hoa', 'tho'], body: null }, content)).toBe('Ngũ linh căn');
-    expect(rootName({ grade: 'the_chat', elements: [], body: 'cuu_duong_the' }, content)).toBe('Cửu Dương Thể');
-    expect(rootName({ grade: 'none', elements: [], body: null }, content)).toBe('Không linh căn');
+    expect(rootName({ grade: 'song', elements: ['kim', 'hoa'] }, content)).toBe('Song linh căn (Kim, Hỏa)');
+    expect(rootName({ grade: 'ngu', elements: ['kim', 'moc', 'thuy', 'hoa', 'tho'] }, content)).toBe('Ngũ linh căn');
+    expect(rootNameOf({ grade: 'the_chat', elements: [] }, 'cuu_duong_the', content)).toBe('Cửu Dương Thể');
+    expect(rootName({ grade: 'none', elements: [] }, content)).toBe('Không linh căn');
   });
 
   it('a special body applies its stat and lifespan hooks once', () => {
@@ -96,7 +98,7 @@ describe('spirit root (task 2.2)', () => {
     };
     const s = { ...base, character: { ...base.character, age: 8 } };
     const { state } = revealRoot(s, forced);
-    expect(state.cult.root?.body).toBe('thien_tuyet_mach');
+    expect(state.cult.bodyId).toBe('thien_tuyet_mach');
     expect(state.cult.lifespan).toBe(Math.round(base.cult.lifespan * 0.3));
     expect(revealRoot(state, forced).state).toBe(state);
   });
@@ -118,7 +120,7 @@ function cultivator(seed: string, patch: Partial<GameState['cult']> = {}, grade 
     traits: [],
     destiny: { ...b.destiny, confirmed: true },
     events: { ...b.events, followUps: [] },
-    cult: { ...b.cult, root: { grade, elements: ['kim', 'hoa'], body: null } },
+    cult: { ...b.cult, root: { grade, elements: ['kim', 'hoa'] } },
     log: [...b.log, { age: 15, lines: [] }],
   };
   return { ...s, cult: { ...s.cult, realm: 'luyen_khi', ...patch } };
@@ -140,7 +142,7 @@ describe('cultivation per year (task 2.3)', () => {
   });
 
   it('lineage hooks count only for that lineage', () => {
-    const body = (lineage: string | null) => cultivator('ma', { root: { grade: 'the_chat', elements: [], body: 'thien_sinh_ma_the' }, lineage });
+    const body = (lineage: string | null) => cultivator('ma', { root: { grade: 'the_chat', elements: [] }, bodyId: 'thien_sinh_ma_the', lineage });
     expect(yearlyGain(body('ma'), content) / yearlyGain(body(null), content)).toBeCloseTo(1.2);
     expect(yearlyGain(body('tien'), content)).toBeCloseTo(yearlyGain(body(null), content));
   });
@@ -194,19 +196,19 @@ describe('cultivation per year (task 2.3)', () => {
 
   it('a root starts Luyện Khí 1 with a longer life; no root stays mortal', () => {
     const b = createLife({ seed: 'start' }, content);
-    const s = { ...b, character: { ...b.character, age: 9 }, cult: { ...b.cult, root: { grade: 'tam', elements: ['kim', 'moc', 'thuy'], body: null } } };
+    const s = { ...b, character: { ...b.character, age: 9 }, cult: { ...b.cult, root: { grade: 'tam', elements: ['kim', 'moc', 'thuy'] } } };
     const { state, line } = startCultivating(s, content);
     expect(state.cult.realm).toBe('luyen_khi');
     expect(state.cult.stage).toBe(0);
     expect(state.cult.lifespan - s.cult.lifespan).toBeGreaterThanOrEqual(40);
     expect(state.cult.lifespan - s.cult.lifespan).toBeLessThanOrEqual(60);
     expect(line?.text).toContain('Luyện Khí tầng 1');
-    const none = { ...s, cult: { ...s.cult, root: { grade: 'none', elements: [], body: null } } };
+    const none = { ...s, cult: { ...s.cult, root: { grade: 'none', elements: [] } } };
     expect(startCultivating(none, content).state).toBe(none);
   });
 
   it('Thiên Tuyệt Mạch gives its lifespan back on reaching Trúc Cơ (activeUntil)', () => {
-    const s = cultivator('ttm', { root: { grade: 'the_chat', elements: [], body: 'thien_tuyet_mach' }, lifespan: 36 });
+    const s = cultivator('ttm', { root: { grade: 'the_chat', elements: [] }, bodyId: 'thien_tuyet_mach', lifespan: 36 });
     const hook = content.cultivation.roots.bodies.find((b) => b.id === 'thien_tuyet_mach')!.effects[1];
     expect(hookActive(hook, s, content)).toBe(true);
     const rng = new Rng('ttm');
@@ -310,7 +312,7 @@ describe('big breakthrough into Trúc Cơ (task 2.6)', () => {
 
   it('Thiên Tuyệt Mạch is lifted on reaching Trúc Cơ', () => {
     for (let i = 0; i < 200; i++) {
-      const s = peak(`ttm${i}`, { root: { grade: 'the_chat', elements: [], body: 'thien_tuyet_mach' }, lifespan: 36 });
+      const s = peak(`ttm${i}`, { root: { grade: 'the_chat', elements: [] }, bodyId: 'thien_tuyet_mach', lifespan: 36 });
       const r = attemptMajorBreakthrough(s, content)!;
       if (!r.success) continue;
       expect(r.state.cult.lifespan).toBeGreaterThan(150);

@@ -104,13 +104,13 @@ export function continueAsHeir(state: GameState, content: Content, heirId: strin
   };
 
   if (child) {
-    const root = child.root ?? rollRoot(rng, content);
-    s = { ...s, cult: { ...s.cult, root, lifespan: (content.balance.roots.gradeSpeed[root.grade] ?? 0) > 0 ? s.cult.lifespan : child.lifespan } };
+    const { root, bodyId } = child.root ? { root: child.root, bodyId: child.bodyId ?? null } : rollRoot(rng, content);
+    s = { ...s, cult: { ...s.cult, root, bodyId, lifespan: (content.balance.roots.gradeSpeed[root.grade] ?? 0) > 0 ? s.cult.lifespan : child.lifespan } };
   } else if (disciple) {
     // A disciple was taught to cultivate: their root is at least usable.
-    let root = rollRoot(rng, content, 2);
-    if ((content.balance.roots.gradeSpeed[root.grade] ?? 0) <= 0) root = { grade: 'ngu', elements: content.cultivation.roots.elements.filter((e) => !e.variant).map((e) => e.id), body: null };
-    s = { ...s, cult: { ...s.cult, root, realm: disciple.realm, stage: disciple.stage, progress: Math.min(100, disciple.progress), lifespan: Math.max(disciple.lifespan, option.age + 1) } };
+    let { root, bodyId } = rollRoot(rng, content, 2);
+    if ((content.balance.roots.gradeSpeed[root.grade] ?? 0) <= 0) root = { grade: 'ngu', elements: content.cultivation.roots.elements.filter((e) => !e.variant).map((e) => e.id) };
+    s = { ...s, cult: { ...s.cult, root, bodyId, realm: disciple.realm, stage: disciple.stage, progress: Math.min(100, disciple.progress), lifespan: Math.max(disciple.lifespan, option.age + 1) } };
     s = learnTechnique(s, content, content.balance.techniques.default, { quiet: true })?.state ?? s;
   }
   const parentName = state.character.name;

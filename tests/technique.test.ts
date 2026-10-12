@@ -11,7 +11,7 @@ import { EventFileSchema } from '../src/core/schemas';
 
 const content = loadContent();
 const tech = (id: string) => techniqueById(content, id)!;
-const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'], body: null };
+const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'] };
 
 function cultivator(technique: string | null, patch: Partial<GameState['cult']> = {}, daoHeart = 50): GameState {
   const b = createLife({ seed: 'tech' }, content);
@@ -50,17 +50,17 @@ describe('techniques (task 2.4)', () => {
 
   it('matching rules: root/any/none always fit, five needs a basic element, Lưu Ly Linh Thể fits all', () => {
     expect(techniqueMatches(tech('ngu_hanh_luan_chuyen_kinh'), SONG, content)).toBe(true);
-    expect(techniqueMatches(tech('ngu_hanh_luan_chuyen_kinh'), { grade: 'bien_di', elements: ['loi'], body: null }, content)).toBe(true); // playtest 2026-10-12: Lôi = Kim + Hỏa
-    const body = (id: string): SpiritRoot => ({ grade: 'the_chat', elements: [], body: id });
-    expect(techniqueMatches(tech('hoa_van_quyet'), body('luu_ly_linh_the'), content)).toBe(true);
-    expect(techniqueMatches(tech('hoa_van_quyet'), body('cuu_duong_the'), content)).toBe(false);
-    expect(techniqueMatches(tech('tho_nap_tan_quyen'), body('cuu_duong_the'), content)).toBe(true);
+    expect(techniqueMatches(tech('ngu_hanh_luan_chuyen_kinh'), { grade: 'bien_di', elements: ['loi'] }, content)).toBe(true); // playtest 2026-10-12: Lôi = Kim + Hỏa
+    const stand: SpiritRoot = { grade: 'the_chat', elements: [] };
+    expect(techniqueMatches(tech('hoa_van_quyet'), stand, content, 'luu_ly_linh_the')).toBe(true);
+    expect(techniqueMatches(tech('hoa_van_quyet'), stand, content, 'cuu_duong_the')).toBe(false);
+    expect(techniqueMatches(tech('tho_nap_tan_quyen'), stand, content, 'cuu_duong_the')).toBe(true);
   });
 
   it('conditional hooks: Tàng Phong needs đạo tâm, Ngũ Hành rewards 3+ elements', () => {
     const low = cultivator('tang_phong_kiem_kinh', {}, 40);
     expect(yearlyGain(low, content) / yearlyGain(cultivator('tang_phong_kiem_kinh'), content)).toBeCloseTo(0.9 / 1.1);
-    const tam: SpiritRoot = { grade: 'tam', elements: ['kim', 'moc', 'thuy'], body: null };
+    const tam: SpiritRoot = { grade: 'tam', elements: ['kim', 'moc', 'thuy'] };
     const withTam = cultivator('ngu_hanh_luan_chuyen_kinh', { root: tam });
     expect(yearlyGain(withTam, content)).toBeCloseTo(25 * 0.7 * 1.2 * 1.15);
   });

@@ -14,7 +14,7 @@ function cultivator(age: number, realm: string, stage: number): GameState {
     ...b,
     character: { ...b.character, age },
     log: [...b.log, { age, lines: [] }],
-    cult: { ...b.cult, realm, stage, progress: 0, root: { grade: 'song', elements: ['kim', 'hoa'], body: null } },
+    cult: { ...b.cult, realm, stage, progress: 0, root: { grade: 'song', elements: ['kim', 'hoa'] } },
   };
 }
 
