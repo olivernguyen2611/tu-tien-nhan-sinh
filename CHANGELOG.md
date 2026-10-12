@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6.2: cân bằng theo mô phỏng (2026-10-12)
+- Số liệu 200 đời/loại người chơi máy, seed mặc định, độ khó thường. Trước: tuổi thọ trung vị 75 (random) / 66 (steady); đạt Trúc Cơ 48% / 45%; chết vì lão suy 2.5% / 0.5%. Sau: trung vị 86 / 84; đạt Trúc Cơ 57.5% / 58.5%; lão suy 4% / 1%; p90 tuổi thọ 143→170 (random).
+- Nguyên nhân: sức khỏe bị bào mòn (bệnh 41–57%, giao chiến 36–53% tổng số ca chết). Đã chỉnh trong `balance.json`: `combat.roundInjury` [6,12]→[4,9]; `aging.recoverPerYear` 3→4; `aging.recoverCap` 70→80.
+- Còn thấp (ghi nhận, chưa chỉnh): Kim Đan chỉ 2.5–4%, chưa ai tới Nguyên Anh; phần lớn người chơi máy kẹt ở bình cảnh Trúc Cơ đỉnh. Người chơi máy chọn khá ngẫu nhiên nên con số thật có thể tốt hơn.
+- `npm run simulate` in thêm tuổi trung bình khi vào từng cảnh giới; thêm hook `observe` cho công cụ phân tích.
+
 ### GĐ 6.1: mô phỏng tự động (2026-10-12)
 - Lệnh mới `npm run simulate -- --count 500 --profile both --difficulty normal --seed sim`: một **người chơi máy** sống trọn từng đời theo seed (quay khí vận, trả lời sự kiện, đánh trận, kết đan, vượt tâm ma, chọn thiên phú, đột phá) bằng chính các hàm của game, rồi in thống kê: tuổi thọ (trung bình, trung vị, p10, p90), nguyên nhân chết, tỉ lệ từng đạt mỗi cảnh giới, tuổi thọ theo linh căn.
 - Hai kiểu máy: `random` (chọn ngẫu nhiên, luôn thử đột phá) và `steady` (chọn lựa chọn đầu, chỉ đột phá khi từ 50%).

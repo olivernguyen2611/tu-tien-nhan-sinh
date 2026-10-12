@@ -32,6 +32,10 @@ export interface LifeResult {
   rootGrade: string;
   bodyId: string | null;
   martialStage: number;
+  /** Age at which each realm was first entered. */
+  reachedAt: Record<string, number>;
+  /** Stage within the final realm. */
+  stage: number;
   /** True when the run hit the safety limit instead of ending in death. */
   stuck: boolean;
 }
@@ -42,6 +46,8 @@ export interface SimOptions {
   /** Safety limits; a life that passes them is reported as stuck. */
   maxAge?: number;
   maxSteps?: number;
+  /** Called at each event the bot answers and each blow of a fight (for finding what kills lives). */
+  observe?: (kind: 'event' | 'combat', state: GameState) => void;
 }
 
 /** Live one life to its end. Deterministic for a seed, profile and content. */
@@ -53,10 +59,13 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
   const realms = content.cultivation.realms.realms.map((r) => r.id);
   let s: GameState = confirmDestiny(rollDestiny(createLife({ seed, difficulty: opts.difficulty }, content), content), content);
   let peak = 0;
+  const reachedAt: Record<string, number> = {};
   let steps = 0;
   while (s.alive && s.character.age < maxAge && steps++ < maxSteps) {
     peak = Math.max(peak, realms.indexOf(s.cult.realm));
+    reachedAt[s.cult.realm] ??= s.character.age;
     if (s.events.pending) {
+      opts.observe?.('event', s);
       const event = findEvent(content, s.events.pending);
       const open = event ? visibleChoices(s, content, event).filter((c) => !c.disabled) : [];
       // An event with nothing to pick is cleared by choosing its first choice.
@@ -68,7 +77,11 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     if (s.fate) { s = runSeclusion(chooseFate(s, content, s.fate.offered[0]), content); continue; }
     if (s.combat) {
       if (s.combat.phase === 'fight') {
-        const r = act(s, content, 'all_out');
+        opts.observe?.('combat', s);
+        // A sensible fighter backs out when hurt: plead with someone who only wants a lesson or a purse, else run.
+        const hurtBelow = profile === 'steady' ? 60 : 30;
+        const action = s.stats.health > hurtBelow ? 'all_out' : s.combat.foe.intent === 'kill' ? 'flee' : 'plead';
+        const r = act(s, content, action);
         s = r.state.combat ? r.state : checkDeath(r.state, content, r.state.stats.health <= 0 ? 'combat' : undefined);
       } else {
         s = runSeclusion(checkDeath(settle(s, content, 'spare').state, content), content);
@@ -96,7 +109,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
   return {
     seed, age: s.character.age, alive: s.alive, cause: s.death?.cause ?? (s.alive ? 'stuck' : 'unknown'), realm: s.cult.realm,
     peak: Math.max(peak, realms.indexOf(s.cult.realm)), rootGrade: s.cult.root?.grade ?? 'none', bodyId: s.cult.bodyId ?? null,
-    martialStage: s.martial.stage, stuck: s.alive,
+    martialStage: s.martial.stage, reachedAt, stage: s.cult.stage, stuck: s.alive,
   };
 }
 
@@ -107,6 +120,8 @@ export interface Report {
   byCause: Record<string, number>;
   /** Share of lives that ever reached each realm (by realm id). */
   reached: Record<string, number>;
+  /** Mean age when each realm was first entered, among the lives that got there. */
+  reachedAge: Record<string, number>;
   /** Share of lives by root grade, and their mean age at death. */
   byRoot: Record<string, { share: number; meanAge: number }>;
 }
@@ -121,6 +136,11 @@ export function summarize(results: LifeResult[], content: Content): Report {
   const realms = content.cultivation.realms.realms;
   const reached: Record<string, number> = {};
   realms.forEach((r, i) => { reached[r.id] = n ? results.filter((x) => x.peak >= i).length / n : 0; });
+  const reachedAge: Record<string, number> = {};
+  for (const r of realms) {
+    const ages = results.map((x) => x.reachedAt[r.id]).filter((a): a is number => a !== undefined);
+    if (ages.length > 0) reachedAge[r.id] = ages.reduce((a, b) => a + b, 0) / ages.length;
+  }
   const roots: Record<string, number[]> = {};
   for (const r of results) (roots[r.bodyId ? 'the_chat' : r.rootGrade] ??= []).push(r.age);
   const byRoot: Report['byRoot'] = {};
@@ -128,7 +148,7 @@ export function summarize(results: LifeResult[], content: Content): Report {
   return {
     count: n, stuck: results.filter((r) => r.stuck).length,
     age: { mean: n ? ages.reduce((a, b) => a + b, 0) / n : 0, p10: pct(ages, 10), p50: pct(ages, 50), p90: pct(ages, 90), max: ages[n - 1] ?? 0 },
-    byCause, reached, byRoot,
+    byCause, reached, reachedAge, byRoot,
   };
 }
 
@@ -142,6 +162,7 @@ export function formatReport(rep: Report, content: Content, title: string): stri
     `Tuổi thọ: trung bình ${rep.age.mean.toFixed(1)}, trung vị ${rep.age.p50}, p10 ${rep.age.p10}, p90 ${rep.age.p90}, cao nhất ${rep.age.max}`,
     'Nguyên nhân chết: ' + Object.entries(rep.byCause).sort((a, b) => b[1] - a[1]).map(([c, k]) => `${c} ${p(k / rep.count)}`).join(', '),
     'Từng đạt cảnh giới: ' + Object.entries(rep.reached).map(([id, v]) => `${realmName(id)} ${p(v)}`).join(', '),
+    'Tuổi trung bình khi vào cảnh giới: ' + Object.entries(rep.reachedAge).map(([id, v]) => `${realmName(id)} ${v.toFixed(0)}`).join(', '),
     'Theo linh căn: ' + Object.entries(rep.byRoot).sort((a, b) => b[1].share - a[1].share).map(([g, v]) => `${g} ${p(v.share)} (tuổi TB ${v.meanAge.toFixed(0)})`).join(', '),
   ];
   return lines.join('\n');

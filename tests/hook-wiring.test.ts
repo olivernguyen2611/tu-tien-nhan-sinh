@@ -68,7 +68,7 @@ describe('hooks wired', () => {
   it('agingSlow: the body wears as if years younger', () => {
     const old = { ...life, character: { ...life.character, age: 55 }, stats: { ...life.stats, health: 60 } };
     expect(ageBody(old, content).stats.health).toBe(59);
-    expect(ageBody({ ...old, traits: ['truong_xuan_the'] }, content).stats.health).toBe(63);
+    expect(ageBody({ ...old, traits: ['truong_xuan_the'] }, content).stats.health).toBe(64);
   });
 
   it('cannotWork: bedridden, no career can start', () => {
