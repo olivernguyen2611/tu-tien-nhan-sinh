@@ -40,7 +40,7 @@ import { becomeGhost } from '../systems/ghost';
 import { meetIllusion } from '../systems/heartDemon';
 import { craftRecipe } from '../systems/crafting';
 import { recruitDisciple, teachDisciple } from '../systems/disciples';
-import { foundSect } from '../systems/ownSect';
+import { build, decide, donate, foundSect } from '../systems/ownSect';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -254,6 +254,9 @@ function Screens({ content }: { content: Content }) {
             : a.kind === 'learn' ? (() => { const l = learnTechnique(life, content, a.techniqueId); return l && { ...l, state: enterFirstRealm(l.state, content) }; })()
             : a.kind === 'master' ? requestMaster(life, content)
             : a.kind === 'found' ? foundSect(life, content, { name: a.name, rules: a.rules })
+            : a.kind === 'decide' ? decide(life, content, a.decisionId)
+            : a.kind === 'build' ? build(life, content, a.buildingId)
+            : a.kind === 'donate' ? donate(life, content)
             : leaveSect(life, content);
           if (!r || !r.text) return null;
           setLife(r.state);

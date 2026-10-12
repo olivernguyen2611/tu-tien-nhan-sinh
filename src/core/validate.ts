@@ -2,7 +2,7 @@
 // by their path under content/, returns problems. Used by tools/validate-content.ts
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, FoundingFileSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, FoundingFileSchema, type FoundingFile } from './schemas';
 
 export interface Problem {
   file: string;
@@ -78,6 +78,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   let fateIds: string[] | null = null;
   let itemIds: string[] | null = null;
   let recipeFile: { file: string; data: RecipeFile } | null = null;
+  let foundingPills: { file: string; pills: string[] } | null = null;
   let martialFile: MartialFile | null = null;
   let careerIds: string[] | null = null;
   const sectFiles: { file: string; sects: Sect[] }[] = [];
@@ -166,13 +167,21 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === MartialFileSchema) martialFile = parsed.data as MartialFile;
     if (schema === ItemFileSchema) itemIds = (parsed.data as { id: string }[]).map((x) => x.id);
     if (schema === RecipeFileSchema) recipeFile = { file, data: parsed.data as RecipeFile };
-    if (schema === FoundingFileSchema) problems.push(...duplicates(file, 'tông quy', (parsed.data as { rules: { id: string }[] }).rules));
+    if (schema === FoundingFileSchema) {
+      const f = parsed.data as FoundingFile;
+      problems.push(...duplicates(file, 'tông quy', f.rules), ...duplicates(file, 'công trình', f.buildings), ...duplicates(file, 'quyết định', f.decisions));
+      foundingPills = { file, pills: f.buildings.flatMap((b) => b.pills) };
+    }
     if (schema === CareersFileSchema) careerIds = (parsed.data as { careers: { id: string }[] }).careers.map((c) => c.id);
     if (schema === CareersFileSchema) problems.push(...duplicates(file, 'đường đời', (parsed.data as { careers: { id: string }[] }).careers));
     if (schema === DifficultyFileSchema) difficultyIds = (parsed.data as { id: string }[]).map((d) => d.id);
   }
 
   problems.push(...checkCultivationTables(parsedShared));
+  // Task 5.2: Luyện Đan Phòng sends real items.
+  for (const it of foundingPills?.pills ?? []) {
+    if (itemIds && !itemIds.includes(it)) problems.push({ file: foundingPills!.file, level: 'error', message: `công trình gửi vật phẩm không tồn tại "${it}"` });
+  }
   // Task 4.7: recipes use and make real items.
   if (recipeFile) {
     const { file, data } = recipeFile;
@@ -394,7 +403,7 @@ function checkCultivationTables(t: { balance?: Balance; realms?: RealmsFile; roo
       for (const r of mb.openRealms) {
         if (!realmIds.includes(r)) out.push({ file: bal, level: 'error', message: `majorBreakthrough.openRealms: cảnh giới không tồn tại "${r}"` });
       }
-      for (const r of [t.balance.founding.minRealm, ...Object.keys(t.balance.founding.startMembers)]) {
+      for (const r of [t.balance.founding.minRealm, ...Object.keys(t.balance.founding.startMembers), ...Object.keys(t.balance.founding.maxMembers)]) {
         if (!realmIds.includes(r)) out.push({ file: bal, level: 'error', message: `founding: cảnh giới không tồn tại "${r}"` });
       }
       for (const r of Object.keys(t.balance.disciples.maxByRealm)) {

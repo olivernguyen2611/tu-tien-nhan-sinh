@@ -123,6 +123,157 @@
   ],
   "texts": {
     "founded": "Ngươi khai tông lập phái trên một ngọn núi có linh mạch: {sect}, theo {lineage}. Ngày khai tông, {members} người tới bái sơn môn.",
-    "leftOld": "Ngươi rời {old} để tự mở môn hộ."
-  }
+    "leftOld": "Ngươi rời {old} để tự mở môn hộ.",
+    "report": "Báo cáo của {sect} năm nay: đệ tử {members} ({membersDelta}), kho linh thạch {treasury} ({treasuryDelta}).",
+    "built": "{building} của {sect} lên cấp {level}.",
+    "pills": "Luyện Đan Phòng dâng chưởng môn {count} {item}.",
+    "decided": "Chưởng môn quyết: {decision}.",
+    "donated": "Ngươi góp {count} linh thạch vào kho {sect}."
+  },
+  "buildings": [
+    {
+      "id": "tang_kinh_cac",
+      "name": "Tàng Kinh Các",
+      "text": "Kinh thư chất tới nóc. Chưởng môn đọc nhiều thì tu nhanh.",
+      "cost": [
+        100,
+        250,
+        600
+      ],
+      "upkeep": 2,
+      "effects": [
+        {
+          "hook": "cultivationSpeed",
+          "add": 0.05
+        }
+      ],
+      "growth": 0,
+      "income": 0,
+      "defense": 0,
+      "pills": []
+    },
+    {
+      "id": "linh_dien",
+      "name": "Linh Điền",
+      "text": "Ruộng linh mễ quanh chân núi, đệ tử thay phiên cày cấy.",
+      "cost": [
+        80,
+        200,
+        500
+      ],
+      "upkeep": 0,
+      "effects": [],
+      "growth": 0,
+      "income": 15,
+      "defense": 0,
+      "pills": []
+    },
+    {
+      "id": "nghenh_khach_duong",
+      "name": "Nghênh Khách Đường",
+      "text": "Khách tới bái sơn có chỗ nghỉ chân, tin tức tông môn truyền xa.",
+      "cost": [
+        60,
+        150,
+        400
+      ],
+      "upkeep": 2,
+      "effects": [],
+      "growth": 0.03,
+      "income": 0,
+      "defense": 0,
+      "pills": []
+    },
+    {
+      "id": "ho_son_dai_tran",
+      "name": "Hộ Sơn Đại Trận",
+      "text": "Trận pháp bao quanh núi, kẻ địch tới cửa phải nghĩ lại.",
+      "cost": [
+        150,
+        400,
+        1000
+      ],
+      "upkeep": 5,
+      "effects": [],
+      "growth": 0,
+      "income": 0,
+      "defense": 1,
+      "pills": []
+    },
+    {
+      "id": "luyen_dan_phong",
+      "name": "Luyện Đan Phòng",
+      "text": "Lò đan đỏ lửa quanh năm. Mỗi năm có đan dâng chưởng môn.",
+      "cost": [
+        120,
+        300,
+        700
+      ],
+      "upkeep": 4,
+      "effects": [],
+      "growth": 0,
+      "income": 0,
+      "defense": 0,
+      "pills": [
+        "tu_khi_dan"
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "id": "chia_linh_thach",
+      "name": "Chia linh thạch cho đệ tử",
+      "text": "Kho bớt một ít, lòng người thêm vững. Năm tới đệ tử tới đông hơn.",
+      "cost": 40,
+      "members": 0,
+      "growthBonus": 0.05,
+      "withdrawPct": 0,
+      "karma": 1,
+      "default": false
+    },
+    {
+      "id": "dai_hoi_thu_do",
+      "name": "Mở đại hội thu đồ",
+      "text": "Treo bảng khắp các trấn, người tới thử tài xếp hàng dài.",
+      "cost": 60,
+      "members": 8,
+      "growthBonus": 0,
+      "withdrawPct": 0,
+      "karma": 0,
+      "default": false
+    },
+    {
+      "id": "rut_linh_thach",
+      "name": "Rút linh thạch về tay chưởng môn",
+      "text": "Một nửa kho về túi chưởng môn. Đệ tử nhìn nhau không nói.",
+      "cost": 0,
+      "members": -2,
+      "growthBonus": -0.03,
+      "withdrawPct": 0.5,
+      "karma": -1,
+      "default": false
+    },
+    {
+      "id": "de_tu_tu_quyet",
+      "name": "Để trưởng lão tự quyết",
+      "text": "Chưởng môn không hỏi tới, mọi việc như cũ.",
+      "cost": 0,
+      "members": 0,
+      "growthBonus": 0,
+      "withdrawPct": 0,
+      "karma": 0,
+      "default": true
+    },
+    {
+      "id": "cuu_te_dan_lang",
+      "name": "Cứu tế dân làng dưới núi",
+      "text": "Phát gạo, phát thuốc. Dân làng gọi tông môn là phúc địa.",
+      "cost": 30,
+      "members": 2,
+      "growthBonus": 0,
+      "withdrawPct": 0,
+      "karma": 3,
+      "default": false
+    }
+  ]
 }

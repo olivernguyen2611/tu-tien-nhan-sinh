@@ -774,3 +774,4 @@ button { font: inherit; color: inherit; }
 .sect-rules { margin: 4px 0; padding-left: 18px; font-size: 0.9rem; }
 .rule-option { display: flex; gap: 8px; align-items: flex-start; margin: 6px 0; font-size: 0.9rem; }
 .rule-option input { margin-top: 3px; }
+.sect-report { margin: 8px 0; padding: 8px 10px; border-left: 3px solid var(--jade); background: var(--surface-2); border-radius: 6px; }

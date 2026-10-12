@@ -2,6 +2,26 @@
 
 ## [Chưa phát hành]
 
+### Task 5.2 — Công trình và báo cáo tông môn (2026-10-12)
+- **Tông môn tự chạy mỗi năm** (`balance.founding`):
+  - Đệ tử mới = số đệ tử × (5% + công trình + quyết định năm trước), ít nhất 1, nhân hệ số tông quy.
+  - 2% đệ tử bỏ đi mỗi năm.
+  - Số đệ tử tối đa theo cảnh giới chưởng môn: Kim Đan 100, Nguyên Anh 500, Hóa Thần 2000.
+  - Kho nhận 0.5 linh thạch mỗi đệ tử, cộng thu nhập công trình, trừ bảo trì. Nhân quả đổi theo tông quy.
+- **Báo cáo cuối năm**:
+  - Nhật ký ghi số đệ tử và kho, kèm mức thay đổi.
+  - Bảng Tông môn hiện 1–3 việc cần quyết: chia linh thạch cho đệ tử, mở đại hội thu đồ, rút linh thạch về tay chưởng môn, cứu tế dân làng.
+  - Mỗi việc quyết một lần; việc nào bỏ qua thì trưởng lão tự lo, tông môn vẫn chạy bình thường.
+- **5 công trình**, mỗi cái 3 cấp, xây bằng kho tông môn:
+  - Tàng Kinh Các: chưởng môn tu nhanh hơn 5% mỗi cấp.
+  - Linh Điền: thu nhập.
+  - Nghênh Khách Đường: thu thêm đệ tử.
+  - Hộ Sơn Đại Trận: phòng thủ, dùng cho sự kiện 5.3.
+  - Luyện Đan Phòng: mỗi năm dâng chưởng môn Tụ Khí Đan theo cấp.
+- Chưởng môn **góp 50 linh thạch vào kho** bằng một nút.
+- Validator kiểm tra trùng id công trình/quyết định, cảnh giới, vật phẩm của Luyện Đan Phòng.
+- **Bổ sung kỹ thuật** (PLAN chỉ ghi "công trình + báo cáo, 1–3 quyết định"): mọi con số, 5 công trình, 5 quyết định và câu văn trong `founding.json`.
+
 ### Task 5.1 — Khai tông lập phái (2026-10-12)
 - **Điều kiện**: từ Kim Đan, có 300 linh thạch (`balance.founding`). Bảng Tông môn có mục **Khai tông lập phái**.
 - **Khi khai tông**:

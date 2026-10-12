@@ -58,7 +58,12 @@ export interface GameState {
    * Task 5.1: the sect this life founded (it is its master). Members, treasury and buildings
    * grow from task 5.2 on.
    */
-  ownSect: { name: string; lineage: string; rules: string[]; founded: number; members: number; treasury: number; buildings: Record<string, number> } | null;
+  ownSect: {
+    name: string; lineage: string; rules: string[]; founded: number; members: number; treasury: number; buildings: Record<string, number>;
+    /** Task 5.2: next year's growth bonus from decisions, and this year's report (decisions still open, decisions taken). */
+    growthBonus?: number;
+    report?: { age: number; text: string; decisions: string[]; done: string[] } | null;
+  } | null;
   /**
    * Bế quan (task 4.1): the age the door opens again, and when it closed; null when not in seclusion.
    * fixed: set by an event, so reaching the peak does not end it early (the point is to sit out the years).

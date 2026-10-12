@@ -16,6 +16,7 @@ import { sectYear } from '../systems/sect';
 import { lineageYear, rollPaths } from '../systems/paths';
 import { rankingYear } from '../systems/rankings';
 import { romanceYear, romanceTarget } from '../systems/romance';
+import { ownSectYear } from '../systems/ownSect';
 
 export interface NewLifeInput {
   seed: string;
@@ -154,7 +155,7 @@ export function advanceYear(state: GameState, content: Content): GameState {
   if (!state.alive || state.events.pending || state.fate || state.combat || state.cult.coreForming || state.cult.heartDemonTrial) return state;
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content);
+  const body = checkDeath(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content), content);
   // Task 4.1: in seclusion no ordinary event comes (follow-ups wait for the door to open);
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;

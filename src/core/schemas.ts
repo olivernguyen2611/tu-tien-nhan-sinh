@@ -656,6 +656,18 @@ export const BalanceSchema = z
         nameLength: z.tuple([z.number().int().min(1), z.number().int().min(1)]),
         /** Members on the founding day: base + reputation of the founder's realm. */
         startMembers: z.record(id, z.number().int().min(0)),
+        /** Task 5.2 yearly running: growth = members × growth (+ buildings, rules), at least baseRecruit; attrition share leaves. */
+        growth: z.number().min(0),
+        baseRecruit: z.number().int().min(0),
+        attrition: probability,
+        /** Spirit stones each member brings the treasury a year. */
+        tithe: z.number().min(0),
+        /** Most members the founder's realm can hold. */
+        maxMembers: z.record(id, z.number().int().min(0)),
+        /** Spirit stones the master puts into the treasury with one tap. */
+        donation: z.number().int().min(1),
+        /** How many decisions a yearly report asks for. */
+        decisions: z.tuple([z.number().int().min(0), z.number().int().min(0)]),
       })
       .strict(),
     /** Task 4.9: taking disciples. */
@@ -1935,7 +1947,55 @@ export const FoundingFileSchema = z
         })
         .strict(),
     ),
-    texts: z.object({ founded: z.string().min(1), leftOld: z.string().min(1) }).strict(),
+    /** Task 5.2: buildings, levels 1..cost.length; per level: hooks on the founder, member growth, income, defense, pills a year. */
+    buildings: z.array(
+      z
+        .object({
+          id,
+          name: z.string().min(1),
+          text: z.string().min(1),
+          cost: z.array(z.number().int().min(0)).min(1),
+          upkeep: z.number().min(0),
+          effects: z.array(EffectHookSchema),
+          growth: z.number().min(0),
+          income: z.number().min(0),
+          defense: z.number().min(0),
+          pills: ids,
+        })
+        .strict(),
+    ),
+    /** Task 5.2: what the yearly report may ask the master to decide. default: what the elders do when the master does not answer. */
+    decisions: z.array(
+      z
+        .object({
+          id,
+          name: z.string().min(1),
+          text: z.string().min(1),
+          cost: z.number().int().min(0),
+          members: z.number().int(),
+          growthBonus: z.number(),
+          withdrawPct: z.number().min(0).max(1),
+          karma: z.number(),
+          default: z.boolean(),
+        })
+        .strict(),
+    ),
+    texts: z
+      .object({
+        founded: z.string().min(1),
+        leftOld: z.string().min(1),
+        /** {sect}, {members}, {membersDelta}, {treasury}, {treasuryDelta}. */
+        report: z.string().min(1),
+        /** {building}, {sect}, {level}. */
+        built: z.string().min(1),
+        /** {count}, {item}. */
+        pills: z.string().min(1),
+        /** {decision}. */
+        decided: z.string().min(1),
+        /** {count}, {sect}. */
+        donated: z.string().min(1),
+      })
+      .strict(),
   })
   .strict();
 export type FoundingFile = z.infer<typeof FoundingFileSchema>;

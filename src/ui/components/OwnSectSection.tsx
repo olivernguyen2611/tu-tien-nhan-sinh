@@ -3,12 +3,16 @@
 import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
-import { foundBlocked, sectNameProblem, suggestSectName } from '../../systems/ownSect';
+import { buildingViews, decisionViews, foundBlocked, sectNameProblem, suggestSectName } from '../../systems/ownSect';
 
-export function OwnSectSection({ state, content, onFound }: {
+export function OwnSectSection({ state, content, onFound, onDecide, onBuild, onDonate }: {
   state: GameState;
   content: Content;
   onFound: (name: string, rules: string[]) => void;
+  /** Task 5.2: a decision of the yearly report; raise a building. */
+  onDecide: (decisionId: string) => void;
+  onBuild: (buildingId: string) => void;
+  onDonate: () => void;
 }) {
   const [salt, setSalt] = useState(0);
   const [name, setName] = useState(() => suggestSectName(state, content));
@@ -21,7 +25,37 @@ export function OwnSectSection({ state, content, onFound }: {
     return (
       <div class="crafts">
         <h3 class="panel-sub">{own.name}</h3>
-        <p class="story">Chưởng môn {state.character.name} · {lineageName(own.lineage)} · khai tông năm {own.founded} tuổi · {own.members} đệ tử</p>
+        <p class="story">Chưởng môn {state.character.name} · {lineageName(own.lineage)} · khai tông năm {own.founded} tuổi · {own.members} đệ tử · kho {own.treasury} linh thạch</p>
+        {own.report && own.report.age === state.character.age && (
+          <div class="sect-report">
+            <p class="profile-note">{own.report.text}</p>
+            {decisionViews(state, content).map((d) => (
+              <div class="career-row" key={d.id}>
+                <div class="craft-head"><b>{d.name}</b>{d.cost > 0 && <span class="muted">{d.cost} linh thạch</span>}</div>
+                <p class="profile-note">{d.text}</p>
+                <button class="chip-btn" disabled={!!d.blocked} onClick={() => onDecide(d.id)}>Quyết</button>
+                {d.blocked && <span class="craft-note">{d.blocked}</span>}
+              </div>
+            ))}
+            <p class="profile-note">Việc nào không quyết, trưởng lão tự lo như mọi năm.</p>
+          </div>
+        )}
+        <button class="chip-btn" disabled={state.money.spiritStones < content.balance.founding.donation} onClick={onDonate}>
+          Góp {content.balance.founding.donation} linh thạch vào kho
+        </button>
+        <h3 class="panel-sub">Công trình</h3>
+        {buildingViews(state, content).map((b) => (
+          <div class="career-row" key={b.id}>
+            <div class="craft-head"><b>{b.name}</b><span class="muted">cấp {b.level}/{b.maxLevel}</span></div>
+            <p class="profile-note">{b.text}</p>
+            {b.cost !== null && (
+              <button class="chip-btn" disabled={!!b.blocked} onClick={() => onBuild(b.id)}>
+                {b.level === 0 ? 'Xây' : 'Nâng cấp'} · {b.cost} linh thạch
+              </button>
+            )}
+            {b.blocked && <span class="craft-note">{b.blocked}</span>}
+          </div>
+        ))}
         {own.rules.length > 0 && (
           <ul class="sect-rules">
             {own.rules.map((id) => {
