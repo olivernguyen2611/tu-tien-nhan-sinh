@@ -4,12 +4,13 @@
 import type { Content } from '../core/content';
 import { APTITUDES, FightSchema, MORTAL_STATS } from '../core/schemas';
 import { advanceYear } from '../core/state';
-import type { GameState, LogLine } from '../core/types';
+import type { GameState, LogLine, SpiritRoot } from '../core/types';
 import { startBattle } from './combat';
 import { STAT_LABELS } from './deltas';
 import { addItems } from './items';
-import { createNpc } from './npcs';
-import { enterRealm, startCultivating } from './cultivation';
+import { createNpc, npcById } from './npcs';
+import { applyRomance, romanceBlocked } from './romance';
+import { enterRealm, rootName, startCultivating } from './cultivation';
 import { checkDeath } from './time';
 import { gainGoldenFinger, loseGoldenFinger, fingerDef } from './goldenFinger';
 import { takeChosen } from './chosen';
@@ -286,4 +287,62 @@ export function devMetaUnlockAll(meta: SaveMeta, content: Content): SaveMeta {
 /** Bảo hiểm Kim Thủ Chỉ full: the next ordinary life is sure to be born with one. */
 export function devMetaFingerPity(meta: SaveMeta, content: Content): SaveMeta {
   return { ...meta, fingerPity: content.balance.goldenFinger.pityLives };
+}
+
+// ---------- Playtest 2026-10-12: martial path, spirit root, marriage, event repeats ----------
+
+/** Martial stage (-1 = none … 6); stages 5–6 skip their kỳ ngộ. A mortal only. */
+export function devSetMartial(state: GameState, content: Content, stage: number): GameState {
+  if (!state.alive || state.cult.realm !== 'pham_nhan') return state;
+  const s = { ...state, martial: { ...state.martial, stage, years: 0, lastTrain: null } };
+  return devLog(s, `võ đạo → ${stage < 0 ? 'chưa nhập môn' : content.martial.stages[stage]?.name ?? stage}`);
+}
+
+/** Every root the dev panel can set: grades (elements from the current root or the first ones), each variant, each body. */
+export function devRootOptions(content: Content): { key: string; label: string; root: SpiritRoot }[] {
+  const { grades, elements, bodies } = content.cultivation.roots;
+  const basic = elements.filter((e) => !e.variant).map((e) => e.id);
+  const out: { key: string; label: string; root: SpiritRoot }[] = [];
+  for (const g of grades) {
+    if (g.special) continue;
+    const root = { grade: g.id, elements: basic.slice(0, content.balance.roots.elementCount[g.id] ?? 0), body: null };
+    out.push({ key: g.id, label: rootName(root, content), root });
+  }
+  for (const e of elements.filter((x) => x.variant)) {
+    const root = { grade: 'bien_di', elements: [e.id], body: null };
+    out.push({ key: `bien_di:${e.id}`, label: rootName(root, content), root });
+  }
+  for (const b of bodies) out.push({ key: `body:${b.id}`, label: b.name, root: { grade: 'the_chat', elements: [], body: b.id } });
+  return out;
+}
+
+/** Replace the spirit root (a body's one-time stat gains are not given). */
+export function devSetRoot(state: GameState, content: Content, root: SpiritRoot): GameState {
+  if (!state.alive) return state;
+  return devLog({ ...state, cult: { ...state.cult, root } }, `linh căn → ${rootName(root, content)}`);
+}
+
+/** Wed a new adult at once (affinity 80), cultivating at the player's realm when the player does. */
+export function devMarry(state: GameState, content: Content): GameState {
+  if (!state.alive || state.romance.partner || romanceBlocked(state, content)) return state;
+  const cultivating = state.cult.realm !== 'pham_nhan';
+  const met = createNpc(state, content, {
+    role: 'bằng hữu', age: Math.max(content.balance.romance.minAge, state.character.age), affinity: 80,
+    gender: state.character.gender === 'nam' ? 'nu' : 'nam', root: cultivating, realm: cultivating ? state.cult.realm : undefined,
+  });
+  const s = applyRomance(met.state, content, met.id, { marry: { affinity: 80 } });
+  return devLog(s, `thành thân với ${npcById(s, met.id)?.name ?? met.id}`);
+}
+
+/** Spouse affinity ± delta. */
+export function devSpouseAffinity(state: GameState, delta: number): GameState {
+  const id = state.romance.partner;
+  if (!state.alive || !id) return state;
+  const s = { ...state, npcs: state.npcs.map((n) => (n.id === id ? { ...n, affinity: clamp(n.affinity + delta) } : n)) };
+  return devLog(s, `thiện cảm bạn đời ${delta > 0 ? '+' : ''}${delta} → ${npcById(s, id)?.affinity}`);
+}
+
+/** Forget which events happened (cooldowns, once-per-life, repeat decay). */
+export function devResetEventHistory(state: GameState): GameState {
+  return devLog({ ...state, events: { ...state.events, history: {}, seen: {} } }, 'xóa lịch sử sự kiện');
 }
