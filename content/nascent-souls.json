@@ -5,10 +5,10 @@
       "id": "dao_anh", "name": "Đạo Anh",
       "when": { "maxCoreGrade": 2 },
       "text": "Kim Đan thượng phẩm vỡ ra không một tiếng động. Tiểu nhân trong đan điền mở mắt, mặt mũi giống hệt ngươi, chỉ là bình thản hơn nhiều.",
-      "summary": "Tu luyện +15%; đột phá đại cảnh giới +10%; thọ nguyên +10%.",
+      "summary": "Tu luyện +15%; đột phá đại cảnh giới +10; thọ nguyên +10%.",
       "effects": [
         { "hook": "cultivationSpeed", "add": 0.15 },
-        { "hook": "breakthroughChance.major", "add": 0.1 },
+        { "hook": "breakthroughChance.major", "add": 10 },
         { "hook": "lifespanPct", "add": 0.1 }
       ]
     },
@@ -37,10 +37,10 @@
       "id": "u_hon_anh", "name": "U Hồn Anh",
       "when": { "lineage": "quy" },
       "text": "Nguyên Anh nửa trong suốt, lúc có lúc không. Ngươi cũng không chắc nó đang ở trong người mình hay đứng sau lưng mình.",
-      "summary": "Thọ nguyên +20%; thần thức +20%; bỏ chạy thành công +10%.",
+      "summary": "Thọ nguyên +20%; chống thiên kiếp +10%; bỏ chạy thành công +10%.",
       "effects": [
         { "hook": "lifespanPct", "add": 0.2 },
-        { "hook": "divineSense", "add": 0.2 },
+        { "hook": "tribulationDefense", "add": 0.1 },
         { "hook": "escapeChance", "add": 0.1 }
       ]
     },
@@ -48,11 +48,11 @@
       "id": "yeu_linh_anh", "name": "Yêu Linh Anh",
       "when": { "lineage": "yeu" },
       "text": "Nguyên Anh có đôi tai thú và cái đuôi ngắn, ngủ cuộn tròn trong đan điền. Gọi thì không dậy, có thịt thì dậy.",
-      "summary": "Chiến lực +10%; uy lực con đường Thể +15%; tư chất Ngự thú +20.",
+      "summary": "Chiến lực +10%; uy lực con đường Thể +15%; Căn cốt +5.",
       "effects": [
         { "hook": "combatPower", "add": 0.1 },
         { "hook": "path.body.power", "add": 0.15 },
-        { "hook": "craft.beast.affinity", "add": 20 }
+        { "hook": "stat.physique", "add": 5 }
       ]
     },
     {
@@ -79,10 +79,10 @@
       "id": "phap_tuong_anh", "name": "Pháp Tướng Anh",
       "when": { "path": "spell" },
       "text": "Nguyên Anh mười ngón tay đều có ấn quyết, khẽ động là sấm mây đổi chỗ.",
-      "summary": "Uy lực Pháp +25%; thần thức +10%.",
+      "summary": "Uy lực Pháp +25%; khắc chế hệ mạnh thêm 15%.",
       "effects": [
         { "hook": "path.spell.power", "add": 0.25 },
-        { "hook": "divineSense", "add": 0.1 }
+        { "hook": "element.root.power", "add": 0.15 }
       ]
     },
     {
@@ -99,10 +99,10 @@
       "id": "huyen_anh_anh", "name": "Huyễn Ảnh Anh",
       "when": { "path": "arts" },
       "text": "Ngươi nhìn vào đan điền thấy ba Nguyên Anh. Nhìn lại thì chỉ có một, và nó đang cười.",
-      "summary": "Uy lực Thuật +20%; kháng mị thuật +20%; bỏ chạy thành công +10%.",
+      "summary": "Uy lực Thuật +20%; Tốc +10%; bỏ chạy thành công +10%.",
       "effects": [
         { "hook": "path.arts.power", "add": 0.2 },
-        { "hook": "charmResist", "add": 0.2 },
+        { "hook": "speed", "add": 0.1 },
         { "hook": "escapeChance", "add": 0.1 }
       ]
     },
