@@ -7,6 +7,8 @@ import { activeExtremes, extremeWarnings } from '../../systems/extremes';
 import { DevPanel } from '../components/DevPanel';
 import { BagPanel } from '../components/BagPanel';
 import { MarketPanel, type MarketAction } from '../components/MarketPanel';
+import { MapPanel } from '../components/MapPanel';
+import { currentRegion } from '../../systems/regions';
 import { CombatPanel } from '../components/CombatPanel';
 import type { CombatAction } from '../../core/schemas';
 import type { Aftermath } from '../../systems/combat';
@@ -46,7 +48,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onSeclude, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onChoose, onFamilyAction, onRomance, onUseItem, onMarket, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onSeclude, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onChoose, onFamilyAction, onRomance, onUseItem, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -76,6 +78,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onSettle: (choice: Aftermath) => void;
   /** Buy, sell or bargain at a market (Phường thị). */
   onMarket: (marketId: string, action: MarketAction) => { text: string; tone: Tone };
+  /** Task 4.8: travel to a region; the arrival text, or null. */
+  onTravel: (regionId: string) => string | null;
   /** Practise a craft from the "Tu luyện" sheet. */
   onPractice: (craftId: string) => string | null;
   /** Take up a mortal career from the "Tu luyện" sheet. */
@@ -107,6 +111,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const [familyOpen, setFamilyOpen] = useState(false);
   const [bagOpen, setBagOpen] = useState(false);
   const [marketOpen, setMarketOpen] = useState(false);
+  const [mapOpen, setMapOpen] = useState(false);
   const [cultivateOpen, setCultivateOpen] = useState(false);
   // Kết đan and tâm ma take over the screen; the Tu luyện sheet steps aside so its outcome shows in the log (task 4.2).
   useEffect(() => {
@@ -121,6 +126,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const states = activeExtremes(state, content);
   const goal = currentGoal(state, content);
   const tip = pendingTip(state, content);
+  const region = currentRegion(state, content);
 
   useEffect(() => {
     logRef.current?.scrollTo({ top: logRef.current.scrollHeight, behavior: 'smooth' });
@@ -140,7 +146,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         <button class="avatar" aria-label="Nhân vật" onClick={() => setProfileOpen(true)}>{c.name.split(' ')[0]}</button>
         <div class="who">
           <div class="name">{c.name}</div>
-          <div class="title">{c.age} tuổi · {realmLabel(state, content)}</div>
+          <div class="title">{c.age} tuổi · {realmLabel(state, content)}{region ? ` · ${region.name}` : ''}</div>
         </div>
         <div class="purse">
           <span class="silver">{money.silver} <Term id="luong_bac">lượng bạc</Term></span>
@@ -148,6 +154,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         </div>
         <div class="top-actions">
           {dev && <button class="icon-btn dev-btn" aria-label="Developer mode" title="Developer mode" onClick={() => setDevOpen(true)}>Dev</button>}
+          {content.regions.length > 0 && <button class="icon-btn" aria-label="Bản đồ" title="Bản đồ" onClick={() => setMapOpen(true)}>圖</button>}
           <button class="icon-btn" aria-label="Túi đồ" title="Túi đồ" onClick={() => setBagOpen(true)}>囊</button>
           <button class="icon-btn" aria-label="Sổ lưu" title="Sổ lưu" onClick={onSaves}>簿</button>
           <span class="desktop-only">
@@ -229,6 +236,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
       {sectOpen && <SectPanel state={state} content={content} onAction={onSectAction} onClose={() => setSectOpen(false)} />}
 
       {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onTrain={onTrain} onSeclude={onSeclude} onCraft={onCraft} onClose={() => setCultivateOpen(false)} />}
+
+      {mapOpen && <MapPanel state={state} content={content} unlimited={!!dev} onTravel={onTravel} onClose={() => setMapOpen(false)} />}
 
       {marketOpen && <MarketPanel state={state} content={content} onAction={onMarket} onClose={() => setMarketOpen(false)} />}
 

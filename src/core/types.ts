@@ -59,6 +59,8 @@ export interface GameState {
    * fixed: set by an event, so reaching the peak does not end it early (the point is to sit out the years).
    */
   seclusion: { until: number; since: number; fixed?: boolean } | null;
+  /** Task 4.8: the đại vực the player is in (null = the world's first, home), regions seen, last year moved. */
+  region: { id: string | null; visited: string[]; movedAt: number | null };
   /**
    * Romance (task 3.6): the NPC being courted, whether they said yes (couple), the đạo lữ
    * (task 3.7), people who turned the player down or were left, rivals around the lover,

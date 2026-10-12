@@ -14,6 +14,7 @@ import { addCraftXp } from '../crafts';
 import { forceJoinCareer, leaveCareer, promoteCareer } from '../career';
 import { addMartialYears, martialAttempt, martialPromote } from '../martial';
 import { addPathAffinity } from '../paths';
+import { regionThemeMultiplier } from '../regions';
 import { addContribution, breakPrecept, grantMaster, joinSect, leaveSect, promoteSect } from '../sect';
 import { startBattle } from '../combat';
 import { changeNpc, createNpc, killNpc, npcCalls } from '../npcs';
@@ -33,7 +34,7 @@ export function themeMultiplier(state: GameState, content: Content, event: GameE
     if (!e.hook.startsWith('eventWeight.') || e.mul === undefined || !hookActive(e, state, content)) continue;
     if (event.themes.includes(e.hook.slice('eventWeight.'.length))) mul *= e.mul;
   }
-  return mul * extremeThemeMultiplier(state, content, event.themes);
+  return mul * extremeThemeMultiplier(state, content, event.themes) * regionThemeMultiplier(state, content, event.themes);
 }
 
 /** Weight of an event for this life right now; 0 = cannot happen. */

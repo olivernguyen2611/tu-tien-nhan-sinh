@@ -1,0 +1,217 @@
+[
+  {
+    "id": "dai_nang_thanh_van_tu",
+    "category": "fortune",
+    "title": "Lão nhân câu cá trên mây",
+    "text": "Đi ngang chân núi Thanh Vân, {name} thấy một sợi dây câu thả từ trên mây xuống, lưỡi câu không mồi, lơ lửng ngang mặt.",
+    "themes": ["benefactor"],
+    "conditions": { "region": ["thanh_van_chau"], "age": { "min": 10 } },
+    "weight": 0.6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Cắn thử lưỡi câu",
+        "result": {
+          "text": "Ngươi bị kéo vút lên mây. Thanh Vân Tử nhìn ngươi, cười tới chảy nước mắt, rồi giảng cho một khắc đạo lý trước khi thả về.",
+          "effects": { "stat.comprehension": 3, "stat.happiness": 5 }
+        }
+      },
+      {
+        "text": "Buộc vào lưỡi câu một con cá",
+        "result": {
+          "text": "Dây câu giật nhẹ rồi rút lên. Hôm sau trước cửa nhà ngươi có một túi linh thạch và mẩu giấy: \"Cá ngon.\"",
+          "effects": { "spiritStones": 30, "stat.luck": 2 }
+        }
+      },
+      {
+        "text": "Coi như không thấy",
+        "result": {
+          "text": "Lưỡi câu đi theo ngươi ba bước rồi thôi. Từ trên mây vọng xuống một tiếng thở dài.",
+          "effects": { "stat.daoHeart": 1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "dai_nang_bach_cot",
+    "category": "demonic",
+    "title": "Miếu xương giữa đồng hoang",
+    "text": "Bạch Cốt Bà Bà ngồi trước miếu, đang xâu một chuỗi đốt ngón tay. Bà ngẩng lên: \"Tiểu tử, Vô Chủ Phường dạo này có kẻ gây rối. Đi xử giúp bà.\"",
+    "themes": ["demonic"],
+    "tags": ["dark"],
+    "conditions": { "region": ["vo_chu_hoang_nguyen"] },
+    "weight": 0.8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận việc",
+        "result": {
+          "text": "Kẻ gây rối là một tu sĩ đeo mặt nạ, đang đập sạp hàng.",
+          "effects": {},
+          "fight": {
+            "foe": { "name": "Kẻ phá chợ", "realm": "same", "intent": "kill", "lineage": "ma" },
+            "win": {
+              "text": "Bà Bà gật đầu, thưởng ngươi một túi linh thạch và một ánh nhìn dài, như đang ước lượng xương ngươi.",
+              "effects": { "spiritStones": 80, "reputation": { "ma": 10 }, "stat.daoHeart": -1 }
+            },
+            "lose": {
+              "text": "Ngươi bị đánh văng ra giữa chợ. Bà Bà tự ra tay, xong việc, rồi lườm ngươi một cái.",
+              "effects": { "stat.happiness": -5 }
+            }
+          }
+        }
+      },
+      {
+        "text": "Từ chối khéo",
+        "check": { "stat": "stat.charm", "difficulty": 55 },
+        "success": {
+          "text": "Bà Bà cười khanh khách: \"Mồm mép được.\" Bà cho ngươi đi, còn chỉ đường tránh bọn cướp.",
+          "effects": { "stat.charm": 1, "stat.happiness": 3 }
+        },
+        "fail": {
+          "text": "Bà Bà không nói gì, chỉ gõ nhẹ vào vai ngươi. Ba tháng sau vai ngươi vẫn lạnh.",
+          "effects": { "stat.health": -10 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "dai_nang_kim_mao_hong",
+    "category": "beast",
+    "title": "Thú vương thức giấc",
+    "text": "Cả khu rừng im bặt. Một con hống lông vàng to như ngọn đồi mở một mắt, nhìn {name}. Dưới chân ngươi là cái bẫy thú vừa sập.",
+    "themes": ["beast"],
+    "conditions": { "region": ["van_thu_son_mach"] },
+    "weight": 0.8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Thả con thú con trong bẫy",
+        "result": {
+          "text": "Con hống nhắm mắt lại. Từ đó, yêu thú trong sơn mạch thấy ngươi thì tránh đường.",
+          "effects": { "karma": 5, "stat.daoHeart": 2, "stat.luck": 2 }
+        }
+      },
+      {
+        "text": "Quỳ xuống, giải thích bẫy không phải của mình",
+        "check": { "stat": "stat.intellect", "difficulty": 50 },
+        "success": {
+          "text": "Con hống khịt mũi, gió thổi ngươi lăn ba vòng. Nhưng nó tin.",
+          "effects": { "stat.health": -3, "stat.intellect": 1 }
+        },
+        "fail": {
+          "text": "Con hống không tin. Nó chỉ thở ra một hơi, và ngươi tỉnh dậy cách đó mười dặm.",
+          "effects": { "stat.health": -20, "stat.happiness": -5 }
+        }
+      },
+      {
+        "text": "Bỏ chạy",
+        "result": {
+          "text": "Ngươi chạy bảy ngày bảy đêm. Con hống không đuổi, nó chỉ thấy buồn cười.",
+          "effects": { "stat.physique": 1, "stat.happiness": -3 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "dai_nang_thuong_hai",
+    "category": "fortune",
+    "title": "Ván cờ bên bờ biển",
+    "text": "Một lão già ngồi trên mỏm đá, bày bàn cờ đá, hỏi {name}: \"Đánh một ván? Thắng thì ta trả lời một câu hỏi.\" Sóng đánh qua bàn cờ mà quân không xê dịch.",
+    "themes": ["fortune"],
+    "conditions": { "region": ["dong_hai"] },
+    "weight": 0.8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Ngồi xuống đánh",
+        "check": { "stat": "stat.intellect", "difficulty": 70 },
+        "success": {
+          "text": "Ngươi thắng nửa quân. Thương Hải Lão Tổ cười to, trả lời câu ngươi hỏi về con đường tu hành. Câu trả lời ngắn mà ngươi nghĩ mãi không hết.",
+          "effects": { "stat.comprehension": 4, "nextBreakthroughBonus": 10 }
+        },
+        "fail": {
+          "text": "Ngươi thua bảy mươi quân. Lão vẫn trả lời một câu, câu: \"Về luyện cờ đi.\"",
+          "effects": { "stat.intellect": 2, "stat.happiness": -2 }
+        }
+      },
+      {
+        "text": "Hỏi luôn mà không đánh",
+        "result": {
+          "text": "Lão nhìn ngươi, rồi nhìn biển. \"Gấp vậy thì làm sao lên được Hóa Thần.\" Rồi lão biến mất cùng bàn cờ.",
+          "effects": { "stat.daoHeart": 2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "dai_nang_han_son",
+    "category": "cultivation",
+    "title": "Đầu vết kiếm trăm dặm",
+    "text": "Đi dọc vết kiếm trên tuyết, {name} tới chỗ một người ngồi bất động, tuyết phủ kín vai. Không mở mắt, người ấy nói: \"Rút kiếm. Cho ta xem.\"",
+    "themes": ["benefactor"],
+    "conditions": { "region": ["bac_minh_tuyet_vuc"] },
+    "weight": 0.8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Xuất một kiếm toàn lực",
+        "result": {
+          "text": "Ngươi chém. Hàn Sơn Kiếm Tôn giơ hai ngón tay kẹp lấy.",
+          "effects": {},
+          "fight": {
+            "foe": { "name": "Hàn Sơn Kiếm Tôn", "realm": "above", "powerMul": 0.3, "path": "sword", "element": "bang", "intent": "teach" },
+            "win": {
+              "text": "Hai ngón tay rỉ máu. Kiếm Tôn mở mắt lần đầu sau ba trăm năm: \"Được.\" Ông chỉ cho ngươi một thức.",
+              "effects": { "pathAffinity": { "sword": 10 }, "stat.daoHeart": 3 }
+            },
+            "lose": {
+              "text": "Kiếm Tôn buông tay. \"Chưa được. Về luyện thêm trăm năm.\" Ông nhắm mắt lại.",
+              "effects": { "pathAffinity": { "sword": 3 }, "stat.happiness": -3 }
+            }
+          }
+        }
+      },
+      {
+        "text": "Cúi chào, ngồi xuống cạnh ông một đêm",
+        "result": {
+          "text": "Hai người ngồi im tới sáng. Tuyết phủ vai ngươi như phủ vai ông. Lòng ngươi lặng như mặt hồ đóng băng.",
+          "effects": { "stat.daoHeart": 5, "heartDemon": -10, "stat.health": -5 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "dai_nang_thien_dien",
+    "category": "fate",
+    "title": "Trời đổi sắc ở Trung Châu",
+    "text": "Bầu trời Trung Châu bỗng chuyển màu tím. Giữa không trung, một đạo nhân áo vải đi ngang, dừng lại trước {name}: \"Ngươi từ nơi xa tới. Đường còn dài, có muốn hỏi gì không?\"",
+    "themes": ["fortune"],
+    "conditions": { "region": ["trung_chau"] },
+    "weight": 0.6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Hỏi về cảnh giới trên Hóa Thần",
+        "result": {
+          "text": "Thiên Diễn Đạo Quân chỉ tay lên trời: \"Trên đó còn đường. Ta chưa đi, ngươi thì chưa chắc.\" Rồi ông đi mất.",
+          "effects": { "stat.comprehension": 5, "stat.daoHeart": 3 }
+        }
+      },
+      {
+        "text": "Hỏi về thọ nguyên",
+        "result": {
+          "text": "Đạo Quân búng một giọt sương vào trán ngươi. \"Vài năm thôi. Đừng tham.\"",
+          "effects": { "lifespanPct": 0.05, "stat.health": 5 }
+        }
+      },
+      {
+        "text": "Không hỏi gì, chỉ hành lễ",
+        "result": {
+          "text": "Đạo Quân gật đầu, như hài lòng. Bầu trời trở lại màu xanh.",
+          "effects": { "stat.daoHeart": 4, "karma": 5 }
+        }
+      }
+    ]
+  }
+]

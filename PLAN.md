@@ -336,7 +336,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 4.5 | [x] Thiên kiếp ở các mốc lớn, cần pháp bảo/trận pháp |
 | 4.6 | [x] Bí cảnh dạng chuỗi nhiều bước |
 | 4.7 | [x] Bách nghệ cơ bản: Luyện đan + Luyện khí (các nghề khác để GĐ7) |
-| 4.8 | [ ] Bản đồ đại vực mở dần theo cảnh giới + ✍️ đại năng trấn giữ |
+| 4.8 | [x] Bản đồ đại vực mở dần theo cảnh giới + ✍️ đại năng trấn giữ |
 | 4.9 | [x] Thu đồ đệ (cơ bản) |
 | 4.10 | [x] Áp lực thọ nguyên: chuỗi sự kiện sắp hết thọ, tìm thọ đan, đoạt xá, di ngôn |
 | 4.11 | [x] Tàn hồn trong vật cũ: Kim Thủ Chỉ "lão gia gia" dẫn đường tới thiên địa kỳ vật, có thể đoạt xá (`mortal-path.md` mục 2.5) |

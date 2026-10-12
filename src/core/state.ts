@@ -113,6 +113,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     npcs: [],
     ranking: { prodigies: [], rank: null },
     seclusion: null,
+    region: { id: null, visited: [], movedAt: null },
     romance: { lover: null, couple: false, partner: null, exes: [], rivals: 0, lastActions: {} },
     talents: [],
     fate: null,
