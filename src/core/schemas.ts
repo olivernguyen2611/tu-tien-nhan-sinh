@@ -1365,6 +1365,10 @@ export const LifeTextsSchema = z
     /** Task 4.12 quỷ tu: the offer on the death screen, and the line when the soul rises. */
     ghostOffer: z.string().min(1),
     ghostRise: z.string().min(1),
+    /** Task 5b.10 Trùng sinh: the offer on the death screen, and the line on going back ({age} died, {back} back to). */
+    rewindOffer: z.string().min(1),
+    rewindAge6: z.string().min(1),
+    rewindRealm: z.string().min(1),
     epitaph: z.object({ good: lines, bad: lines, plain: lines }).strict(),
   })
   .strict();

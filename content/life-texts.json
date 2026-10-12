@@ -46,6 +46,9 @@
   ],
   "ghostOffer": "Hồn phách chưa chịu tan. Mối hận chưa báo, việc dở chưa xong, cứ níu lấy ngươi ở lại nhân gian.",
   "ghostRise": "Ngươi mở mắt trong bóng tối, thân xác đã lạnh, hồn vẫn còn. Từ nay ngươi là quỷ tu, sống bằng âm khí, sợ ánh mặt trời.",
+  "rewindOffer": "Ánh sáng nhạt lóe lên giữa lúc hồn lìa xác. Thời gian khựng lại, rồi bắt đầu chảy ngược.",
+  "rewindAge6": "Ngươi chết năm {age} tuổi, rồi choàng tỉnh trên chiếc giường cũ, thân hình đứa trẻ {back} tuổi. Bao chuyện kiếp trước vẫn nhớ rõ từng chi tiết.",
+  "rewindRealm": "Ngươi chết năm {age} tuổi, rồi một niệm quay đầu, mở mắt đã thấy mình năm {back} tuổi, vừa bước vào cảnh giới này. Chuyện về sau vẫn nhớ, chỉ không chắc lần này trời có đi đúng nước cũ.",
   "epitaph": {
     "good": [
       "Một đời hành thiện, người trong làng nhắc tên còn chắp tay.",

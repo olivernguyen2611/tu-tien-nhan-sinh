@@ -6,6 +6,7 @@ import { lifeTitles } from '../../systems/career';
 import { heirOptions } from '../../systems/heir';
 import { lifeHighlights, lifeRecap, rebirthPoints } from '../../systems/rebirth';
 import { earnedBlessings } from '../../systems/blessings';
+import { rewindOffer } from '../../systems/rewind';
 import { Meter } from '../components/Meter';
 
 const STAT_LABELS = [
@@ -15,7 +16,7 @@ const STAT_LABELS = [
   ['charm', 'Mị lực', '貌'],
 ] as const;
 
-export function DeathScreen({ state, content, rebirth, onReadLog, onNewLife, onGhost, onHeir }: {
+export function DeathScreen({ state, content, rebirth, onReadLog, onNewLife, onGhost, onHeir, onRewind }: {
   state: GameState;
   content: Content;
   /** Task 5b.1: Luân Hồi points paid now for this life, and the total kept across lives. */
@@ -26,11 +27,14 @@ export function DeathScreen({ state, content, rebirth, onReadLog, onNewLife, onG
   onGhost: () => void;
   /** Task 5.7: go on as a child or disciple. */
   onHeir: (heirId: string) => void;
+  /** Task 5b.10: Trùng sinh, back to an earlier moment of this life. */
+  onRewind: () => void;
 }) {
   const s = lifeSummary(state, content);
   if (!s) return null;
   const c = state.character;
   const points = rebirthPoints(state, content);
+  const rewind = rewindOffer(state, content);
   const highlights = lifeHighlights(state, content.balance.rebirth.highlights);
   const blessings = earnedBlessings(state, content).map((b) => content.blessings.blessings.find((x) => x.id === b.id)!);
   return (
@@ -89,6 +93,15 @@ export function DeathScreen({ state, content, rebirth, onReadLog, onNewLife, onG
           <div class="ancestry">
             <p class="kicker">Phúc báo cho kiếp sau</p>
             <ul>{blessings.map((b) => <li key={b.id}><b>{b.name}</b>: {b.earned} {b.text}</li>)}</ul>
+          </div>
+        )}
+
+        {rewind && (
+          <div class="ghost-offer">
+            <p class="story">{content.lifeTexts.rewindOffer}</p>
+            <button class="btn-primary" onClick={onRewind}>
+              Trùng sinh về năm {rewind.age} tuổi{rewind.target === 'realm' ? ', lúc mới vào cảnh giới này' : ''}
+            </button>
           </div>
         )}
 
