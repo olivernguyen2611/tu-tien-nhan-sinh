@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6.1: mô phỏng tự động (2026-10-12)
+- Lệnh mới `npm run simulate -- --count 500 --profile both --difficulty normal --seed sim`: một **người chơi máy** sống trọn từng đời theo seed (quay khí vận, trả lời sự kiện, đánh trận, kết đan, vượt tâm ma, chọn thiên phú, đột phá) bằng chính các hàm của game, rồi in thống kê: tuổi thọ (trung bình, trung vị, p10, p90), nguyên nhân chết, tỉ lệ từng đạt mỗi cảnh giới, tuổi thọ theo linh căn.
+- Hai kiểu máy: `random` (chọn ngẫu nhiên, luôn thử đột phá) và `steady` (chọn lựa chọn đầu, chỉ đột phá khi từ 50%).
+- Mã: `src/systems/simulate.ts` (không có luật game riêng); script `tools/simulate.ts` chạy bằng vite-node. Có test.
+- Lần chạy đầu (100 đời, độ khó thường): tuổi thọ trung vị 74 (random) và 52 (steady); chết do chiến đấu 45% và 72%; chỉ khoảng 3% lên Kim Đan, chưa ai lên Nguyên Anh. Đây là đầu vào cho 6.2.
+
 ### Developer mode: sửa các nút không làm gì (2026-10-12)
 - **Nhận khí vận chi tử làm đệ tử** giờ bấm lúc nào cũng được: trước đây nếu đời này đã có một khí vận chi tử (còn sống hay đã mất) thì nút im lặng không làm gì. Nay người cũ được thả ra (vẫn là người quen, không còn là chi tử hay đồ đệ) và người mới vào thay. Cũng sửa lỗi sập khi nhật ký còn trống.
 - Mọi nút cheat không làm đổi gì (thành thân khi chưa đủ tuổi hay theo Phật đạo, học công pháp đang tu, đặt võ đạo khi đã tu tiên, chuỗi võ đạo ở giai đoạn không có…) giờ **báo lý do** ngay trên bảng Dev thay vì im lặng.
