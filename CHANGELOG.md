@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### Tông môn 5c.7 — Phía tông chủ (2026-10-12)
+- **Trưởng lão có tên**: tông mình (lập, kế vị hoặc đòi lại) có 3 trưởng lão là NPC thật (có tuổi, tu luyện, nhớ ơn). Chưởng môn ban thưởng từ kho (30 linh thạch, mỗi người một lần mỗi năm) để tăng thiện cảm và danh vọng.
+- **Danh vọng** 0–100 với 5 bậc (Vô danh, Có tiếng, Danh môn, Đại tông, Thánh địa): mỗi năm tiến dần về mức tương ứng số đệ tử và công trình; bậc cao thì người đến bái sư đông hơn. Số trong `balance.founding.prestige`, bậc trong `founding.json`.
+- 4 sự kiện của chưởng môn (`events/own-sect-life.json`): Tông bạn đến thăm, Đệ tử xin xuống núi lịch luyện, Trưởng lão bất mãn, Đại điển thu đồ. Hiệu ứng `ownSect` thêm `prestige`. Nội dung do Claude tự soạn, chưa qua duyệt.
+
 ### Tông môn 5c.6 — Tranh ngôi chưởng môn, phe phái (2026-10-12)
 - **Ba phe trong tông** (giữ nếp cũ, cải cách, chuộng thực lực): từ Nội môn, đệ tử chọn theo một phe (hoặc đứng ngoài). Chọn phe lưu bằng cờ và mở lối đi riêng ở vòng bàn bạc kế vị.
 - **Tranh ngôi**: Chân truyền (từ Trúc Cơ) gặp chưởng môn muốn truyền ngôi; được tranh ngôi, ủng hộ người khác hoặc từ chối. Tranh ngôi qua vòng bàn bạc rồi luận võ kế vị với một chân truyền khác. Thắng thì thành chưởng môn thật của tông đó.

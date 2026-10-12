@@ -32,6 +32,7 @@ import { disableTutorial, dismissTip } from '../systems/tutorial';
 import { practiceCraft } from '../systems/crafts';
 import { joinCareer } from '../systems/career';
 import { doMission, joinSect, leaveSect, requestMaster } from '../systems/sect';
+import { rewardElder } from '../systems/sectElders';
 import { buyTreasury } from '../systems/sectTreasury';
 import { doChainStep, startChain } from '../systems/sectChains';
 import { doTalk, enterTournament } from '../systems/sectmates';
@@ -387,6 +388,7 @@ function Screens({ content }: { content: Content }) {
             : a.kind === 'decide' ? decide(life, content, a.decisionId)
             : a.kind === 'build' ? build(life, content, a.buildingId)
             : a.kind === 'donate' ? donate(life, content)
+            : a.kind === 'elder' ? rewardElder(life, content, a.npcId)
             : leaveSect(life, content);
           if (!r || !r.text) return null;
           setLife(r.state);

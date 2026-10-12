@@ -3,6 +3,7 @@
 // (state.pastSect, members shrinking each life since); events (conditions.pastSect) let the
 // player meet it again, turn away, or, strong enough, take back the master's seat (effect
 // pastSect: "claimed" makes it this life's ownSect).
+import { seedElders } from './sectElders';
 import type { Content } from '../core/content';
 import type { GameState, LogLine, PastSect, PastSectRecord } from '../core/types';
 import { sectById } from './sect';
@@ -51,5 +52,5 @@ export function applyPastSect(state: GameState, content: Content, status: 'met' 
     ownSect: { name: p.name, lineage: p.lineage, rules: [], founded: state.character.age, members, treasury: cfg.claimTreasury, buildings: {} },
   };
   const text = content.founding.texts.claimed.replaceAll('{sect}', p.name).replaceAll('{members}', String(members));
-  return { state: s, line: { text, tone: 'rare' } };
+  return { state: seedElders(s, content), line: { text, tone: 'rare' } };
 }

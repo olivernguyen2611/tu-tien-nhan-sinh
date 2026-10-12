@@ -1,0 +1,261 @@
+[
+  {
+    "id": "ot_tong_ban_den_tham",
+    "category": "sect",
+    "title": "Tông bạn đến thăm",
+    "text": "Một chiếc linh chu cắm cờ lạ hạ xuống sơn môn. Chưởng môn một tông bạn mang lễ vật đến chào, mong kết tình giao hảo.",
+    "conditions": {
+      "ownSect": {
+        "has": true,
+        "minMembers": 20
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 6,
+    "themes": [
+      "sect_grand"
+    ],
+    "choices": [
+      {
+        "text": "Tiếp đón long trọng",
+        "result": {
+          "text": "Rượu quý, trà ngon, đàn tiêu suốt ba ngày. Khách ra về hết lời khen.",
+          "effects": {
+            "ownSect": {
+              "treasury": -25,
+              "prestige": 4
+            },
+            "reputation": {
+              "chinh": 2
+            },
+            "stat.charm": 2,
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Tiếp đón giản dị",
+        "result": {
+          "text": "Ngươi mời khách chén trà xanh, bàn chuyện đạo. Khách thấy ngươi chân thành.",
+          "effects": {
+            "ownSect": {
+              "prestige": 2
+            },
+            "stat.daoHeart": 1,
+            "stat.happiness": 1
+          }
+        }
+      },
+      {
+        "text": "Từ chối gặp",
+        "result": {
+          "text": "Ngươi sai người mời khách quay về. Tin ấy lan ra không mấy dễ nghe.",
+          "effects": {
+            "ownSect": {
+              "prestige": -3
+            },
+            "stat.happiness": -2,
+            "stat.charm": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ot_de_tu_xuong_nui",
+    "category": "sect",
+    "title": "Đệ tử xin xuống núi lịch luyện",
+    "text": "Đệ tử giỏi nhất của tông quỳ trước điện, xin xuống núi tìm cơ duyên: \"Con muốn thử sức bên ngoài, mong chưởng môn cho phép.\"",
+    "conditions": {
+      "ownSect": {
+        "has": true,
+        "minMembers": 10
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 5,
+    "themes": [
+      "sect_grand"
+    ],
+    "choices": [
+      {
+        "text": "Cho đi, dặn dò kỹ",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Mấy năm sau đệ tử về, danh tiếng vang xa, mang theo thêm không ít người đến bái sư.",
+          "effects": {
+            "ownSect": {
+              "members": 8,
+              "prestige": 4
+            },
+            "stat.happiness": 4
+          }
+        },
+        "fail": {
+          "text": "Đệ tử mất tin tức nhiều năm. Có người nói đã chết ngoài biên giới.",
+          "effects": {
+            "ownSect": {
+              "members": -1,
+              "prestige": -1
+            },
+            "stat.happiness": -4,
+            "stat.daoHeart": -1
+          }
+        }
+      },
+      {
+        "text": "Giữ lại, bảo tu thêm",
+        "result": {
+          "text": "Đệ tử cúi đầu vâng dạ, ánh mắt thoáng buồn. Hắn vẫn tu luyện chăm chỉ.",
+          "effects": {
+            "ownSect": {
+              "prestige": -1
+            },
+            "stat.daoHeart": 1,
+            "stat.happiness": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ot_truong_lao_bat_dong",
+    "category": "sect",
+    "title": "Trưởng lão bất mãn",
+    "text": "Một trưởng lão lâu năm gõ cửa động phủ của ngươi: \"Công lao ta nhiều, mà bổng lộc chẳng tăng. Chưởng môn nhìn lại xem.\"",
+    "conditions": {
+      "ownSect": {
+        "has": true,
+        "minMembers": 20
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 5,
+    "themes": [
+      "sect_grand"
+    ],
+    "choices": [
+      {
+        "text": "Tăng bổng lộc",
+        "result": {
+          "text": "Ngươi lấy từ kho thêm cho trưởng lão. Ông hài lòng, từ đó chăm chỉ hơn.",
+          "effects": {
+            "ownSect": {
+              "treasury": -30,
+              "prestige": 1
+            },
+            "stat.charm": 1,
+            "stat.happiness": 1
+          }
+        }
+      },
+      {
+        "text": "Khuyên nhủ bằng đạo lý",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Ngươi nói về chí hướng ban đầu của tông, trưởng lão trầm ngâm rồi xin lỗi.",
+          "effects": {
+            "ownSect": {
+              "prestige": 2
+            },
+            "stat.charm": 1,
+            "stat.daoHeart": 1
+          }
+        },
+        "fail": {
+          "text": "Trưởng lão nghe xong chỉ cười nhạt, bỏ đi mà không nói gì. Ba tháng sau, ông biệt tăm.",
+          "effects": {
+            "ownSect": {
+              "members": -3,
+              "prestige": -3
+            },
+            "stat.happiness": -4
+          }
+        }
+      },
+      {
+        "text": "Cứng rắn từ chối",
+        "result": {
+          "text": "Ngươi khoát tay. Trưởng lão im lặng, chắp tay lui ra, trong mắt có thứ khó đoán.",
+          "effects": {
+            "ownSect": {
+              "prestige": -1
+            },
+            "stat.daoHeart": 1,
+            "stat.happiness": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ot_dai_dien_thu_do",
+    "category": "sect",
+    "title": "Đại điển thu đồ",
+    "text": "Mười năm một lần, tông mở đại điển thu đồ: sơn môn rộng mở, người từ khắp nơi kéo về khảo thí. Cần có người quyết quy mô lễ.",
+    "conditions": {
+      "ownSect": {
+        "has": true,
+        "minMembers": 30
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 10,
+    "themes": [
+      "sect_grand"
+    ],
+    "choices": [
+      {
+        "text": "Làm lớn, mời cả giang hồ",
+        "result": {
+          "text": "Sơn môn như hội, kẻ đến nhiều không đếm xuể. Tuyển được không ít mầm tốt.",
+          "effects": {
+            "ownSect": {
+              "treasury": -60,
+              "members": 20,
+              "prestige": 4
+            },
+            "reputation": {
+              "giang_ho": 3
+            },
+            "stat.charm": 1,
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Làm vừa phải",
+        "result": {
+          "text": "Một trăm người đến khảo, mười lăm người đậu. Việc vừa sức, không ai chê trách.",
+          "effects": {
+            "ownSect": {
+              "treasury": -20,
+              "members": 8,
+              "prestige": 1
+            },
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Hủy lễ, dồn tiền vào kho",
+        "result": {
+          "text": "Ngươi dẹp đại điển lấy tiền sửa đường núi. Tiết kiệm được nhưng tông bớt phần náo nhiệt.",
+          "effects": {
+            "ownSect": {
+              "prestige": -2
+            },
+            "stat.intellect": 1,
+            "stat.happiness": -2
+          }
+        }
+      }
+    ]
+  }
+]
