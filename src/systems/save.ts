@@ -300,10 +300,13 @@ function writeMeta(store: KeyValueStore, meta: SaveMeta): SaveMeta {
   return meta;
 }
 
-/** A new life begins: count it; the Phúc báo waiting for it are now spent. */
-export function recordNewLife(store: KeyValueStore): SaveMeta {
+/**
+ * A new life begins: count it; the Phúc báo waiting for it are now spent, and so are the
+ * Luân Hồi points paid for its origin (task 5b.9 Cầu đầu thai).
+ */
+export function recordNewLife(store: KeyValueStore, cost = 0): SaveMeta {
   const meta = readMeta(store);
-  return writeMeta(store, { ...meta, livesPlayed: meta.livesPlayed + 1, blessings: null });
+  return writeMeta(store, { ...meta, livesPlayed: meta.livesPlayed + 1, blessings: null, rebirthPoints: Math.max(0, meta.rebirthPoints - cost) });
 }
 
 /**

@@ -390,6 +390,8 @@ export const OriginSchema = z
     noParents: z.boolean().default(false),
     /** Clan of cultivators: the spirit root is rolled balance.roots.clanDescendantRolls times, best kept. */
     cultivatorClan: z.boolean().default(false),
+    /** Task 5b.9 Cầu đầu thai: choosing this origin costs Luân Hồi points (random draws are free). */
+    rebirthCost: z.number().int().min(1).optional(),
     birthText: z.string().min(1),
   })
   .strict();

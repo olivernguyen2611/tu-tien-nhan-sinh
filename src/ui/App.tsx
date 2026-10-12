@@ -44,7 +44,7 @@ import { meetIllusion } from '../systems/heartDemon';
 import { craftRecipe } from '../systems/crafting';
 import { recruitDisciple, teachDisciple } from '../systems/disciples';
 import { build, decide, donate, foundSect } from '../systems/ownSect';
-import { rebirthPoints } from '../systems/rebirth';
+import { newLifeCost, rebirthPoints } from '../systems/rebirth';
 import { earnedBlessings } from '../systems/blessings';
 import { rewind } from '../systems/rewind';
 
@@ -70,6 +70,8 @@ function Screens({ content }: { content: Content }) {
   /** Slot the current life autosaves into. */
   const [slot, setSlot] = useState<number | null>(null);
   const [rollCount, setRollCount] = useState(0);
+  /** Luân Hồi points the life being rolled will cost once confirmed (task 5b.9). */
+  const [originCost, setOriginCost] = useState(0);
   const [theme, setTheme] = useState<ThemePref>(loadThemePref);
   const [devMode, setDevMode] = useState(loadDevMode);
   const toggleDev = (on: boolean) => { saveDevMode(on); setDevMode(on); };
@@ -161,7 +163,12 @@ function Screens({ content }: { content: Content }) {
       <CreateCharacterScreen
         content={content}
         onBack={() => setScreen('title')}
+        rebirthPoints={readMeta(store).rebirthPoints}
         onCreate={(input) => {
+          // Task 5b.9: a chosen origin with a price is paid in Luân Hồi points when the life is confirmed.
+          const cost = newLifeCost(content, input.originId);
+          if (cost > readMeta(store).rebirthPoints) return;
+          setOriginCost(cost);
           // Tips only for the very first life on this browser.
           setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list }, content), content));
           setScreen('destiny');
@@ -177,7 +184,7 @@ function Screens({ content }: { content: Content }) {
         rollCount={rollCount}
         unlimited={devMode}
         onReroll={() => { setLife(rerollDestiny(life, content, devMode)); setRollCount((n) => n + 1); }}
-        onConfirm={() => { recordNewLife(store); setLife(confirmDestiny(life, content)); setScreen('main'); }}
+        onConfirm={() => { recordNewLife(store, originCost); setLife(confirmDestiny(life, content)); setScreen('main'); }}
       />
     );
   }

@@ -27,6 +27,7 @@
     "effects": { "stat.intellect": 5, "stat.charm": 5, "stat.happiness": 5 },
     "silver": 200,
     "spiritStones": 0,
+    "rebirthCost": 10,
     "birthText": "Ngươi chào đời trong phủ đệ của một vị quan huyện ở {hometown}. Gia nhân bày tiệc ba ngày."
   },
   {
@@ -59,6 +60,7 @@
     "silver": 80,
     "spiritStones": 3,
     "cultivatorClan": true,
+    "rebirthCost": 30,
     "birthText": "Ngươi chào đời trong từ đường của một gia tộc tu tiên đã sa sút ở {hometown}. Lão tổ trong gia phả có lẽ đang nhìn ngươi."
   }
 ]
