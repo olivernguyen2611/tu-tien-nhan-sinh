@@ -284,6 +284,10 @@
         {
           "technique": "u_ha_huyet_anh_cong",
           "start": 220
+        },
+        {
+          "item": "dia_nhu_ngan_nam",
+          "start": 150
         }
       ],
       "winText": "Người dẫn phiên che mặt nghiêng đầu: \"{lot}, {price}, thuộc về vị khách này.\"",
@@ -351,6 +355,10 @@
         {
           "technique": "ngu_hanh_luan_chuyen_kinh",
           "start": 280
+        },
+        {
+          "item": "ha_thu_o_ngan_nam",
+          "start": 130
         }
       ],
       "winText": "Tiếng búa ngọc vang lên. Cả sảnh quay lại nhìn ngươi: {lot}, {price}.",

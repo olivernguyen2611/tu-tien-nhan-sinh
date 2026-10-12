@@ -157,5 +157,87 @@
         }
       }
     ]
+  },
+  {
+    "id": "gd_ngan_nam_duoi_goc",
+    "category": "fortune",
+    "title": "Củ hình người dưới gốc cổ thụ",
+    "text": "Cơn bão quật ngã một cây đa cổ thụ đầu làng. Dưới bộ rễ lật lên, {name} thấy một củ hà thủ ô to bằng đứa trẻ sơ sinh, râu dài quấn quanh đá. Lão làng bảo: \"Củ này sống ít cũng nghìn năm.\"",
+    "tags": [
+      "rare"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      }
+    },
+    "weight": 0.4,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đào lên cất kỹ",
+        "result": {
+          "text": "Ngươi bọc củ trong vải ướt, cất vào hòm sâu nhất. Chưa biết dùng vào việc gì, nhưng thứ này không nên bán rẻ.",
+          "effects": {
+            "addItems": [
+              "ha_thu_o_ngan_nam"
+            ],
+            "stat.happiness": 4,
+            "stat.luck": 1
+          }
+        }
+      },
+      {
+        "text": "Biếu lão làng, xin ít bạc",
+        "result": {
+          "text": "Lão làng mừng rơi nước mắt, dúi vào tay ngươi một túi bạc dành dụm. Cả làng nhắc chuyện này ba năm.",
+          "effects": {
+            "silver": 30,
+            "stat.happiness": 3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "gd_dia_nhu_trong_hang",
+    "category": "fortune",
+    "title": "Giọt sữa đá trong hang",
+    "text": "Tránh mưa trong một hang đá, {name} thấy trên vách nhũ thạch có một giọt trắng đục chậm rãi nhỏ xuống một chiếc chén đá tự nhiên. Nhìn vết đóng cặn quanh miệng chén, nó đã nhỏ như vậy không dưới nghìn năm.",
+    "tags": [
+      "rare"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      }
+    },
+    "weight": 0.4,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Hứng đầy một bình ngọc mang đi",
+        "result": {
+          "text": "Phải đợi trọn một ngày mới đầy nửa bình. Ngươi vừa nín thở vừa nghĩ: thứ này đem bán thì phí, đem cho người cần mới đáng.",
+          "effects": {
+            "addItems": [
+              "dia_nhu_ngan_nam"
+            ],
+            "stat.happiness": 3,
+            "stat.luck": 1
+          }
+        }
+      },
+      {
+        "text": "Uống một ngụm tại chỗ",
+        "result": {
+          "text": "Ngọt, đặc, ấm. Ngươi thấy cơ thể nhẹ đi, nhưng cũng biết mình vừa uống mất thứ mà người khác cần hơn.",
+          "effects": {
+            "stat.health": 8,
+            "stat.happiness": 2
+          }
+        }
+      }
+    ]
   }
 ]

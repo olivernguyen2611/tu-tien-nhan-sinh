@@ -27,6 +27,12 @@ export interface Relative {
   root?: SpiritRoot | null;
   /** A child's special body (thể chất đặc biệt), separate from the root; it stands in for the root when set. */
   bodyId?: string | null;
+  /** Backlog 2 (Gia đạo): Ngộ tính gathered from luận bàn, luận đạo and teaching (0–100), and the technique taught. */
+  insight?: number;
+  technique?: string | null;
+  /** Hậu thiên linh căn opened by a gift; tries made with a thousand-year item. */
+  acquired?: boolean;
+  rootTries?: number;
 }
 
 /** Quest chain of the martial path: one step a year; `game` is the mini-game being played. */
@@ -355,6 +361,10 @@ export interface Npc {
   grudge: number;
   /** Id of the NPC whose grudge this one inherited (kin of someone the player killed). */
   heirOf: string | null;
+  /** Backlog 2 (Gia đạo): bond action → player's age when last done; a hậu thiên linh căn opened by a gift. */
+  lastBond?: Record<string, number>;
+  acquired?: boolean;
+  rootTries?: number;
   /** Task 4.9: the player's disciple, and the age they were last taught. */
   disciple?: { since: number; lastTaught: number | null };
   /** Task 5.5: a khí vận chi tử (template id) and the age of the player when they came. */
