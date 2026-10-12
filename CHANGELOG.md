@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6.3: PWA, cài lên điện thoại và chơi offline (2026-10-12)
+- `manifest.webmanifest` + biểu tượng chữ 仙 (192/512, maskable, apple-touch-icon) để "Thêm vào màn hình chính".
+- `public/sw.js`: trang tải qua mạng trước (ra bản mới), có bản lưu làm dự phòng khi mất mạng; file build và font cache-first. Chỉ đăng ký ở bản production.
+- Đã thử bằng trình duyệt: tải một lần, tắt mạng, tải lại vẫn vào được menu.
+
 ### GĐ 6.2: cân bằng theo mô phỏng (2026-10-12)
 - Số liệu 200 đời/loại người chơi máy, seed mặc định, độ khó thường. Trước: tuổi thọ trung vị 75 (random) / 66 (steady); đạt Trúc Cơ 48% / 45%; chết vì lão suy 2.5% / 0.5%. Sau: trung vị 86 / 84; đạt Trúc Cơ 57.5% / 58.5%; lão suy 4% / 1%; p90 tuổi thọ 143→170 (random).
 - Nguyên nhân: sức khỏe bị bào mòn (bệnh 41–57%, giao chiến 36–53% tổng số ca chết). Đã chỉnh trong `balance.json`: `combat.roundInjury` [6,12]→[4,9]; `aging.recoverPerYear` 3→4; `aging.recoverCap` 70→80.
