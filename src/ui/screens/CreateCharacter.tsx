@@ -10,18 +10,23 @@ function newSeed(): string {
   return `${Date.now().toString(36)}-${Math.floor(Math.random() * 1e9).toString(36)}`;
 }
 
-export function CreateCharacterScreen({ content, rebirthPoints, onCreate, onBack }: {
+export function CreateCharacterScreen({ content, rebirthPoints, fingers, onCreate, onBack }: {
   content: Content;
   /** Task 5b.9 Cầu đầu thai: Luân Hồi points to pay for a rare origin. */
   rebirthPoints: number;
+  /** Task 5b.5: Kim Thủ Chỉ unlocked by thành tựu, to choose for balance.goldenFinger.chooseCost points. */
+  fingers: string[];
   onCreate: (input: NewLifeInput) => void;
   onBack: () => void;
 }) {
   const [name, setName] = useState('');
   const [gender, setGender] = useState<Gender | undefined>(undefined);
   const [originId, setOriginId] = useState<string | undefined>(undefined);
+  const [finger, setFinger] = useState<string | undefined>(undefined);
+  const fingerCost = content.balance.goldenFinger.chooseCost;
   const [difficulty, setDifficulty] = useState(content.balance.defaultDifficulty);
   const options = originOptions(content, rebirthPoints);
+  const originCost = options.find((o) => o.id === originId)?.cost ?? 0;
   const chosen = content.difficulties.find((d) => d.id === difficulty);
 
   const rollName = () => {
@@ -88,8 +93,31 @@ export function CreateCharacterScreen({ content, rebirthPoints, onCreate, onBack
         </div>
       </section>
 
+      {fingers.length > 0 && (
+        <section class="field">
+          <span class="field-label">Kim Thủ Chỉ</span>
+          <div class="origin-list" role="radiogroup" aria-label="Kim Thủ Chỉ">
+            <button role="radio" aria-checked={finger === undefined} class={`origin${finger === undefined ? ' on' : ''}`} onClick={() => setFinger(undefined)}>
+              <b>Để trời định</b>
+              <span>Kim Thủ Chỉ có hay không, tùy duyên.</span>
+            </button>
+            {fingers.map((id) => {
+              const f = content.goldenFingers.fingers.find((x) => x.id === id)!;
+              const affordable = fingerCost + originCost <= rebirthPoints;
+              return (
+                <button role="radio" key={id} aria-checked={finger === id} class={`origin${finger === id ? ' on' : ''}`} disabled={!affordable} onClick={() => setFinger(id)}>
+                  <b>{f.name}</b>
+                  <span>{f.summary}</span>
+                  <span class="origin-cost">{fingerCost} điểm Luân Hồi{!affordable && ` (đang có ${rebirthPoints})`}</span>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
       <div class="create-action">
-        <button class="btn-primary" onClick={() => onCreate({ seed: newSeed(), name, gender, originId, difficulty })}>Đầu thai</button>
+        <button class="btn-primary" onClick={() => onCreate({ seed: newSeed(), name, gender, originId, difficulty, goldenFinger: finger })}>Đầu thai</button>
       </div>
     </main>
   );

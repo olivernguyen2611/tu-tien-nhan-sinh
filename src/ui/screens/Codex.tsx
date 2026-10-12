@@ -4,13 +4,19 @@ import type { Content } from '../../core/content';
 import { codexProgress, storyText, type Codex } from '../../systems/codex';
 import { TermText } from '../components/Tooltip';
 
-type Tab = 'traits' | 'combos' | 'fingers' | 'stories';
+type Tab = 'traits' | 'combos' | 'fingers' | 'stories' | 'achievements';
 
 const RARITY_LABEL: Record<string, string> = {
   pham: 'Phàm', luong: 'Lương', uu: 'Ưu', tuyet: 'Tuyệt', thien: 'Thiên', than: 'Thần', ac: 'Ác vận',
 };
 
-export function CodexScreen({ content, codex, onBack }: { content: Content; codex: Codex; onBack: () => void }) {
+export function CodexScreen({ content, codex, achievements, onBack }: {
+  content: Content;
+  codex: Codex;
+  /** Task 5b.5: thành tựu held → the life that earned it. */
+  achievements: Record<string, { name: string; life: number }>;
+  onBack: () => void;
+}) {
   const [tab, setTab] = useState<Tab>('traits');
   const p = codexProgress(codex, content);
   const tabs: [Tab, string][] = [
@@ -18,6 +24,7 @@ export function CodexScreen({ content, codex, onBack }: { content: Content; code
     ['combos', `Tổ hợp ${p.combos[0]}/${p.combos[1]}`],
     ['fingers', `Kim Thủ Chỉ ${p.fingers[0]}/${p.fingers[1]}`],
     ['stories', `Truyện ${codex.stories.length}`],
+    ['achievements', `Thành tựu ${content.achievements.achievements.filter((a) => a.id in achievements).length}/${content.achievements.achievements.length}`],
   ];
   return (
     <main class="create-screen codex-screen">
@@ -63,6 +70,22 @@ export function CodexScreen({ content, codex, onBack }: { content: Content; code
           ) : (
             <li class="trait-chip unknown" key={f.id}><b>Kim Thủ Chỉ ???</b><span>Chưa từng có.</span></li>
           ))}
+        </ul>
+      )}
+
+      {tab === 'achievements' && (
+        <ul class="trait-chips codex-list">
+          {content.achievements.achievements.map((a) => {
+            const got = achievements[a.id];
+            if (!got && a.hidden) return <li class="trait-chip unknown" key={a.id}><b>Thành tựu ẩn ???</b><span>Tự khám phá.</span></li>;
+            return (
+              <li class={`trait-chip${got ? ' r-tuyet' : ' unknown'}`} key={a.id}>
+                <b>{a.name}</b>
+                <span>{a.text}{a.unlockFinger && ' Mở khóa một Kim Thủ Chỉ.'}</span>
+                {got && <span>Đạt ở kiếp thứ {got.life}: {got.name}.</span>}
+              </li>
+            );
+          })}
         </ul>
       )}
 

@@ -1332,8 +1332,12 @@ export const BalanceSchema = z
         perLife: probability,
         maxChance: probability,
         pityLives: z.number().int().min(1),
+        /** Task 5b.5: Luân Hồi points to choose a Kim Thủ Chỉ unlocked by a thành tựu. */
+        chooseCost: z.number().int().min(0),
       })
       .strict(),
+    /** Task 5b.5: huy hiệu cuối đời shown on the death screen and the obituary card. */
+    badges: z.object({ max: z.number().int().min(1) }).strict(),
   })
   .passthrough(); // later tasks add sections (cultivation, lifespan…)
 
@@ -2387,3 +2391,68 @@ export const CodexFileSchema = z
   })
   .strict();
 export type CodexFile = z.infer<typeof CodexFileSchema>;
+
+/** Task 5b.5: what a finished life must show for a thành tựu or huy hiệu (all given must hold). */
+export const LifeCheckSchema = z
+  .object({
+    realmMin: id.optional(),
+    /** Died as a Phàm Nhân. */
+    mortal: z.boolean().optional(),
+    ageMin: z.number().int().min(0).optional(),
+    ageMax: z.number().int().min(0).optional(),
+    cause: z.array(z.enum(['old_age', 'illness', 'breakthrough', 'ordeal', 'combat', 'tribulation'])).optional(),
+    karmaMin: z.number().optional(),
+    karmaMax: z.number().optional(),
+    happinessMin: z.number().optional(),
+    silverMin: z.number().int().optional(),
+    childrenMin: z.number().int().min(0).optional(),
+    childrenMax: z.number().int().min(0).optional(),
+    disciplesMin: z.number().int().min(0).optional(),
+    partner: z.boolean().optional(),
+    ownSect: z.boolean().optional(),
+    clan: z.boolean().optional(),
+    /** Best place reached on the Thiên kiêu bảng at the end. */
+    rankMax: z.number().int().min(1).optional(),
+    lineage: ids.optional(),
+    flagsAll: ids.optional(),
+    /** Kim Thủ Chỉ at death: any (true), none (false), or one of these. */
+    goldenFinger: z.union([z.boolean(), z.array(id)]).optional(),
+    combosMin: z.number().int().min(1).optional(),
+    chosenTemplate: ids.optional(),
+    chosenRole: z.array(z.enum(['protect', 'exploit', 'ignore'])).optional(),
+    /** The khí vận chi tử's tale (codex.json stories). */
+    chosenEnding: z.array(z.enum(['protect', 'exploit_won', 'exploit', 'ignore', 'dead', 'none'])).optional(),
+    /** Lives begun on this browser, this one included. */
+    livesMin: z.number().int().min(1).optional(),
+  })
+  .strict();
+export type LifeCheck = z.infer<typeof LifeCheckSchema>;
+
+/** Task 5b.5: thành tựu kept across lives, and huy hiệu cuối đời given to one life. */
+export const AchievementFileSchema = z
+  .object({
+    achievements: z.array(
+      z
+        .object({
+          id,
+          name: z.string().min(1),
+          /** How it is earned (hidden ones show "???" until earned). */
+          text: z.string().min(1),
+          hidden: z.boolean().default(false),
+          when: LifeCheckSchema,
+          /** This Kim Thủ Chỉ may then be chosen when a new life is made (for balance.goldenFinger.chooseCost). */
+          unlockFinger: id.optional(),
+        })
+        .strict(),
+    ),
+    /** The life's badges: those that fit, highest priority first, at most balance... maxBadges. */
+    badges: z.array(
+      z
+        .object({ id, name: z.string().min(1), text: z.string().min(1), priority: z.number().int(), when: LifeCheckSchema })
+        .strict(),
+    ),
+    /** Obituary card texts: {name}, {years}. */
+    obituary: z.object({ title: z.string().min(1), footer: z.string().min(1) }).strict(),
+  })
+  .strict();
+export type AchievementFile = z.infer<typeof AchievementFileSchema>;

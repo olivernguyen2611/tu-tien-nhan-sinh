@@ -2,6 +2,15 @@
 
 ## [Chưa phát hành]
 
+### Task 5b.5 — Thành tựu, huy hiệu cuối đời, cáo phó (2026-10-12)
+- 30 **thành tựu** lưu vĩnh viễn (`content/achievements.json`): cảnh giới, trăm tuổi, khai tông, lập gia tộc, đạo lữ, Thiên kiêu bảng, đại thiện / đại ác, khí vận chi tử ("Sư phụ của nhân vật chính", "Phản diện bị vả mặt", "Bị đồ đệ gọi là NPC"), Kim Thủ Chỉ, tổ hợp ẩn, trùng sinh, mười / trăm kiếp… Thành tựu ẩn hiện "???" tới khi đạt.
+- 6 thành tựu **mở khóa Kim Thủ Chỉ**: từ đó lúc đầu thai được chọn thẳng Kim Thủ Chỉ ấy với 30 điểm Luân Hồi (`balance.goldenFinger.chooseCost`).
+- 19 **huy hiệu cuối đời** có độ ưu tiên; màn tổng kết đời hiện 3 huy hiệu hợp nhất (`balance.badges.max`), ví dụ "Lão Tổ Cô Độc", "Phàm Nhân Hạnh Phúc Nhất". Đời nào cũng có ít nhất "Một Đời Bình Thường".
+- Màn tổng kết đời hiện các thành tựu mới đạt. Thiên Thư có thêm mục **Thành tựu**.
+- Nút **Lưu cáo phó**: vẽ cáo phó thành ảnh PNG (tên, cảnh giới, cách mất, văn bia, huy hiệu). Trình duyệt hỗ trợ thì mở bảng chia sẻ, không thì tải ảnh về.
+- Điều kiện chung `LifeCheck` cho thành tựu và huy hiệu; validator kiểm tra cảnh giới và Kim Thủ Chỉ được nhắc tới.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Task 5b.4 — Thiên Thư (2026-10-12)
 - Màn **Thiên Thư** mở từ màn tiêu đề (sau kiếp đầu), có 4 mục:
   - Khí vận: đã mang / tổng số; cái chưa gặp hiện "???" kèm phẩm cấp.
