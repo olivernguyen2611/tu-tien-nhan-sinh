@@ -213,6 +213,8 @@ export interface GameState {
     pending: string | null;
     /** Event id → age it last happened (once-per-life, cooldowns). */
     history: Record<string, number>;
+    /** Playtest 2026-10-12: event id → times it happened this life (repeats grow rarer). Absent in old saves. */
+    seen?: Record<string, number>;
     /** Follow-up events booked by earlier choices. */
     followUps: { event: string; atAge: number }[];
     /** Task 3.4: id of the NPC the pending event is about ({npc}). */

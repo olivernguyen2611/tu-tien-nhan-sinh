@@ -595,6 +595,9 @@ export const BalanceSchema = z
         popupChanceLowRealm: probability,
         popupChanceHighRealm: probability,
         logLineChance: probability,
+        /** Playtest 2026-10-12: repeatable events wait at least this many years; each repeat × repeatDecay weight. */
+        minCooldownYears: z.number().int().min(0),
+        repeatDecay: z.number().min(0).max(1),
         /** Skill check: chance = base + (stat − difficulty) × perPoint, clamped to [min, max]. */
         check: z
           .object({ base: probability, perPoint: z.number().min(0), min: probability, max: probability })

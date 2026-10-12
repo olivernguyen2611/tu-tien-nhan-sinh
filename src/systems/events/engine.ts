@@ -47,7 +47,9 @@ export function eventWeight(state: GameState, content: Content, event: GameEvent
   const last = state.events.history[event.id];
   if (last !== undefined) {
     if (event.oncePerLife) return 0;
-    if (event.cooldownYears > 0 && state.character.age - last < event.cooldownYears) return 0;
+    // Playtest 2026-10-12: every repeatable event waits at least minCooldownYears.
+    const cooldown = Math.max(event.cooldownYears, content.balance.events.minCooldownYears);
+    if (state.character.age - last < cooldown) return 0;
   }
   // Task 3.6: a romance event is judged with its lover/partner as the event's NPC.
   const target = event.conditions.romance?.target;
@@ -55,6 +57,9 @@ export function eventWeight(state: GameState, content: Content, event: GameEvent
   if (!meets(judged, event.conditions, content)) return 0;
   let w = event.weight * themeMultiplier(state, content, event);
   if (event.luckAffected) w *= 1 + (state.aptitudes.luck - 50) / 100; // G.4
+  // Playtest 2026-10-12: each time it already happened this life, it grows rarer.
+  const seen = state.events.seen?.[event.id] ?? (last !== undefined ? 1 : 0);
+  if (seen > 0) w *= content.balance.events.repeatDecay ** seen;
   return Math.max(0, w);
 }
 
@@ -231,6 +236,7 @@ export function resolveChoice(given: GameState, content: Content, choiceIndex: n
       ...next.events,
       pending: null,
       history: { ...next.events.history, [event.id]: state.character.age },
+      seen: { ...next.events.seen, [event.id]: (next.events.seen?.[event.id] ?? 0) + 1 },
     },
   };
   const extra = applyExtras(next, content, outcome.effects, text);
