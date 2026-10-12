@@ -217,7 +217,7 @@ export const EffectsSchema = z
       .strict()
       .optional(),
     /** Task 5.3: the founded sect gains or loses members, treasury, next year's growth. */
-    ownSect: z.object({ members: z.number().int().optional(), treasury: z.number().int().optional(), growthBonus: z.number().optional() }).strict().optional(),
+    ownSect: z.object({ members: z.number().int().optional(), treasury: z.number().int().optional(), growthBonus: z.number().optional(), prestige: z.number().optional() }).strict().optional(),
     /** Task 5.5: take a khí vận chi tử of this template as a disciple (beyond the realm's disciple limit). */
     chosenOne: id.optional(),
     /** Task 5b.2: gain this Kim Thủ Chỉ ("random": any), only when the life has none yet. */
@@ -226,6 +226,8 @@ export const EffectsSchema = z
     loseGoldenFinger: z.boolean().optional(),
     /** Task 5b.7: the past life's sect: met, claimed back (becomes this life's ownSect) or turned away from. */
     pastSect: z.enum(['met', 'claimed', 'spurned']).optional(),
+    /** Task 5c.6: the member takes the master's seat of the sect they belong to (it becomes ownSect, no founding cost). */
+    succeedSect: z.boolean().optional(),
     /** Task 5.6: the master's role towards the khí vận chi tử; "ignore" lets them leave the master's door. */
     chosenRole: z.enum(['protect', 'exploit', 'ignore']).optional(),
     /** Task 4.6: the next step of a multi-step event (bí cảnh); it opens right after this one, the same year. */
@@ -275,7 +277,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -757,6 +759,9 @@ export const BalanceSchema = z
         nameLength: z.tuple([z.number().int().min(1), z.number().int().min(1)]),
         /** Members on the founding day: base + reputation of the founder's realm. */
         startMembers: z.record(id, z.number().int().min(0)),
+        /** Task 5c.6: an inherited sect starts with this many members (rank 3 member counts), and treasury. */
+        inheritMembers: z.number().int().min(1),
+        inheritTreasury: z.number().int().min(0),
         /** Task 5.2 yearly running: growth = members × growth (+ buildings, rules), at least baseRecruit; attrition share leaves. */
         growth: z.number().min(0),
         baseRecruit: z.number().int().min(0),
@@ -772,6 +777,13 @@ export const BalanceSchema = z
         donation: z.number().int().min(1),
         /** How many decisions a yearly report asks for. */
         decisions: z.tuple([z.number().int().min(0), z.number().int().min(0)]),
+        /**
+         * Task 5c.7: danh vọng. Each year it moves `approach` of the way to
+         * members/membersFor60 × 60 + building levels × perBuildingLevel (capped 100); starts at `start`.
+         */
+        prestige: z.object({ start: z.number().min(0).max(100), membersFor60: z.number().int().min(1), perBuildingLevel: z.number().min(0), approach: probability }).strict(),
+        /** Named elders: how many, what a reward costs from the treasury, and the bond it buys. */
+        elders: z.object({ count: z.number().int().min(0), rewardCost: z.number().int().min(0), rewardAffinity: z.number(), rewardPrestige: z.number() }).strict(),
       })
       .strict(),
     /** Task 4.9: taking disciples. */
@@ -788,6 +800,27 @@ export const BalanceSchema = z
         teachAffinity: z.number(),
         teachFavor: z.number(),
         teacherProgress: z.number(),
+        /**
+         * Task 5c.8: other acts between master and disciple, each once a year. Spar (luận bàn): chance is the
+         * master's Chiến lực share; the disciple gains sparProgress (×sparLoseMul if the master wins), the
+         * master gains/loses stats. Debate (luận đạo): a comprehension check vs debateDifficulty.
+         * Technique (truyền công): the disciple's progress +techniqueProgress and cultivation speed
+         * +techniqueSpeed[grade] (share). Gift (tặng vật): per item kind progress/affinity/aptitude.
+         */
+        acts: z
+          .object({
+            sparProgress: z.number(),
+            sparLoseMul: z.number(),
+            sparAffinity: z.number(),
+            debateDifficulty: z.number().min(0).max(100),
+            debateProgress: z.number(),
+            debateAffinity: z.number(),
+            techniqueProgress: z.number(),
+            techniqueAffinity: z.number(),
+            techniqueSpeed: z.record(id, z.number().min(0)),
+            gift: z.record(id, z.object({ progress: z.number(), affinity: z.number(), favor: z.number(), aptitude: z.number() }).strict()),
+          })
+          .strict(),
       })
       .strict(),
     /** Task 5.5: khí vận chi tử. Hào quang: faster cultivation, an easier breakthrough, no sudden death. */
@@ -1332,6 +1365,8 @@ export const BalanceSchema = z
         masterCast: z.object({ minRealm: z.number().int().min(0), aboveSelf: z.number().int().min(0), ageOffset: range, affinity: z.number().min(0).max(100) }).strict(),
         /** Task 5c.1: time spent with sectmates a year (each one once a year). */
         talksPerYear: z.number().int().min(1),
+        /** Task 5c.3: a chain mission is given up after this many missed steps. */
+        chainMaxFails: z.number().int().min(1),
         /**
          * Task 5c.2: sect tournaments. Open in years where age % every === offset, to members of minRank+;
          * `rounds` rounds against sectmates (power: Chiến lực; else a check on `stat`); rewards[wins].
@@ -1956,6 +1991,67 @@ export const SectLifeSchema = z
           .strict(),
       )
       .min(1),
+    /**
+     * Task 5c.4: Bảo khố — contribution buys things. `limit` per life; `cost` is the contribution spent
+     * (it does not lower the total that promotion counts). Rewards: items, spirit stones, cultivation bar %.
+     */
+    treasury: z
+      .array(
+        z
+          .object({
+            id,
+            name: z.string().min(1),
+            text: z.string().min(1),
+            cost: z.number().int().min(1),
+            minRank: z.number().int().min(0),
+            sects: ids.optional(),
+            limit: z.number().int().min(1),
+            items: z.array(id).default([]),
+            spiritStones: z.number().int().min(0).default(0),
+            progress: z.number().min(0).default(0),
+          })
+          .strict()
+          .refine((t) => t.items.length > 0 || t.spiritStones > 0 || t.progress > 0, 'phải có phần thưởng'),
+      )
+      .min(1),
+    /**
+     * Task 5c.3: chain missions. One step a year (it uses the year's mission); a failed step can be
+     * retried next year; after balance.sects.chainMaxFails misses the chain is dropped. Texts take
+     * {npc} (a sectmate of `npcKind`, if given) and {title}.
+     */
+    chains: z
+      .array(
+        z
+          .object({
+            id,
+            name: z.string().min(1),
+            minRank: z.number().int().min(0),
+            sects: ids.optional(),
+            npcKind: z.enum(['master', 'elder', 'steward', 'senior', 'peer', 'rival']).optional(),
+            /** Shown when the chain is taken. */
+            intro: z.string().min(1),
+            /** Shown when it is dropped after too many misses. */
+            abandon: z.string().min(1),
+            steps: z
+              .array(
+                z
+                  .object({
+                    text: z.string().min(1),
+                    stat: z.enum([...MORTAL_STATS, ...APTITUDES]),
+                    difficulty: z.number().min(0).max(100),
+                    success: MissionOutcomeSchema,
+                    fail: MissionOutcomeSchema,
+                  })
+                  .strict(),
+              )
+              .min(2),
+            reward: MissionOutcomeSchema,
+            /** Thiện cảm gained with the named sectmate when the chain is finished. */
+            affinity: z.number().optional(),
+          })
+          .strict(),
+      )
+      .min(1),
     missions: z
       .array(
         z
@@ -2335,6 +2431,17 @@ export const DisciplesFileSchema = z
     role: z.string().min(1),
     recruit: z.string().min(1),
     teach: z.array(z.string().min(1)).min(1),
+    /** Task 5c.8: {npc}, {name}, {technique}, {item}. */
+    acts: z
+      .object({
+        sparWin: z.array(z.string().min(1)).min(1),
+        sparLose: z.array(z.string().min(1)).min(1),
+        debateWin: z.array(z.string().min(1)).min(1),
+        debateFail: z.array(z.string().min(1)).min(1),
+        technique: z.array(z.string().min(1)).min(1),
+        gift: z.array(z.string().min(1)).min(1),
+      })
+      .strict(),
   })
   .strict();
 export type DisciplesFile = z.infer<typeof DisciplesFileSchema>;
@@ -2392,8 +2499,14 @@ export const FoundingFileSchema = z
         })
         .strict(),
     ),
+    /** Task 5c.7: standing tiers by danh vọng (ascending min); growth is added to the yearly recruit rate. */
+    prestigeTiers: z.array(z.object({ min: z.number().min(0).max(100), name: z.string().min(1), growth: z.number().min(0) }).strict()).min(1),
     texts: z
       .object({
+        /** {sect}, {names}. */
+        eldersMet: z.string().min(1),
+        /** {title}, {npc}. */
+        elderRewarded: z.string().min(1),
         founded: z.string().min(1),
         leftOld: z.string().min(1),
         /** {sect}, {members}, {membersDelta}, {treasury}, {treasuryDelta}. */
@@ -2408,6 +2521,8 @@ export const FoundingFileSchema = z
         donated: z.string().min(1),
         /** Task 5b.7: the past life's sect taken back ({sect}, {members}). */
         claimed: z.string().min(1),
+        /** Task 5c.6: {sect}, {members}. */
+        succeeded: z.string().min(1),
       })
       .strict(),
   })
