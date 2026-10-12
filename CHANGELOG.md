@@ -2,6 +2,17 @@
 
 ## [Chưa phát hành]
 
+### Task 4.3 — Hình thái Nguyên Anh (2026-10-12)
+- **Mở đột phá Nguyên Anh** (`majorBreakthrough.openRealms`). Thiên kiếp 6 đạo lôi và tâm ma chiến của phiên trước áp dụng như các đại cảnh giới khác.
+- **Kim Đan vỡ, hóa thành Nguyên Anh** với hình thái theo con đường đã đi (`content/nascent-souls.json`). Xét theo thứ tự, luật đầu tiên khớp thì lấy:
+  1. Kim Đan Nhất hoặc Nhị phẩm: **Đạo Anh**.
+  2. Theo đạo thống: Ma thì **Huyết Anh**, Phật thì **Xá Lợi Phật Anh**, Quỷ thì **U Hồn Anh**, Yêu thì **Yêu Linh Anh**.
+  3. Theo con đường chiến đấu chính: Kiếm thì **Kiếm Anh**, Thể thì **Bất Hoại Kim Anh**, Pháp thì **Pháp Tướng Anh**, Binh thì **Thần Binh Anh**, Thuật thì **Huyễn Ảnh Anh**.
+  4. Còn lại: **Thanh Liên Anh**.
+- Mỗi hình thái có hiệu ứng riêng qua bộ móc K.6. Bảng Tu luyện hiện hình thái; nhật ký ghi lúc hóa anh.
+- Chỉ số và thọ nguyên của hình thái cộng một lần lúc hóa anh. Chỉ dùng các móc đã có tác dụng (bỏ thần thức, kháng mị thuật, tư chất Ngự thú vì hệ thống của chúng chưa có).
+- **Nội dung do Claude tự soạn** theo lời chủ dự án, chưa qua duyệt.
+
 ### Task 4.2 — Đan văn (2026-10-12)
 - **Kim Đan thành thì mặt đan hiện đan văn**, sinh ra từ chính 3 luồng linh khí người chơi đã dẫn khi kết đan. Mỗi đan văn có hiệu ứng riêng qua bộ móc K.6.
 - **12 đan văn** trong `content/core-patterns.json`. Xét theo thứ tự, gặp luật đầu tiên khớp thì lấy:

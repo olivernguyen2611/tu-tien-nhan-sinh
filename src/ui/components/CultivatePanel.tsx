@@ -51,6 +51,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
   const foundation = content.cultivation.realms.foundations.find((g) => g.id === cult.foundation);
   const coreGrade = cult.coreGrade !== null ? content.cultivation.realms.coreGradeNames[cult.coreGrade - 1] : null;
   const pattern = content.corePatterns.find((p) => p.id === cult.corePattern);
+  const soul = content.nascentSouls.forms.find((f) => f.id === cult.soulForm);
 
   return (
     <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Tu luyện" onClick={(e) => e.target === e.currentTarget && onClose()}>
@@ -87,6 +88,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
         )}
         {foundation && <p class="profile-note"><TermText text={`Đạo cơ ${foundation.name}: ${foundation.description}`} /></p>}
         {coreGrade && <p class="profile-note"><TermText text={`Kim Đan ${coreGrade}${pattern ? `, ${pattern.name}: ${pattern.summary}` : ''}`} /></p>}
+        {soul && <p class="profile-note"><TermText text={`Nguyên Anh: ${soul.name}. ${soul.summary}`} /></p>}
         {mortal ? (
           <p class="story">
             <TermText text={cult.root ? 'Không có linh căn, linh khí không đọng lại trong người. Đường tu tiên tạm thời khép cửa.' : 'Chưa thử linh căn. Có khi một ngày tiên sư sẽ ghé qua quê nhà.'} />

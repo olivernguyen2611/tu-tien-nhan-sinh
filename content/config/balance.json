@@ -120,7 +120,7 @@
     }
   },
   "majorBreakthrough": {
-    "openRealms": ["truc_co", "kim_dan"],
+    "openRealms": ["truc_co", "kim_dan", "nguyen_anh"],
     "failureWeights": { "lose": 40, "injury": 35, "lifespan": 15, "deviation": 7, "death": 3 },
     "deviationHealth": -30,
     "deviationDaoHeart": -10,

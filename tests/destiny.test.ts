@@ -44,6 +44,7 @@ const content: Content = {
   heartDemon,
   recipes,
   corePatterns: [],
+  nascentSouls: { realm: 'nguyen_anh', forms: [] },
   disciples,
 };
 const born = (seed: string) => rollDestiny(createLife({ seed }, content), content);
