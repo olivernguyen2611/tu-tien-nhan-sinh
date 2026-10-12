@@ -1269,14 +1269,13 @@ export const BalanceSchema = z
         steps: z.array(
           z
             .object({
+              /** Years a typical trainee needs; each year trained raises this year's chance until then. */
               years: z.number().int().min(1),
               /** Averaged for the check. */
               stats: z.array(z.enum([...MORTAL_STATS, ...APTITUDES])).min(1),
               difficulty: z.number(),
               needsTeacher: z.boolean().optional(),
               minPhysique: z.number().optional(),
-              /** Overrides the default years lost on a failed attempt. */
-              failYearsBack: z.number().int().min(0).optional(),
             })
             .strict(),
         ),
@@ -1284,8 +1283,8 @@ export const BalanceSchema = z
         chancePerPoint: z.number().min(0),
         chanceMin: probability,
         chanceMax: probability,
-        /** Training years lost on a failed attempt. */
-        failYearsBack: z.number().int().min(0),
+        /** Share of the check rolled each training year (once the step's typical years are reached). */
+        yearMul: probability,
         oldAge: z.number().int(),
         oldAgeMul: z.number().min(0),
       })

@@ -1,6 +1,7 @@
 // Martial path for mortals (task 3.11, mortal-path.md 2b): seven stages from
-// Tam lưu to Ngũ khí triều nguyên. Training a year at a time fills the years a
-// step needs; then a stat check decides the breakthrough. The last two stages
+// Tam lưu to Ngũ khí triều nguyên. Every training year may break through: the
+// chance comes from Căn cốt and Ngộ tính, and grows with the years trained up to
+// the step's typical years (playtest 2026-10-12: no fixed countdown). The last two stages
 // need a kỳ ngộ (event effect). Ngũ khí triều nguyên becomes a Ngũ linh căn.
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
@@ -39,10 +40,19 @@ export interface MartialView {
   years: number;
   need: number;
   chance: number;
+  /** Chance that training this year breaks through. */
+  yearChance: number;
   /** Why "Luyện võ" cannot be done now. */
   blocked: string | null;
   /** Why the next breakthrough cannot be tried even with enough years. */
   gate: string | null;
+}
+
+/** This year's chance: the full check scaled by years trained so far against the step's typical years. */
+export function martialYearChance(state: GameState, content: Content, years = state.martial.years): number {
+  const step = content.balance.martial.steps[state.martial.stage + 1];
+  if (!step) return 0;
+  return martialChance(state, content) * content.balance.martial.yearMul * Math.min(1, years / step.years);
 }
 
 export function martialChance(state: GameState, content: Content): number {
@@ -79,6 +89,7 @@ export function martialView(state: GameState, content: Content): MartialView {
     years: state.martial.years,
     need: step?.years ?? 0,
     chance: martialChance(state, content),
+    yearChance: step && !gateReason(state, content) ? martialYearChance(state, content, state.martial.years + 1) : 0,
     blocked,
     gate: gateReason(state, content),
   };
@@ -116,23 +127,21 @@ function ascend(state: GameState, content: Content): GameState {
 export function trainMartial(state: GameState, content: Content): { state: GameState; text: string } | null {
   const view = martialView(state, content);
   if (view.blocked) return null;
-  const cfg = content.balance.martial;
   const texts = content.martial.texts;
   const years = state.martial.years + 1;
   let s: GameState = { ...state, martial: { ...state.martial, years, lastTrain: state.character.age } };
-  const lines: LogLine[] = [{ text: texts.train.replaceAll('{years}', String(Math.min(years, view.need))).replaceAll('{need}', String(view.need)).replaceAll('{next}', view.next ?? ''), tone: 'normal' }];
-  if (years >= view.need && !view.gate) {
+  const lines: LogLine[] = [{ text: texts.train.replaceAll('{years}', String(years)).replaceAll('{next}', view.next ?? ''), tone: 'normal' }];
+  if (!view.gate) {
     const rng = Rng.fromState(s.rng);
-    const ok = rng.chance(martialChance(s, content));
+    const ok = rng.chance(martialYearChance(s, content, years));
     s = { ...s, rng: rng.getState() };
     if (ok) {
       s = { ...s, log: addLines(s, lines) };
       const promoted = martialPromote(s, content);
       return { state: promoted, text: promoted.log.at(-1)!.lines.slice(-1)[0].text };
     }
-    const back = cfg.steps[state.martial.stage + 1]?.failYearsBack ?? cfg.failYearsBack;
-    s = { ...s, martial: { ...s.martial, years: Math.max(0, years - back) } };
-    lines.push({ text: texts.fail.replaceAll('{next}', view.next ?? ''), tone: 'bad' });
+    // Past twice the typical years, say so (once in a while), so a weak trainee knows why.
+    if (years >= view.need * 2 && years % view.need === 0) lines.push({ text: texts.fail.replaceAll('{next}', view.next ?? ''), tone: 'bad' });
   }
   return { state: { ...s, log: addLines(s, lines) }, text: lines.map((l) => l.text).join(' ') };
 }

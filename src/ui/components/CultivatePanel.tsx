@@ -152,7 +152,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
             <div class="crafts">
               <h3 class="panel-sub">Võ đạo</h3>
               <p class="story">{m.stage ? `Cảnh giới võ đạo: ${m.stage}` : 'Chưa nhập môn võ đạo.'}</p>
-              {m.next && <p class="profile-note">Luyện thêm {Math.max(0, m.need - m.years)} năm để thử lên {m.next} (tỉ lệ khoảng {Math.round(m.chance * 100)}%).</p>}
+              {m.next && <p class="profile-note">Đã luyện {m.years} năm. Năm nay luyện võ có khoảng {Math.round(m.yearChance * 100)}% đột phá lên {m.next}; tỉ lệ tăng dần tới năm thứ {m.need} (cao nhất {Math.round(m.chance * 100)}%, theo Căn cốt và Ngộ tính).</p>}
               {m.gate && <p class="profile-note">{m.gate}</p>}
               <button class="chip-btn" disabled={!!m.blocked} onClick={() => setPracticed(onTrain())}>Luyện võ</button>
               {m.blocked && <span class="craft-note">{m.blocked}</span>}

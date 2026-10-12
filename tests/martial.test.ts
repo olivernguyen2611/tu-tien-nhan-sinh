@@ -51,6 +51,26 @@ describe('martial path (task 3.11)', () => {
     expect(realmLabel(s, content)).toBe('Phàm Nhân · Tam lưu');
   });
 
+  it('playtest 2026-10-12: no countdown; high Căn cốt and Ngộ tính break through sooner', () => {
+    /** Years of training until Tam lưu, averaged over seeds. */
+    const avg = (physique: number, comprehension: number) => {
+      let total = 0;
+      for (let i = 0; i < 200; i++) {
+        let s = mortal(12, physique, {}, `t${i}`);
+        s = { ...s, rng: new Rng(`t${i}`).getState(), aptitudes: { ...s.aptitudes, comprehension } };
+        let n = 0;
+        while (s.martial.stage < 0 && n < 40) { s = year(trainMartial(s, content)!.state); n++; }
+        total += n;
+      }
+      return total / 200;
+    };
+    const gifted = avg(95, 95);
+    const plain = avg(40, 40);
+    expect(gifted).toBeLessThan(plain);
+    // Some gifted trainees make it in the very first year.
+    expect(gifted).toBeLessThan(content.balance.martial.steps[0].years * 2);
+  });
+
   it('Nhất lưu needs a teacher; Hóa cảnh needs Căn cốt 70', () => {
     expect(martialView(mortal(20, 60, { martial: { stage: 1, years: 5, bonus: 0, lastTrain: null } }), content).gate).toContain('sư phụ');
     expect(martialView(mortal(20, 60, { martial: { stage: 1, years: 5, bonus: 0, lastTrain: null }, flags: { luc_hop_mon: true } }), content).gate).toBeNull();
