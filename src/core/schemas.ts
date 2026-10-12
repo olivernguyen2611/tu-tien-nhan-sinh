@@ -98,6 +98,8 @@ export const EffectsSchema = z
     reducePeakFails: z.number().int().min(1).optional(),
     /** A scroll to learn later from the Tu luyện sheet. */
     gainTechnique: id.optional(),
+    /** Task 3.8: combat path aptitude gained. */
+    pathAffinity: z.record(z.enum(['sword', 'body', 'spell', 'weapon', 'arts']), z.number()).optional(),
     /** Mortal careers. */
     joinCareer: id.optional(),
     careerPromote: z.boolean().optional(),
@@ -126,7 +128,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1164,3 +1166,24 @@ export const MartialFileSchema = z
   })
   .strict();
 export type MartialFile = z.infer<typeof MartialFileSchema>;
+
+/** content/lineages.json: đạo thống (task 3.8, PLAN K.3.1). Speed multipliers live in balance.techniques.lineageMul. */
+const StatDeltaSchema = z.record(z.enum([...MORTAL_STATS, ...APTITUDES]), z.number());
+export const LineageFileSchema = z.array(
+  z
+    .object({
+      id: z.enum(LINEAGES),
+      name: z.string().min(1),
+      strengths: z.string().min(1),
+      costs: z.string().min(1),
+      /** K.6 hooks while following this lineage. */
+      effects: z.array(EffectHookSchema),
+      /** Stats changed once, the first time this life takes up the lineage. */
+      onAdopt: StatDeltaSchema,
+      /** Stats changed every year while following it (Quỷ đạo: health wears away). */
+      perYear: StatDeltaSchema,
+      karmaPerYear: z.number().optional(),
+    })
+    .strict(),
+);
+export type Lineage = z.infer<typeof LineageFileSchema>[number];

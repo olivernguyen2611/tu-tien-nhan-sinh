@@ -19,6 +19,7 @@ function cultivator(technique: string | null, patch: Partial<GameState['cult']> 
     ...b,
     character: { ...b.character, age: 20 },
     aptitudes: { physique: 50, comprehension: 50, luck: 50, daoHeart },
+    paths: {},
     traits: [],
     log: [...b.log, { age: 20, lines: [] }],
     cult: { ...b.cult, realm: 'luyen_khi', root: SONG, technique, lineage: technique ? tech(technique).lineage : null, learned: technique ? [technique] : [], lifespan: 130, ...patch },
@@ -44,7 +45,7 @@ describe('techniques (task 2.4)', () => {
     expect(techniqueMul(cultivator('tang_phong_kiem_kinh'), content)).toBeCloseTo(1.2); // Huyền, Kim fits
     expect(techniqueMul(cultivator('thanh_moc_truong_sinh_cong'), content)).toBeCloseTo(0.7); // Mộc does not fit Kim/Hỏa
     expect(techniqueMul(cultivator('u_ha_huyet_anh_cong'), content)).toBeCloseTo(1.2 * 0.7 * 1.4); // Ma, mismatch
-    expect(yearlyGain(cultivator('tang_phong_kiem_kinh'), content)).toBeCloseTo(25 * 1.2 * (1 + 0)); // đạo tâm 50: no penalty
+    expect(yearlyGain(cultivator('tang_phong_kiem_kinh'), content)).toBeCloseTo(25 * 1.2 * (1 + 0.1)); // đạo tâm 50: no penalty; main path Kiếm +10%
   });
 
   it('matching rules: root/any/none always fit, five needs a basic element, Lưu Ly Linh Thể fits all', () => {
@@ -58,7 +59,7 @@ describe('techniques (task 2.4)', () => {
 
   it('conditional hooks: Tàng Phong needs đạo tâm, Ngũ Hành rewards 3+ elements', () => {
     const low = cultivator('tang_phong_kiem_kinh', {}, 40);
-    expect(yearlyGain(low, content) / yearlyGain(cultivator('tang_phong_kiem_kinh'), content)).toBeCloseTo(0.8);
+    expect(yearlyGain(low, content) / yearlyGain(cultivator('tang_phong_kiem_kinh'), content)).toBeCloseTo(0.9 / 1.1);
     const tam: SpiritRoot = { grade: 'tam', elements: ['kim', 'moc', 'thuy'], body: null };
     const withTam = cultivator('ngu_hanh_luan_chuyen_kinh', { root: tam });
     expect(yearlyGain(withTam, content)).toBeCloseTo(25 * 0.7 * 1.2 * 1.15);

@@ -16,6 +16,7 @@ function rootless(daoHeart: number, patch: Partial<GameState> = {}): GameState {
     ...b,
     character: { ...b.character, age: 20 },
     aptitudes: { physique: 50, comprehension: 50, luck: 50, daoHeart },
+    paths: {},
     traits: [],
     log: [...b.log, { age: 20, lines: [] }],
     events: { pending: null, history: {}, followUps: [] },
@@ -39,7 +40,7 @@ describe('Phật duyên (task 3.12)', () => {
     s = enterFirstRealm(learned.state, content);
     expect(s.cult.realm).toBe('luyen_khi');
     expect(s.cult.lineage).toBe('phat');
-    expect(yearlyGain(s, content)).toBeCloseTo(25 * 0.7 * 0.8);
+    expect(yearlyGain(s, content)).toBeCloseTo(25 * 0.7 * 0.8 * 0.9); // main path Thể −10%
     expect(advanceYear(s, content).cult.progress).toBeGreaterThan(0);
   });
 

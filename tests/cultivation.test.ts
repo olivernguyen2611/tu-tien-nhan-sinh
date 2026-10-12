@@ -114,6 +114,7 @@ function cultivator(seed: string, patch: Partial<GameState['cult']> = {}, grade 
     character: { ...b.character, age: 15 },
     aptitudes: { physique: 50, comprehension: 50, luck: 50, daoHeart: 50 },
     stats: { ...b.stats, health: 80 },
+    paths: {},
     traits: [],
     destiny: { ...b.destiny, confirmed: true },
     events: { ...b.events, followUps: [] },

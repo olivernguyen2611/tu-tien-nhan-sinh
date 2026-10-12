@@ -4,6 +4,7 @@
 import type { Content } from '../core/content';
 import type { Technique } from '../core/schemas';
 import type { GameState, LogLine, SpiritRoot } from '../core/types';
+import { adoptLineage } from './paths';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -110,12 +111,13 @@ export function learnTechnique(state: GameState, content: Content, techId: strin
       progress,
     },
   };
-  if (opts.quiet) return { state: next, text };
+  const adopted = adoptLineage(next, content);
+  if (opts.quiet) return { state: adopted, text };
   const line: LogLine = { text, tone: 'good' };
-  const log = next.log.slice();
+  const log = adopted.log.slice();
   const last = log[log.length - 1];
   if (last) log[log.length - 1] = { ...last, lines: [...last.lines, line] };
-  return { state: { ...next, log }, text };
+  return { state: { ...adopted, log }, text };
 }
 
 /** "Hoàng phẩm · Tiên đạo · hợp linh căn · tới Trúc Cơ" for the Tu luyện sheet. */

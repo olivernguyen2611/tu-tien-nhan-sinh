@@ -7,6 +7,7 @@ import { craftViews } from '../../systems/crafts';
 import { careerIncome, careerLabel, careerViews } from '../../systems/career';
 import { currentTechnique, learnBlocked, techniqueById, techniqueSummary } from '../../systems/technique';
 import { martialView } from '../../systems/martial';
+import { pathsView } from '../../systems/paths';
 import { Meter } from './Meter';
 import { TermText } from './Tooltip';
 
@@ -37,6 +38,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
   const [careerOpen, setCareerOpen] = useState(false);
   const careers = mortal ? careerViews(state, content) : [];
   const currentCareer = careerLabel(state, content);
+  const paths = mortal ? null : pathsView(state, content);
   const foundation = content.cultivation.realms.foundations.find((g) => g.id === cult.foundation);
 
   return (
@@ -139,6 +141,25 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
               </div>
             ))}
             {joined && <p class="action-result good">{joined}</p>}
+          </div>
+        )}
+
+        {paths && (
+          <div class="crafts">
+            <h3 class="panel-sub">Đạo thống · con đường</h3>
+            {paths.lineage && (
+              <p class="profile-note"><b>{paths.lineage.name}</b>: {paths.lineage.strengths} Cái giá: {paths.lineage.costs}</p>
+            )}
+            <p class="profile-note">Con đường chính: {paths.main}</p>
+            {paths.paths.map((p) => (
+              <div class="craft-row" key={p.id}>
+                <div class="craft-head">
+                  <b><TermText text={p.name} /></b>
+                  {p.main && <span class="muted">chính</span>}
+                </div>
+                <Meter label={`${p.value}`} value={p.value} color="var(--bar-cult)" text="" />
+              </div>
+            ))}
           </div>
         )}
 

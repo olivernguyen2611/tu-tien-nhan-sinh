@@ -44,6 +44,8 @@ export interface GameState {
   talents: string[];
   /** A talent choice waiting for the player (after a big breakthrough); blocks the next year. */
   fate: { offered: string[]; refreshesLeft: number } | null;
+  /** Base aptitude 0–100 for each combat path (task 3.8); hooks add on top. */
+  paths: Record<string, number>;
   /** Martial path (task 3.11): stage index (-1 before Tam lưu), training years toward the next, extra % for it. */
   martial: { stage: number; years: number; bonus: number; lastTrain: number | null };
   /** Sect membership (task 2.5). */
@@ -112,6 +114,8 @@ export interface GameState {
     buffs: { mul: number; until: number }[];
     /** Bonus % for the next big breakthrough only. */
     nextBonus: number;
+    /** Lineages this life has followed (one-time onAdopt stats, task 3.8). */
+    lineagesAdopted: string[];
     /** Phật đạo precepts broken (task 3.12). */
     preceptBreaks: number;
     /** Đạo thống (Tiên/Ma/Phật/Quỷ), chosen in GĐ 3; reads lineage.<x>.* hooks. */

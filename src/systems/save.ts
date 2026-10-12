@@ -68,6 +68,10 @@ export function migrate(save: SaveFile): SaveFile {
   // Fields added within saveVersion 1 get their empty defaults.
   let life = save.life as GameState & { extremes?: GameState['extremes'] };
   if (!life.extremes) life = { ...life, extremes: { streak: {}, active: {}, givenAt: {} } };
+  // Task 3.8: old lives start every path at 0 (no main path yet); the current lineage counts as adopted.
+  if (life.paths === undefined) {
+    life = { ...life, paths: {}, cult: { ...life.cult, lineagesAdopted: life.cult.lineage ? [life.cult.lineage] : [] } };
+  }
   // Task 3.12: no precepts broken.
   if ((life.cult as Partial<GameState['cult']>).preceptBreaks === undefined) life = { ...life, cult: { ...life.cult, preceptBreaks: 0 } };
   // Task 3.11: no martial training yet.
