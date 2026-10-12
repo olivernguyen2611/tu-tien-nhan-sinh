@@ -1,5 +1,6 @@
 // Trùng sinh (task 5b.10, mortal-path.md 3.3; fate talent Nhất Niệm Hồi Quang): a rewindOnDeath
-// hook lets a dead life go back once, keeping the memory of the life before (flag ky_uc_kiep_truoc).
+// hook lets a dead life go back once, keeping the memory of the life before (flag ky_uc_kiep_truoc;
+// biet_truoc opens the hidden choices "Ta biết chuyện này sẽ xảy ra").
 // A hook with `at: 6` (Hồi Quang Kính) goes back to age 6; without it, to the start of the
 // current major realm. The spirit root stays; the world turns out a little different (new rng).
 import type { Content } from '../core/content';
@@ -8,6 +9,8 @@ import type { Checkpoint, GameState } from '../core/types';
 import { lifeHooks } from './cultivation';
 
 export const MEMORY_FLAG = 'ky_uc_kiep_truoc';
+/** Opens the hidden choices "Ta biết chuyện này sẽ xảy ra" (also set by the Kim Thủ Chỉ Ký ức kiếp trước). */
+export const FORESIGHT_FLAG = 'biet_truoc';
 const CHECKPOINT_AGE = 6;
 
 function snapshot(state: GameState): Checkpoint {
@@ -56,7 +59,7 @@ export function rewind(state: GameState, content: Content): GameState {
     // The butterfly: the same years will not roll the same way.
     rng: new Rng(`${state.seed}:trung_sinh:${state.death.age}`).getState(),
     cult: { ...cp.cult, root: state.cult.root ?? cp.cult.root },
-    flags: { ...cp.flags, [MEMORY_FLAG]: true },
+    flags: { ...cp.flags, [MEMORY_FLAG]: true, [FORESIGHT_FLAG]: true },
     checkpoints: { age6: state.checkpoints.age6, realm: offer.target === 'realm' ? cp : null },
     log,
   };

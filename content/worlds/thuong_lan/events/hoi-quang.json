@@ -1,0 +1,57 @@
+[
+  {
+    "id": "hq_tiem_cam_do",
+    "category": "fortune",
+    "title": "Gương đồng ở tiệm cầm đồ",
+    "text": "Góc tiệm cầm đồ có một chiếc gương đồng xỉn màu. {name} soi thử, thấy trong gương là mình năm sáu tuổi đang nhìn lại, mặt đầy nước mắt.",
+    "tags": ["rare"],
+    "conditions": { "age": { "min": 12 }, "flagsNone": ["ky_uc_kiep_truoc"] },
+    "weight": 0.03,
+    "luckAffected": true,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Mua ngay, không mặc cả",
+        "requires": { "stats": [{ "stat": "silver", "gte": 80 }] },
+        "result": { "text": "Chủ tiệm mừng như bắt được vàng: cái gương ma này nằm đó ba mươi năm không ai dám mua.", "effects": { "silver": -80, "addItems": ["hoi_quang_kinh"], "stat.happiness": 3 } }
+      },
+      {
+        "text": "Chê gương cũ, đòi bớt giá",
+        "check": { "stat": "stat.charm", "difficulty": 55 },
+        "success": { "text": "Ngươi kể một tràng gương này rước họa vào nhà. Chủ tiệm sợ quá bán rẻ cho ba mươi lượng.", "effects": { "silver": -30, "addItems": ["hoi_quang_kinh"], "stat.happiness": 5 } },
+        "fail": { "text": "Chủ tiệm bực mình đuổi ngươi ra. Hôm sau quay lại, gương đã bị một đạo sĩ mua mất.", "effects": { "stat.happiness": -4 } }
+      },
+      {
+        "text": "Úp gương xuống, đi cho nhanh",
+        "result": { "text": "Đêm đó ngươi mơ thấy đứa bé trong gương gọi tên mình. Sáng ra quên sạch.", "effects": { "stat.daoHeart": 1, "stat.happiness": -1 } }
+      }
+    ]
+  },
+  {
+    "id": "hq_gieng_co",
+    "category": "fortune",
+    "title": "Đáy giếng miếu hoang",
+    "text": "Miếu hoang trên đèo có cái giếng cạn. Đêm trăng tròn, đáy giếng hắt lên một vầng sáng như mặt gương, soi ra những năm tháng {name} đã đi qua.",
+    "tags": ["rare"],
+    "conditions": { "age": { "min": 20 }, "realm": { "min": "luyen_khi" }, "flagsNone": ["ky_uc_kiep_truoc"] },
+    "weight": 0.03,
+    "luckAffected": true,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Thả dây xuống giếng",
+        "check": { "stat": "stat.daoHeart", "difficulty": 55 },
+        "success": { "text": "Đáy giếng là một chiếc gương đồng. Ngươi nhìn thẳng vào những năm tháng ấy mà không chớp mắt, và gương chịu theo ngươi lên.", "effects": { "addItems": ["hoi_quang_kinh"], "stat.daoHeart": 2, "stat.happiness": 4 } },
+        "fail": { "text": "Gương soi ra chuyện ngươi muốn quên nhất. Ngươi buông tay, rơi xuống đáy giếng, bò lên thì gương đã chìm mất.", "effects": { "stat.health": -10, "heartDemon": 1, "stat.happiness": -4 } }
+      },
+      {
+        "text": "Ném một hòn đá xuống thử",
+        "result": { "text": "Mặt gương vỡ tan như mặt nước rồi lặng lại. Ngươi đứng nhìn tới sáng, ngộ ra đôi điều về thời gian.", "effects": { "stat.comprehension": 2, "cultProgress": 10 } }
+      },
+      {
+        "text": "Chuyện đã qua thì cho qua",
+        "result": { "text": "Ngươi quay lưng xuống đèo. Có những thứ không nên soi lại.", "effects": { "stat.daoHeart": 2, "stat.happiness": -1 } }
+      }
+    ]
+  }
+]

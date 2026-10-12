@@ -255,7 +255,8 @@
             "stat.happiness": 5
           }
         }
-      }
+      },
+      {"text": "Ta biết chuyện này sẽ xảy ra", "hidden": true, "requires": {"flagsAll": ["biet_truoc"]}, "result": {"text": "Ngươi rẽ vào lối mòn mà kiếp trước kẻ phục kích không ngờ tới, về tới nơi lúc chúng còn đang ngồi chờ.", "effects": {"stat.happiness": 3, "stat.intellect": 1}}}
     ]
   },
   {
@@ -900,7 +901,8 @@
             "stat.luck": 1
           }
         }
-      }
+      },
+      {"text": "Ta biết chuyện này sẽ xảy ra", "hidden": true, "requires": {"flagsAll": ["biet_truoc"]}, "result": {"text": "Kiếp trước ngươi chết trong cái hang ấy. Kiếp này ngươi cầm bản đồ đi bán lại cho đồng bọn của gã với giá gấp đôi.", "effects": {"spiritStones": 3, "stat.happiness": 4, "karma": -1}}}
     ]
   }
 ]

@@ -769,7 +769,8 @@
             }
           }
         }
-      }
+      },
+      {"text": "Ta biết chuyện này sẽ xảy ra", "hidden": true, "requires": {"flagsAll": ["biet_truoc"]}, "result": {"text": "Ngươi nhận ra bát canh này. Kiếp trước ngươi đã uống nó. Lần này ngươi chỉ ngậm, rồi nhổ ra lúc tiên sứ quay lưng.", "effects": {"stat.daoHeart": 3, "stat.intellect": 1, "setFlags": ["tinh_tao"], "followUp": {"event": "dem_huyet_te", "afterYears": [0, 0]}}}}
     ]
   },
   {
