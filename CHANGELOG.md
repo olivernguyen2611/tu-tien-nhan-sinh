@@ -10,7 +10,7 @@
 - **Nội dung do Claude tự soạn** theo lời chủ dự án, chưa qua duyệt.
 
 ### Task 4.11 — Tàn hồn "lão gia gia" (2026-10-12)
-- **Cửa 2.5 của đường phàm nhân** (`mortal-path.md`): từ 12 tuổi, cực hiếm, mua nhầm chiếc nhẫn biết ho ở chợ hoặc mò được dưới sông. Đeo vào thì có **Nhẫn cổ tàn hồn** (mang theo: tốc độ tu luyện +20%, Ngộ tính +5).
+- **Cửa 2.5 của đường phàm nhân** (`mortal-path.md`): từ 12 tuổi, cực hiếm, mua nhầm chiếc nhẫn biết ho ở chợ hoặc mò được dưới sông. Đeo vào thì có **Nhẫn cổ tàn hồn** (mang theo: tốc độ tu luyện +20%, bình cảnh dễ vượt hơn 10%).
 - **Chuỗi sự kiện** (`content/worlds/thuong_lan/events/remnant-soul.json`):
   1. **Lão gia gia trong nhẫn** chỉ đường tới ao linh tủy. Đi theo, hỏi vặn lão (thử Trí lực: thấy lão hỏi ngày giờ sinh hơi kỹ), hoặc cất nhẫn đi.
   2. **Ao linh tủy Hắc Phong** (thiên địa kỳ vật): phàm nhân không linh căn được khai mạch (Tứ hoặc Ngũ linh căn); người đã tu thì hấp thu linh khí; hoặc nhường ao cho lão.
@@ -36,6 +36,7 @@
   3. Theo con đường chiến đấu chính: Kiếm thì **Kiếm Anh**, Thể thì **Bất Hoại Kim Anh**, Pháp thì **Pháp Tướng Anh**, Binh thì **Thần Binh Anh**, Thuật thì **Huyễn Ảnh Anh**.
   4. Còn lại: **Thanh Liên Anh**.
 - Mỗi hình thái có hiệu ứng riêng qua bộ móc K.6. Bảng Tu luyện hiện hình thái; nhật ký ghi lúc hóa anh.
+- Chỉ số và thọ nguyên của hình thái cộng một lần lúc hóa anh. Chỉ dùng các móc đã có tác dụng (bỏ thần thức, kháng mị thuật, tư chất Ngự thú vì hệ thống của chúng chưa có).
 - **Nội dung do Claude tự soạn** theo lời chủ dự án, chưa qua duyệt.
 
 ### Task 4.2 — Đan văn (2026-10-12)
@@ -47,6 +48,8 @@
   4. **Đan văn biến dị**: có luồng biến dị thì ra Lôi Văn, Hàn Băng, Phong Văn hoặc U Ám.
   5. **Đan văn ngũ hành**: theo hệ dẫn nhiều nhất (Canh Kim, Thanh Mộc, Huyền Thủy, Ly Hỏa, Hậu Thổ); hòa thì lấy luồng sau.
 - Bảng Tu luyện hiện phẩm Kim Đan và đan văn cùng tác dụng. Nhật ký ghi lúc đan văn thành hình.
+- Chỉ số và thọ nguyên của đan văn cộng một lần lúc đan văn thành hình; các tác dụng khác đi qua bộ móc K.6.
+- Móc `element.root.power` và `element.all.power` (đã có ở vài khí vận nhưng trước đây không có tác dụng) giờ được tính khi khắc chế hệ trong trận.
 - **Nội dung do Claude tự soạn** theo lời chủ dự án ("tự quyết định nội dung, mình sẽ xem lại sau"), chưa qua duyệt.
 
 ### Task 4.9 — Thu đồ đệ (cơ bản) (2026-10-12)

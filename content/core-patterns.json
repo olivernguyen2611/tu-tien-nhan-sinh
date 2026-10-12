@@ -3,9 +3,9 @@
     "id": "liet_van", "name": "Liệt Văn",
     "when": { "cracked": true },
     "text": "Một vết rạn chạy ngang mặt đan, như sợi tóc trên chén ngọc. Mỗi lần nhập định, ngươi lại nhớ suýt nữa đã mất tất cả.",
-    "summary": "Đột phá đại cảnh giới −5%; Đạo tâm +5; kháng tâm ma +10%.",
+    "summary": "Đột phá đại cảnh giới −5; Đạo tâm +5; kháng tâm ma +10%.",
     "effects": [
-      { "hook": "breakthroughChance.major", "add": -0.05 },
+      { "hook": "breakthroughChance.major", "add": -5 },
       { "hook": "stat.daoHeart", "add": 5 },
       { "hook": "heartDemonResist", "add": 0.1 }
     ]
@@ -14,10 +14,10 @@
     "id": "tam_sinh_tuan_hoan", "name": "Tam Sinh Tuần Hoàn",
     "when": { "allFlow": true },
     "text": "Ba luồng linh khí nối đuôi nhau thành vòng, sinh không dứt. Kim Đan tự xoay, ngươi ngủ cũng tu.",
-    "summary": "Tu luyện +10%; đột phá đại cảnh giới +5%.",
+    "summary": "Tu luyện +10%; đột phá đại cảnh giới +5.",
     "effects": [
       { "hook": "cultivationSpeed", "add": 0.1 },
-      { "hook": "breakthroughChance.major", "add": 0.05 }
+      { "hook": "breakthroughChance.major", "add": 5 }
     ]
   },
   {
@@ -84,10 +84,10 @@
     "id": "thanh_moc_van", "name": "Thanh Mộc Đan Văn",
     "when": { "element": "moc" },
     "text": "Văn trên đan như gân lá non. Ngươi ngồi thiền ở đâu, cỏ ở đó mọc dày.",
-    "summary": "Thọ nguyên +10%; tư chất Linh thực +10.",
+    "summary": "Thọ nguyên +10%; tu luyện +5%.",
     "effects": [
       { "hook": "lifespanPct", "add": 0.1 },
-      { "hook": "craft.farming.affinity", "add": 10 }
+      { "hook": "cultivationSpeed", "add": 0.05 }
     ]
   },
   {
