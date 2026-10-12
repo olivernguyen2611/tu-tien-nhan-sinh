@@ -6,6 +6,7 @@ import type { GameState } from '../../core/types';
 import {
   currentSect, masterBlocked, masterChance, missionViews, nextRankNeed, sectEligibility, sectTechniques,
 } from '../../systems/sect';
+import { merit, treasuryViews } from '../../systems/sectTreasury';
 import { chainViews } from '../../systems/sectChains';
 import { sectmateViews, tournamentViews } from '../../systems/sectmates';
 import { learnBlocked, techniqueById } from '../../systems/technique';
@@ -20,6 +21,7 @@ export type SectAction =
   | { kind: 'talk'; npcId: string; talkId: string }
   | { kind: 'tournament'; id: string }
   | { kind: 'chain'; id: string; start: boolean }
+  | { kind: 'buy'; id: string }
   | { kind: 'leave' }
   | { kind: 'found'; name: string; rules: string[] }
   | { kind: 'decide'; decisionId: string }
@@ -88,6 +90,19 @@ export function SectPanel({ state, content, onAction, onClose }: {
                 ))}
               </div>
             )}
+
+            <div class="crafts">
+              <h3 class="panel-sub">Bảo khố</h3>
+              <p class="profile-note">Cống hiến còn dùng được: {merit(state)} (đổi đồ không làm tụt cấp bậc).</p>
+              {treasuryViews(state, content).map((t) => (
+                <div class="career-row" key={t.id}>
+                  <div class="craft-head"><b>{t.name}</b><span class="muted">{t.cost} cống hiến · còn {t.left}</span></div>
+                  <p class="profile-note">{t.text}</p>
+                  <button class="chip-btn" disabled={!!t.blocked} onClick={() => act({ kind: 'buy', id: t.id })}>Đổi</button>
+                  {t.blocked && <span class="craft-note">{t.blocked}</span>}
+                </div>
+              ))}
+            </div>
 
             <div class="crafts">
               <h3 class="panel-sub"><TermText text="Công pháp" /> của tông môn</h3>

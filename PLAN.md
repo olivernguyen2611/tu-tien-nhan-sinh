@@ -378,7 +378,7 @@ Nhìn từ hai phía: **đệ tử** cần thăng cấp, tài nguyên, sư phụ
 | 5c.1 | [x] Đồng môn có tên (sư phụ, trưởng lão, chấp sự, sư huynh/tỷ, sư đệ/muội, kình địch) lưu theo từng đời; đi lại, luận đạo, tỉ thí nhẹ, hầu trà, hóa giải hiềm khích |
 | 5c.2 | [x] Đại tỉ nội môn và Luận đạo hội (5 năm một lần, ba trận với đồng môn, thưởng theo số trận thắng) |
 | 5c.3 | [x] Nhiệm vụ chuỗi nhiều bước (nhận ở bảng nhiệm vụ, nhớ tiến độ, thưởng cuối chuỗi) |
-| 5c.4 | [ ] Công trạng đổi đồ: Bảo khố tông môn, cống hiến đổi đan dược, công pháp, linh thạch |
+| 5c.4 | [x] Công trạng đổi đồ: Bảo khố tông môn, cống hiến đổi đan dược, công pháp, linh thạch |
 | 5c.5 | [ ] Sự kiện lớn của tông: đại hội, thí luyện, ngoại địch, nội loạn |
 | 5c.6 | [ ] Tranh ngôi chưởng môn, phe phái trong tông |
 | 5c.7 | [ ] Phía tông chủ: tông môn mình lập có đệ tử NPC, trưởng lão, sự kiện lớn, thịnh suy, danh tiếng |

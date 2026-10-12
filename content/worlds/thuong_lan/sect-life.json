@@ -311,6 +311,136 @@
       }
     }
   ],
+  "treasury": [
+    {
+      "id": "kho_tu_khi_dan",
+      "name": "Tụ Khí Đan",
+      "text": "Một bình đan cơ bản của Đan Phòng, tu Luyện Khí dùng rất hợp.",
+      "cost": 15,
+      "minRank": 1,
+      "limit": 3,
+      "items": [
+        "tu_khi_dan"
+      ]
+    },
+    {
+      "id": "kho_hoi_xuan_dan",
+      "name": "Hồi Xuân Đan",
+      "text": "Đan chữa thương thường dùng trong tông.",
+      "cost": 12,
+      "minRank": 1,
+      "limit": 3,
+      "items": [
+        "hoi_xuan_dan"
+      ]
+    },
+    {
+      "id": "kho_giai_doc_hoan",
+      "name": "Giải Độc Hoàn",
+      "text": "Hơn một lần đệ tử bị độc hại, Đan Phòng luôn dự trữ sẵn.",
+      "cost": 10,
+      "minRank": 1,
+      "limit": 2,
+      "items": [
+        "giai_doc_hoan"
+      ]
+    },
+    {
+      "id": "kho_bua_binh_an",
+      "name": "Bùa bình an",
+      "text": "Bùa do chấp sự Phù Phòng vẽ, giữ được một lần thoát hiểm.",
+      "cost": 18,
+      "minRank": 1,
+      "limit": 2,
+      "items": [
+        "bua_binh_an"
+      ]
+    },
+    {
+      "id": "kho_linh_thach",
+      "name": "Đổi linh thạch",
+      "text": "Cống hiến đổi lấy linh thạch ở Tài Vụ Đường, giá không hời.",
+      "cost": 20,
+      "minRank": 1,
+      "limit": 5,
+      "spiritStones": 6
+    },
+    {
+      "id": "kho_khai_tri_dan",
+      "name": "Khai Trí Đan",
+      "text": "Đan giúp đầu óc minh mẫn, chỉ phát cho đệ tử có công.",
+      "cost": 45,
+      "minRank": 2,
+      "limit": 1,
+      "items": [
+        "khai_tri_dan"
+      ]
+    },
+    {
+      "id": "kho_ngo_dao_tra",
+      "name": "Ngộ Đạo Trà",
+      "text": "Lá trà hái từ cây cổ thụ sau núi, uống vào dễ ngộ.",
+      "cost": 50,
+      "minRank": 2,
+      "limit": 1,
+      "items": [
+        "ngo_dao_tra"
+      ]
+    },
+    {
+      "id": "kho_thanh_phong_kiem",
+      "name": "Thanh Phong Kiếm",
+      "text": "Phi kiếm thường phẩm do Luyện Khí Phòng rèn, bán cho đệ tử nội môn.",
+      "cost": 70,
+      "minRank": 2,
+      "limit": 1,
+      "items": [
+        "thanh_phong_kiem"
+      ]
+    },
+    {
+      "id": "kho_ho_than_ngoc_boi",
+      "name": "Hộ Thân Ngọc Bội",
+      "text": "Ngọc bội khắc trận pháp phòng ngự, đệ tử có công mới được đổi.",
+      "cost": 80,
+      "minRank": 2,
+      "limit": 1,
+      "items": [
+        "ho_than_ngoc_boi"
+      ]
+    },
+    {
+      "id": "kho_tay_tuy_dan",
+      "name": "Tẩy Tủy Đan",
+      "text": "Đan quý chỉ phát cho đệ tử có công lớn, đổi cốt cách.",
+      "cost": 140,
+      "minRank": 3,
+      "limit": 1,
+      "items": [
+        "tay_tuy_dan"
+      ]
+    },
+    {
+      "id": "kho_truc_co_dan",
+      "name": "Trúc Cơ Đan",
+      "text": "Món Trấn Phái của tông: chỉ chân truyền mới có suất, mỗi người một viên.",
+      "cost": 220,
+      "minRank": 3,
+      "limit": 1,
+      "items": [
+        "truc_co_dan"
+      ]
+    },
+    {
+      "id": "kho_linh_mach_tu_thien",
+      "name": "Tĩnh tu bên linh mạch",
+      "text": "Xin một năm tĩnh tu cạnh linh mạch, thanh tu vi tăng lên rõ rệt.",
+      "cost": 60,
+      "minRank": 2,
+      "limit": 3,
+      "progress": 12
+    }
+  ],
   "chains": [
     {
       "id": "chuoi_linh_duoc_that_lac",

@@ -1959,6 +1959,29 @@ export const SectLifeSchema = z
       )
       .min(1),
     /**
+     * Task 5c.4: Bảo khố — contribution buys things. `limit` per life; `cost` is the contribution spent
+     * (it does not lower the total that promotion counts). Rewards: items, spirit stones, cultivation bar %.
+     */
+    treasury: z
+      .array(
+        z
+          .object({
+            id,
+            name: z.string().min(1),
+            text: z.string().min(1),
+            cost: z.number().int().min(1),
+            minRank: z.number().int().min(0),
+            sects: ids.optional(),
+            limit: z.number().int().min(1),
+            items: z.array(id).default([]),
+            spiritStones: z.number().int().min(0).default(0),
+            progress: z.number().min(0).default(0),
+          })
+          .strict()
+          .refine((t) => t.items.length > 0 || t.spiritStones > 0 || t.progress > 0, 'phải có phần thưởng'),
+      )
+      .min(1),
+    /**
      * Task 5c.3: chain missions. One step a year (it uses the year's mission); a failed step can be
      * retried next year; after balance.sects.chainMaxFails misses the chain is dropped. Texts take
      * {npc} (a sectmate of `npcKind`, if given) and {title}.
