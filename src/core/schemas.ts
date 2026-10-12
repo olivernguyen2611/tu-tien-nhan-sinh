@@ -1390,6 +1390,8 @@ export const BalanceSchema = z
         pityLives: z.number().int().min(1),
         /** Task 5b.5: Luân Hồi points to choose a Kim Thủ Chỉ unlocked by a thành tựu. */
         chooseCost: z.number().int().min(0),
+        /** Playtest 2: the finger's panel actions open from this age. */
+        actionMinAge: z.number().int().min(0),
       })
       .strict(),
     /** Task 5b.5: huy hiệu cuối đời shown on the death screen and the obituary card. */
@@ -2403,6 +2405,24 @@ export const RebirthTalentFileSchema = z
 export type RebirthTalentFile = z.infer<typeof RebirthTalentFileSchema>;
 
 /** Task 5b.2: Kim Thủ Chỉ, one a life at most, awakening level by level as the realm rises. */
+/** Playtest 2: one Kim Thủ Chỉ action (a check with success/fail, or a sure result). */
+const FingerActionSchema = z
+  .object({
+    id,
+    name: z.string().min(1),
+    text: z.string().min(1),
+    /** Needs the finger awakened to this level. */
+    minLevel: z.number().int().min(1).default(1),
+    /** Years before it can be used again (1 = once a year). */
+    cooldownYears: z.number().int().min(1).default(1),
+    check: z.object({ stat: statKey, difficulty: z.number().min(0).max(100) }).strict().optional(),
+    success: PlainOutcomeSchema.optional(),
+    fail: PlainOutcomeSchema.optional(),
+    result: PlainOutcomeSchema.optional(),
+  })
+  .strict()
+  .refine((a) => (a.check ? !!a.success && !!a.fail && !a.result : !!a.result), 'hành động có "check" cần "success" + "fail"; không có thì cần "result"');
+
 export const GoldenFingerFileSchema = z
   .object({
     fingers: z.array(
@@ -2432,6 +2452,8 @@ export const GoldenFingerFileSchema = z
                 .strict(),
             )
             .min(1),
+          /** Playtest 2: things the player does with it from its panel, each at most once per cooldown. */
+          actions: z.array(FingerActionSchema).default([]),
         })
         .strict(),
     ),

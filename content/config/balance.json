@@ -538,7 +538,8 @@
     "perLife": 0.0005,
     "maxChance": 0.01,
     "pityLives": 15,
-    "chooseCost": 30
+    "chooseCost": 30,
+    "actionMinAge": 6
   },
   "badges": {
     "max": 3

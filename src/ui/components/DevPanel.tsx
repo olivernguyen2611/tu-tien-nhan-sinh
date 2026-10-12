@@ -14,7 +14,7 @@ import {
   DEV_STATS, devAddKarma, devAddLifespan, devAddMoney, devAddStat, devClearHeartDemon, devFillProgress, devFindEvents, devFoundClan, devFoundSect,
   devGiveItem, devHeal, devJoinSect, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect,
   devMarry, devResetEventHistory, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
-  devResetItemUse, devSetFingerLevel, devSetFlag, devSetGoldenFinger, devSetRealm, devSkipYears, devStartFight, devTakeChosen, devToggleTrait, devTriggerEvent,
+  devResetItemUse, devResetFingerCooldowns, devSetFingerLevel, devSetFlag, devSetGoldenFinger, devSetRealm, devSkipYears, devStartFight, devTakeChosen, devToggleTrait, devTriggerEvent,
 } from '../../systems/dev';
 
 const DEATHS: [DeathCause, string][] = [['old_age', 'Thọ tận'], ['illness', 'Bệnh'], ['combat', 'Tử trận'], ['breakthrough', 'Đột phá thất bại'], ['tribulation', 'Lôi kiếp'], ['ordeal', 'Tai kiếp']];
@@ -158,6 +158,7 @@ export function DevPanel({ state, content, meta, onChange, onMeta, onDisable, on
             {finger && finger.levels.map((l, i) => (
               <button class="chip-btn" key={l.name} disabled={!live} onClick={() => onChange(devSetFingerLevel(state, content, i + 1))}>Cấp {i + 1}</button>
             ))}
+            <button class="chip-btn" disabled={!live || !finger} onClick={() => onChange(devResetFingerCooldowns(state))}>Dùng lại hành động</button>
             <button class="chip-btn" disabled={!live || !finger} onClick={() => onChange(devSetGoldenFinger(state, content, null))}>Bỏ Kim Thủ Chỉ</button>
           </div>
         </Section>

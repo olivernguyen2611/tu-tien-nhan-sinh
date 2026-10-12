@@ -2,6 +2,13 @@
 
 ## [Chưa phát hành]
 
+### Chơi thử 2 — Mục Kim Thủ Chỉ (2026-10-12)
+- Nút 指 trên thanh trên cùng (chỉ hiện khi có Kim Thủ Chỉ, có chấm báo khi còn việc làm được năm nay) mở mục riêng: các tầng thức tỉnh, tầng kế tiếp mở ở cảnh giới nào, và các hành động dùng Kim Thủ Chỉ.
+- 23 hành động cho 7 Kim Thủ Chỉ (`actions` trong `golden-fingers.json`): hỏi lão gia gia, xin đan phương, mượn sức phá bình cảnh; điểm danh hệ thống, vòng quay may mắn; tưới linh dịch, uống một giọt; nhớ lại kiếp trước; đọc tâm ở chợ; tu trong động thiên; xem thiên đạo bảng… Mỗi hành động có tầng tối thiểu và thời gian hồi (năm); dùng từ 6 tuổi (`balance.goldenFinger.actionMinAge`).
+- Điện thoại: thanh trên cùng xuống hai dòng (tên và cảnh giới không còn bị cắt).
+- Dev mode: nút "Dùng lại hành động" cho Kim Thủ Chỉ.
+- Nội dung do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Chơi thử 2 — Nhiệm vụ và sự kiện tông môn (2026-10-12)
 - Bảng nhiệm vụ tông môn: mỗi năm hiện 4 việc (`balance.sects.missionBoard`) chọn từ các việc cấp bậc cho phép, đổi theo năm. Nhiệm vụ có thể chỉ riêng một số tông (`sects`).
 - 21 nhiệm vụ mới (tổng 26), đủ bốn cấp Ký danh → Chân truyền, có việc riêng cho Bách Thảo Cốc, Vô Ưu Tự, Tàng Phong Kiếm Các, U Hà Ma Tông.

@@ -3,7 +3,7 @@
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -127,8 +127,19 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       chosenIds = templates.map((t) => t.id);
     }
     if (schema === GoldenFingerFileSchema) {
-      const fingers = (parsed.data as { fingers: { id: string; levels: { realm: string }[] }[] }).fingers;
+      const fingers = (parsed.data as GoldenFingerFile).fingers;
       problems.push(...duplicates(file, 'Kim Thủ Chỉ', fingers));
+      for (const f of fingers) {
+        problems.push(...duplicates(file, `hành động của ${f.id}`, f.actions));
+        for (const a of f.actions) {
+          if (a.minLevel > f.levels.length) problems.push({ file, level: 'error', message: `${f.id} / ${a.id}: minLevel vượt số tầng` });
+          for (const o of [a.success, a.fail, a.result]) {
+            if (o && !Object.entries(o.effects).some(([k, v]) => k.startsWith('stat.') && typeof v === 'number' && v !== 0)) {
+              problems.push({ file, level: 'error', message: `${f.id} / ${a.id}: kết quả không đổi chỉ số nào` });
+            }
+          }
+        }
+      }
       fingerIds = fingers.map((f) => f.id);
       fingerRealms.push(...fingers.flatMap((f) => f.levels.map((l) => ({ file, finger: f.id, realm: l.realm }))));
     }

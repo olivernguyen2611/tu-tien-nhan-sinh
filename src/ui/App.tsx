@@ -4,6 +4,7 @@ import { advanceYear, createLife, fastForward } from '../core/state';
 import type { GameState } from '../core/types';
 import { describeChanges } from '../systems/deltas';
 import { consumeItem } from '../systems/items';
+import { doFingerAction } from '../systems/fingerActions';
 import { bargain, buy, sell } from '../systems/market';
 import { travel } from '../systems/regions';
 import { act, settle } from '../systems/combat';
@@ -335,6 +336,12 @@ function Screens({ content }: { content: Content }) {
         }}
         onUseItem={(itemId) => {
           const r = consumeItem(life, content, itemId);
+          setLife(checkDeath(r.state, content));
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+        }}
+        onFingerAction={(actionId) => {
+          const r = doFingerAction(life, content, actionId);
+          if (!r) return null;
           setLife(checkDeath(r.state, content));
           return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
         }}
