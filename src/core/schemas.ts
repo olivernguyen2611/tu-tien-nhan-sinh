@@ -756,6 +756,8 @@ export const BalanceSchema = z
       .object({
         /** Most NPCs remembered; past that the least important one is forgotten. */
         max: z.number().int().min(1),
+        /** Backlog 11: people kept in the saved-people book (Sổ lưu). */
+        libraryMax: z.number().int().min(1),
         /** New NPC's age = player's age + a value in this range (never under minAge). */
         ageOffset: z.tuple([z.number().int(), z.number().int()]),
         /** Playtest 2: the same for someone of the player's generation (meetNpc.peer, romance meetings). */
@@ -1666,6 +1668,21 @@ export const LifeTextsSchema = z
     deathIllness: lines,
     /** Task 4.12 quỷ tu: the offer on the death screen, and the line when the soul rises. */
     ghostOffer: z.string().min(1),
+    /** Backlog 11/12: the saved-people book and importing them as NPCs. */
+    npcLibrary: z
+      .object({
+        /** Role presets in the import form (backlog 12): the relation to the player and the opening ledger. */
+        roles: z.array(z.object({ id, label: z.string().min(1), affinity: z.number().int().min(0).max(100), favor: z.number().int().min(0).max(100), grudge: z.number().int().min(0).max(100) }).strict()).min(1),
+        texts: z.object({
+          saved: z.string().min(1),
+          removed: z.string().min(1),
+          full: z.string().min(1),
+          imported: z.string().min(1),
+          nameTaken: z.string().min(1),
+          dead: z.string().min(1),
+        }).strict(),
+      })
+      .strict(),
     /** Backlog 2: Gia đạo wording. {name}, {technique}, {item}, {root}. */
     familyBond: z
       .object({

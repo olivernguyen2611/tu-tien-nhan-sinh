@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### Sổ nhân vật (2026-10-12)
+- Mục mới **Sổ nhân vật** trong Sổ lưu: lưu lại người đã gặp để mang sang đời khác. Ghi được hai loại: **người quen** (nút "Ghi vào sổ nhân vật" trong bảng Quan hệ, tab Người quen) và **nhân vật chính của một ô lưu** (nút cùng tên trên thẻ ô lưu). Sổ giữ tối đa 40 người (`balance.npcs.libraryMax`), có nút Xóa.
+- Mỗi người ghi lại tên, giới tính, tuổi, thọ nguyên, linh căn có hay không, tư chất, cảnh giới, tính cách và mục tiêu. Sổ nằm trong dữ liệu meta của trình duyệt, không đổi theo ô lưu nào.
+- Phần mang vào đời mới (bảng thiết lập vai trò) ở bản cập nhật kế tiếp; lõi nhập (`importPerson`) đã có sẵn và có test.
+- Nội dung (vai trò mẫu, lời văn) do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### 9 ô lưu (2026-10-12)
 - Sổ lưu tăng từ 3 lên **9 ô**. Save cũ ở ô 1 đến 3 giữ nguyên.
 

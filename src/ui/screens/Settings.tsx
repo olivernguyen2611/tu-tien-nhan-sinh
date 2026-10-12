@@ -2,6 +2,7 @@
 // In pick mode the player chooses a slot for a new life or an imported save.
 import { useRef, useState } from 'preact/hooks';
 import type { SlotSummary } from '../../systems/save';
+import type { SavedPerson } from '../../systems/npcLibrary';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { ThemeToggle } from '../components/ThemeToggle';
 import type { ThemePref } from '../theme';
@@ -19,8 +20,13 @@ type Pending = { kind: 'delete' | 'overwrite'; slot: number } | null;
 
 const when = (iso: string) => new Date(iso).toLocaleString('vi-VN', { dateStyle: 'short', timeStyle: 'short' });
 
-export function SettingsScreen({ slots, pick, worldName, message, onPlay, onExport, onDelete, onImport, onPick, onBack, theme, onToggleTheme }: {
+export function SettingsScreen({ slots, library, realmName, onSavePlayer, onRemovePerson, pick, worldName, message, onPlay, onExport, onDelete, onImport, onPick, onBack, theme, onToggleTheme }: {
   slots: SlotView[];
+  /** Backlog 11: the Sổ nhân vật, and writing a slot's protagonist into it. */
+  library: SavedPerson[];
+  realmName: (id: string) => string;
+  onSavePlayer: (slot: number) => void;
+  onRemovePerson: (id: string) => void;
   /** Set in pick mode: what the chosen slot is for ("đời mới", "save vừa nhập"). */
   pick: string | null;
   worldName: (id: string) => string;
@@ -71,6 +77,7 @@ export function SettingsScreen({ slots, pick, worldName, message, onPlay, onExpo
               ) : (
                 <>
                   {s.summary && <button class="chip-btn" onClick={() => onPlay(s.slot)}>Chơi</button>}
+                  {s.summary && <button class="chip-btn" title="Ghi nhân vật này vào Sổ nhân vật để mang sang đời khác" onClick={() => onSavePlayer(s.slot)}>Ghi vào sổ nhân vật</button>}
                   {s.summary && !s.locked && <button class="chip-btn" onClick={() => onExport(s.slot)}>Xuất file</button>}
                   {s.summary && s.locked && <span class="muted slot-lock" title="Độ khó Khó: đời còn sống thì không xuất file">Khó · không xuất file</span>}
                   {s.taken && <button class="chip-btn danger" onClick={() => setPending({ kind: 'delete', slot: s.slot })}>Xóa</button>}
@@ -80,6 +87,28 @@ export function SettingsScreen({ slots, pick, worldName, message, onPlay, onExpo
           </li>
         ))}
       </ol>
+
+      {!pick && (
+        <section class="library" aria-label="Sổ nhân vật">
+          <h2>Sổ nhân vật</h2>
+          {library.length === 0 ? (
+            <p class="settings-note">Chưa ghi ai. Ghi nhân vật từ ô lưu ở trên, hoặc ghi người quen trong bảng Quan hệ, rồi mang họ vào đời khác.</p>
+          ) : (
+            <ul class="slot-list">
+              {library.map((p) => (
+                <li class="slot-card" key={p.id}>
+                  <div class="slot-info">
+                    <b>{p.name}</b>
+                    <span>{p.alive ? `${p.age} tuổi` : 'Đã mất'} · {p.root ? realmName(p.realm) : 'Phàm nhân'} · {p.source === 'player' ? 'Nhân vật chính' : 'Người quen'}</span>
+                    <span class="muted">Từ đời của {p.from} · {worldName(p.worldId)}</span>
+                  </div>
+                  <div class="slot-actions"><button class="chip-btn danger" onClick={() => onRemovePerson(p.id)}>Xóa</button></div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      )}
 
       {!pick && (
         <>

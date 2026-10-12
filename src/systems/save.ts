@@ -1,5 +1,6 @@
 // SaveSystem (PLAN.md C.5, task 1.9): save slots in localStorage, export/import
 // as .json files, and `migrate` so old saves keep working after updates.
+import type { SavedPerson } from './npcLibrary';
 import { z } from 'zod';
 import { version as GAME_VERSION } from '../../package.json';
 import type { GameState, LogYear, PastSectRecord } from '../core/types';
@@ -40,6 +41,8 @@ export interface SaveMeta {
   weekly: Record<string, { id: string; tries: number; best: number; done: boolean }>;
   /** Task 5b.7: the sect a past life ran, for later lives to meet again. */
   pastSect: PastSectRecord | null;
+  /** Backlog 11: people kept in the Sổ nhân vật, to bring into later lives. */
+  library: SavedPerson[];
 }
 /** Seeds remembered in `credited`; older ones are dropped. */
 const MAX_CREDITED = 30;
@@ -383,9 +386,10 @@ export function readMeta(store: KeyValueStore): SaveMeta {
       achievements: m.achievements && typeof m.achievements === 'object' ? m.achievements : {},
       weekly: m.weekly && typeof m.weekly === 'object' ? m.weekly : {},
       pastSect: m.pastSect && typeof m.pastSect.name === 'string' ? m.pastSect : null,
+      library: Array.isArray(m.library) ? m.library.filter((p) => p && typeof p.id === 'string' && typeof p.name === 'string') : [],
     };
   } catch {
-    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {}, fingerPity: 0, codex: EMPTY_CODEX, achievements: {}, weekly: {}, pastSect: null };
+    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {}, fingerPity: 0, codex: EMPTY_CODEX, achievements: {}, weekly: {}, pastSect: null, library: [] };
   }
 }
 
@@ -468,6 +472,11 @@ export function recordChallenge(store: KeyValueStore, week: string, id: string, 
 /** Task 5b.7: keep the sect a past life ran (pastSect.nextPastSectRecord decides what), once per life. */
 export function recordPastSect(store: KeyValueStore, record: PastSectRecord | null): SaveMeta {
   return writeMeta(store, { ...readMeta(store), pastSect: record });
+}
+
+/** Backlog 11: replace the Sổ nhân vật. */
+export function recordLibrary(store: KeyValueStore, library: SavedPerson[]): SaveMeta {
+  return writeMeta(store, { ...readMeta(store), library });
 }
 
 /** Developer mode: write a changed meta back (systems/dev builds it). */
