@@ -2,6 +2,13 @@
 
 ## [Chưa phát hành]
 
+### Góp ý chơi thử 6 — Linh căn biến dị là tổ hợp 2 hành (2026-10-12)
+- Mỗi hệ biến dị là 2 hệ ngũ hành dung hợp: **Lôi = Kim + Hỏa**, **Băng = Kim + Thủy**, **Phong = Mộc + Hỏa**, **Ám = Thủy + Thổ** (`components` trong `roots.json`; validator kiểm tra đúng 2 hệ ngũ hành khác nhau).
+- Người có linh căn biến dị tương thích cả 2 hệ gốc: hợp công pháp của 2 hệ đó (và công pháp ngũ hành), đủ điều kiện tông môn đòi hệ gốc, kết đan được cộng như hệ của mình.
+- Tên linh căn ghi rõ: "Biến dị linh căn (Lôi: Kim + Hỏa)".
+- Con cái đột biến linh căn thường nghiêng về hệ biến dị có chứa hệ của cha mẹ.
+- Nội dung (phép phối hệ, mô tả) do Claude tự soạn theo yêu cầu của chủ dự án, chưa qua duyệt.
+
 ### Góp ý chơi thử 5 — Khí vận tu hành thì chắc chắn có linh căn (2026-10-12)
 - Tiên Thiên Khí Vận có tác dụng cho tu tiên (tốc độ tu luyện, đột phá, bình cảnh, thiên kiếp, ngũ hành, kiếm/pháp/binh/thuật tu, ma đạo) thì chắc chắn có linh căn. Cấp khí vận càng cao, linh căn tối thiểu càng mạnh: Phàm/Ác vận → Ngũ linh căn, Lương → Tứ, Ưu → Tam, Tuyệt → Song, Thiên → Đơn, Thần → Biến dị hoặc thể chất đặc biệt. Có nhiều khí vận thì lấy mức cao nhất.
 - Khí vận Thể tu không bảo đảm linh căn vì vẫn có ích cho đường võ phàm nhân.

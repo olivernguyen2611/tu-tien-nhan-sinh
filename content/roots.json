@@ -6,7 +6,7 @@
     { "id": "tam", "name": "Tam linh căn", "description": "Tư chất trung bình của tu chân giới. Chăm chỉ thì Trúc Cơ không khó." },
     { "id": "song", "name": "Song linh căn", "description": "Hai hệ tương trợ, tông môn nào cũng muốn giữ." },
     { "id": "don", "name": "Thiên linh căn", "description": "Một hệ thuần khiết, linh khí vào như nước đổ xuống dốc. Thiên kiêu bảng có chỗ chờ sẵn." },
-    { "id": "bien_di", "name": "Biến dị linh căn", "special": "variant", "description": "Linh căn đột biến thành hệ hiếm. Mạnh, nhưng công pháp phù hợp khó tìm." },
+    { "id": "bien_di", "name": "Biến dị linh căn", "special": "variant", "description": "Hai hệ ngũ hành dung hợp thành một hệ hiếm. Mạnh, hợp được công pháp của cả hai hệ gốc lẫn công pháp hệ biến dị." },
     { "id": "the_chat", "name": "Thể chất đặc biệt", "special": "body", "description": "Trời sinh dị thể, trăm năm khó gặp." }
   ],
   "revealText": "Linh căn: {root}. {description}",
@@ -17,10 +17,10 @@
     { "id": "thuy", "name": "Thủy", "variant": false, "beats": ["hoa"], "description": "Mềm mà khó cắt đứt. Hợp phòng thủ, ảo thuật." },
     { "id": "hoa", "name": "Hỏa", "variant": false, "beats": ["kim", "bang"], "description": "Bạo liệt, nhanh gọn. Hợp luyện đan, luyện khí." },
     { "id": "tho", "name": "Thổ", "variant": false, "beats": ["thuy", "loi"], "description": "Dày nặng, vững chãi. Hợp luyện thể, trận pháp." },
-    { "id": "loi", "name": "Lôi", "variant": true, "beats": ["thuy", "am"], "description": "Nhanh nhất trong các hệ. Thiên kiếp với người hệ Lôi nhẹ hơn một chút." },
-    { "id": "bang", "name": "Băng", "variant": true, "beats": ["moc", "thuy"], "description": "Lạnh và tĩnh. Làm chậm đối thủ, hợp người đạo tâm vững." },
-    { "id": "phong", "name": "Phong", "variant": true, "beats": ["tho"], "description": "Nhẹ và khó bắt. Bỏ chạy, né tránh giỏi nhất." },
-    { "id": "am", "name": "Ám", "variant": true, "beats": ["moc", "kim"], "description": "Ẩn trong bóng tối. Hợp ám sát, ma đạo, quỷ đạo." }
+    { "id": "loi", "name": "Lôi", "variant": true, "beats": ["thuy", "am"], "description": "Kim và Hỏa dung hợp: nhanh nhất trong các hệ. Thiên kiếp với người hệ Lôi nhẹ hơn một chút.", "components": ["kim", "hoa"] },
+    { "id": "bang", "name": "Băng", "variant": true, "beats": ["moc", "thuy"], "description": "Kim và Thủy dung hợp: lạnh và tĩnh. Làm chậm đối thủ, hợp người đạo tâm vững.", "components": ["kim", "thuy"] },
+    { "id": "phong", "name": "Phong", "variant": true, "beats": ["tho"], "description": "Mộc và Hỏa dung hợp: nhẹ và khó bắt. Bỏ chạy, né tránh giỏi nhất.", "components": ["moc", "hoa"] },
+    { "id": "am", "name": "Ám", "variant": true, "beats": ["moc", "kim"], "description": "Thủy và Thổ dung hợp: ẩn trong bóng tối. Hợp ám sát, ma đạo, quỷ đạo.", "components": ["thuy", "tho"] }
   ],
   "bodies": [
     {

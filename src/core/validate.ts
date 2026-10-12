@@ -604,6 +604,13 @@ function checkCultivationTables(t: { balance?: Balance; realms?: RealmsFile; roo
         if (!elements.has(b)) out.push({ file: f, level: 'error', message: `hệ "${e.id}" khắc hệ không tồn tại "${b}"` });
         if (b === e.id) out.push({ file: f, level: 'error', message: `hệ "${e.id}" không thể tự khắc mình` });
       }
+      // Playtest 2026-10-12: a variant = exactly two distinct basic elements.
+      const basic = (id: string) => t.roots!.elements.some((x) => x.id === id && !x.variant);
+      const parts = e.components ?? [];
+      if (e.variant && (parts.length !== 2 || parts[0] === parts[1] || !parts.every(basic))) {
+        out.push({ file: f, level: 'error', message: `hệ biến dị "${e.id}" cần components là 2 hệ ngũ hành khác nhau` });
+      }
+      if (!e.variant && parts.length > 0) out.push({ file: f, level: 'error', message: `hệ "${e.id}" không phải biến dị, không có components` });
     }
     for (const body of t.roots.bodies) {
       for (const h of body.effects) {

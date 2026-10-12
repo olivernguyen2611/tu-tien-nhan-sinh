@@ -1567,6 +1567,8 @@ export const RootsFileSchema = z
             variant: z.boolean(),
             /** Elements this one beats; "weak to" is derived from the others. */
             beats: ids,
+            /** Playtest 2026-10-12: a variant is two basic elements fused; it fits both of them too. */
+            components: ids.optional(),
             description: z.string().min(1),
           })
           .strict(),
