@@ -8,6 +8,10 @@
 
 ## [Chưa phát hành]
 
+### Tông môn 5c.5 — Sự kiện lớn của tông (2026-10-12)
+- 12 sự kiện mới (`events/sect-grand.json`): **Thí luyện sơn môn** (3 ải, có đánh yêu thú canh cốc, chọn một phần thưởng ở đỉnh), **Chuông báo địch** (ngoại địch tập kích, ra trận hay giữ trận nhãn hay lẩn trốn, rồi sau trận), **Kẻ nội gián** (nội loạn, tố cáo hay đối chất, mật điều tra, đêm bắt phản đồ có đánh) và **Đại hội tông môn** (nhiều lựa chọn, ba năm một lần).
+- Mỗi lựa chọn đều đổi chỉ số; thí luyện, ngoại địch, nội loạn chỉ xảy ra một lần mỗi đời. Nội dung do Claude tự soạn, chưa qua duyệt.
+
 ### Tông môn 5c.4 — Bảo khố (2026-10-12)
 - Mục "Bảo khố" trong bảng Tông môn: đổi cống hiến lấy 12 món (đan dược, bùa, phi kiếm, ngọc bội, linh thạch, một năm tĩnh tu cạnh linh mạch, tới Trúc Cơ Đan cho Chân truyền). Mỗi món có cấp bậc tối thiểu và số suất mỗi đời.
 - Đổi đồ không làm tụt cấp: tổng cống hiến để thăng cấp giữ nguyên, bảng ghi riêng phần đã tiêu (`sect.spent`). Nội dung do Claude tự soạn, chưa qua duyệt.
