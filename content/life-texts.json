@@ -69,6 +69,25 @@
       "Cầu trường sinh mà chẳng được, thôi thì đi trước một bước."
     ]
   },
+  "npcLibrary": {
+    "roles": [
+      { "id": "bang_huu", "label": "Bằng hữu", "affinity": 65, "favor": 0, "grudge": 0 },
+      { "id": "tri_ky", "label": "Tri kỷ", "affinity": 85, "favor": 20, "grudge": 0 },
+      { "id": "an_nhan", "label": "Ân nhân", "affinity": 75, "favor": 70, "grudge": 0 },
+      { "id": "dong_mon", "label": "Đồng môn", "affinity": 55, "favor": 0, "grudge": 0 },
+      { "id": "doi_thu", "label": "Đối thủ", "affinity": 35, "favor": 0, "grudge": 20 },
+      { "id": "ke_thu", "label": "Kẻ thù", "affinity": 10, "favor": 0, "grudge": 75 },
+      { "id": "nguoi_la", "label": "Người lạ có duyên", "affinity": 50, "favor": 0, "grudge": 0 }
+    ],
+    "texts": {
+      "saved": "{name} đã được ghi vào sổ nhân vật.",
+      "removed": "Đã xóa {name} khỏi sổ nhân vật.",
+      "full": "Sổ nhân vật đã đầy, xóa bớt một người rồi hãy ghi tiếp.",
+      "imported": "{name} xuất hiện trong đời ngươi, với tư cách {role}.",
+      "nameTaken": "Trong đời này đã có người trùng tên {name}. Đổi tên rồi nhập lại.",
+      "dead": "{name} đã mất, không nhập vào được."
+    }
+  },
   "familyBond": {
     "actionNames": {
       "spar": "Luận bàn",

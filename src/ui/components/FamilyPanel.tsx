@@ -15,7 +15,7 @@ import { BondSection } from './BondSection';
 import type { BondAction, BondTarget } from '../../systems/familyBond';
 import { Meter } from './Meter';
 
-export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, onClan, onBond, onClose }: {
+export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, onClan, onBond, onSaveNpc, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome text to show under the relative. */
@@ -28,6 +28,8 @@ export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, o
   onClan: (action: ClanAction) => string | null;
   /** Backlog 2: Gia đạo, an action with a child or the đạo lữ (arg: technique or item id). */
   onBond: (target: BondTarget, action: BondAction, arg?: string) => { text: string; tone: Tone; changes: string };
+  /** Backlog 11: write this NPC into the Sổ nhân vật; returns the line to show. */
+  onSaveNpc: (npcId: string) => { text: string; tone: Tone };
   onClose: () => void;
 }) {
   const age = state.character.age;
@@ -106,6 +108,10 @@ export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, o
                       ))}
                     </div>
                   )}
+                  <div class="action-chips">
+                    <button class="chip-btn" title="Ghi người này vào Sổ nhân vật (trong Sổ lưu) để mang sang đời khác"
+                      onClick={() => setResult({ id: n.id, changes: '', ...onSaveNpc(n.id) })}>Ghi vào sổ nhân vật</button>
+                  </div>
                   {result?.id === n.id && result.text && (
                     <p class={`action-result ${result.tone}`}>
                       {result.text}

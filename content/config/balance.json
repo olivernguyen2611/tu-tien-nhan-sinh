@@ -333,6 +333,7 @@
   },
   "npcs": {
     "max": 30,
+    "libraryMax": 40,
     "ageOffset": [-5, 15],
     "peerAgeOffset": [-3, 3],
     "minAge": 6,

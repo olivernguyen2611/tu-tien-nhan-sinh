@@ -14,7 +14,7 @@ import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, lockCost, rerollDestiny, rollDestiny, toggleLock } from '../systems/destiny';
 import {
   deleteSlot, exportSave, firstFreeSlot, latestSlot, listSlots, makeSave, parseSave, readMeta, readSlot, recordNewLife, creditRebirth,
-  slotTaken, writeSlot, buyRebirthTalent, recordCodex, recordAchievements, recordChallenge, recordPastSect, replaceMeta, type SaveFile,
+  slotTaken, writeSlot, buyRebirthTalent, recordCodex, recordAchievements, recordChallenge, recordPastSect, recordLibrary, replaceMeta, type SaveFile,
 } from '../systems/save';
 import { checkDeath } from '../systems/time';
 import { GlossaryProvider } from './components/Tooltip';
@@ -56,6 +56,7 @@ import { build, decide, donate, foundSect } from '../systems/ownSect';
 import { newLifeCost, rebirthPoints } from '../systems/rebirth';
 import { earnedBlessings } from '../systems/blessings';
 import { rewind } from '../systems/rewind';
+import { addToLibrary, personFromLife, personFromNpc, removeFromLibrary } from '../systems/npcLibrary';
 import { onYearAdvanced, recordSnapshot, rewind as rewindTime, rewindOptions, type Snapshot } from '../systems/timeline';
 import { nextTalentCost } from '../systems/rebirthTalents';
 import { rollBirthFinger } from '../systems/goldenFinger';
@@ -176,6 +177,20 @@ function Screens({ content }: { content: Content }) {
     return (
       <SettingsScreen
         slots={slots}
+        library={readMeta(store).library}
+        realmName={(id) => content.cultivation.realms.realms.find((r) => r.id === id)?.name ?? id}
+        onSavePlayer={(s) => {
+          const r = readSlot(store, s, worlds, freshLife);
+          if (!r || !r.ok) return;
+          const added = addToLibrary(readMeta(store).library, personFromLife(r.save.life, content), content);
+          recordLibrary(store, added.library);
+          setMessage({ text: added.text, tone: added.text === content.lifeTexts.npcLibrary.texts.full ? 'bad' : 'good' });
+        }}
+        onRemovePerson={(id) => {
+          const r = removeFromLibrary(readMeta(store).library, id, content);
+          recordLibrary(store, r.library);
+          setMessage({ text: r.text, tone: 'good' });
+        }}
         pick={picking ? (picking.purpose === 'new' ? 'đời mới' : picking.purpose === 'challenge' ? 'thử thách tuần' : 'save vừa nhập') : null}
         worldName={(id) => (id === content.world.id ? content.world.name : id)}
         message={message}
@@ -332,6 +347,14 @@ function Screens({ content }: { content: Content }) {
           const r = performFamilyAction(life, content, relId, actionId);
           setLife(checkDeath(r.state, content));
           return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+        }}
+        onSaveNpc={(npcId) => {
+          const npc = life.npcs.find((n) => n.id === npcId);
+          if (!npc) return { text: '', tone: 'normal' };
+          const r = addToLibrary(readMeta(store).library, personFromNpc(life, npc), content);
+          recordLibrary(store, r.library);
+          refresh((n) => n + 1);
+          return { text: r.text, tone: r.text === content.lifeTexts.npcLibrary.texts.full ? 'bad' : 'good' };
         }}
         onBond={(target, action, arg) => {
           const r = doBond(life, content, target, action, arg);
