@@ -18,6 +18,7 @@ import { rankingYear } from '../systems/rankings';
 import { romanceYear, romanceTarget } from '../systems/romance';
 import { ownSectYear } from '../systems/ownSect';
 import { clanYear } from '../systems/clan';
+import { blessingRerolls } from '../systems/blessings';
 
 export interface NewLifeInput {
   seed: string;
@@ -26,6 +27,8 @@ export interface NewLifeInput {
   originId?: string;  // undefined → weighted random
   difficulty?: string; // undefined → balance.defaultDifficulty
   tutorial?: boolean;  // show first-life tips
+  /** Task 5b.8: Phúc báo earned by the last life. */
+  blessings?: GameState['blessings'];
 }
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
@@ -99,6 +102,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
   const healthShift = Math.round(((stats.health - 50) / 50) * life.healthAdjustMax);
   const lifespan = life.mortalBase + rng.int(-life.mortalVariance, life.mortalVariance) + healthShift;
 
+  const blessings = (input.blessings ?? []).filter((b) => content.blessings.blessings.some((x) => x.id === b.id));
   const family = createFamily(rng, content, splitName(name, content.names).surname, !!origin.noParents, name);
 
   const state: GameState = {
@@ -118,6 +122,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     seclusion: null,
     ownSect: null,
     ancestry: [],
+    blessings,
     clan: null,
     region: { id: null, visited: [], movedAt: null },
     romance: { lover: null, couple: false, partner: null, exes: [], rivals: 0, lastActions: {} },
@@ -136,7 +141,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     money: { silver: origin.silver, spiritStones: origin.spiritStones },
     social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0, trieu_dinh: 0, giang_ho: 0 } },
     flags: origin.noParents ? { no_parents: true, no_father: true, no_mother: true } : {},
-    destiny: { offered: [], rerollsLeft: Math.max(0, content.balance.traits.rerolls + (content.balance.difficulty[difficulty]?.rerollBonus ?? 0)), confirmed: false },
+    destiny: { offered: [], rerollsLeft: Math.max(0, content.balance.traits.rerolls + (content.balance.difficulty[difficulty]?.rerollBonus ?? 0) + blessingRerolls(blessings, content)), confirmed: false },
     traits: [],
     family,
     events: {

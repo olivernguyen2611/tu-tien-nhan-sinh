@@ -11,7 +11,7 @@ import { performFamilyAction } from '../systems/relationships';
 import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, rerollDestiny, rollDestiny } from '../systems/destiny';
 import {
-  deleteSlot, exportSave, firstFreeSlot, latestSlot, listSlots, makeSave, parseSave, readMeta, readSlot, recordNewLife,
+  deleteSlot, exportSave, firstFreeSlot, latestSlot, listSlots, makeSave, parseSave, readMeta, readSlot, recordNewLife, creditRebirth,
   slotTaken, writeSlot, type SaveFile,
 } from '../systems/save';
 import { checkDeath } from '../systems/time';
@@ -44,6 +44,8 @@ import { meetIllusion } from '../systems/heartDemon';
 import { craftRecipe } from '../systems/crafting';
 import { recruitDisciple, teachDisciple } from '../systems/disciples';
 import { build, decide, donate, foundSect } from '../systems/ownSect';
+import { rebirthPoints } from '../systems/rebirth';
+import { earnedBlessings } from '../systems/blessings';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -84,6 +86,14 @@ function Screens({ content }: { content: Content }) {
     if (!life || slot === null || !life.destiny.confirmed) return;
     setSaveFailed(!writeSlot(store, makeSave(life, slot)));
   }, [life, slot]);
+
+  // Task 5b.1: a finished life pays its Luân Hồi points once (creditRebirth skips what was paid).
+  const [rebirth, setRebirth] = useState<{ gained: number; bank: number }>({ gained: 0, bank: 0 });
+  useEffect(() => {
+    if (screen !== 'death' || !life || life.alive) return;
+    const r = creditRebirth(store, life.seed, rebirthPoints(life, content).total, earnedBlessings(life, content));
+    setRebirth({ gained: r.gained, bank: r.meta.rebirthPoints });
+  }, [screen, life]);
 
   const openSaves = (from: Screen) => { setSavesFrom(from); setPicking(null); setMessage(null); setScreen('saves'); };
   const startNewLife = (target: number) => { setSlot(target); setPicking(null); setScreen('create'); };
@@ -152,7 +162,7 @@ function Screens({ content }: { content: Content }) {
         onBack={() => setScreen('title')}
         onCreate={(input) => {
           // Tips only for the very first life on this browser.
-          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0 }, content), content));
+          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list }, content), content));
           setScreen('destiny');
         }}
       />
@@ -173,7 +183,7 @@ function Screens({ content }: { content: Content }) {
   if (screen === 'death' && life) {
     // A new life from here reuses this slot, as when abandoning a life.
     return (
-      <DeathScreen state={life} content={content} onReadLog={() => setScreen('main')} onNewLife={() => setScreen('create')}
+      <DeathScreen state={life} content={content} rebirth={rebirth} onReadLog={() => setScreen('main')} onNewLife={() => setScreen('create')}
         onGhost={() => { setLife(becomeGhost(life, content)); setScreen('main'); }}
         onHeir={(id) => { setLife(continueAsHeir(life, content, id)); setScreen('main'); }} />
     );
@@ -308,6 +318,7 @@ function Screens({ content }: { content: Content }) {
     <TitleScreen
       canContinue={latest !== null}
       livesPlayed={readMeta(store).livesPlayed}
+      rebirthPoints={readMeta(store).rebirthPoints}
       devMode={devMode}
       onDevUnlock={() => toggleDev(true)}
       onContinue={() => latest !== null && loadSlot(latest)}

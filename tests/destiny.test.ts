@@ -4,7 +4,7 @@ import { BalanceSchema, WorldSchema, NamesSchema, OriginFileSchema, TraitFileSch
 import { LifeTextsSchema } from '../src/core/schemas';
 import lifeTexts from '../content/life-texts.json';
 import extremes from '../content/stat-extremes.json';
-import { careers, cultivation, difficulties, fateTalents, items, martial, lineages, rankings, romance, heartDemon, recipes, disciples, founding, heir, clan, sectLife, sects, techniques, tutorial, combat } from './fixtures';
+import { careers, cultivation, difficulties, fateTalents, items, martial, lineages, rankings, romance, heartDemon, recipes, disciples, founding, heir, clan, blessings, sectLife, sects, techniques, tutorial, combat } from './fixtures';
 import { StatExtremesFileSchema } from '../src/core/schemas';
 import { createLife } from '../src/core/state';
 import { confirmDestiny, rerollDestiny, rollDestiny } from '../src/systems/destiny';
@@ -50,6 +50,7 @@ const content: Content = {
   founding,
   heir,
   clan,
+  blessings,
 };
 const born = (seed: string) => rollDestiny(createLife({ seed }, content), content);
 
