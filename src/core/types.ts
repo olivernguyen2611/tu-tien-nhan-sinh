@@ -143,6 +143,8 @@ export interface GameState {
     coreGrade: number | null;
     /** Đan văn of the golden core (task 4.2, core-patterns.json). */
     corePattern: string | null;
+    /** Hình thái Nguyên Anh (task 4.3, nascent-souls.json). */
+    soulForm: string | null;
     /** Task 4.4: tâm ma chiến in progress (blocks the year), before the big breakthrough it guards. */
     heartDemonTrial: { illusions: string[]; round: number; wins: number; losses: number; chancePct: number; target: string } | null;
     /** Tâm ma seeds from dark choices (task 3.9; read by the heart-demon system later). */

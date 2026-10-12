@@ -14,6 +14,7 @@ import { offerFate } from './fate';
 import { breakthroughItem, carriedHooks, removeItems } from './items';
 import { pathSpeedBonus } from './paths';
 import { startCoreForming } from './goldenCore';
+import { soulFormFor } from './nascentSoul';
 import { needsHeartDemonTrial, startHeartDemonTrial } from './heartDemon';
 import { tribulationPreview, undergoTribulation, type TribulationPreview } from './tribulation';
 
@@ -149,6 +150,8 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
     ...carriedHooks(state, content),
     // Đan văn of the golden core (task 4.2).
     ...(content.corePatterns.find((p) => p.id === state.cult.corePattern)?.effects ?? []),
+    // Hình thái Nguyên Anh (task 4.3).
+    ...(content.nascentSouls.forms.find((f) => f.id === state.cult.soulForm)?.effects ?? []),
   ];
 }
 
@@ -457,8 +460,17 @@ export function majorSuccess(before: GameState, s0: GameState, content: Content,
       .replaceAll('{grade}', grade ? `${grade.name}. ${grade.description}` : '');
     tone = foundation === 'hoan_my' || foundation === 'thuong' ? 'rare' : 'good';
   }
+  // Hình thái Nguyên Anh (task 4.3): the shattered core takes a form from the road walked.
+  let log = pushLine(s.log, { text, tone });
+  const form = target.id === content.nascentSouls.realm ? soulFormFor(s, content) : undefined;
+  if (form) {
+    const line = texts.soulForm.replaceAll('{form}', form.name).replaceAll('{text}', form.text);
+    log = pushLine(log, { text: line, tone: 'rare' });
+    s = { ...s, cult: { ...s.cult, soulForm: form.id } };
+    text = `${text} ${line}`;
+  }
   // Nghịch Thiên Cải Mệnh: choose a fate talent before the next year (task 2.7).
-  const done = offerFate({ ...s, rng: rng.getState(), log: pushLine(s.log, { text, tone }) }, content);
+  const done = offerFate({ ...s, rng: rng.getState(), log }, content);
   return { state: done, success: true, text, tone };
 }
 

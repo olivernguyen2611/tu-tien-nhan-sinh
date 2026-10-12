@@ -1319,6 +1319,8 @@ export const RealmsFileSchema = z
     coreShattered: z.string().min(1),
     /** Task 4.2: the đan văn that formed ({pattern}, {text}). */
     corePattern: z.string().min(1),
+    /** Task 4.3: the Nguyên Anh's form ({form}, {text}). */
+    soulForm: z.string().min(1),
       })
       .strict(),
     /** Display names for technique grades and lineages (task 2.4). */
@@ -1920,4 +1922,26 @@ export const CorePatternSchema = z
   .strict();
 export const CorePatternFileSchema = z.array(CorePatternSchema);
 export type CorePattern = z.infer<typeof CorePatternSchema>;
+
+/** content/nascent-souls.json (task 4.3): the Nguyên Anh's form, first match wins. */
+export const NascentSoulFileSchema = z
+  .object({
+    /** Realm whose breakthrough forms the Nguyên Anh. */
+    realm: id,
+    forms: z.array(
+      z
+        .object({
+          id,
+          name: z.string().min(1),
+          /** Kim Đan grade this good or better (1 = Nhất phẩm), đạo thống, main fighting path; {} always fits. */
+          when: z.object({ maxCoreGrade: z.number().int().min(1).max(9).optional(), lineage: id.optional(), path: id.optional() }).strict(),
+          text: z.string().min(1),
+          summary: z.string().min(1),
+          effects: z.array(EffectHookSchema),
+        })
+        .strict(),
+    ),
+  })
+  .strict();
+export type NascentSoulFile = z.infer<typeof NascentSoulFileSchema>;
 
