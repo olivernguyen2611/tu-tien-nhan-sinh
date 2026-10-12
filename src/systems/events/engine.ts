@@ -17,6 +17,7 @@ import { addPathAffinity } from '../paths';
 import { addContribution, breakPrecept, grantMaster, joinSect, leaveSect, promoteSect } from '../sect';
 import { startBattle } from '../combat';
 import { changeNpc, createNpc, killNpc, npcCalls } from '../npcs';
+import { applyRomance, romanceTarget } from '../romance';
 
 type Outcome = NonNullable<GameEvent['choices'][number]['result']>;
 
@@ -70,7 +71,13 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
     const pool = content.events
       .map((e) => ({ e, w: eventWeight(state, content, e) }))
       .filter((x) => x.w > 0);
-    if (pool.length > 0) picked = rng.weighted(pool, (x) => x.w).e.id;
+    if (pool.length > 0) {
+      const e = rng.weighted(pool, (x) => x.w).e;
+      picked = e.id;
+      // Task 3.6: a romance event is about the lover or partner.
+      const target = e.conditions.romance?.target;
+      if (target) npc = romanceTarget(state, target)?.id ?? null;
+    }
   }
 
   return {
@@ -225,10 +232,13 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   // Task 3.4: someone new becomes the event's NPC; then the ledger changes for that NPC.
   if (fx.meetNpc) {
     const { role, realm, stage, root, affinity, favor, grudge } = fx.meetNpc;
-    const met = createNpc(next, content, { role, realm, stage, root, affinity: affinity === undefined ? undefined : 50 + affinity, favor, grudge });
+    // Someone met to be courted is always of age (PLAN H).
+    const minAge = fx.romance?.pursue ? content.balance.romance.minAge : undefined;
+    const met = createNpc(next, content, { role, realm, stage, root, minAge, affinity: affinity === undefined ? undefined : 50 + affinity, favor, grudge });
     next = { ...met.state, events: { ...met.state.events, npc: met.id } };
   }
   const npcId = next.events.npc;
+  if (fx.romance) next = applyRomance(next, content, npcId, fx.romance);
   if (fx.npc && npcId) {
     const { affinity, favor, grudge, reveal, kill, role } = fx.npc;
     next = changeNpc(next, content, npcId, { affinity, favor, grudge, reveal });

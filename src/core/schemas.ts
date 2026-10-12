@@ -59,6 +59,27 @@ const BaseConditionsSchema = z
     martial: z.object({ min: z.number().int().optional(), max: z.number().int().optional(), ready: z.boolean().optional() }).strict().optional(),
     /** Born into one of these origins. */
     origins: ids,
+    /**
+     * Task 3.6: romance. Any romance condition also needs the player of age (balance.romance.minAge),
+     * not on the Phật đạo, and the target (if any) alive and of age. `target` makes the event about
+     * that person ({npc}, {lover}, npc effects).
+     */
+    romance: z
+      .object({
+        target: z.enum(['lover', 'partner', 'beloved']).optional(),
+        lover: z.boolean().optional(),
+        couple: z.boolean().optional(),
+        partner: z.boolean().optional(),
+        /** The target's affinity range. */
+        minAffinity: z.number().optional(),
+        maxAffinity: z.number().optional(),
+        /** The target cultivates (has a root) or is a mortal. */
+        targetRooted: z.boolean().optional(),
+        /** Someone who turned the player down, or whom the player left, is still alive. */
+        ex: z.boolean().optional(),
+      })
+      .strict()
+      .optional(),
     /** Task 3.4: the NPC this event is about (met earlier, or picked by an npcTrigger). */
     npc: z
       .object({
@@ -153,6 +174,17 @@ export const EffectsSchema = z
       })
       .strict()
       .optional(),
+    /** Task 3.6: romance with the event's NPC: start courting them, lose them, become a couple; rivals appear or are exposed. */
+    romance: z
+      .object({
+        pursue: z.boolean().optional(),
+        lose: z.boolean().optional(),
+        couple: z.boolean().optional(),
+        rival: z.number().int().optional(),
+        rivalExposed: z.boolean().optional(),
+      })
+      .strict()
+      .optional(),
     /** Task 3.4: change this event's NPC (sổ ân oán); kill passes the grudge on to kin. */
     npc: z
       .object({
@@ -170,7 +202,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -585,6 +617,40 @@ export const BalanceSchema = z
         revealChance: probability,
         /** Share of a dead NPC's grudge their kin inherits. */
         inheritShare: probability,
+      })
+      .strict(),
+    /** Task 3.6: romance (thiện cảm, theo đuổi, tặng quà, tỏ tình). */
+    romance: z
+      .object({
+        /** Nobody younger takes part in romance (PLAN H). */
+        minAge: z.number().int().min(18),
+        /** Gift: silver for a mortal player, spirit stones for a cultivator; affinity gained (+ charm above 50 ÷ giftCharmDivisor). */
+        giftSilver: z.number().int().min(0),
+        giftStones: z.number().int().min(0),
+        giftAffinity: z.tuple([z.number().int(), z.number().int()]),
+        giftCharmDivisor: z.number().positive(),
+        /** Below this affinity a gift may be turned down. */
+        rejectBelow: z.number(),
+        rejectChance: probability,
+        rejectAffinity: z.number(),
+        /** A masked lover (nature hidden behind a kind face) may use the player: extra money lost. */
+        usedChance: probability,
+        usedSilver: z.number().int().min(0),
+        usedStones: z.number().int().min(0),
+        /** Confession: needs this affinity; chance = base + (affinity − confessAt) × perAffinity + (charm − 50) × perCharm. */
+        confessAt: z.number(),
+        confessBase: z.number(),
+        confessPerAffinity: z.number(),
+        confessPerCharm: z.number(),
+        confessMin: probability,
+        confessMax: probability,
+        confessHappiness: z.number(),
+        rejectHappiness: z.number(),
+        rejectDaoHeart: z.number(),
+        /** Losing a lover or partner to death. */
+        griefHappiness: z.number(),
+        /** Each rival costs this much affinity a year with the lover. */
+        rivalAffinityPerYear: z.number(),
       })
       .strict(),
     /** Task 3.5: Thiên kiêu bảng, the world's young prodigies. */
@@ -1544,3 +1610,28 @@ export const RankingTextsSchema = z
   })
   .strict();
 export type RankingTexts = z.infer<typeof RankingTextsSchema>;
+
+/** content/romance.json (task 3.6): affinity tiers and the texts of romance actions. {npc} = the person, {name} = player. */
+export const RomanceFileSchema = z
+  .object({
+    /** Highest min not above the affinity wins. */
+    tiers: z.array(z.object({ min: z.number(), name: z.string().min(1) }).strict()).min(1),
+    texts: z
+      .object({
+        pursue: z.string().min(1),
+        giveUp: z.string().min(1),
+        gift: z.string().min(1),
+        giftRejected: z.string().min(1),
+        used: z.string().min(1),
+        confessYes: z.string().min(1),
+        confessNo: z.string().min(1),
+        lost: z.string().min(1),
+        died: z.string().min(1),
+        rivals: z.string().min(1),
+      })
+      .strict(),
+    /** Labels for the Người quen tab. */
+    labels: z.object({ lover: z.string().min(1), couple: z.string().min(1), ex: z.string().min(1) }).strict(),
+  })
+  .strict();
+export type RomanceFile = z.infer<typeof RomanceFileSchema>;

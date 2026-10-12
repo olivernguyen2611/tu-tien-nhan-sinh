@@ -15,6 +15,8 @@ export interface NpcSpec {
   name?: string;
   gender?: Npc['gender'];
   age?: number;
+  /** Never younger than this (task 3.6: someone met in a romance event is an adult). */
+  minAge?: number;
   /** Realm id; a rooted NPC with no realm starts where the player's generation usually is. */
   realm?: string;
   stage?: number;
@@ -47,7 +49,7 @@ export function createNpc(state: GameState, content: Content, spec: NpcSpec): { 
   const gender = spec.gender ?? (rng.chance(0.5) ? 'nam' : 'nu');
   const taken = [state.character.name, ...state.family.map((r) => r.name), ...state.npcs.map((n) => n.name)];
   const name = spec.name ?? makeName(rng, content.names, gender, { taken, surname: spec.surname });
-  const age = Math.max(cfg.minAge, spec.age ?? state.character.age + rng.int(cfg.ageOffset[0], cfg.ageOffset[1]));
+  const age = Math.max(cfg.minAge, spec.minAge ?? 0, spec.age ?? state.character.age + rng.int(cfg.ageOffset[0], cfg.ageOffset[1]));
   const root = spec.root ?? (spec.realm !== undefined && spec.realm !== 'pham_nhan' ? true : rng.chance(cfg.rootChance));
   const realm = spec.realm ?? (root && age >= 16 ? realmList(content)[1]?.id ?? 'pham_nhan' : 'pham_nhan');
   const nature = traits.nature.length > 0 ? rng.pick(traits.nature) : null;

@@ -5,13 +5,16 @@ import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
 import { availableActions, relationLabel } from '../../systems/relationships';
 import { npcLabel } from '../../systems/npcs';
+import { romanceLabel, romanceViews, type RomanceAction } from '../../systems/romance';
 import { Meter } from './Meter';
 
-export function FamilyPanel({ state, content, onAction, onClose }: {
+export function FamilyPanel({ state, content, onAction, onRomance, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome text to show under the relative. */
   onAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
+  /** Task 3.6: courting someone met along the way. */
+  onRomance: (npcId: string, action: RomanceAction) => { text: string; tone: Tone; changes: string };
   onClose: () => void;
 }) {
   const age = state.character.age;
@@ -37,10 +40,12 @@ export function FamilyPanel({ state, content, onAction, onClose }: {
           <ul class="family-list">
             {npcs.map((n) => {
               const l = npcLabel(content, n);
+              const love = romanceLabel(state, content, n);
+              const views = n.alive ? romanceViews(state, content, n.id) : [];
               return (
                 <li class={`relative${n.alive ? '' : ' dead'}`} key={n.id}>
                   <div class="relative-head">
-                    <span class="relation">{n.role}</span>
+                    <span class="relation">{love.role ?? n.role}</span>
                     <b>{n.name}</b>
                     <span class="relative-age">{n.alive ? `${n.age} tuổi` : `mất năm ${n.age} tuổi`}</span>
                   </div>
@@ -49,7 +54,23 @@ export function FamilyPanel({ state, content, onAction, onClose }: {
                     {l.surface && ` · ${l.surface}`}
                     {` · Bản chất: ${l.nature ?? '?'}`}
                   </p>
-                  {n.alive && <Meter label="Thiện cảm" value={n.affinity} tone="auto" />}
+                  {n.alive && <Meter label={`Thiện cảm · ${love.tier}`} value={n.affinity} tone="auto" />}
+                  {views.length > 0 && (
+                    <div class="action-chips">
+                      {views.map((v) => (
+                        <button class="chip-btn" key={v.action} disabled={!!v.blocked} title={v.blocked ?? undefined}
+                          onClick={() => setResult({ id: n.id, ...onRomance(n.id, v.action) })}>
+                          {v.label}{v.cost && <span class="chip-cost"> · {v.cost}</span>}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  {result?.id === n.id && result.text && (
+                    <p class={`action-result ${result.tone}`}>
+                      {result.text}
+                      {result.changes && <span class="changes">{result.changes}</span>}
+                    </p>
+                  )}
                   {(n.favor > 0 || n.grudge > 0) && (
                     <p class="npc-ledger">
                       {n.favor > 0 && <span class="good">Ân {n.favor}</span>}

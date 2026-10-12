@@ -10,6 +10,7 @@ import { MarketPanel, type MarketAction } from '../components/MarketPanel';
 import { CombatPanel } from '../components/CombatPanel';
 import type { CombatAction } from '../../core/schemas';
 import type { Aftermath } from '../../systems/combat';
+import type { RomanceAction } from '../../systems/romance';
 import { FamilyPanel } from '../components/FamilyPanel';
 import { CultivatePanel } from '../components/CultivatePanel';
 import { SectPanel, type SectAction } from '../components/SectPanel';
@@ -42,7 +43,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onUseItem, onMarket, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onChoose, onFamilyAction, onRomance, onUseItem, onMarket, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -53,6 +54,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   /** Returns the outcome to show on the card. */
   onChoose: (index: number) => PopupResult;
   onFamilyAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
+  /** Task 3.6: theo đuổi, tặng quà, tỏ tình. */
+  onRomance: (npcId: string, action: RomanceAction) => { text: string; tone: Tone; changes: string };
   /** Use one item from the bag. */
   onUseItem: (itemId: string) => { text: string; tone: Tone; changes: string };
   /** One round of the fight in progress, and the choice after winning (task 3.3). */
@@ -214,7 +217,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       {bagOpen && <BagPanel state={state} content={content} onUse={onUseItem} onClose={() => setBagOpen(false)} />}
 
-      {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onClose={() => setFamilyOpen(false)} />}
+      {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onRomance={onRomance} onClose={() => setFamilyOpen(false)} />}
 
       {profileOpen && (
         <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Nhân vật" onClick={(e) => e.target === e.currentTarget && setProfileOpen(false)}>

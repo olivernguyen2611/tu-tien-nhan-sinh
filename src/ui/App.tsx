@@ -33,6 +33,7 @@ import { doMission, joinSect, leaveSect, requestMaster } from '../systems/sect';
 import { learnTechnique } from '../systems/technique';
 import { chooseFate, rerollFate } from '../systems/fate';
 import { trainMartial } from '../systems/martial';
+import { romanceAction } from '../systems/romance';
 
 type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves';
 /** Why the slot list is open in pick mode. */
@@ -174,6 +175,11 @@ function Screens({ content }: { content: Content }) {
         onFamilyAction={(relId, actionId) => {
           const r = performFamilyAction(life, content, relId, actionId);
           setLife(checkDeath(r.state, content));
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+        }}
+        onRomance={(npcId, action) => {
+          const r = romanceAction(life, content, npcId, action);
+          setLife(r.state);
           return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
         }}
         onCombat={(action, itemId) => {

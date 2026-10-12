@@ -4,6 +4,7 @@ import type { GameEvent } from '../../core/schemas';
 import type { GameState } from '../../core/types';
 import { sectEligibility } from '../sect';
 import { actor, isMasked } from '../npcs';
+import { romanceMeets } from '../romance';
 
 type Conditions = Partial<GameEvent['conditions']>;
 
@@ -77,6 +78,7 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
   if (c.traitsNone?.some((t) => state.traits.includes(t))) return false;
   if (c.goldenFinger) return false;
   if (c.npc && !npcMeets(state, c.npc, content)) return false;
+  if (c.romance && (!content || !romanceMeets(state, c.romance, content))) return false;
   for (const s of c.stats ?? []) {
     const v = readValue(state, s.stat);
     if (s.gte !== undefined && v < s.gte) return false;

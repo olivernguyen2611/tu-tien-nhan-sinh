@@ -52,6 +52,12 @@ export interface GameState {
   talents: string[];
   /** A talent choice waiting for the player (after a big breakthrough); blocks the next year. */
   fate: { offered: string[]; refreshesLeft: number } | null;
+  /**
+   * Romance (task 3.6): the NPC being courted, whether they said yes (couple), the đạo lữ
+   * (task 3.7), people who turned the player down or were left, rivals around the lover,
+   * and the age each romance action was last done (once a year each).
+   */
+  romance: { lover: string | null; couple: boolean; partner: string | null; exes: string[]; rivals: number; lastActions: Record<string, number> };
   /** Thiên kiêu bảng (task 3.5): the world's prodigies and the player's rank last year (null = not on the board). */
   ranking: { prodigies: Prodigy[]; rank: number | null };
   /** Base aptitude 0–100 for each combat path (task 3.8); hooks add on top. */

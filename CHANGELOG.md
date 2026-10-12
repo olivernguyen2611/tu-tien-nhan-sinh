@@ -2,6 +2,26 @@
 
 ## [Chưa phát hành]
 
+### Task 3.6 — Tình duyên (2026-10-12)
+- **Thiện cảm nhiều nấc** (`content/romance.json`): Chán ghét, Lạnh nhạt, Quen biết, Có cảm tình, Tâm đầu ý hợp, Khắc cốt ghi tâm. Tab Người quen hiện nấc bên thanh thiện cảm.
+- **Hành động với người quen**, mỗi việc một lần mỗi năm, số liệu ở `balance.romance`:
+  - Theo đuổi: mỗi lúc chỉ một người.
+  - Tặng quà: phàm nhân trả bạc, tu sĩ trả linh thạch. Thiện cảm tăng theo Mị lực.
+  - Tỏ tình: cần thiện cảm 70. Tỉ lệ theo thiện cảm và Mị lực.
+  - Thôi theo đuổi, hoặc chia tay.
+- **Bị từ chối**: thiện cảm dưới 30 thì quà có thể bị trả lại. Tỏ tình thất bại thì Vui vẻ −15, Đạo tâm +3, thiện cảm −10.
+- **Bị lợi dụng**: người có bộ mặt hiền che bản chất khác (hệ NPC 3.4) có thể moi thêm tiền sau khi nhận quà.
+- **Tình địch** làm thiện cảm của người trong lòng giảm mỗi năm. Người trong lòng hoặc đạo lữ qua đời thì Vui vẻ −30, nhật ký ghi lại.
+- **Cho sự kiện**:
+  - Điều kiện `romance`: có người trong lòng, đã thành đôi, có đạo lữ, khoảng thiện cảm, người kia có linh căn, có người cũ.
+  - `romance.target` gắn sự kiện vào người trong lòng hoặc đạo lữ, để `{npc}`, `{lover}` và hiệu ứng `npc` áp lên người đó.
+  - Hiệu ứng `romance`: bắt đầu theo đuổi, mất người, thành đôi, thêm tình địch, vạch mặt tình địch.
+- **Mục H của PLAN**:
+  - Mọi điều kiện `romance` đòi người chơi và người kia đủ 18 tuổi, còn sống, và người chơi không theo Phật đạo (kiêng tình duyên, phần còn nợ của task 3.12).
+  - Người gặp trong sự kiện tình duyên luôn được tạo từ 18 tuổi.
+  - Validator báo lỗi nếu sự kiện có chủ đề `romance*`, tag `mature` hoặc hiệu ứng `romance` mà không có `conditions.romance` hay `age.min ≥ 18`.
+- **Bổ sung kỹ thuật** (PLAN chỉ liệt kê tính năng): tên các nấc, câu nhật ký của các hành động, và mọi con số trong `balance.romance`.
+
 ### Task 3.5 — Thiên kiêu bảng (2026-10-12)
 - Thế giới có 12 thiên kiêu riêng (`balance.rankings`). Họ tự tu luyện nhanh hơn người thường, tự đột phá, có thể vẫn lạc. Ai quá 100 tuổi thì rời bảng, người trẻ mới lên thay.
 - Mỗi năm bảng xếp 10 người theo cảnh giới, tầng và tu vi. Người chơi có tên trên bảng nếu đã tu luyện và chưa quá 100 tuổi.

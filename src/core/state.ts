@@ -15,6 +15,7 @@ import { careerYear } from '../systems/career';
 import { sectYear } from '../systems/sect';
 import { lineageYear, rollPaths } from '../systems/paths';
 import { rankingYear } from '../systems/rankings';
+import { romanceYear, romanceTarget } from '../systems/romance';
 
 export interface NewLifeInput {
   seed: string;
@@ -42,7 +43,9 @@ export function fillTemplate(text: string, state: GameState, content?: Content):
     .replace(/\{sect\}/g, sect)
     .replace(/\{npc\}/g, npc?.name ?? 'người kia')
     .replace(/\{npcRole\}/g, npc?.role ?? 'người quen')
-    .replace(/\{npcKin\}/g, kin?.name ?? 'người thân');
+    .replace(/\{npcKin\}/g, kin?.name ?? 'người thân')
+    // Task 3.6: {lover} = the đạo lữ, else the one being courted.
+    .replace(/\{lover\}/g, romanceTarget(state, 'beloved')?.name ?? 'người ấy');
 }
 
 export function createLife(input: NewLifeInput, content: Content): GameState {
@@ -92,6 +95,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     combat: null,
     npcs: [],
     ranking: { prodigies: [], rank: null },
+    romance: { lover: null, couple: false, partner: null, exes: [], rivals: 0, lastActions: {} },
     talents: [],
     fate: null,
     sect: { id: null, rank: 0, since: 0, contribution: 0, master: null, lastMission: null, lastMasterTry: null, left: [] },
@@ -131,7 +135,7 @@ export function advanceYear(state: GameState, content: Content): GameState {
   if (!state.alive || state.events.pending || state.fate || state.combat) return state;
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content);
+  const body = checkDeath(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content);
   const next = body.alive ? rollYearEvent(body, content) : body;
   // The year's log block exists before family news and the event are added to it.
   const log = next.log.slice();

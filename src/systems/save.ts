@@ -92,6 +92,8 @@ export function migrate(save: SaveFile): SaveFile {
   if (life.combat === undefined) life = { ...life, combat: null };
   // Task 3.4: no NPCs met yet.
   if (life.npcs === undefined) life = { ...life, npcs: [] };
+  // Task 3.6: nobody courted yet.
+  if (life.romance === undefined) life = { ...life, romance: { lover: null, couple: false, partner: null, exes: [], rivals: 0, lastActions: {} } };
   // Task 3.5: an empty board; rankingYear fills it next year.
   if (life.ranking === undefined) life = { ...life, ranking: { prodigies: [], rank: null } };
   if (life.events.npc === undefined) life = { ...life, events: { ...life.events, npc: null } };
