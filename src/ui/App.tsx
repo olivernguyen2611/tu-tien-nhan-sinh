@@ -76,6 +76,8 @@ function Screens({ content }: { content: Content }) {
   const store = useMemo(browserStore, []);
   // Only the loaded world can be played for now (world picker comes later).
   const worlds = [content.world.id];
+  // A fresh life: old saves get any field they lack from it (save.ts backfillLife).
+  const freshLife = useMemo(() => createLife({ seed: 'backfill' }, content), [content]);
   const [screen, setScreen] = useState<Screen>('title');
   const [life, setLife] = useState<GameState | null>(null);
   /** Slot the current life autosaves into. */
@@ -141,7 +143,7 @@ function Screens({ content }: { content: Content }) {
   };
 
   const loadSlot = (s: number) => {
-    const r = readSlot(store, s, worlds);
+    const r = readSlot(store, s, worlds, freshLife);
     if (!r || !r.ok) { setMessage({ text: r?.error ?? 'Ô này trống.', tone: 'bad' }); return; }
     setLife(r.save.life);
     setSlot(s);
@@ -170,7 +172,7 @@ function Screens({ content }: { content: Content }) {
         }}
         onImport={async (file) => {
           const raw = await readJsonFile(file);
-          const r = raw === null ? { ok: false as const, error: 'File không phải JSON.' } : parseSave(raw, worlds);
+          const r = raw === null ? { ok: false as const, error: 'File không phải JSON.' } : parseSave(raw, worlds, freshLife);
           if (!r.ok) { setMessage({ text: r.error, tone: 'bad' }); return; }
           if (savesLocked(r.save.life, content)) { setMessage({ text: 'Đời này chơi ở độ khó Khó và vẫn còn sống: không nhập lại được.', tone: 'bad' }); return; }
           setMessage(null);

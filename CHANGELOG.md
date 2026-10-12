@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### Save cũ tự bổ sung hệ thống mới (2026-10-12)
+- `SAVE_VERSION` lên 2. Sau các bước nâng cấp theo phiên bản, `migrate` còn **bổ sung tự động** mọi trường mà đời cũ còn thiếu bằng giá trị của một đời mới tinh (`backfillLife`), nên thêm hệ thống mới không cần viết bước migration tay nữa.
+- Giá trị đã có (kể cả `null`, `0`, `false`) không bao giờ bị đè; lịch trình thử thách gốc (`events.followUps`) và `pastSect` không bị chép từ đời mới.
+- Khi có gì được bổ sung, nhật ký năm hiện tại ghi một dòng "Game vừa cập nhật…". Áp dụng cả khi nạp ô save lẫn nhập file.
+
 ### Tông môn 5c.2 — Đại tỉ và Luận đạo hội (2026-10-12)
 - Hai cuộc thi định kỳ của tông, năm năm một lần (đại tỉ ở tuổi chia hết cho 5, luận đạo hội lệch hai năm), cho đệ tử từ Ngoại môn: ba trận với đồng môn cùng lứa. Đại tỉ so Chiến lực, luận đạo hội thử Ngộ tính.
 - Thưởng theo số trận thắng (cống hiến, linh thạch, thanh tu vi, chỉ số; kể cả thua trắng vẫn đổi chỉ số): số trong `balance.sects.tournaments`, lời văn trong `sect-life.json`. Nhớ thành tích tốt nhất mỗi đời; kình địch ghim thù khi bị thắng, đồng môn khác thân hơn sau trận.
