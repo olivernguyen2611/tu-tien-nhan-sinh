@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "validate": "tsx tools/validate-content.ts",
+    "perf": "vite-node tools/perf.ts",
     "simulate": "vite-node tools/simulate.ts --"
   },
   "dependencies": {
