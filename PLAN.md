@@ -309,7 +309,7 @@ Validator (`npm run validate`) báo: sai schema, trùng `id`, tham chiếu tới
 | 3.1 | [x] Túi đồ, bạc/linh thạch, đan dược dùng được (✍️ ~15 đan dược, ~15 vật phẩm) |
 | 3.2 | [x] Phường thị: mua bán, trả giá đơn giản |
 | 3.3 | [x] CombatSystem theo K.4: chiến lực, 3 hiệp × 5 hành động, văn bản theo con đường + hệ |
-| 3.4 | [ ] NPC có số mệnh riêng: tự tu luyện, già, chết; tính cách bề ngoài/bản chất; sổ ân oán |
+| 3.4 | [x] NPC có số mệnh riêng: tự tu luyện, già, chết; tính cách bề ngoài/bản chất; sổ ân oán |
 | 3.5 | [x] Thiên kiêu bảng cập nhật mỗi năm |
 | 3.6 | [x] Tình duyên: thiện cảm nhiều nấc, theo đuổi, tặng quà, bị từ chối, bị lợi dụng |
 | 3.7 | [x] Đạo lữ đại điển, song tu, sinh con (di truyền linh căn, đột biến) |

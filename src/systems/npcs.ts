@@ -67,7 +67,7 @@ export function createNpc(state: GameState, content: Content, spec: NpcSpec): { 
     progress: 0,
     surface,
     nature: nature?.id ?? null,
-    natureKnown: nature !== null && nature.surface !== undefined,
+    natureKnown: nature !== null && (nature.surface !== undefined || nature.honest),
     goal: traits.goals.length > 0 ? rng.pick(traits.goals).id : null,
     affinity: clamp(spec.affinity ?? 50),
     favor: clamp(spec.favor ?? 0),

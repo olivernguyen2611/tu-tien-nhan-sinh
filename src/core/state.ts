@@ -44,6 +44,9 @@ export function fillTemplate(text: string, state: GameState, content?: Content):
     .replace(/\{npc\}/g, npc?.name ?? 'người kia')
     .replace(/\{npcRole\}/g, npc?.role ?? 'người quen')
     .replace(/\{npcKin\}/g, kin?.name ?? 'người thân')
+    // Task 3.4: the NPC's outward character and true nature, lower-case for mid-sentence use.
+    .replace(/\{npcSurface\}/g, (content?.npcTraits.surface.find((x) => x.id === npc?.surface)?.name ?? 'dễ gần').toLowerCase())
+    .replace(/\{npcNature\}/g, (content?.npcTraits.nature.find((x) => x.id === npc?.nature)?.name ?? 'khó đoán').toLowerCase())
     // Task 3.6: {lover} = the đạo lữ, else the one being courted.
     .replace(/\{lover\}/g, romanceTarget(state, 'beloved')?.name ?? 'người ấy')
     // Task 3.9: forms of address by gender: the lover calls themself muội/huynh, calls the player chàng/nàng.

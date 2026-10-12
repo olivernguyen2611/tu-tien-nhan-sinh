@@ -1622,6 +1622,8 @@ export const NpcTraitsFileSchema = z
         riskPerYear: z.number().min(0).max(1).default(0),
         /** Surface id this nature always comes with (Chân thành: what you see is what you get). */
         surface: id.optional(),
+        /** Chân thành: what you see is what you get, so the nature is known from the start. */
+        honest: z.boolean().default(false),
         /** Surfaces that hide this nature (Ôn hòa hiding Tham lam): such an NPC may show their true face (npcTrigger "reveal"). */
         masks: ids,
         /** Revenge / repay chance multipliers and how fast affinity grows. */

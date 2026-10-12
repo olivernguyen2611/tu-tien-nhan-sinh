@@ -1,0 +1,157 @@
+{
+  "surface": [
+    {
+      "id": "on_hoa",
+      "name": "Ôn hòa",
+      "text": "Nói năng nhỏ nhẹ, ai nhờ gì cũng gật."
+    },
+    {
+      "id": "lanh_lung",
+      "name": "Lạnh lùng",
+      "text": "Ba câu mới đáp một chữ."
+    },
+    {
+      "id": "hao_sang",
+      "name": "Hào sảng",
+      "text": "Uống rượu bằng bát, kết bạn bằng nắm đấm."
+    },
+    {
+      "id": "khiem_cung",
+      "name": "Khiêm cung",
+      "text": "Gặp ai cũng chắp tay gọi tiền bối."
+    },
+    {
+      "id": "kieu_ngao",
+      "name": "Kiêu ngạo",
+      "text": "Nhìn người bằng lỗ mũi."
+    },
+    {
+      "id": "lam_loi",
+      "name": "Lắm lời",
+      "text": "Hỏi một câu, kể ba đời."
+    },
+    {
+      "id": "nhut_nhat",
+      "name": "Nhút nhát",
+      "text": "Đi đường cúi mặt, gặp chó cũng tránh."
+    },
+    {
+      "id": "phong_luu",
+      "name": "Phong lưu",
+      "text": "Áo trắng quạt giấy, cười một cái nửa phường thị đỏ mặt."
+    }
+  ],
+  "nature": [
+    {
+      "id": "trung_hau",
+      "name": "Trung hậu",
+      "text": "Nhận ơn một giọt, báo đáp một dòng suối.",
+      "repayMul": 2,
+      "masks": [
+        "lanh_lung",
+        "kieu_ngao"
+      ]
+    },
+    {
+      "id": "tham_lam",
+      "name": "Tham lam",
+      "text": "Thấy bảo vật thì quên cả tình nghĩa.",
+      "masks": [
+        "on_hoa",
+        "khiem_cung",
+        "hao_sang"
+      ]
+    },
+    {
+      "id": "muu_mo",
+      "name": "Mưu mô",
+      "text": "Cười với ngươi, tính với ngươi.",
+      "affinityMul": 0.5,
+      "masks": [
+        "on_hoa",
+        "khiem_cung",
+        "lam_loi"
+      ]
+    },
+    {
+      "id": "thu_dai",
+      "name": "Thù dai",
+      "text": "Chuyện mười năm trước vẫn nhớ từng chữ.",
+      "grudgeFade": 0,
+      "revengeMul": 1.5,
+      "masks": [
+        "on_hoa",
+        "khiem_cung"
+      ]
+    },
+    {
+      "id": "nhan_hau",
+      "name": "Nhân hậu",
+      "text": "Thấy kiến đi qua cũng nhường đường.",
+      "grudgeFade": 3,
+      "revengeMul": 0.5,
+      "masks": [
+        "lanh_lung",
+        "kieu_ngao"
+      ]
+    },
+    {
+      "id": "hen_nhat",
+      "name": "Hèn nhát",
+      "text": "Gặp nguy là chạy trước.",
+      "masks": [
+        "hao_sang",
+        "kieu_ngao"
+      ]
+    },
+    {
+      "id": "cuong_vong",
+      "name": "Cuồng vọng",
+      "text": "Muốn thành tiên, ai cản là kẻ thù.",
+      "speedMul": 1.3,
+      "riskPerYear": 0.01,
+      "masks": [
+        "khiem_cung",
+        "nhut_nhat"
+      ]
+    },
+    {
+      "id": "chan_thanh",
+      "name": "Chân thành",
+      "text": "Nói gì làm nấy.",
+      "honest": true
+    }
+  ],
+  "goals": [
+    {
+      "id": "truong_sinh",
+      "name": "Trường sinh",
+      "text": "Bế quan, tu luyện nhanh hơn, ít xuất hiện."
+    },
+    {
+      "id": "bao_thu",
+      "name": "Báo thù",
+      "text": "Nếu có oán với ngươi: tìm tới ngươi."
+    },
+    {
+      "id": "lam_giau",
+      "name": "Làm giàu",
+      "text": "Buôn bán ở phường thị, có thể nhờ vả hoặc cho vay."
+    },
+    {
+      "id": "danh_vong",
+      "name": "Danh vọng",
+      "text": "Khiêu chiến người cùng thế hệ."
+    },
+    {
+      "id": "bao_ve_gia_dinh",
+      "name": "Bảo vệ gia đình",
+      "text": "Lập gia đình sớm, ít gây chuyện."
+    },
+    {
+      "id": "tim_dao_lu",
+      "name": "Tìm đạo lữ",
+      "text": "Hay xuất hiện trong chuyện tình duyên."
+    }
+  ]
+}

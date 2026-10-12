@@ -2,6 +2,33 @@
 
 ## [Chưa phát hành]
 
+### Task 3.4 — NPC có số mệnh riêng (2026-10-12)
+- **Engine** (phiên làm `task/3.4-npcs`):
+  - NPC già đi, tự tu luyện và đột phá, rồi chết.
+  - Sổ ân oán phai dần theo năm. Oán ≥ 30 thì có thể tìm tới báo thù, ân ≥ 30 thì tới báo ân. Giết một NPC thì người thân cùng họ nhận một nửa mối thù.
+  - Giao chiến với NPC dùng đúng cảnh giới của người đó.
+  - Bảng Quan hệ có tab Người quen. Developer mode có nút gặp nhanh bạn, thù, ân nhân.
+- **Nội dung theo bản đã duyệt** `docs/design/npcs.md`:
+  - `content/npc-traits.json`: 8 bề ngoài, 8 bản chất, 6 mục tiêu đời.
+  - Theo bảng "bề ngoài che giấu bản chất": người Ôn hòa có thể là Tham lam, Mưu mô hoặc Thù dai, và lộ ra qua sự kiện Bộ mặt thật.
+  - Bản chất đổi luật chơi:
+    - Trung hậu: báo ân ×2.
+    - Mưu mô: thiện cảm tăng một nửa.
+    - Thù dai: oán không phai, báo thù ×1.5.
+    - Nhân hậu: oán phai ×3, báo thù ×0.5.
+    - Cuồng vọng: tu nhanh ×1.3, mỗi năm 1% chết sớm.
+    - Chân thành: lộ bản chất ngay từ đầu (thêm trường `honest`).
+- **4 sự kiện ân oán** (`events/npcs.json`, mục "Ân oán"): Cố nhân tìm tới, Báo ân, Hậu duệ báo thù, Bộ mặt thật.
+  - Đánh nhau là trận thật với chính NPC đó.
+  - Bồi thường trả bạc nếu là phàm nhân, linh thạch nếu là tu sĩ.
+  - Văn bản 4 sự kiện là **phần bổ sung** dựa trên khung đã duyệt (bản nháp ghi "viết sau khi bạn duyệt khung này").
+- Placeholder mới `{npcSurface}`, `{npcNature}`.
+- **Chưa làm** (bản duyệt có nhắc nhưng chưa có hệ thống tương ứng):
+  - Mục tiêu đời mới chỉ hiển thị, chưa đổi hành vi NPC.
+  - Hèn nhát chưa "đâm sau lưng".
+  - NPC chưa có phe và chưa lập gia đình.
+  - Chưa có "ra tay giúp khi ngươi gặp nạn".
+
 ### Task 3.9 — 40 sự kiện giang hồ (2026-10-12)
 - **Nhập đủ 40 sự kiện đã duyệt** của `docs/design/events-jianghu.md` vào `content/worlds/thuong_lan/events/`:
   - `romance.json`: Tình duyên, 10 sự kiện.

@@ -49,6 +49,8 @@ describe('40 sự kiện giang hồ (task 3.9)', () => {
     s = cultivator(25);
     const met = createNpc(s, content, { role: 'người quen', age: 24, affinity: 50 });
     s = applyRomance(met.state, content, met.id, { pursue: true });
+    // An honest nature, so affinity moves at the plain rate.
+    s = { ...s, npcs: s.npcs.map((n) => ({ ...n, nature: 'chan_thanh', surface: 'on_hoa' })) };
     expect(eventWeight(s, content, findEvent(content, 'tang_qua')!)).toBeGreaterThan(0);
     expect(eventWeight({ ...s, cult: { ...s.cult, lineage: 'phat' } }, content, findEvent(content, 'tang_qua')!)).toBe(0);
     // The gift event names the lover and raises their affinity.
