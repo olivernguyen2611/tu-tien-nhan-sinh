@@ -345,7 +345,12 @@ export const ChoiceSchema = z
     text: z.string().min(1),
     requires: ConditionsSchema.partial().optional(),
     hidden: z.boolean().default(false),
-    check: z.object({ stat: statKey, difficulty: z.number().min(0).max(100) }).strict().optional(),
+    check: z.object({
+      stat: statKey,
+      difficulty: z.number().min(0).max(100),
+      /** 6c.7: a hook that eases this check (charmResist against charms and illusions, heartDemonResist against inner demons). */
+      resist: z.enum(['charmResist', 'heartDemonResist']).optional(),
+    }).strict().optional(),
     success: OutcomeSchema.optional(),
     fail: OutcomeSchema.optional(),
     result: OutcomeSchema.optional(),
@@ -640,7 +645,11 @@ export const BalanceSchema = z
         repeatDecay: z.number().min(0).max(1),
         /** Skill check: chance = base + (stat − difficulty) × perPoint, clamped to [min, max]. */
         check: z
-          .object({ base: probability, perPoint: z.number().min(0), min: probability, max: probability })
+          .object({
+            base: probability, perPoint: z.number().min(0), min: probability, max: probability,
+            /** 6c.7: a check with `resist` counts the hook's value × this as points off the difficulty. */
+            resistPoints: z.number().positive().default(100),
+          })
           .strict(),
       })
       .strict(),

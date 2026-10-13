@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6c.7: sự kiện Kim Đan, Nguyên Anh, Hóa Thần (2026-10-13)
+- 30 sự kiện mới (`events/high-realm.json`, id `hr_`): 10 từ Kim Đan, 10 từ Nguyên Anh, 10 từ Hóa Thần. Nội dung do Claude quyết theo luật GĐ 4+, chủ dự án duyệt sau. Mọi lựa chọn đều đổi ít nhất một chỉ số; validator sạch.
+- Ba chủ đề trước đây thiếu: **báo ứng** (oan hồn đòi nợ khi nghiệp nặng, thư đền ơn khi nhiều thiện, ác nghiệp chồng chất, di vật kẻ bại trận), **lừa đảo** (bảo vật tổ truyền, đan độc bán rẻ), **bi kịch gia đình** (tin cha mẹ già và mất, đệ tử bỏ sơn môn, đạo lữ giấu chuyện, người xưa gõ cửa, bạn cũ mất tích, bạn cũ nhập ma). Kèm kịch bản cảnh giới cao: Nguyên Anh rời thể, thiên cơ rối loạn, chư thiên giáng thế, kiếp nạn chồng kiếp nạn, đệ tử cuối, thọ nguyên cạn, thiên đạo hỏi.
+- **Kháng mị thuật (`charmResist`) có tác dụng**: lựa chọn có kiểm tra thêm trường `check.resist` (`charmResist` hoặc `heartDemonResist`); mỗi điểm hook làm cửa kiểm tra dễ đi `events.check.resistPoints` (100) điểm độ khó. Hai sự kiện mị hoặc ("Nụ cười không rõ gốc gác", "Ma nữ cầu bạn đồng hành") dùng nó, chỉ cho nhân vật từ 18 tuổi.
+- Mô phỏng 250 đời `--profile player`: các sự kiện Kim Đan xuất hiện 34-49 lần; Nguyên Anh 8-12 lần; Hóa Thần và các sự kiện cần đạo lữ, tông môn, cha mẹ còn sống không xuất hiện vì bot không có (đã có test kiểm tra trọng số).
+
 ### GĐ 6c.6: bớt lặp nhật ký và văn bản (2026-10-13)
 - "Báo cáo của tông" (tông môn tự lập) chỉ vào nhật ký mỗi 5 năm (`founding.reportLogEvery`), hoặc ngay khi tông biến động mạnh (số đệ tử đổi từ 10% hoặc kho cạn). Bảng Tông môn vẫn có báo cáo và quyết định mỗi năm. Bản đánh giá ghi dòng này chiếm 110 trong 141 năm.
 - "Báo ân" và các lần NPC đến trả ơn cách nhau ít nhất 8 năm (`npcs.repayGapYears`); trước đó tới 21 lần một đời.

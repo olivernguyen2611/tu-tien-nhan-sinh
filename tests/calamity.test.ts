@@ -76,3 +76,42 @@ describe('6c.4 stat gains taper', () => {
     expect(ordinaryStat('charm', 99, 20, content, rng)).toBe(100);
   });
 });
+
+describe('6c.7 charmResist eases a check', () => {
+  it('a charm-resisting trait raises the chance of a check marked with resist', async () => {
+    const { checkChance } = await import('../src/systems/events/engine');
+    const s = cultivator('kim_dan', 'resist');
+    const guarded = { ...s, traits: ['huyen_tam'] };
+    const plain = checkChance(s, content, 'stat.daoHeart', 60, 'charmResist');
+    expect(checkChance(guarded, content, 'stat.daoHeart', 60, 'charmResist')).toBeGreaterThan(plain);
+    // Without `resist`, the trait changes nothing.
+    expect(checkChance(guarded, content, 'stat.daoHeart', 60)).toBeCloseTo(checkChance(s, content, 'stat.daoHeart', 60));
+    // The new late-realm events carry the mark.
+    const marked = content.events.filter((e) => e.choices.some((c) => c.check?.resist === 'charmResist')).map((e) => e.id);
+    expect(marked).toEqual(expect.arrayContaining(['hr_nu_tu_mi_hoac', 'hr_ma_nu_cau_ban']));
+  });
+
+  it('there are events for Kim Đan, Nguyên Anh and Hóa Thần, with unique ids', () => {
+    const hr = content.events.filter((e) => e.id.startsWith('hr_'));
+    expect(hr.length).toBeGreaterThanOrEqual(30);
+    expect(new Set(content.events.map((e) => e.id)).size).toBe(content.events.length);
+    const from = (r: string) => hr.filter((e) => e.conditions.realm?.min === r).length;
+    expect(from('kim_dan')).toBeGreaterThanOrEqual(10);
+    expect(from('nguyen_anh')).toBeGreaterThanOrEqual(10);
+    expect(from('hoa_than')).toBeGreaterThanOrEqual(8);
+  });
+});
+
+describe('6c.7 late-realm events can come up', () => {
+  it('Hóa Thần events with only a realm condition have weight for a Hóa Thần cultivator', async () => {
+    const { eventWeight } = await import('../src/systems/events/engine');
+    const s = { ...cultivator('hoa_than', 'late'), character: { ...cultivator('hoa_than', 'late').character, age: 400 } };
+    const open = ['hr_chu_thien_giang_the', 'hr_pho_the_tu_nhan', 'hr_lao_ban_tu_quen', 'hr_kiep_nan_chap_chong', 'hr_thien_dao_tu_van', 'hr_nguoi_xua_ma_hoa'];
+    for (const id of open) {
+      const e = content.events.find((x) => x.id === id)!;
+      expect(eventWeight(s, content, e), id).toBeGreaterThan(0);
+    }
+    const early = cultivator('kim_dan', 'late');
+    expect(eventWeight(early, content, content.events.find((x) => x.id === 'hr_chu_thien_giang_the')!)).toBe(0);
+  });
+});

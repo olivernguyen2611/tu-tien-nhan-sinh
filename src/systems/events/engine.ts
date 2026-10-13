@@ -171,9 +171,10 @@ export interface ChoiceView {
   check: { stat: string; difficulty: number; chance: number } | null;
 }
 
-export function checkChance(state: GameState, content: Content, stat: string, difficulty: number): number {
+export function checkChance(state: GameState, content: Content, stat: string, difficulty: number, resist?: 'charmResist' | 'heartDemonResist'): number {
   const c = content.balance.events.check;
-  const p = c.base + (readValue(state, stat) - difficulty) * c.perPoint;
+  const ease = resist ? hookSum(state, content, resist) * c.resistPoints : 0;
+  const p = c.base + (readValue(state, stat) - difficulty + ease) * c.perPoint;
   return Math.max(c.min, Math.min(c.max, p));
 }
 
@@ -191,7 +192,7 @@ export function visibleChoices(state: GameState, content: Content, event: GameEv
         ? c.requires?.traitsAny?.find((t) => state.traits.includes(t)) ?? c.requires?.talentsAny?.find((t) => state.talents.includes(t)) ?? null
         : null,
       disabled: !ok,
-      check: c.check ? { ...c.check, chance: checkChance(state, content, c.check.stat, c.check.difficulty) } : null,
+      check: c.check ? { ...c.check, chance: checkChance(state, content, c.check.stat, c.check.difficulty, c.check.resist) } : null,
     });
   });
   // Task 3.9: variants of one choice (same text, exclusive requires) show only the one that applies.
@@ -263,7 +264,7 @@ export function resolveChoice(given: GameState, content: Content, choiceIndex: n
   let outcome: Outcome;
   let success: boolean | null = null;
   if (choice.check) {
-    success = rng.chance(checkChance(state, content, choice.check.stat, choice.check.difficulty));
+    success = rng.chance(checkChance(state, content, choice.check.stat, choice.check.difficulty, choice.check.resist));
     outcome = (success ? choice.success : choice.fail)!;
   } else {
     outcome = choice.result!;
