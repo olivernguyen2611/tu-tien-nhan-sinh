@@ -13,6 +13,7 @@ import { chooseFate } from './fate';
 import { placeStrand } from './goldenCore';
 import { meetIllusion } from './heartDemon';
 import { goLeisure } from './leisure';
+import { caveView, rentCave } from './cave';
 import { runSeclusion } from './seclusion';
 import { doMission, joinSect, missionViews, requestMaster, masterBlocked, sectEligibility, sectTechniques } from './sect';
 import { buyTreasury, treasuryViews } from './sectTreasury';
@@ -56,6 +57,8 @@ export interface LifeResult {
   aptitudeHigh: boolean;
   /** 6b.12: how many times each event fired this life. */
   seen: Record<string, number>;
+  /** 6b.14: spirit stones left at death. */
+  stonesLeft: number;
 }
 
 export interface SimOptions {
@@ -152,6 +155,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     aptitudeGain: aptSum(s) - aptStart,
     aptitudeHigh: Math.max(s.aptitudes.physique, s.aptitudes.comprehension, s.aptitudes.luck) >= 90,
     seen: { ...(s.events.seen ?? {}) },
+    stonesLeft: s.money.spiritStones,
   };
 }
 
@@ -171,6 +175,9 @@ function playerYear(state: GameState, content: Content): GameState {
   }
   // A player who sees the warning goes on a trip.
   if (s.stats.happiness < 30) s = goLeisure(s, content)?.state ?? s;
+  // 6b.14: with stones to spare (twice a long lease), rent a cave on a spirit vein.
+  const lease = caveView(s, content).leases.at(-1);
+  if (lease && !lease.blocked && s.money.spiritStones >= lease.cost * 2) s = rentCave(s, content, lease.years)?.state ?? s;
   // Move to the technique that reaches furthest (no limit counts as furthest).
   const order = content.cultivation.realms.realms.map((r) => r.id);
   const reach = (id: string | null) => {
@@ -208,6 +215,8 @@ export interface Report {
   aptitudeHigh: number;
   /** The events that repeat most: mean times per 100 years lived, among lives that had them (max = most in one life). */
   topRepeats: { id: string; max: number; perCentury: number }[];
+  /** Spirit stones left at death: mean, median and share of lives dying with 500 or more. */
+  stonesLeft: { mean: number; p50: number; rich: number };
 }
 
 const pct = (sorted: number[], p: number) => sorted[Math.min(sorted.length - 1, Math.floor((p / 100) * sorted.length))] ?? 0;
@@ -245,6 +254,10 @@ export function summarize(results: LifeResult[], content: Content): Report {
     aptitudeGain: mean(results.map((r) => r.aptitudeGain)),
     aptitudeHigh: n ? results.filter((r) => r.aptitudeHigh).length / n : 0,
     topRepeats: topRepeats(results),
+    stonesLeft: (() => {
+      const st = results.map((r) => r.stonesLeft).sort((a, b) => a - b);
+      return { mean: mean(st), p50: st[Math.floor(st.length / 2)] ?? 0, rich: n ? st.filter((v) => v >= 500).length / n : 0 };
+    })(),
   };
 }
 
@@ -273,6 +286,7 @@ export function formatReport(rep: Report, content: Content, title: string): stri
     `Hạnh phúc chạm 0: ${p(rep.happyZero.share)} số đời, trung bình ${rep.happyZero.meanYears.toFixed(1)} năm ở 0 mỗi đời; đạo tâm chạm 0: ${p(rep.daoHeartZero)}`,
     `Năm đầy thanh tu vi mà không tiến được: trung bình ${rep.fullBarYears.toFixed(1)} năm mỗi đời, trong đó ${rep.capYears.toFixed(1)} năm vì công pháp`,
     `Tư chất (căn cốt + ngộ tính + khí vận) tăng trung bình ${rep.aptitudeGain.toFixed(1)} điểm mỗi đời; ${p(rep.aptitudeHigh)} số đời kết thúc với một chỉ số từ 90`,
+    `Linh thạch lúc chết: trung bình ${rep.stonesLeft.mean.toFixed(0)}, trung vị ${rep.stonesLeft.p50}, ${p(rep.stonesLeft.rich)} số đời còn từ 500`,
     'Sự kiện lặp dày nhất (lần mỗi 100 năm sống, nhiều nhất một đời): ' + rep.topRepeats.map((t) => `${t.id} ${t.perCentury.toFixed(1)} (${t.max})`).join(', '),
   ];
   return lines.join('\n');

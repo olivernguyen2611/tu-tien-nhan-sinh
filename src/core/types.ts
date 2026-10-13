@@ -232,6 +232,8 @@ export interface GameState {
     nextBonus: number;
     /** 6b.4: age since the technique has blocked the next realm at the peak (bức tường công pháp), or null. */
     wallSince: number | null;
+    /** 6b.14: last year of the động phủ lease, or null. */
+    caveUntil: number | null;
     /** Task 4.2: the core being formed (blocks the year), and the Kim Đan grade 1–9 once formed. */
     coreForming: { round: number; offered: string[]; placed: string[]; purity: number; cracks: number; chancePct: number } | null;
     coreGrade: number | null;

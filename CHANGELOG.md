@@ -8,6 +8,10 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6b.14: động phủ linh mạch, chỗ tiêu linh thạch (2026-10-13)
+- Bảng Tu luyện có mục **Động phủ linh mạch**: thuê 1 năm hoặc 10 năm (giảm 10%), tu vi ×1.5 suốt thời hạn, cộng dồn với bế quan. Giá mỗi năm theo cảnh giới: Luyện Khí 10, Trúc Cơ 30, Kim Đan 80, Nguyên Anh 200, Hóa Thần 500 linh thạch (`balance.caveRent`). Bản đánh giá ghi các kiếp tu chết với hơn 1.000 linh thạch không biết tiêu vào đâu.
+- Mô phỏng 300 đời `--profile player` (bot thuê 10 năm khi có gấp đôi giá): linh thạch lúc chết trung bình 606 → 388, số đời còn từ 500 linh thạch 39% → 21%. Tỉ lệ lên cảnh giới gần như không đổi, vì đường tu vẫn bị chặn ở đột phá chứ không ở tốc độ. Bộ mô phỏng in thêm dòng linh thạch lúc chết.
+
 ### GĐ 6b.13: giao diện (2026-10-13)
 - Ô tên chỉ nhận chữ cái (có dấu) và dấu cách, tối đa 24 chữ, có dòng đếm. Tên gõ vào được làm sạch lần nữa trước khi đầu thai, nên họ của cả nhà không còn lấy từ ký tự lạ (lỗi #14).
 - Thẻ kết quả sự kiện bỏ qua lần chạm trong 300 ms đầu: bấm đúp vào lựa chọn không còn bấm luôn "Tiếp tục" (lỗi #16).

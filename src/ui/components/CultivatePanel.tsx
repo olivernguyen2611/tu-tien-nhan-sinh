@@ -12,11 +12,12 @@ import type { QuestAction } from './MiniGamePopup';
 import { pathsView } from '../../systems/paths';
 import { rankingBoard } from '../../systems/rankings';
 import { seclusionView } from '../../systems/seclusion';
+import { caveView } from '../../systems/cave';
 import { recipeViews } from '../../systems/crafting';
 import { Meter } from './Meter';
 import { TermText } from './Tooltip';
 
-export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSeclude, onCraft, onClose }: {
+export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSeclude, onRentCave, onCraft, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome to show in the sheet. */
@@ -35,6 +36,8 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
   onCraft: (recipeId: string) => string | null;
   /** Task 4.1: bế quan; the sheet closes so the log shows the years. */
   onSeclude: (years: number) => void;
+  /** 6b.14: rent a cave on a spirit vein for this many years; returns the log line. */
+  onRentCave: (years: number) => string | null;
   onClose: () => void;
 }) {
   const [confirming, setConfirming] = useState(false);
@@ -52,6 +55,8 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
   const paths = mortal ? null : pathsView(state, content);
   const board = rankingBoard(state, content);
   const seclusion = seclusionView(state, content);
+  const cave = caveView(state, content);
+  const [caveNote, setCaveNote] = useState<string | null>(null);
   const foundation = content.cultivation.realms.foundations.find((g) => g.id === cult.foundation);
   const coreGrade = cult.coreGrade !== null ? content.cultivation.realms.coreGradeNames[cult.coreGrade - 1] : null;
   const pattern = content.corePatterns.find((p) => p.id === cult.corePattern);
@@ -118,6 +123,23 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
               ))}
             </div>
             {seclusion.blocked && <span class="craft-note">{seclusion.blocked}</span>}
+          </div>
+        )}
+
+        {cave.blocked !== 'Chưa tu hành.' && cave.blocked !== 'Đã qua đời.' && (
+          <div class="crafts">
+            <h3 class="panel-sub">Động phủ linh mạch</h3>
+            <p class="profile-note">Thuê chỗ ngồi trên linh mạch: tu vi ×{cave.speedMul} suốt thời hạn thuê, cộng dồn với bế quan.{cave.until !== null ? ` Đang thuê tới năm ${cave.until} tuổi.` : ''}</p>
+            <div class="action-chips">
+              {cave.leases.map((l) => (
+                <button class="chip-btn" key={l.years} disabled={!!l.blocked} title={l.blocked ?? undefined}
+                  onClick={() => setCaveNote(onRentCave(l.years))}>
+                  {l.years} năm · {l.cost} linh thạch
+                </button>
+              ))}
+            </div>
+            {caveNote && <p class="action-result good">{caveNote}</p>}
+            {!caveNote && cave.leases.every((l) => l.blocked) && cave.until === null && <span class="craft-note">{cave.leases[0]?.blocked}</span>}
           </div>
         )}
 
