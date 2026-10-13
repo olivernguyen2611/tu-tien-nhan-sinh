@@ -845,6 +845,8 @@ export const BalanceSchema = z
         /** Repaying a kindness: favor at least repayAt; chance a year. */
         repayAt: z.number(),
         repayChance: probability,
+        /** 6c.6: at least this many years between two repay visits (Báo ân), whoever it is. */
+        repayGapYears: z.number().int().min(0),
         /** Revenge chance × this when the NPC's realm is above the player's. */
         revengeStrongerMul: z.number().min(0),
         /** Chance a year that a masked NPC (nature ≠ surface) shows their true face. */
@@ -877,6 +879,8 @@ export const BalanceSchema = z
     founding: z
       .object({
         minRealm: id,
+        /** 6c.6: the yearly report line goes in the log only every this many years (or on a big swing); the panel always has it. */
+        reportLogEvery: z.number().int().min(1),
         /** Spirit stones to open a mountain gate. */
         cost: z.number().int().min(0),
         /** How many tông quy to pick, and how long a name may be. */
@@ -2637,7 +2641,7 @@ export const RomanceFileSchema = z
         /** Playtest 2026-10-12, phu thê. */
         /** Playtest 2: several lines, one picked at random. */
         company: z.array(z.string().min(1)).min(1),
-        dualCult: z.string().min(1),
+        dualCult: z.array(z.string().min(1)).min(1),
         reconcileYes: z.string().min(1),
         reconcileNo: z.string().min(1),
         divorce: z.string().min(1),

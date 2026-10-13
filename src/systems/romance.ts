@@ -269,7 +269,7 @@ export function romanceAction(state: GameState, content: Content, npcId: string,
     const pct = Math.round(b.dualCultProgress * (0.5 + n.affinity / 100));
     s = applyRomance(addProgress(s, pct), content, npcId, { partnerProgress: pct });
     s = changeNpc(s, content, npcId, { affinity: 2 });
-    lines.push({ text: fill(t.dualCult), tone: 'good' });
+    lines.push({ text: fill(rng.pick(t.dualCult)), tone: 'good' });
   } else if (action === 'reconcile') {
     if (rng.chance(reconcileChance(s, content))) {
       s = changeNpc(s, content, npcId, { affinity: b.reconcileAffinity });

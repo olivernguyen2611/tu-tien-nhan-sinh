@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6c.6: bớt lặp nhật ký và văn bản (2026-10-13)
+- "Báo cáo của tông" (tông môn tự lập) chỉ vào nhật ký mỗi 5 năm (`founding.reportLogEvery`), hoặc ngay khi tông biến động mạnh (số đệ tử đổi từ 10% hoặc kho cạn). Bảng Tông môn vẫn có báo cáo và quyết định mỗi năm. Bản đánh giá ghi dòng này chiếm 110 trong 141 năm.
+- "Báo ân" và các lần NPC đến trả ơn cách nhau ít nhất 8 năm (`npcs.repayGapYears`); trước đó tới 21 lần một đời.
+- Thêm biến thể văn bản: Song tu 1 → 6, Bầu bạn 6 → 10, Hỏi han 2 → 6, Phụ việc nhà 2 → 5, Chăm sóc 2 → 5, Cãi nhau 2 → 5, Xin tiền 1 → 3, Luận bàn / Luận đạo / Truyền công pháp / Tặng vật phẩm với con và đạo lữ 3 → 5 mỗi loại.
+- Ghi chú: `romance.texts.dualCult` đổi từ một chuỗi thành danh sách.
+
 ### GĐ 6c.5: kinh tế người tu (2026-10-13)
 - Bạc không còn vô dụng sau khi nhập đạo: mỗi năm Thương hội tự đổi bạc của người tu từ Luyện Khí trở lên lấy linh thạch, 100 bạc một linh thạch (`economy.silverPerStone`, giá bất lợi), ghi một dòng nhật ký.
 - Nuôi người: từ Trúc Cơ, mỗi con, đạo lữ, đồ đệ còn sống (tối đa 6) ăn tiêu linh thạch mỗi năm theo cảnh giới (Trúc Cơ 0,5, Kim Đan 1, Nguyên Anh 2, Hóa Thần 4). Thiếu linh thạch thì mất 3 hạnh phúc và hết sạch linh thạch.

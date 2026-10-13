@@ -380,7 +380,7 @@
     "revengeAt": 30,
     "revengeChance": 0.2,
     "repayAt": 30,
-    "repayChance": 0.15,
+    "repayChance": 0.15, "repayGapYears": 8,
     "revengeStrongerMul": 2,
     "revealChance": 0.05,
     "inheritShare": 0.5
@@ -448,7 +448,7 @@
     "inheritKarma": 0.3
   },
   "founding": {
-    "minRealm": "kim_dan",
+    "minRealm": "kim_dan", "reportLogEvery": 5,
     "cost": 300,
     "maxRules": 3,
     "nameLength": [2, 24],
