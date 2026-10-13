@@ -51,6 +51,9 @@ export interface LifeResult {
   /** Years with a full bar that could not go on, and how many of them the technique blocked. */
   fullBarYears: number;
   capYears: number;
+  /** 6b.9: căn cốt + ngộ tính + khí vận gained over the life (end − start), and whether one reached 90. */
+  aptitudeGain: number;
+  aptitudeHigh: boolean;
 }
 
 export interface SimOptions {
@@ -78,6 +81,8 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
   let daoHeartZero = false;
   let fullBarYears = 0;
   let capYears = 0;
+  const aptSum = (x: GameState) => x.aptitudes.physique + x.aptitudes.comprehension + x.aptitudes.luck;
+  const aptStart = aptSum(s);
   while (s.alive && s.character.age < maxAge && steps++ < maxSteps) {
     peak = Math.max(peak, realms.indexOf(s.cult.realm));
     reachedAt[s.cult.realm] ??= s.character.age;
@@ -141,6 +146,8 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     peak: Math.max(peak, realms.indexOf(s.cult.realm)), rootGrade: s.cult.root?.grade ?? 'none', bodyId: s.cult.bodyId ?? null,
     martialStage: s.martial.stage, reachedAt, stage: s.cult.stage, stuck: s.alive,
     happyZeroYears, daoHeartZero, fullBarYears, capYears,
+    aptitudeGain: aptSum(s) - aptStart,
+    aptitudeHigh: Math.max(s.aptitudes.physique, s.aptitudes.comprehension, s.aptitudes.luck) >= 90,
   };
 }
 
@@ -192,6 +199,9 @@ export interface Report {
   /** Mean years per life with a full bar that could not go on, and how many of those the technique blocked. */
   fullBarYears: number;
   capYears: number;
+  /** Mean aptitude gained per life (three stats summed) and share of lives ending with one at 90+. */
+  aptitudeGain: number;
+  aptitudeHigh: number;
 }
 
 const pct = (sorted: number[], p: number) => sorted[Math.min(sorted.length - 1, Math.floor((p / 100) * sorted.length))] ?? 0;
@@ -226,6 +236,8 @@ export function summarize(results: LifeResult[], content: Content): Report {
     daoHeartZero: n ? results.filter((r) => r.daoHeartZero).length / n : 0,
     fullBarYears: mean(results.map((r) => r.fullBarYears)),
     capYears: mean(results.map((r) => r.capYears)),
+    aptitudeGain: mean(results.map((r) => r.aptitudeGain)),
+    aptitudeHigh: n ? results.filter((r) => r.aptitudeHigh).length / n : 0,
   };
 }
 
@@ -244,6 +256,7 @@ export function formatReport(rep: Report, content: Content, title: string): stri
       .map(([g, v]) => `${g} ${p(v.share)} (tuổi TB ${v.meanAge.toFixed(0)}, Kim Đan ${p(v.kimDan)}, kẹt công pháp ${v.capYears.toFixed(0)} năm)`).join(', '),
     `Hạnh phúc chạm 0: ${p(rep.happyZero.share)} số đời, trung bình ${rep.happyZero.meanYears.toFixed(1)} năm ở 0 mỗi đời; đạo tâm chạm 0: ${p(rep.daoHeartZero)}`,
     `Năm đầy thanh tu vi mà không tiến được: trung bình ${rep.fullBarYears.toFixed(1)} năm mỗi đời, trong đó ${rep.capYears.toFixed(1)} năm vì công pháp`,
+    `Tư chất (căn cốt + ngộ tính + khí vận) tăng trung bình ${rep.aptitudeGain.toFixed(1)} điểm mỗi đời; ${p(rep.aptitudeHigh)} số đời kết thúc với một chỉ số từ 90`,
   ];
   return lines.join('\n');
 }

@@ -7,6 +7,7 @@
 // balance.familyBond, texts in family-bond.json.
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
+import { ordinaryAptitude } from './aptitudeGain';
 import type { GameState, LogLine, Npc, Relative, SpiritRoot, Tone } from '../core/types';
 import { itemById, removeItems } from './items';
 import { techniqueById, techniqueMatches } from './technique';
@@ -144,13 +145,17 @@ export function bondViews(state: GameState, content: Content): BondView[] {
 
 export interface BondResult { state: GameState; text: string; tone: Tone }
 
-function applyNumbers(state: GameState, effects: Record<string, number>): GameState {
+/** With `content` + `rng`, aptitude gains shrink as they climb (6b.9). */
+function applyNumbers(state: GameState, effects: Record<string, number>, content?: Content, rng?: Rng): GameState {
   const stats = { ...state.stats };
   const aptitudes = { ...state.aptitudes };
   for (const [key, v] of Object.entries(effects)) {
     const k = key.slice(5);
     if (k in stats) stats[k as keyof typeof stats] = clamp(stats[k as keyof typeof stats] + v);
-    else if (k in aptitudes) aptitudes[k as keyof typeof aptitudes] = clamp(aptitudes[k as keyof typeof aptitudes] + v);
+    else if (k in aptitudes) {
+      const cur = aptitudes[k as keyof typeof aptitudes];
+      aptitudes[k as keyof typeof aptitudes] = content && rng ? ordinaryAptitude(k, cur, v, content, rng) : clamp(cur + v);
+    }
   }
   return { ...state, stats, aptitudes };
 }
@@ -253,7 +258,8 @@ export function doBond(state: GameState, content: Content, target: BondTarget, a
       }),
     };
   }
-  next = applyNumbers({ ...next, rng: rng.getState() }, a.playerEffects);
+  next = applyNumbers(next, a.playerEffects, content, rng);
+  next = { ...next, rng: rng.getState() };
   const log = next.log.slice();
   const last = log[log.length - 1];
   const entry: LogLine = { text: line, tone };

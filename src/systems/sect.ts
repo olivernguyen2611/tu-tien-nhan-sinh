@@ -1,6 +1,7 @@
 // Sect life (task 2.5): joining, ranks (Ký danh → Ngoại môn → Nội môn → Chân
 // truyền), yearly stipend, one mission a year for contribution, sect techniques
 // by rank, and asking an elder to be one's master.
+import { ordinaryAptitude } from './aptitudeGain';
 import type { Content } from '../core/content';
 import { Rng, hashSeed } from '../core/rng';
 import type { EffectHook, Sect } from '../core/schemas';
@@ -210,7 +211,7 @@ export function doMission(state: GameState, content: Content, missionId: string)
   const aptitudes = { ...state.aptitudes };
   for (const [k, v] of Object.entries(out.stats)) {
     if (k in stats) stats[k as keyof typeof stats] = clamp(stats[k as keyof typeof stats] + v);
-    else aptitudes[k as keyof typeof aptitudes] = clamp(aptitudes[k as keyof typeof aptitudes] + v);
+    else aptitudes[k as keyof typeof aptitudes] = ordinaryAptitude(k, aptitudes[k as keyof typeof aptitudes], v, content, rng);
   }
   let next: GameState = {
     ...state,

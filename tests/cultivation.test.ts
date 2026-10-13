@@ -5,17 +5,23 @@ import { advanceYear, createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
 import { attemptMajorBreakthrough, breakthroughPct, cultivateYear, inBottleneck, majorBreakthroughInfo, enterRealm, hookActive, realmLabel, revealRoot, rollRoot, rootName, rootNameOf, rootTestAge, startCultivating, yearlyGain } from '../src/systems/cultivation';
 import { migrate, makeSave } from '../src/systems/save';
-import { resolveChoice } from '../src/systems/events/engine';
+import { findEvent, resolveChoice, visibleChoices } from '../src/systems/events/engine';
 
 const content = loadContent();
 const speed = (grade: string) => content.balance.roots.gradeSpeed[grade];
+
+/** Take the first choice the life can afford (choice 0 may need silver it lacks). */
+const firstOpen = (s: GameState) => {
+  const ev = findEvent(content, s.events.pending!)!;
+  return visibleChoices(s, content, ev).find((c) => !c.disabled)?.index ?? 0;
+};
 
 /** Pass years (taking the first choice of any event) until the root is known or age 20. */
 function untilTested(seed: string, originId?: string): GameState {
   let s = createLife({ seed, originId }, content);
   s = { ...s, destiny: { ...s.destiny, confirmed: true } };
   while (s.alive && !s.cult.root && s.character.age < 20) {
-    s = s.events.pending ? resolveChoice(s, content, 0).state : advanceYear(s, content);
+    s = s.events.pending ? resolveChoice(s, content, firstOpen(s)).state : advanceYear(s, content);
   }
   return s;
 }
@@ -242,7 +248,7 @@ describe('cultivation per year (task 2.3)', () => {
   it('a whole life with a root keeps cultivating through advanceYear', () => {
     let s = untilTested('life-x');
     for (let i = 0; i < 300 && s.alive && s.character.age < 60; i++) {
-      s = s.events.pending ? resolveChoice(s, content, 0).state : advanceYear(s, content);
+      s = s.events.pending ? resolveChoice(s, content, firstOpen(s)).state : advanceYear(s, content);
     }
     if (s.cult.root && content.balance.roots.gradeSpeed[s.cult.root.grade] > 0) expect(s.cult.realm).toBe('luyen_khi');
     else expect(s.cult.realm).toBe('pham_nhan');

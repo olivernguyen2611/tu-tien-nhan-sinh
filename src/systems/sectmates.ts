@@ -4,6 +4,7 @@
 // Each year the player may spend time with a few of them (once each): ask for pointers,
 // debate the Way, spar, drink tea, make peace. Numbers: balance.sects, texts and the list
 // of interactions: sect-life.json.
+import { ordinaryAptitude } from './aptitudeGain';
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameState, LogLine, Npc, SectmateKind } from '../core/types';
@@ -173,7 +174,7 @@ export function doTalk(state: GameState, content: Content, npcId: string, talkId
   const aptitudes = { ...state.aptitudes };
   for (const [k, v] of Object.entries(out.stats)) {
     if (k in stats) stats[k as keyof typeof stats] = clamp(stats[k as keyof typeof stats] + v);
-    else aptitudes[k as keyof typeof aptitudes] = clamp(aptitudes[k as keyof typeof aptitudes] + v);
+    else aptitudes[k as keyof typeof aptitudes] = ordinaryAptitude(k, aptitudes[k as keyof typeof aptitudes], v, content, rng);
   }
   const talks = state.sect.talks && state.sect.talks.age === state.character.age ? state.sect.talks : { age: state.character.age, count: 0 };
   let s: GameState = {
@@ -250,7 +251,7 @@ export function enterTournament(state: GameState, content: Content, id: string):
   const aptitudes = { ...s.aptitudes };
   for (const [k, v] of Object.entries(reward.stats)) {
     if (k in stats) stats[k as keyof typeof stats] = clamp(stats[k as keyof typeof stats] + v);
-    else aptitudes[k as keyof typeof aptitudes] = clamp(aptitudes[k as keyof typeof aptitudes] + v);
+    else aptitudes[k as keyof typeof aptitudes] = ordinaryAptitude(k, aptitudes[k as keyof typeof aptitudes], v, content, rng);
   }
   const prev = s.sect.tournaments ?? {};
   const placement = fill(texts.placements[Math.min(wins, texts.placements.length - 1)]!, { sect: sect.name });

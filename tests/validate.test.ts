@@ -14,6 +14,7 @@ const balance = {
   lifespan: { mortalBase: 70, mortalVariance: 10, healthAdjustMax: 10, pressureLeftPct: 0.1, eventCapPct: 0.5 },
   fastForward: { maxYears: 10 },
   leisure: { minAge: 8, silver: 5, spiritStones: 3, happiness: [8, 14], freeHappiness: [3, 5], daoHeartBelow: 20, daoHeart: 1 },
+  aptitudeGain: { stats: ["physique", "comprehension", "luck"], softAt: 60, softMul: 0.5, hardAt: 80, hardMul: 0.2 },
   aging: { recoverPerYear: 3, recoverCap: 70, declineStartAge: 50, healthDeclinePerYear: 1, illnessStartAge: 60, illnessChancePerYear: 0.008, illnessHealthLoss: [5, 15], illnessHappinessLoss: 5, epitaphKarma: 30, milestoneAges: [60], milestoneHealth: -5, milestoneCharm: -3, slowAgingYears: 30 },
   realms: realBalance.realms,
   realmStages: realBalance.realmStages,
