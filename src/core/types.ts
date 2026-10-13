@@ -309,6 +309,8 @@ export interface Foe {
   lineage: string;
   intent: 'teach' | 'rob' | 'kill';
   mercy: number;
+  /** 6b.7: a group ("Hai tán tu"): texts say "bọn chúng" instead of "y". */
+  plural?: boolean;
 }
 
 /** A fight in progress: up to 3 rounds, first to balance.combat.winRounds. */

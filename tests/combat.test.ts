@@ -148,3 +148,18 @@ describe('validator (task 3.3)', () => {
     expect(e.some((m) => m.includes('kết quả thắng'))).toBe(true);
   });
 });
+
+describe('6b.7 a group of foes', () => {
+  it('is "bọn chúng", not "y", after the fight', () => {
+    let s = startBattle(cultivator(), content, FightSchema.parse({
+      foe: { name: 'Hai tán tu', plural: true, realm: 'pham_nhan', intent: 'rob' },
+      win: { text: 'Thắng.', effects: { 'stat.happiness': 5 } },
+      lose: { text: 'Thua.', effects: { 'stat.happiness': -5 } },
+    }), 'Thử');
+    expect(s.combat!.lines.some((l) => l.text.includes('Mắt bọn chúng'))).toBe(true);
+    s = playOut(s);
+    const text = settle(s, content, 'spare').state.log.at(-1)!.lines.map((l) => l.text).join(' ');
+    expect(text).toContain('Bọn chúng lết đi');
+    expect(text).not.toMatch(/\{y\}|\bY lết/);
+  });
+});

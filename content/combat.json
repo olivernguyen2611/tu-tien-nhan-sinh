@@ -2,8 +2,8 @@
   "start": "{foe} chặn đường. {intent}",
   "intent": {
     "teach": "Xem ra chỉ muốn dạy cho ngươi một bài học.",
-    "rob": "Mắt y cứ dán vào túi đồ của ngươi.",
-    "kill": "Sát khí lạnh tới tận gáy. Kẻ này muốn lấy mạng."
+    "rob": "Mắt {y} cứ dán vào túi đồ của ngươi.",
+    "kill": "Sát khí lạnh tới tận gáy. Đối phương muốn lấy mạng."
   },
   "actions": {
     "all_out": { "name": "Toàn lực", "hint": "Dễ thắng hiệp hơn, thua thì bị thương nặng hơn." },
@@ -39,7 +39,7 @@
     ]
   },
   "counter": [
-    "Linh lực của ngươi khắc đúng hệ của y.",
+    "Linh lực của ngươi khắc đúng hệ của {y}.",
     "Đúng hệ khắc chế, một chiêu bằng hai."
   ],
   "miss": [
@@ -75,10 +75,10 @@
     "{foe} không nói gì, chỉ ra tay mạnh hơn.",
     "\"Cầu xin?\" {foe} bật cười, rồi đánh tiếp."
   ],
-  "won": "{foe} quỳ một gối, không đứng dậy nổi. Số phận y nằm trong tay ngươi.",
+  "won": "{foe} quỳ một gối, không đứng dậy nổi. Số phận {y} nằm trong tay ngươi.",
   "after": {
-    "spare": "Ngươi tha cho {foe}. Y lết đi, ngoái lại nhìn một lần.",
-    "loot": "Ngươi lột sạch túi đồ của {foe} rồi đá y ra đường.",
+    "spare": "Ngươi tha cho {foe}. {Y} lết đi, ngoái lại nhìn một lần.",
+    "loot": "Ngươi lột sạch túi đồ của {foe} rồi đá {y} ra đường.",
     "kill": "Ngươi kết liễu {foe}. Gió thổi qua, mùi máu tanh không tan."
   },
   "lost": {

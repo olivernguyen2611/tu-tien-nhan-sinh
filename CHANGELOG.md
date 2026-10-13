@@ -8,6 +8,10 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6b.7: lời văn giao chiến (2026-10-13)
+- Kẻ địch nhiều người ("Hai tán tu", "Ba tán tu bị thương", "Hai đồng đội") có `plural: true`; lời văn giao chiến dùng chỗ trống `{y}` / `{Y}`, đọc là "bọn chúng" thay vì "y" (lỗi #12). Câu ý định "Kẻ này muốn lấy mạng" đổi thành "Đối phương muốn lấy mạng".
+- "Rủ rê phục kích": câu thua không còn nói hộ vệ là Trúc Cơ (đối thủ cùng cảnh giới với người chơi, lỗi #5).
+
 ### GĐ 6b.6: hành động hợp ngữ cảnh (2026-10-13)
 - Tông môn chỉ nhận người từ 8 tuổi (`sects.minJoinAge`); trước đó trẻ 0 tuổi bái nhập được Vô Ưu Tự (lỗi #4).
 - Bảo khố khóa món chỉ gồm đan đột phá cho cảnh giới đã qua, ghi "Vô dụng ở cảnh giới này." (Trúc Cơ Đan khi đã Trúc Cơ, lỗi #13).
