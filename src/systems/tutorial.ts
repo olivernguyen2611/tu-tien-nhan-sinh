@@ -2,6 +2,7 @@
 import type { Content } from '../core/content';
 import type { TutorialWhen } from '../core/schemas';
 import type { GameState } from '../core/types';
+import { openWish } from './achievements';
 import { techniqueWall } from './technique';
 
 function atPeak(state: GameState, content: Content): boolean {
@@ -26,6 +27,11 @@ export function tutorialMatches(state: GameState, content: Content, when: Tutori
 /** The first goal that fits this life now. */
 export function currentGoal(state: GameState, content: Content): string | null {
   if (!state.alive) return null;
+  // 6c.8: from Hóa Thần on, the open di nguyện is the goal (nothing lies above the realm).
+  if (state.cult.realm === 'hoa_than') {
+    const wish = openWish(state, content);
+    if (wish) return content.achievements.wishGoal.replaceAll('{name}', wish.name).replaceAll('{text}', wish.text);
+  }
   const text = content.tutorial.goals.find((g) => tutorialMatches(state, content, g.when))?.text;
   if (!text) return null;
   const wall = techniqueWall(state, content);

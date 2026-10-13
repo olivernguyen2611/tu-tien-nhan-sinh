@@ -666,7 +666,8 @@
     "ownSect": 10,
     "clan": 10,
     "ranked": 5,
-    "highlights": 5
+    "highlights": 5,
+    "wish": 4
   },
   "goldenFinger": {
     "birthChance": 0.003,

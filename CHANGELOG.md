@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6c.8: di nguyện, mục tiêu hậu Hóa Thần (2026-10-13)
+- Không thêm cảnh giới. Từ Hóa Thần, dòng **Mục tiêu** hiện **di nguyện chưa thành** đầu tiên thay cho "Đường tu còn dài": đứng trên đỉnh Hóa Thần, có người nối nghiệp, mở sơn môn muôn đời, con cháu đầy nhà, bạn đường trăm năm, tay không vấy máu oan, tên khắc trên bảng vàng, dựng gia tộc, lòng như nước lặng, hưởng trọn thọ nguyên (10 di nguyện trong `achievements.json`, dùng lại bộ kiểm tra của thành tựu).
+- Mỗi di nguyện đã thành khi lìa đời cho thêm 4 điểm Luân Hồi (`rebirth.wish`), hiện thành dòng "Di nguyện: …" ở màn kết thúc. Nhờ vậy 118 năm sau viên mãn có việc để làm, và kiếp sau hưởng được.
+- Test mới (`tests/wishes.test.ts`).
+
 ### GĐ 6c.7: sự kiện Kim Đan, Nguyên Anh, Hóa Thần (2026-10-13)
 - 30 sự kiện mới (`events/high-realm.json`, id `hr_`): 10 từ Kim Đan, 10 từ Nguyên Anh, 10 từ Hóa Thần. Nội dung do Claude quyết theo luật GĐ 4+, chủ dự án duyệt sau. Mọi lựa chọn đều đổi ít nhất một chỉ số; validator sạch.
 - Ba chủ đề trước đây thiếu: **báo ứng** (oan hồn đòi nợ khi nghiệp nặng, thư đền ơn khi nhiều thiện, ác nghiệp chồng chất, di vật kẻ bại trận), **lừa đảo** (bảo vật tổ truyền, đan độc bán rẻ), **bi kịch gia đình** (tin cha mẹ già và mất, đệ tử bỏ sơn môn, đạo lữ giấu chuyện, người xưa gõ cửa, bạn cũ mất tích, bạn cũ nhập ma). Kèm kịch bản cảnh giới cao: Nguyên Anh rời thể, thiên cơ rối loạn, chư thiên giáng thế, kiếp nạn chồng kiếp nạn, đệ tử cuối, thọ nguyên cạn, thiên đạo hỏi.

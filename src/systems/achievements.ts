@@ -75,3 +75,14 @@ export function unlockedFingers(content: Content, held: string[]): string[] {
     .map((a) => a.unlockFinger!)
     .filter((id, i, all) => all.indexOf(id) === i && content.goldenFingers.fingers.some((f) => f.id === id));
 }
+
+/** 6c.8: the di nguyện this life has met so far (or at its end). */
+export function wishesMet(state: GameState, content: Content): AchievementFile['wishes'] {
+  return content.achievements.wishes.filter((w) => lifeMeets(state, content, w.when, 0));
+}
+
+/** 6c.8: the first di nguyện still open, for the goal line once the life has reached Hóa Thần. */
+export function openWish(state: GameState, content: Content): AchievementFile['wishes'][number] | null {
+  const met = new Set(wishesMet(state, content).map((w) => w.id));
+  return content.achievements.wishes.find((w) => !met.has(w.id)) ?? null;
+}

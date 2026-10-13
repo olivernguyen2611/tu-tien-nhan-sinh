@@ -1,59 +1,563 @@
 {
   "achievements": [
-    {"id": "tram_tuoi", "name": "Bách Tuế", "text": "Sống qua trăm tuổi.", "when": {"ageMin": 100}},
-    {"id": "dao_co_so_thanh", "name": "Đạo Cơ Sơ Thành", "text": "Đạt Trúc Cơ.", "when": {"realmMin": "truc_co"}},
-    {"id": "kim_dan_dai_dao", "name": "Kim Đan Đại Đạo", "text": "Kết thành Kim Đan.", "when": {"realmMin": "kim_dan"}},
-    {"id": "nguyen_anh_lao_quai", "name": "Nguyên Anh Lão Quái", "text": "Đạt Nguyên Anh.", "when": {"realmMin": "nguyen_anh"}},
-    {"id": "hoa_than_dai_nang", "name": "Hóa Thần Đại Năng", "text": "Đạt Hóa Thần.", "when": {"realmMin": "hoa_than"}},
-    {"id": "vo_dao_nhap_tien", "name": "Võ Đạo Nhập Tiên", "text": "Không linh căn mà đi tới tận cùng võ đạo.", "when": {"flagsAll": ["vo_dao_nhap_tien"]}},
-    {"id": "khai_son_lap_phai", "name": "Khai Sơn Lập Phái", "text": "Lập một tông môn của riêng mình.", "when": {"ownSect": true}},
-    {"id": "khai_chi_tan_diep", "name": "Khai Chi Tán Diệp", "text": "Lập gia tộc tu tiên.", "when": {"clan": true}},
-    {"id": "con_dan_chau_dong", "name": "Con Đàn Cháu Đống", "text": "Có từ năm người con trở lên.", "when": {"childrenMin": 5}},
-    {"id": "ket_dao_lu", "name": "Kết Tóc Se Duyên", "text": "Có đạo lữ tới cuối đời.", "when": {"partner": true}},
-    {"id": "thien_kieu_bang_thu", "name": "Thiên Kiêu Bảng Thủ", "text": "Đứng đầu Thiên kiêu bảng.", "when": {"rankMax": 1}},
-    {"id": "dai_thien", "name": "Bồ Tát Sống", "text": "Nhân quả từ +80 trở lên.", "when": {"karmaMin": 80}},
-    {"id": "dai_ac", "name": "Ma Đầu Một Cõi", "text": "Nhân quả từ −80 trở xuống.", "when": {"karmaMax": -80}},
-    {"id": "phu_kha_dich_quoc", "name": "Phú Khả Địch Quốc", "text": "Chết đi để lại một vạn lượng bạc.", "when": {"silverMin": 10000}},
-    {"id": "ton_su_trong_dao", "name": "Tôn Sư Trọng Đạo", "text": "Có từ ba đồ đệ trở lên.", "when": {"disciplesMin": 3}},
-    {"id": "tro_bui_thien_loi", "name": "Tro Bụi Dưới Thiên Lôi", "text": "Chết dưới thiên kiếp.", "hidden": true, "when": {"cause": ["tribulation"]}},
-    {"id": "su_phu_nhan_vat_chinh", "name": "Sư Phụ Của Nhân Vật Chính", "text": "Hộ đạo cho một khí vận chi tử.", "when": {"chosenRole": ["protect"]}},
-    {"id": "phan_dien_bi_va_mat", "name": "Phản Diện Bị Vả Mặt", "text": "Lợi dụng khí vận chi tử, để nó sống sót mang hận.", "hidden": true, "when": {"chosenEnding": ["exploit"]}},
-    {"id": "su_phu_phan_dien", "name": "Sư Phụ Phản Diện", "text": "Lợi dụng khí vận chi tử rồi tự tay kết thúc câu chuyện.", "hidden": true, "when": {"chosenEnding": ["exploit_won"]}},
-    {"id": "bi_goi_la_npc", "name": "Bị Đồ Đệ Gọi Là NPC", "text": "Nhận một người xuyên không làm đồ đệ.", "hidden": true, "when": {"chosenTemplate": ["xuyen_khong"]}},
-    {"id": "nguoi_duoc_chon", "name": "Người Được Chọn", "text": "Có Kim Thủ Chỉ.", "when": {"goldenFinger": true}},
-    {"id": "menh_cach_ky_la", "name": "Mệnh Cách Kỳ Lạ", "text": "Thức tỉnh một tổ hợp ẩn.", "when": {"combosMin": 1}},
-    {"id": "nghich_thien_trung_sinh", "name": "Nghịch Thiên Trùng Sinh", "text": "Sống lại một đời, giữ ký ức kiếp trước.", "hidden": true, "when": {"flagsAll": ["ky_uc_kiep_truoc"]}, "unlockFinger": "ky_uc_kiep_truoc"},
-    {"id": "tan_hon_tri_ky", "name": "Tàn Hồn Tri Kỷ", "text": "Đi cùng lão gia gia trong nhẫn tới Kim Đan.", "hidden": true, "when": {"goldenFinger": ["lao_gia_gia"], "realmMin": "kim_dan"}, "unlockFinger": "lao_gia_gia"},
-    {"id": "ky_chu_uu_tu", "name": "Ký Chủ Ưu Tú", "text": "Mang Hệ thống tới Trúc Cơ.", "hidden": true, "when": {"goldenFinger": ["he_thong"], "realmMin": "truc_co"}, "unlockFinger": "he_thong"},
-    {"id": "dong_thien_chi_chu", "name": "Động Thiên Chi Chủ", "text": "Giữ được Tùy thân động thiên tới Nguyên Anh.", "hidden": true, "when": {"goldenFinger": ["tuy_than_dong_thien"], "realmMin": "nguyen_anh"}, "unlockFinger": "tuy_than_dong_thien"},
-    {"id": "hoa_quy", "name": "Hóa Quỷ Tu Tiên", "text": "Chết rồi vẫn tu, bằng Quỷ đạo.", "hidden": true, "when": {"lineage": ["quy"]}},
-    {"id": "yeu_menh", "name": "Hoa Chưa Kịp Nở", "text": "Chết trước mười lăm tuổi.", "hidden": true, "when": {"ageMax": 14}},
-    {"id": "thap_the_luan_hoi", "name": "Thập Thế Luân Hồi", "text": "Trải qua mười kiếp.", "when": {"livesMin": 10}, "unlockFinger": "binh_nho_than_bi"},
-    {"id": "bach_the_luan_hoi", "name": "Bách Thế Luân Hồi", "text": "Trải qua một trăm kiếp.", "hidden": true, "when": {"livesMin": 100}, "unlockFinger": "thien_dao_bang"}
+    {
+      "id": "tram_tuoi",
+      "name": "Bách Tuế",
+      "text": "Sống qua trăm tuổi.",
+      "when": {
+        "ageMin": 100
+      }
+    },
+    {
+      "id": "dao_co_so_thanh",
+      "name": "Đạo Cơ Sơ Thành",
+      "text": "Đạt Trúc Cơ.",
+      "when": {
+        "realmMin": "truc_co"
+      }
+    },
+    {
+      "id": "kim_dan_dai_dao",
+      "name": "Kim Đan Đại Đạo",
+      "text": "Kết thành Kim Đan.",
+      "when": {
+        "realmMin": "kim_dan"
+      }
+    },
+    {
+      "id": "nguyen_anh_lao_quai",
+      "name": "Nguyên Anh Lão Quái",
+      "text": "Đạt Nguyên Anh.",
+      "when": {
+        "realmMin": "nguyen_anh"
+      }
+    },
+    {
+      "id": "hoa_than_dai_nang",
+      "name": "Hóa Thần Đại Năng",
+      "text": "Đạt Hóa Thần.",
+      "when": {
+        "realmMin": "hoa_than"
+      }
+    },
+    {
+      "id": "vo_dao_nhap_tien",
+      "name": "Võ Đạo Nhập Tiên",
+      "text": "Không linh căn mà đi tới tận cùng võ đạo.",
+      "when": {
+        "flagsAll": [
+          "vo_dao_nhap_tien"
+        ]
+      }
+    },
+    {
+      "id": "khai_son_lap_phai",
+      "name": "Khai Sơn Lập Phái",
+      "text": "Lập một tông môn của riêng mình.",
+      "when": {
+        "ownSect": true
+      }
+    },
+    {
+      "id": "khai_chi_tan_diep",
+      "name": "Khai Chi Tán Diệp",
+      "text": "Lập gia tộc tu tiên.",
+      "when": {
+        "clan": true
+      }
+    },
+    {
+      "id": "con_dan_chau_dong",
+      "name": "Con Đàn Cháu Đống",
+      "text": "Có từ năm người con trở lên.",
+      "when": {
+        "childrenMin": 5
+      }
+    },
+    {
+      "id": "ket_dao_lu",
+      "name": "Kết Tóc Se Duyên",
+      "text": "Có đạo lữ tới cuối đời.",
+      "when": {
+        "partner": true
+      }
+    },
+    {
+      "id": "thien_kieu_bang_thu",
+      "name": "Thiên Kiêu Bảng Thủ",
+      "text": "Đứng đầu Thiên kiêu bảng.",
+      "when": {
+        "rankMax": 1
+      }
+    },
+    {
+      "id": "dai_thien",
+      "name": "Bồ Tát Sống",
+      "text": "Nhân quả từ +80 trở lên.",
+      "when": {
+        "karmaMin": 80
+      }
+    },
+    {
+      "id": "dai_ac",
+      "name": "Ma Đầu Một Cõi",
+      "text": "Nhân quả từ −80 trở xuống.",
+      "when": {
+        "karmaMax": -80
+      }
+    },
+    {
+      "id": "phu_kha_dich_quoc",
+      "name": "Phú Khả Địch Quốc",
+      "text": "Chết đi để lại một vạn lượng bạc.",
+      "when": {
+        "silverMin": 10000
+      }
+    },
+    {
+      "id": "ton_su_trong_dao",
+      "name": "Tôn Sư Trọng Đạo",
+      "text": "Có từ ba đồ đệ trở lên.",
+      "when": {
+        "disciplesMin": 3
+      }
+    },
+    {
+      "id": "tro_bui_thien_loi",
+      "name": "Tro Bụi Dưới Thiên Lôi",
+      "text": "Chết dưới thiên kiếp.",
+      "hidden": true,
+      "when": {
+        "cause": [
+          "tribulation"
+        ]
+      }
+    },
+    {
+      "id": "su_phu_nhan_vat_chinh",
+      "name": "Sư Phụ Của Nhân Vật Chính",
+      "text": "Hộ đạo cho một khí vận chi tử.",
+      "when": {
+        "chosenRole": [
+          "protect"
+        ]
+      }
+    },
+    {
+      "id": "phan_dien_bi_va_mat",
+      "name": "Phản Diện Bị Vả Mặt",
+      "text": "Lợi dụng khí vận chi tử, để nó sống sót mang hận.",
+      "hidden": true,
+      "when": {
+        "chosenEnding": [
+          "exploit"
+        ]
+      }
+    },
+    {
+      "id": "su_phu_phan_dien",
+      "name": "Sư Phụ Phản Diện",
+      "text": "Lợi dụng khí vận chi tử rồi tự tay kết thúc câu chuyện.",
+      "hidden": true,
+      "when": {
+        "chosenEnding": [
+          "exploit_won"
+        ]
+      }
+    },
+    {
+      "id": "bi_goi_la_npc",
+      "name": "Bị Đồ Đệ Gọi Là NPC",
+      "text": "Nhận một người xuyên không làm đồ đệ.",
+      "hidden": true,
+      "when": {
+        "chosenTemplate": [
+          "xuyen_khong"
+        ]
+      }
+    },
+    {
+      "id": "nguoi_duoc_chon",
+      "name": "Người Được Chọn",
+      "text": "Có Kim Thủ Chỉ.",
+      "when": {
+        "goldenFinger": true
+      }
+    },
+    {
+      "id": "menh_cach_ky_la",
+      "name": "Mệnh Cách Kỳ Lạ",
+      "text": "Thức tỉnh một tổ hợp ẩn.",
+      "when": {
+        "combosMin": 1
+      }
+    },
+    {
+      "id": "nghich_thien_trung_sinh",
+      "name": "Nghịch Thiên Trùng Sinh",
+      "text": "Sống lại một đời, giữ ký ức kiếp trước.",
+      "hidden": true,
+      "when": {
+        "flagsAll": [
+          "ky_uc_kiep_truoc"
+        ]
+      },
+      "unlockFinger": "ky_uc_kiep_truoc"
+    },
+    {
+      "id": "tan_hon_tri_ky",
+      "name": "Tàn Hồn Tri Kỷ",
+      "text": "Đi cùng lão gia gia trong nhẫn tới Kim Đan.",
+      "hidden": true,
+      "when": {
+        "goldenFinger": [
+          "lao_gia_gia"
+        ],
+        "realmMin": "kim_dan"
+      },
+      "unlockFinger": "lao_gia_gia"
+    },
+    {
+      "id": "ky_chu_uu_tu",
+      "name": "Ký Chủ Ưu Tú",
+      "text": "Mang Hệ thống tới Trúc Cơ.",
+      "hidden": true,
+      "when": {
+        "goldenFinger": [
+          "he_thong"
+        ],
+        "realmMin": "truc_co"
+      },
+      "unlockFinger": "he_thong"
+    },
+    {
+      "id": "dong_thien_chi_chu",
+      "name": "Động Thiên Chi Chủ",
+      "text": "Giữ được Tùy thân động thiên tới Nguyên Anh.",
+      "hidden": true,
+      "when": {
+        "goldenFinger": [
+          "tuy_than_dong_thien"
+        ],
+        "realmMin": "nguyen_anh"
+      },
+      "unlockFinger": "tuy_than_dong_thien"
+    },
+    {
+      "id": "hoa_quy",
+      "name": "Hóa Quỷ Tu Tiên",
+      "text": "Chết rồi vẫn tu, bằng Quỷ đạo.",
+      "hidden": true,
+      "when": {
+        "lineage": [
+          "quy"
+        ]
+      }
+    },
+    {
+      "id": "yeu_menh",
+      "name": "Hoa Chưa Kịp Nở",
+      "text": "Chết trước mười lăm tuổi.",
+      "hidden": true,
+      "when": {
+        "ageMax": 14
+      }
+    },
+    {
+      "id": "thap_the_luan_hoi",
+      "name": "Thập Thế Luân Hồi",
+      "text": "Trải qua mười kiếp.",
+      "when": {
+        "livesMin": 10
+      },
+      "unlockFinger": "binh_nho_than_bi"
+    },
+    {
+      "id": "bach_the_luan_hoi",
+      "name": "Bách Thế Luân Hồi",
+      "text": "Trải qua một trăm kiếp.",
+      "hidden": true,
+      "when": {
+        "livesMin": 100
+      },
+      "unlockFinger": "thien_dao_bang"
+    }
   ],
   "badges": [
-    {"id": "dai_nang_mot_phuong", "name": "Đại Năng Một Phương", "text": "Một tiếng ho, cả đại vực im lặng.", "priority": 90, "when": {"realmMin": "hoa_than"}},
-    {"id": "su_phu_nvc", "name": "Sư Phụ Của Nhân Vật Chính", "text": "Thiên hạ nhớ tên đồ đệ, đồ đệ nhớ tên sư phụ.", "priority": 85, "when": {"chosenRole": ["protect"]}},
-    {"id": "su_phu_phan_dien", "name": "Sư Phụ Phản Diện", "text": "Mỗi câu chuyện cần một kẻ như thế.", "priority": 85, "when": {"chosenRole": ["exploit"]}},
-    {"id": "lao_to_co_doc", "name": "Lão Tổ Cô Độc", "text": "Sống rất lâu, một mình rất lâu.", "priority": 80, "when": {"realmMin": "kim_dan", "partner": false, "childrenMax": 0}},
-    {"id": "khai_son_to_su", "name": "Khai Sơn Tổ Sư", "text": "Tên khắc trên bia đá đầu núi.", "priority": 75, "when": {"ownSect": true}},
-    {"id": "gia_chu_khai_toc", "name": "Gia Chủ Khai Tộc", "text": "Đứng đầu tộc phả.", "priority": 70, "when": {"clan": true}},
-    {"id": "pham_nhan_hanh_phuc", "name": "Phàm Nhân Hạnh Phúc Nhất", "text": "Không thành tiên, mà cười nhiều hơn tiên.", "priority": 70, "when": {"mortal": true, "happinessMin": 80, "ageMin": 60}},
-    {"id": "bo_tat_song", "name": "Bồ Tát Sống", "text": "Đi tới đâu, người ta thắp hương tới đó.", "priority": 65, "when": {"karmaMin": 80}},
-    {"id": "ma_dau", "name": "Ma Đầu Một Cõi", "text": "Trẻ con nghe tên thì nín khóc.", "priority": 65, "when": {"karmaMax": -80}},
-    {"id": "thien_kieu", "name": "Thiên Kiêu", "text": "Từng đứng trong ba hạng đầu Thiên kiêu bảng.", "priority": 60, "when": {"rankMax": 3}},
-    {"id": "nguoi_duoc_chon", "name": "Kẻ Mang Kim Thủ Chỉ", "text": "Trời cho một ngón tay vàng.", "priority": 55, "when": {"goldenFinger": true}},
-    {"id": "con_dan_chau_dong", "name": "Con Đàn Cháu Đống", "text": "Tết nhà đông như chợ phiên.", "priority": 50, "when": {"childrenMin": 5}},
-    {"id": "phu_ong", "name": "Phú Ông", "text": "Nằm xuống trên đống bạc.", "priority": 45, "when": {"silverMin": 5000}},
-    {"id": "tro_bui_thien_loi", "name": "Tro Bụi Dưới Thiên Lôi", "text": "Trời không cho qua.", "priority": 45, "when": {"cause": ["tribulation"]}},
-    {"id": "chet_vi_nong_voi", "name": "Chết Vì Nóng Vội", "text": "Một bước nữa thôi. Bước ấy không qua.", "priority": 40, "when": {"cause": ["breakthrough"]}},
-    {"id": "tram_tuoi_lao_nhan", "name": "Bách Tuế Lão Nhân", "text": "Sống đủ lâu để chán cả trời.", "priority": 35, "when": {"ageMin": 100}},
-    {"id": "hoa_chua_no", "name": "Hoa Chưa Kịp Nở", "text": "Đời ngắn như cái chớp mắt.", "priority": 30, "when": {"ageMax": 14}},
-    {"id": "tu_si_vo_danh", "name": "Tu Sĩ Vô Danh", "text": "Đã bước lên con đường tu tiên, thế là đủ.", "priority": 10, "when": {"realmMin": "luyen_khi"}},
-    {"id": "mot_doi_binh_thuong", "name": "Một Đời Bình Thường", "text": "Sinh, lớn, già, đi. Như phần đông thiên hạ.", "priority": 0, "when": {}}
+    {
+      "id": "dai_nang_mot_phuong",
+      "name": "Đại Năng Một Phương",
+      "text": "Một tiếng ho, cả đại vực im lặng.",
+      "priority": 90,
+      "when": {
+        "realmMin": "hoa_than"
+      }
+    },
+    {
+      "id": "su_phu_nvc",
+      "name": "Sư Phụ Của Nhân Vật Chính",
+      "text": "Thiên hạ nhớ tên đồ đệ, đồ đệ nhớ tên sư phụ.",
+      "priority": 85,
+      "when": {
+        "chosenRole": [
+          "protect"
+        ]
+      }
+    },
+    {
+      "id": "su_phu_phan_dien",
+      "name": "Sư Phụ Phản Diện",
+      "text": "Mỗi câu chuyện cần một kẻ như thế.",
+      "priority": 85,
+      "when": {
+        "chosenRole": [
+          "exploit"
+        ]
+      }
+    },
+    {
+      "id": "lao_to_co_doc",
+      "name": "Lão Tổ Cô Độc",
+      "text": "Sống rất lâu, một mình rất lâu.",
+      "priority": 80,
+      "when": {
+        "realmMin": "kim_dan",
+        "partner": false,
+        "childrenMax": 0
+      }
+    },
+    {
+      "id": "khai_son_to_su",
+      "name": "Khai Sơn Tổ Sư",
+      "text": "Tên khắc trên bia đá đầu núi.",
+      "priority": 75,
+      "when": {
+        "ownSect": true
+      }
+    },
+    {
+      "id": "gia_chu_khai_toc",
+      "name": "Gia Chủ Khai Tộc",
+      "text": "Đứng đầu tộc phả.",
+      "priority": 70,
+      "when": {
+        "clan": true
+      }
+    },
+    {
+      "id": "pham_nhan_hanh_phuc",
+      "name": "Phàm Nhân Hạnh Phúc Nhất",
+      "text": "Không thành tiên, mà cười nhiều hơn tiên.",
+      "priority": 70,
+      "when": {
+        "mortal": true,
+        "happinessMin": 80,
+        "ageMin": 60
+      }
+    },
+    {
+      "id": "bo_tat_song",
+      "name": "Bồ Tát Sống",
+      "text": "Đi tới đâu, người ta thắp hương tới đó.",
+      "priority": 65,
+      "when": {
+        "karmaMin": 80
+      }
+    },
+    {
+      "id": "ma_dau",
+      "name": "Ma Đầu Một Cõi",
+      "text": "Trẻ con nghe tên thì nín khóc.",
+      "priority": 65,
+      "when": {
+        "karmaMax": -80
+      }
+    },
+    {
+      "id": "thien_kieu",
+      "name": "Thiên Kiêu",
+      "text": "Từng đứng trong ba hạng đầu Thiên kiêu bảng.",
+      "priority": 60,
+      "when": {
+        "rankMax": 3
+      }
+    },
+    {
+      "id": "nguoi_duoc_chon",
+      "name": "Kẻ Mang Kim Thủ Chỉ",
+      "text": "Trời cho một ngón tay vàng.",
+      "priority": 55,
+      "when": {
+        "goldenFinger": true
+      }
+    },
+    {
+      "id": "con_dan_chau_dong",
+      "name": "Con Đàn Cháu Đống",
+      "text": "Tết nhà đông như chợ phiên.",
+      "priority": 50,
+      "when": {
+        "childrenMin": 5
+      }
+    },
+    {
+      "id": "phu_ong",
+      "name": "Phú Ông",
+      "text": "Nằm xuống trên đống bạc.",
+      "priority": 45,
+      "when": {
+        "silverMin": 5000
+      }
+    },
+    {
+      "id": "tro_bui_thien_loi",
+      "name": "Tro Bụi Dưới Thiên Lôi",
+      "text": "Trời không cho qua.",
+      "priority": 45,
+      "when": {
+        "cause": [
+          "tribulation"
+        ]
+      }
+    },
+    {
+      "id": "chet_vi_nong_voi",
+      "name": "Chết Vì Nóng Vội",
+      "text": "Một bước nữa thôi. Bước ấy không qua.",
+      "priority": 40,
+      "when": {
+        "cause": [
+          "breakthrough"
+        ]
+      }
+    },
+    {
+      "id": "tram_tuoi_lao_nhan",
+      "name": "Bách Tuế Lão Nhân",
+      "text": "Sống đủ lâu để chán cả trời.",
+      "priority": 35,
+      "when": {
+        "ageMin": 100
+      }
+    },
+    {
+      "id": "hoa_chua_no",
+      "name": "Hoa Chưa Kịp Nở",
+      "text": "Đời ngắn như cái chớp mắt.",
+      "priority": 30,
+      "when": {
+        "ageMax": 14
+      }
+    },
+    {
+      "id": "tu_si_vo_danh",
+      "name": "Tu Sĩ Vô Danh",
+      "text": "Đã bước lên con đường tu tiên, thế là đủ.",
+      "priority": 10,
+      "when": {
+        "realmMin": "luyen_khi"
+      }
+    },
+    {
+      "id": "mot_doi_binh_thuong",
+      "name": "Một Đời Bình Thường",
+      "text": "Sinh, lớn, già, đi. Như phần đông thiên hạ.",
+      "priority": 0,
+      "when": {}
+    }
   ],
   "obituary": {
     "title": "Cáo Phó",
     "footer": "Tu Tiên Nhân Sinh · kiếp thứ {lives}"
-  }
+  },
+  "wishGoal": "Di nguyện chưa thành: {name}. {text}",
+  "wishes": [
+    {
+      "id": "vien_man_hoa_than",
+      "name": "Đứng trên đỉnh Hóa Thần",
+      "text": "Bước vào Hóa Thần, cảnh giới cao nhất của giới này.",
+      "when": {
+        "realmMin": "hoa_than"
+      }
+    },
+    {
+      "id": "truyen_nhan",
+      "name": "Có người nối nghiệp",
+      "text": "Nhận một đồ đệ và dạy họ nên người.",
+      "when": {
+        "disciplesMin": 1
+      }
+    },
+    {
+      "id": "mo_tong_lap_phai",
+      "name": "Mở sơn môn muôn đời",
+      "text": "Lập một tông môn, để lại cánh cổng sau lưng.",
+      "when": {
+        "ownSect": true,
+        "realmMin": "kim_dan"
+      }
+    },
+    {
+      "id": "con_chau_day_nha",
+      "name": "Con cháu đầy nhà",
+      "text": "Nuôi ít nhất ba người con nên thân.",
+      "when": {
+        "childrenMin": 3
+      }
+    },
+    {
+      "id": "dao_lu_bach_nien",
+      "name": "Bạn đường trăm năm",
+      "text": "Cùng một đạo lữ đi tới tuổi 200.",
+      "when": {
+        "partner": true,
+        "ageMin": 200
+      }
+    },
+    {
+      "id": "dai_thien",
+      "name": "Tay không vấy máu oan",
+      "text": "Giữ nhân quả sạch, từ thiện đủ đầy.",
+      "when": {
+        "karmaMin": 60,
+        "realmMin": "kim_dan"
+      }
+    },
+    {
+      "id": "danh_liet_bang",
+      "name": "Tên khắc trên bảng vàng",
+      "text": "Vào mười hạng đầu Thiên kiêu bảng.",
+      "when": {
+        "rankMax": 10
+      }
+    },
+    {
+      "id": "lap_gia_toc",
+      "name": "Dựng gia tộc",
+      "text": "Lập một gia tộc tu tiên cho đời sau.",
+      "when": {
+        "clan": true
+      }
+    },
+    {
+      "id": "tam_nhu_nuoc",
+      "name": "Lòng như nước lặng",
+      "text": "Sống tới tuổi 200 mà vẫn vui, không ân hận.",
+      "when": {
+        "happinessMin": 85,
+        "ageMin": 200
+      }
+    },
+    {
+      "id": "tho_nguyen_tron",
+      "name": "Hưởng trọn thọ nguyên",
+      "text": "Đi hết đường, ra đi khi thọ nguyên cạn, không chết vì kiếp nạn.",
+      "when": {
+        "cause": [
+          "old_age"
+        ],
+        "realmMin": "nguyen_anh"
+      }
+    }
+  ]
 }

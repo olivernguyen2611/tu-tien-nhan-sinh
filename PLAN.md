@@ -427,7 +427,7 @@ Giữ trần Hóa Thần, không thêm cảnh giới mới. Mỗi task có chỉ
 | 6c.5 | [x] Kinh tế: chỗ tiêu bạc và linh thạch |
 | 6c.6 | [x] Giảm lặp nhật ký, thêm biến thể văn bản |
 | 6c.7 | [x] ~30 sự kiện Kim Đan/Nguyên Anh/Hóa Thần, nối `charmResist` |
-| 6c.8 | [ ] Mục tiêu hậu Hóa Thần (di sản, kết cục), không thêm cảnh giới |
+| 6c.8 | [x] Mục tiêu hậu Hóa Thần (di sản, kết cục), không thêm cảnh giới |
 | 6c.9 | [ ] Giao diện và dọn PLAN.md |
 
 ### GĐ 7 — Mở rộng nội dung

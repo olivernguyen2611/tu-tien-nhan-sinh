@@ -1678,6 +1678,8 @@ export const BalanceSchema = z
         ranked: z.number().int().min(0),
         /** Rare moments of the log shown on the death screen. */
         highlights: z.number().int().min(0),
+        /** 6c.8: Luân Hồi points for each di nguyện fulfilled. */
+        wish: z.number().int().min(0),
       })
       .strict(),
     /** Task 5b.2: Kim Thủ Chỉ at birth: chance + per life played (capped), sure after pityLives lives without one. */
@@ -3129,6 +3131,13 @@ export const AchievementFileSchema = z
         .object({ id, name: z.string().min(1), text: z.string().min(1), priority: z.number().int(), when: LifeCheckSchema })
         .strict(),
     ),
+    /**
+     * 6c.8: di nguyện, the wishes of an old cultivator once nothing lies above Hóa Thần. Each one met is worth
+     * balance.rebirth.wish Luân Hồi points; the goal line names the first one still open from Hóa Thần on.
+     */
+    wishes: z.array(z.object({ id, name: z.string().min(1), text: z.string().min(1), when: LifeCheckSchema }).strict()).default([]),
+    /** The goal line for an open wish: {name}, {text}. */
+    wishGoal: z.string().min(1).default('Di nguyện chưa thành: {name}. {text}'),
     /** Obituary card texts: {name}, {years}. */
     obituary: z.object({ title: z.string().min(1), footer: z.string().min(1) }).strict(),
   })
