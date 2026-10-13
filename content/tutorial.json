@@ -2,8 +2,10 @@
   "goals": [
     { "id": "grow_up", "text": "Lớn lên, chờ ngày tiên sư ghé qua thử linh căn.", "when": { "rootTested": false } },
     { "id": "mortal_life", "text": "Không có linh căn: sống trọn một đời phàm nhân cho ra trò.", "when": { "hasRoot": false } },
+    { "id": "technique_wall", "text": "{technique} chỉ tu tới {realm}, không mở được cửa {next}. Tìm công pháp cao hơn: lên cấp trong tông để mở công pháp mới, xem phường thị và đấu giá, hay vào bí cảnh. Có bí tịch rồi thì mở Tu luyện mà đổi.", "when": { "techniqueWall": true } },
     { "id": "break_truc_co", "text": "Đột phá Trúc Cơ: mở Tu luyện mà thử.", "when": { "realm": "luyen_khi", "atPeak": true } },
     { "id": "luyen_khi_9", "text": "Tu tới Luyện Khí tầng 9.", "when": { "realm": "luyen_khi" } },
+    { "id": "break_next", "text": "Đã tới đỉnh {realm}: mở Tu luyện mà thử đột phá.", "when": { "atPeak": true } },
     { "id": "truc_co_peak", "text": "Tu tới Trúc Cơ viên mãn.", "when": { "realm": "truc_co" } },
     { "id": "keep_going", "text": "Đường tu còn dài, cứ đi tiếp.", "when": {} }
   ],

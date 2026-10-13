@@ -3,6 +3,7 @@ import type { Content } from '../../core/content';
 import type { GameEvent } from '../../core/schemas';
 import type { GameState } from '../../core/types';
 import { sectEligibility } from '../sect';
+import { fittingTechniques } from '../technique';
 import { actor, isMasked } from '../npcs';
 import { romanceMeets } from '../romance';
 import { currentRegion } from '../regions';
@@ -52,6 +53,8 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (k.maxRung !== undefined && (!state.career.id || state.career.rung > k.maxRung)) return false;
   }
   if (c.peakFails && (state.cult.fails[`${state.cult.realm}:peak`] ?? 0) < c.peakFails.min) return false;
+  if (c.techniqueWall && (state.cult.wallSince === null || state.character.age - state.cult.wallSince < c.techniqueWall.minYears
+    || (content && fittingTechniques(state, content).length === 0))) return false;
   if (c.martial?.min !== undefined && state.martial.stage < c.martial.min) return false;
   if (c.martial?.max !== undefined && state.martial.stage > c.martial.max) return false;
   if (c.martial?.ready !== undefined && content) {

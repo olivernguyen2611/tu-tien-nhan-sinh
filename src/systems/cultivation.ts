@@ -9,7 +9,7 @@ import { checkDeath } from './time';
 import { difficultyHookSum } from './difficulty';
 import { careerHooks } from './career';
 import { currentRegion, regionQi } from './regions';
-import { currentTechnique, learnTechnique, techniqueCapReason, techniqueMul } from './technique';
+import { currentTechnique, learnTechnique, techniqueCapReason, techniqueMul, techniqueWall } from './technique';
 import { sectHooks } from './sect';
 import { ownSectHooks } from './ownSect';
 import { chosenHooks } from './chosen';
@@ -489,6 +489,9 @@ export function cultivateYear(state: GameState, content: Content): GameState {
       }
     }
   }
+  // 6b.4: remember since when the technique has shut the next realm (for the guaranteed kỳ ngộ and the goal line).
+  const wall = !!techniqueWall(s, content);
+  if (wall !== (s.cult.wallSince !== null)) s = { ...s, cult: { ...s.cult, wallSince: wall ? s.character.age : null } };
   return { ...s, rng: rng.getState(), log };
 }
 

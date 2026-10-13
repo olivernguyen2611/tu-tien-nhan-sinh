@@ -56,6 +56,8 @@ const BaseConditionsSchema = z
       .optional(),
     /** Failed big breakthroughs at the current realm's peak (task 2.8). */
     peakFails: z.object({ min: z.number().int().min(0) }).strict().optional(),
+    /** 6b.4: the technique has shut the next realm at the peak for at least this many years, and some technique this life can learn leads further. */
+    techniqueWall: z.object({ minYears: z.number().int().min(0) }).strict().optional(),
     /** Fate talents (task 2.8 hidden choices). */
     talentsAny: ids,
     /** Martial stage index range (task 3.11; -1 = not yet Tam lưu). */
@@ -172,6 +174,8 @@ export const EffectsSchema = z
     reducePeakFails: z.number().int().min(1).optional(),
     /** A scroll to learn later from the Tu luyện sheet. */
     gainTechnique: id.optional(),
+    /** 6b.4: a scroll the life can learn that leads past the current realm (fits the root if one does). */
+    gainFittingTechnique: z.boolean().optional(),
     /** Task 3.8: combat path aptitude gained. */
     pathAffinity: z.record(z.enum(['sword', 'body', 'spell', 'weapon', 'arts']), z.number()).optional(),
     /** Mortal careers. */
@@ -276,7 +280,7 @@ export const EffectsSchema = z
   .catchall(z.number())
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
-      'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique',
+      'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
       'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
@@ -1926,6 +1930,8 @@ const TutorialWhenSchema = z
     realm: id.optional(),
     /** Full bar at the last stage of the realm. */
     atPeak: z.boolean().optional(),
+    /** 6b.4: at the peak and the technique shuts the next realm; the goal may use {technique}, {realm}, {next}. */
+    techniqueWall: z.boolean().optional(),
     /** In a sect (task 2.5). */
     inSect: z.boolean().optional(),
   })

@@ -4,7 +4,7 @@
     "description": "Mây trắng phủ chín ngọn núi, chuông sớm vang tới tận chân núi. Tông môn lớn nhất Thương Lan, quy củ cũng nhiều nhất: đi sai một bước cũng có người ghi sổ.",
     "ranks": ["Ký danh", "Ngoại môn", "Nội môn", "Chân truyền"],
     "requires": {},
-    "techniques": [{ "id": "bich_lac_dan_khi_quyet", "rank": 1 }, { "id": "ngu_hanh_luan_chuyen_kinh", "rank": 3 }],
+    "techniques": [{ "id": "bich_lac_dan_khi_quyet", "rank": 1 }, { "id": "bich_lac_thanh_van_kinh", "rank": 2 }, { "id": "ngu_hanh_luan_chuyen_kinh", "rank": 3 }],
     "effects": [{ "hook": "breakthroughChance", "add": 5 }],
     "duty": "Nhiệm vụ tông môn nhiều; vi phạm môn quy bị phạt."
   },
@@ -22,7 +22,7 @@
     "description": "Cả thung lũng thơm mùi thuốc. Người trong cốc hiền lành, nhưng đắc tội với họ thì cả đời đừng mong mua được viên đan nào.",
     "ranks": ["Ký danh", "Ngoại môn", "Nội môn", "Chân truyền"],
     "requires": { "minStats": { "comprehension": 50 } },
-    "techniques": [{ "id": "thanh_moc_truong_sinh_cong", "rank": 1 }],
+    "techniques": [{ "id": "thanh_moc_truong_sinh_cong", "rank": 1 }, { "id": "bach_thao_xuan_sinh_quyet", "rank": 2 }],
     "effects": [{ "hook": "craft.alchemy.affinity", "add": 15 }, { "hook": "craft.farming.affinity", "add": 10 }],
     "duty": "Phải trông linh điền; chiến lực kém."
   },
