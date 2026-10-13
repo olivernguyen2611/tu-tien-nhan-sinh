@@ -158,7 +158,9 @@ export function techniqueSummary(state: GameState, content: Content): string | n
   return [
     `${names.gradeNames[tech.grade] ?? tech.grade} phẩm`,
     names.lineageNames[tech.lineage] ?? tech.lineage,
-    techniqueMatches(tech, state.cult.root, content, state.cult.bodyId) ? 'hợp linh căn' : 'không hợp linh căn',
+    // 6b.10: a rootless cultivator on a rootless technique: the root is not the point.
+    !usableRoot(state, content) && tech.requires.rootless ? 'không cần linh căn'
+      : techniqueMatches(tech, state.cult.root, content, state.cult.bodyId) ? 'hợp linh căn' : 'không hợp linh căn',
     tech.adaptive ? 'tự thích ứng thể chất, linh căn' : '',
     maxName ? `tu tới ${maxName}` : 'không giới hạn cảnh giới',
   ].filter(Boolean).join(' · ');
