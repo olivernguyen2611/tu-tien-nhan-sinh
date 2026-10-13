@@ -345,6 +345,8 @@ button { font: inherit; color: inherit; }
 .stat-row .label { display: flex; gap: 6px; white-space: nowrap; justify-content: space-between; font-size: 0.75rem; color: var(--muted); }
 .stat-row .label b { color: var(--ink); font-weight: 600; }
 .stat-row.wide { grid-column: 1 / -1; }
+.leisure-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.leisure-hint { margin: 0; flex: 1 1 100%; font-size: 0.75rem; color: var(--bad); }
 
 /* Event popup */
 .modal-backdrop {

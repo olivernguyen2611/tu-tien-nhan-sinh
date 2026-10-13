@@ -87,8 +87,10 @@
     "mortalBase": 70,
     "mortalVariance": 10,
     "healthAdjustMax": 10,
-    "pressureLeftPct": 0.1
+    "pressureLeftPct": 0.1,
+    "eventCapPct": 0.5
   },
+  "leisure": { "minAge": 8, "silver": 5, "spiritStones": 3, "happiness": [8, 14], "freeHappiness": [3, 5], "daoHeartBelow": 20, "daoHeart": 1 },
   "fastForward": {
     "maxYears": 10
   },
@@ -119,6 +121,7 @@
     "years": 3,
     "onceCooldownYears": 10,
     "happinessDrift": 2,
+    "happinessQuietDrift": 3,
     "happinessRest": 50
   },
   "realms": {

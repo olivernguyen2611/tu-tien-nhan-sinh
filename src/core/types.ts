@@ -286,6 +286,8 @@ export interface GameState {
     active: Record<string, number>;
     /** State id → age its once-effects were last given; "<id>#<n>" for its specials. */
     givenAt: Record<string, number>;
+    /** 6b.2: age of the last Ngao du trip. */
+    lastLeisure: number | null;
   };
   log: LogYear[];
 }

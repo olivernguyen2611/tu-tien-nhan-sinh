@@ -149,15 +149,16 @@ export function ageExtremes(state: GameState, content: Content): GameState {
       lines.push({ text: fill(file.enter, { name: d.name, text: d.text }), tone: toneOf(d) });
       const last = givenAt[d.id];
       if (d.onceEffects.length > 0 && (last === undefined || age - last >= cooldown)) {
+        // 6b.3: thọ nguyên from a state counts once per life; repeated it compounded into lives past 3000 years.
+        for (const e of d.onceEffects) if (e.hook !== 'lifespanPct' || last === undefined) s = applyOnce(s, e.hook, e.add);
         givenAt[d.id] = age;
-        for (const e of d.onceEffects) s = applyOnce(s, e.hook, e.add);
       }
     } else if (years > 1 && n === years - 1) {
       lines.push({ text: fill(file.warn[d.zone as Zone], { stat: statLabel(d.stat) }), tone: 'normal' });
     }
   }
 
-  s = { ...s, extremes: { streak, active, givenAt } };
+  s = { ...s, extremes: { ...s.extremes, streak, active, givenAt } };
 
   // 5. Floors last, so nothing this year pushes a stat under them.
   for (const d of activeExtremes(s, content)) {

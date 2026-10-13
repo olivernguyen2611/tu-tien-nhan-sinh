@@ -50,6 +50,20 @@
   "rewindOffer": "Ánh sáng nhạt lóe lên giữa lúc hồn lìa xác. Thời gian khựng lại, rồi bắt đầu chảy ngược.",
   "rewindAge6": "Ngươi chết năm {age} tuổi, rồi choàng tỉnh trên chiếc giường cũ, thân hình đứa trẻ {back} tuổi. Bao chuyện kiếp trước vẫn nhớ rõ từng chi tiết.",
   "rewindRealm": "Ngươi chết năm {age} tuổi, rồi một niệm quay đầu, mở mắt đã thấy mình năm {back} tuổi, vừa bước vào cảnh giới này. Chuyện về sau vẫn nhớ, chỉ không chắc lần này trời có đi đúng nước cũ.",
+  "leisure": {
+    "paid": [
+      "Ngươi gác việc tu hành, xuống núi dạo một vòng. Uống trà ở quán ven sông, nghe kể chuyện tới khi trời tối.",
+      "Ngươi lên thuyền đi ngược dòng mấy trăm dặm, ngắm hai bờ núi xanh. Về tới nơi mới nhớ ra chưa hỏi giá vé.",
+      "Ngươi ghé một trấn nhỏ đúng hội hoa đăng. Thả một chiếc đèn xuống sông, chẳng cầu gì, chỉ thấy lòng nhẹ đi.",
+      "Ngươi về thăm quê, ăn một bát mì đầu chợ. Mì vẫn dở, nhưng ngươi ăn hết.",
+      "Ngươi trèo lên đỉnh núi xem mặt trời mọc. Gió lạnh, mây trôi, mấy chuyện vướng bận bỗng nhỏ lại."
+    ],
+    "free": [
+      "Trong túi chẳng còn gì, ngươi đi bộ ra bờ suối ngồi cả buổi. Không tốn đồng nào, mà cũng đỡ hơn.",
+      "Ngươi nằm dưới gốc cây đếm mây. Đếm tới đám thứ bảy mươi thì ngủ quên."
+    ],
+    "lowHint": "Lòng như tro nguội đang bào sức khỏe và đạo tâm. Thử Ngao du, bế quan tĩnh tâm, hay về hỏi han người nhà."
+  },
   "epitaph": {
     "good": [
       "Một đời hành thiện, người trong làng nhắc tên còn chắp tay.",

@@ -174,7 +174,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
       followUps: content.world.rootTestEvent ? [{ event: content.world.rootTestEvent, atAge: rootTestAge(input.seed, content) }] : [],
       npc: null,
     },
-    extremes: { streak: {}, active: {}, givenAt: {} },
+    extremes: { streak: {}, active: {}, givenAt: {}, lastLeisure: null },
     log: [],
   };
   state.log.push({ age: 0, lines: [{ text: fillTemplate(origin.birthText, state), tone: 'normal' }] });
@@ -209,17 +209,19 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   const block = log[log.length - 1];
   if (state.seclusion && block.lines.length === 0) {
     log[log.length - 1] = { ...block, lines: [{ text: content.cultivation.realms.texts.seclusionYear, tone: 'normal' }] };
-    return { ...next, log };
+    // A still year in seclusion calms the heart like a quiet one.
+    return { ...next, stats: { ...next.stats, happiness: easeHappiness(next.stats.happiness, true, content) }, log };
   }
-  if (!next.events.pending && block.lines.length === 0) {
-    log[log.length - 1] = { ...block, lines: [{ text: 'Một năm bình lặng trôi qua.', tone: 'normal' }] };
-    // A quiet year eases happiness back toward its resting point.
-    const { happinessDrift: drift, happinessRest: rest } = content.balance.extremes;
-    const h = next.stats.happiness;
-    const eased = h > rest ? Math.max(rest, h - drift) : Math.min(rest, h + drift);
-    return { ...next, stats: { ...next.stats, happiness: eased }, log };
-  }
-  return { ...next, log };
+  const quiet = !next.events.pending && block.lines.length === 0;
+  if (quiet) log[log.length - 1] = { ...block, lines: [{ text: 'Một năm bình lặng trôi qua.', tone: 'normal' }] };
+  // 6b.2: every year eases happiness back toward its resting point; a quiet year eases it more.
+  return { ...next, stats: { ...next.stats, happiness: easeHappiness(next.stats.happiness, quiet, content) }, log };
+}
+
+function easeHappiness(h: number, quiet: boolean, content: Content): number {
+  const { happinessDrift, happinessQuietDrift, happinessRest: rest } = content.balance.extremes;
+  const drift = happinessDrift + (quiet ? happinessQuietDrift : 0);
+  return h > rest ? Math.max(rest, h - drift) : Math.min(rest, h + drift);
 }
 
 /**

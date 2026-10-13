@@ -164,7 +164,7 @@ function splitBody(life: GameState): GameState {
 function migrateSteps(save: SaveFile): SaveFile {
   // Fields added within saveVersion 1 get their empty defaults.
   let life = save.life as GameState & { extremes?: GameState['extremes'] };
-  if (!life.extremes) life = { ...life, extremes: { streak: {}, active: {}, givenAt: {} } };
+  if (!life.extremes) life = { ...life, extremes: { streak: {}, active: {}, givenAt: {}, lastLeisure: null } };
   // Task 3.8: old lives start every path at 0 (no main path yet); the current lineage counts as adopted.
   if (life.paths === undefined) {
     life = { ...life, paths: {}, cult: { ...life.cult, lineagesAdopted: life.cult.lineage ? [life.cult.lineage] : [] } };

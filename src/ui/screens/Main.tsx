@@ -8,6 +8,7 @@ import type { SaveMeta } from '../../systems/save';
 import type { RewindOption } from '../../systems/timeline';
 import type { ImportSetup, SavedPerson } from '../../systems/npcLibrary';
 import { activeExtremes, extremeWarnings } from '../../systems/extremes';
+import { leisureView } from '../../systems/leisure';
 import { DevPanel } from '../components/DevPanel';
 import { BagPanel } from '../components/BagPanel';
 import { GoldenFingerPanel } from '../components/GoldenFingerPanel';
@@ -58,7 +59,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onSeclude, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onSeclude, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -66,6 +67,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onAdvance: () => void;
   /** Pass several quiet years at once. */
   onFastForward: () => void;
+  /** 6b.2 Ngao du: a trip to lift happiness, once a year. */
+  onLeisure: () => void;
   /** Returns the outcome to show on the card. */
   onChoose: (index: number) => PopupResult;
   /** Task 5.4: gia tộc. */
@@ -150,6 +153,9 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const goal = currentGoal(state, content);
   const tip = pendingTip(state, content);
   const region = currentRegion(state, content);
+  const leisure = leisureView(state, content);
+  const sad = states.some((d) => d.stat === 'happiness' && d.zone === 'low');
+  const showLeisure = state.alive && (sad || stats.happiness < content.balance.extremes.happinessRest);
 
   useEffect(() => {
     logRef.current?.scrollTo({ top: logRef.current.scrollHeight, behavior: 'smooth' });
@@ -240,6 +246,15 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         <div class="stat-row"><span class="icon">體</span><Meter label="Sức khỏe" term="suc_khoe" value={stats.health} tone="auto" warn={warn.includes('health')} /></div>
         <div class="stat-row"><span class="icon">智</span><Meter label="Trí tuệ" term="tri_tue" value={stats.intellect} tone="auto" warn={warn.includes('intellect')} /></div>
         <div class="stat-row"><span class="icon">貌</span><Meter label="Mị lực" term="mi_luc" value={stats.charm} tone="auto" warn={warn.includes('charm')} /></div>
+        {showLeisure && (
+          <div class="stat-row wide leisure-row">
+            {sad && <p class="leisure-hint" role="status">{content.lifeTexts.leisure.lowHint}</p>}
+            <button class="chip-btn" onClick={onLeisure} title={leisure.blocked ?? 'Gác việc một chút, đi cho khuây khỏa'}
+              disabled={!!leisure.blocked || !!state.events.pending || !!state.combat || !!result}>
+              Ngao du{leisure.cost ? ` (${leisure.cost})` : ''}{leisure.blocked ? ` · ${leisure.blocked}` : ''}
+            </button>
+          </div>
+        )}
         <div class="stat-row wide"><span class="icon">修</span><Meter label="Tu vi" term="tu_vi" value={cult.progress} color="var(--bar-cult)"
           text={cult.realm === 'pham_nhan' ? 'Chưa tu luyện' : `${realmLabel(state, content)} · ${Math.floor(cult.progress)}%`} /></div>
         <div class="stat-row wide"><span class="icon">壽</span><Meter label="Tuổi" term="tho_nguyen" value={c.age} max={cult.lifespan} color="var(--bar-life)" text={`${c.age} tuổi`} /></div>

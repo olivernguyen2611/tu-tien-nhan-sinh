@@ -402,7 +402,7 @@ Mỗi vấn đề một task, theo mức nghiêm trọng trong bản đánh giá
 |---|---|
 | 6b.1 | [x] Sự kiện thử linh căn không lặp vô hạn: trốn tối đa 2 lần, lần thứ 3 tiên sư tự lôi ra thử (lỗi #1) |
 | 6b.2 | [x] Người chơi máy kiểu "người chơi" cho `npm run simulate` (vào tông, nhiệm vụ, bái sư, bảo khố, đổi công pháp) + số đo hạnh phúc 0, đạo tâm 0, năm kẹt vì công pháp |
-| 6b.3 | [ ] Hạnh phúc không rơi về 0 cả đời: trôi về mức nghỉ mỗi năm, có lối ra, cảnh báo (lỗi #2) |
+| 6b.3 | [x] Hạnh phúc không rơi về 0 cả đời: trôi về mức nghỉ mỗi năm, có lối ra, cảnh báo (lỗi #2) |
 | 6b.4 | [ ] Bức tường công pháp: Mục tiêu nói rõ cần công pháp nào và tìm ở đâu, kỳ ngộ bảo đảm khi kẹt lâu (lỗi #3) |
 | 6b.5 | [ ] Cân lại thể chất đặc biệt (quá phổ biến) và linh căn tốt kẹt lâu hơn linh căn kém |
 | 6b.6 | [ ] Sự kiện, hành động không hợp ngữ cảnh: bái nhập lúc 0 tuổi, học nghề khi đã vào tông, Trúc Cơ Đan khi đã Trúc Cơ (lỗi #4, #13, #15) |
