@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6c.3: tai ương trên đường tu (2026-10-13)
+- Người tu từ Trúc Cơ trở lên không còn an toàn tuyệt đối: mỗi năm có khả năng gặp **tai ương** (phản phệ linh khí, tán tu báo thù, độc chướng, yêu thú, đan độc, cấm chế nổ), mất sức khỏe. Tỉ lệ và mức mất theo cảnh giới (`aging.calamity`: Trúc Cơ 2%, Kim Đan 5%, Nguyên Anh 7%, Hóa Thần 9% mỗi năm); khí vận và thể chất giảm tỉ lệ, sàn 1%. Bản đánh giá ghi cơ thể người tu già chậm nên chẳng còn mối nguy nào sau Trúc Cơ.
+- Nguyên nhân chết mới `calamity` ("Mất năm N tuổi vì tai ương trên đường tu"): người tu từ Trúc Cơ cạn sức khỏe thì chết vì tai ương, phàm nhân và Luyện Khí vẫn là bệnh. Thêm vào dev mode, thành tựu, hồn ma (`ghost.causeChance.calamity` 0.2).
+- Mô phỏng `--profile player` 300 đời: tuổi thọ trung bình 118.7 → 106.2, tai ương 29% số cái chết (phần lớn vốn là các ca cạn sức khỏe, trước ghi là bệnh).
+
 ### GĐ 6c.2: hãm vòng cày an toàn của tông môn (2026-10-13)
 - Nhiệm vụ tông: làm xong phải nghỉ `missionCooldown` (2) năm mới nhận việc tiếp (bước chuỗi nhiệm vụ cũng tính). Trước đó năm nào cũng làm được.
 - Thất bại nhiệm vụ cấp Nội môn trở lên (`missionFail`): 30% bị thương 2 năm và mất 8 sức khỏe.

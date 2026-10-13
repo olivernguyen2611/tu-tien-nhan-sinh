@@ -88,13 +88,55 @@
   },
   "npcLibrary": {
     "roles": [
-      { "id": "bang_huu", "label": "Bằng hữu", "affinity": 65, "favor": 0, "grudge": 0 },
-      { "id": "tri_ky", "label": "Tri kỷ", "affinity": 85, "favor": 20, "grudge": 0 },
-      { "id": "an_nhan", "label": "Ân nhân", "affinity": 75, "favor": 70, "grudge": 0 },
-      { "id": "dong_mon", "label": "Đồng môn", "affinity": 55, "favor": 0, "grudge": 0 },
-      { "id": "doi_thu", "label": "Đối thủ", "affinity": 35, "favor": 0, "grudge": 20 },
-      { "id": "ke_thu", "label": "Kẻ thù", "affinity": 10, "favor": 0, "grudge": 75 },
-      { "id": "nguoi_la", "label": "Người lạ có duyên", "affinity": 50, "favor": 0, "grudge": 0 }
+      {
+        "id": "bang_huu",
+        "label": "Bằng hữu",
+        "affinity": 65,
+        "favor": 0,
+        "grudge": 0
+      },
+      {
+        "id": "tri_ky",
+        "label": "Tri kỷ",
+        "affinity": 85,
+        "favor": 20,
+        "grudge": 0
+      },
+      {
+        "id": "an_nhan",
+        "label": "Ân nhân",
+        "affinity": 75,
+        "favor": 70,
+        "grudge": 0
+      },
+      {
+        "id": "dong_mon",
+        "label": "Đồng môn",
+        "affinity": 55,
+        "favor": 0,
+        "grudge": 0
+      },
+      {
+        "id": "doi_thu",
+        "label": "Đối thủ",
+        "affinity": 35,
+        "favor": 0,
+        "grudge": 20
+      },
+      {
+        "id": "ke_thu",
+        "label": "Kẻ thù",
+        "affinity": 10,
+        "favor": 0,
+        "grudge": 75
+      },
+      {
+        "id": "nguoi_la",
+        "label": "Người lạ có duyên",
+        "affinity": 50,
+        "favor": 0,
+        "grudge": 0
+      }
     ],
     "texts": {
       "saved": "{name} đã được ghi vào sổ nhân vật.",
@@ -181,5 +223,17 @@
       "heirTechnique": "Cha mẹ để lại cho ngươi {technique}, từng câu khẩu quyết đều đã nghe từ nhỏ. Ngươi bắt đầu tu bằng chính công pháp ấy.",
       "heirInsight": "Những năm được cha mẹ luận bàn, luận đạo không uổng: ngộ tính của ngươi hơn hẳn lứa tuổi."
     }
-  }
+  },
+  "deathCalamity": [
+    "Năm {age} tuổi, một kiếp nạn bất ngờ ập xuống mà thân thể đã quá mỏi để chống đỡ. Ngươi gục giữa đường tu, đèn linh khí tắt lịm.",
+    "Năm {age} tuổi, tai ương chồng tai ương, ngươi không kịp dưỡng thương thì kiếp sau đã tới. Đạo đồ dừng ở đây."
+  ],
+  "calamity": [
+    "Linh khí trong người nổi cơn phản phệ, kinh mạch như bị kim châm.",
+    "Một tên tán tu ôm thù cũ tập kích giữa đường, ngươi thoát được nhưng đổ máu.",
+    "Đi ngang vùng đất tà khí nặng, ngươi trúng độc chướng, nằm liệt nhiều ngày.",
+    "Yêu thú lạc đàn xông vào động phủ, giao đấu một trận mới đuổi được.",
+    "Đan độc tích tụ lâu năm bộc phát, ngươi nôn ra máu đen.",
+    "Cấm chế cũ trong thạch thất vô cớ nổ tung, ngươi bị sóng xung kích hất văng."
+  ]
 }

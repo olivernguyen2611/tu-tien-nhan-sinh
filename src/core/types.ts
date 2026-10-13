@@ -68,7 +68,7 @@ export interface SpiritRoot {
   elements: string[];
 }
 
-export type DeathCause = 'old_age' | 'illness' | 'breakthrough' | 'ordeal' | 'combat' | 'tribulation';
+export type DeathCause = 'old_age' | 'illness' | 'breakthrough' | 'ordeal' | 'combat' | 'tribulation' | 'calamity';
 
 export interface GameState {
   version: 1;

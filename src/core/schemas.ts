@@ -772,6 +772,16 @@ export const BalanceSchema = z
         declineStartAge: z.number().int().min(0),
         healthDeclinePerYear: z.number().min(0),
         /** PLAN.md G.3: from this age, illness chance = (age − start) × illnessChancePerYear. */
+        /**
+         * 6c.3: a cultivator beyond Luyện Khí meets a calamity now and then. Per realm: the yearly chance and the
+         * health it takes; luck and physique lower the chance (never below `minChance`).
+         */
+        calamity: z.object({
+          realms: z.record(id, z.object({ chance: probability, loss: range }).strict()),
+          luckPerPoint: z.number().min(0),
+          physiquePerPoint: z.number().min(0),
+          minChance: probability,
+        }).strict(),
         illnessStartAge: z.number().int().min(0),
         illnessChancePerYear: probability,
         illnessHealthLoss: range,
@@ -1000,7 +1010,7 @@ export const BalanceSchema = z
     ghost: z
       .object({
         /** Chance of a lingering obsession by cause of death, + (luck − 50) × luckPerPoint + continueAfterDeath hooks. */
-        causeChance: z.record(z.enum(['old_age', 'illness', 'breakthrough', 'ordeal', 'combat', 'tribulation']), probability),
+        causeChance: z.record(z.enum(['old_age', 'illness', 'breakthrough', 'ordeal', 'combat', 'tribulation', 'calamity']), probability),
         luckPerPoint: z.number(),
         maxChance: probability,
         /** The ghost's realm (at least), its technique, health on rising and years of afterlife. */
@@ -1733,6 +1743,9 @@ export const LifeTextsSchema = z
     /** Task 4.5: struck down by thiên kiếp. */
     deathTribulation: lines,
     deathIllness: lines,
+    /** 6c.3: a yearly calamity (tai ương) of a cultivator; {age}. */
+    deathCalamity: lines,
+    calamity: lines,
     /** Task 4.12 quỷ tu: the offer on the death screen, and the line when the soul rises. */
     ghostOffer: z.string().min(1),
     /** Backlog 11/12: the saved-people book and importing them as NPCs. */
@@ -3033,7 +3046,7 @@ export const LifeCheckSchema = z
     mortal: z.boolean().optional(),
     ageMin: z.number().int().min(0).optional(),
     ageMax: z.number().int().min(0).optional(),
-    cause: z.array(z.enum(['old_age', 'illness', 'breakthrough', 'ordeal', 'combat', 'tribulation'])).optional(),
+    cause: z.array(z.enum(['old_age', 'illness', 'breakthrough', 'ordeal', 'combat', 'tribulation', 'calamity'])).optional(),
     karmaMin: z.number().optional(),
     karmaMax: z.number().optional(),
     happinessMin: z.number().optional(),
