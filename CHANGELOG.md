@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6b.2: người chơi máy kiểu "người chơi" (2026-10-13)
+- `npm run simulate -- --profile player`: chọn sự kiện ngẫu nhiên, vào tông môn đầu tiên đủ điều kiện, mỗi năm làm nhiệm vụ có tỉ lệ cao nhất, xin bái sư, đổi đồ ở bảo khố, chuyển sang công pháp tu được xa nhất, đột phá khi tỉ lệ ≥ 40%. Chỉ gọi hàm của game.
+- Báo cáo thêm: tỉ lệ Kim Đan và số năm kẹt vì công pháp theo từng linh căn; số đời hạnh phúc chạm 0 và số năm ở 0; số đời đạo tâm chạm 0; số năm đầy thanh tu vi mà không tiến được.
+- Mốc hiện tại (300 đời, seed `sim`, độ khó thường): Trúc Cơ 55.7%, Kim Đan 17%, Nguyên Anh 7%; hạnh phúc chạm 0 ở 39.3% số đời (TB 11.8 năm), đạo tâm chạm 0 ở 22.7%; TB 28.6 năm đầy thanh/đời, 6.1 năm vì công pháp; thể chất đặc biệt 29% số đời.
+
 ### GĐ 6b.1: thử linh căn không lặp vô hạn (2026-10-13)
 - Trước: chọn "trốn" ở "Tiên sư thử linh căn" hẹn lại chính sự kiện đó năm sau, không giới hạn; một kiếp gặp 145 lần tới năm 153 tuổi.
 - Sau: trốn lần 1 → "Tiên sư lại ghé" (`thu_linh_can_lai`); trốn lần 2 → "Lần ghé cuối của tiên sư" (`thu_linh_can_cuoi`), cả hai lựa chọn ở lần này đều thử linh căn. Mỗi đời gặp tối đa 3 lần, linh căn luôn được thử.

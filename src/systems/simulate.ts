@@ -13,12 +13,18 @@ import { chooseFate } from './fate';
 import { placeStrand } from './goldenCore';
 import { meetIllusion } from './heartDemon';
 import { runSeclusion } from './seclusion';
-import { learnTechnique } from './technique';
+import { doMission, joinSect, missionViews, requestMaster, masterBlocked, sectEligibility, sectTechniques } from './sect';
+import { buyTreasury, treasuryViews } from './sectTreasury';
+import { learnBlocked, learnTechnique, techniqueById, techniqueCapReason, techniqueMaxRealm } from './technique';
 import { checkDeath } from './time';
 
-/** How the bot decides. `random` picks event choices at random and always tries to break through; `steady` takes the first open choice and only breaks through at 50% or better. */
-export type BotProfile = 'random' | 'steady';
-export const BOT_PROFILES: BotProfile[] = ['random', 'steady'];
+/**
+ * How the bot decides. `random` picks event choices at random and always tries to break through; `steady` takes the first open choice and only breaks through at 50% or better.
+ * `player` (6b, from the 2026-10-12 playtest) lives like a typical player: random choices, joins a sect, does the best mission
+ * each year, asks for a master, spends contribution at the treasury, moves to the technique that reaches furthest, and breaks through at 40% or better.
+ */
+export type BotProfile = 'random' | 'steady' | 'player';
+export const BOT_PROFILES: BotProfile[] = ['random', 'steady', 'player'];
 
 export interface LifeResult {
   seed: string;
@@ -38,6 +44,12 @@ export interface LifeResult {
   stage: number;
   /** True when the run hit the safety limit instead of ending in death. */
   stuck: boolean;
+  /** Years lived with happiness at 0; whether đạo tâm ever hit 0. */
+  happyZeroYears: number;
+  daoHeartZero: boolean;
+  /** Years with a full bar that could not go on, and how many of them the technique blocked. */
+  fullBarYears: number;
+  capYears: number;
 }
 
 export interface SimOptions {
@@ -61,6 +73,10 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
   let peak = 0;
   const reachedAt: Record<string, number> = {};
   let steps = 0;
+  let happyZeroYears = 0;
+  let daoHeartZero = false;
+  let fullBarYears = 0;
+  let capYears = 0;
   while (s.alive && s.character.age < maxAge && steps++ < maxSteps) {
     peak = Math.max(peak, realms.indexOf(s.cult.realm));
     reachedAt[s.cult.realm] ??= s.character.age;
@@ -98,19 +114,62 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
         if (started !== s) { s = started; continue; }
       }
     }
+    if (profile === 'player' && !s.seclusion) s = playerYear(s, content);
     const info = majorBreakthroughInfo(s, content);
-    if (info && !info.blocked && (profile === 'random' || info.chancePct >= 50)) {
+    const minPct = profile === 'random' ? 0 : profile === 'player' ? 40 : 50;
+    if (info && !info.blocked && info.chancePct >= minPct) {
       const r = attemptMajorBreakthrough(s, content);
       if (r) { s = checkDeath(r.state, content); continue; }
     }
+    const before = s.character.age;
     s = s.seclusion ? runSeclusion(s, content) : advanceYear(s, content);
     s = checkDeath(s, content);
+    const years = s.character.age - before;
+    if (years > 0) {
+      if (s.stats.happiness <= 0) happyZeroYears += years;
+      if (s.aptitudes.daoHeart <= 0) daoHeartZero = true;
+      const next = realms[realms.indexOf(s.cult.realm) + 1];
+      if (s.cult.realm !== 'pham_nhan' && s.cult.progress >= 100 && next) {
+        fullBarYears += years;
+        if (techniqueCapReason(s, content, next)) capYears += years;
+      }
+    }
   }
   return {
     seed, age: s.character.age, alive: s.alive, cause: s.death?.cause ?? (s.alive ? 'stuck' : 'unknown'), realm: s.cult.realm,
     peak: Math.max(peak, realms.indexOf(s.cult.realm)), rootGrade: s.cult.root?.grade ?? 'none', bodyId: s.cult.bodyId ?? null,
     martialStage: s.martial.stage, reachedAt, stage: s.cult.stage, stuck: s.alive,
+    happyZeroYears, daoHeartZero, fullBarYears, capYears,
   };
+}
+
+/** The `player` bot's own moves in a year, before it passes: only the game's own actions. */
+function playerYear(state: GameState, content: Content): GameState {
+  let s = state;
+  if (!s.sect.id) {
+    const sect = content.sects.find((x) => x.recruitable && !sectEligibility(s, content, x.id));
+    if (sect) s = joinSect(s, content, sect.id).state;
+  }
+  if (s.sect.id) {
+    const best = missionViews(s, content).filter((m) => !m.blocked).sort((a, b) => b.chance - a.chance)[0];
+    if (best) s = doMission(s, content, best.id)?.state ?? s;
+    if (!masterBlocked(s, content)) s = requestMaster(s, content)?.state ?? s;
+    const buy = treasuryViews(s, content).find((t) => !t.blocked);
+    if (buy) s = buyTreasury(s, content, buy.id)?.state ?? s;
+  }
+  // Move to the technique that reaches furthest (no limit counts as furthest).
+  const order = content.cultivation.realms.realms.map((r) => r.id);
+  const reach = (id: string | null) => {
+    const t = techniqueById(content, id);
+    if (!t) return -1;
+    const max = techniqueMaxRealm(t, content);
+    return max ? order.indexOf(max) : order.length;
+  };
+  const options = [...sectTechniques(s, content).filter((t) => t.open).map((t) => t.id), ...s.cult.scrolls]
+    .filter((id) => { const t = techniqueById(content, id); return !!t && !learnBlocked(s, content, t); });
+  const better = options.sort((a, b) => reach(b) - reach(a))[0];
+  if (better && s.cult.technique && reach(better) > reach(s.cult.technique)) s = learnTechnique(s, content, better, { quiet: true })?.state ?? s;
+  return s;
 }
 
 export interface Report {
@@ -122,8 +181,14 @@ export interface Report {
   reached: Record<string, number>;
   /** Mean age when each realm was first entered, among the lives that got there. */
   reachedAge: Record<string, number>;
-  /** Share of lives by root grade, and their mean age at death. */
-  byRoot: Record<string, { share: number; meanAge: number }>;
+  /** Share of lives by root grade, their mean age at death, share reaching Kim Đan, and mean years blocked by the technique. */
+  byRoot: Record<string, { share: number; meanAge: number; kimDan: number; capYears: number }>;
+  /** Share of lives that ever sat at happiness 0, mean such years; share whose đạo tâm hit 0. */
+  happyZero: { share: number; meanYears: number };
+  daoHeartZero: number;
+  /** Mean years per life with a full bar that could not go on, and how many of those the technique blocked. */
+  fullBarYears: number;
+  capYears: number;
 }
 
 const pct = (sorted: number[], p: number) => sorted[Math.min(sorted.length - 1, Math.floor((p / 100) * sorted.length))] ?? 0;
@@ -141,14 +206,23 @@ export function summarize(results: LifeResult[], content: Content): Report {
     const ages = results.map((x) => x.reachedAt[r.id]).filter((a): a is number => a !== undefined);
     if (ages.length > 0) reachedAge[r.id] = ages.reduce((a, b) => a + b, 0) / ages.length;
   }
-  const roots: Record<string, number[]> = {};
-  for (const r of results) (roots[r.bodyId ? 'the_chat' : r.rootGrade] ??= []).push(r.age);
+  const roots: Record<string, LifeResult[]> = {};
+  for (const r of results) (roots[r.bodyId ? 'the_chat' : r.rootGrade] ??= []).push(r);
+  const kd = realms.findIndex((r) => r.id === 'kim_dan');
+  const mean = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0);
   const byRoot: Report['byRoot'] = {};
-  for (const [g, list] of Object.entries(roots)) byRoot[g] = { share: list.length / n, meanAge: list.reduce((a, b) => a + b, 0) / list.length };
+  for (const [g, list] of Object.entries(roots)) {
+    byRoot[g] = { share: list.length / n, meanAge: mean(list.map((x) => x.age)), kimDan: list.filter((x) => kd >= 0 && x.peak >= kd).length / list.length, capYears: mean(list.map((x) => x.capYears)) };
+  }
+  const sad = results.filter((r) => r.happyZeroYears > 0);
   return {
     count: n, stuck: results.filter((r) => r.stuck).length,
     age: { mean: n ? ages.reduce((a, b) => a + b, 0) / n : 0, p10: pct(ages, 10), p50: pct(ages, 50), p90: pct(ages, 90), max: ages[n - 1] ?? 0 },
     byCause, reached, reachedAge, byRoot,
+    happyZero: { share: n ? sad.length / n : 0, meanYears: mean(results.map((r) => r.happyZeroYears)) },
+    daoHeartZero: n ? results.filter((r) => r.daoHeartZero).length / n : 0,
+    fullBarYears: mean(results.map((r) => r.fullBarYears)),
+    capYears: mean(results.map((r) => r.capYears)),
   };
 }
 
@@ -163,7 +237,10 @@ export function formatReport(rep: Report, content: Content, title: string): stri
     'Nguyên nhân chết: ' + Object.entries(rep.byCause).sort((a, b) => b[1] - a[1]).map(([c, k]) => `${c} ${p(k / rep.count)}`).join(', '),
     'Từng đạt cảnh giới: ' + Object.entries(rep.reached).map(([id, v]) => `${realmName(id)} ${p(v)}`).join(', '),
     'Tuổi trung bình khi vào cảnh giới: ' + Object.entries(rep.reachedAge).map(([id, v]) => `${realmName(id)} ${v.toFixed(0)}`).join(', '),
-    'Theo linh căn: ' + Object.entries(rep.byRoot).sort((a, b) => b[1].share - a[1].share).map(([g, v]) => `${g} ${p(v.share)} (tuổi TB ${v.meanAge.toFixed(0)})`).join(', '),
+    'Theo linh căn: ' + Object.entries(rep.byRoot).sort((a, b) => b[1].share - a[1].share)
+      .map(([g, v]) => `${g} ${p(v.share)} (tuổi TB ${v.meanAge.toFixed(0)}, Kim Đan ${p(v.kimDan)}, kẹt công pháp ${v.capYears.toFixed(0)} năm)`).join(', '),
+    `Hạnh phúc chạm 0: ${p(rep.happyZero.share)} số đời, trung bình ${rep.happyZero.meanYears.toFixed(1)} năm ở 0 mỗi đời; đạo tâm chạm 0: ${p(rep.daoHeartZero)}`,
+    `Năm đầy thanh tu vi mà không tiến được: trung bình ${rep.fullBarYears.toFixed(1)} năm mỗi đời, trong đó ${rep.capYears.toFixed(1)} năm vì công pháp`,
   ];
   return lines.join('\n');
 }

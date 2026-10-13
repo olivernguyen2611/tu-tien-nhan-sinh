@@ -15,7 +15,7 @@ describe('Mô phỏng tự động (6.1)', () => {
   });
 
   it('both bot profiles finish every life', () => {
-    for (const profile of ['random', 'steady'] as const) {
+    for (const profile of ['random', 'steady', 'player'] as const) {
       const { results, report } = simulateMany(content, 12, `sim-p-${profile}`, { profile });
       expect(results.every((r) => !r.alive && !r.stuck)).toBe(true);
       expect(report.count).toBe(12);
