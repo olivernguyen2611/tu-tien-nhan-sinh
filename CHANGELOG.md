@@ -8,6 +8,9 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6b.8: không hỏi tha/giết hai lần (2026-10-13)
+- Trận đánh mà phần thắng hẹn tiếp sự kiện ngay trong năm (`followUp.afterYears` = [0, 0]) bỏ bước chung Tha / Lột đồ / Giết; sự kiện tiếp theo tự quyết số phận đối thủ. Trước đó "Bảng treo thưởng" cho chọn Tha rồi ngay sau lại hỏi Giao nộp / Thả đi (lỗi #6).
+
 ### GĐ 6b.7: lời văn giao chiến (2026-10-13)
 - Kẻ địch nhiều người ("Hai tán tu", "Ba tán tu bị thương", "Hai đồng đội") có `plural: true`; lời văn giao chiến dùng chỗ trống `{y}` / `{Y}`, đọc là "bọn chúng" thay vì "y" (lỗi #12). Câu ý định "Kẻ này muốn lấy mạng" đổi thành "Đối phương muốn lấy mạng".
 - "Rủ rê phục kích": câu thua không còn nói hộ vệ là Trúc Cơ (đối thủ cùng cảnh giới với người chơi, lỗi #5).

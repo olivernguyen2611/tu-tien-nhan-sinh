@@ -163,3 +163,16 @@ describe('6b.7 a group of foes', () => {
     expect(text).not.toMatch(/\{y\}|\bY lết/);
   });
 });
+
+describe('6b.8 a fight whose story goes on at once', () => {
+  it('skips spare / loot / kill and books the follow-up', () => {
+    let s = startBattle(cultivator(), content, FightSchema.parse({
+      foe: { name: 'Kẻ trộm đan', realm: 'pham_nhan', intent: 'teach' },
+      win: { text: 'Hắn quỳ xuống.', effects: { followUp: { event: 'bang_treo_thuong_tiep', afterYears: [0, 0] } } },
+      lose: { text: 'Thua.', effects: {} },
+    }), 'Thử');
+    s = playOut(s);
+    expect(s.combat).toBeNull();
+    expect(s.events.followUps.some((f) => f.event === 'bang_treo_thuong_tiep')).toBe(true);
+  });
+});
