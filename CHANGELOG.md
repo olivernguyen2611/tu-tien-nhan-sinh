@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6b.5: thể chất đặc biệt hiếm lại (2026-10-13)
+- Trước: 8 kỳ ngộ thức tỉnh thể chất, mỗi cái trọng số 0.4 và là một cơ hội riêng, điều kiện chỉ số thấp (55–60), nên đời sống lâu gần như chắc gặp một cái. Mô phỏng: 31% số đời mang thể chất.
+- Sau: **mỗi đời tối đa một cơ duyên** (gặp một kỳ ngộ thức tỉnh, nhận hay từ chối, là hết: cờ `duyen_the_chat`); trọng số 0.02 (Vạn Độc 0.05); ngưỡng chỉ số cao hơn: Cửu Dương căn cốt 70, Thái Âm trí tuệ 70, Bàn Thạch căn cốt 80 + đạo tâm 60, U Minh khí vận 70 + đạo tâm 65, Thiên Sinh Ma Thể danh ma 40 + đạo tâm 60.
+- Mô phỏng 300 đời `--profile player`: thể chất 31% → 9% số đời. Tỉ lệ Kim Đan theo linh căn nay đi đúng thứ tự: Đơn 33.3%, Song 31.7%, Tam 29.3%, Tứ 22.6%, Ngũ 17.5% (trước: Đơn 9.1%, Tam 18.2%).
+
 ### GĐ 6b.4: bức tường công pháp (2026-10-13)
 - Dòng **Mục tiêu** nói rõ khi công pháp chặn đường: "{công pháp} chỉ tu tới {cảnh giới}, không mở được cửa {cảnh giới sau}…" kèm chỗ tìm (lên cấp trong tông, phường thị, đấu giá, bí cảnh). Thêm mục tiêu "Đã tới đỉnh … thử đột phá" cho mọi cảnh giới.
 - **Kỳ ngộ bảo đảm** khi kẹt: "Ngọc giản dưới gốc tùng" (sau 8 năm kẹt) và "Tán tu bán bí tịch" (sau 20 năm), mỗi cái cách nhau ít nhất 30 năm. Hiệu ứng mới `gainFittingTechnique` cho một bí tịch học được, tu xa hơn cảnh giới hiện tại, ưu tiên hợp linh căn và phẩm thấp nhất đủ dùng. Điều kiện mới `techniqueWall.minYears` (chỉ đúng khi có công pháp như vậy); `cult.wallSince` ghi năm bắt đầu kẹt.
