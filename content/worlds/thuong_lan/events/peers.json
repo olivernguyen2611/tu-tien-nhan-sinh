@@ -12,11 +12,22 @@
   {
     "id": "pe_dong_mon_cung_lua", "category": "sect", "title": "Đồng môn cùng lứa",
     "text": "Lứa đệ tử mới có một người cùng tuổi {name}, cứ hay ngồi gần ngươi lúc tĩnh tọa.",
-    "conditions": { "age": { "min": 16, "max": 17 }, "sect": { "member": true } },
-    "weight": 5, "oncePerLife": true,
+    "conditions": { "age": { "min": 16, "max": 30 }, "sect": { "member": true } },
+    "weight": 5, "cooldownYears": 12,
     "choices": [
       { "text": "Rủ cùng luyện công", "result": { "text": "Hai người đấu tập mỗi sáng. Đánh nhau nhiều tới mức thành bạn thân.", "effects": { "meetNpc": { "role": "đồng môn", "affinity": 15, "peer": true }, "stat.physique": 1, "stat.happiness": 3 } } },
       { "text": "Giữ khoảng cách", "result": { "text": "Ngươi chuyển chỗ ngồi. Người kia nhìn theo, không nói gì.", "effects": { "stat.daoHeart": 1 } } }
+    ]
+  },
+  {
+    "id": "pe_tang_kinh_cac_dem", "category": "romance", "title": "Đêm ở Tàng Kinh Các",
+    "text": "Tàng Kinh Các sắp đóng cửa. Chỉ còn {name} và một đồng môn cùng lứa tranh nhau quyển bí tịch cuối cùng trên giá.",
+    "themes": ["romance"],
+    "conditions": { "age": { "min": 18, "max": 80 }, "sect": { "member": true }, "romance": { "lover": false, "partner": false } },
+    "weight": 4, "cooldownYears": 10,
+    "choices": [
+      { "text": "Nhường, rồi rủ đọc chung", "check": { "stat": "stat.charm", "difficulty": 35 }, "success": { "text": "Hai cái đầu chụm vào một trang sách tới lúc trưởng lão gõ cửa đuổi về. Hôm sau lại hẹn đọc tiếp.", "effects": { "meetNpc": { "role": "đồng môn", "affinity": 18, "peer": true }, "romance": { "pursue": true }, "stat.happiness": 5 } }, "fail": { "text": "Người ta cảm ơn, ôm sách đi mất. Ngươi đứng lại với cái giá trống.", "effects": { "meetNpc": { "role": "đồng môn", "affinity": 8, "peer": true }, "stat.happiness": -1, "stat.charm": 1 } } },
+      { "text": "Giành lấy, đọc một mình", "result": { "text": "Bí tịch là của ngươi. Ánh mắt người kia thì không.", "effects": { "stat.intellect": 2, "stat.happiness": -1, "karma": -1 } } }
     ]
   },
   {

@@ -3,7 +3,7 @@ import { loadContent } from '../src/core/content';
 import { createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
 import { createNpc, npcById } from '../src/systems/npcs';
-import { applyRomance, birthChance, romanceAction, romanceViews } from '../src/systems/romance';
+import { applyRomance, birthChance, romanceAction, romanceNote, romanceViews } from '../src/systems/romance';
 import { resolveChoice } from '../src/systems/events/engine';
 import { sectYear, joinSect } from '../src/systems/sect';
 
@@ -62,5 +62,28 @@ describe('romance and children (playtest 2)', () => {
     }
     expect(lines).toBeGreaterThan(0);
     expect(lines).toBeLessThan(8);
+  });
+});
+
+describe('romance inside a sect (6b.11)', () => {
+  it('a sect peer met in Tàng Kinh Các can be courted, and is of the same generation', () => {
+    let wooed = 0;
+    for (let i = 0; i < 20; i++) {
+      const base = adult(30);
+      const s = { ...base, sect: { ...base.sect, id: 'bich_lac_tong' }, rng: createLife({ seed: `tk${i}` }, content).rng, events: { ...base.events, pending: 'pe_tang_kinh_cac_dem' } };
+      const r = resolveChoice(s, content, 0);
+      if (!r.success) continue;
+      wooed++;
+      const n = npcById(r.state, r.state.romance.lover)!;
+      expect(Math.abs(n.age - 30)).toBeLessThanOrEqual(3);
+    }
+    expect(wooed).toBeGreaterThan(0);
+  });
+
+  it('Quan hệ says why romance is closed on the Buddhist path', () => {
+    const s = adult(30);
+    expect(romanceNote(s, content)).toBeNull();
+    expect(romanceNote({ ...s, cult: { ...s.cult, lineage: 'phat' } }, content)).toContain('Phật đạo');
+    expect(romanceNote({ ...s, character: { ...s.character, age: 10 } }, content)).toBeNull();
   });
 });

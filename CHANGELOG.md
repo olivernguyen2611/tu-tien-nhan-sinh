@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6b.11: tình duyên trong tông môn (2026-10-13)
+- Sự kiện mới "Đêm ở Tàng Kinh Các" (đệ tử tông môn, 18–80 tuổi, chưa có người thương): nhường sách rồi đọc chung (thử mị lực 35) thì quen một đồng môn cùng lứa và bắt đầu theo đuổi (lỗi #9).
+- "Đồng môn cùng lứa" mở cho 16–30 tuổi, lặp lại sau 12 năm (trước: chỉ 16–17 tuổi, một lần một đời).
+- Tab Người quen ghi rõ khi tình duyên bị đóng, ví dụ "Tình duyên đóng: Phật đạo kiêng tình duyên." (kiếp F tu ở Vô Ưu Tự nên không có nút Theo đuổi mà không biết vì sao).
+- Thọ nguyên cộng thẳng từ sự kiện (`lifespanYears`) nay cũng chịu trần `lifespan.eventCapPct` như `lifespanPct`. Giới hạn an toàn của bộ mô phỏng nâng từ 3000 lên 6000 tuổi: một Hóa Thần đủ mọi phần thưởng thọ nguyên sống quá 3000 là hợp lệ, trước bị tính là "kẹt".
+
 ### GĐ 6b.10: người không linh căn tu Phật (2026-10-13)
 - Mục tiêu "Không có linh căn: sống trọn một đời phàm nhân" chỉ hiện khi còn là phàm nhân. Người không linh căn đã vào Luyện Khí qua đường Phật thấy mục tiêu tu luyện như mọi người (lỗi #8).
 - Bảng Tu luyện ghi công pháp không cần linh căn (Vô Ưu Thiền Tâm Pháp) là "không cần linh căn" thay vì "hợp linh căn" khi người tu không có linh căn.

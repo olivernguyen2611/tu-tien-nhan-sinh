@@ -34,6 +34,13 @@ export function romanceBlocked(state: GameState, content: Content): string | nul
   return null;
 }
 
+/** 6b.11: why romance is closed for a grown-up (Phật đạo…), shown in Quan hệ; null when open or still a child. */
+export function romanceNote(state: GameState, content: Content): string | null {
+  if (!state.alive || state.character.age < content.balance.romance.minAge) return null;
+  const why = romanceBlocked(state, content);
+  return why ? `Tình duyên đóng: ${why}.` : null;
+}
+
 /** An NPC who can be courted or loved: alive and of age. */
 function ofAge(content: Content, n: Npc | undefined): n is Npc {
   return !!n && n.alive && n.age >= content.balance.romance.minAge;

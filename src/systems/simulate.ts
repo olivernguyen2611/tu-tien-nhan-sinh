@@ -69,7 +69,8 @@ export interface SimOptions {
 /** Live one life to its end. Deterministic for a seed, profile and content. */
 export function simulateLife(content: Content, seed: string, opts: SimOptions = {}): LifeResult {
   const profile = opts.profile ?? 'random';
-  const maxAge = opts.maxAge ?? 3000;
+  // A Hóa Thần with every lifespan bonus can pass 3000 (realm base 2000 × hooks); 6b.11 raised the limit.
+  const maxAge = opts.maxAge ?? 6000;
   const maxSteps = opts.maxSteps ?? 20000;
   const botRng = new Rng(`bot:${seed}`);
   const realms = content.cultivation.realms.realms.map((r) => r.id);
