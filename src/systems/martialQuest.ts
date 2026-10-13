@@ -98,8 +98,8 @@ function newGame(content: Content, step: MartialStep, aided: boolean, rng: Rng):
     const next = (id: string) => (mode === 'sinh' ? content.balance.coreForming.generates[id] : basic.find((e) => e.id === id)?.beats.find((b) => basic.some((x) => x.id === b)));
     const target = [rng.pick(basic).id];
     while (target.length < Math.min(level.length, basic.length)) target.push(next(target[target.length - 1])!);
-    // The first stone is given.
-    return { kind: 'ngu_hanh', mode, target, input: [target[0]], mistakes: 0, allowed, shown: true, aided };
+    // The first stone is given. Nothing to memorise, so input is open at once.
+    return { kind: 'ngu_hanh', mode, target, input: [target[0]], mistakes: 0, allowed, shown: false, aided };
   }
   const symbols = Object.keys(content.martial.games.symbols);
   const target = Array.from({ length: level.length }, () => rng.pick(symbols));

@@ -276,7 +276,7 @@ export function resolveChoice(given: GameState, content: Content, choiceIndex: n
   // Filled after the effects so {npc} names someone just met.
   text = fillTemplate(extra.text, next, content);
   const lines: LogLine[] = [
-    { text: `${event.title}: ${fillTemplate(choice.text, state, content)}.`, tone: 'normal' },
+    { text: `${fillTemplate(event.title, state, content)}: ${fillTemplate(choice.text, state, content)}.`, tone: 'normal' },
     { text, tone },
   ];
   const log = next.log.slice();

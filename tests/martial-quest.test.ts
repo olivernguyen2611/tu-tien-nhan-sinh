@@ -57,6 +57,17 @@ describe('martial quest chain', () => {
     expect(moved.martial.quest?.id).not.toBe('tam_hoa');
   });
 
+  it('the ngũ hành game takes input at once and can be won', () => {
+    let s = martialQuestYear(mortalAt(4), content);
+    s = { ...s, martial: { ...s.martial, quest: { ...s.martial.quest!, step: 1 } } };
+    s = beginQuestStep(s, content, false)!.state;
+    const g = s.martial.quest!.game!;
+    expect(g.kind).toBe('ngu_hanh');
+    expect(g.shown).toBe(false);
+    for (const sym of g.target.slice(g.input.length)) s = miniGameInput(s, content, sym).state;
+    expect(s.martial.quest).toMatchObject({ step: 2, game: null });
+  });
+
   it('a mini-game step opens a game, wins on the right input, and allows one try a year', () => {
     let s = martialQuestYear(mortalAt(4), content);
     const begun = beginQuestStep(s, content, false)!;

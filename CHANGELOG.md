@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6c.0: vá lỗi nhanh sau đợt chơi thử 13/10 (2026-10-13)
+- **Vòng đá ngũ hành** chơi được: trò này không có gì để ghi nhớ nên nhận nhập liệu ngay (trước đó bị coi là "đang hiện đáp án" và bỏ qua mọi lần bấm, chặn cả chuỗi Tam hoa tụ đỉnh và Ngũ khí triều nguyên). Có test thắng trò.
+- Tiêu đề sự kiện có `{lover}` ("{lover} lâm bệnh") được điền tên ở thẻ kết quả và nhật ký.
+- Con có linh căn dùng được không còn chết đúng 120 tuổi: tuổi thọ dao động theo `lifespan.mortalVariance` như người thường.
+- Sửa câu chết bệnh dùng "bạn" thay vì "ngươi", và dòng "Để GĐ 7 làm đầy đủ." lộ ra ở nhược điểm Yêu đạo.
+
 ### GĐ 6b.14: động phủ linh mạch, chỗ tiêu linh thạch (2026-10-13)
 - Bảng Tu luyện có mục **Động phủ linh mạch**: thuê 1 năm hoặc 10 năm (giảm 10%), tu vi ×1.5 suốt thời hạn, cộng dồn với bế quan. Giá mỗi năm theo cảnh giới: Luyện Khí 10, Trúc Cơ 30, Kim Đan 80, Nguyên Anh 200, Hóa Thần 500 linh thạch (`balance.caveRent`). Bản đánh giá ghi các kiếp tu chết với hơn 1.000 linh thạch không biết tiêu vào đâu.
 - Mô phỏng 300 đời `--profile player` (bot thuê 10 năm khi có gấp đôi giá): linh thạch lúc chết trung bình 606 → 388, số đời còn từ 500 linh thạch 39% → 21%. Tỉ lệ lên cảnh giới gần như không đổi, vì đường tu vẫn bị chặn ở đột phá chứ không ở tốc độ. Bộ mô phỏng in thêm dòng linh thạch lúc chết.
