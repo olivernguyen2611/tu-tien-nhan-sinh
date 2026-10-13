@@ -1,7 +1,7 @@
 // Sect life (task 2.5): joining, ranks (Ký danh → Ngoại môn → Nội môn → Chân
 // truyền), yearly stipend, one mission a year for contribution, sect techniques
 // by rank, and asking an elder to be one's master.
-import { ordinaryAptitude } from './aptitudeGain';
+import { ordinaryAptitude, ordinaryStat } from './aptitudeGain';
 import type { Content } from '../core/content';
 import { Rng, hashSeed } from '../core/rng';
 import type { EffectHook, Sect } from '../core/schemas';
@@ -195,8 +195,16 @@ export function missionViews(state: GameState, content: Content): MissionView[] 
     chance: checkChance(state, content, m.stat, m.difficulty),
     blocked: !state.alive ? 'Đã hết một đời.'
       : state.sect.lastMission === state.character.age ? 'Năm nay đã làm một nhiệm vụ rồi.'
-      : null,
+      : missionRest(state, content),
   }));
+}
+
+/** 6c.2: after a mission the body and the board need a rest of `missionCooldown` years. */
+function missionRest(state: GameState, content: Content): string | null {
+  const last = state.sect.lastMission;
+  const wait = content.balance.sects.missionCooldown;
+  if (last === null || last === undefined || state.character.age - last >= wait) return null;
+  return `Vừa làm việc tông xong, phải nghỉ tới năm ${last + wait} tuổi.`;
 }
 
 /** Do one sect mission this year: a stat check, contribution and maybe spirit stones. */
@@ -210,7 +218,7 @@ export function doMission(state: GameState, content: Content, missionId: string)
   const stats = { ...state.stats };
   const aptitudes = { ...state.aptitudes };
   for (const [k, v] of Object.entries(out.stats)) {
-    if (k in stats) stats[k as keyof typeof stats] = clamp(stats[k as keyof typeof stats] + v);
+    if (k in stats) stats[k as keyof typeof stats] = ordinaryStat(k, stats[k as keyof typeof stats], v, content, rng);
     else aptitudes[k as keyof typeof aptitudes] = ordinaryAptitude(k, aptitudes[k as keyof typeof aptitudes], v, content, rng);
   }
   let next: GameState = {
@@ -221,6 +229,13 @@ export function doMission(state: GameState, content: Content, missionId: string)
     money: { ...state.money, spiritStones: state.money.spiritStones + out.spiritStones },
     sect: { ...state.sect, lastMission: state.character.age },
   };
+  // 6c.2: a failed mission of higher rank can leave a wound.
+  const risk = content.balance.sects.missionFail;
+  const hurt = !success && state.sect.rank >= risk.minRank && rng.chance(risk.injuryChance);
+  next = { ...next, rng: rng.getState() };
+  if (hurt) {
+    next = { ...next, stats: { ...next.stats, health: clamp(next.stats.health + risk.health) }, cult: { ...next.cult, injuredUntil: state.character.age + risk.injuryYears } };
+  }
   next = addContribution(next, out.contribution);
   const text = `${mission.name}: ${out.text} Cống hiến +${out.contribution}.`;
   return { state: { ...next, log: addLines(next, [{ text, tone: success ? 'good' : 'bad' }]) }, text, success };

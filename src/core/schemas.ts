@@ -738,6 +738,10 @@ export const BalanceSchema = z
     aptitudeGain: z
       .object({ stats: z.array(z.enum(APTITUDES)), softAt: z.number(), softMul: z.number().min(0), hardAt: z.number(), hardMul: z.number().min(0) })
       .strict(),
+    /** 6c.4: ordinary gains to these stats shrink past softAt / hardAt (like aptitudeGain). */
+    statGain: z
+      .object({ stats: z.array(z.enum(['happiness', 'intellect', 'charm'])), softAt: z.number(), softMul: z.number().min(0), hardAt: z.number(), hardMul: z.number().min(0) })
+      .strict(),
     /** 6b.2 Ngao du: once a year, pay to lift happiness (silver for mortals, spirit stones for cultivators). */
     leisure: z
       .object({
@@ -772,6 +776,16 @@ export const BalanceSchema = z
         declineStartAge: z.number().int().min(0),
         healthDeclinePerYear: z.number().min(0),
         /** PLAN.md G.3: from this age, illness chance = (age − start) × illnessChancePerYear. */
+        /**
+         * 6c.3: a cultivator beyond Luyện Khí meets a calamity now and then. Per realm: the yearly chance and the
+         * health it takes; luck and physique lower the chance (never below `minChance`).
+         */
+        calamity: z.object({
+          realms: z.record(id, z.object({ chance: probability, loss: range }).strict()),
+          luckPerPoint: z.number().min(0),
+          physiquePerPoint: z.number().min(0),
+          minChance: probability,
+        }).strict(),
         illnessStartAge: z.number().int().min(0),
         illnessChancePerYear: probability,
         illnessHealthLoss: range,
@@ -1000,7 +1014,7 @@ export const BalanceSchema = z
     ghost: z
       .object({
         /** Chance of a lingering obsession by cause of death, + (luck − 50) × luckPerPoint + continueAfterDeath hooks. */
-        causeChance: z.record(z.enum(['old_age', 'illness', 'breakthrough', 'ordeal', 'combat', 'tribulation']), probability),
+        causeChance: z.record(z.enum(['old_age', 'illness', 'breakthrough', 'ordeal', 'combat', 'tribulation', 'calamity']), probability),
         luckPerPoint: z.number(),
         maxChance: probability,
         /** The ghost's realm (at least), its technique, health on rising and years of afterlife. */
@@ -1324,6 +1338,11 @@ export const BalanceSchema = z
             comprehensionPerPoint: z.number(),
             daoHeartPerPoint: z.number(),
             failPenaltyPct: z.number().min(0),
+            /** 6c.1: bonuses beyond this many points count only `modifierShare` of the way. */
+            modifierKnee: z.number().min(0),
+            modifierShare: z.number().min(0).max(1),
+            /** 6c.1: most points the bonuses can add to a big breakthrough into this realm. */
+            majorModifierCap: z.record(id, z.number().min(0)),
             minPct: z.number().min(0).max(100),
             maxPct: z.number().min(0).max(100),
           })
@@ -1349,6 +1368,13 @@ export const BalanceSchema = z
         failureWeights: z
           .object({ lose: z.number().min(0), injury: z.number().min(0), lifespan: z.number().min(0), deviation: z.number().min(0), death: z.number().min(0) })
           .strict(),
+        /** 6c.1: weights that replace failureWeights for a big breakthrough into this realm. */
+        failureWeightsByRealm: z
+          .record(
+            id,
+            z.object({ lose: z.number().min(0), injury: z.number().min(0), lifespan: z.number().min(0), deviation: z.number().min(0), death: z.number().min(0) }).strict(),
+          )
+          .default({}),
         deviationHealth: z.number(),
         deviationDaoHeart: z.number(),
         /** Failures at a realm's peak before the bottleneck slows cultivation. */
@@ -1456,6 +1482,12 @@ export const BalanceSchema = z
         stipendLogEvery: z.number().int().min(1),
         /** Playtest 2: missions posted on the board each year (picked from those the rank allows). */
         missionBoard: z.number().int().min(1),
+        /** 6c.2: years between two missions (a chain step also counts as one). */
+        missionCooldown: z.number().int().min(1),
+        /** 6c.2: failing a mission of this rank or higher may leave an injury. */
+        missionFail: z.object({ minRank: z.number().int().min(0), injuryChance: probability, injuryYears: z.number().int().min(1), health: z.number() }).strict(),
+        /** 6c.2: each earlier purchase of a treasury entry makes it this many percent dearer. */
+        treasuryPriceStepPct: z.number().min(0),
         /**
          * Task 5c.1: named sectmates met on joining. Realm = the higher of minRealm (index into the realm
          * list) and the player's realm + aboveSelf; age = the player's + ageOffset.
@@ -1715,6 +1747,9 @@ export const LifeTextsSchema = z
     /** Task 4.5: struck down by thiên kiếp. */
     deathTribulation: lines,
     deathIllness: lines,
+    /** 6c.3: a yearly calamity (tai ương) of a cultivator; {age}. */
+    deathCalamity: lines,
+    calamity: lines,
     /** Task 4.12 quỷ tu: the offer on the death screen, and the line when the soul rises. */
     ghostOffer: z.string().min(1),
     /** Backlog 11/12: the saved-people book and importing them as NPCs. */
@@ -3015,7 +3050,7 @@ export const LifeCheckSchema = z
     mortal: z.boolean().optional(),
     ageMin: z.number().int().min(0).optional(),
     ageMax: z.number().int().min(0).optional(),
-    cause: z.array(z.enum(['old_age', 'illness', 'breakthrough', 'ordeal', 'combat', 'tribulation'])).optional(),
+    cause: z.array(z.enum(['old_age', 'illness', 'breakthrough', 'ordeal', 'combat', 'tribulation', 'calamity'])).optional(),
     karmaMin: z.number().optional(),
     karmaMax: z.number().optional(),
     happinessMin: z.number().optional(),

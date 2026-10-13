@@ -8,6 +8,29 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6c.4: chỉ số không còn dính 100 (2026-10-13)
+- Hạnh phúc, trí tuệ và mị lực tăng chậm dần khi đã cao (`statGain`): từ 70 điểm chỉ tính một nửa, từ 90 chỉ tính một phần tư. Chỉ áp cho phần cộng thường (kết quả sự kiện thường, nhiệm vụ tông); kỳ ngộ, mất điểm và các chỉ số khác giữ nguyên. Bản đánh giá ghi Trí tuệ 100 từ tuổi 23, Mị lực 100 từ 53, Hạnh phúc dính 93-100.
+- Bộ mô phỏng in thêm "Số năm sống có chỉ số từ 95" cho từng chỉ số (bản mô phỏng người chơi máy ra hạnh phúc 0%, trí tuệ 6%, mị lực 6%; người thật chơi lâu và ngao du nhiều hơn nên cao hơn, cần đối chiếu lại bằng bot giao diện).
+- Test mới cho độ nén.
+
+### GĐ 6c.3: tai ương trên đường tu (2026-10-13)
+- Người tu từ Trúc Cơ trở lên không còn an toàn tuyệt đối: mỗi năm có khả năng gặp **tai ương** (phản phệ linh khí, tán tu báo thù, độc chướng, yêu thú, đan độc, cấm chế nổ), mất sức khỏe. Tỉ lệ và mức mất theo cảnh giới (`aging.calamity`: Trúc Cơ 2%, Kim Đan 5%, Nguyên Anh 7%, Hóa Thần 9% mỗi năm); khí vận và thể chất giảm tỉ lệ, sàn 1%. Bản đánh giá ghi cơ thể người tu già chậm nên chẳng còn mối nguy nào sau Trúc Cơ.
+- Nguyên nhân chết mới `calamity` ("Mất năm N tuổi vì tai ương trên đường tu"): người tu từ Trúc Cơ cạn sức khỏe thì chết vì tai ương, phàm nhân và Luyện Khí vẫn là bệnh. Thêm vào dev mode, thành tựu, hồn ma (`ghost.causeChance.calamity` 0.2).
+- Mô phỏng `--profile player` 300 đời: tuổi thọ trung bình 118.7 → 106.2, tai ương 29% số cái chết (phần lớn vốn là các ca cạn sức khỏe, trước ghi là bệnh).
+
+### GĐ 6c.2: hãm vòng cày an toàn của tông môn (2026-10-13)
+- Nhiệm vụ tông: làm xong phải nghỉ `missionCooldown` (2) năm mới nhận việc tiếp (bước chuỗi nhiệm vụ cũng tính). Trước đó năm nào cũng làm được.
+- Thất bại nhiệm vụ cấp Nội môn trở lên (`missionFail`): 30% bị thương 2 năm và mất 8 sức khỏe.
+- Bảo khố: mỗi lần đổi lại cùng một món đắt thêm 20% (`treasuryPriceStepPct`); bảng hiển thị giá hiện tại.
+- Mô phỏng `--profile player` 300 đời (sau 6c.1 → sau 6c.2): Kim Đan 18% → 14%, Nguyên Anh 5% → 3%, Hóa Thần 3% → 0.7%, trung vị tuổi thọ 78 → 68. Cố ý để thấp tạm thời; sẽ chỉnh lại trần ở bước cân bằng cuối (6c.9) sau khi các bước sinh tồn xong.
+- Không đụng "Cải mệnh": chưa tìm thấy mục này trong code hiện tại, ghi lại để xem ở bước sau.
+
+### GĐ 6c.1: đường cong đột phá (2026-10-13)
+- Các điểm cộng vào tỉ lệ đột phá (ngộ tính, đạo tâm, hook, vật phẩm, tích lũy chờ đỉnh) không còn cộng dồn vô hạn: quá `modifierKnee` (20 điểm) chỉ tính một nửa (`modifierShare`), và đột phá đại cảnh giới có trần cộng theo cảnh giới đích (`majorModifierCap`: Trúc Cơ 36, Kim Đan 36, Nguyên Anh 34, Hóa Thần 38). Điểm trừ (thất bại, độ khó khó) không bị giới hạn. Bản chơi thử 13/10 thấy Nguyên Anh 87%, Hóa Thần 81% vì cộng dồn không trần.
+- Thất bại đột phá vào Nguyên Anh và Hóa Thần nặng hơn (`failureWeightsByRealm`): tử vong 3 → 5 và 8, hao thọ 15 → 17 và 18, tẩu hỏa 7 → 8 và 9.
+- Mô phỏng `--profile player` 900 đời (trước 300 đời): Kim Đan 21.3% → 19.1%, Nguyên Anh 8.3% → 6.2%, Hóa Thần 4% → 2.3%, tuổi thọ trung vị 78 → 81.
+- Đan dược hỗ trợ vẫn cộng đủ số ghi trên vật phẩm (chỉ chịu trần). Test mới cho độ nén và trần cộng dồn.
+
 ### GĐ 6c.0: vá lỗi nhanh sau đợt chơi thử 13/10 (2026-10-13)
 - **Vòng đá ngũ hành** chơi được: trò này không có gì để ghi nhớ nên nhận nhập liệu ngay (trước đó bị coi là "đang hiện đáp án" và bỏ qua mọi lần bấm, chặn cả chuỗi Tam hoa tụ đỉnh và Ngũ khí triều nguyên). Có test thắng trò.
 - Tiêu đề sự kiện có `{lover}` ("{lover} lâm bệnh") được điền tên ở thẻ kết quả và nhật ký.

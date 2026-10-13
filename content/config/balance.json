@@ -90,6 +90,7 @@
     "pressureLeftPct": 0.1,
     "eventCapPct": 0.5
   },
+  "statGain": { "stats": ["happiness", "intellect", "charm"], "softAt": 70, "softMul": 0.5, "hardAt": 90, "hardMul": 0.25 },
   "aptitudeGain": { "stats": ["physique", "comprehension", "luck"], "softAt": 60, "softMul": 0.5, "hardAt": 80, "hardMul": 0.2 },
   "caveRent": { "cost": { "luyen_khi": 10, "truc_co": 30, "kim_dan": 80, "nguyen_anh": 200, "hoa_than": 500 }, "speedMul": 1.5, "leases": [1, 10], "leaseDiscount": 0.1 },
   "leisure": { "minAge": 8, "silver": 5, "spiritStones": 3, "happiness": [8, 14], "freeHappiness": [3, 5], "daoHeartBelow": 20, "daoHeart": 1 },
@@ -101,6 +102,17 @@
     "recoverCap": 80,
     "declineStartAge": 50,
     "healthDeclinePerYear": 1,
+    "calamity": {
+      "realms": {
+        "truc_co": { "chance": 0.02, "loss": [5, 12] },
+        "kim_dan": { "chance": 0.05, "loss": [10, 25] },
+        "nguyen_anh": { "chance": 0.07, "loss": [15, 35] },
+        "hoa_than": { "chance": 0.09, "loss": [20, 45] }
+      },
+      "luckPerPoint": 0.0002,
+      "physiquePerPoint": 0.0002,
+      "minChance": 0.01
+    },
     "illnessStartAge": 60,
     "illnessChancePerYear": 0.008,
     "illnessHealthLoss": [5, 15],
@@ -158,7 +170,10 @@
     "aptitudeGrowth": 3,
     "aptitudeMin": 0.3,
     "regionQi": 1.0,
-    "breakthrough": { "comprehensionPerPoint": 0.3, "daoHeartPerPoint": 0.2, "failPenaltyPct": 5, "minPct": 3, "maxPct": 95 },
+    "breakthrough": { "comprehensionPerPoint": 0.3, "daoHeartPerPoint": 0.2, "failPenaltyPct": 5,
+      "modifierKnee": 20,
+      "modifierShare": 0.5,
+      "majorModifierCap": { "truc_co": 36, "kim_dan": 36, "nguyen_anh": 34, "hoa_than": 38 }, "minPct": 3, "maxPct": 95 },
     "minorFailure": {
       "weights": { "lose": 70, "injury": 25, "lifespan": 5 },
       "loseProgress": 30,
@@ -171,6 +186,10 @@
   "majorBreakthrough": {
     "openRealms": ["truc_co", "kim_dan", "nguyen_anh", "hoa_than"],
     "failureWeights": { "lose": 40, "injury": 35, "lifespan": 15, "deviation": 7, "death": 3 },
+    "failureWeightsByRealm": {
+      "nguyen_anh": { "lose": 35, "injury": 35, "lifespan": 17, "deviation": 8, "death": 5 },
+      "hoa_than": { "lose": 30, "injury": 35, "lifespan": 18, "deviation": 9, "death": 8 }
+    },
     "deviationHealth": -30,
     "deviationDaoHeart": -10,
     "bottleneckFails": 2,
@@ -246,7 +265,7 @@
       { "rank": 3, "contribution": 200, "realm": "truc_co", "stage": 0 }
     ],
     "masterMinRank": 2,
-    "missionBoard": 4,
+    "missionBoard": 4, "missionCooldown": 2, "missionFail": { "minRank": 2, "injuryChance": 0.3, "injuryYears": 2, "health": -8 }, "treasuryPriceStepPct": 20,
     "stipendLogEvery": 10,
     "masterChanceBase": 0.25,
     "masterChancePerPoint": 0.01,
@@ -506,7 +525,7 @@
     "survivePhysique": 3
   },
   "ghost": {
-    "causeChance": { "old_age": 0, "illness": 0.05, "breakthrough": 0.1, "ordeal": 0.1, "combat": 0.25, "tribulation": 0.1 },
+    "causeChance": { "old_age": 0, "illness": 0.05, "breakthrough": 0.1, "ordeal": 0.1, "combat": 0.25, "tribulation": 0.1, "calamity": 0.2 },
     "luckPerPoint": 0.004,
     "maxChance": 0.6,
     "realm": "luyen_khi",

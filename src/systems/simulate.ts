@@ -48,6 +48,8 @@ export interface LifeResult {
   stuck: boolean;
   /** Years lived with happiness at 0; whether đạo tâm ever hit 0. */
   happyZeroYears: number;
+  /** Years lived with happiness / trí tuệ / mị lực at 95 or more (6c.4), and all years lived. */
+  topYears: { happiness: number; intellect: number; charm: number; lived: number };
   daoHeartZero: boolean;
   /** Years with a full bar that could not go on, and how many of them the technique blocked. */
   fullBarYears: number;
@@ -84,6 +86,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
   const reachedAt: Record<string, number> = {};
   let steps = 0;
   let happyZeroYears = 0;
+  const topYears = { happiness: 0, intellect: 0, charm: 0, lived: 0 };
   let daoHeartZero = false;
   let fullBarYears = 0;
   let capYears = 0;
@@ -139,6 +142,8 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     const years = s.character.age - before;
     if (years > 0) {
       if (s.stats.happiness <= 0) happyZeroYears += years;
+      topYears.lived += years;
+      for (const k of ['happiness', 'intellect', 'charm'] as const) if (s.stats[k] >= 95) topYears[k] += years;
       if (s.aptitudes.daoHeart <= 0) daoHeartZero = true;
       const next = realms[realms.indexOf(s.cult.realm) + 1];
       if (s.cult.realm !== 'pham_nhan' && s.cult.progress >= 100 && next) {
@@ -151,7 +156,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     seed, age: s.character.age, alive: s.alive, cause: s.death?.cause ?? (s.alive ? 'stuck' : 'unknown'), realm: s.cult.realm,
     peak: Math.max(peak, realms.indexOf(s.cult.realm)), rootGrade: s.cult.root?.grade ?? 'none', bodyId: s.cult.bodyId ?? null,
     martialStage: s.martial.stage, reachedAt, stage: s.cult.stage, stuck: s.alive,
-    happyZeroYears, daoHeartZero, fullBarYears, capYears,
+    happyZeroYears, topYears, daoHeartZero, fullBarYears, capYears,
     aptitudeGain: aptSum(s) - aptStart,
     aptitudeHigh: Math.max(s.aptitudes.physique, s.aptitudes.comprehension, s.aptitudes.luck) >= 90,
     seen: { ...(s.events.seen ?? {}) },
@@ -207,6 +212,8 @@ export interface Report {
   /** Share of lives that ever sat at happiness 0, mean such years; share whose đạo tâm hit 0. */
   happyZero: { share: number; meanYears: number };
   daoHeartZero: number;
+  /** Share of all years lived with each stat at 95+. */
+  topShare: { happiness: number; intellect: number; charm: number };
   /** Mean years per life with a full bar that could not go on, and how many of those the technique blocked. */
   fullBarYears: number;
   capYears: number;
@@ -247,6 +254,7 @@ export function summarize(results: LifeResult[], content: Content): Report {
     count: n, stuck: results.filter((r) => r.stuck).length,
     age: { mean: n ? ages.reduce((a, b) => a + b, 0) / n : 0, p10: pct(ages, 10), p50: pct(ages, 50), p90: pct(ages, 90), max: ages[n - 1] ?? 0 },
     byCause, reached, reachedAge, byRoot,
+    topShare: (() => { const t = (k: 'happiness' | 'intellect' | 'charm') => results.reduce((a, r) => a + r.topYears[k], 0) / Math.max(1, results.reduce((a, r) => a + r.topYears.lived, 0)); return { happiness: t('happiness'), intellect: t('intellect'), charm: t('charm') }; })(),
     happyZero: { share: n ? sad.length / n : 0, meanYears: mean(results.map((r) => r.happyZeroYears)) },
     daoHeartZero: n ? results.filter((r) => r.daoHeartZero).length / n : 0,
     fullBarYears: mean(results.map((r) => r.fullBarYears)),
@@ -284,6 +292,7 @@ export function formatReport(rep: Report, content: Content, title: string): stri
     'Theo linh căn: ' + Object.entries(rep.byRoot).sort((a, b) => b[1].share - a[1].share)
       .map(([g, v]) => `${g} ${p(v.share)} (tuổi TB ${v.meanAge.toFixed(0)}, Kim Đan ${p(v.kimDan)}, kẹt công pháp ${v.capYears.toFixed(0)} năm)`).join(', '),
     `Hạnh phúc chạm 0: ${p(rep.happyZero.share)} số đời, trung bình ${rep.happyZero.meanYears.toFixed(1)} năm ở 0 mỗi đời; đạo tâm chạm 0: ${p(rep.daoHeartZero)}`,
+    `Số năm sống có chỉ số từ 95: hạnh phúc ${p(rep.topShare.happiness)}, trí tuệ ${p(rep.topShare.intellect)}, mị lực ${p(rep.topShare.charm)}`,
     `Năm đầy thanh tu vi mà không tiến được: trung bình ${rep.fullBarYears.toFixed(1)} năm mỗi đời, trong đó ${rep.capYears.toFixed(1)} năm vì công pháp`,
     `Tư chất (căn cốt + ngộ tính + khí vận) tăng trung bình ${rep.aptitudeGain.toFixed(1)} điểm mỗi đời; ${p(rep.aptitudeHigh)} số đời kết thúc với một chỉ số từ 90`,
     `Linh thạch lúc chết: trung bình ${rep.stonesLeft.mean.toFixed(0)}, trung vị ${rep.stonesLeft.p50}, ${p(rep.stonesLeft.rich)} số đời còn từ 500`,

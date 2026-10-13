@@ -177,6 +177,20 @@ describe('cultivation per year (task 2.3)', () => {
     expect(breakthroughPct(s, content, 200, false)).toBe(95);
   });
 
+  it('6c.1: bonuses taper past the knee and a big breakthrough has a ceiling', () => {
+    const b = content.balance.cultivation.breakthrough;
+    const s = cultivator('cap');
+    const genius = { ...s, aptitudes: { ...s.aptitudes, comprehension: 100, daoHeart: 100 }, cult: { ...s.cult, nextBonus: 25 } };
+    // Past the knee only `modifierShare` of the extra counts; for a big breakthrough the cap bites too.
+    const taper = (raw: number) => b.modifierKnee + (raw - b.modifierKnee) * b.modifierShare;
+    expect(breakthroughPct(genius, content, 20, false)).toBeCloseTo(20 + taper(15 + 10));
+    const tapered = taper(15 + 10 + 25);
+    const into = content.cultivation.realms.realms[content.cultivation.realms.realms.findIndex((r) => r.id === genius.cult.realm) + 1].id;
+    const cap = b.majorModifierCap[into];
+    expect(breakthroughPct(genius, content, 20, true)).toBeCloseTo(20 + Math.min(tapered, cap));
+    expect(breakthroughPct({ ...genius, cult: { ...genius.cult, nextBonus: 200 } }, content, 20, true)).toBeCloseTo(20 + cap);
+  });
+
   it('a full bar climbs to the next Luyện Khí stage about 90% of the time', () => {
     let up = 0;
     for (let i = 0; i < 400; i++) {

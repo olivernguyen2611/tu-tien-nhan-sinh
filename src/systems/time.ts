@@ -59,6 +59,18 @@ export function ageBody(state: GameState, content: Content): GameState {
     lines.push({ text: fill(rng.pick(content.lifeTexts.illness), age), tone: 'bad' });
   }
 
+  // 6c.3: a cultivator's body does not fall ill, but the road has its calamities (tai ương).
+  const calamity = cfg.calamity.realms[state.cult.realm];
+  if (calamity && !state.flags.quy_tu) {
+    const chance = Math.max(cfg.calamity.minChance,
+      calamity.chance - state.aptitudes.luck * cfg.calamity.luckPerPoint - state.aptitudes.physique * cfg.calamity.physiquePerPoint);
+    if (rng.chance(chance)) {
+      health -= rng.int(calamity.loss[0], calamity.loss[1]);
+      happiness -= cfg.illnessHappinessLoss;
+      lines.push({ text: rng.pick(content.lifeTexts.calamity), tone: 'bad' });
+    }
+  }
+
   return {
     ...state,
     rng: rng.getState(),
@@ -70,7 +82,7 @@ export function ageBody(state: GameState, content: Content): GameState {
 /** Why this life should end now, if it should. */
 export function deathCause(state: GameState): DeathCause | null {
   if (state.character.age >= state.cult.lifespan) return 'old_age';
-  if (state.stats.health <= 0) return 'illness';
+  if (state.stats.health <= 0) return state.cult.realm !== 'pham_nhan' && state.cult.realm !== 'luyen_khi' ? 'calamity' : 'illness';
   return null;
 }
 
@@ -86,7 +98,7 @@ export function checkDeath(state: GameState, content: Content, forced?: DeathCau
   const texts = content.lifeTexts;
   const rng = Rng.fromState(state.rng);
   const age = state.character.age;
-  const pools = { old_age: texts.deathOldAge, breakthrough: texts.deathBreakthrough, ordeal: texts.deathOrdeal, illness: texts.deathIllness, combat: texts.deathCombat, tribulation: texts.deathTribulation };
+  const pools = { old_age: texts.deathOldAge, breakthrough: texts.deathBreakthrough, ordeal: texts.deathOrdeal, illness: texts.deathIllness, combat: texts.deathCombat, tribulation: texts.deathTribulation, calamity: texts.deathCalamity };
   const line = rng.pick(pools[cause]);
   const karma = state.social.karma;
   const pool = karma >= cfg.epitaphKarma ? texts.epitaph.good : karma <= -cfg.epitaphKarma ? texts.epitaph.bad : state.cult.realm !== 'pham_nhan' ? texts.epitaph.plainCultivator : texts.epitaph.plain;
@@ -123,6 +135,7 @@ export function lifeSummary(state: GameState, content: Content): LifeSummary | n
       : cause === 'ordeal' ? `Mất năm ${age} tuổi khi luyện hóa kỳ vật`
       : cause === 'combat' ? `Tử trận năm ${age} tuổi`
       : cause === 'tribulation' ? `Mất năm ${age} tuổi dưới thiên kiếp`
+      : cause === 'calamity' ? `Mất năm ${age} tuổi vì tai ương trên đường tu`
       : `Mất năm ${age} tuổi vì bệnh`,
     epitaph,
     karmaLabel: k >= t ? 'Thiện nhân' : k <= -t ? 'Ác nhân' : 'Người thường',

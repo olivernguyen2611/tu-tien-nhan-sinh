@@ -1,6 +1,6 @@
 // EventEngine (PLAN.md task 1.5): each year pick at most one event, the player
 // chooses, the outcome is applied. Pure functions over GameState + Content.
-import { ordinaryAptitude } from '../aptitudeGain';
+import { ordinaryAptitude, ordinaryStat } from '../aptitudeGain';
 import type { Content } from '../../core/content';
 import { Rng } from '../../core/rng';
 import type { GameEvent } from '../../core/schemas';
@@ -205,7 +205,10 @@ function applyEffects(state: GameState, effects: Outcome['effects'], rng: Rng, c
     if (typeof value !== 'number') continue;
     if (key.startsWith('stat.')) {
       const k = key.slice(5);
-      if (k in stats) stats[k as keyof typeof stats] = clamp(stats[k as keyof typeof stats] + value);
+      if (k in stats) {
+        const cur = stats[k as keyof typeof stats];
+        stats[k as keyof typeof stats] = ordinary && content ? ordinaryStat(k, cur, value, content, rng) : clamp(cur + value);
+      }
       else if (k in aptitudes) {
         const cur = aptitudes[k as keyof typeof aptitudes];
         aptitudes[k as keyof typeof aptitudes] = ordinary && content ? ordinaryAptitude(k, cur, value, content, rng) : clamp(cur + value);
