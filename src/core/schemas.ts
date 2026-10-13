@@ -305,6 +305,8 @@ export const FoeSpecSchema = z
     lineage: id.default('tien'),
     /** What the foe wants: dạy dỗ, cướp, giết. Decides what losing costs. */
     intent: z.enum(['teach', 'rob', 'kill']),
+    /** 6b.7: several people ("Hai tán tu"): {y} in combat texts reads "bọn chúng". */
+    plural: z.boolean().default(false),
     /** Base chance the foe accepts a plea (balance.combat.pleaIntent when left out). */
     mercy: z.number().min(0).max(1).optional(),
     /** Task 5.3: the foe attacks the founded sect: Hộ Sơn Đại Trận weakens them (balance.founding.defensePerLevel). */

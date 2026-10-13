@@ -39,7 +39,7 @@
           "effects": {},
           "fight": {
             "foe": {
-              "name": "Ba tán tu bị thương",
+              "name": "Ba tán tu bị thương", "plural": true,
               "realm": "same",
               "intent": "rob",
               "powerMul": 1.2
@@ -176,7 +176,7 @@
           },
           "fight": {
             "foe": {
-              "name": "Hai tán tu",
+              "name": "Hai tán tu", "plural": true,
               "realm": "same",
               "intent": "rob"
             },
@@ -202,7 +202,7 @@
           "effects": {},
           "fight": {
             "foe": {
-              "name": "Hai tán tu",
+              "name": "Hai tán tu", "plural": true,
               "realm": "same",
               "intent": "rob"
             },
@@ -518,7 +518,7 @@
               }
             },
             "lose": {
-              "text": "Hộ vệ Tô gia là Trúc Cơ.",
+              "text": "Hộ vệ Tô gia đánh lâu năm, chiêu nào cũng ra đúng chỗ. Gã tán tu chạy trước, ngươi chạy sau, mang theo một vết đao.",
               "effects": {
                 "setFlags": [
                   "ke_thu_to_gia"

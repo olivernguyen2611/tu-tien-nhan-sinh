@@ -22,8 +22,10 @@ const realmAt = (content: Content, i: number) => {
   const list = content.cultivation.realms.realms;
   return list[Math.max(0, Math.min(list.length - 1, i))].id;
 };
+/** {foe}, {name}, and the foe's pronoun {y} / {Y} ("y", or "bọn chúng" for a group). */
 const fill = (text: string, foe: Foe, state: GameState) =>
-  text.replace(/\{foe\}/g, foe.name).replace(/\{name\}/g, state.character.name);
+  text.replace(/\{foe\}/g, foe.name).replace(/\{name\}/g, state.character.name)
+    .replace(/\{y\}/g, foe.plural ? 'bọn chúng' : 'y').replace(/\{Y\}/g, foe.plural ? 'Bọn chúng' : 'Y');
 
 /** The player's main combat path (task 3.8 aptitudes), or null while no path stands out. */
 export function mainPath(state: GameState, content: Content): string | null {
@@ -114,6 +116,7 @@ export function makeFoe(state: GameState, content: Content, spec: FoeSpec, rng: 
     lineage: spec.lineage,
     intent: spec.intent,
     mercy: spec.mercy ?? c.pleaIntent[spec.intent],
+    plural: spec.plural || undefined,
   };
 }
 
