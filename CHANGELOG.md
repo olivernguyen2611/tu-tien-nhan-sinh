@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6b.4: bức tường công pháp (2026-10-13)
+- Dòng **Mục tiêu** nói rõ khi công pháp chặn đường: "{công pháp} chỉ tu tới {cảnh giới}, không mở được cửa {cảnh giới sau}…" kèm chỗ tìm (lên cấp trong tông, phường thị, đấu giá, bí cảnh). Thêm mục tiêu "Đã tới đỉnh … thử đột phá" cho mọi cảnh giới.
+- **Kỳ ngộ bảo đảm** khi kẹt: "Ngọc giản dưới gốc tùng" (sau 8 năm kẹt) và "Tán tu bán bí tịch" (sau 20 năm), mỗi cái cách nhau ít nhất 30 năm. Hiệu ứng mới `gainFittingTechnique` cho một bí tịch học được, tu xa hơn cảnh giới hiện tại, ưu tiên hợp linh căn và phẩm thấp nhất đủ dùng. Điều kiện mới `techniqueWall.minYears` (chỉ đúng khi có công pháp như vậy); `cult.wallSince` ghi năm bắt đầu kẹt.
+- Tông môn mở công pháp huyền phẩm ở cấp Nội môn cho mọi linh căn: Bích Lạc Thanh Vân Kinh (Bích Lạc Tông), Bách Thảo Xuân Sinh Quyết (Bách Thảo Cốc). Trước đó công pháp cao hơn của Bích Lạc cần linh căn từ 3 hệ, nên đơn, song linh căn kẹt ở Trúc Cơ.
+- Mô phỏng 300 đời `--profile player`: năm kẹt vì công pháp TB 7.3 → 2.6 năm/đời; Kim Đan 25.3% → 27%; Nguyên Anh 11.3% → 14.3%.
+
 ### GĐ 6b.3: hạnh phúc không rơi về 0 cả đời (2026-10-13)
 - Trước: hạnh phúc chỉ trôi về mức nghỉ (50) trong "năm bình lặng", mà đời trong tông gần như không có năm như vậy; "Lòng như tro nguội" bào sức khỏe và đạo tâm hàng chục năm.
 - Sau: **mỗi năm** hạnh phúc trôi về 50 thêm `extremes.happinessDrift` = 2; năm bình lặng và năm bế quan thêm `happinessQuietDrift` = 3 (tổng 5, trước là 2).

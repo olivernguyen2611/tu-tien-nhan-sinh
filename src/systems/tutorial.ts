@@ -2,6 +2,7 @@
 import type { Content } from '../core/content';
 import type { TutorialWhen } from '../core/schemas';
 import type { GameState } from '../core/types';
+import { techniqueWall } from './technique';
 
 function atPeak(state: GameState, content: Content): boolean {
   const realm = content.cultivation.realms.realms.find((r) => r.id === state.cult.realm);
@@ -17,6 +18,7 @@ export function tutorialMatches(state: GameState, content: Content, when: Tutori
   if (when.hasRoot !== undefined && (!root || usable !== when.hasRoot)) return false;
   if (when.realm !== undefined && state.cult.realm !== when.realm) return false;
   if (when.atPeak !== undefined && atPeak(state, content) !== when.atPeak) return false;
+  if (when.techniqueWall !== undefined && !!techniqueWall(state, content) !== when.techniqueWall) return false;
   if (when.inSect !== undefined && !!state.sect.id !== when.inSect) return false;
   return true;
 }
@@ -24,7 +26,11 @@ export function tutorialMatches(state: GameState, content: Content, when: Tutori
 /** The first goal that fits this life now. */
 export function currentGoal(state: GameState, content: Content): string | null {
   if (!state.alive) return null;
-  return content.tutorial.goals.find((g) => tutorialMatches(state, content, g.when))?.text ?? null;
+  const text = content.tutorial.goals.find((g) => tutorialMatches(state, content, g.when))?.text;
+  if (!text) return null;
+  const wall = techniqueWall(state, content);
+  const realm = content.cultivation.realms.realms.find((r) => r.id === state.cult.realm)?.name ?? '';
+  return text.replaceAll('{technique}', wall?.technique ?? '').replaceAll('{realm}', wall?.realm ?? realm).replaceAll('{next}', wall?.next ?? '');
 }
 
 /** Next tip to show (first life only), or null. */

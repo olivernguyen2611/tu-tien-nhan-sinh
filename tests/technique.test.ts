@@ -28,7 +28,7 @@ function cultivator(technique: string | null, patch: Partial<GameState['cult']> 
 
 describe('techniques (task 2.4)', () => {
   it('the shipped techniques and sects pass validation', () => {
-    expect(content.techniques.length).toBe(28);
+    expect(content.techniques.length).toBe(30);
     expect(content.sects.map((s) => s.id)).toContain('bich_lac_tong');
     expect(content.sects.find((s) => s.id === 'van_yeu_dien')?.recruitable).toBe(false);
   });

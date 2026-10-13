@@ -1,0 +1,79 @@
+[
+  {
+    "id": "tw_ngoc_gian_goc_tung",
+    "category": "fortune",
+    "title": "Ngọc giản dưới gốc tùng",
+    "text": "Đã mấy năm {name} ngồi trước bức tường của chính công pháp mình. Một chiều đi dạo, rễ một cây tùng già bật lên sau trận mưa, lộ ra một hộp đá. Trong hộp là một miếng ngọc giản, chữ khắc còn mới như hôm qua.",
+    "tags": ["rare"],
+    "themes": ["fortune"],
+    "conditions": { "techniqueWall": { "minYears": 8 } },
+    "weight": 1,
+    "urgent": true,
+    "cooldownYears": 30,
+    "choices": [
+      {
+        "text": "Áp ngọc giản lên trán đọc thử",
+        "result": {
+          "text": "Từng dòng khẩu quyết chảy vào thức hải. Chỗ bế tắc bao năm bỗng có đường vòng.",
+          "effects": { "gainFittingTechnique": true, "stat.comprehension": 1, "stat.happiness": 3 }
+        }
+      },
+      {
+        "text": "Mang về tông, nhờ trưởng lão xem giúp",
+        "requires": { "sect": { "member": true } },
+        "result": {
+          "text": "Trưởng lão lật qua lật lại, bảo không có độc, còn dặn ngươi tu cho đàng hoàng. Tông môn ghi cho ngươi một công.",
+          "effects": { "gainFittingTechnique": true, "sectContribution": 10, "stat.happiness": 2 }
+        }
+      },
+      {
+        "text": "Không phải của mình, chôn lại chỗ cũ",
+        "result": {
+          "text": "Ngươi lấp đất, vỗ vỗ mấy cái, đi về. Đêm ấy ngủ rất ngon, chỉ hơi tiếc.",
+          "effects": { "stat.daoHeart": 2, "stat.happiness": -1, "karma": 2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tw_tan_tu_ban_bi_tich",
+    "category": "fortune",
+    "title": "Tán tu bán bí tịch",
+    "text": "Ở chân núi có một tán tu tóc bạc trải chiếu bán đồ. Thấy {name} đi qua, lão gọi giật lại: \"Đạo hữu kẹt ở cửa ải lâu rồi phải không? Nhìn sắc mặt là biết.\"",
+    "tags": ["funny"],
+    "themes": ["fortune"],
+    "conditions": { "techniqueWall": { "minYears": 20 } },
+    "weight": 1,
+    "urgent": true,
+    "cooldownYears": 30,
+    "choices": [
+      {
+        "text": "Trả 30 linh thạch mua cuốn lão chỉ",
+        "requires": { "stats": [{ "stat": "spiritStones", "gte": 30 }] },
+        "result": {
+          "text": "Lão rút từ đáy bọc ra một cuốn sách bọc vải dầu. \"Đọc xong nhớ quay lại khen.\"",
+          "effects": { "spiritStones": -30, "gainFittingTechnique": true, "stat.happiness": 2 }
+        }
+      },
+      {
+        "text": "Kể khổ, xin xem chịu",
+        "check": { "stat": "stat.charm", "difficulty": 55 },
+        "success": {
+          "text": "Lão nghe xong thở dài, quăng cho ngươi cuốn sách: \"Trả sau. Mà thôi, khỏi trả.\"",
+          "effects": { "gainFittingTechnique": true, "stat.charm": 1 }
+        },
+        "fail": {
+          "text": "Lão nghe xong gật gù, rồi gói hàng đi mất. Ngươi đứng đó với nỗi khổ của mình.",
+          "effects": { "stat.happiness": -2, "stat.charm": -1 }
+        }
+      },
+      {
+        "text": "Lừa đảo, đi thẳng",
+        "result": {
+          "text": "Sau lưng lão còn nói vọng theo: \"Bức tường đó không tự đổ đâu!\"",
+          "effects": { "stat.daoHeart": 1, "stat.happiness": -1 }
+        }
+      }
+    ]
+  }
+]

@@ -26,6 +26,36 @@
     ]
   },
   {
+    "id": "bich_lac_thanh_van_kinh",
+    "name": "Bích Lạc Thanh Vân Kinh",
+    "grade": "huyen",
+    "lineage": "tien",
+    "elements": "root",
+    "flavor": "Bát cơm trắng ăn đủ rồi thì tông môn dọn thêm thức ăn. Đệ tử nội môn Bích Lạc ai cũng phải chép tay một lần.",
+    "note": "6b.4: công pháp nội môn của Bích Lạc Tông, hợp mọi linh căn, để đệ tử đơn, song linh căn không kẹt ở Trúc Cơ.",
+    "effects": [
+      {
+        "hook": "bottleneckResist",
+        "add": 0.05
+      }
+    ]
+  },
+  {
+    "id": "bach_thao_xuan_sinh_quyet",
+    "name": "Bách Thảo Xuân Sinh Quyết",
+    "grade": "huyen",
+    "lineage": "tien",
+    "elements": "root",
+    "flavor": "Tu như cây mọc: mỗi năm một vòng gỗ, không vội. Lò đan của người tu nó hiếm khi nổ.",
+    "note": "6b.4: công pháp nội môn của Bách Thảo Cốc, hợp mọi linh căn.",
+    "effects": [
+      {
+        "hook": "craft.alchemy.success",
+        "add": 0.1
+      }
+    ]
+  },
+  {
     "id": "ngu_hanh_luan_chuyen_kinh",
     "name": "Ngũ Hành Luân Chuyển Kinh",
     "grade": "huyen",

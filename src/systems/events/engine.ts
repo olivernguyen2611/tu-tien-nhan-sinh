@@ -8,7 +8,7 @@ import { extremeThemeMultiplier } from '../extremes';
 import type { GameState, LogLine, Tone } from '../../core/types';
 import { meets, readValue } from './conditions';
 import { addProgress, addSpeedBuff, enterFirstRealm, awakenBody, grantRoot, hookActive, hookSum, lifeHooks, reducePeakFails, revealRoot, startCultivating } from '../cultivation';
-import { gainScroll, learnTechnique } from '../technique';
+import { fittingTechnique, gainScroll, learnTechnique } from '../technique';
 import { addItems, removeItems } from '../items';
 import { addCraftXp } from '../crafts';
 import { forceJoinCareer, leaveCareer, promoteCareer } from '../career';
@@ -393,6 +393,13 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.careerPromote) next = promoteCareer(next, content);
   if (fx.gainTechnique) {
     const got = gainScroll(next, content, fx.gainTechnique);
+    if (got) { next = got.state; text = `${text} ${got.text}`; }
+  }
+  if (fx.gainFittingTechnique) {
+    const rng = Rng.fromState(next.rng);
+    const tech = fittingTechnique(next, content, rng);
+    next = { ...next, rng: rng.getState() };
+    const got = tech ? gainScroll(next, content, tech.id) : null;
     if (got) { next = got.state; text = `${text} ${got.text}`; }
   }
   if (fx.sectPromote) next = promoteSect(next, content);

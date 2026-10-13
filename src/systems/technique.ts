@@ -3,6 +3,7 @@
 // how far it can take you; switching costs part of the current bar.
 import type { Content } from '../core/content';
 import type { Technique } from '../core/schemas';
+import type { Rng } from '../core/rng';
 import type { GameState, LogLine, SpiritRoot } from '../core/types';
 import { adoptLineage } from './paths';
 import { extremeHasHook } from './extremes';
@@ -161,6 +162,48 @@ export function techniqueSummary(state: GameState, content: Content): string | n
     tech.adaptive ? 'tự thích ứng thể chất, linh căn' : '',
     maxName ? `tu tới ${maxName}` : 'không giới hạn cảnh giới',
   ].filter(Boolean).join(' · ');
+}
+
+/** 6b.4: at the peak with the next realm shut by the technique: the technique and its last realm. */
+export function techniqueWall(state: GameState, content: Content): { technique: string; realm: string; next: string } | null {
+  const realms = content.cultivation.realms.realms;
+  const i = realms.findIndex((r) => r.id === state.cult.realm);
+  const realm = realms[i];
+  const next = realms[i + 1];
+  if (!realm || !next || state.cult.realm === 'pham_nhan') return null;
+  if (state.cult.stage < realm.stages.length - 1 || state.cult.progress < 100) return null;
+  const tech = currentTechnique(state, content);
+  if (!tech || !techniqueCapReason(state, content, next.id)) return null;
+  return { technique: tech.name, realm: realm.name, next: next.name };
+}
+
+/** How far a technique reaches, as a realm index (no limit = past the last realm). */
+function reachOf(tech: Technique, content: Content): number {
+  const order = content.cultivation.realms.realms.map((r) => r.id);
+  const max = techniqueMaxRealm(tech, content);
+  return max ? order.indexOf(max) : order.length;
+}
+
+/**
+ * 6b.4 kỳ ngộ bảo đảm: a technique this life can learn that leads past the current realm, not yet owned.
+ * Prefers one that fits the root, then the lowest grade that is enough (a wall is not a jackpot).
+ */
+export function fittingTechniques(state: GameState, content: Content): Technique[] {
+  const order = content.cultivation.realms.realms.map((r) => r.id);
+  const here = order.indexOf(state.cult.realm);
+  const owned = new Set([state.cult.technique, ...state.cult.scrolls, ...state.cult.learned]);
+  const pool = content.techniques.filter((t) =>
+    !owned.has(t.id) && !t.requires.ghostOnly && !learnBlocked(state, content, t) && reachOf(t, content) > here);
+  if (pool.length === 0) return [];
+  const fits = pool.filter((t) => techniqueMatches(t, state.cult.root, content, state.cult.bodyId));
+  const list = fits.length > 0 ? fits : pool;
+  const low = Math.min(...list.map((t) => reachOf(t, content)));
+  return list.filter((t) => reachOf(t, content) === low);
+}
+
+export function fittingTechnique(state: GameState, content: Content, rng: Rng): Technique | null {
+  const list = fittingTechniques(state, content);
+  return list.length > 0 ? rng.pick(list) : null;
 }
 
 /** Keep a technique scroll to practise later (task 2.8). */
