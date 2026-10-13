@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { goLeisure } from '../systems/leisure';
 import { rentCave } from '../systems/cave';
 import type { Content } from '../core/content';
-import { advanceYear, createLife, fastForward } from '../core/state';
+import { advanceYear, createLife, fastForward, fillTemplate } from '../core/state';
 import type { GameState } from '../core/types';
 import { describeChanges } from '../systems/deltas';
 import { consumeItem } from '../systems/items';
@@ -501,7 +501,8 @@ function Screens({ content }: { content: Content }) {
           return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
         }}
         onChoose={(i) => {
-          const title = findEvent(content, life.events.pending ?? '')?.title ?? '';
+          const pendingEvent = findEvent(content, life.events.pending ?? '');
+          const title = pendingEvent ? fillTemplate(pendingEvent.title, life, content) : '';
           const r = resolveChoice(life, content, i);
           // An event may close the door for some years (task 4.1).
           setLife(runSeclusion(checkDeath(r.state, content), content));

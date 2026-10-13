@@ -415,6 +415,21 @@ Mỗi vấn đề một task, theo mức nghiêm trọng trong bản đánh giá
 | 6b.13 | [x] Giao diện: ô tên, bấm đúp, nút Back, khối Mục tiêu, nhãn phiên bản (lỗi #14, #16, #17, #18, #20) |
 | 6b.14 | [x] Chỗ tiêu linh thạch giữa đời |
 
+### GĐ 6c — Tăng độ khó tới Hóa Thần, vá chỗ sơ sài (`docs`: kế hoạch `tu-tien/ke-hoach/tang-do-kho-toi-hoa-than.md`)
+Giữ trần Hóa Thần, không thêm cảnh giới mới. Mỗi task có chỉ tiêu đo bằng `npm run simulate`.
+| # | Task |
+|---|---|
+| 6c.0 | [x] Vá lỗi nhanh: ải ngũ hành chơi được (B1), tiêu đề `{lover}` (B2), tuổi thọ con có căn (B6), lỗi chữ (B4, B5) |
+| 6c.1 | [ ] Đường cong đột phá: trần cộng dồn, hiệu suất giảm dần, trần clamp theo cảnh giới, thất bại/kiếp nạn nặng hơn |
+| 6c.2 | [ ] Hãm vòng cày an toàn của tông môn (nhiệm vụ, bảo khố, Cải mệnh) |
+| 6c.3 | [ ] Áp lực sinh tồn sau Trúc Cơ |
+| 6c.4 | [ ] Chỉ số bão hòa (Hạnh phúc, Trí tuệ, Mị lực) |
+| 6c.5 | [ ] Kinh tế: chỗ tiêu bạc và linh thạch |
+| 6c.6 | [ ] Giảm lặp nhật ký, thêm biến thể văn bản |
+| 6c.7 | [ ] ~30 sự kiện Kim Đan/Nguyên Anh/Hóa Thần, nối `charmResist` |
+| 6c.8 | [ ] Mục tiêu hậu Hóa Thần (di sản, kết cục), không thêm cảnh giới |
+| 6c.9 | [ ] Giao diện và dọn PLAN.md |
+
 ### GĐ 7 — Mở rộng nội dung
 Thêm **thế giới mới** với tuyến cốt truyện riêng (mục C.7) + màn chọn thế giới. Linh giới/Tiên giới, thêm hàng trăm sự kiện, các nghề bách nghệ còn lại (Trận pháp, Phù lục, Linh thực, Ngự thú), thêm mô bản khí vận chi tử, Capacitor nếu muốn lên store.
 

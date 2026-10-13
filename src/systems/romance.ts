@@ -374,8 +374,8 @@ function makeChild(state: GameState, content: Content, partner: Npc, rng: Rng, a
   const { root, bodyId } = adopted ? rollRoot(rng, content, 1) : inheritRoot(state, content, partner, rng);
   const l = content.balance.lifespan;
   const usable = (content.balance.roots.gradeSpeed[root.grade] ?? 0) > 0;
-  // A child with a usable root grows up to cultivate and lives about as long as a Luyện Khí cultivator.
-  const lifespan = usable ? content.balance.realms.luyen_khi?.lifespan ?? l.mortalBase : l.mortalBase + rng.int(-l.mortalVariance, l.mortalVariance);
+  // A child with a usable root grows up to cultivate and lives about as long as a Luyện Khí cultivator, give or take.
+  const lifespan = (usable ? content.balance.realms.luyen_khi?.lifespan ?? l.mortalBase : l.mortalBase) + rng.int(-l.mortalVariance, l.mortalVariance);
   return {
     id: `child_${childCount(state)}_${state.character.age}`,
     role: 'child', gender, name, age: 0, alive: true, lifespan,

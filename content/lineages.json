@@ -25,7 +25,7 @@
   },
   {
     "id": "yeu", "name": "Yêu đạo",
-    "strengths": "Thân thể cường tráng.", "costs": "Để GĐ 7 làm đầy đủ.",
+    "strengths": "Thân thể cường tráng.", "costs": "Người đời e dè, chính đạo khó dung.",
     "effects": [],
     "onAdopt": { "physique": 5 }, "perYear": {}
   }
