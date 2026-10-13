@@ -401,18 +401,19 @@ Mỗi vấn đề một task, theo mức nghiêm trọng trong bản đánh giá
 | # | Task |
 |---|---|
 | 6b.1 | [x] Sự kiện thử linh căn không lặp vô hạn: trốn tối đa 2 lần, lần thứ 3 tiên sư tự lôi ra thử (lỗi #1) |
-| 6b.2 | [ ] Hạnh phúc không rơi về 0 cả đời: trôi về mức nghỉ mỗi năm, có lối ra, cảnh báo (lỗi #2) |
-| 6b.3 | [ ] Bức tường công pháp: Mục tiêu nói rõ cần công pháp nào và tìm ở đâu, kỳ ngộ bảo đảm khi kẹt lâu (lỗi #3) |
-| 6b.4 | [ ] Cân lại thể chất đặc biệt (quá phổ biến) và linh căn tốt kẹt lâu hơn linh căn kém |
-| 6b.5 | [ ] Sự kiện, hành động không hợp ngữ cảnh: bái nhập lúc 0 tuổi, học nghề khi đã vào tông, Trúc Cơ Đan khi đã Trúc Cơ (lỗi #4, #13, #15) |
-| 6b.6 | [ ] Giao chiến: cảnh giới đối thủ khớp lời văn, đại từ số nhiều (lỗi #5, #12) |
-| 6b.7 | [ ] Tha kẻ trộm rồi không bị hỏi giao nộp (lỗi #6) |
-| 6b.8 | [ ] Tư chất không trôi quá nhiều theo nhiệm vụ, sự kiện thường (lỗi #7) |
-| 6b.9 | [ ] Người không linh căn tu Phật: Mục tiêu và nhãn công pháp không mâu thuẫn (lỗi #8) |
-| 6b.10 | [ ] Đồng môn cùng lứa để theo đuổi trong tông (lỗi #9) |
-| 6b.11 | [ ] Giảm lặp nhật ký/sự kiện, công bố linh căn một lần, Dấu ấn một đời chọn câu đáng nhớ (lỗi #10, #11, #19) |
-| 6b.12 | [ ] Giao diện: ô tên, bấm đúp, nút Back, khối Mục tiêu, nhãn phiên bản (lỗi #14, #16, #17, #18, #20) |
-| 6b.13 | [ ] Chỗ tiêu linh thạch giữa đời, và hồ sơ bot "người chơi" cho `npm run simulate` |
+| 6b.2 | [x] Người chơi máy kiểu "người chơi" cho `npm run simulate` (vào tông, nhiệm vụ, bái sư, bảo khố, đổi công pháp) + số đo hạnh phúc 0, đạo tâm 0, năm kẹt vì công pháp |
+| 6b.3 | [ ] Hạnh phúc không rơi về 0 cả đời: trôi về mức nghỉ mỗi năm, có lối ra, cảnh báo (lỗi #2) |
+| 6b.4 | [ ] Bức tường công pháp: Mục tiêu nói rõ cần công pháp nào và tìm ở đâu, kỳ ngộ bảo đảm khi kẹt lâu (lỗi #3) |
+| 6b.5 | [ ] Cân lại thể chất đặc biệt (quá phổ biến) và linh căn tốt kẹt lâu hơn linh căn kém |
+| 6b.6 | [ ] Sự kiện, hành động không hợp ngữ cảnh: bái nhập lúc 0 tuổi, học nghề khi đã vào tông, Trúc Cơ Đan khi đã Trúc Cơ (lỗi #4, #13, #15) |
+| 6b.7 | [ ] Giao chiến: cảnh giới đối thủ khớp lời văn, đại từ số nhiều (lỗi #5, #12) |
+| 6b.8 | [ ] Tha kẻ trộm rồi không bị hỏi giao nộp (lỗi #6) |
+| 6b.9 | [ ] Tư chất không trôi quá nhiều theo nhiệm vụ, sự kiện thường (lỗi #7) |
+| 6b.10 | [ ] Người không linh căn tu Phật: Mục tiêu và nhãn công pháp không mâu thuẫn (lỗi #8) |
+| 6b.11 | [ ] Đồng môn cùng lứa để theo đuổi trong tông (lỗi #9) |
+| 6b.12 | [ ] Giảm lặp nhật ký/sự kiện, công bố linh căn một lần, Dấu ấn một đời chọn câu đáng nhớ (lỗi #10, #11, #19) |
+| 6b.13 | [ ] Giao diện: ô tên, bấm đúp, nút Back, khối Mục tiêu, nhãn phiên bản (lỗi #14, #16, #17, #18, #20) |
+| 6b.14 | [ ] Chỗ tiêu linh thạch giữa đời |
 
 ### GĐ 7 — Mở rộng nội dung
 Thêm **thế giới mới** với tuyến cốt truyện riêng (mục C.7) + màn chọn thế giới. Linh giới/Tiên giới, thêm hàng trăm sự kiện, các nghề bách nghệ còn lại (Trận pháp, Phù lục, Linh thực, Ngự thú), thêm mô bản khí vận chi tử, Capacitor nếu muốn lên store.

@@ -1,4 +1,4 @@
-// npm run simulate -- --count 500 --profile both --difficulty normal --seed sim
+// npm run simulate -- --count 500 --profile both --difficulty normal --seed sim   (both = mọi hồ sơ: random, steady, player)
 // Chạy hàng loạt đời giả lập để xem cân bằng (tuổi chết, cảnh giới, nguyên nhân chết, linh căn).
 // Dùng vite-node vì game nạp nội dung bằng import.meta.glob của Vite.
 import { loadContent } from '../src/core/content';
