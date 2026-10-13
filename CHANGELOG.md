@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6b.13: giao diện (2026-10-13)
+- Ô tên chỉ nhận chữ cái (có dấu) và dấu cách, tối đa 24 chữ, có dòng đếm. Tên gõ vào được làm sạch lần nữa trước khi đầu thai, nên họ của cả nhà không còn lấy từ ký tự lạ (lỗi #14).
+- Thẻ kết quả sự kiện bỏ qua lần chạm trong 300 ms đầu: bấm đúp vào lựa chọn không còn bấm luôn "Tiếp tục" (lỗi #16).
+- Nút Back của điện thoại đóng bảng đang mở (Tu luyện, Tông môn, Quan hệ, Túi đồ…) thay vì rời game (lỗi #17).
+- Khối Mục tiêu dính đầu nhật ký có nền đặc phủ kín bề ngang và cả phần đệm phía trên, thêm bóng mờ, chữ nhật ký không còn lộ qua (lỗi #18).
+- Màn tiêu đề ghi "Bản thử nghiệm 0.6.0" (lấy từ `package.json`, nay là 0.6.0) thay vì "Bản dựng khung · đang xây dựng" (lỗi #20).
+
 ### GĐ 6b.12: bớt lặp, Dấu ấn một đời (2026-10-13)
 - "[Hệ thống] Nhiệm vụ định kỳ": Hệ thống giao việc mỗi 10 năm (trước 3), mỗi nhiệm vụ chờ 15 năm mới lặp. "Khảo hạch cuối năm" chờ 10 năm (trước 5). Mô phỏng 300 đời: ba nhiệm vụ Hệ thống trước đứng đầu bảng lặp (trung bình 66 lần một đời, có đời 177 lần), nay không sự kiện nào quá 3 lần mỗi 100 năm sống (lỗi #10).
 - Bộ mô phỏng in thêm dòng "Sự kiện lặp dày nhất" (lần mỗi 100 năm sống).

@@ -4,6 +4,7 @@ import { fillTemplate } from '../../core/state';
 import type { GameState, Tone } from '../../core/types';
 import { findEvent, visibleChoices } from '../../systems/events/engine';
 import { TermText } from './Tooltip';
+import { useTapGuard } from './useTapGuard';
 
 const STAT_NAMES: Record<string, string> = {
   'stat.health': 'Sức khỏe', 'stat.happiness': 'Hạnh phúc', 'stat.intellect': 'Trí tuệ', 'stat.charm': 'Mị lực',
@@ -28,6 +29,7 @@ export function EventPopup({ state, content, result, onChoose, onClose }: {
   onClose: () => void;
 }) {
   const event = state.events.pending ? findEvent(content, state.events.pending) : undefined;
+  const ready = useTapGuard(result);
   if (!result && !event) return null;
 
   return (
@@ -39,7 +41,7 @@ export function EventPopup({ state, content, result, onChoose, onClose }: {
             <h2>{result.title}</h2>
             <p class={`story outcome ${result.tone}`}><TermText text={result.text} /></p>
             {result.changes && <p class="changes">{result.changes}</p>}
-            <button class="choice" onClick={onClose}>Tiếp tục</button>
+            <button class="choice" onClick={() => { if (ready) onClose(); }} aria-disabled={!ready}>Tiếp tục</button>
           </>
         ) : event && (
           <>

@@ -4,6 +4,7 @@ import type { Content } from '../../core/content';
 import { Rng } from '../../core/rng';
 import { randomName, type NewLifeInput } from '../../core/state';
 import type { Gender } from '../../core/types';
+import { cleanName, NAME_MAX, nameChars } from '../../systems/names';
 import { originOptions } from '../../systems/rebirth';
 
 function newSeed(): string {
@@ -47,10 +48,11 @@ export function CreateCharacterScreen({ content, rebirthPoints, fingers, onCreat
       <section class="field">
         <label for="name">Danh tính</label>
         <div class="name-row">
-          <input id="name" type="text" maxLength={24} placeholder="Để trống: trời đặt tên" value={name}
-            onInput={(e) => setName((e.target as HTMLInputElement).value)} />
+          <input id="name" type="text" maxLength={NAME_MAX} placeholder="Để trống: trời đặt tên" value={name}
+            onInput={(e) => { const el = e.target as HTMLInputElement; const v = nameChars(el.value); el.value = v; setName(v); }} />
           <button class="icon-btn" onClick={rollName} title="Tên ngẫu nhiên" aria-label="Tên ngẫu nhiên">卜</button>
         </div>
+        <p class="field-hint">Chỉ chữ cái và dấu cách, tối đa {NAME_MAX} chữ ({[...name].length}/{NAME_MAX}).</p>
       </section>
 
       <section class="field">
@@ -117,7 +119,7 @@ export function CreateCharacterScreen({ content, rebirthPoints, fingers, onCreat
       )}
 
       <div class="create-action">
-        <button class="btn-primary" onClick={() => onCreate({ seed: newSeed(), name, gender, originId, difficulty, goldenFinger: finger })}>Đầu thai</button>
+        <button class="btn-primary" onClick={() => onCreate({ seed: newSeed(), name: cleanName(name), gender, originId, difficulty, goldenFinger: finger })}>Đầu thai</button>
       </div>
     </main>
   );
