@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6b.6: hành động hợp ngữ cảnh (2026-10-13)
+- Tông môn chỉ nhận người từ 8 tuổi (`sects.minJoinAge`); trước đó trẻ 0 tuổi bái nhập được Vô Ưu Tự (lỗi #4).
+- Bảo khố khóa món chỉ gồm đan đột phá cho cảnh giới đã qua, ghi "Vô dụng ở cảnh giới này." (Trúc Cơ Đan khi đã Trúc Cơ, lỗi #13).
+- Sự kiện "Học nghề" (lò rèn, tiệm thuốc, quán trọ) không đến với đệ tử tông môn (lỗi #15).
+
 ### GĐ 6b.5: thể chất đặc biệt hiếm lại (2026-10-13)
 - Trước: 8 kỳ ngộ thức tỉnh thể chất, mỗi cái trọng số 0.4 và là một cơ hội riêng, điều kiện chỉ số thấp (55–60), nên đời sống lâu gần như chắc gặp một cái. Mô phỏng: 31% số đời mang thể chất.
 - Sau: **mỗi đời tối đa một cơ duyên** (gặp một kỳ ngộ thức tỉnh, nhận hay từ chối, là hết: cờ `duyen_the_chat`); trọng số 0.02 (Vạn Độc 0.05); ngưỡng chỉ số cao hơn: Cửu Dương căn cốt 70, Thái Âm trí tuệ 70, Bàn Thạch căn cốt 80 + đạo tâm 60, U Minh khí vận 70 + đạo tâm 65, Thiên Sinh Ma Thể danh ma 40 + đạo tâm 60.

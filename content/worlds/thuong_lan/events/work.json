@@ -13,7 +13,10 @@
         "nghe_ren",
         "nghe_thuoc",
         "nghe_quan"
-      ]
+      ],
+      "sect": {
+        "member": false
+      }
     },
     "weight": 15,
     "oncePerLife": true,

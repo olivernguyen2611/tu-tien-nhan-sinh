@@ -1418,6 +1418,8 @@ export const BalanceSchema = z
     /** Task 2.4/2.5: sect numbers keyed by sect id (worlds/<id>/sects.json). */
     sects: z
       .object({
+        /** 6b.6: youngest age a sect takes in (playtest: an infant joined Vô Ưu Tự). */
+        minJoinAge: z.number().int().min(0),
         /** Spirit stones a year at the outer-disciple rank. */
         stipend: z.record(id, z.number().min(0)),
         /** Stipend multiplier per rank index. */

@@ -232,6 +232,7 @@
     "adaptive": { "rootGrade": { "ngu": 0.5, "tu": 0.4, "tam": 0.3, "song": 0.2, "don": 0.1, "bien_di": 0.1, "the_chat": 0.1 }, "body": 0.25 }
   },
   "sects": {
+    "minJoinAge": 8,
     "stipend": { "bich_lac_tong": 3, "tang_phong_kiem_cac": 1, "bach_thao_coc": 2, "vo_uu_tu": 1, "u_ha_ma_tong": 4, "van_yeu_dien": 2 },
     "rankStipendMul": [0.5, 1, 2, 4],
     "karmaPerYear": { "u_ha_ma_tong": -2 },

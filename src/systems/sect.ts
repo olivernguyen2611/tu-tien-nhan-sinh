@@ -50,6 +50,7 @@ export function sectEligibility(state: GameState, content: Content, sectId: stri
   if (!state.alive) return 'đã hết một đời';
   if (state.sect.id) return 'đang là đệ tử tông môn khác';
   if (state.sect.left.includes(sectId)) return 'đã từng rời đi, không được quay lại';
+  if (state.character.age < content.balance.sects.minJoinAge) return `cần ${content.balance.sects.minJoinAge} tuổi`;
   const root = state.cult.root;
   if (!root || (content.balance.roots.gradeSpeed[root.grade] ?? 0) <= 0) {
     // Phật duyên (task 3.12): some sects take the rootless with a strong đạo tâm.
