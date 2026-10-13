@@ -20,11 +20,14 @@
       "stats": [
         {
           "stat": "stat.physique",
-          "gte": 60
+          "gte": 70
         }
+      ],
+      "flagsNone": [
+        "duyen_the_chat"
       ]
     },
-    "weight": 0.4,
+    "weight": 0.02,
     "cooldownYears": 0,
     "oncePerLife": true,
     "choices": [
@@ -35,7 +38,10 @@
           "effects": {
             "stat.health": -20,
             "stat.physique": 3,
-            "awakenBody": "cuu_duong_the"
+            "awakenBody": "cuu_duong_the",
+            "setFlags": [
+              "duyen_the_chat"
+            ]
           }
         }
       },
@@ -45,7 +51,10 @@
           "text": "Ngươi lùi ra. Khe núi vẫn nóng, ngươi vẫn là ngươi.",
           "effects": {
             "stat.daoHeart": 2,
-            "stat.happiness": 1
+            "stat.happiness": 1,
+            "setFlags": [
+              "duyen_the_chat"
+            ]
           }
         }
       }
@@ -72,11 +81,14 @@
       "stats": [
         {
           "stat": "stat.intellect",
-          "gte": 55
+          "gte": 70
         }
+      ],
+      "flagsNone": [
+        "duyen_the_chat"
       ]
     },
-    "weight": 0.4,
+    "weight": 0.02,
     "cooldownYears": 0,
     "oncePerLife": true,
     "choices": [
@@ -87,7 +99,10 @@
           "effects": {
             "stat.health": -15,
             "stat.charm": 3,
-            "awakenBody": "thai_am_the"
+            "awakenBody": "thai_am_the",
+            "setFlags": [
+              "duyen_the_chat"
+            ]
           }
         }
       },
@@ -97,7 +112,10 @@
           "text": "Trăng đẹp, nước lạnh. Ngươi về nhà ngủ một giấc ngon lành.",
           "effects": {
             "stat.daoHeart": 2,
-            "stat.happiness": 1
+            "stat.happiness": 1,
+            "setFlags": [
+              "duyen_the_chat"
+            ]
           }
         }
       }
@@ -126,9 +144,12 @@
           "stat": "stat.physique",
           "gte": 85
         }
+      ],
+      "flagsNone": [
+        "duyen_the_chat"
       ]
     },
-    "weight": 0.4,
+    "weight": 0.02,
     "cooldownYears": 0,
     "oncePerLife": true,
     "choices": [
@@ -139,7 +160,10 @@
           "effects": {
             "stat.health": -15,
             "stat.daoHeart": 2,
-            "awakenBody": "kim_cuong_than"
+            "awakenBody": "kim_cuong_than",
+            "setFlags": [
+              "duyen_the_chat"
+            ]
           }
         }
       },
@@ -149,7 +173,10 @@
           "text": "Ngươi nén cơn nóng xuống. Thân thể vẫn mạnh, chỉ thiếu một bước.",
           "effects": {
             "stat.daoHeart": 2,
-            "stat.happiness": 1
+            "stat.happiness": 1,
+            "setFlags": [
+              "duyen_the_chat"
+            ]
           }
         }
       }
@@ -176,15 +203,18 @@
       "stats": [
         {
           "stat": "stat.physique",
-          "gte": 75
+          "gte": 80
         },
         {
           "stat": "stat.daoHeart",
-          "gte": 55
+          "gte": 60
         }
+      ],
+      "flagsNone": [
+        "duyen_the_chat"
       ]
     },
-    "weight": 0.4,
+    "weight": 0.02,
     "cooldownYears": 0,
     "oncePerLife": true,
     "choices": [
@@ -195,7 +225,10 @@
           "effects": {
             "stat.health": -10,
             "stat.happiness": -2,
-            "awakenBody": "ban_thach_thanh_cot"
+            "awakenBody": "ban_thach_thanh_cot",
+            "setFlags": [
+              "duyen_the_chat"
+            ]
           }
         }
       },
@@ -205,7 +238,10 @@
           "text": "Núi vẫn im lặng sau lưng ngươi.",
           "effects": {
             "stat.daoHeart": 2,
-            "stat.happiness": 1
+            "stat.happiness": 1,
+            "setFlags": [
+              "duyen_the_chat"
+            ]
           }
         }
       }
@@ -231,9 +267,12 @@
       },
       "flagsAll": [
         "trung_doc"
+      ],
+      "flagsNone": [
+        "duyen_the_chat"
       ]
     },
-    "weight": 1.0,
+    "weight": 0.05,
     "cooldownYears": 0,
     "oncePerLife": true,
     "choices": [
@@ -244,7 +283,10 @@
           "effects": {
             "stat.health": -20,
             "stat.intellect": 2,
-            "awakenBody": "van_doc_the"
+            "awakenBody": "van_doc_the",
+            "setFlags": [
+              "duyen_the_chat"
+            ]
           }
         }
       },
@@ -254,7 +296,10 @@
           "text": "Thuốc giải hữu hiệu. Ngươi sống, và chẳng hiểu mình vừa bỏ lỡ điều gì.",
           "effects": {
             "stat.daoHeart": 2,
-            "stat.happiness": 1
+            "stat.happiness": 1,
+            "setFlags": [
+              "duyen_the_chat"
+            ]
           }
         }
       }
@@ -281,15 +326,18 @@
       "stats": [
         {
           "stat": "stat.luck",
-          "gte": 55
+          "gte": 70
         },
         {
           "stat": "stat.daoHeart",
-          "gte": 60
+          "gte": 65
         }
+      ],
+      "flagsNone": [
+        "duyen_the_chat"
       ]
     },
-    "weight": 0.4,
+    "weight": 0.02,
     "cooldownYears": 0,
     "oncePerLife": true,
     "choices": [
@@ -301,7 +349,10 @@
             "stat.health": -10,
             "stat.charm": -2,
             "stat.intellect": 2,
-            "awakenBody": "u_minh_hon_the"
+            "awakenBody": "u_minh_hon_the",
+            "setFlags": [
+              "duyen_the_chat"
+            ]
           }
         }
       },
@@ -311,7 +362,10 @@
           "text": "Ngươi chạy một mạch về nhà, thắp ba nén hương.",
           "effects": {
             "stat.daoHeart": 2,
-            "stat.happiness": 1
+            "stat.happiness": 1,
+            "setFlags": [
+              "duyen_the_chat"
+            ]
           }
         }
       }
@@ -340,9 +394,12 @@
           "stat": "stat.comprehension",
           "gte": 90
         }
+      ],
+      "flagsNone": [
+        "duyen_the_chat"
       ]
     },
-    "weight": 0.4,
+    "weight": 0.02,
     "cooldownYears": 0,
     "oncePerLife": true,
     "choices": [
@@ -353,7 +410,10 @@
           "effects": {
             "stat.happiness": 4,
             "stat.daoHeart": 2,
-            "awakenBody": "tien_thien_dao_cot"
+            "awakenBody": "tien_thien_dao_cot",
+            "setFlags": [
+              "duyen_the_chat"
+            ]
           }
         }
       },
@@ -363,7 +423,10 @@
           "text": "Mây trôi, ngươi cũng đứng dậy. Cơ duyên đến rồi lại đi.",
           "effects": {
             "stat.daoHeart": 2,
-            "stat.happiness": 1
+            "stat.happiness": 1,
+            "setFlags": [
+              "duyen_the_chat"
+            ]
           }
         }
       }
@@ -390,15 +453,18 @@
       "stats": [
         {
           "stat": "reputation.ma",
-          "gte": 30
+          "gte": 40
         },
         {
           "stat": "stat.daoHeart",
-          "gte": 50
+          "gte": 60
         }
+      ],
+      "flagsNone": [
+        "duyen_the_chat"
       ]
     },
-    "weight": 0.4,
+    "weight": 0.02,
     "cooldownYears": 0,
     "oncePerLife": true,
     "choices": [
@@ -410,7 +476,10 @@
             "stat.health": -10,
             "stat.daoHeart": -2,
             "stat.charm": 2,
-            "awakenBody": "thien_sinh_ma_the"
+            "awakenBody": "thien_sinh_ma_the",
+            "setFlags": [
+              "duyen_the_chat"
+            ]
           }
         }
       },
@@ -420,7 +489,10 @@
           "text": "Tiếng thì thầm tắt dần. Ngươi toát mồ hôi lạnh.",
           "effects": {
             "stat.daoHeart": 2,
-            "stat.happiness": 1
+            "stat.happiness": 1,
+            "setFlags": [
+              "duyen_the_chat"
+            ]
           }
         }
       }
