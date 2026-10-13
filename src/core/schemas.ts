@@ -738,6 +738,19 @@ export const BalanceSchema = z
     aptitudeGain: z
       .object({ stats: z.array(z.enum(APTITUDES)), softAt: z.number(), softMul: z.number().min(0), hardAt: z.number(), hardMul: z.number().min(0) })
       .strict(),
+    /**
+     * 6c.5: a cultivator's yearly money. Silver is swapped for spirit stones at `silverPerStone` (bad rate, no UI);
+     * from Trúc Cơ, each living child, đạo lữ and disciple (up to maxDependents) eats upkeep spirit stones by realm.
+     */
+    economy: z
+      .object({
+        silverPerStone: z.number().positive(),
+        exchangeFrom: id,
+        upkeepPerDependent: z.record(id, z.number().min(0)),
+        maxDependents: z.number().int().min(0),
+        shortHappiness: z.number(),
+      })
+      .strict(),
     /** 6c.4: ordinary gains to these stats shrink past softAt / hardAt (like aptitudeGain). */
     statGain: z
       .object({ stats: z.array(z.enum(['happiness', 'intellect', 'charm'])), softAt: z.number(), softMul: z.number().min(0), hardAt: z.number(), hardMul: z.number().min(0) })
@@ -1750,6 +1763,8 @@ export const LifeTextsSchema = z
     /** 6c.3: a yearly calamity (tai ương) of a cultivator; {age}. */
     deathCalamity: lines,
     calamity: lines,
+    /** 6c.5: yearly money lines; {silver} {stones}. */
+    economy: z.object({ exchange: z.string().min(1), upkeepPaid: z.string().min(1), upkeepShort: z.string().min(1) }).strict(),
     /** Task 4.12 quỷ tu: the offer on the death screen, and the line when the soul rises. */
     ghostOffer: z.string().min(1),
     /** Backlog 11/12: the saved-people book and importing them as NPCs. */

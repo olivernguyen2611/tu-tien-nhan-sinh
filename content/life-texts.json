@@ -235,5 +235,10 @@
     "Yêu thú lạc đàn xông vào động phủ, giao đấu một trận mới đuổi được.",
     "Đan độc tích tụ lâu năm bộc phát, ngươi nôn ra máu đen.",
     "Cấm chế cũ trong thạch thất vô cớ nổ tung, ngươi bị sóng xung kích hất văng."
-  ]
+  ],
+  "economy": {
+    "exchange": "Thương hội thu {silver} lượng bạc của ngươi, đổi lấy {stones} linh thạch. Giá hời cho họ, nhưng bạc nằm không cũng chỉ để mốc.",
+    "upkeepPaid": "Gia quyến và đồ đệ ăn tiêu hết {stones} linh thạch trong năm.",
+    "upkeepShort": "Linh thạch không đủ nuôi gia quyến và đồ đệ, ngươi thấy hổ thẹn khó tả."
+  }
 }

@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6c.5: kinh tế người tu (2026-10-13)
+- Bạc không còn vô dụng sau khi nhập đạo: mỗi năm Thương hội tự đổi bạc của người tu từ Luyện Khí trở lên lấy linh thạch, 100 bạc một linh thạch (`economy.silverPerStone`, giá bất lợi), ghi một dòng nhật ký.
+- Nuôi người: từ Trúc Cơ, mỗi con, đạo lữ, đồ đệ còn sống (tối đa 6) ăn tiêu linh thạch mỗi năm theo cảnh giới (Trúc Cơ 0,5, Kim Đan 1, Nguyên Anh 2, Hóa Thần 4). Thiếu linh thạch thì mất 3 hạnh phúc và hết sạch linh thạch.
+- Mô phỏng: linh thạch lúc chết trung vị 218 → 174, số đời còn từ 500 linh thạch 14% → 13%.
+- Test mới (`tests/economy.test.ts`).
+
 ### GĐ 6c.4: chỉ số không còn dính 100 (2026-10-13)
 - Hạnh phúc, trí tuệ và mị lực tăng chậm dần khi đã cao (`statGain`): từ 70 điểm chỉ tính một nửa, từ 90 chỉ tính một phần tư. Chỉ áp cho phần cộng thường (kết quả sự kiện thường, nhiệm vụ tông); kỳ ngộ, mất điểm và các chỉ số khác giữ nguyên. Bản đánh giá ghi Trí tuệ 100 từ tuổi 23, Mị lực 100 từ 53, Hạnh phúc dính 93-100.
 - Bộ mô phỏng in thêm "Số năm sống có chỉ số từ 95" cho từng chỉ số (bản mô phỏng người chơi máy ra hạnh phúc 0%, trí tuệ 6%, mị lực 6%; người thật chơi lâu và ngao du nhiều hơn nên cao hơn, cần đối chiếu lại bằng bot giao diện).
