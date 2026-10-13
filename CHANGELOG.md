@@ -8,6 +8,14 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6b.3: hạnh phúc không rơi về 0 cả đời (2026-10-13)
+- Trước: hạnh phúc chỉ trôi về mức nghỉ (50) trong "năm bình lặng", mà đời trong tông gần như không có năm như vậy; "Lòng như tro nguội" bào sức khỏe và đạo tâm hàng chục năm.
+- Sau: **mỗi năm** hạnh phúc trôi về 50 thêm `extremes.happinessDrift` = 2; năm bình lặng và năm bế quan thêm `happinessQuietDrift` = 3 (tổng 5, trước là 2).
+- Hành động mới **Ngao du** (dưới thanh chỉ số, hiện khi hạnh phúc dưới 50): mỗi năm một lần, từ 8 tuổi; tu sĩ trả 3 linh thạch, phàm nhân 5 lượng bạc, hạnh phúc +8–14; hết tiền thì đi dạo miễn phí +3–5; nếu hạnh phúc ≤ 20 thì đạo tâm +1 (`balance.leisure`). Đây cũng là chỗ tiêu linh thạch giữa đời.
+- Khi đang "Lòng như tro nguội", dưới thanh chỉ số có dòng cảnh báo nói rõ hậu quả và lối ra.
+- Đo bằng `npm run simulate -- --profile player` (300 đời, người chơi máy đi Ngao du khi hạnh phúc < 30): hạnh phúc chạm 0 39.3% → 0% số đời; đạo tâm chạm 0 22.7% → 14%; Kim Đan 17% → 25.3%; Nguyên Anh 7% → 11.3%.
+- Sửa kèm (lộ ra khi đời tu sống lâu hơn): vài đời Hóa Thần sống quá 3000 năm vì thọ nguyên cộng dồn theo %. Nay `lifespanPct` từ sự kiện không đẩy thọ nguyên quá thọ nguyên gốc của cảnh giới × 1.5 (`lifespan.eventCapPct` = 0.5), và thọ nguyên từ trạng thái "Thân cường thể tráng" chỉ nhận một lần mỗi đời. Đời dài nhất trong 300 đời: 2774 tuổi, không còn đời bất tử.
+
 ### GĐ 6b.2: người chơi máy kiểu "người chơi" (2026-10-13)
 - `npm run simulate -- --profile player`: chọn sự kiện ngẫu nhiên, vào tông môn đầu tiên đủ điều kiện, mỗi năm làm nhiệm vụ có tỉ lệ cao nhất, xin bái sư, đổi đồ ở bảo khố, chuyển sang công pháp tu được xa nhất, đột phá khi tỉ lệ ≥ 40%. Chỉ gọi hàm của game.
 - Báo cáo thêm: tỉ lệ Kim Đan và số năm kẹt vì công pháp theo từng linh căn; số đời hạnh phúc chạm 0 và số năm ở 0; số đời đạo tâm chạm 0; số năm đầy thanh tu vi mà không tiến được.

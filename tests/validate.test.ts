@@ -11,8 +11,9 @@ const balance = {
     fatherAge: [20, 35], motherAge: [17, 30], affinityStart: [55, 85], olderSiblings: [0, 2], olderSiblingGap: [2, 6],
     youngerSiblingChance: 0.12, motherMinAgeForChild: 16, motherMaxAgeForChild: 40, maxSiblings: 4, affinityDecay: 1, grief: { father: [-20, -30], mother: [-20, -30], sibling: [-15, -15], child: [-25, -40], parentDaoHeart: 2 },
   },
-  lifespan: { mortalBase: 70, mortalVariance: 10, healthAdjustMax: 10, pressureLeftPct: 0.1 },
+  lifespan: { mortalBase: 70, mortalVariance: 10, healthAdjustMax: 10, pressureLeftPct: 0.1, eventCapPct: 0.5 },
   fastForward: { maxYears: 10 },
+  leisure: { minAge: 8, silver: 5, spiritStones: 3, happiness: [8, 14], freeHappiness: [3, 5], daoHeartBelow: 20, daoHeart: 1 },
   aging: { recoverPerYear: 3, recoverCap: 70, declineStartAge: 50, healthDeclinePerYear: 1, illnessStartAge: 60, illnessChancePerYear: 0.008, illnessHealthLoss: [5, 15], illnessHappinessLoss: 5, epitaphKarma: 30, milestoneAges: [60], milestoneHealth: -5, milestoneCharm: -3, slowAgingYears: 30 },
   realms: realBalance.realms,
   realmStages: realBalance.realmStages,
@@ -52,7 +53,7 @@ const balance = {
   goldenFinger: realBalance.goldenFinger,
   badges: realBalance.badges,
   pastSect: realBalance.pastSect,
-  extremes: { lowAt: 5, highAt: 95, exitLow: 20, exitHigh: 80, karmaLowAt: -80, karmaHighAt: 80, karmaExitLow: -60, karmaExitHigh: 60, years: 3, onceCooldownYears: 10, happinessDrift: 2, happinessRest: 50 },
+  extremes: { lowAt: 5, highAt: 95, exitLow: 20, exitHigh: 80, karmaLowAt: -80, karmaHighAt: 80, karmaExitLow: -60, karmaExitHigh: 60, years: 3, onceCooldownYears: 10, happinessDrift: 2, happinessQuietDrift: 3, happinessRest: 50 },
 };
 
 function event(overrides: Record<string, unknown> = {}) {

@@ -12,6 +12,7 @@ import { resolveChoice, findEvent, visibleChoices } from './events/engine';
 import { chooseFate } from './fate';
 import { placeStrand } from './goldenCore';
 import { meetIllusion } from './heartDemon';
+import { goLeisure } from './leisure';
 import { runSeclusion } from './seclusion';
 import { doMission, joinSect, missionViews, requestMaster, masterBlocked, sectEligibility, sectTechniques } from './sect';
 import { buyTreasury, treasuryViews } from './sectTreasury';
@@ -157,6 +158,8 @@ function playerYear(state: GameState, content: Content): GameState {
     const buy = treasuryViews(s, content).find((t) => !t.blocked);
     if (buy) s = buyTreasury(s, content, buy.id)?.state ?? s;
   }
+  // A player who sees the warning goes on a trip.
+  if (s.stats.happiness < 30) s = goLeisure(s, content)?.state ?? s;
   // Move to the technique that reaches furthest (no limit counts as furthest).
   const order = content.cultivation.realms.realms.map((r) => r.id);
   const reach = (id: string | null) => {

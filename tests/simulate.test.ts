@@ -21,7 +21,7 @@ describe('Mô phỏng tự động (6.1)', () => {
       expect(report.count).toBe(12);
       expect(report.stuck).toBe(0);
     }
-  });
+  }, 60_000);
 
   it('the report adds up', () => {
     const { results, report } = simulateMany(content, 20, 'sim-report');

@@ -721,9 +721,25 @@ export const BalanceSchema = z
       .object({
         mortalBase: z.number().int().min(1),
         mortalVariance: z.number().int().min(0),
+        /** 6b.3: event lifespanPct cannot lift the lifespan past the realm's base × (1 + this); repeated gains compounded into lives of 3000+ years. */
+        eventCapPct: z.number().min(0),
         healthAdjustMax: z.number().int().min(0),
         /** Task 4.10: "đại hạn sắp tới" once the years left are at most this share of the lifespan. */
         pressureLeftPct: probability,
+      })
+      .strict(),
+    /** 6b.2 Ngao du: once a year, pay to lift happiness (silver for mortals, spirit stones for cultivators). */
+    leisure: z
+      .object({
+        minAge: z.number().int().min(0),
+        silver: z.number().int().min(0),
+        spiritStones: z.number().int().min(0),
+        happiness: z.tuple([z.number(), z.number()]),
+        /** Free walk when the purse is empty. */
+        freeHappiness: z.tuple([z.number(), z.number()]),
+        /** Đạo tâm gained when happiness was at or below this before the trip. */
+        daoHeartBelow: z.number(),
+        daoHeart: z.number(),
       })
       .strict(),
     /** Task 1.11: "Tua nhanh" stops after at most this many years. */
@@ -1218,8 +1234,10 @@ export const BalanceSchema = z
         karmaExitHigh: z.number(),
         years: z.number().int().min(1),
         onceCooldownYears: z.number().int().min(0),
-        /** Quiet years pull happiness this much toward happinessRest. */
+        /** Every year pulls happiness this much toward happinessRest (6b.2; was quiet years only). */
         happinessDrift: z.number().min(0),
+        /** A quiet year pulls this much more. */
+        happinessQuietDrift: z.number().min(0),
         happinessRest: z.number(),
       })
       .strict(),
@@ -1720,6 +1738,8 @@ export const LifeTextsSchema = z
     rewindOffer: z.string().min(1),
     rewindAge6: z.string().min(1),
     rewindRealm: z.string().min(1),
+    /** 6b.2 Ngao du: paid trip, free walk (empty purse), and the low-happiness hint under the stats. */
+    leisure: z.object({ paid: lines, free: lines, lowHint: z.string().min(1) }).strict(),
     /** plainCultivator: the plain pool for anyone past Phàm Nhân (playtest 2026-10-12). */
     epitaph: z.object({ good: lines, bad: lines, plain: lines, plainCultivator: lines }).strict(),
   })

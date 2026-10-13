@@ -363,7 +363,13 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   // Task 3.9.
   if (fx.lifespanYears) next = { ...next, cult: { ...next.cult, lifespan: Math.max(next.character.age + 1, next.cult.lifespan + fx.lifespanYears) } };
   // Task 4.10: a share of the lifespan, so a pill or a new body is worth as much to a Nguyên Anh as to a Luyện Khí.
-  if (fx.lifespanPct) next = { ...next, cult: { ...next.cult, lifespan: Math.max(next.character.age + 1, next.cult.lifespan + Math.round(next.cult.lifespan * fx.lifespanPct)) } };
+  if (fx.lifespanPct) {
+    const cur = next.cult.lifespan;
+    const base = content.balance.realms[next.cult.realm]?.lifespan ?? content.balance.lifespan.mortalBase;
+    const cap = Math.max(cur, Math.round(base * (1 + content.balance.lifespan.eventCapPct)));
+    const lifespan = fx.lifespanPct > 0 ? Math.min(cap, cur + Math.round(cur * fx.lifespanPct)) : cur + Math.round(cur * fx.lifespanPct);
+    next = { ...next, cult: { ...next.cult, lifespan: Math.max(next.character.age + 1, lifespan) } };
+  }
   if (fx.heartDemon) {
     // Task 3.10: heartDemonResist shrinks new tâm ma (a negative resist, Ma Tâm Chủng, makes it grow).
     const gain = fx.heartDemon > 0 ? Math.max(0, Math.round(fx.heartDemon * (1 - hookSum(next, content, 'heartDemonResist')))) : fx.heartDemon;
