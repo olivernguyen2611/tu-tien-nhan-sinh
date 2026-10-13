@@ -407,7 +407,7 @@ Mỗi vấn đề một task, theo mức nghiêm trọng trong bản đánh giá
 | 6b.5 | [x] Cân lại thể chất đặc biệt (quá phổ biến) và linh căn tốt kẹt lâu hơn linh căn kém |
 | 6b.6 | [x] Sự kiện, hành động không hợp ngữ cảnh: bái nhập lúc 0 tuổi, học nghề khi đã vào tông, Trúc Cơ Đan khi đã Trúc Cơ (lỗi #4, #13, #15) |
 | 6b.7 | [x] Giao chiến: cảnh giới đối thủ khớp lời văn, đại từ số nhiều (lỗi #5, #12) |
-| 6b.8 | [ ] Tha kẻ trộm rồi không bị hỏi giao nộp (lỗi #6) |
+| 6b.8 | [x] Tha kẻ trộm rồi không bị hỏi giao nộp (lỗi #6) |
 | 6b.9 | [ ] Tư chất không trôi quá nhiều theo nhiệm vụ, sự kiện thường (lỗi #7) |
 | 6b.10 | [ ] Người không linh căn tu Phật: Mục tiêu và nhãn công pháp không mâu thuẫn (lỗi #8) |
 | 6b.11 | [ ] Đồng môn cùng lứa để theo đuổi trong tông (lỗi #9) |

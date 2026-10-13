@@ -271,6 +271,8 @@ export function act(state: GameState, content: Content, action: CombatAction, it
     if (steal > 0) s = hurt(s, -Math.round(c.roundInjury[1] * steal));
     const b2 = { ...battle, won: battle.won + 1 };
     if (b2.won >= c.winRounds) {
+      // 6b.8: when the event carries on right after the fight (a same-year follow-up decides the foe's fate), skip the shared spare/loot/kill step.
+      if (battle.outcomes.win.effects.followUp?.afterYears[1] === 0) return end(s, content, b2, 'won', { text, tone: 'good' }, rng);
       const next = withBattle(s, { ...b2, phase: 'won' }, { text, tone: 'good' }, rng);
       return { state: withBattle(next, next.combat!, { text: fill(t.won, foe, s), tone: 'good' }, rng), text, tone: 'good' };
     }
@@ -320,7 +322,7 @@ function loseConsequence(s: GameState, content: Content, foe: Foe, rng: Rng): { 
   return { state: { ...s, stats: { ...s.stats, health: 0 } }, lines };
 }
 
-function end(s: GameState, content: Content, battle: Battle, how: 'lost' | 'fled' | 'spared', line: LogLine, rng: Rng): CombatResult {
+function end(s: GameState, content: Content, battle: Battle, how: 'lost' | 'fled' | 'spared' | 'won', line: LogLine, rng: Rng): CombatResult {
   const lines: LogLine[] = [line];
   let next = s;
   if (how === 'lost') {
@@ -335,12 +337,16 @@ function end(s: GameState, content: Content, battle: Battle, how: 'lost' | 'fled
       // Died saving someone: Phúc báo for the next life (task 5b.8).
       next = { ...next, flags: { ...next.flags, chet_vi_cuu_nguoi: true } };
     }
+  } else if (how === 'won') {
+    const o = applyOutcome({ ...next, rng: rng.getState(), events: { ...next.events, npc: battle.npcId } }, content, battle.outcomes.win, rng);
+    next = o.state;
+    lines.push({ text: o.text, tone: 'good' });
   } else if (how === 'fled' && battle.outcomes.fled) {
     const o = applyOutcome({ ...next, rng: rng.getState(), events: { ...next.events, npc: battle.npcId } }, content, battle.outcomes.fled, rng);
     next = o.state;
     lines.push({ text: o.text, tone: 'normal' });
   }
-  return finish(next, battle, lines, rng, how === 'lost' ? 'bad' : 'normal');
+  return finish(next, battle, lines, rng, how === 'lost' ? 'bad' : how === 'won' ? 'good' : 'normal');
 }
 
 /** Close the fight: sum it up in the year's log and free the year. */
