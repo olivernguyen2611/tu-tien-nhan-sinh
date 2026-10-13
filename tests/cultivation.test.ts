@@ -44,7 +44,20 @@ describe('spirit root (task 2.2)', () => {
     s = { ...s, character: { ...s.character, age }, events: { ...s.events, pending: 'thu_linh_can', followUps: [] } };
     s = resolveChoice(s, content, 1).state;
     expect(s.cult.root).toBeNull();
-    expect(s.events.followUps).toEqual([{ event: 'thu_linh_can', atAge: age + 1 }]);
+    expect(s.events.followUps).toEqual([{ event: 'thu_linh_can_lai', atAge: age + 1 }]);
+  });
+
+  it('hiding works at most twice; the third visit always tests (playtest 3)', () => {
+    let s = createLife({ seed: 'hide3' }, content);
+    s = { ...s, events: { ...s.events, pending: 'thu_linh_can', followUps: [] } };
+    s = resolveChoice(s, content, 1).state;
+    s = { ...s, events: { ...s.events, pending: s.events.followUps[0].event, followUps: [] } };
+    s = resolveChoice(s, content, 1).state;
+    expect(s.events.followUps.map((f) => f.event)).toEqual(['thu_linh_can_cuoi']);
+    s = { ...s, events: { ...s.events, pending: 'thu_linh_can_cuoi', followUps: [] } };
+    s = resolveChoice(s, content, 1).state;
+    expect(s.cult.root).not.toBeNull();
+    expect(s.events.followUps).toEqual([]);
   });
 
   it('roughly follows the grade table (60% no root)', () => {
