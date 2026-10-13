@@ -423,7 +423,7 @@ Giữ trần Hóa Thần, không thêm cảnh giới mới. Mỗi task có chỉ
 | 6c.1 | [x] Đường cong đột phá: trần cộng dồn, hiệu suất giảm dần, trần clamp theo cảnh giới, thất bại/kiếp nạn nặng hơn |
 | 6c.2 | [x] Hãm vòng cày an toàn của tông môn (nhiệm vụ, bảo khố, Cải mệnh) |
 | 6c.3 | [x] Áp lực sinh tồn sau Trúc Cơ |
-| 6c.4 | [ ] Chỉ số bão hòa (Hạnh phúc, Trí tuệ, Mị lực) |
+| 6c.4 | [x] Chỉ số bão hòa (Hạnh phúc, Trí tuệ, Mị lực) |
 | 6c.5 | [ ] Kinh tế: chỗ tiêu bạc và linh thạch |
 | 6c.6 | [ ] Giảm lặp nhật ký, thêm biến thể văn bản |
 | 6c.7 | [ ] ~30 sự kiện Kim Đan/Nguyên Anh/Hóa Thần, nối `charmResist` |

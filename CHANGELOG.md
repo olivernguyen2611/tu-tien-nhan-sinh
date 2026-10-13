@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6c.4: chỉ số không còn dính 100 (2026-10-13)
+- Hạnh phúc, trí tuệ và mị lực tăng chậm dần khi đã cao (`statGain`): từ 70 điểm chỉ tính một nửa, từ 90 chỉ tính một phần tư. Chỉ áp cho phần cộng thường (kết quả sự kiện thường, nhiệm vụ tông); kỳ ngộ, mất điểm và các chỉ số khác giữ nguyên. Bản đánh giá ghi Trí tuệ 100 từ tuổi 23, Mị lực 100 từ 53, Hạnh phúc dính 93-100.
+- Bộ mô phỏng in thêm "Số năm sống có chỉ số từ 95" cho từng chỉ số (bản mô phỏng người chơi máy ra hạnh phúc 0%, trí tuệ 6%, mị lực 6%; người thật chơi lâu và ngao du nhiều hơn nên cao hơn, cần đối chiếu lại bằng bot giao diện).
+- Test mới cho độ nén.
+
 ### GĐ 6c.3: tai ương trên đường tu (2026-10-13)
 - Người tu từ Trúc Cơ trở lên không còn an toàn tuyệt đối: mỗi năm có khả năng gặp **tai ương** (phản phệ linh khí, tán tu báo thù, độc chướng, yêu thú, đan độc, cấm chế nổ), mất sức khỏe. Tỉ lệ và mức mất theo cảnh giới (`aging.calamity`: Trúc Cơ 2%, Kim Đan 5%, Nguyên Anh 7%, Hóa Thần 9% mỗi năm); khí vận và thể chất giảm tỉ lệ, sàn 1%. Bản đánh giá ghi cơ thể người tu già chậm nên chẳng còn mối nguy nào sau Trúc Cơ.
 - Nguyên nhân chết mới `calamity` ("Mất năm N tuổi vì tai ương trên đường tu"): người tu từ Trúc Cơ cạn sức khỏe thì chết vì tai ương, phàm nhân và Luyện Khí vẫn là bệnh. Thêm vào dev mode, thành tựu, hồn ma (`ghost.causeChance.calamity` 0.2).

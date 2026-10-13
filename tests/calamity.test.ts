@@ -62,3 +62,17 @@ describe('6c.3 calamity (tai ương)', () => {
     expect(deathCause(m)).toBe('illness');
   });
 });
+
+describe('6c.4 stat gains taper', () => {
+  it('ordinary gains to happiness, trí tuệ and mị lực shrink at the top, losses and other stats do not', async () => {
+    const { ordinaryStat } = await import('../src/systems/aptitudeGain');
+    const { Rng } = await import('../src/core/rng');
+    const rng = new Rng('taper');
+    expect(ordinaryStat('happiness', 50, 10, content, rng)).toBe(60);
+    expect(ordinaryStat('happiness', 80, 10, content, rng)).toBe(85);
+    expect(ordinaryStat('happiness', 95, 8, content, rng)).toBe(97);
+    expect(ordinaryStat('happiness', 95, -8, content, rng)).toBe(87);
+    expect(ordinaryStat('health', 95, 4, content, rng)).toBe(99);
+    expect(ordinaryStat('charm', 99, 20, content, rng)).toBe(100);
+  });
+});

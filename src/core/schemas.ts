@@ -738,6 +738,10 @@ export const BalanceSchema = z
     aptitudeGain: z
       .object({ stats: z.array(z.enum(APTITUDES)), softAt: z.number(), softMul: z.number().min(0), hardAt: z.number(), hardMul: z.number().min(0) })
       .strict(),
+    /** 6c.4: ordinary gains to these stats shrink past softAt / hardAt (like aptitudeGain). */
+    statGain: z
+      .object({ stats: z.array(z.enum(['happiness', 'intellect', 'charm'])), softAt: z.number(), softMul: z.number().min(0), hardAt: z.number(), hardMul: z.number().min(0) })
+      .strict(),
     /** 6b.2 Ngao du: once a year, pay to lift happiness (silver for mortals, spirit stones for cultivators). */
     leisure: z
       .object({

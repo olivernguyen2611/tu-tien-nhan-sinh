@@ -15,3 +15,19 @@ export function ordinaryAptitude(key: string, current: number, add: number, cont
   }
   return Math.max(0, Math.min(100, Math.round(current + gain)));
 }
+
+/**
+ * 6c.4: happiness, trí tuệ and mị lực also climb less and less in ordinary play, so they stop sitting at 100
+ * for most of a life. Only ordinary gains are scaled (events, missions); losses and kỳ ngộ are not.
+ */
+export function ordinaryStat(key: string, current: number, add: number, content: Content, rng: Rng): number {
+  const cfg = content.balance.statGain;
+  let gain = add;
+  if (add > 0 && (cfg.stats as string[]).includes(key)) {
+    const mul = current >= cfg.hardAt ? cfg.hardMul : current >= cfg.softAt ? cfg.softMul : 1;
+    const raw = add * mul;
+    const frac = raw - Math.floor(raw);
+    gain = Math.floor(raw) + (frac > 0 && rng.chance(frac) ? 1 : 0);
+  }
+  return Math.max(0, Math.min(100, Math.round(current + gain)));
+}
