@@ -345,7 +345,12 @@ export const ChoiceSchema = z
     text: z.string().min(1),
     requires: ConditionsSchema.partial().optional(),
     hidden: z.boolean().default(false),
-    check: z.object({ stat: statKey, difficulty: z.number().min(0).max(100) }).strict().optional(),
+    check: z.object({
+      stat: statKey,
+      difficulty: z.number().min(0).max(100),
+      /** 6c.7: a hook that eases this check (charmResist against charms and illusions, heartDemonResist against inner demons). */
+      resist: z.enum(['charmResist', 'heartDemonResist']).optional(),
+    }).strict().optional(),
     success: OutcomeSchema.optional(),
     fail: OutcomeSchema.optional(),
     result: OutcomeSchema.optional(),
@@ -640,7 +645,11 @@ export const BalanceSchema = z
         repeatDecay: z.number().min(0).max(1),
         /** Skill check: chance = base + (stat − difficulty) × perPoint, clamped to [min, max]. */
         check: z
-          .object({ base: probability, perPoint: z.number().min(0), min: probability, max: probability })
+          .object({
+            base: probability, perPoint: z.number().min(0), min: probability, max: probability,
+            /** 6c.7: a check with `resist` counts the hook's value × this as points off the difficulty. */
+            resistPoints: z.number().positive().default(100),
+          })
           .strict(),
       })
       .strict(),
@@ -738,6 +747,19 @@ export const BalanceSchema = z
     aptitudeGain: z
       .object({ stats: z.array(z.enum(APTITUDES)), softAt: z.number(), softMul: z.number().min(0), hardAt: z.number(), hardMul: z.number().min(0) })
       .strict(),
+    /**
+     * 6c.5: a cultivator's yearly money. Silver is swapped for spirit stones at `silverPerStone` (bad rate, no UI);
+     * from Trúc Cơ, each living child, đạo lữ and disciple (up to maxDependents) eats upkeep spirit stones by realm.
+     */
+    economy: z
+      .object({
+        silverPerStone: z.number().positive(),
+        exchangeFrom: id,
+        upkeepPerDependent: z.record(id, z.number().min(0)),
+        maxDependents: z.number().int().min(0),
+        shortHappiness: z.number(),
+      })
+      .strict(),
     /** 6c.4: ordinary gains to these stats shrink past softAt / hardAt (like aptitudeGain). */
     statGain: z
       .object({ stats: z.array(z.enum(['happiness', 'intellect', 'charm'])), softAt: z.number(), softMul: z.number().min(0), hardAt: z.number(), hardMul: z.number().min(0) })
@@ -832,6 +854,8 @@ export const BalanceSchema = z
         /** Repaying a kindness: favor at least repayAt; chance a year. */
         repayAt: z.number(),
         repayChance: probability,
+        /** 6c.6: at least this many years between two repay visits (Báo ân), whoever it is. */
+        repayGapYears: z.number().int().min(0),
         /** Revenge chance × this when the NPC's realm is above the player's. */
         revengeStrongerMul: z.number().min(0),
         /** Chance a year that a masked NPC (nature ≠ surface) shows their true face. */
@@ -864,6 +888,8 @@ export const BalanceSchema = z
     founding: z
       .object({
         minRealm: id,
+        /** 6c.6: the yearly report line goes in the log only every this many years (or on a big swing); the panel always has it. */
+        reportLogEvery: z.number().int().min(1),
         /** Spirit stones to open a mountain gate. */
         cost: z.number().int().min(0),
         /** How many tông quy to pick, and how long a name may be. */
@@ -1652,6 +1678,8 @@ export const BalanceSchema = z
         ranked: z.number().int().min(0),
         /** Rare moments of the log shown on the death screen. */
         highlights: z.number().int().min(0),
+        /** 6c.8: Luân Hồi points for each di nguyện fulfilled. */
+        wish: z.number().int().min(0),
       })
       .strict(),
     /** Task 5b.2: Kim Thủ Chỉ at birth: chance + per life played (capped), sure after pityLives lives without one. */
@@ -1750,6 +1778,8 @@ export const LifeTextsSchema = z
     /** 6c.3: a yearly calamity (tai ương) of a cultivator; {age}. */
     deathCalamity: lines,
     calamity: lines,
+    /** 6c.5: yearly money lines; {silver} {stones}. */
+    economy: z.object({ exchange: z.string().min(1), upkeepPaid: z.string().min(1), upkeepShort: z.string().min(1) }).strict(),
     /** Task 4.12 quỷ tu: the offer on the death screen, and the line when the soul rises. */
     ghostOffer: z.string().min(1),
     /** Backlog 11/12: the saved-people book and importing them as NPCs. */
@@ -2622,7 +2652,7 @@ export const RomanceFileSchema = z
         /** Playtest 2026-10-12, phu thê. */
         /** Playtest 2: several lines, one picked at random. */
         company: z.array(z.string().min(1)).min(1),
-        dualCult: z.string().min(1),
+        dualCult: z.array(z.string().min(1)).min(1),
         reconcileYes: z.string().min(1),
         reconcileNo: z.string().min(1),
         divorce: z.string().min(1),
@@ -3101,6 +3131,13 @@ export const AchievementFileSchema = z
         .object({ id, name: z.string().min(1), text: z.string().min(1), priority: z.number().int(), when: LifeCheckSchema })
         .strict(),
     ),
+    /**
+     * 6c.8: di nguyện, the wishes of an old cultivator once nothing lies above Hóa Thần. Each one met is worth
+     * balance.rebirth.wish Luân Hồi points; the goal line names the first one still open from Hóa Thần on.
+     */
+    wishes: z.array(z.object({ id, name: z.string().min(1), text: z.string().min(1), when: LifeCheckSchema }).strict()).default([]),
+    /** The goal line for an open wish: {name}, {text}. */
+    wishGoal: z.string().min(1).default('Di nguyện chưa thành: {name}. {text}'),
     /** Obituary card texts: {name}, {years}. */
     obituary: z.object({ title: z.string().min(1), footer: z.string().min(1) }).strict(),
   })

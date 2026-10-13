@@ -6,6 +6,7 @@ import type { GameState } from '../core/types';
 import { careerLabel } from './career';
 import { realmLabel } from './cultivation';
 import { sectLabel } from './sect';
+import { wishesMet } from './achievements';
 
 export interface RecapLine { label: string; value: string }
 export interface PointLine { label: string; points: number }
@@ -74,6 +75,8 @@ export function rebirthPoints(state: GameState, content: Content): { lines: Poin
     { label: 'Lập gia tộc', points: state.clan && state.clan.founder === state.character.name ? b.clan : 0 },
     { label: 'Lên Thiên kiêu bảng', points: state.ranking.rank !== null ? b.ranked : 0 },
   ];
+  // 6c.8: each di nguyện fulfilled.
+  for (const w of wishesMet(state, content)) raw.push({ label: `Di nguyện: ${w.name}`, points: b.wish });
   const lines = raw.filter((l) => l.points > 0);
   return { lines, total: lines.reduce((s, l) => s + l.points, 0) };
 }

@@ -43,12 +43,36 @@
     "noChild": "Năm nay vẫn chưa có tin vui. Duyên con cái, cưỡng cầu không được.",
     "childRoot": "{child} lên {age} tuổi, thử linh căn: {root}.",
     "childNoRoot": "{child} lên {age} tuổi, thử linh căn: không có. Làm phàm nhân cũng tốt.",
-    "company": ["Ngươi gác việc một hôm, cùng {npc} pha ấm trà, nói chuyện trên trời dưới biển. Hóa ra người ấy còn nhớ cả chuyện vặt ngươi kể từ lâu lắm.", "Hai người đi dạo bờ suối tới tối. {npc} nhặt một hòn sỏi tròn, bảo ngươi giữ lấy.", "Ngươi xuống bếp nấu một bữa. Cơm hơi khê, {npc} vẫn ăn hết, còn khen.", "Đêm trăng, {npc} tựa vai ngươi ngủ quên. Ngươi ngồi yên tới sáng, chân tê rần.", "Cùng {npc} ra chợ, mua một cây trâm rẻ tiền. Người ấy cài lên tóc cả tháng.", "{npc} kể chuyện thuở nhỏ, ngươi kể chuyện thuở nhỏ. Cười tới mức hàng xóm sang gõ cửa."],
-    "dualCult": "Ngươi và {npc} ngồi đối diện, linh khí hai người quấn lấy nhau như hai sợi chỉ cùng một cuộn. Cả hai đều tiến thêm một bước.",
+    "company": [
+      "Ngươi gác việc một hôm, cùng {npc} pha ấm trà, nói chuyện trên trời dưới biển. Hóa ra người ấy còn nhớ cả chuyện vặt ngươi kể từ lâu lắm.",
+      "Hai người đi dạo bờ suối tới tối. {npc} nhặt một hòn sỏi tròn, bảo ngươi giữ lấy.",
+      "Ngươi xuống bếp nấu một bữa. Cơm hơi khê, {npc} vẫn ăn hết, còn khen.",
+      "Đêm trăng, {npc} tựa vai ngươi ngủ quên. Ngươi ngồi yên tới sáng, chân tê rần.",
+      "Cùng {npc} ra chợ, mua một cây trâm rẻ tiền. Người ấy cài lên tóc cả tháng.",
+      "{npc} kể chuyện thuở nhỏ, ngươi kể chuyện thuở nhỏ. Cười tới mức hàng xóm sang gõ cửa.",
+      "Ngươi đọc cho {npc} nghe một đoạn sách cũ. Người ấy nghe tới quên cả uống trà.",
+      "Trời mưa, hai người ngồi dưới hiên chia nhau một chiếc bánh nướng. {npc} bảo hóa ra mưa cũng dễ chịu.",
+      "Ngươi cùng {npc} trồng một luống rau thơm. Cả hai cãi nhau xem nên gieo hạt nào trước.",
+      "{npc} chỉnh lại cổ áo cho ngươi trước lúc ra cửa, tay ngừng một thoáng lâu hơn cần thiết."
+    ],
+    "dualCult": [
+      "Ngươi và {npc} ngồi đối diện, linh khí hai người quấn lấy nhau như hai sợi chỉ cùng một cuộn. Cả hai đều tiến thêm một bước.",
+      "Hai người ngồi đối diện, nhịp thở dần đồng điệu. Linh khí đi một vòng qua cả hai rồi trở về đan điền, ấm như lò than mùa đông.",
+      "{npc} nắm tay ngươi dẫn khí vào kinh mạch. Ngươi thấy một chỗ tắc lâu năm khẽ thông ra.",
+      "Đêm đó hai người luyện chung một bộ khẩu quyết, mỗi người sai một chỗ, chỗ sai của người này lại vừa bù cho người kia.",
+      "Linh khí của ngươi nóng, của {npc} mát. Quyện vào nhau thành một dòng ôn hòa, cả hai đều tiến thêm một chút.",
+      "Song tu xong, {npc} lau mồ hôi cho ngươi, nói đùa rằng lần sau phải thắp thêm nén hương cho trang trọng."
+    ],
     "reconcileYes": "Ngươi nấu bát canh người ấy thích, đặt xuống bàn, nói một câu \"Là ta sai\". {npc} cầm thìa lên. Thế là xong.",
     "reconcileNo": "Ngươi muốn làm lành, {npc} chỉ \"ừ\" một tiếng rồi quay đi. Tường trong nhà dường như dày thêm.",
     "divorce": "Ngươi và {npc} viết thư hòa ly, mỗi người cầm một bản. Không ai khóc, cũng không ai nói câu nào thừa.",
-    "neglect": ["Cả năm ngươi chẳng mấy khi ở nhà. {npc} không trách, chỉ là bữa cơm dọn ra ngày càng ít món.", "{npc} đợi ngươi ở cửa mấy tối liền, rồi thôi không đợi nữa.", "Ngươi về nhà, thấy {npc} đã ngủ. Trên bàn có bát canh nguội.", "{npc} hỏi ngươi một câu, ngươi trả lời câu khác. Người ấy cười nhạt rồi quay đi.", "Hàng xóm hỏi thăm {npc} sao dạo này hay ngồi một mình."],
+    "neglect": [
+      "Cả năm ngươi chẳng mấy khi ở nhà. {npc} không trách, chỉ là bữa cơm dọn ra ngày càng ít món.",
+      "{npc} đợi ngươi ở cửa mấy tối liền, rồi thôi không đợi nữa.",
+      "Ngươi về nhà, thấy {npc} đã ngủ. Trên bàn có bát canh nguội.",
+      "{npc} hỏi ngươi một câu, ngươi trả lời câu khác. Người ấy cười nhạt rồi quay đi.",
+      "Hàng xóm hỏi thăm {npc} sao dạo này hay ngồi một mình."
+    ],
     "spouseLeft": "Một sáng ngươi dậy, chỗ bên cạnh đã lạnh. {npc} để lại một lá thư: \"Ở cùng một người không nhìn thấy mình, còn cô đơn hơn ở một mình.\""
   },
   "labels": {

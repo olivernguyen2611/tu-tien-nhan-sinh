@@ -1,0 +1,1792 @@
+[
+  {
+    "id": "hr_oan_hon_doi_no",
+    "category": "high_realm",
+    "title": "Oan hồn đòi nợ",
+    "text": "Đêm bế quan, đan điền chợt lạnh. Trong làn khói hương hiện lên những gương mặt ngươi từng lờ đi, mỗi gương mặt một món nợ.",
+    "tags": [
+      "dark"
+    ],
+    "themes": [
+      "karma"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "kim_dan",
+        "max": "kim_dan"
+      },
+      "stats": [
+        {
+          "stat": "karma",
+          "lte": -20
+        }
+      ]
+    },
+    "weight": 3,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Tụng kinh siêu độ",
+        "result": {
+          "text": "Ngươi tụng suốt ba đêm. Khói hương tan, những gương mặt cúi đầu rồi mờ dần.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "karma": 6,
+            "spiritStones": -10
+          }
+        }
+      },
+      {
+        "text": "Dùng sát khí đè xuống",
+        "check": {
+          "stat": "stat.daoHeart",
+          "difficulty": 55,
+          "resist": "heartDemonResist"
+        },
+        "success": {
+          "text": "Ngươi quát một tiếng, oan hồn tan như sương. Đạo tâm vững thêm một phần.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "stat.happiness": -2
+          }
+        },
+        "fail": {
+          "text": "Oan hồn không sợ. Chúng bò vào kinh mạch ngươi, lạnh buốt đến tận xương.",
+          "effects": {
+            "stat.health": -15,
+            "heartDemon": 5
+          }
+        }
+      },
+      {
+        "text": "Giả như không thấy",
+        "result": {
+          "text": "Ngươi nhắm mắt ngủ tiếp. Sáng ra thấy tóc mai bạc thêm mấy sợi.",
+          "effects": {
+            "stat.happiness": -5,
+            "stat.luck": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_phuc_bao_nguoi_cuu",
+    "category": "high_realm",
+    "title": "Thư người được cứu",
+    "text": "Một phong thư lặn lội từ xa tới. Người ngươi từng cứu nay đã có cơ nghiệp, muốn đền ơn.",
+    "tags": [],
+    "themes": [
+      "karma"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "kim_dan",
+        "max": "kim_dan"
+      },
+      "stats": [
+        {
+          "stat": "karma",
+          "gte": 30
+        }
+      ]
+    },
+    "weight": 3,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Nhận lễ tạ",
+        "result": {
+          "text": "Một rương linh thạch và gói trà quý. Ngươi uống một chén, thấy ân tình cũng như trà, nguội thì đắng.",
+          "effects": {
+            "spiritStones": 40,
+            "stat.happiness": 4
+          }
+        }
+      },
+      {
+        "text": "Khước từ, chỉ hồi âm vài chữ",
+        "result": {
+          "text": "Ngươi viết: \"Việc nhỏ, đừng nhớ.\" Người nhận được thư đọc đi đọc lại.",
+          "effects": {
+            "karma": 3,
+            "stat.daoHeart": 1,
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Nhờ họ ngó giúp tin tức bốn phương",
+        "result": {
+          "text": "Từ đó thỉnh thoảng có thư đưa tin hay, nhiều chuyện thật mà cũng nhiều chuyện hóng được.",
+          "effects": {
+            "stat.intellect": 1,
+            "stat.luck": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_ban_bao_vat_to_truyen",
+    "category": "high_realm",
+    "title": "Bảo vật tổ truyền",
+    "text": "Một tán tu ôm hộp gấm chặn đường: \"Tổ truyền bảy đời, vì người nhà đau nặng mới bán.\" Ánh mắt thì đảo qua đảo lại.",
+    "tags": [],
+    "themes": [
+      "scam"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "kim_dan",
+        "max": "kim_dan"
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Giám định kỹ",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Vừa mở nắp ngươi đã thấy dấu lò luyện mới. Tán tu tái mặt, quỳ xuống van xin tha. Ngươi tha, nhưng bắt hắn trả lại tiền đã lừa người khác.",
+          "effects": {
+            "stat.intellect": 1,
+            "reputation": {
+              "giang_ho": 2
+            },
+            "spiritStones": 15
+          }
+        },
+        "fail": {
+          "text": "Hộp có cấm chế dán sẵn, mắt ngươi bị che mất. Ngươi mua nhầm một khối đá sơn đỏ.",
+          "effects": {
+            "spiritStones": -70,
+            "stat.happiness": -4
+          }
+        }
+      },
+      {
+        "text": "Mua luôn cho khỏi cãi",
+        "result": {
+          "text": "Hắn nhận tiền nhanh đến mức ngươi nghe cả tiếng gió. Hộp trống không.",
+          "effects": {
+            "spiritStones": -60,
+            "stat.luck": -1,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Bỏ đi",
+        "result": {
+          "text": "Ngươi đi qua, mặc cho hắn gọi sau lưng. Cũng là một cách giữ túi.",
+          "effects": {
+            "stat.intellect": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_cha_me_tuoi_gia",
+    "category": "high_realm",
+    "title": "Tin từ quê nhà",
+    "text": "Thư từ quê cũ đến muộn nửa năm: cha mẹ phàm thân đã già yếu, hàng xóm viết hộ vài dòng ngắn ngủi.",
+    "tags": [],
+    "themes": [
+      "family"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "kim_dan",
+        "max": "kim_dan"
+      },
+      "family": {
+        "parentAlive": true
+      },
+      "flagsNone": [
+        "no_father",
+        "no_mother"
+      ]
+    },
+    "weight": 3,
+    "cooldownYears": 12,
+    "choices": [
+      {
+        "text": "Về thăm ngay",
+        "result": {
+          "text": "Ngươi ngồi bên giường cả mùa đông. Mẹ nắm tay ngươi, hỏi tu tiên có mệt không.",
+          "effects": {
+            "stat.happiness": 6,
+            "stat.daoHeart": 1,
+            "karma": 2
+          }
+        }
+      },
+      {
+        "text": "Gửi linh dược và thư",
+        "result": {
+          "text": "Ngươi gửi một gói tẩy tủy thảo, một lá thư dài. Hồi âm chỉ có một câu: \"Con ăn cơm chưa?\"",
+          "effects": {
+            "spiritStones": -10,
+            "stat.happiness": 2,
+            "karma": 1
+          }
+        }
+      },
+      {
+        "text": "Để lòng thanh tịnh, không về",
+        "result": {
+          "text": "Ngươi tự nhủ đã cắt duyên trần. Đêm đó ngồi thiền mãi không vào định.",
+          "effects": {
+            "stat.daoHeart": -1,
+            "stat.happiness": -4,
+            "heartDemon": 3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_nu_tu_mi_hoac",
+    "category": "high_realm",
+    "title": "Nụ cười không rõ gốc gác",
+    "text": "Một nữ tu mặc áo lụa chặn ngươi ở quán trà, nụ cười hơi quá hoàn hảo. Ngươi thấy tay mình tự rót thêm chén thứ ba.",
+    "tags": [
+      "mature"
+    ],
+    "themes": [
+      "charm"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "kim_dan",
+        "max": "kim_dan"
+      },
+      "age": {
+        "min": 18
+      }
+    },
+    "weight": 2,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Giữ tâm bất động",
+        "check": {
+          "stat": "stat.daoHeart",
+          "difficulty": 50,
+          "resist": "charmResist"
+        },
+        "success": {
+          "text": "Ngươi thấy sợi tơ hồng quấn nơi cổ tay. Cắt đứt, nụ cười kia vỡ thành khói. Ma tu ẩn thân bỏ chạy.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "reputation": {
+              "chinh": 2
+            }
+          }
+        },
+        "fail": {
+          "text": "Đầu óc ngươi nhẹ bẫng. Tỉnh dậy túi trữ vật nhẹ hơn mười khối linh thạch, và có thêm một vết đỏ nơi cổ tay.",
+          "effects": {
+            "spiritStones": -40,
+            "stat.health": -8,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Hỏi thẳng tên và sư môn",
+        "result": {
+          "text": "Nàng cười nhạt rồi biến mất. Cái tên nàng nói ra, ngươi tra mãi không thấy trong sổ nào.",
+          "effects": {
+            "stat.intellect": 1,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Rời quán, không ngoái lại",
+        "result": {
+          "text": "Ngươi để lại tiền trà và hai chén chưa cạn. Gió ngoài đường mát hơn ngươi tưởng.",
+          "effects": {
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_dan_duoc_gia",
+    "category": "high_realm",
+    "title": "Lò đan bán đan độc",
+    "text": "Một đan phòng nhỏ chào hàng: \"Hồi Xuân Đan giá rẻ bằng nửa.\" Ngươi ngửi thấy mùi chì đan nhàn nhạt.",
+    "tags": [
+      "dark"
+    ],
+    "themes": [
+      "scam"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "kim_dan",
+        "max": "kim_dan"
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Thử một viên để nghiệm",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Thân thể ngươi hóa giải được độc nhẹ. Ngươi nắm được bằng chứng, báo cho đan hội.",
+          "effects": {
+            "stat.intellect": 1,
+            "reputation": {
+              "giang_ho": 2
+            },
+            "spiritStones": 10
+          }
+        },
+        "fail": {
+          "text": "Độc đan bám vào kinh mạch, ba ngày không dậy nổi.",
+          "effects": {
+            "stat.health": -18,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Báo cho đan hội",
+        "result": {
+          "text": "Đan hội thưởng ngươi một món nhỏ và hứa niêm phong lò kia.",
+          "effects": {
+            "spiritStones": 15,
+            "karma": 3,
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Mua một lô đem bán lại",
+        "result": {
+          "text": "Ngươi kiếm được mười khối linh thạch, và một thanh danh khó nói.",
+          "effects": {
+            "spiritStones": 10,
+            "karma": -5,
+            "stat.luck": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_ke_thu_cu_hoi_han",
+    "category": "high_realm",
+    "title": "Kẻ thù xưa cầu hòa",
+    "text": "Người từng đối đầu với ngươi nay mang lễ vật tới, quỳ trước cửa động phủ. Hắn nói mình đã đổi, giọng run rẩy.",
+    "tags": [],
+    "themes": [
+      "karma"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "kim_dan",
+        "max": "kim_dan"
+      }
+    },
+    "weight": 2,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Tha thứ, cùng uống một chén",
+        "result": {
+          "text": "Hai bên cạn chén, ân oán nhạt đi nhiều. Hắn nói ít, uống nhiều, rồi khóc.",
+          "effects": {
+            "karma": 4,
+            "stat.happiness": 3,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Dò xét thật giả",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Trong lễ vật có cấm chế truy dấu. Ngươi gỡ ra, trả lại kèm một câu lạnh nhạt. Hắn tái mặt.",
+          "effects": {
+            "stat.intellect": 1,
+            "karma": 1
+          }
+        },
+        "fail": {
+          "text": "Ngươi nhận lễ vật rồi mới thấy dây truy dấu. Hắn biết động phủ ngươi ở đâu.",
+          "effects": {
+            "stat.luck": -2,
+            "stat.health": -6
+          }
+        }
+      },
+      {
+        "text": "Đuổi đi",
+        "result": {
+          "text": "Cửa động phủ đóng sầm. Tiếng hắn gọi nhỏ dần, rồi im hẳn.",
+          "effects": {
+            "stat.happiness": -2,
+            "karma": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_bi_canh_tu_hoa_nhap_ma",
+    "category": "high_realm",
+    "title": "Tẩu hỏa giữa đêm",
+    "text": "Đang vận công, đan dược trong bụng chợt đảo chiều. Ngươi biết mình đang trên bờ vực tẩu hỏa.",
+    "tags": [],
+    "themes": [
+      "cultivation"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "kim_dan",
+        "max": "kim_dan"
+      }
+    },
+    "weight": 2,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Dốc toàn lực kéo về",
+        "check": {
+          "stat": "stat.daoHeart",
+          "difficulty": 55,
+          "resist": "heartDemonResist"
+        },
+        "success": {
+          "text": "Đan khí lên xuống ba vòng rồi quy về. Ngươi mồ hôi đầm đìa nhưng đan chủng thêm chắc.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "cultProgress": 8
+          }
+        },
+        "fail": {
+          "text": "Đan khí rẽ sai kinh mạch. Ngươi nôn ra một ngụm máu đen.",
+          "effects": {
+            "stat.health": -22,
+            "heartDemon": 4
+          }
+        }
+      },
+      {
+        "text": "Ngừng vận công, ngồi nhịn",
+        "result": {
+          "text": "Cơn đau kéo dài nửa đêm rồi lắng. Ngươi mất tiến độ nhưng giữ được mạng.",
+          "effects": {
+            "cultProgress": -8,
+            "stat.health": -5
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_nho_dao_huu",
+    "category": "high_realm",
+    "title": "Lời nhắn của đạo hữu cũ",
+    "text": "Một đạo hữu thuở Luyện Khí gửi thư nhờ giúp đỡ: hắn đứng ở ngưỡng Trúc Cơ mãi không qua, lương thực gần cạn.",
+    "tags": [],
+    "themes": [
+      "bond"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "kim_dan",
+        "max": "kim_dan"
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Gửi linh thạch và đan dược",
+        "result": {
+          "text": "Hắn hồi âm bằng ba chữ run run: \"Ta nợ ngươi.\" Ngươi cười, bảo đừng nhớ.",
+          "effects": {
+            "spiritStones": -30,
+            "karma": 4,
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Chỉ điểm vài câu qua thư",
+        "result": {
+          "text": "Ngươi viết hai trang kinh nghiệm. Nửa năm sau hắn báo tin Trúc Cơ thành công.",
+          "effects": {
+            "stat.comprehension": 1,
+            "karma": 2,
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Gác thư sang một bên",
+        "result": {
+          "text": "Thư nằm mãi dưới đáy hộp. Ngươi không còn nhớ nổi mặt người viết.",
+          "effects": {
+            "stat.happiness": -2,
+            "karma": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_kim_dan_dien_cuong",
+    "category": "high_realm",
+    "title": "Đan chủng náo loạn",
+    "text": "Viên kim đan trong bụng đột nhiên xoay ngược chiều, mặt đất quanh động phủ nứt ra một đường mảnh.",
+    "tags": [],
+    "themes": [
+      "cultivation"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "kim_dan",
+        "max": "kim_dan"
+      }
+    },
+    "weight": 2,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Dùng thể phách trấn áp",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Thể phách ngươi đủ cứng, đan chủng chịu hàng. Kinh mạch giãn rộng thêm một chút.",
+          "effects": {
+            "stat.physique": 1,
+            "cultProgress": 6
+          }
+        },
+        "fail": {
+          "text": "Đan chủng rung đến mức răng ngươi đập vào nhau. Ngươi ngã quỵ, thương cả ngày trời.",
+          "effects": {
+            "stat.health": -20,
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Rời động phủ, tìm nơi trống trải",
+        "result": {
+          "text": "Ngoài trời đan chủng lặng lẽ hơn nhiều. Ngươi ngồi suốt đêm nhìn sao.",
+          "effects": {
+            "stat.happiness": 2,
+            "cultProgress": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_nguyen_anh_roi_the",
+    "category": "high_realm",
+    "title": "Nguyên Anh rời thể",
+    "text": "Trong lúc nhập định, Nguyên Anh chợt tự đứng dậy, thổi bay màn khói rồi đi ra cửa. Ngươi thấy mình nhìn mình bước ra.",
+    "tags": [],
+    "themes": [
+      "cultivation"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "nguyen_anh",
+        "max": "nguyen_anh"
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Gọi về ngay",
+        "check": {
+          "stat": "stat.comprehension",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Nguyên Anh quay đầu, nghe lời trở về. Nó mang theo một mảnh ký ức nơi nó đã đi, thứ ngươi chưa từng thấy.",
+          "effects": {
+            "stat.comprehension": 2,
+            "cultProgress": 6
+          }
+        },
+        "fail": {
+          "text": "Nguyên Anh không nghe. Ngươi cố đuổi theo, tinh thần rã rời, ba ngày sau mới liền lại.",
+          "effects": {
+            "stat.health": -18,
+            "stat.daoHeart": -1
+          }
+        }
+      },
+      {
+        "text": "Đi theo xem nó đi đâu",
+        "result": {
+          "text": "Nó chỉ ra sân ngắm trăng rồi trở vào. Ngươi cười, hóa ra nó cũng cần ngắm trăng.",
+          "effects": {
+            "stat.happiness": 5,
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_tong_mon_bi_phan_boi",
+    "category": "high_realm",
+    "title": "Nội gián trong đồ chúng",
+    "text": "Một đệ tử thân tín bị phát hiện đưa tin cho đối thủ. Hắn quỳ giữa điện, mồ hôi nhỏ thành vũng.",
+    "tags": [
+      "dark"
+    ],
+    "themes": [
+      "sect"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "nguyen_anh",
+        "max": "nguyen_anh"
+      },
+      "ownSect": {
+        "has": true
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Phế tu vi, đuổi khỏi sơn môn",
+        "result": {
+          "text": "Lời xử trí vang khắp tông. Từ đó không ai dám đùa với ngươi, cũng không ai dám nói thật.",
+          "effects": {
+            "karma": -3,
+            "stat.happiness": -3,
+            "reputation": {
+              "chinh": 1
+            }
+          }
+        }
+      },
+      {
+        "text": "Tra hỏi tới cùng",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 58
+        },
+        "success": {
+          "text": "Ngươi lần ra cả sợi dây phía sau. Một thế lực nhỏ bị nhổ tận gốc, tông môn yên được mấy năm.",
+          "effects": {
+            "stat.intellect": 2,
+            "reputation": {
+              "giang_ho": 3
+            },
+            "spiritStones": 30
+          }
+        },
+        "fail": {
+          "text": "Hắn khai nửa thật nửa giả, ngươi bắt nhầm người. Tiếng oan vang lên trong điện.",
+          "effects": {
+            "karma": -4,
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Tha, nhưng đổi chức, lệnh canh gác",
+        "result": {
+          "text": "Hắn dập đầu đến chảy máu. Ngươi không biết mình thương hay hèn.",
+          "effects": {
+            "karma": 2,
+            "stat.daoHeart": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_vo_chong_than_tam",
+    "category": "high_realm",
+    "title": "Giữa đêm đạo lữ nói thật",
+    "text": "Đạo lữ ngồi bên đèn, hỏi nhỏ: \"Bao năm nay, trong lòng ngươi, ta là gì?\" Ngọn đèn không động.",
+    "tags": [],
+    "themes": [
+      "family"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "nguyen_anh",
+        "max": "nguyen_anh"
+      },
+      "romance": {
+        "couple": true,
+        "target": "partner"
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Nói thật những điều chưa từng nói",
+        "result": {
+          "text": "Hai người ngồi đến sáng. Lời thật hóa ra không đau như ngươi sợ.",
+          "effects": {
+            "stat.happiness": 8,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Cười, đổi sang chuyện tu luyện",
+        "result": {
+          "text": "Người ấy gật đầu, rót thêm trà. Hai người không ai nhắc lại nữa.",
+          "effects": {
+            "stat.happiness": -4,
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Im lặng nắm tay",
+        "result": {
+          "text": "Tay họ lạnh hơn ngươi tưởng. Ngươi nắm đến khi nó ấm.",
+          "effects": {
+            "stat.happiness": 4
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_de_tu_bo_di",
+    "category": "high_realm",
+    "title": "Đệ tử bỏ sơn môn",
+    "text": "Sáng ra phòng đệ tử thân tín trống không, trên bàn còn tờ giấy: \"Con muốn tự đi, xin sư phụ đừng tìm.\"",
+    "tags": [],
+    "themes": [
+      "family"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "nguyen_anh",
+        "max": "nguyen_anh"
+      },
+      "ownSect": {
+        "has": true
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 25,
+    "choices": [
+      {
+        "text": "Tìm theo, đưa về",
+        "result": {
+          "text": "Ngươi tìm thấy cậu ở một thị trấn xa, đang rửa bát thuê. Cả hai đều đỏ mắt.",
+          "effects": {
+            "stat.happiness": 2,
+            "spiritStones": -8,
+            "karma": 1
+          }
+        }
+      },
+      {
+        "text": "Để đi, âm thầm gửi tiền",
+        "result": {
+          "text": "Hàng năm một túi linh thạch nhỏ gửi qua bưu cục, không đề tên. Cậu nhận mà không hỏi.",
+          "effects": {
+            "spiritStones": -20,
+            "stat.daoHeart": 1,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Giận, mặc kệ",
+        "result": {
+          "text": "Ba năm không thư từ. Phòng vẫn được quét sạch mỗi ngày, ngươi không hiểu ai sai.",
+          "effects": {
+            "stat.happiness": -6,
+            "karma": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_tin_cha_me_mat",
+    "category": "high_realm",
+    "title": "Tin hiếu từ quê nhà",
+    "text": "Nhà cũ báo tang: song thân phàm trần, người cuối cùng đã đi. Thư đến chậm, lúc ngươi đọc thì đã qua trăm ngày.",
+    "tags": [],
+    "themes": [
+      "family"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "nguyen_anh",
+        "max": "nguyen_anh"
+      },
+      "family": {
+        "parentAlive": true
+      }
+    },
+    "weight": 2,
+    "cooldownYears": 60,
+    "choices": [
+      {
+        "text": "Về chịu tang, thắp hương",
+        "result": {
+          "text": "Ngươi quỳ trước bài vị rất lâu. Giữa tu hành và người sinh ra ngươi, hóa ra có một khoảng không thể bù.",
+          "effects": {
+            "relativeDies": "parent",
+            "stat.happiness": -8,
+            "karma": 3,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Lập đàn tụng kinh từ xa",
+        "result": {
+          "text": "Ngươi tụng ba ngày liền. Tiếng kinh tốt, nhưng không đủ ấm.",
+          "effects": {
+            "relativeDies": "parent",
+            "stat.happiness": -6,
+            "stat.daoHeart": -1,
+            "spiritStones": -10
+          }
+        }
+      },
+      {
+        "text": "Giữ đạo tâm, không để lòng loạn",
+        "result": {
+          "text": "Ngươi ngồi thiền đúng giờ. Sau đó mới phát hiện nước mắt đã thấm đẫm gối.",
+          "effects": {
+            "relativeDies": "parent",
+            "stat.happiness": -10,
+            "heartDemon": 4
+          }
+        }
+      }
+    ],
+    "oncePerLife": true
+  },
+  {
+    "id": "hr_thien_co_loan",
+    "category": "high_realm",
+    "title": "Thiên cơ rối loạn",
+    "text": "Đêm nay sao dịch chỗ. Toán sư dưới chân núi bói không ra quẻ, chỉ viết hai chữ \"đại biến\" rồi khóc.",
+    "tags": [],
+    "themes": [
+      "fortune"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "nguyen_anh",
+        "max": "nguyen_anh"
+      }
+    },
+    "weight": 2,
+    "cooldownYears": 25,
+    "choices": [
+      {
+        "text": "Tự suy diễn thiên cơ",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Ngươi thấy một đường rẽ trước mắt. Nhờ vậy tránh được một tai họa nhỏ.",
+          "effects": {
+            "stat.intellect": 2,
+            "stat.luck": 1
+          }
+        },
+        "fail": {
+          "text": "Thiên cơ phản phệ, đầu ngươi đau như búa bổ.",
+          "effects": {
+            "stat.health": -15,
+            "stat.intellect": -1
+          }
+        }
+      },
+      {
+        "text": "Dặn đệ tử đóng cửa tránh việc",
+        "result": {
+          "text": "Ba tháng sau tin loạn nổ ra ở phương Đông. Cả tông yên ổn qua mùa.",
+          "effects": {
+            "stat.luck": 1,
+            "stat.happiness": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_tu_si_chet_de_lai_vat",
+    "category": "high_realm",
+    "title": "Di vật kẻ bại trận",
+    "text": "Một tu sĩ bại trận chết dưới chân ngươi, tay vẫn nắm một túi nhỏ. Bên trong có thư gửi vợ con, và ba món vật.",
+    "tags": [
+      "dark"
+    ],
+    "themes": [
+      "karma"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "nguyen_anh",
+        "max": "nguyen_anh"
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Giữ vật, gửi thư",
+        "result": {
+          "text": "Ngươi giao thư cho người nhà hắn, giữ lại một món làm tin. Đêm ấy không ngủ.",
+          "effects": {
+            "karma": 2,
+            "spiritStones": 20,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Gửi hết cả thư lẫn vật",
+        "result": {
+          "text": "Mấy năm sau, một đứa trẻ tìm tới dập đầu ba cái. Ngươi lúng túng không biết đáp thế nào.",
+          "effects": {
+            "karma": 6,
+            "stat.happiness": 4
+          }
+        }
+      },
+      {
+        "text": "Giữ hết",
+        "result": {
+          "text": "Ba món vật khá tốt. Còn lá thư, ngươi đốt.",
+          "effects": {
+            "spiritStones": 50,
+            "karma": -6,
+            "stat.daoHeart": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_dan_dao_hoa_ac_nghiep",
+    "category": "high_realm",
+    "title": "Ác nghiệp chồng chất",
+    "text": "Mây đen quanh động phủ không chịu tan. Đạo tâm ngươi nặng như đeo đá. Những việc xưa đã quá nhiều, chưa kịp đền.",
+    "tags": [
+      "dark"
+    ],
+    "themes": [
+      "karma"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "nguyen_anh",
+        "max": "nguyen_anh"
+      },
+      "stats": [
+        {
+          "stat": "karma",
+          "lte": -40
+        }
+      ]
+    },
+    "weight": 3,
+    "cooldownYears": 25,
+    "choices": [
+      {
+        "text": "Rời động phủ hành thiện ba năm",
+        "result": {
+          "text": "Ngươi đi qua vùng đói, mở kho phát đan. Mây đen nhạt dần theo từng lần cúi đầu.",
+          "effects": {
+            "karma": 12,
+            "spiritStones": -40,
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Chặt đứt tâm ma bằng ý chí",
+        "check": {
+          "stat": "stat.daoHeart",
+          "difficulty": 62,
+          "resist": "heartDemonResist"
+        },
+        "success": {
+          "text": "Ngươi quát một tiếng, mây tan như bị rạch. Nhưng nghiệp vẫn ghi trong sổ trời.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "heartDemon": -5
+          }
+        },
+        "fail": {
+          "text": "Tâm ma phản đòn, cả hồn phách rung lên.",
+          "effects": {
+            "stat.health": -20,
+            "heartDemon": 6
+          }
+        }
+      },
+      {
+        "text": "Mặc kệ, tu tiếp",
+        "result": {
+          "text": "Ngươi tự bảo nghiệp là chuyện của sau này. Sau này tới rất nhanh.",
+          "effects": {
+            "stat.luck": -2,
+            "stat.happiness": -3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_ma_nu_cau_ban",
+    "category": "high_realm",
+    "title": "Ma nữ cầu bạn đồng hành",
+    "text": "Một nữ tu mặc đồ đen đứng dưới ánh trăng, giọng nhẹ như khói: \"Ta cô độc nhiều năm. Ngươi có muốn làm bạn không?\"",
+    "tags": [
+      "mature",
+      "dark"
+    ],
+    "themes": [
+      "charm"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "nguyen_anh",
+        "max": "nguyen_anh"
+      },
+      "age": {
+        "min": 18
+      }
+    },
+    "weight": 2,
+    "cooldownYears": 25,
+    "choices": [
+      {
+        "text": "Giữ lòng như nước",
+        "check": {
+          "stat": "stat.daoHeart",
+          "difficulty": 58,
+          "resist": "charmResist"
+        },
+        "success": {
+          "text": "Ngươi nghe thấy lời nàng như tiếng gió. Nàng cười, biến mất, để lại một chiếc lá khô.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "stat.happiness": 1
+          }
+        },
+        "fail": {
+          "text": "Tâm ngươi lỡ một nhịp. Khi tỉnh, nàng đã đi, mang theo vài thứ trong túi.",
+          "effects": {
+            "spiritStones": -50,
+            "stat.happiness": -4,
+            "heartDemon": 3
+          }
+        }
+      },
+      {
+        "text": "Cùng uống một chén rồi chia tay",
+        "result": {
+          "text": "Hai người nói chuyện về hồn ma và hoa quế. Nàng không đòi gì cả, ngươi cũng không hỏi.",
+          "effects": {
+            "stat.happiness": 3,
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Đuổi đi",
+        "result": {
+          "text": "Nàng cúi chào rất cung kính, lạnh lùng, rồi tan vào bóng.",
+          "effects": {
+            "stat.daoHeart": 1,
+            "stat.happiness": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_lo_dan_phan_nghich",
+    "category": "high_realm",
+    "title": "Lò đan phản nghịch",
+    "text": "Đang luyện một lò đan lớn, lửa bỗng đổi sắc, nắp lò bật tung. Nửa lò đan hóa thành tro, nửa còn lại phát ra mùi kỳ dị.",
+    "tags": [],
+    "themes": [
+      "craft"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "nguyen_anh",
+        "max": "nguyen_anh"
+      }
+    },
+    "weight": 2,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Dập lửa, cứu đan",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 52
+        },
+        "success": {
+          "text": "Ngươi cứu được nửa lò. Mấy viên còn lại sáng bóng lạ thường.",
+          "effects": {
+            "stat.intellect": 1,
+            "cultProgress": 5,
+            "spiritStones": 20
+          }
+        },
+        "fail": {
+          "text": "Ngươi bị bỏng tay, mất cả lò. Mùi khét theo ngươi suốt tuần.",
+          "effects": {
+            "stat.health": -10,
+            "spiritStones": -30
+          }
+        }
+      },
+      {
+        "text": "Lùi lại để lò tự tắt",
+        "result": {
+          "text": "Cả lò thành tro. Ngươi nhìn tro và nghĩ mình chẳng hợp nghề đan.",
+          "effects": {
+            "stat.happiness": -2,
+            "stat.intellect": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_chu_thien_giang_the",
+    "category": "high_realm",
+    "title": "Chư thiên giáng thế",
+    "text": "Trong động phủ, ngươi nghe nhiều giọng thì thầm cùng lúc, mỗi giọng mang một thứ ngôn ngữ chưa từng học. Rồi chúng dần thành một.",
+    "tags": [],
+    "themes": [
+      "cultivation"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "hoa_than"
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 30,
+    "choices": [
+      {
+        "text": "Lắng nghe tới cuối",
+        "check": {
+          "stat": "stat.comprehension",
+          "difficulty": 62,
+          "resist": "heartDemonResist"
+        },
+        "success": {
+          "text": "Giọng cuối cùng chỉ nói một câu, ngươi không chép ra được, nhưng nó ở lại trong ngươi từ đó.",
+          "effects": {
+            "stat.comprehension": 2,
+            "cultProgress": 10
+          }
+        },
+        "fail": {
+          "text": "Nghe quá sâu, ngươi quên mất mình đang ở đâu. Tỉnh lại giữa sân, chân trần giẫm trên tuyết.",
+          "effects": {
+            "stat.health": -15,
+            "stat.daoHeart": -1
+          }
+        }
+      },
+      {
+        "text": "Bịt tai, giữ nguyên đạo tâm",
+        "result": {
+          "text": "Ngươi giữ tâm mình ngồi đến sáng. Giọng thì thầm lặng đi như chưa từng.",
+          "effects": {
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Cất giọng đáp lại",
+        "result": {
+          "text": "Ngươi hỏi vọng một câu. Câu trả lời đến sau một năm, dưới dạng một giấc mơ.",
+          "effects": {
+            "stat.luck": 1,
+            "stat.happiness": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_pho_the_tu_nhan",
+    "category": "high_realm",
+    "title": "Người xưa gõ cửa",
+    "text": "Cổng động phủ mở không tiếng gió. Một ông lão ngồi ngoài, bảo mình từng bắt chim bên ngươi thuở nhỏ. Ngươi nhìn mãi không nhận ra ai.",
+    "tags": [],
+    "themes": [
+      "family"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "hoa_than"
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 40,
+    "choices": [
+      {
+        "text": "Mời vào uống trà",
+        "result": {
+          "text": "Ông lão kể chuyện ngày xưa, kể từng cái cây từng con ngõ. Ngươi nghe tới khi trà nguội. Nước mắt đọng ở khóe mắt không hiểu vì sao.",
+          "effects": {
+            "stat.happiness": 6,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Nhìn thật kỹ rồi nói thẳng là không nhớ",
+        "result": {
+          "text": "Ông lão gật đầu: \"Thế cũng phải.\" Rồi đi, để lại một chiếc ná.",
+          "effects": {
+            "stat.happiness": -2,
+            "karma": 1
+          }
+        }
+      },
+      {
+        "text": "Lấy linh thạch tiễn đi",
+        "result": {
+          "text": "Ông lão cầm túi, thở dài, bước chậm xuống bậc đá. Ngươi nhìn theo đến khi hết bóng.",
+          "effects": {
+            "spiritStones": -20,
+            "stat.happiness": -3,
+            "karma": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_lao_ban_tu_quen",
+    "category": "high_realm",
+    "title": "Lão bạn tu hành mất tích",
+    "text": "Người bạn cùng ngươi từ thuở Luyện Khí nay không tin tức nữa. Sơn môn của hắn đã đóng cửa mười năm.",
+    "tags": [],
+    "themes": [
+      "bond"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "hoa_than"
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 40,
+    "choices": [
+      {
+        "text": "Tìm tới tận nơi",
+        "result": {
+          "text": "Ngươi mở cổng. Trong sân, cây quế đã to bằng người ôm. Có một nấm mộ dưới gốc.",
+          "effects": {
+            "stat.happiness": -6,
+            "stat.daoHeart": 1,
+            "karma": 2
+          }
+        }
+      },
+      {
+        "text": "Lập bài vị nhỏ, thắp hương",
+        "result": {
+          "text": "Một nén hương, một chén trà. Ngươi nói ít, vì người nghe cũng chẳng nói gì.",
+          "effects": {
+            "stat.happiness": -2,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Không dám tìm, tự bảo hắn còn sống",
+        "result": {
+          "text": "Ngươi chọn tin. Từ đó mỗi năm gửi một lá thư không địa chỉ, đốt lên trời.",
+          "effects": {
+            "stat.happiness": -1,
+            "stat.luck": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_kiep_nan_chap_chong",
+    "category": "high_realm",
+    "title": "Kiếp nạn chồng kiếp nạn",
+    "text": "Mây kiếp chưa tan, mây khác lại kéo đến. Trời cao dường như muốn đo xem ngươi chịu được bao nhiêu lần.",
+    "tags": [],
+    "themes": [
+      "tribulation"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "hoa_than"
+      }
+    },
+    "weight": 2,
+    "cooldownYears": 30,
+    "choices": [
+      {
+        "text": "Đón nhận bằng thể phách",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 65
+        },
+        "success": {
+          "text": "Sấm đánh nát tầng tầng, ngươi đứng nguyên ở đó. Tro bụi rơi quanh thân như tuyết đen.",
+          "effects": {
+            "stat.physique": 2,
+            "stat.health": -8,
+            "cultProgress": 8
+          }
+        },
+        "fail": {
+          "text": "Một tia kiếp xuyên qua phòng thủ. Ngươi gục xuống, khói bốc lên từ vai.",
+          "effects": {
+            "stat.health": -30,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Dùng pháp bảo che chắn",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Pháp bảo vỡ nát nhưng cứu ngươi một mạng. Ngươi cười, nhìn trời, rồi nhặt mảnh vỡ.",
+          "effects": {
+            "stat.luck": 1,
+            "stat.health": -5
+          }
+        },
+        "fail": {
+          "text": "Pháp bảo bị xuyên thẳng, hộ thân không kịp.",
+          "effects": {
+            "stat.health": -25,
+            "spiritStones": -30
+          }
+        }
+      },
+      {
+        "text": "Chạy xuống núi tìm nơi kín",
+        "result": {
+          "text": "Ngươi chạy khỏi nơi tụ mây, mất mặt nhưng giữ được mạng.",
+          "effects": {
+            "stat.happiness": -4,
+            "stat.daoHeart": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_ke_ke_nghiep_dang_nhap",
+    "category": "high_realm",
+    "title": "Đệ tử cuối gõ cửa",
+    "text": "Một thiếu niên quỳ trước động phủ ba ngày không đứng dậy, xin được nhận làm đệ tử cuối cùng. Mắt cậu sáng như lửa.",
+    "tags": [],
+    "themes": [
+      "bond"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "hoa_than"
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 30,
+    "choices": [
+      {
+        "text": "Thu nhận, truyền hết sở học",
+        "result": {
+          "text": "Từ đó trong động phủ có tiếng bước chân nhỏ. Ngươi ngạc nhiên thấy mình không thích tĩnh nữa.",
+          "effects": {
+            "stat.happiness": 6,
+            "karma": 3,
+            "stat.comprehension": 1
+          }
+        }
+      },
+      {
+        "text": "Thử tâm tính trước",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Ngươi đặt ba bẫy nhỏ. Cậu vượt cả ba bằng sự ngay thẳng, chẳng phải cơ trí. Ngươi nhận.",
+          "effects": {
+            "stat.intellect": 1,
+            "karma": 2,
+            "stat.happiness": 3
+          }
+        },
+        "fail": {
+          "text": "Cậu đi nửa đường thì bỏ. Ngươi nhìn bóng lưng cậu, thấy mình khắt khe quá.",
+          "effects": {
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Từ chối, cho một món quà nhỏ",
+        "result": {
+          "text": "Cậu cúi đầu rời đi, tay ôm món quà như ôm kỷ vật.",
+          "effects": {
+            "spiritStones": -5,
+            "stat.happiness": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_ho_phap_uan_bao",
+    "category": "high_realm",
+    "title": "Đồng đạo tìm ngươi hộ pháp",
+    "text": "Ba chưởng môn cùng đến cầu ngươi trấn giữ một trận đại hội. Họ không nói thật, nhưng ánh mắt đều nhìn ra ngoài cửa.",
+    "tags": [],
+    "themes": [
+      "sect"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "hoa_than"
+      },
+      "ownSect": {
+        "has": true
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 30,
+    "choices": [
+      {
+        "text": "Nhận, theo dõi lặng lẽ",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Ngươi nhìn ra trận pháp thật: họ định lợi dụng uy danh ngươi. Ngươi rút lui kịp, và cho họ hiểu ngươi biết.",
+          "effects": {
+            "stat.intellect": 2,
+            "reputation": {
+              "chinh": 3
+            }
+          }
+        },
+        "fail": {
+          "text": "Ngươi bị dùng làm bình phong. Đến khi biết thì tên ngươi đã gắn vào bản cáo.",
+          "effects": {
+            "karma": -4,
+            "stat.happiness": -4
+          }
+        }
+      },
+      {
+        "text": "Từ chối, nói đã tuổi cao",
+        "result": {
+          "text": "Ba người cúi chào ra về. Ngươi nghe thấy họ than, không giận mà chỉ lặng người.",
+          "effects": {
+            "stat.happiness": -1,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Nhận, lấy giá cao",
+        "result": {
+          "text": "Ngươi ra giá năm trăm linh thạch. Họ trả không chớp mắt, khiến ngươi nghi ngờ mình ra giá thấp.",
+          "effects": {
+            "spiritStones": 500,
+            "karma": -2,
+            "stat.happiness": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_tuoi_tho_dem_nguoc",
+    "category": "high_realm",
+    "title": "Đồng hồ thọ nguyên",
+    "text": "Sáng nay ngươi tính sổ: số năm còn lại có thể đếm trên đầu ngón tay một người biết đếm. Hóa Thần sống lâu, nhưng không phải vô hạn.",
+    "tags": [],
+    "themes": [
+      "cultivation"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "hoa_than"
+      },
+      "lifespan": {
+        "nearEnd": true
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 30,
+    "choices": [
+      {
+        "text": "Viết di thư, giao việc cho đệ tử",
+        "result": {
+          "text": "Ngươi xếp lại hết giấy tờ, tự thấy nhẹ đi. Tông môn cũng yên lòng hơn.",
+          "effects": {
+            "stat.happiness": 3,
+            "stat.daoHeart": 1,
+            "karma": 2
+          }
+        }
+      },
+      {
+        "text": "Dồn hết sức vào tu hành",
+        "result": {
+          "text": "Ngươi bế quan thêm một năm. Tu vi nhích, sắc mặt cũng nhích sang màu tro.",
+          "effects": {
+            "cultProgress": 10,
+            "stat.happiness": -3,
+            "stat.health": -5
+          }
+        }
+      },
+      {
+        "text": "Dạo một vòng núi sông cũ",
+        "result": {
+          "text": "Ngươi đi qua những chỗ đã đi, ăn những món đã ăn. Chợt nhận ra mình nhớ nhiều hơn tưởng.",
+          "effects": {
+            "stat.happiness": 6,
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_thien_dao_tu_van",
+    "category": "high_realm",
+    "title": "Thiên đạo hỏi ngươi",
+    "text": "Giữa lúc nhập định, một giọng không rõ tuổi hỏi: \"Ngươi tu để làm gì?\" Câu hỏi đơn giản, nhưng ngươi thấy cổ họng nghẹn lại.",
+    "tags": [],
+    "themes": [
+      "cultivation"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "hoa_than"
+      }
+    },
+    "weight": 2,
+    "cooldownYears": 40,
+    "choices": [
+      {
+        "text": "Đáp thật lòng, dù có hơi ngượng",
+        "result": {
+          "text": "Ngươi đáp một câu chẳng cao siêu gì. Giọng nói im lặng một chốc rồi bảo: \"Được.\"",
+          "effects": {
+            "stat.daoHeart": 3,
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Đáp khéo, né câu hỏi",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 60,
+          "resist": "heartDemonResist"
+        },
+        "success": {
+          "text": "Ngươi vẽ ra một câu trả lời hoa mỹ. Giọng kia dường như mỉm cười, không nói gì.",
+          "effects": {
+            "stat.intellect": 2,
+            "stat.luck": 1
+          }
+        },
+        "fail": {
+          "text": "Giọng kia lặng đi lâu. Ngươi cảm thấy mình đã nói dối cả với bản thân.",
+          "effects": {
+            "stat.daoHeart": -2,
+            "heartDemon": 3
+          }
+        }
+      },
+      {
+        "text": "Không đáp",
+        "result": {
+          "text": "Ngươi ngồi im. Giọng kia thở dài như người già, rồi tan đi.",
+          "effects": {
+            "stat.happiness": -1,
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ],
+    "oncePerLife": true
+  },
+  {
+    "id": "hr_nguoi_xua_ma_hoa",
+    "category": "high_realm",
+    "title": "Bạn cũ nhập ma",
+    "text": "Một người bạn từng cùng ngươi lên đường nay khoác huyết bào, trấn giữ một thành ma. Hắn gửi thiếp: \"Gặp một lần, uống một chén, đừng mang kiếm.\"",
+    "tags": [
+      "dark"
+    ],
+    "themes": [
+      "bond"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "hoa_than"
+      }
+    },
+    "weight": 2,
+    "cooldownYears": 40,
+    "choices": [
+      {
+        "text": "Đến, không mang kiếm",
+        "result": {
+          "text": "Hắn rót đầy chén rượu: \"Ngươi nghĩ ta sai?\" Ngươi không đáp. Hai người uống tới trăng lên.",
+          "effects": {
+            "stat.happiness": 2,
+            "stat.daoHeart": -1,
+            "karma": -1
+          }
+        }
+      },
+      {
+        "text": "Đến, mang kiếm giấu trong tay áo",
+        "result": {
+          "text": "Hắn nhìn tay áo ngươi một lúc lâu rồi cười. Chén rượu không ai uống hết.",
+          "effects": {
+            "stat.intellect": 1,
+            "stat.happiness": -3,
+            "reputation": {
+              "chinh": 2
+            }
+          }
+        }
+      },
+      {
+        "text": "Không đến",
+        "result": {
+          "text": "Thiếp vẫn nằm trên bàn mấy năm. Ngươi không đốt, cũng không đáp.",
+          "effects": {
+            "stat.happiness": -3,
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hr_dao_lu_phan_boi",
+    "category": "high_realm",
+    "title": "Đạo lữ giấu chuyện",
+    "text": "Ngươi vô tình thấy đạo lữ lặng lẽ trao đổi tin với người của một thế lực lạ. Khi ngươi bước tới, nàng chỉ im, môi mím chặt.",
+    "tags": [
+      "dark"
+    ],
+    "themes": [
+      "family"
+    ],
+    "conditions": {
+      "realm": {
+        "min": "kim_dan"
+      },
+      "romance": {
+        "couple": true,
+        "target": "partner"
+      }
+    },
+    "weight": 2,
+    "cooldownYears": 30,
+    "choices": [
+      {
+        "text": "Hỏi cho ra lẽ",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Hóa ra họ bị ép bằng một chuyện cũ của gia tộc bên người ấy. Ngươi đứng ra gỡ rối, hai người ngồi nói tới sáng.",
+          "effects": {
+            "stat.intellect": 1,
+            "stat.happiness": 4,
+            "karma": 1
+          }
+        },
+        "fail": {
+          "text": "Ngươi hỏi dồn, người ấy lặng đi rồi đóng cửa phòng. Căn nhà lạnh mấy ngày.",
+          "effects": {
+            "stat.happiness": -6,
+            "stat.daoHeart": -1
+          }
+        }
+      },
+      {
+        "text": "Tạm im, âm thầm điều tra",
+        "result": {
+          "text": "Ngươi theo dõi nửa năm mới biết sự thật. Thật ra sai ở ngươi nhiều hơn một chút.",
+          "effects": {
+            "stat.intellect": 1,
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Tin tưởng, không hỏi",
+        "result": {
+          "text": "Ba tháng sau chính người ấy đến thú nhận, nước mắt đầy áo. Ngươi chỉ nắm tay.",
+          "effects": {
+            "stat.happiness": 5,
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ]
+  }
+]

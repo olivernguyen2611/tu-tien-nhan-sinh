@@ -18,6 +18,7 @@ import { rankingYear } from '../systems/rankings';
 import { romanceYear, romanceTarget } from '../systems/romance';
 import { ownSectYear } from '../systems/ownSect';
 import { clanYear } from '../systems/clan';
+import { economyYear } from '../systems/economy';
 import { martialQuestYear } from '../systems/martialQuest';
 import { notifyYear } from '../systems/timeline';
 import { blessingRerolls } from '../systems/blessings';
@@ -199,7 +200,7 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   state = awakenGoldenFinger(state, content);
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content);
+  const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content);
   // Task 4.1: in seclusion no ordinary event comes (follow-ups wait for the door to open);
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;

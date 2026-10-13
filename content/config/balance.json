@@ -92,6 +92,13 @@
   },
   "statGain": { "stats": ["happiness", "intellect", "charm"], "softAt": 70, "softMul": 0.5, "hardAt": 90, "hardMul": 0.25 },
   "aptitudeGain": { "stats": ["physique", "comprehension", "luck"], "softAt": 60, "softMul": 0.5, "hardAt": 80, "hardMul": 0.2 },
+  "economy": {
+    "silverPerStone": 100,
+    "exchangeFrom": "luyen_khi",
+    "upkeepPerDependent": { "truc_co": 0.5, "kim_dan": 1, "nguyen_anh": 2, "hoa_than": 4 },
+    "maxDependents": 6,
+    "shortHappiness": -3
+  },
   "caveRent": { "cost": { "luyen_khi": 10, "truc_co": 30, "kim_dan": 80, "nguyen_anh": 200, "hoa_than": 500 }, "speedMul": 1.5, "leases": [1, 10], "leaseDiscount": 0.1 },
   "leisure": { "minAge": 8, "silver": 5, "spiritStones": 3, "happiness": [8, 14], "freeHappiness": [3, 5], "daoHeartBelow": 20, "daoHeart": 1 },
   "fastForward": {
@@ -173,7 +180,7 @@
     "breakthrough": { "comprehensionPerPoint": 0.3, "daoHeartPerPoint": 0.2, "failPenaltyPct": 5,
       "modifierKnee": 20,
       "modifierShare": 0.5,
-      "majorModifierCap": { "truc_co": 36, "kim_dan": 36, "nguyen_anh": 34, "hoa_than": 38 }, "minPct": 3, "maxPct": 95 },
+      "majorModifierCap": { "truc_co": 34, "kim_dan": 32, "nguyen_anh": 30, "hoa_than": 26 }, "minPct": 3, "maxPct": 95 },
     "minorFailure": {
       "weights": { "lose": 70, "injury": 25, "lifespan": 5 },
       "loseProgress": 30,
@@ -373,7 +380,7 @@
     "revengeAt": 30,
     "revengeChance": 0.2,
     "repayAt": 30,
-    "repayChance": 0.15,
+    "repayChance": 0.15, "repayGapYears": 8,
     "revengeStrongerMul": 2,
     "revealChance": 0.05,
     "inheritShare": 0.5
@@ -441,7 +448,7 @@
     "inheritKarma": 0.3
   },
   "founding": {
-    "minRealm": "kim_dan",
+    "minRealm": "kim_dan", "reportLogEvery": 5,
     "cost": 300,
     "maxRules": 3,
     "nameLength": [2, 24],
@@ -659,7 +666,8 @@
     "ownSect": 10,
     "clan": 10,
     "ranked": 5,
-    "highlights": 5
+    "highlights": 5,
+    "wish": 4
   },
   "goldenFinger": {
     "birthChance": 0.003,

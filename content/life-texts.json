@@ -167,44 +167,60 @@
         "spar": [
           "Hai cha con ra sân luận bàn. {name} đánh trượt ba lần, ngã hai lần, vẫn cười toe: \"Lần sau con thắng!\"",
           "Ngươi chỉ dùng một ngón tay đỡ chiêu. {name} tức đỏ mặt, đánh lại, lần này chạm được vạt áo ngươi.",
-          "{name} múa một thế quyền học lỏm đâu đó. Ngươi chỉ ra ba chỗ sai, đứa trẻ ghi nhớ cả ba."
+          "{name} múa một thế quyền học lỏm đâu đó. Ngươi chỉ ra ba chỗ sai, đứa trẻ ghi nhớ cả ba.",
+          "{name} đòi dùng kiếm gỗ. Ngươi nhường ba chiêu, đứa trẻ vẫn đánh hụt cả ba, rồi tự phì cười.",
+          "Ngươi ép {name} đứng tấn nửa canh giờ. Chân run như sợi bún, nhưng không chịu ngồi xuống."
         ],
         "discuss": [
           "Đêm trăng, ngươi kể cho {name} nghe vì sao nước chảy xuống mà khí bay lên. Đứa trẻ hỏi lại một câu khiến ngươi ngồi im rất lâu.",
           "{name} hỏi: \"Cha ơi, tu tiên để làm gì?\" Ngươi trả lời được nửa chừng, rồi nhận ra mình cũng chưa biết hết.",
-          "Hai người ngồi dưới gốc cây luận về chữ \"đạo\". {name} kết luận: đạo là đường về nhà. Ngươi chẳng cãi được."
+          "Hai người ngồi dưới gốc cây luận về chữ \"đạo\". {name} kết luận: đạo là đường về nhà. Ngươi chẳng cãi được.",
+          "{name} hỏi vì sao người ta phải chết. Ngươi nói về con sông, về nước ra biển, rồi bỗng nghẹn lời.",
+          "Hai cha con ngồi nghe mưa suốt buổi chiều. {name} thì thầm: \"Con nghe được hơi thở của mưa.\""
         ],
         "teach": [
           "Ngươi chép khẩu quyết {technique} từng câu vào tấm giấy dày, dặn {name} học thuộc trước khi học hiểu.",
           "{name} ngồi xếp bằng, đọc theo từng câu {technique}. Câu nào cũng sai một chữ, câu nào cũng thành thật.",
-          "Ngươi truyền {technique} cho {name}. Đứa trẻ nghe xong hỏi: \"Có cách nào tu mà không phải dậy sớm không?\""
+          "Ngươi truyền {technique} cho {name}. Đứa trẻ nghe xong hỏi: \"Có cách nào tu mà không phải dậy sớm không?\"",
+          "Ngươi dạy {name} cách thu hơi, nhả hơi. Đứa trẻ làm sai, làm lại, làm sai kiểu khác.",
+          "{name} chép lại khẩu quyết ba lần, mỗi lần một chữ khác. Ngươi cười, đưa bút sửa."
         ],
         "gift": [
           "Ngươi trao {item} cho {name}. Đứa trẻ cầm bằng hai tay, như cầm cả gia tài.",
           "{name} nhận {item}, nhìn mãi không dám dùng, rồi chạy đi khoe cả xóm.",
-          "Ngươi đặt {item} vào tay {name}: \"Giữ cho kỹ, sau này cần đến.\""
+          "Ngươi đặt {item} vào tay {name}: \"Giữ cho kỹ, sau này cần đến.\"",
+          "{name} nhận quà bằng cả hai tay, cúi đầu cảm ơn nghiêm trang như người lớn.",
+          "Ngươi đặt món quà lên bàn. {name} nhìn mãi mà không dám chạm, sợ làm hỏng."
         ]
       },
       "partner": {
         "spar": [
           "Ngươi và {name} luận bàn trong sân sau. Kiếm chạm kiếm, ai cũng giữ tay, cuối cùng hòa, cười ngất.",
           "{name} thua nửa chiêu, bảo hôm nay trời nắng gắt nên không tính. Ngươi đồng ý cho đỡ mất mặt.",
-          "Hai người đấu một trận, đổ mồ hôi, uống chung một bầu rượu. Chẳng ai nhớ ai thắng."
+          "Hai người đấu một trận, đổ mồ hôi, uống chung một bầu rượu. Chẳng ai nhớ ai thắng.",
+          "Hai người luận bàn dưới trăng. Chiêu cuối cả hai cùng dừng sát cổ nhau, rồi cùng cười.",
+          "{name} đỡ chiêu của ngươi bằng một tay áo, nói rằng đây là thế thủ gia truyền."
         ],
         "discuss": [
           "Đêm khuya, ngươi và {name} ngồi luận đạo bên chén trà nguội. Mỗi người chỉ ra chỗ kẹt của người kia.",
           "{name} hỏi một câu về ngũ hành mà ngươi không đáp được. Hai người cùng đi lật sách tới sáng.",
-          "Ngươi nói tới tâm cảnh, {name} nói tới thế đạo. Hai bên không ai thuyết phục được ai, nhưng cả hai đều hiểu thêm."
+          "Ngươi nói tới tâm cảnh, {name} nói tới thế đạo. Hai bên không ai thuyết phục được ai, nhưng cả hai đều hiểu thêm.",
+          "Hai người cãi nhau về một câu trong kinh văn tới khuya. Sáng ra thấy cả hai đều đúng một nửa.",
+          "{name} hỏi ngươi sợ gì nhất trên đường tu. Ngươi đáp, rồi nghe câu trả lời của người ấy, thấy mình chưa hiểu mấy."
         ],
         "teach": [
           "Ngươi chậm rãi giảng {technique} cho {name}, từng câu một, như ngày xưa có người giảng cho ngươi.",
           "{name} nghe {technique} xong, ngồi tĩnh tọa suốt ba ngày. Ngươi canh bên cạnh, ngủ gật hai lần.",
-          "Ngươi truyền {technique} cho {name}. Người ấy bảo công pháp hay thật, chỉ tiếc chữ ngươi chép xấu."
+          "Ngươi truyền {technique} cho {name}. Người ấy bảo công pháp hay thật, chỉ tiếc chữ ngươi chép xấu.",
+          "Ngươi ngồi sau {name}, cầm tay chỉ từng đường kinh mạch. Người ấy học nhanh hơn ngươi tưởng.",
+          "{name} hỏi ngược lại một chỗ khó, ngươi phải lật lại cả sổ tay cũ mới trả lời được."
         ],
         "gift": [
           "Ngươi tặng {name} {item}. Người ấy giả vờ chê phô trương, rồi cất kỹ trong tay áo.",
           "{name} nhận {item}, nhìn ngươi lâu hơn thường lệ. Chẳng nói gì, nhưng tối ấy nấu thêm một món.",
-          "Ngươi đưa {item} cho {name}: \"Của nàng đấy, đừng tiếc.\" Người ấy bật cười: \"Vậy mà bảo là của ta.\""
+          "Ngươi đưa {item} cho {name}: \"Của nàng đấy, đừng tiếc.\" Người ấy bật cười: \"Vậy mà bảo là của ta.\"",
+          "{name} mở món quà, lặng đi một chút rồi nói: \"Ngươi vẫn nhớ.\"",
+          "Món quà nhỏ thôi, nhưng {name} cất kỹ trong hộp, thỉnh thoảng lấy ra xem."
         ]
       },
       "mismatch": "Công pháp này không hợp căn cơ của người học, tu sẽ chậm và gượng.",
@@ -235,5 +251,10 @@
     "Yêu thú lạc đàn xông vào động phủ, giao đấu một trận mới đuổi được.",
     "Đan độc tích tụ lâu năm bộc phát, ngươi nôn ra máu đen.",
     "Cấm chế cũ trong thạch thất vô cớ nổ tung, ngươi bị sóng xung kích hất văng."
-  ]
+  ],
+  "economy": {
+    "exchange": "Thương hội thu {silver} lượng bạc của ngươi, đổi lấy {stones} linh thạch. Giá hời cho họ, nhưng bạc nằm không cũng chỉ để mốc.",
+    "upkeepPaid": "Gia quyến và đồ đệ ăn tiêu hết {stones} linh thạch trong năm.",
+    "upkeepShort": "Linh thạch không đủ nuôi gia quyến và đồ đệ, ngươi thấy hổ thẹn khó tả."
+  }
 }

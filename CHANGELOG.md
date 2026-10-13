@@ -8,6 +8,36 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6c.9: cân lại trần đột phá, giao diện, dọn PLAN (2026-10-13)
+- Trần cộng dồn đột phá đại cảnh giới chốt lại sau khi các bước 6c.2-6c.5 làm game khó thêm: Trúc Cơ 34, Kim Đan 32, Nguyên Anh 30, Hóa Thần 26 điểm (`majorModifierCap`; trước đó 36/36/34/38). Chặn trên của tỉ lệ thành công (cơ sở + trần): Trúc Cơ 64%, Kim Đan 52%, Nguyên Anh 42%, Hóa Thần 34%, so với 87% và 81% ở Nguyên Anh và Hóa Thần trong bản đánh giá.
+- Người chơi máy (`--profile player`) đột phá từ 30% trở lên (trước 40%), vì trần mới thấp hơn.
+- Mô phỏng 1500 đời `--profile player`, tổng sau 6c.1-6c.9: Kim Đan 13.5%, Nguyên Anh 3.3%, Hóa Thần 0.5% (trước 6c: 21.3% / 8.3% / 4%), tuổi thọ trung vị 68 (trước 78). Hơi thấp hơn chỉ tiêu trong kế hoạch (15-25 / 4-8 / 1-3) vì người chơi máy yếu hơn người thật: chết sớm vì giao chiến (50% số cái chết), không ngao du, không dùng khí vận. Người chơi thật vẫn có nhiều đòn bẩy hơn; cần một lượt chơi giao diện sau khi merge để xác nhận Hóa Thần còn tới được.
+- Giao diện: bảng Tu luyện, Tông môn dùng hai cột trên màn từ 1100px (đã chụp ảnh 1280px); dev panel không còn tràn ngang ở 390px và 320px (`flex-wrap`); màn 320px có avatar, nhãn dock, thẻ mục tiêu và hướng dẫn gọn hơn.
+- PLAN.md: đánh dấu 5c.7, thêm hàng 5c.8 còn thiếu.
+
+### GĐ 6c.8: di nguyện, mục tiêu hậu Hóa Thần (2026-10-13)
+- Không thêm cảnh giới. Từ Hóa Thần, dòng **Mục tiêu** hiện **di nguyện chưa thành** đầu tiên thay cho "Đường tu còn dài": đứng trên đỉnh Hóa Thần, có người nối nghiệp, mở sơn môn muôn đời, con cháu đầy nhà, bạn đường trăm năm, tay không vấy máu oan, tên khắc trên bảng vàng, dựng gia tộc, lòng như nước lặng, hưởng trọn thọ nguyên (10 di nguyện trong `achievements.json`, dùng lại bộ kiểm tra của thành tựu).
+- Mỗi di nguyện đã thành khi lìa đời cho thêm 4 điểm Luân Hồi (`rebirth.wish`), hiện thành dòng "Di nguyện: …" ở màn kết thúc. Nhờ vậy 118 năm sau viên mãn có việc để làm, và kiếp sau hưởng được.
+- Test mới (`tests/wishes.test.ts`).
+
+### GĐ 6c.7: sự kiện Kim Đan, Nguyên Anh, Hóa Thần (2026-10-13)
+- 30 sự kiện mới (`events/high-realm.json`, id `hr_`): 10 từ Kim Đan, 10 từ Nguyên Anh, 10 từ Hóa Thần. Nội dung do Claude quyết theo luật GĐ 4+, chủ dự án duyệt sau. Mọi lựa chọn đều đổi ít nhất một chỉ số; validator sạch.
+- Ba chủ đề trước đây thiếu: **báo ứng** (oan hồn đòi nợ khi nghiệp nặng, thư đền ơn khi nhiều thiện, ác nghiệp chồng chất, di vật kẻ bại trận), **lừa đảo** (bảo vật tổ truyền, đan độc bán rẻ), **bi kịch gia đình** (tin cha mẹ già và mất, đệ tử bỏ sơn môn, đạo lữ giấu chuyện, người xưa gõ cửa, bạn cũ mất tích, bạn cũ nhập ma). Kèm kịch bản cảnh giới cao: Nguyên Anh rời thể, thiên cơ rối loạn, chư thiên giáng thế, kiếp nạn chồng kiếp nạn, đệ tử cuối, thọ nguyên cạn, thiên đạo hỏi.
+- **Kháng mị thuật (`charmResist`) có tác dụng**: lựa chọn có kiểm tra thêm trường `check.resist` (`charmResist` hoặc `heartDemonResist`); mỗi điểm hook làm cửa kiểm tra dễ đi `events.check.resistPoints` (100) điểm độ khó. Hai sự kiện mị hoặc ("Nụ cười không rõ gốc gác", "Ma nữ cầu bạn đồng hành") dùng nó, chỉ cho nhân vật từ 18 tuổi.
+- Mô phỏng 250 đời `--profile player`: các sự kiện Kim Đan xuất hiện 34-49 lần; Nguyên Anh 8-12 lần; Hóa Thần và các sự kiện cần đạo lữ, tông môn, cha mẹ còn sống không xuất hiện vì bot không có (đã có test kiểm tra trọng số).
+
+### GĐ 6c.6: bớt lặp nhật ký và văn bản (2026-10-13)
+- "Báo cáo của tông" (tông môn tự lập) chỉ vào nhật ký mỗi 5 năm (`founding.reportLogEvery`), hoặc ngay khi tông biến động mạnh (số đệ tử đổi từ 10% hoặc kho cạn). Bảng Tông môn vẫn có báo cáo và quyết định mỗi năm. Bản đánh giá ghi dòng này chiếm 110 trong 141 năm.
+- "Báo ân" và các lần NPC đến trả ơn cách nhau ít nhất 8 năm (`npcs.repayGapYears`); trước đó tới 21 lần một đời.
+- Thêm biến thể văn bản: Song tu 1 → 6, Bầu bạn 6 → 10, Hỏi han 2 → 6, Phụ việc nhà 2 → 5, Chăm sóc 2 → 5, Cãi nhau 2 → 5, Xin tiền 1 → 3, Luận bàn / Luận đạo / Truyền công pháp / Tặng vật phẩm với con và đạo lữ 3 → 5 mỗi loại.
+- Ghi chú: `romance.texts.dualCult` đổi từ một chuỗi thành danh sách.
+
+### GĐ 6c.5: kinh tế người tu (2026-10-13)
+- Bạc không còn vô dụng sau khi nhập đạo: mỗi năm Thương hội tự đổi bạc của người tu từ Luyện Khí trở lên lấy linh thạch, 100 bạc một linh thạch (`economy.silverPerStone`, giá bất lợi), ghi một dòng nhật ký.
+- Nuôi người: từ Trúc Cơ, mỗi con, đạo lữ, đồ đệ còn sống (tối đa 6) ăn tiêu linh thạch mỗi năm theo cảnh giới (Trúc Cơ 0,5, Kim Đan 1, Nguyên Anh 2, Hóa Thần 4). Thiếu linh thạch thì mất 3 hạnh phúc và hết sạch linh thạch.
+- Mô phỏng: linh thạch lúc chết trung vị 218 → 174, số đời còn từ 500 linh thạch 14% → 13%.
+- Test mới (`tests/economy.test.ts`).
+
 ### GĐ 6c.4: chỉ số không còn dính 100 (2026-10-13)
 - Hạnh phúc, trí tuệ và mị lực tăng chậm dần khi đã cao (`statGain`): từ 70 điểm chỉ tính một nửa, từ 90 chỉ tính một phần tư. Chỉ áp cho phần cộng thường (kết quả sự kiện thường, nhiệm vụ tông); kỳ ngộ, mất điểm và các chỉ số khác giữ nguyên. Bản đánh giá ghi Trí tuệ 100 từ tuổi 23, Mị lực 100 từ 53, Hạnh phúc dính 93-100.
 - Bộ mô phỏng in thêm "Số năm sống có chỉ số từ 95" cho từng chỉ số (bản mô phỏng người chơi máy ra hạnh phúc 0%, trí tuệ 6%, mị lực 6%; người thật chơi lâu và ngao du nhiều hơn nên cao hơn, cần đối chiếu lại bằng bot giao diện).

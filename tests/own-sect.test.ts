@@ -73,7 +73,19 @@ describe('công trình và báo cáo tông môn (task 5.2)', () => {
     expect(own.report!.age).toBe(next.character.age);
     expect(own.report!.decisions.length).toBeGreaterThanOrEqual(cfg.decisions[0]);
     expect(own.report!.decisions.length).toBeLessThanOrEqual(cfg.decisions[1]);
-    expect(next.log.at(-1)!.lines.some((l) => l.text.startsWith('Báo cáo của Thanh Tiêu Tông'))).toBe(true);
+  });
+
+  it('6c.6: the report reaches the log only every reportLogEvery years, unless the sect swings hard', () => {
+    const inLog = (age: number, growthBonus: number) => {
+      const s = founded();
+      const at = { ...s, character: { ...s.character, age: age - 1 }, ownSect: { ...s.ownSect!, members: 40, growthBonus } };
+      const next = advanceYear({ ...at, events: { ...at.events, pending: null } }, content);
+      return next.log.at(-1)!.lines.some((l) => l.text.startsWith('Báo cáo của Thanh Tiêu Tông'));
+    };
+    expect(inLog(cfg.reportLogEvery * 8, 0)).toBe(true);
+    expect(inLog(cfg.reportLogEvery * 8 + 1, 0)).toBe(false);
+    // A sudden swing (here, a recruiting drive that doubles the sect) is logged on any year.
+    expect(inLog(cfg.reportLogEvery * 8 + 1, 1)).toBe(true);
   });
 
   it('tông quy shape recruitment: Mở cửa cho tán tu draws more than Bế môn tự thủ', () => {

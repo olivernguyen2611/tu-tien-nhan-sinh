@@ -140,9 +140,17 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
   };
 }
 
+/** 6c.6: some repay event (Báo ân…) already happened within balance.npcs.repayGapYears. */
+function repaidRecently(state: GameState, content: Content): boolean {
+  const gap = content.balance.npcs.repayGapYears;
+  return content.events.some((e) => e.npcTrigger === 'repay' && state.events.history[e.id] !== undefined && state.character.age - state.events.history[e.id] < gap);
+}
+
 /** Task 3.4: an NPC whose ledger calls for a visit, and an event for it whose conditions hold. */
 function npcEvent(state: GameState, content: Content, rng: Rng): { npc: string; event: string } | null {
   for (const call of npcCalls(state, content, rng)) {
+    // 6c.6: kindness repaid is a moment, not a yearly chore.
+    if (call.trigger === 'repay' && repaidRecently(state, content)) continue;
     const withNpc = { ...state, events: { ...state.events, npc: call.id } };
     const pool = content.events.filter((e) => e.npcTrigger === call.trigger && e.weight > 0 && meets(withNpc, e.conditions, content));
     if (pool.length === 0) continue;
@@ -163,9 +171,10 @@ export interface ChoiceView {
   check: { stat: string; difficulty: number; chance: number } | null;
 }
 
-export function checkChance(state: GameState, content: Content, stat: string, difficulty: number): number {
+export function checkChance(state: GameState, content: Content, stat: string, difficulty: number, resist?: 'charmResist' | 'heartDemonResist'): number {
   const c = content.balance.events.check;
-  const p = c.base + (readValue(state, stat) - difficulty) * c.perPoint;
+  const ease = resist ? hookSum(state, content, resist) * c.resistPoints : 0;
+  const p = c.base + (readValue(state, stat) - difficulty + ease) * c.perPoint;
   return Math.max(c.min, Math.min(c.max, p));
 }
 
@@ -183,7 +192,7 @@ export function visibleChoices(state: GameState, content: Content, event: GameEv
         ? c.requires?.traitsAny?.find((t) => state.traits.includes(t)) ?? c.requires?.talentsAny?.find((t) => state.talents.includes(t)) ?? null
         : null,
       disabled: !ok,
-      check: c.check ? { ...c.check, chance: checkChance(state, content, c.check.stat, c.check.difficulty) } : null,
+      check: c.check ? { ...c.check, chance: checkChance(state, content, c.check.stat, c.check.difficulty, c.check.resist) } : null,
     });
   });
   // Task 3.9: variants of one choice (same text, exclusive requires) show only the one that applies.
@@ -255,7 +264,7 @@ export function resolveChoice(given: GameState, content: Content, choiceIndex: n
   let outcome: Outcome;
   let success: boolean | null = null;
   if (choice.check) {
-    success = rng.chance(checkChance(state, content, choice.check.stat, choice.check.difficulty));
+    success = rng.chance(checkChance(state, content, choice.check.stat, choice.check.difficulty, choice.check.resist));
     outcome = (success ? choice.success : choice.fail)!;
   } else {
     outcome = choice.result!;
