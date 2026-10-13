@@ -1,5 +1,6 @@
 // EventEngine (PLAN.md task 1.5): each year pick at most one event, the player
 // chooses, the outcome is applied. Pure functions over GameState + Content.
+import { ordinaryAptitude } from '../aptitudeGain';
 import type { Content } from '../../core/content';
 import { Rng } from '../../core/rng';
 import type { GameEvent } from '../../core/schemas';
@@ -191,7 +192,8 @@ export function visibleChoices(state: GameState, content: Content, event: GameEv
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
-function applyEffects(state: GameState, effects: Outcome['effects'], rng: Rng): GameState {
+/** `ordinary` (not a rare event): aptitude gains shrink as they climb (6b.9). */
+function applyEffects(state: GameState, effects: Outcome['effects'], rng: Rng, content?: Content, ordinary = false): GameState {
   const stats = { ...state.stats };
   const aptitudes = { ...state.aptitudes };
   const money = { ...state.money };
@@ -204,7 +206,10 @@ function applyEffects(state: GameState, effects: Outcome['effects'], rng: Rng): 
     if (key.startsWith('stat.')) {
       const k = key.slice(5);
       if (k in stats) stats[k as keyof typeof stats] = clamp(stats[k as keyof typeof stats] + value);
-      else if (k in aptitudes) aptitudes[k as keyof typeof aptitudes] = clamp(aptitudes[k as keyof typeof aptitudes] + value);
+      else if (k in aptitudes) {
+        const cur = aptitudes[k as keyof typeof aptitudes];
+        aptitudes[k as keyof typeof aptitudes] = ordinary && content ? ordinaryAptitude(k, cur, value, content, rng) : clamp(cur + value);
+      }
     } else if (key === 'silver' || key === 'spiritStones') {
       money[key] = Math.max(0, money[key] + value);
     } else if (key === 'karma') {
@@ -253,7 +258,7 @@ export function resolveChoice(given: GameState, content: Content, choiceIndex: n
     outcome = choice.result!;
   }
 
-  let next = applyEffects(state, outcome.effects, rng);
+  let next = applyEffects(state, outcome.effects, rng, content, !event.tags.includes('rare'));
   let text = outcome.text;
   const tone: Tone = event.tags.includes('rare') ? 'rare' : success === true ? 'good' : success === false ? 'bad' : 'normal';
   next = {
@@ -430,6 +435,6 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
 
 /** Apply an outcome that does not come from a pending event (e.g. the end of a fight). */
 export function applyOutcome(state: GameState, content: Content, outcome: { text: string; effects: Outcome['effects'] }, rng: Rng): { state: GameState; text: string } {
-  const r = applyExtras(applyEffects(state, outcome.effects, rng), content, outcome.effects, outcome.text);
+  const r = applyExtras(applyEffects(state, outcome.effects, rng, content, true), content, outcome.effects, outcome.text);
   return { state: r.state, text: fillTemplate(r.text, r.state, content) };
 }

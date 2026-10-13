@@ -734,6 +734,10 @@ export const BalanceSchema = z
         pressureLeftPct: probability,
       })
       .strict(),
+    /** 6b.9: ordinary gains to these aptitudes shrink at softAt and hardAt (kỳ ngộ are not scaled). */
+    aptitudeGain: z
+      .object({ stats: z.array(z.enum(APTITUDES)), softAt: z.number(), softMul: z.number().min(0), hardAt: z.number(), hardMul: z.number().min(0) })
+      .strict(),
     /** 6b.2 Ngao du: once a year, pay to lift happiness (silver for mortals, spirit stones for cultivators). */
     leisure: z
       .object({

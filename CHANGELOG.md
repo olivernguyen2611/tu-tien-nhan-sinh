@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6b.9: tư chất không trôi (2026-10-13)
+- Căn cốt, ngộ tính, khí vận tăng từ nguồn thường (sự kiện không phải kỳ ngộ, nhiệm vụ tông môn, đồng môn, chuỗi nhiệm vụ, luận đạo với đạo lữ) nay giảm dần: từ 60 chỉ còn ×0.5, từ 80 còn ×0.2, phần lẻ làm tròn theo xác suất (`balance.aptitudeGain`). Kỳ ngộ (sự kiện `rare`), đan dược, khí vận, thiên phú, thể chất không bị giảm; mất tư chất không bị giảm (lỗi #7).
+- Mô phỏng 300 đời `--profile player`: tư chất tăng trung bình 42.8 → 33.7 điểm mỗi đời; số đời kết thúc với một chỉ số từ 90: 52.3% → 29.3%. Tỉ lệ cảnh giới gần như không đổi (Kim Đan 26% → 23%). Bộ mô phỏng in thêm dòng tư chất.
+- Test `cultivation` chọn lựa chọn đầu tiên đủ điều kiện (trước đó có thể kẹt mãi ở sự kiện mà lựa chọn 0 cần bạc).
+
 ### GĐ 6b.8: không hỏi tha/giết hai lần (2026-10-13)
 - Trận đánh mà phần thắng hẹn tiếp sự kiện ngay trong năm (`followUp.afterYears` = [0, 0]) bỏ bước chung Tha / Lột đồ / Giết; sự kiện tiếp theo tự quyết số phận đối thủ. Trước đó "Bảng treo thưởng" cho chọn Tha rồi ngay sau lại hỏi Giao nộp / Thả đi (lỗi #6).
 

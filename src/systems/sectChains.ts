@@ -5,6 +5,7 @@
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameState, LogLine, Npc } from '../core/types';
+import { ordinaryAptitude } from './aptitudeGain';
 import { changeNpc, npcById } from './npcs';
 import { sectmates, sectmateTitle } from './sectmates';
 
@@ -30,12 +31,12 @@ function vars(state: GameState, content: Content, npc: Npc | undefined) {
   return npc ? { npc: npc.name, title: sectmateTitle(state, content, npc) } : { npc: '', title: '' };
 }
 
-function applyOutcome(state: GameState, out: Chain['reward']): GameState {
+function applyOutcome(state: GameState, out: Chain['reward'], content: Content, rng: Rng): GameState {
   const stats = { ...state.stats };
   const aptitudes = { ...state.aptitudes };
   for (const [k, v] of Object.entries(out.stats)) {
     if (k in stats) stats[k as keyof typeof stats] = clamp(stats[k as keyof typeof stats] + v);
-    else aptitudes[k as keyof typeof aptitudes] = clamp(aptitudes[k as keyof typeof aptitudes] + v);
+    else aptitudes[k as keyof typeof aptitudes] = ordinaryAptitude(k, aptitudes[k as keyof typeof aptitudes], v, content, rng);
   }
   return {
     ...state,
@@ -122,11 +123,11 @@ export function doChainStep(state: GameState, content: Content, chainId: string)
   const v = vars(state, content, npc);
   const rng = Rng.fromState(state.rng);
   const success = rng.chance(view.chance ?? 0.5);
-  let s: GameState = { ...state, rng: rng.getState(), sect: { ...state.sect, lastMission: state.character.age } };
-  s = applyOutcome(s, success ? step.success : step.fail);
+  let s: GameState = { ...state, sect: { ...state.sect, lastMission: state.character.age } };
+  s = applyOutcome(s, success ? step.success : step.fail, content, rng);
   const lines: LogLine[] = [{ text: `${chain.name} (${cur.step + 1}/${chain.steps.length}): ${fill((success ? step.success : step.fail).text, v)} Cống hiến +${(success ? step.success : step.fail).contribution}.`, tone: success ? 'good' : 'bad' }];
   if (success && cur.step + 1 >= chain.steps.length) {
-    s = applyOutcome(s, chain.reward);
+    s = applyOutcome(s, chain.reward, content, rng);
     lines.push({ text: `${chain.name} hoàn tất: ${fill(chain.reward.text, v)} Cống hiến +${chain.reward.contribution}.`, tone: 'good' });
     s = { ...s, sect: { ...s.sect, chain: null, chainsDone: [...(s.sect.chainsDone ?? []), chainId] } };
     if (npc && chain.affinity) s = changeNpc(s, content, npc.id, { affinity: chain.affinity, favor: 5 });
@@ -138,5 +139,6 @@ export function doChainStep(state: GameState, content: Content, chainId: string)
   } else {
     s = { ...s, sect: { ...s.sect, chain: { ...cur, fails: cur.fails + 1 } } };
   }
+  s = { ...s, rng: rng.getState() };
   return { state: { ...s, log: addLines(s, lines) }, text: lines.map((l) => l.text).join(' '), success };
 }

@@ -90,6 +90,7 @@
     "pressureLeftPct": 0.1,
     "eventCapPct": 0.5
   },
+  "aptitudeGain": { "stats": ["physique", "comprehension", "luck"], "softAt": 60, "softMul": 0.5, "hardAt": 80, "hardMul": 0.2 },
   "leisure": { "minAge": 8, "silver": 5, "spiritStones": 3, "happiness": [8, 14], "freeHappiness": [3, 5], "daoHeartBelow": 20, "daoHeart": 1 },
   "fastForward": {
     "maxYears": 10
