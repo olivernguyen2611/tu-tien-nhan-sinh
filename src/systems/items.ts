@@ -48,6 +48,14 @@ export function breakthroughItem(state: GameState, content: Content, major: bool
     .sort((a, b) => (b.breakthrough!.add - a.breakthrough!.add))[0];
 }
 
+/** 6b.6: a breakthrough pill for a realm this life has already left behind (Trúc Cơ Đan for a Trúc Cơ). */
+export function pillOutgrown(state: GameState, content: Content, id: string): boolean {
+  const realm = itemById(content, id)?.breakthrough?.realm;
+  if (!realm) return false;
+  const order = content.cultivation.realms.realms.map((r) => r.id);
+  return order.indexOf(state.cult.realm) > order.indexOf(realm);
+}
+
 /** "Tụ Khí Đan ×2, Trúc Cơ Đan" for the profile. */
 export function inventoryLabel(state: GameState, content: Content): string | null {
   const parts = Object.entries(state.inventory)

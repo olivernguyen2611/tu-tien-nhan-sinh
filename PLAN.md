@@ -405,7 +405,7 @@ Mỗi vấn đề một task, theo mức nghiêm trọng trong bản đánh giá
 | 6b.3 | [x] Hạnh phúc không rơi về 0 cả đời: trôi về mức nghỉ mỗi năm, có lối ra, cảnh báo (lỗi #2) |
 | 6b.4 | [x] Bức tường công pháp: Mục tiêu nói rõ cần công pháp nào và tìm ở đâu, kỳ ngộ bảo đảm khi kẹt lâu (lỗi #3) |
 | 6b.5 | [x] Cân lại thể chất đặc biệt (quá phổ biến) và linh căn tốt kẹt lâu hơn linh căn kém |
-| 6b.6 | [ ] Sự kiện, hành động không hợp ngữ cảnh: bái nhập lúc 0 tuổi, học nghề khi đã vào tông, Trúc Cơ Đan khi đã Trúc Cơ (lỗi #4, #13, #15) |
+| 6b.6 | [x] Sự kiện, hành động không hợp ngữ cảnh: bái nhập lúc 0 tuổi, học nghề khi đã vào tông, Trúc Cơ Đan khi đã Trúc Cơ (lỗi #4, #13, #15) |
 | 6b.7 | [ ] Giao chiến: cảnh giới đối thủ khớp lời văn, đại từ số nhiều (lỗi #5, #12) |
 | 6b.8 | [ ] Tha kẻ trộm rồi không bị hỏi giao nộp (lỗi #6) |
 | 6b.9 | [ ] Tư chất không trôi quá nhiều theo nhiệm vụ, sự kiện thường (lỗi #7) |

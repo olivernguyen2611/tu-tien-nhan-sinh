@@ -3,7 +3,7 @@
 // total contribution that promotion counts (state.sect.spent tracks it). Entries in sect-life.json.
 import type { Content } from '../core/content';
 import type { GameState } from '../core/types';
-import { addItems, itemById } from './items';
+import { addItems, itemById, pillOutgrown } from './items';
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
 
@@ -14,8 +14,9 @@ export function merit(state: GameState): number {
 
 export interface TreasuryView { id: string; name: string; text: string; cost: number; left: number; blocked: string | null }
 
-function blockedReason(state: GameState, t: { cost: number; minRank: number; limit: number; id: string; sects?: string[] }, ranks: string[]): string | null {
+function blockedReason(state: GameState, content: Content, t: { cost: number; minRank: number; limit: number; id: string; sects?: string[]; items: string[] }, ranks: string[]): string | null {
   if (!state.alive) return 'Đã hết một đời.';
+  if (t.items.length > 0 && t.items.every((i) => pillOutgrown(state, content, i))) return 'Vô dụng ở cảnh giới này.';
   if (t.sects && !t.sects.includes(state.sect.id ?? '')) return 'Tông này không bán.';
   if (state.sect.rank < t.minRank) return `Cần là đệ tử ${ranks[t.minRank] ?? ''}.`;
   if ((state.sect.bought?.[t.id] ?? 0) >= t.limit) return 'Đã đổi hết suất của đời này.';
@@ -35,7 +36,7 @@ export function treasuryViews(state: GameState, content: Content): TreasuryView[
       text: t.text,
       cost: t.cost,
       left: Math.max(0, t.limit - (state.sect.bought?.[t.id] ?? 0)),
-      blocked: blockedReason(state, t, sect.ranks),
+      blocked: blockedReason(state, content, t, sect.ranks),
     }));
 }
 
@@ -43,7 +44,7 @@ export function treasuryViews(state: GameState, content: Content): TreasuryView[
 export function buyTreasury(state: GameState, content: Content, id: string): { state: GameState; text: string; success: boolean } | null {
   const sect = content.sects.find((s) => s.id === state.sect.id);
   const t = content.sectLife?.treasury.find((x) => x.id === id);
-  if (!sect || !t || blockedReason(state, t, sect.ranks)) return null;
+  if (!sect || !t || blockedReason(state, content, t, sect.ranks)) return null;
   let s: GameState = {
     ...state,
     sect: { ...state.sect, spent: (state.sect.spent ?? 0) + t.cost, bought: { ...state.sect.bought, [id]: (state.sect.bought?.[id] ?? 0) + 1 } },
