@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6c.1: đường cong đột phá (2026-10-13)
+- Các điểm cộng vào tỉ lệ đột phá (ngộ tính, đạo tâm, hook, vật phẩm, tích lũy chờ đỉnh) không còn cộng dồn vô hạn: quá `modifierKnee` (20 điểm) chỉ tính một nửa (`modifierShare`), và đột phá đại cảnh giới có trần cộng theo cảnh giới đích (`majorModifierCap`: Trúc Cơ 36, Kim Đan 36, Nguyên Anh 34, Hóa Thần 38). Điểm trừ (thất bại, độ khó khó) không bị giới hạn. Bản chơi thử 13/10 thấy Nguyên Anh 87%, Hóa Thần 81% vì cộng dồn không trần.
+- Thất bại đột phá vào Nguyên Anh và Hóa Thần nặng hơn (`failureWeightsByRealm`): tử vong 3 → 5 và 8, hao thọ 15 → 17 và 18, tẩu hỏa 7 → 8 và 9.
+- Mô phỏng `--profile player` 900 đời (trước 300 đời): Kim Đan 21.3% → 19.1%, Nguyên Anh 8.3% → 6.2%, Hóa Thần 4% → 2.3%, tuổi thọ trung vị 78 → 81.
+- Đan dược hỗ trợ vẫn cộng đủ số ghi trên vật phẩm (chỉ chịu trần). Test mới cho độ nén và trần cộng dồn.
+
 ### GĐ 6c.0: vá lỗi nhanh sau đợt chơi thử 13/10 (2026-10-13)
 - **Vòng đá ngũ hành** chơi được: trò này không có gì để ghi nhớ nên nhận nhập liệu ngay (trước đó bị coi là "đang hiện đáp án" và bỏ qua mọi lần bấm, chặn cả chuỗi Tam hoa tụ đỉnh và Ngũ khí triều nguyên). Có test thắng trò.
 - Tiêu đề sự kiện có `{lover}` ("{lover} lâm bệnh") được điền tên ở thẻ kết quả và nhật ký.

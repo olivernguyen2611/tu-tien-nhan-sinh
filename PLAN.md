@@ -420,7 +420,7 @@ Giữ trần Hóa Thần, không thêm cảnh giới mới. Mỗi task có chỉ
 | # | Task |
 |---|---|
 | 6c.0 | [x] Vá lỗi nhanh: ải ngũ hành chơi được (B1), tiêu đề `{lover}` (B2), tuổi thọ con có căn (B6), lỗi chữ (B4, B5) |
-| 6c.1 | [ ] Đường cong đột phá: trần cộng dồn, hiệu suất giảm dần, trần clamp theo cảnh giới, thất bại/kiếp nạn nặng hơn |
+| 6c.1 | [x] Đường cong đột phá: trần cộng dồn, hiệu suất giảm dần, trần clamp theo cảnh giới, thất bại/kiếp nạn nặng hơn |
 | 6c.2 | [ ] Hãm vòng cày an toàn của tông môn (nhiệm vụ, bảo khố, Cải mệnh) |
 | 6c.3 | [ ] Áp lực sinh tồn sau Trúc Cơ |
 | 6c.4 | [ ] Chỉ số bão hòa (Hạnh phúc, Trí tuệ, Mị lực) |

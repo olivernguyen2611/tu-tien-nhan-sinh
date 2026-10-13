@@ -158,7 +158,10 @@
     "aptitudeGrowth": 3,
     "aptitudeMin": 0.3,
     "regionQi": 1.0,
-    "breakthrough": { "comprehensionPerPoint": 0.3, "daoHeartPerPoint": 0.2, "failPenaltyPct": 5, "minPct": 3, "maxPct": 95 },
+    "breakthrough": { "comprehensionPerPoint": 0.3, "daoHeartPerPoint": 0.2, "failPenaltyPct": 5,
+      "modifierKnee": 20,
+      "modifierShare": 0.5,
+      "majorModifierCap": { "truc_co": 36, "kim_dan": 36, "nguyen_anh": 34, "hoa_than": 38 }, "minPct": 3, "maxPct": 95 },
     "minorFailure": {
       "weights": { "lose": 70, "injury": 25, "lifespan": 5 },
       "loseProgress": 30,
@@ -171,6 +174,10 @@
   "majorBreakthrough": {
     "openRealms": ["truc_co", "kim_dan", "nguyen_anh", "hoa_than"],
     "failureWeights": { "lose": 40, "injury": 35, "lifespan": 15, "deviation": 7, "death": 3 },
+    "failureWeightsByRealm": {
+      "nguyen_anh": { "lose": 35, "injury": 35, "lifespan": 17, "deviation": 8, "death": 5 },
+      "hoa_than": { "lose": 30, "injury": 35, "lifespan": 18, "deviation": 9, "death": 8 }
+    },
     "deviationHealth": -30,
     "deviationDaoHeart": -10,
     "bottleneckFails": 2,

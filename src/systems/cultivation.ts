@@ -346,15 +346,23 @@ export function breakthroughPct(state: GameState, content: Content, basePct: num
   const b = content.balance.cultivation.breakthrough;
   // Big breakthroughs count failures at the realm's peak, stages count their own.
   const fails = state.cult.fails[major ? `${state.cult.realm}:peak` : `${state.cult.realm}:${state.cult.stage}`] ?? 0;
-  const pct = basePct
-    + (state.aptitudes.comprehension - 50) * b.comprehensionPerPoint
+  // 6c.1: bonuses pile up with diminishing returns, and a big breakthrough has a ceiling on them.
+  const bonus = (state.aptitudes.comprehension - 50) * b.comprehensionPerPoint
     + (state.aptitudes.daoHeart - 50) * b.daoHeartPerPoint
     + hookSum(state, content, 'breakthroughChance')
     + hookSum(state, content, major ? 'breakthroughChance.major' : 'breakthroughChance.minor')
     + (major ? state.cult.nextBonus : 0)
-    + (breakthroughItem(state, content, major)?.breakthrough?.add ?? 0)
-    + state.itemUse.nextBreakthrough
-    - b.failPenaltyPct * fails;
+    + state.itemUse.nextBreakthrough;
+  // A pill is a one-off the player spends, so it is added at face value; only the ceiling limits it.
+  const pill = breakthroughItem(state, content, major)?.breakthrough?.add ?? 0;
+  let shaped = (bonus > b.modifierKnee ? b.modifierKnee + (bonus - b.modifierKnee) * b.modifierShare : bonus) + pill;
+  if (major) {
+    const realms = content.cultivation.realms.realms;
+    const target = realms[realmIndex(content, state.cult.realm) + 1]?.id;
+    const cap = target ? b.majorModifierCap[target] : undefined;
+    if (cap !== undefined) shaped = Math.min(shaped, cap);
+  }
+  const pct = basePct + shaped - b.failPenaltyPct * fails;
   return Math.max(b.minPct, Math.min(b.maxPct, pct));
 }
 
@@ -629,7 +637,9 @@ export function majorFailure(before: GameState, s0: GameState, content: Content,
   const key = `${before.cult.realm}:peak`;
   const failCount = (s.cult.fails[key] ?? 0) + 1;
   s = { ...s, cult: { ...s.cult, fails: { ...s.cult.fails, [key]: failCount } } };
-  const kind = rng.weighted(['lose', 'injury', 'lifespan', 'deviation', 'death'] as const, (k) => cfg.failureWeights[k]);
+  const target = content.cultivation.realms.realms[realmIndex(content, before.cult.realm) + 1]?.id ?? '';
+  const weights = cfg.failureWeightsByRealm[target] ?? cfg.failureWeights;
+  const kind = rng.weighted(['lose', 'injury', 'lifespan', 'deviation', 'death'] as const, (k) => weights[k]);
   let text: string;
   if (kind === 'lose') {
     s = { ...s, cult: { ...s.cult, progress: Math.max(0, 100 - minor.loseProgress) } };

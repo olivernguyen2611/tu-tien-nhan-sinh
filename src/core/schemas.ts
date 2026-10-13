@@ -1324,6 +1324,11 @@ export const BalanceSchema = z
             comprehensionPerPoint: z.number(),
             daoHeartPerPoint: z.number(),
             failPenaltyPct: z.number().min(0),
+            /** 6c.1: bonuses beyond this many points count only `modifierShare` of the way. */
+            modifierKnee: z.number().min(0),
+            modifierShare: z.number().min(0).max(1),
+            /** 6c.1: most points the bonuses can add to a big breakthrough into this realm. */
+            majorModifierCap: z.record(id, z.number().min(0)),
             minPct: z.number().min(0).max(100),
             maxPct: z.number().min(0).max(100),
           })
@@ -1349,6 +1354,13 @@ export const BalanceSchema = z
         failureWeights: z
           .object({ lose: z.number().min(0), injury: z.number().min(0), lifespan: z.number().min(0), deviation: z.number().min(0), death: z.number().min(0) })
           .strict(),
+        /** 6c.1: weights that replace failureWeights for a big breakthrough into this realm. */
+        failureWeightsByRealm: z
+          .record(
+            id,
+            z.object({ lose: z.number().min(0), injury: z.number().min(0), lifespan: z.number().min(0), deviation: z.number().min(0), death: z.number().min(0) }).strict(),
+          )
+          .default({}),
         deviationHealth: z.number(),
         deviationDaoHeart: z.number(),
         /** Failures at a realm's peak before the bottleneck slows cultivation. */
