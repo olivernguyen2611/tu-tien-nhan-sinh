@@ -57,7 +57,7 @@ export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, 
       {(livesPlayed > 0 || rebirthPoints > 0) && <button class="link-btn" onClick={onRebirth}>Luân Hồi Đài</button>}
       {(livesPlayed > 0 || devMode) && <button class="link-btn" onClick={onCodex}>Thiên Thư</button>}
       {(livesPlayed > 0 || devMode) && <button class="link-btn" onClick={onChallenge}>Thử thách tuần</button>}
-      <p class="note">{livesPlayed > 0 ? `Đã trải ${livesPlayed} kiếp · ` : ''}{rebirthPoints > 0 ? `${rebirthPoints} điểm Luân Hồi · ` : ''}Bản dựng khung · đang xây dựng</p>
+      <p class="note">{livesPlayed > 0 ? `Đã trải ${livesPlayed} kiếp · ` : ''}{rebirthPoints > 0 ? `${rebirthPoints} điểm Luân Hồi · ` : ''}Bản thử nghiệm {__APP_VERSION__}</p>
     </main>
   );
 }

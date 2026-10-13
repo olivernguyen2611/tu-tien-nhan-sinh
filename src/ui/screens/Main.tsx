@@ -2,6 +2,7 @@
 // middle, a dock with the big age button, and stat bars underneath.
 import type { DiscipleAct } from '../../systems/discipleActs';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { useBackClose } from '../components/useBackClose';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
 import type { SaveMeta } from '../../systems/save';
@@ -144,6 +145,11 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   }, [!!state.cult.coreForming, !!state.cult.heartDemonTrial, !!state.martial.quest?.game]);
   const [sectOpen, setSectOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
+  const anySheet = profileOpen || familyOpen || bagOpen || fingerOpen || marketOpen || mapOpen || cultivateOpen || sectOpen || devOpen;
+  useBackClose(anySheet, () => {
+    setProfileOpen(false); setFamilyOpen(false); setBagOpen(false); setFingerOpen(false); setMarketOpen(false);
+    setMapOpen(false); setCultivateOpen(false); setSectOpen(false); setDevOpen(false);
+  });
   const logRef = useRef<HTMLElement>(null);
   const { character: c, stats, cult, money } = state;
   const origin = content.origins.find((o) => o.id === c.originId);

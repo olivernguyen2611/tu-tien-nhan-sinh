@@ -189,7 +189,14 @@ button { font: inherit; color: inherit; }
 }
 
 /* Goal line and first-life tips, pinned at the top of the log */
-.guide { position: sticky; top: 0; z-index: 2; margin: 0 -4px 8px; padding: 6px 4px 8px; background: var(--bg); }
+/* 6b.13 (lỗi #18): full width of the log, solid, reaching up over the log's top padding, with a soft edge below. */
+.guide {
+  position: sticky; top: calc(-1 * var(--log-pad-top)); z-index: 2;
+  margin: calc(-1 * var(--log-pad-top)) calc(-1 * var(--log-pad-x)) 8px;
+  padding: calc(var(--log-pad-top) + 6px) var(--log-pad-x) 8px;
+  background: var(--log-bg);
+  box-shadow: 0 6px 8px -6px rgba(0, 0, 0, 0.25);
+}
 .goal-line { margin: 0; font-size: 0.875rem; }
 .goal-label { display: inline-block; margin-right: 4px; padding: 1px 8px; border-radius: 999px; background: var(--jade); color: var(--surface); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; vertical-align: 1px; }
 .tip-card { margin-top: 8px; padding: 10px 12px; border: 1px solid var(--jade); border-left-width: 4px; border-radius: 10px; background: var(--surface); }
@@ -239,9 +246,12 @@ button { font: inherit; color: inherit; }
 
 /* Life log, one block per age */
 .life-log {
+  --log-pad-top: 8px;
+  --log-pad-x: 14px;
+  --log-bg: var(--bg);
   grid-area: log;
   overflow-y: auto;
-  padding: 8px 14px 16px;
+  padding: var(--log-pad-top) var(--log-pad-x) 16px;
   font-family: var(--font-story);
   overscroll-behavior: contain;
 }
@@ -411,10 +421,13 @@ button { font: inherit; color: inherit; }
   .top-bar { border: 1px solid var(--line); border-radius: 14px; margin-bottom: 16px; padding: 12px 16px; }
   .guide { background: var(--surface); }
   .life-log {
+    --log-pad-top: 12px;
+    --log-pad-x: 24px;
+    --log-bg: var(--surface);
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 14px 14px 0 0;
-    padding: 12px 24px 20px;
+    padding: var(--log-pad-top) var(--log-pad-x) 20px;
     font-size: 1.0625rem;
   }
   .dock { border: 1px solid var(--line); border-top-style: dashed; border-radius: 0 0 14px 14px; padding: 0 24px 10px; }

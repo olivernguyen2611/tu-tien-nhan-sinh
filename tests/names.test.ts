@@ -4,7 +4,7 @@ import type { Content } from '../src/core/content';
 import { Rng } from '../src/core/rng';
 import { BalanceSchema, FamilyActionFileSchema, LifeTextsSchema, NamesSchema, OriginFileSchema, WorldSchema } from '../src/core/schemas';
 import { advanceYear, createLife } from '../src/core/state';
-import { makeName, splitName } from '../src/systems/names';
+import { cleanName, makeName, NAME_MAX, nameChars, splitName } from '../src/systems/names';
 import balance from '../content/config/balance.json';
 import familyActions from '../content/family-actions.json';
 import lifeTexts from '../content/life-texts.json';
@@ -94,5 +94,20 @@ describe('names', () => {
 
   it('the name lists have no duplicates', () => {
     for (const [key, list] of Object.entries(N)) expect(new Set(list).size, key).toBe(list.length);
+  });
+});
+
+describe('typed names (6b.13)', () => {
+  it('keeps only letters and spaces, at most NAME_MAX characters', () => {
+    expect(cleanName('  Lý   Thanh Phong ')).toBe('Lý Thanh Phong');
+    expect(cleanName('<img src=x onerror=alert(1)>🐉')).toBe('img srcx onerroralert');
+    expect([...nameChars('Nguyễn'.repeat(10))].length).toBe(NAME_MAX);
+    expect(cleanName('   ')).toBe('');
+  });
+
+  it('a cleaned name gives the family a real surname', () => {
+    const s = createLife({ seed: 'xss', name: cleanName('<img src=x>Lý Phong') }, content);
+    expect(s.character.name).not.toContain('<');
+    expect(s.family.every((r) => !r.name.includes('<'))).toBe(true);
   });
 });

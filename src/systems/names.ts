@@ -11,6 +11,19 @@ const MAX_TRIES = 40;
 
 const norm = (s: string) => s.trim().toLocaleLowerCase('vi');
 
+/** Longest name the player may type (6b.13). */
+export const NAME_MAX = 24;
+
+/** While typing: only letters (with their tone marks) and spaces, at most NAME_MAX characters. */
+export function nameChars(raw: string): string {
+  return [...raw.normalize('NFC').replace(/[^\p{L}\p{M} ]/gu, '').replace(/ {2,}/g, ' ')].slice(0, NAME_MAX).join('');
+}
+
+/** The name kept for a new life: nameChars, trimmed; empty means "let fate name it". */
+export function cleanName(raw: string): string {
+  return nameChars(raw.trim()).trim();
+}
+
 /** Split a full name into surname and given name; compound surnames (Thượng Quan…) are kept whole. */
 export function splitName(full: string, names: Names): { surname: string; given: string } {
   const trimmed = full.trim().replace(/\s+/g, ' ');
