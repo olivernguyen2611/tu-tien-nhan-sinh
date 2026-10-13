@@ -4,21 +4,107 @@
     "category": "cultivation",
     "title": "Tiên sư thử linh căn",
     "text": "Một vị tiên sư áo xám ghé {hometown}, đặt một khối đá trắng giữa sân đình. Trẻ con trong vùng xếp hàng dài, đứa nào đặt tay lên cũng run. Tới lượt {name}.",
-    "tags": ["rare"],
+    "tags": [
+      "rare"
+    ],
     "weight": 0,
     "choices": [
       {
         "text": "Bước lên, đặt tay lên đá thử linh",
         "result": {
           "text": "Khối đá lạnh buốt. Tiên sư nheo mắt nhìn hồi lâu, rồi khẽ gật đầu với chính mình.",
-          "effects": { "testRoot": true, "stat.daoHeart": 1 }
+          "effects": {
+            "testRoot": true,
+            "stat.daoHeart": 1
+          }
         }
       },
       {
         "text": "Sợ quá, chui ra sau đống rơm trốn",
         "result": {
           "text": "Tiên sư không đợi ai. Năm sau nghe nói người lại ghé qua, lần này đừng trốn nữa.",
-          "effects": { "stat.happiness": -2, "followUp": { "event": "thu_linh_can", "afterYears": [1, 1] } }
+          "effects": {
+            "stat.happiness": -2,
+            "followUp": {
+              "event": "thu_linh_can_lai",
+              "afterYears": [
+                1,
+                1
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "thu_linh_can_lai",
+    "category": "cultivation",
+    "title": "Tiên sư lại ghé",
+    "text": "Năm nay tiên sư áo xám quay lại {hometown}, khối đá trắng vẫn đặt giữa sân đình. Người lớn trong nhà đã dặn trước: lần này mà trốn nữa thì khỏi ăn cơm.",
+    "tags": [
+      "rare"
+    ],
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Ngoan ngoãn bước lên đặt tay",
+        "result": {
+          "text": "Đá lạnh buốt như lần trước ngươi tưởng tượng. Tiên sư nhìn hồi lâu rồi gật đầu.",
+          "effects": {
+            "testRoot": true,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Lại trốn, lần này trèo lên cây đa",
+        "result": {
+          "text": "Ngươi ngồi trên cây cả buổi, muỗi đốt sưng mặt. Tiên sư đi rồi, nhưng nghe đâu năm sau còn ghé lần cuối.",
+          "effects": {
+            "stat.happiness": -2,
+            "stat.health": -1,
+            "followUp": {
+              "event": "thu_linh_can_cuoi",
+              "afterYears": [
+                1,
+                1
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "thu_linh_can_cuoi",
+    "category": "cultivation",
+    "title": "Lần ghé cuối của tiên sư",
+    "text": "Tiên sư áo xám ghé {hometown} lần cuối. Lần này người không đứng ở sân đình mà đi thẳng tới chỗ {name} hay trốn, vén đống rơm lên.",
+    "tags": [
+      "rare",
+      "funny"
+    ],
+    "weight": 0,
+    "choices": [
+      {
+        "text": "Cười trừ, tự đặt tay lên đá",
+        "result": {
+          "text": "\"Ba năm trốn ba chỗ, cũng có chút thiên phú ẩn thân.\" Tiên sư nói vậy, rồi nhìn khối đá dưới tay ngươi.",
+          "effects": {
+            "testRoot": true,
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Vùng chạy",
+        "result": {
+          "text": "Chưa chạy được ba bước đã bị xách cổ áo lên như xách mèo. Tay ngươi bị ấn thẳng xuống đá thử linh.",
+          "effects": {
+            "testRoot": true,
+            "stat.charm": -1
+          }
         }
       }
     ]

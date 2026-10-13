@@ -8,6 +8,10 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6b.1: thử linh căn không lặp vô hạn (2026-10-13)
+- Trước: chọn "trốn" ở "Tiên sư thử linh căn" hẹn lại chính sự kiện đó năm sau, không giới hạn; một kiếp gặp 145 lần tới năm 153 tuổi.
+- Sau: trốn lần 1 → "Tiên sư lại ghé" (`thu_linh_can_lai`); trốn lần 2 → "Lần ghé cuối của tiên sư" (`thu_linh_can_cuoi`), cả hai lựa chọn ở lần này đều thử linh căn. Mỗi đời gặp tối đa 3 lần, linh căn luôn được thử.
+
 ### GĐ 6.7: rà soát nhiều cỡ màn hình (2026-10-12)
 - Chạy bản build trong Chromium ở 320×568 (điện thoại nhỏ), 390×844, 768×1024 (máy tính bảng), 1366×768 (máy tính): màn hình tên, tạo nhân vật, màn chính và các bảng Tu luyện, Tông môn, Quan hệ, Khám phá, Bản đồ, Túi, Sổ. Không có trang nào tràn ngang, không lỗi console.
 - Sửa: ô avatar ở đầu màn chính cắt chữ khi họ dài (ví dụ "Thượng"); nay chỉ hiện chữ cái đầu, cỡ chữ lớn hơn.
