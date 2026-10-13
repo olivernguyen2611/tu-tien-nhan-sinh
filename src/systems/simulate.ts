@@ -54,6 +54,8 @@ export interface LifeResult {
   /** 6b.9: căn cốt + ngộ tính + khí vận gained over the life (end − start), and whether one reached 90. */
   aptitudeGain: number;
   aptitudeHigh: boolean;
+  /** 6b.12: how many times each event fired this life. */
+  seen: Record<string, number>;
 }
 
 export interface SimOptions {
@@ -149,6 +151,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     happyZeroYears, daoHeartZero, fullBarYears, capYears,
     aptitudeGain: aptSum(s) - aptStart,
     aptitudeHigh: Math.max(s.aptitudes.physique, s.aptitudes.comprehension, s.aptitudes.luck) >= 90,
+    seen: { ...(s.events.seen ?? {}) },
   };
 }
 
@@ -203,6 +206,8 @@ export interface Report {
   /** Mean aptitude gained per life (three stats summed) and share of lives ending with one at 90+. */
   aptitudeGain: number;
   aptitudeHigh: number;
+  /** The events that repeat most: mean times per 100 years lived, among lives that had them (max = most in one life). */
+  topRepeats: { id: string; max: number; perCentury: number }[];
 }
 
 const pct = (sorted: number[], p: number) => sorted[Math.min(sorted.length - 1, Math.floor((p / 100) * sorted.length))] ?? 0;
@@ -239,7 +244,17 @@ export function summarize(results: LifeResult[], content: Content): Report {
     capYears: mean(results.map((r) => r.capYears)),
     aptitudeGain: mean(results.map((r) => r.aptitudeGain)),
     aptitudeHigh: n ? results.filter((r) => r.aptitudeHigh).length / n : 0,
+    topRepeats: topRepeats(results),
   };
+}
+
+function topRepeats(results: LifeResult[]): Report['topRepeats'] {
+  const per: Record<string, { k: number; rate: number }[]> = {};
+  for (const r of results) for (const [id, k] of Object.entries(r.seen)) (per[id] ??= []).push({ k, rate: (k * 100) / Math.max(r.age, 20) });
+  return Object.entries(per)
+    .map(([id, xs]) => ({ id, max: Math.max(...xs.map((x) => x.k)), perCentury: xs.reduce((a, x) => a + x.rate, 0) / xs.length }))
+    .sort((a, b) => b.perCentury - a.perCentury)
+    .slice(0, 8);
 }
 
 /** The report as plain text for the terminal. */
@@ -258,6 +273,7 @@ export function formatReport(rep: Report, content: Content, title: string): stri
     `Hạnh phúc chạm 0: ${p(rep.happyZero.share)} số đời, trung bình ${rep.happyZero.meanYears.toFixed(1)} năm ở 0 mỗi đời; đạo tâm chạm 0: ${p(rep.daoHeartZero)}`,
     `Năm đầy thanh tu vi mà không tiến được: trung bình ${rep.fullBarYears.toFixed(1)} năm mỗi đời, trong đó ${rep.capYears.toFixed(1)} năm vì công pháp`,
     `Tư chất (căn cốt + ngộ tính + khí vận) tăng trung bình ${rep.aptitudeGain.toFixed(1)} điểm mỗi đời; ${p(rep.aptitudeHigh)} số đời kết thúc với một chỉ số từ 90`,
+    'Sự kiện lặp dày nhất (lần mỗi 100 năm sống, nhiều nhất một đời): ' + rep.topRepeats.map((t) => `${t.id} ${t.perCentury.toFixed(1)} (${t.max})`).join(', '),
   ];
   return lines.join('\n');
 }

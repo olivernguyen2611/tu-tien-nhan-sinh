@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6b.12: bớt lặp, Dấu ấn một đời (2026-10-13)
+- "[Hệ thống] Nhiệm vụ định kỳ": Hệ thống giao việc mỗi 10 năm (trước 3), mỗi nhiệm vụ chờ 15 năm mới lặp. "Khảo hạch cuối năm" chờ 10 năm (trước 5). Mô phỏng 300 đời: ba nhiệm vụ Hệ thống trước đứng đầu bảng lặp (trung bình 66 lần một đời, có đời 177 lần), nay không sự kiện nào quá 3 lần mỗi 100 năm sống (lỗi #10).
+- Bộ mô phỏng in thêm dòng "Sự kiện lặp dày nhất" (lần mỗi 100 năm sống).
+- Năm thử linh căn: đoạn công bố linh căn và câu vào Luyện Khí chỉ ghi một lần trong kết quả sự kiện, không thêm dòng riêng lặp lại. Bái nhập tông môn qua sự kiện cũng vậy (lỗi #11).
+- "Dấu ấn một đời" bỏ câu đã xuất hiện hơn một lần trong đời, ưu tiên câu hiếm và đột phá đại cảnh giới (lỗi #19).
+
 ### GĐ 6b.11: tình duyên trong tông môn (2026-10-13)
 - Sự kiện mới "Đêm ở Tàng Kinh Các" (đệ tử tông môn, 18–80 tuổi, chưa có người thương): nhường sách rồi đọc chung (thử mị lực 35) thì quen một đồng môn cùng lứa và bắt đầu theo đuổi (lỗi #9).
 - "Đồng môn cùng lứa" mở cho 16–30 tuổi, lặp lại sau 12 năm (trước: chỉ 16–17 tuổi, một lần một đời).

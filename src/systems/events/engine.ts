@@ -289,6 +289,17 @@ export function resolveChoice(given: GameState, content: Content, choiceIndex: n
   return { state: next, text, tone, success };
 }
 
+/** `after` minus the lines (by text) that were added to the same year entry since `before`. */
+function dropAdded(before: GameState['log'], after: GameState['log'], texts: string[]): GameState['log'] {
+  const i = after.length - 1;
+  if (i < 0 || before.length !== after.length) return after;
+  const kept = before[i]?.lines.length ?? 0;
+  const lines = after[i].lines;
+  const out = after.slice();
+  out[i] = { ...after[i], lines: [...lines.slice(0, kept), ...lines.slice(kept).filter((l) => !texts.includes(l.text))] };
+  return out;
+}
+
 /** Effects beyond plain numbers (root test, sect, items, techniques…); returns the state and the text with any extra sentences. */
 function applyExtras(state: GameState, content: Content, fx: Outcome['effects'], text: string): { state: GameState; text: string } {
   let next = state;
@@ -310,15 +321,19 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
     if (role) next = { ...next, npcs: next.npcs.map((n) => (n.id === npcId ? { ...n, role } : n)) };
     if (kill) next = killNpc(next, content, npcId);
   }
+  // 6b.12 (lỗi #11): these systems log their own line; the event's text already carries it, so drop the copy.
   if (fx.testRoot) {
+    const before = next.log;
     const revealed = revealRoot(next, content);
     const started = startCultivating(revealed.state, content);
-    next = started.state;
-    for (const line of [revealed.line, started.line]) if (line) text = `${text} ${line.text}`;
+    const said = [revealed.line, started.line].filter((l) => l !== null).map((l) => l.text);
+    next = { ...started.state, log: dropAdded(before, started.state.log, said) };
+    for (const line of said) text = `${text} ${line}`;
   }
   if (fx.joinSect) {
+    const before = next.log;
     const joined = joinSect(next, content, fx.joinSect);
-    next = joined.state;
+    next = { ...joined.state, log: joined.text ? dropAdded(before, joined.state.log, [joined.text]) : joined.state.log };
     if (joined.text) text = `${text} ${joined.text}`;
   }
   if (fx.sectContribution) next = addContribution(next, fx.sectContribution);

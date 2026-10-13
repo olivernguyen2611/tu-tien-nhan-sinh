@@ -78,14 +78,15 @@ describe('Kim Thủ Chỉ (task 5b.2)', () => {
     expect(r.state.goldenFinger?.id).toBe('lao_gia_gia');
   });
 
-  it('Hệ thống brings a quest every 3 years', () => {
+  it('Hệ thống brings a quest every 10 years (6b.12; was 3)', () => {
     let s = born('he_thong');
     const quests = new Set(content.events.filter((e) => e.themes.includes('he_thong')).map((e) => e.id));
     let seen = 0;
-    for (let i = 0; i < 30 && s.alive; i++) {
+    for (let i = 0; i < 60 && s.alive; i++) {
       s = advanceYear({ ...s, events: { ...s.events, pending: null }, combat: null }, content);
       if (s.events.pending && quests.has(s.events.pending)) seen++;
     }
     expect(seen).toBeGreaterThanOrEqual(5);
+    expect(seen).toBeLessThanOrEqual(8);
   });
 });

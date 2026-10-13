@@ -21,7 +21,7 @@
      "summary": "Ba năm một lần giao nhiệm vụ kỳ quặc, làm xong có thưởng; càng lên cao thưởng càng hậu.",
      "risk": "Nhiệm vụ có lúc vô lý tới mức mất mặt, có lúc nguy hiểm; không làm thì bị trừng phạt.",
      "levels": [
-       {"realm": "pham_nhan", "name": "Tân thủ", "text": "[Hệ thống] Mở khóa: nhiệm vụ định kỳ. Phần thưởng: tùy tâm trạng hệ thống.", "effects": [{"hook": "trigger.everyNYears", "years": 3, "tag": "he_thong"}, {"hook": "cultivationSpeed", "add": 0.05}]},
+       {"realm": "pham_nhan", "name": "Tân thủ", "text": "[Hệ thống] Mở khóa: nhiệm vụ định kỳ. Phần thưởng: tùy tâm trạng hệ thống.", "effects": [{"hook": "trigger.everyNYears", "years": 10, "tag": "he_thong"}, {"hook": "cultivationSpeed", "add": 0.05}]},
        {"realm": "luyen_khi", "name": "Thương thành", "text": "[Hệ thống] Mở khóa: thương thành. Giá cả hợp lý, không hoàn tiền.", "effects": [{"hook": "priceDiscount", "add": 0.15}, {"hook": "lootPct", "add": 0.25}]},
        {"realm": "truc_co", "name": "Thăng cấp", "text": "[Hệ thống] Thăng cấp thành công. Hệ thống tự thấy mình đẹp trai hơn.", "effects": [{"hook": "cultivationSpeed", "add": 0.15}, {"hook": "stat.luck", "add": 5}, {"hook": "incomePct", "add": 0.2}]},
        {"realm": "nguyen_anh", "name": "Chung cực", "text": "[Hệ thống] Chúc mừng ký chủ. Từ nay nhiệm vụ do ký chủ tự đặt.", "effects": [{"hook": "breakthroughChance", "add": 8}, {"hook": "lifespanPct", "add": 0.1}]},

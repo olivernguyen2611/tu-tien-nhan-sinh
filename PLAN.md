@@ -411,7 +411,7 @@ Mỗi vấn đề một task, theo mức nghiêm trọng trong bản đánh giá
 | 6b.9 | [x] Tư chất không trôi quá nhiều theo nhiệm vụ, sự kiện thường (lỗi #7) |
 | 6b.10 | [x] Người không linh căn tu Phật: Mục tiêu và nhãn công pháp không mâu thuẫn (lỗi #8) |
 | 6b.11 | [x] Đồng môn cùng lứa để theo đuổi trong tông (lỗi #9) |
-| 6b.12 | [ ] Giảm lặp nhật ký/sự kiện, công bố linh căn một lần, Dấu ấn một đời chọn câu đáng nhớ (lỗi #10, #11, #19) |
+| 6b.12 | [x] Giảm lặp nhật ký/sự kiện, công bố linh căn một lần, Dấu ấn một đời chọn câu đáng nhớ (lỗi #10, #11, #19) |
 | 6b.13 | [ ] Giao diện: ô tên, bấm đúp, nút Back, khối Mục tiêu, nhãn phiên bản (lỗi #14, #16, #17, #18, #20) |
 | 6b.14 | [ ] Chỗ tiêu linh thạch giữa đời |
 

@@ -54,6 +54,17 @@ describe('tổng kết đời và điểm Luân Hồi (task 5b.1)', () => {
     expect(lifeHighlights(s, 2)).toEqual(['20 tuổi: Hai', '30 tuổi: Ba']);
   });
 
+  it('highlights skip repeated lines and put a big breakthrough first (6b.12)', () => {
+    const s = dead({ log: [
+      { age: 9, lines: [{ text: 'Tiên sư không đợi ai.', tone: 'rare' }] },
+      { age: 10, lines: [{ text: 'Tiên sư không đợi ai.', tone: 'rare' }, { text: 'Quét lá cũng là tu.', tone: 'rare' }] },
+      { age: 40, lines: [{ text: 'Từ nay ngươi là tu sĩ Trúc Cơ.', tone: 'good' }, { text: 'Ăn bánh.', tone: 'good' }] },
+      { age: 50, lines: [{ text: 'Gặp tiên nhân.', tone: 'rare' }] },
+    ] });
+    expect(lifeHighlights(s, 2, content)).toEqual(['40 tuổi: Từ nay ngươi là tu sĩ Trúc Cơ.', '50 tuổi: Gặp tiên nhân.']);
+    expect(lifeHighlights(s, 5, content)).toEqual(['10 tuổi: Quét lá cũng là tu.', '40 tuổi: Từ nay ngươi là tu sĩ Trúc Cơ.', '50 tuổi: Gặp tiên nhân.']);
+  });
+
   it('credits each life once; a quỷ tu dying later only adds the difference', () => {
     const store = fakeStore();
     expect(creditRebirth(store, 'seed-a', 12).gained).toBe(12);

@@ -24,7 +24,7 @@
     "id": "sd_khao_hach", "category": "sect", "title": "Khảo hạch cuối năm",
     "text": "Chấp sự đường kiểm tra tu vi từng đệ tử. Ai chậm tiến sẽ bị cắt bổng lộc.",
     "conditions": { "sect": { "member": true } },
-    "weight": 5, "cooldownYears": 5,
+    "weight": 5, "cooldownYears": 10,
     "choices": [
       { "text": "Vận công cho chấp sự xem", "check": { "stat": "stat.daoHeart", "difficulty": 50 }, "success": { "text": "Chân khí vững vàng. Chấp sự gật đầu, ghi chữ \"ưu\".", "effects": { "sectContribution": 12, "spiritStones": 3, "stat.happiness": 3 } }, "fail": { "text": "Run tay, chân khí lệch một nhịp. Bị ghi chữ \"kém\".", "effects": { "spiritStones": -2, "stat.happiness": -4 } } },
       { "text": "Nhét linh thạch cho chấp sự", "requires": { "stats": [{ "stat": "spiritStones", "gte": 5 }] }, "result": { "text": "Chấp sự nhìn quanh rồi ghi chữ \"khá\". Lòng ngươi hơi gợn.", "effects": { "spiritStones": -5, "stat.daoHeart": -1, "karma": -1 } } }

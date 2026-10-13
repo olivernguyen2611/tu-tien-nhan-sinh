@@ -36,7 +36,7 @@
     "themes": ["he_thong"],
     "conditions": { "goldenFinger": { "id": ["he_thong"] } },
     "weight": 0.01,
-    "cooldownYears": 2,
+    "cooldownYears": 15,
     "choices": [
       {
         "text": "Thức ba đêm dạy gà",
@@ -59,7 +59,7 @@
     "themes": ["he_thong"],
     "conditions": { "goldenFinger": { "id": ["he_thong"] } },
     "weight": 0.01,
-    "cooldownYears": 2,
+    "cooldownYears": 15,
     "choices": [
       {
         "text": "Hắng giọng, bắt đầu",
@@ -82,7 +82,7 @@
     "themes": ["he_thong"],
     "conditions": { "goldenFinger": { "id": ["he_thong"], "minLevel": 2 }, "realm": { "min": "luyen_khi" } },
     "weight": 0.01,
-    "cooldownYears": 3,
+    "cooldownYears": 15,
     "choices": [
       {
         "text": "Đi tìm người mà khiêu chiến",
