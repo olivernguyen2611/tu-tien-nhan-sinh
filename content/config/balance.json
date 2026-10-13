@@ -253,7 +253,7 @@
       { "rank": 3, "contribution": 200, "realm": "truc_co", "stage": 0 }
     ],
     "masterMinRank": 2,
-    "missionBoard": 4,
+    "missionBoard": 4, "missionCooldown": 2, "missionFail": { "minRank": 2, "injuryChance": 0.3, "injuryYears": 2, "health": -8 }, "treasuryPriceStepPct": 20,
     "stipendLogEvery": 10,
     "masterChanceBase": 0.25,
     "masterChancePerPoint": 0.01,

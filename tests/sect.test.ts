@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { Rng } from '../src/core/rng';
 import { loadContent } from '../src/core/content';
 import { advanceYear, createLife } from '../src/core/state';
 import type { GameState, SpiritRoot } from '../src/core/types';
@@ -83,9 +84,30 @@ describe('sects (task 2.5)', () => {
     const r = doMission(s, content, first)!;
     expect(r.state.sect.contribution).toBeGreaterThan(0);
     expect(doMission(r.state, content, first)).toBeNull();
-    s = { ...r.state, character: { ...r.state.character, age: 15 } };
+    // 6c.2: a rest of `missionCooldown` years follows a mission.
+    const rest = { ...r.state, character: { ...r.state.character, age: r.state.character.age + 1 } };
+    expect(missionViews(rest, content)[0].blocked).toContain('nghỉ');
+    s = { ...r.state, character: { ...r.state.character, age: r.state.character.age + content.balance.sects.missionCooldown } };
     const next = missionViews(s, content)[0].id;
     expect(doMission(s, content, next)).not.toBeNull();
+  });
+
+  it('6c.2: a failed mission of rank 2 or more can leave an injury, a rank 0 one never does', () => {
+    const joined = joinSect(disciple(), content, 'bich_lac_tong').state;
+    const risk = content.balance.sects.missionFail;
+    let hurt = 0;
+    for (let i = 0; i < 60; i++) {
+      for (const rank of [0, risk.minRank]) {
+        const s = { ...joined, rng: new Rng(`mfail-${i}`).getState(), sect: { ...joined.sect, rank, lastMission: null } };
+        const id = missionViews(s, content)[0].id;
+        const r = doMission(s, content, id)!;
+        if (!r.success && r.state.cult.injuredUntil !== null) {
+          expect(rank).toBeGreaterThanOrEqual(risk.minRank);
+          hurt++;
+        }
+      }
+    }
+    expect(hurt).toBeGreaterThan(0);
   });
 
   it('the mission board rotates yearly and only shows the sect\'s own missions', () => {

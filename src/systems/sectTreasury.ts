@@ -12,6 +12,12 @@ export function merit(state: GameState): number {
   return Math.max(0, state.sect.contribution - (state.sect.spent ?? 0));
 }
 
+/** 6c.2: the price climbs with each earlier purchase of the same entry. */
+export function treasuryCost(state: GameState, content: Content, t: { id: string; cost: number }): number {
+  const bought = state.sect.bought?.[t.id] ?? 0;
+  return Math.round(t.cost * (1 + (bought * content.balance.sects.treasuryPriceStepPct) / 100));
+}
+
 export interface TreasuryView { id: string; name: string; text: string; cost: number; left: number; blocked: string | null }
 
 function blockedReason(state: GameState, content: Content, t: { cost: number; minRank: number; limit: number; id: string; sects?: string[]; items: string[] }, ranks: string[]): string | null {
@@ -20,7 +26,8 @@ function blockedReason(state: GameState, content: Content, t: { cost: number; mi
   if (t.sects && !t.sects.includes(state.sect.id ?? '')) return 'Tông này không bán.';
   if (state.sect.rank < t.minRank) return `Cần là đệ tử ${ranks[t.minRank] ?? ''}.`;
   if ((state.sect.bought?.[t.id] ?? 0) >= t.limit) return 'Đã đổi hết suất của đời này.';
-  if (merit(state) < t.cost) return `Cần ${t.cost} cống hiến.`;
+  const cost = treasuryCost(state, content, t);
+  if (merit(state) < cost) return `Cần ${cost} cống hiến.`;
   return null;
 }
 
@@ -34,7 +41,7 @@ export function treasuryViews(state: GameState, content: Content): TreasuryView[
       id: t.id,
       name: t.name,
       text: t.text,
-      cost: t.cost,
+      cost: treasuryCost(state, content, t),
       left: Math.max(0, t.limit - (state.sect.bought?.[t.id] ?? 0)),
       blocked: blockedReason(state, content, t, sect.ranks),
     }));
@@ -45,9 +52,10 @@ export function buyTreasury(state: GameState, content: Content, id: string): { s
   const sect = content.sects.find((s) => s.id === state.sect.id);
   const t = content.sectLife?.treasury.find((x) => x.id === id);
   if (!sect || !t || blockedReason(state, content, t, sect.ranks)) return null;
+  const cost = treasuryCost(state, content, t);
   let s: GameState = {
     ...state,
-    sect: { ...state.sect, spent: (state.sect.spent ?? 0) + t.cost, bought: { ...state.sect.bought, [id]: (state.sect.bought?.[id] ?? 0) + 1 } },
+    sect: { ...state.sect, spent: (state.sect.spent ?? 0) + cost, bought: { ...state.sect.bought, [id]: (state.sect.bought?.[id] ?? 0) + 1 } },
     money: { ...state.money, spiritStones: state.money.spiritStones + t.spiritStones },
   };
   s = addItems(s, t.items);
@@ -57,7 +65,7 @@ export function buyTreasury(state: GameState, content: Content, id: string): { s
     ...(t.spiritStones ? [`${t.spiritStones} linh thạch`] : []),
     ...(t.progress ? [`thanh tu vi +${t.progress}%`] : []),
   ].join(', ');
-  const text = `Bảo khố ${sect.name}: đổi ${t.cost} cống hiến lấy ${t.name} (${got}).`;
+  const text = `Bảo khố ${sect.name}: đổi ${cost} cống hiến lấy ${t.name} (${got}).`;
   const log = s.log.slice();
   const last = log[log.length - 1];
   if (last) log[log.length - 1] = { ...last, lines: [...last.lines, { text, tone: 'good' }] };

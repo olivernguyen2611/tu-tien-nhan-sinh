@@ -1468,6 +1468,12 @@ export const BalanceSchema = z
         stipendLogEvery: z.number().int().min(1),
         /** Playtest 2: missions posted on the board each year (picked from those the rank allows). */
         missionBoard: z.number().int().min(1),
+        /** 6c.2: years between two missions (a chain step also counts as one). */
+        missionCooldown: z.number().int().min(1),
+        /** 6c.2: failing a mission of this rank or higher may leave an injury. */
+        missionFail: z.object({ minRank: z.number().int().min(0), injuryChance: probability, injuryYears: z.number().int().min(1), health: z.number() }).strict(),
+        /** 6c.2: each earlier purchase of a treasury entry makes it this many percent dearer. */
+        treasuryPriceStepPct: z.number().min(0),
         /**
          * Task 5c.1: named sectmates met on joining. Realm = the higher of minRealm (index into the realm
          * list) and the player's realm + aboveSelf; age = the player's + ageOffset.

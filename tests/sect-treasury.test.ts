@@ -31,8 +31,11 @@ describe('bảo khố (task 5c.4)', () => {
     expect(s.inventory.tu_khi_dan).toBe(1);
     expect(merit(s)).toBe(15);
     expect(s.sect.contribution).toBe(30); // promotion total untouched
-    s = buyTreasury(s, content, 'kho_tu_khi_dan')!.state;
-    expect(buyTreasury(s, content, 'kho_tu_khi_dan')).toBeNull(); // out of merit
+    // 6c.2: the second one costs 20% more (18), and 15 merit is no longer enough.
+    expect(treasuryViews(s, content).find((t) => t.id === 'kho_tu_khi_dan')!.cost).toBe(18);
+    expect(buyTreasury(s, content, 'kho_tu_khi_dan')).toBeNull();
+    const rich = buyTreasury(buyTreasury(member(100), content, 'kho_tu_khi_dan')!.state, content, 'kho_tu_khi_dan')!.state;
+    expect(merit(rich)).toBe(100 - 15 - 18);
     const stones = member(100);
     const r = buyTreasury(stones, content, 'kho_linh_thach')!;
     expect(r.state.money.spiritStones).toBe(stones.money.spiritStones + 6);

@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6c.2: hãm vòng cày an toàn của tông môn (2026-10-13)
+- Nhiệm vụ tông: làm xong phải nghỉ `missionCooldown` (2) năm mới nhận việc tiếp (bước chuỗi nhiệm vụ cũng tính). Trước đó năm nào cũng làm được.
+- Thất bại nhiệm vụ cấp Nội môn trở lên (`missionFail`): 30% bị thương 2 năm và mất 8 sức khỏe.
+- Bảo khố: mỗi lần đổi lại cùng một món đắt thêm 20% (`treasuryPriceStepPct`); bảng hiển thị giá hiện tại.
+- Mô phỏng `--profile player` 300 đời (sau 6c.1 → sau 6c.2): Kim Đan 18% → 14%, Nguyên Anh 5% → 3%, Hóa Thần 3% → 0.7%, trung vị tuổi thọ 78 → 68. Cố ý để thấp tạm thời; sẽ chỉnh lại trần ở bước cân bằng cuối (6c.9) sau khi các bước sinh tồn xong.
+- Không đụng "Cải mệnh": chưa tìm thấy mục này trong code hiện tại, ghi lại để xem ở bước sau.
+
 ### GĐ 6c.1: đường cong đột phá (2026-10-13)
 - Các điểm cộng vào tỉ lệ đột phá (ngộ tính, đạo tâm, hook, vật phẩm, tích lũy chờ đỉnh) không còn cộng dồn vô hạn: quá `modifierKnee` (20 điểm) chỉ tính một nửa (`modifierShare`), và đột phá đại cảnh giới có trần cộng theo cảnh giới đích (`majorModifierCap`: Trúc Cơ 36, Kim Đan 36, Nguyên Anh 34, Hóa Thần 38). Điểm trừ (thất bại, độ khó khó) không bị giới hạn. Bản chơi thử 13/10 thấy Nguyên Anh 87%, Hóa Thần 81% vì cộng dồn không trần.
 - Thất bại đột phá vào Nguyên Anh và Hóa Thần nặng hơn (`failureWeightsByRealm`): tử vong 3 → 5 và 8, hao thọ 15 → 17 và 18, tẩu hỏa 7 → 8 và 9.
