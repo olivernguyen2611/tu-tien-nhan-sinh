@@ -3,6 +3,7 @@ import { loadContent } from '../src/core/content';
 import { createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
 import { makeSave, migrate } from '../src/systems/save';
+import { techniqueSummary } from '../src/systems/technique';
 import { currentGoal, disableTutorial, dismissTip, pendingTip } from '../src/systems/tutorial';
 
 const content = loadContent();
@@ -20,6 +21,14 @@ describe('goals and tips (task 2.9)', () => {
     expect(currentGoal(withCult(s, { root: song, realm: 'luyen_khi', stage: 8, progress: 100 }), content)).toContain('Đột phá Trúc Cơ');
     expect(currentGoal(withCult(s, { root: song, realm: 'truc_co' }), content)).toContain('Trúc Cơ viên mãn');
     expect(currentGoal({ ...s, alive: false }, content)).toBeNull();
+  });
+
+  it('a rootless cultivator on the Buddhist path is not told to live as a mortal (6b.10)', () => {
+    const none = { grade: 'none', elements: [] };
+    const monk = withCult(life(), { root: none, realm: 'luyen_khi', stage: 0, technique: 'vo_uu_thien_tam_phap', lineage: 'phat' });
+    expect(currentGoal(monk, content)).toBe('Tu tới Luyện Khí tầng 9.');
+    expect(techniqueSummary(monk, content)).toContain('không cần linh căn');
+    expect(techniqueSummary(monk, content)).not.toContain('hợp linh căn');
   });
 
   it('tips show one at a time, only once, only when enabled', () => {
