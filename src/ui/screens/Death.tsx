@@ -43,7 +43,7 @@ export function DeathScreen({ state, content, rebirth, lives, onReadLog, onNewLi
   const c = state.character;
   const points = rebirthPoints(state, content);
   const rewind = rewindOffer(state, content);
-  const highlights = lifeHighlights(state, content.balance.rebirth.highlights);
+  const highlights = lifeHighlights(state, content.balance.rebirth.highlights, content);
   const badges = lifeBadges(state, content, lives);
   const challenge = challengeDef(content, state.challenge?.id);
   const result = challengeResult(state, content);

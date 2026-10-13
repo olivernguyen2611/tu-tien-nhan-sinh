@@ -29,10 +29,31 @@ export function lifeRecap(state: GameState, content: Content): RecapLine[] {
   return lines;
 }
 
-/** Rare moments of the log ("rare" tone), newest last, at most `max`. */
-export function lifeHighlights(state: GameState, max: number): string[] {
-  const rare = state.log.flatMap((y) => y.lines.filter((l) => l.tone === 'rare').map((l) => `${y.age} tuổi: ${l.text}`));
-  return rare.slice(-max);
+/**
+ * The moments worth remembering, in order of age, at most `max` (6b.12, lỗi #19). A line that came
+ * more than once in this life is not memorable. Rare lines and lines that name a realm (a big
+ * breakthrough) come first; among equals the later one wins.
+ */
+export function lifeHighlights(state: GameState, max: number, content?: Content): string[] {
+  const realms = (content?.cultivation.realms.realms ?? []).filter((r) => r.id !== 'pham_nhan').map((r) => r.name);
+  const count = new Map<string, number>();
+  for (const y of state.log) for (const l of y.lines) count.set(l.text, (count.get(l.text) ?? 0) + 1);
+  const picks: { age: number; text: string; score: number; order: number }[] = [];
+  let order = 0;
+  for (const y of state.log) {
+    for (const l of y.lines) {
+      order++;
+      if (count.get(l.text)! > 1) continue;
+      const milestone = realms.some((r) => l.text.includes(r));
+      if (l.tone !== 'rare' && !(l.tone === 'good' && milestone)) continue;
+      picks.push({ age: y.age, text: l.text, score: (l.tone === 'rare' ? 3 : 1) + (milestone ? 3 : 0), order });
+    }
+  }
+  return picks
+    .sort((a, b) => b.score - a.score || b.order - a.order)
+    .slice(0, max)
+    .sort((a, b) => a.order - b.order)
+    .map((p) => `${p.age} tuổi: ${p.text}`);
 }
 
 /** Luân Hồi points this life earns, line by line (balance.rebirth). */

@@ -41,7 +41,8 @@ describe('spirit root (task 2.2)', () => {
     const s = untilTested('reveal-1');
     expect(s.cult.root).not.toBeNull();
     expect(s.character.age).toBe(rootTestAge('reveal-1', content));
-    expect(s.log.at(-1)!.lines.some((l) => l.text.startsWith('Linh căn: '))).toBe(true);
+    // 6b.12: said once, inside the event's outcome, not again as a line of its own.
+    expect(s.log.at(-1)!.lines.filter((l) => l.text.includes('Linh căn: ')).length).toBe(1);
   });
 
   it('hiding books the test again next year', () => {
