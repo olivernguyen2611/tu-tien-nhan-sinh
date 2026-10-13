@@ -752,6 +752,15 @@ export const BalanceSchema = z
         daoHeart: z.number(),
       })
       .strict(),
+    /** 6b.14 Động phủ linh mạch: spirit stones per year by realm, speed while the lease runs, lease lengths (years) and the discount past one year. */
+    caveRent: z
+      .object({
+        cost: z.record(z.string(), z.number().int().min(0)),
+        speedMul: z.number().min(1),
+        leases: z.array(z.number().int().min(1)).min(1),
+        leaseDiscount: z.number().min(0).max(1),
+      })
+      .strict(),
     /** Task 1.11: "Tua nhanh" stops after at most this many years. */
     fastForward: z.object({ maxYears: z.number().int().min(1) }).strict(),
     aging: z
@@ -1752,6 +1761,8 @@ export const LifeTextsSchema = z
     rewindRealm: z.string().min(1),
     /** 6b.2 Ngao du: paid trip, free walk (empty purse), and the low-happiness hint under the stats. */
     leisure: z.object({ paid: lines, free: lines, lowHint: z.string().min(1) }).strict(),
+    /** 6b.14 Động phủ linh mạch: the line when a lease is taken ({years}, {cost}). */
+    cave: z.object({ rent: z.string().min(1) }).strict(),
     /** plainCultivator: the plain pool for anyone past Phàm Nhân (playtest 2026-10-12). */
     epitaph: z.object({ good: lines, bad: lines, plain: lines, plainCultivator: lines }).strict(),
   })

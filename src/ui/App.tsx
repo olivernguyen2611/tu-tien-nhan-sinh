@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { goLeisure } from '../systems/leisure';
+import { rentCave } from '../systems/cave';
 import type { Content } from '../core/content';
 import { advanceYear, createLife, fastForward } from '../core/state';
 import type { GameState } from '../core/types';
@@ -347,6 +348,7 @@ function Screens({ content }: { content: Content }) {
         onFastForward={() => setLife(life.seclusion ? runSeclusion(life, content) : fastForward(life, content))}
         onLeisure={() => { const r = goLeisure(life, content); if (r) setLife(r.state); }}
         onSeclude={(years) => setLife(seclude(life, content, years))}
+        onRentCave={(years) => { const r = rentCave(life, content, years); if (!r) return null; setLife(r.state); return r.text; }}
         onPlaceStrand={(element) => setLife(placeStrand(life, content, element).state)}
         onMeetIllusion={(option) => setLife(meetIllusion(life, content, option).state)}
         onClan={(a) => {

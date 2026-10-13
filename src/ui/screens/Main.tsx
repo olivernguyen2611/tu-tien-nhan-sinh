@@ -60,7 +60,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onSeclude, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -84,6 +84,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onPlaceStrand: (element: string) => void;
   /** Task 4.1: bế quan for this many years. */
   onSeclude: (years: number) => void;
+  onRentCave: (years: number) => string | null;
   onFamilyAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
   /** Task 3.6: theo đuổi, tặng quà, tỏ tình. */
   onRomance: (npcId: string, action: RomanceAction) => { text: string; tone: Tone; changes: string };
@@ -283,7 +284,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       {sectOpen && <SectPanel state={state} content={content} onAction={onSectAction} onClose={() => setSectOpen(false)} />}
 
-      {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onCraft={onCraft} onClose={() => setCultivateOpen(false)} />}
+      {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onClose={() => setCultivateOpen(false)} />}
 
       {mapOpen && <MapPanel state={state} content={content} unlimited={!!dev} onTravel={onTravel} onClose={() => setMapOpen(false)} />}
 
