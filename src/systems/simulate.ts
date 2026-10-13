@@ -131,7 +131,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     }
     if (profile === 'player' && !s.seclusion) s = playerYear(s, content);
     const info = majorBreakthroughInfo(s, content);
-    const minPct = profile === 'random' ? 0 : profile === 'player' ? 40 : 50;
+    const minPct = profile === 'random' ? 0 : profile === 'player' ? 30 : 50;
     if (info && !info.blocked && info.chancePct >= minPct) {
       const r = attemptMajorBreakthrough(s, content);
       if (r) { s = checkDeath(r.state, content); continue; }

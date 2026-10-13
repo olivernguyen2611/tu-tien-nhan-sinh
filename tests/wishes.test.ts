@@ -15,7 +15,7 @@ function life(realm: string, patch: Partial<GameState> = {}): GameState {
 
 describe('6c.8 di nguyện', () => {
   it('a wish is met when its check holds, and each one is worth Luân Hồi points', () => {
-    const s = life('hoa_than', { social: { ...life('hoa_than').social, karma: 80 }, alive: false, death: { age: 320, cause: 'old_age', epitaph: 'x', ghostOffer: null } });
+    const s = life('hoa_than', { social: { ...life('hoa_than').social, karma: 80 }, alive: false, death: { age: 320, cause: 'old_age', epitaph: 'x' } });
     const met = wishesMet(s, content).map((w) => w.id);
     expect(met).toEqual(expect.arrayContaining(['vien_man_hoa_than', 'dai_thien', 'tho_nguyen_tron']));
     const wish = rebirthPoints(s, content).lines.filter((l) => l.label.startsWith('Di nguyện'));

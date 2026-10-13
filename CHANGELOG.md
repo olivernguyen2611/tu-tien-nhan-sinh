@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6c.9: cân lại trần đột phá, giao diện, dọn PLAN (2026-10-13)
+- Trần cộng dồn đột phá đại cảnh giới chốt lại sau khi các bước 6c.2-6c.5 làm game khó thêm: Trúc Cơ 34, Kim Đan 32, Nguyên Anh 30, Hóa Thần 26 điểm (`majorModifierCap`; trước đó 36/36/34/38). Chặn trên của tỉ lệ thành công (cơ sở + trần): Trúc Cơ 64%, Kim Đan 52%, Nguyên Anh 42%, Hóa Thần 34%, so với 87% và 81% ở Nguyên Anh và Hóa Thần trong bản đánh giá.
+- Người chơi máy (`--profile player`) đột phá từ 30% trở lên (trước 40%), vì trần mới thấp hơn.
+- Mô phỏng 1500 đời `--profile player`, tổng sau 6c.1-6c.9: Kim Đan 13.5%, Nguyên Anh 3.3%, Hóa Thần 0.5% (trước 6c: 21.3% / 8.3% / 4%), tuổi thọ trung vị 68 (trước 78). Hơi thấp hơn chỉ tiêu trong kế hoạch (15-25 / 4-8 / 1-3) vì người chơi máy yếu hơn người thật: chết sớm vì giao chiến (50% số cái chết), không ngao du, không dùng khí vận. Người chơi thật vẫn có nhiều đòn bẩy hơn; cần một lượt chơi giao diện sau khi merge để xác nhận Hóa Thần còn tới được.
+- Giao diện: bảng Tu luyện, Tông môn dùng hai cột trên màn từ 1100px (đã chụp ảnh 1280px); dev panel không còn tràn ngang ở 390px và 320px (`flex-wrap`); màn 320px có avatar, nhãn dock, thẻ mục tiêu và hướng dẫn gọn hơn.
+- PLAN.md: đánh dấu 5c.7, thêm hàng 5c.8 còn thiếu.
+
 ### GĐ 6c.8: di nguyện, mục tiêu hậu Hóa Thần (2026-10-13)
 - Không thêm cảnh giới. Từ Hóa Thần, dòng **Mục tiêu** hiện **di nguyện chưa thành** đầu tiên thay cho "Đường tu còn dài": đứng trên đỉnh Hóa Thần, có người nối nghiệp, mở sơn môn muôn đời, con cháu đầy nhà, bạn đường trăm năm, tay không vấy máu oan, tên khắc trên bảng vàng, dựng gia tộc, lòng như nước lặng, hưởng trọn thọ nguyên (10 di nguyện trong `achievements.json`, dùng lại bộ kiểm tra của thành tựu).
 - Mỗi di nguyện đã thành khi lìa đời cho thêm 4 điểm Luân Hồi (`rebirth.wish`), hiện thành dòng "Di nguyện: …" ở màn kết thúc. Nhờ vậy 118 năm sau viên mãn có việc để làm, và kiếp sau hưởng được.

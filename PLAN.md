@@ -381,7 +381,8 @@ Nhìn từ hai phía: **đệ tử** cần thăng cấp, tài nguyên, sư phụ
 | 5c.4 | [x] Công trạng đổi đồ: Bảo khố tông môn, cống hiến đổi đan dược, công pháp, linh thạch |
 | 5c.5 | [x] Sự kiện lớn của tông: đại hội, thí luyện, ngoại địch, nội loạn |
 | 5c.6 | [x] Tranh ngôi chưởng môn, phe phái trong tông (hiệu ứng mới `succeedSect`) |
-| 5c.7 | [ ] Phía tông chủ: tông môn mình lập có đệ tử NPC, trưởng lão, sự kiện lớn, thịnh suy, danh tiếng |
+| 5c.7 | [x] Phía tông chủ: tông môn mình lập có đệ tử NPC, trưởng lão, sự kiện lớn, thịnh suy, danh tiếng |
+| 5c.8 | [x] Sư phụ và đồ đệ ngoài chỉ điểm: luận bàn, luận đạo, truyền công pháp, tặng vật phẩm |
 | 5c.9 | [x] Chiêu mộ người quen (NPC có quan hệ) vào tông của mình |
 
 ### GĐ 6 — Hoàn thiện
@@ -428,7 +429,7 @@ Giữ trần Hóa Thần, không thêm cảnh giới mới. Mỗi task có chỉ
 | 6c.6 | [x] Giảm lặp nhật ký, thêm biến thể văn bản |
 | 6c.7 | [x] ~30 sự kiện Kim Đan/Nguyên Anh/Hóa Thần, nối `charmResist` |
 | 6c.8 | [x] Mục tiêu hậu Hóa Thần (di sản, kết cục), không thêm cảnh giới |
-| 6c.9 | [ ] Giao diện và dọn PLAN.md |
+| 6c.9 | [x] Giao diện và dọn PLAN.md |
 
 ### GĐ 7 — Mở rộng nội dung
 Thêm **thế giới mới** với tuyến cốt truyện riêng (mục C.7) + màn chọn thế giới. Linh giới/Tiên giới, thêm hàng trăm sự kiện, các nghề bách nghệ còn lại (Trận pháp, Phù lục, Linh thực, Ngự thú), thêm mô bản khí vận chi tử, Capacitor nếu muốn lên store.
