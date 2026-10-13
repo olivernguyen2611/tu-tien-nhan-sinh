@@ -8,7 +8,7 @@ import type { GameState, Tone } from '../../core/types';
 import { availableActions, relationLabel } from '../../systems/relationships';
 import { npcLabel } from '../../systems/npcs';
 import { hasHook } from '../../systems/cultivation';
-import { childRootLabel, romanceLabel, romanceViews, type RomanceAction } from '../../systems/romance';
+import { childRootLabel, romanceLabel, romanceNote, romanceViews, type RomanceAction } from '../../systems/romance';
 import { disciples, maxDisciples, recruitBlocked, teachBlocked } from '../../systems/disciples';
 import { ClanSection, type ClanAction } from './ClanSection';
 import { BondSection } from './BondSection';
@@ -66,6 +66,7 @@ export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, o
           </div>
         )}
         {tab === 'npcs' && <ImportSection content={content} getSources={getSources} onImport={onImport} />}
+        {tab === 'npcs' && romanceNote(state, content) && <p class="profile-note">{romanceNote(state, content)}</p>}
         {tab === 'npcs' && (npcs.length === 0 ? (
           <p class="story">Giang hồ mênh mông, ngươi chưa quen được ai.</p>
         ) : (

@@ -365,13 +365,21 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
     const age = next.character.age;
     next = { ...next, seclusion: { until: age + fx.seclusionYears, since: age, fixed: true } };
   }
+  // Events add at most balance.lifespan.eventCapPct above the realm's base lifespan (never cut what is already there).
+  const lifespanCap = (cur: number) => {
+    const base = content.balance.realms[next.cult.realm]?.lifespan ?? content.balance.lifespan.mortalBase;
+    return Math.max(cur, Math.round(base * (1 + content.balance.lifespan.eventCapPct)));
+  };
   // Task 3.9.
-  if (fx.lifespanYears) next = { ...next, cult: { ...next.cult, lifespan: Math.max(next.character.age + 1, next.cult.lifespan + fx.lifespanYears) } };
+  if (fx.lifespanYears) {
+    const cur = next.cult.lifespan;
+    const lifespan = fx.lifespanYears > 0 ? Math.min(lifespanCap(cur), cur + fx.lifespanYears) : cur + fx.lifespanYears;
+    next = { ...next, cult: { ...next.cult, lifespan: Math.max(next.character.age + 1, lifespan) } };
+  }
   // Task 4.10: a share of the lifespan, so a pill or a new body is worth as much to a Nguyên Anh as to a Luyện Khí.
   if (fx.lifespanPct) {
     const cur = next.cult.lifespan;
-    const base = content.balance.realms[next.cult.realm]?.lifespan ?? content.balance.lifespan.mortalBase;
-    const cap = Math.max(cur, Math.round(base * (1 + content.balance.lifespan.eventCapPct)));
+    const cap = lifespanCap(cur);
     const lifespan = fx.lifespanPct > 0 ? Math.min(cap, cur + Math.round(cur * fx.lifespanPct)) : cur + Math.round(cur * fx.lifespanPct);
     next = { ...next, cult: { ...next.cult, lifespan: Math.max(next.character.age + 1, lifespan) } };
   }
