@@ -470,6 +470,26 @@
     "recruit": { "minAffinity": 55, "minAge": 16, "giftCost": 20, "base": 0.45, "affinityWeight": 0.01, "favorWeight": 0.004, "grudgeWeight": 0.01, "joinAffinity": 8, "refuseAffinity": -2, "joinPrestige": 1, "memberTithe": 2 }
   },
   "chosen": { "age": [12, 16], "affinity": 55, "progressMul": 1.6, "breakthroughBonus": 0.15 },
+  "npcGift": {
+    "affinity": { "pill": 6, "artifact": 8, "talisman": 5, "array": 5, "material": 4, "misc": 3 },
+    "taste": {
+      "tham_lam": { "artifact": 1.5, "pill": 1.3, "material": 1.3, "misc": 0.8 },
+      "trung_hau": { "misc": 1.4 },
+      "muu_mo": { "array": 1.5, "talisman": 1.4, "misc": 0.7 },
+      "nhan_hau": { "pill": 1.3 },
+      "cuong_vong": { "artifact": 1.5, "misc": 0.6 },
+      "chan_thanh": { "misc": 1.3, "material": 1.2 },
+      "hen_nhat": { "pill": 0.8, "material": 0.8, "misc": 0.8 }
+    },
+    "useProgress": 12,
+    "useAptitude": 1,
+    "mortalMul": 0.5,
+    "rejectBelow": 30,
+    "rejectChance": 0.35,
+    "rejectAffinity": -4,
+    "grudgeEase": 3,
+    "playerHappiness": 1
+  },
   "disciples": {
     "maxByRealm": { "truc_co": 1, "kim_dan": 3, "nguyen_anh": 5, "hoa_than": 9 },
     "age": [12, 16],

@@ -33,6 +33,7 @@ const balance = {
   fate: realBalance.fate,
   martial: realBalance.martial,
   familyBond: realBalance.familyBond,
+  npcGift: realBalance.npcGift,
   dev: realBalance.dev,
   buddhism: realBalance.buddhism,
   paths: realBalance.paths,

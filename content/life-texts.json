@@ -256,5 +256,37 @@
     "exchange": "Thương hội thu {silver} lượng bạc của ngươi, đổi lấy {stones} linh thạch. Giá hời cho họ, nhưng bạc nằm không cũng chỉ để mốc.",
     "upkeepPaid": "Gia quyến và đồ đệ ăn tiêu hết {stones} linh thạch trong năm.",
     "upkeepShort": "Linh thạch không đủ nuôi gia quyến và đồ đệ, ngươi thấy hổ thẹn khó tả."
+  },
+  "npcGift": {
+    "gift": [
+      "Ngươi trao {item} cho {npc}. Người ta nhận, gật đầu một cái.",
+      "{npc} nhận {item}, cân nhắc một lúc rồi cất kỹ vào tay áo."
+    ],
+    "liked": [
+      "{item} đúng ý {npc} đến lạ. Khóe mắt người ta cong lên, như gặp tri âm.",
+      "Món {item} vừa hợp gu {npc}, câu chuyện sau đó dài hơn thường lệ."
+    ],
+    "disliked": [
+      "{npc} nhìn {item} hồi lâu rồi cười gượng: \"Tâm ý ta nhận, còn vật này... thôi vậy.\"",
+      "{item} không hợp tính {npc}, nhưng người ta vẫn lịch sự cảm tạ."
+    ],
+    "rejected": [
+      "{npc} đẩy {item} lại: \"Vô công bất thọ lộc.\" Ngươi ôm đồ về, gió chiều hơi lạnh.",
+      "{npc} lạnh mặt không nhận {item}. Ân oán cũ, một món quà chưa đủ xóa."
+    ],
+    "usedPill": [
+      "{npc} uống {item} ngay trước mặt ngươi. Linh khí quanh người họ khẽ dày thêm.",
+      "{item} vào bụng {npc}, tu vi nhích lên một chút. Người ta nhìn ngươi thêm một cái."
+    ],
+    "usedArtifact": [
+      "{npc} nhỏ máu nhận chủ {item}, thử vài chiêu. Pháp khí này giờ đã là của họ.",
+      "{item} hợp tay {npc} hơn ngươi tưởng, từ nay họ mang theo bên mình."
+    ],
+    "mortal": [
+      "{npc} chỉ là phàm nhân, chẳng dùng được {item}, bèn cất vào rương để làm vật gia bảo.",
+      "{item} quý nhưng {npc} không biết dùng, đành đem treo trong nhà cho đẹp."
+    ],
+    "likes": "hợp gu",
+    "dislikes": "không hợp gu"
   }
 }

@@ -14,16 +14,19 @@ import { ClanSection, type ClanAction } from './ClanSection';
 import { BondSection } from './BondSection';
 import type { BondAction, BondTarget } from '../../systems/familyBond';
 import { Meter } from './Meter';
+import { NpcGiftRow } from './NpcGiftRow';
 import { ImportSection } from './ImportSection';
 import type { ImportSetup, SavedPerson } from '../../systems/npcLibrary';
 
-export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, onClan, onBond, onSaveNpc, getSources, onImport, onClose }: {
+export function FamilyPanel({ state, content, onAction, onRomance, onGiftNpc, onDisciple, onClan, onBond, onSaveNpc, getSources, onImport, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome text to show under the relative. */
   onAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
   /** Task 3.6: courting someone met along the way. */
   onRomance: (npcId: string, action: RomanceAction) => { text: string; tone: Tone; changes: string };
+  /** 9.0.2: give an item from the bag to someone met along the way. */
+  onGiftNpc: (npcId: string, itemId: string) => { text: string; tone: Tone; changes: string } | null;
   /** Task 4.9: take a disciple (no id) or teach one. */
   onDisciple: (npcId: string | null, act?: DiscipleAct) => { text: string; tone: Tone; changes: string } | null;
   /** Task 5.4: found the clan or buy a property; returns the log text. */
@@ -114,6 +117,9 @@ export function FamilyPanel({ state, content, onAction, onRomance, onDisciple, o
                         </button>
                       ))}
                     </div>
+                  )}
+                  {n.alive && !n.disciple && romanceLabel(state, content, n).role !== content.romance.labels.partner && romanceLabel(state, content, n).role !== content.romance.labels.spouse && (
+                    <NpcGiftRow state={state} content={content} npc={n} onGift={(itemId) => { const r = onGiftNpc(n.id, itemId); if (r) setResult({ id: n.id, ...r }); }} />
                   )}
                   <div class="action-chips">
                     <button class="chip-btn" title="Ghi người này vào Sổ nhân vật (trong Sổ lưu) để mang sang đời khác"

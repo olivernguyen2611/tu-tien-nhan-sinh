@@ -934,6 +934,27 @@ export const BalanceSchema = z
         }).strict(),
       })
       .strict(),
+    /** 9.0.2: tặng vật phẩm cho bất kỳ người quen nào (không phải đồ đệ, đạo lữ). */
+    npcGift: z
+      .object({
+        /** Item kind → affinity the NPC gains. */
+        affinity: z.record(id, z.number()),
+        /** Nature id → item kind → taste multiplier (>1 hợp gu, <1 không hợp); missing = 1. */
+        taste: z.record(id, z.record(id, z.number().min(0))),
+        /** A cultivator who takes a pill gains this much progress; one who takes an artifact gains aptitude. */
+        useProgress: z.number(),
+        useAptitude: z.number(),
+        /** A mortal cannot use cultivation goods: the gift counts for this share. */
+        mortalMul: z.number().min(0).max(1),
+        /** Someone cold to the player (affinity below) may turn a gift down. */
+        rejectBelow: z.number(),
+        rejectChance: z.number().min(0).max(1),
+        rejectAffinity: z.number(),
+        /** A gift to a grudge-holder eases the grudge by this much. */
+        grudgeEase: z.number(),
+        playerHappiness: z.number(),
+      })
+      .strict(),
     /** Task 4.9: taking disciples. */
     disciples: z
       .object({
@@ -1807,6 +1828,20 @@ export const LifeTextsSchema = z
           nameTaken: z.string().min(1),
           dead: z.string().min(1),
         }).strict(),
+      })
+      .strict(),
+    /** 9.0.2: lời tặng đồ cho người quen. {npc}, {item}. */
+    npcGift: z
+      .object({
+        gift: lines,
+        liked: lines,
+        disliked: lines,
+        rejected: lines,
+        usedPill: lines,
+        usedArtifact: lines,
+        mortal: lines,
+        likes: z.string().min(1),
+        dislikes: z.string().min(1),
       })
       .strict(),
     /** Backlog 2: Gia đạo wording. {name}, {technique}, {item}, {root}. */

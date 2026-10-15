@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### 9.0.2: tặng đồ từ túi cho mọi người quen (2026-10-15)
+- Mỗi người quen còn sống (trừ đồ đệ và đạo lữ đã có đường riêng) có hàng **Tặng đồ**: chọn một món trong túi, danh sách chia nhóm theo loại, gợi ý "hợp gu / không hợp gu" khi đã biết bản chất họ. Mỗi người một món mỗi năm.
+- Phản ứng theo bản chất: tham lam mê pháp khí, mưu mô thích trận pháp và phù lục, v.v. (`balance.npcGift.taste`). Tu sĩ nhận đan dược thì tu vi tăng, nhận pháp khí thì tư chất tăng; phàm nhân chỉ cất giữ nên thiện cảm tăng ít hơn. Người đang lạnh nhạt có thể từ chối (đồ ở lại túi); tặng cho người có hiềm khích làm nguôi bớt thù oán.
+- Mã nguồn `systems/npcGift.ts`, UI `NpcGiftRow.tsx`, lời trong `life-texts.json`. Trường tùy chọn `Npc.lastGift` (save cũ không cần migration). Test `tests/npc-gift.test.ts`.
+
 ### 9.0.1: người cũ vẫn tương tác được (2026-10-15)
 - Chia tay hay hòa ly xong, người cũ không còn bị khóa: có 4 hành động riêng là **Xin lỗi, đền bù** (tốn tiền, tăng thiện cảm), **Hóa giải hiềm khích**, **Nối lại duyên** (cần thiện cảm đủ cao, xác suất theo thiện cảm và mị lực, thành công thì thành đôi lại) và **Cắt đứt hẳn** (không theo đuổi lại được). Mọi con số nằm ở `balance.romance`, lời ở `romance.json`.
 - Save: thêm trường tùy chọn `romance.cut`, save cũ không cần migration. Test mới `tests/romance-ex.test.ts`.

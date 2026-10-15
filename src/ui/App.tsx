@@ -46,6 +46,7 @@ import { chooseFate, rerollFate } from '../systems/fate';
 import { trainMartial } from '../systems/martial';
 import { beginQuestStep, miniGameHide, miniGameInput, miniGameQuit } from '../systems/martialQuest';
 import { romanceAction } from '../systems/romance';
+import { giftNpc } from '../systems/npcGift';
 import { runSeclusion, seclude } from '../systems/seclusion';
 import { placeStrand } from '../systems/goldenCore';
 import { becomeGhost } from '../systems/ghost';
@@ -404,6 +405,12 @@ function Screens({ content }: { content: Content }) {
         }}
         onRomance={(npcId, action) => {
           const r = romanceAction(life, content, npcId, action);
+          setLife(r.state);
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+        }}
+        onGiftNpc={(npcId, itemId) => {
+          const r = giftNpc(life, content, npcId, itemId);
+          if (!r) return null;
           setLife(r.state);
           return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
         }}

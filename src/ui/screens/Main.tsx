@@ -60,7 +60,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -88,6 +88,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onFamilyAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
   /** Task 3.6: theo đuổi, tặng quà, tỏ tình. */
   onRomance: (npcId: string, action: RomanceAction) => { text: string; tone: Tone; changes: string };
+  onGiftNpc: (npcId: string, itemId: string) => { text: string; tone: Tone; changes: string } | null;
   /** Use one item from the bag. */
   onUseItem: (itemId: string) => { text: string; tone: Tone; changes: string };
   /** Playtest 2: one Kim Thủ Chỉ action. */
@@ -294,7 +295,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       {fingerOpen && <GoldenFingerPanel state={state} content={content} onAction={onFingerAction} onClose={() => setFingerOpen(false)} />}
 
-      {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onRomance={onRomance} onBond={onBond} onSaveNpc={onSaveNpc} getSources={getSources} onImport={onImport} onDisciple={onDisciple} onClan={onClan} onClose={() => setFamilyOpen(false)} />}
+      {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onRomance={onRomance} onGiftNpc={onGiftNpc} onBond={onBond} onSaveNpc={onSaveNpc} getSources={getSources} onImport={onImport} onDisciple={onDisciple} onClan={onClan} onClose={() => setFamilyOpen(false)} />}
 
       {profileOpen && (
         <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Nhân vật" onClick={(e) => e.target === e.currentTarget && setProfileOpen(false)}>
