@@ -8,7 +8,7 @@ import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameEvent } from '../core/schemas';
 import type { GameState, LogLine, Npc, Relative, Tone } from '../core/types';
-import { addProgress, rollRoot, rootNameOf, type RootRoll } from './cultivation';
+import { addProgress, hookSum, rollRoot, rootNameOf, type RootRoll } from './cultivation';
 import { changeNpc, isMasked, npcById } from './npcs';
 import { clanRootRolls } from './clan';
 import { makeName, splitName } from './names';
@@ -228,7 +228,7 @@ export function reconcileChance(state: GameState, content: Content): number {
 export function confessChance(state: GameState, content: Content, n: Npc): number {
   const b = content.balance.romance;
   const p = b.confessBase + (n.affinity - b.confessAt) * b.confessPerAffinity + (state.stats.charm - 50) * b.confessPerCharm;
-  return Math.max(b.confessMin, Math.min(b.confessMax, p));
+  return Math.max(b.confessMin, Math.min(b.confessMax, p + hookSum(state, content, 'romanceChance')));
 }
 
 /** Do one romance action; returns the new state and the log line. */
@@ -327,7 +327,7 @@ export function romanceAction(state: GameState, content: Content, npcId: string,
       lines.push({ text: fill(t.mendNo), tone: 'bad' });
     }
   } else if (action === 'rekindle') {
-    if (rng.chance(Math.min(0.9, b.rekindleBase + (n.affinity - b.rekindleAt) * b.confessPerAffinity + (s.stats.charm - 50) * b.confessPerCharm))) {
+    if (rng.chance(Math.min(0.9, hookSum(s, content, 'romanceChance') + b.rekindleBase + (n.affinity - b.rekindleAt) * b.confessPerAffinity + (s.stats.charm - 50) * b.confessPerCharm))) {
       s = { ...s, romance: { ...s.romance, lover: npcId, couple: true, exes: s.romance.exes.filter((x) => x !== npcId) }, stats: { ...s.stats, happiness: clamp(s.stats.happiness + b.rekindleHappiness) } };
       lines.push({ text: fill(t.rekindleYes), tone: 'rare' });
     } else {
@@ -413,7 +413,7 @@ export function inheritRoot(state: GameState, content: Content, partner: Npc | n
     if (pool.length > 0) return { root: { grade: 'bien_di', elements: [rng.pick(pool).id] }, bodyId: inherited };
   }
   // Gia quy Trọng tu luyện adds rolls (task 5.4).
-  const rolled = rollRoot(rng, content, 1 + rooted * b.rootRollsPerParent + clanRootRolls(state, content));
+  const rolled = rollRoot(rng, content, 1 + rooted * b.rootRollsPerParent + clanRootRolls(state, content) + Math.max(0, Math.round(hookSum(state, content, 'childRootRolls'))));
   const root = rolled.root;
   const bodyId = inherited ?? rolled.bodyId;
   const own = (mine?.elements ?? []).filter((e) => !root.elements.includes(e));

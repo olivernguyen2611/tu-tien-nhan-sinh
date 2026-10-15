@@ -64,7 +64,7 @@ function skillOf(state: GameState, content: Content, id: string, rng: Rng) {
   const known = state.crafts.skills[id];
   if (known) return known;
   const [lo, hi] = content.balance.crafts.startAffinity;
-  return { level: 0, affinity: clamp(rng.int(lo, hi) + hookSum(state, content, `craft.${id}.affinity`)) };
+  return { level: 0, affinity: clamp(rng.int(lo, hi) + hookSum(state, content, `craft.${id}.affinity`) + hookSum(state, content, 'craft.all.affinity')) };
 }
 
 /** Practise a craft for this year. Returns null when it cannot be done now. */

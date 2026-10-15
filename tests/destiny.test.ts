@@ -112,4 +112,17 @@ describe('destiny roll', () => {
     expect(done.log[0].lines.some((l) => l.tone === 'rare')).toBe(true);
     expect(confirmDestiny(done, content)).toBe(done);
   });
+
+  it('9.R2b: birthSilver adds silver once at confirm', () => {
+    const s = born('silver');
+    const forced = { ...s, destiny: { ...s.destiny, offered: ['phu_quy_menh', 'kheo_mom', 'thiet_vi'] } };
+    const done = confirmDestiny(forced, content);
+    expect(done.money.silver).toBe(s.money.silver + 200);
+  });
+
+  it('9.R2c: mixed traits carry both a gain and a cost', () => {
+    const mixed = content.traits.filter((t) => t.mixed);
+    expect(mixed.length).toBeGreaterThanOrEqual(15);
+    for (const t of mixed) expect(t.summary).toMatch(/✔[\s\S]*✖|✖[\s\S]*✔/);
+  });
 });

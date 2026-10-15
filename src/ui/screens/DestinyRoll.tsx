@@ -55,6 +55,7 @@ export function DestinyRollScreen({ state, content, rollCount, unlimited, canLoc
                   <b>{t.name}</b>
                   <span class="trait-rarity">{RARITY_LABEL[t.rarity]}</span>
                 </div>
+                {t.mixed && <span class="trait-mixed">Họa phúc tương y</span>}
                 <p class="trait-flavor">{t.flavor}</p>
                 <p class="trait-summary"><TermText text={t.summary} /></p>
                 {traitRootNote(content, t.id) && <p class="trait-summary root-note">{traitRootNote(content, t.id)}</p>}

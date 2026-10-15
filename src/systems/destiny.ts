@@ -118,6 +118,7 @@ export function confirmDestiny(state: GameState, content: Content): GameState {
   let stats = { ...state.stats };
   let aptitudes = { ...state.aptitudes };
   let lifespanPct = 0;
+  let birthSilver = 0;
 
   // Phúc báo from the last life (task 5b.8) give their one-time gains with the traits.
   const combos = activeCombos({ ...state, traits: chosen.map((t) => t.id) }, content);
@@ -130,6 +131,8 @@ export function confirmDestiny(state: GameState, content: Content): GameState {
         else if (key in aptitudes) aptitudes[key as keyof typeof aptitudes] = clamp(aptitudes[key as keyof typeof aptitudes] + e.add);
       } else if (e.hook === 'lifespanPct' && e.add !== undefined) {
         lifespanPct += e.add;
+      } else if (e.hook === 'birthSilver' && e.add !== undefined) {
+        birthSilver += e.add;
       }
       // Other hooks are read by their own systems (cultivation, combat, events…) later.
     }
@@ -161,6 +164,7 @@ export function confirmDestiny(state: GameState, content: Content): GameState {
     stats,
     aptitudes,
     cult: { ...state.cult, lifespan },
+    money: { ...state.money, silver: Math.max(0, state.money.silver + Math.round(birthSilver)) },
     traits: chosen.map((t) => t.id),
     destiny: { ...state.destiny, confirmed: true },
     log: [{ ...birth, lines }, ...state.log.slice(1)],

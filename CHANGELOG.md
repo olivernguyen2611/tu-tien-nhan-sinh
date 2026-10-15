@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### 9.R2b–c: Tiên Thiên Khí Vận phủ rộng hơn (2026-10-15)
+- 3 móc mới cho khí vận: `birthSilver` (bạc lúc sinh), `romanceChance` (tỏ tình, nối lại duyên cũ dễ hơn hoặc khó hơn), `childRootRolls` (con cái được gieo linh căn thêm lần, lấy lần tốt nhất). `craft.all.affinity` nay cộng vào tư chất mọi nghề.
+- 50 khí vận mới (tổng 110): 12 Phàm, 12 Lương, 9 Ưu, 6 Tuyệt, 4 Thiên, 1 Thần và 6 Ác vận, phủ gia cảnh, tình duyên, con cái, nghề, chiến đấu, quan trường, tâm cảnh.
+- Khí vận **họa phúc tương y** (vừa lợi vừa hại, trường `mixed`) có nhãn riêng trên thẻ. 6 khí vận cũ có cả ✔ lẫn ✖ cũng được gắn nhãn này.
+
 ### 9.R2a: "Nghịch Thiên Bốc Mệnh" đổi thành "Tiên Thiên Khí Vận" (2026-10-15)
 - Màn quay khí vận lúc sinh và các thiên phú luân hồi liên quan dùng tên mới. "Nghịch thiên cải mệnh" (nút quay lại) giữ nguyên.
 

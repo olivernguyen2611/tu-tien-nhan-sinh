@@ -503,6 +503,8 @@ const ADD_HOOK = new RegExp(
       'rootReroll',
       // Special bodies (realms-roots-paths.md B5); takes effect from task 2.3.
       'lineage\\.(tien|ma|phat|quy|yeu)\\.cultivationSpeed',
+      // 9.R2b: khí vận reaching more corners of life: silver at birth, luck in love, rooted children.
+      'birthSilver', 'romanceChance', 'childRootRolls',
     ].join('|') +
     ')$',
 );
@@ -601,6 +603,8 @@ export const TraitSchema = z
     flavor: z.string().min(1),
     summary: z.string().min(1),
     effects: z.array(EffectHookSchema).min(1),
+    /** 9.R2c: phúc họa đi kèm (shown as "Họa phúc tương y"). */
+    mixed: z.boolean().optional(),
   })
   .strict();
 export const TraitFileSchema = z.array(TraitSchema).min(1);

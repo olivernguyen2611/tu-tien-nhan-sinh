@@ -528,6 +528,7 @@ button { font: inherit; color: inherit; }
 .trait-head b { font-family: var(--font-story); font-size: 1.0625rem; color: var(--rc); }
 .trait-card.r-pham .trait-head b, .trait-chip.r-pham b { color: var(--ink); }
 .trait-rarity { flex: none; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--rc); border: 1px solid var(--rc); border-radius: 999px; padding: 1px 8px; }
+.trait-mixed { align-self: flex-start; font-size: 0.6875rem; font-style: italic; color: var(--muted); border: 1px dashed var(--line); border-radius: 999px; padding: 0 8px; }
 .trait-flavor { margin: 0; font-family: var(--font-story); font-style: italic; font-size: 0.8125rem; color: var(--muted); }
 .trait-summary { margin: 0; font-size: 0.875rem; }
 .trait-summary.root-note { color: var(--jade); font-weight: 600; }
