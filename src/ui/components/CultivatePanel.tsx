@@ -1,4 +1,5 @@
 // "Tu luyện" sheet: realm, root, yearly progress, and the big breakthrough button.
+import { Fold } from './Fold';
 import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
@@ -78,23 +79,22 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
           </div>
         )}
         {state.cult.scrolls.length > 0 && state.alive && (
-          <div class="crafts">
-            <h3 class="panel-sub">Bí tịch</h3>
-            {state.cult.scrolls.map((id) => {
-              const tech = techniqueById(content, id);
-              if (!tech) return null;
-              const blocked = learnBlocked(state, content, tech);
-              return (
-                <div class="career-row" key={id}>
-                  <div class="craft-head"><b>{tech.name}</b><span class="muted">{content.cultivation.realms.gradeNames[tech.grade]} phẩm · {content.cultivation.realms.lineageNames[tech.lineage]}</span></div>
-                  <p class="profile-note"><TermText text={tech.flavor} /></p>
-                  <button class="chip-btn" disabled={!!blocked} onClick={() => setPracticed(onLearn(id))}>Tu công pháp này</button>
-                  {blocked ? <span class="craft-note">{blocked}</span>
-                    : state.cult.technique && <span class="craft-note">Đổi công pháp mất {content.balance.techniques.switchLossPct}% thanh tu vi.</span>}
-                </div>
-              );
-            })}
-          </div>
+          <Fold id="cult:Bí tịch" title="Bí tịch">
+              {state.cult.scrolls.map((id) => {
+                const tech = techniqueById(content, id);
+                if (!tech) return null;
+                const blocked = learnBlocked(state, content, tech);
+                return (
+                  <div class="career-row" key={id}>
+                    <div class="craft-head"><b>{tech.name}</b><span class="muted">{content.cultivation.realms.gradeNames[tech.grade]} phẩm · {content.cultivation.realms.lineageNames[tech.lineage]}</span></div>
+                    <p class="profile-note"><TermText text={tech.flavor} /></p>
+                    <button class="chip-btn" disabled={!!blocked} onClick={() => setPracticed(onLearn(id))}>Tu công pháp này</button>
+                    {blocked ? <span class="craft-note">{blocked}</span>
+                      : state.cult.technique && <span class="craft-note">Đổi công pháp mất {content.balance.techniques.switchLossPct}% thanh tu vi.</span>}
+                  </div>
+                );
+              })}
+          </Fold>
         )}
         {foundation && <p class="profile-note"><TermText text={`Đạo cơ ${foundation.name}: ${foundation.description}`} /></p>}
         {coreGrade && <p class="profile-note"><TermText text={`Kim Đan ${coreGrade}${pattern ? `, ${pattern.name}: ${pattern.summary}` : ''}`} /></p>}
@@ -111,36 +111,34 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
         )}
 
         {seclusion.options.length > 0 && (
-          <div class="crafts">
-            <h3 class="panel-sub"><TermText text="Bế quan" /></h3>
-            <p class="profile-note">Tu vi ×{content.balance.seclusion.speedMul}, không có sự kiện. Năm tháng vẫn trôi, người thân vẫn già.</p>
-            <div class="action-chips">
-              {seclusion.options.map((y) => (
-                <button class="chip-btn" key={y} disabled={!!seclusion.blocked} title={seclusion.blocked ?? undefined}
-                  onClick={() => { onSeclude(y); onClose(); }}>
-                  {y} năm
-                </button>
-              ))}
-            </div>
-            {seclusion.blocked && <span class="craft-note">{seclusion.blocked}</span>}
-          </div>
+          <Fold id="cult:seclusion" title={<TermText text="Bế quan" />}>
+              <p class="profile-note">Tu vi ×{content.balance.seclusion.speedMul}, không có sự kiện. Năm tháng vẫn trôi, người thân vẫn già.</p>
+              <div class="action-chips">
+                {seclusion.options.map((y) => (
+                  <button class="chip-btn" key={y} disabled={!!seclusion.blocked} title={seclusion.blocked ?? undefined}
+                    onClick={() => { onSeclude(y); onClose(); }}>
+                    {y} năm
+                  </button>
+                ))}
+              </div>
+              {seclusion.blocked && <span class="craft-note">{seclusion.blocked}</span>}
+          </Fold>
         )}
 
         {cave.blocked !== 'Chưa tu hành.' && cave.blocked !== 'Đã qua đời.' && (
-          <div class="crafts">
-            <h3 class="panel-sub">Động phủ linh mạch</h3>
-            <p class="profile-note">Thuê chỗ ngồi trên linh mạch: tu vi ×{cave.speedMul} suốt thời hạn thuê, cộng dồn với bế quan.{cave.until !== null ? ` Đang thuê tới năm ${cave.until} tuổi.` : ''}</p>
-            <div class="action-chips">
-              {cave.leases.map((l) => (
-                <button class="chip-btn" key={l.years} disabled={!!l.blocked} title={l.blocked ?? undefined}
-                  onClick={() => setCaveNote(onRentCave(l.years))}>
-                  {l.years} năm · {l.cost} linh thạch
-                </button>
-              ))}
-            </div>
-            {caveNote && <p class="action-result good">{caveNote}</p>}
-            {!caveNote && cave.leases.every((l) => l.blocked) && cave.until === null && <span class="craft-note">{cave.leases[0]?.blocked}</span>}
-          </div>
+          <Fold id="cult:Động phủ linh mạch" title="Động phủ linh mạch">
+              <p class="profile-note">Thuê chỗ ngồi trên linh mạch: tu vi ×{cave.speedMul} suốt thời hạn thuê, cộng dồn với bế quan.{cave.until !== null ? ` Đang thuê tới năm ${cave.until} tuổi.` : ''}</p>
+              <div class="action-chips">
+                {cave.leases.map((l) => (
+                  <button class="chip-btn" key={l.years} disabled={!!l.blocked} title={l.blocked ?? undefined}
+                    onClick={() => setCaveNote(onRentCave(l.years))}>
+                    {l.years} năm · {l.cost} linh thạch
+                  </button>
+                ))}
+              </div>
+              {caveNote && <p class="action-result good">{caveNote}</p>}
+              {!caveNote && cave.leases.every((l) => l.blocked) && cave.until === null && <span class="craft-note">{cave.leases[0]?.blocked}</span>}
+          </Fold>
         )}
 
         {info && state.alive && (
@@ -176,126 +174,121 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
         {mortal && state.alive && (() => {
           const m = martialView(state, content);
           return (
-            <div class="crafts">
-              <h3 class="panel-sub">Võ đạo</h3>
-              <p class="story">{m.stage ? `Cảnh giới võ đạo: ${m.stage}` : 'Chưa nhập môn võ đạo.'}</p>
-              {(() => {
-                const manual = mortalManual(state, content);
-                return manual && <p class="profile-note"><b>{manual.name}</b>: {manual.flavor} (sức chiến +{Math.round(manual.power * 100)}%, thọ nguyên +{manual.lifespan} năm).</p>;
-              })()}
-              {m.next && <p class="profile-note">Đã luyện {m.years} năm. Năm nay luyện võ có khoảng {Math.round(m.yearChance * 100)}% đột phá lên {m.next}; tỉ lệ tăng dần tới năm thứ {m.need} (cao nhất {Math.round(m.chance * 100)}%, theo Căn cốt và Ngộ tính).</p>}
-              {m.gate && <p class="profile-note">{m.gate}</p>}
-              <button class="chip-btn" disabled={!!m.blocked} onClick={() => setPracticed(onTrain())}>Luyện võ</button>
-              {m.blocked && <span class="craft-note">{m.blocked}</span>}
-              {(() => {
-                const q = questView(state, content);
-                if (!q) return null;
-                return (
-                  <div class="quest">
-                    <h3 class="panel-sub">{q.quest.name} · ải {q.stepIndex + 1}/{q.total}</h3>
-                    <p class="story"><b>{q.step.title}.</b> {q.step.text}</p>
-                    {q.chance !== null && <p class="profile-note">Thử sức: khoảng {Math.round(q.chance * 100)}% qua ải (theo {q.step.check!.stats.map((k) => ({ physique: 'Căn cốt', health: 'Sức khỏe', daoHeart: 'Đạo tâm', comprehension: 'Ngộ tính', intellect: 'Trí tuệ', charm: 'Mị lực', luck: 'Khí vận', happiness: 'Vui vẻ' }[k])).join(', ')}).</p>}
-                    <button class="chip-btn" disabled={!!q.blocked} onClick={() => setPracticed(onQuest({ kind: 'step', aid: false }))}>{q.step.game ? 'Vào ải' : 'Thử sức'}</button>
-                    {q.aid && <button class="chip-btn" disabled={!!q.blocked || !q.aid.have} title={q.aid.text} onClick={() => setPracticed(onQuest({ kind: 'step', aid: true }))}>{`${q.aid.text} (${q.aid.name}${q.aid.have ? '' : ', chưa có'})`}</button>}
-                    {q.blocked && <span class="craft-note">{q.blocked}</span>}
-                  </div>
-                );
-              })()}
-            </div>
+            <Fold id="cult:Võ đạo" title="Võ đạo">
+                <p class="story">{m.stage ? `Cảnh giới võ đạo: ${m.stage}` : 'Chưa nhập môn võ đạo.'}</p>
+                {(() => {
+                  const manual = mortalManual(state, content);
+                  return manual && <p class="profile-note"><b>{manual.name}</b>: {manual.flavor} (sức chiến +{Math.round(manual.power * 100)}%, thọ nguyên +{manual.lifespan} năm).</p>;
+                })()}
+                {m.next && <p class="profile-note">Đã luyện {m.years} năm. Năm nay luyện võ có khoảng {Math.round(m.yearChance * 100)}% đột phá lên {m.next}; tỉ lệ tăng dần tới năm thứ {m.need} (cao nhất {Math.round(m.chance * 100)}%, theo Căn cốt và Ngộ tính).</p>}
+                {m.gate && <p class="profile-note">{m.gate}</p>}
+                <button class="chip-btn" disabled={!!m.blocked} onClick={() => setPracticed(onTrain())}>Luyện võ</button>
+                {m.blocked && <span class="craft-note">{m.blocked}</span>}
+                {(() => {
+                  const q = questView(state, content);
+                  if (!q) return null;
+                  return (
+                    <div class="quest">
+                      <h3 class="panel-sub">{q.quest.name} · ải {q.stepIndex + 1}/{q.total}</h3>
+                      <p class="story"><b>{q.step.title}.</b> {q.step.text}</p>
+                      {q.chance !== null && <p class="profile-note">Thử sức: khoảng {Math.round(q.chance * 100)}% qua ải (theo {q.step.check!.stats.map((k) => ({ physique: 'Căn cốt', health: 'Sức khỏe', daoHeart: 'Đạo tâm', comprehension: 'Ngộ tính', intellect: 'Trí tuệ', charm: 'Mị lực', luck: 'Khí vận', happiness: 'Vui vẻ' }[k])).join(', ')}).</p>}
+                      <button class="chip-btn" disabled={!!q.blocked} onClick={() => setPracticed(onQuest({ kind: 'step', aid: false }))}>{q.step.game ? 'Vào ải' : 'Thử sức'}</button>
+                      {q.aid && <button class="chip-btn" disabled={!!q.blocked || !q.aid.have} title={q.aid.text} onClick={() => setPracticed(onQuest({ kind: 'step', aid: true }))}>{`${q.aid.text} (${q.aid.name}${q.aid.have ? '' : ', chưa có'})`}</button>}
+                      {q.blocked && <span class="craft-note">{q.blocked}</span>}
+                    </div>
+                  );
+                })()}
+            </Fold>
           );
         })()}
 
         {mortal && state.alive && (
-          <div class="crafts">
-            <h3 class="panel-sub">Đường đời</h3>
-            {currentCareer ? (
-              <p class="story">{currentCareer} · thu nhập {careerIncome(state, content)} lượng bạc mỗi năm.</p>
-            ) : (
-              <p class="profile-note">Chưa theo đường nào. Từ {content.balance.careers.joinAge[0]} tuổi có thể chọn một đường để kiếm sống và tiến thân.</p>
-            )}
-            <button class="chip-btn" aria-expanded={careerOpen} onClick={() => setCareerOpen(!careerOpen)}>{currentCareer ? 'Đổi đường' : 'Chọn đường'}</button>
-            {careerOpen && careers.filter((c) => !c.current).map((c) => (
-              <div class="career-row" key={c.id}>
-                <div class="craft-head"><b>{c.name}</b></div>
-                <p class="profile-note"><TermText text={c.description} /></p>
-                <button class="chip-btn" disabled={!!c.blocked} onClick={() => { setJoined(onJoinCareer(c.id)); setCareerOpen(false); }}>Theo đường này</button>
-                {c.blocked && <span class="craft-note">{c.blocked}</span>}
-              </div>
-            ))}
-            {joined && <p class="action-result good">{joined}</p>}
-          </div>
+          <Fold id="cult:Đường đời" title="Đường đời">
+              {currentCareer ? (
+                <p class="story">{currentCareer} · thu nhập {careerIncome(state, content)} lượng bạc mỗi năm.</p>
+              ) : (
+                <p class="profile-note">Chưa theo đường nào. Từ {content.balance.careers.joinAge[0]} tuổi có thể chọn một đường để kiếm sống và tiến thân.</p>
+              )}
+              <button class="chip-btn" aria-expanded={careerOpen} onClick={() => setCareerOpen(!careerOpen)}>{currentCareer ? 'Đổi đường' : 'Chọn đường'}</button>
+              {careerOpen && careers.filter((c) => !c.current).map((c) => (
+                <div class="career-row" key={c.id}>
+                  <div class="craft-head"><b>{c.name}</b></div>
+                  <p class="profile-note"><TermText text={c.description} /></p>
+                  <button class="chip-btn" disabled={!!c.blocked} onClick={() => { setJoined(onJoinCareer(c.id)); setCareerOpen(false); }}>Theo đường này</button>
+                  {c.blocked && <span class="craft-note">{c.blocked}</span>}
+                </div>
+              ))}
+              {joined && <p class="action-result good">{joined}</p>}
+          </Fold>
         )}
 
         {paths && (
-          <div class="crafts">
-            <h3 class="panel-sub">Đạo thống · con đường</h3>
-            {paths.lineage && (
-              <p class="profile-note"><b>{paths.lineage.name}</b>: {paths.lineage.strengths} Cái giá: {paths.lineage.costs}</p>
-            )}
-            <p class="profile-note">Con đường chính: {paths.main}</p>
-            {paths.paths.map((p) => (
-              <div class="craft-row" key={p.id}>
-                <div class="craft-head">
-                  <b><TermText text={p.name} /></b>
-                  {p.main && <span class="muted">chính</span>}
+          <Fold id="cult:Đạo thống · con đường" title="Đạo thống · con đường">
+              {paths.lineage && (
+                <p class="profile-note"><b>{paths.lineage.name}</b>: {paths.lineage.strengths} Cái giá: {paths.lineage.costs}</p>
+              )}
+              <p class="profile-note">Con đường chính: {paths.main}</p>
+              {paths.paths.map((p) => (
+                <div class="craft-row" key={p.id}>
+                  <div class="craft-head">
+                    <b><TermText text={p.name} /></b>
+                    {p.main && <span class="muted">chính</span>}
+                  </div>
+                  <Meter label={`${p.value}`} value={p.value} color="var(--bar-cult)" text="" />
                 </div>
-                <Meter label={`${p.value}`} value={p.value} color="var(--bar-cult)" text="" />
-              </div>
-            ))}
-          </div>
+              ))}
+          </Fold>
         )}
 
         {crafts.length > 0 && (
-          <div class="crafts">
-            <h3 class="panel-sub"><TermText text="Bách nghệ" /></h3>
-            <p class="profile-note">Mỗi năm chuyên tâm được một nghề.</p>
-            {crafts.map((c) => (
-              <div class="craft-row" key={c.id}>
-                <div class="craft-head">
-                  <b><TermText text={c.name} /></b>
-                  <span class="muted">{c.title}</span>
+          <Fold id="cult:crafts" title={<TermText text="Bách nghệ" />}>
+              <p class="profile-note">Mỗi năm chuyên tâm được một nghề.</p>
+              {crafts.map((c) => (
+                <div class="craft-row" key={c.id}>
+                  <div class="craft-head">
+                    <b><TermText text={c.name} /></b>
+                    <span class="muted">{c.title}</span>
+                  </div>
+                  <Meter label={`Cấp ${c.level}`} value={c.level} color="var(--bar-cult)" text="" />
+                  <button class="chip-btn" disabled={!!c.blocked} title={c.blocked ?? undefined}
+                    onClick={() => setPracticed(onPractice(c.id))}>
+                    Luyện tập{c.cost > 0 && <span class="chip-cost"> · {c.cost} bạc</span>}
+                  </button>
+                  {c.blocked && <span class="craft-note">{c.blocked}</span>}
+                  {recipeViews(state, content, c.id).length > 0 && (
+                    <details class="recipes">
+                      <summary>Luyện chế</summary>
+                      {recipeViews(state, content, c.id).map((r) => (
+                        <div class="recipe" key={r.id}>
+                          <button class="chip-btn" disabled={!!r.blocked} title={r.blocked ?? undefined} onClick={() => setPracticed(onCraft(r.id))}>
+                            {r.product}{r.count > 1 && ` ×${r.count}`} · {Math.round(r.chance * 100)}%
+                          </button>
+                          <span class="craft-note">{r.needs}{r.blocked && ` · ${r.blocked}`}</span>
+                        </div>
+                      ))}
+                    </details>
+                  )}
                 </div>
-                <Meter label={`Cấp ${c.level}`} value={c.level} color="var(--bar-cult)" text="" />
-                <button class="chip-btn" disabled={!!c.blocked} title={c.blocked ?? undefined}
-                  onClick={() => setPracticed(onPractice(c.id))}>
-                  Luyện tập{c.cost > 0 && <span class="chip-cost"> · {c.cost} bạc</span>}
-                </button>
-                {c.blocked && <span class="craft-note">{c.blocked}</span>}
-                {recipeViews(state, content, c.id).length > 0 && (
-                  <details class="recipes">
-                    <summary>Luyện chế</summary>
-                    {recipeViews(state, content, c.id).map((r) => (
-                      <div class="recipe" key={r.id}>
-                        <button class="chip-btn" disabled={!!r.blocked} title={r.blocked ?? undefined} onClick={() => setPracticed(onCraft(r.id))}>
-                          {r.product}{r.count > 1 && ` ×${r.count}`} · {Math.round(r.chance * 100)}%
-                        </button>
-                        <span class="craft-note">{r.needs}{r.blocked && ` · ${r.blocked}`}</span>
-                      </div>
-                    ))}
-                  </details>
-                )}
-              </div>
-            ))}
-            {practiced && <p class="action-result good">{practiced}</p>}
-          </div>
+              ))}
+              {practiced && <p class="action-result good">{practiced}</p>}
+          </Fold>
         )}
 
         {board.length > 0 && (
-          <div class="crafts">
-            <h3 class="panel-sub">{content.rankings.title}</h3>
-            <p class="profile-note">{content.rankings.note}</p>
-            <ol class="ranking">
-              {board.map((r) => (
-                <li key={r.rank} class={r.player ? 'me' : undefined}>
-                  <span class="rank-no">{r.rank}</span>
-                  <span class="rank-name">
-                    <b>{r.name}</b> · {r.realm}
-                    <span class="muted rank-sub">{r.sect} · {r.age} tuổi</span>
-                  </span>
-                </li>
-              ))}
-            </ol>
-          </div>
+          <Fold id="cult:rankings" title={content.rankings.title}>
+              <p class="profile-note">{content.rankings.note}</p>
+              <ol class="ranking">
+                {board.map((r) => (
+                  <li key={r.rank} class={r.player ? 'me' : undefined}>
+                    <span class="rank-no">{r.rank}</span>
+                    <span class="rank-name">
+                      <b>{r.name}</b> · {r.realm}
+                      <span class="muted rank-sub">{r.sect} · {r.age} tuổi</span>
+                    </span>
+                  </li>
+                ))}
+              </ol>
+          </Fold>
         )}
 
         <button class="choice" onClick={onClose}>Đóng</button>

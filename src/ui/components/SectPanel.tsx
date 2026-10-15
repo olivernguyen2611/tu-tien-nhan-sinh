@@ -1,5 +1,6 @@
 // "Tông môn" sheet: membership, rank and contribution, yearly mission, sect
 // techniques, asking for a master; or the list of sects to apply to.
+import { Fold } from './Fold';
 import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
@@ -65,79 +66,74 @@ export function SectPanel({ state, content, onAction, onClose }: {
             {state.sect.rank === 0 && <p class="profile-note">Ký danh một năm thì thành đệ tử chính thức.</p>}
             <p class="profile-note">Nghĩa vụ: {sect.duty}</p>
 
-            <div class="crafts">
-              <h3 class="panel-sub">Nhiệm vụ tông môn</h3>
-              <p class="profile-note">Bảng nhiệm vụ đổi mỗi năm, lên cấp thì có việc lớn hơn. Mỗi năm nhận được một việc.</p>
-              {missionViews(state, content).map((m) => (
-                <div class="career-row" key={m.id}>
-                  <div class="craft-head"><b>{m.name}</b><span class="muted">{Math.round(m.chance * 100)}%</span></div>
-                  <p class="profile-note">{m.text}</p>
-                  <button class="chip-btn" disabled={!!m.blocked} onClick={() => act({ kind: 'mission', missionId: m.id })}>Nhận việc</button>
-                  {m.blocked && <span class="craft-note">{m.blocked}</span>}
-                </div>
-              ))}
-            </div>
-
-            {chainViews(state, content).length > 0 && (
-              <div class="crafts">
-                <h3 class="panel-sub">Chuỗi nhiệm vụ</h3>
-                <p class="profile-note">Việc dài nhiều bước, mỗi năm làm một bước (tính vào nhiệm vụ của năm). Hỏng hai bước thì bị rút lại.</p>
-                {chainViews(state, content).map((c) => (
-                  <div class="career-row" key={c.id}>
-                    <div class="craft-head"><b>{c.name}</b><span class="muted">{c.active ? `bước ${c.step + 1}/${c.steps} · ${Math.round((c.chance ?? 0) * 100)}%` : `${c.steps} bước`}</span></div>
-                    <p class="profile-note">{c.text}</p>
-                    <button class="chip-btn" disabled={!!c.blocked} onClick={() => act({ kind: 'chain', id: c.id, start: !c.active })}>{c.active ? 'Làm bước này' : 'Nhận chuỗi'}</button>
-                    {c.blocked && <span class="craft-note">{c.blocked}</span>}
+            <Fold id="sect:Nhiệm vụ tông môn" title="Nhiệm vụ tông môn" count={missionViews(state, content).length}>
+                <p class="profile-note">Bảng nhiệm vụ đổi mỗi năm, lên cấp thì có việc lớn hơn. Mỗi năm nhận được một việc.</p>
+                {missionViews(state, content).map((m) => (
+                  <div class="career-row" key={m.id}>
+                    <div class="craft-head"><b>{m.name}</b><span class="muted">{Math.round(m.chance * 100)}%</span></div>
+                    <p class="profile-note">{m.text}</p>
+                    <button class="chip-btn" disabled={!!m.blocked} onClick={() => act({ kind: 'mission', missionId: m.id })}>Nhận việc</button>
+                    {m.blocked && <span class="craft-note">{m.blocked}</span>}
                   </div>
                 ))}
-              </div>
+            </Fold>
+
+            {chainViews(state, content).length > 0 && (
+              <Fold id="sect:Chuỗi nhiệm vụ" title="Chuỗi nhiệm vụ">
+                  <p class="profile-note">Việc dài nhiều bước, mỗi năm làm một bước (tính vào nhiệm vụ của năm). Hỏng hai bước thì bị rút lại.</p>
+                  {chainViews(state, content).map((c) => (
+                    <div class="career-row" key={c.id}>
+                      <div class="craft-head"><b>{c.name}</b><span class="muted">{c.active ? `bước ${c.step + 1}/${c.steps} · ${Math.round((c.chance ?? 0) * 100)}%` : `${c.steps} bước`}</span></div>
+                      <p class="profile-note">{c.text}</p>
+                      <button class="chip-btn" disabled={!!c.blocked} onClick={() => act({ kind: 'chain', id: c.id, start: !c.active })}>{c.active ? 'Làm bước này' : 'Nhận chuỗi'}</button>
+                      {c.blocked && <span class="craft-note">{c.blocked}</span>}
+                    </div>
+                  ))}
+              </Fold>
             )}
 
-            <div class="crafts">
-              <h3 class="panel-sub">Bảo khố</h3>
-              <p class="profile-note">Cống hiến còn dùng được: {merit(state)} (đổi đồ không làm tụt cấp bậc).</p>
-              {treasuryViews(state, content).map((t) => (
-                <div class="career-row" key={t.id}>
-                  <div class="craft-head"><b>{t.name}</b><span class="muted">{t.cost} cống hiến · còn {t.left}</span></div>
-                  <p class="profile-note">{t.text}</p>
-                  <button class="chip-btn" disabled={!!t.blocked} onClick={() => act({ kind: 'buy', id: t.id })}>Đổi</button>
-                  {t.blocked && <span class="craft-note">{t.blocked}</span>}
-                </div>
-              ))}
-            </div>
-
-            <div class="crafts">
-              <h3 class="panel-sub"><TermText text="Công pháp" /> của tông môn</h3>
-              {sectTechniques(state, content).map((t) => {
-                const tech = techniqueById(content, t.id);
-                if (!tech) return null;
-                const current = state.cult.technique === t.id;
-                const blocked = current ? 'Đang tu.' : !t.open ? `Cần là đệ tử ${sect.ranks[t.rank]}.` : learnBlocked(state, content, tech);
-                return (
+            <Fold id="sect:Bảo khố" title="Bảo khố" count={treasuryViews(state, content).length}>
+                <p class="profile-note">Cống hiến còn dùng được: {merit(state)} (đổi đồ không làm tụt cấp bậc).</p>
+                {treasuryViews(state, content).map((t) => (
                   <div class="career-row" key={t.id}>
-                    <div class="craft-head"><b>{tech.name}</b><span class="muted">{content.cultivation.realms.gradeNames[tech.grade]} phẩm</span></div>
-                    <p class="profile-note"><TermText text={tech.flavor} /></p>
-                    <button class="chip-btn" disabled={!!blocked} onClick={() => act({ kind: 'learn', techniqueId: t.id })}>
-                      {state.cult.technique ? 'Đổi sang tu' : 'Học'}
-                    </button>
-                    {blocked && <span class="craft-note">{blocked}</span>}
-                    {!blocked && state.cult.technique && <span class="craft-note">Đổi công pháp mất {content.balance.techniques.switchLossPct}% thanh tu vi.</span>}
+                    <div class="craft-head"><b>{t.name}</b><span class="muted">{t.cost} cống hiến · còn {t.left}</span></div>
+                    <p class="profile-note">{t.text}</p>
+                    <button class="chip-btn" disabled={!!t.blocked} onClick={() => act({ kind: 'buy', id: t.id })}>Đổi</button>
+                    {t.blocked && <span class="craft-note">{t.blocked}</span>}
                   </div>
-                );
-              })}
-            </div>
+                ))}
+            </Fold>
 
-            <div class="crafts">
-              <h3 class="panel-sub">Sư phụ</h3>
-              {state.sect.master ? <p class="story">{state.sect.master}</p> : (
-                <>
-                  <button class="chip-btn" disabled={!!masterBlocked(state, content)} onClick={() => act({ kind: 'master' })}>
-                    Xin bái sư · {Math.round(masterChance(state, content) * 100)}%
-                  </button>
-                  {masterBlocked(state, content) && <span class="craft-note">{masterBlocked(state, content)}</span>}
-                </>
-              )}
-            </div>
+            <Fold id="sect:techniques" title={<><TermText text="Công pháp" /> của tông môn</>}>
+                {sectTechniques(state, content).map((t) => {
+                  const tech = techniqueById(content, t.id);
+                  if (!tech) return null;
+                  const current = state.cult.technique === t.id;
+                  const blocked = current ? 'Đang tu.' : !t.open ? `Cần là đệ tử ${sect.ranks[t.rank]}.` : learnBlocked(state, content, tech);
+                  return (
+                    <div class="career-row" key={t.id}>
+                      <div class="craft-head"><b>{tech.name}</b><span class="muted">{content.cultivation.realms.gradeNames[tech.grade]} phẩm</span></div>
+                      <p class="profile-note"><TermText text={tech.flavor} /></p>
+                      <button class="chip-btn" disabled={!!blocked} onClick={() => act({ kind: 'learn', techniqueId: t.id })}>
+                        {state.cult.technique ? 'Đổi sang tu' : 'Học'}
+                      </button>
+                      {blocked && <span class="craft-note">{blocked}</span>}
+                      {!blocked && state.cult.technique && <span class="craft-note">Đổi công pháp mất {content.balance.techniques.switchLossPct}% thanh tu vi.</span>}
+                    </div>
+                  );
+                })}
+            </Fold>
+
+            <Fold id="sect:Sư phụ" title="Sư phụ">
+                {state.sect.master ? <p class="story">{state.sect.master}</p> : (
+                  <>
+                    <button class="chip-btn" disabled={!!masterBlocked(state, content)} onClick={() => act({ kind: 'master' })}>
+                      Xin bái sư · {Math.round(masterChance(state, content) * 100)}%
+                    </button>
+                    {masterBlocked(state, content) && <span class="craft-note">{masterBlocked(state, content)}</span>}
+                  </>
+                )}
+            </Fold>
 
             {tournamentViews(state, content).filter((t) => !t.blocked || t.blocked === 'Năm nay đã dự rồi.').map((t) => (
               <div class="crafts" key={t.id}>
@@ -149,24 +145,23 @@ export function SectPanel({ state, content, onAction, onClose }: {
               </div>
             ))}
 
-            <div class="crafts">
-              <h3 class="panel-sub">Đồng môn</h3>
-              <p class="profile-note">Mỗi năm đi lại được vài người, mỗi người một lần. Thân thiết thì mới được chỉ điểm.</p>
-              {sectmateViews(state, content).map((v) => (
-                <div class="career-row" key={v.npc.id}>
-                  <div class="craft-head"><b>{v.title} {v.npc.name}</b><span class="muted">thiện cảm {v.npc.affinity}</span></div>
-                  <p class="profile-note">{v.npc.age} tuổi · {content.cultivation.realms.realms.find((r) => r.id === v.npc.realm)?.name}</p>
-                  {v.talks.map((t) => (
-                    <div key={t.id}>
-                      <button class="chip-btn" disabled={!!t.blocked} title={t.text} onClick={() => act({ kind: 'talk', npcId: v.npc.id, talkId: t.id })}>
-                        {t.name} · {Math.round(t.chance * 100)}%
-                      </button>
-                      {t.blocked && <span class="craft-note">{t.blocked}</span>}
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
+            <Fold id="sect:Đồng môn" title="Đồng môn" count={sectmateViews(state, content).length}>
+                <p class="profile-note">Mỗi năm đi lại được vài người, mỗi người một lần. Thân thiết thì mới được chỉ điểm.</p>
+                {sectmateViews(state, content).map((v) => (
+                  <div class="career-row" key={v.npc.id}>
+                    <div class="craft-head"><b>{v.title} {v.npc.name}</b><span class="muted">thiện cảm {v.npc.affinity}</span></div>
+                    <p class="profile-note">{v.npc.age} tuổi · {content.cultivation.realms.realms.find((r) => r.id === v.npc.realm)?.name}</p>
+                    {v.talks.map((t) => (
+                      <div key={t.id}>
+                        <button class="chip-btn" disabled={!!t.blocked} title={t.text} onClick={() => act({ kind: 'talk', npcId: v.npc.id, talkId: t.id })}>
+                          {t.name} · {Math.round(t.chance * 100)}%
+                        </button>
+                        {t.blocked && <span class="craft-note">{t.blocked}</span>}
+                      </div>
+                    ))}
+                  </div>
+                ))}
+            </Fold>
 
             {leaving ? (
               <>

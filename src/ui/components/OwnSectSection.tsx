@@ -1,5 +1,6 @@
 // Khai tông lập phái (task 5.1): found one's own sect from the Tông môn sheet,
 // or see the sect already founded.
+import { Fold } from './Fold';
 import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
@@ -34,31 +35,29 @@ export function OwnSectSection({ state, content, onFound, onDecide, onBuild, onD
         <p class="story">Chưởng môn {state.character.name} · {lineageName(own.lineage)} · khai tông năm {own.founded} tuổi · {own.members} đệ tử · kho {own.treasury} linh thạch</p>
         <p class="profile-note">Danh vọng: {prestigeTier(state, content).name} ({Math.round(prestigeOf(state, content))}/100). Đông đệ tử và nhiều công trình thì danh vọng lên, danh vọng cao thì người đến bái sư càng đông.</p>
         {elderViews(state, content).length > 0 && (
-          <div class="crafts">
-            <h3 class="panel-sub">Trưởng lão</h3>
-            {elderViews(state, content).map((v) => (
-              <div class="career-row" key={v.npc.id}>
-                <div class="craft-head"><b>{v.npc.name}</b><span class="muted">thiện cảm {v.npc.affinity}</span></div>
-                <p class="profile-note">{v.npc.age} tuổi · {content.cultivation.realms.realms.find((r) => r.id === v.npc.realm)?.name}</p>
-                <button class="chip-btn" disabled={!!v.blocked} onClick={() => onElder(v.npc.id)}>Ban thưởng · {content.balance.founding.elders.rewardCost} linh thạch</button>
-                {v.blocked && <span class="craft-note">{v.blocked}</span>}
-              </div>
-            ))}
-          </div>
+          <Fold id="own:Trưởng lão" title="Trưởng lão">
+              {elderViews(state, content).map((v) => (
+                <div class="career-row" key={v.npc.id}>
+                  <div class="craft-head"><b>{v.npc.name}</b><span class="muted">thiện cảm {v.npc.affinity}</span></div>
+                  <p class="profile-note">{v.npc.age} tuổi · {content.cultivation.realms.realms.find((r) => r.id === v.npc.realm)?.name}</p>
+                  <button class="chip-btn" disabled={!!v.blocked} onClick={() => onElder(v.npc.id)}>Ban thưởng · {content.balance.founding.elders.rewardCost} linh thạch</button>
+                  {v.blocked && <span class="craft-note">{v.blocked}</span>}
+                </div>
+              ))}
+          </Fold>
         )}
         {recruitViews(state, content).length > 0 && (
-          <div class="crafts">
-            <h3 class="panel-sub">Chiêu mộ người quen</h3>
-            <p class="profile-note">Mời cố nhân gia nhập {own.name}, lễ vật {content.balance.founding.recruit.giftCost} linh thạch từ kho. Đã có {sectMembers(state).length} người quen nhập môn.</p>
-            {recruitViews(state, content).map((v) => (
-              <div class="career-row" key={v.npc.id}>
-                <div class="craft-head"><b>{v.npc.name}</b><span class="muted">{v.npc.role} · thiện cảm {v.npc.affinity}</span></div>
-                <p class="profile-note">{v.npc.age} tuổi · {content.cultivation.realms.realms.find((r) => r.id === v.npc.realm)?.name}</p>
-                <button class="chip-btn" disabled={!!v.blocked} onClick={() => onRecruit(v.npc.id)}>Mời nhập môn · khả năng {Math.round(v.chance * 100)}%</button>
-                {v.blocked && <span class="craft-note">{v.blocked}</span>}
-              </div>
-            ))}
-          </div>
+          <Fold id="own:Chiêu mộ người quen" title="Chiêu mộ người quen">
+              <p class="profile-note">Mời cố nhân gia nhập {own.name}, lễ vật {content.balance.founding.recruit.giftCost} linh thạch từ kho. Đã có {sectMembers(state).length} người quen nhập môn.</p>
+              {recruitViews(state, content).map((v) => (
+                <div class="career-row" key={v.npc.id}>
+                  <div class="craft-head"><b>{v.npc.name}</b><span class="muted">{v.npc.role} · thiện cảm {v.npc.affinity}</span></div>
+                  <p class="profile-note">{v.npc.age} tuổi · {content.cultivation.realms.realms.find((r) => r.id === v.npc.realm)?.name}</p>
+                  <button class="chip-btn" disabled={!!v.blocked} onClick={() => onRecruit(v.npc.id)}>Mời nhập môn · khả năng {Math.round(v.chance * 100)}%</button>
+                  {v.blocked && <span class="craft-note">{v.blocked}</span>}
+                </div>
+              ))}
+          </Fold>
         )}
         {own.report && own.report.age === state.character.age && (
           <div class="sect-report">
@@ -106,27 +105,26 @@ export function OwnSectSection({ state, content, onFound, onDecide, onBuild, onD
   const nameProblem = sectNameProblem(name, content);
   const toggle = (id: string) => setRules((rs) => (rs.includes(id) ? rs.filter((x) => x !== id) : rs.length < cfg.maxRules ? [...rs, id] : rs));
   return (
-    <div class="crafts">
-      <h3 class="panel-sub">Khai tông lập phái</h3>
-      <p class="profile-note">Mở sơn môn theo {lineageName(state.cult.lineage ?? 'tien')}, tốn {cfg.cost} linh thạch. Đang ở tông môn nào thì phải rời đi.</p>
-      {blocked ? <p class="craft-note">{blocked}</p> : (
-        <>
-          <label class="field">
-            <span>Tên tông môn</span>
-            <input value={name} maxLength={cfg.nameLength[1]} onInput={(e) => setName((e.target as HTMLInputElement).value)} />
-          </label>
-          <button class="link-btn" onClick={() => { setSalt(salt + 1); setName(suggestSectName(state, content, salt + 1)); }}>Gợi ý tên khác</button>
-          <p class="profile-note">Tông quy (chọn tối đa {cfg.maxRules}):</p>
-          {content.founding.rules.map((r) => (
-            <label class="rule-option" key={r.id}>
-              <input type="checkbox" checked={rules.includes(r.id)} disabled={!rules.includes(r.id) && rules.length >= cfg.maxRules} onChange={() => toggle(r.id)} />
-              <span><b>{r.name}</b>: {r.text}</span>
+    <Fold id="own:Khai tông lập phái" title="Khai tông lập phái">
+        <p class="profile-note">Mở sơn môn theo {lineageName(state.cult.lineage ?? 'tien')}, tốn {cfg.cost} linh thạch. Đang ở tông môn nào thì phải rời đi.</p>
+        {blocked ? <p class="craft-note">{blocked}</p> : (
+          <>
+            <label class="field">
+              <span>Tên tông môn</span>
+              <input value={name} maxLength={cfg.nameLength[1]} onInput={(e) => setName((e.target as HTMLInputElement).value)} />
             </label>
-          ))}
-          {nameProblem && <p class="craft-note">{nameProblem}</p>}
-          <button class="btn-primary" disabled={!!nameProblem} onClick={() => onFound(name, rules)}>Khai tông</button>
-        </>
-      )}
-    </div>
+            <button class="link-btn" onClick={() => { setSalt(salt + 1); setName(suggestSectName(state, content, salt + 1)); }}>Gợi ý tên khác</button>
+            <p class="profile-note">Tông quy (chọn tối đa {cfg.maxRules}):</p>
+            {content.founding.rules.map((r) => (
+              <label class="rule-option" key={r.id}>
+                <input type="checkbox" checked={rules.includes(r.id)} disabled={!rules.includes(r.id) && rules.length >= cfg.maxRules} onChange={() => toggle(r.id)} />
+                <span><b>{r.name}</b>: {r.text}</span>
+              </label>
+            ))}
+            {nameProblem && <p class="craft-note">{nameProblem}</p>}
+            <button class="btn-primary" disabled={!!nameProblem} onClick={() => onFound(name, rules)}>Khai tông</button>
+          </>
+        )}
+    </Fold>
   );
 }

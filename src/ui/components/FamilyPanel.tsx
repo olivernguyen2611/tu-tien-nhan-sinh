@@ -14,6 +14,7 @@ import { ClanSection, type ClanAction } from './ClanSection';
 import { BondSection } from './BondSection';
 import type { BondAction, BondTarget } from '../../systems/familyBond';
 import { Meter } from './Meter';
+import { Fold } from './Fold';
 import { NpcGiftRow } from './NpcGiftRow';
 import { ImportSection } from './ImportSection';
 import type { ImportSetup, SavedPerson } from '../../systems/npcLibrary';
@@ -97,29 +98,33 @@ export function FamilyPanel({ state, content, onAction, onRomance, onGiftNpc, on
                     {` · Bản chất: ${l.nature ?? '?'}`}
                   </p>
                   {n.alive && <Meter label={`Thiện cảm · ${love.tier}`} value={n.affinity} tone="auto" />}
-                  {n.alive && n.disciple && (
-                    <div class="action-chips">
-                      <button class="chip-btn" disabled={!!teachBlocked(state, n)} title={teachBlocked(state, n) ?? undefined}
-                        onClick={() => { const r = onDisciple(n.id); if (r) setResult({ id: n.id, ...r }); }}>
-                        Chỉ điểm
-                      </button>
-                    </div>
-                  )}
-                  {n.alive && n.disciple && (
-                    <DiscipleActs state={state} content={content} npc={n} onAct={(act) => { const r = onDisciple(n.id, act); if (r) setResult({ id: n.id, ...r }); }} />
-                  )}
-                  {views.length > 0 && (
-                    <div class="action-chips">
-                      {views.map((v) => (
-                        <button class="chip-btn" key={v.action} disabled={!!v.blocked} title={v.blocked ?? undefined}
-                          onClick={() => setResult({ id: n.id, ...onRomance(n.id, v.action) })}>
-                          {v.label}{v.cost && <span class="chip-cost"> · {v.cost}</span>}
+                  {n.alive && (
+                    <Fold id={`npc:${n.id}`} title="Tương tác">
+                    {n.alive && n.disciple && (
+                      <div class="action-chips">
+                        <button class="chip-btn" disabled={!!teachBlocked(state, n)} title={teachBlocked(state, n) ?? undefined}
+                          onClick={() => { const r = onDisciple(n.id); if (r) setResult({ id: n.id, ...r }); }}>
+                          Chỉ điểm
                         </button>
-                      ))}
-                    </div>
-                  )}
-                  {n.alive && !n.disciple && romanceLabel(state, content, n).role !== content.romance.labels.partner && romanceLabel(state, content, n).role !== content.romance.labels.spouse && (
-                    <NpcGiftRow state={state} content={content} npc={n} onGift={(itemId) => { const r = onGiftNpc(n.id, itemId); if (r) setResult({ id: n.id, ...r }); }} />
+                      </div>
+                    )}
+                    {n.alive && n.disciple && (
+                      <DiscipleActs state={state} content={content} npc={n} onAct={(act) => { const r = onDisciple(n.id, act); if (r) setResult({ id: n.id, ...r }); }} />
+                    )}
+                    {views.length > 0 && (
+                      <div class="action-chips">
+                        {views.map((v) => (
+                          <button class="chip-btn" key={v.action} disabled={!!v.blocked} title={v.blocked ?? undefined}
+                            onClick={() => setResult({ id: n.id, ...onRomance(n.id, v.action) })}>
+                            {v.label}{v.cost && <span class="chip-cost"> · {v.cost}</span>}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    {n.alive && !n.disciple && romanceLabel(state, content, n).role !== content.romance.labels.partner && romanceLabel(state, content, n).role !== content.romance.labels.spouse && (
+                      <NpcGiftRow state={state} content={content} npc={n} onGift={(itemId) => { const r = onGiftNpc(n.id, itemId); if (r) setResult({ id: n.id, ...r }); }} />
+                    )}
+                    </Fold>
                   )}
                   <div class="action-chips">
                     <button class="chip-btn" title="Ghi người này vào Sổ nhân vật (trong Sổ lưu) để mang sang đời khác"

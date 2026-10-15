@@ -8,6 +8,10 @@
 
 ## [Chưa phát hành]
 
+### 9.0.5: giao diện thu gọn, bấm mới xổ danh sách (2026-10-15)
+- Component `Fold` (mục thu gọn, đầu mục kèm số lượng, nhớ mục đã mở trong phiên). Áp dụng cho bảng Tông môn (nhiệm vụ, chuỗi, bảo khố, công pháp, sư phụ, đồng môn), bảng Tu luyện (bí tịch, bế quan, động phủ, võ đạo, đường đời, đạo thống, bách nghệ, bảng xếp hạng), tông môn riêng (trưởng lão, chiêu mộ, công trình) và mỗi người quen trong Quan hệ (mục "Tương tác" chứa các nút).
+- Chưa làm: tách tab riêng cho tông môn, bố cục hai cột máy tính, chấm báo việc cần làm; chờ dock mới (9.7). Chưa kiểm ảnh 320/390/1280.
+
 ### 9.0.2: tặng đồ từ túi cho mọi người quen (2026-10-15)
 - Mỗi người quen còn sống (trừ đồ đệ và đạo lữ đã có đường riêng) có hàng **Tặng đồ**: chọn một món trong túi, danh sách chia nhóm theo loại, gợi ý "hợp gu / không hợp gu" khi đã biết bản chất họ. Mỗi người một món mỗi năm.
 - Phản ứng theo bản chất: tham lam mê pháp khí, mưu mô thích trận pháp và phù lục, v.v. (`balance.npcGift.taste`). Tu sĩ nhận đan dược thì tu vi tăng, nhận pháp khí thì tư chất tăng; phàm nhân chỉ cất giữ nên thiện cảm tăng ít hơn. Người đang lạnh nhạt có thể từ chối (đồ ở lại túi); tặng cho người có hiềm khích làm nguôi bớt thù oán.
