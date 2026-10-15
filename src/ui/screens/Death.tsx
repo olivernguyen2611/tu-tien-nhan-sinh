@@ -115,6 +115,9 @@ export function DeathScreen({ state, content, rebirth, lives, onReadLog, onNewLi
           </div>
         )}
 
+        {state.devUsed ? (
+          <p class="settings-note">Đời này có dùng chế độ thử nghiệm: không tính thành tựu, điểm Luân Hồi, Thiên Thư hay Sổ tri thức.</p>
+        ) : (
         <div class="rebirth-points">
           <p class="kicker">Điểm Luân Hồi</p>
           <ul>
@@ -127,6 +130,7 @@ export function DeathScreen({ state, content, rebirth, lives, onReadLog, onNewLi
           </p>
           <button class="link-btn" onClick={onRebirth}>Lên Luân Hồi Đài</button>
         </div>
+        )}
 
         {blessings.length > 0 && (
           <div class="ancestry">

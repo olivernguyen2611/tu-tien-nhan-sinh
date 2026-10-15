@@ -106,6 +106,8 @@ export interface GameState {
   knowledgeFound?: number;
   /** 9.R5b: every entry this life found itself; the rest of `knowledge` came from past lives. */
   knowledgeNew?: string[];
+  /** 9.R6a: developer mode was on during this life; it earns no records (thành tựu, thử thách tuần, điểm Luân Hồi, Thiên Thư, Sổ tri thức). */
+  devUsed?: boolean;
   /** Task 5b.1: thiên phú luân hồi this life was born with (id → level), bought in earlier lives. */
   rebirthTalents: Record<string, number>;
   /** Task 5b.8: Phúc báo brought from the last life (blessings.json id; career = the path that earned it). */

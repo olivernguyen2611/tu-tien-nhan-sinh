@@ -153,5 +153,6 @@
       "name": "Tìm đạo lữ",
       "text": "Hay xuất hiện trong chuyện tình duyên."
     }
-  ]
+  ],
+  "info": { "tiers": ["Xa lạ", "Quen biết", "Thân thiết", "Tri kỷ"], "unseen": "Không nhìn thấu: tu vi người này vượt xa ngươi.", "secretNone": "Chưa thấy điều gì giấu kín.", "secretHeir": "Mang mối thù truyền đời của" }
 }

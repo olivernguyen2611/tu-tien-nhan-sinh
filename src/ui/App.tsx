@@ -30,6 +30,7 @@ import { MainScreen } from './screens/Main';
 import { SettingsScreen, type SlotView } from './screens/Settings';
 import { TitleScreen } from './screens/Title';
 import { loadDevMode, saveDevMode } from './devMode';
+import { countsForRecords, markDevLife } from '../systems/dev';
 import { attemptMajorBreakthrough, enterFirstRealm } from '../systems/cultivation';
 import { savesLocked } from '../systems/difficulty';
 import { disableTutorial, dismissTip } from '../systems/tutorial';
@@ -109,6 +110,8 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
   const [theme, setTheme] = useState<ThemePref>(loadThemePref);
   const [devMode, setDevMode] = useState(loadDevMode);
   const toggleDev = (on: boolean) => { saveDevMode(on); setDevMode(on); };
+  // 9.R6a: playing with developer mode on marks the life (no records).
+  useEffect(() => { if (devMode && life && life.destiny.confirmed && !life.devUsed) setLife(markDevLife(life)); }, [devMode, life]);
   const [savesFrom, setSavesFrom] = useState<Screen>('title');
   const [picking, setPicking] = useState<Picking>(null);
   const [message, setMessage] = useState<Message>(null);
@@ -158,6 +161,8 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
   const [rebirth, setRebirth] = useState<{ gained: number; bank: number; fresh: string[] }>({ gained: 0, bank: 0, fresh: [] });
   useEffect(() => {
     if (screen !== 'death' || !life || life.alive) return;
+    // 9.R6a: a dev life earns nothing.
+    if (!countsForRecords(life)) { setRebirth({ gained: 0, bank: readMeta(store).rebirthPoints, fresh: [] }); return; }
     // Task 5b.6: every try of a weekly challenge shares a seed, so points are credited per try.
     const key = creditKey(life);
     const first = !(key in readMeta(store).credited);
@@ -264,6 +269,8 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         theme={theme}
         onToggleTheme={toggleTheme}
         sound={sound}
+        devMode={devMode}
+        onToggleDev={toggleDev}
         onToggleSound={toggleSound}
       />
     );
@@ -331,7 +338,7 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         onConfirm={() => {
           recordNewLife(store, originCost + (devMode ? 0 : lockCost(life, content)), !!life.goldenFinger, !!life.challenge);
           const born = confirmDestiny(life, content);
-          recordCodex(store, codexOf(born, content));
+          if (countsForRecords(born)) recordCodex(store, codexOf(born, content));
           setLife(born);
           setScreen('main');
         }}

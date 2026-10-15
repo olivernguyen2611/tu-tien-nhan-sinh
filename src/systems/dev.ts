@@ -440,3 +440,11 @@ export function devResetFingerCooldowns(state: GameState): GameState {
 export function devResetEventHistory(state: GameState): GameState {
   return devLog({ ...state, events: { ...state.events, history: {}, seen: {} } }, 'xóa lịch sử sự kiện');
 }
+
+/** 9.R6a: a life touched by developer mode is marked for good and earns no records. */
+export function markDevLife(state: GameState): GameState {
+  return state.devUsed ? state : { ...state, devUsed: true };
+}
+
+/** Whether this life may write thành tựu, thử thách tuần, điểm Luân Hồi, Thiên Thư and Sổ tri thức. */
+export const countsForRecords = (state: GameState): boolean => !state.devUsed;

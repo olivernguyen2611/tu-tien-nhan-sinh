@@ -6,8 +6,7 @@ import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
 import { availableActions, relationLabel } from '../../systems/relationships';
-import { npcLabel } from '../../systems/npcs';
-import { hasHook } from '../../systems/cultivation';
+import { npcInfo } from '../../systems/npcs';
 import { childRootLabel, romanceLabel, romanceNote, romanceViews, type RomanceAction } from '../../systems/romance';
 import { disciples, maxDisciples, recruitBlocked, teachBlocked } from '../../systems/disciples';
 import { ClanSection, type ClanAction } from './ClanSection';
@@ -79,7 +78,7 @@ export function FamilyPanel({ state, content, onAction, onRomance, onGiftNpc, on
         ) : (
           <ul class="family-list">
             {npcs.map((n) => {
-              const l = npcLabel(content, n, hasHook(state, content, 'readMind'));
+              const l = npcInfo(state, content, n);
               const love = romanceLabel(state, content, n);
               const views = n.alive ? romanceViews(state, content, n.id) : [];
               return (
@@ -96,10 +95,15 @@ export function FamilyPanel({ state, content, onAction, onRomance, onGiftNpc, on
                     </p>
                   )}
                   <p class="profile-note npc-line">
-                    {l.realm}
-                    {l.surface && ` · ${l.surface}`}
+                    {l.realm ?? 'Không nhìn thấu'}
+                    {` · ${l.tierName}`}
                     {` · Bản chất: ${l.nature ?? '?'}`}
                   </p>
+                  <Fold id={`npcinfo:${n.id}`} title="Thông tin">
+                    <dl class="npc-info">
+                      {l.rows.map((r) => <div key={r.label}><dt>{r.label}</dt><dd>{r.value}</dd></div>)}
+                    </dl>
+                  </Fold>
                   {n.alive && <Meter label={`Thiện cảm · ${love.tier}`} value={n.affinity} tone="auto" />}
                   {n.alive && (
                     <Fold id={`npc:${n.id}`} title="Tương tác">

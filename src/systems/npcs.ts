@@ -269,3 +269,52 @@ export function npcLabel(content: Content, n: Npc, readMind = false): { surface:
     realm: `${realm?.name ?? ''}${stageName}`,
   };
 }
+
+export interface NpcInfoRow { label: string; value: string }
+export interface NpcInfo {
+  /** 0 xa lạ · 1 quen biết · 2 thân thiết · 3 tri kỷ. */
+  tier: number;
+  tierName: string;
+  /** null when the realm is too far above the player to read. */
+  realm: string | null;
+  nature: string | null;
+  rows: NpcInfoRow[];
+}
+
+/**
+ * 9.R6a: what the player knows of an NPC. Each layer of thiện cảm (balance.npcs.infoTiers) shows more;
+ * Đọc tâm (readMind) sees everything, thần thức (divineSense) reads one realm higher.
+ */
+export function npcInfo(state: GameState, content: Content, n: Npc): NpcInfo {
+  const cfg = content.balance.npcs;
+  const tiers = cfg.infoTiers ?? [30, 60, 85];
+  const readMind = hookSum(state, content, 'readMind') > 0;
+  const tier = readMind ? 3 : tiers.filter((t) => n.affinity >= t).length;
+  const t = content.npcTraits.info;
+  const label = npcLabel(content, n, readMind || tier >= 2);
+  const list = realmList(content);
+  const idx = (id: string) => list.findIndex((r) => r.id === id);
+  const seeAbove = (cfg.infoSeeAbove ?? 1) + (hookSum(state, content, 'divineSense') > 0 ? 1 : 0);
+  const seen = readMind || n.realm === 'pham_nhan' || idx(n.realm) <= idx(state.cult.realm) + seeAbove;
+  const rows: NpcInfoRow[] = [];
+  if (!seen) rows.push({ label: 'Tu vi', value: t?.unseen ?? '?' });
+  rows.push({ label: 'Thân phận', value: n.role });
+  if (tier >= 1) {
+    if (label.surface) rows.push({ label: 'Tính nết', value: label.surface });
+    rows.push({ label: 'Thiện cảm', value: String(Math.round(n.affinity)) });
+  }
+  if (tier >= 2) {
+    if (label.nature) rows.push({ label: 'Bản chất', value: label.nature });
+    if (label.goal) rows.push({ label: 'Chí hướng', value: label.goal });
+    rows.push({ label: 'Ân · Oán', value: `${Math.round(n.favor)} · ${Math.round(n.grudge)}` });
+    const tech = n.technique && content.techniques.find((x) => x.id === n.technique)?.name;
+    if (tech) rows.push({ label: 'Công pháp', value: tech });
+  }
+  if (tier >= 3) {
+    rows.push({ label: 'Thọ nguyên', value: `${Math.max(0, Math.round(n.lifespan - n.age))} năm còn lại` });
+    rows.push({ label: 'Tư chất', value: n.root ? String(Math.round(n.aptitude)) : 'Không linh căn' });
+    const avenger = n.heirOf && state.npcs.find((x) => x.id === n.heirOf);
+    rows.push({ label: 'Bí mật', value: avenger ? `${t?.secretHeir ?? ''} ${avenger.name}`.trim() : t?.secretNone ?? '' });
+  }
+  return { tier, tierName: t?.tiers[tier] ?? '', realm: seen ? label.realm : null, nature: label.nature, rows };
+}

@@ -1,6 +1,7 @@
 import { useRef, useState } from 'preact/hooks';
 import { ThemeToggle } from '../components/ThemeToggle';
-import { DEV_TAP_GAP_MS, DEV_TAPS } from '../devMode';
+import { DEV_TAP_GAP_MS, DEV_TAPS, DEV_WARNING } from '../devMode';
+import { ConfirmDialog } from '../components/ConfirmDialog';
 import type { ThemePref } from '../theme';
 
 export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, onDevUnlock, onContinue, onStart, onSaves, onRebirth, onCodex, onChallenge, theme, onToggleTheme }: {
@@ -26,6 +27,7 @@ export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, 
   // Hidden unlock: tap the seal 20 times (no more than 2 s apart).
   const taps = useRef({ count: 0, at: 0 });
   const [left, setLeft] = useState<number | null>(null);
+  const [ask, setAsk] = useState(false);
   const tapSeal = () => {
     if (devMode) return;
     const now = Date.now();
@@ -35,7 +37,7 @@ export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, 
     if (t.count >= DEV_TAPS) {
       t.count = 0;
       setLeft(null);
-      onDevUnlock();
+      setAsk(true);
     } else {
       setLeft(t.count >= DEV_TAPS - 5 ? DEV_TAPS - t.count : null);
     }
@@ -58,6 +60,7 @@ export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, 
       {(livesPlayed > 0 || devMode) && <button class="link-btn" onClick={onCodex}>Thiên Thư</button>}
       {(livesPlayed > 0 || devMode) && <button class="link-btn" onClick={onChallenge}>Thử thách tuần</button>}
       <p class="note">{livesPlayed > 0 ? `Đã trải ${livesPlayed} kiếp · ` : ''}{rebirthPoints > 0 ? `${rebirthPoints} điểm Luân Hồi · ` : ''}Bản thử nghiệm {__APP_VERSION__}</p>
+      {ask && <ConfirmDialog title="Bật chế độ thử nghiệm?" text={DEV_WARNING} confirmLabel="Bật" onCancel={() => setAsk(false)} onConfirm={() => { setAsk(false); onDevUnlock(); }} />}
     </main>
   );
 }

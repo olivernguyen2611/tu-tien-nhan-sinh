@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### 9.R6a: thẻ thông tin NPC, công tắc chế độ thử nghiệm (2026-10-15)
+- Mỗi người quen có mục **Thông tin** (gập/mở), hiện theo tầng thiện cảm (`balance.npcs.infoTiers` 30/60/85): Xa lạ (thân phận) → Quen biết (tính nết, thiện cảm) → Thân thiết (bản chất, chí hướng, ân oán, công pháp) → Tri kỷ (thọ nguyên, tư chất, bí mật như mối thù truyền đời). Bản chất giờ cũng lộ khi đã thân thiết.
+- Cảnh giới cao hơn mình quá `infoSeeAbove` (1) bậc thì **"Không nhìn thấu"**; thần thức (`divineSense`) đọc thêm một bậc, Đọc tâm (`readMind`) thấy hết mọi tầng. Tên tầng và câu chữ trong `npc-traits.json` (mục `info`).
+- **Cài đặt** có công tắc **Chế độ thử nghiệm**, bật phải qua hộp xác nhận; chạm ấn 仙 20 lần cũng hỏi lại. Đời nào chơi khi bật bị gắn `devUsed` (con cháu nối dõi giữ dấu): không tính thành tựu, thử thách tuần, điểm Luân Hồi, Thiên Thư và Sổ tri thức; màn hình qua đời ghi rõ.
+
 ### 9.R5b: kiếp đầu là phàm nhân, mở khóa dần (2026-10-15)
 - Cửa vào tiên giới mở theo những gì đời này **sinh ra đã biết** (Sổ tri thức các kiếp trước). Điều đời này tự tìm ra chỉ mở cửa cho các kiếp sau.
   - Cổng hội thu đồ, triều đình, cơ duyên xảo hợp đóng hẳn khi chưa biết (`immortalGates.closedUnknown`); cơ duyên phàm gian còn ×0,3.

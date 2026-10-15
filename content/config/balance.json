@@ -403,7 +403,9 @@
     "coldBelow": 30,
     "bondChance": 0.12,
     "bondGapYears": 3,
-    "inheritShare": 0.5
+    "inheritShare": 0.5,
+    "infoTiers": [30, 60, 85],
+    "infoSeeAbove": 1
   },
   "combat": {
     "stagePct": 0.1,

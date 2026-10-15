@@ -895,6 +895,9 @@ export const BalanceSchema = z
         bondGapYears: z.number().int().min(0),
         /** Share of a dead NPC's grudge their kin inherits. */
         inheritShare: probability,
+        /** 9.R6: thiện cảm needed for each layer of the NPC info card (quen, thân, tri kỷ), and how many realms above the player one can still be read. */
+        infoTiers: z.tuple([z.number(), z.number(), z.number()]).optional(),
+        infoSeeAbove: z.number().int().min(0).optional(),
       })
       .strict(),
     /** Task 5.4: founding a cultivation clan. */
@@ -2883,6 +2886,8 @@ export const NpcTraitsFileSchema = z
       }).strict(),
     ),
     goals: z.array(npcTrait),
+    /** 9.R6: the NPC info card: layer names and the line for a realm too high to see. */
+    info: z.object({ tiers: z.tuple([z.string(), z.string(), z.string(), z.string()]), unseen: z.string().min(1), secretNone: z.string().min(1), secretHeir: z.string().min(1) }).strict().optional(),
   })
   .strict();
 export type NpcTraitsFile = z.infer<typeof NpcTraitsFileSchema>;
