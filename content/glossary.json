@@ -263,9 +263,15 @@
     "aliases": []
   },
   {
+    "id": "ngu_khi_linh_can",
+    "term": "Ngũ khí",
+    "definition": "Linh căn của người đi trọn võ đạo: năm hệ tương sinh, hơn hẳn ngũ linh căn tạp loạn. Chỉ có khi đạt Ngũ khí triều nguyên.",
+    "aliases": []
+  },
+  {
     "id": "the_chat_dac_biet",
     "term": "Thể chất đặc biệt",
-    "definition": "Trời sinh dị thể, trăm năm khó gặp.",
+    "definition": "Trời sinh dị thể, trăm năm khó gặp. Chỉ thêm hiệu ứng đặc biệt, không thay linh căn.",
     "aliases": []
   },
   {

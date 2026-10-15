@@ -18,6 +18,7 @@ import { takeChosen } from './chosen';
 import { suggestSectName } from './ownSect';
 import { clanName } from './clan';
 import { sectById } from './sect';
+import { hoaCanhGift } from './martial';
 import { finishStep, questForStage } from './martialQuest';
 import { Rng } from '../core/rng';
 import type { DeathCause } from '../core/types';
@@ -325,7 +326,9 @@ export function devMetaFingerPity(meta: SaveMeta, content: Content): SaveMeta {
 /** Martial stage (-1 = none … 6); stages 5–6 skip their kỳ ngộ. A mortal only. */
 export function devSetMartial(state: GameState, content: Content, stage: number): GameState {
   if (!state.alive || state.cult.realm !== 'pham_nhan') return state;
-  const s = { ...state, martial: { ...state.martial, stage, years: 0, lastTrain: null, reachedAt: state.character.age, quest: null } };
+  let s: GameState = { ...state, martial: { ...state.martial, stage, years: 0, lastTrain: null, reachedAt: state.character.age, quest: null } };
+  // Skipping to Hóa cảnh or beyond still brings the cao nhân's gift (once).
+  if (stage >= content.martial.gift.stage && !s.flags[content.martial.gift.flag]) s = hoaCanhGift(s, content);
   return devLog(s, `võ đạo → ${stage < 0 ? 'chưa nhập môn' : content.martial.stages[stage]?.name ?? stage}`);
 }
 
@@ -374,6 +377,11 @@ export function devRootOptions(content: Content): { key: string; label: string; 
     const root = { grade: g.id, elements: basic.slice(0, content.balance.roots.elementCount[g.id] ?? 0) };
     out.push({ key: g.id, label: rootName(root, content), root, group: 'Linh căn thường' });
   }
+  const martial = grades.find((g) => g.special === 'martial');
+  if (martial) {
+    const root = { grade: martial.id, elements: basic };
+    out.push({ key: martial.id, label: rootName(root, content), root, group: 'Linh căn võ đạo' });
+  }
   for (const e of elements.filter((x) => x.variant)) {
     const root = { grade: 'bien_di', elements: [e.id] };
     out.push({ key: `bien_di:${e.id}`, label: rootName(root, content), root, group: 'Biến dị linh căn' });
@@ -381,19 +389,16 @@ export function devRootOptions(content: Content): { key: string; label: string; 
   return out;
 }
 
-/** Replace the spirit root; this also drops any special body, which would have stood in for it. */
+/** Replace the spirit root (a special body is a separate thing and stays). */
 export function devSetRoot(state: GameState, content: Content, root: SpiritRoot): GameState {
   if (!state.alive) return state;
-  return devLog({ ...state, cult: { ...state.cult, root, bodyId: null } }, `linh căn → ${rootName(root, content)}`);
+  return devLog({ ...state, cult: { ...state.cult, root } }, `linh căn → ${rootName(root, content)}`);
 }
 
-/** Set (or clear, with null) the special body without its one-time gains; a body takes the root's place. */
+/** Set (or clear, with null) the special body without its one-time gains; the root is untouched. */
 export function devSetBody(state: GameState, content: Content, bodyId: string | null): GameState {
   if (!state.alive || (bodyId && !content.cultivation.roots.bodies.some((b) => b.id === bodyId))) return state;
-  const grade = content.cultivation.roots.grades.find((g) => g.special === 'body')?.id ?? 'the_chat';
-  const basic = content.cultivation.roots.elements.filter((e) => !e.variant).map((e) => e.id);
-  const root = bodyId ? { grade, elements: [] } : state.cult.root?.grade === grade ? { grade: 'song', elements: basic.slice(0, 2) } : state.cult.root;
-  return devLog({ ...state, cult: { ...state.cult, root, bodyId } }, `thể chất → ${bodyId ?? content.cultivation.roots.plainBody}`);
+  return devLog({ ...state, cult: { ...state.cult, bodyId } }, `thể chất → ${bodyId ?? content.cultivation.roots.plainBody}`);
 }
 
 /** Awaken a special body at once (its one-time gains apply), even for a rootless or already-bodied character. */
@@ -401,7 +406,7 @@ export function devAwakenBody(state: GameState, content: Content, bodyId: string
   if (!state.alive || !content.cultivation.roots.bodies.some((b) => b.id === bodyId)) return state;
   const base: GameState = state.cult.root && !state.cult.bodyId && (content.balance.roots.gradeSpeed[state.cult.root.grade] ?? 0) > 0
     ? state
-    : { ...state, cult: { ...state.cult, root: { grade: 'bien_di', elements: [content.cultivation.roots.elements[0].id] } } };
+    : { ...state, cult: { ...state.cult, root: { grade: 'song', elements: ['kim', 'moc'] }, bodyId: null } };
   return devLog(awakenBody(base, content, bodyId).state, `thức tỉnh thể chất → ${bodyId}`);
 }
 

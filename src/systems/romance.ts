@@ -8,7 +8,7 @@ import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameEvent } from '../core/schemas';
 import type { GameState, LogLine, Npc, Relative, Tone } from '../core/types';
-import { addProgress, rollRoot, rootName, rootNameOf, type RootRoll } from './cultivation';
+import { addProgress, rollRoot, rootNameOf, type RootRoll } from './cultivation';
 import { changeNpc, isMasked, npcById } from './npcs';
 import { clanRootRolls } from './clan';
 import { makeName, splitName } from './names';
@@ -348,22 +348,24 @@ export function inheritRoot(state: GameState, content: Content, partner: Npc | n
   const b = content.balance.romance;
   const mine = state.cult.root;
   const rooted = Number(!!mine && (content.balance.roots.gradeSpeed[mine.grade] ?? 0) > 0) + Number(!!partner?.root);
-  if (mine && state.cult.bodyId && rng.chance(b.bodyInheritChance)) return { root: { ...mine }, bodyId: state.cult.bodyId };
+  // The body passes on apart from the root: the child's root is rolled below either way.
+  const inherited = state.cult.bodyId && rng.chance(b.bodyInheritChance) ? state.cult.bodyId : null;
   if (rooted > 0 && rng.chance(b.mutationChance)) {
     // A variant fuses two basic elements: one of the player's own leans the mutation its way.
     const variants = content.cultivation.roots.elements.filter((e) => e.variant);
     const near = variants.filter((v) => (v.components ?? []).some((c) => mine?.elements.includes(c)));
     const pool = near.length > 0 ? near : variants;
-    if (pool.length > 0) return { root: { grade: 'bien_di', elements: [rng.pick(pool).id] }, bodyId: null };
+    if (pool.length > 0) return { root: { grade: 'bien_di', elements: [rng.pick(pool).id] }, bodyId: inherited };
   }
   // Gia quy Trọng tu luyện adds rolls (task 5.4).
   const rolled = rollRoot(rng, content, 1 + rooted * b.rootRollsPerParent + clanRootRolls(state, content));
   const root = rolled.root;
+  const bodyId = inherited ?? rolled.bodyId;
   const own = (mine?.elements ?? []).filter((e) => !root.elements.includes(e));
-  if (rolled.bodyId || root.elements.length === 0 || own.length === 0 || root.grade === 'bien_di') return rolled;
+  if (root.elements.length === 0 || own.length === 0 || root.grade === 'bien_di') return { root, bodyId };
   // Keep the count, take the player's elements first.
   const pool = [...(mine?.elements ?? []), ...root.elements.filter((e) => !(mine?.elements ?? []).includes(e))];
-  return { root: { ...root, elements: pool.slice(0, root.elements.length) }, bodyId: null };
+  return { root: { ...root, elements: pool.slice(0, root.elements.length) }, bodyId };
 }
 
 function makeChild(state: GameState, content: Content, partner: Npc, rng: Rng, adopted: boolean): Relative {
@@ -465,5 +467,5 @@ export function romanceLabel(state: GameState, content: Content, n: Npc): { role
 /** "Linh căn: …" for a child old enough to have been tested, else null. */
 export function childRootLabel(content: Content, r: Relative): string | null {
   if (r.role !== 'child' || !r.root || r.age < content.balance.roots.testAge[0]) return null;
-  return r.bodyId ? `Thể chất: ${rootNameOf(r.root, r.bodyId, content)}` : `Linh căn: ${rootName(r.root, content)}`;
+  return `Linh căn: ${rootNameOf(r.root, r.bodyId, content)}`;
 }

@@ -4,10 +4,14 @@ import type { SavedPerson } from './npcLibrary';
 import { z } from 'zod';
 import { version as GAME_VERSION } from '../../package.json';
 import type { GameState, LogYear, PastSectRecord } from '../core/types';
+import { Rng } from '../core/rng';
 import { EMPTY_CODEX, mergeCodex, type Codex } from './codex';
 
-/** v2: after the per-version steps in `migrate`, missing fields are backfilled from a fresh life (`backfillLife`). */
-export const SAVE_VERSION = 2;
+/**
+ * v2: after the per-version steps in `migrate`, missing fields are backfilled from a fresh life (`backfillLife`).
+ * v3: a special body no longer stands in for the root; old "thể chất" lives get an ordinary root back (`restoreRoots`).
+ */
+export const SAVE_VERSION = 3;
 export const SLOT_COUNT = 9;
 const KEY_PREFIX = 'tutien.save.';
 const META_KEY = 'tutien.meta';
@@ -161,6 +165,40 @@ function splitBody(life: GameState): GameState {
   return out;
 }
 
+/** The five basic elements, as written in roots.json when saveVersion 3 was made (migrations stay frozen in time). */
+const BASIC_ELEMENTS = ['kim', 'moc', 'thuy', 'hoa', 'tho'];
+
+/**
+ * SaveVersion 3: before it, a special body took the root's place (grade `the_chat`, no elements). The
+ * body stays and the life is given the root it would have had, drawn from the life's own seed (a Tam
+ * or Song linh căn, so the body-born keep a decent start).
+ */
+function restoreRoots(life: GameState): GameState {
+  const fix = (key: string) => {
+    const rng = new Rng(`${life.seed}:restore-root:${key}`);
+    const count = rng.chance(0.5) ? 3 : 2;
+    const pool = BASIC_ELEMENTS.slice();
+    const picked: string[] = [];
+    while (picked.length < count) picked.push(pool.splice(rng.int(0, pool.length - 1), 1)[0]);
+    return { grade: count === 3 ? 'tam' : 'song', elements: BASIC_ELEMENTS.filter((e) => picked.includes(e)) };
+  };
+  let out = life;
+  if (out.cult.root?.grade === 'the_chat') out = { ...out, cult: { ...out.cult, root: fix('self') } };
+  if (out.family.some((r) => r.root?.grade === 'the_chat')) {
+    out = { ...out, family: out.family.map((r) => (r.root?.grade === 'the_chat' ? { ...r, root: fix(r.id) } : r)) };
+  }
+  // Hóa cảnh now brings the cao nhân's gift: a mortal already at Hóa cảnh or Tam hoa gets it late (no lifespan top-up).
+  if (out.cult.realm === 'pham_nhan' && out.martial.stage >= 4 && !out.flags.cao_nhan_vo_dao) {
+    const scrolls = out.cult.scrolls.includes('cuu_chuyen_kim_cot_quyet') ? out.cult.scrolls : [...out.cult.scrolls, 'cuu_chuyen_kim_cot_quyet'];
+    out = { ...out, flags: { ...out.flags, cao_nhan_vo_dao: true }, martial: { ...out.martial, manual: 'duong_nguyen_van_the_cong' }, cult: { ...out.cult, scrolls } };
+  }
+  // Ngũ khí triều nguyên used to give a plain Ngũ linh căn; now it gives the Ngũ khí root and Tiên Võ thể.
+  if (out.flags.vo_dao_nhap_tien && out.cult.root?.grade === 'ngu') {
+    out = { ...out, cult: { ...out.cult, root: { ...out.cult.root, grade: 'ngu_khi' }, bodyId: 'tien_vo_the' } };
+  }
+  return out;
+}
+
 function migrateSteps(save: SaveFile): SaveFile {
   // Fields added within saveVersion 1 get their empty defaults.
   let life = save.life as GameState & { extremes?: GameState['extremes'] };
@@ -263,7 +301,7 @@ function migrateSteps(save: SaveFile): SaveFile {
       },
     };
   }
-  life = splitBody(life);
+  life = restoreRoots(splitBody(life));
   return life === save.life ? save : { ...save, life };
 }
 

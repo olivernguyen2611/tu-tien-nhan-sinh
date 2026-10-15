@@ -17,7 +17,7 @@ describe('realms, roots, paths, crafts (task 2.1)', () => {
   it('has the approved shape', () => {
     expect(cultivation.realms.realms.map((r) => r.id)).toEqual(['pham_nhan', 'luyen_khi', 'truc_co', 'kim_dan', 'nguyen_anh', 'hoa_than']);
     expect(cultivation.realms.realms[1].stages).toHaveLength(9);
-    expect(cultivation.roots.bodies).toHaveLength(11);
+    expect(cultivation.roots.bodies).toHaveLength(12);
     expect(cultivation.aptitudes.paths).toHaveLength(5);
     expect(cultivation.aptitudes.crafts.filter((c) => c.mortal).map((c) => c.id)).toEqual(['alchemy', 'farming']);
   });

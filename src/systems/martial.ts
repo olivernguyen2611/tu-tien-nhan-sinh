@@ -7,6 +7,7 @@ import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameState, LogLine } from '../core/types';
 import { startCultivating } from './cultivation';
+import { learnTechnique } from './technique';
 
 const value = (state: GameState, key: string) =>
   key in state.stats ? state.stats[key as keyof GameState['stats']] : state.aptitudes[key as keyof GameState['aptitudes']];
@@ -107,20 +108,55 @@ export function martialPromote(state: GameState, content: Content): GameState {
     cult: { ...state.cult, lifespan: state.cult.lifespan + add },
   };
   s = { ...s, log: addLines(s, [{ text: content.martial.texts.promote.replaceAll('{stage}', def.name).replaceAll('{description}', def.description), tone: 'good' }]) };
+  if (stage === content.martial.gift.stage) s = hoaCanhGift(s, content);
   if (stage === content.martial.stages.length - 1) s = ascend(s, content);
   return s;
 }
 
-/** Ngũ khí triều nguyên: the five qi become a Ngũ linh căn; the life steps into Luyện Khí. */
+/**
+ * Hóa cảnh: a cao nhân gives a technique this rootless body cannot cultivate (it waits in the scrolls
+ * until Ngũ khí) and a mortal manual in its place: more combat power and a little lifespan.
+ */
+export function hoaCanhGift(state: GameState, content: Content): GameState {
+  const { gift, manual } = content.martial;
+  const scrolls = state.cult.scrolls.includes(gift.technique) || state.cult.technique === gift.technique ? state.cult.scrolls : [...state.cult.scrolls, gift.technique];
+  const s: GameState = {
+    ...state,
+    flags: { ...state.flags, [gift.flag]: true },
+    aptitudes: { ...state.aptitudes, physique: Math.min(100, state.aptitudes.physique + manual.physique) },
+    martial: { ...state.martial, manual: manual.id },
+    cult: { ...state.cult, scrolls, lifespan: state.cult.lifespan + manual.lifespan },
+  };
+  return { ...s, log: addLines(s, [{ text: gift.giftText, tone: 'rare' }, { text: gift.manualText.replaceAll('{manual}', manual.name), tone: 'good' }]) };
+}
+
+/** The mortal manual taken up at Hóa cảnh while the life is still a mortal, else null. */
+export function mortalManual(state: GameState, content: Content): Content['martial']['manual'] | null {
+  return state.martial.manual && state.cult.realm === 'pham_nhan' ? content.martial.manual : null;
+}
+
+/**
+ * Ngũ khí triều nguyên: the five qi become the Ngũ khí root (above an ordinary Ngũ linh căn) and the
+ * body becomes Tiên Võ thể; the life steps into Luyện Khí. Only a mortal ever gets here (a rootless
+ * one: the root is innate, and this is the path's own reward).
+ */
 function ascend(state: GameState, content: Content): GameState {
   const basic = content.cultivation.roots.elements.filter((e) => !e.variant).map((e) => e.id);
+  const { rootGrade, bodyId } = content.martial.ascend;
   const withRoot: GameState = {
     ...state,
     flags: { ...state.flags, vo_dao_nhap_tien: true },
-    cult: { ...state.cult, root: { grade: 'ngu', elements: basic } },
+    martial: { ...state.martial, manual: null },
+    cult: { ...state.cult, root: { grade: rootGrade, elements: basic }, bodyId },
   };
   const logged = { ...withRoot, log: addLines(withRoot, [{ text: content.martial.texts.ascend, tone: 'rare' }]) };
-  return startCultivating(logged, content).state;
+  let s = startCultivating(logged, content).state;
+  // The cao nhân of Hóa cảnh returns: now there is a root, the kinh can be cultivated.
+  const { gift } = content.martial;
+  const tech = content.techniques.find((t) => t.id === gift.technique);
+  const learned = tech ? learnTechnique(s, content, gift.technique, { quiet: true, force: true }) : null;
+  if (learned && tech) s = { ...learned.state, log: addLines(learned.state, [{ text: gift.reunionText.replaceAll('{technique}', tech.name), tone: 'rare' }]) };
+  return s;
 }
 
 /** Train for a year; with enough years, try the next stage. Null when it cannot be done now. */

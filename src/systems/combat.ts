@@ -8,6 +8,7 @@ import type { Battle, Foe, GameState, LogLine, Tone } from '../core/types';
 import { hasHook, hookSum } from './cultivation';
 import { applyOutcome } from './events/engine';
 import { itemById, removeItems } from './items';
+import { martialPower } from './martial';
 import { mainPath as mainPathOf } from './paths';
 import { breakPrecept } from './sect';
 import { sectDefense } from './ownSect';
@@ -59,7 +60,8 @@ export function combatPower(state: GameState, content: Content): number {
   const b = content.balance;
   const c = b.combat;
   const realm = b.realms[state.cult.realm];
-  const base = realm?.combatPower ?? 1;
+  // A mortal fights with the strength of their martial stage (balance.martial.combatPower).
+  const base = state.cult.realm === 'pham_nhan' ? Math.max(realm?.combatPower ?? 1, martialPower(state, content)) : realm?.combatPower ?? 1;
   const tech = currentTechnique(state, content);
   const techMul = tech ? b.techniques.gradeMul[tech.grade] ?? 1 : 1;
   const lineage = state.cult.lineage ?? tech?.lineage ?? 'tien';

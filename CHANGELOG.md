@@ -8,6 +8,26 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6d.4: cao nhân trở lại ở Ngũ khí triều nguyên (2026-10-15)
+- Đạt Ngũ khí triều nguyên, lão nhân năm xưa hiện ra lần nữa, bấy giờ đã có linh căn Ngũ khí nên **Cửu Chuyển Kim Cốt Quyết** tu được: vào Luyện Khí 1 với chính công pháp này (thay Dẫn Khí Quyết mặc định), Tiên Võ thể đi kèm. Luôn được tặng kể cả khi đi tắt bằng dev mode.
+
+### GĐ 6d.3: Hóa cảnh, cao nhân tặng kinh chưa tu được (2026-10-15)
+- Đạt **Hóa cảnh** là một cao nhân hiện ra tặng **Cửu Chuyển Kim Cốt Quyết** (vào mục Bí tịch). Vì chưa có linh căn nên chưa tu được (hiện đúng lý do "Không có linh căn…"), kinh nằm đó chờ tới Ngũ khí.
+- Cao nhân dạy thay một công phu phàm nhân, **Dưỡng Nguyên Vận Thể Công** (`martial.json` `manual`): sức chiến +20%, thọ nguyên +8 năm, Căn cốt +3 một lần. Vừa phải, không bằng công pháp tu sĩ; bỏ đi khi đạt Ngũ khí. Hiện ở mục Võ đạo của bảng Tu luyện.
+- Sửa kèm: sức chiến của phàm nhân nay tính theo cảnh giới võ đạo (`balance.martial.combatPower`, trước đây bảng này chưa được nối vào giao chiến).
+- Save: người đã ở Hóa cảnh/Tam hoa được tặng muộn (không cộng thọ nguyên). Dev mode: chọn cảnh giới võ đạo từ Hóa cảnh trở lên cũng nhận quà.
+
+### GĐ 6d.2: linh căn Ngũ khí và Tiên Võ thể (2026-10-15)
+- Hạng linh căn mới **Ngũ khí** (`roots.json`, không lăn ngẫu nhiên, chỉ có khi đạt Ngũ khí triều nguyên): tốc độ tu 1,25 (ngũ linh căn 0,4; song 1,0) cùng hiệu ứng riêng +25% tốc độ tu, +0,1 chống nghẽn, +4% đột phá. Hạng linh căn giờ có thể mang `effects`.
+- Thể chất mới **Tiên Võ thể** (không lăn ngẫu nhiên): Căn cốt +10, thân luyện +40, giảm thương tích 30%, sức chiến +15%, thọ +10%. Đạt Ngũ khí triều nguyên là có cả hai (`martial.json` `ascend`); hiệu ứng nhập tiên cũ giảm tốc độ +100% xuống +25% vì linh căn đã mạnh hơn.
+- Save v3 cũng nâng người đã nhập tiên bằng võ đạo (Ngũ linh căn cũ) lên Ngũ khí + Tiên Võ thể. Dev mode có thêm nhóm "Linh căn võ đạo".
+
+### GĐ 6d.1: tách thể chất khỏi linh căn (2026-10-15)
+- Thể chất đặc biệt không còn thay linh căn: bỏ hạng `the_chat`. Linh căn lăn riêng; thể chất lăn riêng (`balance.roots.bodyChance` 0,4%) lúc thử linh căn, chỉ thêm hiệu ứng đặc biệt. Người không linh căn có thể chất vẫn không tu được. Công pháp tự thích ứng (Thái Sơ) chỉ xét linh căn; Lưu Ly Linh Thể vẫn hợp mọi công pháp.
+- Thức tỉnh thể chất giữ nguyên linh căn. Con cái thừa hưởng thể chất của cha mẹ riêng với linh căn. Linh căn biến dị chỉ chứa một hệ biến dị, không kèm hệ thường (có test).
+- Save v3: đời cũ có thể chất thay linh căn được trả một linh căn Tam hoặc Song (lăn theo seed của đời, ổn định), con cái cũng vậy; thể chất được giữ.
+- Dev mode: đặt linh căn không còn xóa thể chất, đặt thể chất không đụng linh căn. Giao diện hiện hai dòng Linh căn và Thể chất riêng.
+
 ### GĐ 6c.9: cân lại trần đột phá, giao diện, dọn PLAN (2026-10-13)
 - Trần cộng dồn đột phá đại cảnh giới chốt lại sau khi các bước 6c.2-6c.5 làm game khó thêm: Trúc Cơ 34, Kim Đan 32, Nguyên Anh 30, Hóa Thần 26 điểm (`majorModifierCap`; trước đó 36/36/34/38). Chặn trên của tỉ lệ thành công (cơ sở + trần): Trúc Cơ 64%, Kim Đan 52%, Nguyên Anh 42%, Hóa Thần 34%, so với 87% và 81% ở Nguyên Anh và Hóa Thần trong bản đánh giá.
 - Người chơi máy (`--profile player`) đột phá từ 30% trở lên (trước 40%), vì trần mới thấp hơn.

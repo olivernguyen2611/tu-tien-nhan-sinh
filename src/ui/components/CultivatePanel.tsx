@@ -6,7 +6,7 @@ import { bodyLabel, inBottleneck, majorBreakthroughInfo, realmLabel, rootLabel, 
 import { craftViews } from '../../systems/crafts';
 import { careerIncome, careerLabel, careerViews } from '../../systems/career';
 import { currentTechnique, learnBlocked, techniqueById, techniqueSummary } from '../../systems/technique';
-import { martialView } from '../../systems/martial';
+import { martialView, mortalManual } from '../../systems/martial';
 import { questView } from '../../systems/martialQuest';
 import type { QuestAction } from './MiniGamePopup';
 import { pathsView } from '../../systems/paths';
@@ -179,6 +179,10 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
             <div class="crafts">
               <h3 class="panel-sub">Võ đạo</h3>
               <p class="story">{m.stage ? `Cảnh giới võ đạo: ${m.stage}` : 'Chưa nhập môn võ đạo.'}</p>
+              {(() => {
+                const manual = mortalManual(state, content);
+                return manual && <p class="profile-note"><b>{manual.name}</b>: {manual.flavor} (sức chiến +{Math.round(manual.power * 100)}%, thọ nguyên +{manual.lifespan} năm).</p>;
+              })()}
               {m.next && <p class="profile-note">Đã luyện {m.years} năm. Năm nay luyện võ có khoảng {Math.round(m.yearChance * 100)}% đột phá lên {m.next}; tỉ lệ tăng dần tới năm thứ {m.need} (cao nhất {Math.round(m.chance * 100)}%, theo Căn cốt và Ngộ tính).</p>}
               {m.gate && <p class="profile-note">{m.gate}</p>}
               <button class="chip-btn" disabled={!!m.blocked} onClick={() => setPracticed(onTrain())}>Luyện võ</button>

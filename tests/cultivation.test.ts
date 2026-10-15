@@ -79,13 +79,12 @@ describe('spirit root (task 2.2)', () => {
     const rng = new Rng('elements');
     const variant = content.cultivation.roots.elements.filter((e) => e.variant).map((e) => e.id);
     for (let i = 0; i < 3000; i++) {
-      const { root: r, bodyId } = rollRoot(rng, content);
+      const { root: r } = rollRoot(rng, content);
       expect(new Set(r.elements).size).toBe(r.elements.length);
-      if (r.grade === 'the_chat') expect(bodyId).not.toBeNull();
-      else expect(bodyId).toBeNull();
-      if (r.grade === 'the_chat') continue;
-      else expect(r.elements).toHaveLength(content.balance.roots.elementCount[r.grade]);
+      expect(r.elements).toHaveLength(content.balance.roots.elementCount[r.grade]);
+      // A variant root holds only its variant element, never an ordinary one besides.
       if (r.grade === 'bien_di') expect(variant).toContain(r.elements[0]);
+      else for (const e of r.elements) expect(variant).not.toContain(e);
     }
   });
 
@@ -102,7 +101,7 @@ describe('spirit root (task 2.2)', () => {
   it('names roots with their elements', () => {
     expect(rootName({ grade: 'song', elements: ['kim', 'hoa'] }, content)).toBe('Song linh căn (Kim, Hỏa)');
     expect(rootName({ grade: 'ngu', elements: ['kim', 'moc', 'thuy', 'hoa', 'tho'] }, content)).toBe('Ngũ linh căn');
-    expect(rootNameOf({ grade: 'the_chat', elements: [] }, 'cuu_duong_the', content)).toBe('Cửu Dương Thể');
+    expect(rootNameOf({ grade: 'song', elements: ['kim', 'hoa'] }, 'cuu_duong_the', content)).toBe('Song linh căn (Kim, Hỏa), thể chất Cửu Dương Thể');
     expect(rootName({ grade: 'none', elements: [] }, content)).toBe('Không linh căn');
   });
 
@@ -113,12 +112,13 @@ describe('spirit root (task 2.2)', () => {
       ...content,
       balance: {
         ...content.balance,
-        roots: { ...content.balance.roots, gradeWeights: { the_chat: 1 }, bodyWeights: { thien_tuyet_mach: 1 } },
+        roots: { ...content.balance.roots, gradeWeights: { song: 1 }, bodyChance: 1, bodyWeights: { thien_tuyet_mach: 1 } },
       },
     };
     const s = { ...base, character: { ...base.character, age: 8 } };
     const { state } = revealRoot(s, forced);
     expect(state.cult.bodyId).toBe('thien_tuyet_mach');
+    expect(state.cult.root?.grade).toBe('song');
     expect(state.cult.lifespan).toBe(Math.round(base.cult.lifespan * 0.3));
     expect(revealRoot(state, forced).state).toBe(state);
   });
@@ -162,7 +162,7 @@ describe('cultivation per year (task 2.3)', () => {
   });
 
   it('lineage hooks count only for that lineage', () => {
-    const body = (lineage: string | null) => cultivator('ma', { root: { grade: 'the_chat', elements: [] }, bodyId: 'thien_sinh_ma_the', lineage });
+    const body = (lineage: string | null) => cultivator('ma', { bodyId: 'thien_sinh_ma_the', lineage });
     expect(yearlyGain(body('ma'), content) / yearlyGain(body(null), content)).toBeCloseTo(1.2);
     expect(yearlyGain(body('tien'), content)).toBeCloseTo(yearlyGain(body(null), content));
   });
@@ -242,7 +242,7 @@ describe('cultivation per year (task 2.3)', () => {
   });
 
   it('Thiên Tuyệt Mạch gives its lifespan back on reaching Trúc Cơ (activeUntil)', () => {
-    const s = cultivator('ttm', { root: { grade: 'the_chat', elements: [] }, bodyId: 'thien_tuyet_mach', lifespan: 36 });
+    const s = cultivator('ttm', { bodyId: 'thien_tuyet_mach', lifespan: 36 });
     const hook = content.cultivation.roots.bodies.find((b) => b.id === 'thien_tuyet_mach')!.effects[1];
     expect(hookActive(hook, s, content)).toBe(true);
     const rng = new Rng('ttm');
@@ -346,7 +346,7 @@ describe('big breakthrough into Trúc Cơ (task 2.6)', () => {
 
   it('Thiên Tuyệt Mạch is lifted on reaching Trúc Cơ', () => {
     for (let i = 0; i < 200; i++) {
-      const s = peak(`ttm${i}`, { root: { grade: 'the_chat', elements: [] }, bodyId: 'thien_tuyet_mach', lifespan: 36 });
+      const s = peak(`ttm${i}`, { bodyId: 'thien_tuyet_mach', lifespan: 36 });
       const r = attemptMajorBreakthrough(s, content)!;
       if (!r.success) continue;
       expect(r.state.cult.lifespan).toBeGreaterThan(150);

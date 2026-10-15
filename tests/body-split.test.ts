@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { loadContent } from '../src/core/content';
 import { createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
-import { bodyLabel, rootLabel, startCultivating } from '../src/systems/cultivation';
+import { bodyLabel, rollRoot, rootLabel, rootUsable, startCultivating } from '../src/systems/cultivation';
 import { devSetBody, devSetRoot } from '../src/systems/dev';
 import { inheritRoot } from '../src/systems/romance';
 import { Rng } from '../src/core/rng';
@@ -20,30 +20,51 @@ describe('linh căn and thể chất are separate', () => {
     expect(bodyLabel(createLife({ seed: 'x' }, content), content)).toBe('Chưa rõ');
   });
 
-  it('a special body stands in for the root and the root line says so', () => {
+  it('a special body leaves the root alone and adds its own effects', () => {
     const s = devSetBody(adult(), content, 'cuu_duong_the');
     expect(s.cult.bodyId).toBe('cuu_duong_the');
-    expect(s.cult.root).toEqual({ grade: 'the_chat', elements: [] });
+    expect(s.cult.root).toEqual({ grade: 'song', elements: ['kim', 'hoa'] });
     expect(bodyLabel(s, content)).toBe('Cửu Dương Thể');
-    expect(rootLabel(s, content)).toContain('thể chất');
+    expect(rootLabel(s, content)).toContain('Song linh căn');
     expect(startCultivating(s, content).state.cult.realm).not.toBe('pham_nhan');
   });
 
-  it('setting an elemental root drops the body; clearing the body leaves a usable root', () => {
+  it('a body does not make a rootless mortal able to cultivate', () => {
+    const s = devSetBody({ ...adult(), cult: { ...adult().cult, root: { grade: 'none', elements: [] } } }, content, 'cuu_duong_the');
+    expect(rootUsable(s, content)).toBe(false);
+  });
+
+  it('setting a root keeps the body; clearing the body keeps the root', () => {
     const withBody = devSetBody(adult(), content, 'cuu_duong_the');
-    expect(devSetRoot(withBody, content, { grade: 'don', elements: ['kim'] }).cult.bodyId).toBeNull();
+    expect(devSetRoot(withBody, content, { grade: 'don', elements: ['kim'] }).cult.bodyId).toBe('cuu_duong_the');
     const cleared = devSetBody(withBody, content, null);
     expect(cleared.cult.bodyId).toBeNull();
-    expect(cleared.cult.root?.grade).not.toBe('the_chat');
+    expect(cleared.cult.root).toEqual(withBody.cult.root);
   });
 
-  it('a child can inherit the parent body, kept apart from the root', () => {
+  it('a child can inherit the parent body, with a root rolled apart from it', () => {
     const parent = devSetBody(adult(), content, 'cuu_duong_the');
     const boosted = { ...content, balance: { ...content.balance, romance: { ...content.balance.romance, bodyInheritChance: 1 } } };
-    expect(inheritRoot(parent, boosted, null, new Rng('inh'))).toEqual({ root: { grade: 'the_chat', elements: [] }, bodyId: 'cuu_duong_the' });
+    const got = inheritRoot(parent, boosted, null, new Rng('inh'));
+    expect(got.bodyId).toBe('cuu_duong_the');
+    expect(got.root.grade).not.toBe('the_chat');
   });
 
-  it('old saves move root.body to cult.bodyId, children too', () => {
+  it('a variant root is never mixed with ordinary elements', () => {
+    const variants = new Set(content.cultivation.roots.elements.filter((e) => e.variant).map((e) => e.id));
+    const rng = new Rng('variant-only');
+    let seen = 0;
+    for (let i = 0; i < 6000; i++) {
+      const { root } = rollRoot(rng, content);
+      if (root.grade !== 'bien_di') continue;
+      seen++;
+      expect(root.elements).toHaveLength(1);
+      expect(variants.has(root.elements[0])).toBe(true);
+    }
+    expect(seen).toBeGreaterThan(0);
+  });
+
+  it('old saves: root.body moves to cult.bodyId and the body-born get an ordinary root back (v3), children too', () => {
     const base = adult();
     const old = {
       ...base,
@@ -52,7 +73,19 @@ describe('linh căn and thể chất are separate', () => {
     } as unknown as GameState;
     const m = migrate(makeSave(old, 1)).life;
     expect(m.cult.bodyId).toBe('ban_thach_thanh_cot');
-    expect(m.cult.root).toEqual({ grade: 'the_chat', elements: [] });
-    expect(m.family[0]).toMatchObject({ bodyId: 'kim_cuong_than', root: { grade: 'the_chat', elements: [] } });
+    expect(['tam', 'song']).toContain(m.cult.root?.grade);
+    expect(m.cult.root!.elements.length).toBeGreaterThanOrEqual(2);
+    expect(m.family[0].bodyId).toBe('kim_cuong_than');
+    expect(['tam', 'song']).toContain(m.family[0].root?.grade);
+    // A martial ascender of the old kind (plain Ngũ linh căn) becomes Ngũ khí + Tiên Võ thể.
+    const ascender = { ...adult(), flags: { vo_dao_nhap_tien: true }, cult: { ...adult().cult, root: { grade: 'ngu', elements: ['kim', 'moc', 'thuy', 'hoa', 'tho'] } } } as unknown as GameState;
+    expect(migrate(makeSave(ascender, 1)).life.cult).toMatchObject({ root: { grade: 'ngu_khi' }, bodyId: 'tien_vo_the' });
+    // A mortal already at Hóa cảnh gets the cao nhân's gift late.
+    const hoa = { ...adult(), cult: { ...adult().cult, realm: 'pham_nhan', scrolls: [] }, flags: {}, martial: { stage: 4, years: 0, bonus: 0, lastTrain: null } } as unknown as GameState;
+    const lateGift = migrate(makeSave(hoa, 1)).life;
+    expect(lateGift.martial.manual).toBe('duong_nguyen_van_the_cong');
+    expect(lateGift.cult.scrolls).toContain('cuu_chuyen_kim_cot_quyet');
+    // Same seed, same root: migrating twice does not change it.
+    expect(migrate(makeSave(old, 1)).life.cult.root).toEqual(m.cult.root);
   });
 });

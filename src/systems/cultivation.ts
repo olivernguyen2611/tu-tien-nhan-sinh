@@ -27,19 +27,26 @@ import { blessingHooks } from './blessings';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
-/** A root test result: the root, plus the special body that stands in for it (grade the_chat). */
+/** A root test result: the root, plus a special body found at the same test (separate from the root, it only adds effects). */
 export interface RootRoll { root: SpiritRoot; bodyId: string | null }
 
-/** One roll: grade by weight, then its elements (or a special body). `floor`: no grade slower than this one. */
-function rollOnce(rng: Rng, content: Content, floor: string | null = null): RootRoll {
+/** One roll: grade by weight, then its elements. `floor`: no grade slower than this one. */
+function rollOnce(rng: Rng, content: Content, floor: string | null = null): SpiritRoot {
   const cfg = content.balance.roots;
-  const { grades, elements, bodies } = content.cultivation.roots;
+  const { grades, elements } = content.cultivation.roots;
   const min = floor ? cfg.gradeSpeed[floor] ?? 0 : 0;
   const grade = rng.weighted(grades, (g) => ((cfg.gradeSpeed[g.id] ?? 0) >= min ? cfg.gradeWeights[g.id] ?? 0 : 0));
   const count = cfg.elementCount[grade.id] ?? 0;
-  if (grade.special === 'body') return { root: { grade: grade.id, elements: [] }, bodyId: rng.weighted(bodies, (b) => cfg.bodyWeights[b.id] ?? 0).id };
+  // A variant root draws only variant elements: it never mixes with ordinary ones.
   const kind = elements.filter((e) => e.variant === (grade.special === 'variant')).map((e) => e.id);
-  return { root: { grade: grade.id, elements: pickElements(rng, kind, count) }, bodyId: null };
+  return { grade: grade.id, elements: pickElements(rng, kind, count) };
+}
+
+/** A special body is found (or not) apart from the root. */
+export function rollBody(rng: Rng, content: Content): string | null {
+  const cfg = content.balance.roots;
+  if (!rng.chance(cfg.bodyChance)) return null;
+  return rng.weighted(content.cultivation.roots.bodies, (b) => cfg.bodyWeights[b.id] ?? 0).id;
 }
 
 /** `count` distinct elements, kept in content order (Kim Mộc Thủy Hỏa Thổ). */
@@ -52,13 +59,13 @@ function pickElements(rng: Rng, from: string[], count: number): string[] {
 
 /** Roll `rolls` times and keep the root with the highest cultivation speed. */
 export function rollRoot(rng: Rng, content: Content, rolls = 1, floor: string | null = null): RootRoll {
-  const speed = (r: RootRoll) => content.balance.roots.gradeSpeed[r.root.grade] ?? 0;
+  const speed = (r: SpiritRoot) => content.balance.roots.gradeSpeed[r.grade] ?? 0;
   let best = rollOnce(rng, content, floor);
   for (let i = 1; i < rolls; i++) {
     const next = rollOnce(rng, content, floor);
     if (speed(next) > speed(best)) best = next;
   }
-  return best;
+  return { root: best, bodyId: rollBody(rng, content) };
 }
 
 /**
@@ -124,14 +131,13 @@ export function bodyName(bodyId: string, content: Content): string {
   return content.cultivation.roots.bodies.find((b) => b.id === bodyId)?.name ?? bodyId;
 }
 
-/** The root a person shows: a special body's name when it stands in for the root, else the root's. */
+/** The root line of a person: the root's name, with the special body after it when there is one. */
 export function rootNameOf(root: SpiritRoot, bodyId: string | null | undefined, content: Content): string {
-  return bodyId ? bodyName(bodyId, content) : rootName(root, content);
+  return bodyId ? `${rootName(root, content)}, thể chất ${bodyName(bodyId, content)}` : rootName(root, content);
 }
 
-/** What the profile shows for the root: a special body replaces it, so the root line says so. */
+/** What the profile shows for the root (a special body is its own line, see `bodyLabel`). */
 export function rootLabel(state: GameState, content: Content): string {
-  if (state.cult.bodyId) return 'Không cần (thể chất đã thay thế)';
   return state.cult.root ? rootName(state.cult.root, content) : 'Chưa thử';
 }
 
@@ -141,10 +147,8 @@ export function bodyLabel(state: GameState, content: Content): string {
   return state.cult.root ? content.cultivation.roots.plainBody : 'Chưa rõ';
 }
 
-export function rootDescription(root: SpiritRoot, content: Content, bodyId?: string | null): string {
-  const { grades, bodies } = content.cultivation.roots;
-  if (bodyId) return bodies.find((b) => b.id === bodyId)?.description ?? '';
-  return grades.find((g) => g.id === root.grade)?.description ?? '';
+export function rootDescription(root: SpiritRoot, content: Content): string {
+  return content.cultivation.roots.grades.find((g) => g.id === root.grade)?.description ?? '';
 }
 
 /** A special body's one-time stat and lifespan gains (its other hooks are read by their systems later). */
@@ -169,16 +173,15 @@ function bodyGains(state: GameState, content: Content, bodyId: string | null) {
 
 /**
  * Thức tỉnh thể chất: a latent body wakes in someone who already has a usable root (never in a
- * rootless mortal: roots stay innate). The element root is replaced by the body.
+ * rootless mortal: roots stay innate). The body only adds its effects; the root is untouched.
  */
 export function awakenBody(state: GameState, content: Content, bodyId: string): { state: GameState; text: string } {
   const root = state.cult.root;
   const body = content.cultivation.roots.bodies.find((b) => b.id === bodyId);
   if (!state.alive || !body || !root || state.cult.bodyId || (content.balance.roots.gradeSpeed[root.grade] ?? 0) <= 0) return { state, text: '' };
-  const grade = content.cultivation.roots.grades.find((g) => g.special === 'body')?.id ?? 'the_chat';
   const gains = bodyGains(state, content, bodyId);
   const text = content.cultivation.roots.awakenText.replace('{body}', body.name).replace('{description}', body.description);
-  const next: GameState = { ...state, ...gains, cult: { ...state.cult, root: { grade, elements: [] }, bodyId, lifespan: gains.lifespan }, log: pushLine(state.log, { text, tone: 'rare' }) };
+  const next: GameState = { ...state, ...gains, cult: { ...state.cult, bodyId, lifespan: gains.lifespan }, log: pushLine(state.log, { text, tone: 'rare' }) };
   return { state: next, text };
 }
 
@@ -198,8 +201,10 @@ export function revealRoot(state: GameState, content: Content): { state: GameSta
   const { stats, aptitudes, lifespan } = bodyGains(state, content, bodyId);
 
   const speed = content.balance.roots.gradeSpeed[root.grade] ?? 0;
-  const text = (bodyId ? content.cultivation.roots.revealBodyText.replace('{body}', bodyName(bodyId, content)) : content.cultivation.roots.revealText.replace('{root}', rootName(root, content)))
-    .replace('{description}', rootDescription(root, content, bodyId));
+  const bodyText = bodyId
+    ? ` ${content.cultivation.roots.revealBodyText.replace('{body}', bodyName(bodyId, content)).replace('{description}', content.cultivation.roots.bodies.find((b) => b.id === bodyId)?.description ?? '')}`
+    : '';
+  const text = content.cultivation.roots.revealText.replace('{root}', rootName(root, content)).replace('{description}', rootDescription(root, content)) + bodyText;
   const intro = floor ? `${content.cultivation.roots.traitGuaranteeText.replace('{trait}', floor.trait)} ` : '';
   const line: LogLine = { text: intro + text, tone: speed === 0 ? 'bad' : speed >= 1.6 ? 'rare' : speed >= 1 ? 'good' : 'normal' };
 
@@ -231,14 +236,18 @@ export function hookActive(e: Hook, state: GameState, content: Content): boolean
 export function lifeHooks(state: GameState, content: Content): Hook[] {
   const fromTraits = state.traits.flatMap((id) => content.traits.find((t) => t.id === id)?.effects ?? []);
   const body = state.cult.bodyId ? content.cultivation.roots.bodies.find((b) => b.id === state.cult.bodyId) : undefined;
+  // The root grade can carry hooks too (Ngũ khí).
+  const grade = state.cult.root ? content.cultivation.roots.grades.find((g) => g.id === state.cult.root!.grade) : undefined;
   return [
-    ...fromTraits, ...(body?.effects ?? []), ...careerHooks(state, content),
+    ...fromTraits, ...(body?.effects ?? []), ...(grade?.effects ?? []), ...careerHooks(state, content),
     ...(currentTechnique(state, content)?.effects ?? []), ...sectHooks(state, content), ...ownSectHooks(state, content),
     ...state.talents.flatMap((id) => content.fateTalents.find((t) => t.id === id)?.effects ?? []),
     // Đạo thống (task 3.8).
     ...(content.lineages.find((l) => l.id === state.cult.lineage)?.effects ?? []),
     // Võ đạo nhập tiên keeps the body's edge (task 3.11).
     ...(state.flags.vo_dao_nhap_tien ? content.martial.ascendEffects : []),
+    // Dưỡng Nguyên Vận Thể Công, the manual a rootless Hóa cảnh martial artist cultivates instead.
+    ...(state.martial.manual && state.cult.realm === 'pham_nhan' ? [{ hook: 'combatPower', add: content.martial.manual.power }] : []),
     ...carriedHooks(state, content),
     // Đan văn of the golden core (task 4.2).
     ...(content.corePatterns.find((p) => p.id === state.cult.corePattern)?.effects ?? []),

@@ -26,7 +26,7 @@
     },
     {
       "name": "Ngũ khí triều nguyên",
-      "description": "Ngũ khí trong người hóa thành Ngũ linh căn. Từ đây bước vào Luyện Khí tầng 1, tiếp tục như tu sĩ."
+      "description": "Ngũ khí trong người thành một vòng khép kín, đá thử linh căn cũng phải gọi là Ngũ khí. Thân hóa Tiên Võ thể. Từ đây bước vào Luyện Khí tầng 1, tiếp tục như tu sĩ."
     }
   ],
   "teacher": {
@@ -41,6 +41,23 @@
       "vo_lam"
     ]
   },
+  "gift": {
+    "stage": 4,
+    "technique": "cuu_chuyen_kim_cot_quyet",
+    "flag": "cao_nhan_vo_dao",
+    "giftText": "Một lão nhân áo vải chắp tay sau lưng nhìn ngươi hồi lâu, rồi ném cho ngươi cuốn Cửu Chuyển Kim Cốt Quyết: \"Thân ngươi đã luyện tới Hóa cảnh, nhưng ngũ tạng không có linh căn, linh khí không đọng lại. Kinh này ngươi chưa tu được. Giữ lấy, đừng đánh mất.\"",
+    "reunionText": "Ngày ngũ khí khép thành vòng, lão nhân áo vải năm xưa lại đứng ngoài cổng, chẳng thấy già thêm ngày nào. Lão chỉ vào ngực ngươi: \"Giờ thì linh khí đọng lại được rồi. Cuốn kinh ta giữ cho ngươi, mở ra mà tu.\" Ngươi mở {technique} ra đọc, từng chữ như khắc vào xương.",
+    "manualText": "Lão lại dặn thêm vài câu khẩu quyết, gọi là {manual}: \"Không có linh căn thì tạm tu cái này, mượn khí huyết mà dưỡng gân cốt. Không nhiều, nhưng đủ để ngươi sống lâu và đánh khỏe hơn người thường.\" Quay đi một cái, lão đã khuất sau mấy lớp mái ngói."
+  },
+  "manual": {
+    "id": "duong_nguyen_van_the_cong",
+    "name": "Dưỡng Nguyên Vận Thể Công",
+    "flavor": "Công phu của kẻ không có linh căn: lấy hơi thở dưỡng khí huyết, lấy khí huyết dưỡng gân cốt. Không thành tiên được, nhưng thân thể bền hơn hẳn người cùng tuổi.",
+    "power": 0.2,
+    "lifespan": 8,
+    "physique": 3
+  },
+  "ascend": { "rootGrade": "ngu_khi", "bodyId": "tien_vo_the" },
   "ascendEffects": [
     {
       "hook": "path.body.affinity",
@@ -52,14 +69,14 @@
     },
     {
       "hook": "cultivationSpeed",
-      "add": 1.0
+      "add": 0.25
     }
   ],
   "texts": {
     "train": "Một năm luyện võ, đã {years} năm hướng tới {next}.",
     "promote": "Võ công đột phá: {stage}. {description}",
     "fail": "Luyện đã lâu mà {next} vẫn chưa tới. Phải xem lại gân cốt và ngộ tính.",
-    "ascend": "Ngũ khí trong ngũ tạng hợp với ngũ hành, hóa thành Ngũ linh căn. Võ đạo đi tới tận cùng, chạm cửa tiên."
+    "ascend": "Ngũ khí trong ngũ tạng thông nhau thành một vòng tuần hoàn: linh căn ngươi nay là Ngũ khí, thân hóa Tiên Võ thể. Võ đạo đi tới tận cùng, chạm cửa tiên."
   },
   "quests": [
     {

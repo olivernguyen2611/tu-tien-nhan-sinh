@@ -6,13 +6,13 @@
     { "id": "tam", "name": "Tam linh căn", "description": "Tư chất trung bình của tu chân giới. Chăm chỉ thì Trúc Cơ không khó." },
     { "id": "song", "name": "Song linh căn", "description": "Hai hệ tương trợ, tông môn nào cũng muốn giữ." },
     { "id": "don", "name": "Thiên linh căn", "description": "Một hệ thuần khiết, linh khí vào như nước đổ xuống dốc. Thiên kiêu bảng có chỗ chờ sẵn." },
-    { "id": "bien_di", "name": "Biến dị linh căn", "special": "variant", "description": "Hai hệ ngũ hành dung hợp thành một hệ hiếm. Mạnh, hợp được công pháp của cả hai hệ gốc lẫn công pháp hệ biến dị." },
-    { "id": "the_chat", "name": "Thể chất đặc biệt", "special": "body", "description": "Trời sinh dị thể, trăm năm khó gặp." }
+    { "id": "ngu_khi", "name": "Ngũ khí", "special": "martial", "description": "Ngũ khí trong ngũ tạng đã thông nhau, không cần đá thử linh căn nào chứng. Không phải ngũ linh căn tạp loạn: năm hệ tuần hoàn tương sinh, linh khí vào cũng như khí huyết, không hao mà còn dôi ra.", "effects": [{ "hook": "cultivationSpeed", "add": 0.25 }, { "hook": "bottleneckResist", "add": 0.1 }, { "hook": "breakthroughChance", "add": 4 }] },
+    { "id": "bien_di", "name": "Biến dị linh căn", "special": "variant", "description": "Hai hệ ngũ hành dung hợp thành một hệ hiếm. Mạnh, hợp được công pháp của cả hai hệ gốc lẫn công pháp hệ biến dị." }
   ],
   "revealText": "Linh căn: {root}. {description}",
-  "revealBodyText": "Đá thử linh căn không sáng theo ngũ hành nào, mà cả thân người nóng lên: thể chất {body}. {description}",
+  "revealBodyText": "Đá thử linh căn còn nóng lên theo một cách lạ: thể chất {body}. {description}",
   "plainBody": "Phàm thể",
-  "awakenText": "Linh căn cũ vỡ ra, một thứ khác trồi lên từ tận xương tủy: {body}. {description}",
+  "awakenText": "Linh căn vẫn còn đó, nhưng từ tận xương tủy trồi lên thêm một thứ khác: thể chất {body}. {description}",
   "traitGuaranteeText": "Khí vận {trait} đã định từ lúc sinh: đá thử linh căn vừa chạm tay đã sáng lên.",
   "elements": [
     { "id": "kim", "name": "Kim", "variant": false, "beats": ["moc", "phong"], "description": "Sắc bén, cương trực. Hợp kiếm, hợp binh khí." },
@@ -26,6 +26,18 @@
     { "id": "am", "name": "Ám", "variant": true, "beats": ["moc", "kim"], "description": "Thủy và Thổ dung hợp: ẩn trong bóng tối. Hợp ám sát, ma đạo, quỷ đạo.", "components": ["thuy", "tho"] }
   ],
   "bodies": [
+    {
+      "id": "tien_vo_the",
+      "name": "Tiên Võ thể",
+      "description": "Thân người luyện tới chỗ cùng của võ đạo: xương như ngọc, huyết như thủy ngân, ngũ khí lưu chuyển không ngừng. Chỉ có người đi trọn võ đạo mới có, trời không sinh ra.",
+      "effects": [
+        { "hook": "stat.physique", "add": 10 },
+        { "hook": "path.body.affinity", "add": 40 },
+        { "hook": "injuryReduce", "add": 0.3 },
+        { "hook": "combatPower", "add": 0.15 },
+        { "hook": "lifespanPct", "add": 0.1 }
+      ]
+    },
     {
       "id": "luu_ly_linh_the",
       "name": "Lưu Ly Linh Thể",
