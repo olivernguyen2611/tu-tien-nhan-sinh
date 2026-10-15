@@ -8,6 +8,9 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6d.4: cao nhân trở lại ở Ngũ khí triều nguyên (2026-10-15)
+- Đạt Ngũ khí triều nguyên, lão nhân năm xưa hiện ra lần nữa, bấy giờ đã có linh căn Ngũ khí nên **Cửu Chuyển Kim Cốt Quyết** tu được: vào Luyện Khí 1 với chính công pháp này (thay Dẫn Khí Quyết mặc định), Tiên Võ thể đi kèm. Luôn được tặng kể cả khi đi tắt bằng dev mode.
+
 ### GĐ 6d.3: Hóa cảnh, cao nhân tặng kinh chưa tu được (2026-10-15)
 - Đạt **Hóa cảnh** là một cao nhân hiện ra tặng **Cửu Chuyển Kim Cốt Quyết** (vào mục Bí tịch). Vì chưa có linh căn nên chưa tu được (hiện đúng lý do "Không có linh căn…"), kinh nằm đó chờ tới Ngũ khí.
 - Cao nhân dạy thay một công phu phàm nhân, **Dưỡng Nguyên Vận Thể Công** (`martial.json` `manual`): sức chiến +20%, thọ nguyên +8 năm, Căn cốt +3 một lần. Vừa phải, không bằng công pháp tu sĩ; bỏ đi khi đạt Ngũ khí. Hiện ở mục Võ đạo của bảng Tu luyện.

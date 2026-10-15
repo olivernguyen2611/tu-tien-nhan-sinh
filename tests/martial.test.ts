@@ -100,7 +100,9 @@ describe('martial path (task 3.11)', () => {
     expect(grades.ngu_khi).toBeGreaterThan(grades.song);
     expect(lifeHooks(s, content).some((h) => h.hook === 'bottleneckResist')).toBe(true);
     expect(s.cult.realm).toBe('luyen_khi');
-    expect(s.cult.technique).toBe('dan_khi_quyet');
+    // The cao nhân returns with the kinh he held back at Hóa cảnh, now cultivable.
+    expect(s.cult.technique).toBe('cuu_chuyen_kim_cot_quyet');
+    expect(s.cult.scrolls).not.toContain('cuu_chuyen_kim_cot_quyet');
     expect(lifeHooks(s, content).some((h) => h.hook === 'path.body.affinity' && h.add === 30)).toBe(true);
     expect(yearlyGain(s, content)).toBeGreaterThan(0);
   });

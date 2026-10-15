@@ -2521,6 +2521,8 @@ export const MartialFileSchema = z
         flag: id,
         giftText: z.string().min(1),
         manualText: z.string().min(1),
+        /** Ngũ khí triều nguyên: the cao nhân returns and teaches the technique; {technique}. */
+        reunionText: z.string().min(1),
       })
       .strict(),
     manual: z

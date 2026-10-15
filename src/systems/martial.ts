@@ -7,6 +7,7 @@ import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameState, LogLine } from '../core/types';
 import { startCultivating } from './cultivation';
+import { learnTechnique } from './technique';
 
 const value = (state: GameState, key: string) =>
   key in state.stats ? state.stats[key as keyof GameState['stats']] : state.aptitudes[key as keyof GameState['aptitudes']];
@@ -149,7 +150,13 @@ function ascend(state: GameState, content: Content): GameState {
     cult: { ...state.cult, root: { grade: rootGrade, elements: basic }, bodyId },
   };
   const logged = { ...withRoot, log: addLines(withRoot, [{ text: content.martial.texts.ascend, tone: 'rare' }]) };
-  return startCultivating(logged, content).state;
+  let s = startCultivating(logged, content).state;
+  // The cao nhân of Hóa cảnh returns: now there is a root, the kinh can be cultivated.
+  const { gift } = content.martial;
+  const tech = content.techniques.find((t) => t.id === gift.technique);
+  const learned = tech ? learnTechnique(s, content, gift.technique, { quiet: true, force: true }) : null;
+  if (learned && tech) s = { ...learned.state, log: addLines(learned.state, [{ text: gift.reunionText.replaceAll('{technique}', tech.name), tone: 'rare' }]) };
+  return s;
 }
 
 /** Train for a year; with enough years, try the next stage. Null when it cannot be done now. */

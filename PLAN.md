@@ -438,7 +438,7 @@ Chủ dự án chốt: Hóa cảnh được cao nhân tặng Cửu Chuyển Kim 
 | 6d.1 | [x] Tách thể chất khỏi linh căn: thể chất là hiệu ứng riêng, không thay linh căn; save v3 trả linh căn cho đời cũ; dev mode |
 | 6d.2 | [x] Linh căn Ngũ khí (hơn ngũ linh căn) và thể chất Tiên Võ thể |
 | 6d.3 | [x] Hóa cảnh: Cửu Chuyển Kim Cốt Quyết không tu được, công pháp phàm nhân thay thế (sức mạnh, thọ nguyên vừa phải) |
-| 6d.4 | [ ] Ngũ khí triều nguyên: gặp lại cao nhân, nhận kinh, nhập tiên; dev mode và mô phỏng |
+| 6d.4 | [x] Ngũ khí triều nguyên: gặp lại cao nhân, nhận kinh, nhập tiên |
 
 ### GĐ 7 — Mở rộng nội dung
 Thêm **thế giới mới** với tuyến cốt truyện riêng (mục C.7) + màn chọn thế giới. Linh giới/Tiên giới, thêm hàng trăm sự kiện, các nghề bách nghệ còn lại (Trận pháp, Phù lục, Linh thực, Ngự thú), thêm mô bản khí vận chi tử, Capacitor nếu muốn lên store.
