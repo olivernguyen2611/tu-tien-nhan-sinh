@@ -505,6 +505,8 @@ const ADD_HOOK = new RegExp(
       'lineage\\.(tien|ma|phat|quy|yeu)\\.cultivationSpeed',
       // 9.R2b: khí vận reaching more corners of life: silver at birth, luck in love, rooted children.
       'birthSilver', 'romanceChance', 'childRootRolls',
+      // 9.R2b: breakthrough odds while in one realm (any stage or the big step out of it).
+      'breakthroughChance\\.at\\.[a-z0-9_]+',
     ].join('|') +
     ')$',
 );
@@ -603,8 +605,8 @@ export const TraitSchema = z
     flavor: z.string().min(1),
     summary: z.string().min(1),
     effects: z.array(EffectHookSchema).min(1),
-    /** 9.R2c: phúc họa đi kèm (shown as "Họa phúc tương y"). */
-    mixed: z.boolean().optional(),
+    /** 9.R2c: tốt (gain only), xấu (harm), hon_hop (gain and cost; tagged "Phúc họa song hành" on the card). */
+    nature: z.enum(['tot', 'xau', 'hon_hop']).optional(),
   })
   .strict();
 export const TraitFileSchema = z.array(TraitSchema).min(1);
@@ -3311,3 +3313,28 @@ export const ChallengeFileSchema = z.array(
     .strict(),
 );
 export type ChallengeFile = z.infer<typeof ChallengeFileSchema>;
+
+/**
+ * 9.R2c: readable lines for effect hooks (content/effect-labels.json). Keys are hook names, with `*` for one
+ * segment; `{v}` is the formatted value, `{name}` the segment's name from `names[<group>]` ("realms" reads
+ * the realm table), `{years}` for trigger.everyNYears.
+ */
+const EffectLabelSchema = z
+  .object({
+    text: z.string().min(1),
+    fmt: z.enum(['int', 'pct', 'pts', 'num', 'mul', 'count']).optional(),
+    names: z.string().optional(),
+    zero: z.string().optional(),
+    /** A higher value hurts (shown in the harm colour). */
+    bad: z.boolean().optional(),
+  })
+  .strict();
+export const EffectLabelsSchema = z
+  .object({
+    activeFrom: z.string().min(1),
+    hooks: z.record(z.string(), EffectLabelSchema),
+    names: z.record(z.string(), z.record(z.string(), z.string())),
+    badWhenUp: z.array(z.string()).default([]),
+  })
+  .strict();
+export type EffectLabels = z.infer<typeof EffectLabelsSchema>;

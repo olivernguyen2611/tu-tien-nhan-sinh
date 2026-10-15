@@ -8,10 +8,12 @@
 
 ## [Chưa phát hành]
 
-### 9.R2b–c: Tiên Thiên Khí Vận phủ rộng hơn (2026-10-15)
-- 3 móc mới cho khí vận: `birthSilver` (bạc lúc sinh), `romanceChance` (tỏ tình, nối lại duyên cũ dễ hơn hoặc khó hơn), `childRootRolls` (con cái được gieo linh căn thêm lần, lấy lần tốt nhất). `craft.all.affinity` nay cộng vào tư chất mọi nghề.
-- 50 khí vận mới (tổng 110): 12 Phàm, 12 Lương, 9 Ưu, 6 Tuyệt, 4 Thiên, 1 Thần và 6 Ác vận, phủ gia cảnh, tình duyên, con cái, nghề, chiến đấu, quan trường, tâm cảnh.
-- Khí vận **họa phúc tương y** (vừa lợi vừa hại, trường `mixed`) có nhãn riêng trên thẻ. 6 khí vận cũ có cả ✔ lẫn ✖ cũng được gắn nhãn này.
+### 9.R2b–c: Tiên Thiên Khí Vận phủ khắp ngóc ngách (2026-10-15)
+- Móc mới: `birthSilver` (bạc lúc sinh), `romanceChance` (tỏ tình, nối lại duyên cũ), `childRootRolls` (con cái được gieo linh căn thêm lần, lấy lần tốt nhất), `breakthroughChance.at.<cảnh giới>` (đột phá khi đang ở một cảnh giới). `craft.all.affinity` nay cộng vào tư chất mọi nghề.
+- Từ 60 lên **160 khí vận** (Phàm 36, Lương 34, Ưu 31, Tuyệt 20, Thiên 11, Thần 6, Ác 22), phủ tu luyện, đột phá từng cảnh giới, kỳ ngộ, tình duyên, con cái, gia thế, sức khỏe, thọ nguyên, tài vận, chiến đấu, sáu nghề, quý nhân, tiểu nhân, thiên kiếp và tâm ma. 43 khí vận **phúc họa song hành** (trường `nature`), có nhãn riêng trên thẻ.
+- Thẻ khí vận in **từng dòng hiệu ứng tự sinh từ dữ liệu** (✔ lợi, ✖ hại; nhãn ở `content/effect-labels.json`), nên lời và số không lệch nhau. Mô tả viết tay chỉ còn hiện ở khí vận có cơ chế cần lời (tích dấu, mở chuỗi sự kiện, điều kiện theo cảnh giới).
+- 17 tổ hợp ẩn mới (tổng 29).
+- Sửa lỗi: Độ Kiếp Thể và tổ hợp Đạo Thể Hỗn Nguyên ghi "chống thiên kiếp" nhưng thật ra làm thiên kiếp **mạnh hơn**; nay đúng là giảm sát thương thiên lôi.
 
 ### 9.R2a: "Nghịch Thiên Bốc Mệnh" đổi thành "Tiên Thiên Khí Vận" (2026-10-15)
 - Màn quay khí vận lúc sinh và các thiên phú luân hồi liên quan dùng tên mới. "Nghịch thiên cải mệnh" (nút quay lại) giữ nguyên.

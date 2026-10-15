@@ -1,0 +1,84 @@
+{
+  "activeFrom": "từ {age} tuổi",
+  "hooks": {
+    "stat.*": { "text": "{name} {v}", "fmt": "int", "names": "stats" },
+    "cultivationSpeed": { "text": "Tốc độ tu luyện {v}", "fmt": "pct" },
+    "breakthroughChance": { "text": "Tỉ lệ đột phá {v}", "fmt": "pts" },
+    "breakthroughChance.major": { "text": "Đột phá đại cảnh giới {v}", "fmt": "pts" },
+    "breakthroughChance.minor": { "text": "Lên tiểu cảnh giới {v}", "fmt": "pts" },
+    "breakthroughChance.at.*": { "text": "Đột phá khi ở {name} {v}", "fmt": "pts", "names": "realms" },
+    "bottleneckResist": { "text": "Vượt bình cảnh {v}", "fmt": "pct" },
+    "lifespanPct": { "text": "Thọ nguyên {v}", "fmt": "pct" },
+    "lifespanYears": { "text": "Thọ nguyên {v} năm", "fmt": "int" },
+    "combatPower": { "text": "Chiến lực {v}", "fmt": "pct" },
+    "combatPower.vsHigherRealm": { "text": "Chiến lực khi đánh người cảnh giới cao hơn {v}", "fmt": "pct" },
+    "speed": { "text": "Tốc {v}", "fmt": "pct" },
+    "divineSense": { "text": "Thần thức {v}", "fmt": "pct" },
+    "escapeChance": { "text": "Bỏ chạy thành công {v}", "fmt": "pct" },
+    "injuryReduce": { "text": "Thương tích nhận vào giảm {v}", "fmt": "pct" },
+    "lifesteal": { "text": "Hút máu {v}", "fmt": "pct" },
+    "element.*.power": { "text": "Uy lực {name} {v}", "fmt": "pct", "names": "elements" },
+    "path.*.affinity": { "text": "Tư chất con đường {name} {v}", "fmt": "int", "names": "paths" },
+    "path.*.power": { "text": "Uy lực con đường {name} {v}", "fmt": "pct", "names": "paths" },
+    "craft.*.affinity": { "text": "Tư chất {name} {v}", "fmt": "int", "names": "crafts" },
+    "craft.*.success": { "text": "{name} thành công {v}", "fmt": "pct", "names": "crafts" },
+    "craft.*.yield": { "text": "{name} thêm sản phẩm {v}", "fmt": "num", "names": "crafts" },
+    "heartDemonResist": { "text": "Kháng tâm ma {v}", "fmt": "pct" },
+    "charmResist": { "text": "Kháng mị thuật {v}", "fmt": "pct" },
+    "npcAffinityStart": { "text": "Thiện cảm khởi đầu với người mới {v}", "fmt": "int" },
+    "faction.*.reputation": { "text": "Danh vọng {name} {v}", "fmt": "int", "names": "factions" },
+    "priceDiscount": { "text": "Mua bán rẻ hơn {v}", "fmt": "pct" },
+    "incomePct": { "text": "Thu nhập {v}", "fmt": "pct" },
+    "lootPct": { "text": "Chiến lợi phẩm {v}", "fmt": "pct" },
+    "artifactPct": { "text": "Uy lực pháp bảo {v}", "fmt": "pct" },
+    "illnessChancePct": { "text": "Tỉ lệ đổ bệnh {v}", "fmt": "pts", "bad": true },
+    "tribulationPct": { "text": "Thiên kiếp nặng thêm {v}", "fmt": "pts", "bad": true },
+    "tribulationPower": { "text": "Thiên kiếp nặng thêm {v}", "fmt": "pct", "bad": true },
+    "tribulationDefense": { "text": "Chống thiên lôi {v}", "fmt": "pct" },
+    "trigger.cheatDeath": { "text": "Thoát chết {v} lần mỗi đời", "fmt": "count" },
+    "trigger.everyNYears": { "text": "Cứ {years} năm chắc chắn gặp {name}", "names": "themes" },
+    "rootReroll": { "text": "Thêm {v} lần gieo linh căn (lấy lần tốt nhất)", "fmt": "count" },
+    "birthSilver": { "text": "Bạc lúc sinh {v}", "fmt": "int" },
+    "romanceChance": { "text": "Tình duyên thuận {v}", "fmt": "pct" },
+    "childRootRolls": { "text": "Con cái thêm {v} lần gieo linh căn", "fmt": "count" },
+    "lineage.*.cultivationSpeed": { "text": "Tu {name} nhanh {v}", "fmt": "pct", "names": "lineages" },
+    "cultivationProgress": { "text": "Tu vi {v}", "fmt": "num" },
+    "eventWeight.*": { "text": "Gặp {name} {v}", "fmt": "mul", "zero": "Không gặp {name}", "names": "themes" },
+    "agingSlow": { "text": "Lão hóa chậm" },
+    "ignoreElementWeakness": { "text": "Không bị hệ khắc" },
+    "readMind": { "text": "Đọc được lòng người" },
+    "rewindOnDeath": { "text": "Chết thì quay lại một mốc cũ" },
+    "unlockChain.*": { "text": "Mở chuỗi sự kiện riêng" },
+    "counter": { "text": "Tích dấu, đủ dấu thì có phần thưởng" }
+  },
+  "names": {
+    "stats": {
+      "health": "Sức khỏe", "happiness": "Hạnh phúc", "intellect": "Trí tuệ", "charm": "Mị lực",
+      "physique": "Căn cốt", "comprehension": "Ngộ tính", "luck": "Khí vận", "daoHeart": "Đạo tâm"
+    },
+    "paths": { "sword": "Kiếm", "body": "Thể", "spell": "Pháp", "weapon": "Binh", "arts": "Thuật" },
+    "crafts": {
+      "alchemy": "Luyện đan", "forging": "Luyện khí", "formation": "Trận pháp", "talisman": "Phù lục",
+      "farming": "Linh thực", "beast": "Ngự thú", "all": "mọi nghề"
+    },
+    "elements": {
+      "kim": "hệ Kim", "moc": "hệ Mộc", "thuy": "hệ Thủy", "hoa": "hệ Hỏa", "tho": "hệ Thổ", "loi": "hệ Lôi",
+      "bang": "hệ Băng", "phong": "hệ Phong", "am": "hệ Âm", "root": "hệ linh căn chính", "all": "mọi hệ"
+    },
+    "factions": {
+      "chinh": "Chính đạo", "ma": "Ma đạo", "tan_tu": "Tán tu", "yeu": "Yêu tộc", "trieu_dinh": "Triều đình", "giang_ho": "Giang hồ"
+    },
+    "lineages": { "tien": "Tiên đạo", "ma": "Ma đạo", "phat": "Phật đạo", "quy": "Quỷ đạo", "yeu": "Yêu đạo" },
+    "themes": {
+      "fortune": "kỳ ngộ", "romance": "chuyện tình", "demonic": "ma đạo cám dỗ", "justice": "chuyện bất bình",
+      "ky_vat": "kỳ vật", "market": "tin phường thị", "bi_canh": "bí cảnh", "beast": "yêu thú", "heart_demon": "tâm ma",
+      "plunder": "cướp bóc", "sect_grand": "đại sự tông môn", "be_quan": "chuyện bế quan", "study": "chuyện học hành",
+      "cultivation": "chuyện tu luyện", "mishap": "tai nạn vặt", "family": "chuyện gia đình", "herb": "linh thảo",
+      "lifespan": "chuyện thọ nguyên", "karma": "nhân quả", "benefactor": "quý nhân", "poisoning": "ngộ độc ăn uống",
+      "bond": "chuyện thân tình", "funny": "chuyện dở khóc dở cười", "romance_trouble": "rắc rối tình ái",
+      "he_thong": "hệ thống", "scam": "kẻ lừa đảo", "charm": "mị thuật", "sect": "chuyện tông môn",
+      "family_tragedy": "tang sự trong nhà", "craft": "chuyện nghề", "tribulation": "thiên kiếp", "ranking": "bảng xếp hạng"
+    }
+  },
+  "badWhenUp": ["eventWeight.mishap", "eventWeight.beast", "eventWeight.family_tragedy", "eventWeight.scam", "eventWeight.poisoning", "eventWeight.heart_demon", "eventWeight.romance_trouble", "eventWeight.plunder", "eventWeight.demonic", "eventWeight.tribulation"]
+}
