@@ -720,7 +720,8 @@
   },
   "immortalGates": {
     "chance": { "hoi_thu_do": 0.12, "the_gia": 0.9, "hoang_that": 0.06, "co_duyen": 0.008, "pham_gian": 0.03 },
-    "unknownMul": 0.2,
+    "unknownMul": 0.3,
+    "closedUnknown": ["hoi_thu_do", "hoang_that", "co_duyen"],
     "luckWeight": 1
   },
   "knowledge": { "defaultChance": 0.04, "maxPerYear": 1, "maxPerLife": 3 },

@@ -11,6 +11,7 @@ import { chosenMeets } from '../chosen';
 import { goldenFingerMeets } from '../goldenFinger';
 import { pastSectMeets } from '../pastSect';
 import { hasUsableInnateRoot } from '../cultivation';
+import { bornKnowing } from '../knowledge';
 
 type Conditions = Partial<GameEvent['conditions']>;
 
@@ -85,6 +86,9 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (c.root.minElements !== undefined && (root?.elements.length ?? 0) < c.root.minElements) return false;
     if (c.root.innate !== undefined && (!content || root || hasUsableInnateRoot(state, content) !== c.root.innate)) return false;
   }
+  // 9.R5b: doors open on what the life was born knowing (past lives), see knowledge.ts bornKnowing.
+  if (c.knowledge?.all?.some((k) => !bornKnowing(state).includes(k))) return false;
+  if (c.knowledge?.none?.some((k) => bornKnowing(state).includes(k))) return false;
   if (c.flagsAll?.some((f) => !state.flags[f])) return false;
   if (c.itemsAll?.some((i) => !(state.inventory[i] > 0))) return false;
   if (c.flagsNone?.some((f) => state.flags[f])) return false;

@@ -104,6 +104,8 @@ export interface GameState {
   knowledge?: string[];
   /** 9.R5a: how many of them this life found by chance (balance.knowledge.maxPerLife; sure finds do not count). */
   knowledgeFound?: number;
+  /** 9.R5b: every entry this life found itself; the rest of `knowledge` came from past lives. */
+  knowledgeNew?: string[];
   /** Task 5b.1: thiên phú luân hồi this life was born with (id → level), bought in earlier lives. */
   rebirthTalents: Record<string, number>;
   /** Task 5b.8: Phúc báo brought from the last life (blessings.json id; career = the path that earned it). */

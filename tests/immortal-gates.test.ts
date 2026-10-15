@@ -33,7 +33,16 @@ describe('9.R4b tiên duyên gates', () => {
     expect(gateChance(kid('g1', 20), content, a)).toBe(0);
     const known = gateChance(kid('g1', 10), content, a);
     expect(known).toBeCloseTo(content.balance.immortalGates!.chance.hoi_thu_do);
-    expect(gateChance(kid('g1', 10, 'nong_dan', []), content, a)).toBeCloseTo(known * content.balance.immortalGates!.unknownMul);
+    // 9.R5b: hội thu đồ and cơ duyên stay shut to a life born knowing nothing; cơ duyên phàm gian is only scaled down.
+    expect(gateChance(kid('g1', 10, 'nong_dan', []), content, a)).toBe(0);
+    const gifted = (k: string[]) => { const s = kid('g1', 20, 'nong_dan', k); return { ...s, aptitudes: { ...s.aptitudes, comprehension: 90 } }; };
+    expect(gateChance(gifted(all), content, gate('co_duyen'))).toBeGreaterThan(0);
+    expect(gateChance(gifted([]), content, gate('co_duyen'))).toBe(0);
+    const fighter3 = (k: string[]) => { const s = kid('g1', 30, 'nong_dan', k); return { ...s, martial: { ...s.martial, stage: 3 } }; };
+    expect(gateChance(fighter3([]), content, gate('pham_gian')) / gateChance(fighter3(all), content, gate('pham_gian'))).toBeCloseTo(content.balance.immortalGates!.unknownMul);
+    // What a life learns itself opens doors only for the lives after it.
+    const learned = { ...kid('g1', 10, 'nong_dan', []), knowledge: ['tien_mon_thu_do'], knowledgeNew: ['tien_mon_thu_do'] };
+    expect(gateChance(learned, content, a)).toBe(0);
     // Luck helps.
     const lucky = kid('g1', 10);
     expect(gateChance({ ...lucky, aptitudes: { ...lucky.aptitudes, luck: 80 } }, content, a)).toBeGreaterThan(known);
@@ -61,7 +70,7 @@ describe('9.R4b tiên duyên gates', () => {
     expect(gatesYear({ ...s, cult: { ...s.cult, root: { grade: 'none', elements: [] } } }, content).events.followUps).toHaveLength(0);
   });
 
-  it('a seasoned player is found far more often than a first life, which still can be lucky', () => {
+  it('a seasoned player is found far more often than a first life (9.R5b: a first life only by rare cơ duyên)', () => {
     let seasoned = 0;
     let first = 0;
     for (let i = 0; i < 300; i++) {
@@ -69,7 +78,6 @@ describe('9.R4b tiên duyên gates', () => {
       if (opened(kid(`gs${i}`, 6, 'nong_dan', []))) first++;
     }
     expect(seasoned / 300).toBeGreaterThan(0.5);
-    expect(first / 300).toBeGreaterThan(0.05);
-    expect(first / 300).toBeLessThan(seasoned / 300 / 2);
+    expect(first / 300).toBeLessThan(0.05);
   });
 });

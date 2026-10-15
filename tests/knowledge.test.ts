@@ -3,7 +3,9 @@ import { loadContent } from '../src/core/content';
 import { advanceYear, createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
 import { codexOf, codexProgress, mergeCodex, EMPTY_CODEX } from '../src/systems/codex';
-import { knowledgeByGroup, knowledgeUnlocks, knowledgeYear, sourceHolds } from '../src/systems/knowledge';
+import { BASIC_KNOWLEDGE, featureOpen, knowledgeByGroup, knowledgeUnlocks, knowledgeYear, sourceHolds, visibleGlossary } from '../src/systems/knowledge';
+import { nextTalentCost, talentShop } from '../src/systems/rebirthTalents';
+import { sectEligibility } from '../src/systems/sect';
 import { readMeta, recordCodex, type KeyValueStore } from '../src/systems/save';
 
 const content = loadContent();
@@ -74,14 +76,51 @@ describe('9.R5a Sổ tri thức', () => {
     const store = fakeStore();
     store.setItem('bachthe.meta', JSON.stringify({ livesPlayed: 2, codex: { traits: [], combos: [], fingers: [], stories: [] } }));
     expect(readMeta(store).livesPlayed).toBe(2);
-    expect(readMeta(store).codex.knowledge).toEqual([]);
+    // 9.R5b: a browser that played before the Sổ tri thức starts with the basics.
+    expect(readMeta(store).codex.knowledge).toEqual(BASIC_KNOWLEDGE);
+    const fresh = fakeStore();
+    expect(readMeta(fresh).codex.knowledge).toEqual([]);
     recordCodex(store, m);
-    expect(readMeta(store).codex.knowledge).toEqual(['bi_canh', 'thien_kieu']);
+    expect(readMeta(store).codex.knowledge).toEqual([...BASIC_KNOWLEDGE, 'bi_canh', 'thien_kieu']);
   });
 
   it('unlocks are looked up by kind and id', () => {
     expect(knowledgeUnlocks(['tien_mon_thu_do'], content, 'gate', 'hoi_thu_do')).toBe(true);
     expect(knowledgeUnlocks([], content, 'gate', 'hoi_thu_do')).toBe(false);
     expect(knowledgeUnlocks(['dan_khi_nhap_the'], content, 'tab', 'tu_luyen')).toBe(true);
+  });
+});
+
+describe('9.R5b kiếp đầu là phàm nhân, mở khóa dần', () => {
+  it('tabs open with knowledge, or once the life is inside them', () => {
+    const s = base();
+    expect(featureOpen(s, content, 'tab', 'tu_luyen')).toBe(false);
+    expect(featureOpen(s, content, 'tab', 'tong_mon')).toBe(false);
+    expect(featureOpen({ ...s, knowledge: ['dan_khi_nhap_the'] }, content, 'tab', 'tu_luyen')).toBe(true);
+    expect(featureOpen({ ...s, cult: { ...s.cult, root: { grade: 'tam', elements: ['kim', 'moc', 'thuy'] } } }, content, 'tab', 'tong_mon')).toBe(true);
+    expect(featureOpen({ ...s, knowledge: ['phat_duyen'] }, content, 'tab', 'tong_mon')).toBe(true);
+    // A tab no entry gates is always open.
+    expect(featureOpen(s, content, 'tab', 'khong_co')).toBe(true);
+  });
+
+  it('gated glossary terms stay plain until known', () => {
+    expect(visibleGlossary(content, []).some((g) => g.id === 'linh_can')).toBe(false);
+    expect(visibleGlossary(content, ['linh_can_la_gi']).some((g) => g.id === 'linh_can')).toBe(true);
+    expect(visibleGlossary(content, []).some((g) => g.id === 'hanh_phuc')).toBe(true);
+  });
+
+  it('fate never rolls the clan origin for a life that knows nothing; cultivation talents hide', () => {
+    for (let i = 0; i < 200; i++) expect(createLife({ seed: `o${i}`, knowledge: [] }, content).character.originId).not.toBe('tu_tien_gia_toc');
+    const rows = talentShop(content, {}, 999, []);
+    expect(rows.find((r) => r.id === 'linh_can_an_ky')!.locked).toBe(true);
+    expect(rows.find((r) => r.id === 'tuc_tue')!.locked).toBe(false);
+    expect(nextTalentCost(content, {}, 'linh_can_an_ky', [])).toBeNull();
+    expect(nextTalentCost(content, {}, 'linh_can_an_ky', ['linh_can_la_gi'])).toBeGreaterThan(0);
+  });
+
+  it('a rootless mortal who never heard of Phật duyên does not knock on the temple door', () => {
+    const s = { ...base(), character: { ...base().character, age: 20 }, aptitudes: { ...base().aptitudes, daoHeart: 90 }, cult: { ...base().cult, root: { grade: 'none', elements: [] } } };
+    expect(sectEligibility(s, content, 'vo_uu_tu')).toMatch(/chưa từng nghe/);
+    expect(sectEligibility({ ...s, knowledge: ['phat_duyen'] }, content, 'vo_uu_tu')).toBeNull();
   });
 });

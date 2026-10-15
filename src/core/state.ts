@@ -22,7 +22,7 @@ import { economyYear } from '../systems/economy';
 import { martialQuestYear } from '../systems/martialQuest';
 import { notifyYear } from '../systems/timeline';
 import { blessingRerolls } from '../systems/blessings';
-import { knowledgeYear } from '../systems/knowledge';
+import { knowledgeYear, knowsFor } from '../systems/knowledge';
 import { gatesYear } from '../systems/immortalGates';
 import { withCheckpoints } from '../systems/rewind';
 import { awakenGoldenFinger } from '../systems/goldenFinger';
@@ -99,7 +99,9 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
 
   const gender: Gender = input.gender ?? (rng.chance(0.5) ? 'nam' : 'nu');
   const name = input.name?.trim() || randomName(rng, content, gender);
-  const origin = content.origins.find((o) => o.id === input.originId) ?? rng.weighted(content.origins, (o) => o.weight);
+  // 9.R5b: fate never rolls an origin the past lives have not heard of (when the Sổ tri thức is given).
+  const rollable = content.origins.filter((o) => !input.knowledge || knowsFor(input.knowledge, o.requiresKnowledge));
+  const origin = content.origins.find((o) => o.id === input.originId) ?? rng.weighted(rollable.length ? rollable : content.origins, (o) => o.weight);
   const hometown = rng.pick(content.names.hometowns);
   const difficulty = input.difficulty && content.balance.difficulty[input.difficulty] ? input.difficulty : content.balance.defaultDifficulty;
 

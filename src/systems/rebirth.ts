@@ -7,6 +7,7 @@ import { careerLabel } from './career';
 import { realmLabel } from './cultivation';
 import { sectLabel } from './sect';
 import { wishesMet } from './achievements';
+import { knowsFor } from './knowledge';
 
 export interface RecapLine { label: string; value: string }
 export interface PointLine { label: string; points: number }
@@ -81,11 +82,12 @@ export function rebirthPoints(state: GameState, content: Content): { lines: Poin
   return { lines, total: lines.reduce((s, l) => s + l.points, 0) };
 }
 
-export interface OriginOption { id: string; cost: number; affordable: boolean }
+export interface OriginOption { id: string; cost: number; affordable: boolean; /** 9.R5b: not known yet. */ locked: boolean }
 
 /** Task 5b.9 Cầu đầu thai: what choosing each origin costs, given the points kept. */
-export function originOptions(content: Content, points: number): OriginOption[] {
-  return content.origins.map((o) => ({ id: o.id, cost: o.rebirthCost ?? 0, affordable: (o.rebirthCost ?? 0) <= points }));
+export function originOptions(content: Content, points: number, known?: string[]): OriginOption[] {
+  // 9.R5b: an origin waiting for knowledge is shown locked.
+  return content.origins.map((o) => ({ id: o.id, cost: o.rebirthCost ?? 0, affordable: (o.rebirthCost ?? 0) <= points, locked: !!known && !knowsFor(known, o.requiresKnowledge) }));
 }
 
 /** Points a new life costs: only a chosen origin with a price (leaving it to fate is free). */

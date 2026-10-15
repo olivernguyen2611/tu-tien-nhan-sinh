@@ -68,6 +68,7 @@ import { rollBirthFinger } from '../systems/goldenFinger';
 import { RebirthScreen } from './screens/Rebirth';
 import { CodexScreen } from './screens/Codex';
 import { codexOf } from '../systems/codex';
+import { visibleGlossary } from '../systems/knowledge';
 import { earnedAchievements, unlockedFingers } from '../systems/achievements';
 import { challengeDef, challengeResult, creditKey, startChallenge, weekKey, weeklyChallenge } from '../systems/challenge';
 import { ChallengeScreen } from './screens/Challenge';
@@ -79,14 +80,17 @@ type Picking = { purpose: 'new' } | { purpose: 'challenge' } | { purpose: 'impor
 type Message = { text: string; tone: 'good' | 'bad' } | null;
 
 export function App({ content }: { content: Content }) {
+  // 9.R5b: glossary terms open as the Sổ tri thức grows (Screens reports what is known).
+  const [known, setKnown] = useState<string[]>([]);
+  const glossary = useMemo(() => visibleGlossary(content, known), [content, known]);
   return (
-    <GlossaryProvider glossary={content.glossary}>
-      <Screens content={content} />
+    <GlossaryProvider glossary={glossary}>
+      <Screens content={content} onKnown={setKnown} />
     </GlossaryProvider>
   );
 }
 
-function Screens({ content }: { content: Content }) {
+function Screens({ content, onKnown }: { content: Content; onKnown: (known: string[]) => void }) {
   const store = useMemo(browserStore, []);
   // Only the loaded world can be played for now (world picker comes later).
   const worlds = [content.world.id];
@@ -94,6 +98,9 @@ function Screens({ content }: { content: Content }) {
   const freshLife = useMemo(() => createLife({ seed: 'backfill' }, content), [content]);
   const [screen, setScreen] = useState<Screen>('title');
   const [life, setLife] = useState<GameState | null>(null);
+  // 9.R5b: what this life (or, between lives, the Thiên Thư) knows decides which glossary terms show.
+  const knownKey = (life?.knowledge ?? readMeta(store).codex.knowledge).join(',');
+  useEffect(() => onKnown(knownKey ? knownKey.split(',') : []), [knownKey]);
   /** Slot the current life autosaves into. */
   const [slot, setSlot] = useState<number | null>(null);
   const [rollCount, setRollCount] = useState(0);
@@ -279,9 +286,9 @@ function Screens({ content }: { content: Content }) {
   if (screen === 'rebirth') {
     const meta = readMeta(store);
     return (
-      <RebirthScreen content={content} points={meta.rebirthPoints} owned={meta.rebirthTalents}
+      <RebirthScreen content={content} points={meta.rebirthPoints} owned={meta.rebirthTalents} known={meta.codex.knowledge}
         onBuy={(id) => {
-          const cost = nextTalentCost(content, meta.rebirthTalents, id);
+          const cost = nextTalentCost(content, meta.rebirthTalents, id, meta.codex.knowledge);
           if (cost !== null && buyRebirthTalent(store, id, cost)) refresh((n) => n + 1);
         }}
         onBack={() => setScreen(rebirthFrom === 'death' && life && !life.alive ? 'death' : 'title')} />
@@ -293,6 +300,7 @@ function Screens({ content }: { content: Content }) {
         content={content}
         onBack={() => setScreen('title')}
         rebirthPoints={readMeta(store).rebirthPoints}
+        known={readMeta(store).codex.knowledge}
         fingers={unlockedFingers(content, Object.keys(readMeta(store).achievements))}
         onCreate={(input) => {
           // Task 5b.9: a chosen origin with a price is paid in Luân Hồi points when the life is confirmed;

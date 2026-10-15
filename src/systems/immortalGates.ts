@@ -6,15 +6,16 @@ import { Rng } from '../core/rng';
 import type { ImmortalGate } from '../core/schemas';
 import type { GameState } from '../core/types';
 import { meets } from './events/conditions';
-import { knownEntries } from './knowledge';
+import { bornKnowing } from './knowledge';
 
 /** This year's chance of a gate, or 0 when it is shut (conditions, already opened, no number). */
 export function gateChance(state: GameState, content: Content, gate: ImmortalGate): number {
   const cfg = content.balance.immortalGates;
   const base = cfg?.chance[gate.id] ?? 0;
   if (!cfg || base <= 0 || state.flags[gateFlag(gate)] || !meets(state, gate.conditions, content)) return 0;
-  const known = !gate.requiresKnowledge || knownEntries(state).includes(gate.requiresKnowledge);
+  const known = !gate.requiresKnowledge || bornKnowing(state).includes(gate.requiresKnowledge);
   const luck = 1 + (cfg.luckWeight * (state.aptitudes.luck - 50)) / 100;
+  if (!known && cfg.closedUnknown.includes(gate.id)) return 0;
   return Math.max(0, Math.min(1, base * (known ? 1 : cfg.unknownMul) * luck));
 }
 

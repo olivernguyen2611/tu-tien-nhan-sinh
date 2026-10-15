@@ -15,6 +15,8 @@ function rootless(daoHeart: number, patch: Partial<GameState> = {}): GameState {
   return {
     ...b,
     character: { ...b.character, age: 20 },
+    // 9.R5b: the life has heard of Phật duyên.
+    knowledge: ['phat_duyen'],
     aptitudes: { physique: 50, comprehension: 50, luck: 50, daoHeart },
     paths: {},
     traits: [],

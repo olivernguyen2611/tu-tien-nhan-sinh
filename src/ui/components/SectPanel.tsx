@@ -15,6 +15,7 @@ import { TermText } from './Tooltip';
 import { OwnSectSection } from './OwnSectSection';
 import { SectIdentity } from './SectIdentity';
 import { JianghuSection } from './JianghuSection';
+import { featureOpen } from '../../systems/knowledge';
 
 export type SectAction =
   | { kind: 'join'; sectId: string }
@@ -179,6 +180,7 @@ export function SectPanel({ state, content, onAction, onClose }: {
         ) : (
           <>
             <h2>Chưa có tông môn</h2>
+            {featureOpen(state, content, 'tab', 'tong_mon') ? <>
             <h3 class="muted">Tông môn tu tiên</h3>
             <p class="profile-note">Có linh căn thì có thể lên núi xin bái nhập. Không linh căn mà Đạo tâm vững, cửa chùa vẫn mở.</p>
             {content.sects.filter((s) => s.recruitable).map((s) => {
@@ -193,6 +195,7 @@ export function SectPanel({ state, content, onAction, onClose }: {
                 </div>
               );
             })}
+            </> : <p class="profile-note">Người ta đồn trên núi cao có tiên môn, nhưng chưa ai trong vùng tận mắt thấy cổng núi.</p>}
           </>
         )}
 

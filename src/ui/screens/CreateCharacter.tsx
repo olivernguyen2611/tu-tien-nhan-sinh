@@ -11,12 +11,14 @@ function newSeed(): string {
   return `${Date.now().toString(36)}-${Math.floor(Math.random() * 1e9).toString(36)}`;
 }
 
-export function CreateCharacterScreen({ content, rebirthPoints, fingers, onCreate, onBack }: {
+export function CreateCharacterScreen({ content, rebirthPoints, fingers, known, onCreate, onBack }: {
   content: Content;
   /** Task 5b.9 Cầu đầu thai: Luân Hồi points to pay for a rare origin. */
   rebirthPoints: number;
   /** Task 5b.5: Kim Thủ Chỉ unlocked by thành tựu, to choose for balance.goldenFinger.chooseCost points. */
   fingers: string[];
+  /** 9.R5b: the Sổ tri thức of past lives (origins waiting for it are locked). */
+  known: string[];
   onCreate: (input: NewLifeInput) => void;
   onBack: () => void;
 }) {
@@ -26,7 +28,7 @@ export function CreateCharacterScreen({ content, rebirthPoints, fingers, onCreat
   const [finger, setFinger] = useState<string | undefined>(undefined);
   const fingerCost = content.balance.goldenFinger.chooseCost;
   const [difficulty, setDifficulty] = useState(content.balance.defaultDifficulty);
-  const options = originOptions(content, rebirthPoints);
+  const options = originOptions(content, rebirthPoints, known);
   const originCost = options.find((o) => o.id === originId)?.cost ?? 0;
   const chosen = content.difficulties.find((d) => d.id === difficulty);
 
@@ -83,6 +85,12 @@ export function CreateCharacterScreen({ content, rebirthPoints, fingers, onCreat
           </button>
           {content.origins.map((o, i) => {
             const opt = options[i];
+            if (opt.locked) return (
+              <button role="radio" aria-checked={false} class="origin" key={o.id} disabled>
+                <b>???</b>
+                <span>Một xuất thân các kiếp trước chưa từng nghe tới.</span>
+              </button>
+            );
             return (
               <button role="radio" aria-checked={originId === o.id} class={`origin${originId === o.id ? ' on' : ''}`} key={o.id}
                 disabled={!opt.affordable} onClick={() => setOriginId(o.id)}>

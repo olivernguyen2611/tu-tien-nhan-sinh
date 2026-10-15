@@ -103,6 +103,8 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   const factionFiles: { file: string; factions: JianghuFaction[] }[] = [];
   const knowledgeFiles: { file: string; entries: KnowledgeEntry[] }[] = [];
   const gateFiles: { file: string; gates: ImmortalGate[] }[] = [];
+  /** 9.R5b: things that wait for a Sổ tri thức entry. */
+  const knowledgeRefs: { file: string; what: string; id: string }[] = [];
   let glossaryIds: string[] | null = null;
   const marketFiles: { file: string; markets: Market[] }[] = [];
   let chosenIds: string[] | null = null;
@@ -171,6 +173,9 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       problems.push(...duplicates(file, 'tổ hợp ẩn', combos));
       comboTraits.push(...combos.map((c) => ({ file, combo: c.id, traits: c.traits })));
     }
+    if (schema === RebirthTalentFileSchema) {
+      for (const t of (parsed.data as { talents: { id: string; requiresKnowledge?: string }[] }).talents) if (t.requiresKnowledge) knowledgeRefs.push({ file, what: `thiên phú "${t.id}"`, id: t.requiresKnowledge });
+    }
     if (schema === RebirthTalentFileSchema) problems.push(...duplicates(file, 'thiên phú luân hồi', (parsed.data as { talents: { id: string }[] }).talents));
     if (schema === StatExtremesFileSchema) {
       const ids = new Set<string>();
@@ -188,6 +193,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     }
     if (schema === WorldSchema && (parsed.data as World).rootTestEvent) rootTests.push({ file, event: (parsed.data as World).rootTestEvent! });
     if (schema === OriginFileSchema) {
+      for (const o of parsed.data as Origin[]) if (o.requiresKnowledge) knowledgeRefs.push({ file, what: `xuất thân "${o.id}"`, id: o.requiresKnowledge });
       const seenOrigin = new Set<string>();
       for (const o of parsed.data as Origin[]) {
         if (seenOrigin.has(o.id)) problems.push({ file, level: 'error', message: `trùng id xuất thân "${o.id}"` });
@@ -472,6 +478,13 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       }
     }
   }
+
+  // 9.R5b: what waits for knowledge names a real entry (any world: shared files have no world).
+  const allKnowledge = new Set(knowledgeFiles.flatMap((k) => k.entries.map((e) => e.id)));
+  for (const { file, event } of events) {
+    for (const k of [...(event.conditions.knowledge?.all ?? []), ...(event.conditions.knowledge?.none ?? [])]) knowledgeRefs.push({ file, what: `sự kiện "${event.id}"`, id: k });
+  }
+  for (const r of knowledgeRefs) if (!allKnowledge.has(r.id)) problems.push({ file: r.file, level: 'error', message: `${r.what} cần tri thức lạ "${r.id}"` });
 
   // 9.R4b: a gate brings an event of its world, names a real Sổ tri thức entry, and has its chance in balance.json.
   for (const { file, gates } of gateFiles) {

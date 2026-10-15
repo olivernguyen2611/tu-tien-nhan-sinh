@@ -233,6 +233,35 @@
     ]
   },
   {
+    "id": "phat_duyen",
+    "group": "tien_dao",
+    "name": "Phật duyên",
+    "text": "Nhà chùa có câu: không linh căn thì tu tâm. Người đạo tâm vững, vào chùa gánh nước quét sân đủ năm, có khi tu được thật. Chuyện ấy sư trụ trì chỉ kể cho người hỏi đúng lúc.",
+    "sources": [
+      {
+        "kind": "event",
+        "id": "huong_hoa_hoi",
+        "chance": 0.3
+      },
+      {
+        "kind": "sect",
+        "id": "vo_uu_tu",
+        "chance": 1
+      },
+      {
+        "kind": "event",
+        "id": "tien_nhan_bay_ngang",
+        "chance": 0.05
+      }
+    ],
+    "unlocks": [
+      {
+        "kind": "tab",
+        "id": "tong_mon"
+      }
+    ]
+  },
+  {
     "id": "vo_dao_tam_luu",
     "group": "vo_dao",
     "name": "Thang võ đạo",

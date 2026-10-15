@@ -8,6 +8,7 @@ import type { EffectHook, Sect } from '../core/schemas';
 import type { GameState, LogLine } from '../core/types';
 import { chooseMaster, sectmateYear, seedCast } from './sectmates';
 import { currentTechnique, learnTechnique, rootAffinities } from './technique';
+import { featureOpen } from './knowledge';
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
 
@@ -57,6 +58,8 @@ export function sectEligibility(state: GameState, content: Content, sectId: stri
     // Phật duyên (task 3.12): some sects take the rootless with a strong đạo tâm.
     const need = sect.requires.rootlessMinDaoHeart;
     if (need === undefined) return 'cần có linh căn';
+    // 9.R5b: a mortal who never heard of it does not go knocking.
+    if (!featureOpen(state, content, 'tab', 'tong_mon', { born: true })) return 'chưa từng nghe tới tông môn tu tiên';
     return state.aptitudes.daoHeart >= need ? null : `không linh căn thì cần Đạo tâm ${need}`;
   }
   const missing = statsShort(state, sect.requires.minStats);

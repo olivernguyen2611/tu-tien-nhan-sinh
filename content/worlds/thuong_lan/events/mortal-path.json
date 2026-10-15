@@ -1092,6 +1092,11 @@
       ],
       "realm": {
         "max": "pham_nhan"
+      },
+      "knowledge": {
+        "all": [
+          "phat_duyen"
+        ]
       }
     },
     "weight": 3,

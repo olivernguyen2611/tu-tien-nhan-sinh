@@ -47,6 +47,8 @@ const BaseConditionsSchema = z
       .optional(),
     /** Spirit root (task 2.11): tested or not; usable = can cultivate. */
     /** innate (9.R4a): the untested root born with the life is usable (true) or not (false). */
+    /** 9.R5b: Sổ tri thức entries this life knows (all) or does not know (none). */
+    knowledge: z.object({ all: ids, none: ids }).partial().strict().optional(),
     root: z.object({ tested: z.boolean().optional(), usable: z.boolean().optional(), minElements: z.number().int().min(1).optional(), innate: z.boolean().optional() }).strict().optional(),
     /** Stage within the current realm, 0-based (task 2.8: "Luyện Khí tầng 4+" = min 3). */
     stage: z.object({ min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional(),
@@ -431,6 +433,8 @@ export const OriginSchema = z
     noParents: z.boolean().default(false),
     /** Clan of cultivators: the spirit root is rolled balance.roots.clanDescendantRolls times, best kept. */
     cultivatorClan: z.boolean().default(false),
+    /** 9.R5b: not offered (nor rolled) until this Sổ tri thức entry is known. */
+    requiresKnowledge: id.optional(),
     /** Task 5b.9 Cầu đầu thai: choosing this origin costs Luân Hồi points (random draws are free). */
     rebirthCost: z.number().int().min(1).optional(),
     birthText: z.string().min(1),
@@ -1759,7 +1763,8 @@ export const BalanceSchema = z
       })
       .strict(),
     /** 9.R4b: yearly chance of each tiên duyên gate; scale without its knowledge; luck shifts it by luckWeight × (luck − 50)%. */
-    immortalGates: z.object({ chance: z.record(z.string(), probability), unknownMul: probability, luckWeight: z.number().min(0) }).strict().optional(),
+    /** 9.R5b: closedUnknown gates stay shut until their entry is known (a first life never meets them). */
+    immortalGates: z.object({ chance: z.record(z.string(), probability), unknownMul: probability, closedUnknown: z.array(z.string()).default([]), luckWeight: z.number().min(0) }).strict().optional(),
     /** 9.R5a Sổ tri thức: yearly chance for a source that names none; at most this many finds a year, and a life. */
     knowledge: z.object({ defaultChance: probability, maxPerYear: z.number().int().min(1), maxPerLife: z.number().int().min(1) }).strict().optional(),
     /** Task 5b.2: Kim Thủ Chỉ at birth: chance + per life played (capped), sure after pityLives lives without one. */
@@ -3258,6 +3263,8 @@ export const RebirthTalentFileSchema = z
                 .strict(),
             )
             .min(1),
+          /** 9.R5b: hidden on the Luân Hồi đài until this Sổ tri thức entry is known (cultivation talents). */
+          requiresKnowledge: id.optional(),
         })
         .strict(),
     ),

@@ -6,6 +6,7 @@ import { version as GAME_VERSION } from '../../package.json';
 import type { GameState, LogYear, PastSectRecord } from '../core/types';
 import { Rng } from '../core/rng';
 import { EMPTY_CODEX, mergeCodex, type Codex } from './codex';
+import { BASIC_KNOWLEDGE } from './knowledge';
 
 /**
  * v2: after the per-version steps in `migrate`, missing fields are backfilled from a fresh life (`backfillLife`).
@@ -445,7 +446,7 @@ export function readMeta(store: KeyValueStore): SaveMeta {
       blessings: m.blessings && Array.isArray(m.blessings.list) ? m.blessings : null,
       rebirthTalents: m.rebirthTalents && typeof m.rebirthTalents === 'object' ? m.rebirthTalents : {},
       fingerPity: typeof m.fingerPity === 'number' ? m.fingerPity : 0,
-      codex: readCodex(m.codex),
+      codex: withBasicKnowledge(readCodex(m.codex), m),
       achievements: m.achievements && typeof m.achievements === 'object' ? m.achievements : {},
       weekly: m.weekly && typeof m.weekly === 'object' ? m.weekly : {},
       pastSect: m.pastSect && typeof m.pastSect.name === 'string' ? m.pastSect : null,
@@ -499,6 +500,12 @@ export function buyRebirthTalent(store: KeyValueStore, id: string, cost: number)
   if (cost > meta.rebirthPoints) return null;
   const rebirthTalents = { ...meta.rebirthTalents, [id]: (meta.rebirthTalents[id] ?? 0) + 1 };
   return writeMeta(store, { ...meta, rebirthPoints: meta.rebirthPoints - cost, rebirthTalents });
+}
+
+/** 9.R5b: a browser that played before the Sổ tri thức existed starts with the basics (knowledge.ts). */
+function withBasicKnowledge(codex: Codex, raw: Partial<SaveMeta>): Codex {
+  const old = (raw.livesPlayed ?? 0) > 0 && !(raw.codex && Array.isArray((raw.codex as Partial<Codex>).knowledge));
+  return old ? { ...codex, knowledge: [...BASIC_KNOWLEDGE] } : codex;
 }
 
 function readCodex(raw: unknown): Codex {

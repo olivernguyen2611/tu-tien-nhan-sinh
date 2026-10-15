@@ -8,6 +8,15 @@
 
 ## [Chưa phát hành]
 
+### 9.R5b: kiếp đầu là phàm nhân, mở khóa dần (2026-10-15)
+- Cửa vào tiên giới mở theo những gì đời này **sinh ra đã biết** (Sổ tri thức các kiếp trước). Điều đời này tự tìm ra chỉ mở cửa cho các kiếp sau.
+  - Cổng hội thu đồ, triều đình, cơ duyên xảo hợp đóng hẳn khi chưa biết (`immortalGates.closedUnknown`); cơ duyên phàm gian còn ×0,3.
+  - Hạ viện Vô Ưu và việc xin vào chùa khi không linh căn cần đã biết **Phật duyên** (mục tri thức mới, nghe được ở hội hương hỏa).
+  - Xuất thân "Hậu duệ gia tộc tu tiên" và 4 thiên phú luân hồi về tu tiên hiện "???" tới khi biết về linh căn; trời định không bao giờ cho xuất thân chưa biết.
+- Giao diện: chưa biết gì về tu tiên thì thẻ Tu luyện đọc là **Rèn luyện**, thẻ Tông môn đọc là **Giang hồ** và không liệt kê tiên môn; thuật ngữ như linh căn, linh khí, tu vi chưa gạch chân chú giải cho tới khi biết. Đã ở trong (có linh căn, đã vào tông, đang tu) thì mở như cũ.
+- Save cũ: trình duyệt đã chơi trước khi có Sổ tri thức được ghi sẵn 5 mục cơ bản (lời đồn tiên nhân, tiên môn thu đồ, linh căn, dẫn khí nhập thể, chính đạo tông môn) để không bị khóa oan.
+- Đo 200 đời (bot player): kiếp đầu chạm Luyện Khí 59,5% → **7%** (phần còn lại chủ yếu là kỳ ngộ tàn hồn trong nhẫn); người chơi đã biết hết vẫn 74,5%. Mục tiêu ≤ 3% của kế hoạch chưa đạt hẳn; có thể siết kỳ ngộ sau nếu cần.
+
 ### 9.R4d: Tiên Võ song tu, dọn theo và save cũ (2026-10-15)
 - Võ giả bắt đầu tu tiên vào **tầng khởi đầu theo bậc võ đạo** (`balance.martial.conversion`): Tuyệt đỉnh tầng 2, Hóa cảnh tầng 4, Tam hoa tầng 7, Ngũ khí **thẳng Trúc Cơ sơ kỳ** (đạo cơ trung phẩm). Nhật ký có dòng riêng. Thân thể đã định hình bởi võ đạo nên tu chậm hơn ×0,9 (trừ linh căn Ngũ khí). Sức mạnh vẫn lấy phần lớn hơn giữa tu tiên và võ đạo (9.V1).
 - Save cũ: đời chưa thử linh căn bỏ lịch hẹn thử linh căn đại trà còn treo; cổng tiên duyên lo phần còn lại. Đời đã thử giữ nguyên.
