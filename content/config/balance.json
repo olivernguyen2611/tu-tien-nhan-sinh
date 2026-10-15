@@ -630,7 +630,16 @@
     "reconcileAffinity": 12,
     "reconcileFailAffinity": -3,
     "divorceHappiness": -10,
-    "divorceDaoHeart": 2
+    "divorceDaoHeart": 2,
+    "amendsAffinity": 8,
+    "mendBase": 0.35,
+    "mendAffinity": 10,
+    "mendFailAffinity": -3,
+    "rekindleAt": 45,
+    "rekindleBase": 0.25,
+    "rekindleHappiness": 12,
+    "rekindleFailAffinity": -8,
+    "cutOffHappiness": -2
   },
   "rankings": {
     "count": 12,

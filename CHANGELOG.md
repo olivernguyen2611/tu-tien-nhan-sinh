@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### 9.0.1: người cũ vẫn tương tác được (2026-10-15)
+- Chia tay hay hòa ly xong, người cũ không còn bị khóa: có 4 hành động riêng là **Xin lỗi, đền bù** (tốn tiền, tăng thiện cảm), **Hóa giải hiềm khích**, **Nối lại duyên** (cần thiện cảm đủ cao, xác suất theo thiện cảm và mị lực, thành công thì thành đôi lại) và **Cắt đứt hẳn** (không theo đuổi lại được). Mọi con số nằm ở `balance.romance`, lời ở `romance.json`.
+- Save: thêm trường tùy chọn `romance.cut`, save cũ không cần migration. Test mới `tests/romance-ex.test.ts`.
+- Chưa làm: thiện cảm người cũ tự phai/hồi theo năm và cờ mức độ phũ của sự kiện từ hôn; để dành cho 9.0.3.
+
 ### GĐ 6d.4: cao nhân trở lại ở Ngũ khí triều nguyên (2026-10-15)
 - Đạt Ngũ khí triều nguyên, lão nhân năm xưa hiện ra lần nữa, bấy giờ đã có linh căn Ngũ khí nên **Cửu Chuyển Kim Cốt Quyết** tu được: vào Luyện Khí 1 với chính công pháp này (thay Dẫn Khí Quyết mặc định), Tiên Võ thể đi kèm. Luôn được tặng kể cả khi đi tắt bằng dev mode.
 

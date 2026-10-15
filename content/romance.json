@@ -73,7 +73,14 @@
       "{npc} hỏi ngươi một câu, ngươi trả lời câu khác. Người ấy cười nhạt rồi quay đi.",
       "Hàng xóm hỏi thăm {npc} sao dạo này hay ngồi một mình."
     ],
-    "spouseLeft": "Một sáng ngươi dậy, chỗ bên cạnh đã lạnh. {npc} để lại một lá thư: \"Ở cùng một người không nhìn thấy mình, còn cô đơn hơn ở một mình.\""
+    "spouseLeft": "Một sáng ngươi dậy, chỗ bên cạnh đã lạnh. {npc} để lại một lá thư: \"Ở cùng một người không nhìn thấy mình, còn cô đơn hơn ở một mình.\"",
+    "amendsYes": "Ngươi mang lễ đến tạ lỗi với {npc}, lời nói chậm mà thật. Người ta không nói gì, nhưng cũng không đóng cửa.",
+    "amendsNo": "Ngươi mang lễ đến tạ lỗi, {npc} nhìn chiếc hộp rồi nhìn ngươi, sau cùng chỉ khẽ lắc đầu.",
+    "mendYes": "Ngươi tìm {npc} nói rõ ngọn ngành chuyện cũ. Hiềm khích như băng tan, không còn là địch nhân của nhau.",
+    "mendNo": "Ngươi muốn giải bày với {npc}, nhưng chuyện cũ như cái gai chưa nhổ, nói thêm chỉ đau thêm.",
+    "rekindleYes": "Ngươi đứng trước cửa {npc} rất lâu. Cánh cửa mở ra, người ta nói: \"Lần này đừng để ta đợi nữa.\"",
+    "rekindleNo": "Ngươi ngỏ ý nối lại duyên cũ. {npc} im lặng một hồi: \"Có những chuyện, vỡ rồi thì chỉ còn hoài niệm.\"",
+    "cutOff": "Ngươi đốt thư cũ, cắt đứt hẳn với {npc}. Từ nay đường ai nấy đi, không còn vương vấn."
   },
   "labels": {
     "lover": "Người trong lòng",
