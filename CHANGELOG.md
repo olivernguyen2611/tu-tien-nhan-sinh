@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### 9.V1: thước sức mạnh võ đạo mới (2026-10-15)
+- Theo chủ dự án (15/10 16:40): bậc cao chênh nhau ít hơn, Ngũ khí chỉ ngang Trúc Cơ hậu kỳ, viên mãn. `balance.martial.combatPower` từ 1 / 1,5 / 2 / 3 / 5 / 7 / 9 thành **1,5 / 2 / 2,8 / 4 / 7 / 18 / 40** (Tam lưu → Ngũ khí).
+- Tỉ lệ thắng trận theo công thức (Căn cốt 50): Hóa cảnh với Luyện Khí tầng 1 khoảng 31%; Tam hoa với Luyện Khí tầng 9 50%, với Trúc Cơ sơ kỳ 14%; Ngũ khí với Trúc Cơ hậu kỳ 40%, viên mãn 36%, Kim Đan sơ kỳ 3%.
+- Võ giả chạy nhanh theo cảnh giới tương đương (`speedEquivMul` 1,5): Hóa cảnh chạy như Luyện Khí, Ngũ khí như Trúc Cơ. Sức mạnh võ đạo được giữ cả khi đã nhập tu tiên (lấy cái lớn hơn), nên Tiên Võ đồng tu không làm người yếu đi.
+- `npm run simulate -- --duel` in bảng tỉ lệ thắng; test `tests/duel.test.ts` khóa các mốc trên.
+
 ### 9.R3d: đo Kim Thủ Chỉ bằng mô phỏng (2026-10-15)
 - `npm run simulate -- --fingers all --count 200 --profile player`: mỗi kim thủ chỉ chạy cùng seed với và không có nó; bot dùng mọi hành động đang mở (nên cái giá cũng được trả). Báo độ lệch tu luyện, thọ, linh thạch, chết trận, tâm ma, và so với mục tiêu theo bậc `balance.goldenFinger.impactTarget` (phàm +10%, hiếm +25%, cực hiếm +50%, nghịch thiên +100% trên trục mạnh nhất): yếu (dưới nửa), vừa, mạnh (trên gấp đôi).
 - Chỉnh theo số đo 200 đời: Bất diệt chiến hồn (thọ −44%: luyện tốn 3 Sức khỏe thay 6, cướp bóc ×1,2 thay ×1,4, thêm giảm thương 10%), Hỗn độn châu (thọ −42%: bỏ hao Sức khỏe mỗi năm, luyện tốn 1 đạo tâm thay 3, hỏng −10 Sức khỏe thay −15, thiên kiếp nặng thêm 10% thay 25%, thêm tốc tu 15% từ đầu), Ngộ đạo thạch bia (tâm ma +46%: hồi 2 năm, không hao đạo tâm khi ngộ được, ngộ hỏng mới hao 2 đạo tâm và +2 tâm ma), Nhãn thấu cơ duyên (thọ −24%: soi 4 năm một lần), Bình nhỏ thần bí và Mảnh vườn thần bí (bậc Phàm mà mạnh quá: bớt thọ, tốc tu, linh thạch mỗi năm; uống linh dịch 3 năm một lần, +4 Sức khỏe thay +8).

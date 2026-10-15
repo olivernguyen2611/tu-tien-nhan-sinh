@@ -1654,6 +1654,8 @@ export const BalanceSchema = z
       .object({
         minAge: z.number().int().min(0),
         combatPower: z.array(z.number().min(0)).min(1),
+        /** 9.V1: speed counts the highest realm whose base power is at most martial power × this (Hóa cảnh runs like Luyện Khí). */
+        speedEquivMul: z.number().min(0).optional(),
         /** Lifespan added on reaching each stage. */
         lifespan: z.array(z.number().int().min(0)).min(1),
         /** Training into stage i (steps[0] = into Tam lưu). Stages past the list need a kỳ ngộ. */

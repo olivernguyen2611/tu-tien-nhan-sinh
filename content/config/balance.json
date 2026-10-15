@@ -327,7 +327,8 @@
   },
   "martial": {
     "minAge": 10,
-    "combatPower": [1, 1.5, 2, 3, 5, 7, 9],
+    "combatPower": [1.5, 2, 2.8, 4, 7, 18, 40],
+    "speedEquivMul": 1.5,
     "lifespan": [0, 0, 5, 10, 30, 20, 20],
     "steps": [
       { "years": 3, "stats": ["physique", "comprehension"], "difficulty": 30 },

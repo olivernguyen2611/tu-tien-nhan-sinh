@@ -2,6 +2,7 @@
 // Chạy hàng loạt đời giả lập để xem cân bằng (tuổi chết, cảnh giới, nguyên nhân chết, linh căn).
 // Dùng vite-node vì game nạp nội dung bằng import.meta.glob của Vite.
 import { loadContent } from '../src/core/content';
+import { duelTable } from '../src/systems/duel';
 import { BOT_PROFILES, fingerImpacts, formatReport, simulateMany, traitImpacts, type BotProfile } from '../src/systems/simulate';
 
 const args = process.argv.slice(2);
@@ -39,6 +40,18 @@ if (traitsArg) {
     console.log(`${i.id} | ${t?.rarity} | ${t?.nature ?? 'tot'} | ${i.peak.toFixed(2)} | ${i.age.toFixed(1)} | ${(i.kimDan * 100).toFixed(1)}% | ${i.over ? 'VƯỢT' : ''}`);
   }
   console.log(`(${((Date.now() - started) / 1000).toFixed(1)}s)`);
+  process.exit(0);
+}
+// 9.V1: npm run simulate -- --duel   (thước sức mạnh: võ giả từng cảnh giới đấu tu sĩ, theo công thức, không chạy đời)
+if (args.includes('--duel')) {
+  const rows = duelTable(content);
+  const realms = [...new Set(rows.map((r) => r.foe))];
+  const show = realms.filter((f) => /tầng (1|5|9)$|kỳ$|viên mãn$/.test(f) && !/(Nguyên Anh|Hóa Thần)/.test(f));
+  console.log('== Thước sức mạnh: tỉ lệ thắng trận (2 trong 3 hiệp), Căn cốt 50 ==');
+  console.log(['Võ đạo', ...show].join(' | '));
+  for (const m of [...new Set(rows.map((r) => r.martial))]) {
+    console.log([m, ...show.map((f) => `${Math.round(rows.find((r) => r.martial === m && r.foe === f)!.match * 100)}%`)].join(' | '));
+  }
   process.exit(0);
 }
 // 9.R3d: npm run simulate -- --fingers all --count 40 --profile player   (or --fingers id1,id2)
