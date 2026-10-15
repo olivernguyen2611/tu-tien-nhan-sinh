@@ -13,6 +13,7 @@ import { sectmateViews, tournamentViews } from '../../systems/sectmates';
 import { learnBlocked, techniqueById } from '../../systems/technique';
 import { TermText } from './Tooltip';
 import { OwnSectSection } from './OwnSectSection';
+import { SectIdentity } from './SectIdentity';
 
 export type SectAction =
   | { kind: 'join'; sectId: string }
@@ -52,6 +53,7 @@ export function SectPanel({ state, content, onAction, onClose }: {
           <>
             <h2>{sect.name}</h2>
             <p class="profile-note"><TermText text={sect.description} /></p>
+            <SectIdentity sect={sect} content={content} />
             <p class="story">Đệ tử {sect.ranks[state.sect.rank]} · cống hiến {state.sect.contribution}{state.sect.master ? ` · sư phụ: ${state.sect.master}` : ''}</p>
             {(() => {
               const need = nextRankNeed(state, content);
@@ -183,6 +185,7 @@ export function SectPanel({ state, content, onAction, onClose }: {
                 <div class="career-row" key={s.id}>
                   <div class="craft-head"><b>{s.name}</b><span class="muted">{content.cultivation.realms.lineageNames[s.lineage]}</span></div>
                   <p class="profile-note"><TermText text={s.description} /></p>
+                  <SectIdentity sect={s} content={content} />
                   <button class="chip-btn" disabled={!!reason} onClick={() => act({ kind: 'join', sectId: s.id })}>Xin bái nhập</button>
                   {reason && <span class="craft-note">{reason.charAt(0).toUpperCase() + reason.slice(1)}.</span>}
                 </div>

@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### 9.0.4: bản sắc tông môn, gia phong gia tộc (bước đầu) (2026-10-15)
+- Mỗi tông môn có mục **Bản sắc** (`sects.json` trường `identity`): truyền thống, tuyệt kỹ, giai thoại, đối thủ (Bích Lạc và Tàng Phong tranh kiếm đạo, Bách Thảo Cốc và U Hà Ma Tông thù nhau vì độc), nhân vật nổi bật (chưởng môn, thiên tài, các chủ…). Hiện ở bảng Tông môn và danh sách xin bái nhập.
+- Gia quy của gia tộc có thêm **gia phong** (`clan.json` trường `tradition`) hiện dưới từng gia quy.
+- Chưa làm (để cho 10.11, 13.4): chuỗi sự kiện theo thế hệ (tế tổ, tranh gia chủ, hôn nhân liên gia), nhân vật nổi bật ảnh hưởng gameplay, thi đua tông-tông/tộc-tộc.
+
 ### 9.0.3: tương tác theo mức thân và sự kiện chung (2026-10-15)
 - Người quen có **việc làm theo mức thân** (`content/npc-acts.json`): quen biết thì uống trà, hỏi thăm tin tức; từ có cảm tình thì rủ uống rượu, ngao du, nhờ giúp đỡ, cùng tu luyện (hai tu sĩ); thân thiết thì tâm sự, xin chỉ điểm; người có hiềm khích thì dò la, cầu hòa, đối đầu. Mỗi việc một lần mỗi năm mỗi người. Người thân bậc 3 thấy ít nhất 6 việc khác nhau.
 - **Sự kiện chung** mới (`events/bond.json`, 10 sự kiện): bạn thân thỉnh thoảng tìm tới (trigger `bond`, `balance.npcs.bondAt/bondChance/bondGapYears`): cùng uống rượu, nhờ việc, hiểu lầm, cùng gặp nạn, thiệp mời, bạn sa cơ, kẻ thù chung, cùng ngộ đạo; từ thân 85 là kết nghĩa kim lan; từ 90 là tâm sự đêm khuya. Điều kiện sự kiện thêm `npc.minAffinity/maxAffinity`.

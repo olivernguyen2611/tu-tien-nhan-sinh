@@ -7,7 +7,8 @@
       "rootRolls": 1,
       "incomeMul": 1,
       "inheritMoney": 0,
-      "karmaPerYear": 0
+      "karmaPerYear": 0,
+      "tradition": "Sáng mùng một, con cháu tụ ở từ đường đọc tên các bậc tiền bối đã kết đan. Đứa nào lười tu bị phạt quỳ một nén nhang."
     },
     {
       "id": "trong_thuong_nghiep",
@@ -16,7 +17,8 @@
       "rootRolls": 0,
       "incomeMul": 1.5,
       "inheritMoney": 0,
-      "karmaPerYear": 0
+      "karmaPerYear": 0,
+      "tradition": "Sổ sách nhà này ghi tới từng đồng. Trẻ lên bảy đã phải biết gảy bàn tính, gả cưới cũng tính lời lỗ trước."
     },
     {
       "id": "doc_dinh_truyen_thua",
@@ -25,7 +27,8 @@
       "rootRolls": 0,
       "incomeMul": 1,
       "inheritMoney": 0.2,
-      "karmaPerYear": 0
+      "karmaPerYear": 0,
+      "tradition": "Mỗi đời chỉ một người giữ ấn tộc trưởng. Anh em còn lại ra ngoài lập nghiệp, nên con cháu nhà này đi khắp bốn phương."
     },
     {
       "id": "tich_thien",
@@ -34,7 +37,8 @@
       "rootRolls": 0,
       "incomeMul": 0.9,
       "inheritMoney": 0,
-      "karmaPerYear": 2
+      "karmaPerYear": 2,
+      "tradition": "Cổng nhà không bao giờ đóng ngày đói. Người trong vùng gọi là nhà Thiện, ai có chuyện cũng tìm tới."
     }
   ],
   "properties": [

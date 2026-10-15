@@ -2230,6 +2230,22 @@ export const SectFileSchema = z.array(
       /** K.6 hooks while a disciple. */
       effects: z.array(EffectHookSchema),
       duty: z.string().min(1),
+      /** 9.0.4: what sets this sect apart (shown in the Tông môn sheet). */
+      identity: z
+        .object({
+          /** The sect's lasting custom (truyền thống). */
+          tradition: z.string().min(1),
+          /** Its signature art or speciality (tuyệt kỹ). */
+          signature: z.string().min(1),
+          /** A tale of its history (giai thoại). */
+          anecdote: z.string().min(1),
+          /** Id of the sect it vies with, and why. */
+          rival: z.object({ sect: id, reason: z.string().min(1) }).strict().optional(),
+          /** People who give it a face (founder, genius, traitor…). */
+          notable: z.array(z.object({ name: z.string().min(1), title: z.string().min(1), text: z.string().min(1) }).strict()).default([]),
+        })
+        .strict()
+        .optional(),
     })
     .strict(),
 );
@@ -2988,6 +3004,8 @@ export const ClanFileSchema = z
           /** Added to the share of money an heir inherits. */
           inheritMoney: z.number().min(0).max(1),
           karmaPerYear: z.number(),
+          /** 9.0.4: the custom this rule grows into over generations (gia phong), shown in the clan section. */
+          tradition: z.string().min(1).optional(),
         })
         .strict(),
     ),
