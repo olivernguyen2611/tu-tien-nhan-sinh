@@ -8,6 +8,7 @@ import type { GameState } from '../core/types';
 import { act, settle } from './combat';
 import { attemptMajorBreakthrough, enterFirstRealm, majorBreakthroughInfo, rootUsable } from './cultivation';
 import { confirmDestiny, rollDestiny } from './destiny';
+import { doFingerAction, fingerActionViews } from './fingerActions';
 import { resolveChoice, findEvent, visibleChoices } from './events/engine';
 import { chooseFate } from './fate';
 import { placeStrand } from './goldenCore';
@@ -73,6 +74,8 @@ export interface SimOptions {
   observe?: (kind: 'event' | 'combat', state: GameState) => void;
   /** 9.R2d: skip the roll and take exactly these khí vận ([] = none), for A/B runs on the same seeds. */
   traits?: string[];
+  /** 9.R3d: start with this Kim Thủ Chỉ (absent = none, as before). */
+  goldenFinger?: string;
 }
 
 /** Live one life to its end. Deterministic for a seed, profile and content. */
@@ -83,7 +86,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
   const maxSteps = opts.maxSteps ?? 20000;
   const botRng = new Rng(`bot:${seed}`);
   const realms = content.cultivation.realms.realms.map((r) => r.id);
-  const born = createLife({ seed, difficulty: opts.difficulty }, content);
+  const born = createLife({ seed, difficulty: opts.difficulty, goldenFinger: opts.goldenFinger }, content);
   const offered = opts.traits ? { ...born, destiny: { ...born.destiny, offered: opts.traits } } : rollDestiny(born, content);
   let s: GameState = confirmDestiny(offered, content);
   let peak = 0;
@@ -134,6 +137,11 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
       }
     }
     if (profile === 'player' && !s.seclusion) s = playerYear(s, content);
+    // 9.R3d: every bot uses each finger action that is open (so the finger's price is paid too).
+    if (s.goldenFinger && !s.seclusion && !s.events.pending) {
+      for (const v of fingerActionViews(s, content)) if (!v.blocked) s = doFingerAction(s, content, v.id)?.state ?? s;
+      if (s.events.pending || s.combat) continue;
+    }
     const info = majorBreakthroughInfo(s, content);
     const minPct = profile === 'random' ? 0 : profile === 'player' ? 30 : 50;
     if (info && !info.blocked && info.chancePct >= minPct) {
@@ -344,4 +352,44 @@ export function traitImpacts(content: Content, ids: string[], count: number, pre
     return { id, peak, age: r.age - b.age, kimDan: r.kimDan - b.kimDan, over: peak > max || (mixed && peak > (budget?.mixedMax ?? Infinity)) };
   });
   return { base: base.report, impacts };
+}
+
+/** 9.R3d: what one Kim Thủ Chỉ changes, against the same seeds with none (relative lift per axis, and its price). */
+export interface FingerImpact {
+  id: string;
+  /** Relative lift: mean peak realm, mean age, spirit stones at death (best of the three is `gain`). */
+  cultivation: number;
+  lifespan: number;
+  wealth: number;
+  gain: number;
+  /** Change in the share of lives dying in a fight / to a heart demon or đạo tâm at 0 (its price). */
+  combatDeath: number;
+  heartDemon: number;
+  /** Against balance.goldenFinger.impactTarget: under half of it, over twice it, or in range. */
+  verdict: 'yeu' | 'manh' | 'vua';
+}
+
+export function fingerImpacts(content: Content, ids: string[], count: number, prefix: string, opts: SimOptions = {}): { base: Report; impacts: FingerImpact[] } {
+  const mean = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / Math.max(1, xs.length);
+  const share = (rs: LifeResult[], f: (r: LifeResult) => boolean) => rs.filter(f).length / Math.max(1, rs.length);
+  const stats = (rs: LifeResult[]) => ({
+    peak: mean(rs.map((r) => r.peak)), age: mean(rs.map((r) => r.age)), stones: mean(rs.map((r) => r.stonesLeft)),
+    combat: share(rs, (r) => r.cause === 'combat'), demon: share(rs, (r) => r.cause.includes('demon') || r.cause.includes('tam_ma') || r.daoHeartZero),
+  });
+  const { results, report: base } = simulateMany(content, count, prefix, { ...opts, goldenFinger: undefined });
+  const b = stats(results);
+  const targets = content.balance.goldenFinger.impactTarget ?? {};
+  const impacts = ids.map((id) => {
+    const f = content.goldenFingers.fingers.find((x) => x.id === id);
+    const r = stats(simulateMany(content, count, prefix, { ...opts, goldenFinger: id }).results);
+    // Floors keep a tiny baseline (e.g. almost no stones) from turning a small change into a huge ratio.
+    const cultivation = (r.peak - b.peak) / Math.max(b.peak, 0.5);
+    const lifespan = (r.age - b.age) / Math.max(b.age, 1);
+    const wealth = (r.stones - b.stones) / Math.max(b.stones, 100);
+    const gain = Math.max(cultivation, lifespan, wealth);
+    const target = targets[f?.rarity ?? 'pham'] ?? 0;
+    const verdict: FingerImpact['verdict'] = gain < target / 2 ? 'yeu' : gain > target * 2 ? 'manh' : 'vua';
+    return { id, cultivation, lifespan, wealth, gain, combatDeath: r.combat - b.combat, heartDemon: r.demon - b.demon, verdict };
+  });
+  return { base, impacts };
 }

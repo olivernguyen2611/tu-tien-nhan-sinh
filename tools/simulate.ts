@@ -2,7 +2,7 @@
 // Chạy hàng loạt đời giả lập để xem cân bằng (tuổi chết, cảnh giới, nguyên nhân chết, linh căn).
 // Dùng vite-node vì game nạp nội dung bằng import.meta.glob của Vite.
 import { loadContent } from '../src/core/content';
-import { BOT_PROFILES, formatReport, simulateMany, traitImpacts, type BotProfile } from '../src/systems/simulate';
+import { BOT_PROFILES, fingerImpacts, formatReport, simulateMany, traitImpacts, type BotProfile } from '../src/systems/simulate';
 
 const args = process.argv.slice(2);
 const arg = (name: string, fallback: string) => {
@@ -37,6 +37,25 @@ if (traitsArg) {
   for (const i of impacts.sort((a, b) => b.peak - a.peak)) {
     const t = content.traits.find((x) => x.id === i.id);
     console.log(`${i.id} | ${t?.rarity} | ${t?.nature ?? 'tot'} | ${i.peak.toFixed(2)} | ${i.age.toFixed(1)} | ${(i.kimDan * 100).toFixed(1)}% | ${i.over ? 'VƯỢT' : ''}`);
+  }
+  console.log(`(${((Date.now() - started) / 1000).toFixed(1)}s)`);
+  process.exit(0);
+}
+// 9.R3d: npm run simulate -- --fingers all --count 40 --profile player   (or --fingers id1,id2)
+const fingersArg = arg('fingers', '');
+if (fingersArg) {
+  const ids = fingersArg === 'all' ? content.goldenFingers.fingers.map((f) => f.id) : fingersArg.split(',');
+  const profile = profiles[0];
+  const started = Date.now();
+  const { base, impacts } = fingerImpacts(content, ids, count, prefix, { profile, difficulty: difficulty || undefined });
+  const p = (v: number) => `${v >= 0 ? '+' : ''}${(v * 100).toFixed(0)}%`;
+  const names = content.goldenFingers.rarityNames ?? {};
+  console.log(`== Kim Thủ Chỉ A/B · ${profile} · ${count} đời mỗi bên · nền: tuổi TB ${base.age.mean.toFixed(1)} ==`);
+  console.log('id | bậc | tu luyện | thọ | linh thạch | Δ chết trận | Δ tâm ma | đánh giá');
+  for (const i of impacts) {
+    const f = content.goldenFingers.fingers.find((x) => x.id === i.id);
+    const tier = f ? (names as Record<string, string>)[f.rarity] ?? f.rarity : '?';
+    console.log(`${i.id} | ${tier} | ${p(i.cultivation)} | ${p(i.lifespan)} | ${p(i.wealth)} | ${p(i.combatDeath)} | ${p(i.heartDemon)} | ${{ yeu: 'yếu', manh: 'MẠNH', vua: 'vừa' }[i.verdict]}`);
   }
   console.log(`(${((Date.now() - started) / 1000).toFixed(1)}s)`);
   process.exit(0);

@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### 9.R3d: đo Kim Thủ Chỉ bằng mô phỏng (2026-10-15)
+- `npm run simulate -- --fingers all --count 200 --profile player`: mỗi kim thủ chỉ chạy cùng seed với và không có nó; bot dùng mọi hành động đang mở (nên cái giá cũng được trả). Báo độ lệch tu luyện, thọ, linh thạch, chết trận, tâm ma, và so với mục tiêu theo bậc `balance.goldenFinger.impactTarget` (phàm +10%, hiếm +25%, cực hiếm +50%, nghịch thiên +100% trên trục mạnh nhất): yếu (dưới nửa), vừa, mạnh (trên gấp đôi).
+- Chỉnh theo số đo 200 đời: Bất diệt chiến hồn (thọ −44%: luyện tốn 3 Sức khỏe thay 6, cướp bóc ×1,2 thay ×1,4, thêm giảm thương 10%), Hỗn độn châu (thọ −42%: bỏ hao Sức khỏe mỗi năm, luyện tốn 1 đạo tâm thay 3, hỏng −10 Sức khỏe thay −15, thiên kiếp nặng thêm 10% thay 25%, thêm tốc tu 15% từ đầu), Ngộ đạo thạch bia (tâm ma +46%: hồi 2 năm, không hao đạo tâm khi ngộ được, ngộ hỏng mới hao 2 đạo tâm và +2 tâm ma), Nhãn thấu cơ duyên (thọ −24%: soi 4 năm một lần), Bình nhỏ thần bí và Mảnh vườn thần bí (bậc Phàm mà mạnh quá: bớt thọ, tốc tu, linh thạch mỗi năm; uống linh dịch 3 năm một lần, +4 Sức khỏe thay +8).
+- Sau khi chỉnh: Chiến hồn và Nhãn thấu cơ duyên về mức "vừa"; Bình nhỏ thần bí còn hơi mạnh (thọ +21%); Hỗn độn châu và Ngộ đạo thạch bia vẫn đo ra thọ −20 đến −30%: chúng đẩy tu vi nhanh nên người chơi máy đột phá sớm, ít đời lên Nguyên Anh hơn (cần xem lại cùng 9.V và GĐ 13).
+- Còn lại để ý: vài cái nghịch thiên (Thiên mệnh thư, Thôn phệ) đo ra "yếu" vì sức mạnh nằm ở chỗ bot không dùng hết (sửa một dòng sự kiện, nuốt nội đan khi thắng); số đo 200 đời vẫn lệch khoảng ±10% ở trục thọ.
+- Test: mỗi kim thủ chỉ làm đời sống khác đi trên cùng seed.
+
 ### 9.W: một thế giới, võ lâm tách khỏi tông môn tu tiên (2026-10-15)
 - Theo chủ dự án: không làm thế giới thứ hai, võ lâm đặt thẳng vào Thương Lan giới. Đổi tên hiển thị (giữ id, save cũ vẫn mở): vùng quê Thanh Vân châu thành **Trung Nguyên** (đất Đại Ung vương triều); trong sự kiện Diên Châu thành Trung Nguyên, Lục Hợp Môn thành Thiếu Lâm, Thính Vũ Kiếm Phái thành Hoa Sơn phái, Vô Diện Lâu thành Huyết Sát Lâu.
 - File mới `content/worlds/thuong_lan/jianghu-factions.json`: 17 thế lực giang hồ (7 môn phái và bang: Thiếu Lâm, Hoa Sơn, Võ Đang, Nga Mi, Côn Lôn, Không Động, Cái Bang; Ngũ đại thế gia Mộ Dung, Gia Cát, Đường Môn, Nam Cung, Bành; Thiên Ma Thần Giáo, Huyết Sát Lâu, Lục Lâm Minh, Thiên Hạ Tiêu Cục, Vạn Bảo Thương Hội), mỗi thế lực có tôn chỉ, tuyệt học, cách gia nhập, giao hảo/đối địch, nhân vật tiêu biểu. Tên tuyệt học tự đặt, không dùng tên riêng của tiểu thuyết có bản quyền.
