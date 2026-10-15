@@ -7,6 +7,7 @@ import { attemptMajorBreakthrough, breakthroughPct, cultivateYear, inBottleneck,
 import { migrate, makeSave } from '../src/systems/save';
 import { findEvent, resolveChoice, visibleChoices } from '../src/systems/events/engine';
 import { learnTechnique } from '../src/systems/technique';
+import { act, settle } from '../src/systems/combat';
 
 const content = loadContent();
 const speed = (grade: string) => content.balance.roots.gradeSpeed[grade];
@@ -22,7 +23,9 @@ function untilTested(seed: string, originId?: string): GameState {
   let s = createLife({ seed, originId }, content);
   s = { ...s, destiny: { ...s.destiny, confirmed: true } };
   while (s.alive && !s.cult.root && s.character.age < 20) {
-    s = s.events.pending ? resolveChoice(s, content, firstOpen(s)).state : advanceYear(s, content);
+    // A fight from an event is fought through (all out, then spare), as the simulate bot does.
+    if (s.combat) s = s.combat.phase === 'fight' ? act(s, content, 'all_out').state : settle(s, content, 'spare').state;
+    else s = s.events.pending ? resolveChoice(s, content, firstOpen(s)).state : advanceYear(s, content);
   }
   return s;
 }

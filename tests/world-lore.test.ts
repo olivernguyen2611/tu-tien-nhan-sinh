@@ -12,6 +12,8 @@ describe('world lore (9.R7c)', () => {
     expect(content.races).toHaveLength(6);
     expect(regionLore(content, 'thanh_van_chau').nations).toContain('Đại Ung vương triều');
     expect(regionLore(content, 'thai_co_chien_truong').races).toContain('Thạch tộc');
+    expect(content.figures!.length).toBeGreaterThanOrEqual(25);
+    expect(regionLore(content, 'huyet_uyen').figures.some((f) => f.includes('Xích Phát Ma Quân'))).toBe(true);
   });
 
   it('a lore entry in an unknown region is an error', () => {

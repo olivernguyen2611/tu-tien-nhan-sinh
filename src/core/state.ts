@@ -24,6 +24,7 @@ import { notifyYear } from '../systems/timeline';
 import { blessingRerolls } from '../systems/blessings';
 import { knowledgeYear, knowsFor } from '../systems/knowledge';
 import { gatesYear } from '../systems/immortalGates';
+import { worldEventsYear } from '../systems/worldEvents';
 import { withCheckpoints } from '../systems/rewind';
 import { awakenGoldenFinger } from '../systems/goldenFinger';
 import { goldenFingerYear } from '../systems/fingerActions';
@@ -212,7 +213,9 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   // Task 4.1: in seclusion no ordinary event comes (follow-ups wait for the door to open);
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;
-  const rolled = !body.alive ? secluded : state.seclusion ? rollSeclusionEvent(secluded, content) : rollYearEvent(gatesYear(secluded, content), content);
+  // 9.R7e: the world moves on before the year's event is drawn.
+  const worldly = body.alive ? worldEventsYear(secluded, content) : secluded;
+  const rolled = !body.alive ? worldly : state.seclusion ? rollSeclusionEvent(worldly, content) : rollYearEvent(gatesYear(worldly, content), content);
   // 9.R5a: what the year taught goes into the Sổ tri thức.
   const next = rolled.alive ? knowledgeYear(rolled, content) : rolled;
   // The year's log block exists before family news and the event are added to it.

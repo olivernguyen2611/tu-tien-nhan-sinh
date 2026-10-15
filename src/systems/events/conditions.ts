@@ -89,6 +89,10 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
   // 9.R5b: doors open on what the life was born knowing (past lives), see knowledge.ts bornKnowing.
   if (c.knowledge?.all?.some((k) => !bornKnowing(state).includes(k))) return false;
   if (c.knowledge?.none?.some((k) => bornKnowing(state).includes(k))) return false;
+  if (c.worldEvent) {
+    const a = state.world?.active;
+    if (!a || !c.worldEvent.id.includes(a.id) || (c.worldEvent.phase !== undefined && c.worldEvent.phase !== a.phase)) return false;
+  }
   if (c.flagsAll?.some((f) => !state.flags[f])) return false;
   if (c.itemsAll?.some((i) => !(state.inventory[i] > 0))) return false;
   if (c.flagsNone?.some((f) => state.flags[f])) return false;

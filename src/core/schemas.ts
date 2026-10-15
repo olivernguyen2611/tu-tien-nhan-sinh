@@ -49,6 +49,8 @@ const BaseConditionsSchema = z
     /** innate (9.R4a): the untested root born with the life is usable (true) or not (false). */
     /** 9.R5b: Sổ tri thức entries this life knows (all) or does not know (none). */
     knowledge: z.object({ all: ids, none: ids }).partial().strict().optional(),
+    /** 9.R7e: a sự kiện thiên hạ is under way (any of these ids; at this phase index when given). */
+    worldEvent: z.object({ id: ids, phase: z.number().int().min(0).optional() }).strict().optional(),
     root: z.object({ tested: z.boolean().optional(), usable: z.boolean().optional(), minElements: z.number().int().min(1).optional(), innate: z.boolean().optional() }).strict().optional(),
     /** Stage within the current realm, 0-based (task 2.8: "Luyện Khí tầng 4+" = min 3). */
     stage: z.object({ min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional(),
@@ -1770,6 +1772,8 @@ export const BalanceSchema = z
     immortalGates: z.object({ chance: z.record(z.string(), probability), unknownMul: probability, closedUnknown: z.array(z.string()).default([]), luckWeight: z.number().min(0) }).strict().optional(),
     /** 9.R5a Sổ tri thức: yearly chance for a source that names none; at most this many finds a year, and a life. */
     knowledge: z.object({ defaultChance: probability, maxPerYear: z.number().int().min(1), maxPerLife: z.number().int().min(1) }).strict().optional(),
+    /** 9.R7e sự kiện thiên hạ: yearly chance one starts when none is under way; from this age of the player. */
+    worldEvents: z.object({ startChance: probability, minAge: z.number().int().min(0) }).strict().optional(),
     /** Task 5b.2: Kim Thủ Chỉ at birth: chance + per life played (capped), sure after pityLives lives without one. */
     goldenFinger: z
       .object({
@@ -2567,6 +2571,55 @@ export const JianghuFactionFileSchema = z.array(
     .strict(),
 );
 export type JianghuFaction = z.infer<typeof JianghuFactionFileSchema>[number];
+
+/** 9.R7e: content/worlds/<id>/world-events.json — sự kiện thiên hạ that run in phases (báo trước, diễn ra, hậu quả). */
+export const WorldEventFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      kind: z.enum(['war', 'secret_realm', 'auction', 'beast_tide', 'dynasty', 'tournament', 'omen', 'calamity', 'passing']),
+      /** Where it is felt; empty = everywhere. Outside these regions only the news reaches the player. */
+      regions: z.array(id).default([]),
+      weight: z.number().positive(),
+      cooldownYears: z.number().int().min(0),
+      phases: z
+        .array(
+          z
+            .object({
+              name: z.string().min(1),
+              years: z.number().int().min(1),
+              /** Logged when the phase begins (tin đồn). */
+              text: z.string().min(1),
+              /** Event theme → weight × while this phase lasts (where it is felt). */
+              eventWeight: z.record(id, z.number().min(0)).default({}),
+              /** Market prices × while this phase lasts (where it is felt). */
+              priceMul: z.number().positive().default(1),
+            })
+            .strict(),
+        )
+        .min(1),
+    })
+    .strict(),
+);
+export type WorldEvent = z.infer<typeof WorldEventFileSchema>[number];
+
+/** 9.R7f: content/worlds/<id>/figures.json — famous people of the world (đại năng, ma đầu, vua chúa), heard of in each region. */
+export const FigureFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      title: z.string().min(1),
+      realm: id,
+      region: id,
+      /** Sect they belong to, if any (sects.json of the same world). */
+      sect: id.optional(),
+      text: z.string().min(1),
+    })
+    .strict(),
+);
+export type Figure = z.infer<typeof FigureFileSchema>[number];
 
 /** 9.R7c: content/worlds/<id>/nations.json — the phàm quốc (mortal kingdoms) of a world. */
 export const NationFileSchema = z.array(

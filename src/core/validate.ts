@@ -3,7 +3,7 @@
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, WorldClanFileSchema, RaceFileSchema, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -72,6 +72,8 @@ export function schemaFor(path: string): ZodTypeAny | null {
   if (rest === 'regions.json') return RegionFileSchema;
   if (rest === 'jianghu-factions.json') return JianghuFactionFileSchema;
   if (rest === 'nations.json') return NationFileSchema;
+  if (rest === 'figures.json') return FigureFileSchema;
+  if (rest === 'world-events.json') return WorldEventFileSchema;
   if (rest === 'clans.json') return WorldClanFileSchema;
   if (rest === 'races.json') return RaceFileSchema;
   if (rest === 'knowledge.json') return KnowledgeFileSchema;
@@ -106,6 +108,8 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   const factionFiles: { file: string; factions: JianghuFaction[] }[] = [];
   /** 9.R7c: nations, clans and races name the regions they live in. */
   const loreFiles: { file: string; items: { id: string; region?: string; regions?: string[] }[] }[] = [];
+  const worldEventFiles: { file: string; events: WorldEvent[] }[] = [];
+  const figureFiles: { file: string; figures: Figure[] }[] = [];
   const knowledgeFiles: { file: string; entries: KnowledgeEntry[] }[] = [];
   const gateFiles: { file: string; gates: ImmortalGate[] }[] = [];
   /** 9.R5b: things that wait for a Sổ tri thức entry. */
@@ -257,7 +261,9 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === MartialFileSchema) martialFile = parsed.data as MartialFile;
     if (schema === RegionFileSchema) regionFiles.push({ file, regions: parsed.data as Region[] });
     if (schema === JianghuFactionFileSchema) factionFiles.push({ file, factions: parsed.data as JianghuFaction[] });
-    if (schema === NationFileSchema || schema === WorldClanFileSchema || schema === RaceFileSchema) loreFiles.push({ file, items: parsed.data as { id: string; region?: string; regions?: string[] }[] });
+    if (schema === WorldEventFileSchema) { worldEventFiles.push({ file, events: parsed.data as WorldEvent[] }); loreFiles.push({ file, items: parsed.data as WorldEvent[] }); }
+    if (schema === FigureFileSchema) figureFiles.push({ file, figures: parsed.data as Figure[] });
+    if (schema === NationFileSchema || schema === FigureFileSchema || schema === WorldClanFileSchema || schema === RaceFileSchema) loreFiles.push({ file, items: parsed.data as { id: string; region?: string; regions?: string[] }[] });
     if (schema === KnowledgeFileSchema) knowledgeFiles.push({ file, entries: parsed.data as KnowledgeEntry[] });
     if (schema === ImmortalGateFileSchema) gateFiles.push({ file, gates: parsed.data as ImmortalGate[] });
     if (schema === GlossarySchema) glossaryIds = (parsed.data as { id: string }[]).map((x) => x.id);
@@ -368,6 +374,22 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       if (!regionIds.has(f.region)) problems.push({ file, level: 'error', message: `thế lực "${f.id}" ở vùng lạ "${f.region}"` });
       if (sectIds.has(f.id)) problems.push({ file, level: 'error', message: `thế lực "${f.id}" trùng id với một tông môn tu tiên` });
       for (const o of [...f.allies, ...f.rivals]) if (!ids.has(o) || o === f.id) problems.push({ file, level: 'error', message: `thế lực "${f.id}" nhắc tới thế lực lạ "${o}"` });
+    }
+  }
+  // 9.R7e: events that wait for a sự kiện thiên hạ name one that exists.
+  const worldEventIds = new Set(worldEventFiles.flatMap((f) => f.events.map((e) => e.id)));
+  for (const { file, event } of events) {
+    for (const c of [event.conditions, ...event.choices.map((ch) => ch.requires ?? {})]) {
+      for (const w of c.worldEvent?.id ?? []) if (!worldEventIds.has(w)) problems.push({ file, level: 'error', message: `sự kiện "${event.id}" chờ sự kiện thiên hạ lạ "${w}"` });
+    }
+  }
+  // 9.R7f: famous people name real realms and sects of their world.
+  for (const { file, figures } of figureFiles) {
+    const world = file.split('/')[1];
+    const sectIds = new Set(sectFiles.filter((f) => f.file.split('/')[1] === world).flatMap((f) => f.sects.map((x) => x.id)));
+    for (const f of figures) {
+      if (f.sect && !sectIds.has(f.sect)) problems.push({ file, level: 'error', message: `nhân vật "${f.id}" thuộc tông lạ "${f.sect}"` });
+      if (parsedShared.realms && !parsedShared.realms.realms.some((r) => r.id === f.realm)) problems.push({ file, level: 'error', message: `nhân vật "${f.id}" ở cảnh giới lạ "${f.realm}"` });
     }
   }
   // 9.R7d: a sect sits in a real region of its world; allies and rival are sects of the same world.

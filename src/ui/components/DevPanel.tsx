@@ -17,7 +17,7 @@ import type { SaveMeta } from '../../systems/save';
 import type { RewindOption } from '../../systems/timeline';
 import {
   DEV_STATS, devAddKarma, devAddLifespan, devAddMoney, devAddStat, devClearHeartDemon, devFillProgress, devFindEvents, devFoundClan, devFoundSect,
-  devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect,
+  devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devWorldEvent, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect,
   devAwakenBody, devResetBond, devChildrenRoot, devSetBody, devStartMartialQuest, devQuestStep, devMarry, devResetEventHistory, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
   devResetItemUse, devResetFingerCooldowns, devSetFingerLevel, devSetFlag, devSetGoldenFinger, devSetRealm, devSkipYears, devStartFight, devTakeChosen, devToggleTrait, devTriggerEvent,
 } from '../../systems/dev';
@@ -76,6 +76,7 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
   const [talentId, setTalentId] = useState(content.rebirthTalents.talents[0]?.id ?? '');
   const [templateId, setTemplateId] = useState(content.chosenOnes.templates[0]?.id ?? '');
   const [sectId, setSectId] = useState(content.sects[0]?.id ?? '');
+  const [worldEventId, setWorldEventId] = useState(content.worldEvents?.[0]?.id ?? '');
   const [flag, setFlag] = useState('');
   const roots = devRootOptions(content);
   const [rootKey, setRootKey] = useState(roots[0]?.key ?? '');
@@ -218,6 +219,15 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
             </Pick>
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devJoinSect(state, content, sectId))}>Vào tông</button>
           </div>
+          {(content.worldEvents ?? []).length > 0 && (
+            <div class="dev-event">
+              <Pick value={worldEventId} onChange={setWorldEventId} label="Sự kiện thiên hạ">
+                {(content.worldEvents ?? []).map((e) => <option key={e.id} value={e.id}>{e.name}</option>)}
+              </Pick>
+              <button class="chip-btn" disabled={!live} onClick={() => onChange(devWorldEvent(state, content, worldEventId))}>Bắt đầu</button>
+              <button class="chip-btn" disabled={!live || !state.world?.active} onClick={() => onChange(devWorldEvent(state, content, null))}>Dừng</button>
+            </div>
+          )}
           <div class="action-chips">
             <button class="chip-btn" disabled={!live || !!state.ownSect} onClick={() => onChange(devFoundSect(state, content))}>Khai tông miễn phí</button>
             <button class="chip-btn" disabled={!live || !!state.clan} onClick={() => onChange(devFoundClan(state, content))}>Lập gia tộc miễn phí</button>

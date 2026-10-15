@@ -6,6 +6,8 @@ export interface RegionLore {
   clans: string[];
   races: string[];
   factions: string[];
+  /** 9.R7f: famous people heard of here. */
+  figures: string[];
 }
 
 export function regionLore(content: Content, regionId: string): RegionLore {
@@ -14,5 +16,6 @@ export function regionLore(content: Content, regionId: string): RegionLore {
     clans: (content.worldClans ?? []).filter((c) => c.region === regionId).map((c) => `${c.name} (${c.craft.toLocaleLowerCase('vi')})`),
     races: (content.races ?? []).filter((r) => r.regions.includes(regionId)).map((r) => r.name),
     factions: (content.jianghuFactions ?? []).filter((f) => f.region === regionId).map((f) => f.name),
+    figures: (content.figures ?? []).filter((f) => f.region === regionId).map((f) => `${f.title} ${f.name}`),
   };
 }

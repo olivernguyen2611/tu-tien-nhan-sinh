@@ -106,6 +106,8 @@ export interface GameState {
   knowledgeFound?: number;
   /** 9.R5b: every entry this life found itself; the rest of `knowledge` came from past lives. */
   knowledgeNew?: string[];
+  /** 9.R7e: the sự kiện thiên hạ under way (one at a time), and the age each one may come again. */
+  world?: { active: { id: string; phase: number; left: number } | null; cooldown: Record<string, number> };
   /** 9.R6a: developer mode was on during this life; it earns no records (thành tựu, thử thách tuần, điểm Luân Hồi, Thiên Thư, Sổ tri thức). */
   devUsed?: boolean;
   /** Task 5b.1: thiên phú luân hồi this life was born with (id → level), bought in earlier lives. */

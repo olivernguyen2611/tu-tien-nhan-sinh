@@ -8,6 +8,17 @@
 
 ## [Chưa phát hành]
 
+### 9.R7f: danh nhân, phường thị bổ sung (2026-10-15)
+- `figures.json`: 25 danh nhân của Thương Lan (vua chúa, đại năng trấn giữ, chưởng môn, ma đầu, thương nhân). Bản đồ hiện họ dưới vùng đã đặt chân tới.
+- Ba phường thị mới (tổng 15): Chợ muối Xích Sa (Vô Chủ, trả bạc), Ngư thị Long Tích (Đông Hải), Thư các Đại Diễn (Trung Châu, bí tịch).
+
+### 9.R7e: sự kiện thiên hạ (2026-10-15)
+- `world-events.json`: 30 sự kiện thiên hạ chạy theo pha (báo trước, diễn ra, hậu quả): Tiên Ma đại chiến, bí cảnh Thái Cổ, long cung Đông Hải, băng cung Bắc Minh, đấu giá Kim Thiềm, thú triều, Đại Ung đổi ngôi, chiến tranh với Xích Sa, thiên kiêu đại hội, điềm phi thăng (chừa chỗ cho thượng giới), ôn dịch, đại hạn, ma đầu xuất thế…
+- Mỗi lúc có nhiều nhất một sự kiện; không có thì mỗi năm có `balance.worldEvents.startChance` (12%) bắt đầu một cái, theo luồng RNG riêng (không làm lệch seed cũ). Mỗi pha ghi một dòng tin đồn vào nhật ký, đổi trọng số chủ đề sự kiện và giá phường thị ở những vùng chịu ảnh hưởng.
+- Điều kiện sự kiện mới `worldEvent` (id, pha). 10 sự kiện đi kèm (`events/world-events.json`): ra tiền tuyến, vào bí cảnh, đấu giá, chặn thú triều, phò hoàng tử, thiên kiêu luận võ, dịch bệnh, mưa linh khí, lệnh trưng binh.
+- Bản đồ ghi sự kiện thiên hạ đang diễn ra. Developer mode: chọn sự kiện để bắt đầu hoặc dừng. Con cháu nối dõi sống tiếp trong cùng thời cuộc.
+- Test `cultivation.test.ts`: hàm cho năm trôi giờ đánh hết trận đấu do sự kiện mở ra (trước đó treo vô hạn khi gặp sự kiện có trận đấu).
+
 ### 9.R7d: 38 tông môn tu tiên theo vùng (2026-10-15)
 - 32 tông môn mới, chia đủ tám đại vực (mỗi vùng ít nhất 3 tông môn hoặc thế lực), mỗi tông có tôn chỉ, truyền thống, tuyệt kỹ, giai thoại, nhân vật, công pháp, hiệu ứng, bổng lộc; ma tông trừ nghiệp mỗi năm và đổi danh tiếng khi gia nhập.
 - Tông môn có thêm `region`, `tier` (đại, trung, tiểu), `allies`; sáu tông cũ đi chiêu mộ khắp nơi (`roaming`), các tông còn lại chỉ nhận người **tự tìm tới vùng của họ**.

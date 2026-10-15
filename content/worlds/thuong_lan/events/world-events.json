@@ -1,0 +1,435 @@
+[
+  {
+    "id": "tht_tien_ma_chieu_binh",
+    "category": "sect",
+    "title": "Lệnh chiêu binh",
+    "text": "Tiên Ma đại chiến nổ ra. Người của các đại tông đi khắp nơi chiêu mộ tu sĩ ra tiền tuyến, hứa trả công bằng linh thạch và danh tiếng.",
+    "themes": ["justice"],
+    "conditions": {
+      "worldEvent": { "id": ["tien_ma_dai_chien"], "phase": 1 },
+      "region": ["huyet_uyen", "vo_chu_hoang_nguyen", "trung_chau"],
+      "realm": { "min": "luyen_khi" }
+    },
+    "weight": 2,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Ra tiền tuyến",
+        "result": {
+          "text": "Ngươi được xếp vào một đội tuần tra. Ngay đêm đầu, ma tu tập kích.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Ma tu tập kích",
+              "realm": "same",
+              "powerMul": 1.1,
+              "lineage": "ma",
+              "intent": "kill",
+              "plural": true
+            },
+            "win": {
+              "text": "Đội của ngươi giữ được trại. Chỉ huy ghi tên ngươi vào sổ công.",
+              "effects": { "spiritStones": 40, "reputation": { "chinh": 5, "ma": -5 }, "stat.daoHeart": 2 }
+            },
+            "lose": {
+              "text": "Trại vỡ, ngươi chạy thoát với một vết thương dài trên lưng.",
+              "effects": { "stat.health": -12, "stat.happiness": -4 }
+            }
+          }
+        }
+      },
+      {
+        "text": "Đi làm hậu cần",
+        "result": {
+          "text": "Ngươi chở đan dược, khiêng thương binh. Không oai, nhưng không ai chết vì ngươi đến muộn.",
+          "effects": { "spiritStones": 15, "karma": 2, "stat.physique": 1, "stat.health": -3 }
+        }
+      },
+      {
+        "text": "Đóng cửa tu luyện, chờ qua cơn",
+        "result": {
+          "text": "Ngươi đóng cửa. Bên ngoài trời đỏ suốt mấy tháng, trong lòng ngươi thì không yên.",
+          "effects": { "cultProgress": 12, "stat.daoHeart": -2, "reputation": { "chinh": -1 } }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tht_thai_co_vao_bi_canh",
+    "category": "secret_realm",
+    "title": "Cửa bí cảnh thượng cổ",
+    "text": "Cửa bí cảnh trên Thái Cổ chiến trường đang mở. Hàng người chờ vào dài tới chân trời, ai cũng giấu bùa hộ thân trong tay áo.",
+    "themes": ["bi_canh"],
+    "conditions": {
+      "worldEvent": { "id": ["bi_canh_thai_co_mo"], "phase": 1 },
+      "region": ["thai_co_chien_truong"],
+      "realm": { "min": "kim_dan", "max": "kim_dan" }
+    },
+    "weight": 2,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Vào sâu tầng trong",
+        "check": { "stat": "stat.luck", "difficulty": 60 },
+        "success": {
+          "text": "Tầng trong có một tịnh thất còn nguyên cấm chế. Ngươi lấy được một lọ đan và một mảnh ngọc giản trước khi trần sụp.",
+          "effects": { "addItems": ["ket_kim_dan"], "cultProgress": 25, "stat.comprehension": 2 }
+        },
+        "fail": {
+          "text": "Cấm chế tầng trong bật lên. Ngươi bò ra ngoài với nửa người tê dại.",
+          "effects": { "stat.health": -15, "stat.happiness": -4 }
+        }
+      },
+      {
+        "text": "Đi vòng tầng ngoài nhặt đồ",
+        "result": {
+          "text": "Tầng ngoài đã bị vét, nhưng vẫn còn vài viên linh thạch kẹt trong khe đá.",
+          "effects": { "spiritStones": 30, "stat.happiness": 2 }
+        }
+      },
+      {
+        "text": "Đứng ngoài bán bùa",
+        "result": {
+          "text": "Bùa hộ thân bán chạy như tôm tươi. Ngươi không vào bí cảnh mà vẫn giàu lên.",
+          "effects": { "spiritStones": 20, "stat.charm": 1, "karma": -1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tht_long_cung",
+    "category": "fortune",
+    "title": "Đi dưới đáy biển khô",
+    "text": "Long cung lộ ra giữa đáy biển khô. Giao tộc đứng canh cửa chính; cửa sau thì chẳng ai biết ở đâu.",
+    "themes": ["bi_canh", "fortune"],
+    "conditions": {
+      "worldEvent": { "id": ["bi_canh_dong_hai_mo"], "phase": 1 },
+      "region": ["dong_hai"],
+      "realm": { "min": "truc_co" }
+    },
+    "weight": 2,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Tìm cửa sau",
+        "check": { "stat": "stat.intellect", "difficulty": 60 },
+        "success": {
+          "text": "Ngươi lần theo vết nước rỉ, tìm ra một ống thoát nước cũ dẫn vào kho báu của giao long.",
+          "effects": { "addItems": ["giap_vay_giao"], "spiritStones": 40, "karma": -2, "stat.happiness": 4 }
+        },
+        "fail": {
+          "text": "Ống thoát nước dẫn ngươi vào ổ cua. Cua rất lớn.",
+          "effects": { "stat.health": -10, "stat.happiness": -3 }
+        }
+      },
+      {
+        "text": "Xin phép giao tộc vào",
+        "result": {
+          "text": "Giao tộc nhìn ngươi rất lâu rồi cho vào một gian phụ. Ngươi lấy một món, cúi chào rồi ra.",
+          "effects": { "addItems": ["tran_chau_giao_nhan"], "karma": 2, "stat.charm": 1 }
+        }
+      },
+      {
+        "text": "Ngồi trên bờ xem",
+        "result": {
+          "text": "Ngươi ngồi xem cả ngày. Thủy triều lên, mấy kẻ tham lam không kịp chạy. Ngươi thở dài.",
+          "effects": { "stat.daoHeart": 2, "stat.happiness": -1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tht_dau_gia_kim_thiem",
+    "category": "market",
+    "title": "Phiên đấu giá lớn",
+    "text": "Đại hội đấu giá Kim Thiềm đang mở. Món chốt phiên là một gốc linh chi ngàn năm, mười người giơ bảng cùng lúc.",
+    "themes": ["market"],
+    "conditions": {
+      "worldEvent": { "id": ["kim_thiem_dai_dau_gia"], "phase": 1 },
+      "region": ["trung_chau", "dong_hai", "vo_chu_hoang_nguyen"],
+      "realm": { "min": "luyen_khi" }
+    },
+    "weight": 2,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Ra giá tới cùng",
+        "result": {
+          "text": "Ngươi thắng phiên, ví nhẹ hẳn. Gốc linh chi thơm tới mức cả đêm không ngủ được.",
+          "effects": { "spiritStones": -60, "addItems": ["linh_chi_ngan_nam"], "stat.happiness": 4 }
+        },
+        "requires": {
+          "stats": [{ "stat": "spiritStones", "gte": 60 }]
+        }
+      },
+      {
+        "text": "Đẩy giá cho kẻ khác mua",
+        "check": { "stat": "stat.charm", "difficulty": 55 },
+        "success": {
+          "text": "Ngươi giơ bảng đúng lúc, đẩy giá lên gấp đôi rồi rút. Kim Thiềm Thương Minh lặng lẽ gửi ngươi một phong bao.",
+          "effects": { "spiritStones": 25, "karma": -1, "stat.happiness": 3 }
+        },
+        "fail": {
+          "text": "Ngươi giơ bảng sai lúc. Không ai trả cao hơn. Ngươi phải mua thứ mình không cần.",
+          "effects": { "spiritStones": -30, "stat.happiness": -5 }
+        }
+      },
+      {
+        "text": "Chỉ ngồi xem",
+        "result": {
+          "text": "Ngươi xem trọn phiên, học được giá của trăm món đồ. Kiến thức cũng là của cải.",
+          "effects": { "stat.intellect": 2, "stat.happiness": 1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tht_thu_trieu",
+    "category": "beast",
+    "title": "Thú triều tràn làng",
+    "text": "Thú triều tràn khỏi Vạn Thú sơn mạch. Một làng ven rừng chưa kịp chạy, tiếng trẻ con khóc lẫn tiếng thú gầm.",
+    "themes": ["beast", "justice"],
+    "conditions": {
+      "worldEvent": { "id": ["thu_trieu_van_thu"], "phase": 1 },
+      "region": ["van_thu_son_mach", "thanh_van_chau"]
+    },
+    "weight": 2,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Dẫn dân làng chạy",
+        "result": {
+          "text": "Ngươi dẫn hơn trăm người băng qua sông trong đêm. Không ai chết. Ngươi cũng không.",
+          "effects": { "karma": 3, "stat.physique": 1, "stat.health": -4 }
+        }
+      },
+      {
+        "text": "Chặn ở cổng làng",
+        "result": {
+          "text": "Một con yêu thú dẫn đầu lao thẳng vào ngươi.",
+          "effects": {},
+          "fight": {
+            "foe": { "name": "Yêu thú dẫn đầu", "realm": "same", "powerMul": 1, "intent": "kill" },
+            "win": {
+              "text": "Con đầu đàn ngã, bầy thú tản ra. Dân làng kéo ngươi vào ăn cơm ba ngày liền.",
+              "effects": { "karma": 4, "reputation": { "chinh": 4 }, "addItems": ["noi_dan_2"], "stat.happiness": 4 }
+            },
+            "lose": {
+              "text": "Ngươi bị hất văng, nhưng đủ lâu để dân làng chạy thoát.",
+              "effects": { "stat.health": -12, "karma": 3 }
+            },
+            "rescue": true
+          }
+        }
+      },
+      {
+        "text": "Đi nhặt nội đan sau đám thú",
+        "result": {
+          "text": "Ngươi đi sau thú triều, nhặt nội đan của những con bị giẫm chết. Túi đầy, lòng trống.",
+          "effects": { "addItems": ["noi_dan_1", "noi_dan_1"], "karma": -2, "stat.daoHeart": -1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tht_tranh_ngoi",
+    "category": "mortal",
+    "title": "Hoàng tử chiêu hiền",
+    "text": "Đại Ung tranh ngôi. Một hoàng tử cho người tới tận nhà, mời ngươi về phủ làm môn khách.",
+    "themes": ["justice"],
+    "conditions": {
+      "worldEvent": { "id": ["dai_ung_doi_ngoi"], "phase": 1 },
+      "region": ["thanh_van_chau"],
+      "age": { "min": 18 }
+    },
+    "weight": 2,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Nhận lời phò tá",
+        "check": { "stat": "stat.intellect", "difficulty": 55 },
+        "success": {
+          "text": "Hoàng tử của ngươi lên ngôi. Ngươi được ban một tòa nhà và một cái tên trong sử sách.",
+          "effects": { "silver": 300, "reputation": { "chinh": 3 }, "stat.happiness": 6 }
+        },
+        "fail": {
+          "text": "Hoàng tử của ngươi thua. Ngươi trốn khỏi kinh thành trong một xe phân.",
+          "effects": { "silver": -50, "stat.happiness": -8, "stat.health": -4 }
+        }
+      },
+      {
+        "text": "Từ chối khéo",
+        "result": {
+          "text": "Ngươi từ chối bằng một bài thơ. Hoàng tử cười, để ngươi yên. Bài thơ thì lưu truyền.",
+          "effects": { "stat.charm": 2, "stat.intellect": 1 }
+        }
+      },
+      {
+        "text": "Bán tin cho phe kia",
+        "result": {
+          "text": "Phe kia trả hậu. Đêm đó ngươi ngủ không yên, sáng ra thấy dao cắm trên cửa.",
+          "effects": { "silver": 150, "karma": -4, "stat.happiness": -3 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tht_thien_kieu",
+    "category": "sect",
+    "title": "Ghi danh thiên kiêu đại hội",
+    "text": "Thiên kiêu đại hội đang mở ở Trung Châu. Bảng ghi danh còn chỗ, người trẻ dưới trăm tuổi mới được lên đài.",
+    "themes": ["ranking"],
+    "conditions": {
+      "worldEvent": { "id": ["thien_kieu_dai_hoi"], "phase": 1 },
+      "region": ["trung_chau"],
+      "realm": { "min": "truc_co" },
+      "age": { "max": 100 }
+    },
+    "weight": 2,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Ghi danh",
+        "result": {
+          "text": "Đối thủ đầu tiên của ngươi là đệ tử chân truyền một đại tông.",
+          "effects": {},
+          "fight": {
+            "foe": { "name": "Đệ tử chân truyền", "realm": "same", "powerMul": 1.15, "intent": "teach" },
+            "win": {
+              "text": "Ngươi thắng ba trận liên tiếp, tên được khắc lên bảng thiên kiêu.",
+              "effects": { "reputation": { "chinh": 6 }, "stat.happiness": 6, "stat.charm": 2 }
+            },
+            "lose": {
+              "text": "Ngươi thua ngay trận đầu, nhưng thua có khí phách. Có trưởng lão gật đầu.",
+              "effects": { "stat.daoHeart": 2, "stat.happiness": -2 }
+            }
+          }
+        }
+      },
+      {
+        "text": "Xem để học",
+        "result": {
+          "text": "Ngươi xem trọn đại hội, ghi chép từng chiêu. Về nhà luyện lại, thấy mình hiểu thêm một chút.",
+          "effects": { "cultProgress": 15, "stat.comprehension": 2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tht_dich_benh",
+    "category": "mortal",
+    "title": "Dịch tới làng",
+    "text": "Ôn dịch tới làng bên. Người ta dựng trại cách ly bên bờ sông, cần người nấu thuốc.",
+    "themes": ["karma", "family"],
+    "conditions": {
+      "worldEvent": { "id": ["dich_benh"], "phase": 0 },
+      "region": ["thanh_van_chau"],
+      "age": { "min": 12 }
+    },
+    "weight": 2,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Vào trại giúp nấu thuốc",
+        "result": {
+          "text": "Ngươi nấu thuốc ba tháng. Nhiều người khỏi. Có người không. Ngươi nhớ hết mặt họ.",
+          "effects": { "karma": 4, "stat.health": -6, "stat.daoHeart": 3 }
+        }
+      },
+      {
+        "text": "Đóng cửa giữ nhà",
+        "result": {
+          "text": "Ngươi đóng cửa, nhà ngươi bình an. Ngoài kia tiếng khóc vọng vào mỗi đêm.",
+          "effects": { "stat.health": 2, "stat.happiness": -4 }
+        }
+      },
+      {
+        "text": "Bán thuốc giá cao",
+        "check": { "stat": "stat.charm", "difficulty": 45 },
+        "success": {
+          "text": "Thuốc bán hết trong một ngày. Túi đầy bạc, tên ngươi bị dân làng nguyền rủa.",
+          "effects": { "silver": 120, "karma": -5, "stat.happiness": 2 }
+        },
+        "fail": {
+          "text": "Dân làng đập vỡ quầy thuốc, cướp sạch. Ngươi không dám kêu.",
+          "effects": { "silver": -30, "stat.happiness": -5, "karma": -2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tht_mua_linh_khi",
+    "category": "cultivation",
+    "title": "Mưa linh khí",
+    "text": "Sau điềm phi thăng, linh khí rơi như mưa khắp Thương Lan. Người tu luyện ai cũng ngồi giữa trời hứng lấy.",
+    "themes": ["cultivation"],
+    "conditions": {
+      "worldEvent": { "id": ["dieu_phi_thang"], "phase": 1 },
+      "realm": { "min": "luyen_khi" }
+    },
+    "weight": 2,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Ngồi giữa trời hứng linh khí",
+        "result": {
+          "text": "Linh khí thấm vào kinh mạch như mưa xuân vào đất khô.",
+          "effects": { "cultProgress": 30, "stat.happiness": 3 }
+        }
+      },
+      {
+        "text": "Ngộ đạo dưới mưa",
+        "result": {
+          "text": "Ngươi không hứng linh khí, chỉ nhìn mưa. Ngươi nghĩ về người đã cố bước lên trời kia.",
+          "effects": { "stat.comprehension": 3, "stat.daoHeart": 3, "cultProgress": 10 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tht_trung_binh",
+    "category": "mortal",
+    "title": "Lệnh trưng binh tới cửa",
+    "text": "Đại Ung đánh Xích Sa. Lý trưởng gõ cửa từng nhà: mỗi nhà ra một người, nhà nào không có người thì nộp bạc.",
+    "themes": ["family", "justice"],
+    "conditions": {
+      "worldEvent": { "id": ["ung_xich_sa_chien"], "phase": 0 },
+      "region": ["thanh_van_chau"],
+      "realm": { "max": "pham_nhan" },
+      "age": { "min": 16, "max": 45 }
+    },
+    "weight": 2,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Đi lính",
+        "check": { "stat": "stat.physique", "difficulty": 50 },
+        "success": {
+          "text": "Ngươi ra trận, sống sót trở về, mang theo một tấm huy chương và tiếng ho mỗi đêm.",
+          "effects": { "stat.physique": 3, "silver": 60, "stat.health": -5, "reputation": { "chinh": 2 } }
+        },
+        "fail": {
+          "text": "Ngươi bị thương ngay trận đầu, được khiêng về quê trên một chiếc xe bò.",
+          "effects": { "stat.health": -15, "stat.happiness": -5 }
+        }
+      },
+      {
+        "text": "Nộp bạc miễn lính",
+        "result": {
+          "text": "Ngươi nộp bạc. Nhà nghèo đi một chút, nhưng còn đủ người.",
+          "effects": { "silver": -80, "stat.happiness": 1 }
+        },
+        "requires": {
+          "stats": [{ "stat": "silver", "gte": 80 }]
+        }
+      },
+      {
+        "text": "Trốn lên núi",
+        "result": {
+          "text": "Ngươi trốn lên núi nửa năm, sống bằng rau rừng. Về nhà thì lý trưởng đã quên.",
+          "effects": { "stat.health": -3, "stat.physique": 1, "reputation": { "chinh": -1 } }
+        }
+      }
+    ]
+  }
+]

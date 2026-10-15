@@ -779,6 +779,7 @@
     "closedUnknown": ["hoi_thu_do", "hoang_that", "co_duyen"],
     "luckWeight": 1
   },
+  "worldEvents": { "startChance": 0.12, "minAge": 6 },
   "knowledge": { "defaultChance": 0.04, "maxPerYear": 1, "maxPerLife": 3 },
   "goldenFinger": {
     "birthChance": 0.07,

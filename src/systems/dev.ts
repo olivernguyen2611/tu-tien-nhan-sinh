@@ -18,6 +18,7 @@ import { takeChosen } from './chosen';
 import { suggestSectName } from './ownSect';
 import { clanName } from './clan';
 import { sectById } from './sect';
+import { startWorldEvent } from './worldEvents';
 import { hoaCanhGift } from './martial';
 import { finishStep, questForStage } from './martialQuest';
 import { Rng } from '../core/rng';
@@ -260,6 +261,14 @@ export function devJoinSect(state: GameState, content: Content, sectId: string):
   const sect = sectById(content, sectId);
   if (!state.alive || !sect) return state;
   return devLog({ ...state, sect: { ...state.sect, id: sectId, rank: 0, since: state.character.age, contribution: 0, master: null, left: state.sect.left.filter((x) => x !== sectId) } }, `vào ${sect.name}`);
+}
+
+/** 9.R7e: start a sự kiện thiên hạ now (replacing the one under way), or end it (id null). */
+export function devWorldEvent(state: GameState, content: Content, id: string | null): GameState {
+  if (!state.alive) return state;
+  if (id === null) return state.world?.active ? devLog({ ...state, world: { ...state.world, active: null } }, 'dừng sự kiện thiên hạ') : state;
+  const name = content.worldEvents?.find((e) => e.id === id)?.name;
+  return name ? devLog(startWorldEvent(state, content, id), `bắt đầu ${name}`) : state;
 }
 
 /** Task 5b.7: a made-up sect of a past life, not met yet, to test its events. */

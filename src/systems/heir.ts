@@ -99,6 +99,7 @@ export function continueAsHeir(state: GameState, content: Content, heirId: strin
     npcs: state.npcs.filter((n) => n.id !== heirId).map((n) => (n.disciple && option.kind === 'disciple' ? { ...n, role: 'sư đệ', disciple: undefined } : n)),
     ranking: state.ranking,
     devUsed: state.devUsed,
+    world: state.world,
     ownSect: state.ownSect ? { ...state.ownSect, report: null } : null,
     ancestry,
     events: { pending: null, history: {}, followUps: [], npc: null },
