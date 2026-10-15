@@ -1,0 +1,161 @@
+[
+  {
+    "id": "hoa_than_toa_hoa",
+    "name": "Hóa Thần tọa hóa",
+    "text": "Đứng trên đỉnh Thương Lan, nhìn mãi con đường lên trời đã đứt, rồi nhắm mắt.",
+    "check": {
+      "realmMin": "hoa_than"
+    }
+  },
+  {
+    "id": "tan_duoi_thien_kiep",
+    "name": "Tan dưới thiên kiếp",
+    "text": "Trời không cho, người cố lấy. Sấm sét ghi tên ngươi lên mây một khắc rồi xóa.",
+    "check": {
+      "cause": [
+        "tribulation"
+      ]
+    }
+  },
+  {
+    "id": "ma_dau",
+    "name": "Ma đầu một cõi",
+    "text": "Thiên hạ gọi tên ngươi để dọa trẻ con. Ngươi chưa bao giờ hối hận, hoặc chưa bao giờ nói ra.",
+    "check": {
+      "lineage": [
+        "ma"
+      ],
+      "realmMin": "kim_dan"
+    }
+  },
+  {
+    "id": "vien_tich",
+    "name": "Viên tịch",
+    "text": "Ngồi kiết già, mỉm cười, đi. Đệ tử nhặt được mấy viên xá lợi và một nồi cơm chay còn ấm.",
+    "check": {
+      "lineage": [
+        "phat"
+      ],
+      "cause": [
+        "old_age"
+      ]
+    }
+  },
+  {
+    "id": "to_su_khai_tong",
+    "name": "Tổ sư khai tông",
+    "text": "Tông môn ngươi dựng còn đó; đệ tử đời sau thắp hương trước tượng một người họ chưa từng gặp.",
+    "check": {
+      "ownSect": true
+    }
+  },
+  {
+    "id": "thuy_to_gia_toc",
+    "name": "Thủy tổ gia tộc",
+    "text": "Gia phả mở đầu bằng tên ngươi. Con cháu đời sau cãi nhau xem tổ tiên thật ra là người thế nào.",
+    "check": {
+      "clan": true
+    }
+  },
+  {
+    "id": "nguyen_anh_lao_quai",
+    "name": "Nguyên Anh lão quái",
+    "text": "Sống đủ lâu để thấy bạn bè thành bia đá, kẻ thù thành chuyện kể.",
+    "check": {
+      "realmMin": "nguyen_anh"
+    }
+  },
+  {
+    "id": "chet_vi_dot_pha",
+    "name": "Chết vì đột phá",
+    "text": "Một bước nữa là trời cao biển rộng. Bước ấy hụt.",
+    "check": {
+      "cause": [
+        "breakthrough"
+      ]
+    }
+  },
+  {
+    "id": "tu_tran",
+    "name": "Tử trận",
+    "text": "Ngã xuống giữa trận, kiếm còn trong tay.",
+    "check": {
+      "cause": [
+        "combat"
+      ]
+    }
+  },
+  {
+    "id": "kim_dan_chan_nhan",
+    "name": "Kim Đan chân nhân",
+    "text": "Kết thành kim đan, được người đời gọi một tiếng chân nhân. Nhiêu đó đã hơn vạn người.",
+    "check": {
+      "realmMin": "kim_dan"
+    }
+  },
+  {
+    "id": "yeu_menh",
+    "name": "Yểu mệnh",
+    "text": "Đời ngắn như một ngọn nến. Kiếp sau, mong trời cho thêm vài năm.",
+    "check": {
+      "ageMax": 15
+    }
+  },
+  {
+    "id": "ac_gia_ac_bao",
+    "name": "Ác giả ác báo",
+    "text": "Nợ nghiệp chồng chất. Người đời không khóc, chỉ thở phào.",
+    "check": {
+      "karmaMax": -50
+    }
+  },
+  {
+    "id": "con_chau_day_dan",
+    "name": "Con cháu đầy đàn",
+    "text": "Một đời phàm nhân, không tu tiên, không thành danh, nhưng lúc nhắm mắt có cả nhà quanh giường.",
+    "check": {
+      "mortal": true,
+      "childrenMin": 3,
+      "cause": [
+        "old_age"
+      ]
+    }
+  },
+  {
+    "id": "tho_chung",
+    "name": "Thọ chung chính tẩm",
+    "text": "Già, mệt, ngủ một giấc dài. Một kết thúc mà nhiều tu sĩ không có được.",
+    "check": {
+      "cause": [
+        "old_age"
+      ]
+    }
+  },
+  {
+    "id": "bao_benh",
+    "name": "Bạo bệnh",
+    "text": "Bệnh tới nhanh hơn thầy thuốc. Đời người, ai biết trước được.",
+    "check": {
+      "cause": [
+        "illness"
+      ]
+    }
+  },
+  {
+    "id": "kiep_nan",
+    "name": "Kiếp nạn",
+    "text": "Trời sập đúng chỗ ngươi đứng.",
+    "check": {
+      "cause": [
+        "ordeal",
+        "calamity"
+      ]
+    }
+  },
+  {
+    "id": "mot_doi_binh_thuong",
+    "name": "Một đời bình thường",
+    "text": "Không ai viết sử về ngươi. Nhưng có người nhớ.",
+    "check": {}
+  }
+]

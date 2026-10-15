@@ -16,7 +16,7 @@ import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, lockCost, rerollDestiny, rollDestiny, toggleLock } from '../systems/destiny';
 import {
   deleteSlot, exportSave, firstFreeSlot, latestSlot, listSlots, makeSave, parseSave, readMeta, readSlot, recordNewLife, creditRebirth,
-  slotTaken, writeSlot, SLOT_COUNT, buyRebirthTalent, recordCodex, recordAchievements, recordChallenge, recordPastSect, recordLibrary, replaceMeta, type SaveFile,
+  slotTaken, writeSlot, SLOT_COUNT, buyRebirthTalent, recordCodex, recordChronicle, recordAchievements, recordChallenge, recordPastSect, recordLibrary, replaceMeta, type SaveFile,
 } from '../systems/save';
 import { checkDeath } from '../systems/time';
 import { GlossaryProvider } from './components/Tooltip';
@@ -31,6 +31,7 @@ import { SettingsScreen, type SlotView } from './screens/Settings';
 import { TitleScreen } from './screens/Title';
 import { loadDevMode, saveDevMode } from './devMode';
 import { countsForRecords, markDevLife } from '../systems/dev';
+import { chronicleOf } from '../systems/chronicle';
 import { attemptMajorBreakthrough, enterFirstRealm } from '../systems/cultivation';
 import { savesLocked } from '../systems/difficulty';
 import { disableTutorial, dismissTip } from '../systems/tutorial';
@@ -173,6 +174,8 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
     if (first) recordPastSect(store, nextPastSectRecord(readMeta(store).pastSect, life, content));
     // Task 5b.4: the Thiên Thư keeps what this life saw, and the khí vận chi tử's tale.
     recordCodex(store, codexOf(life, content));
+    // 9.R8: Sổ luân hồi (this life's record, ending and regions).
+    recordChronicle(store, chronicleOf(life, content, r.meta.livesPlayed));
     // Task 5b.5: thành tựu kept across lives; the ones new to this browser are shown.
     const a = recordAchievements(store, earnedAchievements(life, content, r.meta.livesPlayed).map((x) => x.id), life.character.name);
     setRebirth({ gained: r.gained, bank: r.meta.rebirthPoints, fresh: a.fresh });
@@ -288,7 +291,7 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
     );
   }
   if (screen === 'codex') {
-    return <CodexScreen content={content} codex={readMeta(store).codex} achievements={readMeta(store).achievements} onBack={() => setScreen('title')} />;
+    return <CodexScreen content={content} codex={readMeta(store).codex} achievements={readMeta(store).achievements} chronicle={readMeta(store).chronicle} onBack={() => setScreen('title')} />;
   }
   if (screen === 'rebirth') {
     const meta = readMeta(store);

@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### 9.R8: Sổ luân hồi (2026-10-15)
+- Thiên Thư thêm 3 tab: **Các kiếp** (mỗi kiếp: tên, tuổi, cảnh giới, lối sống, kết cục, điểm luân hồi; kèm thống kê tổng: số kiếp, thọ cao nhất, tuổi bình quân, tổng điểm), **Kết cục** (đã thấy / chưa thấy, chưa thấy hiện "???"), **Bản đồ** (đại vực đã đặt chân qua mọi kiếp).
+- `content/endings.json`: 17 kết cục, xét theo thứ tự, cái đầu tiên khớp là kết cục của kiếp (dùng cùng điều kiện với thành tựu); "Một đời bình thường" là kết cục dự phòng.
+- `src/systems/chronicle.ts` (thuần) + `chronicle` trong dữ liệu chung của trình duyệt; ghi lúc chết, kiếp có dùng Developer Mode không được ghi. Giữ 100 kiếp gần nhất.
+- Test: `tests/chronicle.test.ts`.
+
 ### 9.R7f: danh nhân, phường thị bổ sung (2026-10-15)
 - `figures.json`: 25 danh nhân của Thương Lan (vua chúa, đại năng trấn giữ, chưởng môn, ma đầu, thương nhân). Bản đồ hiện họ dưới vùng đã đặt chân tới.
 - Ba phường thị mới (tổng 15): Chợ muối Xích Sa (Vô Chủ, trả bạc), Ngư thị Long Tích (Đông Hải), Thư các Đại Diễn (Trung Châu, bí tịch).

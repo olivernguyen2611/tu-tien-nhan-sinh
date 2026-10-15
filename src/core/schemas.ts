@@ -3536,6 +3536,12 @@ export const LifeCheckSchema = z
   .strict();
 export type LifeCheck = z.infer<typeof LifeCheckSchema>;
 
+/** 9.R8: content/endings.json — kết cục of a life, in order: the first whose check holds is the ending. */
+export const EndingFileSchema = z.array(
+  z.object({ id, name: z.string().min(1), text: z.string().min(1), check: LifeCheckSchema }).strict(),
+);
+export type Ending = z.infer<typeof EndingFileSchema>[number];
+
 /** Task 5b.5: thành tựu kept across lives, and huy hiệu cuối đời given to one life. */
 export const AchievementFileSchema = z
   .object({

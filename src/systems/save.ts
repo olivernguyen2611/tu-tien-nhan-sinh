@@ -6,6 +6,7 @@ import { version as GAME_VERSION } from '../../package.json';
 import type { GameState, LogYear, PastSectRecord } from '../core/types';
 import { Rng } from '../core/rng';
 import { EMPTY_CODEX, mergeCodex, type Codex } from './codex';
+import { EMPTY_CHRONICLE, mergeChronicle, readChronicle, type Chronicle } from './chronicle';
 import { BASIC_KNOWLEDGE } from './knowledge';
 
 /**
@@ -70,6 +71,8 @@ export interface SaveMeta {
   pastSect: PastSectRecord | null;
   /** Backlog 11: people kept in the Sổ nhân vật, to bring into later lives. */
   library: SavedPerson[];
+  /** 9.R8: Sổ luân hồi (lives, endings, regions). */
+  chronicle: Chronicle;
 }
 /** Seeds remembered in `credited`; older ones are dropped. */
 const MAX_CREDITED = 30;
@@ -451,9 +454,10 @@ export function readMeta(store: KeyValueStore): SaveMeta {
       weekly: m.weekly && typeof m.weekly === 'object' ? m.weekly : {},
       pastSect: m.pastSect && typeof m.pastSect.name === 'string' ? m.pastSect : null,
       library: Array.isArray(m.library) ? m.library.filter((p) => p && typeof p.id === 'string' && typeof p.name === 'string') : [],
+      chronicle: readChronicle(m.chronicle),
     };
   } catch {
-    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {}, fingerPity: 0, codex: EMPTY_CODEX, achievements: {}, weekly: {}, pastSect: null, library: [] };
+    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {}, fingerPity: 0, codex: EMPTY_CODEX, achievements: {}, weekly: {}, pastSect: null, library: [], chronicle: EMPTY_CHRONICLE };
   }
 }
 
@@ -545,6 +549,12 @@ export function recordPastSect(store: KeyValueStore, record: PastSectRecord | nu
 }
 
 /** Backlog 11: replace the Sổ nhân vật. */
+/** 9.R8: fold one finished life into the Sổ luân hồi. */
+export function recordChronicle(store: KeyValueStore, add: Chronicle): SaveMeta {
+  const meta = readMeta(store);
+  return writeMeta(store, { ...meta, chronicle: mergeChronicle(meta.chronicle, add) });
+}
+
 export function recordLibrary(store: KeyValueStore, library: SavedPerson[]): SaveMeta {
   return writeMeta(store, { ...readMeta(store), library });
 }
