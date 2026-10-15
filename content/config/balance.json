@@ -329,13 +329,14 @@
     "minAge": 10,
     "combatPower": [1.5, 2, 2.8, 4, 7, 18, 40],
     "speedEquivMul": 1.5,
-    "lifespan": [0, 0, 5, 10, 30, 20, 20],
+    "subStageYears": [2, 3, 3, 4, 5, 6, 8],
+    "lifespan": [0, 2, 5, 10, 25, 25, 30],
     "steps": [
       { "years": 3, "stats": ["physique", "comprehension"], "difficulty": 30 },
       { "years": 4, "stats": ["physique", "comprehension"], "difficulty": 45 },
       { "years": 5, "stats": ["physique", "comprehension"], "difficulty": 55, "needsTeacher": true },
-      { "years": 8, "stats": ["physique", "comprehension"], "difficulty": 65 },
-      { "years": 10, "stats": ["physique", "comprehension"], "difficulty": 86, "minPhysique": 70 }
+      { "years": 8, "stats": ["physique", "comprehension"], "difficulty": 65, "deviation": { "chance": 0.06, "health": -6, "cripple": 0 } },
+      { "years": 10, "stats": ["physique", "comprehension"], "difficulty": 86, "minPhysique": 70, "deviation": { "chance": 0.1, "health": -12, "cripple": 0.02 } }
     ],
     "chanceBase": 0.5,
     "chancePerPoint": 0.015,

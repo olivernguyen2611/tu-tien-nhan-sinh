@@ -189,6 +189,8 @@ export const EffectsSchema = z
     kill: z.boolean().optional(),
     /** Task 3.11: martial path. */
     martialPromote: z.boolean().optional(),
+    /** 9.V2: Tiên Võ đồng tu: a Ngũ khí martial artist with the cao nhân's kinh steps into cultivation. */
+    martialAscend: z.boolean().optional(),
     martialAttempt: z.boolean().optional(),
     martialYears: z.number().int().optional(),
     /** Extra % for the next martial breakthrough. */
@@ -284,7 +286,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1656,6 +1658,8 @@ export const BalanceSchema = z
         combatPower: z.array(z.number().min(0)).min(1),
         /** 9.V1: speed counts the highest realm whose base power is at most martial power × this (Hóa cảnh runs like Luyện Khí). */
         speedEquivMul: z.number().min(0).optional(),
+        /** 9.V2: years in a stage per tiểu cảnh (index = stage); each tiểu cảnh adds combat.stagePct power. */
+        subStageYears: z.array(z.number().min(1)).optional(),
         /** Lifespan added on reaching each stage. */
         lifespan: z.array(z.number().int().min(0)).min(1),
         /** Training into stage i (steps[0] = into Tam lưu). Stages past the list need a kỳ ngộ. */
@@ -1669,6 +1673,8 @@ export const BalanceSchema = z
               difficulty: z.number(),
               needsTeacher: z.boolean().optional(),
               minPhysique: z.number().optional(),
+              /** 9.V2: bình cảnh / tâm ma võ đạo: a failed year past the typical years may turn into tẩu hỏa (lose health), rarely losing a stage. */
+              deviation: z.object({ chance: probability, health: z.number().int(), cripple: probability }).strict().optional(),
             })
             .strict(),
         ),
@@ -2690,7 +2696,16 @@ export const MartialFileSchema = z
     ascend: z.object({ rootGrade: id, bodyId: id }).strict(),
     ascendEffects: z.array(EffectHookSchema),
     /** {years}, {need}, {next}, {stage}, {description}. */
-    texts: z.object({ train: z.string().min(1), promote: z.string().min(1), fail: z.string().min(1), ascend: z.string().min(1) }).strict(),
+    texts: z.object({
+      train: z.string().min(1), promote: z.string().min(1), fail: z.string().min(1), ascend: z.string().min(1),
+      /** 9.V2: logged on reaching the last stage (the end of the martial path; Tiên Võ đồng tu needs a tiên duyên). */
+      peak: z.string().min(1).optional(),
+      /** 9.V2: tẩu hỏa while forcing a breakthrough; and losing a stage to it. */
+      deviation: z.string().min(1).optional(),
+      crippled: z.string().min(1).optional(),
+    }).strict(),
+    /** 9.V2: names of the three tiểu cảnh inside a stage (Sơ nhập, Tiểu thành, Đại thành). */
+    subStages: z.array(z.string().min(1)).length(3).optional(),
     /** Backlog 7: one chain of steps from a stage to the next; each step is a mini-game or a stat check. */
     quests: z.array(MartialQuestSchema),
     /** Mini-game wording: the symbols, and a name and a how-to for each game. */

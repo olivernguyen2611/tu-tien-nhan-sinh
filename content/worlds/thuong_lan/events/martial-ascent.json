@@ -148,5 +148,50 @@
         "result": { "text": "Đẹp. Trăm năm mới có một lần, và ngươi đã thấy.", "effects": { "stat.happiness": 5 } }
       }
     ]
+  },
+{
+ "id": "vd_tien_vo_dong_tu",
+ "category": "mortal",
+ "title": "Tiên duyên ngoài cổng",
+ "text": "Ngũ khí đã khép vòng từ lâu, võ đạo không còn đường đi. Một đêm trăng, lão nhân áo vải năm xưa đứng ngoài cổng nhà {name}, chỉ vào cuốn Cửu Chuyển Kim Cốt Quyết trên án: \"Giờ thì tu được rồi. Đi không?\"",
+ "tags": [
+  "rare"
+ ],
+ "conditions": {
+  "realm": {
+   "max": "pham_nhan"
+  },
+  "martial": {
+   "min": 6
+  },
+  "flagsAll": [
+   "cao_nhan_vo_dao"
+  ]
+ },
+ "weight": 0.25,
+ "luckAffected": true,
+ "oncePerLife": true,
+ "choices": [
+  {
+   "text": "Theo lão bước qua cửa tiên",
+   "result": {
+    "text": "Lão nhân điểm ba huyệt trên ngực. Ngũ khí trong người hóa thành linh căn.",
+    "effects": {
+     "martialAscend": true,
+     "stat.daoHeart": 3
+    }
+   }
+  },
+  {
+   "text": "Ở lại làm người phàm mạnh nhất thiên hạ",
+   "result": {
+    "text": "Lão nhân cười, phất tay áo đi mất. Ngươi đứng trên đỉnh võ đạo, nhìn mây trôi.",
+    "effects": {
+     "stat.happiness": 5,
+     "stat.daoHeart": 2
+    }
+   }
   }
+ ]
+}
 ]

@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### 9.V2: tiểu cảnh võ đạo, tẩu hỏa, Ngũ khí là tận cùng (2026-10-15)
+- Mỗi bậc võ đạo có ba tiểu cảnh **sơ nhập / tiểu thành / đại thành**, lên theo số năm giữ bậc (`balance.martial.subStageYears`); mỗi tiểu cảnh cộng `combat.stagePct` sức mạnh. Bảng võ đạo hiện "Hóa cảnh tiểu thành". Save cũ bắt đầu ở sơ nhập.
+- Cưỡng ép xung quan Tuyệt đỉnh và Hóa cảnh quá số năm thường lệ có thể **tẩu hỏa** (mất sức khỏe); ở Hóa cảnh có chút khả năng rớt một bậc (`steps[].deviation`).
+- Theo chủ dự án (15/10 16:31): Ngũ khí triều nguyên là **tận cùng võ đạo**, không còn tự vào Luyện Khí. Muốn Tiên Võ đồng tu phải gặp tiên duyên: sự kiện hiếm `vd_tien_vo_dong_tu` (cần Ngũ khí + đã nhận kinh của cao nhân), chọn đi thì nhận linh căn Ngũ khí, Tiên Võ thể và Luyện Khí 1 (hiệu ứng mới `martialAscend`); chọn ở lại thì làm người phàm mạnh nhất.
+- Thọ nguyên Tam hoa giảm từ +30 xuống +25. Test mới `tests/martial-v2.test.ts`.
+
 ### 9.V1: thước sức mạnh võ đạo mới (2026-10-15)
 - Theo chủ dự án (15/10 16:40): bậc cao chênh nhau ít hơn, Ngũ khí chỉ ngang Trúc Cơ hậu kỳ, viên mãn. `balance.martial.combatPower` từ 1 / 1,5 / 2 / 3 / 5 / 7 / 9 thành **1,5 / 2 / 2,8 / 4 / 7 / 18 / 40** (Tam lưu → Ngũ khí).
 - Tỉ lệ thắng trận theo công thức (Căn cốt 50): Hóa cảnh với Luyện Khí tầng 1 khoảng 31%; Tam hoa với Luyện Khí tầng 9 50%, với Trúc Cơ sơ kỳ 14%; Ngũ khí với Trúc Cơ hậu kỳ 40%, viên mãn 36%, Kim Đan sơ kỳ 3%.

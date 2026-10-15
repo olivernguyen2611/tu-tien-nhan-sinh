@@ -13,7 +13,7 @@ import { fittingTechnique, gainScroll, learnTechnique } from '../technique';
 import { addItems, removeItems } from '../items';
 import { addCraftXp } from '../crafts';
 import { forceJoinCareer, leaveCareer, promoteCareer } from '../career';
-import { addMartialYears, martialAttempt, martialPromote } from '../martial';
+import { addMartialYears, martialAscend, martialAttempt, martialPromote } from '../martial';
 import { addPathAffinity } from '../paths';
 import { regionThemeMultiplier } from '../regions';
 import { chosenDisciple, isChosenEvent, setChosenRole, takeChosen } from '../chosen';
@@ -434,6 +434,7 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.martialYears) next = addMartialYears(next, fx.martialYears);
   if (fx.martialBonus) next = { ...next, martial: { ...next.martial, bonus: next.martial.bonus + fx.martialBonus } };
   if (fx.martialPromote) next = martialPromote(next, content);
+  if (fx.martialAscend) next = martialAscend(next, content);
   if (fx.martialAttempt) {
     const tried = martialAttempt(next, content);
     next = tried.state;

@@ -3,7 +3,7 @@ import { loadContent } from '../src/core/content';
 import { Rng } from '../src/core/rng';
 import { createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
-import { martialPromote } from '../src/systems/martial';
+import { martialAscend, martialPromote } from '../src/systems/martial';
 import {
   beginQuestStep, gameSymbols, martialQuestYear, miniGameHide, miniGameInput, miniGameQuit, questView,
 } from '../src/systems/martialQuest';
@@ -160,8 +160,10 @@ describe('martial quest chain', () => {
   it('the last chain ends in Ngũ khí triều nguyên: a five-element root that cultivates faster than a plain one', () => {
     const last = content.martial.quests[1].steps.length - 1;
     const s0 = martialQuestYear(mortalAt(5, 30, { quest: { id: 'ngu_khi', step: last, startedAt: 20, lastTry: null, game: null } }), content);
-    const s = solve(beginQuestStep(s0, content, false)!.state);
-    expect(s.martial.stage).toBe(6);
+    const peak = solve(beginQuestStep(s0, content, false)!.state);
+    expect(peak.martial.stage).toBe(6);
+    expect(peak.cult.realm).toBe('pham_nhan');
+    const s = martialAscend(peak, content);
     expect(s.cult.root).toMatchObject({ grade: 'ngu_khi' });
     expect(s.cult.bodyId).toBe('tien_vo_the');
     expect(s.cult.root!.elements).toHaveLength(5);

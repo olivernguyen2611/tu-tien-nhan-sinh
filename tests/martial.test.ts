@@ -7,7 +7,7 @@ import { lifeHooks, realmLabel, rootLabel, yearlyGain } from '../src/systems/cul
 import { findEvent, resolveChoice, eventWeight } from '../src/systems/events/engine';
 import { combatPower } from '../src/systems/combat';
 import { learnBlocked, techniqueById } from '../src/systems/technique';
-import { martialPromote, martialView, mortalManual, trainMartial } from '../src/systems/martial';
+import { martialAscend, martialPromote, martialView, mortalManual, trainMartial } from '../src/systems/martial';
 import { makeSave, migrate } from '../src/systems/save';
 
 const content = loadContent();
@@ -86,13 +86,17 @@ describe('martial path (task 3.11)', () => {
 
   it('stages add lifespan; past 50 the chance halves', () => {
     const s = mortal(30, 80, { martial: { stage: 3, years: 10, bonus: 0, lastTrain: null } });
-    expect(martialPromote(s, content).cult.lifespan).toBe(75 + 30 + content.martial.manual.lifespan);
+    expect(martialPromote(s, content).cult.lifespan).toBe(75 + content.balance.martial.lifespan[4] + content.martial.manual.lifespan);
     const old = { ...s, character: { ...s.character, age: 55 } };
     expect(martialView(old, content).chance).toBeCloseTo(martialView(s, content).chance / 2);
   });
 
-  it('Ngũ khí triều nguyên gives the Ngũ khí root (better than Ngũ linh căn) with Tiên Võ thể, and Luyện Khí 1', () => {
-    const s = martialPromote(mortal(50, 90, { martial: { stage: 5, years: 0, bonus: 0, lastTrain: null } }), content);
+  it('Ngũ khí triều nguyên + Tiên Võ đồng tu gives the Ngũ khí root (better than Ngũ linh căn) with Tiên Võ thể, and Luyện Khí 1', () => {
+    const peak = martialPromote(mortal(50, 90, { martial: { stage: 5, years: 0, bonus: 0, lastTrain: null } }), content);
+    // 9.V2: Ngũ khí is the end of the martial path; it stays mortal until a tiên duyên.
+    expect(peak.martial.stage).toBe(6);
+    expect(peak.cult.realm).toBe('pham_nhan');
+    const s = martialAscend(peak, content);
     expect(s.cult.root?.grade).toBe('ngu_khi');
     expect(rootLabel(s, content)).toBe('Ngũ khí');
     expect(s.cult.bodyId).toBe('tien_vo_the');
@@ -156,11 +160,12 @@ describe('martial path (task 3.11)', () => {
     const gather = findEvent(content, 'vd_ngu_khi_linh_tinh')!;
     expect(eventWeight(tam, content, gather)).toBeGreaterThan(0);
     let up: GameState = tam;
-    for (let i = 0; i < 30 && up.cult.realm === 'pham_nhan'; i++) {
+    for (let i = 0; i < 30 && up.martial.stage < 6; i++) {
       up = resolveChoice({ ...tam, rng: new Rng(`nk${i}`).getState(), events: { ...tam.events, pending: gather.id } }, content, 0).state;
     }
-    expect(up.cult.realm).toBe('luyen_khi');
-    expect(up.cult.root?.grade).toBe('ngu_khi');
+    expect(up.martial.stage).toBe(6);
+    expect(up.cult.realm).toBe('pham_nhan');
+    expect(martialAscend(up, content).cult.root?.grade).toBe('ngu_khi');
     expect(up.inventory.linh_tinh_kim ?? 0).toBe(0);
   });
 });
@@ -188,7 +193,7 @@ describe('Hóa cảnh: the cao nhân\'s gift (backlog 7)', () => {
     expect(s.aptitudes.physique).toBe(before.aptitudes.physique + m.physique);
     const without = { ...s, martial: { ...s.martial, manual: null } };
     expect(combatPower(s, content)).toBeGreaterThan(combatPower(without, content));
-    const up = martialPromote(martialPromote({ ...s, martial: { ...s.martial, stage: 5 } }, content), content);
+    const up = martialAscend(martialPromote(martialPromote({ ...s, martial: { ...s.martial, stage: 5 } }, content), content), content);
     expect(up.martial.manual).toBeNull();
     expect(mortalManual(up, content)).toBeNull();
   });

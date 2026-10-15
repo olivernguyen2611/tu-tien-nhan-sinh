@@ -24,9 +24,26 @@ export function martialName(state: GameState, content: Content): string | null {
   return state.martial.stage >= 0 ? content.martial.stages[state.martial.stage]?.name ?? null : null;
 }
 
-/** Combat power of a mortal from the martial stage (for task 3.3). */
+/** 9.V2: tiểu cảnh inside the stage (0 sơ nhập, 1 tiểu thành, 2 đại thành), by years since reaching it. */
+export function martialSubStage(state: GameState, content: Content): number {
+  const per = content.balance.martial.subStageYears?.[state.martial.stage];
+  if (state.martial.stage < 0 || !per) return 0;
+  const years = state.character.age - (state.martial.reachedAt ?? state.character.age);
+  return Math.max(0, Math.min(2, Math.floor(years / per)));
+}
+
+/** "Hóa cảnh tiểu thành", or null before Tam lưu. */
+export function martialLabel(state: GameState, content: Content): string | null {
+  const name = martialName(state, content);
+  const sub = content.martial.subStages?.[martialSubStage(state, content)];
+  return name && sub ? `${name} ${sub}` : name;
+}
+
+/** Combat power of a mortal from the martial stage (for task 3.3); each tiểu cảnh adds combat.stagePct (9.V2). */
 export function martialPower(state: GameState, content: Content): number {
-  return state.martial.stage >= 0 ? content.balance.martial.combatPower[state.martial.stage] ?? 0 : 0;
+  if (state.martial.stage < 0) return 0;
+  const base = content.balance.martial.combatPower[state.martial.stage] ?? 0;
+  return base * (1 + content.balance.combat.stagePct * martialSubStage(state, content));
 }
 
 function hasTeacher(state: GameState, content: Content): boolean {
@@ -85,7 +102,7 @@ export function martialView(state: GameState, content: Content): MartialView {
   else if (!step) blocked = nextStage ? `Muốn lên ${nextStage.name} cần kỳ ngộ.` : 'Võ đạo đã tới tận cùng.';
   else if (state.martial.lastTrain === state.character.age) blocked = 'Năm nay đã luyện rồi.';
   return {
-    stage: martialName(state, content),
+    stage: martialLabel(state, content),
     next: step ? nextStage?.name ?? null : null,
     years: state.martial.years,
     need: step?.years ?? 0,
@@ -96,7 +113,7 @@ export function martialView(state: GameState, content: Content): MartialView {
   };
 }
 
-/** Reach the next stage (training or an event): lifespan grows; the last stage ascends. */
+/** Reach the next stage (training or an event): lifespan grows. The last stage is the end of the path (9.V2): no auto-ascend. */
 export function martialPromote(state: GameState, content: Content): GameState {
   const stage = state.martial.stage + 1;
   const def = content.martial.stages[stage];
@@ -109,7 +126,7 @@ export function martialPromote(state: GameState, content: Content): GameState {
   };
   s = { ...s, log: addLines(s, [{ text: content.martial.texts.promote.replaceAll('{stage}', def.name).replaceAll('{description}', def.description), tone: 'good' }]) };
   if (stage === content.martial.gift.stage) s = hoaCanhGift(s, content);
-  if (stage === content.martial.stages.length - 1) s = ascend(s, content);
+  if (stage === content.martial.stages.length - 1 && content.martial.texts.peak) s = { ...s, log: addLines(s, [{ text: content.martial.texts.peak, tone: 'rare' }]) };
   return s;
 }
 
@@ -133,6 +150,16 @@ export function hoaCanhGift(state: GameState, content: Content): GameState {
 /** The mortal manual taken up at Hóa cảnh while the life is still a mortal, else null. */
 export function mortalManual(state: GameState, content: Content): Content['martial']['manual'] | null {
   return state.martial.manual && state.cult.realm === 'pham_nhan' ? content.martial.manual : null;
+}
+
+/**
+ * 9.V2 Tiên Võ đồng tu (event effect martialAscend): a Ngũ khí martial artist who met a tiên duyên and holds
+ * the cao nhân's kinh steps into cultivation. Martial power is kept (combatPower takes the larger).
+ */
+export function martialAscend(state: GameState, content: Content): GameState {
+  const last = content.martial.stages.length - 1;
+  if (state.martial.stage !== last || state.cult.realm !== 'pham_nhan') return state;
+  return ascend(state, content);
 }
 
 /**
@@ -175,6 +202,21 @@ export function trainMartial(state: GameState, content: Content): { state: GameS
       s = { ...s, log: addLines(s, lines) };
       const promoted = martialPromote(s, content);
       return { state: promoted, text: promoted.log.at(-1)!.lines.slice(-1)[0].text };
+    }
+    // 9.V2: forcing a hard step past its typical years may go wrong (tẩu hỏa), rarely costing a stage.
+    const step = content.balance.martial.steps[state.martial.stage + 1];
+    if (step?.deviation && years >= view.need) {
+      const r2 = Rng.fromState(s.rng);
+      if (r2.chance(step.deviation.chance)) {
+        s = { ...s, stats: { ...s.stats, health: Math.max(0, s.stats.health + step.deviation.health) } };
+        if (content.martial.texts.deviation) lines.push({ text: content.martial.texts.deviation, tone: 'bad' });
+        if (state.martial.stage > 0 && r2.chance(step.deviation.cripple)) {
+          const down = state.martial.stage - 1;
+          s = { ...s, martial: { ...s.martial, stage: down, years: 0, reachedAt: state.character.age } };
+          if (content.martial.texts.crippled) lines.push({ text: content.martial.texts.crippled.replaceAll('{stage}', content.martial.stages[down].name), tone: 'bad' });
+        }
+      }
+      s = { ...s, rng: r2.getState() };
     }
     // Past twice the typical years, say so (once in a while), so a weak trainee knows why.
     if (years >= view.need * 2 && years % view.need === 0) lines.push({ text: texts.fail.replaceAll('{next}', view.next ?? ''), tone: 'bad' });

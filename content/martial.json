@@ -76,8 +76,12 @@
     "train": "Một năm luyện võ, đã {years} năm hướng tới {next}.",
     "promote": "Võ công đột phá: {stage}. {description}",
     "fail": "Luyện đã lâu mà {next} vẫn chưa tới. Phải xem lại gân cốt và ngộ tính.",
-    "ascend": "Ngũ khí trong ngũ tạng thông nhau thành một vòng tuần hoàn: linh căn ngươi nay là Ngũ khí, thân hóa Tiên Võ thể. Võ đạo đi tới tận cùng, chạm cửa tiên."
+    "ascend": "Ngũ khí trong ngũ tạng hóa thành linh căn Ngũ khí, thân hóa Tiên Võ thể. Tiên duyên đã tới: lão nhân áo vải dẫn ngươi bước qua cửa tiên, tiên võ đồng tu.",
+    "peak": "Võ đạo đã tới tận cùng: xưa nay chưa ai đi xa hơn một bước. Muốn bước tiếp, phải có tiên duyên.",
+    "deviation": "Cưỡng ép xung quan, chân khí chạy ngược: tẩu hỏa nhập ma, nằm liệt mấy tháng.",
+    "crippled": "Kinh mạch rách nát, võ công tụt xuống {stage}."
   },
+  "subStages": ["sơ nhập", "tiểu thành", "đại thành"],
   "quests": [
     {
       "id": "tam_hoa",

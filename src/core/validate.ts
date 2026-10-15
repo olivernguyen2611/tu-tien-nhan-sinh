@@ -77,7 +77,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
 }
 
 /** Flags the engine sets itself (not via events). */
-export const ENGINE_FLAGS = ['no_aging_charm', 'no_parents', 'no_father', 'no_mother', 'mua_hang_gia', 'vo_dao_nhap_tien'];
+export const ENGINE_FLAGS = ['no_aging_charm', 'no_parents', 'no_father', 'no_mother', 'mua_hang_gia', 'vo_dao_nhap_tien', 'cao_nhan_vo_dao'];
 /** Words naming a parent in event text, and the flag the engine sets once that parent is gone. */
 // "cha ta", "mẹ hắn", "yêu thú mẹ"… are someone else's parents (task 3.9), not the player's.
 const PARENT_WORDS = [
