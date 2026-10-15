@@ -501,7 +501,7 @@ export function buyRebirthTalent(store: KeyValueStore, id: string, cost: number)
 function readCodex(raw: unknown): Codex {
   const c = (raw && typeof raw === 'object' ? raw : {}) as Partial<Codex>;
   const list = (v: unknown) => (Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : []);
-  return { traits: list(c.traits), combos: list(c.combos), fingers: list(c.fingers), stories: Array.isArray(c.stories) ? c.stories : [] };
+  return { traits: list(c.traits), combos: list(c.combos), fingers: list(c.fingers), stories: Array.isArray(c.stories) ? c.stories : [], knowledge: list(c.knowledge) };
 }
 
 /** Task 5b.4: fold what a life saw into the Thiên Thư (codex.ts codexOf). */

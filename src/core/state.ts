@@ -22,6 +22,7 @@ import { economyYear } from '../systems/economy';
 import { martialQuestYear } from '../systems/martialQuest';
 import { notifyYear } from '../systems/timeline';
 import { blessingRerolls } from '../systems/blessings';
+import { knowledgeYear } from '../systems/knowledge';
 import { withCheckpoints } from '../systems/rewind';
 import { awakenGoldenFinger } from '../systems/goldenFinger';
 import { goldenFingerYear } from '../systems/fingerActions';
@@ -43,6 +44,8 @@ export interface NewLifeInput {
   goldenFinger?: string | null;
   /** Task 5b.7: the sect a past life ran (from the save meta). */
   pastSect?: PastSectRecord | null;
+  /** 9.R5a: Sổ tri thức entries known by past lives (from the save meta). */
+  knowledge?: string[];
 }
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
@@ -143,6 +146,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     ancestry: [],
     blessings,
     rebirthTalents,
+    knowledge: (input.knowledge ?? []).filter((k) => (content.knowledge ?? []).some((e) => e.id === k)),
     challenge: null,
     goldenFinger: input.goldenFinger && content.goldenFingers.fingers.some((f) => f.id === input.goldenFinger) ? { id: input.goldenFinger, level: 0, since: 0 } : null,
     checkpoints: { age6: null, realm: null },
@@ -205,7 +209,9 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   // Task 4.1: in seclusion no ordinary event comes (follow-ups wait for the door to open);
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;
-  const next = !body.alive ? secluded : state.seclusion ? rollSeclusionEvent(secluded, content) : rollYearEvent(secluded, content);
+  const rolled = !body.alive ? secluded : state.seclusion ? rollSeclusionEvent(secluded, content) : rollYearEvent(secluded, content);
+  // 9.R5a: what the year taught goes into the Sổ tri thức.
+  const next = rolled.alive ? knowledgeYear(rolled, content) : rolled;
   // The year's log block exists before family news and the event are added to it.
   const log = next.log.slice();
   const block = log[log.length - 1];

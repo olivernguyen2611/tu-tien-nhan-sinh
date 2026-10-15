@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### 9.R5a: Sổ tri thức (2026-10-15)
+- Dữ liệu mới `content/worlds/thuong_lan/knowledge.json`: 29 mục tri thức chia 7 nhóm (tiên đạo, võ đạo, thế giới, thế lực, nhân vật, công pháp và bảo vật, bí cảnh). Mỗi mục có nguồn khám phá (sự kiện đã gặp, cờ, vật phẩm đang giữ, cảnh giới, bậc võ đạo, tông môn, vùng đang ở) và thứ nó mở khóa (cổng tiên duyên, thẻ giao diện, thuật ngữ, vùng, xuất thân; 9.R5b sẽ đọc).
+- Mỗi năm, nguồn nào đang đúng thì mục đó có xác suất được ghi vào sổ (`balance.knowledge`): nguồn chắc chắn (vd. bước vào Luyện Khí) luôn ghi; nguồn may rủi tối đa 1 mục mỗi năm, 3 mục mỗi kiếp. Dòng nhật ký "Ghi vào Sổ tri thức: …". RNG riêng theo seed nên không xê dịch phần còn lại của đời.
+- Tri thức giữ qua mọi kiếp (meta Thiên Thư) và truyền cho hậu duệ; kiếp mới sinh ra đã biết những gì kiếp trước biết. Thiên Thư có thẻ **Tri thức** mới, mục chưa biết hiện "???".
+- `npm run validate` kiểm tra nguồn và thứ được mở khóa có thật. Test mới `tests/knowledge.test.ts`.
+- Hiện game vẫn thử linh căn đại trà nên kiếp đầu gần như luôn biết "Linh căn", "Tiên môn thu đồ"; khi 9.R4 bỏ thử đại trà thì kiếp đầu còn khoảng 1–3 mục như kế hoạch.
+
 ### 9.V2: tiểu cảnh võ đạo, tẩu hỏa, Ngũ khí là tận cùng (2026-10-15)
 - Mỗi bậc võ đạo có ba tiểu cảnh **sơ nhập / tiểu thành / đại thành**, lên theo số năm giữ bậc (`balance.martial.subStageYears`); mỗi tiểu cảnh cộng `combat.stagePct` sức mạnh. Bảng võ đạo hiện "Hóa cảnh tiểu thành". Save cũ bắt đầu ở sơ nhập.
 - Cưỡng ép xung quan Tuyệt đỉnh và Hóa cảnh quá số năm thường lệ có thể **tẩu hỏa** (mất sức khỏe); ở Hóa cảnh có chút khả năng rớt một bậc (`steps[].deviation`).

@@ -41,6 +41,8 @@ export interface LifeResult {
   rootGrade: string;
   bodyId: string | null;
   martialStage: number;
+  /** 9.R5a: Sổ tri thức entries found by chance in this life. */
+  knowledge: number;
   /** Age at which each realm was first entered. */
   reachedAt: Record<string, number>;
   /** Stage within the final realm. */
@@ -167,7 +169,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
   return {
     seed, age: s.character.age, alive: s.alive, cause: s.death?.cause ?? (s.alive ? 'stuck' : 'unknown'), realm: s.cult.realm,
     peak: Math.max(peak, realms.indexOf(s.cult.realm)), rootGrade: s.cult.root?.grade ?? 'none', bodyId: s.cult.bodyId ?? null,
-    martialStage: s.martial.stage, reachedAt, stage: s.cult.stage, stuck: s.alive,
+    martialStage: s.martial.stage, knowledge: s.knowledgeFound ?? 0, reachedAt, stage: s.cult.stage, stuck: s.alive,
     happyZeroYears, topYears, daoHeartZero, fullBarYears, capYears,
     aptitudeGain: aptSum(s) - aptStart,
     aptitudeHigh: Math.max(s.aptitudes.physique, s.aptitudes.comprehension, s.aptitudes.luck) >= 90,

@@ -3,7 +3,7 @@
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, KnowledgeFileSchema, type KnowledgeEntry, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -71,6 +71,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
   if (rest === 'markets.json') return MarketFileSchema;
   if (rest === 'regions.json') return RegionFileSchema;
   if (rest === 'jianghu-factions.json') return JianghuFactionFileSchema;
+  if (rest === 'knowledge.json') return KnowledgeFileSchema;
   if (rest === 'challenges.json') return ChallengeFileSchema;
   if (/^events\/[^/]+\.json$/.test(rest)) return EventFileSchema;
   return null;
@@ -99,6 +100,8 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   let martialFile: MartialFile | null = null;
   const regionFiles: { file: string; regions: Region[] }[] = [];
   const factionFiles: { file: string; factions: JianghuFaction[] }[] = [];
+  const knowledgeFiles: { file: string; entries: KnowledgeEntry[] }[] = [];
+  let glossaryIds: string[] | null = null;
   const marketFiles: { file: string; markets: Market[] }[] = [];
   let chosenIds: string[] | null = null;
   let fingerIds: string[] | null = null;
@@ -241,6 +244,8 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === MartialFileSchema) martialFile = parsed.data as MartialFile;
     if (schema === RegionFileSchema) regionFiles.push({ file, regions: parsed.data as Region[] });
     if (schema === JianghuFactionFileSchema) factionFiles.push({ file, factions: parsed.data as JianghuFaction[] });
+    if (schema === KnowledgeFileSchema) knowledgeFiles.push({ file, entries: parsed.data as KnowledgeEntry[] });
+    if (schema === GlossarySchema) glossaryIds = (parsed.data as { id: string }[]).map((x) => x.id);
     if (schema === MarketFileSchema) {
       problems.push(...duplicates(file, 'phường thị', parsed.data as Market[]));
       marketFiles.push({ file, markets: parsed.data as Market[] });
@@ -435,6 +440,32 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
         outcome?.effects.setFlags.forEach((f) => flagsSet.add(f));
         // Task 3.3 fights set flags when they end.
         for (const end of [outcome?.fight?.win, outcome?.fight?.lose, outcome?.fight?.fled]) end?.effects.setFlags.forEach((f) => flagsSet.add(f));
+      }
+    }
+  }
+
+  // 9.R5a: Sổ tri thức sources and unlocks name real things of the same world.
+  for (const { file, entries } of knowledgeFiles) {
+    const world = splitWorldPath(file).worldId ?? '';
+    const regions = regionIdsByWorld.get(world) ?? new Set<string>();
+    const sectIds = new Set(sectFiles.filter((f) => splitWorldPath(f.file).worldId === world).flatMap((f) => f.sects.map((x) => x.id)));
+    const origins = originIdsByWorld.get(world) ?? new Set<string>();
+    problems.push(...duplicates(file, 'tri thức', entries));
+    for (const e of entries) {
+      const err = (message: string) => problems.push({ file, level: 'error', message: `tri thức "${e.id}": ${message}` });
+      for (const s of e.sources) {
+        const known: Record<string, (x: string) => boolean> = {
+          event: (x) => seen.has(x), flag: (x) => flagsSet.has(x), item: (x) => !itemIds || itemIds.includes(x),
+          realm: (x) => !realmIds || realmIds.has(x), sect: (x) => sectIds.has(x), region: (x) => regions.has(x),
+        };
+        if (s.kind === 'martial') { if (s.stage === undefined) err('nguồn "martial" cần "stage"'); continue; }
+        if (!s.id) { if (s.kind !== 'sect') err(`nguồn "${s.kind}" cần "id"`); continue; }
+        if (!known[s.kind](s.id)) err(`nguồn ${s.kind} lạ "${s.id}"`);
+      }
+      for (const u of e.unlocks) {
+        if (u.kind === 'term' && glossaryIds && !glossaryIds.includes(u.id)) err(`mở thuật ngữ lạ "${u.id}"`);
+        if (u.kind === 'region' && !regions.has(u.id)) err(`mở vùng lạ "${u.id}"`);
+        if (u.kind === 'origin' && !origins.has(u.id)) err(`mở xuất thân lạ "${u.id}"`);
       }
     }
   }

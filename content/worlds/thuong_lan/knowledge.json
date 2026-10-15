@@ -1,0 +1,682 @@
+[
+  {
+    "id": "tin_don_tien_nhan",
+    "group": "tien_dao",
+    "name": "Lời đồn về tiên nhân",
+    "text": "Người già trong làng kể: trên núi cao có kẻ cưỡi gió, sống mấy trăm năm không bạc tóc. Nghe như chuyện ma, nhưng ai cũng kể giống nhau đến lạ.",
+    "sources": [
+      {
+        "kind": "event",
+        "id": "tien_nhan_bay_ngang",
+        "chance": 0.24
+      },
+      {
+        "kind": "event",
+        "id": "huong_hoa_hoi",
+        "chance": 0.09
+      },
+      {
+        "kind": "event",
+        "id": "tien_mon_tuyen_do_truot",
+        "chance": 0.18
+      }
+    ],
+    "unlocks": [
+      {
+        "kind": "gate",
+        "id": "co_duyen"
+      },
+      {
+        "kind": "term",
+        "id": "tu_tien"
+      }
+    ]
+  },
+  {
+    "id": "tien_mon_thu_do",
+    "group": "tien_dao",
+    "name": "Tiên môn thu đồ",
+    "text": "Cứ vài chục năm, tiên môn xuống núi chọn đệ tử. Kẻ được chọn bay đi trong một sớm, kẻ trượt về nhà cày ruộng tiếp. Chuyện được chọn hay không, nghe nói nằm ở một thứ gọi là linh căn.",
+    "sources": [
+      {
+        "kind": "event",
+        "id": "tien_mon_tuyen_do_truot",
+        "chance": 0.3
+      },
+      {
+        "kind": "event",
+        "id": "tong_mon_tuyen_do",
+        "chance": 0.3
+      },
+      {
+        "kind": "event",
+        "id": "thu_linh_can",
+        "chance": 0.3
+      }
+    ],
+    "unlocks": [
+      {
+        "kind": "gate",
+        "id": "hoi_thu_do"
+      },
+      {
+        "kind": "term",
+        "id": "tong_mon"
+      }
+    ]
+  },
+  {
+    "id": "linh_can_la_gi",
+    "group": "tien_dao",
+    "name": "Linh căn",
+    "text": "Linh căn là trời cho, có thì có, không thì thôi. Khổ luyện trăm năm cũng không mọc ra được, chỉ kỳ ngộ cực lớn mới mở được kinh mạch cho kẻ không có.",
+    "sources": [
+      {
+        "kind": "event",
+        "id": "thu_linh_can",
+        "chance": 0.3
+      },
+      {
+        "kind": "realm",
+        "id": "luyen_khi",
+        "chance": 1
+      },
+      {
+        "kind": "event",
+        "id": "hang_khai_mach",
+        "chance": 0.15
+      }
+    ],
+    "unlocks": [
+      {
+        "kind": "term",
+        "id": "linh_can"
+      },
+      {
+        "kind": "term",
+        "id": "ngu_hanh"
+      }
+    ]
+  },
+  {
+    "id": "dan_khi_nhap_the",
+    "group": "tien_dao",
+    "name": "Dẫn khí nhập thể",
+    "text": "Bước đầu của tu tiên: ngồi yên, hít linh khí trời đất vào kinh mạch. Nói thì dễ, nhiều người ngồi ba năm chỉ hít được bụi.",
+    "sources": [
+      {
+        "kind": "realm",
+        "id": "luyen_khi",
+        "chance": 1
+      }
+    ],
+    "unlocks": [
+      {
+        "kind": "tab",
+        "id": "tu_luyen"
+      },
+      {
+        "kind": "term",
+        "id": "linh_khi"
+      },
+      {
+        "kind": "term",
+        "id": "tu_vi"
+      }
+    ]
+  },
+  {
+    "id": "truc_co_dai_quan",
+    "group": "tien_dao",
+    "name": "Trúc Cơ, cửa ải đầu",
+    "text": "Mười người Luyện Khí, chín người chết già ở viên mãn. Qua được Trúc Cơ mới tính là tu sĩ thật, thọ nguyên gấp đôi phàm nhân.",
+    "sources": [
+      {
+        "kind": "realm",
+        "id": "luyen_khi"
+      },
+      {
+        "kind": "item",
+        "id": "truc_co_dan",
+        "chance": 0.15
+      },
+      {
+        "kind": "realm",
+        "id": "truc_co",
+        "chance": 1
+      }
+    ],
+    "unlocks": [
+      {
+        "kind": "term",
+        "id": "dot_pha"
+      }
+    ]
+  },
+  {
+    "id": "kim_dan_ket_thanh",
+    "group": "tien_dao",
+    "name": "Kết Kim Đan",
+    "text": "Chân nguyên ngưng thành một viên đan trong đan điền. Đan có phẩm, phẩm định cả đời. Người phàm gọi kẻ Kim Đan là lão tổ.",
+    "sources": [
+      {
+        "kind": "realm",
+        "id": "truc_co"
+      },
+      {
+        "kind": "realm",
+        "id": "kim_dan",
+        "chance": 1
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "nguyen_anh_hoa_than",
+    "group": "tien_dao",
+    "name": "Nguyên Anh và Hóa Thần",
+    "text": "Đan vỡ, anh thành: một hình nhân nhỏ ngồi trong đan điền, thân xác chết vẫn còn đường sống. Trên nữa là Hóa Thần, người phàm chỉ nghe tên chứ chưa ai thấy.",
+    "sources": [
+      {
+        "kind": "realm",
+        "id": "kim_dan"
+      },
+      {
+        "kind": "realm",
+        "id": "nguyen_anh",
+        "chance": 1
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "tam_ma_tri_thuc",
+    "group": "tien_dao",
+    "name": "Tâm ma",
+    "text": "Đạo cao một thước, ma cao một trượng. Càng gần đỉnh, nỗi sợ trong lòng càng hóa hình mà đòi mạng.",
+    "sources": [
+      {
+        "kind": "realm",
+        "id": "truc_co"
+      },
+      {
+        "kind": "event",
+        "id": "tam_ma_nguoi_than",
+        "chance": 0.18
+      }
+    ],
+    "unlocks": [
+      {
+        "kind": "term",
+        "id": "tam_ma"
+      }
+    ]
+  },
+  {
+    "id": "vo_dao_tam_luu",
+    "group": "vo_dao",
+    "name": "Thang võ đạo",
+    "text": "Giang hồ chia võ nhân thành Tam lưu, Nhị lưu, Nhất lưu, Tuyệt đỉnh. Trên Tuyệt đỉnh là Hóa cảnh, cả vương triều đếm trên đầu ngón tay.",
+    "sources": [
+      {
+        "kind": "martial",
+        "stage": 0,
+        "chance": 0.15
+      },
+      {
+        "kind": "flag",
+        "id": "luc_hop_mon",
+        "chance": 0.15
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "tam_hoa_ngu_khi",
+    "group": "vo_dao",
+    "name": "Tam hoa và Ngũ khí",
+    "text": "Hóa cảnh rồi vẫn còn hai bước: ba đóa hoa tinh khí thần tụ trên đỉnh đầu, rồi năm luồng khí ngũ tạng về một mối. Đến đó là tận cùng võ đạo, không ai biết bước kế là gì.",
+    "sources": [
+      {
+        "kind": "martial",
+        "stage": 4,
+        "chance": 0.12
+      },
+      {
+        "kind": "flag",
+        "id": "cam_ung_tam_hoa",
+        "chance": 0.3
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "tien_vo_dong_tu",
+    "group": "vo_dao",
+    "name": "Tiên Võ đồng tu",
+    "text": "Lời truyền miệng: kẻ đến tận cùng võ đạo, nếu gặp được tiên duyên, ngũ khí trong người có thể hóa thành linh căn. Chưa ai kiểm chứng, vì chưa ai sống đủ lâu để kể.",
+    "sources": [
+      {
+        "kind": "martial",
+        "stage": 6,
+        "chance": 0.15
+      },
+      {
+        "kind": "flag",
+        "id": "vo_dao_nhap_tien",
+        "chance": 0.3
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "the_gioi_thuong_lan",
+    "group": "the_gioi",
+    "name": "Thương Lan giới",
+    "text": "Thế giới này gọi là Thương Lan. Phàm nhân sống ở Trung Nguyên dưới Đại Ung vương triều; xa hơn là hoang nguyên, núi yêu thú, biển đảo và tuyết vực mà người thường đi không về.",
+    "sources": [
+      {
+        "kind": "region",
+        "id": "thanh_van_chau",
+        "chance": 0.02
+      },
+      {
+        "kind": "event",
+        "id": "thuong_chien",
+        "chance": 0.09
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "vo_chu_hoang_nguyen",
+    "group": "the_gioi",
+    "name": "Vô Chủ hoang nguyên",
+    "text": "Vùng đất không ai cai quản: tán tu, ma tu, kẻ trốn nợ đều về đây. Linh khí dày hơn Trung Nguyên, mạng người mỏng hơn.",
+    "sources": [
+      {
+        "kind": "region",
+        "id": "vo_chu_hoang_nguyen",
+        "chance": 0.3
+      },
+      {
+        "kind": "event",
+        "id": "vo_chu_phuong_tan_quyen",
+        "chance": 0.15
+      }
+    ],
+    "unlocks": [
+      {
+        "kind": "region",
+        "id": "vo_chu_hoang_nguyen"
+      }
+    ]
+  },
+  {
+    "id": "van_thu_son_mach",
+    "group": "the_gioi",
+    "name": "Vạn Thú sơn mạch",
+    "text": "Rừng núi trùng điệp, yêu thú làm chủ. Thợ săn kể có con hổ biết nói, và không ai dám cười.",
+    "sources": [
+      {
+        "kind": "region",
+        "id": "van_thu_son_mach",
+        "chance": 0.3
+      },
+      {
+        "kind": "event",
+        "id": "yeu_thu_ha_son",
+        "chance": 0.15
+      }
+    ],
+    "unlocks": [
+      {
+        "kind": "region",
+        "id": "van_thu_son_mach"
+      }
+    ]
+  },
+  {
+    "id": "dong_hai_quan_dao",
+    "group": "the_gioi",
+    "name": "Đông Hải quần đảo",
+    "text": "Ngoài khơi có ngàn đảo, giao nhân hát trong sương. Thương thuyền đi về giàu to, hoặc không về.",
+    "sources": [
+      {
+        "kind": "region",
+        "id": "dong_hai",
+        "chance": 0.3
+      }
+    ],
+    "unlocks": [
+      {
+        "kind": "region",
+        "id": "dong_hai"
+      }
+    ]
+  },
+  {
+    "id": "bac_minh_tuyet_vuc",
+    "group": "the_gioi",
+    "name": "Bắc Minh tuyết vực",
+    "text": "Băng tuyết quanh năm, lạnh đến mức lời nói đông thành đá. Người tu băng hệ coi là đất lành.",
+    "sources": [
+      {
+        "kind": "region",
+        "id": "bac_minh_tuyet_vuc",
+        "chance": 0.3
+      }
+    ],
+    "unlocks": [
+      {
+        "kind": "region",
+        "id": "bac_minh_tuyet_vuc"
+      }
+    ]
+  },
+  {
+    "id": "thuong_lan_trung_chau",
+    "group": "the_gioi",
+    "name": "Thương Lan Trung Châu",
+    "text": "Trung tâm của giới, nơi các đại tông đặt sơn môn. Phàm nhân không lên được, mà lên được cũng không thở nổi vì linh áp.",
+    "sources": [
+      {
+        "kind": "region",
+        "id": "trung_chau",
+        "chance": 0.3
+      },
+      {
+        "kind": "realm",
+        "id": "kim_dan"
+      }
+    ],
+    "unlocks": [
+      {
+        "kind": "region",
+        "id": "trung_chau"
+      }
+    ]
+  },
+  {
+    "id": "chinh_dao_tong_mon",
+    "group": "the_luc",
+    "name": "Chính đạo tông môn",
+    "text": "Bích Lạc Tông, Tàng Phong Kiếm Các, Bách Thảo Cốc, Vô Ưu Tự: bốn nhà chính đạo, ngoài mặt hòa khí, sau lưng tranh từng mạch linh thạch.",
+    "sources": [
+      {
+        "kind": "sect",
+        "chance": 0.15
+      },
+      {
+        "kind": "event",
+        "id": "tong_mon_tuyen_do",
+        "chance": 0.12
+      }
+    ],
+    "unlocks": [
+      {
+        "kind": "tab",
+        "id": "tong_mon"
+      }
+    ]
+  },
+  {
+    "id": "u_ha_ma_tong",
+    "group": "the_luc",
+    "name": "U Hà Ma Tông",
+    "text": "Ma tông bên dòng sông đen. Tu nhanh, chết sớm, kẻ thù nhiều hơn bạn. Người phàm nhắc tên là trẻ con nín khóc.",
+    "sources": [
+      {
+        "kind": "sect",
+        "id": "u_ha_ma_tong",
+        "chance": 0.3
+      },
+      {
+        "kind": "event",
+        "id": "u_ha_giao_dich",
+        "chance": 0.18
+      },
+      {
+        "kind": "event",
+        "id": "loi_moi_u_ha",
+        "chance": 0.18
+      },
+      {
+        "kind": "event",
+        "id": "u_ha_nho_mat",
+        "chance": 0.15
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "van_yeu_dien",
+    "group": "the_luc",
+    "name": "Vạn Yêu Điện",
+    "text": "Nơi yêu tu hóa hình tụ về. Có kẻ bảo yêu cũng giữ chữ tín hơn người, có kẻ đã bị ăn nên không bảo được.",
+    "sources": [
+      {
+        "kind": "sect",
+        "id": "van_yeu_dien",
+        "chance": 0.3
+      },
+      {
+        "kind": "event",
+        "id": "yeu_tu_hoa_hinh",
+        "chance": 0.18
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "ma_tu_huyet_te",
+    "group": "the_luc",
+    "name": "Ma tu và huyết tế",
+    "text": "Có kẻ đổi máu người lấy tu vi. Đêm huyết tế, cả làng ngủ không dậy nữa.",
+    "sources": [
+      {
+        "kind": "event",
+        "id": "dem_huyet_te",
+        "chance": 0.3
+      },
+      {
+        "kind": "event",
+        "id": "huyet_te_dot_pha",
+        "chance": 0.3
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "lao_gia_trong_nhan",
+    "group": "nhan_vat",
+    "name": "Tàn hồn trong vật cũ",
+    "text": "Đôi khi một chiếc nhẫn cũ chứa hồn một lão quái. Lão dạy ngươi tu luyện, đổi lại lão cần một thân xác. Chuyện tử tế hay không, tùy lão.",
+    "sources": [
+      {
+        "kind": "event",
+        "id": "tan_hon_cho_phien",
+        "chance": 0.3
+      },
+      {
+        "kind": "event",
+        "id": "lao_ma_trong_nhan",
+        "chance": 0.3
+      },
+      {
+        "kind": "event",
+        "id": "lao_gia_gia_doat_xa",
+        "chance": 0.3
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "thien_kieu",
+    "group": "nhan_vat",
+    "name": "Thiên kiêu",
+    "text": "Mỗi đời có vài kẻ sinh ra đã khác: mười tuổi Luyện Khí, hai mươi Trúc Cơ. Gặp thì kết giao, không thì tránh xa.",
+    "sources": [
+      {
+        "kind": "event",
+        "id": "thien_kieu_han_gia",
+        "chance": 0.3
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "cong_phap_pham_cap",
+    "group": "cong_phap",
+    "name": "Công pháp",
+    "text": "Linh căn là ruộng, công pháp là cách cày. Không có công pháp, linh căn tốt mấy cũng nằm không.",
+    "sources": [
+      {
+        "kind": "realm",
+        "id": "luyen_khi",
+        "chance": 1
+      },
+      {
+        "kind": "event",
+        "id": "ma_cong_tan_quyen",
+        "chance": 0.3
+      },
+      {
+        "kind": "event",
+        "id": "vo_chu_phuong_tan_quyen",
+        "chance": 0.3
+      }
+    ],
+    "unlocks": [
+      {
+        "kind": "term",
+        "id": "cong_phap"
+      }
+    ]
+  },
+  {
+    "id": "linh_thach_tien_te",
+    "group": "cong_phap",
+    "name": "Linh thạch",
+    "text": "Đá chứa linh khí, tu sĩ dùng làm tiền. Một viên hạ phẩm bằng cả năm lương bạc của một nhà nông.",
+    "sources": [
+      {
+        "kind": "event",
+        "id": "dau_gia_kim_thiem",
+        "chance": 0.18
+      },
+      {
+        "kind": "event",
+        "id": "do_thach",
+        "chance": 0.3
+      },
+      {
+        "kind": "realm",
+        "id": "luyen_khi",
+        "chance": 0.5
+      }
+    ],
+    "unlocks": [
+      {
+        "kind": "term",
+        "id": "linh_thach"
+      }
+    ]
+  },
+  {
+    "id": "linh_tinh_ngu_hanh",
+    "group": "cong_phap",
+    "name": "Linh tinh ngũ hành",
+    "text": "Tinh hoa kim, mộc, thủy, hỏa, thổ kết thành tinh thể. Đủ cả năm trong tay là chuyện cả đời người ít gặp.",
+    "sources": [
+      {
+        "kind": "item",
+        "id": "linh_tinh_kim",
+        "chance": 0.3
+      },
+      {
+        "kind": "item",
+        "id": "linh_tinh_moc",
+        "chance": 0.3
+      },
+      {
+        "kind": "item",
+        "id": "linh_tinh_thuy",
+        "chance": 0.3
+      },
+      {
+        "kind": "item",
+        "id": "linh_tinh_hoa",
+        "chance": 0.3
+      },
+      {
+        "kind": "item",
+        "id": "linh_tinh_tho",
+        "chance": 0.3
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "bi_canh",
+    "group": "bi_canh",
+    "name": "Bí cảnh",
+    "text": "Mảnh trời đất tách riêng, mỗi mấy chục năm mở một lần. Vào thì chia của, ra thì chia mạng.",
+    "sources": [
+      {
+        "kind": "event",
+        "id": "bi_canh_van_kiem_mo",
+        "chance": 0.3
+      },
+      {
+        "kind": "event",
+        "id": "bi_canh_long_uyen_mo",
+        "chance": 0.3
+      },
+      {
+        "kind": "event",
+        "id": "bi_canh_chia_cua",
+        "chance": 0.3
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "van_kiem_mo",
+    "group": "bi_canh",
+    "name": "Mộ vạn kiếm",
+    "text": "Mộ của một kiếm tu thượng cổ, kiếm cắm đầy núi. Kiếm chọn người chứ người không chọn kiếm.",
+    "sources": [
+      {
+        "kind": "event",
+        "id": "bc_vk_rung_kiem",
+        "chance": 0.3
+      },
+      {
+        "kind": "event",
+        "id": "bc_vk_mo_chu",
+        "chance": 0.3
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "long_uyen_mo",
+    "group": "bi_canh",
+    "name": "Long uyên",
+    "text": "Vực sâu dưới đáy biển, nghe đồn có xương rồng. Giao long canh cửa không biết đùa.",
+    "sources": [
+      {
+        "kind": "event",
+        "id": "bc_lu_hanh_lang",
+        "chance": 0.3
+      },
+      {
+        "kind": "event",
+        "id": "bc_lu_long_chau",
+        "chance": 0.3
+      }
+    ],
+    "unlocks": []
+  }
+]

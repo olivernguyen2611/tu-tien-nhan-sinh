@@ -2,9 +2,15 @@
 import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import { codexProgress, storyText, type Codex } from '../../systems/codex';
+import { knowledgeByGroup } from '../../systems/knowledge';
 import { TermText } from '../components/Tooltip';
 
-type Tab = 'traits' | 'combos' | 'fingers' | 'stories' | 'achievements';
+type Tab = 'knowledge' | 'traits' | 'combos' | 'fingers' | 'stories' | 'achievements';
+
+/** 9.R5a: Sổ tri thức groups. */
+const GROUP_LABEL: Record<string, string> = {
+  tien_dao: 'Tiên đạo', vo_dao: 'Võ đạo', the_gioi: 'Thế giới', the_luc: 'Thế lực', nhan_vat: 'Nhân vật', cong_phap: 'Công pháp, bảo vật', bi_canh: 'Bí cảnh',
+};
 
 const RARITY_LABEL: Record<string, string> = {
   pham: 'Phàm', luong: 'Lương', uu: 'Ưu', tuyet: 'Tuyệt', thien: 'Thiên', than: 'Thần', ac: 'Ác vận',
@@ -20,6 +26,7 @@ export function CodexScreen({ content, codex, achievements, onBack }: {
   const [tab, setTab] = useState<Tab>('traits');
   const p = codexProgress(codex, content);
   const tabs: [Tab, string][] = [
+    ['knowledge', `Tri thức ${p.knowledge[0]}/${p.knowledge[1]}`],
     ['traits', `Khí vận ${p.traits[0]}/${p.traits[1]}`],
     ['combos', `Tổ hợp ${p.combos[0]}/${p.combos[1]}`],
     ['fingers', `Kim Thủ Chỉ ${p.fingers[0]}/${p.fingers[1]}`],
@@ -38,6 +45,19 @@ export function CodexScreen({ content, codex, achievements, onBack }: {
           <button role="tab" key={id} class={`tab${tab === id ? ' on' : ''}`} aria-selected={tab === id} onClick={() => setTab(id)}>{label}</button>
         ))}
       </div>
+
+      {tab === 'knowledge' && knowledgeByGroup(codex.knowledge, content).map(({ group, entries }) => (
+        <section key={group}>
+          <h3>{GROUP_LABEL[group] ?? group} {entries.filter((e) => e.known).length}/{entries.length}</h3>
+          <ul class="trait-chips codex-list">
+            {entries.map(({ entry, known }) => known ? (
+              <li class="trait-chip r-uu" key={entry.id}><b>{entry.name}</b><span>{entry.text}</span></li>
+            ) : (
+              <li class="trait-chip unknown" key={entry.id}><b>???</b><span>Chưa từng nghe tới.</span></li>
+            ))}
+          </ul>
+        </section>
+      ))}
 
       {tab === 'traits' && (
         <ul class="trait-chips codex-list">

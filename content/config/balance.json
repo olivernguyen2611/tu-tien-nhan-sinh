@@ -709,6 +709,7 @@
     "highlights": 5,
     "wish": 4
   },
+  "knowledge": { "defaultChance": 0.04, "maxPerYear": 1, "maxPerLife": 3 },
   "goldenFinger": {
     "birthChance": 0.07,
     "perLife": 0.002,

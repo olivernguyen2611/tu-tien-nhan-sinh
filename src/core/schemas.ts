@@ -1749,6 +1749,8 @@ export const BalanceSchema = z
         wish: z.number().int().min(0),
       })
       .strict(),
+    /** 9.R5a Sổ tri thức: yearly chance for a source that names none; at most this many finds a year, and a life. */
+    knowledge: z.object({ defaultChance: probability, maxPerYear: z.number().int().min(1), maxPerLife: z.number().int().min(1) }).strict().optional(),
     /** Task 5b.2: Kim Thủ Chỉ at birth: chance + per life played (capped), sure after pityLives lives without one. */
     goldenFinger: z
       .object({
@@ -2531,6 +2533,43 @@ export const JianghuFactionFileSchema = z.array(
     .strict(),
 );
 export type JianghuFaction = z.infer<typeof JianghuFactionFileSchema>[number];
+
+/** 9.R5a: groups of the Sổ tri thức, and what one entry can be found through or open. */
+export const KNOWLEDGE_GROUPS = ['tien_dao', 'vo_dao', 'the_gioi', 'the_luc', 'nhan_vat', 'cong_phap', 'bi_canh'] as const;
+export const KNOWLEDGE_SOURCES = ['event', 'flag', 'item', 'realm', 'martial', 'sect', 'region'] as const;
+export const KNOWLEDGE_UNLOCKS = ['gate', 'tab', 'term', 'region', 'origin'] as const;
+
+/**
+ * content/worlds/<id>/knowledge.json (9.R5a): the Sổ tri thức, kept across lives. Each year a life meets a
+ * source (an event seen, a flag, an item held, a realm or martial stage reached, a sect joined, a region
+ * stood in), an unknown entry may be found. `unlocks` are read by 9.R5b (gates, tabs, glossary terms…).
+ */
+export const KnowledgeFileSchema = z.array(
+  z
+    .object({
+      id,
+      group: z.enum(KNOWLEDGE_GROUPS),
+      name: z.string().min(1),
+      text: z.string().min(1),
+      sources: z
+        .array(
+          z
+            .object({
+              kind: z.enum(KNOWLEDGE_SOURCES),
+              /** Event / flag / item / realm / sect / region id; a martial stage index for "martial"; none for "sect" = any sect. */
+              id: z.string().min(1).optional(),
+              stage: z.number().int().min(0).optional(),
+              /** Yearly chance while the source holds (balance.knowledge.defaultChance if absent). */
+              chance: probability.optional(),
+            })
+            .strict(),
+        )
+        .min(1),
+      unlocks: z.array(z.object({ kind: z.enum(KNOWLEDGE_UNLOCKS), id: z.string().min(1) }).strict()).default([]),
+    })
+    .strict(),
+);
+export type KnowledgeEntry = z.infer<typeof KnowledgeFileSchema>[number];
 
 /** content/worlds/<id>/markets.json (task 3.2): where things are bought and sold. */
 export const MarketFileSchema = z.array(

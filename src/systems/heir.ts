@@ -56,7 +56,7 @@ export function continueAsHeir(state: GameState, content: Content, heirId: strin
   const child = option.kind === 'child' ? state.family.find((r) => r.id === heirId)! : null;
   const disciple = option.kind === 'disciple' ? state.npcs.find((n) => n.id === heirId)! : null;
   const gender = (child ?? disciple)!.gender;
-  const base = createLife({ seed, name: option.name, gender, originId: state.character.originId, difficulty: state.difficulty }, content);
+  const base = createLife({ seed, name: option.name, gender, originId: state.character.originId, difficulty: state.difficulty, knowledge: state.knowledge }, content);
   const rng = Rng.fromState(base.rng);
 
   // Family: the one who died, the living đạo lữ, the other children.
