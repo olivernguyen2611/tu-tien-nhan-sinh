@@ -2,6 +2,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { validateContent, type Problem } from '../src/core/validate';
+import { bannedNameProblems } from '../src/core/bannedNames';
 
 const root = join(import.meta.dirname, '..', 'content');
 const publicDir = join(import.meta.dirname, '..', 'public');
@@ -27,6 +28,13 @@ for (const full of listJson(root)) {
 }
 
 problems.push(...validateContent(files));
+
+// 9.R7a: no proper nouns from copyrighted works (docs/design/ten-cam.json).
+const bannedFile = join(import.meta.dirname, '..', 'docs', 'design', 'ten-cam.json');
+if (existsSync(bannedFile)) {
+  const banned = (JSON.parse(readFileSync(bannedFile, 'utf8')) as { groups: { names: string[] }[] }).groups.flatMap((g) => g.names);
+  problems.push(...bannedNameProblems(files, banned));
+}
 
 // Images referenced by events must exist under public/.
 for (const [file, data] of Object.entries(files)) {

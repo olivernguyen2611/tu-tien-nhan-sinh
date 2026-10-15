@@ -8,6 +8,10 @@
 
 ## [Chưa phát hành]
 
+### 9.R7a: hàng rào tên cấm, kinh thánh thế giới (2026-10-15)
+- `docs/design/ten-cam.json`: danh sách tên riêng nổi bật của các tác phẩm có bản quyền (không đưa vào game). `npm run validate` báo lỗi khi nội dung dùng đúng tên đó (mọi kiểu hoa thường), dùng tên chỉ khác dấu thanh viết hoa như tên riêng, hoặc khi kho tên có thể ghép ra một tên trong danh sách. Nội dung hiện tại sạch.
+- `docs/design/the-gioi-thuong-lan.md`: lịch sử bốn thời kỳ, tám đại vực (thêm Huyết Uyên ma vực và Thái Cổ chiến trường), năm phàm quốc, mười hai thế gia, sáu tộc, khung ~40 tông môn, sự kiện thiên hạ, quy tắc đặt tên và thứ tự nhập dữ liệu 9.R7b–e.
+
 ### 9.R6b: hồ sơ NPC đầy đủ trong chế độ thử nghiệm (2026-10-15)
 - Bảng dev "Người có quan hệ" có mục **Hồ sơ đầy đủ**: mọi thứ lưu về người đó, cả phần ẩn (bản chất chưa lộ, ân oán, thù truyền đời, đồ đệ, đồng môn, khí vận chi tử, lần tương tác; người thân thì linh căn, thể chất, ngộ tính, công pháp được truyền).
 - Chỉnh tự do: đặt thẳng một con số (thiện cảm, ân, oán, tư chất, tuổi, thọ nguyên, tiến độ; người thân có ngộ tính), đổi tính nết/bản chất/chí hướng, lộ hay giấu bản chất, truyền hoặc bỏ công pháp. Sinh/tử, cảnh giới, linh căn, xóa khỏi thế giới giữ như cũ.
