@@ -1,7 +1,7 @@
 // Light/dark preference, applied as <html data-theme>. "auto" follows the device.
 export type ThemePref = 'auto' | 'light' | 'dark';
 
-const KEY = 'tutien.theme';
+const KEY = 'bachthe.theme';
 
 export function loadThemePref(): ThemePref {
   try {

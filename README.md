@@ -1,4 +1,6 @@
-# Tu Tiên Nhân Sinh
+# Bách Thế Luân Hồi
+
+(Tên cũ: Tu Tiên Nhân Sinh. Repo và link chơi thử giữ nguyên địa chỉ cũ.)
 
 Game mô phỏng cuộc đời tu tiên dạng text: sinh ra là phàm nhân, mỗi lượt một năm, tìm linh căn, bái nhập tông môn, đột phá cảnh giới… hoặc chết già như người thường. Chết rồi luân hồi, mang theo một phần thiên phú sang đời sau.
 

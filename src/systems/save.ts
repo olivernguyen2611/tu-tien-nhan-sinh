@@ -13,8 +13,30 @@ import { EMPTY_CODEX, mergeCodex, type Codex } from './codex';
  */
 export const SAVE_VERSION = 3;
 export const SLOT_COUNT = 9;
-const KEY_PREFIX = 'tutien.save.';
-const META_KEY = 'tutien.meta';
+const KEY_PREFIX = 'bachthe.save.';
+const META_KEY = 'bachthe.meta';
+
+/** 9.R1: keys from before the game was renamed (Tu Tiên Nhân Sinh). Kept untouched as a backup. */
+export const LEGACY_PREFIX = 'tutien.';
+export const STORE_PREFIX = 'bachthe.';
+const MIGRATED_KEY = 'bachthe.migrated';
+
+/**
+ * 9.R1: copy every old `tutien.*` key to `bachthe.*` once (never overwriting a newer key, never
+ * deleting the old one). `keys` lists the store's keys (localStorage has no iterator in KeyValueStore).
+ */
+export function copyLegacyKeys(store: KeyValueStore, keys: string[]): number {
+  if (store.getItem(MIGRATED_KEY)) return 0;
+  let n = 0;
+  for (const k of keys) {
+    if (!k.startsWith(LEGACY_PREFIX)) continue;
+    const to = STORE_PREFIX + k.slice(LEGACY_PREFIX.length);
+    const v = store.getItem(k);
+    if (v !== null && store.getItem(to) === null) { store.setItem(to, v); n++; }
+  }
+  store.setItem(MIGRATED_KEY, '1');
+  return n;
+}
 /** Stay well under the ~5 MB localStorage limit; above this the log is compacted. */
 const MAX_SAVE_CHARS = 1_000_000;
 const CALM_LINE = 'Một năm bình lặng trôi qua.';
@@ -310,7 +332,7 @@ export type ParseResult = { ok: true; save: SaveFile } | { ok: false; error: str
 /** Check and upgrade raw save data (from a slot or an imported file). */
 export function parseSave(raw: unknown, knownWorlds: string[], defaults?: GameState): ParseResult {
   const parsed = SaveShape.safeParse(raw);
-  if (!parsed.success) return { ok: false, error: 'File không phải save của Tu Tiên Nhân Sinh, hoặc đã hỏng.' };
+  if (!parsed.success) return { ok: false, error: 'File không phải save của Bách Thế Luân Hồi, hoặc đã hỏng.' };
   if (parsed.data.saveVersion > SAVE_VERSION) {
     return { ok: false, error: 'Save này từ bản game mới hơn, hãy tải lại trang để cập nhật.' };
   }
@@ -407,7 +429,7 @@ export function latestSlot(store: KeyValueStore, knownWorlds: string[]): number 
 export function exportSave(save: SaveFile): { fileName: string; text: string } {
   const who = save.life.character.name.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D')
     .replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '').toLowerCase();
-  return { fileName: `tu-tien-${who || 'save'}-${save.life.character.age}-tuoi.json`, text: JSON.stringify(save, null, 2) };
+  return { fileName: `bach-the-${who || 'save'}-${save.life.character.age}-tuoi.json`, text: JSON.stringify(save, null, 2) };
 }
 
 export function readMeta(store: KeyValueStore): SaveMeta {

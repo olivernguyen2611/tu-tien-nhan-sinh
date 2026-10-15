@@ -1,7 +1,7 @@
 {
-  "name": "Tu Tiên Nhân Sinh",
-  "short_name": "Tu Tiên",
-  "description": "Mô phỏng một đời tu tiên",
+  "name": "Bách Thế Luân Hồi",
+  "short_name": "Bách Thế",
+  "description": "Mô phỏng trăm kiếp nhân sinh: phàm nhân, giang hồ, tu tiên",
   "lang": "vi",
   "start_url": "./",
   "scope": "./",

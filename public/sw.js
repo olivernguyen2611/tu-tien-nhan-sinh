@@ -1,6 +1,6 @@
 // Service worker: cache-first for the game's own files so it plays offline.
 // Bump CACHE when the strategy changes; hashed build assets never go stale.
-const CACHE = 'tutien-v1';
+const CACHE = 'bachthe-v1';
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.add(self.registration.scope)).then(() => self.skipWaiting()));

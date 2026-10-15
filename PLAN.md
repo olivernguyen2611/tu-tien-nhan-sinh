@@ -36,7 +36,7 @@
 - **Motif tu tiên kinh điển + hài hước**: phế vật nghịch tập, từ hôn, lão gia gia trong nhẫn, đồ đệ xuyên không gọi sư phụ là "NPC".
 
 ### Khác biệt so với BitLife
-| BitLife | Tu Tiên Nhân Sinh |
+| BitLife | Bách Thế Luân Hồi (tên cũ Tu Tiên Nhân Sinh) |
 |---|---|
 | Đời người ~80 năm, cố định nhịp | Từ vài chục đến hàng nghìn năm; nhịp tự co giãn (bế quan, tua nhanh) |
 | Chỉ số đời thường | Thêm hệ cảnh giới, linh căn, tu vi, thọ nguyên, nhân quả |

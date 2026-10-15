@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### 9.R1: đổi tên game thành Bách Thế Luân Hồi (2026-10-15)
+- Tên mới ở màn tiêu đề (kèm câu "Trăm kiếp luân hồi, một đường cầu đạo"), thẻ trình duyệt, manifest PWA, thành tựu chia sẻ, README, tên file save xuất ra (`bach-the-…json`), `package.json`.
+- Khóa lưu đổi từ `tutien.*` sang `bachthe.*`: lần đầu mở bản mới, mọi khóa cũ được **sao chép** sang khóa mới (không ghi đè, không xóa khóa cũ để làm bản dự phòng). File save cũ xuất ra trước đây vẫn nhập được. Cache PWA đổi tên nên bản cài sẵn tự cập nhật.
+- Giữ nguyên tên repo và link GitHub Pages để không gãy link chơi thử.
+
 ### Thái Sơ Diễn Đạo Kinh lên Vô Thượng phẩm (2026-10-15)
 - Phẩm công pháp mới **Vô Thượng** (trên Thiên phẩm; hệ số tu luyện ×3,0 so với ×2,0 của Thiên). Thái Sơ Diễn Đạo Kinh là công pháp duy nhất ở phẩm này: thiên địa tự diễn luyện, không ai viết ra.
 - Mạnh hơn: tốc độ tu luyện +30%, đột phá +10 (đại cảnh giới +20), vượt bình cảnh +30%, kháng tâm ma +30%, thọ nguyên +20%, chiến lực +25%, uy lực mọi hệ +15%, đỡ thiên lôi 15%; phần bù cho linh căn yếu gấp đôi (ngũ linh căn +100%).
