@@ -12,6 +12,7 @@ import { bodyLabel, innateRootLabel, rootLabel } from '../../systems/cultivation
 import { npcById } from '../../systems/npcs';
 import { romanceBlocked } from '../../systems/romance';
 import { devPeople, devPersonCheat, personCheatsAvailable, type PersonCheat } from '../../systems/devPeople';
+import { DevPersonSheet } from './DevPersonSheet';
 import type { SaveMeta } from '../../systems/save';
 import type { RewindOption } from '../../systems/timeline';
 import {
@@ -236,7 +237,7 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
         </Section>
 
         <Section title="Người có quan hệ">
-          <p class="profile-note">Chọn tên một người thân hoặc người quen rồi chỉnh họ. Người thân không có sổ ân oán, cảnh giới hay tư chất.</p>
+          <p class="profile-note">Chọn tên một người thân hoặc người quen rồi chỉnh họ. Người thân không có sổ ân oán, cảnh giới hay tư chất. Mở "Hồ sơ đầy đủ" để xem mọi thứ (cả phần ẩn) và đặt số tùy ý.</p>
           {people.length === 0 ? <p class="profile-note">Chưa có ai.</p> : (
             <>
               <div class="dev-event">
@@ -268,6 +269,7 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
                       <button class="chip-btn" disabled={!live} onClick={() => cheat({ kind: 'realm', realmId: personRealm })}>Đặt cảnh giới</button>
                     </div>
                   )}
+                  <DevPersonSheet key={person.key} state={state} content={content} person={person} live={live} onCheat={(c) => cheat(c)} />
                 </>
               )}
             </>

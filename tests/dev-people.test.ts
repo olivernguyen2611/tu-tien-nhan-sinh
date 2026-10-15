@@ -3,7 +3,7 @@ import { loadContent } from '../src/core/content';
 import { createLife } from '../src/core/state';
 import type { GameState, Relative } from '../src/core/types';
 import { createNpc } from '../src/systems/npcs';
-import { devPeople, devPersonCheat, personCheatsAvailable } from '../src/systems/devPeople';
+import { devPeople, devPersonCheat, devPersonSheet, personCheatsAvailable } from '../src/systems/devPeople';
 
 const content = loadContent();
 
@@ -74,5 +74,33 @@ describe('Dev mode: cheat the people around the protagonist', () => {
     expect(devPersonCheat(partnered, content, npcKey, { kind: 'remove' })).toBe(partnered);
     expect(devPersonCheat(s, content, 'npc:nobody', { kind: 'affinity', delta: 5 })).toBe(s);
     expect(devPersonCheat(s, content, 'zzz', { kind: 'affinity', delta: 5 })).toBe(s);
+  });
+});
+
+describe('Dev mode: full NPC sheet (9.R6b)', () => {
+  it('shows hidden parts and sets any number, trait and technique', () => {
+    const { s, npcKey, kidKey } = world();
+    const id = npcKey.slice(4);
+    const sheet = devPersonSheet(s, content, npcKey);
+    expect(sheet.find((r) => r.label === 'Tính nết · bản chất')!.value).toContain('(ẩn)');
+    let t = devPersonCheat(s, content, npcKey, { kind: 'set', field: 'grudge', value: 77 });
+    expect(t.npcs.find((n) => n.id === id)!.grudge).toBe(77);
+    t = devPersonCheat(t, content, npcKey, { kind: 'set', field: 'favor', value: 500 });
+    expect(t.npcs.find((n) => n.id === id)!.favor).toBe(100);
+    const nature = content.npcTraits.nature[0].id;
+    t = devPersonCheat(t, content, npcKey, { kind: 'trait', slot: 'nature', id: nature });
+    t = devPersonCheat(t, content, npcKey, { kind: 'revealNature', on: true });
+    expect(t.npcs.find((n) => n.id === id)).toMatchObject({ nature, natureKnown: true });
+    const goal = content.npcTraits.goals[0].id;
+    t = devPersonCheat(t, content, npcKey, { kind: 'trait', slot: 'goal', id: goal });
+    expect(t.npcs.find((n) => n.id === id)!.goal).toBe(goal);
+    const tech = content.techniques[0];
+    t = devPersonCheat(t, content, npcKey, { kind: 'technique', id: tech.id });
+    expect(devPersonSheet(t, content, npcKey).find((r) => r.label === 'Công pháp')!.value).toBe(tech.name);
+    t = devPersonCheat(t, content, kidKey, { kind: 'set', field: 'insight', value: 40 });
+    t = devPersonCheat(t, content, kidKey, { kind: 'technique', id: tech.id });
+    expect(t.family[0]).toMatchObject({ insight: 40, technique: tech.id });
+    expect(devPersonCheat(t, content, kidKey, { kind: 'trait', slot: 'nature', id: nature })).toBe(t);
+    expect(devPersonCheat(t, content, npcKey, { kind: 'trait', slot: 'nature', id: 'nope' })).toBe(t);
   });
 });
