@@ -187,6 +187,11 @@ function restoreRoots(life: GameState): GameState {
   if (out.family.some((r) => r.root?.grade === 'the_chat')) {
     out = { ...out, family: out.family.map((r) => (r.root?.grade === 'the_chat' ? { ...r, root: fix(r.id) } : r)) };
   }
+  // Hóa cảnh now brings the cao nhân's gift: a mortal already at Hóa cảnh or Tam hoa gets it late (no lifespan top-up).
+  if (out.cult.realm === 'pham_nhan' && out.martial.stage >= 4 && !out.flags.cao_nhan_vo_dao) {
+    const scrolls = out.cult.scrolls.includes('cuu_chuyen_kim_cot_quyet') ? out.cult.scrolls : [...out.cult.scrolls, 'cuu_chuyen_kim_cot_quyet'];
+    out = { ...out, flags: { ...out.flags, cao_nhan_vo_dao: true }, martial: { ...out.martial, manual: 'duong_nguyen_van_the_cong' }, cult: { ...out.cult, scrolls } };
+  }
   // Ngũ khí triều nguyên used to give a plain Ngũ linh căn; now it gives the Ngũ khí root and Tiên Võ thể.
   if (out.flags.vo_dao_nhap_tien && out.cult.root?.grade === 'ngu') {
     out = { ...out, cult: { ...out.cult, root: { ...out.cult.root, grade: 'ngu_khi' }, bodyId: 'tien_vo_the' } };

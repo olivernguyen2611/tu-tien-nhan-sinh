@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6d.3: Hóa cảnh, cao nhân tặng kinh chưa tu được (2026-10-15)
+- Đạt **Hóa cảnh** là một cao nhân hiện ra tặng **Cửu Chuyển Kim Cốt Quyết** (vào mục Bí tịch). Vì chưa có linh căn nên chưa tu được (hiện đúng lý do "Không có linh căn…"), kinh nằm đó chờ tới Ngũ khí.
+- Cao nhân dạy thay một công phu phàm nhân, **Dưỡng Nguyên Vận Thể Công** (`martial.json` `manual`): sức chiến +20%, thọ nguyên +8 năm, Căn cốt +3 một lần. Vừa phải, không bằng công pháp tu sĩ; bỏ đi khi đạt Ngũ khí. Hiện ở mục Võ đạo của bảng Tu luyện.
+- Sửa kèm: sức chiến của phàm nhân nay tính theo cảnh giới võ đạo (`balance.martial.combatPower`, trước đây bảng này chưa được nối vào giao chiến).
+- Save: người đã ở Hóa cảnh/Tam hoa được tặng muộn (không cộng thọ nguyên). Dev mode: chọn cảnh giới võ đạo từ Hóa cảnh trở lên cũng nhận quà.
+
 ### GĐ 6d.2: linh căn Ngũ khí và Tiên Võ thể (2026-10-15)
 - Hạng linh căn mới **Ngũ khí** (`roots.json`, không lăn ngẫu nhiên, chỉ có khi đạt Ngũ khí triều nguyên): tốc độ tu 1,25 (ngũ linh căn 0,4; song 1,0) cùng hiệu ứng riêng +25% tốc độ tu, +0,1 chống nghẽn, +4% đột phá. Hạng linh căn giờ có thể mang `effects`.
 - Thể chất mới **Tiên Võ thể** (không lăn ngẫu nhiên): Căn cốt +10, thân luyện +40, giảm thương tích 30%, sức chiến +15%, thọ +10%. Đạt Ngũ khí triều nguyên là có cả hai (`martial.json` `ascend`); hiệu ứng nhập tiên cũ giảm tốc độ +100% xuống +25% vì linh căn đã mạnh hơn.

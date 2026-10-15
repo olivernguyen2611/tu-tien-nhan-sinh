@@ -5,7 +5,9 @@ import { createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
 import { lifeHooks, realmLabel, rootLabel, yearlyGain } from '../src/systems/cultivation';
 import { findEvent, resolveChoice, eventWeight } from '../src/systems/events/engine';
-import { martialPromote, martialView, trainMartial } from '../src/systems/martial';
+import { combatPower } from '../src/systems/combat';
+import { learnBlocked, techniqueById } from '../src/systems/technique';
+import { martialPromote, martialView, mortalManual, trainMartial } from '../src/systems/martial';
 import { makeSave, migrate } from '../src/systems/save';
 
 const content = loadContent();
@@ -84,7 +86,7 @@ describe('martial path (task 3.11)', () => {
 
   it('stages add lifespan; past 50 the chance halves', () => {
     const s = mortal(30, 80, { martial: { stage: 3, years: 10, bonus: 0, lastTrain: null } });
-    expect(martialPromote(s, content).cult.lifespan).toBe(75 + 30);
+    expect(martialPromote(s, content).cult.lifespan).toBe(75 + 30 + content.martial.manual.lifespan);
     const old = { ...s, character: { ...s.character, age: 55 } };
     expect(martialView(old, content).chance).toBeCloseTo(martialView(s, content).chance / 2);
   });
@@ -158,5 +160,34 @@ describe('martial path (task 3.11)', () => {
     expect(up.cult.realm).toBe('luyen_khi');
     expect(up.cult.root?.grade).toBe('ngu_khi');
     expect(up.inventory.linh_tinh_kim ?? 0).toBe(0);
+  });
+});
+
+describe('Hóa cảnh: the cao nhân\'s gift (backlog 7)', () => {
+  const atTuyetDinh = () => mortal(40, 90, { martial: { stage: 3, years: 0, bonus: 0, lastTrain: null } });
+
+  it('gives Cửu Chuyển Kim Cốt Quyết as a scroll that a rootless body cannot cultivate, and a mortal manual', () => {
+    const s = martialPromote(atTuyetDinh(), content);
+    const g = content.martial.gift;
+    expect(s.martial.stage).toBe(g.stage);
+    expect(s.cult.scrolls).toContain(g.technique);
+    expect(s.flags[g.flag]).toBe(true);
+    expect(learnBlocked(s, content, techniqueById(content, g.technique)!)).toMatch(/linh căn/);
+    expect(mortalManual(s, content)?.id).toBe(content.martial.manual.id);
+    expect(s.cult.technique).toBeNull();
+    expect(s.log.at(-1)!.lines.map((l) => l.text).join(' ')).toContain('Cửu Chuyển Kim Cốt Quyết');
+  });
+
+  it('the manual adds a little lifespan, Căn cốt and combat power, and goes away at Ngũ khí', () => {
+    const before = atTuyetDinh();
+    const s = martialPromote(before, content);
+    const m = content.martial.manual;
+    expect(s.cult.lifespan).toBe(before.cult.lifespan + content.balance.martial.lifespan[4] + m.lifespan);
+    expect(s.aptitudes.physique).toBe(before.aptitudes.physique + m.physique);
+    const without = { ...s, martial: { ...s.martial, manual: null } };
+    expect(combatPower(s, content)).toBeGreaterThan(combatPower(without, content));
+    const up = martialPromote(martialPromote({ ...s, martial: { ...s.martial, stage: 5 } }, content), content);
+    expect(up.martial.manual).toBeNull();
+    expect(mortalManual(up, content)).toBeNull();
   });
 });

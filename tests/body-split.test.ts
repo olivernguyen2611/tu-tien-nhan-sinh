@@ -80,6 +80,11 @@ describe('linh căn and thể chất are separate', () => {
     // A martial ascender of the old kind (plain Ngũ linh căn) becomes Ngũ khí + Tiên Võ thể.
     const ascender = { ...adult(), flags: { vo_dao_nhap_tien: true }, cult: { ...adult().cult, root: { grade: 'ngu', elements: ['kim', 'moc', 'thuy', 'hoa', 'tho'] } } } as unknown as GameState;
     expect(migrate(makeSave(ascender, 1)).life.cult).toMatchObject({ root: { grade: 'ngu_khi' }, bodyId: 'tien_vo_the' });
+    // A mortal already at Hóa cảnh gets the cao nhân's gift late.
+    const hoa = { ...adult(), cult: { ...adult().cult, realm: 'pham_nhan', scrolls: [] }, flags: {}, martial: { stage: 4, years: 0, bonus: 0, lastTrain: null } } as unknown as GameState;
+    const lateGift = migrate(makeSave(hoa, 1)).life;
+    expect(lateGift.martial.manual).toBe('duong_nguyen_van_the_cong');
+    expect(lateGift.cult.scrolls).toContain('cuu_chuyen_kim_cot_quyet');
     // Same seed, same root: migrating twice does not change it.
     expect(migrate(makeSave(old, 1)).life.cult.root).toEqual(m.cult.root);
   });

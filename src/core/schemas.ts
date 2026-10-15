@@ -2510,6 +2510,22 @@ export const MartialFileSchema = z
     /** What counts as "bí kíp hoặc sư phụ" for stages that need a teacher. */
     teacher: z.object({ flags: ids, careers: ids, origins: ids }).strict(),
     /** Kept after Ngũ khí triều nguyên brings the life into Luyện Khí. */
+    /**
+     * At `stage` (Hóa cảnh) a cao nhân gives a technique the life cannot cultivate yet (no root) and a
+     * mortal manual instead: `power` = combatPower hook, `lifespan` = years once, `physique` = Căn cốt once.
+     */
+    gift: z
+      .object({
+        stage: z.number().int().min(0),
+        technique: id,
+        flag: id,
+        giftText: z.string().min(1),
+        manualText: z.string().min(1),
+      })
+      .strict(),
+    manual: z
+      .object({ id, name: z.string().min(1), flavor: z.string().min(1), power: z.number().min(0), lifespan: z.number().int().min(0), physique: z.number().int().min(0) })
+      .strict(),
     /** What Ngũ khí triều nguyên gives: the root grade (roots.json, special martial) and the special body. */
     ascend: z.object({ rootGrade: id, bodyId: id }).strict(),
     ascendEffects: z.array(EffectHookSchema),

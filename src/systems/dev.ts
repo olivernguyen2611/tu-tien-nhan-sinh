@@ -18,6 +18,7 @@ import { takeChosen } from './chosen';
 import { suggestSectName } from './ownSect';
 import { clanName } from './clan';
 import { sectById } from './sect';
+import { hoaCanhGift } from './martial';
 import { finishStep, questForStage } from './martialQuest';
 import { Rng } from '../core/rng';
 import type { DeathCause } from '../core/types';
@@ -325,7 +326,9 @@ export function devMetaFingerPity(meta: SaveMeta, content: Content): SaveMeta {
 /** Martial stage (-1 = none … 6); stages 5–6 skip their kỳ ngộ. A mortal only. */
 export function devSetMartial(state: GameState, content: Content, stage: number): GameState {
   if (!state.alive || state.cult.realm !== 'pham_nhan') return state;
-  const s = { ...state, martial: { ...state.martial, stage, years: 0, lastTrain: null, reachedAt: state.character.age, quest: null } };
+  let s: GameState = { ...state, martial: { ...state.martial, stage, years: 0, lastTrain: null, reachedAt: state.character.age, quest: null } };
+  // Skipping to Hóa cảnh or beyond still brings the cao nhân's gift (once).
+  if (stage >= content.martial.gift.stage && !s.flags[content.martial.gift.flag]) s = hoaCanhGift(s, content);
   return devLog(s, `võ đạo → ${stage < 0 ? 'chưa nhập môn' : content.martial.stages[stage]?.name ?? stage}`);
 }
 

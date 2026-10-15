@@ -107,8 +107,31 @@ export function martialPromote(state: GameState, content: Content): GameState {
     cult: { ...state.cult, lifespan: state.cult.lifespan + add },
   };
   s = { ...s, log: addLines(s, [{ text: content.martial.texts.promote.replaceAll('{stage}', def.name).replaceAll('{description}', def.description), tone: 'good' }]) };
+  if (stage === content.martial.gift.stage) s = hoaCanhGift(s, content);
   if (stage === content.martial.stages.length - 1) s = ascend(s, content);
   return s;
+}
+
+/**
+ * Hóa cảnh: a cao nhân gives a technique this rootless body cannot cultivate (it waits in the scrolls
+ * until Ngũ khí) and a mortal manual in its place: more combat power and a little lifespan.
+ */
+export function hoaCanhGift(state: GameState, content: Content): GameState {
+  const { gift, manual } = content.martial;
+  const scrolls = state.cult.scrolls.includes(gift.technique) || state.cult.technique === gift.technique ? state.cult.scrolls : [...state.cult.scrolls, gift.technique];
+  const s: GameState = {
+    ...state,
+    flags: { ...state.flags, [gift.flag]: true },
+    aptitudes: { ...state.aptitudes, physique: Math.min(100, state.aptitudes.physique + manual.physique) },
+    martial: { ...state.martial, manual: manual.id },
+    cult: { ...state.cult, scrolls, lifespan: state.cult.lifespan + manual.lifespan },
+  };
+  return { ...s, log: addLines(s, [{ text: gift.giftText, tone: 'rare' }, { text: gift.manualText.replaceAll('{manual}', manual.name), tone: 'good' }]) };
+}
+
+/** The mortal manual taken up at Hóa cảnh while the life is still a mortal, else null. */
+export function mortalManual(state: GameState, content: Content): Content['martial']['manual'] | null {
+  return state.martial.manual && state.cult.realm === 'pham_nhan' ? content.martial.manual : null;
 }
 
 /**
@@ -122,6 +145,7 @@ function ascend(state: GameState, content: Content): GameState {
   const withRoot: GameState = {
     ...state,
     flags: { ...state.flags, vo_dao_nhap_tien: true },
+    martial: { ...state.martial, manual: null },
     cult: { ...state.cult, root: { grade: rootGrade, elements: basic }, bodyId },
   };
   const logged = { ...withRoot, log: addLines(withRoot, [{ text: content.martial.texts.ascend, tone: 'rare' }]) };

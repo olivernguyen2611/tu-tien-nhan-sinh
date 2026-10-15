@@ -246,6 +246,8 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
     ...(content.lineages.find((l) => l.id === state.cult.lineage)?.effects ?? []),
     // Võ đạo nhập tiên keeps the body's edge (task 3.11).
     ...(state.flags.vo_dao_nhap_tien ? content.martial.ascendEffects : []),
+    // Dưỡng Nguyên Vận Thể Công, the manual a rootless Hóa cảnh martial artist cultivates instead.
+    ...(state.martial.manual && state.cult.realm === 'pham_nhan' ? [{ hook: 'combatPower', add: content.martial.manual.power }] : []),
     ...carriedHooks(state, content),
     // Đan văn of the golden core (task 4.2).
     ...(content.corePatterns.find((p) => p.id === state.cult.corePattern)?.effects ?? []),

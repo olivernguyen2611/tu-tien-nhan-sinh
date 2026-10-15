@@ -149,6 +149,8 @@ export interface GameState {
     /** The quest chain toward the next stage (martial.json quests), and the ones finished. */
     quest?: MartialQuest | null;
     done?: string[];
+    /** The mortal manual taken up after the Hóa cảnh gift (martial.json `manual`); null/absent before, dropped at Ngũ khí. */
+    manual?: string | null;
   };
   /** Sect membership (task 2.5). */
   sect: {
