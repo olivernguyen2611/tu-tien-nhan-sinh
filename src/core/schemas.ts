@@ -2271,6 +2271,14 @@ export const SectFileSchema = z.array(
       lineage: z.enum(LINEAGES),
       /** False: in the world but not taking disciples yet. */
       recruitable: z.boolean(),
+      /** 9.R7d: the đại vực it sits in; unless roaming, it takes only those who come to its region. */
+      region: id.optional(),
+      /** 9.R7d: đại tông, trung tông, tiểu tông. */
+      tier: z.enum(['dai', 'trung', 'tieu']).default('dai'),
+      /** 9.R7d: sends recruiters across the world (hội thu đồ), so it can be joined from anywhere. */
+      roaming: z.boolean().default(false),
+      /** 9.R7d: friendly sects (the rival is identity.rival). */
+      allies: z.array(id).default([]),
       description: z.string().min(1),
       /** Rank names from lowest (index 0) to highest. */
       ranks: z.array(z.string().min(1)).min(2),

@@ -72,22 +72,22 @@ Thế gia có **dòng đích** (con chính thất, được truyền công pháp
 | `quy_toc` | Quỷ tộc | U Minh dưới Huyết Uyên | Nối quỷ tu (đạo thống Quỷ) |
 | `thach_toc` | Thạch tộc (người đá Thái Cổ) | Thái Cổ chiến trường | Ngủ ngàn năm, tỉnh dậy không nhớ ai là bạn |
 
-## 6. Tông môn tu tiên (~40, `sects.json`)
+## 6. Tông môn tu tiên (38, `sects.json`)
 
-Sáu tông cũ giữ nguyên. Mỗi tông thêm `region`, `allies`, `rivals`. Cấp: **đại tông** (thu người có linh căn tốt), **trung tông**, **tiểu tông** (dễ vào, ít tài nguyên).
+Mỗi tông có `region`, `tier` (đại, trung, tiểu), `allies` và đối thủ (`identity.rival`). Sáu tông cũ có `roaming`: mở hội thu đồ khắp nơi nên bái nhập được từ đâu cũng được. Các tông còn lại chỉ nhận người tự tìm tới vùng của mình.
 
-| Vùng | Tông (in đậm = đã có) |
+| Vùng | Tông (in đậm = có từ trước, đi chiêu mộ khắp nơi) |
 |---|---|
-| Trung Nguyên | **Vô Ưu Tự** (Phật), Thanh Khê Kiếm Phái (tiểu, kiếm), Lạc Diệp Môn (tiểu, đan), Tử Trúc Am (Phật, ni), Khâm Thiên Giám (triều đình, không phải tông nhưng thu người) |
-| Vô Chủ hoang nguyên | Hắc Phong Trại (tà, tán tu lập), Phong Sa Môn (tiểu, thân pháp), Tán Tu Liên Minh (liên minh lỏng) |
-| Vạn Thú sơn mạch | **Vạn Yêu Điện** (yêu), **Bách Thảo Cốc** (rìa rừng, đan), Ngự Thú Tông (trung), Thanh Mộc Cung (trung, mộc hệ) |
-| Huyết Uyên ma vực | **U Hà Ma Tông** (ma), Huyết Ảnh Môn (ma, ám sát), Thi Âm Tông (quỷ, luyện thi), Vạn Độc Giáo (ma, độc), Ma La Điện (ma, thượng tầng) |
-| Đông Hải quần đảo | Bích Ba Các (trung, thủy), Thận Lâu Đảo (trung, ảo thuật, giữ Hải thị), Long Tích Đảo (đại, thể tu), Tiềm Long Phủ (tiểu, đảo nhỏ) |
-| Thái Cổ chiến trường | Thủ Mộ Tông (trung, giữ cổ mộ), Phá Cấm Đường (tiểu, đào di tích), Chiến Thần Điện (đại, thể tu, thờ di cốt thần) |
-| Bắc Minh tuyết vực | Băng Tâm Cung (đại, nữ tu), Tuyết Lang Bộ (yêu, sói tuyết), Hàn Sơn Tự (Phật, khổ tu) |
-| Trung Châu | **Bích Lạc Tông** (đại, tiên), **Tàng Phong Kiếm Các** (đại, kiếm), Thái Huyền Đạo Cung (đại, pháp), Thiên Cơ Các (đại, bói toán, trận), Đại Diễn Thư Viện (đại, nho tu), Kim Thiềm Thương Minh (thương hội) |
+| Trung Nguyên | **Vô Ưu Tự** (Phật), Thanh Khê Kiếm Phái (tiểu, kiếm), Lạc Diệp Môn (tiểu, đan), Tử Trúc Am (trung, Phật, ni), Vân Mộng Các (tiểu, ảo thuật) |
+| Vô Chủ hoang nguyên | Hắc Phong Trại (tiểu, tán tu), Phong Sa Môn (tiểu, thân pháp), Tán Tu Liên Minh (trung) |
+| Vạn Thú sơn mạch | **Vạn Yêu Điện** (yêu), **Bách Thảo Cốc** (đan), Ngự Thú Tông (trung), Thanh Mộc Cung (trung, mộc), Bách Điểu Cốc (tiểu, yêu) |
+| Huyết Uyên ma vực | **U Hà Ma Tông**, Huyết Ảnh Môn (trung, ám sát), Thi Âm Tông (trung, quỷ, luyện thi), Vạn Độc Giáo (trung, độc), Ma La Điện (đại) |
+| Đông Hải quần đảo | Bích Ba Các (trung, thủy), Thận Lâu Đảo (trung, ảo thuật, buôn bán), Long Tích Đảo (đại, thể tu), Tiềm Long Phủ (tiểu), Hải Nguyệt Am (tiểu, Phật) |
+| Thái Cổ chiến trường | Thủ Mộ Tông (trung), Phá Cấm Đường (tiểu, giải cấm chế), Chiến Thần Điện (đại, thể tu), Di Cốt Môn (tiểu, ma) |
+| Bắc Minh tuyết vực | Băng Tâm Cung (đại, nữ tu), Tuyết Lang Bộ (trung, yêu), Hàn Sơn Tự (trung, Phật khổ tu), Phong Tuyết Kiếm Lư (tiểu, kiếm) |
+| Trung Châu | **Bích Lạc Tông**, **Tàng Phong Kiếm Các**, Thái Huyền Đạo Cung (đại, pháp), Thiên Cơ Các (đại, bói toán, trận), Đại Diễn Thư Viện (đại, nho tu), Tinh La Điện (trung, tinh tú), Kim Thiềm Thương Minh (đại, thương minh) |
 
-Tổng ~38 tông + 3 thế lực nửa tông. Danh sách chốt khi làm 9.R7d; tên nào đụng hàng rào thì đổi.
+Khâm Thiên Giám là cơ quan triều đình Đại Ung (cổng tiên duyên `hoang_that`), không phải tông môn.
 
 ## 7. Sự kiện thiên hạ (`world-events.json`, ~30)
 

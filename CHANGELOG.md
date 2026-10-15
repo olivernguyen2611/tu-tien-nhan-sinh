@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### 9.R7d: 38 tông môn tu tiên theo vùng (2026-10-15)
+- 32 tông môn mới, chia đủ tám đại vực (mỗi vùng ít nhất 3 tông môn hoặc thế lực), mỗi tông có tôn chỉ, truyền thống, tuyệt kỹ, giai thoại, nhân vật, công pháp, hiệu ứng, bổng lộc; ma tông trừ nghiệp mỗi năm và đổi danh tiếng khi gia nhập.
+- Tông môn có thêm `region`, `tier` (đại, trung, tiểu), `allies`; sáu tông cũ đi chiêu mộ khắp nơi (`roaming`), các tông còn lại chỉ nhận người **tự tìm tới vùng của họ**.
+- Bảng Tông môn chỉ hiện các tông bái nhập được ở chỗ đang đứng; tông các vùng khác gom trong mục gập "Tông môn các vùng khác".
+- Validate kiểm vùng, đồng minh, đối thủ của tông môn.
+
 ### 9.R7c: phàm quốc, thế gia, chủng tộc (2026-10-15)
 - Ba file dữ liệu mới của Thương Lan: `nations.json` (5 phàm quốc: Đại Ung, Cảnh quốc, Lạc Hà, Bạch Lộc, Xích Sa), `clans.json` (12 tu tiên thế gia, mỗi nhà có nghề, dòng đích và dòng thứ), `races.json` (6 tộc: nhân, yêu, giao, linh, quỷ, thạch).
 - Bản đồ: vùng đã đặt chân tới hiện phàm quốc, thế gia, chủng tộc và thế lực giang hồ ở đó.

@@ -370,6 +370,19 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       for (const o of [...f.allies, ...f.rivals]) if (!ids.has(o) || o === f.id) problems.push({ file, level: 'error', message: `thế lực "${f.id}" nhắc tới thế lực lạ "${o}"` });
     }
   }
+  // 9.R7d: a sect sits in a real region of its world; allies and rival are sects of the same world.
+  for (const { file, sects } of sectFiles) {
+    const world = file.split('/')[1];
+    const regionIds = new Set(regionFiles.filter((r) => r.file.split('/')[1] === world).flatMap((r) => r.regions.map((x) => x.id)));
+    const ids = new Set(sects.map((x) => x.id));
+    for (const x of sects) {
+      if (x.region && regionIds.size > 0 && !regionIds.has(x.region)) problems.push({ file, level: 'error', message: `tông môn "${x.id}" ở vùng lạ "${x.region}"` });
+      if (!x.roaming && !x.region) problems.push({ file, level: 'error', message: `tông môn "${x.id}" không đi chiêu mộ khắp nơi (roaming) nên phải có region` });
+      for (const o of [...x.allies, ...(x.identity?.rival ? [x.identity.rival.sect] : [])]) {
+        if (!ids.has(o) || o === x.id) problems.push({ file, level: 'error', message: `tông môn "${x.id}" nhắc tới tông lạ "${o}"` });
+      }
+    }
+  }
   for (const { file, items } of loreFiles) {
     const world = file.split('/')[1];
     const regionIds = new Set(regionFiles.filter((r) => r.file.split('/')[1] === world).flatMap((r) => r.regions.map((x) => x.id)));

@@ -54,7 +54,10 @@
           "text": "Mười lăm tuổi nhập nội môn, được kỳ vọng kế vị, tính tình khó gần."
         }
       ]
-    }
+    },
+    "region": "trung_chau",
+    "tier": "dai",
+    "roaming": true
   },
   {
     "id": "tang_phong_kiem_cac",
@@ -115,7 +118,10 @@
           "text": "Cả năm không nói quá mười câu. Có người bảo ông đã quên cách cười."
         }
       ]
-    }
+    },
+    "region": "trung_chau",
+    "tier": "dai",
+    "roaming": true
   },
   {
     "id": "bach_thao_coc",
@@ -171,7 +177,10 @@
           "text": "Hiền lành với bệnh nhân, nhưng ai làm hại người trong cốc thì bà nhớ rất lâu."
         }
       ]
-    }
+    },
+    "region": "van_thu_son_mach",
+    "tier": "dai",
+    "roaming": true
   },
   {
     "id": "vo_uu_tu",
@@ -216,7 +225,10 @@
           "text": "Hay hỏi những câu tưởng đơn giản mà khiến người ta nghĩ cả đời."
         }
       ]
-    }
+    },
+    "region": "thanh_van_chau",
+    "tier": "dai",
+    "roaming": true
   },
   {
     "id": "u_ha_ma_tong",
@@ -255,7 +267,10 @@
           "text": "Cười rất hiền, ra tay rất ác, nhớ tên mọi đệ tử kể cả đã chết."
         }
       ]
-    }
+    },
+    "region": "huyet_uyen",
+    "tier": "dai",
+    "roaming": true
   },
   {
     "id": "van_yeu_dien",
@@ -293,6 +308,1846 @@
           "name": "Hồ Tiểu Lục",
           "title": "Điện chủ",
           "text": "Hồ ly chín trăm tuổi, thích đóng giả cô bé, rất ghét bị gọi là bà."
+        }
+      ]
+    },
+    "region": "van_thu_son_mach",
+    "tier": "dai",
+    "roaming": true
+  },
+  {
+    "id": "thanh_khe_kiem_phai",
+    "name": "Thanh Khê Kiếm Phái",
+    "faction": "chinh",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "thanh_van_chau",
+    "tier": "tieu",
+    "allies": [],
+    "description": "Kiếm phái nhỏ bên suối, mười mấy đệ tử, một lão sư phụ hay say. Vào dễ, ra cũng dễ, chỉ có mài kiếm là khó.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "physique": 35
+      }
+    },
+    "techniques": [
+      {
+        "id": "dan_khi_quyet",
+        "rank": 0
+      },
+      {
+        "id": "tang_phong_kiem_kinh",
+        "rank": 2
+      }
+    ],
+    "effects": [
+      {
+        "hook": "path.sword.affinity",
+        "add": 8
+      }
+    ],
+    "duty": "Gánh nước cho cả làng dưới suối.",
+    "identity": {
+      "tradition": "Đệ tử mới phải chém đôi một chiếc lá rơi trên mặt suối mà không làm gợn nước.",
+      "signature": "Khê Thủy Kiếm: kiếm nhẹ như nước chảy, đánh lâu mới thấy lợi hại.",
+      "anecdote": "Tổ sư vốn là thợ rèn trong làng, rèn hỏng ba trăm thanh mới ngộ ra kiếm đạo.",
+      "rival": {
+        "sect": "lac_diep_mon",
+        "reason": "Hai phái tranh nhau một con suối từ đời ông nội."
+      },
+      "notable": [
+        {
+          "name": "Liễu Bách Tuế",
+          "title": "Chưởng môn",
+          "text": "Uống rượu từ sáng, dạy kiếm từ trưa. Kiếm trong tay ông chưa bao giờ run, chén rượu thì có."
+        }
+      ]
+    }
+  },
+  {
+    "id": "lac_diep_mon",
+    "name": "Lạc Diệp Môn",
+    "faction": "chinh",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "thanh_van_chau",
+    "tier": "tieu",
+    "allies": [
+      "tu_truc_am"
+    ],
+    "description": "Môn phái luyện đan nhỏ ở rừng phong. Lò đan suốt ngày bốc khói, mùa thu lá đỏ rụng đầy sân.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "intellect": 40
+      }
+    },
+    "techniques": [
+      {
+        "id": "dan_khi_quyet",
+        "rank": 0
+      },
+      {
+        "id": "thanh_moc_truong_sinh_cong",
+        "rank": 1
+      }
+    ],
+    "effects": [
+      {
+        "hook": "craft.alchemy.affinity",
+        "add": 10
+      }
+    ],
+    "duty": "Hái thuốc, trông lò, quét lá.",
+    "identity": {
+      "tradition": "Mỗi năm đệ tử trả lại cho rừng một gốc cây non cho mỗi lò đan nổ.",
+      "signature": "Thu Diệp đan: đan dược rẻ mà chắc, bán khắp chợ phiên Trung Nguyên.",
+      "anecdote": "Môn chủ đời đầu là học trò bị Ôn gia đuổi ra, lập môn để chứng minh không cần Ôn gia cũng luyện được đan.",
+      "rival": {
+        "sect": "thanh_khe_kiem_phai",
+        "reason": "Hai phái tranh nhau một con suối từ đời ông nội."
+      },
+      "notable": [
+        {
+          "name": "Hà Tam Nương",
+          "title": "Môn chủ",
+          "text": "Cười to, mắng to, luyện đan giỏi. Nồi đan nào nổ bà cũng bảo là do thời tiết."
+        }
+      ]
+    }
+  },
+  {
+    "id": "tu_truc_am",
+    "name": "Tử Trúc Am",
+    "faction": "chinh",
+    "lineage": "phat",
+    "recruitable": true,
+    "region": "thanh_van_chau",
+    "tier": "trung",
+    "allies": [
+      "vo_uu_tu",
+      "lac_diep_mon"
+    ],
+    "description": "Am ni cô giữa rừng trúc tím, gần kinh thành Lạc Hà. Tụng kinh, chữa bệnh cho dân, cửa am không đóng bao giờ.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "daoHeart": 50
+      },
+      "rootlessMinDaoHeart": 75
+    },
+    "techniques": [
+      {
+        "id": "vo_uu_thien_tam_phap",
+        "rank": 0
+      },
+      {
+        "id": "ho_anh_thanh_lien_quyet",
+        "rank": 3
+      }
+    ],
+    "effects": [
+      {
+        "hook": "heartDemonResist",
+        "add": 0.1
+      },
+      {
+        "hook": "craft.alchemy.affinity",
+        "add": 5
+      }
+    ],
+    "duty": "Chữa bệnh miễn phí mỗi phiên chợ.",
+    "identity": {
+      "tradition": "Mỗi đệ tử trồng một bụi trúc khi nhập môn; bụi trúc chết thì phải tụng kinh sám hối ba tháng.",
+      "signature": "Tử Trúc Tâm Kinh: tĩnh tâm, trừ tà, đánh nhau thì không giỏi lắm.",
+      "anecdote": "Am do một vương phi Lạc Hà lập ra sau khi rời hoàng cung, nên vua Lạc Hà đời nào cũng tới dâng hương.",
+      "notable": [
+        {
+          "name": "Tĩnh Tâm sư thái",
+          "title": "Trụ trì",
+          "text": "Nói chậm, đi chậm, nhưng ai làm ác trong vùng đều biết bà nhanh thế nào."
+        }
+      ]
+    }
+  },
+  {
+    "id": "van_mong_cac",
+    "name": "Vân Mộng Các",
+    "faction": "chinh",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "thanh_van_chau",
+    "tier": "tieu",
+    "allies": [],
+    "description": "Các nhỏ trên hồ sương, chuyên ảo thuật và thuật pháp. Đệ tử hay bị người ngoài tưởng là gánh xiếc.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "comprehension": 45
+      }
+    },
+    "techniques": [
+      {
+        "id": "mong_trung_tan_kinh",
+        "rank": 0
+      },
+      {
+        "id": "thuy_nguyet_quan_tuong_phap",
+        "rank": 2
+      }
+    ],
+    "effects": [
+      {
+        "hook": "path.arts.affinity",
+        "add": 10
+      }
+    ],
+    "duty": "Diễn ảo thuật ở hội làng để kiếm tiền cho các.",
+    "identity": {
+      "tradition": "Mỗi năm có một đêm cả hồ chìm trong ảo cảnh, đệ tử phải tự tìm đường về.",
+      "signature": "Thủy Mộng Thuật: cho địch thấy thứ hắn sợ nhất.",
+      "anecdote": "Các chủ đời trước lừa được cả một đại năng Kim Đan bằng một con vịt giấy. Câu chuyện thật hay giả thì chính các cũng không chắc.",
+      "notable": [
+        {
+          "name": "Mộng Tiên Tử",
+          "title": "Các chủ",
+          "text": "Chưa ai thấy mặt thật. Có người bảo bà là ba người đứng chồng lên nhau."
+        }
+      ]
+    }
+  },
+  {
+    "id": "hac_phong_trai",
+    "name": "Hắc Phong Trại",
+    "faction": "tan_tu",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "vo_chu_hoang_nguyen",
+    "tier": "tieu",
+    "allies": [
+      "tan_tu_lien_minh"
+    ],
+    "description": "Tán tu lập trại trên vách đá, nửa thổ phỉ nửa môn phái. Luật trại: chia đều, phản bội thì chôn cát.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {},
+    "techniques": [
+      {
+        "id": "dan_khi_quyet",
+        "rank": 0
+      },
+      {
+        "id": "hoa_van_quyet",
+        "rank": 1
+      }
+    ],
+    "effects": [
+      {
+        "hook": "lootPct",
+        "add": 0.1
+      }
+    ],
+    "duty": "Đi canh đường buôn, thu phí qua đường.",
+    "identity": {
+      "tradition": "Ai vào trại phải uống chung một bát rượu pha cát, uống xong là anh em.",
+      "signature": "Hắc Phong Đao: đao nặng, gió đen, không cần đẹp.",
+      "anecdote": "Trại chủ đời đầu là đệ tử bị một đại tông đuổi ra; ông ta dựng trại ngay trên đường đại tông đi tuyển đồ.",
+      "rival": {
+        "sect": "phong_sa_mon",
+        "reason": "Tranh nhau con đường buôn muối với Xích Sa."
+      },
+      "notable": [
+        {
+          "name": "Lôi Đại Hổ",
+          "title": "Trại chủ",
+          "text": "Giọng như sấm, tính như trẻ con. Nợ ai một bữa rượu là nhớ cả đời."
+        }
+      ]
+    }
+  },
+  {
+    "id": "phong_sa_mon",
+    "name": "Phong Sa Môn",
+    "faction": "tan_tu",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "vo_chu_hoang_nguyen",
+    "tier": "tieu",
+    "allies": [],
+    "description": "Môn phái thân pháp giữa sa mạc, đi nhanh như gió cát. Nghèo, nhưng chưa ai đuổi kịp để đòi nợ.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "physique": 40
+      }
+    },
+    "techniques": [
+      {
+        "id": "dan_khi_quyet",
+        "rank": 0
+      }
+    ],
+    "effects": [
+      {
+        "hook": "escapeChance",
+        "add": 0.1
+      },
+      {
+        "hook": "speed",
+        "add": 0.05
+      }
+    ],
+    "duty": "Đưa thư qua sa mạc.",
+    "identity": {
+      "tradition": "Đệ tử phải chạy một vòng quanh hồ khô dưới nắng trưa, ai ngã thì chạy lại.",
+      "signature": "Lưu Sa Bộ: chân không chạm đất, dấu chân bị gió xóa ngay.",
+      "anecdote": "Môn chủ bảo môn có từ thời Thượng Cổ, nhưng sách sử duy nhất của môn là một quyển sổ nợ.",
+      "rival": {
+        "sect": "hac_phong_trai",
+        "reason": "Tranh nhau con đường buôn muối với Xích Sa."
+      },
+      "notable": [
+        {
+          "name": "Phi Yến",
+          "title": "Môn chủ",
+          "text": "Chạy nhanh nhất Vô Chủ hoang nguyên. Nợ nhiều nhất Vô Chủ hoang nguyên."
+        }
+      ]
+    }
+  },
+  {
+    "id": "tan_tu_lien_minh",
+    "name": "Tán Tu Liên Minh",
+    "faction": "tan_tu",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "vo_chu_hoang_nguyen",
+    "tier": "trung",
+    "allies": [
+      "hac_phong_trai"
+    ],
+    "description": "Liên minh lỏng của tán tu ở Vô Chủ Phường: không chưởng môn, không quy củ, chỉ có một tấm bảng việc và một quỹ chung ai cũng nghi.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {},
+    "techniques": [
+      {
+        "id": "dan_khi_quyet",
+        "rank": 0
+      },
+      {
+        "id": "ngu_hanh_luan_chuyen_kinh",
+        "rank": 2
+      }
+    ],
+    "effects": [
+      {
+        "hook": "priceDiscount",
+        "add": 0.05
+      }
+    ],
+    "duty": "Nhận việc trên bảng, nộp một phần mười.",
+    "identity": {
+      "tradition": "Mỗi năm họp một lần để cãi nhau xem quỹ chung đi đâu; chưa năm nào cãi xong.",
+      "signature": "Không có tuyệt kỹ chung; ai cũng giấu một chiêu cho riêng mình.",
+      "anecdote": "Liên minh lập ra sau một đêm ba đại tông cùng tới Vô Chủ Phường bắt người. Đêm ấy tán tu đứng chung, sáng ra lại tản đi.",
+      "notable": [
+        {
+          "name": "Lão Mù",
+          "title": "Người giữ bảng",
+          "text": "Không mù. Chỉ là không ai nhớ ông nhìn thấy gì."
+        }
+      ]
+    }
+  },
+  {
+    "id": "ngu_thu_tong",
+    "name": "Ngự Thú Tông",
+    "faction": "chinh",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "van_thu_son_mach",
+    "tier": "trung",
+    "allies": [
+      "van_yeu_dien"
+    ],
+    "description": "Tông môn kết khế với yêu thú. Đệ tử nuôi thú như nuôi con, có người nuôi cả rồng đất.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "oneOf": [
+        {
+          "rootElements": [
+            "moc",
+            "phong"
+          ]
+        },
+        {
+          "minStats": {
+            "charm": 50
+          }
+        }
+      ]
+    },
+    "techniques": [
+      {
+        "id": "dan_khi_quyet",
+        "rank": 0
+      },
+      {
+        "id": "van_thu_thong_linh_thuat",
+        "rank": 1
+      }
+    ],
+    "effects": [
+      {
+        "hook": "craft.beast.affinity",
+        "add": 15
+      }
+    ],
+    "duty": "Chăn thú, dọn chuồng, đưa thú đi khám.",
+    "identity": {
+      "tradition": "Đệ tử mới được chọn một quả trứng; trứng nở ra gì thì nuôi nấy, kể cả nở ra gà.",
+      "signature": "Song Hồn Khế: người và thú chung một hơi thở trong trận.",
+      "anecdote": "Tổ sư đi lạc trong Vạn Thú sơn mạch, được một bầy sói nuôi lớn. Ra khỏi rừng ông lập tông để trả ơn.",
+      "rival": {
+        "sect": "thanh_moc_cung",
+        "reason": "Ngự Thú Tông thả thú ăn vườn thuốc của Thanh Mộc Cung, chuyện ba trăm năm chưa xong."
+      },
+      "notable": [
+        {
+          "name": "Khương Bá Nha",
+          "title": "Tông chủ",
+          "text": "Người Khương gia, nói chuyện với thú nhiều hơn với người."
+        }
+      ]
+    }
+  },
+  {
+    "id": "thanh_moc_cung",
+    "name": "Thanh Mộc Cung",
+    "faction": "chinh",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "van_thu_son_mach",
+    "tier": "trung",
+    "allies": [
+      "bach_thao_coc"
+    ],
+    "description": "Cung điện xây trong thân một cây cổ thụ nghìn năm. Mộc hệ, chữa thương, trồng thuốc.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "oneOf": [
+        {
+          "rootElements": [
+            "moc",
+            "thuy"
+          ]
+        }
+      ]
+    },
+    "techniques": [
+      {
+        "id": "thanh_moc_truong_sinh_cong",
+        "rank": 0
+      },
+      {
+        "id": "bach_thao_xuan_sinh_quyet",
+        "rank": 2
+      }
+    ],
+    "effects": [
+      {
+        "hook": "craft.farming.affinity",
+        "add": 15
+      }
+    ],
+    "duty": "Chăm vườn thuốc, tưới cây mẹ.",
+    "identity": {
+      "tradition": "Cung chủ mỗi đời phải ngủ một đêm trong lõi cây mẹ để nghe cây nói.",
+      "signature": "Thanh Mộc Hồi Xuân: thương nặng tới đâu cũng gượng dậy được một lần.",
+      "anecdote": "Cây mẹ có từ thời Thái Cổ; người ta đồn rễ nó đâm tới tận Thái Cổ chiến trường.",
+      "rival": {
+        "sect": "ngu_thu_tong",
+        "reason": "Ngự Thú Tông thả thú ăn vườn thuốc của Thanh Mộc Cung, chuyện ba trăm năm chưa xong."
+      },
+      "notable": [
+        {
+          "name": "Mộc Thanh Y",
+          "title": "Cung chủ",
+          "text": "Nói chuyện với cây hiền hơn với người. Với Ngự Thú Tông thì không hiền với ai cả."
+        }
+      ]
+    }
+  },
+  {
+    "id": "bach_dieu_coc",
+    "name": "Bách Điểu Cốc",
+    "faction": "yeu",
+    "lineage": "yeu",
+    "recruitable": true,
+    "region": "van_thu_son_mach",
+    "tier": "tieu",
+    "allies": [
+      "van_yeu_dien"
+    ],
+    "description": "Thung lũng chim, người và chim yêu sống chung. Sáng nào cũng ồn như chợ.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {},
+    "techniques": [
+      {
+        "id": "van_thu_thong_linh_thuat",
+        "rank": 0
+      }
+    ],
+    "effects": [
+      {
+        "hook": "craft.beast.affinity",
+        "add": 8
+      },
+      {
+        "hook": "escapeChance",
+        "add": 0.05
+      }
+    ],
+    "duty": "Đưa thư bằng chim cho cả sơn mạch.",
+    "identity": {
+      "tradition": "Đệ tử phải học tiếng của một loài chim trước khi được nhận tên.",
+      "signature": "Bách Điểu Triều Phượng: gọi cả bầy chim che trời.",
+      "anecdote": "Cốc chủ là một con hạc trắng tu thành người, bảo đã sống tám trăm năm nhưng vẫn khai bốn trăm.",
+      "notable": [
+        {
+          "name": "Bạch Hạc Lão Nhân",
+          "title": "Cốc chủ",
+          "text": "Gầy, cao, đứng một chân khi nghĩ việc khó."
+        }
+      ]
+    }
+  },
+  {
+    "id": "huyet_anh_mon",
+    "name": "Huyết Ảnh Môn",
+    "faction": "ma",
+    "lineage": "ma",
+    "recruitable": true,
+    "region": "huyet_uyen",
+    "tier": "trung",
+    "allies": [
+      "ma_la_dien"
+    ],
+    "description": "Môn phái sát thủ ma đạo. Nhận tiền giết người, không hỏi lý do, không trả lại tiền.",
+    "ranks": [
+      "Ảnh nô",
+      "Ảnh vệ",
+      "Ảnh sát",
+      "Ảnh chủ"
+    ],
+    "requires": {
+      "minStats": {
+        "physique": 45
+      }
+    },
+    "techniques": [
+      {
+        "id": "u_ha_huyet_anh_cong",
+        "rank": 0
+      },
+      {
+        "id": "huyet_hai_phan_anh_cong",
+        "rank": 3
+      }
+    ],
+    "effects": [
+      {
+        "hook": "combatPower",
+        "add": 0.05
+      },
+      {
+        "hook": "escapeChance",
+        "add": 0.1
+      }
+    ],
+    "duty": "Nhận một mạng mỗi năm.",
+    "identity": {
+      "tradition": "Đệ tử mới phải mang về chiếc bóng của một người: không cần giết, chỉ cần người đó không bao giờ tìm thấy bóng mình nữa.",
+      "signature": "Huyết Ảnh Phân Thân: một nhát dao từ ba hướng.",
+      "anecdote": "Môn chủ đời đầu từng là ám vệ của Đại Ung, bị chính hoàng đế bán đứng.",
+      "rival": {
+        "sect": "u_ha_ma_tong",
+        "reason": "Tranh nhau quyền thu cống ở Huyết Uyên; sắp trở mặt."
+      },
+      "notable": [
+        {
+          "name": "Vô Danh",
+          "title": "Môn chủ",
+          "text": "Không ai biết mặt. Ai thấy mặt thì không kể được nữa."
+        }
+      ]
+    }
+  },
+  {
+    "id": "thi_am_tong",
+    "name": "Thi Âm Tông",
+    "faction": "ma",
+    "lineage": "quy",
+    "recruitable": true,
+    "region": "huyet_uyen",
+    "tier": "trung",
+    "allies": [],
+    "description": "Tông luyện thi dưới đáy vực. Đệ tử ít, thi nô nhiều, ngày nào cũng lạnh.",
+    "ranks": [
+      "Thi nô",
+      "Thi vệ",
+      "Thi sư",
+      "Thi tôn"
+    ],
+    "requires": {
+      "oneOf": [
+        {
+          "rootElements": [
+            "am"
+          ]
+        },
+        {
+          "minStats": {
+            "daoHeart": 30
+          }
+        }
+      ]
+    },
+    "techniques": [
+      {
+        "id": "u_ha_huyet_anh_cong",
+        "rank": 0
+      }
+    ],
+    "effects": [
+      {
+        "hook": "craft.beast.affinity",
+        "add": 5
+      },
+      {
+        "hook": "heartDemonResist",
+        "add": -0.05
+      }
+    ],
+    "duty": "Canh nghĩa địa, nhặt xác.",
+    "identity": {
+      "tradition": "Mỗi đệ tử tự luyện một thi nô từ người không ai nhận, và phải đặt tên cho nó.",
+      "signature": "Thi Âm Khôi Lỗi: thi nô đánh thay, chủ nhân đứng xa.",
+      "anecdote": "Tông chủ đời đầu luyện chính mình thành thi, vẫn ngồi trên ngai đá dưới đáy vực, thỉnh thoảng gật đầu.",
+      "rival": {
+        "sect": "thu_mo_tong",
+        "reason": "Thủ Mộ Tông giữ mộ, Thi Âm Tông đào mộ."
+      },
+      "notable": [
+        {
+          "name": "Âm Thất Nương",
+          "title": "Tông chủ",
+          "text": "Hát ru thi nô mỗi tối. Giọng rất hay, không ai dám khen."
+        }
+      ]
+    }
+  },
+  {
+    "id": "van_doc_giao",
+    "name": "Vạn Độc Giáo",
+    "faction": "ma",
+    "lineage": "ma",
+    "recruitable": true,
+    "region": "huyet_uyen",
+    "tier": "trung",
+    "allies": [
+      "ma_la_dien"
+    ],
+    "description": "Giáo phái độc ở đầm lầy phía đông Huyết Uyên. Coi độc như thuốc, coi người như vật thử thuốc.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "intellect": 45
+      }
+    },
+    "techniques": [
+      {
+        "id": "u_ha_huyet_anh_cong",
+        "rank": 0
+      },
+      {
+        "id": "huyet_hai_phan_anh_cong",
+        "rank": 3
+      }
+    ],
+    "effects": [
+      {
+        "hook": "craft.alchemy.affinity",
+        "add": 10
+      }
+    ],
+    "duty": "Nuôi rắn, nuôi rết, thử thuốc.",
+    "identity": {
+      "tradition": "Đệ tử nhập giáo phải uống một chén độc do sư phụ chọn; giải được là đệ tử, không giải được thì thôi.",
+      "signature": "Vạn Độc Quy Tông: một hơi thở nhiễm trăm loại độc.",
+      "anecdote": "Giáo chủ đời đầu là người Độc Cô thị bị đuổi vì quá độc, ngay cả với Độc Cô thị.",
+      "notable": [
+        {
+          "name": "Lam Phượng Hoàng",
+          "title": "Giáo chủ",
+          "text": "Đẹp như hoa, độc như hoa. Thích tặng người khác quà."
+        }
+      ]
+    }
+  },
+  {
+    "id": "ma_la_dien",
+    "name": "Ma La Điện",
+    "faction": "ma",
+    "lineage": "ma",
+    "recruitable": true,
+    "region": "huyet_uyen",
+    "tier": "dai",
+    "allies": [
+      "huyet_anh_mon",
+      "van_doc_giao"
+    ],
+    "description": "Đại điện ma đạo trên vách Huyết Uyên, dưới trướng Uyên chủ. Thu cả ma lẫn người muốn thành ma.",
+    "ranks": [
+      "Ma nô",
+      "Ma vệ",
+      "Ma sứ",
+      "Ma tử"
+    ],
+    "requires": {
+      "minStats": {
+        "daoHeart": 20
+      }
+    },
+    "techniques": [
+      {
+        "id": "u_ha_huyet_anh_cong",
+        "rank": 0
+      },
+      {
+        "id": "huyet_hai_phan_anh_cong",
+        "rank": 2
+      },
+      {
+        "id": "thien_ma_giai_the_dai_phap",
+        "rank": 3
+      }
+    ],
+    "effects": [
+      {
+        "hook": "combatPower",
+        "add": 0.08
+      },
+      {
+        "hook": "heartDemonResist",
+        "add": -0.1
+      }
+    ],
+    "duty": "Nộp cống, đi săn đệ tử chính đạo.",
+    "identity": {
+      "tradition": "Mỗi năm điện tổ chức Huyết Yến: đệ tử đánh nhau, kẻ thắng ngồi gần Uyên chủ hơn một ghế.",
+      "signature": "Ma La Thiên Thủ: nghìn tay ma, mỗi tay một kiểu đau.",
+      "anecdote": "Điện do Xích Phát Ma Quân lập sau khi ngồi lên ngai Uyên chủ; đệ tử đầu tiên là ba ma tu đã định ám sát ông.",
+      "rival": {
+        "sect": "bich_lac_tong",
+        "reason": "Tiên Ma đại chiến chưa bao giờ thật sự kết thúc."
+      },
+      "notable": [
+        {
+          "name": "Xích Phát Ma Quân",
+          "title": "Điện chủ",
+          "text": "Uyên chủ của Huyết Uyên. Cười nhiều, không ai hiểu vì sao."
+        }
+      ]
+    }
+  },
+  {
+    "id": "bich_ba_cac",
+    "name": "Bích Ba Các",
+    "faction": "chinh",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "dong_hai",
+    "tier": "trung",
+    "allies": [
+      "tiem_long_phu"
+    ],
+    "description": "Các thủy hệ trên đảo san hô. Đệ tử lặn giỏi, bơi giỏi, chèo thuyền dở tệ.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "oneOf": [
+        {
+          "rootElements": [
+            "thuy",
+            "bang"
+          ]
+        }
+      ]
+    },
+    "techniques": [
+      {
+        "id": "dan_khi_quyet",
+        "rank": 0
+      },
+      {
+        "id": "thuy_nguyet_quan_tuong_phap",
+        "rank": 1
+      }
+    ],
+    "effects": [
+      {
+        "hook": "path.spell.affinity",
+        "add": 10
+      }
+    ],
+    "duty": "Tuần biển, đuổi hải tặc.",
+    "identity": {
+      "tradition": "Đệ tử mới phải lặn xuống đáy biển nhặt một viên đá có khắc tên tổ sư.",
+      "signature": "Bích Ba Vạn Trượng: gọi sóng cao như núi.",
+      "anecdote": "Tổ sư lập các trên lưng một con rùa biển ngủ; ba trăm năm sau rùa thức dậy bơi đi, các phải dời lên đảo.",
+      "rival": {
+        "sect": "than_lau_dao",
+        "reason": "Tranh nhau quyền giữ Hải thị."
+      },
+      "notable": [
+        {
+          "name": "Hải Lan Tâm",
+          "title": "Các chủ",
+          "text": "Người Lan gia, tóc xanh như rêu biển, ghét ăn cá."
+        }
+      ]
+    }
+  },
+  {
+    "id": "than_lau_dao",
+    "name": "Thận Lâu Đảo",
+    "faction": "tan_tu",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "dong_hai",
+    "tier": "trung",
+    "allies": [],
+    "description": "Đảo ảo ảnh, lúc có lúc không. Giữ Hải thị Thận Lâu, buôn bán khắp Đông Hải.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "charm": 45
+      }
+    },
+    "techniques": [
+      {
+        "id": "mong_trung_tan_kinh",
+        "rank": 0
+      },
+      {
+        "id": "thuy_nguyet_quan_tuong_phap",
+        "rank": 2
+      }
+    ],
+    "effects": [
+      {
+        "hook": "priceDiscount",
+        "add": 0.08
+      },
+      {
+        "hook": "path.arts.affinity",
+        "add": 5
+      }
+    ],
+    "duty": "Trông quầy ở Hải thị.",
+    "identity": {
+      "tradition": "Mỗi đệ tử phải bán được một món hàng cho chính sư phụ mình trước khi được nhận.",
+      "signature": "Thận Lâu Huyễn Cảnh: người mua thấy món hàng đẹp gấp đôi.",
+      "anecdote": "Đảo chủ đời đầu là thương nhân thua sạch ở hải thị, dựng ảo ảnh một hòn đảo để trốn nợ, rồi trốn mãi thành môn phái.",
+      "rival": {
+        "sect": "bich_ba_cac",
+        "reason": "Tranh nhau quyền giữ Hải thị."
+      },
+      "notable": [
+        {
+          "name": "Kim Đa Bảo",
+          "title": "Đảo chủ",
+          "text": "Mập, cười híp mắt, nhớ giá của mọi thứ trên đời."
+        }
+      ]
+    }
+  },
+  {
+    "id": "long_tich_dao",
+    "name": "Long Tích Đảo",
+    "faction": "chinh",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "dong_hai",
+    "tier": "dai",
+    "allies": [
+      "bich_ba_cac"
+    ],
+    "description": "Đảo hình sống rồng giữa khơi, thể tu luyện thân bằng sóng biển. Đệ tử da đen như đồng.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "physique": 55
+      }
+    },
+    "techniques": [
+      {
+        "id": "thach_phu_luyen_the_thien",
+        "rank": 0
+      },
+      {
+        "id": "cuu_chuyen_kim_cot_quyet",
+        "rank": 3
+      }
+    ],
+    "effects": [
+      {
+        "hook": "path.body.affinity",
+        "add": 15
+      }
+    ],
+    "duty": "Đứng giữa sóng mỗi sáng một canh giờ.",
+    "identity": {
+      "tradition": "Mỗi năm đệ tử phải bơi vòng quanh đảo, chạm vào cả chín chiếc vảy rồng đá.",
+      "signature": "Long Tích Bất Hoại: thân như sống rồng, đao kiếm gãy trước.",
+      "anecdote": "Đảo là xương sống của một con rồng thời Thái Cổ; đảo chủ đời nào cũng nói nghe thấy tim nó đập.",
+      "rival": {
+        "sect": "chien_than_dien",
+        "reason": "Hai tông thể tu tranh nhau cái danh thân thể mạnh nhất Thương Lan."
+      },
+      "notable": [
+        {
+          "name": "Long Thất Gia",
+          "title": "Đảo chủ",
+          "text": "Không mặc áo, quanh năm đứng trên mỏm đá."
+        }
+      ]
+    }
+  },
+  {
+    "id": "tiem_long_phu",
+    "name": "Tiềm Long Phủ",
+    "faction": "chinh",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "dong_hai",
+    "tier": "tieu",
+    "allies": [
+      "bich_ba_cac"
+    ],
+    "description": "Phủ nhỏ trong hang đá dưới nước. Nhận đệ tử nghèo, dạy kiên nhẫn trước, dạy võ sau.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {},
+    "techniques": [
+      {
+        "id": "dan_khi_quyet",
+        "rank": 0
+      },
+      {
+        "id": "tho_nap_tan_quyen",
+        "rank": 0
+      }
+    ],
+    "effects": [
+      {
+        "hook": "breakthroughChance",
+        "add": 2
+      }
+    ],
+    "duty": "Bắt cá nuôi phủ.",
+    "identity": {
+      "tradition": "Đệ tử phải ngồi dưới đáy nước một ngày không ngoi lên, ai ngoi lên sớm thì ngồi lại.",
+      "signature": "Tiềm Long Quyết: tích lũy lâu, đột phá một lần là vọt lên.",
+      "anecdote": "Phủ chủ đời đầu ẩn dưới nước ba trăm năm, lúc ra ngoài thì người quen đã chết hết.",
+      "notable": [
+        {
+          "name": "Ẩn Ngư Ông",
+          "title": "Phủ chủ",
+          "text": "Câu cá cả ngày, không bao giờ mắc con nào. Ông bảo đó là ý chí."
+        }
+      ]
+    }
+  },
+  {
+    "id": "hai_nguyet_am",
+    "name": "Hải Nguyệt Am",
+    "faction": "chinh",
+    "lineage": "phat",
+    "recruitable": true,
+    "region": "dong_hai",
+    "tier": "tieu",
+    "allies": [
+      "tu_truc_am"
+    ],
+    "description": "Am ni trên đảo nhỏ, đêm trăng tụng kinh cho người chết trên biển.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "daoHeart": 45
+      },
+      "rootlessMinDaoHeart": 70
+    },
+    "techniques": [
+      {
+        "id": "vo_uu_thien_tam_phap",
+        "rank": 0
+      }
+    ],
+    "effects": [
+      {
+        "hook": "heartDemonResist",
+        "add": 0.1
+      }
+    ],
+    "duty": "Thắp đèn dẫn đường cho thuyền đêm.",
+    "identity": {
+      "tradition": "Mỗi đêm rằm, đệ tử thả một ngọn đèn hoa đăng cho một người chết đuối không ai biết tên.",
+      "signature": "Nguyệt Chiếu Hải Tâm: tâm lặng như mặt biển đêm trăng.",
+      "anecdote": "Am do vợ một thuyền trưởng lập ra sau khi chồng không về; bà thắp đèn ba mươi năm và đắc đạo.",
+      "notable": [
+        {
+          "name": "Diệu Âm sư thái",
+          "title": "Trụ trì",
+          "text": "Giọng tụng kinh nghe được từ ba hòn đảo bên cạnh."
+        }
+      ]
+    }
+  },
+  {
+    "id": "thu_mo_tong",
+    "name": "Thủ Mộ Tông",
+    "faction": "chinh",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "thai_co_chien_truong",
+    "tier": "trung",
+    "allies": [
+      "chien_than_dien"
+    ],
+    "description": "Tông môn giữ mộ thần tộc, sống giữa di cốt. Đệ tử ăn chay, nói nhỏ, quét bụi giỏi.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "daoHeart": 45
+      }
+    },
+    "techniques": [
+      {
+        "id": "thach_phu_luyen_the_thien",
+        "rank": 0
+      },
+      {
+        "id": "cuu_chuyen_kim_cot_quyet",
+        "rank": 3
+      }
+    ],
+    "effects": [
+      {
+        "hook": "path.body.affinity",
+        "add": 8
+      },
+      {
+        "hook": "heartDemonResist",
+        "add": 0.05
+      }
+    ],
+    "duty": "Quét mộ, đuổi kẻ đào trộm.",
+    "identity": {
+      "tradition": "Đệ tử mới được giao một ngôi mộ để quét suốt đời, dù không biết trong mộ là ai.",
+      "signature": "Thủ Mộ Quyết: đứng yên như bia đá, đao chém không động.",
+      "anecdote": "Tổ sư là người đầu tiên đặt chân lên Thái Cổ chiến trường sau Đoạn Thiên chi biến; ông thấy di cốt và quyết định ở lại.",
+      "rival": {
+        "sect": "thi_am_tong",
+        "reason": "Thủ Mộ Tông giữ mộ, Thi Âm Tông đào mộ."
+      },
+      "notable": [
+        {
+          "name": "Thủ Mộ Nhân",
+          "title": "Tông chủ",
+          "text": "Không ai biết tên thật. Cây chổi của lão từng quét bay một Kim Đan."
+        }
+      ]
+    }
+  },
+  {
+    "id": "pha_cam_duong",
+    "name": "Phá Cấm Đường",
+    "faction": "tan_tu",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "thai_co_chien_truong",
+    "tier": "tieu",
+    "allies": [],
+    "description": "Hội đào di tích, giải cấm chế lấy công. Ai cũng thiếu vài ngón tay.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "intellect": 45
+      }
+    },
+    "techniques": [
+      {
+        "id": "dan_khi_quyet",
+        "rank": 0
+      }
+    ],
+    "effects": [
+      {
+        "hook": "craft.formation.affinity",
+        "add": 12
+      },
+      {
+        "hook": "lootPct",
+        "add": 0.05
+      }
+    ],
+    "duty": "Dò đường trước cho đoàn đào.",
+    "identity": {
+      "tradition": "Đệ tử nào giải được cấm chế đầu tiên thì được khắc tên lên cửa đường, kèm số ngón tay còn lại.",
+      "signature": "Phá Cấm Thủ: mười ngón tay đọc phù văn như đọc sách.",
+      "anecdote": "Đường do mấy người Bách Lý gia lập ra sau khi gia tộc cấm họ vào di tích vì quá liều.",
+      "rival": {
+        "sect": "thu_mo_tong",
+        "reason": "Đào thứ Thủ Mộ Tông giữ."
+      },
+      "notable": [
+        {
+          "name": "Cửu Chỉ",
+          "title": "Đường chủ",
+          "text": "Còn chín ngón. Bảo ngón thứ mười đổi được một bình đan."
+        }
+      ]
+    }
+  },
+  {
+    "id": "chien_than_dien",
+    "name": "Chiến Thần Điện",
+    "faction": "chinh",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "thai_co_chien_truong",
+    "tier": "dai",
+    "allies": [
+      "thu_mo_tong"
+    ],
+    "description": "Đại điện thể tu thờ di cốt một chiến thần Thái Cổ. Đệ tử đánh nhau thay cơm.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "physique": 55
+      }
+    },
+    "techniques": [
+      {
+        "id": "thach_phu_luyen_the_thien",
+        "rank": 0
+      },
+      {
+        "id": "cuu_chuyen_kim_cot_quyet",
+        "rank": 2
+      },
+      {
+        "id": "bat_dong_kim_than_quyet",
+        "rank": 3
+      }
+    ],
+    "effects": [
+      {
+        "hook": "path.body.affinity",
+        "add": 12
+      },
+      {
+        "hook": "combatPower",
+        "add": 0.05
+      }
+    ],
+    "duty": "Đánh thử với di cốt thần mỗi tháng.",
+    "identity": {
+      "tradition": "Mỗi năm điện mở Chiến Thần Đài, ai trụ được ba ngày dưới linh áp của di cốt thì vào nội điện.",
+      "signature": "Chiến Thần Quyền: một quyền mang theo sát ý thời Thái Cổ.",
+      "anecdote": "Di cốt chiến thần cầm trong tay một ngọn thương gãy; điện chủ nào cũng thử rút, chưa ai rút được.",
+      "rival": {
+        "sect": "long_tich_dao",
+        "reason": "Hai tông thể tu tranh nhau cái danh thân thể mạnh nhất Thương Lan."
+      },
+      "notable": [
+        {
+          "name": "Mạnh Thiết Sơn",
+          "title": "Điện chủ",
+          "text": "Vai rộng bằng cửa. Nói chuyện như hét, hét như sấm."
+        }
+      ]
+    }
+  },
+  {
+    "id": "di_cot_mon",
+    "name": "Di Cốt Môn",
+    "faction": "ma",
+    "lineage": "ma",
+    "recruitable": true,
+    "region": "thai_co_chien_truong",
+    "tier": "tieu",
+    "allies": [],
+    "description": "Môn phái ma đạo luyện xương thần thú vào người. Mạnh nhanh, già cũng nhanh.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "physique": 45
+      }
+    },
+    "techniques": [
+      {
+        "id": "u_ha_huyet_anh_cong",
+        "rank": 0
+      }
+    ],
+    "effects": [
+      {
+        "hook": "path.body.affinity",
+        "add": 10
+      },
+      {
+        "hook": "heartDemonResist",
+        "add": -0.05
+      }
+    ],
+    "duty": "Đào xương thần thú.",
+    "identity": {
+      "tradition": "Đệ tử phải cấy một mảnh xương thần thú vào tay; tay ai nhận được xương thì được gọi là sư huynh.",
+      "signature": "Cốt Giáp Thuật: xương mọc ra ngoài da làm giáp.",
+      "anecdote": "Môn chủ đời đầu cấy cả một bộ xương rồng vào người, sống thêm trăm năm, chết thì xương bỏ đi một mình.",
+      "rival": {
+        "sect": "thu_mo_tong",
+        "reason": "Thủ Mộ Tông coi họ là kẻ trộm xương tổ tiên."
+      },
+      "notable": [
+        {
+          "name": "Cốt Lão",
+          "title": "Môn chủ",
+          "text": "Nửa người là xương rồng. Đi đâu cũng kêu lách cách."
+        }
+      ]
+    }
+  },
+  {
+    "id": "bang_tam_cung",
+    "name": "Băng Tâm Cung",
+    "faction": "chinh",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "bac_minh_tuyet_vuc",
+    "tier": "dai",
+    "allies": [
+      "han_son_tu"
+    ],
+    "description": "Cung băng giữa tuyết vực, chỉ nhận nữ đệ tử. Lạnh lùng, kiêu ngạo, và rất giỏi.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "oneOf": [
+        {
+          "rootElements": [
+            "bang",
+            "thuy"
+          ]
+        }
+      ],
+      "minStats": {
+        "daoHeart": 45
+      }
+    },
+    "techniques": [
+      {
+        "id": "thuy_nguyet_quan_tuong_phap",
+        "rank": 0
+      },
+      {
+        "id": "ngu_hanh_luan_chuyen_kinh",
+        "rank": 3
+      }
+    ],
+    "effects": [
+      {
+        "hook": "heartDemonResist",
+        "add": 0.15
+      },
+      {
+        "hook": "path.spell.affinity",
+        "add": 8
+      }
+    ],
+    "duty": "Giữ băng mạch, không được khóc (nước mắt đóng băng).",
+    "identity": {
+      "tradition": "Đệ tử phải ngồi trên hồ băng một đêm; ai còn ấm lòng thì băng tan, phải ngồi lại.",
+      "signature": "Băng Tâm Quyết: tâm như băng, không động, không lay.",
+      "anecdote": "Cung chủ đời đầu chặt đứt tình duyên của mình bằng một kiếm băng, lập cung để không ai phải chịu như bà.",
+      "notable": [
+        {
+          "name": "Hàn Nguyệt Cung chủ",
+          "title": "Cung chủ",
+          "text": "Đẹp như tượng băng. Có lời đồn năm nào bà cũng xuống núi một lần, không ai biết để gặp ai."
+        }
+      ]
+    }
+  },
+  {
+    "id": "tuyet_lang_bo",
+    "name": "Tuyết Lang Bộ",
+    "faction": "yeu",
+    "lineage": "yeu",
+    "recruitable": true,
+    "region": "bac_minh_tuyet_vuc",
+    "tier": "trung",
+    "allies": [
+      "van_yeu_dien"
+    ],
+    "description": "Bộ tộc sói tuyết tu thành người. Đi săn theo đàn, trung thành tới chết.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "physique": 45
+      }
+    },
+    "techniques": [
+      {
+        "id": "van_thu_thong_linh_thuat",
+        "rank": 0
+      },
+      {
+        "id": "van_yeu_hoa_hinh_phap",
+        "rank": 3
+      }
+    ],
+    "effects": [
+      {
+        "hook": "path.body.affinity",
+        "add": 8
+      },
+      {
+        "hook": "craft.beast.affinity",
+        "add": 8
+      }
+    ],
+    "duty": "Săn mồi cho cả đàn.",
+    "identity": {
+      "tradition": "Đệ tử người phải được cả đàn sói chấp nhận: ngủ chung một đêm mà không bị cắn.",
+      "signature": "Lang Nguyệt Khiếu: tiếng hú làm địch lạnh run.",
+      "anecdote": "Bộ chủ đời đầu là con sói đầu đàn có sẹo hình trăng, đánh thắng một Nguyên Anh để giữ hang.",
+      "notable": [
+        {
+          "name": "Nguyệt Ngân",
+          "title": "Bộ chủ",
+          "text": "Mắt xanh, sẹo trăng trên trán. Ít nói, ai nói nhiều thì bị nhìn tới im."
+        }
+      ]
+    }
+  },
+  {
+    "id": "han_son_tu",
+    "name": "Hàn Sơn Tự",
+    "faction": "chinh",
+    "lineage": "phat",
+    "recruitable": true,
+    "region": "bac_minh_tuyet_vuc",
+    "tier": "trung",
+    "allies": [
+      "bang_tam_cung",
+      "vo_uu_tu"
+    ],
+    "description": "Chùa khổ tu trên núi tuyết. Ăn một bữa, ngủ ngồi, tụng kinh trong gió.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "daoHeart": 55
+      },
+      "rootlessMinDaoHeart": 75
+    },
+    "techniques": [
+      {
+        "id": "vo_uu_thien_tam_phap",
+        "rank": 0
+      },
+      {
+        "id": "bat_dong_kim_than_quyet",
+        "rank": 3
+      }
+    ],
+    "effects": [
+      {
+        "hook": "heartDemonResist",
+        "add": 0.2
+      }
+    ],
+    "duty": "Quét tuyết trên ba nghìn bậc đá.",
+    "identity": {
+      "tradition": "Mỗi sáng tăng chúng tụng kinh trên đỉnh núi trần, tuyết phủ tới vai cũng không phủi.",
+      "signature": "Hàn Sơn Bất Động: thân như núi tuyết, tâm như tuyết rơi.",
+      "anecdote": "Có người bảo Hàn Sơn Kiếm Tôn từng là tăng ở đây, rồi xuống núi vì muốn cầm kiếm. Chùa không nhận cũng không chối.",
+      "notable": [
+        {
+          "name": "Khổ Hạnh đại sư",
+          "title": "Trụ trì",
+          "text": "Gầy như que củi, gió thổi không ngã."
+        }
+      ]
+    }
+  },
+  {
+    "id": "phong_tuyet_kiem_lu",
+    "name": "Phong Tuyết Kiếm Lư",
+    "faction": "chinh",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "bac_minh_tuyet_vuc",
+    "tier": "tieu",
+    "allies": [
+      "tang_phong_kiem_cac"
+    ],
+    "description": "Ba gian lều tranh giữa bão tuyết, năm kiếm khách cô độc. Nhận người thì nhận, không nhận thì đóng cửa.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "daoHeart": 50
+      },
+      "oneOf": [
+        {
+          "rootElements": [
+            "kim",
+            "bang"
+          ]
+        }
+      ]
+    },
+    "techniques": [
+      {
+        "id": "tang_phong_kiem_kinh",
+        "rank": 0
+      },
+      {
+        "id": "nhat_tuyen_thien_kiem_dien",
+        "rank": 3
+      }
+    ],
+    "effects": [
+      {
+        "hook": "path.sword.affinity",
+        "add": 12
+      }
+    ],
+    "duty": "Chẻ củi bằng kiếm.",
+    "identity": {
+      "tradition": "Đệ tử phải luyện kiếm ngoài bão tuyết cho tới khi kiếm đông vào tay.",
+      "signature": "Phong Tuyết Nhất Tuyến: một kiếm cắt đôi bão tuyết.",
+      "anecdote": "Lư do một kiếm khách Tàng Phong Kiếm Các bỏ đi lập ra, vì ở các còn quá đông người.",
+      "notable": [
+        {
+          "name": "Cô Hàn",
+          "title": "Lư chủ",
+          "text": "Đệ tử cũ của Tàng Phong Kiếm Các. Nói còn ít hơn Mạc Vô Ngôn."
+        }
+      ]
+    }
+  },
+  {
+    "id": "thai_huyen_dao_cung",
+    "name": "Thái Huyền Đạo Cung",
+    "faction": "chinh",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "trung_chau",
+    "tier": "dai",
+    "allies": [
+      "bich_lac_tong"
+    ],
+    "description": "Đạo cung pháp tu trên mây, coi trọng ngộ tính hơn linh căn. Đệ tử giảng đạo nhiều hơn đánh nhau.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "comprehension": 55
+      }
+    },
+    "techniques": [
+      {
+        "id": "dan_khi_quyet",
+        "rank": 0
+      },
+      {
+        "id": "ngu_hanh_luan_chuyen_kinh",
+        "rank": 1
+      },
+      {
+        "id": "van_phap_quy_nhat_kinh",
+        "rank": 3
+      }
+    ],
+    "effects": [
+      {
+        "hook": "path.spell.affinity",
+        "add": 12
+      },
+      {
+        "hook": "breakthroughChance",
+        "add": 3
+      }
+    ],
+    "duty": "Chép kinh, giảng đạo cho đệ tử mới.",
+    "identity": {
+      "tradition": "Mỗi mười năm cung mở Luận Đạo Hội, ai thắng được cung chủ một câu thì được ngồi ngang hàng một ngày.",
+      "signature": "Thái Huyền Ngũ Lôi: năm đạo sấm theo năm hành.",
+      "anecdote": "Cung chủ đời đầu ngồi ngộ đạo dưới gốc tùng ba trăm năm, đứng dậy thì tùng đã thành rừng.",
+      "rival": {
+        "sect": "dai_dien_thu_vien",
+        "reason": "Tranh nhau đạo lý: đạo trước hay lý trước."
+      },
+      "notable": [
+        {
+          "name": "Huyền Cơ Chân Nhân",
+          "title": "Cung chủ",
+          "text": "Nói câu nào cũng như câu đố. Đệ tử ghi chép xong mới hiểu đó là lời mắng."
+        }
+      ]
+    }
+  },
+  {
+    "id": "thien_co_cac",
+    "name": "Thiên Cơ Các",
+    "faction": "tan_tu",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "trung_chau",
+    "tier": "dai",
+    "allies": [],
+    "description": "Các bói toán và trận pháp, nghe nói biết trước mọi chuyện. Không thuộc phe nào, bán tin cho mọi phe.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "intellect": 60
+      }
+    },
+    "techniques": [
+      {
+        "id": "mong_trung_tan_kinh",
+        "rank": 0
+      },
+      {
+        "id": "ngu_hanh_luan_chuyen_kinh",
+        "rank": 2
+      }
+    ],
+    "effects": [
+      {
+        "hook": "craft.formation.affinity",
+        "add": 15
+      }
+    ],
+    "duty": "Tính quẻ cho khách.",
+    "identity": {
+      "tradition": "Đệ tử phải bói đúng ngày mình nhập các, trước khi biết mình sẽ nhập các.",
+      "signature": "Thiên Cơ Diễn Toán: tính trước ba bước của địch.",
+      "anecdote": "Các chủ nào cũng mù một mắt; người ta bảo đó là cái giá của việc nhìn thấy tương lai.",
+      "notable": [
+        {
+          "name": "Thiên Toán Tử",
+          "title": "Các chủ",
+          "text": "Mù mắt trái. Lúc nào cũng mỉm cười như vừa đoán trúng chuyện gì."
+        }
+      ]
+    }
+  },
+  {
+    "id": "dai_dien_thu_vien",
+    "name": "Đại Diễn Thư Viện",
+    "faction": "chinh",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "trung_chau",
+    "tier": "dai",
+    "allies": [],
+    "description": "Thư viện nho tu, lấy sách làm pháp bảo, lấy chữ làm kiếm. Đệ tử đọc nhiều hơn tu.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "intellect": 55
+      }
+    },
+    "techniques": [
+      {
+        "id": "dan_khi_quyet",
+        "rank": 0
+      },
+      {
+        "id": "ngu_hanh_luan_chuyen_kinh",
+        "rank": 2
+      }
+    ],
+    "effects": [
+      {
+        "hook": "breakthroughChance",
+        "add": 2
+      },
+      {
+        "hook": "craft.talisman.affinity",
+        "add": 10
+      }
+    ],
+    "duty": "Chép sách, sửa sách, giữ sách.",
+    "identity": {
+      "tradition": "Đệ tử mới phải chép tay một bộ kinh nghìn trang; chép sai một chữ thì chép lại từ đầu.",
+      "signature": "Văn Tâm Bút Pháp: một nét bút thành phù, một câu thơ thành trận.",
+      "anecdote": "Viện trưởng đời đầu là quan coi thi Cảnh quốc, đỗ trạng nguyên rồi bỏ quan lên núi tu.",
+      "rival": {
+        "sect": "thai_huyen_dao_cung",
+        "reason": "Tranh nhau đạo lý: đạo trước hay lý trước."
+      },
+      "notable": [
+        {
+          "name": "Lục Văn Chương",
+          "title": "Viện trưởng",
+          "text": "Nói chuyện toàn trích dẫn. Đánh nhau cũng trích dẫn."
+        }
+      ]
+    }
+  },
+  {
+    "id": "tinh_la_dien",
+    "name": "Tinh La Điện",
+    "faction": "chinh",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "trung_chau",
+    "tier": "trung",
+    "allies": [
+      "thien_co_cac"
+    ],
+    "description": "Điện quan sát tinh tú, tu theo sao trời. Đệ tử thức đêm, ngủ ngày.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "comprehension": 50
+      }
+    },
+    "techniques": [
+      {
+        "id": "mong_trung_tan_kinh",
+        "rank": 0
+      },
+      {
+        "id": "hoa_van_quyet",
+        "rank": 1
+      }
+    ],
+    "effects": [
+      {
+        "hook": "path.spell.affinity",
+        "add": 8
+      },
+      {
+        "hook": "craft.formation.affinity",
+        "add": 5
+      }
+    ],
+    "duty": "Ghi chép sao trời mỗi đêm.",
+    "identity": {
+      "tradition": "Mỗi đệ tử được giao một ngôi sao; sao rụng thì người đó phải đi tìm.",
+      "signature": "Tinh La Kỳ Bố: bày trận theo bản đồ sao.",
+      "anecdote": "Điện chủ đời đầu thấy cột sáng phi thăng cuối thời Thượng Cổ, cả đời đi tìm ngôi sao nơi cột sáng chạm tới.",
+      "notable": [
+        {
+          "name": "Vọng Tinh Lão Nhân",
+          "title": "Điện chủ",
+          "text": "Cổ mỏi vì ngẩng đầu nhìn sao năm trăm năm."
+        }
+      ]
+    }
+  },
+  {
+    "id": "kim_thiem_thuong_minh",
+    "name": "Kim Thiềm Thương Minh",
+    "faction": "tan_tu",
+    "lineage": "tien",
+    "recruitable": true,
+    "region": "trung_chau",
+    "tier": "dai",
+    "allies": [
+      "than_lau_dao"
+    ],
+    "description": "Thương minh lớn nhất Thương Lan, có quầy ở mọi phường thị. Nhận đệ tử biết tính toán, không cần biết đánh.",
+    "ranks": [
+      "Ký danh",
+      "Ngoại môn",
+      "Nội môn",
+      "Chân truyền"
+    ],
+    "requires": {
+      "minStats": {
+        "intellect": 50
+      }
+    },
+    "techniques": [
+      {
+        "id": "dan_khi_quyet",
+        "rank": 0
+      },
+      {
+        "id": "tho_nap_hoan_quyen",
+        "rank": 2
+      }
+    ],
+    "effects": [
+      {
+        "hook": "priceDiscount",
+        "add": 0.1
+      }
+    ],
+    "duty": "Trông quầy, đòi nợ, tính sổ.",
+    "identity": {
+      "tradition": "Đệ tử mới phải kiếm được một trăm linh thạch trong năm đầu, bằng bất cứ cách nào thương minh không phải ra mặt giải quyết.",
+      "signature": "Kim Thiềm Thổ Bảo: con cóc vàng nhả ra đúng món hàng khách cần.",
+      "anecdote": "Minh chủ đời đầu là một con cóc vàng tu thành người, bảo tiền là thứ duy nhất không bao giờ phản bội.",
+      "notable": [
+        {
+          "name": "Kim Lão Bản",
+          "title": "Minh chủ",
+          "text": "Cười híp mắt, nói chuyện bằng con số. Nghe nói biết bí mật của mọi đại năng."
         }
       ]
     }
