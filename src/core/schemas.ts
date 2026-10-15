@@ -1754,6 +1754,8 @@ export const BalanceSchema = z
         actionMinAge: z.number().int().min(0),
         /** 9.R3c: chance of each tier when a finger is drawn (then weight within the tier). */
         rarityWeights: z.record(z.enum(GOLDEN_FINGER_RARITIES), z.number().min(0)).optional(),
+        /** 9.R3d: target lift of each tier on its best axis (simulate --fingers), e.g. 0.25 = +25%. */
+        impactTarget: z.record(z.enum(GOLDEN_FINGER_RARITIES), z.number().min(0)).optional(),
       })
       .strict(),
     /** Task 5b.5: huy hiệu cuối đời shown on the death screen and the obituary card. */
@@ -2492,6 +2494,35 @@ export const RegionFileSchema = z.array(
     .strict(),
 );
 export type Region = z.infer<typeof RegionFileSchema>[number];
+
+/** 9.W: kinds and stances of giang hồ forces (kept apart from the cultivation sects in sects.json). */
+export const JIANGHU_KINDS = ['mon_phai', 'the_gia', 'giao_phai', 'bang_hoi', 'sat_thu', 'tieu_cuc', 'thuong_hoi'] as const;
+export const JIANGHU_ALIGNMENTS = ['chinh', 'ta', 'trung_lap', 'ma'] as const;
+
+/** content/worlds/<id>/jianghu-factions.json (9.W): thế gia, môn phái, giáo phái, bang hội of the mortal world. Joining comes in 11.2. */
+export const JianghuFactionFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      kind: z.enum(JIANGHU_KINDS),
+      alignment: z.enum(JIANGHU_ALIGNMENTS),
+      /** Region it sits in (regions.json of the same world). */
+      region: id,
+      /** Tôn chỉ, one line. */
+      motto: z.string().min(1),
+      description: z.string().min(1),
+      /** Its signature arts, as text for now (they become công pháp in 11.3). */
+      signature: z.string().min(1),
+      /** Who may enter and how. */
+      entry: z.string().min(1),
+      allies: z.array(id).default([]),
+      rivals: z.array(id).default([]),
+      notable: z.array(z.object({ name: z.string().min(1), title: z.string().min(1), text: z.string().min(1) }).strict()).default([]),
+    })
+    .strict(),
+);
+export type JianghuFaction = z.infer<typeof JianghuFactionFileSchema>[number];
 
 /** content/worlds/<id>/markets.json (task 3.2): where things are bought and sold. */
 export const MarketFileSchema = z.array(

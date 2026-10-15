@@ -254,7 +254,7 @@ Có người thân đang bệnh nặng · đang ở tông môn chính đạo
 Có linh căn · ở Vô Chủ Phường
 > Viên đan đỏ thắm, rẻ một nửa so với Tụ Khí Đan. Người bán cười: "Đừng hỏi làm từ gì."
 - **Mua và uống** → `tu vi +15%` · `karma −10` · `stat.daoHeart −5` · `stat.health +3`
-- **Hỏi xem làm từ gì** · ⚄ Mị lực 50 → thành công: "Từ phàm nhân mất tích ở Diên Châu." `flag: nguon_huyet_dan` · `stat.intellect +2` · `stat.happiness −5` · thất bại: "Người bán bỏ đi, ngươi bị theo dõi." `stat.happiness −3` · `kích hoạt #12`
+- **Hỏi xem làm từ gì** · ⚄ Mị lực 50 → thành công: "Từ phàm nhân mất tích ở Trung Nguyên." `flag: nguon_huyet_dan` · `stat.intellect +2` · `stat.happiness −5` · thất bại: "Người bán bỏ đi, ngươi bị theo dõi." `stat.happiness −3` · `kích hoạt #12`
 - **Đập vỡ sạp hàng** · ⚄ Chiến lực → thắng: `karma +8` · `danh vọng Chính +5` · `stat.daoHeart +3` · thua: `stat.health −15`
 - Có `nguon_huyet_dan` và `nghi_huong_hoa_hoi`: lựa chọn **"Nối hai đầu mối, báo Bích Lạc Tông"** → `danh vọng Chính +20` · `flag: ke_thu_u_ha` · `stat.intellect +3` · `stat.daoHeart +3`
 

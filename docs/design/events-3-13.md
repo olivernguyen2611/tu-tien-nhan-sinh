@@ -58,7 +58,7 @@ Có flag `ke_thu_u_ha` · 2–10 năm sau · tag: demonic
 
 ## B. Sự kiện con đường đời
 
-Đã có sẵn: Quan lộ 2 (Thi Hương, Án oan ở huyện), Thương lộ 2 (Mở tiệm, Thương chiến), Võ lâm 1 (Đại hội võ lâm), Y lộ 1 (Dịch bệnh Diên Châu).
+Đã có sẵn: Quan lộ 2 (Thi Hương, Án oan ở huyện), Thương lộ 2 (Mở tiệm, Thương chiến), Võ lâm 1 (Đại hội võ lâm), Y lộ 1 (Dịch bệnh Trung Nguyên).
 
 Mỗi đường thêm 3 sự kiện ở các bậc giữa và cao, để leo được tới bậc 5 bằng sự kiện chứ không chỉ chờ tự thăng.
 

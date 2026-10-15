@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### 9.W: một thế giới, võ lâm tách khỏi tông môn tu tiên (2026-10-15)
+- Theo chủ dự án: không làm thế giới thứ hai, võ lâm đặt thẳng vào Thương Lan giới. Đổi tên hiển thị (giữ id, save cũ vẫn mở): vùng quê Thanh Vân châu thành **Trung Nguyên** (đất Đại Ung vương triều); trong sự kiện Diên Châu thành Trung Nguyên, Lục Hợp Môn thành Thiếu Lâm, Thính Vũ Kiếm Phái thành Hoa Sơn phái, Vô Diện Lâu thành Huyết Sát Lâu.
+- File mới `content/worlds/thuong_lan/jianghu-factions.json`: 17 thế lực giang hồ (7 môn phái và bang: Thiếu Lâm, Hoa Sơn, Võ Đang, Nga Mi, Côn Lôn, Không Động, Cái Bang; Ngũ đại thế gia Mộ Dung, Gia Cát, Đường Môn, Nam Cung, Bành; Thiên Ma Thần Giáo, Huyết Sát Lâu, Lục Lâm Minh, Thiên Hạ Tiêu Cục, Vạn Bảo Thương Hội), mỗi thế lực có tôn chỉ, tuyệt học, cách gia nhập, giao hảo/đối địch, nhân vật tiêu biểu. Tên tuyệt học tự đặt, không dùng tên riêng của tiểu thuyết có bản quyền.
+- Tông môn tu tiên vẫn ở `sects.json`. Bảng tông môn chia hai mục: "Tông môn tu tiên" (xin bái nhập như cũ) và "Thế lực giang hồ" (mục thu gọn, xếp theo chính, tà, trung lập, ma; chưa gia nhập được, để 11.2).
+- Validator: thế lực ở vùng có thật, không trùng id tông môn, giao hảo/đối địch nhắc thế lực có thật. Test `tests/jianghu.test.ts`.
+
 ### 9.R3a–c: làm lại Kim Thủ Chỉ (2026-10-15)
 - Mỗi Kim Thủ Chỉ có **độ hiếm** (Phàm, Hiếm, Cực hiếm, Nghịch thiên), **cơ chế đặc trưng** và **điểm yếu có cơ chế thật**: móc bất lợi khi còn giữ, cái giá trả mỗi năm (vd. Kiếm linh uống máu, Mượn vận hao khí vận), cái giá cộng dồn theo số lần dùng (vd. mỗi dòng Thiên mệnh thư làm thiên kiếp nặng thêm 5%).
 - **Kích hoạt** riêng: có cái tỉnh lúc sinh, có cái ngủ tới một tuổi (Hệ thống 10 tuổi, Nhãn thấu cơ duyên 12 tuổi) hay một cảnh giới (Tùy thân động thiên, Ngộ đạo thạch bia, Kiếm linh, Thôn phệ tỉnh ở Luyện Khí).

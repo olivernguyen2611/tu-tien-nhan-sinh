@@ -3,7 +3,7 @@
     "id": "tien_mon_tuyen_do_truot",
     "category": "mortal",
     "title": "Ngày tiên môn tuyển đồ",
-    "text": "Mười năm một lần, Bích Lạc Tông xuống Diên Châu tuyển người. {name} đặt tay lên viên đá thử, đá không sáng. Tiên sư phất tay: \"Người kế tiếp.\"",
+    "text": "Mười năm một lần, Bích Lạc Tông xuống Trung Nguyên tuyển người. {name} đặt tay lên viên đá thử, đá không sáng. Tiên sư phất tay: \"Người kế tiếp.\"",
     "conditions": {
       "age": {
         "min": 8,
@@ -444,7 +444,7 @@
   {
     "id": "dich_benh_dien_chau",
     "category": "mortal",
-    "title": "Dịch bệnh Diên Châu",
+    "title": "Dịch bệnh Trung Nguyên",
     "text": "Dịch lan khắp ba huyện. Hồi Xuân Đường đóng cửa vì thầy thuốc cũng ngã bệnh.",
     "tags": [
       "dark"
@@ -509,7 +509,7 @@
       {
         "text": "Đưa cả nhà lánh đi",
         "result": {
-          "text": "Cả nhà bình an. Tin dữ từ Diên Châu cứ dội về mãi.",
+          "text": "Cả nhà bình an. Tin dữ từ Trung Nguyên cứ dội về mãi.",
           "effects": {
             "stat.happiness": -5
           }
@@ -1177,8 +1177,8 @@
   {
     "id": "bai_nhap_luc_hop_mon",
     "category": "mortal",
-    "title": "Bái nhập Lục Hợp Môn",
-    "text": "Lục Hợp Môn mở cửa nhận đệ tử. Bài thử: đứng tấn một nén nhang dưới nắng trưa.",
+    "title": "Bái nhập Thiếu Lâm",
+    "text": "Thiếu Lâm mở cửa nhận đệ tử. Bài thử: đứng tấn một nén nhang dưới nắng trưa.",
     "conditions": {
       "age": {
         "min": 10,
@@ -1403,7 +1403,7 @@
     "id": "dai_hoi_vo_lam",
     "category": "mortal",
     "title": "Đại hội võ lâm",
-    "text": "Quần hùng tụ về Diên Châu tranh ngôi minh chủ. Lục Hợp Môn, Thính Vũ Kiếm Phái đều có người, Vô Diện Lâu đâu đó trong đám đông.",
+    "text": "Quần hùng tụ về Trung Nguyên tranh ngôi minh chủ. Thiếu Lâm, Hoa Sơn phái đều có người, Huyết Sát Lâu đâu đó trong đám đông.",
     "conditions": {
       "realm": {
         "max": "pham_nhan"
@@ -1457,7 +1457,7 @@
         }
       },
       {
-        "text": "Rình bắt sát thủ Vô Diện Lâu",
+        "text": "Rình bắt sát thủ Huyết Sát Lâu",
         "check": {
           "stat": "stat.intellect",
           "difficulty": 60

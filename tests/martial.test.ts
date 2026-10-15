@@ -116,7 +116,7 @@ describe('martial path (task 3.11)', () => {
     for (let i = 0; i < 50; i++) expect(lifetime(`low${i}`, 65, true)).toBeLessThan(4);
   });
 
-  it('events: Lục Hợp Môn makes a Tam lưu; Hóa cảnh event needs readiness', () => {
+  it('events: Thiếu Lâm makes a Tam lưu; Hóa cảnh event needs readiness', () => {
     const kid = mortal(12, 80, { character: { ...mortal().character, age: 12, originId: 'vo_lam' } });
     expect(eventWeight(kid, content, findEvent(content, 'bai_nhap_luc_hop_mon')!)).toBeGreaterThan(0);
     const r = resolveChoice({ ...kid, events: { ...kid.events, pending: 'bai_nhap_luc_hop_mon' } }, content, 0).state;

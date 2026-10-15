@@ -3,7 +3,7 @@
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -70,6 +70,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
   if (rest === 'sect-life.json') return SectLifeSchema;
   if (rest === 'markets.json') return MarketFileSchema;
   if (rest === 'regions.json') return RegionFileSchema;
+  if (rest === 'jianghu-factions.json') return JianghuFactionFileSchema;
   if (rest === 'challenges.json') return ChallengeFileSchema;
   if (/^events\/[^/]+\.json$/.test(rest)) return EventFileSchema;
   return null;
@@ -97,6 +98,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   let foundingPills: { file: string; pills: string[] } | null = null;
   let martialFile: MartialFile | null = null;
   const regionFiles: { file: string; regions: Region[] }[] = [];
+  const factionFiles: { file: string; factions: JianghuFaction[] }[] = [];
   const marketFiles: { file: string; markets: Market[] }[] = [];
   let chosenIds: string[] | null = null;
   let fingerIds: string[] | null = null;
@@ -238,6 +240,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === LineageFileSchema) problems.push(...duplicates(file, 'đạo thống', parsed.data as { id: string }[]));
     if (schema === MartialFileSchema) martialFile = parsed.data as MartialFile;
     if (schema === RegionFileSchema) regionFiles.push({ file, regions: parsed.data as Region[] });
+    if (schema === JianghuFactionFileSchema) factionFiles.push({ file, factions: parsed.data as JianghuFaction[] });
     if (schema === MarketFileSchema) {
       problems.push(...duplicates(file, 'phường thị', parsed.data as Market[]));
       marketFiles.push({ file, markets: parsed.data as Market[] });
@@ -334,6 +337,19 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   }
   const realmIds = parsedShared.realms ? new Set(parsedShared.realms.realms.map((r) => r.id)) : null;
 
+  // 9.W: giang hồ forces sit in a real region of their world, name real forces as allies / rivals, and never share an id with a sect.
+  for (const { file, factions } of factionFiles) {
+    const world = file.split('/')[1];
+    const regionIds = new Set(regionFiles.filter((r) => r.file.split('/')[1] === world).flatMap((r) => r.regions.map((x) => x.id)));
+    const sectIds = new Set(sectFiles.filter((f) => f.file.split('/')[1] === world).flatMap((f) => f.sects.map((x) => x.id)));
+    const ids = new Set(factions.map((f) => f.id));
+    problems.push(...duplicates(file, 'thế lực giang hồ', factions));
+    for (const f of factions) {
+      if (!regionIds.has(f.region)) problems.push({ file, level: 'error', message: `thế lực "${f.id}" ở vùng lạ "${f.region}"` });
+      if (sectIds.has(f.id)) problems.push({ file, level: 'error', message: `thế lực "${f.id}" trùng id với một tông môn tu tiên` });
+      for (const o of [...f.allies, ...f.rivals]) if (!ids.has(o) || o === f.id) problems.push({ file, level: 'error', message: `thế lực "${f.id}" nhắc tới thế lực lạ "${o}"` });
+    }
+  }
   // Task 4.8: đại vực name real realms; their hooks act while the player stays, so no one-off stat.<x>.
   const regionIdsByWorld = new Map<string, Set<string>>();
   for (const { file, regions } of regionFiles) {
