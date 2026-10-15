@@ -186,17 +186,38 @@ export function awakenBody(state: GameState, content: Content, bodyId: string): 
 }
 
 /**
+ * 9.R4a linh căn ẩn: the root a life is born with, fixed by its seed and destiny (its own RNG stream),
+ * whether or not anyone ever tests it. revealRoot shows it; hint events read it before that.
+ */
+export function innateRoot(state: GameState, content: Content): RootRoll {
+  const rng = new Rng(`${state.seed}:root`);
+  const origin = content.origins.find((o) => o.id === state.character.originId);
+  // Phúc báo Đại thiện nhân (task 5b.8): rootReroll adds rolls, best kept.
+  const rolls = (origin?.cultivatorClan ? content.balance.roots.clanDescendantRolls : 1) + Math.max(0, Math.round(hookSum(state, content, 'rootReroll')));
+  return rollRoot(rng, content, rolls, traitRootFloor(state, content)?.grade ?? null);
+}
+
+/** 9.R4a: the innate root's name, for developer mode (null once tested: the real root shows instead). */
+export function innateRootLabel(state: GameState, content: Content): string | null {
+  if (state.cult.root) return null;
+  const { root, bodyId } = innateRoot(state, content);
+  return rootNameOf(root, bodyId, content);
+}
+
+/** 9.R4a: does the untested innate root let this life cultivate? */
+export function hasUsableInnateRoot(state: GameState, content: Content): boolean {
+  if (state.cult.root) return false;
+  return (content.balance.roots.gradeSpeed[innateRoot(state, content).root.grade] ?? 0) > 0;
+}
+
+/**
  * Reveal the spirit root (once per life). A special body's stat and lifespan
  * hooks apply now; its other hooks are read by their systems later.
  */
 export function revealRoot(state: GameState, content: Content): { state: GameState; line: LogLine | null } {
   if (state.cult.root) return { state, line: null };
-  const rng = Rng.fromState(state.rng);
-  const origin = content.origins.find((o) => o.id === state.character.originId);
-  // Phúc báo Đại thiện nhân (task 5b.8): rootReroll adds rolls, best kept.
-  const rolls = (origin?.cultivatorClan ? content.balance.roots.clanDescendantRolls : 1) + Math.max(0, Math.round(hookSum(state, content, 'rootReroll')));
   const floor = traitRootFloor(state, content);
-  const { root, bodyId } = rollRoot(rng, content, rolls, floor?.grade ?? null);
+  const { root, bodyId } = innateRoot(state, content);
 
   const { stats, aptitudes, lifespan } = bodyGains(state, content, bodyId);
 
@@ -212,7 +233,7 @@ export function revealRoot(state: GameState, content: Content): { state: GameSta
   const last = log[log.length - 1];
   if (last) log[log.length - 1] = { ...last, lines: [...last.lines, line] };
   return {
-    state: { ...state, rng: rng.getState(), stats, aptitudes, cult: { ...state.cult, root, bodyId, lifespan }, log },
+    state: { ...state, stats, aptitudes, cult: { ...state.cult, root, bodyId, lifespan }, log },
     line,
   };
 }

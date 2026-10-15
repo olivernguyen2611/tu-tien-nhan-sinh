@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### 9.R4a: linh căn ẩn (2026-10-15)
+- Linh căn giờ định sẵn **lúc sinh** theo seed và khí vận (luồng RNG riêng `seed:root`), dù có ai thử hay không. Thử linh căn chỉ là nhìn thấy nó; thử không còn tiêu RNG của đời.
+- 6 sự kiện dấu hiệu mới (`root-hints.json`): trẻ có linh căn đôi khi thấy gió ấm, bà đỡ nhận xét, mơ sao rơi, cây khô nhú lộc; Kim Thủ Chỉ Nhãn thấu cơ duyên soi được mình có hay không có linh căn. Điều kiện sự kiện mới `root.innate`.
+- Developer mode hiện linh căn ẩn bên cạnh linh căn.
+- Chưa bỏ thử linh căn đại trà: phần đó đi cùng bốn cổng tiên duyên ở 9.R4b để game không có lúc không ai vào được tu tiên.
+
 ### 9.R5a: Sổ tri thức (2026-10-15)
 - Dữ liệu mới `content/worlds/thuong_lan/knowledge.json`: 29 mục tri thức chia 7 nhóm (tiên đạo, võ đạo, thế giới, thế lực, nhân vật, công pháp và bảo vật, bí cảnh). Mỗi mục có nguồn khám phá (sự kiện đã gặp, cờ, vật phẩm đang giữ, cảnh giới, bậc võ đạo, tông môn, vùng đang ở) và thứ nó mở khóa (cổng tiên duyên, thẻ giao diện, thuật ngữ, vùng, xuất thân; 9.R5b sẽ đọc).
 - Mỗi năm, nguồn nào đang đúng thì mục đó có xác suất được ghi vào sổ (`balance.knowledge`): nguồn chắc chắn (vd. bước vào Luyện Khí) luôn ghi; nguồn may rủi tối đa 1 mục mỗi năm, 3 mục mỗi kiếp. Dòng nhật ký "Ghi vào Sổ tri thức: …". RNG riêng theo seed nên không xê dịch phần còn lại của đời.

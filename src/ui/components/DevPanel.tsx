@@ -8,7 +8,7 @@ import type { DeathCause, GameState } from '../../core/types';
 import { STAT_LABELS } from '../../systems/deltas';
 import { activeCombos } from '../../systems/destiny';
 import { fingerDef } from '../../systems/goldenFinger';
-import { bodyLabel, rootLabel } from '../../systems/cultivation';
+import { bodyLabel, innateRootLabel, rootLabel } from '../../systems/cultivation';
 import { npcById } from '../../systems/npcs';
 import { romanceBlocked } from '../../systems/romance';
 import { devPeople, devPersonCheat, personCheatsAvailable, type PersonCheat } from '../../systems/devPeople';
@@ -153,7 +153,7 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
         </Section>
 
         <Section title="Linh căn & võ đạo">
-          <p class="profile-note">Linh căn: {rootLabel(state, content)} · thể chất: {bodyLabel(state, content)} · võ đạo: {state.martial.stage < 0 ? 'chưa nhập môn' : content.martial.stages[state.martial.stage]?.name}</p>
+          <p class="profile-note">Linh căn: {rootLabel(state, content)}{innateRootLabel(state, content) && ` (ẩn: ${innateRootLabel(state, content)})`} · thể chất: {bodyLabel(state, content)} · võ đạo: {state.martial.stage < 0 ? 'chưa nhập môn' : content.martial.stages[state.martial.stage]?.name}</p>
           <div class="dev-event">
             <GPick value={rootKey} onChange={setRootKey} label="Linh căn" options={roots.map((r) => ({ id: r.key, name: r.label, group: r.group }))} />
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devSetRoot(state, content, roots.find((r) => r.key === rootKey)!.root))}>Đặt</button>

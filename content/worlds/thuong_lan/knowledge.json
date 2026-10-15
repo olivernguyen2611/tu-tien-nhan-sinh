@@ -85,6 +85,26 @@
         "kind": "event",
         "id": "hang_khai_mach",
         "chance": 0.15
+      },
+      {
+        "kind": "event",
+        "id": "dau_hieu_gio_am",
+        "chance": 0.1
+      },
+      {
+        "kind": "event",
+        "id": "dau_hieu_ba_do",
+        "chance": 0.1
+      },
+      {
+        "kind": "event",
+        "id": "dau_hieu_mong_sao",
+        "chance": 0.1
+      },
+      {
+        "kind": "event",
+        "id": "dau_hieu_cay_heo",
+        "chance": 0.1
       }
     ],
     "unlocks": [

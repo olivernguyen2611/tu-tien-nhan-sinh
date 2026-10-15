@@ -10,6 +10,7 @@ import { currentRegion } from '../regions';
 import { chosenMeets } from '../chosen';
 import { goldenFingerMeets } from '../goldenFinger';
 import { pastSectMeets } from '../pastSect';
+import { hasUsableInnateRoot } from '../cultivation';
 
 type Conditions = Partial<GameEvent['conditions']>;
 
@@ -80,6 +81,7 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
       if (!root || usable !== c.root.usable) return false;
     }
     if (c.root.minElements !== undefined && (root?.elements.length ?? 0) < c.root.minElements) return false;
+    if (c.root.innate !== undefined && (!content || root || hasUsableInnateRoot(state, content) !== c.root.innate)) return false;
   }
   if (c.flagsAll?.some((f) => !state.flags[f])) return false;
   if (c.itemsAll?.some((i) => !(state.inventory[i] > 0))) return false;

@@ -46,7 +46,8 @@ const BaseConditionsSchema = z
       .strict()
       .optional(),
     /** Spirit root (task 2.11): tested or not; usable = can cultivate. */
-    root: z.object({ tested: z.boolean().optional(), usable: z.boolean().optional(), minElements: z.number().int().min(1).optional() }).strict().optional(),
+    /** innate (9.R4a): the untested root born with the life is usable (true) or not (false). */
+    root: z.object({ tested: z.boolean().optional(), usable: z.boolean().optional(), minElements: z.number().int().min(1).optional(), innate: z.boolean().optional() }).strict().optional(),
     /** Stage within the current realm, 0-based (task 2.8: "Luyện Khí tầng 4+" = min 3). */
     stage: z.object({ min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional(),
     /** Mortal career (task 2.8). */
