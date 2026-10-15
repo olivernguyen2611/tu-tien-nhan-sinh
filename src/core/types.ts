@@ -384,6 +384,8 @@ export interface Npc {
   lastBond?: Record<string, number>;
   /** 9.0.2: the player's age when an item was last given to this NPC (once a year). */
   lastGift?: number;
+  /** 9.0.3: act id → the player's age when last done with this NPC (once a year each). */
+  lastActs?: Record<string, number>;
   acquired?: boolean;
   rootTries?: number;
   /** Task 4.9: the player's disciple, and the age they were last taught. */

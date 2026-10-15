@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### 9.0.3: tương tác theo mức thân và sự kiện chung (2026-10-15)
+- Người quen có **việc làm theo mức thân** (`content/npc-acts.json`): quen biết thì uống trà, hỏi thăm tin tức; từ có cảm tình thì rủ uống rượu, ngao du, nhờ giúp đỡ, cùng tu luyện (hai tu sĩ); thân thiết thì tâm sự, xin chỉ điểm; người có hiềm khích thì dò la, cầu hòa, đối đầu. Mỗi việc một lần mỗi năm mỗi người. Người thân bậc 3 thấy ít nhất 6 việc khác nhau.
+- **Sự kiện chung** mới (`events/bond.json`, 10 sự kiện): bạn thân thỉnh thoảng tìm tới (trigger `bond`, `balance.npcs.bondAt/bondChance/bondGapYears`): cùng uống rượu, nhờ việc, hiểu lầm, cùng gặp nạn, thiệp mời, bạn sa cơ, kẻ thù chung, cùng ngộ đạo; từ thân 85 là kết nghĩa kim lan; từ 90 là tâm sự đêm khuya. Điều kiện sự kiện thêm `npc.minAffinity/maxAffinity`.
+- Chưa làm: thiện cảm người cũ tự phai theo năm, chuỗi riêng từng cặp theo nhiều bước (hiện chia theo bậc thân).
+
 ### 9.0.5: giao diện thu gọn, bấm mới xổ danh sách (2026-10-15)
 - Component `Fold` (mục thu gọn, đầu mục kèm số lượng, nhớ mục đã mở trong phiên). Áp dụng cho bảng Tông môn (nhiệm vụ, chuỗi, bảo khố, công pháp, sư phụ, đồng môn), bảng Tu luyện (bí tịch, bế quan, động phủ, võ đạo, đường đời, đạo thống, bách nghệ, bảng xếp hạng), tông môn riêng (trưởng lão, chiêu mộ, công trình) và mỗi người quen trong Quan hệ (mục "Tương tác" chứa các nút).
 - Chưa làm: tách tab riêng cho tông môn, bố cục hai cột máy tính, chấm báo việc cần làm; chờ dock mới (9.7). Chưa kiểm ảnh 320/390/1280.

@@ -134,7 +134,7 @@ export function actor(state: GameState): Npc | undefined {
   return npcById(state, state.events.npc);
 }
 
-export type NpcTrigger = 'revenge' | 'repay' | 'reveal';
+export type NpcTrigger = 'revenge' | 'repay' | 'reveal' | 'bond';
 
 /**
  * This year's NPC-driven visit, if any: someone with a grudge comes for revenge,
@@ -154,8 +154,10 @@ export function npcCalls(state: GameState, content: Content, rng: Rng): { trigge
     }
     if (n.favor >= cfg.repayAt && rng.chance(Math.min(1, cfg.repayChance * (nat?.repayMul ?? 1)))) out.push({ trigger: 'repay', id: n.id });
     if (isMasked(content, n) && rng.chance(cfg.revealChance)) out.push({ trigger: 'reveal', id: n.id });
+    // 9.0.3: a close friend shares something with the player.
+    if (n.affinity >= cfg.bondAt && n.grudge < cfg.revengeAt && rng.chance(cfg.bondChance)) out.push({ trigger: 'bond', id: n.id });
   }
-  const rank: Record<NpcTrigger, number> = { revenge: 0, reveal: 1, repay: 2 };
+  const rank: Record<NpcTrigger, number> = { revenge: 0, reveal: 1, repay: 2, bond: 3 };
   return out.sort((a, b) => rank[a.trigger] - rank[b.trigger]);
 }
 

@@ -1,0 +1,291 @@
+[
+  {
+    "id": "tra_chuyen",
+    "name": "Uống trà trò chuyện",
+    "minAffinity": 40,
+    "success": {
+      "affinity": [
+        2,
+        5
+      ],
+      "effects": {
+        "stat.happiness": 1
+      },
+      "texts": [
+        "Hai người ngồi dưới hiên uống trà, nói chuyện mưa nắng. Chẳng đâu vào đâu mà dễ chịu.",
+        "Ngươi và {npc} đổi vài câu chuyện phiếm. Ấm trà cạn lúc nào không hay."
+      ]
+    }
+  },
+  {
+    "id": "hoi_tin_tuc",
+    "name": "Hỏi thăm tin tức",
+    "minAffinity": 40,
+    "success": {
+      "affinity": [
+        1,
+        3
+      ],
+      "effects": {
+        "stat.intellect": 1
+      },
+      "texts": [
+        "{npc} kể mấy chuyện nghe được ngoài chợ. Có chuyện thật, có chuyện thêu dệt, ngươi tự biết lựa.",
+        "Ngươi hỏi thăm thời cuộc. {npc} nói một hồi, ngươi gật gù ghi nhớ."
+      ]
+    }
+  },
+  {
+    "id": "ruou",
+    "name": "Rủ đi uống rượu",
+    "minAffinity": 60,
+    "cost": 5,
+    "success": {
+      "affinity": [
+        4,
+        8
+      ],
+      "effects": {
+        "stat.happiness": 3,
+        "stat.health": -1
+      },
+      "texts": [
+        "Rượu rót đầy, lời cũng đầy. {npc} cười nhiều hơn thường lệ.",
+        "Hai người uống tới khuya, chia tay trong tiếng ve."
+      ]
+    }
+  },
+  {
+    "id": "du_ngoan",
+    "name": "Cùng ngao du",
+    "minAffinity": 60,
+    "success": {
+      "affinity": [
+        4,
+        9
+      ],
+      "effects": {
+        "stat.happiness": 3,
+        "stat.charm": 1
+      },
+      "texts": [
+        "Ngươi và {npc} rong chơi qua mấy ngọn đồi. Đường xa mà chẳng thấy mỏi.",
+        "Cùng {npc} ngắm cảnh, đàm đạo chuyện trên trời dưới đất."
+      ]
+    }
+  },
+  {
+    "id": "nho_giup",
+    "name": "Nhờ giúp đỡ",
+    "minAffinity": 65,
+    "check": {
+      "stat": "stat.charm",
+      "difficulty": 45
+    },
+    "silver": [
+      10,
+      40
+    ],
+    "success": {
+      "affinity": [
+        -2,
+        0
+      ],
+      "effects": {
+        "stat.happiness": 1
+      },
+      "texts": [
+        "{npc} nghe ngươi nhờ, không hỏi thêm câu nào, lục túi đưa ra một ít."
+      ]
+    },
+    "fail": {
+      "affinity": [
+        -6,
+        -2
+      ],
+      "effects": {
+        "stat.happiness": -2
+      },
+      "texts": [
+        "{npc} lúng túng nói dạo này cũng khó khăn. Ngươi nhận ra mình đã nhờ không đúng lúc."
+      ]
+    }
+  },
+  {
+    "id": "cung_tu_luyen",
+    "name": "Cùng tu luyện",
+    "minAffinity": 60,
+    "cultivatorOnly": true,
+    "progress": 6,
+    "success": {
+      "affinity": [
+        3,
+        6
+      ],
+      "effects": {
+        "stat.comprehension": 1
+      },
+      "texts": [
+        "Hai người đối tọa, linh khí quanh thân cùng nhịp. Tu vi cả hai tiến thêm một chút.",
+        "Ngươi và {npc} trao đổi tâm đắc, mỗi người mở thêm một cánh cửa."
+      ]
+    }
+  },
+  {
+    "id": "tam_su",
+    "name": "Tâm sự",
+    "minAffinity": 80,
+    "success": {
+      "affinity": [
+        3,
+        6
+      ],
+      "effects": {
+        "stat.daoHeart": 2,
+        "stat.happiness": 2
+      },
+      "texts": [
+        "Ngươi nói chuyện lòng mình với {npc}. Chẳng cần lời đáp, chỉ cần có người nghe.",
+        "Đêm khuya, {npc} kể chuyện cũ. Ngươi nghe, rồi kể lại chuyện của mình."
+      ]
+    }
+  },
+  {
+    "id": "xin_chi_dan",
+    "name": "Xin chỉ điểm",
+    "minAffinity": 75,
+    "check": {
+      "stat": "stat.comprehension",
+      "difficulty": 45
+    },
+    "success": {
+      "affinity": [
+        3,
+        6
+      ],
+      "effects": {
+        "stat.comprehension": 2
+      },
+      "texts": [
+        "{npc} chỉ ra một chỗ ngươi chưa thông, nói một câu mà ngươi nghĩ mấy ngày."
+      ]
+    },
+    "fail": {
+      "affinity": [
+        0,
+        2
+      ],
+      "effects": {
+        "stat.intellect": 1
+      },
+      "texts": [
+        "{npc} giảng một hồi, ngươi chỉ hiểu được nửa. Thôi, nửa cũng là hơn không."
+      ]
+    }
+  },
+  {
+    "id": "do_la",
+    "name": "Dò la hư thực",
+    "enemy": true,
+    "reveal": true,
+    "check": {
+      "stat": "stat.intellect",
+      "difficulty": 45
+    },
+    "success": {
+      "affinity": [
+        0,
+        0
+      ],
+      "effects": {
+        "stat.intellect": 1
+      },
+      "texts": [
+        "Ngươi nghe ngóng đủ nơi, đoán ra {npc} thật sự là hạng người nào."
+      ]
+    },
+    "fail": {
+      "affinity": [
+        0,
+        0
+      ],
+      "effects": {
+        "stat.happiness": -1
+      },
+      "texts": [
+        "Ngươi dò la nửa chừng thì bị {npc} phát hiện, ánh mắt lại càng lạnh."
+      ]
+    }
+  },
+  {
+    "id": "hoa_giai",
+    "name": "Cầu hòa",
+    "enemy": true,
+    "grudgeEase": 20,
+    "check": {
+      "stat": "stat.charm",
+      "difficulty": 55
+    },
+    "success": {
+      "affinity": [
+        8,
+        14
+      ],
+      "effects": {
+        "stat.daoHeart": 1,
+        "stat.happiness": 2
+      },
+      "texts": [
+        "Ngươi cúi đầu nói chuyện cũ. {npc} im lặng rất lâu, rồi khẽ gật.",
+        "Một chén trà, vài lời thật lòng. Oán cũ nhẹ đi quá nửa."
+      ]
+    },
+    "fail": {
+      "affinity": [
+        -6,
+        -2
+      ],
+      "effects": {
+        "stat.happiness": -2
+      },
+      "texts": [
+        "{npc} xoay lưng bỏ đi, không nghe hết câu của ngươi."
+      ]
+    }
+  },
+  {
+    "id": "doi_dau",
+    "name": "Đối đầu",
+    "enemy": true,
+    "check": {
+      "stat": "stat.physique",
+      "difficulty": 50
+    },
+    "success": {
+      "affinity": [
+        -3,
+        0
+      ],
+      "effects": {
+        "stat.physique": 1,
+        "stat.daoHeart": 1
+      },
+      "texts": [
+        "Ngươi chặn đường {npc}, nói thẳng điều cần nói. Khí thế ngươi áp đảo, người ta lui một bước."
+      ]
+    },
+    "fail": {
+      "affinity": [
+        -5,
+        -1
+      ],
+      "effects": {
+        "stat.health": -4,
+        "stat.daoHeart": -1
+      },
+      "texts": [
+        "Lời qua tiếng lại, rồi động tay. Ngươi ăn một đòn đau, đành lui."
+      ]
+    }
+  }
+]

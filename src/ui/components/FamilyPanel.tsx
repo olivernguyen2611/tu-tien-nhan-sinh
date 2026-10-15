@@ -15,17 +15,20 @@ import { BondSection } from './BondSection';
 import type { BondAction, BondTarget } from '../../systems/familyBond';
 import { Meter } from './Meter';
 import { Fold } from './Fold';
+import { npcActViews } from '../../systems/npcActs';
 import { NpcGiftRow } from './NpcGiftRow';
 import { ImportSection } from './ImportSection';
 import type { ImportSetup, SavedPerson } from '../../systems/npcLibrary';
 
-export function FamilyPanel({ state, content, onAction, onRomance, onGiftNpc, onDisciple, onClan, onBond, onSaveNpc, getSources, onImport, onClose }: {
+export function FamilyPanel({ state, content, onAction, onRomance, onGiftNpc, onNpcAct, onDisciple, onClan, onBond, onSaveNpc, getSources, onImport, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome text to show under the relative. */
   onAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
   /** Task 3.6: courting someone met along the way. */
   onRomance: (npcId: string, action: RomanceAction) => { text: string; tone: Tone; changes: string };
+  /** 9.0.3: an act suited to how close this person is (trà, rượu, tâm sự, cầu hòa…). */
+  onNpcAct: (npcId: string, actId: string) => { text: string; tone: Tone; changes: string } | null;
   /** 9.0.2: give an item from the bag to someone met along the way. */
   onGiftNpc: (npcId: string, itemId: string) => { text: string; tone: Tone; changes: string } | null;
   /** Task 4.9: take a disciple (no id) or teach one. */
@@ -110,6 +113,16 @@ export function FamilyPanel({ state, content, onAction, onRomance, onGiftNpc, on
                     )}
                     {n.alive && n.disciple && (
                       <DiscipleActs state={state} content={content} npc={n} onAct={(act) => { const r = onDisciple(n.id, act); if (r) setResult({ id: n.id, ...r }); }} />
+                    )}
+                    {!n.disciple && npcActViews(state, content, n).length > 0 && (
+                      <div class="action-chips">
+                        {npcActViews(state, content, n).map((a) => (
+                          <button class="chip-btn" key={a.id} disabled={!!a.blocked} title={a.blocked ?? undefined}
+                            onClick={() => { const r = onNpcAct(n.id, a.id); if (r) setResult({ id: n.id, ...r }); }}>
+                            {a.name}{a.chance !== null && <span class="chip-cost"> · {Math.round(a.chance * 100)}%</span>}{a.cost > 0 && <span class="chip-cost"> · {a.cost} bạc</span>}
+                          </button>
+                        ))}
+                      </div>
                     )}
                     {views.length > 0 && (
                       <div class="action-chips">

@@ -47,6 +47,7 @@ import { trainMartial } from '../systems/martial';
 import { beginQuestStep, miniGameHide, miniGameInput, miniGameQuit } from '../systems/martialQuest';
 import { romanceAction } from '../systems/romance';
 import { giftNpc } from '../systems/npcGift';
+import { doNpcAct } from '../systems/npcActs';
 import { runSeclusion, seclude } from '../systems/seclusion';
 import { placeStrand } from '../systems/goldenCore';
 import { becomeGhost } from '../systems/ghost';
@@ -405,6 +406,12 @@ function Screens({ content }: { content: Content }) {
         }}
         onRomance={(npcId, action) => {
           const r = romanceAction(life, content, npcId, action);
+          setLife(r.state);
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+        }}
+        onNpcAct={(npcId, actId) => {
+          const r = doNpcAct(life, content, npcId, actId);
+          if (!r) return null;
           setLife(r.state);
           return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
         }}
