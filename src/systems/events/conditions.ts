@@ -78,7 +78,9 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (c.root.tested !== undefined && !!root !== c.root.tested) return false;
     if (c.root.usable !== undefined) {
       const usable = !!root && (content?.balance.roots.gradeSpeed[root.grade] ?? 0) > 0;
-      if (!root || usable !== c.root.usable) return false;
+      // 9.R4a: usable false also holds for an untested life born without a usable root.
+      const rootless = root ? !usable : !!content && !hasUsableInnateRoot(state, content);
+      if (c.root.usable ? !usable : !rootless) return false;
     }
     if (c.root.minElements !== undefined && (root?.elements.length ?? 0) < c.root.minElements) return false;
     if (c.root.innate !== undefined && (!content || root || hasUsableInnateRoot(state, content) !== c.root.innate)) return false;

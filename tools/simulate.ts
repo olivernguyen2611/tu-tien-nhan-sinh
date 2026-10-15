@@ -75,7 +75,9 @@ if (fingersArg) {
 }
 for (const profile of profiles) {
   const started = Date.now();
-  const { report } = simulateMany(content, count, prefix, { profile, difficulty: difficulty || undefined });
-  console.log(formatReport(report, content, `${profile} · ${difficulty || content.balance.defaultDifficulty}`));
+  // 9.R4b: --first-life plays with an empty Sổ tri thức (gates need luck).
+  const firstLife = args.includes('--first-life');
+  const { report } = simulateMany(content, count, prefix, { profile, difficulty: difficulty || undefined, knowledge: firstLife ? 'none' : 'all' });
+  console.log(formatReport(report, content, `${profile} · ${difficulty || content.balance.defaultDifficulty}${firstLife ? ' · kiếp đầu' : ''}`));
   console.log(`(${((Date.now() - started) / 1000).toFixed(1)}s)\n`);
 }

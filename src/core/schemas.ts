@@ -1750,6 +1750,8 @@ export const BalanceSchema = z
         wish: z.number().int().min(0),
       })
       .strict(),
+    /** 9.R4b: yearly chance of each tiên duyên gate; scale without its knowledge; luck shifts it by luckWeight × (luck − 50)%. */
+    immortalGates: z.object({ chance: z.record(z.string(), probability), unknownMul: probability, luckWeight: z.number().min(0) }).strict().optional(),
     /** 9.R5a Sổ tri thức: yearly chance for a source that names none; at most this many finds a year, and a life. */
     knowledge: z.object({ defaultChance: probability, maxPerYear: z.number().int().min(1), maxPerLife: z.number().int().min(1) }).strict().optional(),
     /** Task 5b.2: Kim Thủ Chỉ at birth: chance + per life played (capped), sure after pityLives lives without one. */
@@ -2534,6 +2536,25 @@ export const JianghuFactionFileSchema = z.array(
     .strict(),
 );
 export type JianghuFaction = z.infer<typeof JianghuFactionFileSchema>[number];
+
+/**
+ * content/worlds/<id>/immortal-gates.json (9.R4b): the ways a mortal is found by the immortal world
+ * (instead of every child being tested). Each year a gate's conditions hold, it opens by its chance
+ * (balance.immortalGates.chance.<id>) and its event comes; without its Sổ tri thức entry the chance
+ * is scaled by balance.immortalGates.unknownMul (a first life can still be lucky).
+ */
+export const ImmortalGateFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      event: id,
+      conditions: ConditionsSchema,
+      requiresKnowledge: id.optional(),
+    })
+    .strict(),
+);
+export type ImmortalGate = z.infer<typeof ImmortalGateFileSchema>[number];
 
 /** 9.R5a: groups of the Sổ tri thức, and what one entry can be found through or open. */
 export const KNOWLEDGE_GROUPS = ['tien_dao', 'vo_dao', 'the_gioi', 'the_luc', 'nhan_vat', 'cong_phap', 'bi_canh'] as const;

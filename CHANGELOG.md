@@ -8,6 +8,18 @@
 
 ## [Chưa phát hành]
 
+### 9.R4b: năm cổng tiên duyên, bỏ thử linh căn đại trà (2026-10-15)
+- Không còn hẹn mọi đứa trẻ thử linh căn lúc 6–12 tuổi (`world.json` bỏ `rootTestEvent`). Thay bằng **năm cổng tiên duyên** (`content/worlds/thuong_lan/immortal-gates.json`, xác suất ở `balance.immortalGates`): mỗi năm cổng nào đủ điều kiện thì có xác suất mở, mang tới sự kiện thử linh căn của nó; mỗi cổng mở nhiều nhất một lần mỗi đời.
+  - a. **Tiên môn mở hội thu đồ** (8–16 tuổi): sự kiện tiên sư áo xám cũ.
+  - b. **Tu sĩ tọa trấn triều đình** (con nhà quan, 8–20 tuổi): quốc sư thử linh.
+  - c. **Tu tiên thế gia** (hậu duệ gia tộc tu tiên, 6–9 tuổi): gần như chắc chắn, theo tộc quy.
+  - d. **Cơ duyên xảo hợp** (6–40 tuổi, khí vận, ngộ tính hoặc căn cốt cao): lão đạo ven đường.
+  - e. **Cơ duyên phàm gian** (võ giả từ Tuyệt đỉnh): kiếm khách tu sĩ xem cổ tay.
+- Cổng a, d, e cần mục tri thức tương ứng trong Sổ tri thức; chưa biết thì xác suất chỉ còn 20% (kiếp đầu vẫn có thể gặp may). Khí vận cao thì dễ gặp hơn.
+- Sự kiện phàm nhân trước đây cần "đã thử, không có linh căn" (tiên nhân bay ngang, hội hương hỏa, hạ viện Vô Ưu, kỳ vật mở linh căn) nay đến được với người chưa ai thử. Tiên môn tuyển người trượt giờ là lần thử của người không có linh căn.
+- `npm run simulate` mặc định coi như người chơi đã biết hết Sổ tri thức; thêm `--first-life` để chơi kiếp đầu. 200 đời (bot player): vào Luyện Khí 89% → 76% (kiếp đầu 61,5%, phần lớn nhờ kỳ vật và các đường khác), Kim Đan 15% → 7%, tuổi thọ trung bình 124 → 82. Đây là thay đổi lớn về cân bằng theo đúng kế hoạch (ít người vào tiên đạo hơn); 9.R5b sẽ siết kiếp đầu thêm.
+- Mô tả Ngũ khí triều nguyên sửa lại cho khớp 9.V2 (tận cùng võ đạo, không tự vào Luyện Khí). Mục tiêu và bảng Tu luyện không còn hứa "tiên sư sẽ ghé". Test mới `tests/immortal-gates.test.ts`.
+
 ### 9.R4a: linh căn ẩn (2026-10-15)
 - Linh căn giờ định sẵn **lúc sinh** theo seed và khí vận (luồng RNG riêng `seed:root`), dù có ai thử hay không. Thử linh căn chỉ là nhìn thấy nó; thử không còn tiêu RNG của đời.
 - 6 sự kiện dấu hiệu mới (`root-hints.json`): trẻ có linh căn đôi khi thấy gió ấm, bà đỡ nhận xét, mơ sao rơi, cây khô nhú lộc; Kim Thủ Chỉ Nhãn thấu cơ duyên soi được mình có hay không có linh căn. Điều kiện sự kiện mới `root.innate`.

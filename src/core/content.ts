@@ -1,7 +1,7 @@
 // Loads all JSON under content/ at build time and checks it with the same
 // rules as `npm run validate`.
 import {
-  AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, KnowledgeFileSchema, type KnowledgeEntry, CombatTextsSchema, type CombatTexts, type Market, type FateTalent, type Item, type Lineage, type MartialFile, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile, NpcTraitsFileSchema, RankingTextsSchema, type RankingTexts, RomanceFileSchema, type RomanceFile, HeartDemonFileSchema, type HeartDemonFile, RecipeFileSchema, type RecipeFile, CorePatternFileSchema, type CorePattern, NascentSoulFileSchema, type NascentSoulFile, DisciplesFileSchema, type DisciplesFile, FoundingFileSchema, type FoundingFile, HeirFileSchema, type HeirFile, ChosenFileSchema, type ChosenFile, ClanFileSchema, type ClanFile, BlessingFileSchema, type BlessingFile, RebirthTalentFileSchema, type RebirthTalentFile, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, type TraitComboFile, CodexFileSchema, type CodexFile, AchievementFileSchema, type AchievementFile, ChallengeFileSchema, type ChallengeFile, type NpcTraitsFile,
+  AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, type CombatTexts, type Market, type FateTalent, type Item, type Lineage, type MartialFile, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile, NpcTraitsFileSchema, RankingTextsSchema, type RankingTexts, RomanceFileSchema, type RomanceFile, HeartDemonFileSchema, type HeartDemonFile, RecipeFileSchema, type RecipeFile, CorePatternFileSchema, type CorePattern, NascentSoulFileSchema, type NascentSoulFile, DisciplesFileSchema, type DisciplesFile, FoundingFileSchema, type FoundingFile, HeirFileSchema, type HeirFile, ChosenFileSchema, type ChosenFile, ClanFileSchema, type ClanFile, BlessingFileSchema, type BlessingFile, RebirthTalentFileSchema, type RebirthTalentFile, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, type TraitComboFile, CodexFileSchema, type CodexFile, AchievementFileSchema, type AchievementFile, ChallengeFileSchema, type ChallengeFile, type NpcTraitsFile,
   BalanceSchema, EventFileSchema, FamilyActionFileSchema, GlossarySchema, NpcActFileSchema, EffectLabelsSchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema,
   type Balance, type FamilyAction, type NpcAct, type EffectLabels, type GameEvent, type Glossary, type LifeTexts, type Names, type Origin, type StatExtremesFile, type Trait, type World,
 } from './schemas';
@@ -50,6 +50,8 @@ export interface Content {
   jianghuFactions?: JianghuFaction[];
   /** 9.R5a: the Sổ tri thức of this world. */
   knowledge?: KnowledgeEntry[];
+  /** 9.R4b: the tiên duyên gates of this world. */
+  immortalGates?: ImmortalGate[];
   /** Fight texts (task 3.3). */
   combat: CombatTexts;
   /** NPC personalities and goals (task 3.4). */
@@ -173,6 +175,7 @@ export function loadContent(worldId: string = DEFAULT_WORLD_ID): Content {
     regions: RegionFileSchema.parse(files[`${dir}regions.json`] ?? []),
     jianghuFactions: JianghuFactionFileSchema.parse(files[`${dir}jianghu-factions.json`] ?? []),
     knowledge: KnowledgeFileSchema.parse(files[`${dir}knowledge.json`] ?? []),
+    immortalGates: ImmortalGateFileSchema.parse(files[`${dir}immortal-gates.json`] ?? []),
     combat: CombatTextsSchema.parse(files['combat.json']),
     rankings: RankingTextsSchema.parse(files['rankings.json']),
     romance: RomanceFileSchema.parse(files['romance.json']),

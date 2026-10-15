@@ -78,6 +78,8 @@ export interface SimOptions {
   traits?: string[];
   /** 9.R3d: start with this Kim Thủ Chỉ (absent = none, as before). */
   goldenFinger?: string;
+  /** 9.R4b: a seasoned player knows the whole Sổ tri thức (default, so every gate is open); 'none' plays a first life. */
+  knowledge?: 'all' | 'none';
 }
 
 /** Live one life to its end. Deterministic for a seed, profile and content. */
@@ -88,7 +90,8 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
   const maxSteps = opts.maxSteps ?? 20000;
   const botRng = new Rng(`bot:${seed}`);
   const realms = content.cultivation.realms.realms.map((r) => r.id);
-  const born = createLife({ seed, difficulty: opts.difficulty, goldenFinger: opts.goldenFinger }, content);
+  const knowledge = opts.knowledge === 'none' ? [] : (content.knowledge ?? []).map((e) => e.id);
+  const born = createLife({ seed, difficulty: opts.difficulty, goldenFinger: opts.goldenFinger, knowledge }, content);
   const offered = opts.traits ? { ...born, destiny: { ...born.destiny, offered: opts.traits } } : rollDestiny(born, content);
   let s: GameState = confirmDestiny(offered, content);
   let peak = 0;

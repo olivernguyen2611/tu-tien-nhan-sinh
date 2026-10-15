@@ -27,20 +27,18 @@ function untilTested(seed: string, originId?: string): GameState {
 }
 
 describe('spirit root (task 2.2)', () => {
-  it('every life is booked a root test between 6 and 12', () => {
-    for (let i = 0; i < 50; i++) {
+  it('9.R4b: no life is booked a root test any more (the gates bring it)', () => {
+    for (let i = 0; i < 20; i++) {
       const s = createLife({ seed: `book${i}` }, content);
-      const test = s.events.followUps.find((f) => f.event === content.world.rootTestEvent);
-      expect(test?.atAge).toBe(rootTestAge(`book${i}`, content));
-      expect(test!.atAge).toBeGreaterThanOrEqual(6);
-      expect(test!.atAge).toBeLessThanOrEqual(12);
+      expect(s.events.followUps.some((f) => f.event === 'thu_linh_can')).toBe(false);
     }
   });
 
-  it('taking the test reveals the root at the booked age', () => {
-    const s = untilTested('reveal-1');
+  it('taking the test reveals the root', () => {
+    let s = createLife({ seed: 'reveal-1' }, content);
+    s = { ...s, character: { ...s.character, age: 9 }, events: { ...s.events, pending: 'thu_linh_can', followUps: [] } };
+    s = resolveChoice(s, content, 0).state;
     expect(s.cult.root).not.toBeNull();
-    expect(s.character.age).toBe(rootTestAge('reveal-1', content));
     // 6b.12: said once, inside the event's outcome, not again as a line of its own.
     expect(s.log.at(-1)!.lines.filter((l) => l.text.includes('Linh căn: ')).length).toBe(1);
   });

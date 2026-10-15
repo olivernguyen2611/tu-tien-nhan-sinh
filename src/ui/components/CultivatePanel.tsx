@@ -101,7 +101,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
         {soul && <p class="profile-note"><TermText text={`Nguyên Anh: ${soul.name}. ${soul.summary}`} /></p>}
         {mortal ? (
           <p class="story">
-            <TermText text={rootUsable(state, content) ? 'Có linh căn nhưng chưa nhập đạo: cần một công pháp nhập môn, tông môn hoặc tiên sư dẫn đường.' : cult.root ? 'Không có linh căn, linh khí không đọng lại trong người. Đường tu tiên tạm thời khép cửa.' : 'Chưa thử linh căn. Có khi một ngày tiên sư sẽ ghé qua quê nhà.'} />
+            <TermText text={rootUsable(state, content) ? 'Có linh căn nhưng chưa nhập đạo: cần một công pháp nhập môn, tông môn hoặc tiên sư dẫn đường.' : cult.root ? 'Không có linh căn, linh khí không đọng lại trong người. Đường tu tiên tạm thời khép cửa.' : 'Chưa ai từng thử linh căn cho ngươi. Tiên môn thu đồ, tiên nhân để mắt… tiên duyên không hẹn trước.'} />
           </p>
         ) : (
           <>

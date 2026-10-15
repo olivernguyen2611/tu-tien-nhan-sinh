@@ -15,7 +15,7 @@ const song = { grade: 'song', elements: ['kim', 'hoa'] };
 describe('goals and tips (task 2.9)', () => {
   it('the goal follows the life: test, mortal, Luyện Khí, peak, Trúc Cơ', () => {
     const s = life();
-    expect(currentGoal(s, content)).toContain('thử linh căn');
+    expect(currentGoal(s, content)).toContain('Tiên duyên');
     expect(currentGoal(withCult(s, { root: { grade: 'none', elements: [] } }), content)).toContain('phàm nhân');
     expect(currentGoal(withCult(s, { root: song, realm: 'luyen_khi', stage: 3 }), content)).toBe('Tu tới Luyện Khí tầng 9.');
     expect(currentGoal(withCult(s, { root: song, realm: 'luyen_khi', stage: 8, progress: 100 }), content)).toContain('Đột phá Trúc Cơ');
