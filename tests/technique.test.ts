@@ -51,7 +51,7 @@ describe('techniques (task 2.4)', () => {
   it('matching rules: root/any/none always fit, five needs a basic element, Lưu Ly Linh Thể fits all', () => {
     expect(techniqueMatches(tech('ngu_hanh_luan_chuyen_kinh'), SONG, content)).toBe(true);
     expect(techniqueMatches(tech('ngu_hanh_luan_chuyen_kinh'), { grade: 'bien_di', elements: ['loi'] }, content)).toBe(true); // playtest 2026-10-12: Lôi = Kim + Hỏa
-    const stand: SpiritRoot = { grade: 'the_chat', elements: [] };
+    const stand: SpiritRoot = { grade: 'song', elements: ['moc', 'thuy'] };
     expect(techniqueMatches(tech('hoa_van_quyet'), stand, content, 'luu_ly_linh_the')).toBe(true);
     expect(techniqueMatches(tech('hoa_van_quyet'), stand, content, 'cuu_duong_the')).toBe(false);
     expect(techniqueMatches(tech('tho_nap_tan_quyen'), stand, content, 'cuu_duong_the')).toBe(true);

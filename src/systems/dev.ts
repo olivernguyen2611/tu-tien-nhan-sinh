@@ -381,19 +381,16 @@ export function devRootOptions(content: Content): { key: string; label: string; 
   return out;
 }
 
-/** Replace the spirit root; this also drops any special body, which would have stood in for it. */
+/** Replace the spirit root (a special body is a separate thing and stays). */
 export function devSetRoot(state: GameState, content: Content, root: SpiritRoot): GameState {
   if (!state.alive) return state;
-  return devLog({ ...state, cult: { ...state.cult, root, bodyId: null } }, `linh căn → ${rootName(root, content)}`);
+  return devLog({ ...state, cult: { ...state.cult, root } }, `linh căn → ${rootName(root, content)}`);
 }
 
-/** Set (or clear, with null) the special body without its one-time gains; a body takes the root's place. */
+/** Set (or clear, with null) the special body without its one-time gains; the root is untouched. */
 export function devSetBody(state: GameState, content: Content, bodyId: string | null): GameState {
   if (!state.alive || (bodyId && !content.cultivation.roots.bodies.some((b) => b.id === bodyId))) return state;
-  const grade = content.cultivation.roots.grades.find((g) => g.special === 'body')?.id ?? 'the_chat';
-  const basic = content.cultivation.roots.elements.filter((e) => !e.variant).map((e) => e.id);
-  const root = bodyId ? { grade, elements: [] } : state.cult.root?.grade === grade ? { grade: 'song', elements: basic.slice(0, 2) } : state.cult.root;
-  return devLog({ ...state, cult: { ...state.cult, root, bodyId } }, `thể chất → ${bodyId ?? content.cultivation.roots.plainBody}`);
+  return devLog({ ...state, cult: { ...state.cult, bodyId } }, `thể chất → ${bodyId ?? content.cultivation.roots.plainBody}`);
 }
 
 /** Awaken a special body at once (its one-time gains apply), even for a rootless or already-bodied character. */
@@ -401,7 +398,7 @@ export function devAwakenBody(state: GameState, content: Content, bodyId: string
   if (!state.alive || !content.cultivation.roots.bodies.some((b) => b.id === bodyId)) return state;
   const base: GameState = state.cult.root && !state.cult.bodyId && (content.balance.roots.gradeSpeed[state.cult.root.grade] ?? 0) > 0
     ? state
-    : { ...state, cult: { ...state.cult, root: { grade: 'bien_di', elements: [content.cultivation.roots.elements[0].id] } } };
+    : { ...state, cult: { ...state.cult, root: { grade: 'song', elements: ['kim', 'moc'] }, bodyId: null } };
   return devLog(awakenBody(base, content, bodyId).state, `thức tỉnh thể chất → ${bodyId}`);
 }
 

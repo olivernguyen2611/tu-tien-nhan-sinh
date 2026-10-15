@@ -16,13 +16,13 @@ function cultivator(grade: string, tech: string, patch: Partial<GameState['cult'
 }
 
 describe('Thái Sơ Diễn Đạo Kinh and the high realms (backlog 8)', () => {
-  it('is adaptive: the weaker the root, the more it makes up, a special body gets a flat share', () => {
+  it('is adaptive: the weaker the root, the more it makes up', () => {
     const weak = adaptiveMul(thaiSo, cultivator('ngu', thaiSo.id), content);
     const strong = adaptiveMul(thaiSo, cultivator('don', thaiSo.id), content);
     expect(weak).toBeGreaterThan(strong);
     expect(strong).toBeGreaterThan(1);
-    const body = adaptiveMul(thaiSo, cultivator('the_chat', thaiSo.id, { bodyId: 'luu_ly_linh_the' }), content);
-    expect(body).toBeCloseTo(1 + content.balance.techniques.adaptive.body);
+    // A special body does not change it: the root decides.
+    expect(adaptiveMul(thaiSo, cultivator('song', thaiSo.id, { bodyId: 'luu_ly_linh_the' }), content)).toBe(adaptiveMul(thaiSo, cultivator('song', thaiSo.id), content));
     const plain = techniqueById(content, 'dan_khi_quyet')!;
     expect(adaptiveMul(plain, cultivator('ngu', plain.id), content)).toBe(1);
     expect(techniqueMul(cultivator('ngu', thaiSo.id), content)).toBeGreaterThan(techniqueMul(cultivator('don', thaiSo.id), content));

@@ -1333,6 +1333,8 @@ export const BalanceSchema = z
         gradeSpeed: z.record(id, z.number().min(0)),
         elementCount: z.record(id, z.number().int().min(0)),
         bodyWeights: weightMap,
+        /** Chance, independent of the root, that the test finds a special body. */
+        bodyChance: probability,
         /** Origin "Hậu duệ gia tộc tu tiên" rolls this many times and keeps the best. */
         clanDescendantRolls: z.number().int().min(1),
         /** Age range of the spirit-root test. */
@@ -1479,7 +1481,7 @@ export const BalanceSchema = z
         /** Switching techniques loses this % of the current bar. */
         switchLossPct: z.number().min(0).max(100),
         /** Backlog 8: an adaptive technique (Thái Sơ Diễn Đạo Kinh) reshapes itself to its owner: extra speed share by root grade, or by a special body. */
-        adaptive: z.object({ rootGrade: z.record(id, z.number().min(0)), body: z.number().min(0) }).strict(),
+        adaptive: z.object({ rootGrade: z.record(id, z.number().min(0)) }).strict(),
       })
       .strict(),
     /** Task 2.4/2.5: sect numbers keyed by sect id (worlds/<id>/sects.json). */
@@ -1914,15 +1916,15 @@ export const RootsFileSchema = z
             id,
             name: z.string().min(1),
             description: z.string().min(1),
-            /** "variant": elements drawn from the variant ones; "body": a special body instead of elements. */
-            special: z.enum(['variant', 'body']).optional(),
+            /** "variant": elements drawn from the variant ones; "martial": the Ngũ khí root, only from the martial path. */
+            special: z.enum(['variant', 'martial']).optional(),
           })
           .strict(),
       )
       .min(1),
     /** Log line when the root is revealed: {root} = name with elements, {description}. */
     revealText: z.string().min(1),
-    /** Log line when a special body shows instead of a root: {body}, {description}. */
+    /** Extra log line when the root test also finds a special body (a separate thing from the root): {body}, {description}. */
     revealBodyText: z.string().min(1),
     /** Name of the ordinary body shown for everyone without a special one. */
     plainBody: z.string().min(1),

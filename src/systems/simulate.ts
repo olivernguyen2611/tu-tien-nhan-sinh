@@ -242,7 +242,7 @@ export function summarize(results: LifeResult[], content: Content): Report {
     if (ages.length > 0) reachedAge[r.id] = ages.reduce((a, b) => a + b, 0) / ages.length;
   }
   const roots: Record<string, LifeResult[]> = {};
-  for (const r of results) (roots[r.bodyId ? 'the_chat' : r.rootGrade] ??= []).push(r);
+  for (const r of results) (roots[r.rootGrade] ??= []).push(r);
   const kd = realms.findIndex((r) => r.id === 'kim_dan');
   const mean = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0);
   const byRoot: Report['byRoot'] = {};

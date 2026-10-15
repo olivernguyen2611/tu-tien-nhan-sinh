@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6d.1: tách thể chất khỏi linh căn (2026-10-15)
+- Thể chất đặc biệt không còn thay linh căn: bỏ hạng `the_chat`. Linh căn lăn riêng; thể chất lăn riêng (`balance.roots.bodyChance` 0,4%) lúc thử linh căn, chỉ thêm hiệu ứng đặc biệt. Người không linh căn có thể chất vẫn không tu được. Công pháp tự thích ứng (Thái Sơ) chỉ xét linh căn; Lưu Ly Linh Thể vẫn hợp mọi công pháp.
+- Thức tỉnh thể chất giữ nguyên linh căn. Con cái thừa hưởng thể chất của cha mẹ riêng với linh căn. Linh căn biến dị chỉ chứa một hệ biến dị, không kèm hệ thường (có test).
+- Save v3: đời cũ có thể chất thay linh căn được trả một linh căn Tam hoặc Song (lăn theo seed của đời, ổn định), con cái cũng vậy; thể chất được giữ.
+- Dev mode: đặt linh căn không còn xóa thể chất, đặt thể chất không đụng linh căn. Giao diện hiện hai dòng Linh căn và Thể chất riêng.
+
 ### GĐ 6c.9: cân lại trần đột phá, giao diện, dọn PLAN (2026-10-13)
 - Trần cộng dồn đột phá đại cảnh giới chốt lại sau khi các bước 6c.2-6c.5 làm game khó thêm: Trúc Cơ 34, Kim Đan 32, Nguyên Anh 30, Hóa Thần 26 điểm (`majorModifierCap`; trước đó 36/36/34/38). Chặn trên của tỉ lệ thành công (cơ sở + trần): Trúc Cơ 64%, Kim Đan 52%, Nguyên Anh 42%, Hóa Thần 34%, so với 87% và 81% ở Nguyên Anh và Hóa Thần trong bản đánh giá.
 - Người chơi máy (`--profile player`) đột phá từ 30% trở lên (trước 40%), vì trần mới thấp hơn.

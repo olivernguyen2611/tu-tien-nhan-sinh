@@ -41,7 +41,7 @@ const usableGrade = (content: Content, root: SpiritRoot | null | undefined) => !
 
 /** Can a hậu thiên linh căn still be opened for this child (rootless, tested, tries left)? */
 function rootless(content: Content, r: Relative): boolean {
-  return !!r.root && !r.bodyId && !usableGrade(content, r.root);
+  return !!r.root && !usableGrade(content, r.root);
 }
 
 function child(state: GameState, id: string): Relative | undefined {
@@ -83,7 +83,7 @@ function teachOptions(state: GameState, content: Content, root: SpiritRoot | nul
   });
 }
 
-function blockedFor(state: GameState, content: Content, t: BondTarget, action: BondAction, age: number, root: SpiritRoot | null | undefined, bodyId: string | null | undefined): string | null {
+function blockedFor(state: GameState, content: Content, t: BondTarget, action: BondAction, age: number, root: SpiritRoot | null | undefined): string | null {
   const a = content.balance.familyBond.actions[action];
   if (!state.alive) return 'Đã hết một đời.';
   if (state.character.age < content.balance.familyBond.minPlayerAge) return `Đủ ${content.balance.familyBond.minPlayerAge} tuổi mới làm được.`;
@@ -92,7 +92,7 @@ function blockedFor(state: GameState, content: Content, t: BondTarget, action: B
   if (action === 'discuss' && state.aptitudes.comprehension < (a.minComprehension ?? 0)) return `Cần Ngộ tính ${a.minComprehension ?? 0} mới luận đạo được.`;
   if (action === 'teach') {
     if (state.cult.learned.length === 0) return 'Ngươi chưa học công pháp nào để truyền.';
-    if (!usableGrade(content, root) && !bodyId) return 'Chưa có linh căn thì chưa tu được công pháp.';
+    if (!usableGrade(content, root)) return 'Chưa có linh căn thì chưa tu được công pháp.';
   }
   if (action === 'gift' && Object.values(state.inventory).every((n) => !n)) return 'Trong túi không có gì để tặng.';
   return null;
@@ -100,7 +100,8 @@ function blockedFor(state: GameState, content: Content, t: BondTarget, action: B
 
 function describe(content: Content, r: Relative): string {
   const parts: string[] = [];
-  if (r.root) parts.push(r.bodyId ? `thể chất ${content.cultivation.roots.bodies.find((b) => b.id === r.bodyId)?.name ?? r.bodyId}` : usableGrade(content, r.root) ? `${r.acquired ? 'hậu thiên ' : ''}linh căn ${content.cultivation.roots.grades.find((g) => g.id === r.root!.grade)?.name ?? r.root.grade}` : 'chưa có linh căn');
+  if (r.bodyId) parts.push(`thể chất ${content.cultivation.roots.bodies.find((b) => b.id === r.bodyId)?.name ?? r.bodyId}`);
+  if (r.root) parts.push(usableGrade(content, r.root) ? `${r.acquired ? 'hậu thiên ' : ''}linh căn ${content.cultivation.roots.grades.find((g) => g.id === r.root!.grade)?.name ?? r.root.grade}` : 'chưa có linh căn');
   if ((r.insight ?? 0) > 0) parts.push(`ngộ ${r.insight}/${content.balance.familyBond.insightMax}`);
   if (r.technique) parts.push(`biết ${techniqueById(content, r.technique)?.name ?? r.technique}`);
   return parts.join(' · ');
@@ -120,7 +121,7 @@ export function bondViews(state: GameState, content: Content): BondView[] {
       label: r.gender === 'nam' ? 'Con trai' : 'Con gái',
       note: r.root ? describe(content, r) : 'Chưa thử linh căn',
       actions: ACTION_ORDER.map((id) => ({
-        id, name: names[id], blocked: blockedFor(state, content, t, id, r.age, r.root, r.bodyId),
+        id, name: names[id], blocked: blockedFor(state, content, t, id, r.age, r.root),
         options: id === 'teach' ? teachOptions(state, content, r.root, r.bodyId) : id === 'gift' ? giftOptions(state, content, rootless(content, r)) : null,
       })),
     });
@@ -135,7 +136,7 @@ export function bondViews(state: GameState, content: Content): BondView[] {
       note: p.root ? `${p.acquired ? 'hậu thiên ' : ''}tu sĩ` : 'phàm nhân',
       actions: ACTION_ORDER.map((id) => ({
         id, name: names[id],
-        blocked: id === 'teach' && !p.root ? 'Phàm nhân chưa tu được công pháp.' : blockedFor(state, content, t, id, p.age, root, null),
+        blocked: id === 'teach' && !p.root ? 'Phàm nhân chưa tu được công pháp.' : blockedFor(state, content, t, id, p.age, root),
         options: id === 'teach' ? teachOptions(state, content, null, null) : id === 'gift' ? giftOptions(state, content, !p.root) : null,
       })),
     });

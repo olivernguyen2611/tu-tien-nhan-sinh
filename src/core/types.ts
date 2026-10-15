@@ -25,7 +25,7 @@ export interface Relative {
   lastActions: Record<string, number>;
   /** Task 3.7: a child's spirit root, rolled at birth and shown from the root-test age. */
   root?: SpiritRoot | null;
-  /** A child's special body (thể chất đặc biệt), separate from the root; it stands in for the root when set. */
+  /** A child's special body (thể chất đặc biệt), separate from the root (it adds effects, never replaces it). */
   bodyId?: string | null;
   /** Backlog 2 (Gia đạo): Ngộ tính gathered from luận bàn, luận đạo and teaching (0–100), and the technique taught. */
   insight?: number;
@@ -64,7 +64,7 @@ export interface MiniGame {
 /** Spirit root found by the test at 6–12 (task 2.2); ids from roots.json. */
 export interface SpiritRoot {
   grade: string;
-  /** Element ids; empty for no root or when a special body stands in (grade the_chat; the body is `cult.bodyId`). */
+  /** Element ids; empty for no root. */
   elements: string[];
 }
 
@@ -209,7 +209,7 @@ export interface GameState {
     stage: number;
     progress: number;  // % of current stage
     root: SpiritRoot | null; // null until tested at 6–12
-    /** Special body (roots.json bodies), independent of the root; when set it replaces the root (grade the_chat). */
+    /** Special body (roots.json bodies), independent of the root; it only adds special effects. */
     bodyId: string | null;
     lifespan: number;  // max age
     /** Failed breakthroughs per milestone ("<realm>:<stage>"), for the G.2 penalty. */

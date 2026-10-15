@@ -431,6 +431,15 @@ Giữ trần Hóa Thần, không thêm cảnh giới mới. Mỗi task có chỉ
 | 6c.8 | [x] Mục tiêu hậu Hóa Thần (di sản, kết cục), không thêm cảnh giới |
 | 6c.9 | [x] Giao diện và dọn PLAN.md |
 
+### GĐ 6d — Võ đạo sau Hóa cảnh, tách linh căn và thể chất (yêu cầu chủ dự án 2026-10-15; backlog 7 và 9)
+Chủ dự án chốt: Hóa cảnh được cao nhân tặng Cửu Chuyển Kim Cốt Quyết nhưng chưa có linh căn nên chưa tu được, đổi sang công pháp phàm nhân (tăng sức mạnh, thọ nguyên vừa phải); tới Ngũ khí triều nguyên gặp lại cao nhân mới được truyền kinh. Linh căn Ngũ khí hơn ngũ linh căn thường, đi kèm thể chất Tiên Võ thể. Thể chất đặc biệt không thay linh căn nữa; đã có linh căn biến dị thì không có linh căn thường kèm theo. Cả bốn task nằm chung nhánh, mỗi task một commit; merge theo thứ tự.
+| # | Task |
+|---|---|
+| 6d.1 | [x] Tách thể chất khỏi linh căn: thể chất là hiệu ứng riêng, không thay linh căn; save v3 trả linh căn cho đời cũ; dev mode |
+| 6d.2 | [ ] Linh căn Ngũ khí (hơn ngũ linh căn) và thể chất Tiên Võ thể |
+| 6d.3 | [ ] Hóa cảnh: Cửu Chuyển Kim Cốt Quyết không tu được, công pháp phàm nhân thay thế (sức mạnh, thọ nguyên vừa phải) |
+| 6d.4 | [ ] Ngũ khí triều nguyên: gặp lại cao nhân, nhận kinh, nhập tiên; dev mode và mô phỏng |
+
 ### GĐ 7 — Mở rộng nội dung
 Thêm **thế giới mới** với tuyến cốt truyện riêng (mục C.7) + màn chọn thế giới. Linh giới/Tiên giới, thêm hàng trăm sự kiện, các nghề bách nghệ còn lại (Trận pháp, Phù lục, Linh thực, Ngự thú), thêm mô bản khí vận chi tử, Capacitor nếu muốn lên store.
 

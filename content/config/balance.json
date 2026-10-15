@@ -160,13 +160,14 @@
     "goldenCoreLifespanPerGradeAbove5": 10
   },
   "roots": {
-    "gradeWeights": { "none": 60, "ngu": 14, "tu": 10, "tam": 8, "song": 5, "don": 2, "bien_di": 0.9, "the_chat": 0.1 },
-    "gradeSpeed": { "none": 0, "ngu": 0.4, "tu": 0.55, "tam": 0.7, "song": 1.0, "don": 1.6, "bien_di": 1.8, "the_chat": 2.0 },
-    "elementCount": { "none": 0, "ngu": 5, "tu": 4, "tam": 3, "song": 2, "don": 1, "bien_di": 1, "the_chat": 0 },
+    "gradeWeights": { "none": 60, "ngu": 14, "tu": 10, "tam": 8, "song": 5, "don": 2, "bien_di": 1 },
+    "gradeSpeed": { "none": 0, "ngu": 0.4, "tu": 0.55, "tam": 0.7, "song": 1.0, "don": 1.6, "bien_di": 1.8 },
+    "elementCount": { "none": 0, "ngu": 5, "tu": 4, "tam": 3, "song": 2, "don": 1, "bien_di": 1 },
     "bodyWeights": {
       "luu_ly_linh_the": 2, "ban_thach_thanh_cot": 2, "u_minh_hon_the": 2, "cuu_duong_the": 2, "thai_am_the": 2,
       "hon_don_the": 1, "tien_thien_dao_cot": 1, "kim_cuong_than": 2, "thien_sinh_ma_the": 2, "van_doc_the": 2, "thien_tuyet_mach": 2
     },
+    "bodyChance": 0.004,
     "clanDescendantRolls": 2,
     "testAge": [6, 12],
     "elementCounterBonus": 0.2,
@@ -257,7 +258,7 @@
     "lineageMul": { "tien": 1.0, "ma": 1.4, "phat": 0.8, "quy": 1.0, "yeu": 1.0 },
     "rootlessDaoHeartMax": 0.7,
     "switchLossPct": 20,
-    "adaptive": { "rootGrade": { "ngu": 0.5, "tu": 0.4, "tam": 0.3, "song": 0.2, "don": 0.1, "bien_di": 0.1, "the_chat": 0.1 }, "body": 0.25 }
+    "adaptive": { "rootGrade": { "ngu": 0.5, "tu": 0.4, "tam": 0.3, "song": 0.2, "don": 0.1, "bien_di": 0.1 } }
   },
   "sects": {
     "minJoinAge": 8,

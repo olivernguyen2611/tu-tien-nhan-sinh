@@ -34,7 +34,8 @@ export function techniqueMatches(tech: Technique, root: SpiritRoot | null, conte
   if (!root || tech.elements === 'root' || tech.elements === 'any' || tech.elements === 'none') return true;
   // No usable root (Phật duyên): nothing to clash with.
   if ((content.balance.roots.gradeSpeed[root.grade] ?? 0) <= 0) return true;
-  if (bodyId) return !!content.cultivation.roots.bodies.find((b) => b.id === bodyId)?.anyTechnique;
+  // A body such as Lưu Ly Linh Thể fits any technique; otherwise the root decides.
+  if (bodyId && content.cultivation.roots.bodies.find((b) => b.id === bodyId)?.anyTechnique) return true;
   const basic = new Set(content.cultivation.roots.elements.filter((e) => !e.variant).map((e) => e.id));
   // A variant root also fits its two basic elements (playtest 2026-10-12).
   const fits = rootAffinities(root, content);
@@ -53,12 +54,12 @@ export function techniqueMul(state: GameState, content: Content): number {
 
 /**
  * Backlog 8: a technique that follows its owner (Thái Sơ Diễn Đạo Kinh) fits any root and gives extra
- * speed the weaker the root is; a special body, which replaces the root, gets a flat share.
+ * speed the weaker the root is.
  */
 export function adaptiveMul(tech: Technique, state: GameState, content: Content): number {
   if (!tech.adaptive || !state.cult.root) return 1;
   const cfg = content.balance.techniques.adaptive;
-  return 1 + (state.cult.bodyId ? cfg.body : cfg.rootGrade[state.cult.root.grade] ?? 0);
+  return 1 + (cfg.rootGrade[state.cult.root.grade] ?? 0);
 }
 
 /** Highest realm this technique reaches, or null for no limit. */
