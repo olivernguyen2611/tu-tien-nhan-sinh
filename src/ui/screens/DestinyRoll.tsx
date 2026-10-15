@@ -5,6 +5,7 @@ import { TermText } from '../components/Tooltip';
 import { blessingNames } from '../../systems/blessings';
 import { fingerDef } from '../../systems/goldenFinger';
 import { traitRootNote } from '../../systems/cultivation';
+import { describeEffects } from '../../systems/effectText';
 
 const SLOT_WORDS: Record<number, string> = { 1: 'một', 2: 'hai', 3: 'ba', 4: 'bốn', 5: 'năm' };
 
@@ -55,9 +56,9 @@ export function DestinyRollScreen({ state, content, rollCount, unlimited, canLoc
                   <b>{t.name}</b>
                   <span class="trait-rarity">{RARITY_LABEL[t.rarity]}</span>
                 </div>
-                {t.mixed && <span class="trait-mixed">Họa phúc tương y</span>}
+                {t.nature === 'hon_hop' && <span class="trait-mixed">Phúc họa song hành</span>}
                 <p class="trait-flavor">{t.flavor}</p>
-                <p class="trait-summary"><TermText text={t.summary} /></p>
+                <TraitEffects trait={t} content={content} />
                 {traitRootNote(content, t.id) && <p class="trait-summary root-note">{traitRootNote(content, t.id)}</p>}
               </div>
               <div class="trait-face trait-back" aria-hidden="true">命</div>
@@ -74,11 +75,12 @@ export function DestinyRollScreen({ state, content, rollCount, unlimited, canLoc
 
       {finger && (
         <div class="golden-finger-card" role="note">
-          <p class="kicker">Kim Thủ Chỉ</p>
+          <p class="kicker">Kim Thủ Chỉ{content.goldenFingers.rarityNames?.[finger.rarity] ? ` · ${content.goldenFingers.rarityNames[finger.rarity]}` : ''}</p>
           <b>{finger.name}</b>
           <p class="trait-flavor">{finger.flavor}</p>
           <p class="trait-summary"><TermText text={finger.summary} /></p>
-          <p class="trait-summary risk">Rủi ro: {finger.risk}</p>
+          {finger.signature && <p class="trait-summary">Cơ chế: <TermText text={finger.signature} /></p>}
+          <p class="trait-summary risk">Rủi ro: {finger.risk}{finger.drawback ? ` ${finger.drawback.text}` : ''}</p>
         </div>
       )}
 
@@ -89,5 +91,21 @@ export function DestinyRollScreen({ state, content, rollCount, unlimited, canLoc
         <button class="btn-primary" onClick={onConfirm}>Thuận theo thiên ý</button>
       </div>
     </main>
+  );
+}
+
+/** 9.R2c: the effect lines come from the hooks; the written summary stays only where a hook needs prose. */
+function TraitEffects({ trait, content }: { trait: Content['traits'][number]; content: Content }) {
+  const lines = describeEffects(trait.effects, content);
+  const prose = lines.length === 0 || trait.effects.some((e) => e.hook === 'counter' || e.hook.startsWith('unlockChain.') || e.activeUntil || e.activeIf);
+  return (
+    <>
+      {lines.length > 0 && (
+        <ul class="trait-effects">
+          {lines.map((l) => <li class={l.good ? 'up' : 'down'} key={l.text}>{l.text}</li>)}
+        </ul>
+      )}
+      {prose && <p class="trait-summary"><TermText text={trait.summary} /></p>}
+    </>
   );
 }

@@ -3,7 +3,7 @@
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -27,6 +27,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'traits.json') return TraitFileSchema;
     if (rest === 'family-actions.json') return FamilyActionFileSchema;
     if (rest === 'npc-acts.json') return NpcActFileSchema;
+    if (rest === 'effect-labels.json') return EffectLabelsSchema;
     if (rest === 'life-texts.json') return LifeTextsSchema;
     if (rest === 'stat-extremes.json') return StatExtremesFileSchema;
     if (rest === 'realms.json') return RealmsFileSchema;
@@ -100,6 +101,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   let chosenIds: string[] | null = null;
   let fingerIds: string[] | null = null;
   const fingerRealms: { file: string; finger: string; realm: string }[] = [];
+  const hookRealms: { file: string; realm: string }[] = [];
   const comboTraits: { file: string; combo: string; traits: string[] }[] = [];
   const achievementRefs: { file: string; id: string; realm?: string; finger?: string }[] = [];
   const originIdsByWorld = new Map<string, Set<string>>();
@@ -116,6 +118,8 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       continue;
     }
     problems.push(...checkHookUnits(file, raw));
+    // 9.R2b: breakthroughChance.at.<realm> must name a real realm (checked below).
+    for (const m of JSON.stringify(raw).matchAll(/"hook":"breakthroughChance\.at\.([a-z0-9_]+)"/g)) hookRealms.push({ file, realm: m[1] });
     const parsed = schema.safeParse(raw);
     if (!parsed.success) {
       for (const issue of parsed.error.issues) {
@@ -374,6 +378,9 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     for (const t of c.rules.traits ?? []) if (traitIds && !traitIds.has(t)) problems.push({ file: c.file, level: 'error', message: `${where} nhắc tới khí vận không tồn tại "${t}"` });
     if (c.goal.realmMin && realmIds && !realmIds.has(c.goal.realmMin)) problems.push({ file: c.file, level: 'error', message: `${where} nhắc tới cảnh giới không tồn tại "${c.goal.realmMin}"` });
   }
+  for (const { file, realm } of hookRealms) {
+    if (realmIds && !realmIds.has(realm)) problems.push({ file, level: 'error', message: `móc "breakthroughChance.at.${realm}" nhắc tới cảnh giới không tồn tại` });
+  }
   // Task 5b.2: Kim Thủ Chỉ named by events must exist; their levels need real realms.
   if (fingerIds) {
     for (const { file, finger, realm } of fingerRealms) {
@@ -561,7 +568,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
 const FRACTION_HOOK = /^(cultivationSpeed|speed|combatPower(\.vsHigherRealm)?|escapeChance|injuryReduce|lifesteal|heartDemonResist|charmResist|divineSense|bottleneckResist|priceDiscount|incomePct|lootPct|lifespanPct|artifactPct|tribulationPower|tribulationDefense|(element|path)\.[a-z_]+\.power|craft\.[a-z_]+\.success|lineage\.[a-z_]+\.cultivationSpeed)$/;
 const FRACTION_MAX = 2;
 /** Hooks read in percentage points (5 = +5%): a value under 1 is almost surely written as a share. */
-const POINTS_HOOK = /^(breakthroughChance(\.major|\.minor)?|tribulationPct|illnessChancePct)$/;
+const POINTS_HOOK = /^(breakthroughChance(\.major|\.minor|\.at\.[a-z0-9_]+)?|tribulationPct|illnessChancePct)$/;
 
 /** Every { hook, add } anywhere in a file, checked against the unit its hook is read in. */
 function checkHookUnits(file: string, raw: unknown): Problem[] {

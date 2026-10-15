@@ -360,6 +360,7 @@ export function breakthroughPct(state: GameState, content: Content, basePct: num
     + (state.aptitudes.daoHeart - 50) * b.daoHeartPerPoint
     + hookSum(state, content, 'breakthroughChance')
     + hookSum(state, content, major ? 'breakthroughChance.major' : 'breakthroughChance.minor')
+    + hookSum(state, content, `breakthroughChance.at.${state.cult.realm}`)
     + (major ? state.cult.nextBonus : 0)
     + state.itemUse.nextBreakthrough;
   // A pill is a one-off the player spends, so it is added at face value; only the ceiling limits it.

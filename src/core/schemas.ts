@@ -505,6 +505,8 @@ const ADD_HOOK = new RegExp(
       'lineage\\.(tien|ma|phat|quy|yeu)\\.cultivationSpeed',
       // 9.R2b: khí vận reaching more corners of life: silver at birth, luck in love, rooted children.
       'birthSilver', 'romanceChance', 'childRootRolls',
+      // 9.R2b: breakthrough odds while in one realm (any stage or the big step out of it).
+      'breakthroughChance\\.at\\.[a-z0-9_]+',
     ].join('|') +
     ')$',
 );
@@ -593,6 +595,8 @@ export const StatExtremesFileSchema = z
 export type StatExtreme = z.infer<typeof StatExtremeSchema>;
 export type StatExtremesFile = z.infer<typeof StatExtremesFileSchema>;
 
+/** 9.R3a: Kim Thủ Chỉ tiers. */
+export const GOLDEN_FINGER_RARITIES = ['pham', 'hiem', 'cuc_hiem', 'nghich_thien'] as const;
 export const TRAIT_RARITIES = ['pham', 'luong', 'uu', 'tuyet', 'thien', 'than', 'ac'] as const;
 
 export const TraitSchema = z
@@ -603,8 +607,8 @@ export const TraitSchema = z
     flavor: z.string().min(1),
     summary: z.string().min(1),
     effects: z.array(EffectHookSchema).min(1),
-    /** 9.R2c: phúc họa đi kèm (shown as "Họa phúc tương y"). */
-    mixed: z.boolean().optional(),
+    /** 9.R2c: tốt (gain only), xấu (harm), hon_hop (gain and cost; tagged "Phúc họa song hành" on the card). */
+    nature: z.enum(['tot', 'xau', 'hon_hop']).optional(),
   })
   .strict();
 export const TraitFileSchema = z.array(TraitSchema).min(1);
@@ -671,6 +675,15 @@ export const BalanceSchema = z
         /** Task 5b.3: slots one may lock before rerolling, and the Luân Hồi points each lock costs (paid on confirming). */
         locks: z.number().int().min(0),
         lockCost: z.number().int().min(0),
+        /**
+         * 9.R2d: power budget per rarity for `npm run simulate -- --traits`. Power = change in the mean peak
+         * realm (in realm steps) when a life has only that khí vận, against the same seeds with none. A khí vận
+         * above its rarity's max is flagged; so is an ác vận or phúc họa song hành one whose net is above `mixedMax`.
+         */
+        budget: z
+          .object({ max: z.record(id, z.number()), mixedMax: z.number() })
+          .strict()
+          .optional(),
         /**
          * Backlog 5: tiên thiên khí vận shapes the starting stats. Each trait adds rarityScore[rarity]
          * points; the score lifts every stat in `stats` to at least floorPerPoint × score (capped at floorMax,
@@ -1739,6 +1752,8 @@ export const BalanceSchema = z
         chooseCost: z.number().int().min(0),
         /** Playtest 2: the finger's panel actions open from this age. */
         actionMinAge: z.number().int().min(0),
+        /** 9.R3c: chance of each tier when a finger is drawn (then weight within the tier). */
+        rarityWeights: z.record(z.enum(GOLDEN_FINGER_RARITIES), z.number().min(0)).optional(),
       })
       .strict(),
     /** Task 5b.5: huy hiệu cuối đời shown on the death screen and the obituary card. */
@@ -3141,6 +3156,12 @@ const FingerActionSchema = z
     success: PlainOutcomeSchema.optional(),
     fail: PlainOutcomeSchema.optional(),
     result: PlainOutcomeSchema.optional(),
+    /** 9.R3a: paid on every use, before the check (thọ nguyên, đạo tâm, bạc…). */
+    cost: EffectsSchema.optional(),
+    /** 9.R3a: an item the action uses up; without it the action is blocked. */
+    needItem: id.optional(),
+    /** 9.R3a: hooks that pile up with every use and last while the finger is kept (thiên đạo ghi sổ…). */
+    perUse: z.array(EffectHookSchema).default([]),
   })
   .strict()
   .refine((a) => (a.check ? !!a.success && !!a.fail && !a.result : !!a.result), 'hành động có "check" cần "success" + "fail"; không có thì cần "result"');
@@ -3156,8 +3177,26 @@ export const GoldenFingerFileSchema = z
           summary: z.string().min(1),
           /** The risk it carries (shown with it; the exposure events carry it out). */
           risk: z.string().min(1),
-          /** Chance among the fingers when one is drawn at random. */
+          /** Chance among the fingers of its rarity when one is drawn at random. */
           weight: z.number().min(0),
+          /** 9.R3a: rarity tier (balance.goldenFinger.rarityWeights picks the tier first). */
+          rarity: z.enum(GOLDEN_FINGER_RARITIES).default('hiem'),
+          /**
+           * 9.R3a: when it wakes. birth = at once; age / realm = it sleeps until then (no level, no hook);
+           * event = never drawn at birth, only given by an event or item.
+           */
+          activation: z
+            .object({ kind: z.enum(['birth', 'age', 'realm', 'event']), age: z.number().int().min(0).optional(), realm: id.optional(), text: z.string().min(1).optional() })
+            .strict()
+            .refine((a) => (a.kind === 'age' ? a.age !== undefined : a.kind === 'realm' ? a.realm !== undefined : true), 'activation "age" cần "age", "realm" cần "realm"')
+            .default({ kind: 'birth' }),
+          /** 9.R3a: the mechanic that makes it more than a stat bonus (one line, shown in its panel). */
+          signature: z.string().min(1).optional(),
+          /** 9.R3a: its weakness, with a mechanic: hooks while kept, and effects paid every year once awake. */
+          drawback: z
+            .object({ text: z.string().min(1), hooks: z.array(EffectHookSchema).default([]), yearly: EffectsSchema.optional(), yearlyText: z.string().min(1).optional() })
+            .strict()
+            .optional(),
           /** Level n is reached at levels[n-1].realm; each level adds its hooks to the ones below. */
           levels: z
             .array(
@@ -3179,6 +3218,8 @@ export const GoldenFingerFileSchema = z
         })
         .strict(),
     ),
+    /** 9.R3a: display names of the tiers. */
+    rarityNames: z.record(z.enum(GOLDEN_FINGER_RARITIES), z.string().min(1)).optional(),
   })
   .strict();
 export type GoldenFingerFile = z.infer<typeof GoldenFingerFileSchema>;
@@ -3311,3 +3352,28 @@ export const ChallengeFileSchema = z.array(
     .strict(),
 );
 export type ChallengeFile = z.infer<typeof ChallengeFileSchema>;
+
+/**
+ * 9.R2c: readable lines for effect hooks (content/effect-labels.json). Keys are hook names, with `*` for one
+ * segment; `{v}` is the formatted value, `{name}` the segment's name from `names[<group>]` ("realms" reads
+ * the realm table), `{years}` for trigger.everyNYears.
+ */
+const EffectLabelSchema = z
+  .object({
+    text: z.string().min(1),
+    fmt: z.enum(['int', 'pct', 'pts', 'num', 'mul', 'count']).optional(),
+    names: z.string().optional(),
+    zero: z.string().optional(),
+    /** A higher value hurts (shown in the harm colour). */
+    bad: z.boolean().optional(),
+  })
+  .strict();
+export const EffectLabelsSchema = z
+  .object({
+    activeFrom: z.string().min(1),
+    hooks: z.record(z.string(), EffectLabelSchema),
+    names: z.record(z.string(), z.record(z.string(), z.string())),
+    badWhenUp: z.array(z.string()).default([]),
+  })
+  .strict();
+export type EffectLabels = z.infer<typeof EffectLabelsSchema>;

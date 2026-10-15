@@ -532,6 +532,9 @@ button { font: inherit; color: inherit; }
 .trait-flavor { margin: 0; font-family: var(--font-story); font-style: italic; font-size: 0.8125rem; color: var(--muted); }
 .trait-summary { margin: 0; font-size: 0.875rem; }
 .trait-summary.root-note { color: var(--jade); font-weight: 600; }
+.trait-effects { margin: 0; padding: 0; list-style: none; font-size: 0.8125rem; display: grid; gap: 1px; }
+.trait-effects li::before { content: '✔ '; color: var(--jade); }
+.trait-effects li.down::before { content: '✖ '; color: var(--seal); }
 .destiny-actions { position: sticky; bottom: calc(8px + env(safe-area-inset-bottom)); margin-top: auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
 .btn-secondary { min-height: 52px; border: 1px solid var(--seal); border-radius: var(--radius); background: var(--surface); color: var(--seal); font-weight: 600; cursor: pointer; }
 .btn-secondary:disabled { opacity: 0.45; cursor: default; }

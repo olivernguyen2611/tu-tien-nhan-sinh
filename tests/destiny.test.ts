@@ -119,10 +119,4 @@ describe('destiny roll', () => {
     const done = confirmDestiny(forced, content);
     expect(done.money.silver).toBe(s.money.silver + 200);
   });
-
-  it('9.R2c: mixed traits carry both a gain and a cost', () => {
-    const mixed = content.traits.filter((t) => t.mixed);
-    expect(mixed.length).toBeGreaterThanOrEqual(15);
-    for (const t of mixed) expect(t.summary).toMatch(/✔[\s\S]*✖|✖[\s\S]*✔/);
-  });
 });

@@ -8,10 +8,23 @@
 
 ## [Chưa phát hành]
 
-### 9.R2b–c: Tiên Thiên Khí Vận phủ rộng hơn (2026-10-15)
-- 3 móc mới cho khí vận: `birthSilver` (bạc lúc sinh), `romanceChance` (tỏ tình, nối lại duyên cũ dễ hơn hoặc khó hơn), `childRootRolls` (con cái được gieo linh căn thêm lần, lấy lần tốt nhất). `craft.all.affinity` nay cộng vào tư chất mọi nghề.
-- 50 khí vận mới (tổng 110): 12 Phàm, 12 Lương, 9 Ưu, 6 Tuyệt, 4 Thiên, 1 Thần và 6 Ác vận, phủ gia cảnh, tình duyên, con cái, nghề, chiến đấu, quan trường, tâm cảnh.
-- Khí vận **họa phúc tương y** (vừa lợi vừa hại, trường `mixed`) có nhãn riêng trên thẻ. 6 khí vận cũ có cả ✔ lẫn ✖ cũng được gắn nhãn này.
+### 9.R3a–c: làm lại Kim Thủ Chỉ (2026-10-15)
+- Mỗi Kim Thủ Chỉ có **độ hiếm** (Phàm, Hiếm, Cực hiếm, Nghịch thiên), **cơ chế đặc trưng** và **điểm yếu có cơ chế thật**: móc bất lợi khi còn giữ, cái giá trả mỗi năm (vd. Kiếm linh uống máu, Mượn vận hao khí vận), cái giá cộng dồn theo số lần dùng (vd. mỗi dòng Thiên mệnh thư làm thiên kiếp nặng thêm 5%).
+- **Kích hoạt** riêng: có cái tỉnh lúc sinh, có cái ngủ tới một tuổi (Hệ thống 10 tuổi, Nhãn thấu cơ duyên 12 tuổi) hay một cảnh giới (Tùy thân động thiên, Ngộ đạo thạch bia, Kiếm linh, Thôn phệ tỉnh ở Luyện Khí).
+- Hành động có thể **tốn giá trước** (thọ nguyên, đạo tâm, bạc, máu) và **tiêu vật phẩm** (Thôn phệ cần nội đan hay huyết yêu thú).
+- Từ 7 lên **20 Kim Thủ Chỉ**. 13 cái mới: Mảnh vườn thần bí, Nhãn thấu cơ duyên, Bàn tính vạn lợi, Ngộ đạo thạch bia, Kiếm linh trong mộng, Trường sinh ấn, Nghịch lưu sa (hồi quy một lần), Nhân quả bộ, Bất diệt chiến hồn, Thôn phệ, Mượn vận, Thiên mệnh thư (viết lại một dòng mệnh: lần thử thách kế tiếp chắc chắn thành), Hỗn độn châu. 7 cái cũ được thêm độ hiếm, cơ chế, điểm yếu.
+- Tỉ lệ có Kim Thủ Chỉ lúc sinh từ 0,3% lên **7%** (+0,2% mỗi đời, tối đa 10%; bảo hiểm sau 15 đời giữ nguyên). Khi trúng: Phàm 55%, Hiếm 30%, Cực hiếm 12%, Nghịch thiên 3%.
+- Save cũ: Kim Thủ Chỉ đang có giữ nguyên id, tầng và hành động đã dùng; cái nào nay có kích hoạt muộn mà đã tỉnh thì vẫn tỉnh.
+
+### 9.R2d: đo khí vận bằng mô phỏng (2026-10-15)
+- `npm run simulate -- --traits all --count 40 --profile player` (hoặc `--traits id1,id2`, `--rarity uu`): mỗi khí vận chạy trên cùng các seed với một khí vận rỗng cùng bậc, báo độ chênh cảnh giới trung bình, tuổi thọ, tỉ lệ tới Kim Đan, và đánh dấu cái vượt ngân sách bậc (`balance.traits.budget`).
+
+### 9.R2b–c: Tiên Thiên Khí Vận phủ khắp ngóc ngách (2026-10-15)
+- Móc mới: `birthSilver` (bạc lúc sinh), `romanceChance` (tỏ tình, nối lại duyên cũ), `childRootRolls` (con cái được gieo linh căn thêm lần, lấy lần tốt nhất), `breakthroughChance.at.<cảnh giới>` (đột phá khi đang ở một cảnh giới). `craft.all.affinity` nay cộng vào tư chất mọi nghề.
+- Từ 60 lên **160 khí vận** (Phàm 36, Lương 34, Ưu 31, Tuyệt 20, Thiên 11, Thần 6, Ác 22), phủ tu luyện, đột phá từng cảnh giới, kỳ ngộ, tình duyên, con cái, gia thế, sức khỏe, thọ nguyên, tài vận, chiến đấu, sáu nghề, quý nhân, tiểu nhân, thiên kiếp và tâm ma. 43 khí vận **phúc họa song hành** (trường `nature`), có nhãn riêng trên thẻ.
+- Thẻ khí vận in **từng dòng hiệu ứng tự sinh từ dữ liệu** (✔ lợi, ✖ hại; nhãn ở `content/effect-labels.json`), nên lời và số không lệch nhau. Mô tả viết tay chỉ còn hiện ở khí vận có cơ chế cần lời (tích dấu, mở chuỗi sự kiện, điều kiện theo cảnh giới).
+- 17 tổ hợp ẩn mới (tổng 29).
+- Sửa lỗi: Độ Kiếp Thể và tổ hợp Đạo Thể Hỗn Nguyên ghi "chống thiên kiếp" nhưng thật ra làm thiên kiếp **mạnh hơn**; nay đúng là giảm sát thương thiên lôi.
 
 ### 9.R2a: "Nghịch Thiên Bốc Mệnh" đổi thành "Tiên Thiên Khí Vận" (2026-10-15)
 - Màn quay khí vận lúc sinh và các thiên phú luân hồi liên quan dùng tên mới. "Nghịch thiên cải mệnh" (nút quay lại) giữ nguyên.

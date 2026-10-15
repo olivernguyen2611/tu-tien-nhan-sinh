@@ -18,11 +18,15 @@ function fakeStore(): KeyValueStore {
 }
 
 describe('Kim Thủ Chỉ (task 5b.2)', () => {
-  it('has 6–8 kinds, each with levels and a risk', () => {
+  it('9.R3b: about 20 kinds over four tiers, each with levels, a signature and a weakness', () => {
     const fs = content.goldenFingers.fingers;
-    expect(fs.length).toBeGreaterThanOrEqual(6);
-    expect(fs.length).toBeLessThanOrEqual(8);
-    for (const f of fs) { expect(f.levels.length).toBeGreaterThanOrEqual(2); expect(f.risk.length).toBeGreaterThan(0); }
+    expect(fs.length).toBeGreaterThanOrEqual(18);
+    for (const tier of ['pham', 'hiem', 'cuc_hiem', 'nghich_thien'] as const) expect(fs.some((f) => f.rarity === tier)).toBe(true);
+    for (const f of fs) {
+      expect(f.levels.length, f.id).toBeGreaterThanOrEqual(2);
+      expect(f.signature, f.id).toBeTruthy();
+      expect(f.drawback, f.id).toBeTruthy();
+    }
   });
 
   it('birth chance grows with lives, capped, and is sure after the pity count', () => {
@@ -44,10 +48,39 @@ describe('Kim Thủ Chỉ (task 5b.2)', () => {
   });
 
   it('a finger from birth awakens its first level when the destiny is confirmed', () => {
-    const s = born('tuy_than_dong_thien');
-    expect(s.goldenFinger).toEqual({ id: 'tuy_than_dong_thien', level: 1, since: 0 });
+    const s = born('lao_gia_gia');
+    expect(s.goldenFinger).toEqual({ id: 'lao_gia_gia', level: 1, since: 0 });
     expect(hookSum(s, content, 'cultivationSpeed') - hookSum(born(), content, 'cultivationSpeed')).toBeCloseTo(0.15);
-    expect(s.log[0].lines.some((l) => l.text.startsWith('Kim Thủ Chỉ · Tùy thân động thiên'))).toBe(true);
+    expect(s.log[0].lines.some((l) => l.text.startsWith('Kim Thủ Chỉ · Lão gia gia trong nhẫn'))).toBe(true);
+  });
+
+  it('9.R3a: a finger with a realm activation sleeps until then, with no hook', () => {
+    const s = born('tuy_than_dong_thien');
+    expect(s.goldenFinger!.level).toBe(0);
+    expect(hookSum(s, content, 'cultivationSpeed')).toBeCloseTo(hookSum(born(), content, 'cultivationSpeed'));
+    const woke = advanceYear({ ...s, cult: { ...s.cult, realm: 'luyen_khi' } }, content);
+    expect(woke.goldenFinger!.level).toBe(1);
+    expect(woke.log.flatMap((b) => b.lines).some((l) => l.text.startsWith('Tùy thân động thiên:'))).toBe(true);
+  });
+
+  it('9.R3a: Kiếm linh wakes at Luyện Khí and its hooks count', () => {
+    const s = born('kiem_linh');
+    const at: GameState = { ...s, cult: { ...s.cult, realm: 'luyen_khi' }, stats: { ...s.stats, health: 80 } };
+    const a = advanceYear(at, content);
+    const b = advanceYear({ ...a, events: { ...a.events, pending: null } }, content);
+    expect(b.goldenFinger!.level).toBe(1);
+    expect(hookSum(b, content, 'path.sword.power')).toBeGreaterThanOrEqual(0.15);
+  });
+
+  it('9.R3c: birth draws never pick an event-only finger and spread over tiers', () => {
+    const seen = new Set<string>();
+    for (let i = 0; i < 400; i++) {
+      const id = rollBirthFinger(`tier-${i}`, content, 0, 999);
+      const f = content.goldenFingers.fingers.find((x) => x.id === id)!;
+      expect(f.activation.kind).not.toBe('event');
+      seen.add(f.rarity);
+    }
+    expect(seen.size).toBe(4);
   });
 
   it('awakens further when the realm rises, giving one-time stats once', () => {

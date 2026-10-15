@@ -21,7 +21,7 @@ import { addContribution, breakPrecept, grantMaster, joinSect, leaveSect, promot
 import { startBattle } from '../combat';
 import { changeNpc, createNpc, killNpc, npcCalls } from '../npcs';
 import { applyRomance, romanceTarget } from '../romance';
-import { gainGoldenFinger, loseGoldenFinger } from '../goldenFinger';
+import { gainGoldenFinger, loseGoldenFinger, SURE_CHECK_FLAG } from '../goldenFinger';
 import { applyPastSect } from '../pastSect';
 import { succeedSect } from '../ownSect';
 
@@ -270,14 +270,18 @@ export function resolveChoice(given: GameState, content: Content, choiceIndex: n
   const rng = Rng.fromState(state.rng);
   let outcome: Outcome;
   let success: boolean | null = null;
+  let sure = false;
   if (choice.check) {
-    success = rng.chance(checkChance(state, content, choice.check.stat, choice.check.difficulty, choice.check.resist));
+    // 9.R3a: a line written in the Thiên mệnh thư makes this check go the player's way.
+    sure = !!state.flags[SURE_CHECK_FLAG];
+    success = sure || rng.chance(checkChance(state, content, choice.check.stat, choice.check.difficulty, choice.check.resist));
     outcome = (success ? choice.success : choice.fail)!;
   } else {
     outcome = choice.result!;
   }
 
-  let next = applyEffects(state, outcome.effects, rng, content, !event.tags.includes('rare'));
+  const unflagged = sure ? { ...state, flags: { ...state.flags, [SURE_CHECK_FLAG]: false } } : state;
+  let next = applyEffects(unflagged, outcome.effects, rng, content, !event.tags.includes('rare'));
   let text = outcome.text;
   const tone: Tone = event.tags.includes('rare') ? 'rare' : success === true ? 'good' : success === false ? 'bad' : 'normal';
   next = {

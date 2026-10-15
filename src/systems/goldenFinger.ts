@@ -10,16 +10,43 @@ import type { GameState, LogLine } from '../core/types';
 
 type Finger = GoldenFingerFile['fingers'][number];
 
+/** 9.R3a: set by an action (Thiên mệnh thư, via setFlags); the next event check succeeds, then it is spent. */
+export const SURE_CHECK_FLAG = 'menh_thu_sua_mot_dong';
+
 export function fingerDef(content: Content, id: string | null | undefined): Finger | undefined {
   return content.goldenFingers.fingers.find((f) => f.id === id);
 }
 
 const realmIndex = (content: Content, id: string) => content.cultivation.realms.realms.findIndex((r) => r.id === id);
 
+/** 9.R3a: a finger with an age / realm activation sleeps (no level, no hook) until then. */
+export function fingerAwake(state: GameState, content: Content, f: Finger): boolean {
+  const a = f.activation;
+  if (a.kind === 'age') return state.character.age >= (a.age ?? 0);
+  if (a.kind === 'realm') return realmIndex(content, state.cult.realm) >= realmIndex(content, a.realm ?? '');
+  return true;
+}
+
 /** Levels of this finger the current realm has reached. */
 function reachedLevel(state: GameState, content: Content, f: Finger): number {
+  if (!fingerAwake(state, content, f)) return 0;
   const here = realmIndex(content, state.cult.realm);
   return f.levels.filter((l) => realmIndex(content, l.realm) <= here).length;
+}
+
+/** 9.R3c: draw a tier by balance.goldenFinger.rarityWeights, then a finger in it by weight. */
+export function pickFinger(rng: Rng, content: Content, pool: Finger[]): Finger | null {
+  const live = pool.filter((x) => x.weight > 0);
+  if (live.length === 0) return null;
+  const tiers = content.balance.goldenFinger.rarityWeights;
+  if (tiers) {
+    const open = Object.keys(tiers).filter((r) => live.some((x) => x.rarity === r) && (tiers[r as Finger['rarity']] ?? 0) > 0);
+    if (open.length > 0) {
+      const tier = rng.weighted(open, (r) => tiers[r as Finger['rarity']] ?? 0);
+      return rng.weighted(live.filter((x) => x.rarity === tier), (x) => x.weight);
+    }
+  }
+  return rng.weighted(live, (x) => x.weight);
 }
 
 const ONCE = (e: EffectHook) => e.hook.startsWith('stat.') || e.hook === 'lifespanPct';
@@ -29,7 +56,14 @@ export function goldenFingerHooks(state: GameState, content: Content): EffectHoo
   const g = state.goldenFinger;
   const f = g && fingerDef(content, g.id);
   if (!g || !f) return [];
-  return f.levels.slice(0, g.level).flatMap((l) => l.effects.filter((e) => !ONCE(e)));
+  const levels = f.levels.slice(0, g.level).flatMap((l) => l.effects.filter((e) => !ONCE(e)));
+  if (g.level === 0) return levels;
+  // 9.R3a: its weakness while awake, and what every use has piled up.
+  const piled = f.actions.flatMap((a) => {
+    const n = g.count?.[a.id] ?? 0;
+    return n > 0 ? a.perUse.map((e) => ({ ...e, add: e.add !== undefined ? e.add * n : undefined, mul: e.mul !== undefined ? e.mul ** n : undefined })) : [];
+  });
+  return [...levels, ...(f.drawback?.hooks ?? []), ...piled];
 }
 
 function addLine(state: GameState, line: LogLine): GameState {
@@ -47,6 +81,9 @@ export function awakenGoldenFinger(state: GameState, content: Content): GameStat
   if (!g || !f) return state;
   const target = reachedLevel(state, content, f);
   let next = state;
+  if (g.level === 0 && target > 0 && f.activation.kind !== 'birth' && f.activation.text) {
+    next = addLine(next, { text: `${f.name}: ${f.activation.text}`, tone: 'rare' });
+  }
   for (let lv = g.level + 1; lv <= target; lv++) {
     const l = f.levels[lv - 1];
     const stats = { ...next.stats };
@@ -76,9 +113,8 @@ export function gainGoldenFinger(state: GameState, content: Content, id: string)
   let next = state;
   if (id === 'random') {
     const rng = Rng.fromState(state.rng);
-    const pool = content.goldenFingers.fingers.filter((x) => x.weight > 0);
-    if (pool.length === 0) return state;
-    f = rng.weighted(pool, (x) => x.weight);
+    f = pickFinger(rng, content, content.goldenFingers.fingers) ?? undefined;
+    if (!f) return state;
     next = { ...state, rng: rng.getState() };
   }
   if (!f) return state;
@@ -104,8 +140,8 @@ export function birthFingerChance(content: Content, livesPlayed: number, sinceLa
 export function rollBirthFinger(seed: string, content: Content, livesPlayed: number, sinceLast: number): string | null {
   const rng = new Rng(`${seed}:kim_thu_chi`);
   if (!rng.chance(birthFingerChance(content, livesPlayed, sinceLast))) return null;
-  const pool = content.goldenFingers.fingers.filter((x) => x.weight > 0);
-  return pool.length > 0 ? rng.weighted(pool, (x) => x.weight).id : null;
+  // 9.R3a: fingers that only come through an event are never drawn at birth.
+  return pickFinger(rng, content, content.goldenFingers.fingers.filter((x) => x.activation.kind !== 'event'))?.id ?? null;
 }
 
 /** Does conditions.goldenFinger hold? */

@@ -2,7 +2,7 @@
 // Chạy hàng loạt đời giả lập để xem cân bằng (tuổi chết, cảnh giới, nguyên nhân chết, linh căn).
 // Dùng vite-node vì game nạp nội dung bằng import.meta.glob của Vite.
 import { loadContent } from '../src/core/content';
-import { BOT_PROFILES, formatReport, simulateMany, type BotProfile } from '../src/systems/simulate';
+import { BOT_PROFILES, formatReport, simulateMany, traitImpacts, type BotProfile } from '../src/systems/simulate';
 
 const args = process.argv.slice(2);
 const arg = (name: string, fallback: string) => {
@@ -21,6 +21,26 @@ if (profiles.length === 0) {
 }
 
 const content = loadContent();
+
+// 9.R2d: npm run simulate -- --traits all --count 60 --profile player   (or --traits id1,id2; --rarity uu)
+const traitsArg = arg('traits', '');
+if (traitsArg) {
+  const rarity = arg('rarity', '');
+  const ids = traitsArg === 'all'
+    ? content.traits.filter((t) => !rarity || t.rarity === rarity).map((t) => t.id)
+    : traitsArg.split(',');
+  const profile = profiles[0];
+  const started = Date.now();
+  const { base, impacts } = traitImpacts(content, ids, count, prefix, { profile, difficulty: difficulty || undefined });
+  console.log(`== Khí vận A/B · ${profile} · ${count} đời mỗi bên · nền: tuổi TB ${base.age.mean.toFixed(1)} ==`);
+  console.log('id | bậc | tính chất | Δ cảnh giới TB | Δ tuổi TB | Δ Kim Đan | vượt ngân sách');
+  for (const i of impacts.sort((a, b) => b.peak - a.peak)) {
+    const t = content.traits.find((x) => x.id === i.id);
+    console.log(`${i.id} | ${t?.rarity} | ${t?.nature ?? 'tot'} | ${i.peak.toFixed(2)} | ${i.age.toFixed(1)} | ${(i.kimDan * 100).toFixed(1)}% | ${i.over ? 'VƯỢT' : ''}`);
+  }
+  console.log(`(${((Date.now() - started) / 1000).toFixed(1)}s)`);
+  process.exit(0);
+}
 for (const profile of profiles) {
   const started = Date.now();
   const { report } = simulateMany(content, count, prefix, { profile, difficulty: difficulty || undefined });

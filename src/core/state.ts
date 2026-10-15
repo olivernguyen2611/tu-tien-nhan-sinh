@@ -24,6 +24,7 @@ import { notifyYear } from '../systems/timeline';
 import { blessingRerolls } from '../systems/blessings';
 import { withCheckpoints } from '../systems/rewind';
 import { awakenGoldenFinger } from '../systems/goldenFinger';
+import { goldenFingerYear } from '../systems/fingerActions';
 import { ownedRebirthTalents, rebirthTalentBonus } from '../systems/rebirthTalents';
 import { pastSectFor } from '../systems/pastSect';
 
@@ -197,7 +198,7 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   // Task 5b.10: moments a Trùng sinh can go back to.
   state = withCheckpoints(state);
   // Task 5b.2: the Kim Thủ Chỉ awakens further once the realm allows.
-  state = awakenGoldenFinger(state, content);
+  state = goldenFingerYear(awakenGoldenFinger(state, content), content);
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
   const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content);

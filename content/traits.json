@@ -287,17 +287,17 @@
     "flavor": "Sét đánh trúng ngươi, chính sét cũng thấy ngại.",
     "summary": "Uy lực khi chống thiên kiếp +30%; uy lực hệ Lôi +20%; đột phá đại cảnh giới +5%.",
     "effects": [
-      { "hook": "tribulationPower", "add": 0.3 },
+      { "hook": "tribulationDefense", "add": 0.3 },
       { "hook": "element.loi.power", "add": 0.2 },
       { "hook": "breakthroughChance.major", "add": 5 }
     ]
   },
   {
-    "id": "dai_khi_van_thanh", "rarity": "thien", "name": "Đại Khí Vãn Thành",
+    "id": "dai_khi_van_thanh", "rarity": "thien", "name": "Đại Khí Vãn Thành", "nature": "hon_hop",
     "flavor": "Ba mươi tuổi, người ta Trúc Cơ, ngươi còn ngồi đếm linh khí. Ba trăm tuổi, người ta nằm dưới mộ, ngươi vẫn còn ngồi đếm. Chỉ có điều, giờ đếm bằng núi.",
     "summary": "Trước Trúc Cơ tu luyện chậm hơn 20%. Đổi lại: đột phá đại cảnh giới +15%, bình cảnh dễ vượt hơn 30%, thọ nguyên +20%.",
     "effects": [
-      { "hook": "cultivationSpeed", "add": -0.2, "activeUntil": { "realm": "truc_co" } },
+      { "hook": "cultivationSpeed", "add": -0.2, "activeUntil": {"realm": "truc_co"} },
       { "hook": "breakthroughChance.major", "add": 15 },
       { "hook": "bottleneckResist", "add": 0.3 },
       { "hook": "lifespanPct", "add": 0.2 }
@@ -315,7 +315,7 @@
     ]
   },
   {
-    "id": "khac_than_menh", "rarity": "ac", "name": "Khắc Thân Mệnh", "mixed": true,
+    "id": "khac_than_menh", "rarity": "ac", "name": "Khắc Thân Mệnh", "nature": "hon_hop",
     "flavor": "Thầy bói xem xong, trả lại tiền rồi bỏ chạy.",
     "summary": "✖ Người thân dễ gặp nạn. ✔ Kháng tâm ma +20%, tốc độ tu luyện +10%.",
     "effects": [
@@ -325,7 +325,7 @@
     ]
   },
   {
-    "id": "menh_nhu_dang_hoa", "rarity": "ac", "name": "Mệnh Như Đăng Hỏa", "mixed": true,
+    "id": "menh_nhu_dang_hoa", "rarity": "ac", "name": "Mệnh Như Đăng Hỏa", "nature": "hon_hop",
     "flavor": "Ngọn đèn sáng nhất thường cháy nhanh nhất.",
     "summary": "✖ Thọ nguyên −30%, Sức khỏe −10. ✔ Ngộ tính +20.",
     "effects": [
@@ -335,16 +335,16 @@
     ]
   },
   {
-    "id": "dao_hoa_kiep", "rarity": "ac", "name": "Đào Hoa Kiếp", "mixed": true,
+    "id": "dao_hoa_kiep", "rarity": "ac", "name": "Đào Hoa Kiếp", "nature": "hon_hop",
     "flavor": "Đi chợ mua rau, về nhà kéo theo ba người đòi tỷ thí.",
     "summary": "✔ Mị lực +20. ✖ Từ 18 tuổi: sự kiện tình địch, ghen tuông, bị đeo bám ×2.",
     "effects": [
       { "hook": "stat.charm", "add": 20 },
-      { "hook": "eventWeight.romance_trouble", "mul": 2, "activeFrom": { "age": 18 } }
+      { "hook": "eventWeight.romance_trouble", "mul": 2, "activeFrom": {"age": 18} }
     ]
   },
   {
-    "id": "dao_moi_tinh", "rarity": "ac", "name": "Đảo Môi Tinh", "mixed": true,
+    "id": "dao_moi_tinh", "rarity": "ac", "name": "Đảo Môi Tinh", "nature": "hon_hop",
     "flavor": "Uống nước lạnh cũng mắc răng, đi đường bằng cũng vấp.",
     "summary": "✖ Khí vận −20, chuyện xui vặt ×1.5. ✔ Khổ tận cam lai: mỗi lần sống sót qua tai nạn tích 1 dấu, đủ 5 dấu chắc chắn có một kỳ ngộ lớn.",
     "effects": [
@@ -354,7 +354,7 @@
     ]
   },
   {
-    "id": "ma_tam_chung", "rarity": "ac", "name": "Ma Tâm Chủng",
+    "id": "ma_tam_chung", "rarity": "ac", "name": "Ma Tâm Chủng", "nature": "hon_hop",
     "flavor": "Trong lòng có một hạt giống đen, tưới bằng giận dữ, lớn rất nhanh.",
     "summary": "Kháng tâm ma −20%; ma đạo cám dỗ gặp gấp đôi. Đổi lại: nếu tu Ma đạo thì nhanh hơn 30%.",
     "effects": [
@@ -364,7 +364,7 @@
     ]
   },
   {
-    "id": "tan_tai_dong_tu", "rarity": "ac", "name": "Tán Tài Đồng Tử",
+    "id": "tan_tai_dong_tu", "rarity": "ac", "name": "Tán Tài Đồng Tử", "nature": "hon_hop",
     "flavor": "Tiền vào túi ngươi như nước vào rổ. Nhưng rổ đi đâu cũng có người đổ nước vào.",
     "summary": "Thu nhập −20%. Đổi lại: chiến lợi phẩm +30%, Khí vận +5, kỳ ngộ gặp nhiều hơn.",
     "effects": [
@@ -375,7 +375,7 @@
     ]
   },
   {
-    "id": "chieu_yeu_the", "rarity": "ac", "name": "Chiêu Yêu Thể",
+    "id": "chieu_yeu_the", "rarity": "ac", "name": "Chiêu Yêu Thể", "nature": "hon_hop",
     "flavor": "Yêu thú ngửi thấy ngươi như người ngửi thấy thịt nướng.",
     "summary": "Gặp yêu thú gấp đôi. Đổi lại: tư chất Ngự thú +20 và tư chất con đường Thể +5.",
     "effects": [
@@ -561,7 +561,7 @@
     ]
   },
   {
-    "id": "thien_sat_co_tinh", "rarity": "ac", "name": "Thiên Sát Cô Tinh", "mixed": true,
+    "id": "thien_sat_co_tinh", "rarity": "ac", "name": "Thiên Sát Cô Tinh", "nature": "hon_hop",
     "flavor": "Thầy bói xem tướng xong, trả lại tiền và bỏ chạy.",
     "summary": "✖ Người thân dễ gặp nạn, mị lực −5. ✔ Tốc độ tu luyện +15%, đạo tâm +5.",
     "effects": [
@@ -572,7 +572,7 @@
     ]
   },
   {
-    "id": "benh_cot", "rarity": "ac", "name": "Bệnh Cốt", "mixed": true,
+    "id": "benh_cot", "rarity": "ac", "name": "Bệnh Cốt", "nature": "hon_hop",
     "flavor": "Ho từ lúc biết khóc, uống thuốc thay cơm.",
     "summary": "✖ Sức khỏe −10, bệnh tật +3%. ✔ Ngộ tính +10, Trí tuệ +5 (nằm nhiều thì nghĩ nhiều).",
     "effects": [
@@ -594,25 +594,25 @@
   {
     "id": "mieng_ngot", "rarity": "pham", "name": "Miệng Ngọt",
     "flavor": "Gặp ai cũng gọi một tiếng thật ngọt, kẹo trong làng đều chạy về túi ngươi.",
-    "summary": "Mị lực +4; tình duyên thuận hơn (tỏ tình, nối duyên +5%).",
+    "summary": "Mị lực +4; tình duyên thuận hơn 5%.",
     "effects": [
       { "hook": "stat.charm", "add": 4 },
       { "hook": "romanceChance", "add": 0.05 }
     ]
   },
   {
-    "id": "ngu_ngon_lanh", "rarity": "pham", "name": "Ngủ Ngon Lành",
-    "flavor": "Sấm nổ ngoài hiên vẫn ngáy đều. Bà ngoại bảo đứa này sống thọ.",
-    "summary": "Sức khỏe +4; thọ nguyên +3%.",
+    "id": "truong_tho_tuong", "rarity": "pham", "name": "Trường Thọ Tướng",
+    "flavor": "Dái tai dày, nhân trung dài. Thầy tướng bảo sống trăm tuổi, rồi đòi thêm ba đồng.",
+    "summary": "Thọ nguyên +5%; Sức khỏe +2.",
     "effects": [
-      { "hook": "stat.health", "add": 4 },
-      { "hook": "lifespanPct", "add": 0.03 }
+      { "hook": "lifespanPct", "add": 0.05 },
+      { "hook": "stat.health", "add": 2 }
     ]
   },
   {
     "id": "tai_thinh", "rarity": "pham", "name": "Tai Thính",
     "flavor": "Hàng xóm cãi nhau ba nhà bên, ngươi nghe rõ từng chữ.",
-    "summary": "Trí tuệ +3; thần thức +5%; tin đồn phường thị gặp nhiều hơn.",
+    "summary": "Trí tuệ +3; thần thức +5%; tin phường thị gặp nhiều hơn.",
     "effects": [
       { "hook": "stat.intellect", "add": 3 },
       { "hook": "divineSense", "add": 0.05 },
@@ -629,19 +629,20 @@
     ]
   },
   {
-    "id": "hieu_hoc", "rarity": "pham", "name": "Hiếu Học",
-    "flavor": "Thấy chữ là dừng chân, kể cả chữ trên bia mộ.",
-    "summary": "Trí tuệ +3; Ngộ tính +2; sự kiện học hành nhiều hơn.",
+    "id": "kheo_bep", "rarity": "pham", "name": "Khéo Bếp",
+    "flavor": "Rau dại qua tay ngươi cũng thành món, cả nhà ăn xong quên cả cãi nhau.",
+    "summary": "Hạnh phúc +3; Mị lực +2; ít ốm; tư chất Luyện đan +5.",
     "effects": [
-      { "hook": "stat.intellect", "add": 3 },
-      { "hook": "stat.comprehension", "add": 2 },
-      { "hook": "eventWeight.study", "mul": 1.3 }
+      { "hook": "stat.happiness", "add": 3 },
+      { "hook": "stat.charm", "add": 2 },
+      { "hook": "illnessChancePct", "add": -1 },
+      { "hook": "craft.alchemy.affinity", "add": 5 }
     ]
   },
   {
     "id": "tam_lanh", "rarity": "pham", "name": "Tâm Lành",
     "flavor": "Thấy chim gãy cánh cũng ôm về nuôi.",
-    "summary": "Đạo tâm +3; thiện cảm khởi đầu với người mới +5.",
+    "summary": "Đạo tâm +3; thiện cảm khởi đầu +5.",
     "effects": [
       { "hook": "stat.daoHeart", "add": 3 },
       { "hook": "npcAffinityStart", "add": 5 }
@@ -659,7 +660,7 @@
   {
     "id": "de_nuoi", "rarity": "pham", "name": "Dễ Nuôi",
     "flavor": "Ăn gì cũng lớn, ngã đâu cũng đứng dậy được.",
-    "summary": "Sức khỏe +3; bệnh −1%; thương tích −5%.",
+    "summary": "Sức khỏe +3; ít ốm; thương tích −5%.",
     "effects": [
       { "hook": "stat.health", "add": 3 },
       { "hook": "illnessChancePct", "add": -1 },
@@ -669,7 +670,7 @@
   {
     "id": "vui_tinh", "rarity": "pham", "name": "Vui Tính",
     "flavor": "Cả xóm buồn, chỉ cần ngươi kể một chuyện là xong.",
-    "summary": "Hạnh phúc +4; Mị lực +2; chuyện dở khóc dở cười gặp nhiều hơn.",
+    "summary": "Hạnh phúc +4; Mị lực +2; chuyện dở khóc dở cười nhiều hơn.",
     "effects": [
       { "hook": "stat.happiness", "add": 4 },
       { "hook": "stat.charm", "add": 2 },
@@ -689,17 +690,17 @@
   {
     "id": "dao_hoa_van", "rarity": "luong", "name": "Đào Hoa Vận",
     "flavor": "Tháng ba hoa đào nở, ngươi đi ngang qua là cánh hoa rơi đúng vai.",
-    "summary": "Mị lực +6; tình duyên thuận hơn (+10%); chuyện tình gặp nhiều hơn.",
+    "summary": "Mị lực +6; tình duyên thuận +10%; chuyện tình nhiều hơn từ 18 tuổi.",
     "effects": [
       { "hook": "stat.charm", "add": 6 },
       { "hook": "romanceChance", "add": 0.1 },
-      { "hook": "eventWeight.romance", "mul": 1.3, "activeFrom": { "age": 18 } }
+      { "hook": "eventWeight.romance", "mul": 1.3, "activeFrom": {"age": 18} }
     ]
   },
   {
     "id": "da_tu", "rarity": "luong", "name": "Đa Tử Đa Phúc",
     "flavor": "Nhà ngươi đời nào cũng đông con, đứa nào cũng sáng dạ.",
-    "summary": "Con cái có thêm một lần gieo linh căn (lấy lần tốt nhất); Hạnh phúc +3.",
+    "summary": "Con cái thêm 1 lần gieo linh căn; Hạnh phúc +3.",
     "effects": [
       { "hook": "childRootRolls", "add": 1 },
       { "hook": "stat.happiness", "add": 3 }
@@ -718,11 +719,11 @@
   {
     "id": "than_nong_thu", "rarity": "luong", "name": "Bàn Tay Thần Nông",
     "flavor": "Hạt giống ngươi gieo chưa bao giờ không nảy mầm.",
-    "summary": "Tư chất Linh thực +15; hay gặp linh thảo; Sức khỏe +2.",
+    "summary": "Linh thực thành công +10%, mỗi vụ thêm 1 phần; hay gặp linh thảo.",
     "effects": [
-      { "hook": "craft.farming.affinity", "add": 15 },
-      { "hook": "eventWeight.herb", "mul": 1.3 },
-      { "hook": "stat.health", "add": 2 }
+      { "hook": "craft.farming.success", "add": 0.1 },
+      { "hook": "craft.farming.yield", "add": 1 },
+      { "hook": "eventWeight.herb", "mul": 1.3 }
     ]
   },
   {
@@ -736,25 +737,27 @@
     ]
   },
   {
-    "id": "khi_luc_sung_man", "rarity": "luong", "name": "Khí Lực Sung Mãn",
+    "id": "khi_luc_sung_man", "rarity": "luong", "name": "Lực Bạt Sơn Hà",
     "flavor": "Mười tuổi vác được bao gạo, mười lăm tuổi vác được cả con trâu.",
-    "summary": "Căn cốt +5; chiến lực +5%.",
+    "summary": "Căn cốt +4; tư chất Binh +10; chiến lực +5%.",
     "effects": [
-      { "hook": "stat.physique", "add": 5 },
+      { "hook": "stat.physique", "add": 4 },
+      { "hook": "path.weapon.affinity", "add": 10 },
       { "hook": "combatPower", "add": 0.05 }
     ]
   },
   {
-    "id": "quy_nhan_chi_lo", "rarity": "luong", "name": "Quý Nhân Chỉ Lộ",
-    "flavor": "Mỗi lần lạc đường đều có người tốt bụng đi ngang.",
-    "summary": "Hay gặp quý nhân (×1,6); Khí vận +3.",
+    "id": "an_duc_to_tien", "rarity": "luong", "name": "Ân Đức Tổ Tiên",
+    "flavor": "Ông nội ngươi từng cứu một người lạ khỏi chết đuối. Người lạ ấy chưa quên.",
+    "summary": "Quý nhân nhiều hơn; thiện cảm khởi đầu +5; danh vọng Chính đạo +10.",
     "effects": [
-      { "hook": "eventWeight.benefactor", "mul": 1.6 },
-      { "hook": "stat.luck", "add": 3 }
+      { "hook": "eventWeight.benefactor", "mul": 1.3 },
+      { "hook": "npcAffinityStart", "add": 5 },
+      { "hook": "faction.chinh.reputation", "add": 10 }
     ]
   },
   {
-    "id": "thu_sinh_menh", "rarity": "luong", "name": "Mệnh Thư Sinh", "mixed": true,
+    "id": "thu_sinh_menh", "rarity": "luong", "name": "Mệnh Thư Sinh", "nature": "hon_hop",
     "flavor": "Không cầm nổi kiếm, nhưng cầm bút thì không ai bằng.",
     "summary": "✔ Trí tuệ +8, Ngộ tính +4. ✖ Căn cốt −4.",
     "effects": [
@@ -776,7 +779,7 @@
   {
     "id": "huyet_mach_tien_dan", "rarity": "uu", "name": "Huyết Mạch Tiên Nhân",
     "flavor": "Tổ tiên có người tu đạo, máu ấy còn chảy trong ngươi.",
-    "summary": "Con cái có thêm 2 lần gieo linh căn; tốc độ tu luyện +8%.",
+    "summary": "Con cái thêm 2 lần gieo linh căn; tu luyện +8%.",
     "effects": [
       { "hook": "childRootRolls", "add": 2 },
       { "hook": "cultivationSpeed", "add": 0.08 }
@@ -785,7 +788,7 @@
   {
     "id": "tien_duyen_tham_hau", "rarity": "uu", "name": "Tiên Duyên Thâm Hậu",
     "flavor": "Ngươi chưa thấy tiên nhân, nhưng tiên nhân hình như đã thấy ngươi.",
-    "summary": "Kỳ ngộ gặp nhiều hơn (×1,4); Khí vận +6; Ngộ tính +3.",
+    "summary": "Kỳ ngộ ×1,4; Khí vận +6; Ngộ tính +3.",
     "effects": [
       { "hook": "eventWeight.fortune", "mul": 1.4 },
       { "hook": "stat.luck", "add": 6 },
@@ -793,8 +796,8 @@
     ]
   },
   {
-    "id": "kiem_tam", "rarity": "uu", "name": "Kiếm Tâm Thông Minh",
-    "flavor": "Cầm cành tre vẫn múa ra kiếm ý.",
+    "id": "kiem_si", "rarity": "uu", "name": "Kiếm Si",
+    "flavor": "Cầm cành tre vẫn múa ra kiếm ý, ngủ cũng ôm kiếm gỗ.",
     "summary": "Tư chất Kiếm +15; uy lực Kiếm +15%; Đạo tâm +3.",
     "effects": [
       { "hook": "path.sword.affinity", "add": 15 },
@@ -814,7 +817,7 @@
   {
     "id": "ung_bien", "rarity": "uu", "name": "Ứng Biến Như Thần",
     "flavor": "Bị dồn vào góc tường vẫn tìm được lối thoát.",
-    "summary": "Bỏ chạy +20%; Tốc +10%; chiến lực khi đánh người mạnh hơn +10%.",
+    "summary": "Bỏ chạy +20%; Tốc +10%; đánh người mạnh hơn +10%.",
     "effects": [
       { "hook": "escapeChance", "add": 0.2 },
       { "hook": "speed", "add": 0.1 },
@@ -822,17 +825,18 @@
     ]
   },
   {
-    "id": "tuyet_sac", "rarity": "uu", "name": "Tuyệt Sắc", "mixed": true,
-    "flavor": "Đi chợ một vòng, nửa chợ quên trả tiền thừa.",
-    "summary": "✔ Mị lực +15, tình duyên +15%. ✖ Rắc rối tình ái gặp nhiều gấp đôi (từ 18 tuổi).",
+    "id": "hong_nhan_bac_menh", "rarity": "uu", "name": "Hồng Nhan Bạc Mệnh", "nature": "hon_hop",
+    "flavor": "Đẹp đến mức trời cũng ganh.",
+    "summary": "✔ Mị lực +15, tình duyên +10%. ✖ Thọ nguyên −10%, tai nạn vặt ×1,3.",
     "effects": [
       { "hook": "stat.charm", "add": 15 },
-      { "hook": "romanceChance", "add": 0.15 },
-      { "hook": "eventWeight.romance_trouble", "mul": 2, "activeFrom": {"age": 18} }
+      { "hook": "romanceChance", "add": 0.1 },
+      { "hook": "lifespanPct", "add": -0.1 },
+      { "hook": "eventWeight.mishap", "mul": 1.3 }
     ]
   },
   {
-    "id": "thien_tai_yeu_menh", "rarity": "uu", "name": "Thiên Tài Yểu Mệnh", "mixed": true,
+    "id": "thien_tai_yeu_menh", "rarity": "uu", "name": "Thiên Tài Yểu Mệnh", "nature": "hon_hop",
     "flavor": "Trời cho nhiều thì lấy sớm, ông bà ta nói vậy.",
     "summary": "✔ Ngộ tính +12, tu luyện +15%. ✖ Thọ nguyên −20%, Sức khỏe −5.",
     "effects": [
@@ -856,7 +860,7 @@
   {
     "id": "van_thu_than_can", "rarity": "tuyet", "name": "Vạn Thú Thân Cận",
     "flavor": "Hổ dữ gặp ngươi cũng nằm xuống cho xoa đầu.",
-    "summary": "Tư chất Ngự thú +25; gặp yêu thú ít hại hơn (thương tích −10%); Mị lực +3.",
+    "summary": "Tư chất Ngự thú +25; thương tích −10%; Mị lực +3.",
     "effects": [
       { "hook": "craft.beast.affinity", "add": 25 },
       { "hook": "injuryReduce", "add": 0.1 },
@@ -874,20 +878,21 @@
     ]
   },
   {
-    "id": "ma_than_huyet", "rarity": "tuyet", "name": "Ma Thần Huyết", "mixed": true,
-    "flavor": "Trong mộng thường nghe tiếng trống trận ở nơi không có người.",
-    "summary": "✔ Ma đạo tu nhanh +40%, chiến lực +15%. ✖ Kháng tâm ma −15%, ma đạo cám dỗ ×1,8.",
+    "id": "am_duong_nhan", "rarity": "tuyet", "name": "Âm Dương Nhãn", "nature": "hon_hop",
+    "flavor": "Ngươi thấy những người đứng sau lưng người khác. Họ cũng thấy ngươi.",
+    "summary": "✔ Thần thức +25%, kháng mị thuật +20%, tu Quỷ đạo nhanh +30%. ✖ Hạnh phúc −6, kháng tâm ma −5%.",
     "effects": [
-      { "hook": "lineage.ma.cultivationSpeed", "add": 0.4 },
-      { "hook": "combatPower", "add": 0.15 },
-      { "hook": "heartDemonResist", "add": -0.15 },
-      { "hook": "eventWeight.demonic", "mul": 1.8 }
+      { "hook": "divineSense", "add": 0.25 },
+      { "hook": "charmResist", "add": 0.2 },
+      { "hook": "lineage.quy.cultivationSpeed", "add": 0.3 },
+      { "hook": "stat.happiness", "add": -6 },
+      { "hook": "heartDemonResist", "add": -0.05 }
     ]
   },
   {
-    "id": "dong_tu_than", "rarity": "tuyet", "name": "Đồng Tử Thân", "mixed": true,
+    "id": "dong_tu_than", "rarity": "tuyet", "name": "Đồng Tử Thân", "nature": "hon_hop",
     "flavor": "Tâm sạch như nước suối đầu nguồn.",
-    "summary": "✔ Tu luyện +20%, kháng tâm ma +20%. ✖ Tình duyên khó (−25%).",
+    "summary": "✔ Tu luyện +20%, kháng tâm ma +20%. ✖ Tình duyên −25%.",
     "effects": [
       { "hook": "cultivationSpeed", "add": 0.2 },
       { "hook": "heartDemonResist", "add": 0.2 },
@@ -895,9 +900,9 @@
     ]
   },
   {
-    "id": "thien_menh_chi_tu", "rarity": "thien", "name": "Thiên Mệnh Chi Tử",
+    "id": "thien_tuyen", "rarity": "thien", "name": "Thiên Tuyển Chi Nhân",
     "flavor": "Trời sinh ra ngươi là có ý, dù chưa ai biết ý gì.",
-    "summary": "Khí vận +15; kỳ ngộ ×1,5; đột phá +5; thiện cảm người mới +10.",
+    "summary": "Khí vận +15; kỳ ngộ ×1,5; đột phá +5; thiện cảm khởi đầu +10.",
     "effects": [
       { "hook": "stat.luck", "add": 15 },
       { "hook": "eventWeight.fortune", "mul": 1.5 },
@@ -917,7 +922,7 @@
     ]
   },
   {
-    "id": "nghich_menh", "rarity": "thien", "name": "Nghịch Mệnh", "mixed": true,
+    "id": "nghich_menh", "rarity": "thien", "name": "Nghịch Mệnh", "nature": "hon_hop",
     "flavor": "Số mệnh viết ngươi chết năm mười bảy. Ngươi không đọc số mệnh.",
     "summary": "✔ Một lần mỗi đời thoát chết; đột phá đại cảnh giới +10. ✖ Tai nạn vặt ×1,5, Khí vận −5.",
     "effects": [
@@ -928,7 +933,7 @@
     ]
   },
   {
-    "id": "thai_so_dao_chung", "rarity": "than", "name": "Thái Sơ Đạo Chủng",
+    "id": "dao_tam_vo_cau", "rarity": "than", "name": "Đạo Tâm Vô Cấu",
     "flavor": "Lúc ngươi chào đời, mây trên trời xếp thành một chữ không ai đọc được.",
     "summary": "Ngộ tính +15; tu luyện +25%; vượt bình cảnh +25%; kháng tâm ma +25%; kỳ ngộ ×1,3.",
     "effects": [
@@ -940,18 +945,19 @@
     ]
   },
   {
-    "id": "co_tinh", "rarity": "ac", "name": "Cô Tinh Chiếu Mệnh", "mixed": true,
-    "flavor": "Sao Cô chiếu mệnh: người thân lần lượt rời xa.",
-    "summary": "✖ Người thân dễ gặp nạn, tình duyên −15%. ✔ Đạo tâm +8, tu luyện +10%.",
+    "id": "lang_tu_menh", "rarity": "ac", "name": "Lãng Tử Mệnh", "nature": "hon_hop",
+    "flavor": "Sinh ra đã phải lưu lạc, không nơi nào giữ chân được lâu.",
+    "summary": "✖ Hạnh phúc −6, thiện cảm khởi đầu −5. ✔ Tốc +10%, bí cảnh ×1,3, kỳ ngộ ×1,2.",
     "effects": [
-      { "hook": "eventWeight.family_tragedy", "mul": 1.8 },
-      { "hook": "romanceChance", "add": -0.15 },
-      { "hook": "stat.daoHeart", "add": 8 },
-      { "hook": "cultivationSpeed", "add": 0.1 }
+      { "hook": "stat.happiness", "add": -6 },
+      { "hook": "npcAffinityStart", "add": -5 },
+      { "hook": "speed", "add": 0.1 },
+      { "hook": "eventWeight.bi_canh", "mul": 1.3 },
+      { "hook": "eventWeight.fortune", "mul": 1.2 }
     ]
   },
   {
-    "id": "ngheo_kho", "rarity": "ac", "name": "Sinh Ra Nghèo Khó", "mixed": true,
+    "id": "ngheo_kho", "rarity": "ac", "name": "Sinh Ra Nghèo Khó", "nature": "hon_hop",
     "flavor": "Mái nhà dột ba chỗ, bữa no bữa đói.",
     "summary": "✖ Thu nhập −15%, Hạnh phúc −5. ✔ Căn cốt +5, Đạo tâm +5.",
     "effects": [
@@ -962,30 +968,32 @@
     ]
   },
   {
-    "id": "benh_tat_triem_mien", "rarity": "ac", "name": "Bệnh Tật Triền Miên", "mixed": true,
-    "flavor": "Thuốc thang không dứt, mẹ ngươi đếm tiền thuốc mà khóc.",
-    "summary": "✖ Sức khỏe −10, bệnh +3%. ✔ Tư chất Luyện đan +15, Ngộ tính +5.",
+    "id": "duoc_lo_chi_tu", "rarity": "ac", "name": "Dược Lô Chi Tử", "nature": "hon_hop",
+    "flavor": "Từ nhỏ uống thuốc thay sữa, ngửi mùi là biết vị thuốc nào.",
+    "summary": "✖ Sức khỏe −8, hay ốm. ✔ Tư chất Luyện đan +15, luyện đan thành công +5%.",
     "effects": [
-      { "hook": "stat.health", "add": -10 },
-      { "hook": "illnessChancePct", "add": 3 },
+      { "hook": "stat.health", "add": -8 },
+      { "hook": "illnessChancePct", "add": 2 },
       { "hook": "craft.alchemy.affinity", "add": 15 },
-      { "hook": "stat.comprehension", "add": 5 }
+      { "hook": "craft.alchemy.success", "add": 0.05 }
     ]
   },
   {
-    "id": "xui_xeo", "rarity": "ac", "name": "Xui Xẻo", "mixed": true,
-    "flavor": "Đi đường bằng cũng vấp, uống nước lạnh cũng mắc răng.",
-    "summary": "✖ Khí vận −10, tai nạn vặt ×1,5. ✔ Mỗi lần gặp hạn lại học được một bài: Trí tuệ +5.",
+    "id": "mu_chu", "rarity": "ac", "name": "Mù Chữ", "nature": "hon_hop",
+    "flavor": "Nhà không ai biết chữ, ngươi ký tên bằng một vòng tròn.",
+    "summary": "✖ Trí tuệ −8, ít dịp học hành. ✔ Căn cốt +4, Sức khỏe +3, Đạo tâm +3 (không biết chữ nên không biết sợ).",
     "effects": [
-      { "hook": "stat.luck", "add": -10 },
-      { "hook": "eventWeight.mishap", "mul": 1.5 },
-      { "hook": "stat.intellect", "add": 5 }
+      { "hook": "stat.intellect", "add": -8 },
+      { "hook": "eventWeight.study", "mul": 0.5 },
+      { "hook": "stat.physique", "add": 4 },
+      { "hook": "stat.health", "add": 3 },
+      { "hook": "stat.daoHeart", "add": 3 }
     ]
   },
   {
-    "id": "tieu_nhan_quan_than", "rarity": "ac", "name": "Tiểu Nhân Quấn Thân", "mixed": true,
+    "id": "tieu_nhan_quan_than", "rarity": "ac", "name": "Tiểu Nhân Quấn Thân", "nature": "hon_hop",
     "flavor": "Đi đâu cũng có kẻ nói xấu sau lưng.",
-    "summary": "✖ Thiện cảm người mới −10, hay gặp kẻ lừa. ✔ Thần thức +10%, kháng mị thuật +15%.",
+    "summary": "✖ Thiện cảm khởi đầu −10, hay gặp kẻ lừa. ✔ Thần thức +10%, kháng mị thuật +15%.",
     "effects": [
       { "hook": "npcAffinityStart", "add": -10 },
       { "hook": "eventWeight.scam", "mul": 1.8 },
@@ -994,9 +1002,9 @@
     ]
   },
   {
-    "id": "sat_khi", "rarity": "ac", "name": "Sát Khí Nặng", "mixed": true,
+    "id": "sat_khi", "rarity": "ac", "name": "Sát Khí Nặng", "nature": "hon_hop",
     "flavor": "Gà trong sân thấy ngươi là bay lên mái.",
-    "summary": "✖ Mị lực −8, chuyện máu me gặp nhiều. ✔ Chiến lực +12%, uy lực Binh +10%.",
+    "summary": "✖ Mị lực −8, hay gặp chuyện máu me. ✔ Chiến lực +12%, uy lực Binh +10%.",
     "effects": [
       { "hook": "stat.charm", "add": -8 },
       { "hook": "eventWeight.plunder", "mul": 1.5 },
@@ -1005,9 +1013,9 @@
     ]
   },
   {
-    "id": "tinh_si", "rarity": "luong", "name": "Tình Si", "mixed": true,
+    "id": "tinh_si", "rarity": "luong", "name": "Tình Si", "nature": "hon_hop",
     "flavor": "Thích một người thì thích cả đời, dù người ấy không biết.",
-    "summary": "✔ Tình duyên +15%, Đạo tâm +3. ✖ Thất tình thì tâm ma nặng hơn (kháng tâm ma −10%).",
+    "summary": "✔ Tình duyên +15%, Đạo tâm +3. ✖ Kháng tâm ma −10%.",
     "effects": [
       { "hook": "romanceChance", "add": 0.15 },
       { "hook": "stat.daoHeart", "add": 3 },
@@ -1015,9 +1023,9 @@
     ]
   },
   {
-    "id": "lieu_linh", "rarity": "luong", "name": "Liều Lĩnh", "mixed": true,
+    "id": "lieu_linh", "rarity": "luong", "name": "Liều Lĩnh", "nature": "hon_hop",
     "flavor": "Thấy vực là muốn nhảy thử xem sâu bao nhiêu.",
-    "summary": "✔ Bí cảnh ×1,3, chiến lợi phẩm +10%. ✖ Thương tích +10%.",
+    "summary": "✔ Bí cảnh ×1,3, chiến lợi phẩm +10%. ✖ Thương tích nhận vào +10%.",
     "effects": [
       { "hook": "eventWeight.bi_canh", "mul": 1.3 },
       { "hook": "lootPct", "add": 0.1 },
@@ -1025,7 +1033,7 @@
     ]
   },
   {
-    "id": "ham_choi", "rarity": "pham", "name": "Ham Chơi", "mixed": true,
+    "id": "ham_choi", "rarity": "pham", "name": "Ham Chơi", "nature": "hon_hop",
     "flavor": "Sách mở ra là ngủ, cờ bày ra là tỉnh.",
     "summary": "✔ Hạnh phúc +6, Mị lực +2. ✖ Trí tuệ −3.",
     "effects": [
@@ -1035,9 +1043,9 @@
     ]
   },
   {
-    "id": "cuong_ngao", "rarity": "uu", "name": "Cuồng Ngạo", "mixed": true,
+    "id": "cuong_ngao", "rarity": "uu", "name": "Cuồng Ngạo", "nature": "hon_hop",
     "flavor": "Trời cao một trượng, ngươi muốn cao một trượng mốt.",
-    "summary": "✔ Chiến lực +10%, đột phá +5. ✖ Thiện cảm người mới −8, Đạo tâm dao động (kháng tâm ma −5%).",
+    "summary": "✔ Chiến lực +10%, đột phá +5. ✖ Thiện cảm khởi đầu −8, kháng tâm ma −5%.",
     "effects": [
       { "hook": "combatPower", "add": 0.1 },
       { "hook": "breakthroughChance", "add": 5 },
@@ -1046,9 +1054,9 @@
     ]
   },
   {
-    "id": "tham_tai", "rarity": "pham", "name": "Tham Tài", "mixed": true,
+    "id": "tham_tai", "rarity": "pham", "name": "Tham Tài", "nature": "hon_hop",
     "flavor": "Thấy đồng xu rơi là cúi nhặt, kể cả đang chạy giặc.",
-    "summary": "✔ Thu nhập +12%. ✖ Hay mắc lừa (×1,5), Đạo tâm −2.",
+    "summary": "✔ Thu nhập +12%. ✖ Hay mắc lừa, Đạo tâm −2.",
     "effects": [
       { "hook": "incomePct", "add": 0.12 },
       { "hook": "eventWeight.scam", "mul": 1.5 },
@@ -1056,9 +1064,9 @@
     ]
   },
   {
-    "id": "an_tinh_mai_danh", "rarity": "luong", "name": "Ẩn Tính Mai Danh", "mixed": true,
+    "id": "an_tinh_mai_danh", "rarity": "luong", "name": "Ẩn Tính Mai Danh", "nature": "hon_hop",
     "flavor": "Ngồi giữa đám đông mà không ai nhớ mặt.",
-    "summary": "✔ Bỏ chạy +15%, ít gặp cướp. ✖ Mị lực −4, quý nhân ít để ý (×0,8).",
+    "summary": "✔ Bỏ chạy +15%, ít gặp cướp. ✖ Mị lực −4, quý nhân ít để ý.",
     "effects": [
       { "hook": "escapeChance", "add": 0.15 },
       { "hook": "eventWeight.plunder", "mul": 0.7 },
@@ -1067,7 +1075,7 @@
     ]
   },
   {
-    "id": "dan_doc_the", "rarity": "tuyet", "name": "Đan Độc Thể", "mixed": true,
+    "id": "dan_doc_the", "rarity": "tuyet", "name": "Đan Độc Thể", "nature": "hon_hop",
     "flavor": "Thân thể tích độc của trăm loại thuốc mà không chết.",
     "summary": "✔ Luyện đan +20%, không ngộ độc. ✖ Sức khỏe −6, thọ nguyên −8%.",
     "effects": [
@@ -1078,14 +1086,503 @@
     ]
   },
   {
-    "id": "tien_phong_dao_cot", "rarity": "thien", "name": "Tiên Phong Đạo Cốt", "mixed": true,
+    "id": "tien_phong_dao_cot", "rarity": "thien", "name": "Tiên Phong Đạo Cốt", "nature": "hon_hop",
     "flavor": "Áo vải mà người đi đường vẫn ngoái lại gọi một tiếng tiên sinh.",
-    "summary": "✔ Tu luyện +20%, thọ nguyên +15%, Mị lực +6. ✖ Phàm duyên mỏng: tình duyên −10%.",
+    "summary": "✔ Tu luyện +20%, thọ nguyên +15%, Mị lực +6. ✖ Tình duyên −10%.",
     "effects": [
       { "hook": "cultivationSpeed", "add": 0.2 },
       { "hook": "lifespanPct", "add": 0.15 },
       { "hook": "stat.charm", "add": 6 },
       { "hook": "romanceChance", "add": -0.1 }
+    ]
+  },
+  {
+    "id": "nhanh_mieng", "rarity": "pham", "name": "Nhanh Miệng",
+    "flavor": "Người ta hỏi một, ngươi đáp mười, chín câu trúng.",
+    "summary": "Trí tuệ +3; Mị lực +2; thiện cảm khởi đầu +3.",
+    "effects": [
+      { "hook": "stat.intellect", "add": 3 },
+      { "hook": "stat.charm", "add": 2 },
+      { "hook": "npcAffinityStart", "add": 3 }
+    ]
+  },
+  {
+    "id": "gioi_boi", "rarity": "pham", "name": "Giỏi Bơi",
+    "flavor": "Ba tuổi rơi xuống sông, tự bơi vào bờ còn bắt được con cá.",
+    "summary": "Sức khỏe +2; bỏ chạy +8%; uy lực hệ Thủy +5%.",
+    "effects": [
+      { "hook": "stat.health", "add": 2 },
+      { "hook": "escapeChance", "add": 0.08 },
+      { "hook": "element.thuy.power", "add": 0.05 }
+    ]
+  },
+  {
+    "id": "tiet_kiem", "rarity": "pham", "name": "Tiết Kiệm",
+    "flavor": "Một đồng xu bẻ đôi tiêu hai lần.",
+    "summary": "Mua bán rẻ hơn 6%; bạc khởi đầu +15.",
+    "effects": [
+      { "hook": "priceDiscount", "add": 0.06 },
+      { "hook": "birthSilver", "add": 15 }
+    ]
+  },
+  {
+    "id": "tinh_ngu", "rarity": "pham", "name": "Tỉnh Ngủ",
+    "flavor": "Chuột chạy qua bếp là ngươi mở mắt.",
+    "summary": "Thần thức +5%; ít bị cướp; bỏ chạy +5%.",
+    "effects": [
+      { "hook": "divineSense", "add": 0.05 },
+      { "hook": "eventWeight.plunder", "mul": 0.8 },
+      { "hook": "escapeChance", "add": 0.05 }
+    ]
+  },
+  {
+    "id": "nhan_nai", "rarity": "pham", "name": "Nhẫn Nại",
+    "flavor": "Ngồi câu cá cả ngày không được con nào vẫn cười.",
+    "summary": "Đạo tâm +3; vượt bình cảnh +5%.",
+    "effects": [
+      { "hook": "stat.daoHeart", "add": 3 },
+      { "hook": "bottleneckResist", "add": 0.05 }
+    ]
+  },
+  {
+    "id": "hieu_thao", "rarity": "pham", "name": "Hiếu Thảo",
+    "flavor": "Bát cơm đầu tiên bao giờ cũng để phần cha mẹ.",
+    "summary": "Hạnh phúc +3; Đạo tâm +2; chuyện gia đình nhiều hơn.",
+    "effects": [
+      { "hook": "stat.happiness", "add": 3 },
+      { "hook": "stat.daoHeart", "add": 2 },
+      { "hook": "eventWeight.family", "mul": 1.3 }
+    ]
+  },
+  {
+    "id": "tay_kheo_dan_lat", "rarity": "pham", "name": "Đan Lát Khéo Tay",
+    "flavor": "Đan cái giỏ tre đẹp đến mức hàng xóm đem đi cưới vợ.",
+    "summary": "Tư chất Luyện khí +5, Phù lục +5; thu nhập +5%.",
+    "effects": [
+      { "hook": "craft.forging.affinity", "add": 5 },
+      { "hook": "craft.talisman.affinity", "add": 5 },
+      { "hook": "incomePct", "add": 0.05 }
+    ]
+  },
+  {
+    "id": "de_thuong", "rarity": "pham", "name": "Dễ Thương",
+    "flavor": "Bà bán bánh nào cũng cho ngươi thêm một cái.",
+    "summary": "Mị lực +4; mua bán rẻ hơn 2%.",
+    "effects": [
+      { "hook": "stat.charm", "add": 4 },
+      { "hook": "priceDiscount", "add": 0.02 }
+    ]
+  },
+  {
+    "id": "nhat_gan", "rarity": "pham", "name": "Nhát Gan", "nature": "hon_hop",
+    "flavor": "Thấy bóng mình cũng giật mình, nhưng nhờ vậy chưa chết lần nào.",
+    "summary": "✔ Bỏ chạy +15%, thương tích −5%. ✖ Chiến lực −5%.",
+    "effects": [
+      { "hook": "escapeChance", "add": 0.15 },
+      { "hook": "injuryReduce", "add": 0.05 },
+      { "hook": "combatPower", "add": -0.05 }
+    ]
+  },
+  {
+    "id": "phu_hong_tu_dau", "rarity": "luong", "name": "Ngón Tay Vàng Nghề Phù",
+    "flavor": "Nét bút run run, phù vẽ ra lại sáng hơn người khác.",
+    "summary": "Tư chất Phù lục +15; vẽ phù thành công +5%.",
+    "effects": [
+      { "hook": "craft.talisman.affinity", "add": 15 },
+      { "hook": "craft.talisman.success", "add": 0.05 }
+    ]
+  },
+  {
+    "id": "than_toan", "rarity": "luong", "name": "Thần Toán",
+    "flavor": "Đếm tiền nhanh hơn chủ tiệm, tính sổ đúng hơn quan thu thuế.",
+    "summary": "Trí tuệ +5; thu nhập +8%; mua bán rẻ hơn 3%.",
+    "effects": [
+      { "hook": "stat.intellect", "add": 5 },
+      { "hook": "incomePct", "add": 0.08 },
+      { "hook": "priceDiscount", "add": 0.03 }
+    ]
+  },
+  {
+    "id": "gia_toc_dong_duc", "rarity": "luong", "name": "Gia Tộc Đông Đúc",
+    "flavor": "Tết đến, cả họ ngồi kín ba sân.",
+    "summary": "Hạnh phúc +4; thiện cảm khởi đầu +5; chuyện thân tình nhiều hơn.",
+    "effects": [
+      { "hook": "stat.happiness", "add": 4 },
+      { "hook": "npcAffinityStart", "add": 5 },
+      { "hook": "eventWeight.bond", "mul": 1.3 }
+    ]
+  },
+  {
+    "id": "song_lau", "rarity": "luong", "name": "Sống Lâu Lên Lão Làng",
+    "flavor": "Cây cổ thụ đầu làng trồng cùng năm ngươi sinh.",
+    "summary": "Thọ nguyên +10%; Sức khỏe +3.",
+    "effects": [
+      { "hook": "lifespanPct", "add": 0.1 },
+      { "hook": "stat.health", "add": 3 }
+    ]
+  },
+  {
+    "id": "loi_than_tu", "rarity": "luong", "name": "Lôi Thần Tử",
+    "flavor": "Ngày ngươi sinh, sét đánh trúng cây đa đầu làng ba lần.",
+    "summary": "Uy lực hệ Lôi +15%; chống thiên lôi +5%.",
+    "effects": [
+      { "hook": "element.loi.power", "add": 0.15 },
+      { "hook": "tribulationDefense", "add": 0.05 }
+    ]
+  },
+  {
+    "id": "hoa_than_tu", "rarity": "luong", "name": "Lửa Trong Tay",
+    "flavor": "Mồi bếp không cần đá lửa, thổi một hơi là cháy.",
+    "summary": "Uy lực hệ Hỏa +12%; luyện đan thành công +5%.",
+    "effects": [
+      { "hook": "element.hoa.power", "add": 0.12 },
+      { "hook": "craft.alchemy.success", "add": 0.05 }
+    ]
+  },
+  {
+    "id": "tran_phap_tieu_thanh", "rarity": "luong", "name": "Mê Cung Nhi",
+    "flavor": "Xếp sỏi chơi thành hình, trẻ con đi vào không tìm được đường ra.",
+    "summary": "Tư chất Trận pháp +12; Trí tuệ +3.",
+    "effects": [
+      { "hook": "craft.formation.affinity", "add": 12 },
+      { "hook": "stat.intellect", "add": 3 }
+    ]
+  },
+  {
+    "id": "thanh_tam", "rarity": "luong", "name": "Thanh Tâm Quả Dục",
+    "flavor": "Ít ham muốn nên ít phiền não.",
+    "summary": "Kháng tâm ma +15%; kháng mị thuật +10%; Đạo tâm +3.",
+    "effects": [
+      { "hook": "heartDemonResist", "add": 0.15 },
+      { "hook": "charmResist", "add": 0.1 },
+      { "hook": "stat.daoHeart", "add": 3 }
+    ]
+  },
+  {
+    "id": "truc_co_huu_duyen", "rarity": "luong", "name": "Trúc Cơ Hữu Duyên",
+    "flavor": "Nền móng chưa xây mà đá đã sẵn.",
+    "summary": "Đột phá khi ở Luyện Khí +10%.",
+    "effects": [
+      { "hook": "breakthroughChance.at.luyen_khi", "add": 10 },
+      { "hook": "stat.physique", "add": 2 }
+    ]
+  },
+  {
+    "id": "lam_lu", "rarity": "luong", "name": "Lam Lũ Mà Vui", "nature": "hon_hop",
+    "flavor": "Áo vá bảy mảnh vẫn hát nghêu ngao.",
+    "summary": "✔ Hạnh phúc +8, Đạo tâm +3. ✖ Thu nhập −8%.",
+    "effects": [
+      { "hook": "stat.happiness", "add": 8 },
+      { "hook": "stat.daoHeart", "add": 3 },
+      { "hook": "incomePct", "add": -0.08 }
+    ]
+  },
+  {
+    "id": "kim_dan_hu_hoa", "rarity": "uu", "name": "Kim Đan Hữu Hỏa",
+    "flavor": "Bụng ngươi lúc nào cũng ấm như có lò sưởi.",
+    "summary": "Đột phá khi ở Trúc Cơ +12%; uy lực hệ Hỏa +10%.",
+    "effects": [
+      { "hook": "breakthroughChance.at.truc_co", "add": 12 },
+      { "hook": "element.hoa.power", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "thai_than_tu", "rarity": "uu", "name": "Thai Thần Kiên Cố",
+    "flavor": "Ngủ mơ thấy một đứa trẻ nhỏ xíu ngồi thiền trong bụng mình.",
+    "summary": "Đột phá khi ở Kim Đan +12%; thần thức +10%.",
+    "effects": [
+      { "hook": "breakthroughChance.at.kim_dan", "add": 12 },
+      { "hook": "divineSense", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "ngu_hanh_dieu_hoa", "rarity": "uu", "name": "Ngũ Hành Điều Hòa",
+    "flavor": "Mùa nào trong người cũng thuận, không nóng không lạnh.",
+    "summary": "Uy lực mọi hệ +8%; tu luyện +5%.",
+    "effects": [
+      { "hook": "element.all.power", "add": 0.08 },
+      { "hook": "cultivationSpeed", "add": 0.05 }
+    ]
+  },
+  {
+    "id": "linh_dan_hap_thu", "rarity": "uu", "name": "Dạ Dày Linh Đan",
+    "flavor": "Đan dược vào bụng như nước vào cát.",
+    "summary": "Tu luyện +12%; ít ngộ độc.",
+    "effects": [
+      { "hook": "cultivationSpeed", "add": 0.12 },
+      { "hook": "eventWeight.poisoning", "mul": 0.5 }
+    ]
+  },
+  {
+    "id": "vo_dinh_tam", "rarity": "uu", "name": "Vô Định Tâm",
+    "flavor": "Lòng như mây, gió thổi tan rồi lại tụ.",
+    "summary": "Kháng tâm ma +20%; Đạo tâm +5.",
+    "effects": [
+      { "hook": "heartDemonResist", "add": 0.2 },
+      { "hook": "stat.daoHeart", "add": 5 }
+    ]
+  },
+  {
+    "id": "binh_khi_cam_ung", "rarity": "uu", "name": "Binh Khí Cảm Ứng",
+    "flavor": "Thanh đao cùn trong bếp vào tay ngươi cũng ngân lên.",
+    "summary": "Uy lực pháp bảo +15%; tư chất Luyện khí +10.",
+    "effects": [
+      { "hook": "artifactPct", "add": 0.15 },
+      { "hook": "craft.forging.affinity", "add": 10 }
+    ]
+  },
+  {
+    "id": "than_hanh", "rarity": "uu", "name": "Thần Hành",
+    "flavor": "Chạy theo ngựa, ngựa mệt trước.",
+    "summary": "Tốc +20%; bỏ chạy +15%.",
+    "effects": [
+      { "hook": "speed", "add": 0.2 },
+      { "hook": "escapeChance", "add": 0.15 }
+    ]
+  },
+  {
+    "id": "ti_vo_bat_bai", "rarity": "uu", "name": "Tỉ Võ Bất Bại",
+    "flavor": "Đánh nhau với trẻ con cả làng chưa thua trận nào.",
+    "summary": "Chiến lực +10%; tư chất Thể +10; uy lực Thể +8%.",
+    "effects": [
+      { "hook": "combatPower", "add": 0.1 },
+      { "hook": "path.body.affinity", "add": 10 },
+      { "hook": "path.body.power", "add": 0.08 }
+    ]
+  },
+  {
+    "id": "quan_van_hanh_thong", "rarity": "uu", "name": "Quan Vận Hanh Thông",
+    "flavor": "Ngươi đi thi, đề ra đúng bài đêm qua vừa đọc.",
+    "summary": "Danh vọng Triều đình +15; Trí tuệ +5; thu nhập +10%.",
+    "effects": [
+      { "hook": "faction.trieu_dinh.reputation", "add": 15 },
+      { "hook": "stat.intellect", "add": 5 },
+      { "hook": "incomePct", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "thien_ly_nhan", "rarity": "uu", "name": "Thiên Lý Nhãn",
+    "flavor": "Nhìn rõ con chim sẻ đậu trên ngọn núi bên kia.",
+    "summary": "Thần thức +20%; bỏ chạy +10%.",
+    "effects": [
+      { "hook": "divineSense", "add": 0.2 },
+      { "hook": "escapeChance", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "hung_tinh_doat_menh", "rarity": "uu", "name": "Hung Tinh Hộ Mệnh", "nature": "hon_hop",
+    "flavor": "Sao xấu chiếu mệnh, nhưng sao ấy lại khá thương ngươi.",
+    "summary": "✔ Chiến lực +15%, hút máu 5%. ✖ Khí vận −6, cướp bóc gặp nhiều hơn.",
+    "effects": [
+      { "hook": "combatPower", "add": 0.15 },
+      { "hook": "lifesteal", "add": 0.05 },
+      { "hook": "stat.luck", "add": -6 },
+      { "hook": "eventWeight.plunder", "mul": 1.4 }
+    ]
+  },
+  {
+    "id": "si_tinh_tu", "rarity": "uu", "name": "Một Đời Một Người", "nature": "hon_hop",
+    "flavor": "Lời thề lúc mười tám, tới tám mươi vẫn nhớ.",
+    "summary": "✔ Tình duyên +20%, Đạo tâm +5. ✖ Rắc rối tình ái tâm ma nặng (kháng tâm ma −10%).",
+    "effects": [
+      { "hook": "romanceChance", "add": 0.2 },
+      { "hook": "stat.daoHeart", "add": 5 },
+      { "hook": "heartDemonResist", "add": -0.1 }
+    ]
+  },
+  {
+    "id": "nguyen_anh_hu_duyen", "rarity": "tuyet", "name": "Anh Thai Sẵn Ý",
+    "flavor": "Từ nhỏ ngươi đã cảm thấy trong mình có hai người.",
+    "summary": "Đột phá khi ở Kim Đan +15%, khi ở Nguyên Anh +10%.",
+    "effects": [
+      { "hook": "breakthroughChance.at.kim_dan", "add": 15 },
+      { "hook": "breakthroughChance.at.nguyen_anh", "add": 10 }
+    ]
+  },
+  {
+    "id": "thien_loi_than", "rarity": "tuyet", "name": "Thiên Lôi Bất Xâm",
+    "flavor": "Sét đánh trúng ngươi ba lần, lần nào cũng chỉ cháy tóc.",
+    "summary": "Chống thiên lôi +25%; uy lực hệ Lôi +15%.",
+    "effects": [
+      { "hook": "tribulationDefense", "add": 0.25 },
+      { "hook": "element.loi.power", "add": 0.15 }
+    ]
+  },
+  {
+    "id": "van_kiep_bat_ma", "rarity": "tuyet", "name": "Vạn Kiếp Bất Ma",
+    "flavor": "Tâm ma tới gõ cửa, ngươi mời nó uống trà rồi tiễn về.",
+    "summary": "Kháng tâm ma +35%; Đạo tâm +8.",
+    "effects": [
+      { "hook": "heartDemonResist", "add": 0.35 },
+      { "hook": "stat.daoHeart", "add": 8 }
+    ]
+  },
+  {
+    "id": "tu_bao_bon", "rarity": "tuyet", "name": "Tụ Bảo Bồn",
+    "flavor": "Ngươi để đâu thì ở đó có của.",
+    "summary": "Thu nhập +25%; chiến lợi phẩm +20%; bạc khởi đầu +100.",
+    "effects": [
+      { "hook": "incomePct", "add": 0.25 },
+      { "hook": "lootPct", "add": 0.2 },
+      { "hook": "birthSilver", "add": 100 }
+    ]
+  },
+  {
+    "id": "ngu_thu_vuong", "rarity": "tuyet", "name": "Bách Thú Chi Vương",
+    "flavor": "Bầy sói trong núi tru đúng giờ ngươi đi ngủ.",
+    "summary": "Tư chất Ngự thú +20; chiến lực +8%; yêu thú gặp nhiều hơn.",
+    "effects": [
+      { "hook": "craft.beast.affinity", "add": 20 },
+      { "hook": "combatPower", "add": 0.08 },
+      { "hook": "eventWeight.beast", "mul": 1.4 }
+    ]
+  },
+  {
+    "id": "tran_dao_ky_tai", "rarity": "tuyet", "name": "Trận Đạo Kỳ Tài",
+    "flavor": "Nhìn một ngọn núi là thấy nó nên dời đi ba trượng về phía đông.",
+    "summary": "Tư chất Trận pháp +25; bày trận thành công +15%; chống thiên lôi +10%.",
+    "effects": [
+      { "hook": "craft.formation.affinity", "add": 25 },
+      { "hook": "craft.formation.success", "add": 0.15 },
+      { "hook": "tribulationDefense", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "huyet_te", "rarity": "tuyet", "name": "Huyết Tế Chi Thân", "nature": "hon_hop",
+    "flavor": "Máu ngươi đỏ sẫm, nhỏ xuống đất thì cỏ héo.",
+    "summary": "✔ Hút máu 15%, uy lực Thể +15%. ✖ Thọ nguyên −10%, Mị lực −5.",
+    "effects": [
+      { "hook": "lifesteal", "add": 0.15 },
+      { "hook": "path.body.power", "add": 0.15 },
+      { "hook": "lifespanPct", "add": -0.1 },
+      { "hook": "stat.charm", "add": -5 }
+    ]
+  },
+  {
+    "id": "hoa_than_hu_menh", "rarity": "thien", "name": "Hóa Thần Hữu Mệnh",
+    "flavor": "Thầy bói đếm cảnh giới trong tướng tay ngươi, đếm tới năm thì ngất.",
+    "summary": "Đột phá đại cảnh giới +10; đột phá khi ở Nguyên Anh +10%; thọ nguyên +10%.",
+    "effects": [
+      { "hook": "breakthroughChance.major", "add": 10 },
+      { "hook": "breakthroughChance.at.nguyen_anh", "add": 10 },
+      { "hook": "lifespanPct", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "van_dao_tong_su", "rarity": "thien", "name": "Bách Nghệ Tông Sư",
+    "flavor": "Đan, khí, trận, phù, ruộng, thú: ngươi chưa học đã biết nửa.",
+    "summary": "Tư chất mọi nghề +15; mọi nghề thành công +10%.",
+    "effects": [
+      { "hook": "craft.all.affinity", "add": 15 },
+      { "hook": "craft.all.success", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "kiep_hoa_tu_sinh", "rarity": "thien", "name": "Kiếp Hỏa Trùng Sinh", "nature": "hon_hop",
+    "flavor": "Mỗi lần ngã xuống, ngươi đứng dậy mạnh hơn một chút.",
+    "summary": "✔ Một lần mỗi đời thoát chết; chống thiên lôi +15%. ✖ Thiên kiếp nặng thêm 15%.",
+    "effects": [
+      { "hook": "trigger.cheatDeath", "add": 1 },
+      { "hook": "tribulationDefense", "add": 0.15 },
+      { "hook": "tribulationPct", "add": 15 }
+    ]
+  },
+  {
+    "id": "hon_mong_dao_than", "rarity": "than", "name": "Hồng Mông Đạo Thân",
+    "flavor": "Ngươi khóc tiếng đầu tiên, linh khí trăm dặm lặng đi một nhịp.",
+    "summary": "Tu luyện +30%; đột phá +8; thọ nguyên +25%; chống thiên lôi +15%.",
+    "effects": [
+      { "hook": "cultivationSpeed", "add": 0.3 },
+      { "hook": "breakthroughChance", "add": 8 },
+      { "hook": "lifespanPct", "add": 0.25 },
+      { "hook": "tribulationDefense", "add": 0.15 }
+    ]
+  },
+  {
+    "id": "thien_dao_sung_nhi", "rarity": "than", "name": "Thiên Đạo Sủng Nhi",
+    "flavor": "Trời không thiên vị ai. Trừ ngươi.",
+    "summary": "Khí vận +20; kỳ ngộ ×1,6; quý nhân ×1,5; một lần mỗi đời thoát chết.",
+    "effects": [
+      { "hook": "stat.luck", "add": 20 },
+      { "hook": "eventWeight.fortune", "mul": 1.6 },
+      { "hook": "eventWeight.benefactor", "mul": 1.5 },
+      { "hook": "trigger.cheatDeath", "add": 1 }
+    ]
+  },
+  {
+    "id": "doan_menh", "rarity": "ac", "name": "Đoản Mệnh Tướng", "nature": "hon_hop",
+    "flavor": "Đường sinh mệnh trong lòng bàn tay ngắn như một vết xước.",
+    "summary": "✖ Thọ nguyên −20%. ✔ Tu luyện +12%, Ngộ tính +5 (biết đời ngắn nên tranh thủ).",
+    "effects": [
+      { "hook": "lifespanPct", "add": -0.2 },
+      { "hook": "cultivationSpeed", "add": 0.12 },
+      { "hook": "stat.comprehension", "add": 5 }
+    ]
+  },
+  {
+    "id": "tam_ma_bam", "rarity": "ac", "name": "Tâm Ma Bám Thân", "nature": "hon_hop",
+    "flavor": "Đêm nào cũng mơ thấy một kẻ giống hệt mình đứng cười.",
+    "summary": "✖ Kháng tâm ma −25%, tâm ma tới nhiều hơn. ✔ Ngộ tính +8, uy lực Thuật +10%.",
+    "effects": [
+      { "hook": "heartDemonResist", "add": -0.25 },
+      { "hook": "eventWeight.heart_demon", "mul": 1.5 },
+      { "hook": "stat.comprehension", "add": 8 },
+      { "hook": "path.arts.power", "add": 0.1 }
+    ]
+  },
+  {
+    "id": "thien_kiep_ky", "rarity": "ac", "name": "Thiên Kiếp Kỵ", "nature": "hon_hop",
+    "flavor": "Trời nhìn ngươi không vừa mắt từ lúc lọt lòng.",
+    "summary": "✖ Thiên kiếp nặng thêm 25%. ✔ Uy lực hệ Lôi +20%, đột phá đại cảnh giới +5.",
+    "effects": [
+      { "hook": "tribulationPct", "add": 25 },
+      { "hook": "element.loi.power", "add": 0.2 },
+      { "hook": "breakthroughChance.major", "add": 5 }
+    ]
+  },
+  {
+    "id": "pha_gia", "rarity": "ac", "name": "Phá Gia Chi Tử", "nature": "hon_hop",
+    "flavor": "Tiền vào tay ngươi như nước vào rổ.",
+    "summary": "✖ Thu nhập −20%, bạc khởi đầu −30. ✔ Mị lực +5, Hạnh phúc +5.",
+    "effects": [
+      { "hook": "incomePct", "add": -0.2 },
+      { "hook": "birthSilver", "add": -30 },
+      { "hook": "stat.charm", "add": 5 },
+      { "hook": "stat.happiness", "add": 5 }
+    ]
+  },
+  {
+    "id": "ton_tu", "rarity": "ac", "name": "Muộn Đường Con Cái", "nature": "hon_hop",
+    "flavor": "Chùa nào cũng đã đi, hương nào cũng đã thắp.",
+    "summary": "✖ Tình duyên −15%, Hạnh phúc −4. ✔ Tu luyện +8%, Đạo tâm +4.",
+    "effects": [
+      { "hook": "romanceChance", "add": -0.15 },
+      { "hook": "stat.happiness", "add": -4 },
+      { "hook": "cultivationSpeed", "add": 0.08 },
+      { "hook": "stat.daoHeart", "add": 4 }
+    ]
+  },
+  {
+    "id": "chieu_hoa", "rarity": "ac", "name": "Chiêu Họa Thể", "nature": "hon_hop",
+    "flavor": "Ngồi im trong nhà cũng có ngói rơi trúng đầu.",
+    "summary": "✖ Tai nạn vặt ×1,8, Sức khỏe −4. ✔ Thương tích −10%, Căn cốt +5 (quen bị đánh).",
+    "effects": [
+      { "hook": "eventWeight.mishap", "mul": 1.8 },
+      { "hook": "stat.health", "add": -4 },
+      { "hook": "injuryReduce", "add": 0.1 },
+      { "hook": "stat.physique", "add": 5 }
+    ]
+  },
+  {
+    "id": "ngu_doc_than", "rarity": "ac", "name": "Ngũ Độc Thân", "nature": "hon_hop",
+    "flavor": "Muỗi đốt ngươi xong thì rơi xuống chết.",
+    "summary": "✖ Mị lực −6, Sức khỏe −4. ✔ Không ngộ độc, kháng mị thuật +20%, Luyện đan thành công +10%.",
+    "effects": [
+      { "hook": "stat.charm", "add": -6 },
+      { "hook": "stat.health", "add": -4 },
+      { "hook": "eventWeight.poisoning", "mul": 0 },
+      { "hook": "charmResist", "add": 0.2 },
+      { "hook": "craft.alchemy.success", "add": 0.1 }
     ]
   }
 ]
