@@ -8,6 +8,9 @@
 
 ## [Chưa phát hành]
 
+### 9.R2a: "Nghịch Thiên Bốc Mệnh" đổi thành "Tiên Thiên Khí Vận" (2026-10-15)
+- Màn quay khí vận lúc sinh và các thiên phú luân hồi liên quan dùng tên mới. "Nghịch thiên cải mệnh" (nút quay lại) giữ nguyên.
+
 ### 9.R1: đổi tên game thành Bách Thế Luân Hồi (2026-10-15)
 - Tên mới ở màn tiêu đề (kèm câu "Trăm kiếp luân hồi, một đường cầu đạo"), thẻ trình duyệt, manifest PWA, thành tựu chia sẻ, README, tên file save xuất ra (`bach-the-…json`), `package.json`.
 - Khóa lưu đổi từ `tutien.*` sang `bachthe.*`: lần đầu mở bản mới, mọi khóa cũ được **sao chép** sang khóa mới (không ghi đè, không xóa khóa cũ để làm bản dự phòng). File save cũ xuất ra trước đây vẫn nhập được. Cache PWA đổi tên nên bản cài sẵn tự cập nhật.

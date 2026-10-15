@@ -504,7 +504,7 @@ button { font: inherit; color: inherit; }
 .profile-note { font-size: 0.8125rem; color: var(--muted); margin: 10px 0 4px; }
 .choice.danger { color: var(--bad); }
 
-/* Destiny roll (Nghịch Thiên Bốc Mệnh) */
+/* Destiny roll (Tiên Thiên Khí Vận) */
 .destiny-screen { max-width: 960px; margin: 0 auto; min-height: 100dvh; padding: calc(12px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 14px; }
 .destiny-intro { margin: 0; color: var(--muted); font-family: var(--font-story); font-size: 0.9375rem; }
 .destiny-cards { display: grid; gap: 10px; }
