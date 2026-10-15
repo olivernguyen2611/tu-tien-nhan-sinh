@@ -1,6 +1,6 @@
 // Browser glue for the save system: a storage that never throws on access,
 // and file download/upload helpers.
-import type { KeyValueStore } from '../systems/save';
+import { copyLegacyKeys, type KeyValueStore } from '../systems/save';
 
 const memory = new Map<string, string>();
 const memoryStore: KeyValueStore = {
@@ -13,7 +13,9 @@ const memoryStore: KeyValueStore = {
 export function browserStore(): KeyValueStore {
   try {
     const ls = window.localStorage;
-    ls.getItem('tutien.probe');
+    ls.getItem('bachthe.probe');
+    // 9.R1: saves and settings from before the rename move over once (the old keys stay as a backup).
+    copyLegacyKeys(ls, Array.from({ length: ls.length }, (_, i) => ls.key(i)).filter((k): k is string => k !== null));
     return ls;
   } catch {
     return memoryStore;

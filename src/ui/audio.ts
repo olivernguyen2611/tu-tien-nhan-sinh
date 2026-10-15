@@ -4,7 +4,7 @@ import type { GameState } from '../core/types';
 
 export type Cue = 'year' | 'event' | 'breakthrough' | 'death';
 
-const KEY = 'tutien.sound';
+const KEY = 'bachthe.sound';
 
 export function loadSoundPref(): boolean {
   try { return localStorage.getItem(KEY) === 'on'; } catch { return false; }

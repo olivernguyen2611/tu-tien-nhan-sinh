@@ -1,13 +1,13 @@
 {
   "talents": [
     {"id": "menh_ban_khai_mo", "name": "Mệnh Bàn Khai Mở", "text": "Đứng lâu trước Luân Hồi đài, ngươi học được cách xoay mệnh bàn thêm vài vòng.", "levels": [
-      {"cost": 5, "summary": "Thêm 1 lượt Nghịch thiên cải mệnh khi bốc mệnh.", "destinyRerolls": 1},
+      {"cost": 5, "summary": "Thêm 1 lượt Nghịch thiên cải mệnh khi quay Tiên Thiên Khí Vận.", "destinyRerolls": 1},
       {"cost": 12, "summary": "Thêm 2 lượt Nghịch thiên cải mệnh.", "destinyRerolls": 2},
       {"cost": 25, "summary": "Thêm 3 lượt Nghịch thiên cải mệnh.", "destinyRerolls": 3}
     ]},
     {"id": "menh_ban_them_o", "name": "Mệnh Bàn Thêm Ô", "text": "Mệnh bàn vốn có ba ô. Đi qua đủ nhiều kiếp, ngươi khắc thêm được ô thứ tư, rồi ô thứ năm.", "levels": [
-      {"cost": 40, "summary": "Bốc mệnh được 4 ô khí vận.", "destinySlots": 1},
-      {"cost": 100, "summary": "Bốc mệnh được 5 ô khí vận.", "destinySlots": 2}
+      {"cost": 40, "summary": "Quay được 4 ô Tiên Thiên Khí Vận.", "destinySlots": 1},
+      {"cost": 100, "summary": "Quay được 5 ô Tiên Thiên Khí Vận.", "destinySlots": 2}
     ]},
     {"id": "dinh_menh_an", "name": "Định Mệnh Ấn", "text": "Một con ấn nhỏ đóng lên mệnh bàn: ô nào đã đóng ấn, quay lại cũng không đổi.", "levels": [
       {"cost": 30, "summary": "Khóa được 2 ô thay vì 1 khi quay lại.", "destinyLocks": 1}

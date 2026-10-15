@@ -101,7 +101,7 @@ describe('save slots', () => {
 
   it('a broken slot is not listed but still counts as taken', () => {
     const store = fakeStore();
-    store.setItem('tutien.save.1', '{not json');
+    store.setItem('bachthe.save.1', '{not json');
     expect(listSlots(store, WORLDS)[0]).toBeNull();
     expect(slotTaken(store, 1)).toBe(true);
     expect(readSlot(store, 1, WORLDS)).toMatchObject({ ok: false });
@@ -118,7 +118,7 @@ describe('import / export', () => {
   it('an exported file imports back', () => {
     const save = makeSave(lifeAt('export', 8), 1);
     const { fileName, text } = exportSave(save);
-    expect(fileName).toMatch(/^tu-tien-[a-z0-9-]+-8-tuoi\.json$/);
+    expect(fileName).toMatch(/^bach-the-[a-z0-9-]+-8-tuoi\.json$/);
     const r = parseSave(JSON.parse(text), WORLDS);
     expect(r.ok && r.save.life).toEqual(save.life);
   });
@@ -149,5 +149,19 @@ describe('log compaction and meta', () => {
     expect(readMeta(store).livesPlayed).toBe(0);
     recordNewLife(store);
     expect(recordNewLife(store).livesPlayed).toBe(2);
+  });
+});
+
+describe('9.R1: đổi tên khóa lưu', () => {
+  it('copies tutien.* keys to bachthe.* once, keeps the old ones, never overwrites', async () => {
+    const { copyLegacyKeys } = await import('../src/systems/save');
+    const m = new Map<string, string>([['tutien.save.1', 'A'], ['tutien.meta', 'M'], ['bachthe.meta', 'NEW'], ['other', 'x']]);
+    const store = { getItem: (k: string) => m.get(k) ?? null, setItem: (k: string, v: string) => void m.set(k, v), removeItem: (k: string) => void m.delete(k) };
+    expect(copyLegacyKeys(store, [...m.keys()])).toBe(1);
+    expect(m.get('bachthe.save.1')).toBe('A');
+    expect(m.get('bachthe.meta')).toBe('NEW');
+    expect(m.get('tutien.save.1')).toBe('A');
+    m.set('tutien.save.2', 'B');
+    expect(copyLegacyKeys(store, [...m.keys()])).toBe(0);
   });
 });

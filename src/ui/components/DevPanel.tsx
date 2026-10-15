@@ -48,7 +48,7 @@ function GPick({ value, onChange, label, options }: { value: string; onChange: (
 const RARITY_ORDER = ['pham', 'luong', 'uu', 'tuyet', 'thien', 'than', 'ac'];
 const RARITY_NAME: Record<string, string> = { pham: 'Phàm', luong: 'Lương', uu: 'Ưu', tuyet: 'Tuyệt', thien: 'Thiên', than: 'Thần', ac: 'Ác vận' };
 const KIND_ORDER = ['pill', 'artifact', 'talisman', 'array', 'material', 'misc'];
-const GRADE_ORDER = ['hoang', 'huyen', 'dia', 'thien'];
+const GRADE_ORDER = ['hoang', 'huyen', 'dia', 'thien', 'vo_thuong'];
 const byOrder = (order: string[]) => (a: string, b: string) => (order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99);
 
 export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange: onApply, onMeta, onDisable, onClose }: {

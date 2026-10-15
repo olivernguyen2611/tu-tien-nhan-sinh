@@ -146,11 +146,18 @@ function repaidRecently(state: GameState, content: Content): boolean {
   return content.events.some((e) => e.npcTrigger === 'repay' && state.events.history[e.id] !== undefined && state.character.age - state.events.history[e.id] < gap);
 }
 
+/** 9.0.3: some shared (bond) event already happened within balance.npcs.bondGapYears. */
+function bondedRecently(state: GameState, content: Content): boolean {
+  const gap = content.balance.npcs.bondGapYears;
+  return content.events.some((e) => e.npcTrigger === 'bond' && state.events.history[e.id] !== undefined && state.character.age - state.events.history[e.id] < gap);
+}
+
 /** Task 3.4: an NPC whose ledger calls for a visit, and an event for it whose conditions hold. */
 function npcEvent(state: GameState, content: Content, rng: Rng): { npc: string; event: string } | null {
   for (const call of npcCalls(state, content, rng)) {
     // 6c.6: kindness repaid is a moment, not a yearly chore.
     if (call.trigger === 'repay' && repaidRecently(state, content)) continue;
+    if (call.trigger === 'bond' && bondedRecently(state, content)) continue;
     const withNpc = { ...state, events: { ...state.events, npc: call.id } };
     const pool = content.events.filter((e) => e.npcTrigger === call.trigger && e.weight > 0 && meets(withNpc, e.conditions, content));
     if (pool.length === 0) continue;

@@ -1,4 +1,4 @@
-// Nghịch Thiên Bốc Mệnh: show the rolled Tiên Thiên Khí Vận, allow limited rerolls.
+// Tiên Thiên Khí Vận (tên cũ Nghịch Thiên Bốc Mệnh): show the rolled Tiên Thiên Khí Vận, allow limited rerolls.
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
 import { TermText } from '../components/Tooltip';
@@ -36,7 +36,7 @@ export function DestinyRollScreen({ state, content, rollCount, unlimited, canLoc
   return (
     <main class="destiny-screen">
       <header class="create-head">
-        <h1>Nghịch Thiên Bốc Mệnh</h1>
+        <h1>Tiên Thiên Khí Vận</h1>
       </header>
       <p class="destiny-intro">
         {state.character.name} vừa chào đời. Trời ban {SLOT_WORDS[traits.length] ?? traits.length} đạo khí vận, đổi được thì đổi, đổi rồi không lấy lại được.
@@ -55,6 +55,7 @@ export function DestinyRollScreen({ state, content, rollCount, unlimited, canLoc
                   <b>{t.name}</b>
                   <span class="trait-rarity">{RARITY_LABEL[t.rarity]}</span>
                 </div>
+                {t.mixed && <span class="trait-mixed">Họa phúc tương y</span>}
                 <p class="trait-flavor">{t.flavor}</p>
                 <p class="trait-summary"><TermText text={t.summary} /></p>
                 {traitRootNote(content, t.id) && <p class="trait-summary root-note">{traitRootNote(content, t.id)}</p>}

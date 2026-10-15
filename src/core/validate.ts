@@ -3,7 +3,7 @@
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -26,6 +26,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'glossary.json') return GlossarySchema;
     if (rest === 'traits.json') return TraitFileSchema;
     if (rest === 'family-actions.json') return FamilyActionFileSchema;
+    if (rest === 'npc-acts.json') return NpcActFileSchema;
     if (rest === 'life-texts.json') return LifeTextsSchema;
     if (rest === 'stat-extremes.json') return StatExtremesFileSchema;
     if (rest === 'realms.json') return RealmsFileSchema;
@@ -723,7 +724,7 @@ function checkTechniquesAndSects(
       if (!techniques.some((x) => x.id === tb.default)) out.push({ file: bal, level: 'error', message: `techniques.default "${tb.default}" không có trong techniques.json` });
       const ghostTech = t.balance.ghost.technique;
       if (!techniques.some((x) => x.id === ghostTech)) out.push({ file: bal, level: 'error', message: `ghost.technique "${ghostTech}" không có trong techniques.json` });
-      for (const g of ['hoang', 'huyen', 'dia', 'thien']) {
+      for (const g of ['hoang', 'huyen', 'dia', 'thien', 'vo_thuong']) {
         if (tb.gradeMul[g] === undefined) out.push({ file: bal, level: 'error', message: `techniques.gradeMul thiếu phẩm "${g}"` });
       }
       for (const l of ['tien', 'ma', 'phat', 'quy', 'yeu']) {

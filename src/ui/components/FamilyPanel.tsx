@@ -14,17 +14,21 @@ import { ClanSection, type ClanAction } from './ClanSection';
 import { BondSection } from './BondSection';
 import type { BondAction, BondTarget } from '../../systems/familyBond';
 import { Meter } from './Meter';
+import { Fold } from './Fold';
+import { npcActViews } from '../../systems/npcActs';
 import { NpcGiftRow } from './NpcGiftRow';
 import { ImportSection } from './ImportSection';
 import type { ImportSetup, SavedPerson } from '../../systems/npcLibrary';
 
-export function FamilyPanel({ state, content, onAction, onRomance, onGiftNpc, onDisciple, onClan, onBond, onSaveNpc, getSources, onImport, onClose }: {
+export function FamilyPanel({ state, content, onAction, onRomance, onGiftNpc, onNpcAct, onDisciple, onClan, onBond, onSaveNpc, getSources, onImport, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome text to show under the relative. */
   onAction: (relativeId: string, actionId: string) => { text: string; tone: Tone; changes: string };
   /** Task 3.6: courting someone met along the way. */
   onRomance: (npcId: string, action: RomanceAction) => { text: string; tone: Tone; changes: string };
+  /** 9.0.3: an act suited to how close this person is (trà, rượu, tâm sự, cầu hòa…). */
+  onNpcAct: (npcId: string, actId: string) => { text: string; tone: Tone; changes: string } | null;
   /** 9.0.2: give an item from the bag to someone met along the way. */
   onGiftNpc: (npcId: string, itemId: string) => { text: string; tone: Tone; changes: string } | null;
   /** Task 4.9: take a disciple (no id) or teach one. */
@@ -97,29 +101,43 @@ export function FamilyPanel({ state, content, onAction, onRomance, onGiftNpc, on
                     {` · Bản chất: ${l.nature ?? '?'}`}
                   </p>
                   {n.alive && <Meter label={`Thiện cảm · ${love.tier}`} value={n.affinity} tone="auto" />}
-                  {n.alive && n.disciple && (
-                    <div class="action-chips">
-                      <button class="chip-btn" disabled={!!teachBlocked(state, n)} title={teachBlocked(state, n) ?? undefined}
-                        onClick={() => { const r = onDisciple(n.id); if (r) setResult({ id: n.id, ...r }); }}>
-                        Chỉ điểm
-                      </button>
-                    </div>
-                  )}
-                  {n.alive && n.disciple && (
-                    <DiscipleActs state={state} content={content} npc={n} onAct={(act) => { const r = onDisciple(n.id, act); if (r) setResult({ id: n.id, ...r }); }} />
-                  )}
-                  {views.length > 0 && (
-                    <div class="action-chips">
-                      {views.map((v) => (
-                        <button class="chip-btn" key={v.action} disabled={!!v.blocked} title={v.blocked ?? undefined}
-                          onClick={() => setResult({ id: n.id, ...onRomance(n.id, v.action) })}>
-                          {v.label}{v.cost && <span class="chip-cost"> · {v.cost}</span>}
+                  {n.alive && (
+                    <Fold id={`npc:${n.id}`} title="Tương tác">
+                    {n.alive && n.disciple && (
+                      <div class="action-chips">
+                        <button class="chip-btn" disabled={!!teachBlocked(state, n)} title={teachBlocked(state, n) ?? undefined}
+                          onClick={() => { const r = onDisciple(n.id); if (r) setResult({ id: n.id, ...r }); }}>
+                          Chỉ điểm
                         </button>
-                      ))}
-                    </div>
-                  )}
-                  {n.alive && !n.disciple && romanceLabel(state, content, n).role !== content.romance.labels.partner && romanceLabel(state, content, n).role !== content.romance.labels.spouse && (
-                    <NpcGiftRow state={state} content={content} npc={n} onGift={(itemId) => { const r = onGiftNpc(n.id, itemId); if (r) setResult({ id: n.id, ...r }); }} />
+                      </div>
+                    )}
+                    {n.alive && n.disciple && (
+                      <DiscipleActs state={state} content={content} npc={n} onAct={(act) => { const r = onDisciple(n.id, act); if (r) setResult({ id: n.id, ...r }); }} />
+                    )}
+                    {!n.disciple && npcActViews(state, content, n).length > 0 && (
+                      <div class="action-chips">
+                        {npcActViews(state, content, n).map((a) => (
+                          <button class="chip-btn" key={a.id} disabled={!!a.blocked} title={a.blocked ?? undefined}
+                            onClick={() => { const r = onNpcAct(n.id, a.id); if (r) setResult({ id: n.id, ...r }); }}>
+                            {a.name}{a.chance !== null && <span class="chip-cost"> · {Math.round(a.chance * 100)}%</span>}{a.cost > 0 && <span class="chip-cost"> · {a.cost} bạc</span>}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    {views.length > 0 && (
+                      <div class="action-chips">
+                        {views.map((v) => (
+                          <button class="chip-btn" key={v.action} disabled={!!v.blocked} title={v.blocked ?? undefined}
+                            onClick={() => setResult({ id: n.id, ...onRomance(n.id, v.action) })}>
+                            {v.label}{v.cost && <span class="chip-cost"> · {v.cost}</span>}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    {n.alive && !n.disciple && romanceLabel(state, content, n).role !== content.romance.labels.partner && romanceLabel(state, content, n).role !== content.romance.labels.spouse && (
+                      <NpcGiftRow state={state} content={content} npc={n} onGift={(itemId) => { const r = onGiftNpc(n.id, itemId); if (r) setResult({ id: n.id, ...r }); }} />
+                    )}
+                    </Fold>
                   )}
                   <div class="action-chips">
                     <button class="chip-btn" title="Ghi người này vào Sổ nhân vật (trong Sổ lưu) để mang sang đời khác"

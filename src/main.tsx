@@ -2,9 +2,12 @@ import { render } from 'preact';
 import { loadContent } from './core/content';
 import { App } from './ui/App';
 import { applyThemePref, loadThemePref } from './ui/theme';
+import { browserStore } from './ui/storage';
 import './ui/theme.css';
 
 const app = document.getElementById('app')!;
+// 9.R1: move saves and settings from the old name's keys before anything reads them.
+browserStore();
 applyThemePref(loadThemePref());
 
 try {

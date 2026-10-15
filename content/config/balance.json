@@ -252,13 +252,13 @@
   },
   "techniques": {
     "default": "dan_khi_quyet",
-    "gradeMul": { "hoang": 1.0, "huyen": 1.2, "dia": 1.5, "thien": 2.0 },
+    "gradeMul": { "hoang": 1.0, "huyen": 1.2, "dia": 1.5, "thien": 2.0, "vo_thuong": 3.0 },
     "gradeMaxRealm": { "hoang": "truc_co", "huyen": "kim_dan", "dia": "nguyen_anh" },
     "mismatchMul": 0.7,
     "lineageMul": { "tien": 1.0, "ma": 1.4, "phat": 0.8, "quy": 1.0, "yeu": 1.0 },
     "rootlessDaoHeartMax": 0.7,
     "switchLossPct": 20,
-    "adaptive": { "rootGrade": { "ngu": 0.5, "tu": 0.4, "tam": 0.3, "song": 0.2, "don": 0.1, "bien_di": 0.1, "ngu_khi": 0.1 } }
+    "adaptive": { "rootGrade": { "ngu": 1.0, "tu": 0.8, "tam": 0.6, "song": 0.4, "don": 0.25, "bien_di": 0.25, "ngu_khi": 0.3 } }
   },
   "sects": {
     "minJoinAge": 8,
@@ -384,6 +384,10 @@
     "repayChance": 0.15, "repayGapYears": 8,
     "revengeStrongerMul": 2,
     "revealChance": 0.05,
+    "bondAt": 60,
+    "coldBelow": 30,
+    "bondChance": 0.12,
+    "bondGapYears": 3,
     "inheritShare": 0.5
   },
   "combat": {
@@ -503,7 +507,7 @@
       "sparProgress": 18, "sparLoseMul": 0.5, "sparAffinity": 3,
       "debateDifficulty": 50, "debateProgress": 14, "debateAffinity": 4,
       "techniqueProgress": 20, "techniqueAffinity": 10,
-      "techniqueSpeed": { "hoang": 0.05, "huyen": 0.1, "dia": 0.18, "thien": 0.3 },
+      "techniqueSpeed": { "hoang": 0.05, "huyen": 0.1, "dia": 0.18, "thien": 0.3, "vo_thuong": 0.5 },
       "gift": {
         "pill": { "progress": 25, "affinity": 8, "favor": 5, "aptitude": 0 },
         "artifact": { "progress": 5, "affinity": 12, "favor": 8, "aptitude": 1 },

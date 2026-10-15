@@ -124,6 +124,9 @@ const BaseConditionsSchema = z
         present: z.boolean().optional(),
         minGrudge: z.number().optional(),
         minFavor: z.number().optional(),
+        /** 9.0.3: the NPC's affinity to the player (shared bond events by closeness). */
+        minAffinity: z.number().optional(),
+        maxAffinity: z.number().optional(),
         /** Kin of someone the player killed. */
         heir: z.boolean().optional(),
         natureKnown: z.boolean().optional(),
@@ -384,7 +387,7 @@ export const EventSchema = z
     cooldownYears: z.number().int().min(0).default(0),
     oncePerLife: z.boolean().default(false),
     /** Task 3.4: not in the yearly pool; fires when an NPC's ledger calls for it (that NPC is the event's NPC). */
-    npcTrigger: z.enum(['revenge', 'repay', 'reveal']).optional(),
+    npcTrigger: z.enum(['revenge', 'repay', 'reveal', 'bond']).optional(),
     /** Task 4.10: fires as soon as it is eligible, ahead of the yearly roll (due follow-ups still come first). */
     urgent: z.boolean().default(false),
     choices: z.array(ChoiceSchema).min(1),
@@ -500,6 +503,8 @@ const ADD_HOOK = new RegExp(
       'rootReroll',
       // Special bodies (realms-roots-paths.md B5); takes effect from task 2.3.
       'lineage\\.(tien|ma|phat|quy|yeu)\\.cultivationSpeed',
+      // 9.R2b: khí vận reaching more corners of life: silver at birth, luck in love, rooted children.
+      'birthSilver', 'romanceChance', 'childRootRolls',
     ].join('|') +
     ')$',
 );
@@ -598,6 +603,8 @@ export const TraitSchema = z
     flavor: z.string().min(1),
     summary: z.string().min(1),
     effects: z.array(EffectHookSchema).min(1),
+    /** 9.R2c: phúc họa đi kèm (shown as "Họa phúc tương y"). */
+    mixed: z.boolean().optional(),
   })
   .strict();
 export const TraitFileSchema = z.array(TraitSchema).min(1);
@@ -860,6 +867,12 @@ export const BalanceSchema = z
         revengeStrongerMul: z.number().min(0),
         /** Chance a year that a masked NPC (nature ≠ surface) shows their true face. */
         revealChance: probability,
+        /** 9.0.3, bond: an NPC with affinity at least bondAt may share an event with the player, chance a year, at least bondGapYears apart. */
+        bondAt: z.number(),
+        /** Below this affinity (or with a grudge) the player gets the "enemy" acts (dò la, cầu hòa, đối đầu). */
+        coldBelow: z.number(),
+        bondChance: probability,
+        bondGapYears: z.number().int().min(0),
         /** Share of a dead NPC's grudge their kin inherits. */
         inheritShare: probability,
       })
@@ -1778,6 +1791,41 @@ export const FamilyActionSchema = z
     if (a.mishapChance > 0 && !a.mishap) ctx.addIssue({ code: 'custom', message: 'có "mishapChance" thì phải có "mishap"' });
   });
 export const FamilyActionFileSchema = z.array(FamilyActionSchema);
+
+/**
+ * Task 9.0.3: what the player can do with someone met along the way, by how close they are
+ * (content/npc-acts.json). Once a year per person per act. `enemy` acts are for people with a
+ * grudge (or cold to the player); the others need affinity in [minAffinity, maxAffinity].
+ */
+export const NpcActSchema = z
+  .object({
+    id,
+    name: z.string().min(1),
+    minAffinity: z.number().optional(),
+    maxAffinity: z.number().optional(),
+    enemy: z.boolean().default(false),
+    /** Only with a cultivating NPC (realm above Phàm Nhân). */
+    cultivatorOnly: z.boolean().default(false),
+    /** Silver spent. */
+    cost: z.number().int().min(0).default(0),
+    /** Silver received on success (e.g. asking for a loan). */
+    silver: affinityRange.optional(),
+    /** % of a stage of cultivation gained by both when it succeeds. */
+    progress: z.number().min(0).default(0),
+    /** Reveals the NPC's true nature. */
+    reveal: z.boolean().default(false),
+    /** Eases this much grudge on success. */
+    grudgeEase: z.number().min(0).default(0),
+    check: z.object({ stat: z.string().min(1), difficulty: z.number() }).strict().optional(),
+    success: ActionOutcomeSchema,
+    fail: ActionOutcomeSchema.optional(),
+  })
+  .strict()
+  .superRefine((a, ctx) => {
+    if (a.check && !a.fail) ctx.addIssue({ code: 'custom', message: 'có "check" thì phải có "fail"' });
+  });
+export const NpcActFileSchema = z.array(NpcActSchema);
+export type NpcAct = z.infer<typeof NpcActSchema>;
 export type FamilyAction = z.infer<typeof FamilyActionSchema>;
 
 export type Balance = z.infer<typeof BalanceSchema>;
@@ -2120,7 +2168,8 @@ export type CareersFile = z.infer<typeof CareersFileSchema>;
 
 // ---------- Techniques and sects (task 2.4) ----------
 
-export const TECHNIQUE_GRADES = ['hoang', 'huyen', 'dia', 'thien'] as const;
+/** Hoàng < Huyền < Địa < Thiên < Vô Thượng (công pháp chí cao do thiên địa diễn hóa). */
+export const TECHNIQUE_GRADES = ['hoang', 'huyen', 'dia', 'thien', 'vo_thuong'] as const;
 export const LINEAGES = ['tien', 'ma', 'phat', 'quy', 'yeu'] as const;
 
 /** content/techniques.json (shared): main cultivation methods, docs/design/techniques.md. */
@@ -2186,6 +2235,22 @@ export const SectFileSchema = z.array(
       /** K.6 hooks while a disciple. */
       effects: z.array(EffectHookSchema),
       duty: z.string().min(1),
+      /** 9.0.4: what sets this sect apart (shown in the Tông môn sheet). */
+      identity: z
+        .object({
+          /** The sect's lasting custom (truyền thống). */
+          tradition: z.string().min(1),
+          /** Its signature art or speciality (tuyệt kỹ). */
+          signature: z.string().min(1),
+          /** A tale of its history (giai thoại). */
+          anecdote: z.string().min(1),
+          /** Id of the sect it vies with, and why. */
+          rival: z.object({ sect: id, reason: z.string().min(1) }).strict().optional(),
+          /** People who give it a face (founder, genius, traitor…). */
+          notable: z.array(z.object({ name: z.string().min(1), title: z.string().min(1), text: z.string().min(1) }).strict()).default([]),
+        })
+        .strict()
+        .optional(),
     })
     .strict(),
 );
@@ -2944,6 +3009,8 @@ export const ClanFileSchema = z
           /** Added to the share of money an heir inherits. */
           inheritMoney: z.number().min(0).max(1),
           karmaPerYear: z.number(),
+          /** 9.0.4: the custom this rule grows into over generations (gia phong), shown in the clan section. */
+          tradition: z.string().min(1).optional(),
         })
         .strict(),
     ),

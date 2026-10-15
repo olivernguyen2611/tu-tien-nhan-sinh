@@ -24,7 +24,7 @@
 ## B. Tóm tắt thiết kế
 
 ### Vòng lặp chính
-1. **Tạo nhân vật** → bấm *Nghịch Thiên Bốc Mệnh* quay 3 ô Tiên Thiên Khí Vận (có reroll).
+1. **Tạo nhân vật** → bấm *Tiên Thiên Khí Vận* (tên cũ Nghịch Thiên Bốc Mệnh) quay 3 ô Tiên Thiên Khí Vận (có reroll).
 2. **Qua một năm** (1 chạm): tuổi +1 → tu vi tăng → kiểm tra thọ nguyên → có thể nảy ra sự kiện → người chơi chọn → hậu quả ghi vào nhật ký.
 3. Lúc rảnh, người chơi mở các tab (Tu luyện, Tông môn, Túi đồ, Quan hệ, Khám phá, Nhân vật) để chủ động làm việc: đột phá, bái sư, đi phường thị, tỏ tình, gây chuyện…
 4. **Chết** (già, đánh nhau, đột phá hỏng, thiên kiếp…) → màn **tổng kết đời** → nhận điểm Luân Hồi → mở khóa thiên phú → đời mới.
@@ -36,7 +36,7 @@
 - **Motif tu tiên kinh điển + hài hước**: phế vật nghịch tập, từ hôn, lão gia gia trong nhẫn, đồ đệ xuyên không gọi sư phụ là "NPC".
 
 ### Khác biệt so với BitLife
-| BitLife | Tu Tiên Nhân Sinh |
+| BitLife | Bách Thế Luân Hồi (tên cũ Tu Tiên Nhân Sinh) |
 |---|---|
 | Đời người ~80 năm, cố định nhịp | Từ vài chục đến hàng nghìn năm; nhịp tự co giãn (bế quan, tua nhanh) |
 | Chỉ số đời thường | Thêm hệ cảnh giới, linh căn, tu vi, thọ nguyên, nhân quả |

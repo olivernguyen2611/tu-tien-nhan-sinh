@@ -504,7 +504,7 @@ button { font: inherit; color: inherit; }
 .profile-note { font-size: 0.8125rem; color: var(--muted); margin: 10px 0 4px; }
 .choice.danger { color: var(--bad); }
 
-/* Destiny roll (Nghịch Thiên Bốc Mệnh) */
+/* Destiny roll (Tiên Thiên Khí Vận) */
 .destiny-screen { max-width: 960px; margin: 0 auto; min-height: 100dvh; padding: calc(12px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 14px; }
 .destiny-intro { margin: 0; color: var(--muted); font-family: var(--font-story); font-size: 0.9375rem; }
 .destiny-cards { display: grid; gap: 10px; }
@@ -528,6 +528,7 @@ button { font: inherit; color: inherit; }
 .trait-head b { font-family: var(--font-story); font-size: 1.0625rem; color: var(--rc); }
 .trait-card.r-pham .trait-head b, .trait-chip.r-pham b { color: var(--ink); }
 .trait-rarity { flex: none; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--rc); border: 1px solid var(--rc); border-radius: 999px; padding: 1px 8px; }
+.trait-mixed { align-self: flex-start; font-size: 0.6875rem; font-style: italic; color: var(--muted); border: 1px dashed var(--line); border-radius: 999px; padding: 0 8px; }
 .trait-flavor { margin: 0; font-family: var(--font-story); font-style: italic; font-size: 0.8125rem; color: var(--muted); }
 .trait-summary { margin: 0; font-size: 0.875rem; }
 .trait-summary.root-note { color: var(--jade); font-weight: 600; }
@@ -937,3 +938,14 @@ html[data-fx='death']::after { box-shadow: inset 0 0 120px 40px rgb(10 8 5 / 0.6
   .event-card .crafts { display: grid; grid-template-columns: 1fr 1fr; column-gap: 24px; align-items: start; }
   .event-card .crafts > :not(.career-row) { grid-column: 1 / -1; }
 }
+
+/* 9.0.5: mục thu gọn */
+.fold { margin: 10px 0 4px; border-top: 1px solid var(--line); padding-top: 6px; }
+.fold-head { cursor: pointer; display: flex; gap: 8px; align-items: baseline; font-weight: 600; list-style: none; padding: 6px 0; }
+.fold-head::-webkit-details-marker { display: none; }
+.fold-head::before { content: '▸'; color: var(--muted, #888); }
+.fold[open] > .fold-head::before { content: '▾'; }
+.fold-count { font-size: 0.8rem; font-weight: 400; color: var(--muted, #888); }
+.fold-hint { font-size: 0.75rem; font-weight: 400; color: var(--accent, #b33); }
+.fold-body { padding-bottom: 6px; }
+@media (min-width: 900px) { .event-card .fold { grid-column: auto; } }

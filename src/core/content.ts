@@ -2,8 +2,8 @@
 // rules as `npm run validate`.
 import {
   AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, CombatTextsSchema, type CombatTexts, type Market, type FateTalent, type Item, type Lineage, type MartialFile, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile, NpcTraitsFileSchema, RankingTextsSchema, type RankingTexts, RomanceFileSchema, type RomanceFile, HeartDemonFileSchema, type HeartDemonFile, RecipeFileSchema, type RecipeFile, CorePatternFileSchema, type CorePattern, NascentSoulFileSchema, type NascentSoulFile, DisciplesFileSchema, type DisciplesFile, FoundingFileSchema, type FoundingFile, HeirFileSchema, type HeirFile, ChosenFileSchema, type ChosenFile, ClanFileSchema, type ClanFile, BlessingFileSchema, type BlessingFile, RebirthTalentFileSchema, type RebirthTalentFile, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, type TraitComboFile, CodexFileSchema, type CodexFile, AchievementFileSchema, type AchievementFile, ChallengeFileSchema, type ChallengeFile, type NpcTraitsFile,
-  BalanceSchema, EventFileSchema, FamilyActionFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema,
-  type Balance, type FamilyAction, type GameEvent, type Glossary, type LifeTexts, type Names, type Origin, type StatExtremesFile, type Trait, type World,
+  BalanceSchema, EventFileSchema, FamilyActionFileSchema, GlossarySchema, NpcActFileSchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema,
+  type Balance, type FamilyAction, type NpcAct, type GameEvent, type Glossary, type LifeTexts, type Names, type Origin, type StatExtremesFile, type Trait, type World,
 } from './schemas';
 import { splitWorldPath, validateContent } from './validate';
 
@@ -23,6 +23,8 @@ export interface Content {
   names: Names;
   traits: Trait[];
   familyActions: FamilyAction[];
+  /** 9.0.3: what to do with people met along the way, by closeness. */
+  npcActs?: NpcAct[];
   lifeTexts: LifeTexts;
   extremes: StatExtremesFile;
   /** Realms, spirit roots, combat paths and crafts (task 2.1). */
@@ -146,6 +148,7 @@ export function loadContent(worldId: string = DEFAULT_WORLD_ID): Content {
     names: NamesSchema.parse(files[`${dir}character/names.json`]),
     traits: TraitFileSchema.parse(files['traits.json']),
     familyActions: FamilyActionFileSchema.parse(files['family-actions.json'] ?? []),
+    npcActs: NpcActFileSchema.parse(files['npc-acts.json'] ?? []),
     lifeTexts: LifeTextsSchema.parse(files['life-texts.json']),
     extremes: StatExtremesFileSchema.parse(files['stat-extremes.json']),
     cultivation: parseCultivationTables(files['realms.json'], files['roots.json'], files['aptitudes.json']),

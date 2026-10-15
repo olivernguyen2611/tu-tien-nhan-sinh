@@ -49,8 +49,8 @@ export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, 
       <div class="seal-mark" aria-hidden="true" onClick={tapSeal}>仙</div>
       {left !== null && <p class="dev-hint" role="status">Còn {left} lần nữa…</p>}
       {devMode && <p class="dev-hint">Developer mode đang bật</p>}
-      <h1>Tu Tiên Nhân Sinh</h1>
-      <p class="subtitle">Một đời phàm nhân, vạn năm tiên lộ</p>
+      <h1>Bách Thế Luân Hồi</h1>
+      <p class="subtitle">Trăm kiếp luân hồi, một đường cầu đạo</p>
       {canContinue && <button class="btn-primary start" onClick={onContinue}>Tiếp tục</button>}
       <button class={canContinue ? 'btn-secondary start' : 'btn-primary start'} onClick={onStart}>Nhập thế</button>
       <button class="link-btn" onClick={onSaves}>Sổ lưu</button>

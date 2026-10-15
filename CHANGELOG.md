@@ -8,6 +8,39 @@
 
 ## [Chưa phát hành]
 
+### 9.R2b–c: Tiên Thiên Khí Vận phủ rộng hơn (2026-10-15)
+- 3 móc mới cho khí vận: `birthSilver` (bạc lúc sinh), `romanceChance` (tỏ tình, nối lại duyên cũ dễ hơn hoặc khó hơn), `childRootRolls` (con cái được gieo linh căn thêm lần, lấy lần tốt nhất). `craft.all.affinity` nay cộng vào tư chất mọi nghề.
+- 50 khí vận mới (tổng 110): 12 Phàm, 12 Lương, 9 Ưu, 6 Tuyệt, 4 Thiên, 1 Thần và 6 Ác vận, phủ gia cảnh, tình duyên, con cái, nghề, chiến đấu, quan trường, tâm cảnh.
+- Khí vận **họa phúc tương y** (vừa lợi vừa hại, trường `mixed`) có nhãn riêng trên thẻ. 6 khí vận cũ có cả ✔ lẫn ✖ cũng được gắn nhãn này.
+
+### 9.R2a: "Nghịch Thiên Bốc Mệnh" đổi thành "Tiên Thiên Khí Vận" (2026-10-15)
+- Màn quay khí vận lúc sinh và các thiên phú luân hồi liên quan dùng tên mới. "Nghịch thiên cải mệnh" (nút quay lại) giữ nguyên.
+
+### 9.R1: đổi tên game thành Bách Thế Luân Hồi (2026-10-15)
+- Tên mới ở màn tiêu đề (kèm câu "Trăm kiếp luân hồi, một đường cầu đạo"), thẻ trình duyệt, manifest PWA, thành tựu chia sẻ, README, tên file save xuất ra (`bach-the-…json`), `package.json`.
+- Khóa lưu đổi từ `tutien.*` sang `bachthe.*`: lần đầu mở bản mới, mọi khóa cũ được **sao chép** sang khóa mới (không ghi đè, không xóa khóa cũ để làm bản dự phòng). File save cũ xuất ra trước đây vẫn nhập được. Cache PWA đổi tên nên bản cài sẵn tự cập nhật.
+- Giữ nguyên tên repo và link GitHub Pages để không gãy link chơi thử.
+
+### Thái Sơ Diễn Đạo Kinh lên Vô Thượng phẩm (2026-10-15)
+- Phẩm công pháp mới **Vô Thượng** (trên Thiên phẩm; hệ số tu luyện ×3,0 so với ×2,0 của Thiên). Thái Sơ Diễn Đạo Kinh là công pháp duy nhất ở phẩm này: thiên địa tự diễn luyện, không ai viết ra.
+- Mạnh hơn: tốc độ tu luyện +30%, đột phá +10 (đại cảnh giới +20), vượt bình cảnh +30%, kháng tâm ma +30%, thọ nguyên +20%, chiến lực +25%, uy lực mọi hệ +15%, đỡ thiên lôi 15%; phần bù cho linh căn yếu gấp đôi (ngũ linh căn +100%).
+- Khó đạt hơn nhiều: bỏ khỏi phường thị; kỳ ngộ Di tích thượng cổ nay cần Khí vận ≥ 90, Ngộ tính ≥ 80, Đạo tâm ≥ 70, hiếm gấp ba lần so với trước, và phải qua phép thử Ngộ tính độ khó 95 (thất bại bị phản phệ, mất cơ duyên).
+- Test `tests/thai-so.test.ts`.
+
+### 9.0.4: bản sắc tông môn, gia phong gia tộc (bước đầu) (2026-10-15)
+- Mỗi tông môn có mục **Bản sắc** (`sects.json` trường `identity`): truyền thống, tuyệt kỹ, giai thoại, đối thủ (Bích Lạc và Tàng Phong tranh kiếm đạo, Bách Thảo Cốc và U Hà Ma Tông thù nhau vì độc), nhân vật nổi bật (chưởng môn, thiên tài, các chủ…). Hiện ở bảng Tông môn và danh sách xin bái nhập.
+- Gia quy của gia tộc có thêm **gia phong** (`clan.json` trường `tradition`) hiện dưới từng gia quy.
+- Chưa làm (để cho 10.11, 13.4): chuỗi sự kiện theo thế hệ (tế tổ, tranh gia chủ, hôn nhân liên gia), nhân vật nổi bật ảnh hưởng gameplay, thi đua tông-tông/tộc-tộc.
+
+### 9.0.3: tương tác theo mức thân và sự kiện chung (2026-10-15)
+- Người quen có **việc làm theo mức thân** (`content/npc-acts.json`): quen biết thì uống trà, hỏi thăm tin tức; từ có cảm tình thì rủ uống rượu, ngao du, nhờ giúp đỡ, cùng tu luyện (hai tu sĩ); thân thiết thì tâm sự, xin chỉ điểm; người có hiềm khích thì dò la, cầu hòa, đối đầu. Mỗi việc một lần mỗi năm mỗi người. Người thân bậc 3 thấy ít nhất 6 việc khác nhau.
+- **Sự kiện chung** mới (`events/bond.json`, 10 sự kiện): bạn thân thỉnh thoảng tìm tới (trigger `bond`, `balance.npcs.bondAt/bondChance/bondGapYears`): cùng uống rượu, nhờ việc, hiểu lầm, cùng gặp nạn, thiệp mời, bạn sa cơ, kẻ thù chung, cùng ngộ đạo; từ thân 85 là kết nghĩa kim lan; từ 90 là tâm sự đêm khuya. Điều kiện sự kiện thêm `npc.minAffinity/maxAffinity`.
+- Chưa làm: thiện cảm người cũ tự phai theo năm, chuỗi riêng từng cặp theo nhiều bước (hiện chia theo bậc thân).
+
+### 9.0.5: giao diện thu gọn, bấm mới xổ danh sách (2026-10-15)
+- Component `Fold` (mục thu gọn, đầu mục kèm số lượng, nhớ mục đã mở trong phiên). Áp dụng cho bảng Tông môn (nhiệm vụ, chuỗi, bảo khố, công pháp, sư phụ, đồng môn), bảng Tu luyện (bí tịch, bế quan, động phủ, võ đạo, đường đời, đạo thống, bách nghệ, bảng xếp hạng), tông môn riêng (trưởng lão, chiêu mộ, công trình) và mỗi người quen trong Quan hệ (mục "Tương tác" chứa các nút).
+- Chưa làm: tách tab riêng cho tông môn, bố cục hai cột máy tính, chấm báo việc cần làm; chờ dock mới (9.7). Chưa kiểm ảnh 320/390/1280.
+
 ### 9.0.2: tặng đồ từ túi cho mọi người quen (2026-10-15)
 - Mỗi người quen còn sống (trừ đồ đệ và đạo lữ đã có đường riêng) có hàng **Tặng đồ**: chọn một món trong túi, danh sách chia nhóm theo loại, gợi ý "hợp gu / không hợp gu" khi đã biết bản chất họ. Mỗi người một món mỗi năm.
 - Phản ứng theo bản chất: tham lam mê pháp khí, mưu mô thích trận pháp và phù lục, v.v. (`balance.npcGift.taste`). Tu sĩ nhận đan dược thì tu vi tăng, nhận pháp khí thì tư chất tăng; phàm nhân chỉ cất giữ nên thiện cảm tăng ít hơn. Người đang lạnh nhạt có thể từ chối (đồ ở lại túi); tặng cho người có hiềm khích làm nguôi bớt thù oán.

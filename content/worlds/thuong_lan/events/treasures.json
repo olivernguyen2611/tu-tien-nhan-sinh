@@ -53,16 +53,21 @@
     "text": "Trong bí cảnh, một đài đá chìm dưới rêu hiện ra khi {name} đi ngang. Trên đài có một quyển sách mở sẵn, trang đầu trắng trơn.",
     "tags": ["rare"],
     "themes": ["fortune", "bi_canh"],
-    "conditions": { "realm": { "min": "truc_co" }, "stats": [{ "stat": "stat.luck", "gte": 75 }] },
-    "weight": 0.5,
+    "conditions": { "realm": { "min": "truc_co" }, "stats": [{ "stat": "stat.luck", "gte": 90 }, { "stat": "stat.comprehension", "gte": 80 }, { "stat": "stat.daoHeart", "gte": 70 }] },
+    "weight": 0.15,
     "oncePerLife": true,
     "luckAffected": true,
     "choices": [
       {
         "text": "Đặt tay lên trang giấy",
-        "result": {
-          "text": "Ngươi đọc tới đâu, chữ hiện tới đó. Khi ngẩng lên, nắng ngoài bí cảnh đã đổi ba lần.",
+        "check": { "stat": "stat.comprehension", "difficulty": 95 },
+        "success": {
+          "text": "Ngươi đọc tới đâu, chữ hiện tới đó. Khi ngẩng lên, nắng ngoài bí cảnh đã đổi ba lần. Thiên địa vừa chọn ngươi làm người đọc thứ hai trong mười vạn năm.",
           "effects": { "gainTechnique": "thai_so_dien_dao_kinh", "setFlags": ["hoai_bich"], "stat.comprehension": 3, "stat.daoHeart": 2, "followUp": { "event": "lo_bi_mat", "afterYears": [3, 8] } }
+        },
+        "fail": {
+          "text": "Chữ hiện ra một dòng rồi bùng thành kim quang, đánh văng ngươi khỏi đài đá. Khi tỉnh lại, quyển sách đã chìm mất, chỉ còn dư âm như sấm trong đầu.",
+          "effects": { "stat.health": -25, "stat.daoHeart": -3, "stat.comprehension": 1 }
         }
       },
       {

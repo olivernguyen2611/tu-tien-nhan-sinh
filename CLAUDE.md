@@ -1,4 +1,4 @@
-# Tu Tiên Nhân Sinh — quy tắc làm việc cho AI
+# Bách Thế Luân Hồi (tên cũ Tu Tiên Nhân Sinh) — quy tắc làm việc cho AI
 
 Game mô phỏng cuộc đời tu tiên kiểu BitLife (web, Vite + TypeScript + Preact). Kế hoạch đầy đủ: `PLAN.md`.
 

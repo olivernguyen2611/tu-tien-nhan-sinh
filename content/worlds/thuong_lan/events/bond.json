@@ -1,0 +1,598 @@
+[
+  {
+    "id": "bond_uong_ruou",
+    "category": "npc",
+    "title": "Rượu gặp tri kỷ",
+    "text": "{npc} xách bầu rượu tới: \"Hôm nay không bàn chuyện đời, chỉ uống.\"",
+    "conditions": {
+      "npc": {
+        "minAffinity": 60,
+        "maxAffinity": 94
+      }
+    },
+    "weight": 1,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Uống thâu đêm",
+        "result": {
+          "text": "Hai người say tới khi trăng xuống núi. Sáng ra đầu đau như búa, lòng nhẹ như mây.",
+          "effects": {
+            "stat.happiness": 4,
+            "stat.health": -2,
+            "npc": {
+              "affinity": 6
+            }
+          }
+        }
+      },
+      {
+        "text": "Kể chuyện trong lòng",
+        "result": {
+          "text": "Ngươi nói những điều chưa nói với ai. {npc} chỉ gật, rót thêm rượu.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "stat.happiness": 2,
+            "npc": {
+              "affinity": 8
+            }
+          }
+        }
+      },
+      {
+        "text": "Uống một chén rồi thôi",
+        "result": {
+          "text": "Ngươi chỉ nhấp môi. {npc} cười: \"Vẫn cẩn thận như xưa.\"",
+          "effects": {
+            "stat.intellect": 1,
+            "npc": {
+              "affinity": 2
+            }
+          }
+        }
+      }
+    ],
+    "npcTrigger": "bond"
+  },
+  {
+    "id": "bond_nho_viec",
+    "category": "npc",
+    "title": "Nhờ một việc nhỏ",
+    "text": "{npc} gãi đầu: \"Có việc hơi khó mở lời, mà ta chỉ tin được ngươi.\"",
+    "conditions": {
+      "npc": {
+        "minAffinity": 60
+      }
+    },
+    "weight": 1,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Giúp không do dự",
+        "result": {
+          "text": "Việc không lớn nhưng tốn công. {npc} nhớ ơn này rất lâu.",
+          "effects": {
+            "stat.happiness": 2,
+            "stat.health": -1,
+            "npc": {
+              "affinity": 8,
+              "favor": 15
+            }
+          }
+        }
+      },
+      {
+        "text": "Giúp, kèm một lời khuyên",
+        "result": {
+          "text": "Ngươi giúp xong còn chỉ ra chỗ người ta sai. {npc} nghe, hơi ngượng mà vẫn cảm kích.",
+          "effects": {
+            "stat.intellect": 1,
+            "npc": {
+              "affinity": 5,
+              "favor": 10
+            }
+          }
+        }
+      },
+      {
+        "text": "Từ chối khéo",
+        "result": {
+          "text": "\"Lúc này ta cũng bận.\" {npc} gật đầu hiểu, mà nụ cười có chút gượng.",
+          "effects": {
+            "stat.happiness": -1,
+            "npc": {
+              "affinity": -5
+            }
+          }
+        }
+      }
+    ],
+    "npcTrigger": "bond"
+  },
+  {
+    "id": "bond_hieu_lam",
+    "category": "npc",
+    "title": "Hiểu lầm",
+    "text": "{npc} nghe lời đồn rằng ngươi đã nói xấu sau lưng người. Y tìm tới, mặt lạnh như sương.",
+    "conditions": {
+      "npc": {
+        "minAffinity": 60,
+        "maxAffinity": 94
+      }
+    },
+    "weight": 1,
+    "cooldownYears": 12,
+    "choices": [
+      {
+        "text": "Giải thích rõ ràng",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Ngươi kể từng việc, từng người. {npc} im lặng rất lâu rồi thở ra: \"Là ta nghe nhầm.\"",
+          "effects": {
+            "stat.daoHeart": 1,
+            "stat.happiness": 3,
+            "npc": {
+              "affinity": 10
+            }
+          }
+        },
+        "fail": {
+          "text": "Càng giải thích càng rối. {npc} bỏ đi, để lại câu \"Để ta nghĩ lại\".",
+          "effects": {
+            "stat.happiness": -3,
+            "npc": {
+              "affinity": -10
+            }
+          }
+        }
+      },
+      {
+        "text": "Im lặng, để thời gian trả lời",
+        "result": {
+          "text": "Ngươi không biện bạch. Nhiều tháng sau sự thật tự lộ, {npc} tới xin lỗi trước.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "stat.happiness": -1,
+            "npc": {
+              "affinity": 5
+            }
+          }
+        }
+      },
+      {
+        "text": "Nổi giận, cắt lời",
+        "result": {
+          "text": "\"Ngươi tin lời đồn hơn tin ta?\" Hai người quay lưng. Cửa đóng lại, lòng nặng trĩu.",
+          "effects": {
+            "stat.happiness": -4,
+            "npc": {
+              "affinity": -15
+            }
+          }
+        }
+      }
+    ],
+    "npcTrigger": "bond"
+  },
+  {
+    "id": "bond_cung_gap_nan",
+    "category": "npc",
+    "title": "Hoạn nạn có nhau",
+    "text": "Đường núi, hai người bị một toán cướp chặn lại. {npc} đứng sát bên ngươi, không lùi nửa bước.",
+    "conditions": {
+      "npc": {
+        "minAffinity": 70
+      }
+    },
+    "weight": 1,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Cùng xông lên",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Hai người lưng tựa lưng, đánh một trận ra trò. Cướp tan, nhìn nhau bật cười.",
+          "effects": {
+            "stat.physique": 2,
+            "stat.happiness": 4,
+            "npc": {
+              "affinity": 12
+            }
+          }
+        },
+        "fail": {
+          "text": "Địch đông hơn tưởng. Cả hai bị thương mới thoát được, nhưng chẳng ai oán ai.",
+          "effects": {
+            "stat.health": -6,
+            "stat.daoHeart": 1,
+            "npc": {
+              "affinity": 6
+            }
+          }
+        }
+      },
+      {
+        "text": "Nhường đường, bỏ của giữ người",
+        "result": {
+          "text": "Ngươi đưa hết tiền mang theo. Cướp thỏa mãn bỏ đi, {npc} thở phào: \"May mà có ngươi biết điều.\"",
+          "effects": {
+            "silver": -20,
+            "stat.intellect": 1,
+            "npc": {
+              "affinity": 5
+            }
+          }
+        }
+      },
+      {
+        "text": "Bảo {npc} chạy trước",
+        "result": {
+          "text": "\"Đi đi, ta chặn đường.\" {npc} ngoái lại ba lần, mắt đỏ hoe. Ngươi thoát được, nhưng đầy thương tích.",
+          "effects": {
+            "stat.health": -8,
+            "stat.daoHeart": 2,
+            "npc": {
+              "affinity": 15,
+              "favor": 25
+            }
+          }
+        }
+      }
+    ],
+    "npcTrigger": "bond"
+  },
+  {
+    "id": "bond_moi_du_le",
+    "category": "npc",
+    "title": "Thiệp mời",
+    "text": "{npc} gửi thiệp mời dự lễ nhà họ, nói có ngươi mới đủ mặt mũi.",
+    "conditions": {
+      "npc": {
+        "minAffinity": 60
+      }
+    },
+    "weight": 1,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Đến dự, mang quà",
+        "result": {
+          "text": "Bàn tiệc đông vui. Ngươi gặp thêm vài gương mặt mới, ai cũng khen {npc} có bạn tốt.",
+          "effects": {
+            "silver": -5,
+            "stat.charm": 2,
+            "stat.happiness": 3,
+            "npc": {
+              "affinity": 6
+            }
+          }
+        },
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 5
+            }
+          ]
+        }
+      },
+      {
+        "text": "Đến dự, ngồi góc yên tĩnh",
+        "result": {
+          "text": "Ngươi uống trà, nhìn người ta nói cười. Thế cũng là một kiểu hạnh phúc.",
+          "effects": {
+            "stat.happiness": 2,
+            "stat.daoHeart": 1,
+            "npc": {
+              "affinity": 3
+            }
+          }
+        }
+      },
+      {
+        "text": "Gửi lời chúc, không đến",
+        "result": {
+          "text": "{npc} hơi tiếc, nhưng vẫn nhận lời chúc với nụ cười.",
+          "effects": {
+            "stat.happiness": -1,
+            "npc": {
+              "affinity": -2
+            }
+          }
+        }
+      }
+    ],
+    "npcTrigger": "bond"
+  },
+  {
+    "id": "bond_ban_sa_sut",
+    "category": "npc",
+    "title": "Bạn lúc sa cơ",
+    "text": "{npc} gầy đi trông thấy. Hỏi ra mới biết việc làm ăn đổ vỡ, nợ chồng nợ.",
+    "conditions": {
+      "npc": {
+        "minAffinity": 65
+      }
+    },
+    "weight": 1,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Cho vay một khoản",
+        "result": {
+          "text": "Ngươi đẩy túi bạc qua bàn. {npc} nắm tay ngươi, không nói nên lời.",
+          "effects": {
+            "silver": -30,
+            "stat.happiness": 3,
+            "npc": {
+              "affinity": 10,
+              "favor": 30
+            }
+          }
+        },
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 30
+            }
+          ]
+        }
+      },
+      {
+        "text": "Bày kế gỡ nợ",
+        "result": {
+          "text": "Ngươi ngồi cùng {npc} tính sổ cả đêm, tìm ra lối thoát. Có đầu óc đôi khi quý hơn có bạc.",
+          "effects": {
+            "stat.intellect": 2,
+            "npc": {
+              "affinity": 8,
+              "favor": 15
+            }
+          }
+        }
+      },
+      {
+        "text": "Chỉ an ủi vài lời",
+        "result": {
+          "text": "Lời hay không trả được nợ. {npc} cảm ơn, nhưng ánh mắt vẫn trống rỗng.",
+          "effects": {
+            "stat.happiness": -2,
+            "npc": {
+              "affinity": -3
+            }
+          }
+        }
+      }
+    ],
+    "npcTrigger": "bond"
+  },
+  {
+    "id": "bond_ket_nghia",
+    "category": "npc",
+    "title": "Kết nghĩa kim lan",
+    "text": "Sau bao năm, {npc} nghiêm trang: \"Ta không có huynh đệ ruột. Ngươi có chịu làm huynh đệ của ta không?\"",
+    "conditions": {
+      "npc": {
+        "minAffinity": 85
+      }
+    },
+    "weight": 1,
+    "cooldownYears": 0,
+    "choices": [
+      {
+        "text": "Chịu, thề trước trời đất",
+        "result": {
+          "text": "Hai người dâng hương, rạch tay, hòa máu vào chén rượu. Từ nay trên đời có một người sống chết cùng ngươi.",
+          "effects": {
+            "stat.daoHeart": 3,
+            "stat.happiness": 6,
+            "npc": {
+              "affinity": 15,
+              "favor": 20,
+              "role": "huynh đệ kết nghĩa"
+            }
+          }
+        }
+      },
+      {
+        "text": "Chịu, nhưng không cần nghi lễ",
+        "result": {
+          "text": "\"Huynh đệ trong lòng, cần gì hương khói.\" {npc} cười lớn, vỗ vai ngươi đau điếng.",
+          "effects": {
+            "stat.happiness": 4,
+            "npc": {
+              "affinity": 10
+            }
+          }
+        }
+      },
+      {
+        "text": "Chưa dám nhận",
+        "result": {
+          "text": "Ngươi sợ mang nợ nghĩa quá nặng. {npc} hiểu, nhưng đêm đó uống rượu một mình.",
+          "effects": {
+            "stat.daoHeart": -1,
+            "stat.happiness": -3,
+            "npc": {
+              "affinity": -6
+            }
+          }
+        }
+      }
+    ],
+    "npcTrigger": "bond",
+    "oncePerLife": true
+  },
+  {
+    "id": "bond_tri_ky",
+    "category": "npc",
+    "title": "Tâm sự đêm khuya",
+    "text": "{npc} gõ cửa giữa đêm: \"Trong lòng ta có chuyện, nói với ngươi mới nhẹ được.\"",
+    "conditions": {
+      "npc": {
+        "minAffinity": 90
+      }
+    },
+    "weight": 1,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Ngồi nghe tới sáng",
+        "result": {
+          "text": "{npc} kể chuyện cả đời chưa kể ai. Khi mặt trời lên, cả hai thấy như đã sống thêm một kiếp.",
+          "effects": {
+            "stat.daoHeart": 3,
+            "stat.happiness": 4,
+            "npc": {
+              "affinity": 8,
+              "favor": 15
+            }
+          }
+        }
+      },
+      {
+        "text": "Kể lại chuyện của mình",
+        "result": {
+          "text": "Hai người đổi bí mật cho nhau. Chẳng ai còn cần giữ mặt nạ trước người kia.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "stat.charm": 1,
+            "npc": {
+              "affinity": 10
+            }
+          }
+        }
+      },
+      {
+        "text": "Giữ im lặng, rót trà",
+        "result": {
+          "text": "Không lời nào cần nói. Bình trà nguội dần mà lòng ấm lên.",
+          "effects": {
+            "stat.happiness": 3,
+            "npc": {
+              "affinity": 5
+            }
+          }
+        }
+      }
+    ],
+    "npcTrigger": "bond"
+  },
+  {
+    "id": "bond_cung_luyen",
+    "category": "npc",
+    "title": "Cùng nhau ngộ đạo",
+    "text": "{npc} rủ ngươi lên đỉnh núi: \"Hôm nay nhìn mây, thử xem ai ngộ được nhiều hơn.\"",
+    "conditions": {
+      "npc": {
+        "minAffinity": 70,
+        "maxAffinity": 99
+      }
+    },
+    "weight": 1,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Tĩnh tọa luận đạo",
+        "check": {
+          "stat": "stat.comprehension",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Hai người nói về đạo tới khi sương xuống. Một câu của {npc} khiến ngươi sáng ra.",
+          "effects": {
+            "stat.comprehension": 3,
+            "npc": {
+              "affinity": 7
+            }
+          }
+        },
+        "fail": {
+          "text": "Ngươi nghĩ mãi không thông, lại bị {npc} trêu. Thôi, trời cao đừng vội.",
+          "effects": {
+            "stat.happiness": 1,
+            "stat.daoHeart": 1,
+            "npc": {
+              "affinity": 3
+            }
+          }
+        }
+      },
+      {
+        "text": "Ngắm mây, khỏi bàn đạo",
+        "result": {
+          "text": "Có những buổi chiều không cần ngộ gì cả. Ngộ được chiều nay là đủ.",
+          "effects": {
+            "stat.happiness": 4,
+            "npc": {
+              "affinity": 4
+            }
+          }
+        }
+      }
+    ],
+    "npcTrigger": "bond"
+  },
+  {
+    "id": "bond_ke_dich_chung",
+    "category": "npc",
+    "title": "Kẻ thù chung",
+    "text": "{npc} nghiến răng: \"Tên đó lại hại người nữa. Ngươi có cùng ta trị hắn không?\"",
+    "conditions": {
+      "npc": {
+        "minAffinity": 65
+      }
+    },
+    "weight": 1,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Cùng bày kế",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Kế hoạch trơn tru. Kẻ kia sa lưới, hai người nhìn nhau cười đắc ý.",
+          "effects": {
+            "stat.intellect": 2,
+            "stat.happiness": 3,
+            "npc": {
+              "affinity": 10
+            }
+          }
+        },
+        "fail": {
+          "text": "Kế hoạch bại lộ giữa chừng. Cả hai phải chạy, cười không nổi mà vẫn cười.",
+          "effects": {
+            "stat.happiness": -2,
+            "stat.health": -2,
+            "npc": {
+              "affinity": 4
+            }
+          }
+        }
+      },
+      {
+        "text": "Khuyên bỏ qua, đừng gây thù",
+        "result": {
+          "text": "{npc} im lặng một lúc, rồi thở dài: \"Ngươi nói cũng phải.\"",
+          "effects": {
+            "stat.daoHeart": 1,
+            "npc": {
+              "affinity": -2
+            }
+          }
+        }
+      }
+    ],
+    "npcTrigger": "bond"
+  }
+]

@@ -29,7 +29,7 @@ export function ClanSection({ state, content, onClan }: {
             <ul class="sect-rules">
               {clan.rules.map((id) => {
                 const r = content.clan.rules.find((x) => x.id === id);
-                return r && <li key={id}><b>{r.name}</b>: {r.text}</li>;
+                return r && <li key={id}><b>{r.name}</b>: {r.text}{r.tradition && <><br /><i>Gia phong: {r.tradition}</i></>}</li>;
               })}
             </ul>
           )}

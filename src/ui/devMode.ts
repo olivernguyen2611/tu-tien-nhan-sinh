@@ -1,6 +1,6 @@
 // Developer mode switch, kept in this browser only. Unlocked by tapping the
 // title seal DEV_TAPS times; it hides the button, it is not access control.
-const KEY = 'tutien.dev';
+const KEY = 'bachthe.dev';
 export const DEV_TAPS = 20;
 /** Taps further apart than this start the count again. */
 export const DEV_TAP_GAP_MS = 2000;
