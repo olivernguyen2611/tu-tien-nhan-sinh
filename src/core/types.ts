@@ -382,6 +382,8 @@ export interface Npc {
   heirOf: string | null;
   /** Backlog 2 (Gia đạo): bond action → player's age when last done; a hậu thiên linh căn opened by a gift. */
   lastBond?: Record<string, number>;
+  /** 9.0.2: the player's age when an item was last given to this NPC (once a year). */
+  lastGift?: number;
   acquired?: boolean;
   rootTries?: number;
   /** Task 4.9: the player's disciple, and the age they were last taught. */
