@@ -14,6 +14,12 @@
     "bargainLose": "Bà bán hàng nhìn ngươi từ đầu tới chân rồi nâng giá.",
     "regions": [
       "thanh_van_chau"
+    ],
+    "techniques": [
+      {
+        "id": "dan_khi_quyet",
+        "price": 60
+      }
     ]
   },
   {
@@ -32,7 +38,13 @@
     ],
     "bargainWin": "Chưởng quầy cười híp mắt: \"Đạo hữu khéo nói, giảm cho một chút.\"",
     "bargainLose": "Chưởng quầy vẫn cười, nhưng giá trên bảng vừa nhích lên.",
-    "stock": 8
+    "stock": 8,
+    "techniques": [
+      {
+        "id": "dan_khi_quyet",
+        "price": 3
+      }
+    ]
   },
   {
     "id": "vo_chu",

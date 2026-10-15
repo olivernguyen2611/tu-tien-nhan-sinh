@@ -356,7 +356,11 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.joinSect) {
     const before = next.log;
     const joined = joinSect(next, content, fx.joinSect);
-    next = { ...joined.state, log: joined.text ? dropAdded(before, joined.state.log, [joined.text]) : joined.state.log };
+    // 9.R4c: the manual a sect hands a rooted newcomer brings them into the first realm.
+    if (joined.joined) joined.state = enterFirstRealm(joined.state, content);
+    const manual = content.cultivation.realms.texts.sectManual;
+    const said = manual && joined.text.endsWith(` ${manual}`) ? [joined.text.slice(0, -manual.length - 1), manual] : [joined.text];
+    next = { ...joined.state, log: joined.text ? dropAdded(before, joined.state.log, said) : joined.state.log };
     if (joined.text) text = `${text} ${joined.text}`;
   }
   if (fx.sectContribution) next = addContribution(next, fx.sectContribution);

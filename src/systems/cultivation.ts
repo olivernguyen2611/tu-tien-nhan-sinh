@@ -442,17 +442,25 @@ export function startCultivating(state: GameState, content: Content): { state: G
   if (!root || state.cult.realm !== 'pham_nhan' || (content.balance.roots.gradeSpeed[root.grade] ?? 0) <= 0) return { state, line: null };
   const first = content.cultivation.realms.realms[1];
   if (!first) return { state, line: null };
+  const texts = content.cultivation.realms.texts;
   const rng = Rng.fromState(state.rng);
-  const entered = enterRealm(state, content, first.id, rng);
-  // The tiên sư leaves the default technique (Dẫn Khí Quyết); the start line already says so.
-  let next = learnTechnique(entered, content, content.balance.techniques.default, { quiet: true })?.state ?? entered;
+  let next = state;
   // Sects come recruiting a few years later (task 2.5).
   const recruit = content.world.sectRecruitEvent;
   if (recruit) {
     const [lo, hi] = content.balance.sects.recruitAfterYears;
     next = { ...next, events: { ...next.events, followUps: [...next.events.followUps, { event: recruit, atAge: next.character.age + rng.int(lo, hi) }] } };
   }
-  const line: LogLine = { text: fillRealm(content.cultivation.realms.texts.start, next, content), tone: 'good' };
+  // 9.R4c: no technique is handed out by default any more. A clan child gets the family's entry manual;
+  // anyone else waits for a sect, a market or a kỳ ngộ to bring one (learning it enters the first realm).
+  const clan = content.origins.find((o) => o.id === state.character.originId)?.cultivatorClan;
+  if (!currentTechnique(next, content) && clan) next = learnTechnique(next, content, content.balance.techniques.default, { quiet: true })?.state ?? next;
+  if (!currentTechnique(next, content)) {
+    const line: LogLine | null = texts.needTechnique ? { text: texts.needTechnique, tone: 'normal' } : null;
+    return { state: { ...next, rng: rng.getState(), log: line ? pushLine(next.log, line) : next.log }, line };
+  }
+  next = enterRealm(next, content, first.id, rng);
+  const line: LogLine = { text: fillRealm((clan && texts.startClan) || texts.start, next, content), tone: 'good' };
   return { state: { ...next, rng: rng.getState(), log: pushLine(next.log, line) }, line };
 }
 

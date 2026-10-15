@@ -6,6 +6,7 @@ import type { GameState } from '../src/core/types';
 import { attemptMajorBreakthrough, breakthroughPct, cultivateYear, inBottleneck, majorBreakthroughInfo, enterRealm, hookActive, realmLabel, revealRoot, rollRoot, rootName, rootNameOf, rootTestAge, startCultivating, yearlyGain } from '../src/systems/cultivation';
 import { migrate, makeSave } from '../src/systems/save';
 import { findEvent, resolveChoice, visibleChoices } from '../src/systems/events/engine';
+import { learnTechnique } from '../src/systems/technique';
 
 const content = loadContent();
 const speed = (grade: string) => content.balance.roots.gradeSpeed[grade];
@@ -228,7 +229,12 @@ describe('cultivation per year (task 2.3)', () => {
 
   it('a root starts Luyện Khí 1 with a longer life; no root stays mortal', () => {
     const b = createLife({ seed: 'start' }, content);
-    const s = { ...b, character: { ...b.character, age: 9 }, cult: { ...b.cult, root: { grade: 'tam', elements: ['kim', 'moc', 'thuy'] } } };
+    const bare = { ...b, character: { ...b.character, age: 9 }, cult: { ...b.cult, root: { grade: 'tam', elements: ['kim', 'moc', 'thuy'] } } };
+    // 9.R4c: a root alone is not enough; without a technique the life waits.
+    const waiting = startCultivating(bare, content);
+    expect(waiting.state.cult.realm).toBe('pham_nhan');
+    expect(waiting.line?.text).toContain('công pháp');
+    const s = learnTechnique(bare, content, content.balance.techniques.default, { quiet: true })!.state;
     const { state, line } = startCultivating(s, content);
     expect(state.cult.realm).toBe('luyen_khi');
     expect(state.cult.stage).toBe(0);

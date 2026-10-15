@@ -126,11 +126,13 @@ export function continueAsHeir(state: GameState, content: Content, heirId: strin
       s = { ...s, log: [{ ...s.log[0], lines: [...s.log[0].lines, { text: content.lifeTexts.familyBond.texts.heirInsight, tone: 'good' }] }] };
     }
   }
-  // A child with a usable root, old enough for the root test, starts cultivating now.
+  // A child with a usable root, old enough for the root test, starts cultivating now on what the parent
+  // taught, or on the family's entry manual (9.R4c: a cultivator's house passes one down).
   if (child && option.age >= content.balance.roots.testAge[0]) {
-    s = startCultivating(s, content).state;
     const taught = child.technique && learnTechnique(s, content, child.technique, { quiet: true });
     if (taught) s = { ...taught.state, log: [{ ...taught.state.log[0], lines: [...taught.state.log[0].lines, { text: content.lifeTexts.familyBond.texts.heirTechnique.replaceAll('{technique}', content.techniques.find((t) => t.id === child.technique)?.name ?? ''), tone: 'good' }] }, ...taught.state.log.slice(1)] };
+    else s = learnTechnique(s, content, content.balance.techniques.default, { quiet: true })?.state ?? s;
+    s = startCultivating(s, content).state;
   }
   return s;
 }

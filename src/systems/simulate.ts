@@ -19,6 +19,7 @@ import { runSeclusion } from './seclusion';
 import { doMission, joinSect, missionViews, requestMaster, masterBlocked, sectEligibility, sectTechniques } from './sect';
 import { buyTreasury, treasuryViews } from './sectTreasury';
 import { learnBlocked, learnTechnique, techniqueById, techniqueCapReason, techniqueMaxRealm } from './technique';
+import { buyScroll, openMarkets, techniqueOffers } from './market';
 import { checkDeath } from './time';
 
 /**
@@ -82,6 +83,20 @@ export interface SimOptions {
   knowledge?: 'all' | 'none';
 }
 
+/** 9.R4c: the bot buys the first scroll it can afford and learn at a market it can enter, then learns it. */
+function buyEntryTechnique(state: GameState, content: Content): { state: GameState } | null {
+  for (const m of openMarkets(state, content)) {
+    for (const o of techniqueOffers(state, content, m.id)) {
+      const tech = techniqueById(content, o.id);
+      if (o.blocked || !tech || learnBlocked(state, content, tech)) continue;
+      const bought = buyScroll(state, content, m.id, o.id).state;
+      const learned = learnTechnique(bought, content, o.id, { quiet: true });
+      if (learned) return learned;
+    }
+  }
+  return null;
+}
+
 /** Live one life to its end. Deterministic for a seed, profile and content. */
 export function simulateLife(content: Content, seed: string, opts: SimOptions = {}): LifeResult {
   const profile = opts.profile ?? 'random';
@@ -133,9 +148,9 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     }
     if (s.cult.coreForming) { s = placeStrand(s, content, s.cult.coreForming.offered[0]).state; continue; }
     if (s.cult.heartDemonTrial) { s = meetIllusion(s, content, 'face').state; continue; }
-    // A rooted mortal takes the starter technique and begins to cultivate.
+    // A rooted mortal finds an entry technique (9.R4c: bought at a market it can reach, or one it holds) and begins to cultivate.
     if (s.cult.realm === 'pham_nhan' && rootUsable(s, content)) {
-      const learned = s.cult.technique ? { state: s } : learnTechnique(s, content, content.balance.techniques.default, { quiet: true });
+      const learned = s.cult.technique ? { state: s } : buyEntryTechnique(s, content);
       if (learned) {
         const started = enterFirstRealm(learned.state, content);
         if (started !== s) { s = started; continue; }
@@ -186,7 +201,7 @@ function playerYear(state: GameState, content: Content): GameState {
   let s = state;
   if (!s.sect.id) {
     const sect = content.sects.find((x) => x.recruitable && !sectEligibility(s, content, x.id));
-    if (sect) s = joinSect(s, content, sect.id).state;
+    if (sect) s = enterFirstRealm(joinSect(s, content, sect.id).state, content);
   }
   if (s.sect.id) {
     const best = missionViews(s, content).filter((m) => !m.blocked).sort((a, b) => b.chance - a.chance)[0];

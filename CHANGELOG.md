@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### 9.R4c: công pháp không còn tặng mặc định (2026-10-15)
+- Thử ra linh căn không còn kèm Dẫn Khí Quyết. Có linh căn mà chưa có công pháp thì vẫn là phàm nhân, nhật ký nói rõ cần công pháp nhập môn và tìm ở đâu; học được công pháp là vào Luyện Khí.
+- Nguồn công pháp nhập môn: **thế gia truyền thừa** (hậu duệ gia tộc tu tiên, và con của người tu khi chơi tiếp bằng con cháu), **tông môn ban** (vào tông là được chấp sự đưa Dẫn Khí Quyết), **mua** (Chợ phiên huyện 60 lượng bạc, Kim Thiềm 3 linh thạch), cùng các nguồn cũ (kỳ ngộ, di tích, cao nhân võ đạo, kim thủ chỉ).
+- Kỳ vật mở linh căn cho người không có giờ chỉ cho linh căn; vào Luyện Khí khi có công pháp. Ngũ khí Tiên Võ đồng tu nhận Cửu Chuyển Kim Cốt Quyết rồi mới nhập Luyện Khí.
+- Bot mô phỏng mua công pháp ở phường thị nó vào được thay vì tự nhận. 200 đời (player): Luyện Khí 74,5%, Trúc Cơ 40,5%, Kim Đan 9,5%.
+
 ### 9.R4b: năm cổng tiên duyên, bỏ thử linh căn đại trà (2026-10-15)
 - Không còn hẹn mọi đứa trẻ thử linh căn lúc 6–12 tuổi (`world.json` bỏ `rootTestEvent`). Thay bằng **năm cổng tiên duyên** (`content/worlds/thuong_lan/immortal-gates.json`, xác suất ở `balance.immortalGates`): mỗi năm cổng nào đủ điều kiện thì có xác suất mở, mang tới sự kiện thử linh căn của nó; mỗi cổng mở nhiều nhất một lần mỗi đời.
   - a. **Tiên môn mở hội thu đồ** (8–16 tuổi): sự kiện tiên sư áo xám cũ.

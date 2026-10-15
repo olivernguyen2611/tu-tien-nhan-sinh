@@ -7,7 +7,7 @@ import { Rng, hashSeed } from '../core/rng';
 import type { EffectHook, Sect } from '../core/schemas';
 import type { GameState, LogLine } from '../core/types';
 import { chooseMaster, sectmateYear, seedCast } from './sectmates';
-import { rootAffinities } from './technique';
+import { currentTechnique, learnTechnique, rootAffinities } from './technique';
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
 
@@ -90,6 +90,15 @@ export function joinSect(state: GameState, content: Content, sectId: string): { 
     sect: { ...state.sect, id: sectId, rank: 0, since: state.character.age, contribution: 0, master: null, lastMission: null, lastMasterTry: null, chain: null, spent: 0, bought: {} },
   };
   const withCast = seedCast({ ...next, log: addLines(next, [{ text, tone: 'good' }]) }, content);
+  // 9.R4c: a rooted newcomer with no technique is handed the entry manual (the caller enters the first realm).
+  const manual = content.cultivation.realms.texts.sectManual;
+  if (withCast.cult.realm === 'pham_nhan' && withCast.cult.root && !currentTechnique(withCast, content)) {
+    const learned = learnTechnique(withCast, content, content.balance.techniques.default, { quiet: true });
+    if (learned) {
+      const said = manual ? `${text} ${manual}` : text;
+      return { state: manual ? { ...learned.state, log: addLines(learned.state, [{ text: manual, tone: 'good' }]) } : learned.state, text: said, joined: true };
+    }
+  }
   return { state: withCast, text, joined: true };
 }
 

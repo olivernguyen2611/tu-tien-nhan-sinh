@@ -177,13 +177,13 @@ function ascend(state: GameState, content: Content): GameState {
     cult: { ...state.cult, root: { grade: rootGrade, elements: basic }, bodyId },
   };
   const logged = { ...withRoot, log: addLines(withRoot, [{ text: content.martial.texts.ascend, tone: 'rare' }]) };
-  let s = startCultivating(logged, content).state;
-  // The cao nhân of Hóa cảnh returns: now there is a root, the kinh can be cultivated.
+  // The cao nhân of Hóa cảnh returns: now there is a root, the kinh can be cultivated (9.R4c: it is the entry technique).
+  let s = logged;
   const { gift } = content.martial;
   const tech = content.techniques.find((t) => t.id === gift.technique);
   const learned = tech ? learnTechnique(s, content, gift.technique, { quiet: true, force: true }) : null;
   if (learned && tech) s = { ...learned.state, log: addLines(learned.state, [{ text: gift.reunionText.replaceAll('{technique}', tech.name), tone: 'rare' }]) };
-  return s;
+  return startCultivating(s, content).state;
 }
 
 /** Train for a year; with enough years, try the next stage. Null when it cannot be done now. */

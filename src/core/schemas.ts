@@ -1972,6 +1972,11 @@ export const RealmsFileSchema = z
       .object({
         /** Root found: the first technique and the first stage. */
         start: z.string().min(1),
+        /** 9.R4c: a clan child is handed the family's entry manual; a rooted mortal without any technique waits. */
+        startClan: z.string().min(1).optional(),
+        needTechnique: z.string().min(1).optional(),
+        /** 9.R4c: a sect hands its new disciple an entry manual. */
+        sectManual: z.string().min(1).optional(),
         stageUp: z.array(z.string().min(1)).min(1),
         /** Bar full at the last stage of a realm: waiting for the big breakthrough. */
         peak: z.string().min(1),

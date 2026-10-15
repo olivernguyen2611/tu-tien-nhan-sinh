@@ -76,7 +76,10 @@
     }
   ],
   "texts": {
-    "start": "Tiên sư để lại một tờ khẩu quyết dẫn khí. Đêm ấy, lần đầu tiên linh khí chịu dừng lại trong kinh mạch ngươi: {realm} {stage}.",
+    "start": "Đêm ấy, lần đầu tiên linh khí chịu dừng lại trong kinh mạch ngươi: {realm} {stage}.",
+    "startClan": "Trưởng lão trao một tờ khẩu quyết gia truyền, dặn chép ba lần rồi đốt. Đêm ấy, lần đầu tiên linh khí chịu dừng lại trong kinh mạch ngươi: {realm} {stage}.",
+    "needTechnique": "Có linh căn mà chưa có công pháp thì chưa nhập đạo được. Phải có một bản công pháp nhập môn: tông môn ban, phường thị bán, hoặc kỳ ngộ đưa tới.",
+    "sectManual": "Chấp sự ném cho một quyển Dẫn Khí Quyết sờn gáy: \"Đệ tử mới ai cũng bắt đầu từ đây.\"",
     "stageUp": [
       "Linh khí trong kinh mạch dày thêm một tầng. Ngươi đã là {realm} {stage}.",
       "Một đêm ngồi tĩnh tọa, bình chướng vỡ ra như lớp băng mỏng: {realm} {stage}.",

@@ -7,6 +7,7 @@ import { devSetBody, devSetRoot } from '../src/systems/dev';
 import { inheritRoot } from '../src/systems/romance';
 import { Rng } from '../src/core/rng';
 import { makeSave, migrate } from '../src/systems/save';
+import { learnTechnique } from '../src/systems/technique';
 
 const content = loadContent();
 const adult = (): GameState => {
@@ -26,7 +27,8 @@ describe('linh căn and thể chất are separate', () => {
     expect(s.cult.root).toEqual({ grade: 'song', elements: ['kim', 'hoa'] });
     expect(bodyLabel(s, content)).toBe('Cửu Dương Thể');
     expect(rootLabel(s, content)).toContain('Song linh căn');
-    expect(startCultivating(s, content).state.cult.realm).not.toBe('pham_nhan');
+    const taught = learnTechnique(s, content, content.balance.techniques.default, { quiet: true })!.state;
+    expect(startCultivating(taught, content).state.cult.realm).not.toBe('pham_nhan');
   });
 
   it('a body does not make a rootless mortal able to cultivate', () => {
