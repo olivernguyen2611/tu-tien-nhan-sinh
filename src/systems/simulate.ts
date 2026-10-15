@@ -71,6 +71,8 @@ export interface SimOptions {
   maxSteps?: number;
   /** Called at each event the bot answers and each blow of a fight (for finding what kills lives). */
   observe?: (kind: 'event' | 'combat', state: GameState) => void;
+  /** 9.R2d: skip the roll and take exactly these khí vận ([] = none), for A/B runs on the same seeds. */
+  traits?: string[];
 }
 
 /** Live one life to its end. Deterministic for a seed, profile and content. */
@@ -81,7 +83,9 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
   const maxSteps = opts.maxSteps ?? 20000;
   const botRng = new Rng(`bot:${seed}`);
   const realms = content.cultivation.realms.realms.map((r) => r.id);
-  let s: GameState = confirmDestiny(rollDestiny(createLife({ seed, difficulty: opts.difficulty }, content), content), content);
+  const born = createLife({ seed, difficulty: opts.difficulty }, content);
+  const offered = opts.traits ? { ...born, destiny: { ...born.destiny, offered: opts.traits } } : rollDestiny(born, content);
+  let s: GameState = confirmDestiny(offered, content);
   let peak = 0;
   const reachedAt: Record<string, number> = {};
   let steps = 0;
@@ -305,4 +309,39 @@ export function formatReport(rep: Report, content: Content, title: string): stri
 export function simulateMany(content: Content, count: number, prefix: string, opts: SimOptions = {}): { results: LifeResult[]; report: Report } {
   const results = Array.from({ length: count }, (_, i) => simulateLife(content, `${prefix}-${i}`, opts));
   return { results, report: summarize(results, content) };
+}
+
+/** 9.R2d: what one khí vận changes, against the same seeds with none. */
+export interface TraitImpact {
+  id: string;
+  /** Change in mean peak realm (realm steps), mean age, and share of lives reaching Kim Đan. */
+  peak: number;
+  age: number;
+  kimDan: number;
+  /** Over its rarity's budget (or a mixed / ác vận one that is all upside). */
+  over: boolean;
+}
+
+export function traitImpacts(content: Content, ids: string[], count: number, prefix: string, opts: SimOptions = {}): { base: Report; impacts: TraitImpact[] } {
+  const kd = content.cultivation.realms.realms.findIndex((r) => r.id === 'kim_dan');
+  const mean = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / Math.max(1, xs.length);
+  const stats = (rs: LifeResult[]) => ({ peak: mean(rs.map((r) => r.peak)), age: mean(rs.map((r) => r.age)), kimDan: mean(rs.map((r) => (r.peak >= kd ? 1 : 0))) });
+  // The baseline for each rarity is an empty khí vận of that rarity, so the stat lift every rarity gives
+  // (backlog 5, fateLift) is in both sides and only the khí vận's own effects are measured.
+  const blank = (rarity: string) => `__blank_${rarity}`;
+  const rarities = [...new Set(ids.map((id) => content.traits.find((x) => x.id === id)?.rarity ?? 'pham'))];
+  const withBlanks: Content = { ...content, traits: [...content.traits, ...rarities.map((r) => ({ id: blank(r), rarity: r, name: '—', flavor: '—', summary: '—', effects: [] }))] };
+  const bases = new Map(rarities.map((r) => [r, simulateMany(withBlanks, count, prefix, { ...opts, traits: [blank(r)] })]));
+  const base = bases.get(rarities[0])!;
+  const budget = content.balance.traits.budget;
+  const impacts = ids.map((id) => {
+    const t = content.traits.find((x) => x.id === id);
+    const b = stats(bases.get(t?.rarity ?? 'pham')!.results);
+    const r = stats(simulateMany(content, count, prefix, { ...opts, traits: [id] }).results);
+    const peak = r.peak - b.peak;
+    const max = budget?.max[t?.rarity ?? ''] ?? Infinity;
+    const mixed = t?.nature === 'hon_hop' || t?.rarity === 'ac';
+    return { id, peak, age: r.age - b.age, kimDan: r.kimDan - b.kimDan, over: peak > max || (mixed && peak > (budget?.mixedMax ?? Infinity)) };
+  });
+  return { base: base.report, impacts };
 }

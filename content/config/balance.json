@@ -28,6 +28,10 @@
     "maxSlots": 5,
     "locks": 1,
     "lockCost": 3,
+    "budget": {
+      "max": { "pham": 0.15, "luong": 0.25, "uu": 0.4, "tuyet": 0.6, "thien": 0.9, "than": 1.4, "ac": 0.3 },
+      "mixedMax": 0.4
+    },
     "fate": {
       "rarityScore": { "pham": 0, "luong": 1, "uu": 2.5, "tuyet": 5, "thien": 8, "than": 12, "ac": 1 },
       "stats": ["health", "intellect", "charm", "physique", "comprehension", "luck", "daoHeart"],
@@ -704,12 +708,13 @@
     "wish": 4
   },
   "goldenFinger": {
-    "birthChance": 0.003,
-    "perLife": 0.0005,
-    "maxChance": 0.01,
+    "birthChance": 0.07,
+    "perLife": 0.002,
+    "maxChance": 0.1,
     "pityLives": 15,
     "chooseCost": 30,
-    "actionMinAge": 6
+    "actionMinAge": 6,
+    "rarityWeights": { "pham": 55, "hiem": 30, "cuc_hiem": 12, "nghich_thien": 3 }
   },
   "badges": {
     "max": 3

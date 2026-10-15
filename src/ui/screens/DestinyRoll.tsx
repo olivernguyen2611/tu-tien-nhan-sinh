@@ -75,11 +75,12 @@ export function DestinyRollScreen({ state, content, rollCount, unlimited, canLoc
 
       {finger && (
         <div class="golden-finger-card" role="note">
-          <p class="kicker">Kim Thủ Chỉ</p>
+          <p class="kicker">Kim Thủ Chỉ{content.goldenFingers.rarityNames?.[finger.rarity] ? ` · ${content.goldenFingers.rarityNames[finger.rarity]}` : ''}</p>
           <b>{finger.name}</b>
           <p class="trait-flavor">{finger.flavor}</p>
           <p class="trait-summary"><TermText text={finger.summary} /></p>
-          <p class="trait-summary risk">Rủi ro: {finger.risk}</p>
+          {finger.signature && <p class="trait-summary">Cơ chế: <TermText text={finger.signature} /></p>}
+          <p class="trait-summary risk">Rủi ro: {finger.risk}{finger.drawback ? ` ${finger.drawback.text}` : ''}</p>
         </div>
       )}
 

@@ -2,7 +2,7 @@
 import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
-import { fingerDef } from '../../systems/goldenFinger';
+import { fingerAwake, fingerDef } from '../../systems/goldenFinger';
 import { fingerActionViews } from '../../systems/fingerActions';
 import { TermText } from './Tooltip';
 
@@ -17,14 +17,19 @@ export function GoldenFingerPanel({ state, content, onAction, onClose }: {
   const f = fingerDef(content, g?.id);
   if (!g || !f) return null;
   const realmName = (id: string) => content.cultivation.realms.realms.find((r) => r.id === id)?.name ?? id;
+  const tier = content.goldenFingers.rarityNames?.[f.rarity];
+  const asleep = g.level === 0 && !fingerAwake(state, content, f);
 
   return (
     <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Kim Thủ Chỉ" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div class="event-card">
-        <div class="kicker">Kim Thủ Chỉ</div>
+        <div class="kicker">Kim Thủ Chỉ{tier ? ` · ${tier}` : ''}</div>
         <h2>{f.name}</h2>
         <p class="story"><TermText text={f.flavor} /></p>
-        <p class="profile-note"><TermText text={`${f.summary} Rủi ro: ${f.risk}`} /></p>
+        {asleep && <p class="profile-note risk" role="status">Còn đang ngủ say: {f.activation.kind === 'age' ? `tỉnh lúc ${f.activation.age} tuổi` : `tỉnh khi tới ${realmName(f.activation.realm ?? '')}`}.</p>}
+        <p class="profile-note"><TermText text={f.summary} /></p>
+        {f.signature && <p class="profile-note"><b>Cơ chế:</b> <TermText text={f.signature} /></p>}
+        <p class="profile-note"><b>Rủi ro:</b> <TermText text={f.drawback ? `${f.risk} ${f.drawback.text}` : f.risk} /></p>
 
         <h3 class="panel-sub">Các tầng thức tỉnh</h3>
         <ul class="finger-levels">
@@ -46,7 +51,7 @@ export function GoldenFingerPanel({ state, content, onAction, onClose }: {
         {fingerActionViews(state, content).map((a) => (
           <div class="career-row" key={a.id}>
             <div class="craft-head"><b>{a.name}</b>{a.chance !== null && <span class="muted">{Math.round(a.chance * 100)}%</span>}</div>
-            <p class="profile-note">{a.text}</p>
+            <p class="profile-note">{a.text}{(g.count?.[a.id] ?? 0) > 0 && <span class="muted"> · đã dùng {g.count?.[a.id]} lần</span>}</p>
             <button class="chip-btn" disabled={!!a.blocked} onClick={() => { const r = onAction(a.id); if (r) setResult(r); }}>Dùng</button>
             {a.blocked && <span class="craft-note">{a.blocked}</span>}
           </div>
