@@ -162,7 +162,8 @@ describe('martial quest chain', () => {
     const s0 = martialQuestYear(mortalAt(5, 30, { quest: { id: 'ngu_khi', step: last, startedAt: 20, lastTry: null, game: null } }), content);
     const s = solve(beginQuestStep(s0, content, false)!.state);
     expect(s.martial.stage).toBe(6);
-    expect(s.cult.root).toMatchObject({ grade: 'ngu' });
+    expect(s.cult.root).toMatchObject({ grade: 'ngu_khi' });
+    expect(s.cult.bodyId).toBe('tien_vo_the');
     expect(s.cult.root!.elements).toHaveLength(5);
     expect(s.flags.vo_dao_nhap_tien).toBe(true);
     const boost = content.martial.ascendEffects.find((e) => e.hook === 'cultivationSpeed')!;

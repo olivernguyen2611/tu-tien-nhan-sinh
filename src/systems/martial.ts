@@ -111,13 +111,18 @@ export function martialPromote(state: GameState, content: Content): GameState {
   return s;
 }
 
-/** Ngũ khí triều nguyên: the five qi become a Ngũ linh căn; the life steps into Luyện Khí. */
+/**
+ * Ngũ khí triều nguyên: the five qi become the Ngũ khí root (above an ordinary Ngũ linh căn) and the
+ * body becomes Tiên Võ thể; the life steps into Luyện Khí. Only a mortal ever gets here (a rootless
+ * one: the root is innate, and this is the path's own reward).
+ */
 function ascend(state: GameState, content: Content): GameState {
   const basic = content.cultivation.roots.elements.filter((e) => !e.variant).map((e) => e.id);
+  const { rootGrade, bodyId } = content.martial.ascend;
   const withRoot: GameState = {
     ...state,
     flags: { ...state.flags, vo_dao_nhap_tien: true },
-    cult: { ...state.cult, root: { grade: 'ngu', elements: basic } },
+    cult: { ...state.cult, root: { grade: rootGrade, elements: basic }, bodyId },
   };
   const logged = { ...withRoot, log: addLines(withRoot, [{ text: content.martial.texts.ascend, tone: 'rare' }]) };
   return startCultivating(logged, content).state;

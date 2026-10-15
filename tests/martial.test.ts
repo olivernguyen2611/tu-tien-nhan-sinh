@@ -3,7 +3,7 @@ import { loadContent } from '../src/core/content';
 import { Rng } from '../src/core/rng';
 import { createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
-import { lifeHooks, realmLabel, yearlyGain } from '../src/systems/cultivation';
+import { lifeHooks, realmLabel, rootLabel, yearlyGain } from '../src/systems/cultivation';
 import { findEvent, resolveChoice, eventWeight } from '../src/systems/events/engine';
 import { martialPromote, martialView, trainMartial } from '../src/systems/martial';
 import { makeSave, migrate } from '../src/systems/save';
@@ -89,9 +89,14 @@ describe('martial path (task 3.11)', () => {
     expect(martialView(old, content).chance).toBeCloseTo(martialView(s, content).chance / 2);
   });
 
-  it('Ngũ khí triều nguyên becomes a Ngũ linh căn and Luyện Khí 1, keeping the body edge', () => {
+  it('Ngũ khí triều nguyên gives the Ngũ khí root (better than Ngũ linh căn) with Tiên Võ thể, and Luyện Khí 1', () => {
     const s = martialPromote(mortal(50, 90, { martial: { stage: 5, years: 0, bonus: 0, lastTrain: null } }), content);
-    expect(s.cult.root?.grade).toBe('ngu');
+    expect(s.cult.root?.grade).toBe('ngu_khi');
+    expect(rootLabel(s, content)).toBe('Ngũ khí');
+    expect(s.cult.bodyId).toBe('tien_vo_the');
+    const grades = content.balance.roots.gradeSpeed;
+    expect(grades.ngu_khi).toBeGreaterThan(grades.song);
+    expect(lifeHooks(s, content).some((h) => h.hook === 'bottleneckResist')).toBe(true);
     expect(s.cult.realm).toBe('luyen_khi');
     expect(s.cult.technique).toBe('dan_khi_quyet');
     expect(lifeHooks(s, content).some((h) => h.hook === 'path.body.affinity' && h.add === 30)).toBe(true);
@@ -151,7 +156,7 @@ describe('martial path (task 3.11)', () => {
       up = resolveChoice({ ...tam, rng: new Rng(`nk${i}`).getState(), events: { ...tam.events, pending: gather.id } }, content, 0).state;
     }
     expect(up.cult.realm).toBe('luyen_khi');
-    expect(up.cult.root?.grade).toBe('ngu');
+    expect(up.cult.root?.grade).toBe('ngu_khi');
     expect(up.inventory.linh_tinh_kim ?? 0).toBe(0);
   });
 });

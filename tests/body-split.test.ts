@@ -77,6 +77,9 @@ describe('linh căn and thể chất are separate', () => {
     expect(m.cult.root!.elements.length).toBeGreaterThanOrEqual(2);
     expect(m.family[0].bodyId).toBe('kim_cuong_than');
     expect(['tam', 'song']).toContain(m.family[0].root?.grade);
+    // A martial ascender of the old kind (plain Ngũ linh căn) becomes Ngũ khí + Tiên Võ thể.
+    const ascender = { ...adult(), flags: { vo_dao_nhap_tien: true }, cult: { ...adult().cult, root: { grade: 'ngu', elements: ['kim', 'moc', 'thuy', 'hoa', 'tho'] } } } as unknown as GameState;
+    expect(migrate(makeSave(ascender, 1)).life.cult).toMatchObject({ root: { grade: 'ngu_khi' }, bodyId: 'tien_vo_the' });
     // Same seed, same root: migrating twice does not change it.
     expect(migrate(makeSave(old, 1)).life.cult.root).toEqual(m.cult.root);
   });

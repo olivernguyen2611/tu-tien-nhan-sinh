@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### GĐ 6d.2: linh căn Ngũ khí và Tiên Võ thể (2026-10-15)
+- Hạng linh căn mới **Ngũ khí** (`roots.json`, không lăn ngẫu nhiên, chỉ có khi đạt Ngũ khí triều nguyên): tốc độ tu 1,25 (ngũ linh căn 0,4; song 1,0) cùng hiệu ứng riêng +25% tốc độ tu, +0,1 chống nghẽn, +4% đột phá. Hạng linh căn giờ có thể mang `effects`.
+- Thể chất mới **Tiên Võ thể** (không lăn ngẫu nhiên): Căn cốt +10, thân luyện +40, giảm thương tích 30%, sức chiến +15%, thọ +10%. Đạt Ngũ khí triều nguyên là có cả hai (`martial.json` `ascend`); hiệu ứng nhập tiên cũ giảm tốc độ +100% xuống +25% vì linh căn đã mạnh hơn.
+- Save v3 cũng nâng người đã nhập tiên bằng võ đạo (Ngũ linh căn cũ) lên Ngũ khí + Tiên Võ thể. Dev mode có thêm nhóm "Linh căn võ đạo".
+
 ### GĐ 6d.1: tách thể chất khỏi linh căn (2026-10-15)
 - Thể chất đặc biệt không còn thay linh căn: bỏ hạng `the_chat`. Linh căn lăn riêng; thể chất lăn riêng (`balance.roots.bodyChance` 0,4%) lúc thử linh căn, chỉ thêm hiệu ứng đặc biệt. Người không linh căn có thể chất vẫn không tu được. Công pháp tự thích ứng (Thái Sơ) chỉ xét linh căn; Lưu Ly Linh Thể vẫn hợp mọi công pháp.
 - Thức tỉnh thể chất giữ nguyên linh căn. Con cái thừa hưởng thể chất của cha mẹ riêng với linh căn. Linh căn biến dị chỉ chứa một hệ biến dị, không kèm hệ thường (có test).

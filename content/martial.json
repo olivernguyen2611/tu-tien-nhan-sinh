@@ -26,7 +26,7 @@
     },
     {
       "name": "Ngũ khí triều nguyên",
-      "description": "Ngũ khí trong người hóa thành Ngũ linh căn. Từ đây bước vào Luyện Khí tầng 1, tiếp tục như tu sĩ."
+      "description": "Ngũ khí trong người thành một vòng khép kín, đá thử linh căn cũng phải gọi là Ngũ khí. Thân hóa Tiên Võ thể. Từ đây bước vào Luyện Khí tầng 1, tiếp tục như tu sĩ."
     }
   ],
   "teacher": {
@@ -41,6 +41,7 @@
       "vo_lam"
     ]
   },
+  "ascend": { "rootGrade": "ngu_khi", "bodyId": "tien_vo_the" },
   "ascendEffects": [
     {
       "hook": "path.body.affinity",
@@ -52,14 +53,14 @@
     },
     {
       "hook": "cultivationSpeed",
-      "add": 1.0
+      "add": 0.25
     }
   ],
   "texts": {
     "train": "Một năm luyện võ, đã {years} năm hướng tới {next}.",
     "promote": "Võ công đột phá: {stage}. {description}",
     "fail": "Luyện đã lâu mà {next} vẫn chưa tới. Phải xem lại gân cốt và ngộ tính.",
-    "ascend": "Ngũ khí trong ngũ tạng hợp với ngũ hành, hóa thành Ngũ linh căn. Võ đạo đi tới tận cùng, chạm cửa tiên."
+    "ascend": "Ngũ khí trong ngũ tạng thông nhau thành một vòng tuần hoàn: linh căn ngươi nay là Ngũ khí, thân hóa Tiên Võ thể. Võ đạo đi tới tận cùng, chạm cửa tiên."
   },
   "quests": [
     {

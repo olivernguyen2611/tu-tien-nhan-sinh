@@ -374,6 +374,11 @@ export function devRootOptions(content: Content): { key: string; label: string; 
     const root = { grade: g.id, elements: basic.slice(0, content.balance.roots.elementCount[g.id] ?? 0) };
     out.push({ key: g.id, label: rootName(root, content), root, group: 'Linh căn thường' });
   }
+  const martial = grades.find((g) => g.special === 'martial');
+  if (martial) {
+    const root = { grade: martial.id, elements: basic };
+    out.push({ key: martial.id, label: rootName(root, content), root, group: 'Linh căn võ đạo' });
+  }
   for (const e of elements.filter((x) => x.variant)) {
     const root = { grade: 'bien_di', elements: [e.id] };
     out.push({ key: `bien_di:${e.id}`, label: rootName(root, content), root, group: 'Biến dị linh căn' });

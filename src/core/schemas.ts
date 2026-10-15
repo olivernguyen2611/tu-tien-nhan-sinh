@@ -1918,6 +1918,8 @@ export const RootsFileSchema = z
             description: z.string().min(1),
             /** "variant": elements drawn from the variant ones; "martial": the Ngũ khí root, only from the martial path. */
             special: z.enum(['variant', 'martial']).optional(),
+            /** Hooks the root itself carries (Ngũ khí); read from the life's root grade. */
+            effects: z.array(EffectHookSchema).optional(),
           })
           .strict(),
       )
@@ -2508,6 +2510,8 @@ export const MartialFileSchema = z
     /** What counts as "bí kíp hoặc sư phụ" for stages that need a teacher. */
     teacher: z.object({ flags: ids, careers: ids, origins: ids }).strict(),
     /** Kept after Ngũ khí triều nguyên brings the life into Luyện Khí. */
+    /** What Ngũ khí triều nguyên gives: the root grade (roots.json, special martial) and the special body. */
+    ascend: z.object({ rootGrade: id, bodyId: id }).strict(),
     ascendEffects: z.array(EffectHookSchema),
     /** {years}, {need}, {next}, {stage}, {description}. */
     texts: z.object({ train: z.string().min(1), promote: z.string().min(1), fail: z.string().min(1), ascend: z.string().min(1) }).strict(),

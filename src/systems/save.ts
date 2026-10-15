@@ -187,6 +187,10 @@ function restoreRoots(life: GameState): GameState {
   if (out.family.some((r) => r.root?.grade === 'the_chat')) {
     out = { ...out, family: out.family.map((r) => (r.root?.grade === 'the_chat' ? { ...r, root: fix(r.id) } : r)) };
   }
+  // Ngũ khí triều nguyên used to give a plain Ngũ linh căn; now it gives the Ngũ khí root and Tiên Võ thể.
+  if (out.flags.vo_dao_nhap_tien && out.cult.root?.grade === 'ngu') {
+    out = { ...out, cult: { ...out.cult, root: { ...out.cult.root, grade: 'ngu_khi' }, bodyId: 'tien_vo_the' } };
+  }
   return out;
 }
 

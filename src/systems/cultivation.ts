@@ -236,8 +236,10 @@ export function hookActive(e: Hook, state: GameState, content: Content): boolean
 export function lifeHooks(state: GameState, content: Content): Hook[] {
   const fromTraits = state.traits.flatMap((id) => content.traits.find((t) => t.id === id)?.effects ?? []);
   const body = state.cult.bodyId ? content.cultivation.roots.bodies.find((b) => b.id === state.cult.bodyId) : undefined;
+  // The root grade can carry hooks too (Ngũ khí).
+  const grade = state.cult.root ? content.cultivation.roots.grades.find((g) => g.id === state.cult.root!.grade) : undefined;
   return [
-    ...fromTraits, ...(body?.effects ?? []), ...careerHooks(state, content),
+    ...fromTraits, ...(body?.effects ?? []), ...(grade?.effects ?? []), ...careerHooks(state, content),
     ...(currentTechnique(state, content)?.effects ?? []), ...sectHooks(state, content), ...ownSectHooks(state, content),
     ...state.talents.flatMap((id) => content.fateTalents.find((t) => t.id === id)?.effects ?? []),
     // Đạo thống (task 3.8).
