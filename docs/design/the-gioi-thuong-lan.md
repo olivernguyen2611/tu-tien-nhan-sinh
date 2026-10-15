@@ -32,7 +32,7 @@ Mỗi vùng: ≥ 3 tông môn hoặc thế lực, ≥ 3 sự kiện đặc trưn
 
 ## 3. Năm phàm quốc (`nations.json`)
 
-Đều nằm ở Trung Nguyên trừ Xích Sa (rìa Vô Chủ hoang nguyên). Nối 12.1 (triều đình) về sau.
+Đều nằm ở Trung Nguyên trừ Xích Sa (rìa Vô Chủ hoang nguyên). Vua: Ung Đế Triệu Khải, Cảnh Vương Lưu Mậu, Lạc Hà Vương Mộc Thiện, Bạch Lộc Công Hô Diên Liệt, Khả hãn Thiết Mộc Ba. Nối 12.1 (triều đình) về sau.
 
 | Id | Tên | Thể chế | Nét riêng |
 |---|---|---|---|

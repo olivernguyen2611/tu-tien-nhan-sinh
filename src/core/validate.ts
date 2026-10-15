@@ -3,7 +3,7 @@
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, WorldClanFileSchema, RaceFileSchema, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -71,6 +71,9 @@ export function schemaFor(path: string): ZodTypeAny | null {
   if (rest === 'markets.json') return MarketFileSchema;
   if (rest === 'regions.json') return RegionFileSchema;
   if (rest === 'jianghu-factions.json') return JianghuFactionFileSchema;
+  if (rest === 'nations.json') return NationFileSchema;
+  if (rest === 'clans.json') return WorldClanFileSchema;
+  if (rest === 'races.json') return RaceFileSchema;
   if (rest === 'knowledge.json') return KnowledgeFileSchema;
   if (rest === 'immortal-gates.json') return ImmortalGateFileSchema;
   if (rest === 'challenges.json') return ChallengeFileSchema;
@@ -101,6 +104,8 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   let martialFile: MartialFile | null = null;
   const regionFiles: { file: string; regions: Region[] }[] = [];
   const factionFiles: { file: string; factions: JianghuFaction[] }[] = [];
+  /** 9.R7c: nations, clans and races name the regions they live in. */
+  const loreFiles: { file: string; items: { id: string; region?: string; regions?: string[] }[] }[] = [];
   const knowledgeFiles: { file: string; entries: KnowledgeEntry[] }[] = [];
   const gateFiles: { file: string; gates: ImmortalGate[] }[] = [];
   /** 9.R5b: things that wait for a Sổ tri thức entry. */
@@ -252,6 +257,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === MartialFileSchema) martialFile = parsed.data as MartialFile;
     if (schema === RegionFileSchema) regionFiles.push({ file, regions: parsed.data as Region[] });
     if (schema === JianghuFactionFileSchema) factionFiles.push({ file, factions: parsed.data as JianghuFaction[] });
+    if (schema === NationFileSchema || schema === WorldClanFileSchema || schema === RaceFileSchema) loreFiles.push({ file, items: parsed.data as { id: string; region?: string; regions?: string[] }[] });
     if (schema === KnowledgeFileSchema) knowledgeFiles.push({ file, entries: parsed.data as KnowledgeEntry[] });
     if (schema === ImmortalGateFileSchema) gateFiles.push({ file, gates: parsed.data as ImmortalGate[] });
     if (schema === GlossarySchema) glossaryIds = (parsed.data as { id: string }[]).map((x) => x.id);
@@ -362,6 +368,16 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       if (!regionIds.has(f.region)) problems.push({ file, level: 'error', message: `thế lực "${f.id}" ở vùng lạ "${f.region}"` });
       if (sectIds.has(f.id)) problems.push({ file, level: 'error', message: `thế lực "${f.id}" trùng id với một tông môn tu tiên` });
       for (const o of [...f.allies, ...f.rivals]) if (!ids.has(o) || o === f.id) problems.push({ file, level: 'error', message: `thế lực "${f.id}" nhắc tới thế lực lạ "${o}"` });
+    }
+  }
+  for (const { file, items } of loreFiles) {
+    const world = file.split('/')[1];
+    const regionIds = new Set(regionFiles.filter((r) => r.file.split('/')[1] === world).flatMap((r) => r.regions.map((x) => x.id)));
+    problems.push(...duplicates(file, 'mục', items));
+    for (const x of items) {
+      for (const r of [...(x.region ? [x.region] : []), ...(x.regions ?? [])]) {
+        if (!regionIds.has(r)) problems.push({ file, level: 'error', message: `"${x.id}" ở vùng lạ "${r}"` });
+      }
     }
   }
   // Task 4.8: đại vực name real realms; their hooks act while the player stays, so no one-off stat.<x>.

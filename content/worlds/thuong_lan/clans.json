@@ -1,0 +1,134 @@
+[
+  {
+    "id": "on_gia",
+    "name": "Ôn gia",
+    "region": "thanh_van_chau",
+    "craft": "Luyện đan",
+    "description": "Thế gia đan sư lâu đời nhất Trung Nguyên, thông gia với hoàng tộc Đại Ung. Trong nhà, đứa trẻ ba tuổi đã phân biệt được trăm loại dược thảo.",
+    "branches": {
+      "main": "Dòng đích học đan phương gia truyền, ngồi lò từ năm bảy tuổi.",
+      "side": "Dòng thứ hái thuốc, canh lò, chờ một lần nổ lò của dòng đích để được thế chỗ."
+    }
+  },
+  {
+    "id": "co_gia",
+    "name": "Cố gia",
+    "region": "thanh_van_chau",
+    "craft": "Trận pháp",
+    "description": "Giữ đại trận che kinh thành Đại Ung. Người Cố gia đi đường hay đếm bước, vì quen đo trận.",
+    "branches": {
+      "main": "Dòng đích được truyền trận đồ hộ quốc.",
+      "side": "Dòng thứ khắc trận bàn đem bán ở chợ phiên."
+    }
+  },
+  {
+    "id": "ninh_gia",
+    "name": "Ninh gia",
+    "region": "thanh_van_chau",
+    "craft": "Linh thực",
+    "description": "Ruộng linh mễ trải ba huyện. Ninh gia giàu mà quê, gặp khách là mời ăn cơm, mời mãi không thôi.",
+    "branches": {
+      "main": "Dòng đích giữ hạt giống linh mễ đời đầu.",
+      "side": "Dòng thứ cày ruộng, gánh nước, và ăn cơm ngon nhất thiên hạ."
+    }
+  },
+  {
+    "id": "ta_gia",
+    "name": "Tạ gia",
+    "region": "vo_chu_hoang_nguyen",
+    "craft": "Buôn tin tức",
+    "description": "Tán tu lập gia ở Vô Chủ Phường, ba đời sống bằng việc biết chuyện người khác. Ai cũng ghét Tạ gia, ai cũng phải hỏi Tạ gia.",
+    "branches": {
+      "main": "Dòng đích giữ sổ tin cũ trăm năm.",
+      "side": "Dòng thứ ngồi quán trà nghe chuyện, mỗi ngày một trăm câu."
+    }
+  },
+  {
+    "id": "khuong_gia",
+    "name": "Khương gia",
+    "region": "van_thu_son_mach",
+    "craft": "Ngự thú",
+    "description": "Sống trong rừng cùng yêu thú, trẻ con Khương gia cưỡi hổ đi học. Hòa ước với Vạn Yêu Điện có chữ ký của tổ tiên họ.",
+    "branches": {
+      "main": "Dòng đích kết khế với yêu thú huyết mạch cao.",
+      "side": "Dòng thứ chăn thú, dọn chuồng, có khi bị thú cắn."
+    }
+  },
+  {
+    "id": "doc_co",
+    "name": "Độc Cô thị",
+    "region": "huyet_uyen",
+    "craft": "Luyện độc",
+    "description": "Thế gia nửa chính nửa tà ở mép Huyết Uyên. Họ bảo độc cũng là thuốc, chỉ là liều hơi nhiều.",
+    "branches": {
+      "main": "Dòng đích luyện độc thể từ nhỏ, máu cũng có độc.",
+      "side": "Dòng thứ thử độc cho dòng đích, sống lâu thì được lên dòng đích."
+    }
+  },
+  {
+    "id": "au_duong",
+    "name": "Âu Dương thế gia",
+    "region": "dong_hai",
+    "craft": "Thuyền buôn",
+    "description": "Đội thuyền lớn nhất Đông Hải, nắm nửa hải thị. Âu Dương gia chủ nói câu nào cũng có giá.",
+    "branches": {
+      "main": "Dòng đích ngồi thuyền lầu, tính sổ.",
+      "side": "Dòng thứ ra khơi, đánh hải tặc, có khi thành hải tặc."
+    }
+  },
+  {
+    "id": "lan_gia",
+    "name": "Lan gia",
+    "region": "dong_hai",
+    "craft": "Huyết mạch giao tộc",
+    "description": "Tổ tiên lấy vợ giao nhân, con cháu tóc hơi xanh, lặn được nửa canh giờ. Giao tộc coi họ là người nhà, nhân tộc thì không chắc.",
+    "branches": {
+      "main": "Dòng đích mang huyết mạch giao tộc rõ nhất, hát được tiếng biển.",
+      "side": "Dòng thứ chỉ còn mái tóc xanh và tật thích ăn cá sống."
+    }
+  },
+  {
+    "id": "bach_ly",
+    "name": "Bách Lý gia",
+    "region": "thai_co_chien_truong",
+    "craft": "Giải cấm chế",
+    "description": "Gia tộc đào di tích ở Thái Cổ chiến trường, mỗi đời mất vài người cho cấm chế thượng cổ. Họ có câu: \"Cửa nào cũng mở được, chỉ là có cửa mở ra không đóng lại được.\"",
+    "branches": {
+      "main": "Dòng đích học phù văn thượng cổ.",
+      "side": "Dòng thứ đi trước dò đường."
+    }
+  },
+  {
+    "id": "thac_bat",
+    "name": "Thác Bạt thị",
+    "region": "bac_minh_tuyet_vuc",
+    "craft": "Thể tu băng hệ",
+    "description": "Ít người, ít lời, sống trong băng nguyên từ trước khi có tên Bắc Minh. Đánh nhau không bao giờ nói trước.",
+    "branches": {
+      "main": "Dòng đích ngâm mình trong hồ băng ba năm mới được nhận tên.",
+      "side": "Dòng thứ giữ lửa trong hang, việc quan trọng nhất ở Bắc Minh."
+    }
+  },
+  {
+    "id": "hoang_phu",
+    "name": "Hoàng Phủ thế gia",
+    "region": "trung_chau",
+    "craft": "Kiếm tu",
+    "description": "Ngàn năm không ra khỏi Trung Châu, kiếm pháp truyền miệng, không chép thành sách. Người Hoàng Phủ gia nói ít, rút kiếm nhiều.",
+    "branches": {
+      "main": "Dòng đích luyện kiếm ý từ khi biết cầm đũa.",
+      "side": "Dòng thứ mài kiếm cho dòng đích, có người mài thành kiếm thánh."
+    }
+  },
+  {
+    "id": "tu_ma",
+    "name": "Tư Mã gia",
+    "region": "trung_chau",
+    "craft": "Phù lục, mưu lược",
+    "description": "Mưu sĩ của các đại tông ở Trung Châu. Trận chiến nào cũng có bóng người Tư Mã gia, ở cả hai phe.",
+    "branches": {
+      "main": "Dòng đích ngồi sau rèm bàn chuyện thiên hạ.",
+      "side": "Dòng thứ vẽ phù, chạy việc, nghe lỏm, ghi chép."
+    }
+  }
+]

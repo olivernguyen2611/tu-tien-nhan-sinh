@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### 9.R7c: phàm quốc, thế gia, chủng tộc (2026-10-15)
+- Ba file dữ liệu mới của Thương Lan: `nations.json` (5 phàm quốc: Đại Ung, Cảnh quốc, Lạc Hà, Bạch Lộc, Xích Sa), `clans.json` (12 tu tiên thế gia, mỗi nhà có nghề, dòng đích và dòng thứ), `races.json` (6 tộc: nhân, yêu, giao, linh, quỷ, thạch).
+- Bản đồ: vùng đã đặt chân tới hiện phàm quốc, thế gia, chủng tộc và thế lực giang hồ ở đó.
+- Validate kiểm vùng của từng mục và trùng id. Tên cho các vua ghi thêm vào kinh thánh thế giới.
+
 ### 9.R7b: tám đại vực, sự kiện riêng mỗi vùng (2026-10-15)
 - Hai đại vực mới: **Huyết Uyên ma vực** (từ Trúc Cơ, linh khí 1,3; chuyện ma đạo gấp ba, tâm ma dễ sinh −15%; Uyên chủ Xích Phát Ma Quân) và **Thái Cổ chiến trường** (từ Kim Đan, linh khí 1,6; bí cảnh, kỳ vật nhiều nhất, chiến lợi phẩm +15%, khó chạy thoát −10%; Thủ Mộ Nhân).
 - 18 sự kiện vùng mới (`events/regions-2.json`): 3 cho mỗi vùng mới, 2 thêm cho mỗi vùng cũ, nên vùng nào cũng có ít nhất 3 sự kiện riêng.

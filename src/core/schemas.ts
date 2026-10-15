@@ -2560,6 +2560,52 @@ export const JianghuFactionFileSchema = z.array(
 );
 export type JianghuFaction = z.infer<typeof JianghuFactionFileSchema>[number];
 
+/** 9.R7c: content/worlds/<id>/nations.json — the phàm quốc (mortal kingdoms) of a world. */
+export const NationFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      kind: z.enum(['vuong_trieu', 'vuong_quoc', 'cong_quoc', 'han_quoc']),
+      region: id,
+      ruler: z.object({ title: z.string().min(1), name: z.string().min(1) }).strict(),
+      description: z.string().min(1),
+    })
+    .strict(),
+);
+export type Nation = z.infer<typeof NationFileSchema>[number];
+
+/** 9.R7c: content/worlds/<id>/clans.json — the tu tiên thế gia of a world (not the player's own clan, clan.json). */
+export const WorldClanFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      region: id,
+      /** What the house is known for (luyện đan, trận pháp…), one line. */
+      craft: z.string().min(1),
+      description: z.string().min(1),
+      /** Dòng đích and dòng thứ, one line each. */
+      branches: z.object({ main: z.string().min(1), side: z.string().min(1) }).strict(),
+    })
+    .strict(),
+);
+export type WorldClan = z.infer<typeof WorldClanFileSchema>[number];
+
+/** 9.R7c: content/worlds/<id>/races.json — the peoples of a world and how they stand with humans. */
+export const RaceFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      regions: z.array(id).default([]),
+      stance: z.enum(['than_thien', 'trung_lap', 'thu_dich']),
+      description: z.string().min(1),
+    })
+    .strict(),
+);
+export type Race = z.infer<typeof RaceFileSchema>[number];
+
 /**
  * content/worlds/<id>/immortal-gates.json (9.R4b): the ways a mortal is found by the immortal world
  * (instead of every child being tested). Each year a gate's conditions hold, it opens by its chance

@@ -2,6 +2,7 @@
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
 import { currentRegion, regionOpen, travelBlock, type TravelBlock } from '../../systems/regions';
+import { regionLore, type RegionLore } from '../../systems/worldLore';
 
 const BLOCK_TEXT: Record<TravelBlock, string> = {
   locked: 'Cảnh giới chưa đủ',
@@ -44,6 +45,7 @@ export function MapPanel({ state, content, unlimited, onTravel, onClose }: {
                       <span class="profile-note">
                         Trấn giữ: {r.guardian.title} {seen ? r.guardian.name : '(chưa rõ danh tính)'} · {realmName(r.guardian.realm)}
                       </span>
+                      {seen && <LoreLines lore={regionLore(content, r.id)} />}
                     </>
                   ) : (
                     <span class="profile-note">Cần {realmName(r.minRealm ?? '')} mới đặt chân tới được.</span>
@@ -60,4 +62,10 @@ export function MapPanel({ state, content, unlimited, onTravel, onClose }: {
       </div>
     </div>
   );
+}
+
+/** 9.R7c: who lives in a region the player has seen. */
+function LoreLines({ lore }: { lore: RegionLore }) {
+  const rows: [string, string[]][] = [['Phàm quốc', lore.nations], ['Thế gia', lore.clans], ['Chủng tộc', lore.races], ['Giang hồ', lore.factions]];
+  return <>{rows.filter(([, v]) => v.length > 0).map(([k, v]) => <span class="profile-note" key={k}>{k}: {v.join(', ')}</span>)}</>;
 }
