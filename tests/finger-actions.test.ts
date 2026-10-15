@@ -26,7 +26,7 @@ describe('Kim Thủ Chỉ actions (playtest 2)', () => {
   it('an action works once per cooldown, then opens again', () => {
     const s = withFinger('binh_nho_than_bi');
     const r = doFingerAction(s, content, 'tuoi_vuon')!;
-    expect(r.state.money.spiritStones).toBe(s.money.spiritStones + 4);
+    expect(r.state.money.spiritStones).toBe(s.money.spiritStones + 2);
     expect(r.state.log.at(-1)!.lines.at(-1)!.text).toContain('Tưới linh dịch');
     expect(fingerActionViews(r.state, content).find((a) => a.id === 'tuoi_vuon')!.blocked).toContain('Năm nay');
     expect(doFingerAction(r.state, content, 'tuoi_vuon')).toBeNull();

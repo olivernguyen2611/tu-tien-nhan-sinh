@@ -14,6 +14,7 @@ import { learnBlocked, techniqueById } from '../../systems/technique';
 import { TermText } from './Tooltip';
 import { OwnSectSection } from './OwnSectSection';
 import { SectIdentity } from './SectIdentity';
+import { JianghuSection } from './JianghuSection';
 
 export type SectAction =
   | { kind: 'join'; sectId: string }
@@ -178,6 +179,7 @@ export function SectPanel({ state, content, onAction, onClose }: {
         ) : (
           <>
             <h2>Chưa có tông môn</h2>
+            <h3 class="muted">Tông môn tu tiên</h3>
             <p class="profile-note">Có linh căn thì có thể lên núi xin bái nhập. Không linh căn mà Đạo tâm vững, cửa chùa vẫn mở.</p>
             {content.sects.filter((s) => s.recruitable).map((s) => {
               const reason = sectEligibility(state, content, s.id);
@@ -193,6 +195,8 @@ export function SectPanel({ state, content, onAction, onClose }: {
             })}
           </>
         )}
+
+        <JianghuSection content={content} />
 
         <OwnSectSection state={state} content={content} onFound={(name, rules) => act({ kind: 'found', name, rules })}
           onDecide={(decisionId) => act({ kind: 'decide', decisionId })} onBuild={(buildingId) => act({ kind: 'build', buildingId })} onDonate={() => act({ kind: 'donate' })} onElder={(npcId) => act({ kind: 'elder', npcId })} onRecruit={(npcId) => act({ kind: 'recruit', npcId })} />

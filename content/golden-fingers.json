@@ -46,12 +46,12 @@
      "levels": [
        {"realm": "pham_nhan", "name": "Giọt đầu", "text": "Một giọt linh dịch rơi xuống luống rau, sáng mai rau cao hơn đầu gối.", "effects": [{"hook": "craft.farming.yield", "add": 1}, {"hook": "craft.farming.success", "add": 0.2}, {"hook": "craft.alchemy.success", "add": 0.05}, {"hook": "stat.health", "add": 5}]},
        {"realm": "luyen_khi", "name": "Linh dịch", "text": "Bình rỉ nhiều hơn. Đan luyện từ linh thảo tưới linh dịch hiếm khi hỏng.", "effects": [{"hook": "craft.alchemy.success", "add": 0.2}, {"hook": "craft.alchemy.yield", "add": 1}, {"hook": "cultivationSpeed", "add": 0.05}]},
-       {"realm": "kim_dan", "name": "Tẩy tủy", "text": "Ngươi uống thử một giọt. Xương cốt kêu răng rắc cả đêm, sáng ra nhẹ bẫng.", "effects": [{"hook": "stat.physique", "add": 8}, {"hook": "lifespanPct", "add": 0.15}, {"hook": "cultivationSpeed", "add": 0.15}]},
-       {"realm": "nguyen_anh", "name": "Linh dịch hóa hải", "text": "Giọt nước xanh biếc hóa thành cả một hồ nhỏ trong bình. Linh thảo, đan dược, thân thể, thứ gì dính vào cũng tốt lên.", "effects": [{"hook": "craft.alchemy.yield", "add": 1}, {"hook": "lifespanPct", "add": 0.1}, {"hook": "cultivationSpeed", "add": 0.1}, {"hook": "breakthroughChance", "add": 5}]}
+       {"realm": "kim_dan", "name": "Tẩy tủy", "text": "Ngươi uống thử một giọt. Xương cốt kêu răng rắc cả đêm, sáng ra nhẹ bẫng.", "effects": [{"hook": "stat.physique", "add": 8}, {"hook": "lifespanPct", "add": 0.06}, {"hook": "cultivationSpeed", "add": 0.08}]},
+       {"realm": "nguyen_anh", "name": "Linh dịch hóa hải", "text": "Giọt nước xanh biếc hóa thành cả một hồ nhỏ trong bình. Linh thảo, đan dược, thân thể, thứ gì dính vào cũng tốt lên.", "effects": [{"hook": "craft.alchemy.yield", "add": 1}, {"hook": "lifespanPct", "add": 0.05}, {"hook": "cultivationSpeed", "add": 0.05}, {"hook": "breakthroughChance", "add": 5}]}
      ],
      "actions": [
-       {"id": "tuoi_vuon", "name": "Tưới linh dịch cho vườn thuốc", "text": "Một giọt cho cả luống. Sáng mai đi xem.", "minLevel": 1, "result": {"text": "Linh thảo mọc vượt rào. Hái một mớ đem bán, còn dư để ăn.", "effects": {"craftXp": {"farming": 1}, "spiritStones": 4, "stat.happiness": 2}}},
-       {"id": "uong_mot_giot", "name": "Uống một giọt", "text": "Linh dịch đậm quá, người thường uống có khi không chịu nổi.", "minLevel": 1, "cooldownYears": 2, "check": {"stat": "stat.physique", "difficulty": 50}, "success": {"text": "Một luồng mát lạnh chạy khắp kinh mạch. Cả người nhẹ bẫng.", "effects": {"stat.health": 8, "stat.physique": 1}}, "fail": {"text": "Linh dịch bốc lên đầu, ngươi sốt mê man ba ngày.", "effects": {"stat.health": -6, "stat.physique": 1}}},
+       {"id": "tuoi_vuon", "name": "Tưới linh dịch cho vườn thuốc", "text": "Một giọt cho cả luống. Sáng mai đi xem.", "minLevel": 1, "result": {"text": "Linh thảo mọc vượt rào. Hái một mớ đem bán, còn dư để ăn.", "effects": {"craftXp": {"farming": 1}, "spiritStones": 2, "stat.happiness": 2}}},
+       {"id": "uong_mot_giot", "name": "Uống một giọt", "text": "Linh dịch đậm quá, người thường uống có khi không chịu nổi.", "minLevel": 1, "cooldownYears": 3, "check": {"stat": "stat.physique", "difficulty": 50}, "success": {"text": "Một luồng mát lạnh chạy khắp kinh mạch. Cả người nhẹ bẫng.", "effects": {"stat.health": 4, "stat.physique": 1}}, "fail": {"text": "Linh dịch bốc lên đầu, ngươi sốt mê man ba ngày.", "effects": {"stat.health": -6, "stat.physique": 1}}},
        {"id": "ngam_dan", "name": "Ngâm đan vào linh dịch", "text": "Thả lò đan mới ra vào bình một đêm, dược lực sẽ đậm thêm.", "minLevel": 2, "cooldownYears": 3, "result": {"text": "Sáng ra đan dược bóng như ngọc, mùi thơm bay khắp phòng.", "effects": {"addItems": ["tu_khi_dan"], "craftXp": {"alchemy": 1}, "stat.happiness": 2}}}
      ]},
     {"id": "ky_uc_kiep_truoc", "name": "Ký ức kiếp trước", "weight": 3, "rarity": "cuc_hiem",
@@ -136,7 +136,7 @@
        {"realm": "kim_dan", "name": "Bách thảo viên", "text": "Thứ gì trong vườn cũng chín sớm trăm năm.", "effects": [{"hook": "craft.farming.yield", "add": 1}, {"hook": "lifespanPct", "add": 0.08}, {"hook": "craft.alchemy.yield", "add": 1}]}
      ],
      "actions": [
-       {"id": "thu_hoach", "name": "Gặt một vụ trái mùa", "text": "Ngoài kia đang đông, trong vườn lúa đã vàng.", "minLevel": 1, "result": {"text": "Gặt được một gùi linh thảo. Đem bán một nửa, giữ một nửa.", "effects": {"spiritStones": 5, "craftXp": {"farming": 1}, "stat.happiness": 2}}},
+       {"id": "thu_hoach", "name": "Gặt một vụ trái mùa", "text": "Ngoài kia đang đông, trong vườn lúa đã vàng.", "minLevel": 1, "result": {"text": "Gặt được một gùi linh thảo. Đem bán một nửa, giữ một nửa.", "effects": {"spiritStones": 2, "craftXp": {"farming": 1}, "stat.happiness": 2}}},
        {"id": "uom_linh_chi", "name": "Ươm một gốc linh chi", "text": "Ủ một gốc linh chi dưới gốc cây già nhất vườn.", "minLevel": 2, "cooldownYears": 3, "check": {"stat": "stat.luck", "difficulty": 50}, "success": {"text": "Ba năm sau, gốc linh chi đỏ như son, tuổi đã trăm năm.", "effects": {"addItems": ["linh_thao_tram_nam"], "craftXp": {"farming": 1}, "stat.happiness": 3}}, "fail": {"text": "Linh chi bị sâu ăn mất nửa. Còn lại ít, đem pha trà.", "effects": {"stat.health": 3, "craftXp": {"farming": 1}}}}
      ]},
     {"id": "nhan_thau_co_duyen", "name": "Nhãn thấu cơ duyên", "weight": 3, "rarity": "pham",
@@ -152,7 +152,7 @@
        {"realm": "nguyen_anh", "name": "Thấu thiên cơ", "text": "Liếc một cái là thấy nhân quả của món đồ: ai luyện, ai giữ, ai đã chết vì nó.", "effects": [{"hook": "eventWeight.fortune", "mul": 1.2}, {"hook": "breakthroughChance", "add": 5}, {"hook": "divineSense", "add": 0.1}]}
      ],
      "actions": [
-       {"id": "soi_co_duyen", "name": "Soi cơ duyên quanh mình", "text": "Mở mắt trái, nhìn một vòng quanh chợ, quanh núi.", "minLevel": 1, "cooldownYears": 2, "cost": {"lifespanYears": -1}, "check": {"stat": "stat.luck", "difficulty": 45}, "success": {"text": "Giữa đống đồ cũ có một chiếc rễ cây phát sáng: nhân sâm rừng!", "effects": {"addItems": ["nhan_sam_rung"], "stat.intellect": 1}}, "fail": {"text": "Nhìn đến hoa mắt, chỉ thấy toàn đồ thường.", "effects": {"stat.health": -2, "stat.intellect": 1}}}
+       {"id": "soi_co_duyen", "name": "Soi cơ duyên quanh mình", "text": "Mở mắt trái, nhìn một vòng quanh chợ, quanh núi.", "minLevel": 1, "cooldownYears": 4, "cost": {"lifespanYears": -1}, "check": {"stat": "stat.luck", "difficulty": 45}, "success": {"text": "Giữa đống đồ cũ có một chiếc rễ cây phát sáng: nhân sâm rừng!", "effects": {"addItems": ["nhan_sam_rung"], "stat.intellect": 1}}, "fail": {"text": "Nhìn đến hoa mắt, chỉ thấy toàn đồ thường.", "effects": {"stat.health": -2, "stat.intellect": 1}}}
      ]},
     {"id": "ban_tinh_van_loi", "name": "Bàn tính vạn lợi", "weight": 2, "rarity": "pham",
      "activation": {"kind": "birth"},
@@ -175,14 +175,14 @@
      "summary": "Mỗi năm một lượt ngộ đạo: đổi thời gian và đạo tâm lấy tu vi.",
      "risk": "Ngộ sai thì sinh tâm ma.",
      "signature": "Ngồi trước bia một năm: thành thì tu vi tăng vọt, hỏng thì tâm ma.",
-     "drawback": {"text": "Mỗi lượt ngộ đạo hao đạo tâm; ngộ hỏng thì tâm ma nặng thêm."},
+     "drawback": {"text": "Ngộ hỏng thì hao đạo tâm, tâm ma nặng thêm."},
      "levels": [
        {"realm": "luyen_khi", "name": "Bia hiện chữ", "text": "Chữ đầu tiên hiện ra: \"Đạo\". Ngươi nhìn nó cả đêm.", "effects": [{"hook": "stat.comprehension", "add": 5}, {"hook": "bottleneckResist", "add": 0.1}]},
        {"realm": "kim_dan", "name": "Bia hiện kinh", "text": "Cả một bài kinh hiện lên rồi tan, mỗi lần một bài khác.", "effects": [{"hook": "bottleneckResist", "add": 0.15}, {"hook": "breakthroughChance", "add": 5}]},
        {"realm": "nguyen_anh", "name": "Bia hóa đạo", "text": "Bia đá vỡ ra, chữ chảy vào người ngươi như nước.", "effects": [{"hook": "cultivationSpeed", "add": 0.15}, {"hook": "breakthroughChance.major", "add": 8}]}
      ],
      "actions": [
-       {"id": "ngo_dao", "name": "Ngồi trước bia ngộ đạo", "text": "Bỏ một năm ra ngồi trước bia, không làm gì khác.", "minLevel": 1, "cost": {"stat.daoHeart": -2}, "check": {"stat": "stat.comprehension", "difficulty": 55}, "success": {"text": "Chữ trên bia sáng lên rồi chui vào trán. Tu vi tăng vọt.", "effects": {"cultProgress": 30, "stat.comprehension": 1}}, "fail": {"text": "Chữ trên bia vặn vẹo thành mặt người. Ngươi tỉnh dậy, tâm ma lẩn quẩn.", "effects": {"heartDemon": 6, "stat.happiness": -3}}}
+       {"id": "ngo_dao", "name": "Ngồi trước bia ngộ đạo", "text": "Bỏ ra một năm ngồi trước bia; ngộ rồi phải nghỉ một năm cho đạo tâm lắng lại.", "minLevel": 1, "cooldownYears": 2, "check": {"stat": "stat.comprehension", "difficulty": 55}, "success": {"text": "Chữ trên bia sáng lên rồi chui vào trán. Tu vi tăng vọt.", "effects": {"cultProgress": 30, "stat.comprehension": 1}}, "fail": {"text": "Chữ trên bia vặn vẹo thành mặt người. Ngươi tỉnh dậy, tâm ma lẩn quẩn.", "effects": {"heartDemon": 2, "stat.daoHeart": -2, "stat.happiness": -3}}}
      ]},
     {"id": "kiem_linh", "name": "Kiếm linh trong mộng", "weight": 2, "rarity": "hiem",
      "activation": {"kind": "realm", "realm": "luyen_khi", "text": "Đêm đầu nhập Luyện Khí, ngươi mơ thấy một thanh kiếm gãy đứng giữa tuyết, gọi tên ngươi."},
@@ -251,14 +251,14 @@
      "summary": "Càng luyện chiến hồn càng mạnh: chiến lực tăng dần theo số lần luyện, hút máu khi đánh.",
      "risk": "Chiến hồn khát chiến: đi đâu cũng gặp chuyện đánh nhau.",
      "signature": "Mỗi lần luyện chiến hồn, chiến lực tăng thêm vĩnh viễn (cộng dồn).",
-     "drawback": {"text": "Chiến hồn khát chiến: cướp bóc, sát phạt tìm tới nhiều hơn; mỗi lần luyện tốn máu.", "hooks": [{"hook": "eventWeight.plunder", "mul": 1.4}]},
+     "drawback": {"text": "Chiến hồn khát chiến: cướp bóc, sát phạt tìm tới nhiều hơn; mỗi lần luyện tốn máu.", "hooks": [{"hook": "eventWeight.plunder", "mul": 1.2}]},
      "levels": [
-       {"realm": "pham_nhan", "name": "Hồn tướng", "text": "Đêm nào ngươi cũng nghe tiếng trống trận.", "effects": [{"hook": "combatPower", "add": 0.1}, {"hook": "path.weapon.affinity", "add": 10}]},
+       {"realm": "pham_nhan", "name": "Hồn tướng", "text": "Đêm nào ngươi cũng nghe tiếng trống trận.", "effects": [{"hook": "combatPower", "add": 0.1}, {"hook": "path.weapon.affinity", "add": 10}, {"hook": "injuryReduce", "add": 0.1}]},
        {"realm": "truc_co", "name": "Sát khí", "text": "Chiến hồn tỉnh hẳn. Đánh nhau, ngươi không lùi bước nào.", "effects": [{"hook": "lifesteal", "add": 0.08}, {"hook": "combatPower", "add": 0.1}]},
        {"realm": "nguyen_anh", "name": "Bất diệt", "text": "Hồn tướng và hồn ngươi quấn vào nhau, đánh tan rồi lại tụ.", "effects": [{"hook": "combatPower", "add": 0.15}, {"hook": "injuryReduce", "add": 0.15}]}
      ],
      "actions": [
-       {"id": "luyen_chien_hon", "name": "Luyện chiến hồn", "text": "Để chiến hồn dẫn đi một trận đánh trong mộng.", "minLevel": 1, "cooldownYears": 2, "cost": {"stat.health": -6}, "result": {"text": "Ngươi tỉnh dậy, hai tay còn run, sát khí trong người dày thêm.", "effects": {"pathAffinity": {"weapon": 1}, "stat.physique": 1}}, "perUse": [{"hook": "combatPower", "add": 0.02}]}
+       {"id": "luyen_chien_hon", "name": "Luyện chiến hồn", "text": "Để chiến hồn dẫn đi một trận đánh trong mộng.", "minLevel": 1, "cooldownYears": 2, "cost": {"stat.health": -3}, "result": {"text": "Ngươi tỉnh dậy, hai tay còn run, sát khí trong người dày thêm.", "effects": {"pathAffinity": {"weapon": 1}, "stat.physique": 1}}, "perUse": [{"hook": "combatPower", "add": 0.02}]}
      ]},
     {"id": "thon_phe", "name": "Thôn phệ", "weight": 2, "rarity": "nghich_thien",
      "activation": {"kind": "realm", "realm": "luyen_khi", "text": "Linh khí vừa vào người đã bị một cái hố đen trong đan điền nuốt sạch. Rồi nó đòi thêm."},
@@ -313,15 +313,15 @@
      "summary": "Hút linh khí mọi hệ, không bị hệ khắc; luyện hóa được một tia hỗn độn đổi tu vi lớn.",
      "risk": "Châu hút cả sinh lực của người giữ nó.",
      "signature": "Uy lực mọi hệ, không bị khắc hệ; luyện hóa hỗn độn đổi lượng lớn tu vi.",
-     "drawback": {"text": "Châu hút sinh lực: mỗi năm Sức khỏe hao một chút; trời ghét vật hỗn độn: thiên kiếp nặng hơn 25%.", "hooks": [{"hook": "tribulationPct", "add": 25}], "yearly": {"stat.health": -1}},
+     "drawback": {"text": "Châu hút sinh lực: luyện hỏng thì rách kinh mạch; trời ghét vật hỗn độn: thiên kiếp nặng hơn 10%.", "hooks": [{"hook": "tribulationPct", "add": 10}]},
      "levels": [
-       {"realm": "pham_nhan", "name": "Châu xám", "text": "Viên châu ấm, ngươi ngủ ôm nó như ôm gối.", "effects": [{"hook": "element.all.power", "add": 0.15}, {"hook": "ignoreElementWeakness"}]},
+       {"realm": "pham_nhan", "name": "Châu xám", "text": "Viên châu ấm, ngươi ngủ ôm nó như ôm gối.", "effects": [{"hook": "element.all.power", "add": 0.15}, {"hook": "ignoreElementWeakness"}, {"hook": "cultivationSpeed", "add": 0.15}]},
        {"realm": "truc_co", "name": "Châu mở", "text": "Viên châu nứt một khe, hút linh khí bốn phương vào người ngươi.", "effects": [{"hook": "cultivationSpeed", "add": 0.25}]},
        {"realm": "kim_dan", "name": "Châu tỏ", "text": "Trong châu có một khoảng không, không trên dưới, không trước sau.", "effects": [{"hook": "element.all.power", "add": 0.15}, {"hook": "breakthroughChance", "add": 5}]},
        {"realm": "nguyen_anh", "name": "Hỗn độn khai", "text": "Viên châu vỡ ra, khoảng không chui vào đan điền ngươi.", "effects": [{"hook": "cultivationSpeed", "add": 0.2}, {"hook": "breakthroughChance.major", "add": 10}]}
      ],
      "actions": [
-       {"id": "luyen_hoa_hon_don", "name": "Luyện hóa một tia hỗn độn", "text": "Rút một tia hỗn độn trong châu, dẫn qua kinh mạch.", "minLevel": 2, "cooldownYears": 3, "cost": {"stat.daoHeart": -3}, "check": {"stat": "stat.comprehension", "difficulty": 60}, "success": {"text": "Tia hỗn độn hóa thành linh lực thuần. Tu vi dâng lên như thủy triều.", "effects": {"cultProgress": 50, "stat.comprehension": 1}}, "fail": {"text": "Tia hỗn độn quẫy mạnh, xé rách một đoạn kinh mạch.", "effects": {"stat.health": -15, "cultProgress": 5}}}
+       {"id": "luyen_hoa_hon_don", "name": "Luyện hóa một tia hỗn độn", "text": "Rút một tia hỗn độn trong châu, dẫn qua kinh mạch.", "minLevel": 2, "cooldownYears": 3, "cost": {"stat.daoHeart": -1}, "check": {"stat": "stat.comprehension", "difficulty": 60}, "success": {"text": "Tia hỗn độn hóa thành linh lực thuần. Tu vi dâng lên như thủy triều.", "effects": {"cultProgress": 50, "stat.comprehension": 1}}, "fail": {"text": "Tia hỗn độn quẫy mạnh, xé rách một đoạn kinh mạch.", "effects": {"stat.health": -10, "cultProgress": 5}}}
      ]}
   ],
   "rarityNames": {"pham": "Phàm", "hiem": "Hiếm", "cuc_hiem": "Cực hiếm", "nghich_thien": "Nghịch thiên"}

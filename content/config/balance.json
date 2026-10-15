@@ -714,7 +714,8 @@
     "pityLives": 15,
     "chooseCost": 30,
     "actionMinAge": 6,
-    "rarityWeights": { "pham": 55, "hiem": 30, "cuc_hiem": 12, "nghich_thien": 3 }
+    "rarityWeights": { "pham": 55, "hiem": 30, "cuc_hiem": 12, "nghich_thien": 3 },
+    "impactTarget": { "pham": 0.1, "hiem": 0.25, "cuc_hiem": 0.5, "nghich_thien": 1 }
   },
   "badges": {
     "max": 3

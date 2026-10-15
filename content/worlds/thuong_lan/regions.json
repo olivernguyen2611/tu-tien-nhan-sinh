@@ -1,11 +1,11 @@
 [
   {
     "id": "thanh_van_chau",
-    "name": "Thanh Vân châu",
-    "description": "Quê nhà: ruộng lúa, chợ phiên, vài tông môn nhỏ trên núi. Linh khí mỏng, lòng người dày.",
+    "name": "Trung Nguyên",
+    "description": "Quê nhà, đất phàm nhân của Đại Ung vương triều: ruộng lúa, chợ phiên, võ lâm Thiếu Lâm, Hoa Sơn, Võ Đang tranh danh. Linh khí mỏng, lòng người dày.",
     "qi": 1.0,
     "summary": "Linh khí thường. Yên ổn, ít kỳ ngộ.",
-    "enterText": "Ngươi về lại Thanh Vân châu. Khói bếp vẫn bay thẳng, quán mì đầu làng vẫn dở.",
+    "enterText": "Ngươi về lại Trung Nguyên. Khói bếp vẫn bay thẳng, quán mì đầu làng vẫn dở.",
     "guardian": {
       "name": "Thanh Vân Tử",
       "title": "Ẩn sĩ",

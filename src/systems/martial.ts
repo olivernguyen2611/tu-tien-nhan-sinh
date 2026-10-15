@@ -69,7 +69,7 @@ export function martialChance(state: GameState, content: Content): number {
 function gateReason(state: GameState, content: Content): string | null {
   const step = content.balance.martial.steps[state.martial.stage + 1];
   if (!step) return null;
-  if (step.needsTeacher && !hasTeacher(state, content)) return 'Cần bí kíp hoặc sư phụ (võ quán, Lục Hợp Môn…).';
+  if (step.needsTeacher && !hasTeacher(state, content)) return 'Cần bí kíp hoặc sư phụ (võ quán, Thiếu Lâm…).';
   if (step.minPhysique !== undefined && state.aptitudes.physique < step.minPhysique) return `Cần Căn cốt ${step.minPhysique}.`;
   return null;
 }

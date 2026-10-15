@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { loadContent } from '../src/core/content';
-import { formatReport, simulateLife, simulateMany, summarize } from '../src/systems/simulate';
+import { fingerImpacts, formatReport, simulateLife, simulateMany, summarize } from '../src/systems/simulate';
 
 const content = loadContent();
 
@@ -35,4 +35,16 @@ describe('Mô phỏng tự động (6.1)', () => {
     expect(formatReport(report, content, 'thử')).toContain('20 đời');
     expect(results).toHaveLength(20);
   });
+
+  it('9.R3d: every Kim Thủ Chỉ changes the life it is given (same seeds, with and without)', () => {
+    const ids = content.goldenFingers.fingers.map((f) => f.id);
+    const base = simulateLife(content, 'sim-gf-0', { profile: 'player' });
+    for (const id of ids) {
+      const life = simulateLife(content, 'sim-gf-0', { profile: 'player', goldenFinger: id });
+      expect(life, id).not.toEqual(base);
+    }
+    const { impacts } = fingerImpacts(content, ids.slice(0, 2), 2, 'sim-gf', { profile: 'player' });
+    expect(impacts.map((i) => i.id)).toEqual(ids.slice(0, 2));
+    expect(impacts.every((i) => Number.isFinite(i.gain) && ['yeu', 'manh', 'vua'].includes(i.verdict))).toBe(true);
+   }, 60_000);
 });

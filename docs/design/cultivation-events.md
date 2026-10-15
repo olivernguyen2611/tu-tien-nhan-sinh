@@ -42,7 +42,7 @@ Ngoại môn · chủ đề: herb · nhiệm vụ tông môn
 
 ### 4. Đưa thư xuống núi `dua_thu_xuong_nui`
 Ngoại môn · nhiệm vụ tông môn
-> Mang thư của trưởng lão tới Khâm Thiên Giám ở Diên Châu. Đường đi qua quê nhà {hometown}.
+> Mang thư của trưởng lão tới Khâm Thiên Giám ở Trung Nguyên. Đường đi qua quê nhà {hometown}.
 - **Đi thẳng, xong việc về ngay** → "Trưởng lão khen ngươi biết điều." `cống hiến +10` · `stat.daoHeart +1` · `stat.happiness −2` (nhớ nhà)
 - **Ghé thăm nhà** (còn cha mẹ) → "Mẹ ngươi khóc, cha ngươi giả vờ không khóc. Ngươi về trễ ba ngày." `stat.happiness +10` · `cống hiến +3`
 - **Ghé Kim Thiềm Thương Minh xem hàng** → "Không mua gì, nhưng biết giá cả." `stat.intellect +2` · `flag: biet_gia_phuong_thi`
@@ -243,7 +243,7 @@ Nối với 4 con đường đời, thang võ đạo và các cửa vào tiên l
 
 ### 26. Ngày tiên môn tuyển đồ `tien_mon_tuyen_do_truot`
 Không linh căn · tuổi 8–14 · chỉ một lần
-> Mười năm một lần, Bích Lạc Tông xuống Diên Châu tuyển người. {name} đặt tay lên viên đá thử, đá không sáng. Tiên sư phất tay: "Người kế tiếp."
+> Mười năm một lần, Bích Lạc Tông xuống Trung Nguyên tuyển người. {name} đặt tay lên viên đá thử, đá không sáng. Tiên sư phất tay: "Người kế tiếp."
 - **Về nhà, theo nghề của mình** → "Mẹ ngươi nấu một nồi cháo, không hỏi gì." `stat.happiness −5` · `stat.daoHeart +2`
 - **Xin làm tạp dịch trên núi** · ⚄ Căn cốt 45 → thành công: "Chấp sự nhìn tay chân ngươi, gật đầu: 'Gánh nước được.'" `flag: tap_dich` *(cửa 2.3)* · `stat.happiness +3` · thất bại: "Không cần người." `stat.happiness −5`
 - **Đứng ngoài cổng không chịu về** → "Ba ngày ba đêm. Một vị sư già đi ngang, nhìn ngươi rất lâu." `stat.daoHeart +5` · `flag: su_gia_de_y` *(gợi Phật duyên)*
@@ -282,9 +282,9 @@ Thương lộ · đã là Chủ tiệm trở lên
 - **Đổi hàng khác, không đấu** → "Ngươi bán thứ họ không có." `stat.intellect +2` · `bạc +30`
 - **Mua luôn tiệm đối diện** (bạc ≥ 300) → "Chủ tiệm kia thành người làm của ngươi." `bạc −300` · `lên nấc Thương lộ (Phú hộ)` · `stat.happiness +5` · `karma −2`
 
-### 32. Bái nhập Lục Hợp Môn `bai_nhap_luc_hop_mon`
+### 32. Bái nhập Thiếu Lâm `bai_nhap_luc_hop_mon`
 Võ lâm · tuổi 10–20 · chỉ một lần
-> Lục Hợp Môn mở cửa nhận đệ tử. Bài thử: đứng tấn một nén nhang dưới nắng trưa.
+> Thiếu Lâm mở cửa nhận đệ tử. Bài thử: đứng tấn một nén nhang dưới nắng trưa.
 - **Đứng tấn** · ⚄ Căn cốt 50 → thành công: `flag: luc_hop_mon` · `lên cảnh giới võ đạo (Tam lưu)` · `danh vọng Giang hồ +5` · `stat.physique +2` · thất bại: "Ngươi ngã sau nửa nén." `stat.physique +1`
 - `[Thiết Vị]` **Đứng tấn, tranh thủ ăn bánh** → "Sư phụ tức cười, nhận luôn." `flag: luc_hop_mon` · `lên cảnh giới võ đạo (Tam lưu)` · `stat.happiness +3`
 
@@ -302,12 +302,12 @@ Võ đạo Tuyệt đỉnh viên mãn · Căn cốt ≥ 70
 
 ### 35. Đại hội võ lâm `dai_hoi_vo_lam`
 Võ lâm · võ đạo Nhất lưu trở lên · mỗi 10 năm
-> Quần hùng tụ về Diên Châu tranh ngôi minh chủ. Lục Hợp Môn, Thính Vũ Kiếm Phái đều có người, Vô Diện Lâu đâu đó trong đám đông.
+> Quần hùng tụ về Trung Nguyên tranh ngôi minh chủ. Thiếu Lâm, Hoa Sơn phái đều có người, Huyết Sát Lâu đâu đó trong đám đông.
 - **Lên đài** · ⚄ Cảnh giới võ đạo → thắng: `lên nấc Võ lâm` (Tông sư hoặc Minh chủ nếu đã Hóa cảnh) · `danh vọng Giang hồ +20` · `stat.happiness +10` · thua: `stat.health −10`
 - **Đứng xem, kết giao** → `npc bạn: võ giả` · `danh vọng Giang hồ +5` · `stat.charm +2`
-- **Rình bắt sát thủ Vô Diện Lâu** · ⚄ Trí tuệ 60 → thành công: `danh vọng Giang hồ +15` · `flag: thu_vo_dien_lau` · `stat.charm +3` · thất bại: `stat.health −8`
+- **Rình bắt sát thủ Huyết Sát Lâu** · ⚄ Trí tuệ 60 → thành công: `danh vọng Giang hồ +15` · `flag: thu_vo_dien_lau` · `stat.charm +3` · thất bại: `stat.health −8`
 
-### 36. Dịch bệnh Diên Châu `dich_benh_dien_chau`
+### 36. Dịch bệnh Trung Nguyên `dich_benh_dien_chau`
 Y lộ hoặc có `nghe_thuoc` · mọi tuổi 16+ · tag: dark (nhẹ)
 > Dịch lan khắp ba huyện. Hồi Xuân Đường đóng cửa vì thầy thuốc cũng ngã bệnh.
 - **Ở lại chữa bệnh** · ⚄ Trí tuệ 60 → thành công: "Ngươi tìm ra bài thuốc. Dân gọi ngươi là thần y." `lên nấc Y lộ` · `karma +10` · `stat.intellect +3` · `stat.daoHeart +3` · thất bại: `stat.health −20` · `karma +5`

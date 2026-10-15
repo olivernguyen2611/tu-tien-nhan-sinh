@@ -208,7 +208,7 @@
     "id": "dua_thu_xuong_nui",
     "category": "sect",
     "title": "Đưa thư xuống núi",
-    "text": "Mang thư của trưởng lão tới Khâm Thiên Giám ở Diên Châu. Đường đi qua quê nhà {hometown}.",
+    "text": "Mang thư của trưởng lão tới Khâm Thiên Giám ở Trung Nguyên. Đường đi qua quê nhà {hometown}.",
     "conditions": {
       "sect": {
         "member": true,
