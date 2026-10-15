@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### 9.R7b: tám đại vực, sự kiện riêng mỗi vùng (2026-10-15)
+- Hai đại vực mới: **Huyết Uyên ma vực** (từ Trúc Cơ, linh khí 1,3; chuyện ma đạo gấp ba, tâm ma dễ sinh −15%; Uyên chủ Xích Phát Ma Quân) và **Thái Cổ chiến trường** (từ Kim Đan, linh khí 1,6; bí cảnh, kỳ vật nhiều nhất, chiến lợi phẩm +15%, khó chạy thoát −10%; Thủ Mộ Nhân).
+- 18 sự kiện vùng mới (`events/regions-2.json`): 3 cho mỗi vùng mới, 2 thêm cho mỗi vùng cũ, nên vùng nào cũng có ít nhất 3 sự kiện riêng.
+- Hai phường thị mới: Chợ đêm Huyết Nguyệt (Huyết Uyên, đan ma đạo rẻ) và Phá Cấm Phường (Thái Cổ, pháp bảo cổ, vật liệu).
+- Sổ tri thức thêm 2 mục cho hai vùng mới (mở vùng trên bản đồ).
+- Hộ vệ Trung Nguyên đổi tên Lạc Vân Tử (tránh gần tên trong tác phẩm khác).
+
 ### 9.R7a: hàng rào tên cấm, kinh thánh thế giới (2026-10-15)
 - `docs/design/ten-cam.json`: danh sách tên riêng nổi bật của các tác phẩm có bản quyền (không đưa vào game). `npm run validate` báo lỗi khi nội dung dùng đúng tên đó (mọi kiểu hoa thường), dùng tên chỉ khác dấu thanh viết hoa như tên riêng, hoặc khi kho tên có thể ghép ra một tên trong danh sách. Nội dung hiện tại sạch.
 - `docs/design/the-gioi-thuong-lan.md`: lịch sử bốn thời kỳ, tám đại vực (thêm Huyết Uyên ma vực và Thái Cổ chiến trường), năm phàm quốc, mười hai thế gia, sáu tộc, khung ~40 tông môn, sự kiện thiên hạ, quy tắc đặt tên và thứ tự nhập dữ liệu 9.R7b–e.

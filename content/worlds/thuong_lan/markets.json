@@ -386,5 +386,64 @@
     },
     "bargainWin": "Quản sự cúi đầu: \"Quý khách, phí ghế giảm một phần.\"",
     "bargainLose": "Quản sự mỉm cười: \"Thiên Bảo Lâu không mặc cả.\""
+  },
+  {
+    "id": "huyet_nguyet_thi",
+    "name": "Chợ đêm Huyết Nguyệt",
+    "description": "Chỉ họp khi trăng đỏ trên Huyết Uyên. Đan của ma đạo hiệu nghiệm, giá rẻ, tác dụng phụ không ghi trên nhãn.",
+    "needsRoot": true,
+    "currency": "spiritStones",
+    "priceMul": 0.9,
+    "regions": [
+      "huyet_uyen"
+    ],
+    "kinds": [
+      "pill",
+      "talisman"
+    ],
+    "items": [
+      "huyet_dan",
+      "huyet_khi_hoan",
+      "yeu_thu_huyet"
+    ],
+    "stock": 6,
+    "techniques": [
+      {
+        "id": "u_ha_huyet_anh_cong",
+        "price": 160
+      }
+    ],
+    "bargainWin": "Lão bán hàng cười khanh khách: \"Hợp mắt, bớt cho một chút. Lần sau mang người tới đổi.\"",
+    "bargainLose": "Lão bán hàng liếm môi, nhìn cổ tay ngươi lâu hơn cần thiết. Giá không giảm."
+  },
+  {
+    "id": "pha_cam_phuong",
+    "name": "Phá Cấm Phường",
+    "description": "Lều bạt dựng giữa di cốt thần thú, nơi kẻ đào di tích bán lại thứ vừa đào được. Hàng tốt lẫn hàng có nguyền.",
+    "needsRoot": true,
+    "currency": "spiritStones",
+    "priceMul": 1.15,
+    "regions": [
+      "thai_co_chien_truong"
+    ],
+    "kinds": [
+      "artifact",
+      "material"
+    ],
+    "items": [
+      "phap_bao_co",
+      "noi_dan_3",
+      "linh_tinh_tho",
+      "loi_tinh"
+    ],
+    "stock": 6,
+    "techniques": [
+      {
+        "id": "cuu_chuyen_kim_cot_quyet",
+        "price": 420
+      }
+    ],
+    "bargainWin": "Gã đào mộ phủi cát trên tay: \"Thôi, đồ chôn ba vạn năm rồi, bán rẻ cũng được.\"",
+    "bargainLose": "Gã đào mộ chỉ vào vết sẹo trên mặt: \"Món này suýt lấy mạng ta. Không bớt.\""
   }
 ]

@@ -7,10 +7,10 @@
     "summary": "Linh khí thường. Yên ổn, ít kỳ ngộ.",
     "enterText": "Ngươi về lại Trung Nguyên. Khói bếp vẫn bay thẳng, quán mì đầu làng vẫn dở.",
     "guardian": {
-      "name": "Thanh Vân Tử",
+      "name": "Lạc Vân Tử",
       "title": "Ẩn sĩ",
       "realm": "nguyen_anh",
-      "text": "Trên đỉnh Thanh Vân có một lão nhân câu cá trên mây, người ta gọi là Thanh Vân Tử. Ba trăm năm nay, yêu ma nào bén mảng tới châu này đều bị lão câu lên rồi thả xuống biển."
+      "text": "Trên đỉnh Lạc Vân có một lão nhân câu cá trên mây, người ta gọi là Lạc Vân Tử. Ba trăm năm nay, yêu ma nào bén mảng tới châu này đều bị lão câu lên rồi thả xuống biển."
     }
   },
   {
@@ -48,6 +48,23 @@
     }
   },
   {
+    "id": "huyet_uyen",
+    "name": "Huyết Uyên ma vực",
+    "description": "Vực sâu phía nam, đất bị đẩy xuống từ Tiên Ma đại chiến thời Trung Cổ. Sông đỏ như máu, ma tông mọc như nấm sau mưa. Chính đạo vào đây phải giấu tên.",
+    "minRealm": "truc_co",
+    "qi": 1.3,
+    "eventWeight": { "demonic": 3, "heart_demon": 1.5, "justice": 0.3, "plunder": 1.5 },
+    "effects": [{ "hook": "heartDemonResist", "add": -0.15 }],
+    "summary": "Linh khí dồi dào nhưng nhiễm ma khí. Chuyện ma đạo gấp ba; tâm ma dễ sinh (−15%).",
+    "enterText": "Ngươi bước xuống Huyết Uyên. Gió ở đây ấm và tanh, như hơi thở của ai đó đứng sau lưng.",
+    "guardian": {
+      "name": "Xích Phát Ma Quân",
+      "title": "Uyên chủ",
+      "realm": "hoa_than",
+      "text": "Kẻ ngồi đáy vực, tóc đỏ quét đất, ba nghìn năm chưa rời ngai. Ma tông nào cũng phải nộp cống. Hắn không ghét chính đạo, hắn chỉ thấy chính đạo buồn cười."
+    }
+  },
+  {
     "id": "dong_hai",
     "name": "Đông Hải quần đảo",
     "description": "Nghìn hòn đảo nổi trên biển xanh. Hải thị đêm nào cũng sáng đèn, dưới đáy biển là phủ cũ của giao long.",
@@ -62,6 +79,23 @@
       "title": "Đảo chủ",
       "realm": "hoa_than",
       "text": "Đảo lớn nhất Đông Hải không có tên, chỉ có một lão già ngồi xem triều lên xuống. Thương Hải Lão Tổ ra tay đúng một lần, khi một tông môn muốn đánh thuế hải thị. Tông môn ấy giờ là một rạn san hô."
+    }
+  },
+  {
+    "id": "thai_co_chien_truong",
+    "name": "Thái Cổ chiến trường",
+    "description": "Đại lục phía tây vỡ thành nghìn mảnh từ trận chiến cuối của thần tộc và cự yêu. Di cốt cao như núi, cấm chế thượng cổ vẫn còn sống, thỉnh thoảng còn đói.",
+    "minRealm": "kim_dan",
+    "qi": 1.6,
+    "eventWeight": { "bi_canh": 2.5, "ky_vat": 2, "beast": 1.5, "romance": 0.5 },
+    "effects": [{ "hook": "lootPct", "add": 0.15 }, { "hook": "escapeChance", "add": -0.1 }],
+    "summary": "Linh khí rất dày. Bí cảnh và kỳ vật nhiều nhất Thương Lan, chiến lợi phẩm +15%; khó chạy thoát (−10%).",
+    "enterText": "Ngươi đặt chân lên Thái Cổ chiến trường. Dưới giày là một chiếc răng, to bằng cả gian nhà.",
+    "guardian": {
+      "name": "Thủ Mộ Nhân",
+      "title": "Người giữ mộ thần",
+      "realm": "hoa_than",
+      "text": "Không ai biết tên thật của lão. Lão quét bụi trên di cốt thần tộc mỗi ngày, ai đào trộm thì lão quét luôn kẻ đó."
     }
   },
   {

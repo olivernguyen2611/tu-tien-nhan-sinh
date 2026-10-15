@@ -386,6 +386,30 @@
     ]
   },
   {
+    "id": "huyet_uyen_ma_vuc",
+    "group": "the_gioi",
+    "name": "Huyết Uyên ma vực",
+    "text": "Phía nam có vực sâu sông đỏ, nơi Ma đạo bị đẩy xuống sau Tiên Ma đại chiến. Ma công tu nhanh ở đó, tâm ma cũng vậy.",
+    "sources": [
+      {
+        "kind": "region",
+        "id": "huyet_uyen",
+        "chance": 0.3
+      },
+      {
+        "kind": "event",
+        "id": "vung_hu_cho_ma",
+        "chance": 0.5
+      }
+    ],
+    "unlocks": [
+      {
+        "kind": "region",
+        "id": "huyet_uyen"
+      }
+    ]
+  },
+  {
     "id": "dong_hai_quan_dao",
     "group": "the_gioi",
     "name": "Đông Hải quần đảo",
@@ -401,6 +425,30 @@
       {
         "kind": "region",
         "id": "dong_hai"
+      }
+    ]
+  },
+  {
+    "id": "thai_co_chien_truong",
+    "group": "the_gioi",
+    "name": "Thái Cổ chiến trường",
+    "text": "Đại lục phía tây vỡ nát từ trận chiến cuối của thần tộc và cự yêu. Di cốt cao như núi, cấm chế thượng cổ vẫn còn sống.",
+    "sources": [
+      {
+        "kind": "region",
+        "id": "thai_co_chien_truong",
+        "chance": 0.3
+      },
+      {
+        "kind": "event",
+        "id": "vung_tc_di_cot",
+        "chance": 0.5
+      }
+    ],
+    "unlocks": [
+      {
+        "kind": "region",
+        "id": "thai_co_chien_truong"
       }
     ]
   },

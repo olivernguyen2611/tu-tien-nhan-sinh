@@ -71,3 +71,15 @@ describe('đại vực (task 4.8)', () => {
     expect(save.life.region).toEqual({ id: null, visited: [], movedAt: null });
   });
 });
+
+describe('9.R7b: eight đại vực', () => {
+  it('each region has at least three events of its own and opens in realm order', () => {
+    const ids = content.regions.map((r) => r.id);
+    expect(ids).toEqual(expect.arrayContaining(['huyet_uyen', 'thai_co_chien_truong']));
+    expect(ids).toHaveLength(8);
+    for (const id of ids) expect(content.events.filter((e) => e.conditions.region?.includes(id)).length, id).toBeGreaterThanOrEqual(3);
+    const rank = (r?: string) => content.cultivation.realms.realms.findIndex((x) => x.id === (r ?? 'pham_nhan'));
+    const order = content.regions.map((r) => rank(r.minRealm));
+    expect(order).toEqual([...order].sort((a, b) => a - b));
+  });
+});
