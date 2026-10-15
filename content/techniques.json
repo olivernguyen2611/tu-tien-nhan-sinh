@@ -328,19 +328,47 @@
   {
     "id": "thai_so_dien_dao_kinh",
     "name": "Thái Sơ Diễn Đạo Kinh",
-    "grade": "thien",
+    "grade": "vo_thuong",
     "lineage": "tien",
     "elements": "any",
-    "flavor": "Trang đầu trống trơn. Người đọc ngộ ra tới đâu, chữ hiện tới đó. Ngươi là người thứ hai trong mười vạn năm thấy được chữ. Chương nào chưa hiện, chỉ là chưa tới lúc.",
-    "note": "Cả Thương Lan giới chỉ có một bản. Hoài bích kỳ tội: có kẻ sẽ tìm tới. Công pháp tự đổi theo người tu: linh căn càng yếu càng được bù, thể chất đặc biệt cũng vừa vặn. Các chương sau Hóa Thần còn niêm phong, mở dần theo từng bản cập nhật.",
+    "flavor": "Không ai viết ra bộ kinh này. Thiên địa tự diễn luyện từ thuở hỗn độn sơ khai, mười vạn năm mới hiện thế một lần. Trang đầu trống trơn: người đọc ngộ tới đâu, chữ hiện tới đó.",
+    "note": "Vô Thượng phẩm, cả Thương Lan giới chỉ có một bản. Hoài bích kỳ tội: có kẻ sẽ tìm tới. Công pháp tự đổi theo người tu: linh căn càng yếu càng được bù nhiều, thể chất đặc biệt cũng vừa vặn. Các chương sau Hóa Thần còn niêm phong, mở dần theo từng bản cập nhật.",
     "effects": [
       {
-        "hook": "breakthroughChance.major",
+        "hook": "cultivationSpeed",
+        "add": 0.3
+      },
+      {
+        "hook": "breakthroughChance",
         "add": 10
       },
       {
+        "hook": "breakthroughChance.major",
+        "add": 20
+      },
+      {
+        "hook": "bottleneckResist",
+        "add": 0.3
+      },
+      {
         "hook": "heartDemonResist",
-        "add": 0.1
+        "add": 0.3
+      },
+      {
+        "hook": "lifespanPct",
+        "add": 0.2
+      },
+      {
+        "hook": "combatPower",
+        "add": 0.25
+      },
+      {
+        "hook": "element.all.power",
+        "add": 0.15
+      },
+      {
+        "hook": "tribulationDefense",
+        "add": 0.15
       }
     ],
     "adaptive": true,

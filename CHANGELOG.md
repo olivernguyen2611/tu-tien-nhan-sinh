@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### Thái Sơ Diễn Đạo Kinh lên Vô Thượng phẩm (2026-10-15)
+- Phẩm công pháp mới **Vô Thượng** (trên Thiên phẩm; hệ số tu luyện ×3,0 so với ×2,0 của Thiên). Thái Sơ Diễn Đạo Kinh là công pháp duy nhất ở phẩm này: thiên địa tự diễn luyện, không ai viết ra.
+- Mạnh hơn: tốc độ tu luyện +30%, đột phá +10 (đại cảnh giới +20), vượt bình cảnh +30%, kháng tâm ma +30%, thọ nguyên +20%, chiến lực +25%, uy lực mọi hệ +15%, đỡ thiên lôi 15%; phần bù cho linh căn yếu gấp đôi (ngũ linh căn +100%).
+- Khó đạt hơn nhiều: bỏ khỏi phường thị; kỳ ngộ Di tích thượng cổ nay cần Khí vận ≥ 90, Ngộ tính ≥ 80, Đạo tâm ≥ 70, hiếm gấp ba lần so với trước, và phải qua phép thử Ngộ tính độ khó 95 (thất bại bị phản phệ, mất cơ duyên).
+- Test `tests/thai-so.test.ts`.
+
 ### 9.0.4: bản sắc tông môn, gia phong gia tộc (bước đầu) (2026-10-15)
 - Mỗi tông môn có mục **Bản sắc** (`sects.json` trường `identity`): truyền thống, tuyệt kỹ, giai thoại, đối thủ (Bích Lạc và Tàng Phong tranh kiếm đạo, Bách Thảo Cốc và U Hà Ma Tông thù nhau vì độc), nhân vật nổi bật (chưởng môn, thiên tài, các chủ…). Hiện ở bảng Tông môn và danh sách xin bái nhập.
 - Gia quy của gia tộc có thêm **gia phong** (`clan.json` trường `tradition`) hiện dưới từng gia quy.

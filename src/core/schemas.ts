@@ -2164,7 +2164,8 @@ export type CareersFile = z.infer<typeof CareersFileSchema>;
 
 // ---------- Techniques and sects (task 2.4) ----------
 
-export const TECHNIQUE_GRADES = ['hoang', 'huyen', 'dia', 'thien'] as const;
+/** Hoàng < Huyền < Địa < Thiên < Vô Thượng (công pháp chí cao do thiên địa diễn hóa). */
+export const TECHNIQUE_GRADES = ['hoang', 'huyen', 'dia', 'thien', 'vo_thuong'] as const;
 export const LINEAGES = ['tien', 'ma', 'phat', 'quy', 'yeu'] as const;
 
 /** content/techniques.json (shared): main cultivation methods, docs/design/techniques.md. */

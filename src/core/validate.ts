@@ -724,7 +724,7 @@ function checkTechniquesAndSects(
       if (!techniques.some((x) => x.id === tb.default)) out.push({ file: bal, level: 'error', message: `techniques.default "${tb.default}" không có trong techniques.json` });
       const ghostTech = t.balance.ghost.technique;
       if (!techniques.some((x) => x.id === ghostTech)) out.push({ file: bal, level: 'error', message: `ghost.technique "${ghostTech}" không có trong techniques.json` });
-      for (const g of ['hoang', 'huyen', 'dia', 'thien']) {
+      for (const g of ['hoang', 'huyen', 'dia', 'thien', 'vo_thuong']) {
         if (tb.gradeMul[g] === undefined) out.push({ file: bal, level: 'error', message: `techniques.gradeMul thiếu phẩm "${g}"` });
       }
       for (const l of ['tien', 'ma', 'phat', 'quy', 'yeu']) {
