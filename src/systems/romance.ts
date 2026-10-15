@@ -15,7 +15,7 @@ import { makeName, splitName } from './names';
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
 
-export type RomanceAction = 'pursue' | 'giveUp' | 'gift' | 'confess' | 'wed' | 'child' | 'company' | 'dualCult' | 'reconcile' | 'divorce';
+export type RomanceAction = 'pursue' | 'giveUp' | 'gift' | 'confess' | 'wed' | 'child' | 'company' | 'dualCult' | 'reconcile' | 'divorce' | 'amends' | 'mend' | 'rekindle' | 'cutOff';
 
 /** Playtest 2026-10-12: what counts as caring for the spouse this year (else the spouse cools). */
 const CARE: RomanceAction[] = ['company', 'gift', 'dualCult', 'reconcile', 'child', 'wed'];
@@ -136,7 +136,8 @@ export function romanceViews(state: GameState, content: Content, npcId: string):
   const doneThisYear = (a: RomanceAction) => r.lastActions[a] === state.character.age;
   if (r.partner === npcId) return partnerViews(state, content, n, doneThisYear);
   if (r.lover !== npcId) {
-    if (r.partner || r.exes.includes(npcId)) return [];
+    if (r.exes.includes(npcId)) return exViews(state, content, n, doneThisYear);
+    if (r.partner || r.cut?.includes(npcId)) return [];
     return [{ action: 'pursue', label: 'Theo đuổi', cost: null, blocked: r.lover ? 'Đang theo đuổi người khác' : null }];
   }
   const cost = giftCost(state, content);
@@ -165,6 +166,27 @@ export function romanceViews(state: GameState, content: Content, npcId: string):
   }
   views.push({ action: 'giveUp', label: r.couple ? 'Chia tay' : 'Thôi theo đuổi', cost: null, blocked: null });
   return views;
+}
+
+/** 9.0.1: người cũ vẫn là người quen: xin lỗi, hóa giải, nối lại duyên, hoặc cắt đứt hẳn. */
+function exViews(state: GameState, content: Content, n: Npc, doneThisYear: (a: RomanceAction) => boolean): RomanceView[] {
+  const b = content.balance.romance;
+  const r = state.romance;
+  const cost = giftCost(state, content);
+  const poor = state.money.silver < cost.silver || state.money.spiritStones < cost.stones;
+  const nothing = r.partner || r.lover ? 'Đang có người bên cạnh' : null;
+  return [
+    {
+      action: 'amends', label: 'Xin lỗi, đền bù', cost: cost.stones ? `${cost.stones} linh thạch` : `${cost.silver} bạc`,
+      blocked: doneThisYear('amends') ? 'Năm nay đã tạ lỗi' : poor ? 'Không đủ tiền' : null,
+    },
+    { action: 'mend', label: 'Hóa giải hiềm khích', cost: null, blocked: doneThisYear('mend') ? 'Năm nay đã thử' : null },
+    {
+      action: 'rekindle', label: 'Nối lại duyên', cost: null,
+      blocked: nothing ?? (doneThisYear('rekindle') ? 'Năm nay đã thử' : n.affinity < b.rekindleAt ? `Cần thiện cảm ${b.rekindleAt}` : null),
+    },
+    { action: 'cutOff', label: 'Cắt đứt hẳn', cost: null, blocked: null },
+  ];
 }
 
 /** Phu thê (playtest 2026-10-12): bầu bạn, quà, song tu, làm lành, con cái, hòa ly. */
@@ -287,6 +309,39 @@ export function romanceAction(state: GameState, content: Content, npcId: string,
       aptitudes: { ...s.aptitudes, daoHeart: clamp(s.aptitudes.daoHeart + b.divorceDaoHeart) },
     };
     lines.push({ text: fill(t.divorce), tone: 'bad' });
+  } else if (action === 'amends') {
+    const cost = giftCost(s, content);
+    s = { ...s, money: { ...s.money, silver: s.money.silver - cost.silver, spiritStones: s.money.spiritStones - cost.stones } };
+    const hurt = n.affinity < b.rejectBelow && rng.chance(b.rejectChance);
+    s = changeNpc(s, content, npcId, { affinity: hurt ? b.rejectAffinity : b.amendsAffinity });
+    s = { ...s, stats: { ...s.stats, happiness: clamp(s.stats.happiness + (hurt ? -2 : 2)) } };
+    lines.push({ text: fill(hurt ? t.amendsNo : t.amendsYes), tone: hurt ? 'bad' : 'good' });
+  } else if (action === 'mend') {
+    if (rng.chance(Math.min(0.95, b.mendBase + (s.stats.charm - 50) * b.reconcilePerCharm))) {
+      s = changeNpc(s, content, npcId, { affinity: b.mendAffinity });
+      s = { ...s, stats: { ...s.stats, happiness: clamp(s.stats.happiness + 3) } };
+      lines.push({ text: fill(t.mendYes), tone: 'good' });
+    } else {
+      s = changeNpc(s, content, npcId, { affinity: b.mendFailAffinity });
+      s = { ...s, stats: { ...s.stats, happiness: clamp(s.stats.happiness - 2) } };
+      lines.push({ text: fill(t.mendNo), tone: 'bad' });
+    }
+  } else if (action === 'rekindle') {
+    if (rng.chance(Math.min(0.9, b.rekindleBase + (n.affinity - b.rekindleAt) * b.confessPerAffinity + (s.stats.charm - 50) * b.confessPerCharm))) {
+      s = { ...s, romance: { ...s.romance, lover: npcId, couple: true, exes: s.romance.exes.filter((x) => x !== npcId) }, stats: { ...s.stats, happiness: clamp(s.stats.happiness + b.rekindleHappiness) } };
+      lines.push({ text: fill(t.rekindleYes), tone: 'rare' });
+    } else {
+      s = changeNpc(s, content, npcId, { affinity: b.rekindleFailAffinity });
+      s = { ...s, stats: { ...s.stats, happiness: clamp(s.stats.happiness - 4) } };
+      lines.push({ text: fill(t.rekindleNo), tone: 'bad' });
+    }
+  } else if (action === 'cutOff') {
+    s = {
+      ...s,
+      romance: { ...s.romance, exes: s.romance.exes.filter((x) => x !== npcId), cut: [...(s.romance.cut ?? []), npcId] },
+      stats: { ...s.stats, happiness: clamp(s.stats.happiness + b.cutOffHappiness) },
+    };
+    lines.push({ text: fill(t.cutOff), tone: 'normal' });
   } else if (action === 'confess') {
     if (rng.chance(confessChance(s, content, n))) {
       s = { ...s, romance: { ...s.romance, couple: true }, stats: { ...s.stats, happiness: clamp(s.stats.happiness + b.confessHappiness) } };

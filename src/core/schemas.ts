@@ -1175,6 +1175,16 @@ export const BalanceSchema = z
         /** Hòa ly: chosen by the player. */
         divorceHappiness: z.number(),
         divorceDaoHeart: z.number(),
+        /** 9.0.1, người cũ: xin lỗi/đền bù, hóa giải hiềm khích, nối lại duyên (cần thiện cảm ≥ rekindleAt), cắt đứt. */
+        amendsAffinity: z.number(),
+        mendBase: z.number(),
+        mendAffinity: z.number(),
+        mendFailAffinity: z.number(),
+        rekindleAt: z.number(),
+        rekindleBase: z.number(),
+        rekindleHappiness: z.number(),
+        rekindleFailAffinity: z.number(),
+        cutOffHappiness: z.number(),
       })
       .strict(),
     /** Task 3.5: Thiên kiêu bảng, the world's young prodigies. */
@@ -2680,6 +2690,14 @@ export const RomanceFileSchema = z
         reconcileYes: z.string().min(1),
         reconcileNo: z.string().min(1),
         divorce: z.string().min(1),
+        /** 9.0.1: người cũ. */
+        amendsYes: z.string().min(1),
+        amendsNo: z.string().min(1),
+        mendYes: z.string().min(1),
+        mendNo: z.string().min(1),
+        rekindleYes: z.string().min(1),
+        rekindleNo: z.string().min(1),
+        cutOff: z.string().min(1),
         neglect: z.array(z.string().min(1)).min(1),
         spouseLeft: z.string().min(1),
       })
