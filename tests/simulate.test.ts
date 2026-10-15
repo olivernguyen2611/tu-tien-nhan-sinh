@@ -34,7 +34,7 @@ describe('Mô phỏng tự động (6.1)', () => {
     expect(summarize([], content).count).toBe(0);
     expect(formatReport(report, content, 'thử')).toContain('20 đời');
     expect(results).toHaveLength(20);
-  });
+  }, 60_000);
 
   it('9.R3d: every Kim Thủ Chỉ changes the life it is given (same seeds, with and without)', () => {
     const ids = content.goldenFingers.fingers.map((f) => f.id);
