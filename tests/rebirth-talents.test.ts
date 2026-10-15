@@ -42,7 +42,8 @@ describe('thiên phú luân hồi (task 5b.1)', () => {
     expect(born.rebirthTalents).toEqual(ownedRebirthTalents(owned, content));
     expect(born.rebirthTalents.khong_co).toBeUndefined();
     expect(born.destiny.rerollsLeft).toBe(plain.destiny.rerollsLeft + 2);
-    expect(born.money.silver).toBe(plain.money.silver + 30);
+    // 9.R2b: khí vận may add birthSilver on confirming, so compare before the destiny is confirmed.
+    expect(born.money.silver).toBe(createLife({ seed: 'tt' }, content).money.silver + 30);
     const s = confirmDestiny(rollDestiny(born, content), content);
     expect(s.aptitudes.comprehension).toBe(Math.min(100, plain.aptitudes.comprehension + 10));
     expect(hookSum(s, content, 'cultivationSpeed') - hookSum(plain, content, 'cultivationSpeed')).toBeCloseTo(0.05);

@@ -8,10 +8,11 @@ const ok = (e: object) => EffectHookSchema.safeParse(e).success;
 describe('traits.json', () => {
   const parsed = TraitFileSchema.parse(traits);
 
-  it('has 60 traits (task 1.2: 20, task 3.10: 20, task 5b.3: 20 more), 9 of them bad-luck', () => {
-    expect(parsed).toHaveLength(60);
-    expect(parsed.filter((t) => t.rarity === 'ac')).toHaveLength(9);
-    expect(new Set(parsed.map((t) => t.id)).size).toBe(60);
+  it('has 160 traits (9.R2c), 22 of them bad-luck, ids and names unique', () => {
+    expect(parsed).toHaveLength(160);
+    expect(parsed.filter((t) => t.rarity === 'ac')).toHaveLength(22);
+    expect(new Set(parsed.map((t) => t.id)).size).toBe(160);
+    expect(new Set(parsed.map((t) => t.name)).size).toBe(160);
   });
 
   it('covers every rarity', () => {
