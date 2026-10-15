@@ -329,6 +329,15 @@
     "minAge": 10,
     "combatPower": [1.5, 2, 2.8, 4, 7, 18, 40],
     "speedEquivMul": 1.5,
+    "conversion": {
+      "speedMul": 0.9,
+      "entries": [
+        { "stage": 3, "realm": "luyen_khi", "realmStage": 1 },
+        { "stage": 4, "realm": "luyen_khi", "realmStage": 3 },
+        { "stage": 5, "realm": "luyen_khi", "realmStage": 6 },
+        { "stage": 6, "realm": "truc_co", "realmStage": 0, "foundation": "trung" }
+      ]
+    },
     "subStageYears": [2, 3, 3, 4, 5, 6, 8],
     "lifespan": [0, 2, 5, 10, 25, 25, 30],
     "steps": [

@@ -1659,6 +1659,14 @@ export const BalanceSchema = z
         combatPower: z.array(z.number().min(0)).min(1),
         /** 9.V1: speed counts the highest realm whose base power is at most martial power × this (Hóa cảnh runs like Luyện Khí). */
         speedEquivMul: z.number().min(0).optional(),
+        /** 9.R4d Tiên Võ song tu: a martial artist who starts cultivating enters at a level set by the martial stage, and cultivates at speedMul (not the Ngũ khí root). */
+        conversion: z
+          .object({
+            speedMul: z.number().min(0),
+            entries: z.array(z.object({ stage: z.number().int().min(0), realm: id, realmStage: z.number().int().min(0), foundation: id.optional() }).strict()),
+          })
+          .strict()
+          .optional(),
         /** 9.V2: years in a stage per tiểu cảnh (index = stage); each tiểu cảnh adds combat.stagePct power. */
         subStageYears: z.array(z.number().min(1)).optional(),
         /** Lifespan added on reaching each stage. */
@@ -1977,6 +1985,8 @@ export const RealmsFileSchema = z
         needTechnique: z.string().min(1).optional(),
         /** 9.R4c: a sect hands its new disciple an entry manual. */
         sectManual: z.string().min(1).optional(),
+        /** 9.R4d: a martial artist steps in above tầng 1 ({realm} {stage}). */
+        martialEntry: z.string().min(1).optional(),
         stageUp: z.array(z.string().min(1)).min(1),
         /** Bar full at the last stage of a realm: waiting for the big breakthrough. */
         peak: z.string().min(1),

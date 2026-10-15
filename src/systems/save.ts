@@ -324,6 +324,9 @@ function migrateSteps(save: SaveFile): SaveFile {
     };
   }
   life = restoreRoots(splitBody(life));
+  // 9.R4d: no mass root test any more: an untested life drops the booked visit (the tiên duyên gates take over).
+  const booked = life.events.followUps.filter((f) => /^thu_linh_can/.test(f.event));
+  if (!life.cult.root && booked.length) life = { ...life, events: { ...life.events, followUps: life.events.followUps.filter((f) => !booked.includes(f)) } };
   return life === save.life ? save : { ...save, life };
 }
 

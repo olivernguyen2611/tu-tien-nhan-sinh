@@ -5,6 +5,9 @@ import { createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
 import { findEvent, eventWeight, resolveChoice } from '../src/systems/events/engine';
 import { martialLabel, martialPower, martialPromote, martialSubStage, trainMartial } from '../src/systems/martial';
+import { startCultivating, yearlyGain } from '../src/systems/cultivation';
+import { learnTechnique } from '../src/systems/technique';
+import { makeSave, migrate } from '../src/systems/save';
 
 const content = loadContent();
 
@@ -66,17 +69,46 @@ describe('9.V2: martial tiểu cảnh, tẩu hỏa, Tiên Võ đồng tu', () =>
     expect(hurt).toBeLessThan(60);
   });
 
-  it('the tiên duyên event needs Ngũ khí and the cao nhân; accepting steps into Luyện Khí', () => {
+  it('the tiên duyên event needs Ngũ khí and the cao nhân; accepting steps into Trúc Cơ (9.R4d)', () => {
     const ev = findEvent(content, 'vd_tien_vo_dong_tu')!;
     const peak = martialPromote(martialPromote(fighter(4), content), content);
     expect(eventWeight({ ...peak, flags: {} }, content, ev)).toBe(0);
     const ready = { ...peak, flags: { ...peak.flags, cao_nhan_vo_dao: true } };
     expect(eventWeight(ready, content, ev)).toBeGreaterThan(0);
     const go = resolveChoice({ ...ready, events: { ...ready.events, pending: ev.id } }, content, 0).state;
-    expect(go.cult.realm).toBe('luyen_khi');
+    expect(go.cult.realm).toBe('truc_co');
     expect(go.cult.root?.grade).toBe('ngu_khi');
     const stay = resolveChoice({ ...ready, events: { ...ready.events, pending: ev.id } }, content, 1).state;
     expect(stay.cult.realm).toBe('pham_nhan');
     expect(stay.martial.stage).toBe(6);
+  });
+});
+
+describe('9.R4d Tiên Võ song tu: a martial artist enters above tầng 1', () => {
+  const rooted = (stage: number) => {
+    const s = fighter(stage, 40, 30);
+    const r = { ...s, cult: { ...s.cult, root: { grade: 'tam', elements: ['kim', 'moc', 'thuy'] } } };
+    return learnTechnique(r, content, content.balance.techniques.default, { quiet: true })!.state;
+  };
+  it('Tuyệt đỉnh tầng 2, Hóa cảnh tầng 4, Tam hoa tầng 7; others tầng 1', () => {
+    expect(startCultivating(rooted(2), content).state.cult).toMatchObject({ realm: 'luyen_khi', stage: 0 });
+    expect(startCultivating(rooted(3), content).state.cult).toMatchObject({ realm: 'luyen_khi', stage: 1 });
+    expect(startCultivating(rooted(4), content).state.cult).toMatchObject({ realm: 'luyen_khi', stage: 3 });
+    const tam = startCultivating(rooted(5), content);
+    expect(tam.state.cult).toMatchObject({ realm: 'luyen_khi', stage: 6 });
+    expect(tam.line?.text).toContain('tầng 7');
+  });
+  it('the martial body cultivates a little slower', () => {
+    const fast = startCultivating({ ...rooted(2), martial: { ...rooted(2).martial, stage: -1 } }, content).state;
+    const slow = { ...fast, martial: { ...fast.martial, stage: 4 } };
+    expect(yearlyGain(slow, content) / yearlyGain(fast, content)).toBeCloseTo(content.balance.martial.conversion!.speedMul);
+  });
+  it('old saves lose a booked mass root test', () => {
+    const s = fighter(-1, 5);
+    const booked = { ...s, cult: { ...s.cult, root: null }, events: { ...s.events, followUps: [{ event: 'thu_linh_can', atAge: 8 }] } };
+    expect(migrate(makeSave(booked, 1)).life.events.followUps).toEqual([]);
+    // A tested life keeps whatever it has.
+    const tested = { ...booked, cult: { ...booked.cult, root: { grade: 'none', elements: [] } } };
+    expect(migrate(makeSave(tested, 1)).life.events.followUps).toHaveLength(1);
   });
 });

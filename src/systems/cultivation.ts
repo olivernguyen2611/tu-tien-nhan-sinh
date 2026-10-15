@@ -358,7 +358,10 @@ export function yearlyGain(state: GameState, content: Content): number {
     ? content.balance.majorBreakthrough.foundationSpeed[state.cult.foundation] ?? 1
     : coreGrade !== null ? content.balance.coreForming.gradeSpeed[coreGrade - 1] ?? 1 : 1;
   const buffs = state.cult.buffs.filter((b) => state.character.age < b.until).reduce((m, b) => m * b.mul, 1);
-  return realm.speedPct * rootMul * aptitude * qi * techniqueMul(state, content) * bonus * dual * secluded * injured * foundation * buffs * bottleneckMul(state, content);
+  // 9.R4d: a body set by martial training cultivates a little slower (the Ngũ khí root has its own bonus).
+  const conv = content.balance.martial.conversion;
+  const martialBody = conv && state.cult.root?.grade !== content.martial.ascend.rootGrade && conv.entries.some((e) => e.stage <= state.martial.stage) ? conv.speedMul : 1;
+  return realm.speedPct * rootMul * aptitude * qi * techniqueMul(state, content) * bonus * dual * secluded * injured * foundation * buffs * martialBody * bottleneckMul(state, content);
 }
 
 /** PLAN G.2 bình cảnh: after N failed big breakthroughs at a realm's peak, cultivation slows. */
@@ -460,7 +463,11 @@ export function startCultivating(state: GameState, content: Content): { state: G
     return { state: { ...next, rng: rng.getState(), log: line ? pushLine(next.log, line) : next.log }, line };
   }
   next = enterRealm(next, content, first.id, rng);
-  const line: LogLine = { text: fillRealm((clan && texts.startClan) || texts.start, next, content), tone: 'good' };
+  const converted = martialEntry(next, content, rng);
+  const line: LogLine = converted !== next && texts.martialEntry
+    ? { text: fillRealm(texts.martialEntry, converted, content), tone: 'rare' }
+    : { text: fillRealm((clan && texts.startClan) || texts.start, converted, content), tone: 'good' };
+  next = converted;
   return { state: { ...next, rng: rng.getState(), log: pushLine(next.log, line) }, line };
 }
 
@@ -768,6 +775,18 @@ export function enterFirstRealm(state: GameState, content: Content): GameState {
   const first = content.cultivation.realms.realms[1];
   if (state.cult.realm !== 'pham_nhan' || !first || !currentTechnique(state, content)) return state;
   const rng = Rng.fromState(state.rng);
-  const next = enterRealm(state, content, first.id, rng);
+  const next = martialEntry(enterRealm(state, content, first.id, rng), content, rng);
   return { ...next, rng: rng.getState() };
+}
+
+/**
+ * 9.R4d Tiên Võ song tu: a martial artist just in Luyện Khí 1 moves up to the level its martial stage
+ * earns (balance.martial.conversion): Tuyệt đỉnh tầng 2, Hóa cảnh tầng 4, Tam hoa tầng 7, Ngũ khí Trúc Cơ.
+ */
+export function martialEntry(state: GameState, content: Content, rng: Rng): GameState {
+  const entries = content.balance.martial.conversion?.entries ?? [];
+  const entry = entries.filter((e) => e.stage <= state.martial.stage).sort((a, b) => b.stage - a.stage)[0];
+  if (!entry || state.cult.realm !== content.cultivation.realms.realms[1]?.id || state.cult.stage !== 0) return state;
+  const moved = entry.realm !== state.cult.realm ? enterRealm(state, content, entry.realm, rng) : state;
+  return { ...moved, cult: { ...moved.cult, stage: entry.realmStage, foundation: entry.foundation ?? moved.cult.foundation } };
 }

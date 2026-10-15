@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### 9.R4d: Tiên Võ song tu, dọn theo và save cũ (2026-10-15)
+- Võ giả bắt đầu tu tiên vào **tầng khởi đầu theo bậc võ đạo** (`balance.martial.conversion`): Tuyệt đỉnh tầng 2, Hóa cảnh tầng 4, Tam hoa tầng 7, Ngũ khí **thẳng Trúc Cơ sơ kỳ** (đạo cơ trung phẩm). Nhật ký có dòng riêng. Thân thể đã định hình bởi võ đạo nên tu chậm hơn ×0,9 (trừ linh căn Ngũ khí). Sức mạnh vẫn lấy phần lớn hơn giữa tu tiên và võ đạo (9.V1).
+- Save cũ: đời chưa thử linh căn bỏ lịch hẹn thử linh căn đại trà còn treo; cổng tiên duyên lo phần còn lại. Đời đã thử giữ nguyên.
+- Đo `simulate --first-life` (200 đời, bot player): vẫn 59,5% chạm Luyện Khí, chủ yếu nhờ các cửa vốn có (Phật duyên, quỷ tu, kỳ vật, xuất thân thế gia) mà bot đi rất chăm. Mục tiêu "kiếp đầu ≤ 3%" để 9.R5b siết (đóng cổng a–c và giảm các cửa khác ở kiếp đầu).
+
 ### 9.R4c: công pháp không còn tặng mặc định (2026-10-15)
 - Thử ra linh căn không còn kèm Dẫn Khí Quyết. Có linh căn mà chưa có công pháp thì vẫn là phàm nhân, nhật ký nói rõ cần công pháp nhập môn và tìm ở đâu; học được công pháp là vào Luyện Khí.
 - Nguồn công pháp nhập môn: **thế gia truyền thừa** (hậu duệ gia tộc tu tiên, và con của người tu khi chơi tiếp bằng con cháu), **tông môn ban** (vào tông là được chấp sự đưa Dẫn Khí Quyết), **mua** (Chợ phiên huyện 60 lượng bạc, Kim Thiềm 3 linh thạch), cùng các nguồn cũ (kỳ ngộ, di tích, cao nhân võ đạo, kim thủ chỉ).

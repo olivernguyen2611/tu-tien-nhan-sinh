@@ -91,7 +91,7 @@ describe('martial path (task 3.11)', () => {
     expect(martialView(old, content).chance).toBeCloseTo(martialView(s, content).chance / 2);
   });
 
-  it('Ngũ khí triều nguyên + Tiên Võ đồng tu gives the Ngũ khí root (better than Ngũ linh căn) with Tiên Võ thể, and Luyện Khí 1', () => {
+  it('Ngũ khí triều nguyên + Tiên Võ đồng tu gives the Ngũ khí root (better than Ngũ linh căn) with Tiên Võ thể, straight into Trúc Cơ (9.R4d)', () => {
     const peak = martialPromote(mortal(50, 90, { martial: { stage: 5, years: 0, bonus: 0, lastTrain: null } }), content);
     // 9.V2: Ngũ khí is the end of the martial path; it stays mortal until a tiên duyên.
     expect(peak.martial.stage).toBe(6);
@@ -103,7 +103,8 @@ describe('martial path (task 3.11)', () => {
     const grades = content.balance.roots.gradeSpeed;
     expect(grades.ngu_khi).toBeGreaterThan(grades.song);
     expect(lifeHooks(s, content).some((h) => h.hook === 'bottleneckResist')).toBe(true);
-    expect(s.cult.realm).toBe('luyen_khi');
+    expect(s.cult.realm).toBe('truc_co');
+    expect(s.cult.foundation).toBe('trung');
     // The cao nhân returns with the kinh he held back at Hóa cảnh, now cultivable.
     expect(s.cult.technique).toBe('cuu_chuyen_kim_cot_quyet');
     expect(s.cult.scrolls).not.toContain('cuu_chuyen_kim_cot_quyet');
