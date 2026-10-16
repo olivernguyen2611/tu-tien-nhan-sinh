@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### 9.R12: Bảng cân bằng trong Developer Mode (2026-10-16)
+- Developer Mode thêm mục **Bảng cân bằng**: chạy 20–200 đời bằng máy ngay trong trình duyệt (Web Worker, trang không bị đơ, dừng được giữa chừng), chọn cách chơi của máy và chạy như kiếp đầu.
+- Kết quả: phân bố tuổi chết, nguyên nhân chết, tỉ lệ đạt từng cảnh giới (kèm tuổi trung bình), theo linh căn, tỉ lệ mở từng cổng tiên duyên, theo Kim Thủ Chỉ, khí vận gặp nhiều nhất (thọ, tỉ lệ Kim Đan), tỉ lệ từng kết cục.
+- Ô **chỉnh balance tạm**: gõ một đoạn JSON (ví dụ `{"karmaLedger": {"chance": 0.1}}`), chỉ dùng cho lần chạy đó, kiểm bằng schema, không ghi vào game.
+- `npm run simulate` cũng có thêm số liệu cổng, kim thủ chỉ, khí vận, kết cục trong báo cáo (`systems/simulate.ts`).
+- Test: `tests/balance-panel.test.ts`. Toàn bộ 792 test xanh.
+
 ### 9.R11: Cài đặt mở rộng (2026-10-16)
 - **Tua nhanh tối đa:** chọn 5, 10, 20 hoặc 50 năm cho mỗi lần bấm tua (danh sách ở `balance.fastForward.choices`; tua vẫn dừng ngay khi có chuyện).
 - **Cỡ chữ:** Nhỏ, Vừa, Lớn, Rất lớn (đổi cỡ chữ gốc của cả trang).

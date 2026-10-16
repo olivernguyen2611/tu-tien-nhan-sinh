@@ -972,3 +972,14 @@ html[data-motion='reduce'][data-fx]::after { display: none; }
 .fold-hint { font-size: 0.75rem; font-weight: 400; color: var(--accent, #b33); }
 .fold-body { padding-bottom: 6px; }
 @media (min-width: 900px) { .event-card .fold { grid-column: auto; } }
+
+/* 9.R12: Bảng cân bằng in developer mode. */
+.balance-panel select, .bal-patch { font: inherit; }
+.bal-patch { width: 100%; box-sizing: border-box; margin: 6px 0; font-family: ui-monospace, monospace; font-size: 0.8125rem; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 6px; }
+.bal-check { display: inline-flex; align-items: center; gap: 4px; font-size: 0.875rem; }
+.bal-block { margin: 10px 0; }
+.bal-bars { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 4px; }
+.bal-bars li { display: grid; grid-template-columns: minmax(6em, 1fr) 2fr 4.5em; align-items: center; gap: 6px; font-size: 0.8125rem; }
+.bal-bars i { display: block; height: 8px; border-radius: 4px; background: var(--jade); min-width: 2px; }
+.bal-bars b { text-align: right; font-variant-numeric: tabular-nums; }
+.bal-bars small { grid-column: 1 / -1; color: var(--muted); margin-top: -2px; }

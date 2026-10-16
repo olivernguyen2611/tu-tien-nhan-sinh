@@ -1,5 +1,6 @@
 // Developer mode panel: play-testing cheats. All changes go through systems/dev.
 // Sections fold (details) so the panel stays usable on a phone.
+import { BalancePanel } from './BalancePanel';
 import type { ComponentChildren } from 'preact';
 import { GroupedSelect, type SelectOption } from './GroupedSelect';
 import { useState } from 'preact/hooks';
@@ -360,6 +361,9 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
             <button class="chip-btn" disabled={!talent || talentLv >= talent.levels.length} onClick={() => onMeta(devMetaTalent(meta, content, talentId, talentLv + 1))}>+</button>
           </div>
           <p class="profile-note">Thiên phú luân hồi áp dụng từ đời sau. Thử thách tuần: chọn thử thách bất kỳ ở màn Thử Thách Tuần.</p>
+        </Section>
+        <Section title="Bảng cân bằng">
+          <BalancePanel content={content} />
         </Section>
 
         <div class="dev-foot">
