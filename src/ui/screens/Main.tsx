@@ -14,6 +14,10 @@ import { DevPanel } from '../components/DevPanel';
 import { BagPanel } from '../components/BagPanel';
 import { GoldenFingerPanel } from '../components/GoldenFingerPanel';
 import { fingerActionViews } from '../../systems/fingerActions';
+import { systemActions, systemDef } from '../../systems/heThong';
+import { SystemPanel } from '../components/SystemPanel';
+import { MemoryPanel } from '../components/MemoryPanel';
+import { meritViews } from '../../systems/thanDao';
 import { MarketPanel, type MarketAction } from '../components/MarketPanel';
 import { MapPanel } from '../components/MapPanel';
 import { currentRegion } from '../../systems/regions';
@@ -61,7 +65,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -95,6 +99,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onUseItem: (itemId: string) => { text: string; tone: Tone; changes: string };
   /** Playtest 2: one Kim Thủ Chỉ action. */
   onFingerAction: (actionId: string) => { text: string; tone: Tone; changes: string } | null;
+  onSystemAction: (actionId: string) => { text: string; tone: Tone; changes: string } | null;
   /** One round of the fight in progress, and the choice after winning (task 3.3). */
   onCombat: (action: CombatAction, itemId?: string) => void;
   onSettle: (choice: Aftermath) => void;
@@ -140,6 +145,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const [familyOpen, setFamilyOpen] = useState(false);
   const [bagOpen, setBagOpen] = useState(false);
   const [fingerOpen, setFingerOpen] = useState(false);
+  const [systemOpen, setSystemOpen] = useState(false);
+  const [memoryOpen, setMemoryOpen] = useState(false);
   const [marketOpen, setMarketOpen] = useState(false);
   const [mapOpen, setMapOpen] = useState(false);
   const [cultivateOpen, setCultivateOpen] = useState(false);
@@ -149,7 +156,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   }, [!!state.cult.coreForming, !!state.cult.heartDemonTrial, !!state.martial.quest?.game]);
   const [sectOpen, setSectOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
-  const anySheet = profileOpen || familyOpen || bagOpen || fingerOpen || marketOpen || mapOpen || cultivateOpen || sectOpen || devOpen;
+  const anySheet = profileOpen || familyOpen || bagOpen || fingerOpen || systemOpen || memoryOpen || marketOpen || mapOpen || cultivateOpen || sectOpen || devOpen;
   useBackClose(anySheet, () => {
     setProfileOpen(false); setFamilyOpen(false); setBagOpen(false); setFingerOpen(false); setMarketOpen(false);
     setMapOpen(false); setCultivateOpen(false); setSectOpen(false); setDevOpen(false);
@@ -159,6 +166,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const origin = content.origins.find((o) => o.id === c.originId);
   const warn = extremeWarnings(state, content);
   const finger = fingerDef(content, state.goldenFinger?.id);
+  const heThong = systemDef(content, state.system?.id);
   const states = activeExtremes(state, content);
   const goal = currentGoal(state, content);
   const tip = pendingTip(state, content);
@@ -207,6 +215,11 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             <button class={`icon-btn finger-btn${fingerActionViews(state, content).some((a) => !a.blocked) ? ' ready' : ''}`}
               aria-label={`Kim Thủ Chỉ: ${finger.name}`} title={`Kim Thủ Chỉ: ${finger.name}`} onClick={() => setFingerOpen(true)}>指</button>
           )}
+          {heThong && (
+            <button class={`icon-btn finger-btn${systemActions(state, content).some((a) => !a.blocked && a.id !== 'quit') ? ' ready' : ''}`}
+              aria-label={heThong.name} title={heThong.name} onClick={() => setSystemOpen(true)}>統</button>
+          )}
+          {state.trungSinh && <button class="icon-btn" aria-label="Ký ức kiếp trước" title="Ký ức kiếp trước" onClick={() => setMemoryOpen(true)}>憶</button>}
           <button class="icon-btn" aria-label="Túi đồ" title="Túi đồ" onClick={() => setBagOpen(true)}>囊</button>
           <button class="icon-btn" aria-label="Sổ lưu" title="Sổ lưu" onClick={onSaves}>簿</button>
           <span class="desktop-only">
@@ -304,6 +317,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       {bagOpen && <BagPanel state={state} content={content} onUse={onUseItem} onClose={() => setBagOpen(false)} />}
 
+      {memoryOpen && <MemoryPanel state={state} content={content} onClose={() => setMemoryOpen(false)} />}
+      {systemOpen && <SystemPanel state={state} content={content} onAction={onSystemAction} onClose={() => setSystemOpen(false)} />}
       {fingerOpen && <GoldenFingerPanel state={state} content={content} onAction={onFingerAction} onClose={() => setFingerOpen(false)} />}
 
       {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onRomance={onRomance} onGiftNpc={onGiftNpc} onNpcAct={onNpcAct} onBond={onBond} onSaveNpc={onSaveNpc} getSources={getSources} onImport={onImport} onDisciple={onDisciple} onClan={onClan} onClose={() => setFamilyOpen(false)} />}
@@ -337,6 +352,14 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
                 ))}
               </ul>
             )}
+            {/* 9.S5: the thành thần paths this life is on. */}
+            {meritViews(state, content).map((m) => (
+              <div class="stat-row merit-row" key={m.id} title={m.text}>
+                <span class="merit-name">{m.name}</span>
+                <div class="bar" aria-label={`${m.name} ${m.points}/${m.threshold}`}><span style={{ width: `${Math.min(100, (m.points / m.threshold) * 100)}%` }} /></div>
+                <span class="muted">{m.done ? 'viên mãn' : `${m.points}/${m.threshold}`}</span>
+              </div>
+            ))}
             {finger && (
               <ul class="trait-chips" aria-label="Kim Thủ Chỉ">
                 <li class="trait-chip r-than golden-finger">

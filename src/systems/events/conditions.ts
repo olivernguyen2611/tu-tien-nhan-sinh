@@ -13,7 +13,7 @@ import { pastSectMeets } from '../pastSect';
 import { hasUsableInnateRoot } from '../cultivation';
 import { bornKnowing } from '../knowledge';
 
-type Conditions = Partial<GameEvent['conditions']>;
+export type Conditions = Partial<GameEvent['conditions']>;
 
 /** Numeric value an event can read: stat.<name>, silver, spiritStones, karma, age. */
 export function readValue(state: GameState, key: string): number {

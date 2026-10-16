@@ -1,0 +1,422 @@
+[
+ {
+  "id": "phe_vat_nghich_canh",
+  "name": "Phế vật · Nghịch cảnh luyện thể",
+  "group": "phe_vat",
+  "rarity": "rat_hiem",
+  "text": "Kinh mạch tắc nghẽn, nhưng thân thể này càng bị đánh càng cứng. Có lẽ trời không cho ngươi tu linh lực, mà cho ngươi tu cái khác.",
+  "costText": "Nửa đời đầu chịu khinh rẻ: tu luyện chậm, đột phá khó, bị sỉ nhục, hủy hôn, bị đuổi đi. Con đường riêng chỉ mở khi đủ sức chịu được nó; thất bại có thể mất mạng.",
+  "weight": 0.5,
+  "unlock": {
+   "livesMin": 3
+  },
+  "costs": [
+   {
+    "hook": "stat.comprehension",
+    "add": -6
+   },
+   {
+    "hook": "cultivationSpeed",
+    "add": -0.35,
+    "activeIf": {
+     "noFlag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "breakthroughChance",
+    "add": -6,
+    "activeIf": {
+     "noFlag": "phe_vat_tinh"
+    }
+   }
+  ],
+  "effects": [
+   {
+    "hook": "stat.daoHeart",
+    "add": 4
+   },
+   {
+    "hook": "cultivationSpeed",
+    "add": 0.45,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "breakthroughChance",
+    "add": 6,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "combatPower",
+    "add": 0.2,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "injuryReduce",
+    "add": 0.15,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   }
+  ],
+  "startEvents": [
+   {
+    "event": "pv_si_nhuc",
+    "atAge": 10
+   },
+   {
+    "event": "pv_huy_hon",
+    "atAge": 18
+   },
+   {
+    "event": "pv_truc_xuat",
+    "atAge": 20
+   },
+   {
+    "event": "pv_tinh_nghich_canh",
+    "atAge": 24
+   }
+  ]
+ },
+ {
+  "id": "phe_vat_ma_nghich",
+  "name": "Phế vật · Ma công nghịch tu",
+  "group": "phe_vat",
+  "rarity": "rat_hiem",
+  "text": "Linh căn tạp loạn, thứ chính đạo chê bai. Nhưng có những ma công cổ cần đúng loại linh căn hỗn tạp ấy để chảy ngược.",
+  "costText": "Nửa đời đầu chịu khinh rẻ: tu luyện chậm, đột phá khó, bị sỉ nhục, hủy hôn, bị đuổi đi. Con đường riêng chỉ mở khi đủ sức chịu được nó; thất bại có thể mất mạng.",
+  "weight": 0.5,
+  "unlock": {
+   "livesMin": 3
+  },
+  "costs": [
+   {
+    "hook": "stat.comprehension",
+    "add": -6
+   },
+   {
+    "hook": "cultivationSpeed",
+    "add": -0.35,
+    "activeIf": {
+     "noFlag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "breakthroughChance",
+    "add": -6,
+    "activeIf": {
+     "noFlag": "phe_vat_tinh"
+    }
+   }
+  ],
+  "effects": [
+   {
+    "hook": "stat.daoHeart",
+    "add": 4
+   },
+   {
+    "hook": "cultivationSpeed",
+    "add": 0.45,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "breakthroughChance",
+    "add": 6,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "combatPower",
+    "add": 0.15,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "heartDemonResist",
+    "add": -0.1,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   }
+  ],
+  "startEvents": [
+   {
+    "event": "pv_si_nhuc",
+    "atAge": 10
+   },
+   {
+    "event": "pv_huy_hon",
+    "atAge": 18
+   },
+   {
+    "event": "pv_truc_xuat",
+    "atAge": 20
+   },
+   {
+    "event": "pv_tinh_ma_nghich",
+    "atAge": 24
+   }
+  ]
+ },
+ {
+  "id": "phe_vat_thon_phe",
+  "name": "Phế vật · Thôn phệ dị biến",
+  "group": "phe_vat",
+  "rarity": "rat_hiem",
+  "text": "Đan điền như cái hũ thủng, linh khí vào bao nhiêu rò bấy nhiêu. Nhưng cái hũ thủng ấy hình như đang đói một thứ khác.",
+  "costText": "Nửa đời đầu chịu khinh rẻ: tu luyện chậm, đột phá khó, bị sỉ nhục, hủy hôn, bị đuổi đi. Con đường riêng chỉ mở khi đủ sức chịu được nó; thất bại có thể mất mạng.",
+  "weight": 0.5,
+  "unlock": {
+   "livesMin": 3
+  },
+  "costs": [
+   {
+    "hook": "stat.comprehension",
+    "add": -6
+   },
+   {
+    "hook": "cultivationSpeed",
+    "add": -0.35,
+    "activeIf": {
+     "noFlag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "breakthroughChance",
+    "add": -6,
+    "activeIf": {
+     "noFlag": "phe_vat_tinh"
+    }
+   }
+  ],
+  "effects": [
+   {
+    "hook": "stat.daoHeart",
+    "add": 4
+   },
+   {
+    "hook": "cultivationSpeed",
+    "add": 0.45,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "breakthroughChance",
+    "add": 6,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "cultivationSpeed",
+    "add": 0.15,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "lootPct",
+    "add": 0.2,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   }
+  ],
+  "startEvents": [
+   {
+    "event": "pv_si_nhuc",
+    "atAge": 10
+   },
+   {
+    "event": "pv_huy_hon",
+    "atAge": 18
+   },
+   {
+    "event": "pv_truc_xuat",
+    "atAge": 20
+   },
+   {
+    "event": "pv_tinh_thon_phe",
+    "atAge": 24
+   }
+  ]
+ },
+ {
+  "id": "phe_vat_dan_the",
+  "name": "Phế vật · Đan độc chi thể",
+  "group": "phe_vat",
+  "rarity": "rat_hiem",
+  "text": "Từ nhỏ uống thuốc gì cũng không công hiệu, thầy thuốc lắc đầu. Không ai biết thuốc không biến mất, mà tích lại trong người.",
+  "costText": "Nửa đời đầu chịu khinh rẻ: tu luyện chậm, đột phá khó, bị sỉ nhục, hủy hôn, bị đuổi đi. Con đường riêng chỉ mở khi đủ sức chịu được nó; thất bại có thể mất mạng.",
+  "weight": 0.5,
+  "unlock": {
+   "livesMin": 3
+  },
+  "costs": [
+   {
+    "hook": "stat.comprehension",
+    "add": -6
+   },
+   {
+    "hook": "cultivationSpeed",
+    "add": -0.35,
+    "activeIf": {
+     "noFlag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "breakthroughChance",
+    "add": -6,
+    "activeIf": {
+     "noFlag": "phe_vat_tinh"
+    }
+   }
+  ],
+  "effects": [
+   {
+    "hook": "stat.daoHeart",
+    "add": 4
+   },
+   {
+    "hook": "cultivationSpeed",
+    "add": 0.45,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "breakthroughChance",
+    "add": 6,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "craft.alchemy.success",
+    "add": 0.2,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "craft.alchemy.affinity",
+    "add": 0.3,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   }
+  ],
+  "startEvents": [
+   {
+    "event": "pv_si_nhuc",
+    "atAge": 10
+   },
+   {
+    "event": "pv_huy_hon",
+    "atAge": 18
+   },
+   {
+    "event": "pv_truc_xuat",
+    "atAge": 20
+   },
+   {
+    "event": "pv_tinh_dan_the",
+    "atAge": 24
+   }
+  ]
+ },
+ {
+  "id": "phe_vat_huyet_mach",
+  "name": "Phế vật · Huyết mạch ẩn",
+  "group": "phe_vat",
+  "rarity": "rat_hiem",
+  "text": "Không linh căn, không tư chất. Chỉ có một vết bớt hình lửa sau gáy, càng lớn càng đỏ.",
+  "costText": "Nửa đời đầu chịu khinh rẻ: tu luyện chậm, đột phá khó, bị sỉ nhục, hủy hôn, bị đuổi đi. Con đường riêng chỉ mở khi đủ sức chịu được nó; thất bại có thể mất mạng.",
+  "weight": 0.5,
+  "unlock": {
+   "livesMin": 3
+  },
+  "costs": [
+   {
+    "hook": "stat.comprehension",
+    "add": -6
+   },
+   {
+    "hook": "cultivationSpeed",
+    "add": -0.35,
+    "activeIf": {
+     "noFlag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "breakthroughChance",
+    "add": -6,
+    "activeIf": {
+     "noFlag": "phe_vat_tinh"
+    }
+   }
+  ],
+  "effects": [
+   {
+    "hook": "stat.daoHeart",
+    "add": 4
+   },
+   {
+    "hook": "cultivationSpeed",
+    "add": 0.45,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "breakthroughChance",
+    "add": 6,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "breakthroughChance.major",
+    "add": 6,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   },
+   {
+    "hook": "element.hoa.power",
+    "add": 0.2,
+    "activeIf": {
+     "flag": "phe_vat_tinh"
+    }
+   }
+  ],
+  "startEvents": [
+   {
+    "event": "pv_si_nhuc",
+    "atAge": 10
+   },
+   {
+    "event": "pv_huy_hon",
+    "atAge": 18
+   },
+   {
+    "event": "pv_truc_xuat",
+    "atAge": 20
+   },
+   {
+    "event": "pv_tinh_huyet_mach",
+    "atAge": 24
+   }
+  ]
+ }
+]

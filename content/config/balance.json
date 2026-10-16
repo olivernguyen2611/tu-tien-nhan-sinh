@@ -106,7 +106,8 @@
   "caveRent": { "cost": { "luyen_khi": 10, "truc_co": 30, "kim_dan": 80, "nguyen_anh": 200, "hoa_than": 500 }, "speedMul": 1.5, "leases": [1, 10], "leaseDiscount": 0.1 },
   "leisure": { "minAge": 8, "silver": 5, "spiritStones": 3, "happiness": [8, 14], "freeHappiness": [3, 5], "daoHeartBelow": 20, "daoHeart": 1 },
   "fastForward": {
-    "maxYears": 10
+    "maxYears": 10,
+    "choices": [5, 10, 20, 50]
   },
   "aging": {
     "recoverPerYear": 4,
@@ -800,6 +801,8 @@
     "claimShare": 0.5,
     "claimTreasury": 200
   },
+  "specialOrigins": { "minLives": 2, "chance": 0.04, "luckPer": 0.0008, "maxPerLife": 2 },
+  "trungSinh": { "memories": 5, "falseChance": 0.15, "driftPerYear": 0.6, "driftPerMemory": 12, "maxBreak": 0.85 },
   "karmaLedger": {
     "perLife": 4, "max": 8, "maxLives": 3, "minWeight": 40, "enemyAt": 65,
     "chance": 0.03, "livesDecay": 0.6, "minAge": 12, "romanceMinAge": 18,

@@ -213,6 +213,8 @@ export const EffectsSchema = z
     learnTechnique: id.optional(),
     /** Thiên địa kỳ vật (task 2.11): a rootless mortal gains a root (balance.kyVat). */
     grantRoot: z.boolean().optional(),
+    /** 9.S5: points on a thành thần path (than-dao.json), e.g. { "cong_duc": 5 }. */
+    merit: z.record(id, z.number()).optional(),
     /** Thức tỉnh thể chất tiềm ẩn: a cultivator who already has a usable root awakens this special body (id in roots.json). */
     awakenBody: id.optional(),
     /** Task 3.4: meet someone new; they become this event's NPC ({npc} in texts). affinity is added to a stranger's 50. */
@@ -497,7 +499,7 @@ const ADD_HOOK = new RegExp(
       `element\\.(${ELEMENTS})\\.power`, `path\\.(${PATHS})\\.(affinity|power)`,
       `craft\\.(${CRAFTS})\\.(success|yield|affinity)`,
       'heartDemonResist', 'charmResist',
-      'npcAffinityStart', 'reunionChance', 'faction\\.(chinh|ma|tan_tu|yeu|trieu_dinh|giang_ho)\\.reputation', 'karmaShift',
+      'npcAffinityStart', 'reunionChance', 'specialOriginChance', 'faction\\.(chinh|ma|tan_tu|yeu|trieu_dinh|giang_ho)\\.reputation', 'karmaShift',
       'priceDiscount', 'incomePct', 'lootPct',
       'trigger\\.cheatDeath',
       // Task 3.3: a storage bag keeps the goods when a robber wins.
@@ -540,7 +542,8 @@ export const EffectHookSchema = z
     activeUntil: z.object({ realm: id }).strict().optional(),
     /** Only while these hold (task 2.4: Ngũ Hành Luân Chuyển Kinh, Tàng Phong Kiếm Kinh). */
     activeIf: z
-      .object({ minRootElements: z.number().int().min(1).optional(), daoHeartBelow: z.number().optional() })
+      // 9.S4: flag / noFlag: only once (or until) a flag is set, e.g. a Phế vật's hidden path awakens.
+      .object({ minRootElements: z.number().int().min(1).optional(), daoHeartBelow: z.number().optional(), flag: id.optional(), noFlag: id.optional() })
       .strict()
       .optional(),
   })
@@ -819,7 +822,8 @@ export const BalanceSchema = z
       })
       .strict(),
     /** Task 1.11: "Tua nhanh" stops after at most this many years. */
-    fastForward: z.object({ maxYears: z.number().int().min(1) }).strict(),
+    /** 9.R11: choices: the years-per-press the player may pick in Cài đặt (maxYears is the default). */
+    fastForward: z.object({ maxYears: z.number().int().min(1), choices: z.array(z.number().int().min(1)).default([5, 10, 20]) }).strict(),
     aging: z
       .object({
         /** Before declineStartAge, health below recoverCap heals recoverPerYear each year. */
@@ -1805,6 +1809,20 @@ export const BalanceSchema = z
      * a tie needs minWeight (ân/oán), kẻ thù from enemyAt; yearly reunion chance × (1 + weight/100) × livesDecay^lives;
      * kinds: how the cố nhân first feels to the player.
      */
+    /**
+     * 9.S1 Tình tiết đặc biệt hiếm: chance a life (from minLives on) draws one, + luckPer × (khí vận − 50);
+     * maxPerLife tình tiết, at most one "nền".
+     */
+    specialOrigins: z.object({
+      minLives: z.number().int().min(2), chance: probability, luckPer: z.number().min(0), maxPerLife: z.number().int().min(1),
+    }).strict(),
+    /**
+     * 9.S3 Trùng sinh: memories a reborn soul brings, chance one is false from the start; the past drifts by
+     * driftPerYear and by driftPerMemory each time a memory is used; a memory breaks with drift/100 (≤ maxBreak).
+     */
+    trungSinh: z.object({
+      memories: z.number().int().min(1), falseChance: probability, driftPerYear: z.number().min(0), driftPerMemory: z.number().min(0), maxBreak: probability,
+    }).strict(),
     karmaLedger: z.object({
       perLife: z.number().int().min(0), max: z.number().int().min(0), maxLives: z.number().int().min(1),
       minWeight: z.number().min(0).max(100), enemyAt: z.number().min(0).max(100),
@@ -3549,9 +3567,159 @@ export const LifeCheckSchema = z
     chosenEnding: z.array(z.enum(['protect', 'exploit_won', 'exploit', 'ignore', 'dead', 'none'])).optional(),
     /** Lives begun on this browser, this one included. */
     livesMin: z.number().int().min(1).optional(),
+    /** 9.R10: stats at the end (stat.<x> keys as in events), tâm ma seeds, martial stage reached (0 = Tam lưu). */
+    statsMin: z.record(z.string(), z.number()).optional(),
+    heartDemonMin: z.number().optional(),
+    martialMin: z.number().int().min(0).optional(),
+    /** 9.R10: in a sect (or ran one) at the end; on a đường đời; born with a usable spiritual root. */
+    inSect: z.boolean().optional(),
+    career: z.boolean().optional(),
+    rooted: z.boolean().optional(),
   })
   .strict();
 export type LifeCheck = z.infer<typeof LifeCheckSchema>;
+
+/** 9.R10: content/thien-dao-ky.json — the Thiên Đạo Ký, a life told in paragraphs. Each section shows its first line whose check holds (a list of texts: one picked by the seed); a section with no such line is left out. */
+export const ThienDaoKyFileSchema = z.object({
+  title: z.string().min(1),
+  sections: z.array(z.object({
+    id,
+    lines: z.array(z.object({ when: LifeCheckSchema.default({}), text: z.union([z.string().min(1), z.array(z.string().min(1)).min(1)]) }).strict()).min(1),
+  }).strict()).min(1),
+}).strict();
+export type ThienDaoKyFile = z.infer<typeof ThienDaoKyFileSchema>;
+
+/**
+ * 9.S1: content/special-origins/*.json — Tình tiết đặc biệt hiếm, decided at birth (never in a first life).
+ * group: he_thong / trung_sinh / phe_vat are "nền" (at most one a life); thanh_tien and khac stack.
+ * unlock: lives played, Sổ tri thức entries, the karma the last life left. weight × traitWeight[khí vận] when held.
+ * costs and effects: stat.<x>, lifespanPct, birthSilver once at birth; other hooks act all life (lifeHooks).
+ * startEvents: follow-ups booked at an age. excludesFinger: cannot sit beside a Kim Thủ Chỉ (the Hệ thống).
+ */
+export const SPECIAL_GROUPS = ['he_thong', 'trung_sinh', 'phe_vat', 'thanh_tien', 'khac'] as const;
+export const SpecialOriginFileSchema = z.array(
+  z.object({
+    id,
+    name: z.string().min(1),
+    group: z.enum(SPECIAL_GROUPS),
+    rarity: z.enum(['hiem', 'rat_hiem', 'cuc_hiem']).default('hiem'),
+    /** Shown on the Thiên cơ biến động screen. */
+    text: z.string().min(1),
+    /** What it costs, said plainly on the same screen. */
+    costText: z.string().min(1),
+    unlock: z.object({
+      livesMin: z.number().int().min(2).default(2),
+      requiresKnowledge: ids,
+      karmaMin: z.number().optional(),
+      karmaMax: z.number().optional(),
+    }).strict().default({}),
+    weight: z.number().min(0),
+    traitWeight: z.record(id, z.number().min(0)).default({}),
+    exclusiveWith: ids,
+    excludesFinger: z.boolean().default(false),
+    costs: z.array(EffectHookSchema).default([]),
+    effects: z.array(EffectHookSchema).default([]),
+    startEvents: z.array(z.object({ event: id, atAge: z.number().int().min(0) }).strict()).default([]),
+    /** 9.S2: a Hệ thống (systems.json) bound to this life. */
+    system: id.optional(),
+    /**
+     * 9.S3: the player picks one on the Thiên cơ screen (e.g. Trùng sinh thật / Đoạt xá). Its gains, costs and
+     * start events apply once picked; `memories` binds the Trùng sinh memories (trung-sinh.json).
+     */
+    variants: z.array(z.object({
+      id, name: z.string().min(1), text: z.string().min(1), costText: z.string().min(1),
+      costs: z.array(EffectHookSchema).default([]), effects: z.array(EffectHookSchema).default([]),
+      startEvents: z.array(z.object({ event: id, atAge: z.number().int().min(0) }).strict()).default([]),
+      memories: z.boolean().default(false),
+    }).strict()).default([]),
+  }).strict(),
+);
+export type SpecialOrigin = z.infer<typeof SpecialOriginFileSchema>[number];
+
+/**
+ * 9.S2 Hệ thống: content/systems.json. Each system talks in its own voice; points come from the yearly
+ * điểm danh, tasks (goal = event conditions, met within `years`) and the shop's negative-cost lines
+ * (đổi thọ nguyên lấy điểm…). Levels by points give all-life hooks. 9.S2b: a trap (hố người) drops clues
+ * in the log, then betrays at a realm or age unless the player cut it off first (quitCost).
+ */
+const SystemOutcomeSchema = z.object({ text: z.string().min(1), effects: EffectsSchema.default({}) }).strict();
+export const SystemFileSchema = z.object({
+  systems: z.array(z.object({
+    id,
+    name: z.string().min(1),
+    /** How it speaks in the log, e.g. "【Hệ thống điểm danh】". */
+    voice: z.string().min(1),
+    text: z.string().min(1),
+    levels: z.array(z.object({ points: z.number().int().min(0), name: z.string().min(1), effects: z.array(EffectHookSchema).default([]) }).strict()).min(1),
+    checkin: z.object({ points: z.number().int().min(0), rewards: z.array(SystemOutcomeSchema.extend({ weight: z.number().min(0), minLevel: z.number().int().min(0).default(0) })).min(1) }).strict().optional(),
+    /** Chance each year without a task that one is given. */
+    taskChance: probability.default(0.3),
+    tasks: z.array(z.object({
+      id, text: z.string().min(1), years: z.number().int().min(1), minLevel: z.number().int().min(0).default(0),
+      when: BaseConditionsSchema.default({}), goal: BaseConditionsSchema, points: z.number().int().min(0),
+      reward: SystemOutcomeSchema, fail: SystemOutcomeSchema,
+    }).strict()).default([]),
+    shop: z.array(z.object({
+      id, name: z.string().min(1), text: z.string().min(1), cost: z.number().int(), minLevel: z.number().int().min(0).default(0),
+      cooldownYears: z.number().int().min(0).default(1), result: SystemOutcomeSchema,
+    }).strict()).default([]),
+    quit: SystemOutcomeSchema,
+    trap: z.object({
+      clues: z.array(z.string().min(1)).min(1),
+      clueChance: probability,
+      betrayAt: z.object({ realm: id.optional(), age: z.number().int().optional() }).strict(),
+      betray: SystemOutcomeSchema,
+    }).strict().optional(),
+  }).strict()),
+}).strict();
+export type SystemFile = z.infer<typeof SystemFileSchema>;
+export type SystemDef = SystemFile['systems'][number];
+
+/**
+ * 9.S3 Trùng sinh: content/worlds/<id>/trung-sinh.json. What a reborn soul remembers of the life to come:
+ * a treasure, a disaster, a future enemy or ally, a chance. Each is recalled once the realm allows; when its
+ * age comes the event plays, unless the past has drifted (hiệu ứng cánh bướm) or the memory was false.
+ */
+export const TrungSinhFileSchema = z.object({
+  /** Cultivation experience counts until this realm is reached. */
+  expUntil: id,
+  exp: z.array(EffectHookSchema).default([]),
+  memories: z.array(z.object({
+    id,
+    kind: z.enum(['bao_vat', 'tai_hoa', 'ke_thu', 'quy_nhan', 'co_duyen']),
+    /** As remembered, e.g. "Năm {age} tuổi, …". */
+    text: z.string().min(1),
+    age: z.object({ min: z.number().int().min(1), max: z.number().int().min(1) }).strict(),
+    recallRealm: id.default('pham_nhan'),
+    event: id,
+    /** When the past has drifted or the memory was false. */
+    broken: z.object({ text: z.string().min(1), effects: EffectsSchema.default({}) }).strict(),
+  }).strict()).min(1),
+}).strict();
+export type TrungSinhFile = z.infer<typeof TrungSinhFileSchema>;
+
+/**
+ * 9.S5 Đường thành thần / thành tiên cuối đời: content/worlds/<id>/than-dao.json. Each path has its own
+ * points (Công đức, Hương hỏa, Long khí, Văn đạo) gained each year from how the life is lived (sources) and
+ * from events (`merit` effect); milestones along the way; past the threshold and minAge its ascend event
+ * comes (the ending is set by a flag); one near the end of life with half the points gets the miss event.
+ */
+export const ThanDaoFileSchema = z.object({
+  paths: z.array(z.object({
+    id,
+    name: z.string().min(1),
+    text: z.string().min(1),
+    sources: z.array(z.object({ when: BaseConditionsSchema, add: z.number() }).strict()).min(1),
+    milestones: z.array(z.object({ at: z.number().min(1), text: z.string().min(1), effects: EffectsSchema.default({}) }).strict()).default([]),
+    threshold: z.number().min(1),
+    minAge: z.number().int().min(0),
+    ascendEvent: id,
+    missEvent: id,
+  }).strict()).min(1),
+  /** The miss event comes this many years before the lifespan runs out. */
+  missWindow: z.number().int().min(1),
+}).strict();
+export type ThanDaoFile = z.infer<typeof ThanDaoFileSchema>;
 
 /** 9.R8: content/endings.json — kết cục of a life, in order: the first whose check holds is the ending. */
 export const EndingFileSchema = z.array(
@@ -3637,6 +3805,9 @@ const EffectLabelSchema = z
 export const EffectLabelsSchema = z
   .object({
     activeFrom: z.string().min(1),
+    /** 9.S4: a flag-gated hook, e.g. "sau khi thức tỉnh" / "trước khi thức tỉnh". */
+    activeFlag: z.string().min(1).default('khi có cơ duyên'),
+    activeNoFlag: z.string().min(1).default('cho tới khi có cơ duyên'),
     hooks: z.record(z.string(), EffectLabelSchema),
     names: z.record(z.string(), z.record(z.string(), z.string())),
     badWhenUp: z.array(z.string()).default([]),

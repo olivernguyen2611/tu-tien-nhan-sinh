@@ -1,5 +1,6 @@
 // Tiên Thiên Khí Vận (PLAN.md task 1.3, spec 4.9.1): roll trait slots at birth,
 // reroll a limited number of times, then apply the chosen traits' stat hooks.
+import { rollSpecialOrigin } from './specialOrigin';
 import type { Content } from '../core/content';
 import { Rng, hashSeed } from '../core/rng';
 import type { EffectHook, Trait, TraitComboFile } from '../core/schemas';
@@ -159,7 +160,7 @@ export function confirmDestiny(state: GameState, content: Content): GameState {
 
   const finger = fingerDef(content, state.goldenFinger?.id);
   if (finger) lines.push({ text: `Kim Thủ Chỉ · ${finger.name}: ${finger.flavor}`, tone: 'rare' as const });
-  return awakenGoldenFinger({
+  const born = awakenGoldenFinger({
     ...state,
     stats,
     aptitudes,
@@ -169,4 +170,6 @@ export function confirmDestiny(state: GameState, content: Content): GameState {
     destiny: { ...state.destiny, confirmed: true },
     log: [{ ...birth, lines }, ...state.log.slice(1)],
   }, content);
+  // 9.S1: with the khí vận known, maybe a Tình tiết đặc biệt hiếm.
+  return rollSpecialOrigin(born, content, state.pastKarma ?? 0);
 }

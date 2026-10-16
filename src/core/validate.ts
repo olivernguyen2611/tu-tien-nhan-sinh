@@ -3,7 +3,8 @@
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
+import { KY_KEYS } from '../systems/thienDaoKy';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, SpecialOriginFileSchema, type SpecialOrigin, SystemFileSchema, type SystemFile, TrungSinhFileSchema, type TrungSinhFile, ThanDaoFileSchema, type ThanDaoFile, ThienDaoKyFileSchema, type ThienDaoKyFile, type Ending, MORTAL_STATS, APTITUDES, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -60,6 +61,9 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'trait-combos.json') return TraitComboFileSchema;
     if (rest === 'codex.json') return CodexFileSchema;
     if (rest === 'endings.json') return EndingFileSchema;
+    if (rest.startsWith('special-origins/')) return SpecialOriginFileSchema;
+    if (rest === 'systems.json') return SystemFileSchema;
+    if (rest === 'thien-dao-ky.json') return ThienDaoKyFileSchema;
     if (rest === 'achievements.json') return AchievementFileSchema;
     return null;
   }
@@ -78,6 +82,8 @@ export function schemaFor(path: string): ZodTypeAny | null {
   if (rest === 'clans.json') return WorldClanFileSchema;
   if (rest === 'races.json') return RaceFileSchema;
   if (rest === 'knowledge.json') return KnowledgeFileSchema;
+  if (rest === 'trung-sinh.json') return TrungSinhFileSchema;
+  if (rest === 'than-dao.json') return ThanDaoFileSchema;
   if (rest === 'immortal-gates.json') return ImmortalGateFileSchema;
   if (rest === 'challenges.json') return ChallengeFileSchema;
   if (/^events\/[^/]+\.json$/.test(rest)) return EventFileSchema;
@@ -112,6 +118,10 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   const worldEventFiles: { file: string; events: WorldEvent[] }[] = [];
   const figureFiles: { file: string; figures: Figure[] }[] = [];
   const knowledgeFiles: { file: string; entries: KnowledgeEntry[] }[] = [];
+  const originFiles: { file: string; origins: SpecialOrigin[] }[] = [];
+  let systemsFile: { file: string; data: SystemFile } | null = null;
+  const trungSinhFiles: { file: string; data: TrungSinhFile }[] = [];
+  const thanDaoFiles: { file: string; data: ThanDaoFile }[] = [];
   const gateFiles: { file: string; gates: ImmortalGate[] }[] = [];
   /** 9.R5b: things that wait for a Sổ tri thức entry. */
   const knowledgeRefs: { file: string; what: string; id: string }[] = [];
@@ -239,6 +249,24 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === RealmsFileSchema) parsedShared.realms = parsed.data as RealmsFile;
     if (schema === RootsFileSchema) parsedShared.roots = parsed.data as RootsFile;
     if (schema === AptitudesFileSchema) parsedShared.aptitudes = parsed.data as AptitudesFile;
+    // 9.R8–9.R10: endings have unique ids, end with a catch-all, and read real stat.<x> keys.
+    if (schema === EndingFileSchema) {
+      const list = parsed.data as Ending[];
+      problems.push(...duplicates(file, 'kết cục', list));
+      if (list.length > 0 && Object.keys(list[list.length - 1].check).length > 0) problems.push({ file, level: 'error', message: 'kết cục cuối cùng phải có check rỗng (kết cục dự phòng)' });
+      const statKeys = new Set([...MORTAL_STATS, ...APTITUDES].map((k) => `stat.${k}`));
+      for (const e of list) for (const k of Object.keys(e.check.statsMin ?? {})) {
+        if (!statKeys.has(k)) problems.push({ file, level: 'error', message: `kết cục "${e.id}" đọc chỉ số lạ "${k}"` });
+      }
+    }
+    // 9.R10: Thiên Đạo Ký lines use only the keys the system fills.
+    if (schema === ThienDaoKyFileSchema) {
+      for (const sec of (parsed.data as ThienDaoKyFile).sections) for (const l of sec.lines) {
+        for (const t of typeof l.text === 'string' ? [l.text] : l.text) for (const m of t.matchAll(/\{(\w+)\}/g)) {
+          if (!KY_KEYS.includes(m[1])) problems.push({ file, level: 'error', message: `mục "${sec.id}" dùng chữ lạ {${m[1]}}` });
+        }
+      }
+    }
     if (schema === TutorialFileSchema) {
       const t = parsed.data as TutorialFile;
       problems.push(...duplicates(file, 'mục tiêu', t.goals), ...duplicates(file, 'mẹo', t.tips));
@@ -266,6 +294,10 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === FigureFileSchema) figureFiles.push({ file, figures: parsed.data as Figure[] });
     if (schema === NationFileSchema || schema === FigureFileSchema || schema === WorldClanFileSchema || schema === RaceFileSchema) loreFiles.push({ file, items: parsed.data as { id: string; region?: string; regions?: string[] }[] });
     if (schema === KnowledgeFileSchema) knowledgeFiles.push({ file, entries: parsed.data as KnowledgeEntry[] });
+    if (schema === ThanDaoFileSchema) thanDaoFiles.push({ file, data: parsed.data as ThanDaoFile });
+    if (schema === TrungSinhFileSchema) trungSinhFiles.push({ file, data: parsed.data as TrungSinhFile });
+    if (schema === SystemFileSchema) systemsFile = { file, data: parsed.data as SystemFile };
+    if (schema === SpecialOriginFileSchema) originFiles.push({ file, origins: parsed.data as SpecialOrigin[] });
     if (schema === ImmortalGateFileSchema) gateFiles.push({ file, gates: parsed.data as ImmortalGate[] });
     if (schema === GlossarySchema) glossaryIds = (parsed.data as { id: string }[]).map((x) => x.id);
     if (schema === MarketFileSchema) {
@@ -536,7 +568,65 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   for (const { file, event } of events) {
     for (const k of [...(event.conditions.knowledge?.all ?? []), ...(event.conditions.knowledge?.none ?? [])]) knowledgeRefs.push({ file, what: `sự kiện "${event.id}"`, id: k });
   }
+  // 9.S1: tình tiết đặc biệt have unique ids and name real khí vận, events, Sổ tri thức entries and other tình tiết.
+  const originIds = originFiles.flatMap((f) => f.origins.map((o) => o.id));
+  const allEventIds = new Set(events.map((e) => e.event.id));
+  for (const { file, origins } of originFiles) {
+    for (const o of origins) {
+      if (originIds.filter((x) => x === o.id).length > 1) problems.push({ file, level: 'error', message: `trùng id tình tiết "${o.id}"` });
+      for (const t of Object.keys(o.traitWeight)) if (traitIds && !traitIds.has(t)) problems.push({ file, level: 'error', message: `tình tiết "${o.id}" nhắc tới khí vận không tồn tại "${t}"` });
+      for (const e of o.startEvents) if (!allEventIds.has(e.event)) problems.push({ file, level: 'error', message: `tình tiết "${o.id}" mở sự kiện không tồn tại "${e.event}"` });
+      for (const x of o.exclusiveWith) if (!originIds.includes(x)) problems.push({ file, level: 'error', message: `tình tiết "${o.id}" loại trừ tình tiết lạ "${x}"` });
+      for (const k of o.unlock.requiresKnowledge) knowledgeRefs.push({ file, what: `tình tiết "${o.id}"`, id: k });
+      if (o.system && !systemsFile?.data.systems.some((x) => x.id === o.system)) problems.push({ file, level: 'error', message: `tình tiết "${o.id}" gắn hệ thống lạ "${o.system}"` });
+    }
+  }
+  // 9.S2: Hệ thống: levels rise by points and act all life (no one-time stat hooks); items it gives exist.
+  if (systemsFile) {
+    const { file, data } = systemsFile;
+    problems.push(...duplicates(file, 'hệ thống', data.systems));
+    for (const sys of data.systems) {
+      const err = (message: string) => problems.push({ file, level: 'error', message: `hệ thống "${sys.id}": ${message}` });
+      sys.levels.forEach((l, i) => {
+        if (i === 0 ? l.points !== 0 : l.points <= sys.levels[i - 1].points) err(`cấp "${l.name}" phải có điểm tăng dần, cấp đầu là 0`);
+        for (const e of l.effects) if (e.hook.startsWith('stat.') || e.hook === 'lifespanPct' || e.hook === 'birthSilver') err(`cấp "${l.name}" dùng móc một lần "${e.hook}"`);
+      });
+      problems.push(...duplicates(file, `nhiệm vụ của "${sys.id}"`, sys.tasks), ...duplicates(file, `cửa hàng của "${sys.id}"`, sys.shop));
+      const outs = [sys.quit, ...(sys.checkin?.rewards ?? []), ...sys.tasks.flatMap((t) => [t.reward, t.fail]), ...sys.shop.map((x) => x.result), ...(sys.trap ? [sys.trap.betray] : [])];
+      for (const it of outs.flatMap((x) => [...(x.effects.addItems ?? []), ...(x.effects.removeItems ?? [])])) if (itemIds && !itemIds.includes(it)) err(`vật phẩm không tồn tại "${it}"`);
+      const maxLevel = sys.levels.length - 1;
+      for (const x of [...sys.tasks, ...sys.shop, ...(sys.checkin?.rewards ?? [])]) if (x.minLevel > maxLevel) err(`cần cấp ${x.minLevel} nhưng chỉ có ${maxLevel}`);
+    }
+  }
   for (const r of knowledgeRefs) if (!allKnowledge.has(r.id)) problems.push({ file: r.file, level: 'error', message: `${r.what} cần tri thức lạ "${r.id}"` });
+
+  // 9.S3: a memory plays an event of its world; ages and realms make sense.
+  for (const { file, data } of trungSinhFiles) {
+    const world = splitWorldPath(file).worldId;
+    const realmIds = parsedShared.realms?.realms.map((r) => r.id) ?? [];
+    problems.push(...duplicates(file, 'ký ức trùng sinh', data.memories));
+    if (realmIds.length && !realmIds.includes(data.expUntil)) problems.push({ file, level: 'error', message: `expUntil là cảnh giới lạ "${data.expUntil}"` });
+    for (const m of data.memories) {
+      if (!events.some((e) => e.event.id === m.event && splitWorldPath(e.file).worldId === world)) problems.push({ file, level: 'error', message: `ký ức "${m.id}" dẫn tới sự kiện lạ "${m.event}"` });
+      if (m.age.min > m.age.max) problems.push({ file, level: 'error', message: `ký ức "${m.id}" có tuổi min > max` });
+      if (realmIds.length && !realmIds.includes(m.recallRealm)) problems.push({ file, level: 'error', message: `ký ức "${m.id}" cần cảnh giới lạ "${m.recallRealm}"` });
+    }
+  }
+
+  // 9.S5: thành thần paths play events of their world; milestones below the threshold; merit names a real path.
+  const meritPaths = new Set(thanDaoFiles.flatMap((f) => f.data.paths.map((p) => p.id)));
+  for (const { file, data } of thanDaoFiles) {
+    const world = splitWorldPath(file).worldId;
+    problems.push(...duplicates(file, 'đường thành thần', data.paths));
+    for (const p of data.paths) {
+      for (const ev of [p.ascendEvent, p.missEvent]) if (!events.some((e) => e.event.id === ev && splitWorldPath(e.file).worldId === world)) problems.push({ file, level: 'error', message: `đường "${p.id}" dẫn tới sự kiện lạ "${ev}"` });
+      for (const m of p.milestones) if (m.at >= p.threshold) problems.push({ file, level: 'error', message: `đường "${p.id}": mốc ${m.at} phải nhỏ hơn ngưỡng ${p.threshold}` });
+    }
+  }
+  for (const { file, event } of events) {
+    for (const c of event.choices) for (const o of [c.result, c.success, c.fail]) for (const k of Object.keys(o?.effects.merit ?? {}))
+      if (!meritPaths.has(k)) problems.push({ file, level: 'error', message: `sự kiện "${event.id}" cộng điểm cho đường lạ "${k}"` });
+  }
 
   // 9.R4b: a gate brings an event of its world, names a real Sổ tri thức entry, and has its chance in balance.json.
   for (const { file, gates } of gateFiles) {

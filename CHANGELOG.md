@@ -8,6 +8,67 @@
 
 ## [Chưa phát hành]
 
+### 9.S5: Đường thành thần, thành tiên cuối đời (2026-10-16)
+- 4 con đường không phải tu luyện cảnh giới, kiếp nào cũng đi được (phàm nhân hay tu sĩ): **Công đức** (sống thiện, làm thầy thuốc), **Hương hỏa** (được dân nhớ ơn, lập tông có đức), **Long khí** (làm quan, được triều đình trọng), **Văn đạo** (trí tuệ, ngộ tính cực cao, làm quan văn).
+- Mỗi năm sống đúng đạo của đường nào thì tích điểm đường ấy; sự kiện cũng cộng được (hiệu ứng mới `merit`). Hai mốc giữa đường có sự kiện nhỏ (dân lập miếu, thơ được hát…). Đủ ngưỡng và từ 50 tuổi: sự kiện **thành thần / thành tiên**, nhận thì đời kết thúc bằng kết cục riêng, từ chối thì sống thêm. Gần hết thọ mà mới được nửa đường: sự kiện lỡ duyên, rơi về phàm.
+- 4 kết cục mới: Công đức thành tiên, Hương hỏa thành thần, Thần hộ quốc, Văn Khúc tinh quân. Bảng nhân vật hiện thanh tiến độ các đường đang đi.
+- Dữ liệu `worlds/thuong_lan/than-dao.json`, 8 sự kiện `events/than-dao.json`. Simulate: khoảng 1–2% số đời đạt một đường. Developer Mode: cộng 30 điểm từng đường.
+- Test: `tests/than-dao.test.ts`.
+
+### 9.S4: Phế vật nghịch tập (2026-10-16)
+- 5 tình tiết **Phế vật** (mở từ kiếp 3): Nghịch cảnh luyện thể, Ma công nghịch tu, Thôn phệ dị biến, Đan độc chi thể, Huyết mạch ẩn.
+- Nửa đời đầu chịu khổ: tu luyện chậm, đột phá khó; chuỗi sự kiện **sỉ nhục** (10 tuổi) → **thư từ hôn** (18 tuổi) → **bị đuổi khỏi tông môn hoặc nhà** (20 tuổi) → **thức tỉnh** con đường riêng (24 tuổi).
+- Thức tỉnh là một lần thử theo chỉ số; thất bại thì trọng thương và vài năm sau mới có cơ hội lại (có thể chết vì nó); từ chối thì sống tiếp như phàm nhân, cái giá vẫn còn. Thức tỉnh xong, cái giá mất và tu luyện bứt phá giữa đời.
+- Giữ luật linh căn bẩm sinh: chỉ **Huyết mạch ẩn** (kỳ ngộ lớn) mới cho linh căn; các đường khác với người không linh căn thì đi võ đạo, rèn thân.
+- Móc hiệu ứng mới: `activeIf.flag` / `activeIf.noFlag` (chỉ có tác dụng sau / trước khi có cờ); thẻ Thiên cơ ghi rõ "sau khi thức tỉnh" / "cho tới khi thức tỉnh".
+- Test: `tests/phe-vat.test.ts`.
+
+### 9.S3: Trùng sinh (2026-10-16)
+- Tình tiết **Trùng sinh** (mở từ kiếp 3). Ở màn Thiên cơ biến động người chơi chọn một trong hai:
+  - **Trùng sinh về tuổi nhỏ (thật):** mang theo 5 ký ức về những chuyện sắp xảy ra (bảo vật, tai họa, kẻ thù khi còn non, quý nhân, cơ duyên), nhớ lại dần theo cảnh giới. Tới đúng tuổi, ký ức thành sự kiện để ngươi hành động. Kinh nghiệm tu luyện kiếp trước giúp tu nhanh, đột phá dễ, nhưng chỉ tới Kim Đan. Không mang theo công pháp.
+  - **Đoạt xá:** chiếm thân xác đứa trẻ khác; ngộ tính, tốc độ tu luyện cao, nhưng nghiệp nặng, tâm ma dễ sinh, hồn cũ phản phệ năm 16 tuổi, người nhà nhận ra năm 8 tuổi.
+- **Hiệu ứng cánh bướm:** lịch sử lệch dần mỗi năm và lệch mạnh mỗi lần dùng ký ức; ký ức càng về sau càng dễ sai. Một số ký ức sai ngay từ đầu (ký ức rạn nứt). Ký ức chưa nhớ ra thì trôi qua.
+- Nút **憶** trên thanh trên mở bảng Ký ức kiếp trước (ký ức đã nhớ, chưa nhớ, đã ứng nghiệm, đã lệch, độ lệch lịch sử).
+- Khung chung: tình tiết đặc biệt có thể có **lựa chọn** (`variants`) ở màn Thiên cơ biến động; số liệu ở `balance.trungSinh`, ký ức ở `worlds/thuong_lan/trung-sinh.json`, 11 sự kiện ở `events/trung-sinh.json`. Developer Mode: chỉnh độ lệch lịch sử.
+- Test: `tests/trung-sinh.test.ts`.
+
+### 9.S2 + 9.S2b: Xuyên không và Hệ thống (2026-10-16)
+- Nhóm tình tiết **Xuyên không · Hệ thống** (12 tình tiết, `special-origins/xuyen-khong.json`): linh hồn từ thế giới khác lạc tới, ký ức mơ hồ, trong đầu có một "Hệ thống". Không đi cùng Kim Thủ Chỉ. Nút **統** trên thanh trên mở bảng Hệ thống.
+- Khung Hệ thống (`content/systems.json`, `src/systems/heThong.ts`): điểm và cấp (mỗi cấp cho hiệu ứng cả đời), **điểm danh** mỗi năm một lần, **nhiệm vụ** có hạn (đạt điều kiện thì thưởng, quá hạn thì phạt), **cửa hàng** đổi điểm (giá âm = bán thọ nguyên, bạc, linh thạch lấy điểm), **đoạn tuyệt** mất hết, không quay lại.
+- 7 hệ thống thường: Điểm Danh, Nhiệm Vụ, Đổi Thọ, Thương Thành, Giám Định, Bói Toán, Thôi Diễn.
+- 9.S2b, 5 hệ thống **hố người** (mở từ kiếp 3): Thiên Đạo Thưởng Phạt (nhiệm vụ độc ác), Đại Lễ Bao (thưởng lừa, tính lãi bằng thọ), Tu Tiên bản thử nghiệm (lỗi), Tiên Tôn Truyền Thừa (đoạt xá lúc Nguyên Anh), Tiêu Dao Khoái Lạc (gây nghiện, bỏ thì vật vã). Thưởng thường hậu hơn hệ thống thật, rải **manh mối** trong nhật ký (lời lẽ lệch, thưởng quá đẹp, nhiệm vụ trái đạo), rồi **phản bội** ở mốc cảnh giới hoặc tuổi. Đoạn tuyệt trước thì tránh được, nhưng có giá.
+- Validate: hệ thống được tình tiết nhắc tới phải có, cấp tăng dần, cấp không dùng móc một lần, vật phẩm phải có thật. Developer Mode: ép từng tình tiết (có sẵn), cộng 100 điểm, cho hệ thống phản bội ngay.
+- Test: `tests/he-thong.test.ts`.
+
+### 9.S1: Khung Tình tiết Đặc biệt Hiếm (2026-10-16)
+- Lúc đầu thai, sau khi chốt khí vận, có xác suất nhỏ "thiên cơ biến động": đời này nhận một (đôi khi hai) tình tiết đặc biệt, hiện ở màn **Thiên cơ biến động** trước năm đầu tiên, nói rõ lợi và cái giá. **Kiếp đầu không bao giờ trúng.**
+- Dữ liệu ở `content/special-origins/*.json` (mỗi nhóm một file): nhóm (Hệ thống, Trùng sinh, Phế vật nghịch tập, Đường thành tiên, Dị số), điều kiện mở (số kiếp, Sổ tri thức, nhân quả kiếp trước), trọng số theo khí vận, loại trừ nhau, không đi cùng Kim Thủ Chỉ, cái giá, hiệu ứng, sự kiện khởi đầu. Tối đa một tình tiết "nền" mỗi đời. Số liệu ở `balance.specialOrigins` (4% mỗi đời từ kiếp thứ 2, khí vận cao thì nhiều hơn).
+- 3 tình tiết mẫu nhóm Dị số: **Túc tuệ**, **Long mạch dưới nền nhà**, **Mệnh phạm thiên sát** (mở khi kiếp trước nhiều ác nghiệp). Các nhóm lớn (Hệ thống, Trùng sinh, Phế vật, Thành tiên) đến ở 9.S2–9.S5.
+- Thiên Thư thêm tab **Thiên cơ** (đã gặp / chưa gặp, số kiếp từng trúng). Developer Mode ép được từng tình tiết. Bảng cân bằng và `npm run simulate` thống kê tỉ lệ trúng.
+- Test: `tests/special-origin.test.ts`.
+
+### 9.R12: Bảng cân bằng trong Developer Mode (2026-10-16)
+- Developer Mode thêm mục **Bảng cân bằng**: chạy 20–200 đời bằng máy ngay trong trình duyệt (Web Worker, trang không bị đơ, dừng được giữa chừng), chọn cách chơi của máy và chạy như kiếp đầu.
+- Kết quả: phân bố tuổi chết, nguyên nhân chết, tỉ lệ đạt từng cảnh giới (kèm tuổi trung bình), theo linh căn, tỉ lệ mở từng cổng tiên duyên, theo Kim Thủ Chỉ, khí vận gặp nhiều nhất (thọ, tỉ lệ Kim Đan), tỉ lệ từng kết cục.
+- Ô **chỉnh balance tạm**: gõ một đoạn JSON (ví dụ `{"karmaLedger": {"chance": 0.1}}`), chỉ dùng cho lần chạy đó, kiểm bằng schema, không ghi vào game.
+- `npm run simulate` in thêm tỉ lệ cổng tiên duyên và kết cục.
+- Test: `tests/balance-panel.test.ts`. Toàn bộ 792 test xanh.
+
+### 9.R11: Cài đặt mở rộng (2026-10-16)
+- **Tua nhanh tối đa:** chọn 5, 10, 20 hoặc 50 năm cho mỗi lần bấm tua (danh sách ở `balance.fastForward.choices`; tua vẫn dừng ngay khi có chuyện).
+- **Cỡ chữ:** Nhỏ, Vừa, Lớn, Rất lớn (đổi cỡ chữ gốc của cả trang).
+- **Giảm chuyển động:** tắt hiệu ứng động ngay trong game, không cần chỉnh máy.
+- **Ẩn nội dung nhạy cảm** (PLAN mục H): bật thì các biến cố gắn nhãn `dark` hoặc `mature` không còn xảy ra; áp dụng cho đời đang chơi và các đời sau (`src/systems/options.ts`, `state.options.gentle`).
+- Các lựa chọn hiển thị lưu trong trình duyệt (`bachthe.prefs`). Công tắc Developer Mode đã có từ 9.R6.
+- Test: `tests/options.test.ts`.
+
+### 9.R10: Kết cục đa dạng, Thiên Đạo Ký (2026-10-16)
+- 10 kết cục mới (tổng 27): **Hóa đạo** (Hóa Thần thọ chung với đạo tâm từ 80), **Tâm ma đoạt xác** (tu sĩ từ Trúc Cơ chết khi tâm ma đã rất nặng), **Nhập thế** (có tu vi mà sống trọn kiếp người: đạo lữ, con cái, hạnh phúc), **Võ đạo tận cùng** và **Tông sư võ lâm** (võ giả Ngũ khí, Hóa cảnh), **Đại thiện nhân**, **Phú giáp một phương**, **Ẩn sĩ**; giữ chỗ **Phi thăng thượng giới** (GĐ 14) và **Đế vương** (12.9), sẽ mở khi các phần đó xong.
+- Điều kiện cuối đời mới dùng chung cho kết cục, thành tựu, huy hiệu: `statsMin`, `heartDemonMin`, `martialMin`, `inSect`, `career`, `rooted`.
+- **Thiên Đạo Ký** ở màn kết thúc (mục thu gọn): kể lại cả đời trong 8–12 đoạn ngắn (xuất thân, căn cơ, con đường, tu vi, tình duyên, con cháu, ân oán, dấu ấn, thời cuộc, thiện ác, cái chết, kết cục), dựng từ mẫu câu trong `content/thien-dao-ky.json`, không cần AI. Đoạn nào đời này không có thì bỏ qua.
+- Validate: kết cục không trùng id, kết cục cuối là dự phòng, chỉ số đọc phải có thật; Thiên Đạo Ký chỉ dùng chữ thay thế có thật.
+- Test: `tests/thien-dao-ky.test.ts`.
+
 ### 9.R9: Nhân quả xuyên kiếp (2026-10-16)
 - Hết một kiếp, những mối ràng buộc nặng nhất (đạo lữ, người mang ơn, người mang oán, tử địch; tối đa 4 mỗi kiếp, 8 tất cả) được ghi vào dữ liệu chung của trình duyệt và giữ qua 3 kiếp. Kiếp có dùng Developer Mode và thử thách tuần không ghi.
 - Kiếp sau, mỗi năm có xác suất một cố nhân quay lại thành người mới gặp, mang dấu vết kiếp trước: đạo lữ thấy quen thân, người mang ơn sẵn ân, kẻ thù sẵn oán (sổ ân oán sau đó chạy như thường: báo ân, báo thù). Mối càng nặng, kiếp càng gần thì càng sớm gặp. Đạo lữ kiếp trước chỉ tái ngộ khi đã đủ 18 tuổi.

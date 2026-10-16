@@ -8,6 +8,7 @@ import type { GameState } from '../core/types';
 import { act, settle } from './combat';
 import { attemptMajorBreakthrough, enterFirstRealm, majorBreakthroughInfo, rootUsable } from './cultivation';
 import { confirmDestiny, rollDestiny } from './destiny';
+import { seeSpecial } from './specialOrigin';
 import { doFingerAction, fingerActionViews } from './fingerActions';
 import { resolveChoice, findEvent, visibleChoices } from './events/engine';
 import { chooseFate } from './fate';
@@ -21,6 +22,8 @@ import { buyTreasury, treasuryViews } from './sectTreasury';
 import { learnBlocked, learnTechnique, techniqueById, techniqueCapReason, techniqueMaxRealm } from './technique';
 import { buyScroll, openMarkets, techniqueOffers } from './market';
 import { checkDeath } from './time';
+import { lifeEnding } from './chronicle';
+import { BalanceSchema } from '../core/schemas';
 
 /**
  * How the bot decides. `random` picks event choices at random and always tries to break through; `steady` takes the first open choice and only breaks through at 50% or better.
@@ -65,6 +68,12 @@ export interface LifeResult {
   seen: Record<string, number>;
   /** 6b.14: spirit stones left at death. */
   stonesLeft: number;
+  /** 9.R12: tiên duyên gates that opened, the Kim Thủ Chỉ, the khí vận, the kết cục. */
+  gates: string[];
+  finger: string | null;
+  traits: string[];
+  ending: string | null;
+  special: string[];
 }
 
 export interface SimOptions {
@@ -106,9 +115,10 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
   const botRng = new Rng(`bot:${seed}`);
   const realms = content.cultivation.realms.realms.map((r) => r.id);
   const knowledge = opts.knowledge === 'none' ? [] : (content.knowledge ?? []).map((e) => e.id);
-  const born = createLife({ seed, difficulty: opts.difficulty, goldenFinger: opts.goldenFinger, knowledge }, content);
+  // 9.S1: a seasoned player is on a later life, so a Tình tiết đặc biệt hiếm can come.
+  const born = createLife({ seed, difficulty: opts.difficulty, goldenFinger: opts.goldenFinger, knowledge, lifeNo: opts.knowledge === 'none' ? 1 : 10 }, content);
   const offered = opts.traits ? { ...born, destiny: { ...born.destiny, offered: opts.traits } } : rollDestiny(born, content);
-  let s: GameState = confirmDestiny(offered, content);
+  let s: GameState = seeSpecial(confirmDestiny(offered, content), content);
   let peak = 0;
   const reachedAt: Record<string, number> = {};
   let steps = 0;
@@ -193,6 +203,11 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     aptitudeHigh: Math.max(s.aptitudes.physique, s.aptitudes.comprehension, s.aptitudes.luck) >= 90,
     seen: { ...(s.events.seen ?? {}) },
     stonesLeft: s.money.spiritStones,
+    gates: Object.keys(s.flags).filter((f) => s.flags[f] && f.startsWith('tien_duyen_')).map((f) => f.slice('tien_duyen_'.length)),
+    finger: s.goldenFinger?.id ?? null,
+    traits: [...s.traits],
+    ending: lifeEnding(s, content, 1),
+    special: s.special?.ids ?? [],
   };
 }
 
@@ -256,7 +271,17 @@ export interface Report {
   topRepeats: { id: string; max: number; perCentury: number }[];
   /** Spirit stones left at death: mean, median and share of lives dying with 500 or more. */
   stonesLeft: { mean: number; p50: number; rich: number };
+  /** 9.R12: share of lives each tiên duyên gate opened for; by Kim Thủ Chỉ and by khí vận (share, mean age, Kim Đan share); kết cục shares. */
+  byGate: Record<string, number>;
+  byFinger: Record<string, Group>;
+  byTrait: Record<string, Group>;
+  byEnding: Record<string, number>;
+  /** 9.S1: Tình tiết đặc biệt hiếm drawn (share, mean age, Kim Đan share), and the share of lives with any. */
+  bySpecial: Record<string, Group>;
+  specialAny: number;
 }
+
+export interface Group { share: number; meanAge: number; kimDan: number }
 
 const pct = (sorted: number[], p: number) => sorted[Math.min(sorted.length - 1, Math.floor((p / 100) * sorted.length))] ?? 0;
 
@@ -294,11 +319,42 @@ export function summarize(results: LifeResult[], content: Content): Report {
     aptitudeGain: mean(results.map((r) => r.aptitudeGain)),
     aptitudeHigh: n ? results.filter((r) => r.aptitudeHigh).length / n : 0,
     topRepeats: topRepeats(results),
+    byGate: (() => { const o: Record<string, number> = {}; for (const r of results) for (const g of r.gates ?? []) o[g] = (o[g] ?? 0) + 1 / n; return o; })(),
+    byFinger: groupBy(results, (r) => (r.finger ? [r.finger] : []), n, kd),
+    byTrait: groupBy(results, (r) => r.traits ?? [], n, kd),
+    bySpecial: groupBy(results, (r) => r.special ?? [], n, kd),
+    specialAny: n ? results.filter((r) => (r.special ?? []).length > 0).length / n : 0,
+    byEnding: (() => { const o: Record<string, number> = {}; for (const r of results) if (r.ending) o[r.ending] = (o[r.ending] ?? 0) + 1 / n; return o; })(),
     stonesLeft: (() => {
       const st = results.map((r) => r.stonesLeft).sort((a, b) => a - b);
       return { mean: mean(st), p50: st[Math.floor(st.length / 2)] ?? 0, rich: n ? st.filter((v) => v >= 500).length / n : 0 };
     })(),
   };
+}
+
+function groupBy(results: LifeResult[], keys: (r: LifeResult) => string[], n: number, kd: number): Record<string, Group> {
+  const lists: Record<string, LifeResult[]> = {};
+  for (const r of results) for (const k of keys(r)) (lists[k] ??= []).push(r);
+  const out: Record<string, Group> = {};
+  for (const [k, list] of Object.entries(lists)) {
+    out[k] = { share: list.length / n, meanAge: list.reduce((a, x) => a + x.age, 0) / list.length, kimDan: list.filter((x) => kd >= 0 && x.peak >= kd).length / list.length };
+  }
+  return out;
+}
+
+/** 9.R12: content with part of balance.json replaced (objects merge, arrays and numbers replace), checked by the schema. */
+export function withBalancePatch(content: Content, patch: unknown): { content: Content; error: string | null } {
+  if (patch === null || patch === undefined || (typeof patch === 'object' && Object.keys(patch as object).length === 0)) return { content, error: null };
+  if (typeof patch !== 'object' || Array.isArray(patch)) return { content, error: 'Bản chỉnh phải là một đối tượng JSON, ví dụ {"karmaLedger": {"chance": 0.1}}' };
+  const merge = (a: unknown, b: unknown): unknown => {
+    if (!b || typeof b !== 'object' || Array.isArray(b) || !a || typeof a !== 'object' || Array.isArray(a)) return b;
+    const out: Record<string, unknown> = { ...(a as Record<string, unknown>) };
+    for (const [k, v] of Object.entries(b as Record<string, unknown>)) out[k] = merge(out[k], v);
+    return out;
+  };
+  const parsed = BalanceSchema.safeParse(merge(content.balance, patch));
+  if (!parsed.success) return { content, error: parsed.error.issues.slice(0, 3).map((i) => `${i.path.join('.')}: ${i.message}`).join('; ') };
+  return { content: { ...content, balance: parsed.data as Content['balance'] }, error: null };
 }
 
 function topRepeats(results: LifeResult[]): Report['topRepeats'] {
@@ -329,6 +385,10 @@ export function formatReport(rep: Report, content: Content, title: string): stri
     `Tư chất (căn cốt + ngộ tính + khí vận) tăng trung bình ${rep.aptitudeGain.toFixed(1)} điểm mỗi đời; ${p(rep.aptitudeHigh)} số đời kết thúc với một chỉ số từ 90`,
     `Linh thạch lúc chết: trung bình ${rep.stonesLeft.mean.toFixed(0)}, trung vị ${rep.stonesLeft.p50}, ${p(rep.stonesLeft.rich)} số đời còn từ 500`,
     'Sự kiện lặp dày nhất (lần mỗi 100 năm sống, nhiều nhất một đời): ' + rep.topRepeats.map((t) => `${t.id} ${t.perCentury.toFixed(1)} (${t.max})`).join(', '),
+    // 9.R12: tiên duyên gates and kết cục.
+    'Cổng tiên duyên mở: ' + (Object.entries(rep.byGate ?? {}).sort((a, b) => b[1] - a[1]).map(([g, v]) => `${g} ${p(v)}`).join(', ') || 'không'),
+    `Thiên cơ biến động: ${p(rep.specialAny ?? 0)} số đời` + (Object.keys(rep.bySpecial ?? {}).length ? ' (' + Object.entries(rep.bySpecial).map(([id, g]) => `${id} ${p(g.share)}`).join(', ') + ')' : ''),
+    'Kết cục: ' + Object.entries(rep.byEnding ?? {}).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([e, v]) => `${e} ${p(v)}`).join(', '),
   ];
   return lines.join('\n');
 }

@@ -1,0 +1,275 @@
+{
+ "paths": [
+  {
+   "id": "cong_duc",
+   "name": "Công đức",
+   "text": "Việc thiện tích lại thành công đức. Đủ dày thì trời đất không nỡ để người như thế tan biến.",
+   "sources": [
+    {
+     "when": {
+      "stats": [
+       {
+        "stat": "karma",
+        "gte": 30
+       }
+      ]
+     },
+     "add": 1
+    },
+    {
+     "when": {
+      "stats": [
+       {
+        "stat": "karma",
+        "gte": 60
+       }
+      ]
+     },
+     "add": 1
+    },
+    {
+     "when": {
+      "career": {
+       "id": "y",
+       "minRung": 2
+      }
+     },
+     "add": 1
+    }
+   ],
+   "milestones": [
+    {
+     "at": 30,
+     "text": "Người được ngươi cứu bắt đầu thắp hương cầu phúc cho ngươi.",
+     "effects": {
+      "stat.happiness": 3,
+      "stat.luck": 1
+     }
+    },
+    {
+     "at": 60,
+     "text": "Có người nói thấy ánh sáng nhạt quanh ngươi khi trời tối. Ngươi chỉ thấy mình ngủ ngon hơn.",
+     "effects": {
+      "stat.health": 4,
+      "stat.daoHeart": 3
+     }
+    }
+   ],
+   "threshold": 120,
+   "minAge": 50,
+   "ascendEvent": "td_cong_duc_thanh_tien",
+   "missEvent": "td_cong_duc_thieu"
+  },
+  {
+   "id": "huong_hoa",
+   "name": "Hương hỏa",
+   "text": "Người đời nhớ ơn thì lập đền, đền có hương khói thì sinh thần lực. Hương hỏa đủ, người thành thần.",
+   "sources": [
+    {
+     "when": {
+      "stats": [
+       {
+        "stat": "karma",
+        "gte": 20
+       },
+       {
+        "stat": "reputation.giang_ho",
+        "gte": 40
+       }
+      ]
+     },
+     "add": 1
+    },
+    {
+     "when": {
+      "ownSect": {
+       "has": true
+      },
+      "stats": [
+       {
+        "stat": "karma",
+        "gte": 30
+       }
+      ]
+     },
+     "add": 1
+    },
+    {
+     "when": {
+      "career": {
+       "id": "y",
+       "minRung": 3
+      }
+     },
+     "add": 1
+    },
+    {
+     "when": {
+      "stats": [
+       {
+        "stat": "karma",
+        "gte": 40
+       },
+       {
+        "stat": "stat.charm",
+        "gte": 70
+       }
+      ]
+     },
+     "add": 1
+    }
+   ],
+   "milestones": [
+    {
+     "at": 30,
+     "text": "Dân trong vùng góp tiền dựng một miếu nhỏ, đắp tượng ngươi hơi mập hơn ngoài đời.",
+     "effects": {
+      "stat.happiness": 4,
+      "stat.charm": 2
+     }
+    },
+    {
+     "at": 60,
+     "text": "Miếu nhỏ thành đền lớn. Ngày rằm, khói hương bay xa ba dặm.",
+     "effects": {
+      "stat.daoHeart": 3,
+      "stat.luck": 2
+     }
+    }
+   ],
+   "threshold": 150,
+   "minAge": 50,
+   "ascendEvent": "td_huong_hoa_thanh_than",
+   "missEvent": "td_huong_hoa_thieu"
+  },
+  {
+   "id": "long_khi",
+   "name": "Long khí",
+   "text": "Người gánh vác vận nước thì được long khí của sơn hà hộ thân. Long khí đủ, sau khi chết thành thần hộ quốc.",
+   "sources": [
+    {
+     "when": {
+      "career": {
+       "id": "quan",
+       "minRung": 2
+      }
+     },
+     "add": 1
+    },
+    {
+     "when": {
+      "career": {
+       "id": "quan",
+       "minRung": 3
+      }
+     },
+     "add": 1
+    },
+    {
+     "when": {
+      "stats": [
+       {
+        "stat": "reputation.trieu_dinh",
+        "gte": 50
+       }
+      ]
+     },
+     "add": 1
+    }
+   ],
+   "milestones": [
+    {
+     "at": 30,
+     "text": "Có lúc đứng trên thành lâu, ngươi thấy như cả sơn hà đang thở cùng mình.",
+     "effects": {
+      "stat.daoHeart": 3,
+      "stat.charm": 2
+     }
+    },
+    {
+     "at": 60,
+     "text": "Thầy tướng trong kinh thành nhìn ngươi rồi cúi đầu thật thấp, không nói lời nào.",
+     "effects": {
+      "stat.happiness": 3,
+      "stat.luck": 2
+     }
+    }
+   ],
+   "threshold": 100,
+   "minAge": 50,
+   "ascendEvent": "td_long_khi_ho_quoc",
+   "missEvent": "td_long_khi_thieu"
+  },
+  {
+   "id": "van_dao",
+   "name": "Văn đạo",
+   "text": "Văn chương đến cực hạn cũng là một con đường. Lời viết ra được truyền tụng ngàn năm thì người viết không còn là người thường.",
+   "sources": [
+    {
+     "when": {
+      "stats": [
+       {
+        "stat": "stat.intellect",
+        "gte": 95
+       }
+      ]
+     },
+     "add": 1
+    },
+    {
+     "when": {
+      "career": {
+       "id": "quan",
+       "minRung": 2
+      },
+      "stats": [
+       {
+        "stat": "stat.intellect",
+        "gte": 70
+       }
+      ]
+     },
+     "add": 1
+    },
+    {
+     "when": {
+      "stats": [
+       {
+        "stat": "stat.intellect",
+        "gte": 90
+       },
+       {
+        "stat": "stat.comprehension",
+        "gte": 90
+       }
+      ]
+     },
+     "add": 1
+    }
+   ],
+   "milestones": [
+    {
+     "at": 30,
+     "text": "Một bài thơ của ngươi được kỹ nữ đầu phố hát. Ngươi nghe mà đỏ mặt vì họ hát sai một chữ.",
+     "effects": {
+      "stat.happiness": 4,
+      "stat.charm": 2
+     }
+    },
+    {
+     "at": 60,
+     "text": "Sĩ tử cả nước chép văn ngươi để học. Có người chép sai, rồi cái sai ấy cũng thành điển cố.",
+     "effects": {
+      "stat.intellect": 2,
+      "stat.daoHeart": 3
+     }
+    }
+   ],
+   "threshold": 200,
+   "minAge": 50,
+   "ascendEvent": "td_van_dao_tinh_quan",
+   "missEvent": "td_van_dao_thieu"
+  }
+ ],
+ "missWindow": 3
+}

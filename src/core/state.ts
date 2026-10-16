@@ -26,6 +26,9 @@ import { knowledgeYear, knowsFor } from '../systems/knowledge';
 import { gatesYear } from '../systems/immortalGates';
 import { worldEventsYear } from '../systems/worldEvents';
 import { pastTiesFor, reunionYear } from '../systems/karmaLedger';
+import { systemYear } from '../systems/heThong';
+import { trungSinhYear } from '../systems/trungSinh';
+import { thanDaoYear } from '../systems/thanDao';
 import { withCheckpoints } from '../systems/rewind';
 import { awakenGoldenFinger } from '../systems/goldenFinger';
 import { goldenFingerYear } from '../systems/fingerActions';
@@ -49,6 +52,11 @@ export interface NewLifeInput {
   pastSect?: PastSectRecord | null;
   /** 9.R9: ties past lives left (from the save meta). */
   karmaLedger?: KarmaTie[];
+  /** 9.R11: hide sensitive events (Cài đặt). */
+  gentle?: boolean;
+  /** 9.S1: lives begun on this browser, this one included. */
+  lifeNo?: number;
+  pastKarma?: number;
   /** 9.R5a: Sổ tri thức entries known by past lives (from the save meta). */
   knowledge?: string[];
 }
@@ -154,6 +162,9 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     ownSect: null,
     pastSect: pastSectFor(input.pastSect, content),
     pastTies: pastTiesFor(input.karmaLedger),
+    options: { gentle: !!input.gentle },
+    lifeNo: input.lifeNo ?? 1,
+    pastKarma: input.pastKarma ?? 0,
     ancestry: [],
     blessings,
     rebirthTalents,
@@ -221,7 +232,7 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;
   // 9.R7e: the world moves on before the year's event is drawn.
-  const worldly = body.alive ? reunionYear(worldEventsYear(secluded, content), content) : secluded;
+  const worldly = body.alive ? thanDaoYear(trungSinhYear(systemYear(reunionYear(worldEventsYear(secluded, content), content), content), content), content) : secluded;
   const rolled = !body.alive ? worldly : state.seclusion ? rollSeclusionEvent(worldly, content) : rollYearEvent(gatesYear(worldly, content), content);
   // 9.R5a: what the year taught goes into the Sổ tri thức.
   const next = rolled.alive ? knowledgeYear(rolled, content) : rolled;
@@ -250,9 +261,9 @@ function easeHappiness(h: number, quiet: boolean, content: Content): number {
  * an event to answer, death, or a year with good/bad/rare news — or until
  * balance.fastForward.maxYears have passed.
  */
-export function fastForward(state: GameState, content: Content): GameState {
+export function fastForward(state: GameState, content: Content, maxYears = content.balance.fastForward.maxYears): GameState {
   let s = state;
-  for (let i = 0; i < content.balance.fastForward.maxYears; i++) {
+  for (let i = 0; i < maxYears; i++) {
     const next = advanceYear(s, content);
     if (next === s) break;
     s = next;

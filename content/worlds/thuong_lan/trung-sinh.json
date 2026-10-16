@@ -1,0 +1,198 @@
+{
+ "expUntil": "kim_dan",
+ "exp": [
+  {
+   "hook": "cultivationSpeed",
+   "add": 0.25
+  },
+  {
+   "hook": "breakthroughChance",
+   "add": 4
+  },
+  {
+   "hook": "bottleneckResist",
+   "add": 0.1
+  }
+ ],
+ "memories": [
+  {
+   "id": "ky_uc_linh_chi",
+   "kind": "bao_vat",
+   "text": "Năm {age} tuổi, sau ngọn núi phía tây làng có một gốc linh chi nghìn năm, kiếp trước bị người khác hái mất.",
+   "age": {
+    "min": 10,
+    "max": 25
+   },
+   "recallRealm": "pham_nhan",
+   "event": "ts_linh_chi",
+   "broken": {
+    "text": "Ngươi tới sau núi, gốc cây trống trơn. Lần này có kẻ đến sớm hơn cả kiếp trước.",
+    "effects": {
+     "stat.happiness": -5,
+     "stat.daoHeart": -2
+    }
+   }
+  },
+  {
+   "id": "ky_uc_lu_lut",
+   "kind": "tai_hoa",
+   "text": "Năm {age} tuổi, mưa lớn bốn mươi ngày, đê vỡ, cả làng trôi theo nước.",
+   "age": {
+    "min": 8,
+    "max": 30
+   },
+   "recallRealm": "pham_nhan",
+   "event": "ts_lu_lut",
+   "broken": {
+    "text": "Năm ấy mưa thuận gió hòa. Ngươi đứng nhìn con đê, chẳng hiểu sao lịch sử lại đổi.",
+    "effects": {
+     "stat.daoHeart": -3,
+     "stat.intellect": 1
+    }
+   }
+  },
+  {
+   "id": "ky_uc_ke_thu",
+   "kind": "ke_thu",
+   "text": "Năm {age} tuổi, ngươi sẽ gặp kẻ về sau giết ngươi ở kiếp trước. Lúc này hắn còn là một thiếu niên vô danh.",
+   "age": {
+    "min": 14,
+    "max": 30
+   },
+   "recallRealm": "pham_nhan",
+   "event": "ts_ke_thu",
+   "broken": {
+    "text": "Thiếu niên ấy không xuất hiện. Có lẽ cánh bướm đã đưa hắn đi nơi khác, hoặc hắn đang đợi ở một khúc quanh ngươi không nhớ.",
+    "effects": {
+     "stat.daoHeart": -3,
+     "stat.happiness": -2
+    }
+   }
+  },
+  {
+   "id": "ky_uc_quy_nhan",
+   "kind": "quy_nhan",
+   "text": "Năm {age} tuổi, một lão nhân áo xám sẽ ngã ở đầu cầu. Kiếp trước ngươi đi qua không đỡ; về sau mới biết lão là cao nhân ẩn thế.",
+   "age": {
+    "min": 10,
+    "max": 40
+   },
+   "recallRealm": "pham_nhan",
+   "event": "ts_quy_nhan",
+   "broken": {
+    "text": "Đầu cầu vắng lặng. Lão nhân áo xám không ngã, hoặc đã ngã ở một cây cầu khác.",
+    "effects": {
+     "stat.happiness": -4
+    }
+   }
+  },
+  {
+   "id": "ky_uc_bi_canh",
+   "kind": "co_duyen",
+   "text": "Năm {age} tuổi, một bí cảnh nhỏ sẽ mở dưới đáy hồ Thanh Thủy trong ba ngày. Kiếp trước ngươi nghe tin quá muộn.",
+   "age": {
+    "min": 18,
+    "max": 50
+   },
+   "recallRealm": "luyen_khi",
+   "event": "ts_bi_canh",
+   "broken": {
+    "text": "Ngươi lặn xuống đáy hồ, chỉ có bùn và cá. Bí cảnh đã mở sớm hơn, hoặc không bao giờ mở nữa.",
+    "effects": {
+     "stat.health": -3,
+     "stat.happiness": -4
+    }
+   }
+  },
+  {
+   "id": "ky_uc_dan_phuong",
+   "kind": "co_duyen",
+   "text": "Năm {age} tuổi, ngươi từng nghe một đan sư say rượu đọc nhầm đan phương Trúc Cơ Đan thành bản tốt hơn.",
+   "age": {
+    "min": 15,
+    "max": 45
+   },
+   "recallRealm": "luyen_khi",
+   "event": "ts_dan_phuong",
+   "broken": {
+    "text": "Ngươi cố nhớ đan phương, chữ cứ nhòe đi. Ghi lại được nửa trang, nửa trang còn lại là chữ của người khác.",
+    "effects": {
+     "stat.intellect": -1,
+     "stat.happiness": -3
+    }
+   }
+  },
+  {
+   "id": "ky_uc_cuop",
+   "kind": "tai_hoa",
+   "text": "Năm {age} tuổi, một toán cướp sẽ chặn đường ở đèo Hắc Phong. Kiếp trước ngươi mất sạch hành lý và suýt mất mạng.",
+   "age": {
+    "min": 16,
+    "max": 40
+   },
+   "recallRealm": "pham_nhan",
+   "event": "ts_cuop",
+   "broken": {
+    "text": "Ngươi tránh đèo Hắc Phong, đi đường vòng, vẫn gặp cướp. Có những chuyện đổi đường cũng không tránh được.",
+    "effects": {
+     "stat.health": -8,
+     "silver": -30
+    }
+   }
+  },
+  {
+   "id": "ky_uc_dao_lu",
+   "kind": "quy_nhan",
+   "text": "Năm {age} tuổi, ngươi sẽ gặp người mà kiếp trước ngươi đã lỡ. Lúc ấy ngươi quá vội.",
+   "age": {
+    "min": 20,
+    "max": 40
+   },
+   "recallRealm": "pham_nhan",
+   "event": "ts_co_nhan",
+   "broken": {
+    "text": "Người ấy không tới. Ngươi chờ đến tối, rồi về. Ký ức này có lẽ chỉ là một giấc mơ đẹp.",
+    "effects": {
+     "stat.happiness": -6,
+     "stat.daoHeart": 2
+    }
+   }
+  },
+  {
+   "id": "ky_uc_kiep_nan",
+   "kind": "tai_hoa",
+   "text": "Lúc Trúc Cơ, kiếp trước ngươi nóng vội nên tẩu hỏa. Lần này ngươi nhớ rõ chỗ khí nghịch.",
+   "age": {
+    "min": 20,
+    "max": 70
+   },
+   "recallRealm": "truc_co",
+   "event": "ts_kiep_nan",
+   "broken": {
+    "text": "Chỗ khí nghịch không giống trong trí nhớ. Kiếp này công pháp khác, kinh mạch khác, ký ức chỉ làm ngươi hoang mang.",
+    "effects": {
+     "stat.daoHeart": -4,
+     "heartDemon": 3
+    }
+   }
+  },
+  {
+   "id": "ky_uc_dai_bien",
+   "kind": "co_duyen",
+   "text": "Năm {age} tuổi, thiên hạ có biến lớn. Ai sớm tích trữ linh thạch thì sau đó giàu nứt vách.",
+   "age": {
+    "min": 25,
+    "max": 60
+   },
+   "recallRealm": "pham_nhan",
+   "event": "ts_tich_tru",
+   "broken": {
+    "text": "Biến lớn không đến như ngươi nhớ. Đống hàng tích trữ mất giá. Lịch sử đã đi khác đường.",
+    "effects": {
+     "spiritStones": -30,
+     "stat.happiness": -5
+    }
+   }
+  }
+ ]
+}

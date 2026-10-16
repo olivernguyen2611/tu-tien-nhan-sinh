@@ -1,5 +1,6 @@
 // Developer mode panel: play-testing cheats. All changes go through systems/dev.
 // Sections fold (details) so the panel stays usable on a phone.
+import { BalancePanel } from './BalancePanel';
 import type { ComponentChildren } from 'preact';
 import { GroupedSelect, type SelectOption } from './GroupedSelect';
 import { useState } from 'preact/hooks';
@@ -17,7 +18,7 @@ import type { SaveMeta } from '../../systems/save';
 import type { RewindOption } from '../../systems/timeline';
 import {
   DEV_STATS, devAddKarma, devAddLifespan, devAddMoney, devAddStat, devClearHeartDemon, devFillProgress, devFindEvents, devFoundClan, devFoundSect,
-  devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devWorldEvent, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect, devPastTie,
+  devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devWorldEvent, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect, devPastTie, devSpecial, devSystemPoints, devSystemBetray, devDrift, devMerit,
   devAwakenBody, devResetBond, devChildrenRoot, devSetBody, devStartMartialQuest, devQuestStep, devMarry, devResetEventHistory, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
   devResetItemUse, devResetFingerCooldowns, devSetFingerLevel, devSetFlag, devSetGoldenFinger, devSetRealm, devSkipYears, devStartFight, devTakeChosen, devToggleTrait, devTriggerEvent,
 } from '../../systems/dev';
@@ -232,6 +233,16 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
             <button class="chip-btn" disabled={!live || !!state.ownSect} onClick={() => onChange(devFoundSect(state, content))}>Khai tông miễn phí</button>
             <button class="chip-btn" disabled={!live || !!state.clan} onClick={() => onChange(devFoundClan(state, content))}>Lập gia tộc miễn phí</button>
             <button class="chip-btn" disabled={!live || !!state.pastSect} onClick={() => onChange(devPastSect(state))}>Có tông môn đời trước</button>
+            {(content.specialOrigins ?? []).map((o) => (
+              <button key={o.id} class="chip-btn" disabled={!live || !!state.special?.ids.includes(o.id)} onClick={() => onChange(devSpecial(state, content, o.id))}>Thiên cơ: {o.name}</button>
+            ))}
+            <button class="chip-btn" disabled={!live || !state.system || state.system.gone} onClick={() => onChange(devSystemPoints(state, content, 100))}>Hệ thống +100 điểm</button>
+            <button class="chip-btn" disabled={!live || !state.system || state.system.gone} onClick={() => onChange(devSystemBetray(state, content))}>Hệ thống phản bội ngay</button>
+            <button class="chip-btn" disabled={!live || !state.trungSinh} onClick={() => onChange(devDrift(state, 25))}>Lịch sử lệch +25</button>
+            <button class="chip-btn" disabled={!live || !state.trungSinh} onClick={() => onChange(devDrift(state, -100))}>Lịch sử về 0</button>
+            {(content.thanDao?.paths ?? []).map((p) => (
+              <button key={p.id} class="chip-btn" disabled={!live} onClick={() => onChange(devMerit(state, p.id, 30))}>{p.name} +30</button>
+            ))}
             {([['dao_lu', 'Đạo lữ'], ['an', 'Ân nhân'], ['oan', 'Oán'], ['ke_thu', 'Kẻ thù']] as const).map(([k, label]) => (
               <button key={k} class="chip-btn" disabled={!live || (k === 'dao_lu' && state.character.age < 18)} onClick={() => onChange(devPastTie(state, content, k))}>Cố nhân: {label}</button>
             ))}
@@ -360,6 +371,9 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
             <button class="chip-btn" disabled={!talent || talentLv >= talent.levels.length} onClick={() => onMeta(devMetaTalent(meta, content, talentId, talentLv + 1))}>+</button>
           </div>
           <p class="profile-note">Thiên phú luân hồi áp dụng từ đời sau. Thử thách tuần: chọn thử thách bất kỳ ở màn Thử Thách Tuần.</p>
+        </Section>
+        <Section title="Bảng cân bằng">
+          <BalancePanel content={content} />
         </Section>
 
         <div class="dev-foot">

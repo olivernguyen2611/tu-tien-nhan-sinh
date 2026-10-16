@@ -59,6 +59,8 @@ const balance = {
   badges: realBalance.badges,
   pastSect: realBalance.pastSect,
   karmaLedger: realBalance.karmaLedger,
+  specialOrigins: realBalance.specialOrigins,
+  trungSinh: realBalance.trungSinh,
   extremes: { lowAt: 5, highAt: 95, exitLow: 20, exitHigh: 80, karmaLowAt: -80, karmaHighAt: 80, karmaExitLow: -60, karmaExitHigh: 60, years: 3, onceCooldownYears: 10, happinessDrift: 2, happinessQuietDrift: 3, happinessRest: 50 },
 };
 

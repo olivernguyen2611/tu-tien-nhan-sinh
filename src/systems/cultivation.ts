@@ -1,5 +1,8 @@
 // Cultivation (GĐ 2). Task 2.2: the spirit-root test and how a root is shown.
 // Task 2.3: yearly cultivation (PLAN.md G.1), Luyện Khí stages (G.2).
+import { specialHooks } from './specialOrigin';
+import { systemHooks } from './heThong';
+import { trungSinhHooks } from './trungSinh';
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { EffectHook } from '../core/schemas';
@@ -250,6 +253,8 @@ export function hookActive(e: Hook, state: GameState, content: Content): boolean
   if (e.activeUntil && realmIndex(content, state.cult.realm) >= realmIndex(content, e.activeUntil.realm)) return false;
   if (e.activeIf?.minRootElements !== undefined && (state.cult.root?.elements.length ?? 0) < e.activeIf.minRootElements) return false;
   if (e.activeIf?.daoHeartBelow !== undefined && state.aptitudes.daoHeart >= e.activeIf.daoHeartBelow) return false;
+  if (e.activeIf?.flag && !state.flags[e.activeIf.flag]) return false;
+  if (e.activeIf?.noFlag && state.flags[e.activeIf.noFlag]) return false;
   return true;
 }
 
@@ -286,6 +291,10 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
     ...goldenFingerHooks(state, content),
     // Tổ hợp ẩn (task 5b.3).
     ...comboHooks(state, content),
+    // Tình tiết đặc biệt hiếm (9.S1).
+    ...specialHooks(state, content),
+    ...systemHooks(state, content),
+    ...trungSinhHooks(state, content),
   ];
 }
 

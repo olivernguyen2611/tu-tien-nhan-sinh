@@ -2,6 +2,9 @@
 // every other system; the UI panel only calls these. Every change is logged
 // with a [Dev] mark so a tested life is never mistaken for a real one.
 import { bringBack } from './karmaLedger';
+import { originDef, rollSpecialOrigin } from './specialOrigin';
+import { applyOutcome } from './events/engine';
+import { levelFor, systemDef } from './heThong';
 import type { Content } from '../core/content';
 import { APTITUDES, FightSchema, MORTAL_STATS } from '../core/schemas';
 import { advanceYear } from '../core/state';
@@ -284,6 +287,44 @@ export function devPastTie(state: GameState, content: Content, kind: KarmaTieKin
   const tie = { kind, name: 'Cố Nhân Dev', gender: state.character.gender === 'nam' ? 'nu' as const : 'nam' as const, self: 'Tiền Thân Dev', weight: 100, lives: 0, met: false };
   const s = { ...state, pastTies: [...(state.pastTies ?? []), tie] };
   return devLog(bringBack(s, content, s.pastTies.length - 1), `cố nhân kiếp trước (${kind})`);
+}
+
+/** 9.S1: force a Tình tiết đặc biệt hiếm on this life (its gains and costs given now; shown on the next screen). */
+export function devSpecial(state: GameState, content: Content, id: string): GameState {
+  if (!state.alive || state.special?.ids.includes(id)) return state;
+  const base = state.special ? { ...state, special: undefined } : state;
+  const s = rollSpecialOrigin(base, content, 0, id);
+  const merged = state.special ? { ...s, special: { ids: [...state.special.ids, id], seen: false } } : s;
+  return devLog(merged, `thiên cơ biến động: ${originDef(content, id)?.name ?? id}`);
+}
+
+/** 9.S2: add points to the bound Hệ thống (levels follow). */
+export function devSystemPoints(state: GameState, content: Content, points: number): GameState {
+  const def = systemDef(content, state.system?.id);
+  if (!state.system || !def) return state;
+  const total = state.system.points + points;
+  return devLog({ ...state, system: { ...state.system, points: total, level: Math.max(state.system.level, levelFor(def, total)) } }, `hệ thống +${points} điểm`);
+}
+
+/** 9.S2b: the trap springs now (or the system is cut off when it has none). */
+export function devSystemBetray(state: GameState, content: Content): GameState {
+  const def = systemDef(content, state.system?.id);
+  if (!state.system || !def || state.system.gone) return state;
+  if (!def.trap) return devLog({ ...state, system: { ...state.system, gone: true } }, 'hệ thống tắt');
+  const r = applyOutcome(state, content, def.trap.betray, Rng.fromState(state.rng));
+  return devLog({ ...r.state, system: { ...state.system, gone: true, task: null } }, `hệ thống phản bội: ${r.text}`);
+}
+
+/** 9.S3: the past drifts further (Trùng sinh). */
+export function devDrift(state: GameState, add: number): GameState {
+  if (!state.trungSinh) return state;
+  return devLog({ ...state, trungSinh: { ...state.trungSinh, drift: Math.max(0, Math.min(100, state.trungSinh.drift + add)) } }, `lịch sử lệch ${add > 0 ? '+' : ''}${add}`);
+}
+
+/** 9.S5: points on a thành thần path. */
+export function devMerit(state: GameState, id: string, add: number): GameState {
+  const points = { ...state.merit?.points, [id]: Math.max(0, (state.merit?.points[id] ?? 0) + add) };
+  return devLog({ ...state, merit: { points, marks: state.merit?.marks ?? [] } }, `${id} +${add}`);
 }
 
 /** Set or clear a flag. */

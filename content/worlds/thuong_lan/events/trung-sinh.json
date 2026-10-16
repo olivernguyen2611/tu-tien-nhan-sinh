@@ -1,0 +1,484 @@
+[
+ {
+  "id": "ts_linh_chi",
+  "category": "fortune",
+  "title": "Gốc linh chi trong trí nhớ",
+  "text": "Đúng như ký ức, sau núi có ánh tím le lói. Gốc linh chi vẫn nằm đó, và cách đó không xa là tiếng bước chân của người hái thuốc mà kiếp trước ngươi từng gặp.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Hái ngay, không để ai thấy",
+    "result": {
+     "text": "Ngươi giấu linh chi vào ngực áo. Kẻ kia tới nơi chỉ còn thấy đất mới xới.",
+     "effects": {
+      "addItems": [
+       "linh_chi_ngan_nam"
+      ],
+      "karma": -2,
+      "stat.happiness": 5
+     }
+    }
+   },
+   {
+    "text": "Chia cho người hái thuốc một nửa",
+    "result": {
+     "text": "Người kia ngẩn ra, rồi chắp tay cảm tạ. Kiếp trước hai người là kẻ thù; kiếp này thì không.",
+     "effects": {
+      "addItems": [
+       "linh_thao_tram_nam"
+      ],
+      "karma": 6,
+      "stat.daoHeart": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ts_lu_lut",
+  "category": "fortune",
+  "title": "Trận lũ đã biết trước",
+  "text": "Mây đen kéo về đúng như ký ức. Ngươi biết đêm thứ ba đê sẽ vỡ. Không ai tin một kẻ bảo trời sẽ sập.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Đi từng nhà khuyên người lên núi",
+    "result": {
+     "text": "Phần lớn người làng cười nhạo, nhưng vẫn có mấy nhà nghe theo. Đêm thứ ba, nước tràn về; những nhà ấy sống sót.",
+     "effects": {
+      "karma": 12,
+      "stat.charm": 3,
+      "stat.health": -3
+     }
+    }
+   },
+   {
+    "text": "Lặng lẽ đưa người nhà đi",
+    "result": {
+     "text": "Cả nhà ngươi bình an trên núi, nhìn làng chìm trong nước đục. Ngươi không ngủ được nhiều đêm.",
+     "effects": {
+      "karma": -3,
+      "stat.happiness": -6,
+      "stat.daoHeart": -2
+     }
+    }
+   },
+   {
+    "text": "Đắp thêm đê suốt ba ngày",
+    "result": {
+     "text": "Tay ngươi rớm máu. Đê không vỡ. Không ai biết đã có một trận lũ suýt xảy ra.",
+     "effects": {
+      "karma": 8,
+      "stat.physique": 3,
+      "stat.health": -5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ts_ke_thu",
+  "category": "fortune",
+  "title": "Kẻ thù khi còn non",
+  "text": "Ở quán trà ven đường, ngươi nhận ra gương mặt ấy. Hắn còn trẻ, áo vá, mắt sáng như dao chưa mài. Hắn chưa biết ngươi là ai.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Ra tay trừ hậu họa",
+    "result": {
+     "text": "Ngươi giết một người chưa làm gì sai. Hậu họa không còn, nhưng thứ khác bắt đầu mọc trong lòng.",
+     "effects": {
+      "kill": true,
+      "karma": -15,
+      "heartDemon": 6,
+      "stat.daoHeart": -4
+     }
+    }
+   },
+   {
+    "text": "Kết giao, đổi kẻ thù thành bằng hữu",
+    "result": {
+     "text": "Ngươi mời hắn chén trà. Ba năm sau hắn gọi ngươi là huynh đệ. Kiếp này, có lẽ hắn sẽ không cầm đao.",
+     "effects": {
+      "karma": 6,
+      "meetNpc": {
+       "role": "bằng hữu",
+       "peer": true,
+       "affinity": 30
+      },
+      "stat.charm": 2
+     }
+    }
+   },
+   {
+    "text": "Tránh xa, đi đường khác",
+    "result": {
+     "text": "Ngươi đổi đường. Lịch sử cũng khẽ đổi theo.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ],
+  "tags": [
+   "violence"
+  ]
+ },
+ {
+  "id": "ts_quy_nhan",
+  "category": "fortune",
+  "title": "Lão nhân đầu cầu",
+  "text": "Đúng ngày ấy, ở đầu cầu ấy, một lão nhân áo xám trượt chân. Ngươi đã chờ khoảnh khắc này rất lâu.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Đỡ lão, đưa về tận nhà",
+    "result": {
+     "text": "Lão nhìn ngươi rất lâu: \"Lạ thật, như đã quen.\" Trước khi đi, lão để lại một quyển sách cũ.",
+     "effects": {
+      "gainFittingTechnique": true,
+      "karma": 5,
+      "stat.comprehension": 3
+     }
+    }
+   },
+   {
+    "text": "Đỡ lão, rồi xin bái sư ngay",
+    "result": {
+     "text": "Lão nhíu mày: \"Ngươi đỡ ta vì muốn bái sư?\" Lão phẩy tay áo bỏ đi. Có những thứ biết trước lại hỏng.",
+     "effects": {
+      "stat.happiness": -4,
+      "stat.intellect": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ts_bi_canh",
+  "category": "fortune",
+  "title": "Bí cảnh đáy hồ",
+  "text": "Ngươi tới hồ sớm hai ngày. Nước sủi bọt đúng giờ trong ký ức, một cánh cửa đá mở ra dưới đáy.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Vào trước mọi người",
+    "result": {
+     "text": "Ngươi lấy trọn phần tốt nhất trước khi tin tức lan ra.",
+     "effects": {
+      "spiritStones": 80,
+      "cultProgress": 30,
+      "stat.luck": 2
+     }
+    }
+   },
+   {
+    "text": "Báo cho sư huynh đệ cùng vào",
+    "result": {
+     "text": "Ít của hơn, nhưng nhiều người nhớ ơn.",
+     "effects": {
+      "spiritStones": 30,
+      "sectContribution": 40,
+      "karma": 4,
+      "stat.charm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ts_dan_phuong",
+  "category": "fortune",
+  "title": "Đan phương say rượu",
+  "text": "Đêm ấy ngươi chợt nhớ trọn vẹn đan phương. Chữ nào cũng rõ như vừa viết.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Tự luyện thử",
+    "result": {
+     "text": "Lò nổ hai lần, lần thứ ba ra một viên đan tròn trịa.",
+     "effects": {
+      "addItems": [
+       "truc_co_dan"
+      ],
+      "craftXp": {
+       "alchemy": 2
+      },
+      "stat.health": -2
+     }
+    }
+   },
+   {
+    "text": "Đem bán đan phương",
+    "result": {
+     "text": "Một đan phường trả giá cao, hỏi ngươi học ở đâu. Ngươi bảo nằm mơ.",
+     "effects": {
+      "silver": 300,
+      "stat.happiness": 4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ts_cuop",
+  "category": "fortune",
+  "title": "Đèo Hắc Phong",
+  "text": "Ngươi biết bọn cướp nấp sau khúc quanh thứ ba, biết cả tên đầu lĩnh sợ lửa.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Phục sẵn, đốt lửa dọa chúng",
+    "result": {
+     "text": "Đầu lĩnh hoảng hồn bỏ chạy, đám lâu la chạy theo, bỏ lại cả túi bạc.",
+     "effects": {
+      "silver": 60,
+      "stat.intellect": 2,
+      "stat.happiness": 3
+     }
+    }
+   },
+   {
+    "text": "Báo quan phủ",
+    "result": {
+     "text": "Quan phủ phục kích bắt gọn. Ngươi được thưởng chút bạc, nhưng có kẻ trong bọn nhớ mặt ngươi.",
+     "effects": {
+      "silver": 30,
+      "karma": 4,
+      "reputation": {
+       "trieu_dinh": 5
+      },
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ],
+  "tags": [
+   "violence"
+  ]
+ },
+ {
+  "id": "ts_co_nhan",
+  "category": "fortune",
+  "title": "Người đã lỡ",
+  "text": "Ngươi nhận ra dáng đi ấy giữa đám đông. Kiếp trước ngươi chỉ kịp ngoái lại một lần.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {
+   "age": {
+    "min": 18
+   }
+  },
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Lần này dừng lại",
+    "result": {
+     "text": "Ngươi gọi một tiếng. Người ấy quay lại, mỉm cười như đã đợi lâu.",
+     "effects": {
+      "meetNpc": {
+       "role": "cố nhân",
+       "peer": true,
+       "adult": true,
+       "affinity": 40
+      },
+      "stat.happiness": 8
+     }
+    }
+   },
+   {
+    "text": "Để duyên tự đến",
+    "result": {
+     "text": "Ngươi không gọi. Có những điều biết trước rồi, lại không nỡ ép.",
+     "effects": {
+      "stat.daoHeart": 4,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ts_kiep_nan",
+  "category": "fortune",
+  "title": "Chỗ khí nghịch",
+  "text": "Lúc tọa thiền, khí trong đan điền rẽ sang đúng chỗ năm xưa làm ngươi tẩu hỏa.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Dừng lại, điều tức ba ngày",
+    "result": {
+     "text": "Ngươi tránh được vết xe đổ. Chỗ nghịch tan dần.",
+     "effects": {
+      "nextBreakthroughBonus": 8,
+      "stat.daoHeart": 3
+     }
+    }
+   },
+   {
+    "text": "Xông thẳng qua, lần này đã biết đường",
+    "result": {
+     "text": "Ngươi xông qua, đau thấu xương, nhưng qua được.",
+     "effects": {
+      "cultProgress": 40,
+      "stat.health": -6
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ts_tich_tru",
+  "category": "fortune",
+  "title": "Tích trữ trước biến",
+  "text": "Tin đồn đầu tiên về biến lớn vừa lọt ra ngoài chợ. Ngươi biết chuyện gì sẽ tới.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Gom hàng ngay",
+    "result": {
+     "text": "Ba năm sau giá vọt lên gấp mười. Ngươi bán ra vừa đúng lúc.",
+     "effects": {
+      "spiritStones": 120,
+      "karma": -2,
+      "stat.happiness": 4
+     }
+    }
+   },
+   {
+    "text": "Báo cho người quen chuẩn bị",
+    "result": {
+     "text": "Người quen tích trữ, ngươi chỉ được cảm tạ.",
+     "effects": {
+      "spiritStones": 30,
+      "karma": 5,
+      "stat.charm": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ts_doat_xa_phan_phe",
+  "category": "fortune",
+  "title": "Hồn cũ phản phệ",
+  "text": "Đêm ấy có một giọng trẻ con khóc trong thức hải: \"Trả thân thể cho ta.\" Hồn của chủ cũ chưa tan hết.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Nghiền nát nó",
+    "result": {
+     "text": "Tiếng khóc tắt. Thân thể từ nay hoàn toàn là của ngươi. Ngươi cố không nghĩ đến điều vừa làm.",
+     "effects": {
+      "karma": -12,
+      "heartDemon": 8,
+      "cultProgress": 20,
+      "stat.daoHeart": -4
+     }
+    }
+   },
+   {
+    "text": "Để nó ngủ yên trong một góc",
+    "result": {
+     "text": "Ngươi dỗ hồn nhỏ ngủ. Đôi khi, ngươi mơ thấy những giấc mơ không phải của mình.",
+     "effects": {
+      "karma": 4,
+      "stat.daoHeart": 2,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Hòa làm một",
+    "result": {
+     "text": "Hai hồn hòa lẫn. Ngươi nhớ cả hai cuộc đời, và không còn chắc mình là ai.",
+     "effects": {
+      "stat.comprehension": 3,
+      "stat.daoHeart": -2,
+      "stat.happiness": -4
+     }
+    }
+   }
+  ],
+  "tags": [
+   "dark"
+  ]
+ },
+ {
+  "id": "ts_doat_xa_nhan_ra",
+  "category": "fortune",
+  "title": "Người nhà nhận ra",
+  "text": "Người nhà của thân thể này nhìn ngươi rất lâu: \"Đứa nhỏ nhà ta không ăn nói như thế.\"",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Nói thật",
+    "result": {
+     "text": "Họ khóc suốt một đêm, sáng ra vẫn để phần cơm cho ngươi. Có những tình thương không cần hiểu.",
+     "effects": {
+      "karma": 4,
+      "stat.happiness": -4,
+      "stat.daoHeart": 4
+     }
+    }
+   },
+   {
+    "text": "Giả làm đứa trẻ cũ",
+    "result": {
+     "text": "Ngươi diễn mãi, giỏi đến mức có lúc quên mình đang diễn.",
+     "effects": {
+      "stat.charm": 3,
+      "stat.happiness": -3,
+      "stat.daoHeart": -2
+     }
+    }
+   }
+  ]
+ }
+]

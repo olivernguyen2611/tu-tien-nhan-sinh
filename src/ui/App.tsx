@@ -7,6 +7,7 @@ import type { GameState } from '../core/types';
 import { describeChanges } from '../systems/deltas';
 import { consumeItem } from '../systems/items';
 import { doFingerAction } from '../systems/fingerActions';
+import { doSystemAction } from '../systems/heThong';
 import { bargain, buy, sell, buyScroll, placeBid } from '../systems/market';
 import { travel } from '../systems/regions';
 import { act, settle } from '../systems/combat';
@@ -23,6 +24,10 @@ import { GlossaryProvider } from './components/Tooltip';
 import { browserStore, downloadText, readJsonFile } from './storage';
 import { cueFor, loadSoundPref, playCue, saveSoundPref } from './audio';
 import { applyThemePref, loadThemePref, nextThemePref, type ThemePref } from './theme';
+import { applyPrefs, loadPrefs, type Prefs } from './prefs';
+import { setGentle } from '../systems/options';
+import { chooseVariant, seeSpecial } from '../systems/specialOrigin';
+import { ThienCoScreen } from './screens/ThienCo';
 import { CreateCharacterScreen } from './screens/CreateCharacter';
 import { DeathScreen } from './screens/Death';
 import { DestinyRollScreen } from './screens/DestinyRoll';
@@ -151,6 +156,11 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
   }, [fx]);
 
   useEffect(() => applyThemePref(theme), [theme]);
+  // 9.R11: pace, text size, motion, sensitive content.
+  const [prefs, setPrefs] = useState<Prefs>(loadPrefs);
+  useEffect(() => applyPrefs(prefs), [prefs]);
+  // The gentle switch follows the setting for whichever life is on screen.
+  useEffect(() => { if (life && !!life.options?.gentle !== prefs.gentle) setLife(setGentle(life, prefs.gentle)); }, [life?.seed, prefs.gentle]);
   const toggleTheme = () => setTheme(nextThemePref);
 
   // Autosave: every change to a confirmed life (each year, choice, family action).
@@ -278,6 +288,10 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         devMode={devMode}
         onToggleDev={toggleDev}
         onToggleSound={toggleSound}
+        prefs={prefs}
+        onPrefs={setPrefs}
+        ffChoices={content.balance.fastForward.choices}
+        ffDefault={content.balance.fastForward.maxYears}
       />
     );
   }
@@ -322,7 +336,7 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
           if (cost > readMeta(store).rebirthPoints) return;
           setOriginCost(cost);
           // Tips only for the very first life on this browser.
-          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list, rebirthTalents: readMeta(store).rebirthTalents, pastSect: readMeta(store).pastSect, karmaLedger: readMeta(store).karmaLedger, knowledge: readMeta(store).codex.knowledge,
+          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list, rebirthTalents: readMeta(store).rebirthTalents, pastSect: readMeta(store).pastSect, karmaLedger: readMeta(store).karmaLedger, gentle: prefs.gentle, lifeNo: readMeta(store).livesPlayed + 1, pastKarma: readMeta(store).chronicle.lives.at(-1)?.karma ?? 0, knowledge: readMeta(store).codex.knowledge,
             goldenFinger: input.goldenFinger ?? rollBirthFinger(input.seed, content, readMeta(store).livesPlayed, readMeta(store).fingerPity) }, content), content));
           setScreen('destiny');
         }}
@@ -361,6 +375,10 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         onRebirth={() => openRebirth('death')} />
     );
   }
+  // 9.S1: a Tình tiết đặc biệt hiếm is shown once before the first year.
+  if (screen === 'main' && life?.special && !life.special.seen) {
+    return <ThienCoScreen state={life} content={content} onChoose={(o, v) => setLife(chooseVariant(life, content, o, v))} onContinue={() => setLife(seeSpecial(life, content))} />;
+  }
   if (screen === 'main' && life) {
     return (
       <MainScreen
@@ -368,7 +386,7 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         content={content}
         saveWarning={saveFailed ? 'Không lưu được: trình duyệt đang chặn hoặc đầy bộ nhớ. Hãy xuất file để giữ đời này.' : null}
         onAdvance={() => setLife(life.seclusion ? runSeclusion(life, content) : advanceYear(life, content))}
-        onFastForward={() => setLife(life.seclusion ? runSeclusion(life, content) : fastForward(life, content))}
+        onFastForward={() => setLife(life.seclusion ? runSeclusion(life, content) : fastForward(life, content, prefs.ffYears ?? content.balance.fastForward.maxYears))}
         onLeisure={() => { const r = goLeisure(life, content); if (r) setLife(r.state); }}
         onSeclude={(years) => setLife(seclude(life, content, years))}
         onRentCave={(years) => { const r = rentCave(life, content, years); if (!r) return null; setLife(r.state); return r.text; }}
@@ -469,6 +487,12 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         }}
         onFingerAction={(actionId) => {
           const r = doFingerAction(life, content, actionId);
+          if (!r) return null;
+          setLife(checkDeath(r.state, content));
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+        }}
+        onSystemAction={(actionId) => {
+          const r = doSystemAction(life, content, actionId);
           if (!r) return null;
           setLife(checkDeath(r.state, content));
           return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };

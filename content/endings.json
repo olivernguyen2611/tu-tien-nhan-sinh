@@ -1,5 +1,79 @@
 [
   {
+    "id": "phi_thang",
+    "name": "Phi thăng thượng giới",
+    "text": "Thiên môn mở, một đạo kim quang đón đi. Hạ giới chỉ còn truyền thuyết.",
+    "check": {
+      "flagsAll": [
+        "phi_thang"
+      ]
+    }
+  },
+  {
+    "id": "de_vuong",
+    "name": "Đế vương",
+    "text": "Ngồi ngai vàng tới hơi thở cuối, sử sách chép tên bằng mực son.",
+    "check": {
+      "flagsAll": [
+        "de_vuong"
+      ]
+    }
+  },
+  {
+    "id": "than_dao_cong_duc",
+    "name": "Công đức thành tiên",
+    "text": "Cả đời làm thiện, cuối đời hóa khói thơm mà đi. Người ta bảo trên trời có thêm một vị tiên quan hiền lành.",
+    "check": {
+      "flagsAll": [
+        "than_dao_cong_duc"
+      ]
+    }
+  },
+  {
+    "id": "than_dao_huong_hoa",
+    "name": "Hương hỏa thành thần",
+    "text": "Đền thờ còn đó, khói hương chưa tắt. Ai thành tâm khấn, nghe nói đều được đáp lời.",
+    "check": {
+      "flagsAll": [
+        "than_dao_huong_hoa"
+      ]
+    }
+  },
+  {
+    "id": "than_dao_long_khi",
+    "name": "Thần hộ quốc",
+    "text": "Thân về với đất, hồn hòa vào long mạch. Mỗi khi nước nguy, có bóng người già đứng trên thành lâu.",
+    "check": {
+      "flagsAll": [
+        "than_dao_long_khi"
+      ]
+    }
+  },
+  {
+    "id": "than_dao_van_dao",
+    "name": "Văn Khúc tinh quân",
+    "text": "Một chữ hóa sao. Sĩ tử đời sau trước khi thi đều thắp hương, khấn đúng tên ngươi.",
+    "check": {
+      "flagsAll": [
+        "than_dao_van_dao"
+      ]
+    }
+  },
+  {
+    "id": "hoa_dao",
+    "name": "Hóa đạo",
+    "text": "Đạo tâm viên mãn, thân tan vào thiên địa. Gió núi nơi ấy về sau mang theo một tia đạo vận cho kẻ đến sau.",
+    "check": {
+      "realmMin": "hoa_than",
+      "cause": [
+        "old_age"
+      ],
+      "statsMin": {
+        "stat.daoHeart": 80
+      }
+    }
+  },
+  {
     "id": "hoa_than_toa_hoa",
     "name": "Hóa Thần tọa hóa",
     "text": "Đứng trên đỉnh Thương Lan, nhìn mãi con đường lên trời đã đứt, rồi nhắm mắt.",
@@ -15,6 +89,15 @@
       "cause": [
         "tribulation"
       ]
+    }
+  },
+  {
+    "id": "thanh_ma",
+    "name": "Tâm ma đoạt xác",
+    "text": "Tâm ma thắng một ván cuối. Thứ rời khỏi thân xác ấy không còn là người năm xưa.",
+    "check": {
+      "realmMin": "truc_co",
+      "heartDemonMin": 20
     }
   },
   {
@@ -66,6 +149,24 @@
     }
   },
   {
+    "id": "vo_dao_tan_cung",
+    "name": "Võ đạo tận cùng",
+    "text": "Một quyền đến Ngũ khí triều nguyên, đi hết con đường võ giả. Phía trước không còn ai mở lối.",
+    "check": {
+      "mortal": true,
+      "martialMin": 6
+    }
+  },
+  {
+    "id": "tong_su_vo_lam",
+    "name": "Tông sư võ lâm",
+    "text": "Lấy thân phàm mà đứng ở Hóa cảnh, giang hồ nhắc tên còn phải hạ giọng.",
+    "check": {
+      "mortal": true,
+      "martialMin": 4
+    }
+  },
+  {
     "id": "chet_vi_dot_pha",
     "name": "Chết vì đột phá",
     "text": "Một bước nữa là trời cao biển rộng. Bước ấy hụt.",
@@ -94,6 +195,22 @@
     }
   },
   {
+    "id": "nhap_the",
+    "name": "Nhập thế",
+    "text": "Có tu vi mà chọn sống trọn kiếp người: vợ con, mâm cơm, khói bếp. Không thành tiên, cũng chẳng hối.",
+    "check": {
+      "realmMin": "luyen_khi",
+      "cause": [
+        "old_age"
+      ],
+      "partner": true,
+      "childrenMin": 1,
+      "statsMin": {
+        "stat.happiness": 75
+      }
+    }
+  },
+  {
     "id": "yeu_menh",
     "name": "Yểu mệnh",
     "text": "Đời ngắn như một ngọn nến. Kiếp sau, mong trời cho thêm vài năm.",
@@ -107,6 +224,36 @@
     "text": "Nợ nghiệp chồng chất. Người đời không khóc, chỉ thở phào.",
     "check": {
       "karmaMax": -50
+    }
+  },
+  {
+    "id": "dai_thien_nhan",
+    "name": "Đại thiện nhân",
+    "text": "Cả đời làm phúc. Ngày đưa tang, người không quen cũng đứng ven đường.",
+    "check": {
+      "karmaMin": 60
+    }
+  },
+  {
+    "id": "phu_giap",
+    "name": "Phú giáp một phương",
+    "text": "Ruộng thẳng cánh cò bay, kho bạc chất cao. Mang theo được đồng nào thì không ai biết.",
+    "check": {
+      "mortal": true,
+      "silverMin": 5000
+    }
+  },
+  {
+    "id": "an_si",
+    "name": "Ẩn sĩ",
+    "text": "Sống lặng lẽ ở chốn non xanh, chết cũng lặng lẽ. Có lẽ đó mới là tự tại.",
+    "check": {
+      "mortal": true,
+      "cause": [
+        "old_age"
+      ],
+      "partner": false,
+      "happinessMin": 70
     }
   },
   {
