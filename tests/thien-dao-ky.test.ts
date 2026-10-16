@@ -16,7 +16,7 @@ describe('Kết cục đa dạng, Thiên Đạo Ký (9.R10)', () => {
     expect(content.endings!.length).toBeGreaterThanOrEqual(25);
     const hoaThan = { ...life.cult, realm: 'hoa_than' };
     expect(lifeEnding(dead({ cult: hoaThan, aptitudes: { ...life.aptitudes, daoHeart: 90 } }, 900), content, 1)).toBe('hoa_dao');
-    expect(lifeEnding(dead({ cult: { ...life.cult, realm: 'truc_co', heartDemon: 9 } }, 120, 'breakthrough'), content, 1)).toBe('thanh_ma');
+    expect(lifeEnding(dead({ cult: { ...life.cult, realm: 'truc_co', heartDemon: 25 } }, 120, 'breakthrough'), content, 1)).toBe('thanh_ma');
     expect(lifeEnding(dead({ cult: { ...life.cult, realm: 'pham_nhan' }, martial: { ...life.martial, stage: 6 } }, 60, 'combat'), content, 1)).toBe('vo_dao_tan_cung');
     expect(lifeEnding(dead({ flags: { ...life.flags, phi_thang: true } }), content, 1)).toBe('phi_thang');
   });

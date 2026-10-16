@@ -24,7 +24,7 @@
 - Test: `tests/options.test.ts`.
 
 ### 9.R10: Kết cục đa dạng, Thiên Đạo Ký (2026-10-16)
-- 10 kết cục mới (tổng 27): **Hóa đạo** (Hóa Thần thọ chung với đạo tâm từ 80), **Tâm ma đoạt xác** (tu sĩ chết khi tâm ma còn nặng), **Nhập thế** (có tu vi mà sống trọn kiếp người: đạo lữ, con cái, hạnh phúc), **Võ đạo tận cùng** và **Tông sư võ lâm** (võ giả Ngũ khí, Hóa cảnh), **Đại thiện nhân**, **Phú giáp một phương**, **Ẩn sĩ**; giữ chỗ **Phi thăng thượng giới** (GĐ 14) và **Đế vương** (12.9), sẽ mở khi các phần đó xong.
+- 10 kết cục mới (tổng 27): **Hóa đạo** (Hóa Thần thọ chung với đạo tâm từ 80), **Tâm ma đoạt xác** (tu sĩ từ Trúc Cơ chết khi tâm ma đã rất nặng), **Nhập thế** (có tu vi mà sống trọn kiếp người: đạo lữ, con cái, hạnh phúc), **Võ đạo tận cùng** và **Tông sư võ lâm** (võ giả Ngũ khí, Hóa cảnh), **Đại thiện nhân**, **Phú giáp một phương**, **Ẩn sĩ**; giữ chỗ **Phi thăng thượng giới** (GĐ 14) và **Đế vương** (12.9), sẽ mở khi các phần đó xong.
 - Điều kiện cuối đời mới dùng chung cho kết cục, thành tựu, huy hiệu: `statsMin`, `heartDemonMin`, `martialMin`, `inSect`, `career`, `rooted`.
 - **Thiên Đạo Ký** ở màn kết thúc (mục thu gọn): kể lại cả đời trong 8–12 đoạn ngắn (xuất thân, căn cơ, con đường, tu vi, tình duyên, con cháu, ân oán, dấu ấn, thời cuộc, thiện ác, cái chết, kết cục), dựng từ mẫu câu trong `content/thien-dao-ky.json`, không cần AI. Đoạn nào đời này không có thì bỏ qua.
 - Validate: kết cục không trùng id, kết cục cuối là dự phòng, chỉ số đọc phải có thật; Thiên Đạo Ký chỉ dùng chữ thay thế có thật.
