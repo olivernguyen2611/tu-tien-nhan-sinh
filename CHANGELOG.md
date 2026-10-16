@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### 9.R9: Nhân quả xuyên kiếp (2026-10-16)
+- Hết một kiếp, những mối ràng buộc nặng nhất (đạo lữ, người mang ơn, người mang oán, tử địch; tối đa 4 mỗi kiếp, 8 tất cả) được ghi vào dữ liệu chung của trình duyệt và giữ qua 3 kiếp. Kiếp có dùng Developer Mode và thử thách tuần không ghi.
+- Kiếp sau, mỗi năm có xác suất một cố nhân quay lại thành người mới gặp, mang dấu vết kiếp trước: đạo lữ thấy quen thân, người mang ơn sẵn ân, kẻ thù sẵn oán (sổ ân oán sau đó chạy như thường: báo ân, báo thù). Mối càng nặng, kiếp càng gần thì càng sớm gặp. Đạo lữ kiếp trước chỉ tái ngộ khi đã đủ 18 tuổi.
+- 7 sự kiện "cố nhân tái ngộ" (`events/reunion.json`), chữ mới `{pastName}` (tên cố nhân kiếp trước) và `{pastSelf}` (tên ngươi kiếp trước). Thẻ Thông tin NPC thêm dòng **Tiền duyên** khi đã thân thiết, hoặc khi có Kim Thủ Chỉ Nhân quả bộ (bộ này còn tăng 5% cơ hội cố nhân tìm tới).
+- Developer Mode: nút "Cố nhân: Đạo lữ / Ân nhân / Oán / Kẻ thù".
+- Test: `tests/karma-ledger.test.ts`.
+
 ### 9.R8: Sổ luân hồi (2026-10-15)
 - Thiên Thư thêm 3 tab: **Các kiếp** (mỗi kiếp: tên, tuổi, cảnh giới, lối sống, kết cục, điểm luân hồi; kèm thống kê tổng: số kiếp, thọ cao nhất, tuổi bình quân, tổng điểm), **Kết cục** (đã thấy / chưa thấy, chưa thấy hiện "???"), **Bản đồ** (đại vực đã đặt chân qua mọi kiếp).
 - `content/endings.json`: 17 kết cục, xét theo thứ tự, cái đầu tiên khớp là kết cục của kiếp (dùng cùng điều kiện với thành tựu); "Một đời bình thường" là kết cục dự phòng.

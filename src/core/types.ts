@@ -134,6 +134,8 @@ export interface GameState {
    * members left, and how far this life went with it.
    */
   pastSect: PastSect | null;
+  /** 9.R9: ties from past lives this life was born with; met once one has come back as an NPC (absent in older saves). */
+  pastTies?: (KarmaTie & { met: boolean })[];
   /**
    * Bế quan (task 4.1): the age the door opens again, and when it closed; null when not in seclusion.
    * fixed: set by an event, so reaching the peak does not end it early (the point is to sit out the years).
@@ -409,11 +411,16 @@ export interface Npc {
   /** Task 5c.9: recruited into the player's own sect (age joined), and the age of the last invitation (once a year each). */
   member?: { since: number };
   recruitTried?: number;
+  /** 9.R9: a cố nhân from a past life ({pastName}, {pastSelf}); met once the reunion event has come. */
+  pastLife?: { kind: KarmaTieKind; name: string; self: string; met: boolean };
 }
 
 /** Task 5c.1: who a sectmate is to the player. */
 export type SectmateKind = 'master' | 'elder' | 'steward' | 'senior' | 'peer' | 'rival';
 
 /** Task 5b.7: a past life's sect as the save meta keeps it (lives: how many lives ago its master died). */
+/** 9.R9: a tie a past life left (meta karmaLedger): who, how heavy (0–100), the player's name then, lives since. */
+export type KarmaTieKind = 'dao_lu' | 'an' | 'oan' | 'ke_thu';
+export interface KarmaTie { kind: KarmaTieKind; name: string; gender: Gender; self: string; weight: number; lives: number }
 export interface PastSectRecord { world: string; name: string; lineage: string; founder: string; members: number; lives: number }
 export interface PastSect { name: string; lineage: string; founder: string; members: number; status: 'unknown' | 'met' | 'claimed' | 'spurned' }

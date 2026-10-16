@@ -140,6 +140,7 @@ function npcMeets(state: GameState, c: NonNullable<Conditions['npc']>, content?:
   if (c.minAffinity !== undefined && n.affinity < c.minAffinity) return false;
   if (c.maxAffinity !== undefined && n.affinity > c.maxAffinity) return false;
   if (c.heir !== undefined && !!n.heirOf !== c.heir) return false;
+  if (c.pastLife && (!n.pastLife || !c.pastLife.includes(n.pastLife.kind))) return false;
   if (c.natureKnown !== undefined && n.natureKnown !== c.natureKnown) return false;
   if (c.masked !== undefined && (!content || isMasked(content, n) !== c.masked)) return false;
   if (c.minRealmGap !== undefined || c.maxRealmGap !== undefined) {

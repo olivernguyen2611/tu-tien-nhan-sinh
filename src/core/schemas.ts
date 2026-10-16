@@ -134,6 +134,8 @@ const BaseConditionsSchema = z
         maxAffinity: z.number().optional(),
         /** Kin of someone the player killed. */
         heir: z.boolean().optional(),
+        /** 9.R9: a cố nhân from a past life, of these kinds. */
+        pastLife: z.array(z.enum(['dao_lu', 'an', 'oan', 'ke_thu'])).optional(),
         natureKnown: z.boolean().optional(),
         /** Their hidden nature does not match the face they show. */
         masked: z.boolean().optional(),
@@ -394,7 +396,7 @@ export const EventSchema = z
     cooldownYears: z.number().int().min(0).default(0),
     oncePerLife: z.boolean().default(false),
     /** Task 3.4: not in the yearly pool; fires when an NPC's ledger calls for it (that NPC is the event's NPC). */
-    npcTrigger: z.enum(['revenge', 'repay', 'reveal', 'bond']).optional(),
+    npcTrigger: z.enum(['reunion', 'revenge', 'repay', 'reveal', 'bond']).optional(),
     /** Task 4.10: fires as soon as it is eligible, ahead of the yearly roll (due follow-ups still come first). */
     urgent: z.boolean().default(false),
     choices: z.array(ChoiceSchema).min(1),
@@ -495,7 +497,7 @@ const ADD_HOOK = new RegExp(
       `element\\.(${ELEMENTS})\\.power`, `path\\.(${PATHS})\\.(affinity|power)`,
       `craft\\.(${CRAFTS})\\.(success|yield|affinity)`,
       'heartDemonResist', 'charmResist',
-      'npcAffinityStart', 'faction\\.(chinh|ma|tan_tu|yeu|trieu_dinh|giang_ho)\\.reputation', 'karmaShift',
+      'npcAffinityStart', 'reunionChance', 'faction\\.(chinh|ma|tan_tu|yeu|trieu_dinh|giang_ho)\\.reputation', 'karmaShift',
       'priceDiscount', 'incomePct', 'lootPct',
       'trigger\\.cheatDeath',
       // Task 3.3: a storage bag keeps the goods when a robber wins.
@@ -1798,6 +1800,19 @@ export const BalanceSchema = z
      * claiming it back brings claimShare of them and claimTreasury into the new ownSect.
      */
     pastSect: z.object({ decay: probability, maxLives: z.number().int().min(1), claimShare: probability, claimTreasury: z.number().int().min(0) }).strict(),
+    /**
+     * 9.R9 Nhân quả xuyên kiếp: ties kept per life (perLife) and in all (max), dropped after maxLives;
+     * a tie needs minWeight (ân/oán), kẻ thù from enemyAt; yearly reunion chance × (1 + weight/100) × livesDecay^lives;
+     * kinds: how the cố nhân first feels to the player.
+     */
+    karmaLedger: z.object({
+      perLife: z.number().int().min(0), max: z.number().int().min(0), maxLives: z.number().int().min(1),
+      minWeight: z.number().min(0).max(100), enemyAt: z.number().min(0).max(100),
+      chance: probability, livesDecay: probability, minAge: z.number().int().min(0), romanceMinAge: z.number().int().min(18),
+      kinds: z.object(Object.fromEntries((['dao_lu', 'an', 'oan', 'ke_thu'] as const).map((k) => [k, z.object({
+        role: z.string().min(1), affinity: z.number().min(0).max(100), favor: z.number().min(0).max(100), grudge: z.number().min(0).max(100),
+      }).strict()])) as Record<'dao_lu' | 'an' | 'oan' | 'ke_thu', z.ZodObject<{ role: z.ZodString; affinity: z.ZodNumber; favor: z.ZodNumber; grudge: z.ZodNumber }, 'strict'>>).strict(),
+    }).strict(),
   })
   .passthrough(); // later tasks add sections (cultivation, lifespan…)
 
@@ -2994,7 +3009,9 @@ export const NpcTraitsFileSchema = z
     ),
     goals: z.array(npcTrait),
     /** 9.R6: the NPC info card: layer names and the line for a realm too high to see. */
-    info: z.object({ tiers: z.tuple([z.string(), z.string(), z.string(), z.string()]), unseen: z.string().min(1), secretNone: z.string().min(1), secretHeir: z.string().min(1) }).strict().optional(),
+    info: z.object({ tiers: z.tuple([z.string(), z.string(), z.string(), z.string()]), unseen: z.string().min(1), secretNone: z.string().min(1), secretHeir: z.string().min(1),
+      /** 9.R9: the Tiền duyên row of a cố nhân ({name} then, {self} the player then), by kind. */
+      pastLife: z.record(z.enum(['dao_lu', 'an', 'oan', 'ke_thu']), z.string().min(1)).optional() }).strict().optional(),
   })
   .strict();
 export type NpcTraitsFile = z.infer<typeof NpcTraitsFileSchema>;

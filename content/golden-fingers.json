@@ -237,7 +237,7 @@
      "signature": "Đọc sổ: biết trước ân oán, trả nợ nhân quả để đổi phúc.",
      "drawback": {"text": "Mỗi lần đọc sổ người khác, nghiệp của họ dính thêm vào ngươi (kháng tâm ma giảm dần)."},
      "levels": [
-       {"realm": "pham_nhan", "name": "Trang đầu", "text": "Trang đầu ghi tên cha mẹ ngươi, và một món nợ chưa trả từ đời ông.", "effects": [{"hook": "eventWeight.karma", "mul": 1.5}, {"hook": "eventWeight.benefactor", "mul": 1.3}, {"hook": "npcAffinityStart", "add": 5}]},
+       {"realm": "pham_nhan", "name": "Trang đầu", "text": "Trang đầu ghi tên cha mẹ ngươi, và một món nợ chưa trả từ đời ông.", "effects": [{"hook": "eventWeight.karma", "mul": 1.5}, {"hook": "eventWeight.benefactor", "mul": 1.3}, {"hook": "npcAffinityStart", "add": 5}, {"hook": "reunionChance", "add": 0.05}]},
        {"realm": "truc_co", "name": "Sổ dày thêm", "text": "Sổ dày thêm một tấc. Có những cái tên được viết bằng mực đỏ.", "effects": [{"hook": "escapeChance", "add": 0.15}, {"hook": "eventWeight.scam", "mul": 0.6}]},
        {"realm": "nguyen_anh", "name": "Chấp bút", "text": "Ngươi cầm được bút. Ngươi không viết, nhưng biết mình viết được.", "effects": [{"hook": "breakthroughChance.major", "add": 8}, {"hook": "heartDemonResist", "add": 0.1}]}
      ],

@@ -134,7 +134,7 @@ export function actor(state: GameState): Npc | undefined {
   return npcById(state, state.events.npc);
 }
 
-export type NpcTrigger = 'revenge' | 'repay' | 'reveal' | 'bond';
+export type NpcTrigger = 'reunion' | 'revenge' | 'repay' | 'reveal' | 'bond';
 
 /**
  * This year's NPC-driven visit, if any: someone with a grudge comes for revenge,
@@ -148,6 +148,8 @@ export function npcCalls(state: GameState, content: Content, rng: Rng): { trigge
   for (const n of state.npcs) {
     if (!n.alive) continue;
     const nat = natureOf(content, n);
+    // 9.R9: a cố nhân from a past life is met the year they come.
+    if (n.pastLife && !n.pastLife.met) out.push({ trigger: 'reunion', id: n.id });
     if (n.grudge >= cfg.revengeAt) {
       const stronger = order.indexOf(n.realm) > order.indexOf(state.cult.realm) ? cfg.revengeStrongerMul : 1;
       if (rng.chance(Math.min(1, cfg.revengeChance * stronger * (nat?.revengeMul ?? 1)))) out.push({ trigger: 'revenge', id: n.id });
@@ -157,7 +159,7 @@ export function npcCalls(state: GameState, content: Content, rng: Rng): { trigge
     // 9.0.3: a close friend shares something with the player.
     if (n.affinity >= cfg.bondAt && n.grudge < cfg.revengeAt && rng.chance(cfg.bondChance)) out.push({ trigger: 'bond', id: n.id });
   }
-  const rank: Record<NpcTrigger, number> = { revenge: 0, reveal: 1, repay: 2, bond: 3 };
+  const rank: Record<NpcTrigger, number> = { reunion: -1, revenge: 0, reveal: 1, repay: 2, bond: 3 };
   return out.sort((a, b) => rank[a.trigger] - rank[b.trigger]);
 }
 
@@ -309,6 +311,11 @@ export function npcInfo(state: GameState, content: Content, n: Npc): NpcInfo {
     rows.push({ label: 'Ân · Oán', value: `${Math.round(n.favor)} · ${Math.round(n.grudge)}` });
     const tech = n.technique && content.techniques.find((x) => x.id === n.technique)?.name;
     if (tech) rows.push({ label: 'Công pháp', value: tech });
+  }
+  // 9.R9: once met, a cố nhân's past life shows to a close bond, đọc tâm or the Nhân quả bộ.
+  const past = n.pastLife?.met ? t?.pastLife?.[n.pastLife.kind] : undefined;
+  if (past && n.pastLife && (tier >= 2 || state.goldenFinger?.id === 'nhan_qua_bo')) {
+    rows.push({ label: 'Tiền duyên', value: past.replaceAll('{name}', n.pastLife.name).replaceAll('{self}', n.pastLife.self) });
   }
   if (tier >= 3) {
     rows.push({ label: 'Thọ nguyên', value: `${Math.max(0, Math.round(n.lifespan - n.age))} năm còn lại` });

@@ -154,5 +154,6 @@
       "text": "Hay xuất hiện trong chuyện tình duyên."
     }
   ],
-  "info": { "tiers": ["Xa lạ", "Quen biết", "Thân thiết", "Tri kỷ"], "unseen": "Không nhìn thấu: tu vi người này vượt xa ngươi.", "secretNone": "Chưa thấy điều gì giấu kín.", "secretHeir": "Mang mối thù truyền đời của" }
+  "info": { "tiers": ["Xa lạ", "Quen biết", "Thân thiết", "Tri kỷ"], "unseen": "Không nhìn thấu: tu vi người này vượt xa ngươi.", "secretNone": "Chưa thấy điều gì giấu kín.", "secretHeir": "Mang mối thù truyền đời của",
+    "pastLife": { "dao_lu": "Kiếp trước là {name}, đạo lữ của {self}.", "an": "Kiếp trước là {name}, từng chịu ơn {self}.", "oan": "Kiếp trước là {name}, còn mối oán với {self}.", "ke_thu": "Kiếp trước là {name}, tử địch của {self}." } }
 }

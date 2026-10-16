@@ -16,7 +16,7 @@ import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, lockCost, rerollDestiny, rollDestiny, toggleLock } from '../systems/destiny';
 import {
   deleteSlot, exportSave, firstFreeSlot, latestSlot, listSlots, makeSave, parseSave, readMeta, readSlot, recordNewLife, creditRebirth,
-  slotTaken, writeSlot, SLOT_COUNT, buyRebirthTalent, recordCodex, recordChronicle, recordAchievements, recordChallenge, recordPastSect, recordLibrary, replaceMeta, type SaveFile,
+  slotTaken, writeSlot, SLOT_COUNT, buyRebirthTalent, recordCodex, recordChronicle, recordKarmaLedger, recordAchievements, recordChallenge, recordPastSect, recordLibrary, replaceMeta, type SaveFile,
 } from '../systems/save';
 import { checkDeath } from '../systems/time';
 import { GlossaryProvider } from './components/Tooltip';
@@ -32,6 +32,7 @@ import { TitleScreen } from './screens/Title';
 import { loadDevMode, saveDevMode } from './devMode';
 import { countsForRecords, markDevLife } from '../systems/dev';
 import { chronicleOf } from '../systems/chronicle';
+import { nextKarmaLedger } from '../systems/karmaLedger';
 import { attemptMajorBreakthrough, enterFirstRealm } from '../systems/cultivation';
 import { savesLocked } from '../systems/difficulty';
 import { disableTutorial, dismissTip } from '../systems/tutorial';
@@ -172,6 +173,8 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
     if (first && result && life.challenge) recordChallenge(store, life.challenge.week, life.challenge.id, result.score, result.done);
     // Task 5b.7: the sect this life ran waits for later lives.
     if (first) recordPastSect(store, nextPastSectRecord(readMeta(store).pastSect, life, content));
+    // 9.R9: the ân oán this life leaves wait for later lives.
+    if (first) recordKarmaLedger(store, nextKarmaLedger(readMeta(store).karmaLedger, life, content));
     // Task 5b.4: the Thiên Thư keeps what this life saw, and the khí vận chi tử's tale.
     recordCodex(store, codexOf(life, content));
     // 9.R8: Sổ luân hồi (this life's record, ending and regions).
@@ -319,7 +322,7 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
           if (cost > readMeta(store).rebirthPoints) return;
           setOriginCost(cost);
           // Tips only for the very first life on this browser.
-          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list, rebirthTalents: readMeta(store).rebirthTalents, pastSect: readMeta(store).pastSect, knowledge: readMeta(store).codex.knowledge,
+          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list, rebirthTalents: readMeta(store).rebirthTalents, pastSect: readMeta(store).pastSect, karmaLedger: readMeta(store).karmaLedger, knowledge: readMeta(store).codex.knowledge,
             goldenFinger: input.goldenFinger ?? rollBirthFinger(input.seed, content, readMeta(store).livesPlayed, readMeta(store).fingerPity) }, content), content));
           setScreen('destiny');
         }}

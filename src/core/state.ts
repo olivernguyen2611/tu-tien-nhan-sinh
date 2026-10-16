@@ -3,7 +3,7 @@ import { ageNpcs, npcById } from '../systems/npcs';
 import type { Content } from './content';
 import { Rng } from './rng';
 import { APTITUDES, MORTAL_STATS } from './schemas';
-import type { GameState, Gender, PastSectRecord } from './types';
+import type { GameState, Gender, KarmaTie, PastSectRecord } from './types';
 import { rollSeclusionEvent, rollYearEvent } from '../systems/events/engine';
 import { ageFamily, createFamily } from '../systems/relationships';
 import { ageExtremes } from '../systems/extremes';
@@ -25,6 +25,7 @@ import { blessingRerolls } from '../systems/blessings';
 import { knowledgeYear, knowsFor } from '../systems/knowledge';
 import { gatesYear } from '../systems/immortalGates';
 import { worldEventsYear } from '../systems/worldEvents';
+import { pastTiesFor, reunionYear } from '../systems/karmaLedger';
 import { withCheckpoints } from '../systems/rewind';
 import { awakenGoldenFinger } from '../systems/goldenFinger';
 import { goldenFingerYear } from '../systems/fingerActions';
@@ -46,6 +47,8 @@ export interface NewLifeInput {
   goldenFinger?: string | null;
   /** Task 5b.7: the sect a past life ran (from the save meta). */
   pastSect?: PastSectRecord | null;
+  /** 9.R9: ties past lives left (from the save meta). */
+  karmaLedger?: KarmaTie[];
   /** 9.R5a: Sổ tri thức entries known by past lives (from the save meta). */
   knowledge?: string[];
 }
@@ -81,7 +84,10 @@ export function fillTemplate(text: string, state: GameState, content?: Content):
     .replace(/\{deceased\}/g, deceasedName(state))
     // Task 5b.7: the past life's sect and the name its master had then.
     .replace(/\{pastSect\}/g, state.pastSect?.name ?? 'tông môn cũ')
-    .replace(/\{pastFounder\}/g, state.pastSect?.founder ?? 'vị tổ sư');
+    .replace(/\{pastFounder\}/g, state.pastSect?.founder ?? 'vị tổ sư')
+    // 9.R9: the cố nhân's name in the past life, and the player's.
+    .replace(/\{pastName\}/g, npc?.pastLife?.name ?? 'cố nhân')
+    .replace(/\{pastSelf\}/g, npc?.pastLife?.self ?? 'kiếp trước');
 }
 
 function deceasedName(state: GameState): string {
@@ -147,6 +153,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     seclusion: null,
     ownSect: null,
     pastSect: pastSectFor(input.pastSect, content),
+    pastTies: pastTiesFor(input.karmaLedger),
     ancestry: [],
     blessings,
     rebirthTalents,
@@ -214,7 +221,7 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;
   // 9.R7e: the world moves on before the year's event is drawn.
-  const worldly = body.alive ? worldEventsYear(secluded, content) : secluded;
+  const worldly = body.alive ? reunionYear(worldEventsYear(secluded, content), content) : secluded;
   const rolled = !body.alive ? worldly : state.seclusion ? rollSeclusionEvent(worldly, content) : rollYearEvent(gatesYear(worldly, content), content);
   // 9.R5a: what the year taught goes into the Sổ tri thức.
   const next = rolled.alive ? knowledgeYear(rolled, content) : rolled;

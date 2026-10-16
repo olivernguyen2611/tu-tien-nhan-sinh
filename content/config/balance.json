@@ -799,5 +799,15 @@
     "maxLives": 6,
     "claimShare": 0.5,
     "claimTreasury": 200
+  },
+  "karmaLedger": {
+    "perLife": 4, "max": 8, "maxLives": 3, "minWeight": 40, "enemyAt": 65,
+    "chance": 0.03, "livesDecay": 0.6, "minAge": 12, "romanceMinAge": 18,
+    "kinds": {
+      "dao_lu": { "role": "cố nhân", "affinity": 70, "favor": 15, "grudge": 0 },
+      "an": { "role": "cố nhân", "affinity": 62, "favor": 40, "grudge": 0 },
+      "oan": { "role": "cố nhân", "affinity": 38, "favor": 0, "grudge": 25 },
+      "ke_thu": { "role": "cố nhân", "affinity": 20, "favor": 0, "grudge": 45 }
+    }
   }
 }

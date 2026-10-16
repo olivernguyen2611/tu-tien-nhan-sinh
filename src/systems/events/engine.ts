@@ -20,7 +20,8 @@ import { worldThemeMultiplier } from '../worldEvents';
 import { chosenDisciple, isChosenEvent, setChosenRole, takeChosen } from '../chosen';
 import { addContribution, breakPrecept, grantMaster, joinSect, leaveSect, promoteSect } from '../sect';
 import { startBattle } from '../combat';
-import { changeNpc, createNpc, killNpc, npcCalls } from '../npcs';
+import { changeNpc, createNpc, killNpc, npcCalls, type NpcTrigger } from '../npcs';
+import { markReunion } from '../karmaLedger';
 import { applyRomance, romanceTarget } from '../romance';
 import { gainGoldenFinger, loseGoldenFinger, SURE_CHECK_FLAG } from '../goldenFinger';
 import { applyPastSect } from '../pastSect';
@@ -113,6 +114,8 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
   } else if (visit) {
     picked = visit.event;
     npc = visit.npc;
+    // 9.R9: a cố nhân's reunion comes once.
+    if (visit.trigger === 'reunion') state = markReunion(state, visit.npc);
   } else if (sure || rng.chance(popupChance(state, content))) {
     // "be_quan" events only break into a seclusion (rollSeclusionEvent).
     const all = content.events
@@ -154,7 +157,7 @@ function bondedRecently(state: GameState, content: Content): boolean {
 }
 
 /** Task 3.4: an NPC whose ledger calls for a visit, and an event for it whose conditions hold. */
-function npcEvent(state: GameState, content: Content, rng: Rng): { npc: string; event: string } | null {
+function npcEvent(state: GameState, content: Content, rng: Rng): { npc: string; event: string; trigger: NpcTrigger } | null {
   for (const call of npcCalls(state, content, rng)) {
     // 6c.6: kindness repaid is a moment, not a yearly chore.
     if (call.trigger === 'repay' && repaidRecently(state, content)) continue;
@@ -162,7 +165,7 @@ function npcEvent(state: GameState, content: Content, rng: Rng): { npc: string; 
     const withNpc = { ...state, events: { ...state.events, npc: call.id } };
     const pool = content.events.filter((e) => e.npcTrigger === call.trigger && e.weight > 0 && meets(withNpc, e.conditions, content));
     if (pool.length === 0) continue;
-    return { npc: call.id, event: rng.weighted(pool, (e) => e.weight).id };
+    return { npc: call.id, event: rng.weighted(pool, (e) => e.weight).id, trigger: call.trigger };
   }
   return null;
 }

@@ -1,10 +1,11 @@
 // Developer mode: cheats for play-testing. Pure functions on GameState, like
 // every other system; the UI panel only calls these. Every change is logged
 // with a [Dev] mark so a tested life is never mistaken for a real one.
+import { bringBack } from './karmaLedger';
 import type { Content } from '../core/content';
 import { APTITUDES, FightSchema, MORTAL_STATS } from '../core/schemas';
 import { advanceYear } from '../core/state';
-import type { GameState, LogLine, SpiritRoot } from '../core/types';
+import type { GameState, KarmaTieKind, LogLine, SpiritRoot } from '../core/types';
 import { startBattle } from './combat';
 import { STAT_LABELS } from './deltas';
 import { addItems } from './items';
@@ -275,6 +276,14 @@ export function devWorldEvent(state: GameState, content: Content, id: string | n
 export function devPastSect(state: GameState): GameState {
   if (!state.alive) return state;
   return devLog({ ...state, pastSect: { name: 'Thử Nghiệm Tông', lineage: 'tien', founder: 'Tiền Bối Dev', members: 40, status: 'unknown' } }, 'có tông môn đời trước');
+}
+
+/** 9.R9: a made-up tie from a past life who comes back at once (their reunion event comes next year). */
+export function devPastTie(state: GameState, content: Content, kind: KarmaTieKind): GameState {
+  if (!state.alive) return state;
+  const tie = { kind, name: 'Cố Nhân Dev', gender: state.character.gender === 'nam' ? 'nu' as const : 'nam' as const, self: 'Tiền Thân Dev', weight: 100, lives: 0, met: false };
+  const s = { ...state, pastTies: [...(state.pastTies ?? []), tie] };
+  return devLog(bringBack(s, content, s.pastTies.length - 1), `cố nhân kiếp trước (${kind})`);
 }
 
 /** Set or clear a flag. */

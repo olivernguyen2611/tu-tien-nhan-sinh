@@ -3,9 +3,10 @@
 import type { SavedPerson } from './npcLibrary';
 import { z } from 'zod';
 import { version as GAME_VERSION } from '../../package.json';
-import type { GameState, LogYear, PastSectRecord } from '../core/types';
+import type { GameState, KarmaTie, LogYear, PastSectRecord } from '../core/types';
 import { Rng } from '../core/rng';
 import { EMPTY_CODEX, mergeCodex, type Codex } from './codex';
+import { readKarmaLedger } from './karmaLedger';
 import { EMPTY_CHRONICLE, mergeChronicle, readChronicle, type Chronicle } from './chronicle';
 import { BASIC_KNOWLEDGE } from './knowledge';
 
@@ -73,6 +74,8 @@ export interface SaveMeta {
   library: SavedPerson[];
   /** 9.R8: Sổ luân hồi (lives, endings, regions). */
   chronicle: Chronicle;
+  /** 9.R9: ties past lives left, carried into the next life. */
+  karmaLedger: KarmaTie[];
 }
 /** Seeds remembered in `credited`; older ones are dropped. */
 const MAX_CREDITED = 30;
@@ -455,9 +458,10 @@ export function readMeta(store: KeyValueStore): SaveMeta {
       pastSect: m.pastSect && typeof m.pastSect.name === 'string' ? m.pastSect : null,
       library: Array.isArray(m.library) ? m.library.filter((p) => p && typeof p.id === 'string' && typeof p.name === 'string') : [],
       chronicle: readChronicle(m.chronicle),
+      karmaLedger: readKarmaLedger(m.karmaLedger),
     };
   } catch {
-    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {}, fingerPity: 0, codex: EMPTY_CODEX, achievements: {}, weekly: {}, pastSect: null, library: [], chronicle: EMPTY_CHRONICLE };
+    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {}, fingerPity: 0, codex: EMPTY_CODEX, achievements: {}, weekly: {}, pastSect: null, library: [], chronicle: EMPTY_CHRONICLE, karmaLedger: [] };
   }
 }
 
@@ -549,6 +553,11 @@ export function recordPastSect(store: KeyValueStore, record: PastSectRecord | nu
 }
 
 /** Backlog 11: replace the Sổ nhân vật. */
+/** 9.R9: the ledger of ties after a life (karmaLedger.nextKarmaLedger decides what), once per life. */
+export function recordKarmaLedger(store: KeyValueStore, ledger: KarmaTie[]): SaveMeta {
+  return writeMeta(store, { ...readMeta(store), karmaLedger: ledger });
+}
+
 /** 9.R8: fold one finished life into the Sổ luân hồi. */
 export function recordChronicle(store: KeyValueStore, add: Chronicle): SaveMeta {
   const meta = readMeta(store);

@@ -26,6 +26,7 @@
     "heartDemonResist": { "text": "Kháng tâm ma {v}", "fmt": "pct" },
     "charmResist": { "text": "Kháng mị thuật {v}", "fmt": "pct" },
     "npcAffinityStart": { "text": "Thiện cảm khởi đầu với người mới {v}", "fmt": "int" },
+    "reunionChance": { "text": "Cố nhân kiếp trước tìm tới mỗi năm {v}", "fmt": "pct" },
     "faction.*.reputation": { "text": "Danh vọng {name} {v}", "fmt": "int", "names": "factions" },
     "priceDiscount": { "text": "Mua bán rẻ hơn {v}", "fmt": "pct" },
     "incomePct": { "text": "Thu nhập {v}", "fmt": "pct" },

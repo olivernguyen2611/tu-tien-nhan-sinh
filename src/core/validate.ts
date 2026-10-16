@@ -630,6 +630,15 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (pastNeeded && event.conditions.pastSect?.has !== true && !event.conditions.pastSect?.status) {
       problems.push({ file, level: 'error', message: `${where}: nhắc tới tông môn đời trước nhưng thiếu conditions.pastSect (has = true hoặc status)` });
     }
+    // 9.R9: {pastName}, {pastSelf} need a cố nhân: the reunion trigger or conditions.npc.pastLife.
+    const allText = `${event.title} ${event.text} ${event.choices.map((c) => [c.text, c.result?.text, c.success?.text, c.fail?.text, c.result?.fight?.win.text, c.result?.fight?.lose.text].join(' ')).join(' ')}`;
+    if (/\{past(Name|Self)\}/.test(allText) && event.npcTrigger !== 'reunion' && !event.conditions.npc?.pastLife) {
+      problems.push({ file, level: 'error', message: `${where}: nhắc tới {pastName}/{pastSelf} nhưng không phải npcTrigger "reunion" và thiếu conditions.npc.pastLife` });
+    }
+    // 9.R9: a reunion event names which kinds of cố nhân it is for.
+    if (event.npcTrigger === 'reunion' && !event.conditions.npc?.pastLife) {
+      problems.push({ file, level: 'error', message: `${where}: npcTrigger "reunion" cần conditions.npc.pastLife (loại cố nhân)` });
+    }
 
     event.choices.forEach((choice, i) => {
       const texts = [choice.text, choice.result?.text, choice.success?.text, choice.fail?.text].filter(Boolean).join(' ');
