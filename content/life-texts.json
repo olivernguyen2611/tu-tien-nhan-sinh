@@ -15,6 +15,60 @@
     "Viên đan trôi tuột xuống bụng, như ăn một hạt đậu.",
     "Không có linh căn, linh dược vào người cũng chỉ như nước lã."
   ],
+  "quietYear": {
+    "lines": [
+      "Một năm bình lặng trôi qua.",
+      "Một năm nữa trôi qua, không có gì đáng kể.",
+      "Năm nay trời yên biển lặng.",
+      "Ngày tháng cứ thế trôi, như nước dưới cầu.",
+      "Một năm qua đi trong những việc nhỏ nhặt thường ngày.",
+      {"text": "Một năm yên ả. Ngươi chợt thấy yên ả cũng là một loại phúc.", "when": {"moodMin": 60}},
+      {"text": "Một năm dài lê thê, chẳng có gì làm ngươi vui lên.", "when": {"moodMax": 30}},
+      {"text": "Một năm yên tĩnh. Tu vi không động, lòng cũng không động.", "when": {"tier": ["tu_chan"]}},
+      {"text": "Một năm trôi qua, mùa màng thất thường như mọi năm.", "when": {"tier": ["pham_gian"]}},
+      {"text": "Một năm nữa trôi qua. Xương cốt mỗi sáng lại kêu thêm một tiếng.", "when": {"ageMin": 60}},
+      {"text": "Một năm nữa trôi qua. Ngươi lớn thêm một chút, mà nhà vẫn chật như cũ.", "when": {"ageMax": 15}}
+    ],
+    "linesShare": 0.2,
+    "parts": [
+      [
+        "Một năm bình lặng trôi qua.",
+        "Một năm nữa trôi qua.",
+        "Năm nay trời yên biển lặng.",
+        "Ngày tháng cứ thế trôi, như nước dưới cầu.",
+        "Xuân qua hạ tới, thu tàn đông sang.",
+        "Một năm không có chuyện gì lớn.",
+        "Năm ấy chẳng ai nhớ ngày nào khác ngày nào.",
+        "Lịch treo tường lại bóc hết một xấp.",
+        "Một năm trôi qua êm như mặt hồ.",
+        "Năm nay chẳng có tin gì đáng kể."
+      ],
+      [
+        "Mưa xuân dầm dề, ngươi ngồi nghe mưa nhiều hơn làm việc.",
+        "Mùa hè nóng, ve kêu suốt ngày.",
+        "Mùa thu lá rụng đầy sân, quét mãi không hết.",
+        "Mùa đông tuyết dày, ai cũng ở trong nhà.",
+        "Hàng xóm cưới vợ, ngươi sang uống chén rượu mừng.",
+        "Ngoài chợ giá gạo lên rồi lại xuống.",
+        "Ngươi sửa lại cái mái dột mà mấy năm nay cứ hẹn.",
+        "Có một con mèo hoang tới ở nhờ, rồi ở luôn.",
+        "Ngươi đọc xong một cuốn sách cũ, quên ngay nửa cuốn.",
+        "Đêm giao thừa pháo nổ ran, ngươi đứng nhìn hồi lâu.",
+        "Ngươi trồng thêm một khóm trúc trước cửa.",
+        "Trận gió lớn cuối năm làm đổ hàng rào, dựng lại mất hai ngày.",
+        {"text": "Ngươi thấy lòng thư thái, ăn ngon ngủ yên.", "when": {"moodMin": 60}},
+        {"text": "Có mấy đêm ngươi ngồi nhìn trăng, chẳng nghĩ gì mà lòng vẫn nặng.", "when": {"moodMax": 30}},
+        {"text": "Tu vi không động, lòng cũng không động.", "when": {"tier": ["tu_chan"]}},
+        {"text": "Linh khí trong núi năm nay loãng hơn mọi năm một chút.", "when": {"tier": ["tu_chan"]}},
+        {"text": "Mùa màng thất thường như mọi năm.", "when": {"tier": ["pham_gian"]}},
+        {"text": "Xương cốt mỗi sáng lại kêu thêm một tiếng.", "when": {"ageMin": 60}},
+        {"text": "Râu tóc bạc thêm mấy sợi, ngươi cũng chẳng buồn đếm.", "when": {"ageMin": 60}},
+        {"text": "Ngươi lớn thêm một chút, mà nhà vẫn chật như cũ.", "when": {"ageMax": 15}},
+        {"text": "Ngươi cao thêm một gang, quần áo cũ chật hết.", "when": {"ageMax": 15}}
+      ]
+    ]
+  },
+  "ledger": "Sổ thu chi năm nay:",
   "itemRepeat": [
     "Lần này thì cơ thể đã quen thuốc, chẳng thấy gì khác.",
     "Thuốc tốt chỉ linh nghiệm một lần, lần hai chỉ còn vị đắng."

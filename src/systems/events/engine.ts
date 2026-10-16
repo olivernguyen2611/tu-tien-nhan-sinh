@@ -27,6 +27,7 @@ import { applyRomance, romanceTarget } from '../romance';
 import { gainGoldenFinger, loseGoldenFinger, SURE_CHECK_FLAG } from '../goldenFinger';
 import { applyPastSect } from '../pastSect';
 import { succeedSect } from '../ownSect';
+import { outcomeText } from '../textPool';
 
 type Outcome = NonNullable<GameEvent['choices'][number]['result']>;
 
@@ -267,6 +268,13 @@ export interface ChoiceResult {
   success: boolean | null;
 }
 
+/** 9.3: the event's title for the log; with someone in it, their name too, so a yearly visit reads as who came. */
+function echoTitle(title: string, state: GameState, content: Content): string {
+  const npc = state.events.npc ? state.npcs?.find((n) => n.id === state.events.npc) : undefined;
+  const filled = fillTemplate(title, state, content);
+  return npc && !filled.includes(npc.name) ? `${filled} (${npc.name})` : filled;
+}
+
 /** Player picks a choice of the pending event. */
 export function resolveChoice(given: GameState, content: Content, choiceIndex: number): ChoiceResult {
   const eventId = given.events.pending;
@@ -293,9 +301,11 @@ export function resolveChoice(given: GameState, content: Content, choiceIndex: n
     outcome = choice.result!;
   }
 
-  const unflagged = sure ? { ...state, flags: { ...state.flags, [SURE_CHECK_FLAG]: false } } : state;
-  let next = applyEffects(unflagged, outcome.effects, rng, content, !event.tags.includes('rare'));
-  let text = outcome.text;
+  const flagged = sure ? { ...state, flags: { ...state.flags, [SURE_CHECK_FLAG]: false } } : state;
+  // 9.3: an outcome with variants says it another way each time.
+  const worded = outcomeText(flagged, content, `ev.${event.id}.${choiceIndex}.${success === false ? 'f' : 's'}`, outcome, rng);
+  let next = applyEffects(worded.state, outcome.effects, rng, content, !event.tags.includes('rare'));
+  let text = worded.text;
   const tone: Tone = event.tags.includes('rare') ? 'rare' : success === true ? 'good' : success === false ? 'bad' : 'normal';
   next = {
     ...next,
@@ -311,10 +321,14 @@ export function resolveChoice(given: GameState, content: Content, choiceIndex: n
   next = extra.state;
   // Filled after the effects so {npc} names someone just met.
   text = fillTemplate(extra.text, next, content);
-  const lines: LogLine[] = [
-    { text: `${fillTemplate(event.title, state, content)}: ${fillTemplate(choice.text, state, content)}.`, tone: 'normal' },
-    { text, tone },
-  ];
+  // 9.3: the first time, the choice is echoed on its own line; a returning event says title and outcome in one.
+  const again = (state.events.seen?.[event.id] ?? 0) > 0;
+  const lines: LogLine[] = again
+    ? [{ text: `${echoTitle(event.title, state, content)}: ${text}`, tone }]
+    : [
+      { text: `${echoTitle(event.title, state, content)}: ${fillTemplate(choice.text, state, content)}.`, tone: 'normal' },
+      { text, tone },
+    ];
   const log = next.log.slice();
   const last = log[log.length - 1];
   if (last && last.age === state.character.age) log[log.length - 1] = { ...last, lines: [...last.lines, ...lines] };

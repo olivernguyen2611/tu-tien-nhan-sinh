@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### 9.3: Văn bản có ngữ cảnh, chống lặp (2026-10-16)
+- Bộ chọn câu `textPool`: pool có điều kiện (thiện cảm, tâm trạng, tuổi, tầng, quan hệ), câu ghép từ mảnh, trí nhớ chống lặp lưu trong save (`textMemory`). Số ở `balance.text`.
+- Dùng pool cho: Bầu bạn, Song tu, hành động gia đình (Hỏi han…), NPC, Luận bàn/Luận đạo với đệ tử, trưởng lão từ chối thu đồ, năm yên ả, báo cáo tông môn tự lập, nhiệm vụ tông môn (kèm câu phụ thời tiết, người đi cùng), dòng đột phá tiểu cảnh giới.
+- Kết quả sự kiện và hành động Kim Thủ Chỉ có thể có `variants`; đã viết thêm cách nói cho các nhiệm vụ tông môn, Kim Thủ Chỉ và sự kiện hay gặp.
+- Nhật ký gọn hơn: sự kiện gặp lại chỉ ghi một dòng "tiêu đề: kết quả"; sự kiện có người thì ghi kèm tên; các dòng định kỳ (bổng lộc, sản nghiệp, báo cáo, chi tiêu, đổi bạc) gộp thành "Sổ thu chi năm nay" và chỉ ghi khi đổi; nhiều lần đổi ở Bảo khố trong năm gộp một dòng.
+- `npm run simulate` thêm tỉ lệ câu lặp và câu lặp nhiều nhất. Tỉ lệ lặp: 39% (bản 13/10) → khoảng 11–17% (200 đời mẫu, hồ sơ player).
+
 ### 9.1: Tầng và lối sống (2026-10-16)
 - Engine có khái niệm **tầng (cõi)**: Phàm gian → Tu chân giới → Linh giới (còn khóa). Tầng chỉ đi lên. Nhập đạo bằng bất kỳ cửa nào (linh căn, kỳ vật, Ngũ khí, Phật duyên…) đều qua một hàm chung, ghi tuổi vào tầng, hiện **màn nhập đạo** toàn màn hình kèm tóm tắt những năm ở phàm gian.
 - **Lối sống** (nhiều cái cùng lúc): Giang hồ, Quan trường, Thương lộ, Y lộ, Quân ngũ, Tu tiên; bật khi thỏa điều kiện, nhớ tuổi bắt đầu.

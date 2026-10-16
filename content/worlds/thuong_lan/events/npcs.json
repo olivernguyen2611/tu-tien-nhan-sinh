@@ -190,6 +190,13 @@
         },
         "result": {
           "text": "Gói quà nặng hơn ngươi tưởng.",
+          "variants": [
+            "{npc} đặt gói quà xuống, nói nhỏ: \"Ơn năm ấy, ta chưa quên.\"",
+            "Quà bọc giấy đỏ, buộc dây gai. Mở ra thấy toàn thứ ngươi đang cần.",
+            "{npc} đến từ sáng sớm, để gói quà trước cửa rồi đi, không đợi ngươi ra.",
+            "Gói quà kèm một lá thư viết vụng. Chữ xấu, mà đọc xong ngươi thấy ấm lòng.",
+            "{npc} khăng khăng bắt ngươi nhận, bảo không nhận thì không về."
+          ],
           "effects": {
             "silver": 40,
             "npc": {
@@ -209,6 +216,11 @@
         },
         "result": {
           "text": "Trong gói là hai mươi khối linh thạch, gói kỹ ba lớp.",
+          "variants": [
+            "{npc} dúi túi linh thạch vào tay ngươi, quay đi rất nhanh như sợ ngươi trả lại.",
+            "Linh thạch đếm đủ hai mươi khối, mỗi khối lau sạch bóng. {npc} để dành lâu lắm.",
+            "{npc} gửi linh thạch qua một đứa trẻ trong làng, kèm lời nhắn: \"Trả nợ cũ.\""
+          ],
           "effects": {
             "spiritStones": 20,
             "npc": {
@@ -223,6 +235,11 @@
         "text": "Xin một viên đan",
         "result": {
           "text": "{npc} lục túi, đưa ra viên đan quý nhất mình có.",
+          "variants": [
+            "{npc} lưỡng lự một chút, rồi đặt viên đan vào tay ngươi: \"Ngươi cần hơn ta.\"",
+            "Viên đan còn thơm mùi lò. {npc} bảo đã nhờ người luyện riêng cho ngươi.",
+            "{npc} mở hộp ngọc, trong có viên đan cất từ nhiều năm. Ngươi nhận, lòng nặng trĩu."
+          ],
           "effects": {
             "addItems": [
               "hoi_xuan_dan"
@@ -239,6 +256,11 @@
         "text": "Xin một lời chỉ điểm",
         "result": {
           "text": "{npc} nói chuyện cả đêm. Sáng ra ngươi thấy đường đi sáng hơn một chút.",
+          "variants": [
+            "{npc} kể những gì mình vấp ngã. Ngươi nghe xong, tránh được mấy cái hố.",
+            "Chỉ một câu của {npc} mà gỡ được chỗ ngươi vướng cả năm.",
+            "{npc} vẽ lên đất một sơ đồ vận khí. Ngươi nhìn hồi lâu, gật đầu."
+          ],
           "effects": {
             "npc": {
               "favor": -30,
@@ -252,6 +274,10 @@
         "text": "Từ chối, coi như bạn bè",
         "result": {
           "text": "{npc} cười lớn, kéo ngươi đi uống rượu. Ơn chưa trả, tình đã sâu thêm.",
+          "variants": [
+            "{npc} bảo vậy thì nợ thêm, rồi rót rượu đầy chén. Hai người uống tới khuya.",
+            "\"Bạn bè mà tính sổ thì còn gì là bạn.\" {npc} vỗ vai ngươi, mắt hơi đỏ."
+          ],
           "effects": {
             "npc": {
               "favor": -10,
@@ -385,6 +411,10 @@
         "text": "Giữ quan hệ, coi như chưa thấy",
         "result": {
           "text": "Ngươi cười xòa. {npc} cũng cười, như chưa có gì.",
+          "variants": [
+            "Ngươi giả như không thấy. {npc} cũng giả như không biết ngươi thấy. Hai bên vẫn thân như cũ.",
+            "Ngươi nhún vai. Ai mà chẳng có vài mặt. {npc} mời ngươi chén trà, chuyện lặng lẽ qua."
+          ],
           "effects": {
             "npc": {
               "reveal": true,

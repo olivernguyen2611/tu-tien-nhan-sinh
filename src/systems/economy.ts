@@ -24,7 +24,11 @@ export function economyYear(state: GameState, content: Content): GameState {
     if (stones >= 1) {
       const silver = stones * cfg.silverPerStone;
       s = { ...s, money: { silver: s.money.silver - silver, spiritStones: s.money.spiritStones + stones } };
-      lines.push({ text: texts.exchange.replace('{silver}', String(silver)).replace('{stones}', String(stones)), tone: 'normal' });
+      // 9.3: the yearly exchange is said the first time, then once a decade.
+      if (!s.textMemory?.['economy.exchange'] || s.character.age % 10 === 0) {
+        lines.push({ text: texts.exchange.replace('{silver}', String(silver)).replace('{stones}', String(stones)), tone: 'normal', ledger: true });
+        s = { ...s, textMemory: { ...s.textMemory, 'economy.exchange': ['1'] } };
+      }
     }
   }
   const rate = cfg.upkeepPerDependent[s.cult.realm] ?? 0;
@@ -32,7 +36,12 @@ export function economyYear(state: GameState, content: Content): GameState {
   if (need > 0) {
     if (s.money.spiritStones >= need) {
       s = { ...s, money: { ...s.money, spiritStones: s.money.spiritStones - need } };
-      lines.push({ text: texts.upkeepPaid.replace('{stones}', String(need)), tone: 'normal' });
+      // 9.3: the same upkeep each year is said once, then again when it changes or every decade.
+      const last = s.textMemory?.['economy.upkeep']?.at(-1);
+      if (last !== String(need) || s.character.age % 10 === 0) {
+        lines.push({ text: texts.upkeepPaid.replace('{stones}', String(need)), tone: 'normal', ledger: true });
+        s = { ...s, textMemory: { ...s.textMemory, 'economy.upkeep': [String(need)] } };
+      }
     } else {
       s = { ...s, money: { ...s.money, spiritStones: 0 }, stats: { ...s.stats, happiness: Math.max(0, s.stats.happiness + cfg.shortHappiness) } };
       lines.push({ text: texts.upkeepShort, tone: 'bad' });

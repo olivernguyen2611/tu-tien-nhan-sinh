@@ -154,6 +154,32 @@ const BaseConditionsSchema = z
   })
   .strict();
 
+/**
+ * 9.3 Text pool: lines with optional conditions (thiện cảm of the other person, mood, tầng, relation, age),
+ * or a line built from parts (mở đầu + diễn biến + kết), each part with its variants. A plain list of
+ * strings is still a valid pool. Recent picks are remembered per life and avoided (textPool.ts).
+ */
+export const TextWhenSchema = z.object({
+  affinityMin: z.number().optional(), affinityMax: z.number().optional(),
+  moodMin: z.number().optional(), moodMax: z.number().optional(),
+  ageMin: z.number().int().optional(), ageMax: z.number().int().optional(),
+  tier: z.array(z.string().regex(/^[a-z0-9_]+$/)).optional(),
+  relation: z.array(z.string().min(1)).optional(),
+}).strict();
+const TextLineSchema = z.union([z.string().min(1), z.object({ text: z.string().min(1), when: TextWhenSchema.optional(), weight: z.number().min(0).default(1) }).strict()]);
+export const TextPoolSchema = z.union([
+  z.array(TextLineSchema).min(1),
+  z.object({
+    /** Whole lines, drawn instead of a composed one with this share. */
+    lines: z.array(TextLineSchema).default([]),
+    linesShare: z.number().min(0).max(1).default(0.3),
+    parts: z.array(z.array(TextLineSchema).min(1)).min(1),
+  }).strict(),
+]);
+export type TextPool = z.infer<typeof TextPoolSchema>;
+export type TextWhen = z.infer<typeof TextWhenSchema>;
+export type TextLine = z.infer<typeof TextLineSchema>;
+
 export const ConditionsSchema = BaseConditionsSchema.extend({
   /** At least one of these must hold (task 2.8). */
   anyOf: z.array(BaseConditionsSchema.partial()).optional(),
@@ -336,7 +362,11 @@ export const FoeSpecSchema = z
   })
   .strict();
 
-const PlainOutcomeSchema = z.object({ text: z.string().min(1), effects: EffectsSchema.default({}) }).strict();
+/** 9.3: one line, or several wordings drawn with the anti-repeat memory. */
+const lineOrLines = z.union([z.string().min(1), z.array(z.string().min(1)).min(1)]);
+
+/** 9.3: `variants` are other wordings of `text`; one is drawn with the anti-repeat memory. */
+const PlainOutcomeSchema = z.object({ text: z.string().min(1), variants: z.array(z.string().min(1)).optional(), effects: EffectsSchema.default({}) }).strict();
 
 /** A 3-round fight started by an event choice; its win/lose outcomes apply when it ends. */
 export const FightSchema = z
@@ -354,6 +384,8 @@ export const FightSchema = z
 export const OutcomeSchema = z
   .object({
     text: z.string().min(1),
+    /** 9.3: other wordings of `text`; one is drawn with the anti-repeat memory. */
+    variants: z.array(z.string().min(1)).optional(),
     effects: EffectsSchema.default({}),
     /** Task 3.3: this outcome starts a fight. */
     fight: FightSchema.optional(),
@@ -1840,6 +1872,8 @@ export const BalanceSchema = z
      * 9.S3 Trùng sinh: memories a reborn soul brings, chance one is false from the start; the past drifts by
      * driftPerYear and by driftPerMemory each time a memory is used; a memory breaks with drift/100 (≤ maxBreak).
      */
+    /** 9.3 text pools: picks remembered per pool, the last `avoid` never repeat, each earlier use ×decay. */
+    text: z.object({ memory: z.number().int().min(1), avoid: z.number().int().min(0), decay: probability, asideShare: probability.default(0) }).strict(),
     trungSinh: z.object({
       memories: z.number().int().min(1), falseChance: probability, driftPerYear: z.number().min(0), driftPerMemory: z.number().min(0), maxBreak: probability,
     }).strict(),
@@ -1861,7 +1895,7 @@ export type Glossary = z.infer<typeof GlossarySchema>;
 const affinityRange = z.tuple([z.number().int(), z.number().int()]).refine(([a, b]) => a <= b, 'khoảng [min, max] bị ngược');
 const familyEffects = z.record(numericKey, z.number()).default({});
 const ActionOutcomeSchema = z
-  .object({ affinity: affinityRange, effects: familyEffects, texts: z.array(z.string().min(1)).min(1) })
+  .object({ affinity: affinityRange, effects: familyEffects, texts: TextPoolSchema })
   .strict();
 
 /** One thing the player can do with a relative ("Tặng quà", "Dẫn đi du ngoạn"…). Once a year per relative. */
@@ -1886,7 +1920,7 @@ export const FamilyActionSchema = z
     mishap: ActionOutcomeSchema.optional(),
     affinity: affinityRange,
     effects: familyEffects,
-    texts: z.array(z.string().min(1)).min(1),
+    texts: TextPoolSchema,
   })
   .strict()
   .superRefine((a, ctx) => {
@@ -1949,6 +1983,10 @@ export const LifeTextsSchema = z
     /** Task 3.1: a rootless mortal takes a cultivator's pill; a once-per-life pill taken again. */
     itemMortal: lines,
     itemRepeat: lines,
+    /** 9.3: a year with nothing in it. */
+    quietYear: TextPoolSchema.default(['Một năm bình lặng trôi qua.']),
+    /** 9.3: lead of the merged sổ thu chi line. */
+    ledger: z.string().min(1).default('Sổ thu chi năm nay:'),
     deathOldAge: lines,
     /** Died breaking into a new realm (task 2.6); {age}. */
     deathBreakthrough: lines,
@@ -2054,11 +2092,11 @@ export const RealmsFileSchema = z
         martialEntry: z.string().min(1).optional(),
         stageUp: z.array(z.string().min(1)).min(1),
         /** Bar full at the last stage of a realm: waiting for the big breakthrough. */
-        peak: z.string().min(1),
-        failLose: z.string().min(1),
+        peak: lineOrLines,
+        failLose: lineOrLines,
         failInjury: z.string().min(1),
         failLifespan: z.string().min(1),
-        injuryHealed: z.string().min(1),
+        injuryHealed: lineOrLines,
         /** Big breakthrough (task 2.6): {realm} = new realm, {grade} = foundation grade name. */
         majorSuccess: z.string().min(1),
         /** Tẩu hỏa nhập ma. */
@@ -2378,6 +2416,8 @@ export type Sect = z.infer<typeof SectFileSchema>[number];
 const MissionOutcomeSchema = z
   .object({
     text: z.string().min(1),
+    /** 9.3: more ways to say it; drawn with `text` from a pool remembered per life. */
+    variants: z.array(z.string().min(1)).default([]),
     contribution: z.number(),
     spiritStones: z.number().int().min(0),
     stats: z.record(z.enum([...MORTAL_STATS, ...APTITUDES]), z.number()),
@@ -2407,7 +2447,9 @@ export const SectLifeSchema = z
         stipend: z.string().min(1),
         leave: z.string().min(1),
         master: z.string().min(1),
-        masterRefused: z.string().min(1),
+        masterRefused: TextPoolSchema,
+        /** 9.3: a short aside (weather, who came along) added to a mission line now and then. */
+        missionAside: TextPoolSchema.optional(),
         masterTitle: z.string().min(1),
         /** Task 3.12: a Phật đạo cultivator kills; expelled after too many breaks ({sect}). */
         preceptBroken: z.string().min(1),
@@ -3096,8 +3138,8 @@ export const RomanceFileSchema = z
         childNoRoot: z.string().min(1),
         /** Playtest 2026-10-12, phu thê. */
         /** Playtest 2: several lines, one picked at random. */
-        company: z.array(z.string().min(1)).min(1),
-        dualCult: z.array(z.string().min(1)).min(1),
+        company: TextPoolSchema,
+        dualCult: TextPoolSchema,
         reconcileYes: z.string().min(1),
         reconcileNo: z.string().min(1),
         divorce: z.string().min(1),
@@ -3175,10 +3217,10 @@ export const DisciplesFileSchema = z
     /** Task 5c.8: {npc}, {name}, {technique}, {item}. */
     acts: z
       .object({
-        sparWin: z.array(z.string().min(1)).min(1),
-        sparLose: z.array(z.string().min(1)).min(1),
-        debateWin: z.array(z.string().min(1)).min(1),
-        debateFail: z.array(z.string().min(1)).min(1),
+        sparWin: TextPoolSchema,
+        sparLose: TextPoolSchema,
+        debateWin: TextPoolSchema,
+        debateFail: TextPoolSchema,
         technique: z.array(z.string().min(1)).min(1),
         gift: z.array(z.string().min(1)).min(1),
       })
@@ -3251,7 +3293,8 @@ export const FoundingFileSchema = z
         founded: z.string().min(1),
         leftOld: z.string().min(1),
         /** {sect}, {members}, {membersDelta}, {treasury}, {treasuryDelta}. */
-        report: z.string().min(1),
+        /** 9.3: a pool (mở đầu + số liệu), {sect} {members} {membersDelta} {treasury} {treasuryDelta}. */
+        report: z.union([z.string().min(1), TextPoolSchema]),
         /** {building}, {sect}, {level}. */
         built: z.string().min(1),
         /** {count}, {item}. */

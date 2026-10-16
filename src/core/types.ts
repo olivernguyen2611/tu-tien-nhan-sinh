@@ -7,7 +7,8 @@ export type Aptitude = (typeof APTITUDES)[number];
 export type Gender = 'nam' | 'nu';
 export type Tone = 'normal' | 'good' | 'bad' | 'rare';
 
-export interface LogLine { text: string; tone: Tone }
+/** 9.3: `ledger` lines (income, stipend, sect report) of one year are merged into one sổ thu chi line. */
+export interface LogLine { text: string; tone: Tone; ledger?: boolean }
 export interface LogYear { age: number; lines: LogLine[] }
 
 export interface Relative {
@@ -150,6 +151,8 @@ export interface GameState {
    */
   /** 9.S5: points on each thành thần path, and the marks passed (milestones "<id>:<at>", "<id>:ascend", "<id>:miss"). */
   merit?: { points: Record<string, number>; marks: string[] };
+  /** 9.3: last picks of each text pool (textPool.ts), so lines do not repeat. */
+  textMemory?: Record<string, string[]>;
   /** 9.1: tầng the life is in, the age it entered each, and a tier just entered whose screen is not shown yet. */
   tier?: string;
   tierHistory?: Record<string, number>;

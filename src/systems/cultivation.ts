@@ -27,6 +27,7 @@ import { soulFormFor } from './nascentSoul';
 import { needsHeartDemonTrial, startHeartDemonTrial } from './heartDemon';
 import { tribulationPreview, undergoTribulation, type TribulationPreview } from './tribulation';
 import { blessingHooks } from './blessings';
+import { drawText } from './textPool';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -497,10 +498,17 @@ export function cultivateYear(state: GameState, content: Content): GameState {
   const rng = Rng.fromState(state.rng);
   let s = state;
   let log = s.log;
+  // 9.3: realm lines come from pools with the anti-repeat memory; a single line is used as is.
+  const say = (key: string, pool: string | string[]): string => {
+    if (typeof pool === 'string') return pool;
+    const r = drawText(s, content, `realm.${key}`, pool, {}, rng);
+    s = { ...s, textMemory: r.state.textMemory };
+    return r.text;
+  };
 
   if (s.cult.injuredUntil !== null && s.character.age >= s.cult.injuredUntil) {
     s = { ...s, cult: { ...s.cult, injuredUntil: null } };
-    log = pushLine(log, { text: texts.injuryHealed, tone: 'good' });
+    log = pushLine(log, { text: say('injuryHealed', texts.injuryHealed), tone: 'good' });
   }
 
   if (s.cult.buffs.some((b) => s.character.age >= b.until)) {
@@ -513,7 +521,7 @@ export function cultivateYear(state: GameState, content: Content): GameState {
 
   if (progress >= 100 && lastStage) {
     // Peak of the realm: waits for the big breakthrough (task 2.6). Say it once.
-    if (!wasFull) log = pushLine(log, { text: fillRealm(texts.peak, s, content), tone: 'good' });
+    if (!wasFull) log = pushLine(log, { text: fillRealm(say('peak', texts.peak), s, content), tone: 'good' });
     // Playtest 2: each year spent at the peak builds up a little for the big breakthrough (tích lũy), capped.
     const mb = content.balance.majorBreakthrough;
     if (mb.openRealms.includes(s.cult.realm) || s.cult.realm === 'luyen_khi') {
@@ -530,13 +538,13 @@ export function cultivateYear(state: GameState, content: Content): GameState {
     s = { ...s, itemUse: { ...s.itemUse, nextBreakthrough: 0 } }; // Phá Chướng Đan is spent on this try
     if (rng.chance(chance)) {
       s = { ...s, cult: { ...s.cult, stage: s.cult.stage + 1, progress: 0 } };
-      log = pushLine(log, { text: fillRealm(rng.pick(texts.stageUp), s, content), tone: 'good' });
+      log = pushLine(log, { text: fillRealm(say('stageUp', texts.stageUp), s, content), tone: 'good' });
     } else {
       const fails = { ...s.cult.fails, [key]: (s.cult.fails[key] ?? 0) + 1 };
       const kind = rng.weighted(['lose', 'injury', 'lifespan'] as const, (k) => cfg.weights[k]);
       if (kind === 'lose') {
         s = { ...s, cult: { ...s.cult, fails, progress: Math.max(0, 100 - cfg.loseProgress) } };
-        log = pushLine(log, { text: texts.failLose, tone: 'bad' });
+        log = pushLine(log, { text: say('failLose', texts.failLose), tone: 'bad' });
       } else if (kind === 'injury') {
         // Bar stays full: it tries again next year, harder (fail penalty).
         s = {
@@ -698,7 +706,7 @@ export function majorFailure(before: GameState, s0: GameState, content: Content,
   let text: string;
   if (kind === 'lose') {
     s = { ...s, cult: { ...s.cult, progress: Math.max(0, 100 - minor.loseProgress) } };
-    text = texts.failLose;
+    text = typeof texts.failLose === 'string' ? texts.failLose : rng.pick(texts.failLose);
   } else if (kind === 'injury') {
     s = { ...s, stats: { ...s.stats, health: clamp(s.stats.health + minor.injuryHealth) }, cult: { ...s.cult, injuredUntil: s.character.age + minor.injuryYears } };
     text = texts.failInjury;

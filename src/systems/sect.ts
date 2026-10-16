@@ -1,6 +1,7 @@
 // Sect life (task 2.5): joining, ranks (Ký danh → Ngoại môn → Nội môn → Chân
 // truyền), yearly stipend, one mission a year for contribution, sect techniques
 // by rank, and asking an elder to be one's master.
+import { drawText } from './textPool';
 import { ordinaryAptitude, ordinaryStat } from './aptitudeGain';
 import type { Content } from '../core/content';
 import { Rng, hashSeed } from '../core/rng';
@@ -188,7 +189,7 @@ export function sectYear(state: GameState, content: Content): GameState {
   // Playtest 2: the stipend line shows when the amount is new (first year at a rank) and then once a decade, not every year.
   const yearsAtRank = state.character.age - state.sect.since;
   if (stones > 0 && (yearsAtRank <= 1 || yearsAtRank % cfg.stipendLogEvery === 0)) {
-    s = { ...s, log: addLines(s, [{ text: fill(life.texts.stipend, { sect: sect.name, stones }), tone: 'normal' }]) };
+    s = { ...s, log: addLines(s, [{ text: fill(life.texts.stipend, { sect: sect.name, stones }), tone: 'normal', ledger: true }]) };
   }
 
   if (s.sect.rank === 0) {
@@ -268,7 +269,17 @@ export function doMission(state: GameState, content: Content, missionId: string)
     next = { ...next, stats: { ...next.stats, health: clamp(next.stats.health + risk.health) }, cult: { ...next.cult, injuredUntil: state.character.age + risk.injuryYears } };
   }
   next = addContribution(next, out.contribution);
-  const text = `${mission.name}: ${out.text} Cống hiến +${out.contribution}.`;
+  const said = drawText(next, content, `mission.${mission.id}.${success ? 'win' : 'fail'}`, [out.text, ...out.variants], {}, rng);
+  next = said.state;
+  // 9.3: now and then a small aside (weather, who came along), so a yearly chore is not word for word.
+  let aside = '';
+  if (content.sectLife?.texts.missionAside && rng.chance(content.balance.text.asideShare)) {
+    const a = drawText(next, content, 'mission.aside', content.sectLife?.texts.missionAside, {}, rng);
+    next = a.state;
+    aside = ` ${a.text}`;
+  }
+  next = { ...next, rng: rng.getState() };
+  const text = `${mission.name}: ${said.text}${aside} Cống hiến +${out.contribution}.`;
   return { state: { ...next, log: addLines(next, [{ text, tone: success ? 'good' : 'bad' }]) }, text, success };
 }
 
@@ -310,7 +321,10 @@ export function requestMaster(state: GameState, content: Content): { state: Game
     text = fill(texts.master, { master });
     return { state: { ...next, log: addLines(next, [{ text, tone: 'good' }]) }, text, success };
   } else {
-    text = texts.masterRefused;
+    // 9.3: the refusal is drawn from a pool remembered per life.
+    const d = drawText(next, content, 'sect.masterRefused', texts.masterRefused, {}, rng);
+    next = d.state;
+    text = d.text;
   }
   next = { ...next, rng: rng.getState() };
   return { state: { ...next, log: addLines(next, [{ text, tone: success ? 'good' : 'bad' }]) }, text, success };

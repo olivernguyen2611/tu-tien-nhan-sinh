@@ -123,7 +123,7 @@ export function clanYear(state: GameState, content: Content): GameState {
     social: { ...state.social, karma: Math.max(-100, Math.min(100, state.social.karma + karma)) },
   };
   if (silver > 0 || stones > 0) {
-    s = pushLines(s, [{ text: content.clan.texts.income.replaceAll('{clan}', clan.name).replaceAll('{income}', money({ silver, spiritStones: stones })), tone: 'good' }]);
+    s = pushLines(s, [{ text: content.clan.texts.income.replaceAll('{clan}', clan.name).replaceAll('{income}', money({ silver, spiritStones: stones })), tone: 'good', ledger: true }]);
   }
   return s;
 }

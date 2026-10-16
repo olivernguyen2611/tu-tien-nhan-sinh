@@ -30,6 +30,7 @@ import { systemYear } from '../systems/heThong';
 import { trungSinhYear } from '../systems/trungSinh';
 import { thanDaoYear } from '../systems/thanDao';
 import { syncTier } from '../systems/tiers';
+import { drawText } from '../systems/textPool';
 import { withCheckpoints } from '../systems/rewind';
 import { awakenGoldenFinger } from '../systems/goldenFinger';
 import { goldenFingerYear } from '../systems/fingerActions';
@@ -211,13 +212,25 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
   return syncTier(state, content);
 }
 
+/** 9.3: two or more periodic lines (income, stipend, sect report) this year become one sổ thu chi line. */
+function mergeLedger(state: GameState, content: Content): GameState {
+  const block = state.log[state.log.length - 1];
+  const ledger = block?.lines.filter((l) => l.ledger) ?? [];
+  if (ledger.length < 2) return state;
+  const at = block.lines.indexOf(ledger[0]);
+  const merged = { text: `${content.lifeTexts.ledger} ${ledger.map((l) => l.text.replace(/\.$/, '')).join(' · ')}.`, tone: 'normal' as const };
+  const lines = block.lines.filter((l) => !l.ledger);
+  lines.splice(at, 0, merged);
+  return { ...state, log: [...state.log.slice(0, -1), { ...block, lines }] };
+}
+
 const withYear = (s: GameState): GameState => ({ ...s, log: [...s.log, { age: s.character.age, lines: [] }] });
 
 /** One year passes; at most one event is rolled for the player to answer. */
 export function advanceYear(state: GameState, content: Content): GameState {
   const once = advanceYearOnce(state, content);
   // 9.1: tầng and lối sống follow what the year changed.
-  const next = once === state ? once : syncTier(once, content);
+  const next = once === state ? once : mergeLedger(syncTier(once, content), content);
   // Developer mode records a snapshot of every year (backlog 6).
   if (next !== state) notifyYear(next);
   return next;
@@ -249,9 +262,11 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
     return { ...next, stats: { ...next.stats, happiness: easeHappiness(next.stats.happiness, true, content) }, log };
   }
   const quiet = !next.events.pending && block.lines.length === 0;
-  if (quiet) log[log.length - 1] = { ...block, lines: [{ text: 'Một năm bình lặng trôi qua.', tone: 'normal' }] };
+  // 9.3: a quiet year says so in many ways (its own seed stream, the life's rng is untouched).
+  const still = quiet ? drawText(next, content, 'quietYear', content.lifeTexts.quietYear, {}, new Rng(`${next.seed}:quiet:${age}`)) : null;
+  if (still) log[log.length - 1] = { ...block, lines: [{ text: still.text, tone: 'normal' }] };
   // 6b.2: every year eases happiness back toward its resting point; a quiet year eases it more.
-  return { ...next, stats: { ...next.stats, happiness: easeHappiness(next.stats.happiness, quiet, content) }, log };
+  return { ...(still?.state ?? next), stats: { ...next.stats, happiness: easeHappiness(next.stats.happiness, quiet, content) }, log };
 }
 
 function easeHappiness(h: number, quiet: boolean, content: Content): number {

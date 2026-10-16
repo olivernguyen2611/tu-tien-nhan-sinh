@@ -1,6 +1,8 @@
 // Sư phụ và đồ đệ, ngoài chỉ điểm (task 5c.8): luận bàn, luận đạo, truyền công pháp đang tu,
 // tặng vật phẩm đang giữ. Mỗi việc một lần mỗi năm cho mỗi đồ đệ. Số trong balance.disciples.acts,
 // lời văn trong disciples.json `acts`. Người thầy cũng nhận lại chỉ số (mọi lựa chọn đều đổi chỉ số).
+import { drawText } from './textPool';
+import type { TextPool } from '../core/schemas';
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameState, LogLine, Npc } from '../core/types';
@@ -85,19 +87,21 @@ export function doDiscipleAct(state: GameState, content: Content, npcId: string,
   };
   let text: string;
   let tone: LogLine['tone'] = 'good';
+  // 9.3: lines from pools that remember what this life has already read.
+  const draw = (pool: TextPool, key: string) => { const d = drawText(s, content, `disciple.${key}`, pool, { affinity: npc.affinity, relation: 'disciple' }, rng); s = d.state; return d.text; };
 
   if (act.kind === 'spar') {
     const win = rng.chance(sparChance(state, content, npc));
     s = { ...s, rng: rng.getState(), npcs: s.npcs.map((n) => (n.id === npcId ? mark(n, cfg.sparProgress * (win ? cfg.sparLoseMul : 1)) : n)) };
     s = changeNpc(s, content, npcId, { affinity: cfg.sparAffinity });
-    if (win) { stat('physique', 1); text = rng.pick(texts.sparWin); } else { stat('health', -4); stat('daoHeart', 1); text = rng.pick(texts.sparLose); tone = 'normal'; }
+    if (win) { stat('physique', 1); text = draw(texts.sparWin, 'sparWin'); } else { stat('health', -4); stat('daoHeart', 1); text = draw(texts.sparLose, 'sparLose'); tone = 'normal'; }
   } else if (act.kind === 'debate') {
     const chance = Math.max(0.1, Math.min(0.9, 0.5 + (state.aptitudes.comprehension - cfg.debateDifficulty) * 0.015));
     const win = rng.chance(chance);
     s = { ...s, rng: rng.getState(), npcs: s.npcs.map((n) => (n.id === npcId ? mark(n, cfg.debateProgress * (win ? 1 : 0.5)) : n)) };
     s = changeNpc(s, content, npcId, { affinity: cfg.debateAffinity });
-    if (win) { stat('comprehension', 1); s = addProgress(s, content.balance.disciples.teacherProgress); text = rng.pick(texts.debateWin); }
-    else { stat('intellect', 1); stat('happiness', -1); text = rng.pick(texts.debateFail); tone = 'normal'; }
+    if (win) { stat('comprehension', 1); s = addProgress(s, content.balance.disciples.teacherProgress); text = draw(texts.debateWin, 'debateWin'); }
+    else { stat('intellect', 1); stat('happiness', -1); text = draw(texts.debateFail, 'debateFail'); tone = 'normal'; }
   } else if (act.kind === 'technique') {
     const tech = techniqueById(content, act.techniqueId)!;
     vars.technique = tech.name;

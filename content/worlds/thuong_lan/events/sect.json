@@ -544,6 +544,11 @@
         "text": "Đòi lại",
         "result": {
           "text": "Chấp sự lườm ngươi, rồi đưa. Tháng sau ngươi lại nhận đủ.",
+          "variants": [
+            "Chấp sự lục sổ hồi lâu, đưa đủ rồi dặn đừng kể với ai.",
+            "\"Ngươi đếm kỹ quá đấy.\" Chấp sự cằn nhằn, nhưng vẫn bù đủ.",
+            "Chấp sự đỏ mặt, bảo do ghi nhầm. Từ đó ngươi luôn được phát đủ phần."
+          ],
           "effects": {
             "addItems": [
               "tu_khi_dan"

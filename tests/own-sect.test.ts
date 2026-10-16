@@ -80,7 +80,8 @@ describe('công trình và báo cáo tông môn (task 5.2)', () => {
       const s = founded();
       const at = { ...s, character: { ...s.character, age: age - 1 }, ownSect: { ...s.ownSect!, members: 40, growthBonus } };
       const next = advanceYear({ ...at, events: { ...at.events, pending: null } }, content);
-      return next.log.at(-1)!.lines.some((l) => l.text.startsWith('Báo cáo của Thanh Tiêu Tông'));
+      // 9.3: the report is worded from a pool; it names the sect and carries the (+n) deltas.
+      return next.log.at(-1)!.lines.some((l) => l.text.includes('Thanh Tiêu Tông') && /\([+-]\d+\)/.test(l.text));
     };
     expect(inLog(cfg.reportLogEvery * 8, 0)).toBe(true);
     expect(inLog(cfg.reportLogEvery * 8 + 1, 0)).toBe(false);

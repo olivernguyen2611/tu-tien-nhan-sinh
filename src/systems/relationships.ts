@@ -1,4 +1,6 @@
 // Family (PLAN.md task 1.7): parents and siblings with affinity, who age and die.
+import { drawText } from './textPool';
+import type { TextPool } from '../core/schemas';
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameState, Gender, LogLine, Relative, Tone } from '../core/types';
@@ -179,14 +181,17 @@ export function performFamilyAction(state: GameState, content: Content, relative
   if (!r || !action || !view || view.disabled) return { state, text: '', tone: 'normal' };
 
   const rng = Rng.fromState(state.rng);
-  let outcome: { affinity: readonly [number, number]; effects: Record<string, number>; texts: string[] } = action;
+  let outcome: { affinity: readonly [number, number]; effects: Record<string, number>; texts: TextPool } = action;
+  let key = `family.${actionId}`;
   let tone: Tone = 'good';
   let silver = 0;
   if (action.needAffinity !== undefined && r.affinity < action.needAffinity && action.refused) {
     outcome = action.refused;
+    key += '.refused';
     tone = 'bad';
   } else if (action.mishap && rng.chance(action.mishapChance)) {
     outcome = action.mishap;
+    key += '.mishap';
     tone = 'normal';
   } else if (action.silver) {
     silver = between(rng, action.silver);
@@ -195,12 +200,13 @@ export function performFamilyAction(state: GameState, content: Content, relative
   if (gain < 0 && tone === 'good') tone = 'normal';
 
   const label = relationLabel(r, state.character.age).toLowerCase();
-  const text = rng.pick(outcome.texts)
+  const drawn = drawText(state, content, key, outcome.texts, { affinity: r.affinity, relation: r.role }, rng);
+  const text = drawn.text
     .replace(/\{Rel\}/g, label.charAt(0).toUpperCase() + label.slice(1))
     .replace(/\{rel\}/g, label)
     .replace(/\{relName\}/g, r.name);
 
-  let next = applyNumbers(state, { ...outcome.effects, silver: silver - action.cost });
+  let next = applyNumbers(drawn.state, { ...outcome.effects, silver: silver - action.cost });
   next = {
     ...next,
     rng: rng.getState(),

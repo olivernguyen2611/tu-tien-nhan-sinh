@@ -332,7 +332,7 @@
     ],
     "masterMinRank": 2,
     "missionBoard": 4, "missionCooldown": 2, "missionFail": { "minRank": 2, "injuryChance": 0.3, "injuryYears": 2, "health": -8 }, "treasuryPriceStepPct": 20,
-    "stipendLogEvery": 10,
+    "stipendLogEvery": 30,
     "masterChanceBase": 0.25,
     "masterChancePerPoint": 0.01,
     "masterSpeed": 0.1,
@@ -524,7 +524,7 @@
     "inheritKarma": 0.3
   },
   "founding": {
-    "minRealm": "kim_dan", "reportLogEvery": 5,
+    "minRealm": "kim_dan", "reportLogEvery": 10,
     "cost": 300,
     "maxRules": 3,
     "nameLength": [2, 24],
@@ -802,6 +802,7 @@
     "claimTreasury": 200
   },
   "specialOrigins": { "minLives": 2, "chance": 0.04, "luckPer": 0.0008, "maxPerLife": 2 },
+  "text": { "memory": 8, "avoid": 3, "decay": 0.4, "asideShare": 0.5 },
   "trungSinh": { "memories": 5, "falseChance": 0.15, "driftPerYear": 0.6, "driftPerMemory": 12, "maxBreak": 0.85 },
   "karmaLedger": {
     "perLife": 4, "max": 8, "maxLives": 3, "minWeight": 40, "enemyAt": 65,

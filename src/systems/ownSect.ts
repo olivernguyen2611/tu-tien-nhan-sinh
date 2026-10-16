@@ -7,6 +7,7 @@
 // building income fill the treasury, upkeep drains it, Luyện Đan Phòng sends
 // pills) and reports to the master with 1–3 decisions; the ones left open the
 // elders handle as usual. Buildings are raised from the treasury.
+import { drawText } from './textPool';
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { EffectHook } from '../core/schemas';
@@ -206,11 +207,13 @@ export function ownSectYear(state: GameState, content: Content): GameState {
   }
   const karma = rules.reduce((k, r) => k + r.karmaPerYear, 0);
   const delta = (n: number) => (n >= 0 ? `+${n}` : String(n));
-  const text = t.report.replaceAll('{sect}', own.name).replaceAll('{members}', String(members)).replaceAll('{membersDelta}', delta(members - own.members))
+  const said = typeof t.report === 'string' ? { text: t.report, state: s } : drawText(s, content, 'ownSect.report', t.report, {}, rng);
+  s = said.state;
+  const text = said.text.replaceAll('{sect}', own.name).replaceAll('{members}', String(members)).replaceAll('{membersDelta}', delta(members - own.members))
     .replaceAll('{treasury}', String(treasury)).replaceAll('{treasuryDelta}', delta(treasury - own.treasury));
   // 6c.6: the log gets the report every few years, or at once when the sect swings hard; the panel keeps this year's.
   const swing = Math.abs(members - own.members) >= Math.max(5, own.members * 0.1) || (treasury === 0 && own.treasury > 0);
-  if (state.character.age % cfg.reportLogEvery === 0 || swing) lines.unshift({ text, tone: 'normal' });
+  if (state.character.age % cfg.reportLogEvery === 0 || swing) lines.unshift({ text, tone: 'normal', ledger: true });
   const pool = content.founding.decisions.filter((d) => !d.default);
   const want = Math.min(pool.length, rng.int(cfg.decisions[0], cfg.decisions[1]));
   const decisions: string[] = [];

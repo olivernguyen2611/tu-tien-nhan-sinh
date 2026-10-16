@@ -10,14 +10,90 @@
     "effects": {
       "stat.happiness": 1
     },
-    "texts": [
-      "Ngươi ngồi cạnh {rel} nói chuyện cả buổi chiều.",
-      "{Rel} kể chuyện ngày xưa, ngươi nghe tới ngủ gật mà {rel} vẫn vui.",
-      "{Rel} hỏi ngươi ăn uống ra sao. Ngươi trả lời qua loa, {rel} vẫn dặn thêm ba câu về chuyện mặc ấm.",
-      "Ngươi hỏi chuyện nhà cửa, {rel} kể từ đầu ngõ tới cuối ngõ. Nghe xong ngươi thấy nhẹ cả người.",
-      "Hai người ngồi uống trà, chẳng nói chuyện lớn, mà chẳng ai muốn đứng dậy trước.",
-      "{Rel} vỗ vai ngươi, bảo: \"Gầy đi rồi.\" Ngươi cười, không cãi."
-    ]
+    "texts": {
+      "linesShare": 0.35,
+      "lines": [
+        "Ngươi ngồi cạnh {rel} nói chuyện cả buổi chiều.",
+        "{Rel} kể chuyện ngày xưa, ngươi nghe tới ngủ gật mà {rel} vẫn vui.",
+        "{Rel} hỏi ngươi ăn uống ra sao. Ngươi trả lời qua loa, {rel} vẫn dặn thêm ba câu về chuyện mặc ấm.",
+        "Ngươi hỏi chuyện nhà cửa, {rel} kể từ đầu ngõ tới cuối ngõ. Nghe xong ngươi thấy nhẹ cả người.",
+        "Hai người ngồi uống trà, chẳng nói chuyện lớn, mà chẳng ai muốn đứng dậy trước.",
+        "{Rel} vỗ vai ngươi, bảo: \"Gầy đi rồi.\" Ngươi cười, không cãi."
+      ],
+      "parts": [
+        [
+          "Ngươi ghé qua thăm {rel}.",
+          "Tối ấy cả nhà ăn cơm xong, ngươi ngồi lại với {rel}.",
+          "Ngươi mang ít bánh sang chỗ {rel}.",
+          "Trời trở lạnh, ngươi sang hỏi han {rel}.",
+          "Đi ngang cổng, ngươi rẽ vào thăm {rel}.",
+          {
+            "text": "Lâu lắm rồi ngươi mới sang chỗ {rel}.",
+            "when": {
+              "affinityMax": 35
+            }
+          }
+        ],
+        [
+          "{Rel} hỏi ngươi ăn uống ra sao, dặn thêm ba câu chuyện mặc ấm.",
+          "{Rel} kể chuyện ngày xưa, ngươi nghe tới ngủ gật.",
+          "Hai người uống trà, chẳng nói chuyện lớn.",
+          "{Rel} than chuyện hàng xóm, ngươi gật gù nghe hết.",
+          "{Rel} vỗ vai ngươi: \"Gầy đi rồi.\"",
+          "Ngươi kể chuyện bên ngoài, {Rel} nghe mắt sáng rỡ.",
+          {
+            "text": "{Rel} lúng túng, như chưa quen được thân mật.",
+            "when": {
+              "affinityMax": 35
+            }
+          },
+          {
+            "text": "{Rel} vẫn còn giận, nhưng rót cho ngươi chén trà.",
+            "when": {
+              "affinityMax": 35
+            }
+          },
+          {
+            "text": "{Rel} kéo ngươi lại, kể đủ thứ chuyện không đầu không đuôi.",
+            "when": {
+              "affinityMin": 75
+            }
+          },
+          {
+            "text": "{Rel} ngồi lâu là mỏi, nhưng vẫn cố nói thêm mấy câu.",
+            "when": {
+              "relation": [
+                "father",
+                "mother"
+              ],
+              "ageMin": 40
+            }
+          },
+          {
+            "text": "{Rel} khoe chuyện ở trường học, mặt đầy tự hào.",
+            "when": {
+              "relation": [
+                "child"
+              ],
+              "ageMax": 45
+            }
+          }
+        ],
+        [
+          "Ngươi về mà thấy nhẹ cả người.",
+          "Chẳng ai muốn đứng dậy trước.",
+          "Lúc về, {rel} còn dúi vào tay ngươi gói mứt.",
+          "Ngươi cười, không cãi.",
+          "Một buổi chiều trôi qua như thế, mà ngươi nhớ lâu.",
+          {
+            "text": "Ngươi thấy những phiền muộn ngoài kia nhỏ lại.",
+            "when": {
+              "moodMax": 35
+            }
+          }
+        ]
+      ]
+    }
   },
   {
     "id": "tang_qua",
