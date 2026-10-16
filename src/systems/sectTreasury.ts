@@ -65,9 +65,14 @@ export function buyTreasury(state: GameState, content: Content, id: string): { s
     ...(t.spiritStones ? [`${t.spiritStones} linh thạch`] : []),
     ...(t.progress ? [`thanh tu vi +${t.progress}%`] : []),
   ].join(', ');
-  const text = `Bảo khố ${sect.name}: đổi ${cost} cống hiến lấy ${t.name} (${got}).`;
+  const deal = `${cost} cống hiến lấy ${t.name}${got && got !== t.name ? ` (${got})` : ''}`;
+  const head = `Bảo khố ${sect.name}: đổi `;
+  const text = `${head}${deal}.`;
   const log = s.log.slice();
   const last = log[log.length - 1];
-  if (last) log[log.length - 1] = { ...last, lines: [...last.lines, { text, tone: 'good' }] };
+  // 9.3: several trades in one year make one line.
+  const prev = last?.lines.at(-1);
+  if (last && prev?.text.startsWith(head)) log[log.length - 1] = { ...last, lines: [...last.lines.slice(0, -1), { ...prev, text: `${prev.text.replace(/\.$/, '')}; ${deal}.` }] };
+  else if (last) log[log.length - 1] = { ...last, lines: [...last.lines, { text, tone: 'good' }] };
   return { state: { ...s, log }, text, success: true };
 }

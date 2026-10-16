@@ -1003,3 +1003,8 @@ html[data-motion='reduce'][data-fx]::after { display: none; }
 /* 9.S5 thành thần paths */
 .merit-row { display: grid; grid-template-columns: 6.5em 1fr auto; align-items: center; gap: 8px; }
 .merit-row .bar > span { background: var(--gold); }
+
+/* 9.1 Màn nhập đạo */
+.nhap-dao .story { max-width: 36em; margin: 0 auto 16px; }
+.nhap-dao-recap { max-width: 36em; margin: 0 auto 16px; padding: 12px 16px; border-radius: 10px; background: var(--surface-2); }
+.nhap-dao-recap ul { margin: 6px 0 0; padding-left: 1.1em; display: grid; gap: 4px; }

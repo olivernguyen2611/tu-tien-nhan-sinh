@@ -17,6 +17,13 @@
         "text": "Uống thâu đêm",
         "result": {
           "text": "Hai người say tới khi trăng xuống núi. Sáng ra đầu đau như búa, lòng nhẹ như mây.",
+          "variants": [
+            "Rượu cạn ba vò, chuyện chưa cạn. {npc} gục xuống bàn mà miệng vẫn cười.",
+            "Uống tới canh ba, {npc} hát một bài quê nhà. Ngươi hát theo, sai lời mà không ai chê.",
+            "Hai người đánh cược ai say trước. Sáng ra không ai nhớ ai thắng.",
+            "Rượu nhạt mà chuyện đậm. {npc} kể những năm không gặp, ngươi nghe tới khi trời hửng.",
+            "Say rồi, {npc} đòi so kiếm, chém đổ nửa hàng rào. Sáng ra hai người cùng đi sửa."
+          ],
           "effects": {
             "stat.happiness": 4,
             "stat.health": -2,
@@ -30,6 +37,10 @@
         "text": "Kể chuyện trong lòng",
         "result": {
           "text": "Ngươi nói những điều chưa nói với ai. {npc} chỉ gật, rót thêm rượu.",
+          "variants": [
+            "Ngươi kể chuyện cũ, giọng run một chút. {npc} không hỏi gì, chỉ ngồi đó tới sáng.",
+            "Ngươi nói hết những nỗi lo trong lòng. {npc} rót rượu, bảo: \"Có ta đây.\""
+          ],
           "effects": {
             "stat.daoHeart": 2,
             "stat.happiness": 2,
@@ -71,6 +82,12 @@
         "text": "Giúp không do dự",
         "result": {
           "text": "Việc không lớn nhưng tốn công. {npc} nhớ ơn này rất lâu.",
+          "variants": [
+            "Ngươi chạy ngược xuôi nửa tháng mới xong. {npc} không nói cảm ơn, chỉ siết tay ngươi thật chặt.",
+            "Việc nhỏ mà khó, ngươi làm tới nơi tới chốn. Từ đó {npc} gặp ai cũng khen ngươi.",
+            "Giúp xong, {npc} mời một bữa cơm nhà, cả nhà người ta ra chào ngươi.",
+            "Ngươi giúp mà không hỏi lý do. Mãi sau {npc} mới kể, giọng nghẹn lại."
+          ],
           "effects": {
             "stat.happiness": 2,
             "stat.health": -1,
@@ -131,6 +148,10 @@
         },
         "success": {
           "text": "Ngươi kể từng việc, từng người. {npc} im lặng rất lâu rồi thở ra: \"Là ta nghe nhầm.\"",
+          "variants": [
+            "Ngươi đưa thư từ cũ ra làm chứng. {npc} đọc xong, đỏ mặt xin lỗi.",
+            "Ngươi nói thật, chậm rãi. {npc} nghe xong bật cười: \"Vậy mà ta giận cả tháng.\""
+          ],
           "effects": {
             "stat.daoHeart": 1,
             "stat.happiness": 3,
@@ -264,6 +285,11 @@
         "text": "Đến dự, mang quà",
         "result": {
           "text": "Bàn tiệc đông vui. Ngươi gặp thêm vài gương mặt mới, ai cũng khen {npc} có bạn tốt.",
+          "variants": [
+            "Ngươi mang tới một vò rượu quý, {npc} khoe với cả bàn. Tiệc vui tới khuya.",
+            "Ngươi bị ép lên múa một đoạn kiếm cho khách xem. {npc} cười tới chảy nước mắt.",
+            "Tiệc đông người lạ, nhưng {npc} kéo ngươi ngồi cạnh suốt buổi."
+          ],
           "effects": {
             "silver": -5,
             "stat.charm": 2,
@@ -286,6 +312,12 @@
         "text": "Đến dự, ngồi góc yên tĩnh",
         "result": {
           "text": "Ngươi uống trà, nhìn người ta nói cười. Thế cũng là một kiểu hạnh phúc.",
+          "variants": [
+            "Ngươi ngồi góc khuất, nghe được mấy chuyện thú vị trong thiên hạ.",
+            "Ngươi chọn bàn cạnh cửa sổ, ngắm trăng hơn ngắm người. {npc} đi ngang, rót cho ngươi chén trà.",
+            "Ngồi yên một góc, ngươi bị một đứa trẻ con nhà khách lân la hỏi chuyện tu tiên cả buổi.",
+            "Ngươi ăn nhiều hơn nói. Tiệc tan, bụng no lòng yên."
+          ],
           "effects": {
             "stat.happiness": 2,
             "stat.daoHeart": 1,
@@ -327,6 +359,10 @@
         "text": "Cho vay một khoản",
         "result": {
           "text": "Ngươi đẩy túi bạc qua bàn. {npc} nắm tay ngươi, không nói nên lời.",
+          "variants": [
+            "Ngươi trả hết nợ giúp {npc} mà không nói một lời. Mãi sau người ta mới biết.",
+            "Túi bạc đưa sang, {npc} đẩy lại ba lần mới chịu nhận. Mắt đỏ hoe."
+          ],
           "effects": {
             "silver": -30,
             "stat.happiness": 3,
@@ -349,6 +385,10 @@
         "text": "Bày kế gỡ nợ",
         "result": {
           "text": "Ngươi ngồi cùng {npc} tính sổ cả đêm, tìm ra lối thoát. Có đầu óc đôi khi quý hơn có bạc.",
+          "variants": [
+            "Hai người bày lại việc buôn từ đầu. Nửa năm sau {npc} gượng dậy được, mang quà tới tạ.",
+            "Ngươi chỉ ra kẻ đang ăn chặn của {npc}. Đuổi gã đi, sổ sách tự sạch."
+          ],
           "effects": {
             "stat.intellect": 2,
             "npc": {
@@ -390,6 +430,10 @@
         "text": "Chịu, thề trước trời đất",
         "result": {
           "text": "Hai người dâng hương, rạch tay, hòa máu vào chén rượu. Từ nay trên đời có một người sống chết cùng ngươi.",
+          "variants": [
+            "Dưới gốc đào già, hai người lạy trời đất tám lạy. {npc} gọi ngươi một tiếng huynh đệ, giọng run run.",
+            "Lời thề nói ra, gió núi ngừng thổi một nhịp. Từ nay hai người chung một con đường."
+          ],
           "effects": {
             "stat.daoHeart": 3,
             "stat.happiness": 6,
@@ -561,6 +605,12 @@
         },
         "success": {
           "text": "Kế hoạch trơn tru. Kẻ kia sa lưới, hai người nhìn nhau cười đắc ý.",
+          "variants": [
+            "{npc} đóng vai mồi, ngươi chặn đường lui. Kẻ kia không kịp kêu một tiếng.",
+            "Kế hoạch có một chỗ hở, may mà kẻ kia ngốc hơn hai người nghĩ.",
+            "Kẻ kia thân bại danh liệt. {npc} rót rượu mừng, tay vẫn còn run.",
+            "Hai người dắt mũi kẻ kia suốt ba tháng. Tới lúc hắn biết thì đã muộn."
+          ],
           "effects": {
             "stat.intellect": 2,
             "stat.happiness": 3,

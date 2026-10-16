@@ -4,6 +4,7 @@
 // Đạo lữ (task 3.7): a couple weds; a cultivating đạo lữ speeds cultivation
 // (song tu, in cultivation.ts); children inherit spirit roots, sometimes mutated.
 // Nobody under balance.romance.minAge takes part, and Phật đạo keeps its precept.
+import { drawText } from './textPool';
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameEvent } from '../core/schemas';
@@ -286,12 +287,16 @@ export function romanceAction(state: GameState, content: Content, npcId: string,
   } else if (action === 'company') {
     s = changeNpc(s, content, npcId, { affinity: rng.int(b.companyAffinity[0], b.companyAffinity[1]) });
     s = { ...s, stats: { ...s.stats, happiness: clamp(s.stats.happiness + b.companyHappiness) } };
-    lines.push({ text: fill(rng.pick(t.company)), tone: 'good' });
+    const d = drawText(s, content, 'romance.company', t.company, { affinity: n.affinity, relation: 'partner' }, rng);
+    s = d.state;
+    lines.push({ text: fill(d.text), tone: 'good' });
   } else if (action === 'dualCult') {
     const pct = Math.round(b.dualCultProgress * (0.5 + n.affinity / 100));
     s = applyRomance(addProgress(s, pct), content, npcId, { partnerProgress: pct });
     s = changeNpc(s, content, npcId, { affinity: 2 });
-    lines.push({ text: fill(rng.pick(t.dualCult)), tone: 'good' });
+    const d = drawText(s, content, 'romance.dualCult', t.dualCult, { affinity: n.affinity, relation: 'partner' }, rng);
+    s = d.state;
+    lines.push({ text: fill(d.text), tone: 'good' });
   } else if (action === 'reconcile') {
     if (rng.chance(reconcileChance(s, content))) {
       s = changeNpc(s, content, npcId, { affinity: b.reconcileAffinity });

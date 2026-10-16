@@ -84,13 +84,37 @@
     "stageUp": [
       "Linh khí trong kinh mạch dày thêm một tầng. Ngươi đã là {realm} {stage}.",
       "Một đêm ngồi tĩnh tọa, bình chướng vỡ ra như lớp băng mỏng: {realm} {stage}.",
-      "Sáng ra mở mắt, cả người nhẹ bẫng. {realm} {stage}, không uổng mấy năm ngồi mòn chiếu."
+      "Sáng ra mở mắt, cả người nhẹ bẫng. {realm} {stage}, không uổng mấy năm ngồi mòn chiếu.",
+      "Linh khí cuộn một vòng trong đan điền rồi lắng xuống, đặc hơn trước: {realm} {stage}.",
+      "Đang ăn cơm thì bình chướng tự vỡ. Ngươi buông đũa, ngồi xếp bằng ngay giữa bàn: {realm} {stage}.",
+      "Mưa rơi suốt đêm, ngươi ngồi nghe tới sáng. Lúc mưa tạnh, tu vi đã lên {realm} {stage}.",
+      "Không có dị tượng gì, chỉ thấy hơi thở dài hơn một chút. {realm} {stage}.",
+      "Kinh mạch nóng ran ba ngày, tới ngày thứ tư thì mát lại: {realm} {stage}.",
+      "Bình chướng mỏng như giấy dán cửa, chọc một cái là thủng. {realm} {stage}, nhanh tới mức ngươi nghi ngờ.",
+      "Ngươi ngồi tĩnh tọa dưới gốc cây, lá rụng đầy vai mà không hay. Đứng dậy đã là {realm} {stage}.",
+      "Một tiếng \"tách\" nhỏ trong đan điền, như hạt đậu nứt vỏ. {realm} {stage}."
     ],
-    "peak": "Tu vi đã tới {realm} {stage}, đầy tràn mà chưa có cửa đi tiếp. Muốn lên nữa phải đột phá đại cảnh giới (mở Tu luyện).",
-    "failLose": "Xung kích bình chướng thất bại, linh khí tán mất mấy phần. Đành ngồi tích lại.",
+    "peak": [
+      "Tu vi đã tới {realm} {stage}, đầy tràn mà chưa có cửa đi tiếp. Muốn lên nữa phải đột phá đại cảnh giới (mở Tu luyện).",
+      "{realm} {stage}: linh khí tràn tới miệng chén, rót thêm cũng không vào. Phải đột phá đại cảnh giới (mở Tu luyện).",
+      "Đan điền căng như trống, {realm} {stage} đã tới đỉnh. Cửa ải đại cảnh giới đứng chờ trước mặt (mở Tu luyện).",
+      "Ngồi mãi cũng không thấy nhích, ngươi biết {realm} {stage} là chỗ cuối. Đường tiếp theo phải tự phá (mở Tu luyện)."
+    ],
+    "failLose": [
+      "Xung kích bình chướng thất bại, linh khí tán mất mấy phần. Đành ngồi tích lại.",
+      "Bình chướng dày hơn ngươi tưởng. Linh khí đập vào rồi dội ngược, mất toi mấy tháng công.",
+      "Đang xung kích thì hắt hơi một cái. Linh khí tan như khói, ngươi ngồi ngẩn ra.",
+      "Lần này chưa được. Linh khí rỉ ra hết một phần, như nước qua kẽ tay.",
+      "Bình chướng rung mà không vỡ. Ngươi thở dài, bắt đầu tích lại từ nửa chừng."
+    ],
     "failInjury": "Linh khí chạy ngược, kinh mạch tổn thương. Mấy năm tới tu luyện sẽ chậm hẳn.",
     "failLifespan": "Đột phá thất bại, nguyên khí hao tổn. Soi gương thấy tóc mai bạc thêm một sợi.",
-    "injuryHealed": "Kinh mạch đã lành hẳn, linh khí lại chạy thông suốt.",
+    "injuryHealed": [
+      "Kinh mạch đã lành hẳn, linh khí lại chạy thông suốt.",
+      "Vết thương trong kinh mạch liền lại, sáng ra vận công không còn nhói.",
+      "Thuốc uống mấy năm cuối cùng cũng có tác dụng. Kinh mạch êm như suối mùa thu.",
+      "Một sáng thức dậy, chỗ đau trong ngực biến mất. Linh khí lại chảy như xưa."
+    ],
     "majorSuccess": "Linh khí trong người hóa lỏng, chảy về đan điền đắp thành nền. Từ nay ngươi là tu sĩ {realm}, đạo cơ {grade}.",
     "majorDeviation": "Tâm thần chao đảo, linh khí chạy loạn. Tẩu hỏa nhập ma! Ngươi gắng gượng giữ được mạng, nhưng tâm cảnh đã có vết nứt.",
     "bottleneck": "Thất bại liền mấy lần, bình chướng như bức tường đá. Linh khí vào người cũng chậm hẳn: đây là bình cảnh.",

@@ -124,7 +124,27 @@
   "texts": {
     "founded": "Ngươi khai tông lập phái trên một ngọn núi có linh mạch: {sect}, theo {lineage}. Ngày khai tông, {members} người tới bái sơn môn.",
     "leftOld": "Ngươi rời {old} để tự mở môn hộ.",
-    "report": "Báo cáo của {sect} năm nay: đệ tử {members} ({membersDelta}), kho linh thạch {treasury} ({treasuryDelta}).",
+    "report": {
+      "lines": [],
+      "linesShare": 0,
+      "parts": [
+      [
+        "Báo cáo của {sect} năm nay:",
+        "Sổ sách {sect} năm nay:",
+        "Chấp sự dâng sổ {sect}:",
+        "Cuối năm, {sect} kiểm kê:",
+        "Trưởng lão chấp sự bẩm về {sect}:",
+        "Sổ vàng {sect} ghi:"
+      ],
+      [
+        "đệ tử {members} ({membersDelta}), kho linh thạch {treasury} ({treasuryDelta}).",
+        "môn hạ {members} người ({membersDelta}), kho còn {treasury} linh thạch ({treasuryDelta}).",
+        "{members} đệ tử ({membersDelta}); linh thạch trong kho {treasury} ({treasuryDelta}).",
+        "người {members} ({membersDelta}), của {treasury} linh thạch ({treasuryDelta}).",
+        "số đệ tử {members} ({membersDelta}), ngân khố {treasury} linh thạch ({treasuryDelta})."
+      ]
+      ]
+    },
     "built": "{building} của {sect} lên cấp {level}.",
     "pills": "Luyện Đan Phòng dâng chưởng môn {count} {item}.",
     "decided": "Chưởng môn quyết: {decision}.",

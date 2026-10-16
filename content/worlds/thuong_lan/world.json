@@ -4,5 +4,108 @@
   "description": "Thế giới đầu tiên: một cõi phàm trần mênh mông, nơi linh khí mỏng mà lòng người thì dày.",
   "order": 1,
   "qi": 1.0,
-  "sectRecruitEvent": "tong_mon_tuyen_do"
+  "sectRecruitEvent": "tong_mon_tuyen_do",
+  "tiers": [
+    {
+      "id": "pham_gian",
+      "name": "Phàm gian",
+      "dock": [
+        "ban_than",
+        "hoat_dong",
+        "nam",
+        "quan_he",
+        "gia_san"
+      ]
+    },
+    {
+      "id": "tu_chan",
+      "name": "Tu chân giới",
+      "entry": {
+        "realm": {
+          "min": "luyen_khi"
+        }
+      },
+      "dock": [
+        "ban_than",
+        "hoat_dong",
+        "nam",
+        "tu_luyen",
+        "tong_mon",
+        "quan_he",
+        "gia_san"
+      ],
+      "enterText": "Linh khí lần đầu chảy qua kinh mạch. Thế gian vẫn là thế gian ấy, nhưng ngươi đã không còn nhìn nó bằng đôi mắt phàm nhân. Từ nay, mỗi năm đều phải chọn: sống, hay tu."
+    },
+    {
+      "id": "linh_gioi",
+      "name": "Linh giới",
+      "locked": true,
+      "dock": []
+    }
+  ],
+  "lifestyles": [
+    {
+      "id": "giang_ho",
+      "name": "Giang hồ",
+      "entry": {
+        "anyOf": [
+          {
+            "career": {
+              "id": "vo_lam"
+            }
+          },
+          {
+            "martial": {
+              "min": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "quan_truong",
+      "name": "Quan trường",
+      "entry": {
+        "career": {
+          "id": "quan"
+        }
+      }
+    },
+    {
+      "id": "thuong_lo",
+      "name": "Thương lộ",
+      "entry": {
+        "career": {
+          "id": "thuong"
+        }
+      }
+    },
+    {
+      "id": "y_lo",
+      "name": "Y lộ",
+      "entry": {
+        "career": {
+          "id": "y"
+        }
+      }
+    },
+    {
+      "id": "quan_ngu",
+      "name": "Quân ngũ",
+      "entry": {
+        "flagsAll": [
+          "quan_ngu"
+        ]
+      }
+    },
+    {
+      "id": "tu_tien",
+      "name": "Tu tiên",
+      "entry": {
+        "realm": {
+          "min": "luyen_khi"
+        }
+      }
+    }
+  ]
 }

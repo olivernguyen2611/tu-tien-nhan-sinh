@@ -9,19 +9,43 @@
   "acts": {
     "sparWin": [
       "Ngươi ra tay nhẹ, đồ đệ {npc} vẫn thua nửa chiêu. Ngươi chỉ cho chỗ sơ hở, {npc} gật gù nhớ kỹ.",
-      "Hai thầy trò đấu ba hiệp. {npc} bại, nhưng chiêu cuối đã có mùi vị riêng."
+      "Hai thầy trò đấu ba hiệp. {npc} bại, nhưng chiêu cuối đã có mùi vị riêng.",
+      "{npc} xông lên quá nóng vội, ngươi chỉ lách người là xong. Lần này {npc} học được chữ \"nhẫn\".",
+      "Ngươi dùng một tay đỡ đủ ba mươi chiêu. {npc} mồ hôi đầm đìa, mắt vẫn sáng rỡ.",
+      "{npc} giả thua để dụ ngươi, mưu kế lộ quá sớm. Ngươi cười, gõ nhẹ lên trán đồ đệ.",
+      {
+        "text": "{npc} đánh như đang giận ai. Ngươi đỡ hết, đợi đồ đệ trút xong mới hỏi chuyện.",
+        "when": {
+          "affinityMax": 40
+        }
+      },
+      {
+        "text": "Đánh xong, {npc} ngồi phịch xuống đất cười: \"Sư phụ lại nương tay.\"",
+        "when": {
+          "affinityMin": 70
+        }
+      }
     ],
     "sparLose": [
       "{npc} bất ngờ phản đòn trúng vai ngươi. Ngươi cười khổ, thầm nhận đồ đệ đã khá hơn nhiều.",
-      "Ngươi sơ ý lộ một chỗ hở, {npc} lập tức nắm lấy. Ngươi thua nửa chiêu, thấy vui nhiều hơn thấy xấu hổ."
+      "Ngươi sơ ý lộ một chỗ hở, {npc} lập tức nắm lấy. Ngươi thua nửa chiêu, thấy vui nhiều hơn thấy xấu hổ.",
+      "{npc} dùng một chiêu ngươi chưa từng dạy. Thua rồi, ngươi vẫn hỏi đồ đệ học ở đâu.",
+      "Ngươi định ra vẻ cao thâm, chân trượt trên rêu. {npc} cố nhịn cười mà không nổi.",
+      "Hai bên ngang ngửa tới chiêu cuối, {npc} nhanh hơn một hơi thở. Ngươi gật đầu, không nói gì, mà trong lòng mở hội."
     ],
     "debateWin": [
       "Ngươi cùng {npc} luận đạo suốt đêm. Mỗi người bẻ một câu hỏi, cuối cùng cùng thông một chỗ trước nay vướng.",
-      "{npc} hỏi vì sao đạo phải đi con đường này. Ngươi trả lời đến câu thứ ba thì chính mình cũng thấy thêm một tầng."
+      "{npc} hỏi vì sao đạo phải đi con đường này. Ngươi trả lời đến câu thứ ba thì chính mình cũng thấy thêm một tầng.",
+      "Hai thầy trò ngồi dưới gốc tùng bàn chữ \"tĩnh\". Gió thổi qua, cả hai cùng im lặng, rồi cùng mỉm cười.",
+      "{npc} đem một câu trong kinh cũ ra hỏi vặn. Ngươi giải xong, chợt thấy câu ấy còn một nghĩa nữa.",
+      "Ngươi vẽ trên cát một vòng tròn. {npc} nhìn rất lâu rồi xóa đi một nửa. Ngươi gật đầu: đúng thế."
     ],
     "debateFail": [
       "Hai thầy trò tranh luận mãi mà chẳng ra kết luận. Trời sáng, cả hai ngáp dài.",
-      "{npc} hỏi một câu ngươi chưa nghĩ ra. Ngươi nhờ vậy biết mình còn thiếu chỗ nào."
+      "{npc} hỏi một câu ngươi chưa nghĩ ra. Ngươi nhờ vậy biết mình còn thiếu chỗ nào.",
+      "Hai người cãi nhau về chữ \"vô\" tới mức quên cả bữa. Cuối cùng chỉ thống nhất được là đói.",
+      "Ngươi giảng một hồi, {npc} gật gù. Hỏi lại thì hóa ra đồ đệ đã ngủ từ đoạn giữa.",
+      "{npc} đưa ra một lẽ ngươi không bác được mà cũng không chịu. Hai thầy trò hẹn năm sau luận tiếp."
     ],
     "technique": [
       "Ngươi truyền lại {technique} cho {npc}, từng câu khẩu quyết, từng thế vận khí. {npc} quỳ xuống bái tạ.",

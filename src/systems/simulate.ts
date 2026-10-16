@@ -74,6 +74,24 @@ export interface LifeResult {
   traits: string[];
   ending: string | null;
   special: string[];
+  /** 9.3: log lines, how many repeat an earlier line of the same life (numbers ignored), the most repeated. */
+  lines?: number;
+  repeatLines?: number;
+  topLines?: [string, number][];
+}
+
+/** 9.3: log lines of a life, counted with numbers blanked so "+12 linh thạch" and "+15 linh thạch" match. */
+function lineRepeats(state: GameState): { lines: number; repeatLines: number; topLines: [string, number][] } {
+  const counts = new Map<string, number>();
+  let lines = 0;
+  for (const y of state.log) for (const l of y.lines) {
+    lines++;
+    const k = l.text.replace(/\d+/g, '#');
+    counts.set(k, (counts.get(k) ?? 0) + 1);
+  }
+  const repeatLines = [...counts.values()].reduce((n, c) => n + c - 1, 0);
+  const topLines = [...counts.entries()].filter(([, c]) => c > 1).sort((a, b) => b[1] - a[1]).slice(0, 5);
+  return { lines, repeatLines, topLines };
 }
 
 export interface SimOptions {
@@ -208,6 +226,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     traits: [...s.traits],
     ending: lifeEnding(s, content, 1),
     special: s.special?.ids ?? [],
+    ...lineRepeats(s),
   };
 }
 
@@ -279,6 +298,9 @@ export interface Report {
   /** 9.S1: Tình tiết đặc biệt hiếm drawn (share, mean age, Kim Đan share), and the share of lives with any. */
   bySpecial: Record<string, Group>;
   specialAny: number;
+  /** 9.3: share of log lines that repeat an earlier line of the same life; the lines repeated most (total uses). */
+  repeatRate?: number;
+  topLines?: [string, number][];
 }
 
 export interface Group { share: number; meanAge: number; kimDan: number }
@@ -324,6 +346,8 @@ export function summarize(results: LifeResult[], content: Content): Report {
     byTrait: groupBy(results, (r) => r.traits ?? [], n, kd),
     bySpecial: groupBy(results, (r) => r.special ?? [], n, kd),
     specialAny: n ? results.filter((r) => (r.special ?? []).length > 0).length / n : 0,
+    repeatRate: (() => { const t = results.reduce((a, r) => a + (r.lines ?? 0), 0); return t ? results.reduce((a, r) => a + (r.repeatLines ?? 0), 0) / t : 0; })(),
+    topLines: (() => { const o = new Map<string, number>(); for (const r of results) for (const [k, c] of r.topLines ?? []) o.set(k, (o.get(k) ?? 0) + c); return [...o.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5); })(),
     byEnding: (() => { const o: Record<string, number> = {}; for (const r of results) if (r.ending) o[r.ending] = (o[r.ending] ?? 0) + 1 / n; return o; })(),
     stonesLeft: (() => {
       const st = results.map((r) => r.stonesLeft).sort((a, b) => a - b);
@@ -388,6 +412,7 @@ export function formatReport(rep: Report, content: Content, title: string): stri
     // 9.R12: tiên duyên gates and kết cục.
     'Cổng tiên duyên mở: ' + (Object.entries(rep.byGate ?? {}).sort((a, b) => b[1] - a[1]).map(([g, v]) => `${g} ${p(v)}`).join(', ') || 'không'),
     `Thiên cơ biến động: ${p(rep.specialAny ?? 0)} số đời` + (Object.keys(rep.bySpecial ?? {}).length ? ' (' + Object.entries(rep.bySpecial).map(([id, g]) => `${id} ${p(g.share)}`).join(', ') + ')' : ''),
+    `Câu lặp trong nhật ký: ${p(rep.repeatRate ?? 0)} số dòng` + ((rep.topLines ?? []).length ? '; lặp nhiều nhất: ' + rep.topLines!.map(([t, c]) => `"${t.slice(0, 50)}" ×${c}`).join(', ') : ''),
     'Kết cục: ' + Object.entries(rep.byEnding ?? {}).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([e, v]) => `${e} ${p(v)}`).join(', '),
   ];
   return lines.join('\n');

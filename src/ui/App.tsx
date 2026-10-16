@@ -28,6 +28,8 @@ import { applyPrefs, loadPrefs, type Prefs } from './prefs';
 import { setGentle } from '../systems/options';
 import { chooseVariant, seeSpecial } from '../systems/specialOrigin';
 import { ThienCoScreen } from './screens/ThienCo';
+import { NhapDaoScreen } from './screens/NhapDao';
+import { seeTier, syncTier } from '../systems/tiers';
 import { CreateCharacterScreen } from './screens/CreateCharacter';
 import { DeathScreen } from './screens/Death';
 import { DestinyRollScreen } from './screens/DestinyRoll';
@@ -161,6 +163,8 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
   useEffect(() => applyPrefs(prefs), [prefs]);
   // The gentle switch follows the setting for whichever life is on screen.
   useEffect(() => { if (life && !!life.options?.gentle !== prefs.gentle) setLife(setGentle(life, prefs.gentle)); }, [life?.seed, prefs.gentle]);
+  // 9.1: an action (breakthrough, kỳ vật, joining a career…) may change the tầng or lối sống.
+  useEffect(() => { if (life) { const s = syncTier(life, content); if (s !== life) setLife(s); } }, [life]);
   const toggleTheme = () => setTheme(nextThemePref);
 
   // Autosave: every change to a confirmed life (each year, choice, family action).
@@ -374,6 +378,10 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         onRewind={() => { setLife(rewind(life, content)); setScreen('main'); }}
         onRebirth={() => openRebirth('death')} />
     );
+  }
+  // 9.1: entering a new tầng (nhập đạo) gets its own full screen, once.
+  if (screen === 'main' && life?.tierScreen && life.alive) {
+    return <NhapDaoScreen state={life} content={content} onContinue={() => setLife(seeTier(life))} />;
   }
   // 9.S1: a Tình tiết đặc biệt hiếm is shown once before the first year.
   if (screen === 'main' && life?.special && !life.special.seen) {

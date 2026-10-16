@@ -43,26 +43,142 @@
     "noChild": "Năm nay vẫn chưa có tin vui. Duyên con cái, cưỡng cầu không được.",
     "childRoot": "{child} lên {age} tuổi, thử linh căn: {root}.",
     "childNoRoot": "{child} lên {age} tuổi, thử linh căn: không có. Làm phàm nhân cũng tốt.",
-    "company": [
-      "Ngươi gác việc một hôm, cùng {npc} pha ấm trà, nói chuyện trên trời dưới biển. Hóa ra người ấy còn nhớ cả chuyện vặt ngươi kể từ lâu lắm.",
-      "Hai người đi dạo bờ suối tới tối. {npc} nhặt một hòn sỏi tròn, bảo ngươi giữ lấy.",
-      "Ngươi xuống bếp nấu một bữa. Cơm hơi khê, {npc} vẫn ăn hết, còn khen.",
-      "Đêm trăng, {npc} tựa vai ngươi ngủ quên. Ngươi ngồi yên tới sáng, chân tê rần.",
-      "Cùng {npc} ra chợ, mua một cây trâm rẻ tiền. Người ấy cài lên tóc cả tháng.",
-      "{npc} kể chuyện thuở nhỏ, ngươi kể chuyện thuở nhỏ. Cười tới mức hàng xóm sang gõ cửa.",
-      "Ngươi đọc cho {npc} nghe một đoạn sách cũ. Người ấy nghe tới quên cả uống trà.",
-      "Trời mưa, hai người ngồi dưới hiên chia nhau một chiếc bánh nướng. {npc} bảo hóa ra mưa cũng dễ chịu.",
-      "Ngươi cùng {npc} trồng một luống rau thơm. Cả hai cãi nhau xem nên gieo hạt nào trước.",
-      "{npc} chỉnh lại cổ áo cho ngươi trước lúc ra cửa, tay ngừng một thoáng lâu hơn cần thiết."
-    ],
-    "dualCult": [
-      "Ngươi và {npc} ngồi đối diện, linh khí hai người quấn lấy nhau như hai sợi chỉ cùng một cuộn. Cả hai đều tiến thêm một bước.",
-      "Hai người ngồi đối diện, nhịp thở dần đồng điệu. Linh khí đi một vòng qua cả hai rồi trở về đan điền, ấm như lò than mùa đông.",
-      "{npc} nắm tay ngươi dẫn khí vào kinh mạch. Ngươi thấy một chỗ tắc lâu năm khẽ thông ra.",
-      "Đêm đó hai người luyện chung một bộ khẩu quyết, mỗi người sai một chỗ, chỗ sai của người này lại vừa bù cho người kia.",
-      "Linh khí của ngươi nóng, của {npc} mát. Quyện vào nhau thành một dòng ôn hòa, cả hai đều tiến thêm một chút.",
-      "Song tu xong, {npc} lau mồ hôi cho ngươi, nói đùa rằng lần sau phải thắp thêm nén hương cho trang trọng."
-    ],
+    "company": {
+      "linesShare": 0.35,
+      "lines": [
+        "Ngươi gác việc một hôm, cùng {npc} pha ấm trà, nói chuyện trên trời dưới biển. Hóa ra người ấy còn nhớ cả chuyện vặt ngươi kể từ lâu lắm.",
+        "Hai người đi dạo bờ suối tới tối. {npc} nhặt một hòn sỏi tròn, bảo ngươi giữ lấy.",
+        "Ngươi xuống bếp nấu một bữa. Cơm hơi khê, {npc} vẫn ăn hết, còn khen.",
+        "Đêm trăng, {npc} tựa vai ngươi ngủ quên. Ngươi ngồi yên tới sáng, chân tê rần.",
+        "Cùng {npc} ra chợ, mua một cây trâm rẻ tiền. Người ấy cài lên tóc cả tháng.",
+        "{npc} kể chuyện thuở nhỏ, ngươi kể chuyện thuở nhỏ. Cười tới mức hàng xóm sang gõ cửa.",
+        "Ngươi đọc cho {npc} nghe một đoạn sách cũ. Người ấy nghe tới quên cả uống trà.",
+        "Trời mưa, hai người ngồi dưới hiên chia nhau một chiếc bánh nướng. {npc} bảo hóa ra mưa cũng dễ chịu.",
+        "Ngươi cùng {npc} trồng một luống rau thơm. Cả hai cãi nhau xem nên gieo hạt nào trước.",
+        "{npc} chỉnh lại cổ áo cho ngươi trước lúc ra cửa, tay ngừng một thoáng lâu hơn cần thiết."
+      ],
+      "parts": [
+        [
+          "Ngươi gác việc một hôm.",
+          "Trời vừa tạnh mưa.",
+          "Sáng sớm, sương còn đọng trên mái.",
+          "Chiều tà, gió từ núi thổi xuống mát rượi.",
+          "Hôm ấy chợ phiên, người đông như hội.",
+          "Đêm trăng sáng như rửa.",
+          "Mùa này hoa trong vườn nở rộ.",
+          "Ngươi về nhà sớm hơn thường lệ."
+        ],
+        [
+          "Ngươi cùng {npc} pha một ấm trà, nói chuyện trên trời dưới biển.",
+          "Hai người dạo bờ suối, đếm đá cuội.",
+          "{npc} kéo ngươi ra chợ, mặc cả từng đồng.",
+          "Ngươi đọc sách, {npc} ngồi vá áo bên cạnh.",
+          "Hai người leo lên đồi sau nhà ngắm mây.",
+          "Ngươi xuống bếp nấu một bữa, {npc} đứng chỉ trỏ.",
+          "{npc} dạy ngươi một khúc hát quê nhà, ngươi hát lệch tông.",
+          "Hai người ngồi dưới hiên nghe mưa rơi trên lá chuối.",
+          {
+            "text": "{npc} vẫn còn giận chuyện cũ, nói ít hơn thường.",
+            "when": {
+              "affinityMax": 40
+            }
+          },
+          {
+            "text": "{npc} ngồi xa một chút, nhưng vẫn ngồi lại.",
+            "when": {
+              "affinityMax": 40
+            }
+          },
+          {
+            "text": "{npc} tựa đầu vào vai ngươi, chẳng cần nói gì.",
+            "when": {
+              "affinityMin": 75
+            }
+          },
+          {
+            "text": "{npc} gọi ngươi bằng cái tên chỉ hai người biết.",
+            "when": {
+              "affinityMin": 75
+            }
+          }
+        ],
+        [
+          "Về tới nhà, lòng ngươi nhẹ hẳn.",
+          "{npc} cười suốt dọc đường về.",
+          "Chẳng có gì to tát, mà ngươi nhớ mãi.",
+          "Lúc chia tay ở cửa, {npc} còn ngoái lại.",
+          "Ngươi chợt nghĩ, tu tiên để làm gì nếu không có những ngày như thế.",
+          "Hôm sau {npc} vẫn còn nhắc.",
+          {
+            "text": "Ngươi thấy mình nên ở nhà nhiều hơn.",
+            "when": {
+              "moodMax": 35
+            }
+          },
+          {
+            "text": "Bao nhiêu phiền muộn mấy tháng nay vơi đi một nửa.",
+            "when": {
+              "moodMax": 35
+            }
+          },
+          {
+            "text": "Ngươi nhận ra tóc {npc} đã điểm bạc, mà nụ cười vẫn như xưa.",
+            "when": {
+              "ageMin": 50
+            }
+          }
+        ]
+      ]
+    },
+    "dualCult": {
+      "linesShare": 0.3,
+      "lines": [
+        "Ngươi và {npc} ngồi đối diện, linh khí hai người quấn lấy nhau như hai sợi chỉ cùng một cuộn. Cả hai đều tiến thêm một bước.",
+        "Hai người ngồi đối diện, nhịp thở dần đồng điệu. Linh khí đi một vòng qua cả hai rồi trở về đan điền, ấm như lò than mùa đông.",
+        "{npc} nắm tay ngươi dẫn khí vào kinh mạch. Ngươi thấy một chỗ tắc lâu năm khẽ thông ra.",
+        "Đêm đó hai người luyện chung một bộ khẩu quyết, mỗi người sai một chỗ, chỗ sai của người này lại vừa bù cho người kia.",
+        "Linh khí của ngươi nóng, của {npc} mát. Quyện vào nhau thành một dòng ôn hòa, cả hai đều tiến thêm một chút.",
+        "Song tu xong, {npc} lau mồ hôi cho ngươi, nói đùa rằng lần sau phải thắp thêm nén hương cho trang trọng."
+      ],
+      "parts": [
+        [
+          "Đêm khuya, tĩnh thất chỉ còn một ngọn đèn.",
+          "Trên đỉnh núi, linh khí sáng sớm dày đặc.",
+          "Hai người ngồi đối diện trên bồ đoàn.",
+          "Giữa mùa đông, ngoài cửa tuyết rơi lặng lẽ.",
+          "Bên suối nước nóng sau núi, hơi nước mờ mịt.",
+          "Trận pháp tụ linh vừa khởi, bốn phía sáng nhạt."
+        ],
+        [
+          "Linh khí hai người quấn lấy nhau như hai sợi chỉ cùng một cuộn.",
+          "Nhịp thở dần đồng điệu, linh khí đi một vòng qua cả hai.",
+          "{npc} dẫn khí vào kinh mạch ngươi, một chỗ tắc khẽ thông ra.",
+          "Khí của ngươi nóng, của {npc} mát, quyện lại thành một dòng ôn hòa.",
+          "Hai người cùng niệm một bộ khẩu quyết, chỗ sai của người này bù cho người kia.",
+          "Thần thức hai bên chạm nhau, như hai giọt nước nhập làm một.",
+          {
+            "text": "Hai người còn ngại ngùng, linh khí đi chậm và dè dặt.",
+            "when": {
+              "affinityMax": 50
+            }
+          },
+          {
+            "text": "Đã quen nhau quá, chẳng cần nói, linh khí tự tìm đường.",
+            "when": {
+              "affinityMin": 80
+            }
+          }
+        ],
+        [
+          "Cả hai đều tiến thêm một bước.",
+          "Mở mắt ra, trời đã sáng.",
+          "{npc} lau mồ hôi cho ngươi, nói đùa lần sau phải thắp hương cho trang trọng.",
+          "Đan điền ấm như lò than mùa đông.",
+          "Ngươi thấy con đường phía trước sáng thêm một chút.",
+          "Xong việc, {npc} ngủ quên trên vai ngươi."
+        ]
+      ]
+    },
     "reconcileYes": "Ngươi nấu bát canh người ấy thích, đặt xuống bàn, nói một câu \"Là ta sai\". {npc} cầm thìa lên. Thế là xong.",
     "reconcileNo": "Ngươi muốn làm lành, {npc} chỉ \"ừ\" một tiếng rồi quay đi. Tường trong nhà dường như dày thêm.",
     "divorce": "Ngươi và {npc} viết thư hòa ly, mỗi người cầm một bản. Không ai khóc, cũng không ai nói câu nào thừa.",

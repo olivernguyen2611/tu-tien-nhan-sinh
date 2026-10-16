@@ -114,6 +114,10 @@
         },
         "success": {
           "text": "Ngươi kéo được hai đứa trẻ lên mái nhà. Cả làng nhớ ơn.",
+          "variants": [
+            "Ngươi lội nước tới ngực, cõng một bà lão ra khỏi nhà sập. Bà gọi ngươi là con suốt mấy năm.",
+            "Ngươi chặt cây làm bè, chở được năm người qua dòng nước xiết."
+          ],
           "effects": {
             "karma": 6,
             "stat.charm": 3

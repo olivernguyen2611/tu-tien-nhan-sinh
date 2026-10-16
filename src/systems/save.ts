@@ -13,8 +13,9 @@ import { BASIC_KNOWLEDGE } from './knowledge';
 /**
  * v2: after the per-version steps in `migrate`, missing fields are backfilled from a fresh life (`backfillLife`).
  * v3: a special body no longer stands in for the root; old "thể chất" lives get an ordinary root back (`restoreRoots`).
+ * v4: tầng (9.1): an older life is put in Phàm gian, or Tu chân giới when it already has a realm (`placeTier`).
  */
-export const SAVE_VERSION = 3;
+export const SAVE_VERSION = 4;
 export const SLOT_COUNT = 9;
 const KEY_PREFIX = 'bachthe.save.';
 const META_KEY = 'bachthe.meta';
@@ -228,6 +229,13 @@ function restoreRoots(life: GameState): GameState {
   return out;
 }
 
+/** SaveVersion 4: the tầng an older life is in, from its realm (ids as when v4 was made); no nhập đạo screen. */
+function placeTier(life: GameState): GameState {
+  if (life.tier !== undefined) return life;
+  const cultivator = life.cult.realm !== 'pham_nhan';
+  return { ...life, tier: cultivator ? 'tu_chan' : 'pham_gian', tierHistory: cultivator ? { pham_gian: 0, tu_chan: life.character.age } : { pham_gian: 0 }, tierScreen: null };
+}
+
 function migrateSteps(save: SaveFile): SaveFile {
   // Fields added within saveVersion 1 get their empty defaults.
   let life = save.life as GameState & { extremes?: GameState['extremes'] };
@@ -330,7 +338,7 @@ function migrateSteps(save: SaveFile): SaveFile {
       },
     };
   }
-  life = restoreRoots(splitBody(life));
+  life = placeTier(restoreRoots(splitBody(life)));
   // 9.R4d: no mass root test any more: an untested life drops the booked visit (the tiên duyên gates take over).
   const booked = life.events.followUps.filter((f) => /^thu_linh_can/.test(f.event));
   if (!life.cult.root && booked.length) life = { ...life, events: { ...life.events, followUps: life.events.followUps.filter((f) => !booked.includes(f)) } };

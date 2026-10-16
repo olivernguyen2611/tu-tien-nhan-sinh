@@ -7,6 +7,7 @@ import type { GameState, Tone } from '../core/types';
 import { applyOutcome, checkChance } from './events/engine';
 import { fingerAwake, fingerDef } from './goldenFinger';
 import { removeItems } from './items';
+import { outcomeText } from './textPool';
 
 export interface FingerActionView {
   id: string;
@@ -54,7 +55,8 @@ export function doFingerAction(state: GameState, content: Content, actionId: str
   // 9.R3a: the price is paid whatever the result; the item is used up.
   if (action.needItem) marked = removeItems(marked, [action.needItem]);
   if (action.cost) marked = applyOutcome(marked, content, { text: '', effects: action.cost }, rng).state;
-  const r = applyOutcome(marked, content, outcome, rng);
+  const worded = outcomeText(marked, content, `finger.${action.id}.${success === false ? 'f' : 's'}`, outcome, rng);
+  const r = applyOutcome(worded.state, content, { ...outcome, text: worded.text }, rng);
   const tone: Tone = success === false ? 'bad' : 'rare';
   const text = `${action.name}: ${r.text}`;
   const log = r.state.log.slice();

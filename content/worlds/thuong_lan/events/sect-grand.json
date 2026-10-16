@@ -616,6 +616,11 @@
         },
         "success": {
           "text": "Khán giả vỗ tay, một vị khách tông bạn xin ngươi chỉ vài chiêu.",
+          "variants": [
+            "Ngươi múa xong, dưới đài im phăng phắc rồi vỡ òa. Tông chủ khẽ gật đầu.",
+            "Một chiêu thu kiếm gọn gàng, đám đệ tử nhỏ dưới đài bắt chước suốt mấy ngày.",
+            "Khách tông bạn hỏi tên công pháp, ngươi cười không nói. Họ về còn bàn tán."
+          ],
           "effects": {
             "sectContribution": 20,
             "reputation": {
@@ -638,6 +643,10 @@
         "text": "Ngồi nghe giảng cả ba ngày",
         "result": {
           "text": "Ngươi ghi chép đầy ba cuốn sổ, mắt thâm quầng mà lòng vui.",
+          "variants": [
+            "Xem đủ ba mươi trận, ngươi rút ra được hai chiêu đáng học.",
+            "Ngươi ngồi hàng đầu, bị kiếm khí thổi bay mũ, mà chép được cả bộ bộ pháp."
+          ],
           "effects": {
             "cultProgress": 4,
             "stat.intellect": 1,
@@ -673,6 +682,9 @@
         "text": "Trông quán trà lo hậu cần",
         "result": {
           "text": "Ngươi bận từ sáng tới tối, chẳng xem được trận nào, nhưng chấp sự ghi công.",
+          "variants": [
+            "Ngươi khuân bàn ghế ba ngày liền. Đại hội xong, tay chai mà công trạng dày."
+          ],
           "effects": {
             "sectContribution": 12,
             "stat.health": -2,

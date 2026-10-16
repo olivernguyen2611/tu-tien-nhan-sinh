@@ -1,5 +1,6 @@
 // Việc làm với người quen theo mức thân (task 9.0.3, content/npc-acts.json): quen thì trò chuyện, bạn thì
 // rượu và ngao du, thân thì tâm sự và xin chỉ điểm, thù thì dò la, cầu hòa, đối đầu. Mỗi việc một lần mỗi năm.
+import { drawText } from './textPool';
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { NpcAct } from '../core/schemas';
@@ -58,10 +59,11 @@ export function doNpcAct(state: GameState, content: Content, npcId: string, actI
   const won = !act.check || rng.chance(checkChance(state, content, act.check.stat, act.check.difficulty));
   const out = won ? act.success : act.fail!;
   const gain = rng.int(out.affinity[0], out.affinity[1]);
-  const text = rng.pick(out.texts).replaceAll('{npc}', n.name).replaceAll('{name}', state.character.name);
+  const drawn = drawText(state, content, `npcAct.${actId}.${won ? 'win' : 'fail'}`, out.texts, { affinity: n.affinity }, rng);
+  const text = drawn.text.replaceAll('{npc}', n.name).replaceAll('{name}', state.character.name);
   const silver = won && act.silver ? rng.int(act.silver[0], act.silver[1]) : 0;
 
-  let s = applyNumbers(state, out.effects);
+  let s = applyNumbers(drawn.state, out.effects);
   s = { ...s, money: { ...s.money, silver: Math.max(0, s.money.silver - act.cost + silver) } };
   s = { ...s, npcs: s.npcs.map((x) => (x.id === npcId ? { ...x, lastActs: { ...x.lastActs, [actId]: state.character.age } } : x)) };
   s = changeNpc(s, content, npcId, { affinity: gain, grudge: won ? -act.grudgeEase : 0, reveal: won && act.reveal });

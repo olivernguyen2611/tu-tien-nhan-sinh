@@ -121,6 +121,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   const originFiles: { file: string; origins: SpecialOrigin[] }[] = [];
   let systemsFile: { file: string; data: SystemFile } | null = null;
   const trungSinhFiles: { file: string; data: TrungSinhFile }[] = [];
+  const worldDefs = new Map<string, World>();
   const thanDaoFiles: { file: string; data: ThanDaoFile }[] = [];
   const gateFiles: { file: string; gates: ImmortalGate[] }[] = [];
   /** 9.R5b: things that wait for a Sổ tri thức entry. */
@@ -211,6 +212,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === WorldSchema && (parsed.data as World).id !== splitWorldPath(file).worldId) {
       problems.push({ file, level: 'error', message: `id thế giới "${(parsed.data as World).id}" phải trùng tên thư mục` });
     }
+    if (schema === WorldSchema) worldDefs.set(splitWorldPath(file).worldId ?? '', parsed.data as World);
     if (schema === WorldSchema && (parsed.data as World).rootTestEvent) rootTests.push({ file, event: (parsed.data as World).rootTestEvent! });
     if (schema === OriginFileSchema) {
       for (const o of parsed.data as Origin[]) if (o.requiresKnowledge) knowledgeRefs.push({ file, what: `xuất thân "${o.id}"`, id: o.requiresKnowledge });
@@ -412,7 +414,11 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   // 9.R7e: events that wait for a sự kiện thiên hạ name one that exists.
   const worldEventIds = new Set(worldEventFiles.flatMap((f) => f.events.map((e) => e.id)));
   for (const { file, event } of events) {
+    // 9.1: tầng and lối sống named by an event exist in its world.
+    const wd = worldDefs.get(splitWorldPath(file).worldId ?? '');
     for (const c of [event.conditions, ...event.choices.map((ch) => ch.requires ?? {})]) {
+      for (const t of [...(c.tier ?? []), ...(c.minTier ? [c.minTier] : []), ...(c.maxTier ? [c.maxTier] : [])]) if (wd && !wd.tiers.some((x) => x.id === t)) problems.push({ file, level: 'error', message: `sự kiện "${event.id}" nhắc tầng lạ "${t}"` });
+      for (const l of c.lifestyle ?? []) if (wd && !wd.lifestyles.some((x) => x.id === l)) problems.push({ file, level: 'error', message: `sự kiện "${event.id}" nhắc lối sống lạ "${l}"` });
       for (const w of c.worldEvent?.id ?? []) if (!worldEventIds.has(w)) problems.push({ file, level: 'error', message: `sự kiện "${event.id}" chờ sự kiện thiên hạ lạ "${w}"` });
     }
   }

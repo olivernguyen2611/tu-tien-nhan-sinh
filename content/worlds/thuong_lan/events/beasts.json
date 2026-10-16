@@ -22,6 +22,11 @@
         "text": "Cầm đao đi săn",
         "result": {
           "text": "Ngươi lần theo vết máu vào rừng.",
+          "variants": [
+            "Vết máu yêu thú còn ấm. Ngươi siết chặt cán đao, bước vào rừng sâu.",
+            "Ngươi đi theo tiếng gầm, càng vào sâu càng lạnh gáy.",
+            "Dân làng chỉ đường tới bìa rừng rồi dừng lại. Đoạn sau ngươi đi một mình."
+          ],
           "effects": {},
           "fight": {
             "foe": {
