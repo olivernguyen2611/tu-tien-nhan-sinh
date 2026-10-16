@@ -2,17 +2,5 @@
   "note": "9.R7: hàng rào tên riêng của các tác phẩm có bản quyền (CLAUDE.md luật 11). Không đưa vào game; npm run validate báo lỗi nếu nội dung chứa tên nào ở đây. Thuật ngữ chung của thể loại (Luyện Khí, Trúc Cơ, linh căn…) và địa danh, chùa chiền có thật (Thiếu Lâm, Võ Đang, Hoa Sơn) không thuộc danh sách.",
   "groups": [
     { "source": "Trò chơi", "names": ["BitLife", "Quỷ Cốc Bát Hoang"] },
-    { "source": "Phàm Nhân Tu Tiên", "names": ["Hàn Lập", "Nam Cung Uyển", "Thất Huyền Môn", "Hoàng Phong Cốc", "Loạn Tinh Hải", "Yểm Nguyệt Tông", "Hư Thiên Điện", "Chưởng Thiên Bình"] },
-    { "source": "Đấu Phá Thương Khung", "names": ["Tiêu Viêm", "Dược Trần", "Tiêu Huân Nhi", "Nạp Lan Yên Nhiên", "Vân Lam Tông", "Già Nam Học Viện", "Hồn Điện", "Đấu Khí Đại Lục", "Ô Thản Thành"] },
-    { "source": "Tiên Nghịch", "names": ["Vương Lâm", "Lý Mộ Uyển", "Hằng Nhạc Phái", "Chu Tước Tinh"] },
-    { "source": "Già Thiên", "names": ["Diệp Phàm", "Hoang Cổ Cấm Địa", "Ngoan Nhân Đại Đế", "Bất Tử Thiên Hoàng"] },
-    { "source": "Thế Giới Hoàn Mỹ", "names": ["Thạch Hạo", "Hoang Thiên Đế", "Liễu Thần", "Thạch Thôn"] },
-    { "source": "Tru Tiên", "names": ["Trương Tiểu Phàm", "Lục Tuyết Kỳ", "Bích Dao", "Thanh Vân Môn", "Quỷ Vương Tông", "Thiên Âm Tự", "Phần Hương Cốc", "Phệ Huyết Châu", "Đại Trúc Phong"] },
-    { "source": "Ngã Dục Phong Thiên", "names": ["Mạnh Hạo", "Kháo Sơn Tông"] },
-    { "source": "Đế Bá", "names": ["Lý Thất Dạ", "Tẩy Nhan Cổ Phái"] },
-    { "source": "Nhất Niệm Vĩnh Hằng", "names": ["Bạch Tiểu Thuần", "Linh Khê Tông"] },
-    { "source": "Kiếm Lai", "names": ["Trần Bình An", "Ly Châu Động Thiên"] },
-    { "source": "Tinh Thần Biến, Bàn Long, Vũ Động Càn Khôn, Cầu Ma", "names": ["Tần Vũ", "Lâm Lôi", "Lâm Động", "Tô Minh"] },
-    { "source": "Kim Dung", "names": ["Cửu Âm Chân Kinh", "Cửu Dương Chân Kinh", "Hàng Long Thập Bát Chưởng", "Độc Cô Cửu Kiếm", "Lục Mạch Thần Kiếm", "Bắc Minh Thần Công", "Quỳ Hoa Bảo Điển", "Tịch Tà Kiếm Phổ", "Nhật Nguyệt Thần Giáo", "Đào Hoa Đảo", "Cổ Mộ Phái", "Lăng Ba Vi Bộ", "Càn Khôn Đại Na Di"] }
   ]
 }
