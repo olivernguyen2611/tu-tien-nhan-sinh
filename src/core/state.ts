@@ -49,6 +49,8 @@ export interface NewLifeInput {
   pastSect?: PastSectRecord | null;
   /** 9.R9: ties past lives left (from the save meta). */
   karmaLedger?: KarmaTie[];
+  /** 9.R11: hide sensitive events (Cài đặt). */
+  gentle?: boolean;
   /** 9.R5a: Sổ tri thức entries known by past lives (from the save meta). */
   knowledge?: string[];
 }
@@ -154,6 +156,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     ownSect: null,
     pastSect: pastSectFor(input.pastSect, content),
     pastTies: pastTiesFor(input.karmaLedger),
+    options: { gentle: !!input.gentle },
     ancestry: [],
     blessings,
     rebirthTalents,
@@ -250,9 +253,9 @@ function easeHappiness(h: number, quiet: boolean, content: Content): number {
  * an event to answer, death, or a year with good/bad/rare news — or until
  * balance.fastForward.maxYears have passed.
  */
-export function fastForward(state: GameState, content: Content): GameState {
+export function fastForward(state: GameState, content: Content, maxYears = content.balance.fastForward.maxYears): GameState {
   let s = state;
-  for (let i = 0; i < content.balance.fastForward.maxYears; i++) {
+  for (let i = 0; i < maxYears; i++) {
     const next = advanceYear(s, content);
     if (next === s) break;
     s = next;

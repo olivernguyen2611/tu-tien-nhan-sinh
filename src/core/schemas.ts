@@ -819,7 +819,8 @@ export const BalanceSchema = z
       })
       .strict(),
     /** Task 1.11: "Tua nhanh" stops after at most this many years. */
-    fastForward: z.object({ maxYears: z.number().int().min(1) }).strict(),
+    /** 9.R11: choices: the years-per-press the player may pick in Cài đặt (maxYears is the default). */
+    fastForward: z.object({ maxYears: z.number().int().min(1), choices: z.array(z.number().int().min(1)).default([5, 10, 20]) }).strict(),
     aging: z
       .object({
         /** Before declineStartAge, health below recoverCap heals recoverPerYear each year. */

@@ -22,6 +22,7 @@ import { addContribution, breakPrecept, grantMaster, joinSect, leaveSect, promot
 import { startBattle } from '../combat';
 import { changeNpc, createNpc, killNpc, npcCalls, type NpcTrigger } from '../npcs';
 import { markReunion } from '../karmaLedger';
+import { hiddenByOptions } from '../options';
 import { applyRomance, romanceTarget } from '../romance';
 import { gainGoldenFinger, loseGoldenFinger, SURE_CHECK_FLAG } from '../goldenFinger';
 import { applyPastSect } from '../pastSect';
@@ -48,6 +49,7 @@ export function themeMultiplier(state: GameState, content: Content, event: GameE
 export function eventWeight(state: GameState, content: Content, event: GameEvent): number {
   if (event.npcTrigger) return 0;
   if (event.weight <= 0) return 0; // follow-up only
+  if (hiddenByOptions(state, event)) return 0;
   const last = state.events.history[event.id];
   if (last !== undefined) {
     if (event.oncePerLife) return 0;
@@ -163,7 +165,7 @@ function npcEvent(state: GameState, content: Content, rng: Rng): { npc: string; 
     if (call.trigger === 'repay' && repaidRecently(state, content)) continue;
     if (call.trigger === 'bond' && bondedRecently(state, content)) continue;
     const withNpc = { ...state, events: { ...state.events, npc: call.id } };
-    const pool = content.events.filter((e) => e.npcTrigger === call.trigger && e.weight > 0 && meets(withNpc, e.conditions, content));
+    const pool = content.events.filter((e) => e.npcTrigger === call.trigger && e.weight > 0 && !hiddenByOptions(state, e) && meets(withNpc, e.conditions, content));
     if (pool.length === 0) continue;
     return { npc: call.id, event: rng.weighted(pool, (e) => e.weight).id, trigger: call.trigger };
   }

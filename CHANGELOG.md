@@ -8,6 +8,14 @@
 
 ## [Chưa phát hành]
 
+### 9.R11: Cài đặt mở rộng (2026-10-16)
+- **Tua nhanh tối đa:** chọn 5, 10, 20 hoặc 50 năm cho mỗi lần bấm tua (danh sách ở `balance.fastForward.choices`; tua vẫn dừng ngay khi có chuyện).
+- **Cỡ chữ:** Nhỏ, Vừa, Lớn, Rất lớn (đổi cỡ chữ gốc của cả trang).
+- **Giảm chuyển động:** tắt hiệu ứng động ngay trong game, không cần chỉnh máy.
+- **Ẩn nội dung nhạy cảm** (PLAN mục H): bật thì các biến cố gắn nhãn `dark` hoặc `mature` không còn xảy ra; áp dụng cho đời đang chơi và các đời sau (`src/systems/options.ts`, `state.options.gentle`).
+- Các lựa chọn hiển thị lưu trong trình duyệt (`bachthe.prefs`). Công tắc Developer Mode đã có từ 9.R6.
+- Test: `tests/options.test.ts`.
+
 ### 9.R10: Kết cục đa dạng, Thiên Đạo Ký (2026-10-16)
 - 10 kết cục mới (tổng 27): **Hóa đạo** (Hóa Thần thọ chung với đạo tâm từ 80), **Tâm ma đoạt xác** (tu sĩ chết khi tâm ma còn nặng), **Nhập thế** (có tu vi mà sống trọn kiếp người: đạo lữ, con cái, hạnh phúc), **Võ đạo tận cùng** và **Tông sư võ lâm** (võ giả Ngũ khí, Hóa cảnh), **Đại thiện nhân**, **Phú giáp một phương**, **Ẩn sĩ**; giữ chỗ **Phi thăng thượng giới** (GĐ 14) và **Đế vương** (12.9), sẽ mở khi các phần đó xong.
 - Điều kiện cuối đời mới dùng chung cho kết cục, thành tựu, huy hiệu: `statsMin`, `heartDemonMin`, `martialMin`, `inSect`, `career`, `rooted`.

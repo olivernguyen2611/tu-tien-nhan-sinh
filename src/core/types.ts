@@ -136,6 +136,8 @@ export interface GameState {
   pastSect: PastSect | null;
   /** 9.R9: ties from past lives this life was born with; met once one has come back as an NPC (absent in older saves). */
   pastTies?: (KarmaTie & { met: boolean })[];
+  /** 9.R11: options from Cài đặt that change play (gentle: no dark or mature events); absent in older saves. */
+  options?: { gentle?: boolean };
   /**
    * Bế quan (task 4.1): the age the door opens again, and when it closed; null when not in seclusion.
    * fixed: set by an event, so reaching the peak does not end it early (the point is to sit out the years).

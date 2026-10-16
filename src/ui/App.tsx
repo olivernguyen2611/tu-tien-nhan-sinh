@@ -23,6 +23,8 @@ import { GlossaryProvider } from './components/Tooltip';
 import { browserStore, downloadText, readJsonFile } from './storage';
 import { cueFor, loadSoundPref, playCue, saveSoundPref } from './audio';
 import { applyThemePref, loadThemePref, nextThemePref, type ThemePref } from './theme';
+import { applyPrefs, loadPrefs, type Prefs } from './prefs';
+import { setGentle } from '../systems/options';
 import { CreateCharacterScreen } from './screens/CreateCharacter';
 import { DeathScreen } from './screens/Death';
 import { DestinyRollScreen } from './screens/DestinyRoll';
@@ -151,6 +153,11 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
   }, [fx]);
 
   useEffect(() => applyThemePref(theme), [theme]);
+  // 9.R11: pace, text size, motion, sensitive content.
+  const [prefs, setPrefs] = useState<Prefs>(loadPrefs);
+  useEffect(() => applyPrefs(prefs), [prefs]);
+  // The gentle switch follows the setting for whichever life is on screen.
+  useEffect(() => { if (life && !!life.options?.gentle !== prefs.gentle) setLife(setGentle(life, prefs.gentle)); }, [life?.seed, prefs.gentle]);
   const toggleTheme = () => setTheme(nextThemePref);
 
   // Autosave: every change to a confirmed life (each year, choice, family action).
@@ -278,6 +285,10 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         devMode={devMode}
         onToggleDev={toggleDev}
         onToggleSound={toggleSound}
+        prefs={prefs}
+        onPrefs={setPrefs}
+        ffChoices={content.balance.fastForward.choices}
+        ffDefault={content.balance.fastForward.maxYears}
       />
     );
   }
@@ -322,7 +333,7 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
           if (cost > readMeta(store).rebirthPoints) return;
           setOriginCost(cost);
           // Tips only for the very first life on this browser.
-          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list, rebirthTalents: readMeta(store).rebirthTalents, pastSect: readMeta(store).pastSect, karmaLedger: readMeta(store).karmaLedger, knowledge: readMeta(store).codex.knowledge,
+          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list, rebirthTalents: readMeta(store).rebirthTalents, pastSect: readMeta(store).pastSect, karmaLedger: readMeta(store).karmaLedger, gentle: prefs.gentle, knowledge: readMeta(store).codex.knowledge,
             goldenFinger: input.goldenFinger ?? rollBirthFinger(input.seed, content, readMeta(store).livesPlayed, readMeta(store).fingerPity) }, content), content));
           setScreen('destiny');
         }}
@@ -368,7 +379,7 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         content={content}
         saveWarning={saveFailed ? 'Không lưu được: trình duyệt đang chặn hoặc đầy bộ nhớ. Hãy xuất file để giữ đời này.' : null}
         onAdvance={() => setLife(life.seclusion ? runSeclusion(life, content) : advanceYear(life, content))}
-        onFastForward={() => setLife(life.seclusion ? runSeclusion(life, content) : fastForward(life, content))}
+        onFastForward={() => setLife(life.seclusion ? runSeclusion(life, content) : fastForward(life, content, prefs.ffYears ?? content.balance.fastForward.maxYears))}
         onLeisure={() => { const r = goLeisure(life, content); if (r) setLife(r.state); }}
         onSeclude={(years) => setLife(seclude(life, content, years))}
         onRentCave={(years) => { const r = rentCave(life, content, years); if (!r) return null; setLife(r.state); return r.text; }}

@@ -697,6 +697,11 @@ button { font: inherit; color: inherit; }
 .chip-btn.danger { border-color: var(--bad); color: var(--bad); }
 .btn-secondary.wide { width: 100%; }
 .settings-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.settings-row { gap: 8px; flex-wrap: wrap; }
+.settings-row > span { display: flex; flex-direction: column; }
+.settings-sub { font-size: 0.75rem; max-width: 34ch; }
+.chip-group { display: flex; flex-wrap: wrap; gap: 4px; }
+.chip-btn.on { background: var(--seal); border-color: var(--seal); color: var(--seal-ink); }
 .save-warning { margin: 0 0 8px; padding: 8px 12px; border-radius: 8px; background: var(--surface-2); color: var(--bad); font-size: 0.875rem; font-weight: 600; }
 @media (min-width: 720px) {
   .slot-card { grid-template-columns: 36px minmax(0, 1fr) auto; }
@@ -925,6 +930,14 @@ main { animation: screen-in 0.25s ease both; }
 html[data-fx]::after { content: ''; position: fixed; inset: 0; z-index: 40; pointer-events: none; box-shadow: inset 0 0 90px 24px rgb(212 170 70 / 0.55); animation: glow-pulse 1.6s ease-out both; }
 html[data-fx='death']::after { box-shadow: inset 0 0 120px 40px rgb(10 8 5 / 0.65); animation-duration: 2.2s; }
 @keyframes glow-pulse { 0% { opacity: 0; } 25% { opacity: 1; } 100% { opacity: 0; } }
+
+/* 9.R11: text size from Cài đặt (most sizes are rem). */
+html[data-font='s'] { font-size: 87.5%; }
+html[data-font='l'] { font-size: 112.5%; }
+html[data-font='xl'] { font-size: 125%; }
+/* 9.R11: "Giảm chuyển động" in Cài đặt does what the device setting below does. */
+html[data-motion='reduce'] *, html[data-motion='reduce'] *::before, html[data-motion='reduce'] *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+html[data-motion='reduce'][data-fx]::after { display: none; }
 
 /* Everything above (and the older fades) stands still for people who ask for less motion. */
 @media (prefers-reduced-motion: reduce) {
