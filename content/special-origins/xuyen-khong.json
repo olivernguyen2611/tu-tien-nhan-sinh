@@ -1,0 +1,293 @@
+[
+ {
+  "id": "xuyen_khong_diem_danh",
+  "name": "Xuyên không · Hệ thống Điểm Danh",
+  "group": "he_thong",
+  "rarity": "hiem",
+  "text": "Linh hồn ngươi từ một thế giới khác lạc tới, ký ức về nhà cao, xe sắt, màn sáng chỉ còn mơ hồ. Lúc mở mắt, trong đầu vang lên một tiếng \"đinh\". Đinh! Hệ thống Điểm Danh đã gắn kết. Mỗi năm điểm danh một lần, phần thưởng thất thường như tâm trạng của trời.",
+  "costText": "Phần thưởng thất thường; không chăm điểm danh thì chẳng được gì.",
+  "weight": 0.35,
+  "excludesFinger": true,
+  "system": "diem_danh",
+  "costs": [
+   {
+    "hook": "stat.happiness",
+    "add": -4
+   }
+  ],
+  "effects": [
+   {
+    "hook": "stat.intellect",
+    "add": 6
+   }
+  ]
+ },
+ {
+  "id": "xuyen_khong_nhiem_vu",
+  "name": "Xuyên không · Hệ thống Nhiệm Vụ",
+  "group": "he_thong",
+  "rarity": "hiem",
+  "text": "Linh hồn ngươi từ một thế giới khác lạc tới, ký ức về nhà cao, xe sắt, màn sáng chỉ còn mơ hồ. Lúc mở mắt, trong đầu vang lên một tiếng \"đinh\". Đinh! Hệ thống Nhiệm Vụ khởi động. Có việc thì làm, làm xong thì thưởng, làm hỏng thì phạt. Rất công bằng, rất phiền.",
+  "costText": "Nhiệm vụ có hạn, làm hỏng thì bị phạt.",
+  "weight": 0.35,
+  "excludesFinger": true,
+  "system": "nhiem_vu",
+  "costs": [
+   {
+    "hook": "stat.happiness",
+    "add": -4
+   }
+  ],
+  "effects": [
+   {
+    "hook": "stat.intellect",
+    "add": 6
+   }
+  ]
+ },
+ {
+  "id": "xuyen_khong_doi_tho",
+  "name": "Xuyên không · Hệ thống Đổi Thọ",
+  "group": "he_thong",
+  "rarity": "rat_hiem",
+  "text": "Linh hồn ngươi từ một thế giới khác lạc tới, ký ức về nhà cao, xe sắt, màn sáng chỉ còn mơ hồ. Lúc mở mắt, trong đầu vang lên một tiếng \"đinh\". Đinh! Hệ thống Thọ Nguyên. Thứ gì cũng có giá, mà giá rẻ nhất trên đời là những năm tháng ngươi chưa sống tới.",
+  "costText": "Điểm rẻ nhất là thọ nguyên của chính ngươi.",
+  "weight": 0.35,
+  "excludesFinger": true,
+  "system": "doi_tho",
+  "costs": [
+   {
+    "hook": "stat.happiness",
+    "add": -4
+   }
+  ],
+  "effects": [
+   {
+    "hook": "stat.intellect",
+    "add": 6
+   }
+  ]
+ },
+ {
+  "id": "xuyen_khong_thuong_thanh",
+  "name": "Xuyên không · Hệ thống Thương Thành",
+  "group": "he_thong",
+  "rarity": "hiem",
+  "text": "Linh hồn ngươi từ một thế giới khác lạc tới, ký ức về nhà cao, xe sắt, màn sáng chỉ còn mơ hồ. Lúc mở mắt, trong đầu vang lên một tiếng \"đinh\". Đinh! Thương Thành khai trương. Hàng thật giá thật, linh thạch đổi điểm, điểm đổi bảo vật, không nhận ghi nợ.",
+  "costText": "Không có tiền thì Thương Thành chỉ để ngắm.",
+  "weight": 0.35,
+  "excludesFinger": true,
+  "system": "thuong_thanh",
+  "costs": [
+   {
+    "hook": "stat.happiness",
+    "add": -4
+   }
+  ],
+  "effects": [
+   {
+    "hook": "stat.intellect",
+    "add": 6
+   }
+  ]
+ },
+ {
+  "id": "xuyen_khong_giam_dinh",
+  "name": "Xuyên không · Hệ thống Giám Định",
+  "group": "he_thong",
+  "rarity": "hiem",
+  "text": "Linh hồn ngươi từ một thế giới khác lạc tới, ký ức về nhà cao, xe sắt, màn sáng chỉ còn mơ hồ. Lúc mở mắt, trong đầu vang lên một tiếng \"đinh\". Đinh! Giám Định Thuật đã mở. Nhìn đồ biết giá, nhìn người biết lòng, nhìn gương thì… thôi đừng nhìn gương.",
+  "costText": "Không đánh nhau giỏi hơn, chỉ nhìn rõ hơn.",
+  "weight": 0.35,
+  "excludesFinger": true,
+  "system": "giam_dinh",
+  "costs": [
+   {
+    "hook": "stat.happiness",
+    "add": -4
+   }
+  ],
+  "effects": [
+   {
+    "hook": "stat.intellect",
+    "add": 6
+   }
+  ]
+ },
+ {
+  "id": "xuyen_khong_boi_toan",
+  "name": "Xuyên không · Hệ thống Bói Toán",
+  "group": "he_thong",
+  "rarity": "hiem",
+  "text": "Linh hồn ngươi từ một thế giới khác lạc tới, ký ức về nhà cao, xe sắt, màn sáng chỉ còn mơ hồ. Lúc mở mắt, trong đầu vang lên một tiếng \"đinh\". Đinh! Mỗi năm một quẻ. Quẻ không đổi được số mệnh, nhưng đổi được chỗ ngươi đặt chân.",
+  "costText": "Quẻ không đổi được mệnh, nghịch mệnh thì phải trả.",
+  "weight": 0.35,
+  "excludesFinger": true,
+  "system": "boi_toan",
+  "costs": [
+   {
+    "hook": "stat.happiness",
+    "add": -4
+   }
+  ],
+  "effects": [
+   {
+    "hook": "stat.intellect",
+    "add": 6
+   }
+  ]
+ },
+ {
+  "id": "xuyen_khong_thoi_dien",
+  "name": "Xuyên không · Hệ thống Thôi Diễn",
+  "group": "he_thong",
+  "rarity": "rat_hiem",
+  "text": "Linh hồn ngươi từ một thế giới khác lạc tới, ký ức về nhà cao, xe sắt, màn sáng chỉ còn mơ hồ. Lúc mở mắt, trong đầu vang lên một tiếng \"đinh\". Đinh! Thôi Diễn khởi động. Công pháp có chỗ sai, ta sửa; bình cảnh có chỗ hở, ta tìm. Ngươi chỉ cần chịu đau đầu.",
+  "costText": "Thôi diễn quá sức thì đau đầu, hại thân.",
+  "weight": 0.35,
+  "excludesFinger": true,
+  "system": "thoi_dien",
+  "costs": [
+   {
+    "hook": "stat.happiness",
+    "add": -4
+   }
+  ],
+  "effects": [
+   {
+    "hook": "stat.intellect",
+    "add": 6
+   }
+  ]
+ },
+ {
+  "id": "xuyen_khong_ta_than",
+  "name": "Xuyên không · Hệ thống Thiên Đạo",
+  "group": "he_thong",
+  "rarity": "rat_hiem",
+  "text": "Linh hồn ngươi từ một thế giới khác lạc tới, ký ức về nhà cao, xe sắt, màn sáng chỉ còn mơ hồ. Lúc mở mắt, trong đầu vang lên một tiếng \"đinh\". Đinh! Ta là ý chí Thiên Đạo. Ngươi được chọn để chấp hành công lý. Công lý của ta, tất nhiên.",
+  "costText": "Hệ thống nào cũng có giá. Giá của cái này, nó chưa nói.",
+  "weight": 0.2,
+  "excludesFinger": true,
+  "system": "ta_than",
+  "costs": [
+   {
+    "hook": "stat.happiness",
+    "add": -4
+   }
+  ],
+  "effects": [
+   {
+    "hook": "stat.intellect",
+    "add": 6
+   }
+  ],
+  "unlock": {
+   "livesMin": 3
+  }
+ },
+ {
+  "id": "xuyen_khong_dai_le_bao",
+  "name": "Xuyên không · Hệ thống Đại Lễ Bao",
+  "group": "he_thong",
+  "rarity": "rat_hiem",
+  "text": "Linh hồn ngươi từ một thế giới khác lạc tới, ký ức về nhà cao, xe sắt, màn sáng chỉ còn mơ hồ. Lúc mở mắt, trong đầu vang lên một tiếng \"đinh\". Đinh! Chúc mừng ký chủ! Tân thủ đại lễ bao, mở là có quà, quà nào cũng xịn, không xịn không lấy tiền!",
+  "costText": "Hệ thống nào cũng có giá. Giá của cái này, nó chưa nói.",
+  "weight": 0.2,
+  "excludesFinger": true,
+  "system": "dai_le_bao",
+  "costs": [
+   {
+    "hook": "stat.happiness",
+    "add": -4
+   }
+  ],
+  "effects": [
+   {
+    "hook": "stat.intellect",
+    "add": 6
+   }
+  ],
+  "unlock": {
+   "livesMin": 3
+  }
+ },
+ {
+  "id": "xuyen_khong_loi_he_thong",
+  "name": "Xuyên không · Hệ thống Tu Tiên",
+  "group": "he_thong",
+  "rarity": "rat_hiem",
+  "text": "Linh hồn ngươi từ một thế giới khác lạc tới, ký ức về nhà cao, xe sắt, màn sáng chỉ còn mơ hồ. Lúc mở mắt, trong đầu vang lên một tiếng \"đinh\". Đinh! Đi-i-inh! Hệ thống Tu Tiên phiên bản thử nghiệm đã gắn kết. Có thể có lỗi nhỏ. Rất nhỏ.",
+  "costText": "Hệ thống nào cũng có giá. Giá của cái này, nó chưa nói.",
+  "weight": 0.2,
+  "excludesFinger": true,
+  "system": "loi_he_thong",
+  "costs": [
+   {
+    "hook": "stat.happiness",
+    "add": -4
+   }
+  ],
+  "effects": [
+   {
+    "hook": "stat.intellect",
+    "add": 6
+   }
+  ],
+  "unlock": {
+   "livesMin": 3
+  }
+ },
+ {
+  "id": "xuyen_khong_doat_xa",
+  "name": "Xuyên không · Hệ thống Tiên Tôn",
+  "group": "he_thong",
+  "rarity": "rat_hiem",
+  "text": "Linh hồn ngươi từ một thế giới khác lạc tới, ký ức về nhà cao, xe sắt, màn sáng chỉ còn mơ hồ. Lúc mở mắt, trong đầu vang lên một tiếng \"đinh\". Đinh! Lão phu là Tiên Tôn thượng cổ, hóa thân thành hệ thống tìm người kế thừa. Ngươi rất hợp. Thân thể ngươi… rất hợp.",
+  "costText": "Hệ thống nào cũng có giá. Giá của cái này, nó chưa nói.",
+  "weight": 0.2,
+  "excludesFinger": true,
+  "system": "doat_xa",
+  "costs": [
+   {
+    "hook": "stat.happiness",
+    "add": -4
+   }
+  ],
+  "effects": [
+   {
+    "hook": "stat.intellect",
+    "add": 6
+   }
+  ],
+  "unlock": {
+   "livesMin": 3
+  }
+ },
+ {
+  "id": "xuyen_khong_khoai_lac",
+  "name": "Xuyên không · Hệ thống Tiêu Dao",
+  "group": "he_thong",
+  "rarity": "rat_hiem",
+  "text": "Linh hồn ngươi từ một thế giới khác lạc tới, ký ức về nhà cao, xe sắt, màn sáng chỉ còn mơ hồ. Lúc mở mắt, trong đầu vang lên một tiếng \"đinh\". Đinh! Tu tiên khổ quá rồi. Hệ thống Tiêu Dao giúp ký chủ vui vẻ mỗi ngày. Vui mới sống lâu, đúng không?",
+  "costText": "Hệ thống nào cũng có giá. Giá của cái này, nó chưa nói.",
+  "weight": 0.2,
+  "excludesFinger": true,
+  "system": "khoai_lac",
+  "costs": [
+   {
+    "hook": "stat.happiness",
+    "add": -4
+   }
+  ],
+  "effects": [
+   {
+    "hook": "stat.intellect",
+    "add": 6
+   }
+  ],
+  "unlock": {
+   "livesMin": 3
+  }
+ }
+]

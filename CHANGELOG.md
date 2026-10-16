@@ -8,6 +8,14 @@
 
 ## [Chưa phát hành]
 
+### 9.S2 + 9.S2b: Xuyên không và Hệ thống (2026-10-16)
+- Nhóm tình tiết **Xuyên không · Hệ thống** (12 tình tiết, `special-origins/xuyen-khong.json`): linh hồn từ thế giới khác lạc tới, ký ức mơ hồ, trong đầu có một "Hệ thống". Không đi cùng Kim Thủ Chỉ. Nút **統** trên thanh trên mở bảng Hệ thống.
+- Khung Hệ thống (`content/systems.json`, `src/systems/heThong.ts`): điểm và cấp (mỗi cấp cho hiệu ứng cả đời), **điểm danh** mỗi năm một lần, **nhiệm vụ** có hạn (đạt điều kiện thì thưởng, quá hạn thì phạt), **cửa hàng** đổi điểm (giá âm = bán thọ nguyên, bạc, linh thạch lấy điểm), **đoạn tuyệt** mất hết, không quay lại.
+- 7 hệ thống thường: Điểm Danh, Nhiệm Vụ, Đổi Thọ, Thương Thành, Giám Định, Bói Toán, Thôi Diễn.
+- 9.S2b, 5 hệ thống **hố người** (mở từ kiếp 3): Thiên Đạo Thưởng Phạt (nhiệm vụ độc ác), Đại Lễ Bao (thưởng lừa, tính lãi bằng thọ), Tu Tiên bản thử nghiệm (lỗi), Tiên Tôn Truyền Thừa (đoạt xá lúc Nguyên Anh), Tiêu Dao Khoái Lạc (gây nghiện, bỏ thì vật vã). Thưởng thường hậu hơn hệ thống thật, rải **manh mối** trong nhật ký (lời lẽ lệch, thưởng quá đẹp, nhiệm vụ trái đạo), rồi **phản bội** ở mốc cảnh giới hoặc tuổi. Đoạn tuyệt trước thì tránh được, nhưng có giá.
+- Validate: hệ thống được tình tiết nhắc tới phải có, cấp tăng dần, cấp không dùng móc một lần, vật phẩm phải có thật. Developer Mode: ép từng tình tiết (có sẵn), cộng 100 điểm, cho hệ thống phản bội ngay.
+- Test: `tests/he-thong.test.ts`.
+
 ### 9.S1: Khung Tình tiết Đặc biệt Hiếm (2026-10-16)
 - Lúc đầu thai, sau khi chốt khí vận, có xác suất nhỏ "thiên cơ biến động": đời này nhận một (đôi khi hai) tình tiết đặc biệt, hiện ở màn **Thiên cơ biến động** trước năm đầu tiên, nói rõ lợi và cái giá. **Kiếp đầu không bao giờ trúng.**
 - Dữ liệu ở `content/special-origins/*.json` (mỗi nhóm một file): nhóm (Hệ thống, Trùng sinh, Phế vật nghịch tập, Đường thành tiên, Dị số), điều kiện mở (số kiếp, Sổ tri thức, nhân quả kiếp trước), trọng số theo khí vận, loại trừ nhau, không đi cùng Kim Thủ Chỉ, cái giá, hiệu ứng, sự kiện khởi đầu. Tối đa một tình tiết "nền" mỗi đời. Số liệu ở `balance.specialOrigins` (4% mỗi đời từ kiếp thứ 2, khí vận cao thì nhiều hơn).

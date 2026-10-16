@@ -983,3 +983,7 @@ html[data-motion='reduce'][data-fx]::after { display: none; }
 .bal-bars i { display: block; height: 8px; border-radius: 4px; background: var(--jade); min-width: 2px; }
 .bal-bars b { text-align: right; font-variant-numeric: tabular-nums; }
 .bal-bars small { grid-column: 1 / -1; color: var(--muted); margin-top: -2px; }
+
+/* 9.S2 Hệ thống panel */
+.system-panel .bar { margin: 4px 0 10px; }
+.system-panel .bar > span { background: var(--gold); }

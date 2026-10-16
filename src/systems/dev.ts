@@ -3,6 +3,8 @@
 // with a [Dev] mark so a tested life is never mistaken for a real one.
 import { bringBack } from './karmaLedger';
 import { originDef, rollSpecialOrigin } from './specialOrigin';
+import { applyOutcome } from './events/engine';
+import { levelFor, systemDef } from './heThong';
 import type { Content } from '../core/content';
 import { APTITUDES, FightSchema, MORTAL_STATS } from '../core/schemas';
 import { advanceYear } from '../core/state';
@@ -294,6 +296,23 @@ export function devSpecial(state: GameState, content: Content, id: string): Game
   const s = rollSpecialOrigin(base, content, 0, id);
   const merged = state.special ? { ...s, special: { ids: [...state.special.ids, id], seen: false } } : s;
   return devLog(merged, `thiên cơ biến động: ${originDef(content, id)?.name ?? id}`);
+}
+
+/** 9.S2: add points to the bound Hệ thống (levels follow). */
+export function devSystemPoints(state: GameState, content: Content, points: number): GameState {
+  const def = systemDef(content, state.system?.id);
+  if (!state.system || !def) return state;
+  const total = state.system.points + points;
+  return devLog({ ...state, system: { ...state.system, points: total, level: Math.max(state.system.level, levelFor(def, total)) } }, `hệ thống +${points} điểm`);
+}
+
+/** 9.S2b: the trap springs now (or the system is cut off when it has none). */
+export function devSystemBetray(state: GameState, content: Content): GameState {
+  const def = systemDef(content, state.system?.id);
+  if (!state.system || !def || state.system.gone) return state;
+  if (!def.trap) return devLog({ ...state, system: { ...state.system, gone: true } }, 'hệ thống tắt');
+  const r = applyOutcome(state, content, def.trap.betray, Rng.fromState(state.rng));
+  return devLog({ ...r.state, system: { ...state.system, gone: true, task: null } }, `hệ thống phản bội: ${r.text}`);
 }
 
 /** Set or clear a flag. */

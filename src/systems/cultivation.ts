@@ -1,6 +1,7 @@
 // Cultivation (GĐ 2). Task 2.2: the spirit-root test and how a root is shown.
 // Task 2.3: yearly cultivation (PLAN.md G.1), Luyện Khí stages (G.2).
 import { specialHooks } from './specialOrigin';
+import { systemHooks } from './heThong';
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { EffectHook } from '../core/schemas';
@@ -289,6 +290,7 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
     ...comboHooks(state, content),
     // Tình tiết đặc biệt hiếm (9.S1).
     ...specialHooks(state, content),
+    ...systemHooks(state, content),
   ];
 }
 

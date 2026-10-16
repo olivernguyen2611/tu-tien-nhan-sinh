@@ -7,6 +7,7 @@ import type { GameState } from '../core/types';
 import { describeChanges } from '../systems/deltas';
 import { consumeItem } from '../systems/items';
 import { doFingerAction } from '../systems/fingerActions';
+import { doSystemAction } from '../systems/heThong';
 import { bargain, buy, sell, buyScroll, placeBid } from '../systems/market';
 import { travel } from '../systems/regions';
 import { act, settle } from '../systems/combat';
@@ -486,6 +487,12 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         }}
         onFingerAction={(actionId) => {
           const r = doFingerAction(life, content, actionId);
+          if (!r) return null;
+          setLife(checkDeath(r.state, content));
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+        }}
+        onSystemAction={(actionId) => {
+          const r = doSystemAction(life, content, actionId);
           if (!r) return null;
           setLife(checkDeath(r.state, content));
           return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };

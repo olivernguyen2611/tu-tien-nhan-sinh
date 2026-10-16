@@ -1,0 +1,2280 @@
+{
+ "systems": [
+  {
+   "id": "diem_danh",
+   "name": "Hệ thống Điểm Danh",
+   "voice": "【Điểm Danh】",
+   "text": "Đinh! Hệ thống Điểm Danh đã gắn kết. Mỗi năm điểm danh một lần, phần thưởng thất thường như tâm trạng của trời.",
+   "levels": [
+    {
+     "points": 0,
+     "name": "Sơ cấp",
+     "effects": []
+    },
+    {
+     "points": 60,
+     "name": "Trung cấp",
+     "effects": [
+      {
+       "hook": "cultivationSpeed",
+       "add": 0.05
+      }
+     ]
+    },
+    {
+     "points": 200,
+     "name": "Cao cấp",
+     "effects": [
+      {
+       "hook": "cultivationSpeed",
+       "add": 0.1
+      },
+      {
+       "hook": "breakthroughChance",
+       "add": 2
+      }
+     ]
+    },
+    {
+     "points": 500,
+     "name": "Chí tôn",
+     "effects": [
+      {
+       "hook": "cultivationSpeed",
+       "add": 0.15
+      },
+      {
+       "hook": "breakthroughChance",
+       "add": 4
+      }
+     ]
+    }
+   ],
+   "checkin": {
+    "points": 15,
+    "rewards": [
+     {
+      "weight": 5,
+      "text": "Điểm danh thành công. Thưởng: một cái bánh bao. Còn nóng.",
+      "effects": {
+       "stat.happiness": 3,
+       "stat.health": 1
+      }
+     },
+     {
+      "weight": 3,
+      "text": "Điểm danh thành công. Thưởng: Tụ Khí Đan.",
+      "effects": {
+       "addItems": [
+        "tu_khi_dan"
+       ],
+       "stat.happiness": 2
+      }
+     },
+     {
+      "weight": 2,
+      "text": "Điểm danh thành công. Thưởng: hai mươi linh thạch.",
+      "effects": {
+       "spiritStones": 20,
+       "stat.happiness": 2
+      }
+     },
+     {
+      "weight": 1,
+      "minLevel": 1,
+      "text": "Điểm danh bạo kích! Thưởng: Ngộ Đạo Trà.",
+      "effects": {
+       "addItems": [
+        "ngo_dao_tra"
+       ],
+       "stat.happiness": 5
+      }
+     },
+     {
+      "weight": 1,
+      "minLevel": 2,
+      "text": "Điểm danh bạo kích! Thưởng: Trúc Cơ Đan.",
+      "effects": {
+       "addItems": [
+        "truc_co_dan"
+       ],
+       "stat.happiness": 6
+      }
+     },
+     {
+      "weight": 0.5,
+      "minLevel": 3,
+      "text": "Điểm danh thần cấp! Thưởng: Diên Thọ Đan.",
+      "effects": {
+       "addItems": [
+        "dien_tho_dan"
+       ],
+       "stat.happiness": 8
+      }
+     }
+    ]
+   },
+   "taskChance": 0.15,
+   "tasks": [
+    {
+     "id": "dot_pha_luyen_khi",
+     "text": "Bước vào Luyện Khí.",
+     "years": 6,
+     "goal": {
+      "realm": {
+       "min": "luyen_khi"
+      }
+     },
+     "points": 30,
+     "reward": {
+      "text": "Đinh! Nhiệm vụ hoàn thành. Thưởng: một viên Tụ Khí Đan.",
+      "effects": {
+       "addItems": [
+        "tu_khi_dan"
+       ],
+       "stat.happiness": 4
+      }
+     },
+     "fail": {
+      "text": "Nhiệm vụ thất bại. Trừ điểm sinh mệnh… à không, trừ tâm trạng.",
+      "effects": {
+       "stat.happiness": -6
+      }
+     },
+     "when": {
+      "realm": {
+       "min": "pham_nhan"
+      },
+      "root": {
+       "usable": true
+      }
+     }
+    },
+    {
+     "id": "dot_pha_truc_co",
+     "text": "Trúc Cơ thành công.",
+     "years": 12,
+     "goal": {
+      "realm": {
+       "min": "truc_co"
+      }
+     },
+     "points": 80,
+     "reward": {
+      "text": "Đinh! Trúc Cơ thành công. Thưởng: Phá Chướng Đan.",
+      "effects": {
+       "addItems": [
+        "pha_chuong_dan"
+       ],
+       "stat.daoHeart": 4
+      }
+     },
+     "fail": {
+      "text": "Hết hạn. Hệ thống lắc đầu, ghi một chữ \"kém\" vào sổ.",
+      "effects": {
+       "stat.daoHeart": -4,
+       "stat.happiness": -4
+      }
+     },
+     "when": {
+      "realm": {
+       "min": "luyen_khi",
+       "max": "luyen_khi"
+      }
+     }
+    },
+    {
+     "id": "dot_pha_kim_dan",
+     "text": "Kết thành Kim Đan.",
+     "years": 25,
+     "goal": {
+      "realm": {
+       "min": "kim_dan"
+      }
+     },
+     "points": 200,
+     "reward": {
+      "text": "Đinh! Kim Đan đã thành. Thưởng: Diên Thọ Đan.",
+      "effects": {
+       "addItems": [
+        "dien_tho_dan"
+       ],
+       "stat.daoHeart": 6
+      }
+     },
+     "fail": {
+      "text": "Hết hạn. \"Ký chủ hơi chậm, nhưng không sao, ta cũng chẳng vội.\"",
+      "effects": {
+       "stat.happiness": -5
+      }
+     },
+     "when": {
+      "realm": {
+       "min": "truc_co",
+       "max": "truc_co"
+      }
+     }
+    }
+   ],
+   "shop": [
+    {
+     "id": "doi_bac",
+     "name": "Đổi bạc",
+     "text": "Ba mươi điểm đổi năm mươi lượng bạc.",
+     "cost": 30,
+     "result": {
+      "text": "Đinh! Bạc đã vào túi.",
+      "effects": {
+       "silver": 50,
+       "stat.happiness": 2
+      }
+     }
+    }
+   ],
+   "quit": {
+    "text": "Ngươi ngừng điểm danh. Hệ thống kêu \"đinh\" lần cuối, nghe như tiếng thở dài.",
+    "effects": {
+     "stat.happiness": -6,
+     "stat.daoHeart": 4
+    }
+   }
+  },
+  {
+   "id": "nhiem_vu",
+   "name": "Hệ thống Nhiệm Vụ",
+   "voice": "【Nhiệm Vụ】",
+   "text": "Đinh! Hệ thống Nhiệm Vụ khởi động. Có việc thì làm, làm xong thì thưởng, làm hỏng thì phạt. Rất công bằng, rất phiền.",
+   "levels": [
+    {
+     "points": 0,
+     "name": "Tân thủ",
+     "effects": []
+    },
+    {
+     "points": 80,
+     "name": "Thạo việc",
+     "effects": [
+      {
+       "hook": "breakthroughChance",
+       "add": 2
+      }
+     ]
+    },
+    {
+     "points": 250,
+     "name": "Lão luyện",
+     "effects": [
+      {
+       "hook": "breakthroughChance",
+       "add": 4
+      },
+      {
+       "hook": "combatPower",
+       "add": 0.05
+      }
+     ]
+    },
+    {
+     "points": 600,
+     "name": "Truyền kỳ",
+     "effects": [
+      {
+       "hook": "breakthroughChance",
+       "add": 6
+      },
+      {
+       "hook": "combatPower",
+       "add": 0.1
+      }
+     ]
+    }
+   ],
+   "taskChance": 0.5,
+   "tasks": [
+    {
+     "id": "dot_pha_luyen_khi",
+     "text": "Bước vào Luyện Khí.",
+     "years": 6,
+     "goal": {
+      "realm": {
+       "min": "luyen_khi"
+      }
+     },
+     "points": 30,
+     "reward": {
+      "text": "Đinh! Nhiệm vụ hoàn thành. Thưởng: một viên Tụ Khí Đan.",
+      "effects": {
+       "addItems": [
+        "tu_khi_dan"
+       ],
+       "stat.happiness": 4
+      }
+     },
+     "fail": {
+      "text": "Nhiệm vụ thất bại. Trừ điểm sinh mệnh… à không, trừ tâm trạng.",
+      "effects": {
+       "stat.happiness": -6
+      }
+     },
+     "when": {
+      "realm": {
+       "min": "pham_nhan"
+      },
+      "root": {
+       "usable": true
+      }
+     }
+    },
+    {
+     "id": "dot_pha_truc_co",
+     "text": "Trúc Cơ thành công.",
+     "years": 12,
+     "goal": {
+      "realm": {
+       "min": "truc_co"
+      }
+     },
+     "points": 80,
+     "reward": {
+      "text": "Đinh! Trúc Cơ thành công. Thưởng: Phá Chướng Đan.",
+      "effects": {
+       "addItems": [
+        "pha_chuong_dan"
+       ],
+       "stat.daoHeart": 4
+      }
+     },
+     "fail": {
+      "text": "Hết hạn. Hệ thống lắc đầu, ghi một chữ \"kém\" vào sổ.",
+      "effects": {
+       "stat.daoHeart": -4,
+       "stat.happiness": -4
+      }
+     },
+     "when": {
+      "realm": {
+       "min": "luyen_khi",
+       "max": "luyen_khi"
+      }
+     }
+    },
+    {
+     "id": "dot_pha_kim_dan",
+     "text": "Kết thành Kim Đan.",
+     "years": 25,
+     "goal": {
+      "realm": {
+       "min": "kim_dan"
+      }
+     },
+     "points": 200,
+     "reward": {
+      "text": "Đinh! Kim Đan đã thành. Thưởng: Diên Thọ Đan.",
+      "effects": {
+       "addItems": [
+        "dien_tho_dan"
+       ],
+       "stat.daoHeart": 6
+      }
+     },
+     "fail": {
+      "text": "Hết hạn. \"Ký chủ hơi chậm, nhưng không sao, ta cũng chẳng vội.\"",
+      "effects": {
+       "stat.happiness": -5
+      }
+     },
+     "when": {
+      "realm": {
+       "min": "truc_co",
+       "max": "truc_co"
+      }
+     }
+    },
+    {
+     "id": "hanh_thien",
+     "text": "Làm việc thiện cho đến khi nhân quả dương.",
+     "years": 5,
+     "goal": {
+      "stats": [
+       {
+        "stat": "karma",
+        "gte": 20
+       }
+      ]
+     },
+     "points": 25,
+     "reward": {
+      "text": "Đinh! Thiện báo. Thưởng: vận may.",
+      "effects": {
+       "stat.luck": 3,
+       "stat.happiness": 4
+      }
+     },
+     "fail": {
+      "text": "Nhiệm vụ thất bại. \"Lòng tốt của ký chủ… còn đang tải.\"",
+      "effects": {
+       "stat.happiness": -4
+      }
+     }
+    },
+    {
+     "id": "tich_bac",
+     "text": "Tích đủ năm trăm lượng bạc.",
+     "years": 8,
+     "goal": {
+      "stats": [
+       {
+        "stat": "silver",
+        "gte": 500
+       }
+      ]
+     },
+     "points": 25,
+     "reward": {
+      "text": "Đinh! Có của ăn của để. Thưởng: Bùa bình an.",
+      "effects": {
+       "addItems": [
+        "bua_binh_an"
+       ],
+       "stat.happiness": 5
+      }
+     },
+     "fail": {
+      "text": "Hết hạn mà túi vẫn lép. Hệ thống im lặng rất lâu.",
+      "effects": {
+       "stat.happiness": -5
+      }
+     },
+     "when": {
+      "age": {
+       "min": 14
+      }
+     }
+    },
+    {
+     "id": "ren_than",
+     "text": "Rèn thân thể cho cường tráng.",
+     "years": 6,
+     "goal": {
+      "stats": [
+       {
+        "stat": "stat.physique",
+        "gte": 60
+       }
+      ]
+     },
+     "points": 20,
+     "reward": {
+      "text": "Đinh! Thân thể đạt chuẩn. Thưởng: Huyết Khí Hoàn.",
+      "effects": {
+       "addItems": [
+        "huyet_khi_hoan"
+       ],
+       "stat.health": 4
+      }
+     },
+     "fail": {
+      "text": "Hết hạn. \"Ký chủ nên bớt nằm.\"",
+      "effects": {
+       "stat.health": -3,
+       "stat.happiness": -3
+      }
+     },
+     "when": {
+      "age": {
+       "min": 10
+      }
+     }
+    },
+    {
+     "id": "bai_son",
+     "text": "Gia nhập một tông môn.",
+     "years": 10,
+     "goal": {
+      "sect": {
+       "member": true
+      }
+     },
+     "points": 40,
+     "reward": {
+      "text": "Đinh! Có chỗ dựa rồi. Thưởng: một bình Tụ Khí Đan.",
+      "effects": {
+       "addItems": [
+        "tu_khi_dan"
+       ],
+       "stat.happiness": 5
+      }
+     },
+     "fail": {
+      "text": "Hết hạn. Vẫn là tán tu, hệ thống thở dài thay ngươi.",
+      "effects": {
+       "stat.happiness": -4
+      }
+     },
+     "when": {
+      "age": {
+       "min": 12
+      },
+      "realm": {
+       "min": "luyen_khi"
+      },
+      "sect": {
+       "member": false
+      }
+     }
+    },
+    {
+     "id": "ngo_tinh",
+     "text": "Đọc sách cho sáng dạ.",
+     "years": 5,
+     "goal": {
+      "stats": [
+       {
+        "stat": "stat.intellect",
+        "gte": 60
+       }
+      ]
+     },
+     "points": 20,
+     "reward": {
+      "text": "Đinh! Học có thành. Thưởng: Khai Trí Đan.",
+      "effects": {
+       "addItems": [
+        "khai_tri_dan"
+       ],
+       "stat.intellect": 2
+      }
+     },
+     "fail": {
+      "text": "Hết hạn. Chữ vẫn là chữ, đầu vẫn là đầu.",
+      "effects": {
+       "stat.happiness": -3
+      }
+     },
+     "when": {
+      "age": {
+       "min": 8
+      }
+     }
+    }
+   ],
+   "shop": [
+    {
+     "id": "dan_duoc",
+     "name": "Đan dược tân thủ",
+     "text": "Bốn mươi điểm đổi một viên Bổ Khí Tán.",
+     "cost": 40,
+     "result": {
+      "text": "Đinh! Đổi thành công.",
+      "effects": {
+       "addItems": [
+        "bo_khi_tan"
+       ],
+       "stat.happiness": 2
+      }
+     }
+    },
+    {
+     "id": "pha_chuong",
+     "name": "Phá Chướng Đan",
+     "text": "Hai trăm điểm đổi một viên Phá Chướng Đan.",
+     "cost": 200,
+     "result": {
+      "text": "Đinh! Đổi thành công.",
+      "effects": {
+       "addItems": [
+        "pha_chuong_dan"
+       ],
+       "stat.daoHeart": 2
+      }
+     },
+     "minLevel": 2,
+     "cooldownYears": 5
+    }
+   ],
+   "quit": {
+    "text": "Ngươi không nhận việc nữa. Hệ thống gạch tên ngươi khỏi bảng, nét gạch rất mạnh tay.",
+    "effects": {
+     "stat.happiness": -6,
+     "stat.daoHeart": 4
+    }
+   }
+  },
+  {
+   "id": "doi_tho",
+   "name": "Hệ thống Đổi Thọ",
+   "voice": "【Thọ Nguyên】",
+   "text": "Đinh! Hệ thống Thọ Nguyên. Thứ gì cũng có giá, mà giá rẻ nhất trên đời là những năm tháng ngươi chưa sống tới.",
+   "levels": [
+    {
+     "points": 0,
+     "name": "Khách lẻ",
+     "effects": []
+    },
+    {
+     "points": 100,
+     "name": "Khách quen",
+     "effects": [
+      {
+       "hook": "cultivationSpeed",
+       "add": 0.05
+      }
+     ]
+    },
+    {
+     "points": 300,
+     "name": "Khách quý",
+     "effects": [
+      {
+       "hook": "cultivationSpeed",
+       "add": 0.1
+      },
+      {
+       "hook": "bottleneckResist",
+       "add": 0.05
+      }
+     ]
+    }
+   ],
+   "taskChance": 0.1,
+   "tasks": [
+    {
+     "id": "dot_pha_truc_co",
+     "text": "Trúc Cơ thành công.",
+     "years": 12,
+     "goal": {
+      "realm": {
+       "min": "truc_co"
+      }
+     },
+     "points": 80,
+     "reward": {
+      "text": "Đinh! Trúc Cơ thành công. Thưởng: Phá Chướng Đan.",
+      "effects": {
+       "addItems": [
+        "pha_chuong_dan"
+       ],
+       "stat.daoHeart": 4
+      }
+     },
+     "fail": {
+      "text": "Hết hạn. Hệ thống lắc đầu, ghi một chữ \"kém\" vào sổ.",
+      "effects": {
+       "stat.daoHeart": -4,
+       "stat.happiness": -4
+      }
+     },
+     "when": {
+      "realm": {
+       "min": "luyen_khi",
+       "max": "luyen_khi"
+      }
+     }
+    },
+    {
+     "id": "dot_pha_kim_dan",
+     "text": "Kết thành Kim Đan.",
+     "years": 25,
+     "goal": {
+      "realm": {
+       "min": "kim_dan"
+      }
+     },
+     "points": 200,
+     "reward": {
+      "text": "Đinh! Kim Đan đã thành. Thưởng: Diên Thọ Đan.",
+      "effects": {
+       "addItems": [
+        "dien_tho_dan"
+       ],
+       "stat.daoHeart": 6
+      }
+     },
+     "fail": {
+      "text": "Hết hạn. \"Ký chủ hơi chậm, nhưng không sao, ta cũng chẳng vội.\"",
+      "effects": {
+       "stat.happiness": -5
+      }
+     },
+     "when": {
+      "realm": {
+       "min": "truc_co",
+       "max": "truc_co"
+      }
+     }
+    }
+   ],
+   "shop": [
+    {
+     "id": "ban_tho",
+     "name": "Bán năm năm thọ",
+     "text": "Bán năm năm thọ nguyên lấy năm mươi điểm.",
+     "cost": -50,
+     "result": {
+      "text": "Đinh! Năm năm của ngươi đã thuộc về ta. Tóc mai bạc thêm vài sợi.",
+      "effects": {
+       "lifespanYears": -5,
+       "stat.health": -2
+      }
+     }
+    },
+    {
+     "id": "tu_vi",
+     "name": "Đổi tu vi",
+     "text": "Sáu mươi điểm đổi một đoạn tu vi.",
+     "cost": 60,
+     "result": {
+      "text": "Đinh! Linh khí rót vào đan điền, nóng ran.",
+      "effects": {
+       "cultProgress": 40,
+       "stat.happiness": 2
+      }
+     }
+    },
+    {
+     "id": "tay_tuy",
+     "name": "Tẩy Tủy Đan",
+     "text": "Ba trăm điểm đổi một viên Tẩy Tủy Đan.",
+     "cost": 300,
+     "result": {
+      "text": "Đinh! Đổi thành công.",
+      "effects": {
+       "addItems": [
+        "tay_tuy_dan"
+       ]
+      }
+     },
+     "minLevel": 1,
+     "cooldownYears": 10
+    },
+    {
+     "id": "chuoc_tho",
+     "name": "Chuộc mười năm thọ",
+     "text": "Hai trăm điểm chuộc lại mười năm thọ nguyên.",
+     "cost": 200,
+     "result": {
+      "text": "Đinh! Thọ nguyên hoàn trả, có tính lãi.",
+      "effects": {
+       "lifespanYears": 10,
+       "stat.happiness": 4
+      }
+     },
+     "minLevel": 2,
+     "cooldownYears": 10
+    }
+   ],
+   "quit": {
+    "text": "Ngươi đóng sổ với Hệ thống Thọ Nguyên. Những năm đã bán thì không trả lại.",
+    "effects": {
+     "stat.happiness": -6,
+     "stat.daoHeart": 4
+    }
+   }
+  },
+  {
+   "id": "thuong_thanh",
+   "name": "Hệ thống Thương Thành",
+   "voice": "【Thương Thành】",
+   "text": "Đinh! Thương Thành khai trương. Hàng thật giá thật, linh thạch đổi điểm, điểm đổi bảo vật, không nhận ghi nợ.",
+   "levels": [
+    {
+     "points": 0,
+     "name": "Thành viên đồng",
+     "effects": []
+    },
+    {
+     "points": 150,
+     "name": "Thành viên bạc",
+     "effects": [
+      {
+       "hook": "priceDiscount",
+       "add": 0.05
+      }
+     ]
+    },
+    {
+     "points": 400,
+     "name": "Thành viên vàng",
+     "effects": [
+      {
+       "hook": "priceDiscount",
+       "add": 0.1
+      },
+      {
+       "hook": "incomePct",
+       "add": 0.1
+      }
+     ]
+    }
+   ],
+   "taskChance": 0.1,
+   "tasks": [
+    {
+     "id": "tich_bac",
+     "text": "Tích đủ năm trăm lượng bạc.",
+     "years": 8,
+     "goal": {
+      "stats": [
+       {
+        "stat": "silver",
+        "gte": 500
+       }
+      ]
+     },
+     "points": 25,
+     "reward": {
+      "text": "Đinh! Có của ăn của để. Thưởng: Bùa bình an.",
+      "effects": {
+       "addItems": [
+        "bua_binh_an"
+       ],
+       "stat.happiness": 5
+      }
+     },
+     "fail": {
+      "text": "Hết hạn mà túi vẫn lép. Hệ thống im lặng rất lâu.",
+      "effects": {
+       "stat.happiness": -5
+      }
+     },
+     "when": {
+      "age": {
+       "min": 14
+      }
+     }
+    }
+   ],
+   "shop": [
+    {
+     "id": "nap_bac",
+     "name": "Nạp bạc",
+     "text": "Nộp một trăm lượng bạc lấy ba mươi điểm.",
+     "cost": -30,
+     "result": {
+      "text": "Đinh! Nạp thành công. Túi nhẹ, lòng cũng nhẹ.",
+      "effects": {
+       "silver": -100
+      }
+     }
+    },
+    {
+     "id": "nap_linh_thach",
+     "name": "Nạp linh thạch",
+     "text": "Nộp năm mươi linh thạch lấy sáu mươi điểm.",
+     "cost": -60,
+     "result": {
+      "text": "Đinh! Nạp thành công.",
+      "effects": {
+       "spiritStones": -50
+      }
+     }
+    },
+    {
+     "id": "ho_than",
+     "name": "Hộ Thân Ngọc Bội",
+     "text": "Một trăm hai mươi điểm.",
+     "cost": 120,
+     "result": {
+      "text": "Đinh! Hàng đã giao, kèm lời chúc thượng lộ bình an.",
+      "effects": {
+       "addItems": [
+        "ho_than_ngoc_boi"
+       ]
+      }
+     },
+     "cooldownYears": 10
+    },
+    {
+     "id": "than_hanh",
+     "name": "Thần Hành Phù",
+     "text": "Năm mươi điểm.",
+     "cost": 50,
+     "result": {
+      "text": "Đinh! Hàng đã giao.",
+      "effects": {
+       "addItems": [
+        "than_hanh_phu"
+       ]
+      }
+     }
+    },
+    {
+     "id": "truc_co",
+     "name": "Trúc Cơ Đan",
+     "text": "Hai trăm điểm.",
+     "cost": 200,
+     "result": {
+      "text": "Đinh! Hàng đã giao.",
+      "effects": {
+       "addItems": [
+        "truc_co_dan"
+       ]
+      }
+     },
+     "minLevel": 1,
+     "cooldownYears": 5
+    },
+    {
+     "id": "ket_kim",
+     "name": "Kết Kim Đan",
+     "text": "Năm trăm điểm.",
+     "cost": 500,
+     "result": {
+      "text": "Đinh! Hàng đã giao. Xin cẩn thận, hàng dễ vỡ.",
+      "effects": {
+       "addItems": [
+        "ket_kim_dan"
+       ]
+      }
+     },
+     "minLevel": 2,
+     "cooldownYears": 10
+    }
+   ],
+   "quit": {
+    "text": "Thương Thành đóng cửa với ngươi. Điểm còn trong tài khoản xem như cúng.",
+    "effects": {
+     "stat.happiness": -6,
+     "stat.daoHeart": 4
+    }
+   }
+  },
+  {
+   "id": "giam_dinh",
+   "name": "Hệ thống Giám Định",
+   "voice": "【Giám Định】",
+   "text": "Đinh! Giám Định Thuật đã mở. Nhìn đồ biết giá, nhìn người biết lòng, nhìn gương thì… thôi đừng nhìn gương.",
+   "levels": [
+    {
+     "points": 0,
+     "name": "Nhãn lực phàm",
+     "effects": [
+      {
+       "hook": "priceDiscount",
+       "add": 0.05
+      }
+     ]
+    },
+    {
+     "points": 80,
+     "name": "Nhãn lực tinh",
+     "effects": [
+      {
+       "hook": "priceDiscount",
+       "add": 0.1
+      },
+      {
+       "hook": "eventWeight.scam",
+       "mul": 0.6
+      }
+     ]
+    },
+    {
+     "points": 250,
+     "name": "Hỏa nhãn kim tinh",
+     "effects": [
+      {
+       "hook": "priceDiscount",
+       "add": 0.15
+      },
+      {
+       "hook": "lootPct",
+       "add": 0.2
+      },
+      {
+       "hook": "eventWeight.ky_vat",
+       "mul": 1.5
+      }
+     ]
+    }
+   ],
+   "checkin": {
+    "points": 10,
+    "rewards": [
+     {
+      "weight": 4,
+      "text": "Giám định một hòn đá ven đường: đá thường. Ngươi vẫn thấy vui vì được biết.",
+      "effects": {
+       "stat.intellect": 1,
+       "stat.happiness": 1
+      }
+     },
+     {
+      "weight": 2,
+      "text": "Giám định ra một gốc linh thảo lẫn trong cỏ dại.",
+      "effects": {
+       "addItems": [
+        "linh_thao_tram_nam"
+       ],
+       "stat.happiness": 3
+      }
+     },
+     {
+      "weight": 1,
+      "minLevel": 1,
+      "text": "Giám định một cái bình cũ ngoài chợ: đồ cổ thật. Bán được giá.",
+      "effects": {
+       "silver": 120,
+       "stat.happiness": 4
+      }
+     }
+    ]
+   },
+   "taskChance": 0.1,
+   "tasks": [
+    {
+     "id": "tich_bac",
+     "text": "Tích đủ năm trăm lượng bạc.",
+     "years": 8,
+     "goal": {
+      "stats": [
+       {
+        "stat": "silver",
+        "gte": 500
+       }
+      ]
+     },
+     "points": 25,
+     "reward": {
+      "text": "Đinh! Có của ăn của để. Thưởng: Bùa bình an.",
+      "effects": {
+       "addItems": [
+        "bua_binh_an"
+       ],
+       "stat.happiness": 5
+      }
+     },
+     "fail": {
+      "text": "Hết hạn mà túi vẫn lép. Hệ thống im lặng rất lâu.",
+      "effects": {
+       "stat.happiness": -5
+      }
+     },
+     "when": {
+      "age": {
+       "min": 14
+      }
+     }
+    }
+   ],
+   "shop": [
+    {
+     "id": "nhin_nguoi",
+     "name": "Nhìn thấu một người",
+     "text": "Ba mươi điểm, lòng người bày ra như sổ sách.",
+     "cost": 30,
+     "result": {
+      "text": "Đinh! Ngươi thấy rõ mấy kẻ quanh mình nghĩ gì. Có người nên tránh xa.",
+      "effects": {
+       "stat.intellect": 2,
+       "stat.daoHeart": 2,
+       "karma": 1
+      }
+     }
+    },
+    {
+     "id": "nhin_mach",
+     "name": "Giám định linh mạch",
+     "text": "Một trăm điểm, tìm được chỗ đất tốt.",
+     "cost": 100,
+     "result": {
+      "text": "Đinh! Dưới gốc cây già có linh mạch nhỏ. Ngươi đào được một mớ linh thạch.",
+      "effects": {
+       "spiritStones": 40,
+       "stat.happiness": 3
+      }
+     },
+     "minLevel": 1,
+     "cooldownYears": 5
+    }
+   ],
+   "quit": {
+    "text": "Mắt ngươi trở lại như mắt người thường. Hóa ra thế gian mờ mờ cũng dễ chịu.",
+    "effects": {
+     "stat.happiness": -6,
+     "stat.daoHeart": 4
+    }
+   }
+  },
+  {
+   "id": "boi_toan",
+   "name": "Hệ thống Bói Toán",
+   "voice": "【Thiên Cơ】",
+   "text": "Đinh! Mỗi năm một quẻ. Quẻ không đổi được số mệnh, nhưng đổi được chỗ ngươi đặt chân.",
+   "levels": [
+    {
+     "points": 0,
+     "name": "Một quẻ",
+     "effects": [
+      {
+       "hook": "escapeChance",
+       "add": 0.05
+      }
+     ]
+    },
+    {
+     "points": 100,
+     "name": "Hai quẻ",
+     "effects": [
+      {
+       "hook": "escapeChance",
+       "add": 0.1
+      },
+      {
+       "hook": "eventWeight.mishap",
+       "mul": 0.8
+      }
+     ]
+    },
+    {
+     "points": 300,
+     "name": "Thấu thiên cơ",
+     "effects": [
+      {
+       "hook": "escapeChance",
+       "add": 0.15
+      },
+      {
+       "hook": "eventWeight.mishap",
+       "mul": 0.6
+      },
+      {
+       "hook": "eventWeight.fortune",
+       "mul": 1.3
+      }
+     ]
+    }
+   ],
+   "checkin": {
+    "points": 12,
+    "rewards": [
+     {
+      "weight": 3,
+      "text": "Quẻ cát: đi về phía đông gặp quý nhân. Ngươi đi về phía đông, gặp một bà bán bánh đúc. Cũng là quý nhân.",
+      "effects": {
+       "stat.luck": 1,
+       "stat.happiness": 3
+      }
+     },
+     {
+      "weight": 2,
+      "text": "Quẻ hung: năm nay chớ qua sông. Ngươi ở nhà cả năm, quả nhiên bình an.",
+      "effects": {
+       "stat.health": 2,
+       "stat.happiness": -1
+      }
+     },
+     {
+      "weight": 1,
+      "text": "Quẻ bình: không có gì đáng nói. Hệ thống cũng hơi ngượng.",
+      "effects": {
+       "stat.daoHeart": 1
+      }
+     },
+     {
+      "weight": 1,
+      "minLevel": 1,
+      "text": "Quẻ đại cát: trong núi có kỳ ngộ. Ngươi vào núi, nhặt được nửa túi linh thạch.",
+      "effects": {
+       "spiritStones": 25,
+       "stat.luck": 2
+      }
+     }
+    ]
+   },
+   "taskChance": 0.1,
+   "tasks": [
+    {
+     "id": "hanh_thien",
+     "text": "Làm việc thiện cho đến khi nhân quả dương.",
+     "years": 5,
+     "goal": {
+      "stats": [
+       {
+        "stat": "karma",
+        "gte": 20
+       }
+      ]
+     },
+     "points": 25,
+     "reward": {
+      "text": "Đinh! Thiện báo. Thưởng: vận may.",
+      "effects": {
+       "stat.luck": 3,
+       "stat.happiness": 4
+      }
+     },
+     "fail": {
+      "text": "Nhiệm vụ thất bại. \"Lòng tốt của ký chủ… còn đang tải.\"",
+      "effects": {
+       "stat.happiness": -4
+      }
+     }
+    }
+   ],
+   "shop": [
+    {
+     "id": "nghich_menh",
+     "name": "Nghịch mệnh một lần",
+     "text": "Hai trăm điểm, lấy vận năm sau bù cho năm nay.",
+     "cost": 200,
+     "result": {
+      "text": "Đinh! Vận khí xoay chiều. Năm sau sẽ trả giá, nhưng đó là chuyện năm sau.",
+      "effects": {
+       "stat.luck": 6,
+       "stat.health": -3
+      }
+     },
+     "minLevel": 1,
+     "cooldownYears": 8
+    }
+   ],
+   "quit": {
+    "text": "Ngươi đốt mai rùa. Từ nay mệnh ai nấy chịu.",
+    "effects": {
+     "stat.happiness": -6,
+     "stat.daoHeart": 4
+    }
+   }
+  },
+  {
+   "id": "thoi_dien",
+   "name": "Hệ thống Thôi Diễn",
+   "voice": "【Thôi Diễn】",
+   "text": "Đinh! Thôi Diễn khởi động. Công pháp có chỗ sai, ta sửa; bình cảnh có chỗ hở, ta tìm. Ngươi chỉ cần chịu đau đầu.",
+   "levels": [
+    {
+     "points": 0,
+     "name": "Thôi diễn sơ bộ",
+     "effects": [
+      {
+       "hook": "cultivationSpeed",
+       "add": 0.05
+      }
+     ]
+    },
+    {
+     "points": 120,
+     "name": "Thôi diễn tinh vi",
+     "effects": [
+      {
+       "hook": "cultivationSpeed",
+       "add": 0.1
+      },
+      {
+       "hook": "bottleneckResist",
+       "add": 0.05
+      }
+     ]
+    },
+    {
+     "points": 350,
+     "name": "Diễn hóa vạn pháp",
+     "effects": [
+      {
+       "hook": "cultivationSpeed",
+       "add": 0.15
+      },
+      {
+       "hook": "bottleneckResist",
+       "add": 0.1
+      },
+      {
+       "hook": "breakthroughChance.major",
+       "add": 4
+      }
+     ]
+    }
+   ],
+   "checkin": {
+    "points": 10,
+    "rewards": [
+     {
+      "weight": 3,
+      "text": "Thôi diễn một đêm, sửa được một chỗ vận khí sai.",
+      "effects": {
+       "cultProgress": 15,
+       "stat.comprehension": 1
+      }
+     },
+     {
+      "weight": 1,
+      "text": "Thôi diễn quá sức, đầu đau như búa bổ.",
+      "effects": {
+       "stat.health": -3,
+       "stat.comprehension": 2
+      }
+     }
+    ]
+   },
+   "taskChance": 0.15,
+   "tasks": [
+    {
+     "id": "dot_pha_luyen_khi",
+     "text": "Bước vào Luyện Khí.",
+     "years": 6,
+     "goal": {
+      "realm": {
+       "min": "luyen_khi"
+      }
+     },
+     "points": 30,
+     "reward": {
+      "text": "Đinh! Nhiệm vụ hoàn thành. Thưởng: một viên Tụ Khí Đan.",
+      "effects": {
+       "addItems": [
+        "tu_khi_dan"
+       ],
+       "stat.happiness": 4
+      }
+     },
+     "fail": {
+      "text": "Nhiệm vụ thất bại. Trừ điểm sinh mệnh… à không, trừ tâm trạng.",
+      "effects": {
+       "stat.happiness": -6
+      }
+     },
+     "when": {
+      "realm": {
+       "min": "pham_nhan"
+      },
+      "root": {
+       "usable": true
+      }
+     }
+    },
+    {
+     "id": "dot_pha_truc_co",
+     "text": "Trúc Cơ thành công.",
+     "years": 12,
+     "goal": {
+      "realm": {
+       "min": "truc_co"
+      }
+     },
+     "points": 80,
+     "reward": {
+      "text": "Đinh! Trúc Cơ thành công. Thưởng: Phá Chướng Đan.",
+      "effects": {
+       "addItems": [
+        "pha_chuong_dan"
+       ],
+       "stat.daoHeart": 4
+      }
+     },
+     "fail": {
+      "text": "Hết hạn. Hệ thống lắc đầu, ghi một chữ \"kém\" vào sổ.",
+      "effects": {
+       "stat.daoHeart": -4,
+       "stat.happiness": -4
+      }
+     },
+     "when": {
+      "realm": {
+       "min": "luyen_khi",
+       "max": "luyen_khi"
+      }
+     }
+    },
+    {
+     "id": "dot_pha_kim_dan",
+     "text": "Kết thành Kim Đan.",
+     "years": 25,
+     "goal": {
+      "realm": {
+       "min": "kim_dan"
+      }
+     },
+     "points": 200,
+     "reward": {
+      "text": "Đinh! Kim Đan đã thành. Thưởng: Diên Thọ Đan.",
+      "effects": {
+       "addItems": [
+        "dien_tho_dan"
+       ],
+       "stat.daoHeart": 6
+      }
+     },
+     "fail": {
+      "text": "Hết hạn. \"Ký chủ hơi chậm, nhưng không sao, ta cũng chẳng vội.\"",
+      "effects": {
+       "stat.happiness": -5
+      }
+     },
+     "when": {
+      "realm": {
+       "min": "truc_co",
+       "max": "truc_co"
+      }
+     }
+    }
+   ],
+   "shop": [
+    {
+     "id": "tim_cong_phap",
+     "name": "Thôi diễn công pháp",
+     "text": "Một trăm năm mươi điểm, diễn ra một quyển hợp với linh căn.",
+     "cost": 150,
+     "result": {
+      "text": "Đinh! Thôi diễn hoàn tất. Một quyển công pháp hiện ra trong đầu, ngươi vội chép lại.",
+      "effects": {
+       "gainFittingTechnique": true,
+       "stat.comprehension": 2
+      }
+     },
+     "minLevel": 1,
+     "cooldownYears": 15
+    },
+    {
+     "id": "pha_binh_canh",
+     "name": "Diễn giải bình cảnh",
+     "text": "Tám mươi điểm.",
+     "cost": 80,
+     "result": {
+      "text": "Đinh! Chỗ tắc đã rõ.",
+      "effects": {
+       "reducePeakFails": 1,
+       "stat.daoHeart": 2
+      }
+     },
+     "cooldownYears": 3
+    }
+   ],
+   "quit": {
+    "text": "Đầu óc ngươi yên tĩnh lại. Không còn ai sửa công pháp, cũng không còn ai cằn nhằn.",
+    "effects": {
+     "stat.happiness": -6,
+     "stat.daoHeart": 4
+    }
+   }
+  },
+  {
+   "id": "ta_than",
+   "name": "Hệ thống Thiên Đạo Thưởng Phạt",
+   "voice": "【Thiên Đạo】",
+   "text": "Đinh! Ta là ý chí Thiên Đạo. Ngươi được chọn để chấp hành công lý. Công lý của ta, tất nhiên.",
+   "levels": [
+    {
+     "points": 0,
+     "name": "Chấp sự",
+     "effects": [
+      {
+       "hook": "combatPower",
+       "add": 0.1
+      }
+     ]
+    },
+    {
+     "points": 100,
+     "name": "Phán quan",
+     "effects": [
+      {
+       "hook": "combatPower",
+       "add": 0.2
+      }
+     ]
+    },
+    {
+     "points": 250,
+     "name": "Đao phủ",
+     "effects": [
+      {
+       "hook": "combatPower",
+       "add": 0.3
+      },
+      {
+       "hook": "heartDemonResist",
+       "add": -0.1
+      }
+     ]
+    }
+   ],
+   "taskChance": 0.5,
+   "tasks": [
+    {
+     "id": "tru_ac",
+     "text": "Nhân quả của ngươi phải nhuốm máu một lần.",
+     "years": 5,
+     "goal": {
+      "stats": [
+       {
+        "stat": "karma",
+        "lte": -15
+       }
+      ]
+     },
+     "points": 60,
+     "reward": {
+      "text": "Đinh! Làm tốt lắm. Thưởng: sức mạnh.",
+      "effects": {
+       "stat.physique": 4,
+       "stat.daoHeart": -3,
+       "heartDemon": 4
+      }
+     },
+     "fail": {
+      "text": "Ngươi chần chừ. Thiên Đạo… không, hệ thống phạt ngươi một trận đau thấu xương.",
+      "effects": {
+       "stat.health": -12,
+       "stat.happiness": -6
+      }
+     }
+    },
+    {
+     "id": "diet_mon",
+     "text": "Nhân quả phải sâu hơn nữa.",
+     "years": 6,
+     "goal": {
+      "stats": [
+       {
+        "stat": "karma",
+        "lte": -40
+       }
+      ]
+     },
+     "points": 120,
+     "reward": {
+      "text": "Đinh! Thưởng: sức mạnh. Ngươi không nhớ mặt những người đã chết.",
+      "effects": {
+       "stat.physique": 6,
+       "stat.daoHeart": -6,
+       "heartDemon": 8
+      }
+     },
+     "fail": {
+      "text": "Lại chần chừ. Lần phạt này nặng hơn.",
+      "effects": {
+       "stat.health": -18,
+       "stat.happiness": -8
+      }
+     },
+     "minLevel": 1
+    }
+   ],
+   "shop": [
+    {
+     "id": "than_luc",
+     "name": "Thần lực",
+     "text": "Năm mươi điểm.",
+     "cost": 50,
+     "result": {
+      "text": "Đinh! Cơ bắp căng phồng. Có gì đó đen đen chảy trong mạch máu.",
+      "effects": {
+       "stat.physique": 5,
+       "heartDemon": 3
+      }
+     }
+    }
+   ],
+   "quit": {
+    "text": "Ngươi chối bỏ \"Thiên Đạo\". Nó gào lên trong đầu ngươi ba ngày ba đêm rồi mới chịu im.",
+    "effects": {
+     "stat.health": -15,
+     "stat.happiness": -10,
+     "stat.daoHeart": 8
+    }
+   },
+   "trap": {
+    "clues": [
+     "Ngươi để ý: Thiên Đạo thật thì cần gì nói \"Đinh!\".",
+     "Hệ thống chưa từng giao nhiệm vụ cứu ai, chỉ toàn giết.",
+     "Đêm qua ngươi mơ thấy một bóng đen ngồi trên đan điền mình, liếm môi."
+    ],
+    "clueChance": 0.25,
+    "betrayAt": {
+     "realm": "kim_dan"
+    },
+    "betray": {
+     "text": "Kim Đan vừa thành, \"Thiên Đạo\" lộ mặt: một tàn hồn ma tu ký sinh, hút sạch huyết khí ngươi tích được rồi biến mất, để lại tâm ma.",
+     "effects": {
+      "stat.health": -30,
+      "stat.daoHeart": -15,
+      "heartDemon": 20,
+      "lifespanYears": -30
+     }
+    }
+   }
+  },
+  {
+   "id": "dai_le_bao",
+   "name": "Hệ thống Đại Lễ Bao",
+   "voice": "【Đại Lễ Bao】",
+   "text": "Đinh! Chúc mừng ký chủ! Tân thủ đại lễ bao, mở là có quà, quà nào cũng xịn, không xịn không lấy tiền!",
+   "levels": [
+    {
+     "points": 0,
+     "name": "Tân thủ",
+     "effects": [
+      {
+       "hook": "cultivationSpeed",
+       "add": 0.15
+      }
+     ]
+    },
+    {
+     "points": 60,
+     "name": "VIP 1",
+     "effects": [
+      {
+       "hook": "cultivationSpeed",
+       "add": 0.25
+      }
+     ]
+    },
+    {
+     "points": 200,
+     "name": "VIP 2",
+     "effects": [
+      {
+       "hook": "cultivationSpeed",
+       "add": 0.35
+      }
+     ]
+    }
+   ],
+   "checkin": {
+    "points": 20,
+    "rewards": [
+     {
+      "weight": 3,
+      "text": "Mở lễ bao: Tụ Khí Đan, hai viên! Hơi đắng.",
+      "effects": {
+       "addItems": [
+        "tu_khi_dan"
+       ],
+       "stat.happiness": 4,
+       "stat.health": -2
+      }
+     },
+     {
+      "weight": 2,
+      "text": "Mở lễ bao: một trăm linh thạch! Chúng phát sáng hơi kỳ.",
+      "effects": {
+       "spiritStones": 100,
+       "stat.happiness": 5,
+       "stat.luck": -2
+      }
+     },
+     {
+      "weight": 1,
+      "text": "Mở lễ bao: Trúc Cơ Đan! Ngươi mừng quýnh, không để ý vỏ đan có vết nứt.",
+      "effects": {
+       "addItems": [
+        "truc_co_dan"
+       ],
+       "stat.happiness": 6,
+       "stat.health": -4
+      }
+     }
+    ]
+   },
+   "taskChance": 0.1,
+   "tasks": [
+    {
+     "id": "dot_pha_luyen_khi",
+     "text": "Bước vào Luyện Khí.",
+     "years": 6,
+     "goal": {
+      "realm": {
+       "min": "luyen_khi"
+      }
+     },
+     "points": 30,
+     "reward": {
+      "text": "Đinh! Nhiệm vụ hoàn thành. Thưởng: một viên Tụ Khí Đan.",
+      "effects": {
+       "addItems": [
+        "tu_khi_dan"
+       ],
+       "stat.happiness": 4
+      }
+     },
+     "fail": {
+      "text": "Nhiệm vụ thất bại. Trừ điểm sinh mệnh… à không, trừ tâm trạng.",
+      "effects": {
+       "stat.happiness": -6
+      }
+     },
+     "when": {
+      "realm": {
+       "min": "pham_nhan"
+      },
+      "root": {
+       "usable": true
+      }
+     }
+    }
+   ],
+   "shop": [
+    {
+     "id": "vip",
+     "name": "Nạp VIP",
+     "text": "Đổi mười năm thọ lấy một trăm điểm. Ưu đãi có hạn!",
+     "cost": -100,
+     "result": {
+      "text": "Đinh! Nạp VIP thành công. Thọ nguyên trừ đi, nụ cười hệ thống tươi thêm.",
+      "effects": {
+       "lifespanYears": -10,
+       "stat.happiness": 3
+      }
+     }
+    }
+   ],
+   "quit": {
+    "text": "Ngươi gỡ hệ thống. Nó gửi theo một lá thư: \"Chi phí hủy dịch vụ\". Ngươi ho ra máu.",
+    "effects": {
+     "stat.health": -10,
+     "stat.happiness": -6,
+     "stat.daoHeart": 6
+    }
+   },
+   "trap": {
+    "clues": [
+     "Quà nào cũng xịn, nhưng sao sức khỏe cứ tụt?",
+     "Ngươi hỏi điều khoản. Hệ thống trả lời bằng ba vạn chữ nhỏ li ti.",
+     "Linh thạch nó cho, đem ra chợ, chưởng quỹ nhìn rồi lắc đầu: \"Linh thạch rút từ thọ nguyên người, ta không thu.\""
+    ],
+    "clueChance": 0.3,
+    "betrayAt": {
+     "realm": "truc_co"
+    },
+    "betray": {
+     "text": "Trúc Cơ vừa xong, Đại Lễ Bao gửi hóa đơn. Mỗi viên đan, mỗi khối linh thạch đều tính lãi bằng thọ nguyên. Hệ thống thu đủ rồi tắt máy.",
+     "effects": {
+      "lifespanYears": -40,
+      "stat.health": -20,
+      "stat.happiness": -15
+     }
+    }
+   }
+  },
+  {
+   "id": "loi_he_thong",
+   "name": "Hệ thống Tu Tiên (bản thử nghiệm)",
+   "voice": "【H̷ệ thố̸ng】",
+   "text": "Đinh! Đi-i-inh! Hệ thống Tu Tiên phiên bản thử nghiệm đã gắn kết. Có thể có lỗi nhỏ. Rất nhỏ.",
+   "levels": [
+    {
+     "points": 0,
+     "name": "Cấp 1",
+     "effects": [
+      {
+       "hook": "cultivationSpeed",
+       "add": 0.1
+      },
+      {
+       "hook": "breakthroughChance",
+       "add": 3
+      }
+     ]
+    },
+    {
+     "points": 80,
+     "name": "Cấp ?",
+     "effects": [
+      {
+       "hook": "cultivationSpeed",
+       "add": 0.2
+      },
+      {
+       "hook": "breakthroughChance",
+       "add": 5
+      }
+     ]
+    }
+   ],
+   "checkin": {
+    "points": 15,
+    "rewards": [
+     {
+      "weight": 3,
+      "text": "Điểm danh thành công. Thưởng: Tụ Khí Đan.",
+      "effects": {
+       "addItems": [
+        "tu_khi_dan"
+       ],
+       "stat.happiness": 2
+      }
+     },
+     {
+      "weight": 2,
+      "text": "Đ̷i̷ể̷m danh thành công. Thưởng: -20 sức khỏe. Ồ, nhầm dấu.",
+      "effects": {
+       "stat.health": -20,
+       "stat.happiness": -4
+      }
+     },
+     {
+      "weight": 1,
+      "text": "Điểm danh thành công. Thưởng: nhân đôi tu vi! …Rồi chia đôi.",
+      "effects": {
+       "cultProgress": -20,
+       "stat.comprehension": 2
+      }
+     }
+    ]
+   },
+   "taskChance": 0.2,
+   "tasks": [
+    {
+     "id": "dot_pha_luyen_khi",
+     "text": "Bước vào Luyện Khí.",
+     "years": 6,
+     "goal": {
+      "realm": {
+       "min": "luyen_khi"
+      }
+     },
+     "points": 30,
+     "reward": {
+      "text": "Đinh! Nhiệm vụ hoàn thành. Thưởng: một viên Tụ Khí Đan.",
+      "effects": {
+       "addItems": [
+        "tu_khi_dan"
+       ],
+       "stat.happiness": 4
+      }
+     },
+     "fail": {
+      "text": "Nhiệm vụ thất bại. Trừ điểm sinh mệnh… à không, trừ tâm trạng.",
+      "effects": {
+       "stat.happiness": -6
+      }
+     },
+     "when": {
+      "realm": {
+       "min": "pham_nhan"
+      },
+      "root": {
+       "usable": true
+      }
+     }
+    },
+    {
+     "id": "dot_pha_truc_co",
+     "text": "Trúc Cơ thành công.",
+     "years": 12,
+     "goal": {
+      "realm": {
+       "min": "truc_co"
+      }
+     },
+     "points": 80,
+     "reward": {
+      "text": "Đinh! Trúc Cơ thành công. Thưởng: Phá Chướng Đan.",
+      "effects": {
+       "addItems": [
+        "pha_chuong_dan"
+       ],
+       "stat.daoHeart": 4
+      }
+     },
+     "fail": {
+      "text": "Hết hạn. Hệ thống lắc đầu, ghi một chữ \"kém\" vào sổ.",
+      "effects": {
+       "stat.daoHeart": -4,
+       "stat.happiness": -4
+      }
+     },
+     "when": {
+      "realm": {
+       "min": "luyen_khi",
+       "max": "luyen_khi"
+      }
+     }
+    }
+   ],
+   "shop": [
+    {
+     "id": "sua_loi",
+     "name": "Báo lỗi",
+     "text": "Ba mươi điểm, mong được sửa lỗi.",
+     "cost": 30,
+     "result": {
+      "text": "Đinh! Đã ghi nhận phản hồi. Lỗi sẽ được sửa trong phiên bản sau.",
+      "effects": {
+       "stat.happiness": -1,
+       "stat.daoHeart": 1
+      }
+     }
+    }
+   ],
+   "quit": {
+    "text": "Ngươi tắt hệ thống. Nó hỏi \"Ngươi có chắc không?\" chín lần, rồi tự bật lại một lần, rồi mới tắt hẳn.",
+    "effects": {
+     "stat.health": -5,
+     "stat.happiness": -4,
+     "stat.daoHeart": 4
+    }
+   },
+   "trap": {
+    "clues": [
+     "Chữ hệ thống hiện ra méo mó, có hôm viết ngược.",
+     "Một đêm hệ thống gọi ngươi bằng tên người khác.",
+     "\"Ký chủ thứ 37… à, thứ 38. Người trước… không quan trọng.\""
+    ],
+    "clueChance": 0.35,
+    "betrayAt": {
+     "age": 60
+    },
+    "betray": {
+     "text": "Hệ thống sập hẳn. Lỗi lan vào kinh mạch, tu vi đảo lộn, thân thể già đi trong một đêm.",
+     "effects": {
+      "cultProgress": -80,
+      "stat.health": -25,
+      "lifespanYears": -20,
+      "stat.comprehension": -4
+     }
+    }
+   }
+  },
+  {
+   "id": "doat_xa",
+   "name": "Hệ thống Tiên Tôn Truyền Thừa",
+   "voice": "【Tiên Tôn】",
+   "text": "Đinh! Lão phu là Tiên Tôn thượng cổ, hóa thân thành hệ thống tìm người kế thừa. Ngươi rất hợp. Thân thể ngươi… rất hợp.",
+   "levels": [
+    {
+     "points": 0,
+     "name": "Đệ tử ký danh",
+     "effects": [
+      {
+       "hook": "cultivationSpeed",
+       "add": 0.15
+      },
+      {
+       "hook": "breakthroughChance.major",
+       "add": 4
+      }
+     ]
+    },
+    {
+     "points": 150,
+     "name": "Đệ tử chân truyền",
+     "effects": [
+      {
+       "hook": "cultivationSpeed",
+       "add": 0.25
+      },
+      {
+       "hook": "breakthroughChance.major",
+       "add": 8
+      }
+     ]
+    },
+    {
+     "points": 400,
+     "name": "Y bát",
+     "effects": [
+      {
+       "hook": "cultivationSpeed",
+       "add": 0.35
+      },
+      {
+       "hook": "breakthroughChance.major",
+       "add": 12
+      }
+     ]
+    }
+   ],
+   "taskChance": 0.3,
+   "tasks": [
+    {
+     "id": "dot_pha_luyen_khi",
+     "text": "Bước vào Luyện Khí.",
+     "years": 6,
+     "goal": {
+      "realm": {
+       "min": "luyen_khi"
+      }
+     },
+     "points": 30,
+     "reward": {
+      "text": "Đinh! Nhiệm vụ hoàn thành. Thưởng: một viên Tụ Khí Đan.",
+      "effects": {
+       "addItems": [
+        "tu_khi_dan"
+       ],
+       "stat.happiness": 4
+      }
+     },
+     "fail": {
+      "text": "Nhiệm vụ thất bại. Trừ điểm sinh mệnh… à không, trừ tâm trạng.",
+      "effects": {
+       "stat.happiness": -6
+      }
+     },
+     "when": {
+      "realm": {
+       "min": "pham_nhan"
+      },
+      "root": {
+       "usable": true
+      }
+     }
+    },
+    {
+     "id": "dot_pha_truc_co",
+     "text": "Trúc Cơ thành công.",
+     "years": 12,
+     "goal": {
+      "realm": {
+       "min": "truc_co"
+      }
+     },
+     "points": 80,
+     "reward": {
+      "text": "Đinh! Trúc Cơ thành công. Thưởng: Phá Chướng Đan.",
+      "effects": {
+       "addItems": [
+        "pha_chuong_dan"
+       ],
+       "stat.daoHeart": 4
+      }
+     },
+     "fail": {
+      "text": "Hết hạn. Hệ thống lắc đầu, ghi một chữ \"kém\" vào sổ.",
+      "effects": {
+       "stat.daoHeart": -4,
+       "stat.happiness": -4
+      }
+     },
+     "when": {
+      "realm": {
+       "min": "luyen_khi",
+       "max": "luyen_khi"
+      }
+     }
+    },
+    {
+     "id": "dot_pha_kim_dan",
+     "text": "Kết thành Kim Đan.",
+     "years": 25,
+     "goal": {
+      "realm": {
+       "min": "kim_dan"
+      }
+     },
+     "points": 200,
+     "reward": {
+      "text": "Đinh! Kim Đan đã thành. Thưởng: Diên Thọ Đan.",
+      "effects": {
+       "addItems": [
+        "dien_tho_dan"
+       ],
+       "stat.daoHeart": 6
+      }
+     },
+     "fail": {
+      "text": "Hết hạn. \"Ký chủ hơi chậm, nhưng không sao, ta cũng chẳng vội.\"",
+      "effects": {
+       "stat.happiness": -5
+      }
+     },
+     "when": {
+      "realm": {
+       "min": "truc_co",
+       "max": "truc_co"
+      }
+     }
+    },
+    {
+     "id": "on_duong",
+     "text": "Giữ thân thể khỏe mạnh.",
+     "years": 6,
+     "goal": {
+      "stats": [
+       {
+        "stat": "stat.health",
+        "gte": 70
+       }
+      ]
+     },
+     "points": 40,
+     "reward": {
+      "text": "Đinh! Tốt, tốt lắm. Thân thể phải giữ cho tốt.",
+      "effects": {
+       "stat.health": 3
+      }
+     },
+     "fail": {
+      "text": "\"Đừng làm hỏng nó.\" Giọng Tiên Tôn lạnh đi một chút.",
+      "effects": {
+       "stat.happiness": -4
+      }
+     }
+    }
+   ],
+   "shop": [
+    {
+     "id": "truyen_cong",
+     "name": "Truyền công",
+     "text": "Một trăm điểm, Tiên Tôn rót tu vi vào người ngươi.",
+     "cost": 100,
+     "result": {
+      "text": "Đinh! Tu vi tăng vọt. Ngươi thấy như có ai vừa ngồi thử vào thân mình.",
+      "effects": {
+       "cultProgress": 60,
+       "stat.daoHeart": -2
+      }
+     },
+     "cooldownYears": 3
+    }
+   ],
+   "quit": {
+    "text": "Ngươi xé bỏ truyền thừa. Tiên Tôn cười lạnh: \"Ngươi sẽ hối hận.\" Một mảnh hồn lão bám lại, thỉnh thoảng thì thầm.",
+    "effects": {
+     "stat.health": -10,
+     "stat.daoHeart": 10,
+     "heartDemon": 6
+    }
+   },
+   "trap": {
+    "clues": [
+     "Tiên Tôn hỏi thăm thân thể ngươi nhiều hơn hỏi thăm tâm cảnh.",
+     "Ngươi soi gương, thấy ánh mắt mình già hơn tuổi mấy trăm năm.",
+     "Tiên Tôn lỡ miệng: \"Đến lúc Nguyên Anh, thân này sẽ thật vừa vặn.\""
+    ],
+    "clueChance": 0.3,
+    "betrayAt": {
+     "realm": "nguyen_anh"
+    },
+    "betray": {
+     "text": "Nguyên Anh vừa thành, Tiên Tôn đoạt xá. Ngươi giành giật trong thức hải bảy ngày bảy đêm, giữ được thân xác nhưng thần hồn rách nát.",
+     "effects": {
+      "stat.health": -35,
+      "stat.daoHeart": -20,
+      "heartDemon": 25,
+      "lifespanYears": -80,
+      "stat.comprehension": -6
+     }
+    }
+   }
+  },
+  {
+   "id": "khoai_lac",
+   "name": "Hệ thống Tiêu Dao Khoái Lạc",
+   "voice": "【Tiêu Dao】",
+   "text": "Đinh! Tu tiên khổ quá rồi. Hệ thống Tiêu Dao giúp ký chủ vui vẻ mỗi ngày. Vui mới sống lâu, đúng không?",
+   "levels": [
+    {
+     "points": 0,
+     "name": "Thoải mái",
+     "effects": [
+      {
+       "hook": "statPerYear.happiness",
+       "add": 2
+      }
+     ]
+    },
+    {
+     "points": 100,
+     "name": "Mê say",
+     "effects": [
+      {
+       "hook": "statPerYear.happiness",
+       "add": 4
+      },
+      {
+       "hook": "cultivationSpeed",
+       "add": -0.1
+      }
+     ]
+    },
+    {
+     "points": 250,
+     "name": "Không rời được",
+     "effects": [
+      {
+       "hook": "statPerYear.happiness",
+       "add": 6
+      },
+      {
+       "hook": "cultivationSpeed",
+       "add": -0.2
+      },
+      {
+       "hook": "statPerYear.daoHeart",
+       "add": -2
+      }
+     ]
+    }
+   ],
+   "checkin": {
+    "points": 25,
+    "rewards": [
+     {
+      "weight": 3,
+      "text": "Điểm danh: một giấc mộng đẹp. Tỉnh dậy vẫn cười.",
+      "effects": {
+       "stat.happiness": 8,
+       "stat.daoHeart": -2
+      }
+     },
+     {
+      "weight": 2,
+      "text": "Điểm danh: một vò rượu ngon không đáy.",
+      "effects": {
+       "stat.happiness": 10,
+       "stat.health": -3
+      }
+     },
+     {
+      "weight": 1,
+      "text": "Điểm danh: quên sạch ưu phiền. Cả ưu phiền lẫn mấy câu khẩu quyết.",
+      "effects": {
+       "stat.happiness": 12,
+       "stat.comprehension": -2
+      }
+     }
+    ]
+   },
+   "taskChance": 0.1,
+   "tasks": [],
+   "shop": [
+    {
+     "id": "mong_dep",
+     "name": "Mộng đẹp ba năm",
+     "text": "Năm mươi điểm.",
+     "cost": 50,
+     "result": {
+      "text": "Ngươi ngủ một giấc, mộng toàn chuyện đẹp. Thức dậy, ba năm đã qua.",
+      "effects": {
+       "stat.happiness": 15,
+       "cultProgress": -15
+      }
+     },
+     "cooldownYears": 3
+    }
+   ],
+   "quit": {
+    "text": "Ngươi cắt đứt Tiêu Dao. Cơn thèm khát kéo đến như lũ: run tay, mất ngủ, nhìn gì cũng xám.",
+    "effects": {
+     "stat.happiness": -30,
+     "stat.health": -8,
+     "stat.daoHeart": 12
+    }
+   },
+   "trap": {
+    "clues": [
+     "Ngươi nhận ra mình đã hai năm không ngồi thiền.",
+     "Bạn cũ tới thăm, ngươi chỉ muốn họ về cho nhanh để điểm danh.",
+     "Ngươi thử bỏ một năm. Tay run, nhìn gì cũng xám."
+    ],
+    "clueChance": 0.3,
+    "betrayAt": {
+     "age": 50
+    },
+    "betray": {
+     "text": "Tiêu Dao đòi lại tất cả. Niềm vui rút đi trong một đêm, để lại một cái xác rỗng ham vui mà không còn biết vui.",
+     "effects": {
+      "stat.happiness": -50,
+      "stat.daoHeart": -15,
+      "heartDemon": 15,
+      "stat.health": -10
+     }
+    }
+   }
+  }
+ ]
+}

@@ -145,6 +145,11 @@ export interface GameState {
   /** 9.S1: Tình tiết đặc biệt hiếm drawn at birth; seen once the Thiên cơ biến động screen was shown. */
   special?: { ids: string[]; seen: boolean };
   /**
+   * 9.S2 Hệ thống bound to this life: points, level (index into levels), the task in hand (until = last age),
+   * last điểm danh and shop use, tasks done; gone once cut off or after a betrayal.
+   */
+  system?: { id: string; points: number; level: number; task: { id: string; until: number } | null; checkin: number | null; bought: Record<string, number>; done: string[]; gone: boolean; clues: number };
+  /**
    * Bế quan (task 4.1): the age the door opens again, and when it closed; null when not in seclusion.
    * fixed: set by an event, so reaching the peak does not end it early (the point is to sit out the years).
    */

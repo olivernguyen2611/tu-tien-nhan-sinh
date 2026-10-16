@@ -3610,9 +3610,50 @@ export const SpecialOriginFileSchema = z.array(
     costs: z.array(EffectHookSchema).default([]),
     effects: z.array(EffectHookSchema).default([]),
     startEvents: z.array(z.object({ event: id, atAge: z.number().int().min(0) }).strict()).default([]),
+    /** 9.S2: a Hệ thống (systems.json) bound to this life. */
+    system: id.optional(),
   }).strict(),
 );
 export type SpecialOrigin = z.infer<typeof SpecialOriginFileSchema>[number];
+
+/**
+ * 9.S2 Hệ thống: content/systems.json. Each system talks in its own voice; points come from the yearly
+ * điểm danh, tasks (goal = event conditions, met within `years`) and the shop's negative-cost lines
+ * (đổi thọ nguyên lấy điểm…). Levels by points give all-life hooks. 9.S2b: a trap (hố người) drops clues
+ * in the log, then betrays at a realm or age unless the player cut it off first (quitCost).
+ */
+const SystemOutcomeSchema = z.object({ text: z.string().min(1), effects: EffectsSchema.default({}) }).strict();
+export const SystemFileSchema = z.object({
+  systems: z.array(z.object({
+    id,
+    name: z.string().min(1),
+    /** How it speaks in the log, e.g. "【Hệ thống điểm danh】". */
+    voice: z.string().min(1),
+    text: z.string().min(1),
+    levels: z.array(z.object({ points: z.number().int().min(0), name: z.string().min(1), effects: z.array(EffectHookSchema).default([]) }).strict()).min(1),
+    checkin: z.object({ points: z.number().int().min(0), rewards: z.array(SystemOutcomeSchema.extend({ weight: z.number().min(0), minLevel: z.number().int().min(0).default(0) })).min(1) }).strict().optional(),
+    /** Chance each year without a task that one is given. */
+    taskChance: probability.default(0.3),
+    tasks: z.array(z.object({
+      id, text: z.string().min(1), years: z.number().int().min(1), minLevel: z.number().int().min(0).default(0),
+      when: BaseConditionsSchema.default({}), goal: BaseConditionsSchema, points: z.number().int().min(0),
+      reward: SystemOutcomeSchema, fail: SystemOutcomeSchema,
+    }).strict()).default([]),
+    shop: z.array(z.object({
+      id, name: z.string().min(1), text: z.string().min(1), cost: z.number().int(), minLevel: z.number().int().min(0).default(0),
+      cooldownYears: z.number().int().min(0).default(1), result: SystemOutcomeSchema,
+    }).strict()).default([]),
+    quit: SystemOutcomeSchema,
+    trap: z.object({
+      clues: z.array(z.string().min(1)).min(1),
+      clueChance: probability,
+      betrayAt: z.object({ realm: id.optional(), age: z.number().int().optional() }).strict(),
+      betray: SystemOutcomeSchema,
+    }).strict().optional(),
+  }).strict()),
+}).strict();
+export type SystemFile = z.infer<typeof SystemFileSchema>;
+export type SystemDef = SystemFile['systems'][number];
 
 /** 9.R8: content/endings.json — kết cục of a life, in order: the first whose check holds is the ending. */
 export const EndingFileSchema = z.array(

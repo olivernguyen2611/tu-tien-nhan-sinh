@@ -8,6 +8,7 @@ import type { EffectHook, SpecialOrigin } from '../core/schemas';
 import type { GameState } from '../core/types';
 import { applyGainHooks, hookSum } from './cultivation';
 import { knowsFor } from './knowledge';
+import { bindSystem } from './heThong';
 
 const BASE_GROUPS = ['he_thong', 'trung_sinh', 'phe_vat'];
 const ONCE = (e: EffectHook) => e.hook.startsWith('stat.') || e.hook === 'lifespanPct' || e.hook === 'birthSilver';
@@ -68,6 +69,8 @@ export function rollSpecialOrigin(state: GameState, content: Content, pastKarma 
     events: { ...s.events, followUps: [...followUps, ...s.events.followUps] },
     log: birth ? [{ ...birth, lines: [...birth.lines, ...picked.map((o) => ({ text: `Thiên cơ biến động · ${o.name}.`, tone: 'rare' as const }))] }, ...s.log.slice(1)] : s.log,
   };
+  // 9.S2: a Hệ thống origin binds its system.
+  for (const o of picked) if (o.system) s = bindSystem(s, content, o.system);
   return s;
 }
 
