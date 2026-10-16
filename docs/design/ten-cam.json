@@ -1,6 +1,6 @@
 {
   "note": "9.R7: hàng rào tên riêng của các tác phẩm có bản quyền (CLAUDE.md luật 11). Không đưa vào game; npm run validate báo lỗi nếu nội dung chứa tên nào ở đây. Thuật ngữ chung của thể loại (Luyện Khí, Trúc Cơ, linh căn…) và địa danh, chùa chiền có thật (Thiếu Lâm, Võ Đang, Hoa Sơn) không thuộc danh sách.",
   "groups": [
-    { "source": "Trò chơi", "names": ["BitLife", "Quỷ Cốc Bát Hoang"] },
+    { "source": "Trò chơi", "names": ["BitLife", "Quỷ Cốc Bát Hoang"] }
   ]
 }
