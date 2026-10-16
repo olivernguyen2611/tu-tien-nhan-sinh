@@ -376,6 +376,9 @@ export function formatReport(rep: Report, content: Content, title: string): stri
     `Tư chất (căn cốt + ngộ tính + khí vận) tăng trung bình ${rep.aptitudeGain.toFixed(1)} điểm mỗi đời; ${p(rep.aptitudeHigh)} số đời kết thúc với một chỉ số từ 90`,
     `Linh thạch lúc chết: trung bình ${rep.stonesLeft.mean.toFixed(0)}, trung vị ${rep.stonesLeft.p50}, ${p(rep.stonesLeft.rich)} số đời còn từ 500`,
     'Sự kiện lặp dày nhất (lần mỗi 100 năm sống, nhiều nhất một đời): ' + rep.topRepeats.map((t) => `${t.id} ${t.perCentury.toFixed(1)} (${t.max})`).join(', '),
+    // 9.R12: tiên duyên gates and kết cục.
+    'Cổng tiên duyên mở: ' + (Object.entries(rep.byGate ?? {}).sort((a, b) => b[1] - a[1]).map(([g, v]) => `${g} ${p(v)}`).join(', ') || 'không'),
+    'Kết cục: ' + Object.entries(rep.byEnding ?? {}).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([e, v]) => `${e} ${p(v)}`).join(', '),
   ];
   return lines.join('\n');
 }
