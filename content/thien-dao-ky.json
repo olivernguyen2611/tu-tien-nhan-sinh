@@ -1,0 +1,67 @@
+{
+  "title": "Thiên Đạo Ký",
+  "sections": [
+    { "id": "sinh", "lines": [
+      { "text": [
+        "Năm ấy ở {hometown} có đứa trẻ chào đời, đặt tên {name}, phận {origin}. Trời đất không báo điềm gì, như với muôn vạn sinh linh khác.",
+        "{name} sinh ra ở {hometown}, phận {origin}. Tiếng khóc chào đời lẫn vào tiếng gà gáy sớm, chẳng ai ngờ chuyện về sau.",
+        "Sổ sinh của {hometown} ghi thêm một dòng: {name}, {origin}. Mực chưa khô, đứa trẻ đã đòi bú."
+      ] }
+    ] },
+    { "id": "can_co", "lines": [
+      { "when": { "rooted": true }, "text": "Trong người {name} có linh căn, như hạt giống chôn sâu chờ mưa." },
+      { "when": { "martialMin": 0 }, "text": "Không linh căn, {name} lấy thân phàm luyện võ, mồ hôi đổi lấy từng tấc công phu." },
+      { "text": "Không linh căn, không kỳ ngộ, {name} sống kiếp phàm nhân như cỏ dại ven đường: không ai trồng, vẫn cứ xanh." }
+    ] },
+    { "id": "con_duong", "lines": [
+      { "when": { "ownSect": true }, "text": "Về sau tự mở tông môn, lập nên {sect}, làm tổ sư một phái." },
+      { "when": { "inSect": true }, "text": "{name} bái nhập {sect}, từ đó sớm tối theo sư môn, áo xanh kiếm gỗ." },
+      { "when": { "career": true }, "text": "{name} theo nghề {career}, lăn lộn giữa chợ đời mà sống." },
+      { "text": "Cả đời {name} không thuộc về đâu, chỗ nào có cơm có rượu thì dừng chân." }
+    ] },
+    { "id": "dinh", "lines": [
+      { "when": { "realmMin": "hoa_than" }, "text": "Tu vi lên tới {realm}, một niệm dời non, đứng trên vạn người." },
+      { "when": { "realmMin": "nguyen_anh" }, "text": "Ngưng thành Nguyên Anh, tu vi {realm}, người đời đã gọi bằng lão tổ." },
+      { "when": { "realmMin": "kim_dan" }, "text": "Kết thành Kim Đan, tu vi {realm}, thọ nguyên dài gấp mấy lần phàm nhân." },
+      { "when": { "realmMin": "truc_co" }, "text": "Trúc Cơ thành công, tu vi dừng ở {realm}." },
+      { "when": { "realmMin": "luyen_khi" }, "text": "Bước được vào Luyện Khí, tu vi dừng ở {realm}: đủ để biết trời cao, chưa đủ để chạm tới." },
+      { "when": { "martialMin": 4 }, "text": "Võ đạo tới {martial}, một thân công phu khiến giang hồ kiêng nể." },
+      { "when": { "martialMin": 0 }, "text": "Võ công tới {martial}, đủ giữ mình, đủ giữ nhà." }
+    ] },
+    { "id": "tinh_duyen", "lines": [
+      { "when": { "partner": true }, "text": "Đạo lữ là {partner}. Đường dài, có người cùng đi thì bớt lạnh." },
+      { "when": { "ageMin": 30 }, "text": "Chuyện tình duyên lỡ làng, cuối cùng vẫn một mình một bóng." }
+    ] },
+    { "id": "hau_the", "lines": [
+      { "text": "Để lại {children} người con và {disciples} đệ tử, huyết mạch lẫn đạo thống đều có người nối." },
+      { "text": "Để lại {children} người con, khói hương sau này không đến nỗi lạnh." },
+      { "text": "Không con cái, nhưng có {disciples} đệ tử gọi một tiếng sư phụ." }
+    ] },
+    { "id": "an_oan", "lines": [
+      { "text": "Một đời kết {friends} mối ân tình, gây {enemies} mối thù chưa trả. Nhân quả ấy, kiếp sau còn gặp." },
+      { "text": "Một đời kết {friends} mối ân tình, chẳng để lại mối thù nào." },
+      { "text": "Ân tình chẳng có mấy, thù thì để lại {enemies} mối. Nhân quả ấy, kiếp sau còn gặp." }
+    ] },
+    { "id": "dau_an", "lines": [
+      { "text": "Lúc lâm chung, trong trí nhớ còn đọng mấy cảnh: “{highlights}”." }
+    ] },
+    { "id": "thoi_cuoc", "lines": [
+      { "text": "Đời ấy gặp thời {worldEvents}, thiên hạ mấy phen chao đảo." }
+    ] },
+    { "id": "thien_ac", "lines": [
+      { "when": { "karmaMin": 50 }, "text": "Làm phúc nhiều, nợ nhân quả ít, Thiên Đạo ghi một nét son." },
+      { "when": { "karmaMax": -50 }, "text": "Tay nhuốm nhiều oán nghiệp, Thiên Đạo ghi một nét mực đen." },
+      { "text": "Thiện ác nửa nọ nửa kia, như phần đông người đời." }
+    ] },
+    { "id": "chet", "lines": [
+      { "when": { "cause": ["tribulation"] }, "text": "{cause}. Sấm sét không hỏi người là ai." },
+      { "when": { "cause": ["breakthrough"] }, "text": "{cause}. Cửa ải ấy, có người qua, có người ở lại." },
+      { "when": { "cause": ["combat"] }, "text": "{cause}. Kiếm không có mắt." },
+      { "when": { "cause": ["old_age"] }, "text": "{cause}. Ra đi lúc ngọn đèn tự tắt, không phải ai cũng có phúc ấy." },
+      { "text": "{cause}." }
+    ] },
+    { "id": "ket", "lines": [
+      { "text": "Thiên Đạo ghi: {ending}. {endingText}" }
+    ] }
+  ]
+}

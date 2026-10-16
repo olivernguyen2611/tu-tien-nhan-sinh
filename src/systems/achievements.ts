@@ -7,6 +7,7 @@ import type { GameState } from '../core/types';
 import { activeCombos } from './destiny';
 import { chosenDisciple } from './chosen';
 import { codexOf } from './codex';
+import { readValue } from './events/conditions';
 
 type Achievement = AchievementFile['achievements'][number];
 type Badge = AchievementFile['badges'][number];
@@ -48,6 +49,12 @@ export function lifeMeets(state: GameState, content: Content, w: LifeCheck, live
     if (!ending || !w.chosenEnding.includes(ending)) return false;
   }
   if (w.livesMin !== undefined && lives < w.livesMin) return false;
+  if (w.statsMin && Object.entries(w.statsMin).some(([k, v]) => readValue(state, k) < v)) return false;
+  if (w.heartDemonMin !== undefined && state.cult.heartDemon < w.heartDemonMin) return false;
+  if (w.martialMin !== undefined && state.martial.stage < w.martialMin) return false;
+  if (w.inSect !== undefined && (!!state.ownSect || !!state.sect.id) !== w.inSect) return false;
+  if (w.career !== undefined && !!state.career.id !== w.career) return false;
+  if (w.rooted !== undefined && (!!state.cult.root && state.cult.root.grade !== 'none') !== w.rooted) return false;
   return true;
 }
 

@@ -3,7 +3,8 @@
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
+import { KY_KEYS } from '../systems/thienDaoKy';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, ThienDaoKyFileSchema, type ThienDaoKyFile, type Ending, MORTAL_STATS, APTITUDES, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -60,6 +61,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'trait-combos.json') return TraitComboFileSchema;
     if (rest === 'codex.json') return CodexFileSchema;
     if (rest === 'endings.json') return EndingFileSchema;
+    if (rest === 'thien-dao-ky.json') return ThienDaoKyFileSchema;
     if (rest === 'achievements.json') return AchievementFileSchema;
     return null;
   }
@@ -239,6 +241,24 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === RealmsFileSchema) parsedShared.realms = parsed.data as RealmsFile;
     if (schema === RootsFileSchema) parsedShared.roots = parsed.data as RootsFile;
     if (schema === AptitudesFileSchema) parsedShared.aptitudes = parsed.data as AptitudesFile;
+    // 9.R8–9.R10: endings have unique ids, end with a catch-all, and read real stat.<x> keys.
+    if (schema === EndingFileSchema) {
+      const list = parsed.data as Ending[];
+      problems.push(...duplicates(file, 'kết cục', list));
+      if (list.length > 0 && Object.keys(list[list.length - 1].check).length > 0) problems.push({ file, level: 'error', message: 'kết cục cuối cùng phải có check rỗng (kết cục dự phòng)' });
+      const statKeys = new Set([...MORTAL_STATS, ...APTITUDES].map((k) => `stat.${k}`));
+      for (const e of list) for (const k of Object.keys(e.check.statsMin ?? {})) {
+        if (!statKeys.has(k)) problems.push({ file, level: 'error', message: `kết cục "${e.id}" đọc chỉ số lạ "${k}"` });
+      }
+    }
+    // 9.R10: Thiên Đạo Ký lines use only the keys the system fills.
+    if (schema === ThienDaoKyFileSchema) {
+      for (const sec of (parsed.data as ThienDaoKyFile).sections) for (const l of sec.lines) {
+        for (const t of typeof l.text === 'string' ? [l.text] : l.text) for (const m of t.matchAll(/\{(\w+)\}/g)) {
+          if (!KY_KEYS.includes(m[1])) problems.push({ file, level: 'error', message: `mục "${sec.id}" dùng chữ lạ {${m[1]}}` });
+        }
+      }
+    }
     if (schema === TutorialFileSchema) {
       const t = parsed.data as TutorialFile;
       problems.push(...duplicates(file, 'mục tiêu', t.goals), ...duplicates(file, 'mẹo', t.tips));

@@ -836,6 +836,8 @@ button { font: inherit; color: inherit; }
 /* Kế thừa và tộc phả (task 5.7) */
 .heir-offer { border-color: var(--jade); }
 .ancestry { margin: 12px 0; text-align: left; font-size: 0.9rem; }
+.thien-dao-ky { text-align: left; font-size: 0.92rem; line-height: 1.6; }
+.thien-dao-ky p { margin: 0 0 8px; text-indent: 1.2em; }
 .ancestry ol, .ancestry ul { margin: 4px 0; padding-left: 20px; }
 .ancestry li.me { font-weight: 600; }
 /* Task 5b.1: Luân Hồi points on the death screen. */

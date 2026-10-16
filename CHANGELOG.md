@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### 9.R10: Kết cục đa dạng, Thiên Đạo Ký (2026-10-16)
+- 10 kết cục mới (tổng 27): **Hóa đạo** (Hóa Thần thọ chung với đạo tâm từ 80), **Tâm ma đoạt xác** (tu sĩ chết khi tâm ma còn nặng), **Nhập thế** (có tu vi mà sống trọn kiếp người: đạo lữ, con cái, hạnh phúc), **Võ đạo tận cùng** và **Tông sư võ lâm** (võ giả Ngũ khí, Hóa cảnh), **Đại thiện nhân**, **Phú giáp một phương**, **Ẩn sĩ**; giữ chỗ **Phi thăng thượng giới** (GĐ 14) và **Đế vương** (12.9), sẽ mở khi các phần đó xong.
+- Điều kiện cuối đời mới dùng chung cho kết cục, thành tựu, huy hiệu: `statsMin`, `heartDemonMin`, `martialMin`, `inSect`, `career`, `rooted`.
+- **Thiên Đạo Ký** ở màn kết thúc (mục thu gọn): kể lại cả đời trong 8–12 đoạn ngắn (xuất thân, căn cơ, con đường, tu vi, tình duyên, con cháu, ân oán, dấu ấn, thời cuộc, thiện ác, cái chết, kết cục), dựng từ mẫu câu trong `content/thien-dao-ky.json`, không cần AI. Đoạn nào đời này không có thì bỏ qua.
+- Validate: kết cục không trùng id, kết cục cuối là dự phòng, chỉ số đọc phải có thật; Thiên Đạo Ký chỉ dùng chữ thay thế có thật.
+- Test: `tests/thien-dao-ky.test.ts`.
+
 ### 9.R9: Nhân quả xuyên kiếp (2026-10-16)
 - Hết một kiếp, những mối ràng buộc nặng nhất (đạo lữ, người mang ơn, người mang oán, tử địch; tối đa 4 mỗi kiếp, 8 tất cả) được ghi vào dữ liệu chung của trình duyệt và giữ qua 3 kiếp. Kiếp có dùng Developer Mode và thử thách tuần không ghi.
 - Kiếp sau, mỗi năm có xác suất một cố nhân quay lại thành người mới gặp, mang dấu vết kiếp trước: đạo lữ thấy quen thân, người mang ơn sẵn ân, kẻ thù sẵn oán (sổ ân oán sau đó chạy như thường: báo ân, báo thù). Mối càng nặng, kiếp càng gần thì càng sớm gặp. Đạo lữ kiếp trước chỉ tái ngộ khi đã đủ 18 tuổi.

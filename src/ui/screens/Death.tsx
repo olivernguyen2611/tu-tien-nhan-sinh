@@ -12,6 +12,8 @@ import { challengeDef, challengeResult } from '../../systems/challenge';
 import { realmLabel } from '../../systems/cultivation';
 import { shareObituary } from '../obituary';
 import { Meter } from '../components/Meter';
+import { Fold } from '../components/Fold';
+import { thienDaoKy } from '../../systems/thienDaoKy';
 
 const STAT_LABELS = [
   ['happiness', 'Hạnh phúc', '樂'],
@@ -45,6 +47,8 @@ export function DeathScreen({ state, content, rebirth, lives, onReadLog, onNewLi
   const rewind = rewindOffer(state, content);
   const highlights = lifeHighlights(state, content.balance.rebirth.highlights, content);
   const badges = lifeBadges(state, content, lives);
+  // 9.R10: the life told as the Thiên Đạo Ký.
+  const ky = thienDaoKy(state, content, lives);
   const challenge = challengeDef(content, state.challenge?.id);
   const result = challengeResult(state, content);
   const fresh = rebirth.fresh.map((id) => content.achievements.achievements.find((a) => a.id === id)).filter((a) => !!a);
@@ -113,6 +117,12 @@ export function DeathScreen({ state, content, rebirth, lives, onReadLog, onNewLi
             <p class="kicker">Dấu ấn một đời</p>
             <ol>{highlights.map((h, i) => <li key={i}>{h}</li>)}</ol>
           </div>
+        )}
+
+        {ky.length > 0 && (
+          <Fold id="thien-dao-ky" title={content.thienDaoKy?.title ?? 'Thiên Đạo Ký'}>
+            <div class="thien-dao-ky">{ky.map((p, i) => <p key={i}>{p}</p>)}</div>
+          </Fold>
         )}
 
         {state.devUsed ? (

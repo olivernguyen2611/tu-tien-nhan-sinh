@@ -3549,9 +3549,27 @@ export const LifeCheckSchema = z
     chosenEnding: z.array(z.enum(['protect', 'exploit_won', 'exploit', 'ignore', 'dead', 'none'])).optional(),
     /** Lives begun on this browser, this one included. */
     livesMin: z.number().int().min(1).optional(),
+    /** 9.R10: stats at the end (stat.<x> keys as in events), tâm ma seeds, martial stage reached (0 = Tam lưu). */
+    statsMin: z.record(z.string(), z.number()).optional(),
+    heartDemonMin: z.number().optional(),
+    martialMin: z.number().int().min(0).optional(),
+    /** 9.R10: in a sect (or ran one) at the end; on a đường đời; born with a usable spiritual root. */
+    inSect: z.boolean().optional(),
+    career: z.boolean().optional(),
+    rooted: z.boolean().optional(),
   })
   .strict();
 export type LifeCheck = z.infer<typeof LifeCheckSchema>;
+
+/** 9.R10: content/thien-dao-ky.json — the Thiên Đạo Ký, a life told in paragraphs. Each section shows its first line whose check holds (a list of texts: one picked by the seed); a section with no such line is left out. */
+export const ThienDaoKyFileSchema = z.object({
+  title: z.string().min(1),
+  sections: z.array(z.object({
+    id,
+    lines: z.array(z.object({ when: LifeCheckSchema.default({}), text: z.union([z.string().min(1), z.array(z.string().min(1)).min(1)]) }).strict()).min(1),
+  }).strict()).min(1),
+}).strict();
+export type ThienDaoKyFile = z.infer<typeof ThienDaoKyFileSchema>;
 
 /** 9.R8: content/endings.json — kết cục of a life, in order: the first whose check holds is the ending. */
 export const EndingFileSchema = z.array(
