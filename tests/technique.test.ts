@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { loadContent } from '../src/core/content';
 import { createLife } from '../src/core/state';
 import type { GameState, SpiritRoot } from '../src/core/types';
-import { majorBreakthroughInfo, startCultivating, yearlyGain } from '../src/systems/cultivation';
+import { enterFirstRealm, majorBreakthroughInfo, startCultivating, yearlyGain } from '../src/systems/cultivation';
+import { joinSect } from '../src/systems/sect';
 import { resolveChoice } from '../src/systems/events/engine';
 import { makeSave, migrate } from '../src/systems/save';
 import { learnBlocked, learnTechnique, techniqueById, techniqueMatches, techniqueMul } from '../src/systems/technique';
@@ -33,11 +34,19 @@ describe('techniques (task 2.4)', () => {
     expect(content.sects.find((s) => s.id === 'van_yeu_dien')?.recruitable).toBe(false);
   });
 
-  it('the root test gives Dẫn Khí Quyết', () => {
+  it('9.R4c: the root test gives no technique; a clan child gets Dẫn Khí Quyết; a sect hands one to a newcomer', () => {
     const b = createLife({ seed: 'start' }, content);
-    const s = startCultivating({ ...b, character: { ...b.character, age: 9 }, cult: { ...b.cult, root: SONG } }, content).state;
-    expect(s.cult.technique).toBe('dan_khi_quyet');
-    expect(s.cult.lineage).toBe('tien');
+    const plain = startCultivating({ ...b, character: { ...b.character, age: 9, originId: 'nong_dan' }, cult: { ...b.cult, root: SONG } }, content).state;
+    expect(plain.cult.technique).toBeNull();
+    expect(plain.cult.realm).toBe('pham_nhan');
+    const clan = startCultivating({ ...b, character: { ...b.character, age: 9, originId: 'tu_tien_gia_toc' }, cult: { ...b.cult, root: SONG } }, content).state;
+    expect(clan.cult.technique).toBe('dan_khi_quyet');
+    expect(clan.cult.lineage).toBe('tien');
+    expect(clan.cult.realm).toBe('luyen_khi');
+    const joined = joinSect({ ...plain, character: { ...plain.character, age: 12 } }, content, 'bich_lac_tong');
+    expect(joined.joined).toBe(true);
+    expect(joined.state.cult.technique).toBe('dan_khi_quyet');
+    expect(enterFirstRealm(joined.state, content).cult.realm).toBe('luyen_khi');
   });
 
   it('grade, element match and lineage set the multiplier (G.1)', () => {

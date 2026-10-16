@@ -4,6 +4,5 @@
   "description": "Thế giới đầu tiên: một cõi phàm trần mênh mông, nơi linh khí mỏng mà lòng người thì dày.",
   "order": 1,
   "qi": 1.0,
-  "rootTestEvent": "thu_linh_can",
   "sectRecruitEvent": "tong_mon_tuyen_do"
 }

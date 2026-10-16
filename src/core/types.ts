@@ -100,6 +100,16 @@ export interface GameState {
   /** Task 5b.2: the Kim Thủ Chỉ of this life (golden-fingers.json), its awakened level, the age it came. */
   /** used: action id → age last used (playtest 2; absent in older saves). */
   goldenFinger: { id: string; level: number; since: number; used?: Record<string, number>; /** 9.R3a: uses per action (perUse hooks pile up). */ count?: Record<string, number> } | null;
+  /** 9.R5a: Sổ tri thức entries this life knows (those of past lives at birth, plus its own finds). */
+  knowledge?: string[];
+  /** 9.R5a: how many of them this life found by chance (balance.knowledge.maxPerLife; sure finds do not count). */
+  knowledgeFound?: number;
+  /** 9.R5b: every entry this life found itself; the rest of `knowledge` came from past lives. */
+  knowledgeNew?: string[];
+  /** 9.R7e: the sự kiện thiên hạ under way (one at a time), and the age each one may come again. */
+  world?: { active: { id: string; phase: number; left: number } | null; cooldown: Record<string, number> };
+  /** 9.R6a: developer mode was on during this life; it earns no records (thành tựu, thử thách tuần, điểm Luân Hồi, Thiên Thư, Sổ tri thức). */
+  devUsed?: boolean;
   /** Task 5b.1: thiên phú luân hồi this life was born with (id → level), bought in earlier lives. */
   rebirthTalents: Record<string, number>;
   /** Task 5b.8: Phúc báo brought from the last life (blessings.json id; career = the path that earned it). */
@@ -124,6 +134,8 @@ export interface GameState {
    * members left, and how far this life went with it.
    */
   pastSect: PastSect | null;
+  /** 9.R9: ties from past lives this life was born with; met once one has come back as an NPC (absent in older saves). */
+  pastTies?: (KarmaTie & { met: boolean })[];
   /**
    * Bế quan (task 4.1): the age the door opens again, and when it closed; null when not in seclusion.
    * fixed: set by an event, so reaching the peak does not end it early (the point is to sit out the years).
@@ -399,11 +411,16 @@ export interface Npc {
   /** Task 5c.9: recruited into the player's own sect (age joined), and the age of the last invitation (once a year each). */
   member?: { since: number };
   recruitTried?: number;
+  /** 9.R9: a cố nhân from a past life ({pastName}, {pastSelf}); met once the reunion event has come. */
+  pastLife?: { kind: KarmaTieKind; name: string; self: string; met: boolean };
 }
 
 /** Task 5c.1: who a sectmate is to the player. */
 export type SectmateKind = 'master' | 'elder' | 'steward' | 'senior' | 'peer' | 'rival';
 
 /** Task 5b.7: a past life's sect as the save meta keeps it (lives: how many lives ago its master died). */
+/** 9.R9: a tie a past life left (meta karmaLedger): who, how heavy (0–100), the player's name then, lives since. */
+export type KarmaTieKind = 'dao_lu' | 'an' | 'oan' | 'ke_thu';
+export interface KarmaTie { kind: KarmaTieKind; name: string; gender: Gender; self: string; weight: number; lives: number }
 export interface PastSectRecord { world: string; name: string; lineage: string; founder: string; members: number; lives: number }
 export interface PastSect { name: string; lineage: string; founder: string; members: number; status: 'unknown' | 'met' | 'claimed' | 'spurned' }

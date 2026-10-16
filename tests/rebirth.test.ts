@@ -78,7 +78,10 @@ describe('tổng kết đời và điểm Luân Hồi (task 5b.1)', () => {
 describe('Cầu đầu thai (task 5b.9)', () => {
   it('rare origins cost points; common ones and fate are free', () => {
     const opts = Object.fromEntries(originOptions(content, 15).map((o) => [o.id, o]));
-    expect(opts.nong_dan).toEqual({ id: 'nong_dan', cost: 0, affordable: true });
+    expect(opts.nong_dan).toEqual({ id: 'nong_dan', cost: 0, affordable: true, locked: false });
+    // 9.R5b: the clan origin waits for the Sổ tri thức to know of spirit roots.
+    expect(originOptions(content, 15, []).find((o) => o.id === 'tu_tien_gia_toc')!.locked).toBe(true);
+    expect(originOptions(content, 15, ['linh_can_la_gi']).find((o) => o.id === 'tu_tien_gia_toc')!.locked).toBe(false);
     expect(opts.quan_gia).toMatchObject({ cost: 10, affordable: true });
     expect(opts.tu_tien_gia_toc).toMatchObject({ cost: 30, affordable: false });
     expect(newLifeCost(content, undefined)).toBe(0);

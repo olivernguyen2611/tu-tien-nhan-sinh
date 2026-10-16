@@ -10,8 +10,7 @@
         "max": 14
       },
       "root": {
-        "tested": true,
-        "usable": false
+        "innate": false
       }
     },
     "weight": 8,
@@ -28,7 +27,8 @@
           "text": "Mẹ ngươi nấu một nồi cháo, không hỏi gì.",
           "effects": {
             "stat.happiness": -5,
-            "stat.daoHeart": 2
+            "stat.daoHeart": 2,
+            "testRoot": true
           }
         }
       },
@@ -42,13 +42,15 @@
           "text": "Chấp sự nhìn tay chân ngươi, gật đầu: \"Gánh nước được.\"",
           "effects": {
             "joinCareer": "tap_dich",
-            "stat.happiness": 3
+            "stat.happiness": 3,
+            "testRoot": true
           }
         },
         "fail": {
           "text": "\"Không cần người.\"",
           "effects": {
-            "stat.happiness": -5
+            "stat.happiness": -5,
+            "testRoot": true
           }
         }
       },
@@ -60,7 +62,8 @@
             "setFlags": [
               "su_gia_de_y"
             ],
-            "stat.daoHeart": 5
+            "stat.daoHeart": 5,
+            "testRoot": true
           }
         }
       }
@@ -75,9 +78,8 @@
       "funny"
     ],
     "conditions": {
-      "root": {
-        "tested": true,
-        "usable": false
+      "realm": {
+        "max": "pham_nhan"
       }
     },
     "weight": 3,
@@ -529,9 +531,8 @@
       "age": {
         "min": 14
       },
-      "root": {
-        "tested": true,
-        "usable": false
+      "realm": {
+        "max": "pham_nhan"
       }
     },
     "weight": 3,
@@ -770,7 +771,32 @@
           }
         }
       },
-      {"text": "Ta biết chuyện này sẽ xảy ra", "hidden": true, "requires": {"flagsAll": ["biet_truoc"]}, "result": {"text": "Ngươi nhận ra bát canh này. Kiếp trước ngươi đã uống nó. Lần này ngươi chỉ ngậm, rồi nhổ ra lúc tiên sứ quay lưng.", "effects": {"stat.daoHeart": 3, "stat.intellect": 1, "setFlags": ["tinh_tao"], "followUp": {"event": "dem_huyet_te", "afterYears": [0, 0]}}}}
+      {
+        "text": "Ta biết chuyện này sẽ xảy ra",
+        "hidden": true,
+        "requires": {
+          "flagsAll": [
+            "biet_truoc"
+          ]
+        },
+        "result": {
+          "text": "Ngươi nhận ra bát canh này. Kiếp trước ngươi đã uống nó. Lần này ngươi chỉ ngậm, rồi nhổ ra lúc tiên sứ quay lưng.",
+          "effects": {
+            "stat.daoHeart": 3,
+            "stat.intellect": 1,
+            "setFlags": [
+              "tinh_tao"
+            ],
+            "followUp": {
+              "event": "dem_huyet_te",
+              "afterYears": [
+                0,
+                0
+              ]
+            }
+          }
+        }
+      }
     ]
   },
   {
@@ -982,7 +1008,6 @@
     ],
     "conditions": {
       "root": {
-        "tested": true,
         "usable": false
       },
       "stats": [
@@ -1050,10 +1075,6 @@
     "title": "Hạ viện Vô Ưu Tự",
     "text": "Chùa nhỏ dưới chân núi, sư thầy hiền, cơm chay ngon. Sư thầy nhìn {name}: \"Thí chủ có duyên.\"",
     "conditions": {
-      "root": {
-        "tested": true,
-        "usable": false
-      },
       "anyOf": [
         {
           "stats": [
@@ -1068,7 +1089,15 @@
             "su_gia_de_y"
           ]
         }
-      ]
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "knowledge": {
+        "all": [
+          "phat_duyen"
+        ]
+      }
     },
     "weight": 3,
     "oncePerLife": true,

@@ -1,10 +1,11 @@
 // Developer mode: cheats for play-testing. Pure functions on GameState, like
 // every other system; the UI panel only calls these. Every change is logged
 // with a [Dev] mark so a tested life is never mistaken for a real one.
+import { bringBack } from './karmaLedger';
 import type { Content } from '../core/content';
 import { APTITUDES, FightSchema, MORTAL_STATS } from '../core/schemas';
 import { advanceYear } from '../core/state';
-import type { GameState, LogLine, SpiritRoot } from '../core/types';
+import type { GameState, KarmaTieKind, LogLine, SpiritRoot } from '../core/types';
 import { startBattle } from './combat';
 import { STAT_LABELS } from './deltas';
 import { addItems } from './items';
@@ -18,6 +19,7 @@ import { takeChosen } from './chosen';
 import { suggestSectName } from './ownSect';
 import { clanName } from './clan';
 import { sectById } from './sect';
+import { startWorldEvent } from './worldEvents';
 import { hoaCanhGift } from './martial';
 import { finishStep, questForStage } from './martialQuest';
 import { Rng } from '../core/rng';
@@ -262,10 +264,26 @@ export function devJoinSect(state: GameState, content: Content, sectId: string):
   return devLog({ ...state, sect: { ...state.sect, id: sectId, rank: 0, since: state.character.age, contribution: 0, master: null, left: state.sect.left.filter((x) => x !== sectId) } }, `vào ${sect.name}`);
 }
 
+/** 9.R7e: start a sự kiện thiên hạ now (replacing the one under way), or end it (id null). */
+export function devWorldEvent(state: GameState, content: Content, id: string | null): GameState {
+  if (!state.alive) return state;
+  if (id === null) return state.world?.active ? devLog({ ...state, world: { ...state.world, active: null } }, 'dừng sự kiện thiên hạ') : state;
+  const name = content.worldEvents?.find((e) => e.id === id)?.name;
+  return name ? devLog(startWorldEvent(state, content, id), `bắt đầu ${name}`) : state;
+}
+
 /** Task 5b.7: a made-up sect of a past life, not met yet, to test its events. */
 export function devPastSect(state: GameState): GameState {
   if (!state.alive) return state;
   return devLog({ ...state, pastSect: { name: 'Thử Nghiệm Tông', lineage: 'tien', founder: 'Tiền Bối Dev', members: 40, status: 'unknown' } }, 'có tông môn đời trước');
+}
+
+/** 9.R9: a made-up tie from a past life who comes back at once (their reunion event comes next year). */
+export function devPastTie(state: GameState, content: Content, kind: KarmaTieKind): GameState {
+  if (!state.alive) return state;
+  const tie = { kind, name: 'Cố Nhân Dev', gender: state.character.gender === 'nam' ? 'nu' as const : 'nam' as const, self: 'Tiền Thân Dev', weight: 100, lives: 0, met: false };
+  const s = { ...state, pastTies: [...(state.pastTies ?? []), tie] };
+  return devLog(bringBack(s, content, s.pastTies.length - 1), `cố nhân kiếp trước (${kind})`);
 }
 
 /** Set or clear a flag. */
@@ -440,3 +458,11 @@ export function devResetFingerCooldowns(state: GameState): GameState {
 export function devResetEventHistory(state: GameState): GameState {
   return devLog({ ...state, events: { ...state.events, history: {}, seen: {} } }, 'xóa lịch sử sự kiện');
 }
+
+/** 9.R6a: a life touched by developer mode is marked for good and earns no records. */
+export function markDevLife(state: GameState): GameState {
+  return state.devUsed ? state : { ...state, devUsed: true };
+}
+
+/** Whether this life may write thành tựu, thử thách tuần, điểm Luân Hồi, Thiên Thư and Sổ tri thức. */
+export const countsForRecords = (state: GameState): boolean => !state.devUsed;

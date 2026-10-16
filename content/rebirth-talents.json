@@ -32,7 +32,7 @@
       {"cost": 15, "summary": "Đạo tâm +6.", "effects": [{"hook": "stat.daoHeart", "add": 6}]},
       {"cost": 30, "summary": "Đạo tâm +10.", "effects": [{"hook": "stat.daoHeart", "add": 10}]}
     ]},
-    {"id": "linh_can_an_ky", "name": "Linh Căn Ấn Ký", "text": "Linh căn kiếp trước để lại một vết ấn, lần thử linh căn này được soi thêm một lượt.", "levels": [
+    {"id": "linh_can_an_ky", "requiresKnowledge": "linh_can_la_gi", "name": "Linh Căn Ấn Ký", "text": "Linh căn kiếp trước để lại một vết ấn, lần thử linh căn này được soi thêm một lượt.", "levels": [
       {"cost": 20, "summary": "Thử linh căn thêm 1 lần, giữ kết quả tốt nhất.", "effects": [{"hook": "rootReroll", "add": 1}]},
       {"cost": 50, "summary": "Thử linh căn thêm 2 lần.", "effects": [{"hook": "rootReroll", "add": 2}]}
     ]},
@@ -40,7 +40,7 @@
       {"cost": 15, "summary": "Thọ nguyên +5%.", "effects": [{"hook": "lifespanPct", "add": 0.05}]},
       {"cost": 40, "summary": "Thọ nguyên +10%.", "effects": [{"hook": "lifespanPct", "add": 0.1}]}
     ]},
-    {"id": "dao_qua_du_am", "name": "Đạo Quả Dư Âm", "text": "Đạo quả kiếp trước vỡ rồi, tiếng ngân vẫn còn. Tu lại con đường cũ nhanh hơn người đi lần đầu.", "levels": [
+    {"id": "dao_qua_du_am", "requiresKnowledge": "linh_can_la_gi", "name": "Đạo Quả Dư Âm", "text": "Đạo quả kiếp trước vỡ rồi, tiếng ngân vẫn còn. Tu lại con đường cũ nhanh hơn người đi lần đầu.", "levels": [
       {"cost": 25, "summary": "Tốc độ tu luyện +5%.", "effects": [{"hook": "cultivationSpeed", "add": 0.05}]},
       {"cost": 60, "summary": "Tốc độ tu luyện +10%.", "effects": [{"hook": "cultivationSpeed", "add": 0.1}]},
       {"cost": 120, "summary": "Tốc độ tu luyện +15%.", "effects": [{"hook": "cultivationSpeed", "add": 0.15}]}
@@ -50,11 +50,11 @@
       {"cost": 8, "summary": "Thêm 100 lượng bạc.", "startSilver": 100},
       {"cost": 15, "summary": "Thêm 300 lượng bạc.", "startSilver": 300}
     ]},
-    {"id": "thien_menh_kha_cai", "name": "Thiên Mệnh Khả Cải", "text": "Biết mệnh có thể cải, nên lúc chọn mệnh ở mỗi lần đột phá, ngươi bình tĩnh hơn.", "levels": [
+    {"id": "thien_menh_kha_cai", "requiresKnowledge": "linh_can_la_gi", "name": "Thiên Mệnh Khả Cải", "text": "Biết mệnh có thể cải, nên lúc chọn mệnh ở mỗi lần đột phá, ngươi bình tĩnh hơn.", "levels": [
       {"cost": 15, "summary": "Mỗi lần Nghịch Thiên Cải Mệnh được làm mới thêm 1 lần.", "fateRefreshes": 1},
       {"cost": 40, "summary": "Làm mới thêm 2 lần.", "fateRefreshes": 2}
     ]},
-    {"id": "tien_duyen_vuong_van", "name": "Tiên Duyên Vương Vấn", "text": "Duyên với tiên đạo chưa dứt, kỳ ngộ tìm đến người cũ dễ hơn.", "levels": [
+    {"id": "tien_duyen_vuong_van", "requiresKnowledge": "linh_can_la_gi", "name": "Tiên Duyên Vương Vấn", "text": "Duyên với tiên đạo chưa dứt, kỳ ngộ tìm đến người cũ dễ hơn.", "levels": [
       {"cost": 20, "summary": "Sự kiện kỳ ngộ dễ gặp hơn (×1.1).", "effects": [{"hook": "eventWeight.fortune", "mul": 1.1}]},
       {"cost": 50, "summary": "Kỳ ngộ ×1.2.", "effects": [{"hook": "eventWeight.fortune", "mul": 1.2}]}
     ]}

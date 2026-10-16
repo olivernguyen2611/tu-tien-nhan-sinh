@@ -1,0 +1,57 @@
+[
+  {
+    "id": "dai_ung",
+    "name": "Đại Ung vương triều",
+    "kind": "vuong_trieu",
+    "region": "thanh_van_chau",
+    "ruler": {
+      "title": "Ung Đế",
+      "name": "Triệu Khải"
+    },
+    "description": "Nước lớn nhất Trung Nguyên, ba trăm năm quốc tộ. Khâm Thiên Giám đi khắp các châu tìm trẻ có tiên duyên dâng lên triều; nhà vua tuổi đã cao, ngày nào cũng hỏi thuốc trường sinh."
+  },
+  {
+    "id": "canh_quoc",
+    "name": "Cảnh quốc",
+    "kind": "vuong_quoc",
+    "region": "thanh_van_chau",
+    "ruler": {
+      "title": "Cảnh Vương",
+      "name": "Lưu Mậu"
+    },
+    "description": "Nước nhỏ ven sông, sống bằng nghề dệt và chè. Trọng văn khinh võ: quan to nhất nước là quan coi thi, tướng giỏi nhất nước là người đánh cờ giỏi nhất."
+  },
+  {
+    "id": "lac_ha",
+    "name": "Lạc Hà quốc",
+    "kind": "vuong_quoc",
+    "region": "thanh_van_chau",
+    "ruler": {
+      "title": "Lạc Hà Vương",
+      "name": "Mộc Thiện"
+    },
+    "description": "Nước của chùa chiền, chuông sớm chuông chiều vang khắp kinh thành. Vua ăn chay, quan ăn chay, chỉ dân là thèm thịt."
+  },
+  {
+    "id": "bach_loc",
+    "name": "Bạch Lộc quốc",
+    "kind": "cong_quoc",
+    "region": "thanh_van_chau",
+    "ruler": {
+      "title": "Bạch Lộc Công",
+      "name": "Hô Diên Liệt"
+    },
+    "description": "Vùng núi phía bắc giáp băng nguyên. Dân săn bắn, kỵ binh giỏi nhất Trung Nguyên; công tước tự tay giết gấu mỗi mùa đông để chứng minh mình còn khỏe."
+  },
+  {
+    "id": "xich_sa",
+    "name": "Xích Sa hãn quốc",
+    "kind": "han_quoc",
+    "region": "vo_chu_hoang_nguyen",
+    "ruler": {
+      "title": "Khả hãn",
+      "name": "Thiết Mộc Ba"
+    },
+    "description": "Du mục sa mạc ở rìa Vô Chủ hoang nguyên, buôn ngựa và muối với tán tu. Luật duy nhất: kẻ mạnh nói, kẻ yếu nghe. Đánh nhau với Đại Ung mười năm một lần, như hẹn."
+  }
+]

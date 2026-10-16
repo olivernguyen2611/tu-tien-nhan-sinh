@@ -10,7 +10,7 @@ const content = loadContent();
 describe('6b.6 hành động hợp ngữ cảnh', () => {
   it('no sect takes in an infant', () => {
     const s = createLife({ seed: 'baby' }, content);
-    const strong = { ...s, aptitudes: { ...s.aptitudes, daoHeart: 100 } };
+    const strong = { ...s, knowledge: ['phat_duyen'], aptitudes: { ...s.aptitudes, daoHeart: 100 } };
     expect(sectEligibility(strong, content, 'vo_uu_tu')).toContain('tuổi');
     const older = { ...strong, character: { ...strong.character, age: content.balance.sects.minJoinAge } };
     expect(sectEligibility(older, content, 'vo_uu_tu')).toBeNull();

@@ -6,6 +6,7 @@ import type { SavedPerson } from '../../systems/npcLibrary';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { ThemeToggle } from '../components/ThemeToggle';
 import type { ThemePref } from '../theme';
+import { DEV_WARNING } from '../devMode';
 
 export interface SlotView {
   slot: number;
@@ -20,7 +21,7 @@ type Pending = { kind: 'delete' | 'overwrite'; slot: number } | null;
 
 const when = (iso: string) => new Date(iso).toLocaleString('vi-VN', { dateStyle: 'short', timeStyle: 'short' });
 
-export function SettingsScreen({ slots, library, realmName, onSavePlayer, onRemovePerson, pick, worldName, message, onPlay, onExport, onDelete, onImport, onPick, onBack, theme, onToggleTheme, sound, onToggleSound }: {
+export function SettingsScreen({ slots, library, realmName, onSavePlayer, onRemovePerson, pick, worldName, message, onPlay, onExport, onDelete, onImport, onPick, onBack, theme, onToggleTheme, sound, onToggleSound, devMode, onToggleDev }: {
   slots: SlotView[];
   /** Backlog 11: the Sổ nhân vật, and writing a slot's protagonist into it. */
   library: SavedPerson[];
@@ -41,8 +42,12 @@ export function SettingsScreen({ slots, library, realmName, onSavePlayer, onRemo
   onToggleTheme: () => void;
   sound: boolean;
   onToggleSound: () => void;
+  /** 9.R6a: the developer mode switch; turning it on asks first. */
+  devMode: boolean;
+  onToggleDev: (on: boolean) => void;
 }) {
   const [pending, setPending] = useState<Pending>(null);
+  const [askDev, setAskDev] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const pendingSlot = pending && slots.find((s) => s.slot === pending.slot);
   const pendingName = pendingSlot?.summary?.name ?? 'save hỏng';
@@ -130,7 +135,21 @@ export function SettingsScreen({ slots, library, realmName, onSavePlayer, onRemo
             <span>Âm thanh (chuông, mõ)</span>
             <button class="chip-btn" role="switch" aria-checked={sound} onClick={onToggleSound}>{sound ? 'Bật' : 'Tắt'}</button>
           </div>
+          <div class="settings-row">
+            <span>Chế độ thử nghiệm</span>
+            <button class="chip-btn" role="switch" aria-checked={devMode} onClick={() => (devMode ? onToggleDev(false) : setAskDev(true))}>{devMode ? 'Bật' : 'Tắt'}</button>
+          </div>
         </>
+      )}
+
+      {askDev && (
+        <ConfirmDialog
+          title="Bật chế độ thử nghiệm?"
+          text={DEV_WARNING}
+          confirmLabel="Bật"
+          onCancel={() => setAskDev(false)}
+          onConfirm={() => { setAskDev(false); onToggleDev(true); }}
+        />
       )}
 
       {pending && (

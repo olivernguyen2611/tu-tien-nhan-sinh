@@ -87,7 +87,9 @@ describe('task 2.8 events and their engine', () => {
   });
 
   it('Phật duyên: a rootless mortal who takes refuge starts cultivating on đạo tâm', () => {
-    const monk = life({ realm: 'pham_nhan', root: NONE, technique: null }, { aptitudes: { physique: 50, comprehension: 50, luck: 50, daoHeart: 75 }, career: { id: 'y', rung: 1, since: 15 } });
+    const monk = life({ realm: 'pham_nhan', root: NONE, technique: null }, { knowledge: ['phat_duyen'], aptitudes: { physique: 50, comprehension: 50, luck: 50, daoHeart: 75 }, career: { id: 'y', rung: 1, since: 15 } });
+    // 9.R5b: only once the life has heard of Phật duyên.
+    expect(eventWeight({ ...monk, knowledge: [] }, content, findEvent(content, 'ha_vien_vo_uu')!)).toBe(0);
     expect(eventWeight(monk, content, findEvent(content, 'ha_vien_vo_uu')!)).toBeGreaterThan(0);
     const r = pick(monk, 'ha_vien_vo_uu', 0).state;
     expect(r.cult.technique).toBe('vo_uu_thien_tam_phap');

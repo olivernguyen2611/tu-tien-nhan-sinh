@@ -14,6 +14,12 @@
     "bargainLose": "Bà bán hàng nhìn ngươi từ đầu tới chân rồi nâng giá.",
     "regions": [
       "thanh_van_chau"
+    ],
+    "techniques": [
+      {
+        "id": "dan_khi_quyet",
+        "price": 60
+      }
     ]
   },
   {
@@ -32,7 +38,13 @@
     ],
     "bargainWin": "Chưởng quầy cười híp mắt: \"Đạo hữu khéo nói, giảm cho một chút.\"",
     "bargainLose": "Chưởng quầy vẫn cười, nhưng giá trên bảng vừa nhích lên.",
-    "stock": 8
+    "stock": 8,
+    "techniques": [
+      {
+        "id": "dan_khi_quyet",
+        "price": 3
+      }
+    ]
   },
   {
     "id": "vo_chu",
@@ -374,5 +386,150 @@
     },
     "bargainWin": "Quản sự cúi đầu: \"Quý khách, phí ghế giảm một phần.\"",
     "bargainLose": "Quản sự mỉm cười: \"Thiên Bảo Lâu không mặc cả.\""
+  },
+  {
+    "id": "huyet_nguyet_thi",
+    "name": "Chợ đêm Huyết Nguyệt",
+    "description": "Chỉ họp khi trăng đỏ trên Huyết Uyên. Đan của ma đạo hiệu nghiệm, giá rẻ, tác dụng phụ không ghi trên nhãn.",
+    "needsRoot": true,
+    "currency": "spiritStones",
+    "priceMul": 0.9,
+    "regions": [
+      "huyet_uyen"
+    ],
+    "kinds": [
+      "pill",
+      "talisman"
+    ],
+    "items": [
+      "huyet_dan",
+      "huyet_khi_hoan",
+      "yeu_thu_huyet"
+    ],
+    "stock": 6,
+    "techniques": [
+      {
+        "id": "u_ha_huyet_anh_cong",
+        "price": 160
+      }
+    ],
+    "bargainWin": "Lão bán hàng cười khanh khách: \"Hợp mắt, bớt cho một chút. Lần sau mang người tới đổi.\"",
+    "bargainLose": "Lão bán hàng liếm môi, nhìn cổ tay ngươi lâu hơn cần thiết. Giá không giảm."
+  },
+  {
+    "id": "pha_cam_phuong",
+    "name": "Phá Cấm Phường",
+    "description": "Lều bạt dựng giữa di cốt thần thú, nơi kẻ đào di tích bán lại thứ vừa đào được. Hàng tốt lẫn hàng có nguyền.",
+    "needsRoot": true,
+    "currency": "spiritStones",
+    "priceMul": 1.15,
+    "regions": [
+      "thai_co_chien_truong"
+    ],
+    "kinds": [
+      "artifact",
+      "material"
+    ],
+    "items": [
+      "phap_bao_co",
+      "noi_dan_3",
+      "linh_tinh_tho",
+      "loi_tinh"
+    ],
+    "stock": 6,
+    "techniques": [
+      {
+        "id": "cuu_chuyen_kim_cot_quyet",
+        "price": 420
+      }
+    ],
+    "bargainWin": "Gã đào mộ phủi cát trên tay: \"Thôi, đồ chôn ba vạn năm rồi, bán rẻ cũng được.\"",
+    "bargainLose": "Gã đào mộ chỉ vào vết sẹo trên mặt: \"Món này suýt lấy mạng ta. Không bớt.\""
+  },
+  {
+    "id": "cho_muoi_xich_sa",
+    "name": "Chợ muối Xích Sa",
+    "description": "Chợ của dân du mục ở rìa hoang nguyên: ngựa, muối, da thú và mấy món đồ tán tu đổi lấy lương khô. Trả bằng bạc, mặc cả bằng tiếng hét.",
+    "currency": "silver",
+    "priceMul": 0.95,
+    "regions": [
+      "vo_chu_hoang_nguyen"
+    ],
+    "kinds": [
+      "misc",
+      "talisman",
+      "pill"
+    ],
+    "items": [
+      "bua_binh_an",
+      "than_hanh_phu",
+      "ruou_thuoc"
+    ],
+    "stock": 6,
+    "bargainWin": "Gã du mục vỗ vai ngươi đau điếng: \"Được! Uống với ta một bát rồi lấy hàng.\"",
+    "bargainLose": "Gã du mục hét to hơn ngươi. Ở Xích Sa, ai hét to hơn thì thắng."
+  },
+  {
+    "id": "long_tich_ngu_thi",
+    "name": "Ngư thị Long Tích",
+    "description": "Chợ cá dưới chân đảo Long Tích, bán cá linh, trân châu và giáp vảy. Thể tu Long Tích Đảo mua thịt cá nhiều tới mức chợ phải mở cả đêm.",
+    "needsRoot": true,
+    "currency": "spiritStones",
+    "priceMul": 1,
+    "regions": [
+      "dong_hai"
+    ],
+    "kinds": [
+      "material",
+      "artifact",
+      "pill"
+    ],
+    "items": [
+      "tran_chau_giao_nhan",
+      "giap_vay_giao",
+      "yeu_thu_huyet"
+    ],
+    "stock": 6,
+    "techniques": [
+      {
+        "id": "thach_phu_luyen_the_thien",
+        "price": 90
+      }
+    ],
+    "bargainWin": "Bà bán cá chặt phăng đầu con cá: \"Thôi, bớt cho cái đầu.\"",
+    "bargainLose": "Bà bán cá giơ dao lên. Ngươi trả đủ."
+  },
+  {
+    "id": "dai_dien_thu_cac",
+    "name": "Thư các Đại Diễn",
+    "description": "Hiệu sách của Đại Diễn Thư Viện ở Trung Châu: bí tịch, phù lục, sách vỡ lòng. Mua sách phải đọc to một trang trước mặt chủ quầy.",
+    "needsRoot": true,
+    "currency": "spiritStones",
+    "priceMul": 1.1,
+    "regions": [
+      "trung_chau"
+    ],
+    "kinds": [
+      "talisman",
+      "misc"
+    ],
+    "items": [
+      "sach_vo_long",
+      "hoa_cau_phu",
+      "than_hanh_phu"
+    ],
+    "stock": 6,
+    "techniques": [
+      {
+        "id": "ngu_hanh_luan_chuyen_kinh",
+        "price": 320
+      },
+      {
+        "id": "mong_trung_tan_kinh",
+        "price": 200
+      }
+    ],
+    "bargainWin": "Chủ quầy gật gù: \"Đọc hay. Bớt cho một phần.\"",
+    "bargainLose": "Chủ quầy lắc đầu: \"Đọc sai ba chữ. Giá giữ nguyên, kèm một lời khuyên đi học lại.\""
   }
 ]

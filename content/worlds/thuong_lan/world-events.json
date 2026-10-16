@@ -1,0 +1,615 @@
+[
+  {
+    "id": "tien_ma_dai_chien",
+    "name": "Tiên Ma đại chiến",
+    "kind": "war",
+    "regions": ["huyet_uyen", "vo_chu_hoang_nguyen", "trung_chau"],
+    "weight": 0.6,
+    "cooldownYears": 120,
+    "phases": [
+      {
+        "name": "Điềm báo",
+        "years": 2,
+        "text": "Huyết Uyên sủi bọt ba đêm liền. Tán tu từ phía nam chạy lên kể ma tu đang tụ binh.",
+        "eventWeight": { "demonic": 1.5 }
+      },
+      {
+        "name": "Khai chiến",
+        "years": 4,
+        "text": "Ma đạo tràn khỏi Huyết Uyên. Các đại tông phát lệnh chiêu binh, đan dược tăng giá từng ngày.",
+        "eventWeight": { "demonic": 2.5, "plunder": 1.8, "justice": 1.5 },
+        "priceMul": 1.3
+      },
+      {
+        "name": "Hậu chiến",
+        "years": 3,
+        "text": "Chiến sự lắng xuống. Trên đường về Trung Châu, xác pháp bảo vỡ nằm đầy hai bên, kẻ nhặt đồ đi thành đoàn.",
+        "eventWeight": { "plunder": 1.5, "fortune": 1.3 },
+        "priceMul": 1.1
+      }
+    ]
+  },
+  {
+    "id": "ma_dao_am_sat",
+    "name": "Ma đạo ám sát chưởng môn",
+    "kind": "war",
+    "regions": ["trung_chau", "huyet_uyen"],
+    "weight": 0.8,
+    "cooldownYears": 60,
+    "phases": [
+      {
+        "name": "Tin dữ",
+        "years": 1,
+        "text": "Chưởng môn một trung tông ở Trung Châu chết trong mật thất, trên vách khắc ấn Huyết Ảnh.",
+        "eventWeight": { "demonic": 1.5, "justice": 1.5 }
+      },
+      {
+        "name": "Truy nã",
+        "years": 3,
+        "text": "Các tông dán lệnh truy nã khắp phường thị. Ai mang ma khí đều bị khám xét.",
+        "eventWeight": { "justice": 2, "demonic": 0.7 },
+        "priceMul": 1.1
+      }
+    ]
+  },
+  {
+    "id": "bi_canh_thai_co_mo",
+    "name": "Bí cảnh Thái Cổ mở cửa",
+    "kind": "secret_realm",
+    "regions": ["thai_co_chien_truong"],
+    "weight": 1,
+    "cooldownYears": 40,
+    "phases": [
+      {
+        "name": "Điềm báo",
+        "years": 1,
+        "text": "Trên Thái Cổ chiến trường, một khe nứt phát sáng suốt bảy đêm. Phá Cấm Đường treo giá bản đồ gấp mười.",
+        "eventWeight": { "bi_canh": 1.5 }
+      },
+      {
+        "name": "Mở cửa",
+        "years": 2,
+        "text": "Cửa bí cảnh thượng cổ mở. Chỉ tu sĩ dưới Nguyên Anh mới qua được cấm chế; ai cũng muốn vào, ít ai muốn ra tay không.",
+        "eventWeight": { "bi_canh": 3, "ky_vat": 2, "plunder": 1.5 }
+      },
+      {
+        "name": "Khép lại",
+        "years": 1,
+        "text": "Cửa bí cảnh đóng lại. Ngoài cửa, người chờ thân nhân ngồi thành hàng.",
+        "eventWeight": { "fortune": 1.2 }
+      }
+    ]
+  },
+  {
+    "id": "bi_canh_dong_hai_mo",
+    "name": "Long cung dưới biển hiện ra",
+    "kind": "secret_realm",
+    "regions": ["dong_hai"],
+    "weight": 0.9,
+    "cooldownYears": 50,
+    "phases": [
+      {
+        "name": "Thủy triều lạ",
+        "years": 1,
+        "text": "Nước Đông Hải rút xa ba mươi dặm, lộ ra mái ngói xanh dưới đáy biển.",
+        "eventWeight": { "bi_canh": 1.5, "market": 1.3 }
+      },
+      {
+        "name": "Long cung mở",
+        "years": 2,
+        "text": "Phủ cũ của giao long hiện ra giữa đáy biển khô. Giao tộc đứng canh, nhân tộc đứng nhìn, ai cũng đếm bước.",
+        "eventWeight": { "bi_canh": 3, "fortune": 1.5 },
+        "priceMul": 1.2
+      },
+      {
+        "name": "Nước lên",
+        "years": 1,
+        "text": "Thủy triều trở lại, nuốt long cung. Hải thị bán đầy vảy rồng giả.",
+        "eventWeight": { "market": 1.5 },
+        "priceMul": 0.9
+      }
+    ]
+  },
+  {
+    "id": "bi_canh_bac_minh",
+    "name": "Băng cung giữa tuyết vực",
+    "kind": "secret_realm",
+    "regions": ["bac_minh_tuyet_vuc"],
+    "weight": 0.7,
+    "cooldownYears": 60,
+    "phases": [
+      {
+        "name": "Băng nứt",
+        "years": 1,
+        "text": "Một tiếng nứt vang khắp Bắc Minh. Dưới băng lộ ra đỉnh một cung điện chưa ai từng thấy.",
+        "eventWeight": { "bi_canh": 1.5 }
+      },
+      {
+        "name": "Băng cung mở",
+        "years": 2,
+        "text": "Băng cung mở cửa. Hàn khí trong đó đông cứng cả tâm ma, cũng đông cứng cả người.",
+        "eventWeight": { "bi_canh": 2.5, "heart_demon": 0.5 }
+      }
+    ]
+  },
+  {
+    "id": "kim_thiem_dai_dau_gia",
+    "name": "Đại hội đấu giá Kim Thiềm",
+    "kind": "auction",
+    "regions": ["trung_chau", "dong_hai", "vo_chu_hoang_nguyen"],
+    "weight": 1.2,
+    "cooldownYears": 15,
+    "phases": [
+      {
+        "name": "Thiệp mời",
+        "years": 1,
+        "text": "Kim Thiềm Thương Minh rải thiệp mời khắp phường thị: mười năm một lần, hàng đã chuẩn bị xong.",
+        "eventWeight": { "market": 1.5 }
+      },
+      {
+        "name": "Đấu giá",
+        "years": 1,
+        "text": "Đại hội đấu giá mở. Tu sĩ các vùng đổ về, linh thạch chảy như nước, hàng trên quầy cũng lên giá theo.",
+        "eventWeight": { "market": 2.5, "plunder": 1.5, "scam": 2 },
+        "priceMul": 1.2
+      }
+    ]
+  },
+  {
+    "id": "hai_thi_than_lau",
+    "name": "Hải thị Thận Lâu mở rộng",
+    "kind": "auction",
+    "regions": ["dong_hai"],
+    "weight": 1,
+    "cooldownYears": 12,
+    "phases": [
+      {
+        "name": "Đèn lồng đỏ",
+        "years": 2,
+        "text": "Hải thị Thận Lâu treo đèn đỏ khắp đảo: ba năm mở rộng, hàng từ các đảo xa đổ về, giá mềm.",
+        "eventWeight": { "market": 2 },
+        "priceMul": 0.85
+      }
+    ]
+  },
+  {
+    "id": "thu_trieu_van_thu",
+    "name": "Thú triều Vạn Thú",
+    "kind": "beast_tide",
+    "regions": ["van_thu_son_mach", "thanh_van_chau"],
+    "weight": 1,
+    "cooldownYears": 30,
+    "phases": [
+      {
+        "name": "Rừng im",
+        "years": 1,
+        "text": "Chim trong Vạn Thú sơn mạch bay hết ra ngoài. Thợ săn bảo rừng im quá.",
+        "eventWeight": { "beast": 1.5 }
+      },
+      {
+        "name": "Thú triều",
+        "years": 2,
+        "text": "Yêu thú tràn khỏi sơn mạch như nước vỡ đê. Làng ven rừng bỏ nhà chạy, tông môn phái người chặn đường.",
+        "eventWeight": { "beast": 3, "justice": 1.5, "mishap": 1.5 },
+        "priceMul": 1.2
+      },
+      {
+        "name": "Thú lui",
+        "years": 1,
+        "text": "Thú triều lui. Ruộng nương tan hoang, nhưng nội đan yêu thú bán đầy chợ.",
+        "eventWeight": { "beast": 1.5, "market": 1.3 },
+        "priceMul": 0.9
+      }
+    ]
+  },
+  {
+    "id": "yeu_toc_tranh_vuong",
+    "name": "Yêu tộc tranh vương",
+    "kind": "beast_tide",
+    "regions": ["van_thu_son_mach"],
+    "weight": 0.6,
+    "cooldownYears": 80,
+    "phases": [
+      {
+        "name": "Hống gầm",
+        "years": 1,
+        "text": "Kim Mao Hống tỉnh giấc gầm một tiếng. Cả sơn mạch biết thú vương đã già.",
+        "eventWeight": { "beast": 1.5 }
+      },
+      {
+        "name": "Tranh vương",
+        "years": 3,
+        "text": "Các đại yêu đánh nhau giành ngôi. Người đi vào rừng lúc này hoặc rất gan, hoặc rất ngu.",
+        "eventWeight": { "beast": 2.5, "fortune": 1.3, "plunder": 1.3 }
+      }
+    ]
+  },
+  {
+    "id": "dai_ung_doi_ngoi",
+    "name": "Đại Ung đổi ngôi",
+    "kind": "dynasty",
+    "regions": ["thanh_van_chau"],
+    "weight": 0.8,
+    "cooldownYears": 60,
+    "phases": [
+      {
+        "name": "Vua bệnh",
+        "years": 1,
+        "text": "Ung Đế bệnh nặng, Khâm Thiên Giám tìm thuốc trường sinh khắp nơi. Giá linh dược ở Trung Nguyên tăng vọt.",
+        "eventWeight": { "market": 1.3 },
+        "priceMul": 1.2
+      },
+      {
+        "name": "Tranh ngôi",
+        "years": 2,
+        "text": "Các hoàng tử tranh ngôi. Kinh thành đóng cửa, quan quân chiêu mộ người giỏi võ.",
+        "eventWeight": { "justice": 1.5, "plunder": 1.3, "mishap": 1.3 },
+        "priceMul": 1.15
+      },
+      {
+        "name": "Tân đế",
+        "years": 2,
+        "text": "Tân đế lên ngôi, đại xá thiên hạ. Thuế giảm ba năm, dân chúng đốt pháo ăn mừng.",
+        "eventWeight": { "fortune": 1.3, "funny": 1.5 },
+        "priceMul": 0.9
+      }
+    ]
+  },
+  {
+    "id": "ung_xich_sa_chien",
+    "name": "Đại Ung đánh Xích Sa",
+    "kind": "war",
+    "regions": ["thanh_van_chau", "vo_chu_hoang_nguyen"],
+    "weight": 0.9,
+    "cooldownYears": 25,
+    "phases": [
+      {
+        "name": "Lệnh trưng binh",
+        "years": 1,
+        "text": "Đại Ung phát lệnh trưng binh, nhà nào có trai tráng phải ra một người.",
+        "eventWeight": { "family": 1.3, "mishap": 1.3 }
+      },
+      {
+        "name": "Chiến sự",
+        "years": 2,
+        "text": "Kỵ binh Xích Sa và quân Đại Ung đánh nhau ở biên giới. Ngựa đắt, muối đắt, mạng người rẻ.",
+        "eventWeight": { "plunder": 1.5, "justice": 1.3 },
+        "priceMul": 1.15
+      },
+      {
+        "name": "Hòa ước",
+        "years": 1,
+        "text": "Hai bên ký hòa ước, như mười năm trước. Như mười năm sau.",
+        "eventWeight": { "market": 1.2 }
+      }
+    ]
+  },
+  {
+    "id": "canh_quoc_khoa_thi",
+    "name": "Cảnh quốc mở đại khoa",
+    "kind": "dynasty",
+    "regions": ["thanh_van_chau"],
+    "weight": 1,
+    "cooldownYears": 10,
+    "phases": [
+      {
+        "name": "Bảng vàng",
+        "years": 1,
+        "text": "Cảnh quốc mở đại khoa, sĩ tử khắp Trung Nguyên lên kinh. Thư sinh đầy đường, chữ nghĩa đầy quán.",
+        "eventWeight": { "study": 2, "romance": 1.3 }
+      }
+    ]
+  },
+  {
+    "id": "thien_kieu_dai_hoi",
+    "name": "Thiên kiêu đại hội",
+    "kind": "tournament",
+    "regions": ["trung_chau"],
+    "weight": 1,
+    "cooldownYears": 20,
+    "phases": [
+      {
+        "name": "Hiệu triệu",
+        "years": 1,
+        "text": "Các đại tông Trung Châu hiệu triệu thiên kiêu dưới trăm tuổi về luận võ.",
+        "eventWeight": { "ranking": 2, "sect_grand": 1.5 }
+      },
+      {
+        "name": "Luận võ",
+        "years": 1,
+        "text": "Thiên kiêu đại hội mở. Bảng thiên kiêu sắp xếp lại, người thắng nổi danh, người thua nổi giận.",
+        "eventWeight": { "ranking": 3, "sect_grand": 2 }
+      }
+    ]
+  },
+  {
+    "id": "luan_dao_dai_hoi",
+    "name": "Luận đạo đại hội",
+    "kind": "tournament",
+    "regions": ["trung_chau", "thanh_van_chau"],
+    "weight": 0.8,
+    "cooldownYears": 25,
+    "phases": [
+      {
+        "name": "Luận đạo",
+        "years": 1,
+        "text": "Thái Huyền Đạo Cung và Đại Diễn Thư Viện mở luận đạo đại hội. Ai cũng được lên đài nói, ít ai được nghe hết.",
+        "eventWeight": { "study": 2, "cultivation": 1.3 }
+      }
+    ]
+  },
+  {
+    "id": "phat_mon_dai_le",
+    "name": "Phật môn đại lễ",
+    "kind": "tournament",
+    "regions": ["thanh_van_chau", "bac_minh_tuyet_vuc"],
+    "weight": 0.8,
+    "cooldownYears": 20,
+    "phases": [
+      {
+        "name": "Đại lễ",
+        "years": 1,
+        "text": "Vô Ưu Tự và Hàn Sơn Tự cùng mở đại lễ. Chuông vang khắp nơi, ma tu đi đường vòng.",
+        "eventWeight": { "demonic": 0.5, "karma": 1.5, "heart_demon": 0.7 }
+      }
+    ]
+  },
+  {
+    "id": "dieu_phi_thang",
+    "name": "Điềm phi thăng",
+    "kind": "omen",
+    "regions": [],
+    "weight": 0.3,
+    "cooldownYears": 200,
+    "phases": [
+      {
+        "name": "Cột sáng",
+        "years": 1,
+        "text": "Một cột sáng vàng vọt lên từ Trung Châu, xuyên tầng mây. Người ta đồn có đại năng thử bước lên Thông Thiên lộ đã đứt từ thời Thượng Cổ.",
+        "eventWeight": { "fortune": 1.5, "cultivation": 1.3 }
+      },
+      {
+        "name": "Mưa linh khí",
+        "years": 1,
+        "text": "Cột sáng tắt. Linh khí rơi như mưa khắp Thương Lan suốt một tháng. Không ai biết người kia lên được hay không.",
+        "eventWeight": { "cultivation": 1.5, "be_quan": 1.5 }
+      }
+    ]
+  },
+  {
+    "id": "sao_choi",
+    "name": "Sao chổi đỏ",
+    "kind": "omen",
+    "regions": [],
+    "weight": 0.8,
+    "cooldownYears": 30,
+    "phases": [
+      {
+        "name": "Sao chổi",
+        "years": 1,
+        "text": "Một sao chổi đỏ quét ngang trời. Thiên Cơ Các đóng cửa không bói, người đời càng sợ.",
+        "eventWeight": { "heart_demon": 1.3, "mishap": 1.3, "fortune": 1.2 }
+      }
+    ]
+  },
+  {
+    "id": "nhat_thuc",
+    "name": "Nhật thực ban trưa",
+    "kind": "omen",
+    "regions": [],
+    "weight": 0.8,
+    "cooldownYears": 25,
+    "phases": [
+      {
+        "name": "Trời tối",
+        "years": 1,
+        "text": "Giữa trưa trời tối như đêm. Phàm nhân quỳ lạy, ma tu tranh thủ luyện công.",
+        "eventWeight": { "demonic": 1.5, "funny": 1.3 }
+      }
+    ]
+  },
+  {
+    "id": "dich_benh",
+    "name": "Ôn dịch phàm gian",
+    "kind": "calamity",
+    "regions": ["thanh_van_chau"],
+    "weight": 0.9,
+    "cooldownYears": 25,
+    "phases": [
+      {
+        "name": "Dịch bệnh",
+        "years": 2,
+        "text": "Ôn dịch lan khắp Trung Nguyên. Lạc Diệp Môn và Tử Trúc Am phát thuốc, nhà giàu đóng cổng.",
+        "eventWeight": { "lifespan": 1.3, "family": 1.5, "karma": 1.5 },
+        "priceMul": 1.2
+      },
+      {
+        "name": "Dịch qua",
+        "years": 1,
+        "text": "Dịch qua. Làng nào cũng có thêm mấy nấm mồ mới.",
+        "eventWeight": { "family": 1.3 }
+      }
+    ]
+  },
+  {
+    "id": "dai_han",
+    "name": "Đại hạn ba năm",
+    "kind": "calamity",
+    "regions": ["thanh_van_chau", "vo_chu_hoang_nguyen"],
+    "weight": 0.8,
+    "cooldownYears": 30,
+    "phases": [
+      {
+        "name": "Hạn hán",
+        "years": 3,
+        "text": "Ba năm không mưa. Lúa chết, giếng cạn, gạo đắt như linh thạch. Ninh gia mở kho phát cháo.",
+        "eventWeight": { "plunder": 1.5, "karma": 1.3, "family": 1.3 },
+        "priceMul": 1.25
+      }
+    ]
+  },
+  {
+    "id": "lu_lon",
+    "name": "Lũ lớn sông Lạc",
+    "kind": "calamity",
+    "regions": ["thanh_van_chau"],
+    "weight": 0.9,
+    "cooldownYears": 15,
+    "phases": [
+      {
+        "name": "Nước lên",
+        "years": 1,
+        "text": "Sông Lạc vỡ đê, ba huyện chìm trong nước. Thuyền cứu người đông hơn thuyền buôn.",
+        "eventWeight": { "justice": 1.5, "mishap": 1.5, "family": 1.3 },
+        "priceMul": 1.1
+      }
+    ]
+  },
+  {
+    "id": "dong_dat_bac_minh",
+    "name": "Băng nguyên rung chuyển",
+    "kind": "calamity",
+    "regions": ["bac_minh_tuyet_vuc"],
+    "weight": 0.6,
+    "cooldownYears": 40,
+    "phases": [
+      {
+        "name": "Rung chuyển",
+        "years": 1,
+        "text": "Băng nguyên nứt toác thành vực. Thác Bạt thị nói có thứ gì đó dưới băng vừa trở mình.",
+        "eventWeight": { "bi_canh": 1.5, "mishap": 1.5 }
+      }
+    ]
+  },
+  {
+    "id": "hai_tac_hoanh_hanh",
+    "name": "Hải tặc hoành hành",
+    "kind": "war",
+    "regions": ["dong_hai"],
+    "weight": 1,
+    "cooldownYears": 15,
+    "phases": [
+      {
+        "name": "Hải tặc",
+        "years": 2,
+        "text": "Hải tặc chặn đường buôn Đông Hải, Âu Dương thế gia treo thưởng mỗi cái đầu một trăm linh thạch.",
+        "eventWeight": { "plunder": 2, "justice": 1.5 },
+        "priceMul": 1.15
+      }
+    ]
+  },
+  {
+    "id": "tan_tu_noi_loan",
+    "name": "Tán tu nổi loạn",
+    "kind": "war",
+    "regions": ["vo_chu_hoang_nguyen"],
+    "weight": 1,
+    "cooldownYears": 15,
+    "phases": [
+      {
+        "name": "Nổi loạn",
+        "years": 2,
+        "text": "Tán tu Vô Chủ Phường đánh nhau với người thu thuế của đại tông. Phường thị đóng nửa, chợ đen mở gấp đôi.",
+        "eventWeight": { "plunder": 2, "demonic": 1.3, "market": 0.7 },
+        "priceMul": 1.2
+      }
+    ]
+  },
+  {
+    "id": "dai_nang_toa_hoa",
+    "name": "Đại năng tọa hóa",
+    "kind": "passing",
+    "regions": ["trung_chau", "bac_minh_tuyet_vuc", "dong_hai"],
+    "weight": 1,
+    "cooldownYears": 20,
+    "phases": [
+      {
+        "name": "Tọa hóa",
+        "years": 1,
+        "text": "Một đại năng Hóa Thần tọa hóa, động phủ không người canh. Trăm luồng độn quang bay về cùng một hướng.",
+        "eventWeight": { "fortune": 2, "plunder": 2, "bi_canh": 1.5 }
+      }
+    ]
+  },
+  {
+    "id": "ma_dau_xuat_the",
+    "name": "Ma đầu xuất thế",
+    "kind": "passing",
+    "regions": ["huyet_uyen", "vo_chu_hoang_nguyen", "thanh_van_chau"],
+    "weight": 0.7,
+    "cooldownYears": 40,
+    "phases": [
+      {
+        "name": "Ma đầu",
+        "years": 2,
+        "text": "Một ma đầu bị phong ấn từ Trung Cổ phá ấn thoát ra. Mỗi đêm lại có một làng tắt đèn.",
+        "eventWeight": { "demonic": 2.5, "justice": 2, "heart_demon": 1.3 }
+      }
+    ]
+  },
+  {
+    "id": "thien_tai_xuat_the",
+    "name": "Thiên tài xuất thế",
+    "kind": "passing",
+    "regions": [],
+    "weight": 1,
+    "cooldownYears": 15,
+    "phases": [
+      {
+        "name": "Thiên tài",
+        "years": 1,
+        "text": "Thiên Cơ Các tuyên: năm nay có người mang mệnh thiên kiêu ra đời. Các tông cử người đi khắp nơi tìm trẻ con.",
+        "eventWeight": { "fortune": 1.3, "sect": 1.3 }
+      }
+    ]
+  },
+  {
+    "id": "linh_mach_phun",
+    "name": "Linh mạch phun trào",
+    "kind": "omen",
+    "regions": ["vo_chu_hoang_nguyen", "van_thu_son_mach", "thai_co_chien_truong"],
+    "weight": 0.8,
+    "cooldownYears": 30,
+    "phases": [
+      {
+        "name": "Linh mạch",
+        "years": 2,
+        "text": "Một linh mạch mới phun lên giữa đồng hoang. Tán tu đổ về đào mỏ, đổ máu vì một hòn đá.",
+        "eventWeight": { "plunder": 1.8, "fortune": 1.5, "cultivation": 1.2 },
+        "priceMul": 0.9
+      }
+    ]
+  },
+  {
+    "id": "tong_mon_thu_do",
+    "name": "Đại tông thu đồ",
+    "kind": "tournament",
+    "regions": [],
+    "weight": 1.2,
+    "cooldownYears": 8,
+    "phases": [
+      {
+        "name": "Thu đồ",
+        "years": 1,
+        "text": "Các đại tông cùng mở hội thu đồ. Đường lên núi đông như trẩy hội, nhà nào có con trẻ cũng đem đi thử vận.",
+        "eventWeight": { "sect": 1.8, "fortune": 1.2 }
+      }
+    ]
+  },
+  {
+    "id": "linh_thu_ha_son",
+    "name": "Linh thú hạ sơn",
+    "kind": "beast_tide",
+    "regions": ["van_thu_son_mach", "bac_minh_tuyet_vuc"],
+    "weight": 0.8,
+    "cooldownYears": 20,
+    "phases": [
+      {
+        "name": "Hạ sơn",
+        "years": 1,
+        "text": "Linh thú quý hiếm xuống núi tìm nước sau mùa khô. Ngự Thú Tông và Khương gia cùng đi bắt.",
+        "eventWeight": { "beast": 2, "fortune": 1.3 }
+      }
+    ]
+  }
+]

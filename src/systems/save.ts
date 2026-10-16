@@ -3,9 +3,12 @@
 import type { SavedPerson } from './npcLibrary';
 import { z } from 'zod';
 import { version as GAME_VERSION } from '../../package.json';
-import type { GameState, LogYear, PastSectRecord } from '../core/types';
+import type { GameState, KarmaTie, LogYear, PastSectRecord } from '../core/types';
 import { Rng } from '../core/rng';
 import { EMPTY_CODEX, mergeCodex, type Codex } from './codex';
+import { readKarmaLedger } from './karmaLedger';
+import { EMPTY_CHRONICLE, mergeChronicle, readChronicle, type Chronicle } from './chronicle';
+import { BASIC_KNOWLEDGE } from './knowledge';
 
 /**
  * v2: after the per-version steps in `migrate`, missing fields are backfilled from a fresh life (`backfillLife`).
@@ -69,6 +72,10 @@ export interface SaveMeta {
   pastSect: PastSectRecord | null;
   /** Backlog 11: people kept in the Sổ nhân vật, to bring into later lives. */
   library: SavedPerson[];
+  /** 9.R8: Sổ luân hồi (lives, endings, regions). */
+  chronicle: Chronicle;
+  /** 9.R9: ties past lives left, carried into the next life. */
+  karmaLedger: KarmaTie[];
 }
 /** Seeds remembered in `credited`; older ones are dropped. */
 const MAX_CREDITED = 30;
@@ -324,6 +331,9 @@ function migrateSteps(save: SaveFile): SaveFile {
     };
   }
   life = restoreRoots(splitBody(life));
+  // 9.R4d: no mass root test any more: an untested life drops the booked visit (the tiên duyên gates take over).
+  const booked = life.events.followUps.filter((f) => /^thu_linh_can/.test(f.event));
+  if (!life.cult.root && booked.length) life = { ...life, events: { ...life.events, followUps: life.events.followUps.filter((f) => !booked.includes(f)) } };
   return life === save.life ? save : { ...save, life };
 }
 
@@ -442,14 +452,16 @@ export function readMeta(store: KeyValueStore): SaveMeta {
       blessings: m.blessings && Array.isArray(m.blessings.list) ? m.blessings : null,
       rebirthTalents: m.rebirthTalents && typeof m.rebirthTalents === 'object' ? m.rebirthTalents : {},
       fingerPity: typeof m.fingerPity === 'number' ? m.fingerPity : 0,
-      codex: readCodex(m.codex),
+      codex: withBasicKnowledge(readCodex(m.codex), m),
       achievements: m.achievements && typeof m.achievements === 'object' ? m.achievements : {},
       weekly: m.weekly && typeof m.weekly === 'object' ? m.weekly : {},
       pastSect: m.pastSect && typeof m.pastSect.name === 'string' ? m.pastSect : null,
       library: Array.isArray(m.library) ? m.library.filter((p) => p && typeof p.id === 'string' && typeof p.name === 'string') : [],
+      chronicle: readChronicle(m.chronicle),
+      karmaLedger: readKarmaLedger(m.karmaLedger),
     };
   } catch {
-    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {}, fingerPity: 0, codex: EMPTY_CODEX, achievements: {}, weekly: {}, pastSect: null, library: [] };
+    return { livesPlayed: 0, rebirthPoints: 0, credited: {}, blessings: null, rebirthTalents: {}, fingerPity: 0, codex: EMPTY_CODEX, achievements: {}, weekly: {}, pastSect: null, library: [], chronicle: EMPTY_CHRONICLE, karmaLedger: [] };
   }
 }
 
@@ -498,10 +510,16 @@ export function buyRebirthTalent(store: KeyValueStore, id: string, cost: number)
   return writeMeta(store, { ...meta, rebirthPoints: meta.rebirthPoints - cost, rebirthTalents });
 }
 
+/** 9.R5b: a browser that played before the Sổ tri thức existed starts with the basics (knowledge.ts). */
+function withBasicKnowledge(codex: Codex, raw: Partial<SaveMeta>): Codex {
+  const old = (raw.livesPlayed ?? 0) > 0 && !(raw.codex && Array.isArray((raw.codex as Partial<Codex>).knowledge));
+  return old ? { ...codex, knowledge: [...BASIC_KNOWLEDGE] } : codex;
+}
+
 function readCodex(raw: unknown): Codex {
   const c = (raw && typeof raw === 'object' ? raw : {}) as Partial<Codex>;
   const list = (v: unknown) => (Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : []);
-  return { traits: list(c.traits), combos: list(c.combos), fingers: list(c.fingers), stories: Array.isArray(c.stories) ? c.stories : [] };
+  return { traits: list(c.traits), combos: list(c.combos), fingers: list(c.fingers), stories: Array.isArray(c.stories) ? c.stories : [], knowledge: list(c.knowledge) };
 }
 
 /** Task 5b.4: fold what a life saw into the Thiên Thư (codex.ts codexOf). */
@@ -535,6 +553,17 @@ export function recordPastSect(store: KeyValueStore, record: PastSectRecord | nu
 }
 
 /** Backlog 11: replace the Sổ nhân vật. */
+/** 9.R9: the ledger of ties after a life (karmaLedger.nextKarmaLedger decides what), once per life. */
+export function recordKarmaLedger(store: KeyValueStore, ledger: KarmaTie[]): SaveMeta {
+  return writeMeta(store, { ...readMeta(store), karmaLedger: ledger });
+}
+
+/** 9.R8: fold one finished life into the Sổ luân hồi. */
+export function recordChronicle(store: KeyValueStore, add: Chronicle): SaveMeta {
+  const meta = readMeta(store);
+  return writeMeta(store, { ...meta, chronicle: mergeChronicle(meta.chronicle, add) });
+}
+
 export function recordLibrary(store: KeyValueStore, library: SavedPerson[]): SaveMeta {
   return writeMeta(store, { ...readMeta(store), library });
 }

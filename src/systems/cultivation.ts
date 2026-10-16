@@ -186,17 +186,38 @@ export function awakenBody(state: GameState, content: Content, bodyId: string): 
 }
 
 /**
+ * 9.R4a linh căn ẩn: the root a life is born with, fixed by its seed and destiny (its own RNG stream),
+ * whether or not anyone ever tests it. revealRoot shows it; hint events read it before that.
+ */
+export function innateRoot(state: GameState, content: Content): RootRoll {
+  const rng = new Rng(`${state.seed}:root`);
+  const origin = content.origins.find((o) => o.id === state.character.originId);
+  // Phúc báo Đại thiện nhân (task 5b.8): rootReroll adds rolls, best kept.
+  const rolls = (origin?.cultivatorClan ? content.balance.roots.clanDescendantRolls : 1) + Math.max(0, Math.round(hookSum(state, content, 'rootReroll')));
+  return rollRoot(rng, content, rolls, traitRootFloor(state, content)?.grade ?? null);
+}
+
+/** 9.R4a: the innate root's name, for developer mode (null once tested: the real root shows instead). */
+export function innateRootLabel(state: GameState, content: Content): string | null {
+  if (state.cult.root) return null;
+  const { root, bodyId } = innateRoot(state, content);
+  return rootNameOf(root, bodyId, content);
+}
+
+/** 9.R4a: does the untested innate root let this life cultivate? */
+export function hasUsableInnateRoot(state: GameState, content: Content): boolean {
+  if (state.cult.root) return false;
+  return (content.balance.roots.gradeSpeed[innateRoot(state, content).root.grade] ?? 0) > 0;
+}
+
+/**
  * Reveal the spirit root (once per life). A special body's stat and lifespan
  * hooks apply now; its other hooks are read by their systems later.
  */
 export function revealRoot(state: GameState, content: Content): { state: GameState; line: LogLine | null } {
   if (state.cult.root) return { state, line: null };
-  const rng = Rng.fromState(state.rng);
-  const origin = content.origins.find((o) => o.id === state.character.originId);
-  // Phúc báo Đại thiện nhân (task 5b.8): rootReroll adds rolls, best kept.
-  const rolls = (origin?.cultivatorClan ? content.balance.roots.clanDescendantRolls : 1) + Math.max(0, Math.round(hookSum(state, content, 'rootReroll')));
   const floor = traitRootFloor(state, content);
-  const { root, bodyId } = rollRoot(rng, content, rolls, floor?.grade ?? null);
+  const { root, bodyId } = innateRoot(state, content);
 
   const { stats, aptitudes, lifespan } = bodyGains(state, content, bodyId);
 
@@ -212,7 +233,7 @@ export function revealRoot(state: GameState, content: Content): { state: GameSta
   const last = log[log.length - 1];
   if (last) log[log.length - 1] = { ...last, lines: [...last.lines, line] };
   return {
-    state: { ...state, rng: rng.getState(), stats, aptitudes, cult: { ...state.cult, root, bodyId, lifespan }, log },
+    state: { ...state, stats, aptitudes, cult: { ...state.cult, root, bodyId, lifespan }, log },
     line,
   };
 }
@@ -337,7 +358,10 @@ export function yearlyGain(state: GameState, content: Content): number {
     ? content.balance.majorBreakthrough.foundationSpeed[state.cult.foundation] ?? 1
     : coreGrade !== null ? content.balance.coreForming.gradeSpeed[coreGrade - 1] ?? 1 : 1;
   const buffs = state.cult.buffs.filter((b) => state.character.age < b.until).reduce((m, b) => m * b.mul, 1);
-  return realm.speedPct * rootMul * aptitude * qi * techniqueMul(state, content) * bonus * dual * secluded * injured * foundation * buffs * bottleneckMul(state, content);
+  // 9.R4d: a body set by martial training cultivates a little slower (the Ngũ khí root has its own bonus).
+  const conv = content.balance.martial.conversion;
+  const martialBody = conv && state.cult.root?.grade !== content.martial.ascend.rootGrade && conv.entries.some((e) => e.stage <= state.martial.stage) ? conv.speedMul : 1;
+  return realm.speedPct * rootMul * aptitude * qi * techniqueMul(state, content) * bonus * dual * secluded * injured * foundation * buffs * martialBody * bottleneckMul(state, content);
 }
 
 /** PLAN G.2 bình cảnh: after N failed big breakthroughs at a realm's peak, cultivation slows. */
@@ -421,17 +445,29 @@ export function startCultivating(state: GameState, content: Content): { state: G
   if (!root || state.cult.realm !== 'pham_nhan' || (content.balance.roots.gradeSpeed[root.grade] ?? 0) <= 0) return { state, line: null };
   const first = content.cultivation.realms.realms[1];
   if (!first) return { state, line: null };
+  const texts = content.cultivation.realms.texts;
   const rng = Rng.fromState(state.rng);
-  const entered = enterRealm(state, content, first.id, rng);
-  // The tiên sư leaves the default technique (Dẫn Khí Quyết); the start line already says so.
-  let next = learnTechnique(entered, content, content.balance.techniques.default, { quiet: true })?.state ?? entered;
+  let next = state;
   // Sects come recruiting a few years later (task 2.5).
   const recruit = content.world.sectRecruitEvent;
   if (recruit) {
     const [lo, hi] = content.balance.sects.recruitAfterYears;
     next = { ...next, events: { ...next.events, followUps: [...next.events.followUps, { event: recruit, atAge: next.character.age + rng.int(lo, hi) }] } };
   }
-  const line: LogLine = { text: fillRealm(content.cultivation.realms.texts.start, next, content), tone: 'good' };
+  // 9.R4c: no technique is handed out by default any more. A clan child gets the family's entry manual;
+  // anyone else waits for a sect, a market or a kỳ ngộ to bring one (learning it enters the first realm).
+  const clan = content.origins.find((o) => o.id === state.character.originId)?.cultivatorClan;
+  if (!currentTechnique(next, content) && clan) next = learnTechnique(next, content, content.balance.techniques.default, { quiet: true })?.state ?? next;
+  if (!currentTechnique(next, content)) {
+    const line: LogLine | null = texts.needTechnique ? { text: texts.needTechnique, tone: 'normal' } : null;
+    return { state: { ...next, rng: rng.getState(), log: line ? pushLine(next.log, line) : next.log }, line };
+  }
+  next = enterRealm(next, content, first.id, rng);
+  const converted = martialEntry(next, content, rng);
+  const line: LogLine = converted !== next && texts.martialEntry
+    ? { text: fillRealm(texts.martialEntry, converted, content), tone: 'rare' }
+    : { text: fillRealm((clan && texts.startClan) || texts.start, converted, content), tone: 'good' };
+  next = converted;
   return { state: { ...next, rng: rng.getState(), log: pushLine(next.log, line) }, line };
 }
 
@@ -739,6 +775,18 @@ export function enterFirstRealm(state: GameState, content: Content): GameState {
   const first = content.cultivation.realms.realms[1];
   if (state.cult.realm !== 'pham_nhan' || !first || !currentTechnique(state, content)) return state;
   const rng = Rng.fromState(state.rng);
-  const next = enterRealm(state, content, first.id, rng);
+  const next = martialEntry(enterRealm(state, content, first.id, rng), content, rng);
   return { ...next, rng: rng.getState() };
+}
+
+/**
+ * 9.R4d Tiên Võ song tu: a martial artist just in Luyện Khí 1 moves up to the level its martial stage
+ * earns (balance.martial.conversion): Tuyệt đỉnh tầng 2, Hóa cảnh tầng 4, Tam hoa tầng 7, Ngũ khí Trúc Cơ.
+ */
+export function martialEntry(state: GameState, content: Content, rng: Rng): GameState {
+  const entries = content.balance.martial.conversion?.entries ?? [];
+  const entry = entries.filter((e) => e.stage <= state.martial.stage).sort((a, b) => b.stage - a.stage)[0];
+  if (!entry || state.cult.realm !== content.cultivation.realms.realms[1]?.id || state.cult.stage !== 0) return state;
+  const moved = entry.realm !== state.cult.realm ? enterRealm(state, content, entry.realm, rng) : state;
+  return { ...moved, cult: { ...moved.cult, stage: entry.realmStage, foundation: entry.foundation ?? moved.cult.foundation } };
 }

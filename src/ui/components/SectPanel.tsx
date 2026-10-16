@@ -5,7 +5,7 @@ import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
 import {
-  currentSect, masterBlocked, masterChance, missionViews, nextRankNeed, sectEligibility, sectTechniques,
+  currentSect, masterBlocked, masterChance, missionViews, nextRankNeed, sectDirectory, sectEligibility, sectTechniques,
 } from '../../systems/sect';
 import { merit, treasuryViews } from '../../systems/sectTreasury';
 import { chainViews } from '../../systems/sectChains';
@@ -15,6 +15,7 @@ import { TermText } from './Tooltip';
 import { OwnSectSection } from './OwnSectSection';
 import { SectIdentity } from './SectIdentity';
 import { JianghuSection } from './JianghuSection';
+import { featureOpen } from '../../systems/knowledge';
 
 export type SectAction =
   | { kind: 'join'; sectId: string }
@@ -179,9 +180,10 @@ export function SectPanel({ state, content, onAction, onClose }: {
         ) : (
           <>
             <h2>Chưa có tông môn</h2>
+            {featureOpen(state, content, 'tab', 'tong_mon') ? <>
             <h3 class="muted">Tông môn tu tiên</h3>
             <p class="profile-note">Có linh căn thì có thể lên núi xin bái nhập. Không linh căn mà Đạo tâm vững, cửa chùa vẫn mở.</p>
-            {content.sects.filter((s) => s.recruitable).map((s) => {
+            {sectDirectory(state, content).here.map((s) => {
               const reason = sectEligibility(state, content, s.id);
               return (
                 <div class="career-row" key={s.id}>
@@ -193,6 +195,15 @@ export function SectPanel({ state, content, onAction, onClose }: {
                 </div>
               );
             })}
+            {sectDirectory(state, content).elsewhere.length > 0 && (
+              <Fold id="sect:elsewhere" title="Tông môn các vùng khác" count={sectDirectory(state, content).elsewhere.reduce((n, g) => n + g.sects.length, 0)}>
+                <p class="profile-note">Tông nhỏ và vừa chỉ nhận người tự tìm tới cổng núi. Lên đường tới vùng của họ rồi mới xin bái nhập được.</p>
+                {sectDirectory(state, content).elsewhere.map((g) => (
+                  <p class="profile-note" key={g.region}><b>{g.region}:</b> {g.sects.map((s) => s.name).join(', ')}</p>
+                ))}
+              </Fold>
+            )}
+            </> : <p class="profile-note">Người ta đồn trên núi cao có tiên môn, nhưng chưa ai trong vùng tận mắt thấy cổng núi.</p>}
           </>
         )}
 

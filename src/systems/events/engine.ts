@@ -13,13 +13,15 @@ import { fittingTechnique, gainScroll, learnTechnique } from '../technique';
 import { addItems, removeItems } from '../items';
 import { addCraftXp } from '../crafts';
 import { forceJoinCareer, leaveCareer, promoteCareer } from '../career';
-import { addMartialYears, martialAttempt, martialPromote } from '../martial';
+import { addMartialYears, martialAscend, martialAttempt, martialPromote } from '../martial';
 import { addPathAffinity } from '../paths';
 import { regionThemeMultiplier } from '../regions';
+import { worldThemeMultiplier } from '../worldEvents';
 import { chosenDisciple, isChosenEvent, setChosenRole, takeChosen } from '../chosen';
 import { addContribution, breakPrecept, grantMaster, joinSect, leaveSect, promoteSect } from '../sect';
 import { startBattle } from '../combat';
-import { changeNpc, createNpc, killNpc, npcCalls } from '../npcs';
+import { changeNpc, createNpc, killNpc, npcCalls, type NpcTrigger } from '../npcs';
+import { markReunion } from '../karmaLedger';
 import { applyRomance, romanceTarget } from '../romance';
 import { gainGoldenFinger, loseGoldenFinger, SURE_CHECK_FLAG } from '../goldenFinger';
 import { applyPastSect } from '../pastSect';
@@ -39,7 +41,7 @@ export function themeMultiplier(state: GameState, content: Content, event: GameE
     if (!e.hook.startsWith('eventWeight.') || e.mul === undefined || !hookActive(e, state, content)) continue;
     if (event.themes.includes(e.hook.slice('eventWeight.'.length))) mul *= e.mul;
   }
-  return mul * extremeThemeMultiplier(state, content, event.themes) * regionThemeMultiplier(state, content, event.themes);
+  return mul * extremeThemeMultiplier(state, content, event.themes) * regionThemeMultiplier(state, content, event.themes) * worldThemeMultiplier(state, content, event.themes);
 }
 
 /** Weight of an event for this life right now; 0 = cannot happen. */
@@ -112,6 +114,8 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
   } else if (visit) {
     picked = visit.event;
     npc = visit.npc;
+    // 9.R9: a cố nhân's reunion comes once.
+    if (visit.trigger === 'reunion') state = markReunion(state, visit.npc);
   } else if (sure || rng.chance(popupChance(state, content))) {
     // "be_quan" events only break into a seclusion (rollSeclusionEvent).
     const all = content.events
@@ -153,7 +157,7 @@ function bondedRecently(state: GameState, content: Content): boolean {
 }
 
 /** Task 3.4: an NPC whose ledger calls for a visit, and an event for it whose conditions hold. */
-function npcEvent(state: GameState, content: Content, rng: Rng): { npc: string; event: string } | null {
+function npcEvent(state: GameState, content: Content, rng: Rng): { npc: string; event: string; trigger: NpcTrigger } | null {
   for (const call of npcCalls(state, content, rng)) {
     // 6c.6: kindness repaid is a moment, not a yearly chore.
     if (call.trigger === 'repay' && repaidRecently(state, content)) continue;
@@ -161,7 +165,7 @@ function npcEvent(state: GameState, content: Content, rng: Rng): { npc: string; 
     const withNpc = { ...state, events: { ...state.events, npc: call.id } };
     const pool = content.events.filter((e) => e.npcTrigger === call.trigger && e.weight > 0 && meets(withNpc, e.conditions, content));
     if (pool.length === 0) continue;
-    return { npc: call.id, event: rng.weighted(pool, (e) => e.weight).id };
+    return { npc: call.id, event: rng.weighted(pool, (e) => e.weight).id, trigger: call.trigger };
   }
   return null;
 }
@@ -356,7 +360,11 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.joinSect) {
     const before = next.log;
     const joined = joinSect(next, content, fx.joinSect);
-    next = { ...joined.state, log: joined.text ? dropAdded(before, joined.state.log, [joined.text]) : joined.state.log };
+    // 9.R4c: the manual a sect hands a rooted newcomer brings them into the first realm.
+    if (joined.joined) joined.state = enterFirstRealm(joined.state, content);
+    const manual = content.cultivation.realms.texts.sectManual;
+    const said = manual && joined.text.endsWith(` ${manual}`) ? [joined.text.slice(0, -manual.length - 1), manual] : [joined.text];
+    next = { ...joined.state, log: joined.text ? dropAdded(before, joined.state.log, said) : joined.state.log };
     if (joined.text) text = `${text} ${joined.text}`;
   }
   if (fx.sectContribution) next = addContribution(next, fx.sectContribution);
@@ -434,6 +442,7 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.martialYears) next = addMartialYears(next, fx.martialYears);
   if (fx.martialBonus) next = { ...next, martial: { ...next.martial, bonus: next.martial.bonus + fx.martialBonus } };
   if (fx.martialPromote) next = martialPromote(next, content);
+  if (fx.martialAscend) next = martialAscend(next, content);
   if (fx.martialAttempt) {
     const tried = martialAttempt(next, content);
     next = tried.state;

@@ -615,6 +615,10 @@ button { font: inherit; color: inherit; }
 .tab { flex: 1; min-height: 40px; border: 1px solid var(--line); border-radius: var(--radius); background: none; color: var(--muted); font: inherit; font-family: var(--font-story); font-size: 1.0625rem; cursor: pointer; }
 .tab.on { border-color: var(--seal); color: var(--ink); font-weight: 700; }
 .npc-line { margin: 0 0 6px; }
+.npc-info { display: grid; grid-template-columns: max-content 1fr; gap: 2px 10px; margin: 4px 0; font-size: 0.92em; }
+.npc-info > div { display: contents; }
+.npc-info dt { color: var(--ink); opacity: 0.7; }
+.npc-info dd { margin: 0; }
 .chosen-line { color: var(--rare); font-weight: 600; }
 .npc-ledger { display: flex; gap: 12px; margin: 6px 0 0; font-size: 0.8125rem; font-weight: 600; }
 .npc-ledger .good { color: var(--good); }
@@ -751,6 +755,7 @@ button { font: inherit; color: inherit; }
 .dev-stats b { text-align: right; font-variant-numeric: tabular-nums; }
 .dev-event { display: flex; flex-wrap: wrap; gap: 8px; }
 .dev-event select { flex: 1; min-width: 0; font: inherit; padding: 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+.dev-event input[type="number"] { width: 6em; font: inherit; padding: 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
 .dev-foot { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; margin-top: 16px; }
 .dev-foot .choice { width: auto; flex: 1; }
 /* Task 5b dev overhaul: folding sections, text inputs. */

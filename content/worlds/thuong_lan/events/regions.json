@@ -3,7 +3,7 @@
     "id": "dai_nang_thanh_van_tu",
     "category": "fortune",
     "title": "Lão nhân câu cá trên mây",
-    "text": "Đi ngang chân núi Thanh Vân, {name} thấy một sợi dây câu thả từ trên mây xuống, lưỡi câu không mồi, lơ lửng ngang mặt.",
+    "text": "Đi ngang chân núi Lạc Vân, {name} thấy một sợi dây câu thả từ trên mây xuống, lưỡi câu không mồi, lơ lửng ngang mặt.",
     "themes": ["benefactor"],
     "conditions": { "region": ["thanh_van_chau"], "age": { "min": 10 } },
     "weight": 0.6,
@@ -12,7 +12,7 @@
       {
         "text": "Cắn thử lưỡi câu",
         "result": {
-          "text": "Ngươi bị kéo vút lên mây. Thanh Vân Tử nhìn ngươi, cười tới chảy nước mắt, rồi giảng cho một khắc đạo lý trước khi thả về.",
+          "text": "Ngươi bị kéo vút lên mây. Lạc Vân Tử nhìn ngươi, cười tới chảy nước mắt, rồi giảng cho một khắc đạo lý trước khi thả về.",
           "effects": { "stat.comprehension": 3, "stat.happiness": 5 }
         }
       },

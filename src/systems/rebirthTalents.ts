@@ -4,6 +4,7 @@
 import type { Content } from '../core/content';
 import type { EffectHook, RebirthTalentFile } from '../core/schemas';
 import type { GameState } from '../core/types';
+import { knowsFor } from './knowledge';
 
 type Talent = RebirthTalentFile['talents'][number];
 type Level = Talent['levels'][number];
@@ -56,17 +57,19 @@ export interface TalentRow {
   max: number;
   /** What the current level gives (null before the first). */
   current: string | null;
+  /** 9.R5b: hidden until its Sổ tri thức entry is known. */
+  locked: boolean;
   /** The next level: what it gives and its price; null at max. */
   next: { summary: string; cost: number; affordable: boolean } | null;
 }
 
 /** The Luân Hồi đài: every talent with its level and next price. */
-export function talentShop(content: Content, owned: Owned, points: number): TalentRow[] {
+export function talentShop(content: Content, owned: Owned, points: number, known?: string[]): TalentRow[] {
   return content.rebirthTalents.talents.map((t) => {
     const level = Math.min(owned[t.id] ?? 0, t.levels.length);
     const nx = t.levels[level];
     return {
-      id: t.id, name: t.name, text: t.text, level, max: t.levels.length,
+      id: t.id, name: t.name, text: t.text, level, max: t.levels.length, locked: level === 0 && !!known && !knowsFor(known, t.requiresKnowledge),
       current: level > 0 ? t.levels[level - 1].summary : null,
       next: nx ? { summary: nx.summary, cost: nx.cost, affordable: nx.cost <= points } : null,
     };
@@ -74,8 +77,8 @@ export function talentShop(content: Content, owned: Owned, points: number): Tale
 }
 
 /** Price of the next level of a talent, or null when maxed or unknown. */
-export function nextTalentCost(content: Content, owned: Owned, id: string): number | null {
+export function nextTalentCost(content: Content, owned: Owned, id: string, known?: string[]): number | null {
   const t = content.rebirthTalents.talents.find((x) => x.id === id);
-  if (!t) return null;
+  if (!t || (!(owned[id] ?? 0) && known && !knowsFor(known, t.requiresKnowledge))) return null;
   return t.levels[owned[id] ?? 0]?.cost ?? null;
 }

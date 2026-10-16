@@ -46,7 +46,12 @@ const BaseConditionsSchema = z
       .strict()
       .optional(),
     /** Spirit root (task 2.11): tested or not; usable = can cultivate. */
-    root: z.object({ tested: z.boolean().optional(), usable: z.boolean().optional(), minElements: z.number().int().min(1).optional() }).strict().optional(),
+    /** innate (9.R4a): the untested root born with the life is usable (true) or not (false). */
+    /** 9.R5b: Sổ tri thức entries this life knows (all) or does not know (none). */
+    knowledge: z.object({ all: ids, none: ids }).partial().strict().optional(),
+    /** 9.R7e: a sự kiện thiên hạ is under way (any of these ids; at this phase index when given). */
+    worldEvent: z.object({ id: ids, phase: z.number().int().min(0).optional() }).strict().optional(),
+    root: z.object({ tested: z.boolean().optional(), usable: z.boolean().optional(), minElements: z.number().int().min(1).optional(), innate: z.boolean().optional() }).strict().optional(),
     /** Stage within the current realm, 0-based (task 2.8: "Luyện Khí tầng 4+" = min 3). */
     stage: z.object({ min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional(),
     /** Mortal career (task 2.8). */
@@ -129,6 +134,8 @@ const BaseConditionsSchema = z
         maxAffinity: z.number().optional(),
         /** Kin of someone the player killed. */
         heir: z.boolean().optional(),
+        /** 9.R9: a cố nhân from a past life, of these kinds. */
+        pastLife: z.array(z.enum(['dao_lu', 'an', 'oan', 'ke_thu'])).optional(),
         natureKnown: z.boolean().optional(),
         /** Their hidden nature does not match the face they show. */
         masked: z.boolean().optional(),
@@ -189,6 +196,8 @@ export const EffectsSchema = z
     kill: z.boolean().optional(),
     /** Task 3.11: martial path. */
     martialPromote: z.boolean().optional(),
+    /** 9.V2: Tiên Võ đồng tu: a Ngũ khí martial artist with the cao nhân's kinh steps into cultivation. */
+    martialAscend: z.boolean().optional(),
     martialAttempt: z.boolean().optional(),
     martialYears: z.number().int().optional(),
     /** Extra % for the next martial breakthrough. */
@@ -284,7 +293,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -387,7 +396,7 @@ export const EventSchema = z
     cooldownYears: z.number().int().min(0).default(0),
     oncePerLife: z.boolean().default(false),
     /** Task 3.4: not in the yearly pool; fires when an NPC's ledger calls for it (that NPC is the event's NPC). */
-    npcTrigger: z.enum(['revenge', 'repay', 'reveal', 'bond']).optional(),
+    npcTrigger: z.enum(['reunion', 'revenge', 'repay', 'reveal', 'bond']).optional(),
     /** Task 4.10: fires as soon as it is eligible, ahead of the yearly roll (due follow-ups still come first). */
     urgent: z.boolean().default(false),
     choices: z.array(ChoiceSchema).min(1),
@@ -428,6 +437,8 @@ export const OriginSchema = z
     noParents: z.boolean().default(false),
     /** Clan of cultivators: the spirit root is rolled balance.roots.clanDescendantRolls times, best kept. */
     cultivatorClan: z.boolean().default(false),
+    /** 9.R5b: not offered (nor rolled) until this Sổ tri thức entry is known. */
+    requiresKnowledge: id.optional(),
     /** Task 5b.9 Cầu đầu thai: choosing this origin costs Luân Hồi points (random draws are free). */
     rebirthCost: z.number().int().min(1).optional(),
     birthText: z.string().min(1),
@@ -486,7 +497,7 @@ const ADD_HOOK = new RegExp(
       `element\\.(${ELEMENTS})\\.power`, `path\\.(${PATHS})\\.(affinity|power)`,
       `craft\\.(${CRAFTS})\\.(success|yield|affinity)`,
       'heartDemonResist', 'charmResist',
-      'npcAffinityStart', 'faction\\.(chinh|ma|tan_tu|yeu|trieu_dinh|giang_ho)\\.reputation', 'karmaShift',
+      'npcAffinityStart', 'reunionChance', 'faction\\.(chinh|ma|tan_tu|yeu|trieu_dinh|giang_ho)\\.reputation', 'karmaShift',
       'priceDiscount', 'incomePct', 'lootPct',
       'trigger\\.cheatDeath',
       // Task 3.3: a storage bag keeps the goods when a robber wins.
@@ -888,6 +899,9 @@ export const BalanceSchema = z
         bondGapYears: z.number().int().min(0),
         /** Share of a dead NPC's grudge their kin inherits. */
         inheritShare: probability,
+        /** 9.R6: thiện cảm needed for each layer of the NPC info card (quen, thân, tri kỷ), and how many realms above the player one can still be read. */
+        infoTiers: z.tuple([z.number(), z.number(), z.number()]).optional(),
+        infoSeeAbove: z.number().int().min(0).optional(),
       })
       .strict(),
     /** Task 5.4: founding a cultivation clan. */
@@ -1654,6 +1668,18 @@ export const BalanceSchema = z
       .object({
         minAge: z.number().int().min(0),
         combatPower: z.array(z.number().min(0)).min(1),
+        /** 9.V1: speed counts the highest realm whose base power is at most martial power × this (Hóa cảnh runs like Luyện Khí). */
+        speedEquivMul: z.number().min(0).optional(),
+        /** 9.R4d Tiên Võ song tu: a martial artist who starts cultivating enters at a level set by the martial stage, and cultivates at speedMul (not the Ngũ khí root). */
+        conversion: z
+          .object({
+            speedMul: z.number().min(0),
+            entries: z.array(z.object({ stage: z.number().int().min(0), realm: id, realmStage: z.number().int().min(0), foundation: id.optional() }).strict()),
+          })
+          .strict()
+          .optional(),
+        /** 9.V2: years in a stage per tiểu cảnh (index = stage); each tiểu cảnh adds combat.stagePct power. */
+        subStageYears: z.array(z.number().min(1)).optional(),
         /** Lifespan added on reaching each stage. */
         lifespan: z.array(z.number().int().min(0)).min(1),
         /** Training into stage i (steps[0] = into Tam lưu). Stages past the list need a kỳ ngộ. */
@@ -1667,6 +1693,8 @@ export const BalanceSchema = z
               difficulty: z.number(),
               needsTeacher: z.boolean().optional(),
               minPhysique: z.number().optional(),
+              /** 9.V2: bình cảnh / tâm ma võ đạo: a failed year past the typical years may turn into tẩu hỏa (lose health), rarely losing a stage. */
+              deviation: z.object({ chance: probability, health: z.number().int(), cripple: probability }).strict().optional(),
             })
             .strict(),
         ),
@@ -1741,6 +1769,13 @@ export const BalanceSchema = z
         wish: z.number().int().min(0),
       })
       .strict(),
+    /** 9.R4b: yearly chance of each tiên duyên gate; scale without its knowledge; luck shifts it by luckWeight × (luck − 50)%. */
+    /** 9.R5b: closedUnknown gates stay shut until their entry is known (a first life never meets them). */
+    immortalGates: z.object({ chance: z.record(z.string(), probability), unknownMul: probability, closedUnknown: z.array(z.string()).default([]), luckWeight: z.number().min(0) }).strict().optional(),
+    /** 9.R5a Sổ tri thức: yearly chance for a source that names none; at most this many finds a year, and a life. */
+    knowledge: z.object({ defaultChance: probability, maxPerYear: z.number().int().min(1), maxPerLife: z.number().int().min(1) }).strict().optional(),
+    /** 9.R7e sự kiện thiên hạ: yearly chance one starts when none is under way; from this age of the player. */
+    worldEvents: z.object({ startChance: probability, minAge: z.number().int().min(0) }).strict().optional(),
     /** Task 5b.2: Kim Thủ Chỉ at birth: chance + per life played (capped), sure after pityLives lives without one. */
     goldenFinger: z
       .object({
@@ -1765,6 +1800,19 @@ export const BalanceSchema = z
      * claiming it back brings claimShare of them and claimTreasury into the new ownSect.
      */
     pastSect: z.object({ decay: probability, maxLives: z.number().int().min(1), claimShare: probability, claimTreasury: z.number().int().min(0) }).strict(),
+    /**
+     * 9.R9 Nhân quả xuyên kiếp: ties kept per life (perLife) and in all (max), dropped after maxLives;
+     * a tie needs minWeight (ân/oán), kẻ thù from enemyAt; yearly reunion chance × (1 + weight/100) × livesDecay^lives;
+     * kinds: how the cố nhân first feels to the player.
+     */
+    karmaLedger: z.object({
+      perLife: z.number().int().min(0), max: z.number().int().min(0), maxLives: z.number().int().min(1),
+      minWeight: z.number().min(0).max(100), enemyAt: z.number().min(0).max(100),
+      chance: probability, livesDecay: probability, minAge: z.number().int().min(0), romanceMinAge: z.number().int().min(18),
+      kinds: z.object(Object.fromEntries((['dao_lu', 'an', 'oan', 'ke_thu'] as const).map((k) => [k, z.object({
+        role: z.string().min(1), affinity: z.number().min(0).max(100), favor: z.number().min(0).max(100), grudge: z.number().min(0).max(100),
+      }).strict()])) as Record<'dao_lu' | 'an' | 'oan' | 'ke_thu', z.ZodObject<{ role: z.ZodString; affinity: z.ZodNumber; favor: z.ZodNumber; grudge: z.ZodNumber }, 'strict'>>).strict(),
+    }).strict(),
   })
   .passthrough(); // later tasks add sections (cultivation, lifespan…)
 
@@ -1959,6 +2007,13 @@ export const RealmsFileSchema = z
       .object({
         /** Root found: the first technique and the first stage. */
         start: z.string().min(1),
+        /** 9.R4c: a clan child is handed the family's entry manual; a rooted mortal without any technique waits. */
+        startClan: z.string().min(1).optional(),
+        needTechnique: z.string().min(1).optional(),
+        /** 9.R4c: a sect hands its new disciple an entry manual. */
+        sectManual: z.string().min(1).optional(),
+        /** 9.R4d: a martial artist steps in above tầng 1 ({realm} {stage}). */
+        martialEntry: z.string().min(1).optional(),
         stageUp: z.array(z.string().min(1)).min(1),
         /** Bar full at the last stage of a realm: waiting for the big breakthrough. */
         peak: z.string().min(1),
@@ -2235,6 +2290,14 @@ export const SectFileSchema = z.array(
       lineage: z.enum(LINEAGES),
       /** False: in the world but not taking disciples yet. */
       recruitable: z.boolean(),
+      /** 9.R7d: the đại vực it sits in; unless roaming, it takes only those who come to its region. */
+      region: id.optional(),
+      /** 9.R7d: đại tông, trung tông, tiểu tông. */
+      tier: z.enum(['dai', 'trung', 'tieu']).default('dai'),
+      /** 9.R7d: sends recruiters across the world (hội thu đồ), so it can be joined from anywhere. */
+      roaming: z.boolean().default(false),
+      /** 9.R7d: friendly sects (the rival is identity.rival). */
+      allies: z.array(id).default([]),
       description: z.string().min(1),
       /** Rank names from lowest (index 0) to highest. */
       ranks: z.array(z.string().min(1)).min(2),
@@ -2524,6 +2587,157 @@ export const JianghuFactionFileSchema = z.array(
 );
 export type JianghuFaction = z.infer<typeof JianghuFactionFileSchema>[number];
 
+/** 9.R7e: content/worlds/<id>/world-events.json — sự kiện thiên hạ that run in phases (báo trước, diễn ra, hậu quả). */
+export const WorldEventFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      kind: z.enum(['war', 'secret_realm', 'auction', 'beast_tide', 'dynasty', 'tournament', 'omen', 'calamity', 'passing']),
+      /** Where it is felt; empty = everywhere. Outside these regions only the news reaches the player. */
+      regions: z.array(id).default([]),
+      weight: z.number().positive(),
+      cooldownYears: z.number().int().min(0),
+      phases: z
+        .array(
+          z
+            .object({
+              name: z.string().min(1),
+              years: z.number().int().min(1),
+              /** Logged when the phase begins (tin đồn). */
+              text: z.string().min(1),
+              /** Event theme → weight × while this phase lasts (where it is felt). */
+              eventWeight: z.record(id, z.number().min(0)).default({}),
+              /** Market prices × while this phase lasts (where it is felt). */
+              priceMul: z.number().positive().default(1),
+            })
+            .strict(),
+        )
+        .min(1),
+    })
+    .strict(),
+);
+export type WorldEvent = z.infer<typeof WorldEventFileSchema>[number];
+
+/** 9.R7f: content/worlds/<id>/figures.json — famous people of the world (đại năng, ma đầu, vua chúa), heard of in each region. */
+export const FigureFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      title: z.string().min(1),
+      realm: id,
+      region: id,
+      /** Sect they belong to, if any (sects.json of the same world). */
+      sect: id.optional(),
+      text: z.string().min(1),
+    })
+    .strict(),
+);
+export type Figure = z.infer<typeof FigureFileSchema>[number];
+
+/** 9.R7c: content/worlds/<id>/nations.json — the phàm quốc (mortal kingdoms) of a world. */
+export const NationFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      kind: z.enum(['vuong_trieu', 'vuong_quoc', 'cong_quoc', 'han_quoc']),
+      region: id,
+      ruler: z.object({ title: z.string().min(1), name: z.string().min(1) }).strict(),
+      description: z.string().min(1),
+    })
+    .strict(),
+);
+export type Nation = z.infer<typeof NationFileSchema>[number];
+
+/** 9.R7c: content/worlds/<id>/clans.json — the tu tiên thế gia of a world (not the player's own clan, clan.json). */
+export const WorldClanFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      region: id,
+      /** What the house is known for (luyện đan, trận pháp…), one line. */
+      craft: z.string().min(1),
+      description: z.string().min(1),
+      /** Dòng đích and dòng thứ, one line each. */
+      branches: z.object({ main: z.string().min(1), side: z.string().min(1) }).strict(),
+    })
+    .strict(),
+);
+export type WorldClan = z.infer<typeof WorldClanFileSchema>[number];
+
+/** 9.R7c: content/worlds/<id>/races.json — the peoples of a world and how they stand with humans. */
+export const RaceFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      regions: z.array(id).default([]),
+      stance: z.enum(['than_thien', 'trung_lap', 'thu_dich']),
+      description: z.string().min(1),
+    })
+    .strict(),
+);
+export type Race = z.infer<typeof RaceFileSchema>[number];
+
+/**
+ * content/worlds/<id>/immortal-gates.json (9.R4b): the ways a mortal is found by the immortal world
+ * (instead of every child being tested). Each year a gate's conditions hold, it opens by its chance
+ * (balance.immortalGates.chance.<id>) and its event comes; without its Sổ tri thức entry the chance
+ * is scaled by balance.immortalGates.unknownMul (a first life can still be lucky).
+ */
+export const ImmortalGateFileSchema = z.array(
+  z
+    .object({
+      id,
+      name: z.string().min(1),
+      event: id,
+      conditions: ConditionsSchema,
+      requiresKnowledge: id.optional(),
+    })
+    .strict(),
+);
+export type ImmortalGate = z.infer<typeof ImmortalGateFileSchema>[number];
+
+/** 9.R5a: groups of the Sổ tri thức, and what one entry can be found through or open. */
+export const KNOWLEDGE_GROUPS = ['tien_dao', 'vo_dao', 'the_gioi', 'the_luc', 'nhan_vat', 'cong_phap', 'bi_canh'] as const;
+export const KNOWLEDGE_SOURCES = ['event', 'flag', 'item', 'realm', 'martial', 'sect', 'region'] as const;
+export const KNOWLEDGE_UNLOCKS = ['gate', 'tab', 'term', 'region', 'origin'] as const;
+
+/**
+ * content/worlds/<id>/knowledge.json (9.R5a): the Sổ tri thức, kept across lives. Each year a life meets a
+ * source (an event seen, a flag, an item held, a realm or martial stage reached, a sect joined, a region
+ * stood in), an unknown entry may be found. `unlocks` are read by 9.R5b (gates, tabs, glossary terms…).
+ */
+export const KnowledgeFileSchema = z.array(
+  z
+    .object({
+      id,
+      group: z.enum(KNOWLEDGE_GROUPS),
+      name: z.string().min(1),
+      text: z.string().min(1),
+      sources: z
+        .array(
+          z
+            .object({
+              kind: z.enum(KNOWLEDGE_SOURCES),
+              /** Event / flag / item / realm / sect / region id; a martial stage index for "martial"; none for "sect" = any sect. */
+              id: z.string().min(1).optional(),
+              stage: z.number().int().min(0).optional(),
+              /** Yearly chance while the source holds (balance.knowledge.defaultChance if absent). */
+              chance: probability.optional(),
+            })
+            .strict(),
+        )
+        .min(1),
+      unlocks: z.array(z.object({ kind: z.enum(KNOWLEDGE_UNLOCKS), id: z.string().min(1) }).strict()).default([]),
+    })
+    .strict(),
+);
+export type KnowledgeEntry = z.infer<typeof KnowledgeFileSchema>[number];
+
 /** content/worlds/<id>/markets.json (task 3.2): where things are bought and sold. */
 export const MarketFileSchema = z.array(
   z
@@ -2688,7 +2902,16 @@ export const MartialFileSchema = z
     ascend: z.object({ rootGrade: id, bodyId: id }).strict(),
     ascendEffects: z.array(EffectHookSchema),
     /** {years}, {need}, {next}, {stage}, {description}. */
-    texts: z.object({ train: z.string().min(1), promote: z.string().min(1), fail: z.string().min(1), ascend: z.string().min(1) }).strict(),
+    texts: z.object({
+      train: z.string().min(1), promote: z.string().min(1), fail: z.string().min(1), ascend: z.string().min(1),
+      /** 9.V2: logged on reaching the last stage (the end of the martial path; Tiên Võ đồng tu needs a tiên duyên). */
+      peak: z.string().min(1).optional(),
+      /** 9.V2: tẩu hỏa while forcing a breakthrough; and losing a stage to it. */
+      deviation: z.string().min(1).optional(),
+      crippled: z.string().min(1).optional(),
+    }).strict(),
+    /** 9.V2: names of the three tiểu cảnh inside a stage (Sơ nhập, Tiểu thành, Đại thành). */
+    subStages: z.array(z.string().min(1)).length(3).optional(),
     /** Backlog 7: one chain of steps from a stage to the next; each step is a mini-game or a stat check. */
     quests: z.array(MartialQuestSchema),
     /** Mini-game wording: the symbols, and a name and a how-to for each game. */
@@ -2785,6 +3008,10 @@ export const NpcTraitsFileSchema = z
       }).strict(),
     ),
     goals: z.array(npcTrait),
+    /** 9.R6: the NPC info card: layer names and the line for a realm too high to see. */
+    info: z.object({ tiers: z.tuple([z.string(), z.string(), z.string(), z.string()]), unseen: z.string().min(1), secretNone: z.string().min(1), secretHeir: z.string().min(1),
+      /** 9.R9: the Tiền duyên row of a cố nhân ({name} then, {self} the player then), by kind. */
+      pastLife: z.record(z.enum(['dao_lu', 'an', 'oan', 'ke_thu']), z.string().min(1)).optional() }).strict().optional(),
   })
   .strict();
 export type NpcTraitsFile = z.infer<typeof NpcTraitsFileSchema>;
@@ -3165,6 +3392,8 @@ export const RebirthTalentFileSchema = z
                 .strict(),
             )
             .min(1),
+          /** 9.R5b: hidden on the Luân Hồi đài until this Sổ tri thức entry is known (cultivation talents). */
+          requiresKnowledge: id.optional(),
         })
         .strict(),
     ),
@@ -3323,6 +3552,12 @@ export const LifeCheckSchema = z
   })
   .strict();
 export type LifeCheck = z.infer<typeof LifeCheckSchema>;
+
+/** 9.R8: content/endings.json — kết cục of a life, in order: the first whose check holds is the ending. */
+export const EndingFileSchema = z.array(
+  z.object({ id, name: z.string().min(1), text: z.string().min(1), check: LifeCheckSchema }).strict(),
+);
+export type Ending = z.infer<typeof EndingFileSchema>[number];
 
 /** Task 5b.5: thành tựu kept across lives, and huy hiệu cuối đời given to one life. */
 export const AchievementFileSchema = z

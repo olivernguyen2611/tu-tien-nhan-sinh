@@ -16,7 +16,7 @@ import { findEvent, resolveChoice } from '../systems/events/engine';
 import { confirmDestiny, lockCost, rerollDestiny, rollDestiny, toggleLock } from '../systems/destiny';
 import {
   deleteSlot, exportSave, firstFreeSlot, latestSlot, listSlots, makeSave, parseSave, readMeta, readSlot, recordNewLife, creditRebirth,
-  slotTaken, writeSlot, SLOT_COUNT, buyRebirthTalent, recordCodex, recordAchievements, recordChallenge, recordPastSect, recordLibrary, replaceMeta, type SaveFile,
+  slotTaken, writeSlot, SLOT_COUNT, buyRebirthTalent, recordCodex, recordChronicle, recordKarmaLedger, recordAchievements, recordChallenge, recordPastSect, recordLibrary, replaceMeta, type SaveFile,
 } from '../systems/save';
 import { checkDeath } from '../systems/time';
 import { GlossaryProvider } from './components/Tooltip';
@@ -30,6 +30,9 @@ import { MainScreen } from './screens/Main';
 import { SettingsScreen, type SlotView } from './screens/Settings';
 import { TitleScreen } from './screens/Title';
 import { loadDevMode, saveDevMode } from './devMode';
+import { countsForRecords, markDevLife } from '../systems/dev';
+import { chronicleOf } from '../systems/chronicle';
+import { nextKarmaLedger } from '../systems/karmaLedger';
 import { attemptMajorBreakthrough, enterFirstRealm } from '../systems/cultivation';
 import { savesLocked } from '../systems/difficulty';
 import { disableTutorial, dismissTip } from '../systems/tutorial';
@@ -68,6 +71,7 @@ import { rollBirthFinger } from '../systems/goldenFinger';
 import { RebirthScreen } from './screens/Rebirth';
 import { CodexScreen } from './screens/Codex';
 import { codexOf } from '../systems/codex';
+import { visibleGlossary } from '../systems/knowledge';
 import { earnedAchievements, unlockedFingers } from '../systems/achievements';
 import { challengeDef, challengeResult, creditKey, startChallenge, weekKey, weeklyChallenge } from '../systems/challenge';
 import { ChallengeScreen } from './screens/Challenge';
@@ -79,14 +83,17 @@ type Picking = { purpose: 'new' } | { purpose: 'challenge' } | { purpose: 'impor
 type Message = { text: string; tone: 'good' | 'bad' } | null;
 
 export function App({ content }: { content: Content }) {
+  // 9.R5b: glossary terms open as the Sổ tri thức grows (Screens reports what is known).
+  const [known, setKnown] = useState<string[]>([]);
+  const glossary = useMemo(() => visibleGlossary(content, known), [content, known]);
   return (
-    <GlossaryProvider glossary={content.glossary}>
-      <Screens content={content} />
+    <GlossaryProvider glossary={glossary}>
+      <Screens content={content} onKnown={setKnown} />
     </GlossaryProvider>
   );
 }
 
-function Screens({ content }: { content: Content }) {
+function Screens({ content, onKnown }: { content: Content; onKnown: (known: string[]) => void }) {
   const store = useMemo(browserStore, []);
   // Only the loaded world can be played for now (world picker comes later).
   const worlds = [content.world.id];
@@ -94,6 +101,9 @@ function Screens({ content }: { content: Content }) {
   const freshLife = useMemo(() => createLife({ seed: 'backfill' }, content), [content]);
   const [screen, setScreen] = useState<Screen>('title');
   const [life, setLife] = useState<GameState | null>(null);
+  // 9.R5b: what this life (or, between lives, the Thiên Thư) knows decides which glossary terms show.
+  const knownKey = (life?.knowledge ?? readMeta(store).codex.knowledge).join(',');
+  useEffect(() => onKnown(knownKey ? knownKey.split(',') : []), [knownKey]);
   /** Slot the current life autosaves into. */
   const [slot, setSlot] = useState<number | null>(null);
   const [rollCount, setRollCount] = useState(0);
@@ -102,6 +112,8 @@ function Screens({ content }: { content: Content }) {
   const [theme, setTheme] = useState<ThemePref>(loadThemePref);
   const [devMode, setDevMode] = useState(loadDevMode);
   const toggleDev = (on: boolean) => { saveDevMode(on); setDevMode(on); };
+  // 9.R6a: playing with developer mode on marks the life (no records).
+  useEffect(() => { if (devMode && life && life.destiny.confirmed && !life.devUsed) setLife(markDevLife(life)); }, [devMode, life]);
   const [savesFrom, setSavesFrom] = useState<Screen>('title');
   const [picking, setPicking] = useState<Picking>(null);
   const [message, setMessage] = useState<Message>(null);
@@ -151,6 +163,8 @@ function Screens({ content }: { content: Content }) {
   const [rebirth, setRebirth] = useState<{ gained: number; bank: number; fresh: string[] }>({ gained: 0, bank: 0, fresh: [] });
   useEffect(() => {
     if (screen !== 'death' || !life || life.alive) return;
+    // 9.R6a: a dev life earns nothing.
+    if (!countsForRecords(life)) { setRebirth({ gained: 0, bank: readMeta(store).rebirthPoints, fresh: [] }); return; }
     // Task 5b.6: every try of a weekly challenge shares a seed, so points are credited per try.
     const key = creditKey(life);
     const first = !(key in readMeta(store).credited);
@@ -159,8 +173,12 @@ function Screens({ content }: { content: Content }) {
     if (first && result && life.challenge) recordChallenge(store, life.challenge.week, life.challenge.id, result.score, result.done);
     // Task 5b.7: the sect this life ran waits for later lives.
     if (first) recordPastSect(store, nextPastSectRecord(readMeta(store).pastSect, life, content));
+    // 9.R9: the ân oán this life leaves wait for later lives.
+    if (first) recordKarmaLedger(store, nextKarmaLedger(readMeta(store).karmaLedger, life, content));
     // Task 5b.4: the Thiên Thư keeps what this life saw, and the khí vận chi tử's tale.
     recordCodex(store, codexOf(life, content));
+    // 9.R8: Sổ luân hồi (this life's record, ending and regions).
+    recordChronicle(store, chronicleOf(life, content, r.meta.livesPlayed));
     // Task 5b.5: thành tựu kept across lives; the ones new to this browser are shown.
     const a = recordAchievements(store, earnedAchievements(life, content, r.meta.livesPlayed).map((x) => x.id), life.character.name);
     setRebirth({ gained: r.gained, bank: r.meta.rebirthPoints, fresh: a.fresh });
@@ -257,6 +275,8 @@ function Screens({ content }: { content: Content }) {
         theme={theme}
         onToggleTheme={toggleTheme}
         sound={sound}
+        devMode={devMode}
+        onToggleDev={toggleDev}
         onToggleSound={toggleSound}
       />
     );
@@ -274,14 +294,14 @@ function Screens({ content }: { content: Content }) {
     );
   }
   if (screen === 'codex') {
-    return <CodexScreen content={content} codex={readMeta(store).codex} achievements={readMeta(store).achievements} onBack={() => setScreen('title')} />;
+    return <CodexScreen content={content} codex={readMeta(store).codex} achievements={readMeta(store).achievements} chronicle={readMeta(store).chronicle} onBack={() => setScreen('title')} />;
   }
   if (screen === 'rebirth') {
     const meta = readMeta(store);
     return (
-      <RebirthScreen content={content} points={meta.rebirthPoints} owned={meta.rebirthTalents}
+      <RebirthScreen content={content} points={meta.rebirthPoints} owned={meta.rebirthTalents} known={meta.codex.knowledge}
         onBuy={(id) => {
-          const cost = nextTalentCost(content, meta.rebirthTalents, id);
+          const cost = nextTalentCost(content, meta.rebirthTalents, id, meta.codex.knowledge);
           if (cost !== null && buyRebirthTalent(store, id, cost)) refresh((n) => n + 1);
         }}
         onBack={() => setScreen(rebirthFrom === 'death' && life && !life.alive ? 'death' : 'title')} />
@@ -293,6 +313,7 @@ function Screens({ content }: { content: Content }) {
         content={content}
         onBack={() => setScreen('title')}
         rebirthPoints={readMeta(store).rebirthPoints}
+        known={readMeta(store).codex.knowledge}
         fingers={unlockedFingers(content, Object.keys(readMeta(store).achievements))}
         onCreate={(input) => {
           // Task 5b.9: a chosen origin with a price is paid in Luân Hồi points when the life is confirmed;
@@ -301,7 +322,7 @@ function Screens({ content }: { content: Content }) {
           if (cost > readMeta(store).rebirthPoints) return;
           setOriginCost(cost);
           // Tips only for the very first life on this browser.
-          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list, rebirthTalents: readMeta(store).rebirthTalents, pastSect: readMeta(store).pastSect,
+          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list, rebirthTalents: readMeta(store).rebirthTalents, pastSect: readMeta(store).pastSect, karmaLedger: readMeta(store).karmaLedger, knowledge: readMeta(store).codex.knowledge,
             goldenFinger: input.goldenFinger ?? rollBirthFinger(input.seed, content, readMeta(store).livesPlayed, readMeta(store).fingerPity) }, content), content));
           setScreen('destiny');
         }}
@@ -323,7 +344,7 @@ function Screens({ content }: { content: Content }) {
         onConfirm={() => {
           recordNewLife(store, originCost + (devMode ? 0 : lockCost(life, content)), !!life.goldenFinger, !!life.challenge);
           const born = confirmDestiny(life, content);
-          recordCodex(store, codexOf(born, content));
+          if (countsForRecords(born)) recordCodex(store, codexOf(born, content));
           setLife(born);
           setScreen('main');
         }}

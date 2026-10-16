@@ -10,6 +10,8 @@ import { currentRegion } from '../regions';
 import { chosenMeets } from '../chosen';
 import { goldenFingerMeets } from '../goldenFinger';
 import { pastSectMeets } from '../pastSect';
+import { hasUsableInnateRoot } from '../cultivation';
+import { bornKnowing } from '../knowledge';
 
 type Conditions = Partial<GameEvent['conditions']>;
 
@@ -77,9 +79,19 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (c.root.tested !== undefined && !!root !== c.root.tested) return false;
     if (c.root.usable !== undefined) {
       const usable = !!root && (content?.balance.roots.gradeSpeed[root.grade] ?? 0) > 0;
-      if (!root || usable !== c.root.usable) return false;
+      // 9.R4a: usable false also holds for an untested life born without a usable root.
+      const rootless = root ? !usable : !!content && !hasUsableInnateRoot(state, content);
+      if (c.root.usable ? !usable : !rootless) return false;
     }
     if (c.root.minElements !== undefined && (root?.elements.length ?? 0) < c.root.minElements) return false;
+    if (c.root.innate !== undefined && (!content || root || hasUsableInnateRoot(state, content) !== c.root.innate)) return false;
+  }
+  // 9.R5b: doors open on what the life was born knowing (past lives), see knowledge.ts bornKnowing.
+  if (c.knowledge?.all?.some((k) => !bornKnowing(state).includes(k))) return false;
+  if (c.knowledge?.none?.some((k) => bornKnowing(state).includes(k))) return false;
+  if (c.worldEvent) {
+    const a = state.world?.active;
+    if (!a || !c.worldEvent.id.includes(a.id) || (c.worldEvent.phase !== undefined && c.worldEvent.phase !== a.phase)) return false;
   }
   if (c.flagsAll?.some((f) => !state.flags[f])) return false;
   if (c.itemsAll?.some((i) => !(state.inventory[i] > 0))) return false;
@@ -128,6 +140,7 @@ function npcMeets(state: GameState, c: NonNullable<Conditions['npc']>, content?:
   if (c.minAffinity !== undefined && n.affinity < c.minAffinity) return false;
   if (c.maxAffinity !== undefined && n.affinity > c.maxAffinity) return false;
   if (c.heir !== undefined && !!n.heirOf !== c.heir) return false;
+  if (c.pastLife && (!n.pastLife || !c.pastLife.includes(n.pastLife.kind))) return false;
   if (c.natureKnown !== undefined && n.natureKnown !== c.natureKnown) return false;
   if (c.masked !== undefined && (!content || isMasked(content, n) !== c.masked)) return false;
   if (c.minRealmGap !== undefined || c.maxRealmGap !== undefined) {

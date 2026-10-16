@@ -6,6 +6,8 @@ import type { GameState } from '../src/core/types';
 import { attemptMajorBreakthrough, breakthroughPct, cultivateYear, inBottleneck, majorBreakthroughInfo, enterRealm, hookActive, realmLabel, revealRoot, rollRoot, rootName, rootNameOf, rootTestAge, startCultivating, yearlyGain } from '../src/systems/cultivation';
 import { migrate, makeSave } from '../src/systems/save';
 import { findEvent, resolveChoice, visibleChoices } from '../src/systems/events/engine';
+import { learnTechnique } from '../src/systems/technique';
+import { act, settle } from '../src/systems/combat';
 
 const content = loadContent();
 const speed = (grade: string) => content.balance.roots.gradeSpeed[grade];
@@ -21,26 +23,26 @@ function untilTested(seed: string, originId?: string): GameState {
   let s = createLife({ seed, originId }, content);
   s = { ...s, destiny: { ...s.destiny, confirmed: true } };
   while (s.alive && !s.cult.root && s.character.age < 20) {
-    s = s.events.pending ? resolveChoice(s, content, firstOpen(s)).state : advanceYear(s, content);
+    // A fight from an event is fought through (all out, then spare), as the simulate bot does.
+    if (s.combat) s = s.combat.phase === 'fight' ? act(s, content, 'all_out').state : settle(s, content, 'spare').state;
+    else s = s.events.pending ? resolveChoice(s, content, firstOpen(s)).state : advanceYear(s, content);
   }
   return s;
 }
 
 describe('spirit root (task 2.2)', () => {
-  it('every life is booked a root test between 6 and 12', () => {
-    for (let i = 0; i < 50; i++) {
+  it('9.R4b: no life is booked a root test any more (the gates bring it)', () => {
+    for (let i = 0; i < 20; i++) {
       const s = createLife({ seed: `book${i}` }, content);
-      const test = s.events.followUps.find((f) => f.event === content.world.rootTestEvent);
-      expect(test?.atAge).toBe(rootTestAge(`book${i}`, content));
-      expect(test!.atAge).toBeGreaterThanOrEqual(6);
-      expect(test!.atAge).toBeLessThanOrEqual(12);
+      expect(s.events.followUps.some((f) => f.event === 'thu_linh_can')).toBe(false);
     }
   });
 
-  it('taking the test reveals the root at the booked age', () => {
-    const s = untilTested('reveal-1');
+  it('taking the test reveals the root', () => {
+    let s = createLife({ seed: 'reveal-1' }, content);
+    s = { ...s, character: { ...s.character, age: 9 }, events: { ...s.events, pending: 'thu_linh_can', followUps: [] } };
+    s = resolveChoice(s, content, 0).state;
     expect(s.cult.root).not.toBeNull();
-    expect(s.character.age).toBe(rootTestAge('reveal-1', content));
     // 6b.12: said once, inside the event's outcome, not again as a line of its own.
     expect(s.log.at(-1)!.lines.filter((l) => l.text.includes('Linh căn: ')).length).toBe(1);
   });
@@ -230,7 +232,12 @@ describe('cultivation per year (task 2.3)', () => {
 
   it('a root starts Luyện Khí 1 with a longer life; no root stays mortal', () => {
     const b = createLife({ seed: 'start' }, content);
-    const s = { ...b, character: { ...b.character, age: 9 }, cult: { ...b.cult, root: { grade: 'tam', elements: ['kim', 'moc', 'thuy'] } } };
+    const bare = { ...b, character: { ...b.character, age: 9 }, cult: { ...b.cult, root: { grade: 'tam', elements: ['kim', 'moc', 'thuy'] } } };
+    // 9.R4c: a root alone is not enough; without a technique the life waits.
+    const waiting = startCultivating(bare, content);
+    expect(waiting.state.cult.realm).toBe('pham_nhan');
+    expect(waiting.line?.text).toContain('công pháp');
+    const s = learnTechnique(bare, content, content.balance.techniques.default, { quiet: true })!.state;
     const { state, line } = startCultivating(s, content);
     expect(state.cult.realm).toBe('luyen_khi');
     expect(state.cult.stage).toBe(0);

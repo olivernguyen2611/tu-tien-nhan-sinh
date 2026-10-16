@@ -7,7 +7,9 @@ import { Rng, hashSeed } from '../core/rng';
 import type { EffectHook, Sect } from '../core/schemas';
 import type { GameState, LogLine } from '../core/types';
 import { chooseMaster, sectmateYear, seedCast } from './sectmates';
-import { rootAffinities } from './technique';
+import { currentTechnique, learnTechnique, rootAffinities } from './technique';
+import { featureOpen } from './knowledge';
+import { currentRegion } from './regions';
 
 const clamp = (v: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, Math.round(v)));
 
@@ -44,6 +46,22 @@ function statsShort(state: GameState, min: Record<string, number> | undefined): 
 }
 
 /** Why this life cannot join the sect now, or null. */
+/** 9.R7d: roaming sects recruit everywhere; the others only in their own region. */
+export function sectReachable(state: GameState, content: Content, sect: Sect): boolean {
+  if (sect.roaming || !sect.region) return true;
+  return (currentRegion(state, content)?.id ?? null) === sect.region;
+}
+
+/** The sects the panel lists as cards (reachable now) and the rest by region, for a short note. */
+export function sectDirectory(state: GameState, content: Content): { here: Sect[]; elsewhere: { region: string; sects: Sect[] }[] } {
+  const open = content.sects.filter((s) => s.recruitable);
+  const here = open.filter((s) => sectReachable(state, content, s));
+  const elsewhere = content.regions
+    .map((r) => ({ region: r.name, sects: open.filter((s) => !here.includes(s) && s.region === r.id) }))
+    .filter((g) => g.sects.length > 0);
+  return { here, elsewhere };
+}
+
 export function sectEligibility(state: GameState, content: Content, sectId: string): string | null {
   const sect = sectById(content, sectId);
   if (!sect) return 'không có tông môn này';
@@ -52,11 +70,15 @@ export function sectEligibility(state: GameState, content: Content, sectId: stri
   if (state.sect.id) return 'đang là đệ tử tông môn khác';
   if (state.sect.left.includes(sectId)) return 'đã từng rời đi, không được quay lại';
   if (state.character.age < content.balance.sects.minJoinAge) return `cần ${content.balance.sects.minJoinAge} tuổi`;
+  // 9.R7d: a trung or tiểu tông takes only those who come to its gate.
+  if (!sectReachable(state, content, sect)) return `phải tới ${content.regions.find((r) => r.id === sect.region)?.name ?? sect.region} mới bái sơn được`;
   const root = state.cult.root;
   if (!root || (content.balance.roots.gradeSpeed[root.grade] ?? 0) <= 0) {
     // Phật duyên (task 3.12): some sects take the rootless with a strong đạo tâm.
     const need = sect.requires.rootlessMinDaoHeart;
     if (need === undefined) return 'cần có linh căn';
+    // 9.R5b: a mortal who never heard of it does not go knocking.
+    if (!featureOpen(state, content, 'tab', 'tong_mon', { born: true })) return 'chưa từng nghe tới tông môn tu tiên';
     return state.aptitudes.daoHeart >= need ? null : `không linh căn thì cần Đạo tâm ${need}`;
   }
   const missing = statsShort(state, sect.requires.minStats);
@@ -90,6 +112,15 @@ export function joinSect(state: GameState, content: Content, sectId: string): { 
     sect: { ...state.sect, id: sectId, rank: 0, since: state.character.age, contribution: 0, master: null, lastMission: null, lastMasterTry: null, chain: null, spent: 0, bought: {} },
   };
   const withCast = seedCast({ ...next, log: addLines(next, [{ text, tone: 'good' }]) }, content);
+  // 9.R4c: a rooted newcomer with no technique is handed the entry manual (the caller enters the first realm).
+  const manual = content.cultivation.realms.texts.sectManual;
+  if (withCast.cult.realm === 'pham_nhan' && withCast.cult.root && !currentTechnique(withCast, content)) {
+    const learned = learnTechnique(withCast, content, content.balance.techniques.default, { quiet: true });
+    if (learned) {
+      const said = manual ? `${text} ${manual}` : text;
+      return { state: manual ? { ...learned.state, log: addLines(learned.state, [{ text: manual, tone: 'good' }]) } : learned.state, text: said, joined: true };
+    }
+  }
   return { state: withCast, text, joined: true };
 }
 

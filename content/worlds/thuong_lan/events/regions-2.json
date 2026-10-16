@@ -1,0 +1,727 @@
+[
+  {
+    "id": "vung_tn_chua_hoang",
+    "category": "mortal",
+    "title": "Chùa hoang ven đường",
+    "text": "Trời đổ mưa, {name} trú trong một ngôi chùa hoang. Tượng Phật mất đầu, nhưng bát hương vẫn còn ấm.",
+    "themes": ["karma"],
+    "conditions": { "region": ["thanh_van_chau"], "age": { "min": 8 } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Thắp một nén hương, ngủ qua đêm",
+        "result": {
+          "text": "Đêm ấy ngươi ngủ ngon lạ thường. Sáng ra trên bát hương có thêm một nén, chẳng biết ai thắp.",
+          "effects": { "stat.happiness": 4, "karma": 2 }
+        }
+      },
+      {
+        "text": "Lục tìm sau tượng",
+        "check": { "stat": "stat.luck", "difficulty": 45 },
+        "success": {
+          "text": "Sau lưng tượng có cái hũ sành, trong là mấy nén bạc cũ. Ngươi thấy hơi áy náy, nhưng chỉ hơi thôi.",
+          "effects": { "silver": 40, "karma": -1, "stat.happiness": 3 }
+        },
+        "fail": {
+          "text": "Ngươi lật tượng, tượng đổ trúng chân. Ngươi đi khập khiễng ba hôm.",
+          "effects": { "stat.health": -5, "karma": -1 }
+        }
+      },
+      {
+        "text": "Đội mưa đi tiếp",
+        "result": {
+          "text": "Ngươi ướt như chuột lột, hắt hơi suốt đường. Nhưng không nợ ai nén hương nào.",
+          "effects": { "stat.health": -3, "stat.daoHeart": 1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "vung_tn_ho_de",
+    "category": "mortal",
+    "title": "Đê vỡ",
+    "text": "Mưa lũ mười ngày, đê sông huyện bên vỡ một khúc. Nha môn chiêu người đắp đê, trả công bằng gạo.",
+    "themes": ["justice"],
+    "conditions": { "region": ["thanh_van_chau"], "age": { "min": 12 } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Xắn quần lội xuống",
+        "result": {
+          "text": "Ngươi vác đất ba ngày ba đêm. Đê giữ được, dân làng nhớ mặt ngươi.",
+          "effects": { "stat.physique": 2, "stat.health": -4, "reputation": { "chinh": 3 }, "karma": 2 }
+        }
+      },
+      {
+        "text": "Nấu cháo phát cho người tránh lũ",
+        "result": {
+          "text": "Nồi cháo loãng mà người xếp hàng dài. Có bà cụ dúi vào tay ngươi một quả trứng luộc.",
+          "effects": { "silver": -15, "stat.happiness": 5, "karma": 2 }
+        }
+      },
+      {
+        "text": "Đứng trên gò xem",
+        "result": {
+          "text": "Ngươi đứng xem tới hết. Đêm về cứ thấy tiếng nước bên tai.",
+          "effects": { "stat.happiness": -3, "karma": -1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "vung_vc_ban_tin",
+    "category": "market",
+    "title": "Kẻ bán tin",
+    "text": "Ở góc Vô Chủ Phường, một gã chột mắt rao: \"Tin thật, giá thật. Tin giả, trả lại gấp đôi.\" Gã chưa bao giờ phải trả.",
+    "themes": ["market"],
+    "conditions": { "region": ["vo_chu_hoang_nguyen"], "realm": { "min": "luyen_khi" } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Mua một tin về động phủ bỏ hoang",
+        "result": {
+          "text": "Tin thật. Động phủ bỏ hoang thật, vì đã bị vét sạch từ trăm năm trước. Ngươi vẫn nhặt được vài viên linh thạch sót.",
+          "effects": { "spiritStones": -5, "cultProgress": 8, "stat.intellect": 2 }
+        }
+      },
+      {
+        "text": "Ép giá",
+        "check": { "stat": "stat.charm", "difficulty": 50 },
+        "success": {
+          "text": "Gã chột cười khẩy nhưng vẫn bán nửa giá, kèm một lời khuyên: \"Đêm nay đừng ngủ ở khách điếm phía đông.\"",
+          "effects": { "stat.luck": 2, "stat.happiness": 3 }
+        },
+        "fail": {
+          "text": "Gã bỏ đi, rồi bán tin về ngươi cho người khác. Ngươi bị bám đuôi mấy hôm.",
+          "effects": { "stat.happiness": -4, "stat.daoHeart": -1 }
+        }
+      },
+      {
+        "text": "Không mua",
+        "result": {
+          "text": "Ngươi đi qua. Sau lưng gã rao tiếp, lần này có nhắc tới tên ngươi.",
+          "effects": { "stat.daoHeart": 1, "stat.happiness": -1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "vung_vc_bao_cat",
+    "category": "accident",
+    "title": "Bão cát",
+    "text": "Một cơn bão cát nuốt trọn chân trời. Trong cát có bóng người, đi ngược gió mà không để lại dấu chân.",
+    "themes": ["mishap"],
+    "conditions": { "region": ["vo_chu_hoang_nguyen"], "realm": { "min": "luyen_khi" } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đào hố nằm im",
+        "result": {
+          "text": "Ngươi nằm dưới cát một ngày một đêm. Bão qua, ngươi bò ra, miệng đầy cát mà lòng nhẹ tênh.",
+          "effects": { "stat.health": -4, "stat.daoHeart": 3 }
+        }
+      },
+      {
+        "text": "Đuổi theo bóng người",
+        "result": {
+          "text": "Bóng người dừng lại, quay đầu. Là một tán tu chết khô từ lâu, còn tay nắm chặt.",
+          "effects": {},
+          "fight": {
+            "foe": { "name": "Cát thi", "realm": "same", "powerMul": 0.8, "lineage": "quy", "intent": "kill" },
+            "win": {
+              "text": "Cát thi tan thành bụi. Trong tay nó là một túi trữ vật rách.",
+              "effects": { "spiritStones": 25, "stat.physique": 1 }
+            },
+            "lose": {
+              "text": "Ngươi chạy thoát, nhưng mang về một vết cào lạnh buốt cả tháng.",
+              "effects": { "stat.health": -8, "heartDemon": 3 }
+            }
+          }
+        }
+      },
+      {
+        "text": "Quay về phường",
+        "result": {
+          "text": "Ngươi về Vô Chủ Phường uống chén trà nóng. Sống lâu cũng là một loại tu vi.",
+          "effects": { "stat.happiness": 2, "silver": -5 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "vung_vt_yeu_thu_con",
+    "category": "beast",
+    "title": "Yêu thú con lạc đàn",
+    "text": "Một con hổ con lông trắng kêu ư ử dưới gốc cây. Vết chân hổ lớn to như mặt bàn dẫn về phía núi.",
+    "themes": ["beast", "karma"],
+    "conditions": { "region": ["van_thu_son_mach"], "realm": { "min": "truc_co" } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Bế nó theo vết chân trả về",
+        "result": {
+          "text": "Hổ lớn hiện ra, nhìn ngươi rất lâu rồi ngậm con đi. Sáng hôm sau trước chỗ ngươi ngủ có một chiếc yêu đan.",
+          "effects": { "addItems": ["noi_dan_1"], "karma": 3, "stat.happiness": 4 }
+        }
+      },
+      {
+        "text": "Đem ra Thú Thị bán",
+        "result": {
+          "text": "Hổ con bán được giá. Đêm đó cả sơn mạch gầm lên, ngươi phải rời vùng ấy gấp.",
+          "effects": { "spiritStones": 40, "karma": -4, "stat.daoHeart": -2 }
+        }
+      },
+      {
+        "text": "Để nó lại, đi đường vòng",
+        "result": {
+          "text": "Ngươi đi đường vòng hai ngày. Đỡ phiền, nhưng vẫn ngoái lại mấy lần.",
+          "effects": { "stat.health": -2, "stat.happiness": -1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "vung_vt_linh_thao_can",
+    "category": "fortune",
+    "title": "Linh thảo biết cắn",
+    "text": "Giữa khe đá mọc một gốc linh thảo trăm năm. Lá nó khép mở như miệng, đang nhai một con chuột.",
+    "themes": ["herb"],
+    "conditions": { "region": ["van_thu_son_mach"], "realm": { "min": "truc_co" } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhổ nhanh, tay không",
+        "check": { "stat": "stat.physique", "difficulty": 55 },
+        "success": {
+          "text": "Ngươi giật được cả rễ. Linh thảo cắn ngón tay ngươi một cái cho có lệ rồi im.",
+          "effects": { "addItems": ["linh_thao_tram_nam"], "stat.happiness": 4 }
+        },
+        "fail": {
+          "text": "Nó cắn thật. Ngón tay ngươi sưng như củ cà rốt.",
+          "effects": { "stat.health": -6, "stat.happiness": -2 }
+        }
+      },
+      {
+        "text": "Cho nó ăn lương khô rồi hái",
+        "result": {
+          "text": "Linh thảo ăn no thì hiền. Ngươi hái được nửa gốc, còn lại để nó mọc tiếp.",
+          "effects": { "addItems": ["linh_thao_tram_nam"], "silver": -5, "karma": 1, "stat.happiness": 2 }
+        }
+      },
+      {
+        "text": "Ngồi xem nó ăn hết con chuột",
+        "result": {
+          "text": "Xem xong ngươi ngộ ra một điều về chuyện ăn và bị ăn, chẳng biết có ích gì.",
+          "effects": { "stat.comprehension": 2, "stat.happiness": -1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "vung_hu_huyet_tri",
+    "category": "demonic",
+    "title": "Huyết trì",
+    "text": "Giữa vực có một hồ máu sủi bọt. Ma tu ngâm mình trong đó, tu vi tăng vùn vụt, mặt mũi cũng mờ dần.",
+    "themes": ["demonic", "heart_demon"],
+    "conditions": { "region": ["huyet_uyen"], "realm": { "min": "truc_co" } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Ngâm một chân thử",
+        "result": {
+          "text": "Linh lực sôi trong kinh mạch. Đêm đó ngươi mơ thấy mình cười rất lâu, tiếng cười không phải của mình.",
+          "effects": { "cultProgress": 25, "heartDemon": 8, "karma": -2, "stat.daoHeart": -2 }
+        }
+      },
+      {
+        "text": "Múc một bầu đem về",
+        "result": {
+          "text": "Bầu máu ấm suốt đường đi, thỉnh thoảng còn đập như tim.",
+          "effects": { "addItems": ["huyet_dan"], "stat.daoHeart": -1 }
+        }
+      },
+      {
+        "text": "Quay lưng đi",
+        "result": {
+          "text": "Ngươi quay lưng. Hồ máu sủi mạnh thêm một chút, như tiếc.",
+          "effects": { "stat.daoHeart": 4, "heartDemon": -3 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "vung_hu_cho_ma",
+    "category": "market",
+    "title": "Chợ đêm ma đạo",
+    "text": "Chợ đêm Huyết Uyên chỉ họp lúc trăng đỏ. Ở đây bán mọi thứ, kể cả những thứ ngươi không muốn biết là gì.",
+    "themes": ["market", "demonic"],
+    "conditions": { "region": ["huyet_uyen"], "realm": { "min": "truc_co" } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Giấu mặt mua một bình đan",
+        "result": {
+          "text": "Đan của ma đạo hiệu nghiệm thật, chỉ là uống xong hơi thèm máu sống.",
+          "effects": { "spiritStones": -15, "addItems": ["huyet_khi_hoan"], "heartDemon": 2, "stat.health": 2 }
+        }
+      },
+      {
+        "text": "Dò tin về tông môn ma đạo",
+        "check": { "stat": "stat.intellect", "difficulty": 55 },
+        "success": {
+          "text": "Ngươi nghe được chuyện U Hà Ma Tông với Huyết Ảnh Môn sắp trở mặt. Tin như vậy đáng giá cả trăm linh thạch.",
+          "effects": { "stat.intellect": 3, "reputation": { "ma": 2 } }
+        },
+        "fail": {
+          "text": "Ngươi hỏi quá nhiều. Một bàn tay đặt lên vai: \"Bằng hữu, muốn biết thì vào đây ngồi.\"",
+          "effects": { "stat.happiness": -5, "stat.health": -3 }
+        }
+      },
+      {
+        "text": "Đi một vòng rồi về",
+        "result": {
+          "text": "Ngươi đi một vòng, không mua gì. Có kẻ nhìn theo bóng ngươi, liếm môi.",
+          "effects": { "stat.daoHeart": 1, "stat.happiness": -2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "vung_hu_chinh_dao_bi_bat",
+    "category": "demonic",
+    "title": "Đệ tử chính đạo bị treo",
+    "text": "Trên cổng đá Huyết Uyên treo một đệ tử chính đạo, còn thở. Bên dưới, ba ma tu đang đánh cược xem hắn sống được mấy ngày.",
+    "themes": ["justice", "demonic"],
+    "conditions": { "region": ["huyet_uyen"], "realm": { "min": "truc_co" } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Cắt dây cứu người",
+        "result": {
+          "text": "Ba ma tu cùng quay lại.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Ba ma tu canh cổng",
+              "realm": "same",
+              "powerMul": 1.1,
+              "lineage": "ma",
+              "intent": "kill",
+              "plural": true
+            },
+            "rescue": true,
+            "win": {
+              "text": "Ngươi đưa được hắn ra khỏi vực. Hắn nói tông môn sẽ nhớ ơn ngươi.",
+              "effects": { "reputation": { "chinh": 5, "ma": -5 }, "karma": 4, "stat.daoHeart": 2 }
+            },
+            "lose": {
+              "text": "Ngươi bị đánh văng xuống vực, bò lên được thì người kia đã không còn.",
+              "effects": { "stat.health": -12, "stat.happiness": -6 }
+            }
+          }
+        }
+      },
+      {
+        "text": "Đặt cược cùng bọn ma tu",
+        "result": {
+          "text": "Ngươi cược ba ngày. Ngươi thắng. Linh thạch nặng tay, nhưng đêm nào cũng nghe tiếng dây thừng kẽo kẹt.",
+          "effects": { "spiritStones": 20, "karma": -5, "heartDemon": 5, "stat.daoHeart": -3 }
+        }
+      },
+      {
+        "text": "Cúi đầu đi qua",
+        "result": {
+          "text": "Ngươi cúi đầu đi qua. Ở Huyết Uyên, ai cũng cúi đầu đi qua.",
+          "effects": { "stat.daoHeart": -2, "stat.happiness": -3 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "vung_dh_giao_nhan_hat",
+    "category": "romance",
+    "title": "Tiếng hát trên đá ngầm",
+    "text": "Đêm trăng, trên đá ngầm có giao nhân ngồi hát. Thuyền phu bịt tai bằng sáp, bảo ngươi cũng nên làm vậy.",
+    "themes": ["charm"],
+    "conditions": { "region": ["dong_hai"], "realm": { "min": "kim_dan" }, "age": { "min": 18 } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nghe trọn bài hát",
+        "check": { "stat": "stat.daoHeart", "difficulty": 55, "resist": "charmResist" },
+        "success": {
+          "text": "Ngươi nghe hết mà vẫn đứng vững. Giao nhân ngạc nhiên, ném cho ngươi một viên trân châu rồi lặn mất.",
+          "effects": { "addItems": ["tran_chau_giao_nhan"], "stat.daoHeart": 2 }
+        },
+        "fail": {
+          "text": "Ngươi tỉnh dậy dưới nước sâu ba trượng, thuyền phu đang túm tóc kéo lên.",
+          "effects": { "stat.health": -7, "stat.happiness": -2 }
+        }
+      },
+      {
+        "text": "Bịt tai bằng sáp",
+        "result": {
+          "text": "Ngươi chỉ thấy giao nhân mấp máy môi. Tiếc thì có tiếc, nhưng còn sống.",
+          "effects": { "stat.happiness": -1, "stat.intellect": 1 }
+        }
+      },
+      {
+        "text": "Hát đáp lại",
+        "result": {
+          "text": "Giao nhân nghe ngươi hát một câu, bịt tai, lặn mất. Thuyền phu cười tới sáng.",
+          "effects": { "stat.happiness": 4, "stat.charm": -1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "vung_dh_thuyen_dam",
+    "category": "plunder",
+    "title": "Thuyền đắm giữa khơi",
+    "text": "Sóng dạt vào bờ mảnh ván thuyền khắc ấn Âu Dương thế gia. Ngoài khơi, cột buồm gãy còn nhô lên mặt nước.",
+    "themes": ["plunder", "fortune"],
+    "conditions": { "region": ["dong_hai"], "realm": { "min": "kim_dan" } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Lặn xuống vớt hàng",
+        "check": { "stat": "stat.physique", "difficulty": 60 },
+        "success": {
+          "text": "Dưới đáy có rương linh thạch còn niêm phong. Ngươi vớt được hai rương trước khi bầy cá mập kéo tới.",
+          "effects": { "spiritStones": 45, "stat.happiness": 4, "karma": -1 }
+        },
+        "fail": {
+          "text": "Dòng nước xoáy kéo ngươi xuống. Ngươi ngoi lên được, tay không, phổi đầy nước mặn.",
+          "effects": { "stat.health": -8 }
+        }
+      },
+      {
+        "text": "Báo cho Âu Dương thế gia",
+        "result": {
+          "text": "Người của Âu Dương gia tới vớt hàng, trả ngươi một phần công. Họ ghi tên ngươi vào sổ khách quen.",
+          "effects": { "spiritStones": 15, "reputation": { "chinh": 2 }, "karma": 2, "stat.happiness": 2 }
+        }
+      },
+      {
+        "text": "Tìm người sống sót trên bờ",
+        "result": {
+          "text": "Ngươi tìm được một thuyền phu ngất trên bãi đá, cõng về làng chài. Hắn khóc như con nít.",
+          "effects": { "stat.health": -2, "karma": 3, "stat.happiness": 3 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "vung_tc_di_cot",
+    "category": "secret_realm",
+    "title": "Di cốt thần thú",
+    "text": "Một bộ xương thần thú nằm dài trăm trượng, trong hốc mắt còn lấp lánh tinh huyết đông lại từ thời Thái Cổ.",
+    "themes": ["ky_vat", "bi_canh"],
+    "conditions": { "region": ["thai_co_chien_truong"], "realm": { "min": "kim_dan" } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Trèo vào hốc mắt lấy tinh huyết",
+        "check": { "stat": "stat.luck", "difficulty": 55 },
+        "success": {
+          "text": "Tinh huyết thần thú nóng như lửa trong tay. Ngươi luyện hóa được một phần, gân cốt như được rèn lại.",
+          "effects": { "stat.physique": 5, "cultProgress": 20, "stat.health": -3 }
+        },
+        "fail": {
+          "text": "Cấm chế trong hốc mắt bừng sáng. Ngươi bị hất văng ra xa, may còn đủ tay chân.",
+          "effects": { "stat.health": -12, "stat.happiness": -3 }
+        }
+      },
+      {
+        "text": "Ngồi dưới bộ xương ngộ đạo",
+        "result": {
+          "text": "Gió qua khe xương như tiếng gầm thời Thái Cổ. Ngươi nghe ra một chút đạo lý về sức mạnh và sự tàn lụi.",
+          "effects": { "stat.comprehension": 4, "stat.daoHeart": 2 }
+        }
+      },
+      {
+        "text": "Đánh dấu, bán bản đồ",
+        "result": {
+          "text": "Bản đồ bán được giá ở phường thị. Tuần sau nghe tin ba nhóm tu sĩ chết ở đó, ngươi im lặng.",
+          "effects": { "spiritStones": 30, "karma": -3, "stat.happiness": -2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "vung_tc_cam_che_doi",
+    "category": "secret_realm",
+    "title": "Cấm chế đói bụng",
+    "text": "Một vòng phù văn thượng cổ trên mặt đất sáng lên khi ngươi tới gần, như con chó già vẫy đuôi. Nó nuốt linh thạch.",
+    "themes": ["bi_canh"],
+    "conditions": { "region": ["thai_co_chien_truong"], "realm": { "min": "kim_dan" } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Cho nó ăn mười viên linh thạch",
+        "result": {
+          "text": "Phù văn ăn xong, mở ra một khe nhỏ. Trong khe là một quyển ngọc giản, chữ cổ đọc không ra, nhưng cầm thấy ấm.",
+          "effects": { "spiritStones": -10, "stat.comprehension": 3, "cultProgress": 10 }
+        }
+      },
+      {
+        "text": "Phá cấm chế",
+        "check": { "stat": "stat.intellect", "difficulty": 65 },
+        "success": {
+          "text": "Ngươi tìm ra mạch hở của phù văn. Cả vòng tắt ngấm, bên trong là kho đồ của một tu sĩ thượng cổ.",
+          "effects": { "spiritStones": 50, "stat.intellect": 2, "stat.happiness": 5 }
+        },
+        "fail": {
+          "text": "Phù văn nổi giận, nuốt luôn túi linh thạch bên hông ngươi.",
+          "effects": { "spiritStones": -20, "stat.happiness": -5 }
+        }
+      },
+      {
+        "text": "Vỗ đầu nó rồi đi",
+        "result": {
+          "text": "Ngươi vỗ vào phù văn như vỗ đầu chó. Nó sáng lên một cái, có vẻ vui. Ngươi cũng vui.",
+          "effects": { "stat.happiness": 3, "karma": 1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "vung_tc_thach_nhan",
+    "category": "beast",
+    "title": "Người đá tỉnh giấc",
+    "text": "Một tảng đá cao ba trượng mở mắt. Nó nhìn ngươi, hỏi bằng thứ tiếng cổ: \"Chiến tranh xong chưa?\"",
+    "themes": ["beast"],
+    "conditions": { "region": ["thai_co_chien_truong"], "realm": { "min": "kim_dan" } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Bảo nó chiến tranh đã xong từ lâu",
+        "result": {
+          "text": "Người đá ngồi xuống, im rất lâu, rồi cảm ơn ngươi bằng một mảnh tinh thạch trên vai nó.",
+          "effects": { "addItems": ["linh_tinh_tho"], "stat.daoHeart": 2, "karma": 2 }
+        }
+      },
+      {
+        "text": "Bảo nó chiến tranh vẫn tiếp diễn",
+        "result": {
+          "text": "Người đá gầm lên, giơ nắm tay.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Thạch tộc chiến sĩ",
+              "realm": "same",
+              "powerMul": 1.2,
+              "element": "tho",
+              "intent": "teach"
+            },
+            "win": {
+              "text": "Người đá vỡ ra, trong lõi có tinh hạch Thái Cổ.",
+              "effects": { "spiritStones": 35, "stat.physique": 2, "karma": -2 }
+            },
+            "lose": {
+              "text": "Người đá đấm ngươi lún xuống đất nửa người rồi ngủ tiếp.",
+              "effects": { "stat.health": -10, "stat.happiness": -3 }
+            }
+          }
+        }
+      },
+      {
+        "text": "Nói thật: không biết",
+        "result": {
+          "text": "Người đá gật gù: \"Ta cũng không biết.\" Hai bên ngồi ngắm hoàng hôn một lúc.",
+          "effects": { "stat.happiness": 4, "stat.comprehension": 1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "vung_bm_bang_lien",
+    "category": "fortune",
+    "title": "Băng tâm liên nở",
+    "text": "Dưới lớp băng nghìn năm có một đóa sen trắng đang nở. Mỗi cánh mở ra, nhiệt độ quanh đó lại hạ thêm một bậc.",
+    "themes": ["herb", "fortune"],
+    "conditions": { "region": ["bac_minh_tuyet_vuc"], "realm": { "min": "nguyen_anh" } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đục băng hái sen",
+        "check": { "stat": "stat.physique", "difficulty": 65 },
+        "success": {
+          "text": "Ngươi đục xuyên ba trượng băng, tay tím ngắt. Đóa sen trong tay lạnh mà không buốt.",
+          "effects": { "addItems": ["bang_tam_lien"], "stat.health": -5 }
+        },
+        "fail": {
+          "text": "Băng nứt dưới chân, ngươi rơi xuống hồ nước đá. Bò lên được thì sen đã khép.",
+          "effects": { "stat.health": -12, "stat.happiness": -3 }
+        }
+      },
+      {
+        "text": "Ngồi thiền cạnh đóa sen",
+        "result": {
+          "text": "Hàn khí len vào kinh mạch, nóng nảy trong lòng ngươi đóng băng từng chút.",
+          "effects": { "heartDemon": -8, "stat.daoHeart": 3, "stat.health": -3 }
+        }
+      },
+      {
+        "text": "Đánh dấu chỗ này rồi đi",
+        "result": {
+          "text": "Ngươi cắm một que gỗ làm dấu. Năm sau quay lại, cả que lẫn sen đều không còn.",
+          "effects": { "stat.happiness": -2, "stat.intellect": 1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "vung_bm_tuyet_lang",
+    "category": "beast",
+    "title": "Bầy sói tuyết",
+    "text": "Tiếng hú vang khắp băng nguyên. Một bầy sói tuyết vây quanh, con đầu đàn mắt xanh biếc, trên trán có vết sẹo hình trăng.",
+    "themes": ["beast"],
+    "conditions": { "region": ["bac_minh_tuyet_vuc"], "realm": { "min": "nguyen_anh" } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Rút kiếm",
+        "result": {
+          "text": "Con đầu đàn lao tới trước.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Sói tuyết đầu đàn",
+              "realm": "same",
+              "powerMul": 0.9,
+              "element": "bang",
+              "intent": "kill"
+            },
+            "win": {
+              "text": "Bầy sói tản đi. Con đầu đàn để lại một vệt máu và chiếc nanh gãy.",
+              "effects": { "addItems": ["noi_dan_3"], "stat.physique": 2 }
+            },
+            "lose": {
+              "text": "Ngươi chạy thoát vào hang băng, mất nửa vạt áo và chút tự tin.",
+              "effects": { "stat.health": -10, "stat.happiness": -3 }
+            }
+          }
+        }
+      },
+      {
+        "text": "Ném hết thịt khô ra",
+        "result": {
+          "text": "Bầy sói ăn xong, con đầu đàn nhìn ngươi, rồi dẫn cả bầy đi. Đêm đó không con gì dám tới gần chỗ ngươi ngủ.",
+          "effects": { "silver": -10, "karma": 2, "stat.happiness": 2 }
+        }
+      },
+      {
+        "text": "Đứng im, nhìn thẳng mắt nó",
+        "result": {
+          "text": "Con đầu đàn nhìn ngươi rất lâu, rồi quay đi. Có những trận thắng không cần rút kiếm.",
+          "effects": { "stat.daoHeart": 4, "stat.health": -2 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "vung_tc2_thien_kieu_dai_hoi",
+    "category": "sect",
+    "title": "Thiên kiêu luận võ",
+    "text": "Trên quảng trường Trung Châu, thiên kiêu các đại tông luận võ. Ai cũng có thể lên đài, chỉ là ít ai xuống đài bằng chân.",
+    "themes": ["ranking"],
+    "conditions": { "region": ["trung_chau"], "realm": { "min": "hoa_than" } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Lên đài",
+        "result": {
+          "text": "Một thiên kiêu áo trắng bước ra, chắp tay mời.",
+          "effects": {},
+          "fight": {
+            "foe": { "name": "Thiên kiêu Thái Huyền Đạo Cung", "realm": "same", "powerMul": 1.15, "intent": "teach" },
+            "win": {
+              "text": "Cả quảng trường im bặt rồi vỡ òa. Tên ngươi được ghi lên bảng đá.",
+              "effects": { "reputation": { "chinh": 6 }, "stat.happiness": 6, "stat.charm": 2 }
+            },
+            "lose": {
+              "text": "Ngươi thua, nhưng thua đẹp. Có người dưới đài ghi tên ngươi vào sổ.",
+              "effects": { "stat.daoHeart": 2, "stat.happiness": -2 }
+            }
+          }
+        }
+      },
+      {
+        "text": "Đứng dưới xem học",
+        "result": {
+          "text": "Ngươi xem ba ngày, ghi lại mười hai chiêu. Có hai chiêu dùng được.",
+          "effects": { "stat.comprehension": 3, "cultProgress": 10 }
+        }
+      },
+      {
+        "text": "Mở sòng cá cược",
+        "result": {
+          "text": "Ngươi cá đúng bảy trận. Người thua cược nhìn ngươi như nhìn kẻ thù kiếp trước.",
+          "effects": { "spiritStones": 40, "karma": -1, "reputation": { "chinh": -1 }, "stat.happiness": 3 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "vung_tc2_dai_nang_toa_hoa",
+    "category": "fortune",
+    "title": "Đại năng tọa hóa",
+    "text": "Một cột sáng vọt lên từ núi phía bắc Trung Châu: có đại năng tọa hóa. Trong một khắc, trăm luồng độn quang cùng bay về phía đó.",
+    "themes": ["fortune", "plunder"],
+    "conditions": { "region": ["trung_chau"], "realm": { "min": "hoa_than" } },
+    "weight": 0.7,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Bay tới tranh đoạt",
+        "check": { "stat": "stat.luck", "difficulty": 60 },
+        "success": {
+          "text": "Ngươi tới sau mà nhặt được trước: một chiếc nhẫn trữ vật rơi vào khe đá không ai thấy.",
+          "effects": {
+            "spiritStones": 80,
+            "addItems": ["linh_chi_ngan_nam"],
+            "karma": -1,
+            "stat.luck": 1,
+            "stat.happiness": 4
+          }
+        },
+        "fail": {
+          "text": "Ngươi tới đúng lúc hai lão quái đánh nhau. Dư chấn hất ngươi bay ba trăm dặm.",
+          "effects": { "stat.health": -15, "stat.happiness": -4 }
+        }
+      },
+      {
+        "text": "Đứng xa thắp hương tiễn",
+        "result": {
+          "text": "Ngươi thắp một nén hương về phía cột sáng. Không ai thấy, nhưng lòng ngươi thấy.",
+          "effects": { "stat.daoHeart": 3, "karma": 2 }
+        }
+      },
+      {
+        "text": "Ở lại tu luyện, tránh xa",
+        "result": {
+          "text": "Nửa tháng sau nghe nói mười mấy người chết vì tranh bảo. Ngươi uống chén trà, tu tiếp.",
+          "effects": { "cultProgress": 15, "stat.happiness": 1 }
+        }
+      }
+    ]
+  }
+]

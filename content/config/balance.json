@@ -266,10 +266,63 @@
   },
   "sects": {
     "minJoinAge": 8,
-    "stipend": { "bich_lac_tong": 3, "tang_phong_kiem_cac": 1, "bach_thao_coc": 2, "vo_uu_tu": 1, "u_ha_ma_tong": 4, "van_yeu_dien": 2 },
+    "stipend": {
+      "bich_lac_tong": 3,
+      "tang_phong_kiem_cac": 1,
+      "bach_thao_coc": 2,
+      "vo_uu_tu": 1,
+      "u_ha_ma_tong": 4,
+      "van_yeu_dien": 2,
+      "thanh_khe_kiem_phai": 1,
+      "lac_diep_mon": 1,
+      "tu_truc_am": 1,
+      "van_mong_cac": 1,
+      "hac_phong_trai": 1,
+      "phong_sa_mon": 1,
+      "tan_tu_lien_minh": 2,
+      "ngu_thu_tong": 2,
+      "thanh_moc_cung": 2,
+      "bach_dieu_coc": 1,
+      "huyet_anh_mon": 3,
+      "thi_am_tong": 2,
+      "van_doc_giao": 2,
+      "ma_la_dien": 4,
+      "bich_ba_cac": 2,
+      "than_lau_dao": 3,
+      "long_tich_dao": 2,
+      "tiem_long_phu": 1,
+      "hai_nguyet_am": 1,
+      "thu_mo_tong": 1,
+      "pha_cam_duong": 1,
+      "chien_than_dien": 3,
+      "di_cot_mon": 2,
+      "bang_tam_cung": 3,
+      "tuyet_lang_bo": 1,
+      "han_son_tu": 1,
+      "phong_tuyet_kiem_lu": 1,
+      "thai_huyen_dao_cung": 3,
+      "thien_co_cac": 3,
+      "dai_dien_thu_vien": 2,
+      "tinh_la_dien": 2,
+      "kim_thiem_thuong_minh": 4
+    },
     "rankStipendMul": [0.5, 1, 2, 4],
-    "karmaPerYear": { "u_ha_ma_tong": -2 },
-    "joinReputation": { "u_ha_ma_tong": { "chinh": -20, "ma": 10 } },
+    "karmaPerYear": {
+      "u_ha_ma_tong": -2,
+      "huyet_anh_mon": -2,
+      "thi_am_tong": -2,
+      "van_doc_giao": -2,
+      "ma_la_dien": -3,
+      "di_cot_mon": -2
+    },
+    "joinReputation": {
+      "u_ha_ma_tong": { "chinh": -20, "ma": 10 },
+      "huyet_anh_mon": { "chinh": -15, "ma": 8 },
+      "thi_am_tong": { "chinh": -15, "ma": 8 },
+      "van_doc_giao": { "chinh": -15, "ma": 8 },
+      "ma_la_dien": { "chinh": -15, "ma": 8 },
+      "di_cot_mon": { "chinh": -15, "ma": 8 }
+    },
     "recruitAfterYears": [1, 3],
     "outerAfterYears": 1,
     "promotion": [
@@ -327,14 +380,25 @@
   },
   "martial": {
     "minAge": 10,
-    "combatPower": [1, 1.5, 2, 3, 5, 7, 9],
-    "lifespan": [0, 0, 5, 10, 30, 20, 20],
+    "combatPower": [1.5, 2, 2.8, 4, 7, 18, 40],
+    "speedEquivMul": 1.5,
+    "conversion": {
+      "speedMul": 0.9,
+      "entries": [
+        { "stage": 3, "realm": "luyen_khi", "realmStage": 1 },
+        { "stage": 4, "realm": "luyen_khi", "realmStage": 3 },
+        { "stage": 5, "realm": "luyen_khi", "realmStage": 6 },
+        { "stage": 6, "realm": "truc_co", "realmStage": 0, "foundation": "trung" }
+      ]
+    },
+    "subStageYears": [2, 3, 3, 4, 5, 6, 8],
+    "lifespan": [0, 2, 5, 10, 25, 25, 30],
     "steps": [
       { "years": 3, "stats": ["physique", "comprehension"], "difficulty": 30 },
       { "years": 4, "stats": ["physique", "comprehension"], "difficulty": 45 },
       { "years": 5, "stats": ["physique", "comprehension"], "difficulty": 55, "needsTeacher": true },
-      { "years": 8, "stats": ["physique", "comprehension"], "difficulty": 65 },
-      { "years": 10, "stats": ["physique", "comprehension"], "difficulty": 86, "minPhysique": 70 }
+      { "years": 8, "stats": ["physique", "comprehension"], "difficulty": 65, "deviation": { "chance": 0.06, "health": -6, "cripple": 0 } },
+      { "years": 10, "stats": ["physique", "comprehension"], "difficulty": 86, "minPhysique": 70, "deviation": { "chance": 0.1, "health": -12, "cripple": 0.02 } }
     ],
     "chanceBase": 0.5,
     "chancePerPoint": 0.015,
@@ -392,7 +456,9 @@
     "coldBelow": 30,
     "bondChance": 0.12,
     "bondGapYears": 3,
-    "inheritShare": 0.5
+    "inheritShare": 0.5,
+    "infoTiers": [30, 60, 85],
+    "infoSeeAbove": 1
   },
   "combat": {
     "stagePct": 0.1,
@@ -707,6 +773,14 @@
     "highlights": 5,
     "wish": 4
   },
+  "immortalGates": {
+    "chance": { "hoi_thu_do": 0.12, "the_gia": 0.9, "hoang_that": 0.06, "co_duyen": 0.008, "pham_gian": 0.03 },
+    "unknownMul": 0.3,
+    "closedUnknown": ["hoi_thu_do", "hoang_that", "co_duyen"],
+    "luckWeight": 1
+  },
+  "worldEvents": { "startChance": 0.12, "minAge": 6 },
+  "knowledge": { "defaultChance": 0.04, "maxPerYear": 1, "maxPerLife": 3 },
   "goldenFinger": {
     "birthChance": 0.07,
     "perLife": 0.002,
@@ -725,5 +799,15 @@
     "maxLives": 6,
     "claimShare": 0.5,
     "claimTreasury": 200
+  },
+  "karmaLedger": {
+    "perLife": 4, "max": 8, "maxLives": 3, "minWeight": 40, "enemyAt": 65,
+    "chance": 0.03, "livesDecay": 0.6, "minAge": 12, "romanceMinAge": 18,
+    "kinds": {
+      "dao_lu": { "role": "cố nhân", "affinity": 70, "favor": 15, "grudge": 0 },
+      "an": { "role": "cố nhân", "affinity": 62, "favor": 40, "grudge": 0 },
+      "oan": { "role": "cố nhân", "affinity": 38, "favor": 0, "grudge": 25 },
+      "ke_thu": { "role": "cố nhân", "affinity": 20, "favor": 0, "grudge": 45 }
+    }
   }
 }

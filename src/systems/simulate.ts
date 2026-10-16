@@ -19,6 +19,7 @@ import { runSeclusion } from './seclusion';
 import { doMission, joinSect, missionViews, requestMaster, masterBlocked, sectEligibility, sectTechniques } from './sect';
 import { buyTreasury, treasuryViews } from './sectTreasury';
 import { learnBlocked, learnTechnique, techniqueById, techniqueCapReason, techniqueMaxRealm } from './technique';
+import { buyScroll, openMarkets, techniqueOffers } from './market';
 import { checkDeath } from './time';
 
 /**
@@ -41,6 +42,8 @@ export interface LifeResult {
   rootGrade: string;
   bodyId: string | null;
   martialStage: number;
+  /** 9.R5a: Sổ tri thức entries found by chance in this life. */
+  knowledge: number;
   /** Age at which each realm was first entered. */
   reachedAt: Record<string, number>;
   /** Stage within the final realm. */
@@ -76,6 +79,22 @@ export interface SimOptions {
   traits?: string[];
   /** 9.R3d: start with this Kim Thủ Chỉ (absent = none, as before). */
   goldenFinger?: string;
+  /** 9.R4b: a seasoned player knows the whole Sổ tri thức (default, so every gate is open); 'none' plays a first life. */
+  knowledge?: 'all' | 'none';
+}
+
+/** 9.R4c: the bot buys the first scroll it can afford and learn at a market it can enter, then learns it. */
+function buyEntryTechnique(state: GameState, content: Content): { state: GameState } | null {
+  for (const m of openMarkets(state, content)) {
+    for (const o of techniqueOffers(state, content, m.id)) {
+      const tech = techniqueById(content, o.id);
+      if (o.blocked || !tech || learnBlocked(state, content, tech)) continue;
+      const bought = buyScroll(state, content, m.id, o.id).state;
+      const learned = learnTechnique(bought, content, o.id, { quiet: true });
+      if (learned) return learned;
+    }
+  }
+  return null;
 }
 
 /** Live one life to its end. Deterministic for a seed, profile and content. */
@@ -86,7 +105,8 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
   const maxSteps = opts.maxSteps ?? 20000;
   const botRng = new Rng(`bot:${seed}`);
   const realms = content.cultivation.realms.realms.map((r) => r.id);
-  const born = createLife({ seed, difficulty: opts.difficulty, goldenFinger: opts.goldenFinger }, content);
+  const knowledge = opts.knowledge === 'none' ? [] : (content.knowledge ?? []).map((e) => e.id);
+  const born = createLife({ seed, difficulty: opts.difficulty, goldenFinger: opts.goldenFinger, knowledge }, content);
   const offered = opts.traits ? { ...born, destiny: { ...born.destiny, offered: opts.traits } } : rollDestiny(born, content);
   let s: GameState = confirmDestiny(offered, content);
   let peak = 0;
@@ -128,9 +148,9 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     }
     if (s.cult.coreForming) { s = placeStrand(s, content, s.cult.coreForming.offered[0]).state; continue; }
     if (s.cult.heartDemonTrial) { s = meetIllusion(s, content, 'face').state; continue; }
-    // A rooted mortal takes the starter technique and begins to cultivate.
+    // A rooted mortal finds an entry technique (9.R4c: bought at a market it can reach, or one it holds) and begins to cultivate.
     if (s.cult.realm === 'pham_nhan' && rootUsable(s, content)) {
-      const learned = s.cult.technique ? { state: s } : learnTechnique(s, content, content.balance.techniques.default, { quiet: true });
+      const learned = s.cult.technique ? { state: s } : buyEntryTechnique(s, content);
       if (learned) {
         const started = enterFirstRealm(learned.state, content);
         if (started !== s) { s = started; continue; }
@@ -167,7 +187,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
   return {
     seed, age: s.character.age, alive: s.alive, cause: s.death?.cause ?? (s.alive ? 'stuck' : 'unknown'), realm: s.cult.realm,
     peak: Math.max(peak, realms.indexOf(s.cult.realm)), rootGrade: s.cult.root?.grade ?? 'none', bodyId: s.cult.bodyId ?? null,
-    martialStage: s.martial.stage, reachedAt, stage: s.cult.stage, stuck: s.alive,
+    martialStage: s.martial.stage, knowledge: s.knowledgeFound ?? 0, reachedAt, stage: s.cult.stage, stuck: s.alive,
     happyZeroYears, topYears, daoHeartZero, fullBarYears, capYears,
     aptitudeGain: aptSum(s) - aptStart,
     aptitudeHigh: Math.max(s.aptitudes.physique, s.aptitudes.comprehension, s.aptitudes.luck) >= 90,
@@ -181,7 +201,7 @@ function playerYear(state: GameState, content: Content): GameState {
   let s = state;
   if (!s.sect.id) {
     const sect = content.sects.find((x) => x.recruitable && !sectEligibility(s, content, x.id));
-    if (sect) s = joinSect(s, content, sect.id).state;
+    if (sect) s = enterFirstRealm(joinSect(s, content, sect.id).state, content);
   }
   if (s.sect.id) {
     const best = missionViews(s, content).filter((m) => !m.blocked).sort((a, b) => b.chance - a.chance)[0];

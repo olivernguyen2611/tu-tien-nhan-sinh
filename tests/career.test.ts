@@ -82,14 +82,14 @@ describe('mortal careers (task 2.11)', () => {
 });
 
 describe('Thiên địa kỳ vật (task 2.11)', () => {
-  it('gives a rootless mortal a Ngũ or Tứ root and starts Luyện Khí, at a cost to health', () => {
+  it('gives a rootless mortal a Ngũ or Tứ root at a cost to health (9.R4c: Luyện Khí waits for a technique)', () => {
     let tu = 0;
     for (let i = 0; i < 200; i++) {
       const s = rootless(mortal(`kv${i}`, 20));
       const r = grantRoot(s, content).state;
       expect(r.alive).toBe(true);
       expect(['ngu', 'tu']).toContain(r.cult.root!.grade);
-      expect(r.cult.realm).toBe('luyen_khi');
+      expect(r.cult.realm).toBe('pham_nhan');
       expect(r.stats.health).toBe(40);
       if (r.cult.root!.grade === 'tu') tu++;
     }

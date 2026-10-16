@@ -2,6 +2,8 @@
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
 import { currentRegion, regionOpen, travelBlock, type TravelBlock } from '../../systems/regions';
+import { regionLore, type RegionLore } from '../../systems/worldLore';
+import { activeWorldEvent } from '../../systems/worldEvents';
 
 const BLOCK_TEXT: Record<TravelBlock, string> = {
   locked: 'Cảnh giới chưa đủ',
@@ -20,6 +22,7 @@ export function MapPanel({ state, content, unlimited, onTravel, onClose }: {
   onClose: () => void;
 }) {
   const here = currentRegion(state, content);
+  const world = activeWorldEvent(state, content);
   const realmName = (id: string) => content.cultivation.realms.realms.find((r) => r.id === id)?.name ?? id;
 
   return (
@@ -28,6 +31,7 @@ export function MapPanel({ state, content, unlimited, onTravel, onClose }: {
         <div class="kicker">Khám phá</div>
         <h2>Bản đồ {content.world.name}</h2>
         {here && <p class="profile-note">Đang ở <b>{here.name}</b>.</p>}
+        {world && <p class="profile-note">Thiên hạ: <b>{world.event.name}</b> · {world.phase.name}</p>}
         <ul class="bag-list">
           {content.regions.map((r) => {
             const open = unlimited || regionOpen(state, content, r);
@@ -44,6 +48,7 @@ export function MapPanel({ state, content, unlimited, onTravel, onClose }: {
                       <span class="profile-note">
                         Trấn giữ: {r.guardian.title} {seen ? r.guardian.name : '(chưa rõ danh tính)'} · {realmName(r.guardian.realm)}
                       </span>
+                      {seen && <LoreLines lore={regionLore(content, r.id)} />}
                     </>
                   ) : (
                     <span class="profile-note">Cần {realmName(r.minRealm ?? '')} mới đặt chân tới được.</span>
@@ -60,4 +65,10 @@ export function MapPanel({ state, content, unlimited, onTravel, onClose }: {
       </div>
     </div>
   );
+}
+
+/** 9.R7c: who lives in a region the player has seen. */
+function LoreLines({ lore }: { lore: RegionLore }) {
+  const rows: [string, string[]][] = [['Phàm quốc', lore.nations], ['Thế gia', lore.clans], ['Chủng tộc', lore.races], ['Giang hồ', lore.factions], ['Danh nhân', lore.figures]];
+  return <>{rows.filter(([, v]) => v.length > 0).map(([k, v]) => <span class="profile-note" key={k}>{k}: {v.join(', ')}</span>)}</>;
 }

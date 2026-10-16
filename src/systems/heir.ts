@@ -56,7 +56,7 @@ export function continueAsHeir(state: GameState, content: Content, heirId: strin
   const child = option.kind === 'child' ? state.family.find((r) => r.id === heirId)! : null;
   const disciple = option.kind === 'disciple' ? state.npcs.find((n) => n.id === heirId)! : null;
   const gender = (child ?? disciple)!.gender;
-  const base = createLife({ seed, name: option.name, gender, originId: state.character.originId, difficulty: state.difficulty }, content);
+  const base = createLife({ seed, name: option.name, gender, originId: state.character.originId, difficulty: state.difficulty, knowledge: state.knowledge }, content);
   const rng = Rng.fromState(base.rng);
 
   // Family: the one who died, the living đạo lữ, the other children.
@@ -98,6 +98,8 @@ export function continueAsHeir(state: GameState, content: Content, heirId: strin
     // The world goes on: NPCs (minus the heir), the prodigies.
     npcs: state.npcs.filter((n) => n.id !== heirId).map((n) => (n.disciple && option.kind === 'disciple' ? { ...n, role: 'sư đệ', disciple: undefined } : n)),
     ranking: state.ranking,
+    devUsed: state.devUsed,
+    world: state.world,
     ownSect: state.ownSect ? { ...state.ownSect, report: null } : null,
     ancestry,
     events: { pending: null, history: {}, followUps: [], npc: null },
@@ -126,11 +128,13 @@ export function continueAsHeir(state: GameState, content: Content, heirId: strin
       s = { ...s, log: [{ ...s.log[0], lines: [...s.log[0].lines, { text: content.lifeTexts.familyBond.texts.heirInsight, tone: 'good' }] }] };
     }
   }
-  // A child with a usable root, old enough for the root test, starts cultivating now.
+  // A child with a usable root, old enough for the root test, starts cultivating now on what the parent
+  // taught, or on the family's entry manual (9.R4c: a cultivator's house passes one down).
   if (child && option.age >= content.balance.roots.testAge[0]) {
-    s = startCultivating(s, content).state;
     const taught = child.technique && learnTechnique(s, content, child.technique, { quiet: true });
     if (taught) s = { ...taught.state, log: [{ ...taught.state.log[0], lines: [...taught.state.log[0].lines, { text: content.lifeTexts.familyBond.texts.heirTechnique.replaceAll('{technique}', content.techniques.find((t) => t.id === child.technique)?.name ?? ''), tone: 'good' }] }, ...taught.state.log.slice(1)] };
+    else s = learnTechnique(s, content, content.balance.techniques.default, { quiet: true })?.state ?? s;
+    s = startCultivating(s, content).state;
   }
   return s;
 }

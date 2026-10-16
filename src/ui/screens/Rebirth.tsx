@@ -4,14 +4,16 @@ import { talentShop } from '../../systems/rebirthTalents';
 
 const ROMAN = ['', 'I', 'II', 'III', 'IV', 'V', 'VI'];
 
-export function RebirthScreen({ content, points, owned, onBuy, onBack }: {
+export function RebirthScreen({ content, points, owned, known, onBuy, onBack }: {
   content: Content;
   points: number;
   owned: Record<string, number>;
+  /** 9.R5b: talents about cultivation stay hidden until the Sổ tri thức knows of it. */
+  known: string[];
   onBuy: (talentId: string) => void;
   onBack: () => void;
 }) {
-  const rows = talentShop(content, owned, points);
+  const rows = talentShop(content, owned, points, known);
   return (
     <main class="create-screen rebirth-screen">
       <header class="create-head">
@@ -22,7 +24,12 @@ export function RebirthScreen({ content, points, owned, onBuy, onBack }: {
         Điểm Luân Hồi: <b>{points}</b>. Thiên phú mua ở đây theo ngươi qua mọi kiếp sau.
       </p>
       <ul class="talent-shop">
-        {rows.map((r) => (
+        {rows.map((r) => r.locked ? (
+          <li key={r.id} class="talent-row">
+            <div class="talent-head"><b>???</b></div>
+            <p class="trait-flavor">Một thiên phú về con đường kiếp này chưa biết tới.</p>
+          </li>
+        ) : (
           <li key={r.id} class={`talent-row${r.level > 0 ? ' owned' : ''}`}>
             <div class="talent-head">
               <b>{r.name}</b>

@@ -21,9 +21,11 @@ export interface Codex {
   combos: string[];
   fingers: string[];
   stories: CodexStory[];
+  /** 9.R5a: Sổ tri thức entries found by any life. */
+  knowledge: string[];
 }
 
-export const EMPTY_CODEX: Codex = { traits: [], combos: [], fingers: [], stories: [] };
+export const EMPTY_CODEX: Codex = { traits: [], combos: [], fingers: [], stories: [], knowledge: [] };
 /** Tales kept; older ones drop off. */
 const MAX_STORIES = 50;
 
@@ -39,7 +41,7 @@ function storyEnding(state: GameState): CodexStory['ending'] | null {
 
 /** What this life adds to the Thiên Thư (a confirmed destiny; the tale only once the life is over). */
 export function codexOf(state: GameState, content: Content): Codex {
-  if (!state.destiny.confirmed) return EMPTY_CODEX;
+  if (!state.destiny.confirmed) return { ...EMPTY_CODEX, knowledge: state.knowledge ?? [] };
   const n = chosenDisciple(state);
   const ending = state.alive ? null : storyEnding(state);
   return {
@@ -47,6 +49,7 @@ export function codexOf(state: GameState, content: Content): Codex {
     combos: activeCombos(state, content).map((c) => c.id),
     fingers: state.goldenFinger ? [state.goldenFinger.id] : [],
     stories: n?.chosen && ending ? [{ life: state.seed, template: n.chosen.template, npc: n.name, master: state.character.name, ending }] : [],
+    knowledge: state.knowledge ?? [],
   };
 }
 
@@ -54,7 +57,7 @@ const union = (a: string[], b: string[]) => [...a, ...b.filter((x) => !a.include
 
 export function mergeCodex(a: Codex, b: Codex): Codex {
   const stories = [...a.stories.filter((s) => !b.stories.some((t) => t.life === s.life)), ...b.stories].slice(-MAX_STORIES);
-  return { traits: union(a.traits, b.traits), combos: union(a.combos, b.combos), fingers: union(a.fingers, b.fingers), stories };
+  return { traits: union(a.traits, b.traits), combos: union(a.combos, b.combos), fingers: union(a.fingers, b.fingers), stories, knowledge: union(a.knowledge ?? [], b.knowledge ?? []) };
 }
 
 /** A tale as the Thiên Thư tells it. */
@@ -68,5 +71,6 @@ export function codexProgress(codex: Codex, content: Content) {
     traits: [codex.traits.filter((t) => content.traits.some((x) => x.id === t)).length, content.traits.length],
     combos: [codex.combos.filter((c) => content.traitCombos.combos.some((x) => x.id === c)).length, content.traitCombos.combos.length],
     fingers: [codex.fingers.filter((f) => content.goldenFingers.fingers.some((x) => x.id === f)).length, content.goldenFingers.fingers.length],
+    knowledge: [codex.knowledge.filter((k) => (content.knowledge ?? []).some((x) => x.id === k)).length, (content.knowledge ?? []).length],
   } as const;
 }

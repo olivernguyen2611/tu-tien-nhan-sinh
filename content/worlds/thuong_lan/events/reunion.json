@@ -1,0 +1,430 @@
+[
+  {
+    "id": "tai_ngo_dao_lu",
+    "category": "npc",
+    "title": "Tựa như đã gặp",
+    "text": "Giữa phố đông, {npc} ngoảnh lại nhìn {name} rất lâu. Cả hai cùng thấy quen, mà không ai nhớ đã gặp ở đâu. Đêm ấy {name} mơ thấy mình tên là {pastSelf}, đứng bên một người gọi là {pastName}.",
+    "themes": [
+      "karma"
+    ],
+    "conditions": {
+      "npc": {
+        "pastLife": [
+          "dao_lu"
+        ]
+      },
+      "age": {
+        "min": 18
+      }
+    },
+    "weight": 3,
+    "npcTrigger": "reunion",
+    "choices": [
+      {
+        "text": "Bước tới hỏi tên",
+        "result": {
+          "text": "{npc} nói tên mình. Ngươi lặp lại, như đã gọi cái tên khác ấy nhiều lần.",
+          "effects": {
+            "npc": {
+              "affinity": 10
+            },
+            "romance": {
+              "pursue": true
+            },
+            "stat.happiness": 5
+          }
+        },
+        "requires": {
+          "romance": {
+            "lover": false,
+            "partner": false
+          }
+        }
+      },
+      {
+        "text": "Chỉ gật đầu chào",
+        "result": {
+          "text": "Hai người đi về hai phía. Ngươi biết rồi sẽ còn gặp lại.",
+          "effects": {
+            "npc": {
+              "affinity": 5
+            },
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Ngươi đã có người bên cạnh, lặng lẽ quay đi",
+        "result": {
+          "text": "Có những duyên nên để lại kiếp trước. Lòng ngươi nặng một chút, rồi nhẹ hẳn.",
+          "effects": {
+            "stat.daoHeart": 3,
+            "stat.happiness": -2
+          }
+        },
+        "requires": {
+          "romance": {
+            "partner": true
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tai_ngo_dao_lu_hoa",
+    "category": "npc",
+    "title": "Chén trà nguội",
+    "text": "{npc} pha trà, đặt trước mặt {name} một chén nguội đúng như ngươi vẫn thích, dù chưa ai từng nói. \"Không hiểu sao ta biết.\"",
+    "themes": [
+      "karma"
+    ],
+    "conditions": {
+      "npc": {
+        "pastLife": [
+          "dao_lu"
+        ]
+      },
+      "age": {
+        "min": 18
+      }
+    },
+    "weight": 2,
+    "npcTrigger": "reunion",
+    "choices": [
+      {
+        "text": "Uống cạn, kể giấc mơ về {pastName}",
+        "result": {
+          "text": "{npc} lặng người, rồi cười: trong mơ của y cũng có một người tên {pastSelf}.",
+          "effects": {
+            "npc": {
+              "affinity": 12
+            },
+            "stat.happiness": 6,
+            "stat.comprehension": 1
+          }
+        }
+      },
+      {
+        "text": "Đùa cho qua",
+        "result": {
+          "text": "Trà nguội thì uống cho nhanh. {npc} bật cười, không khí dễ chịu hẳn.",
+          "effects": {
+            "npc": {
+              "affinity": 6
+            },
+            "stat.charm": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tai_ngo_an",
+    "category": "npc",
+    "title": "Người lạ trả ơn cũ",
+    "text": "{npc} chặn {name} giữa đường, quỳ xuống vái ba vái. \"Ta không biết vì sao, nhưng thấy mình nợ người một mạng.\" Trong đầu ngươi thoáng hiện cái tên {pastName}.",
+    "themes": [
+      "karma"
+    ],
+    "conditions": {
+      "npc": {
+        "pastLife": [
+          "an"
+        ]
+      }
+    },
+    "weight": 3,
+    "npcTrigger": "reunion",
+    "choices": [
+      {
+        "text": "Đỡ dậy, kết làm bằng hữu",
+        "result": {
+          "text": "Ơn cũ thành tình mới. {npc} cứ nhất định đòi đãi ngươi một bữa.",
+          "effects": {
+            "npc": {
+              "affinity": 10
+            },
+            "stat.happiness": 4,
+            "karma": 2
+          }
+        }
+      },
+      {
+        "text": "Nhận một món quà nhỏ cho y yên lòng",
+        "result": {
+          "text": "{npc} dúi vào tay ngươi một túi bạc, rồi mới chịu đứng lên.",
+          "effects": {
+            "silver": 30,
+            "npc": {
+              "favor": -15
+            },
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Bảo y nhầm người",
+        "result": {
+          "text": "{npc} gãi đầu đi mất. Ngươi thấy nhẹ nhõm vì không phải mang thêm nhân quả.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "npc": {
+              "affinity": -5
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tai_ngo_an_chi_diem",
+    "category": "npc",
+    "title": "Lời nhắc từ cố nhân",
+    "text": "{npc}, người ngươi mới quen, bỗng dặn: \"Đừng đi đường núi phía tây năm nay.\" Hỏi vì sao thì y cũng không biết, chỉ thấy phải nói. Kiếp trước {pastSelf} từng cứu {pastName} trên một con đường núi.",
+    "themes": [
+      "karma"
+    ],
+    "conditions": {
+      "npc": {
+        "pastLife": [
+          "an"
+        ]
+      }
+    },
+    "weight": 2,
+    "npcTrigger": "reunion",
+    "choices": [
+      {
+        "text": "Nghe theo",
+        "result": {
+          "text": "Mùa thu năm ấy đường núi tây sạt lở. Ngươi ngồi nhà uống trà.",
+          "effects": {
+            "stat.health": 3,
+            "npc": {
+              "affinity": 8
+            },
+            "stat.luck": 1
+          }
+        }
+      },
+      {
+        "text": "Cười cảm ơn rồi vẫn đi",
+        "result": {
+          "text": "Đường núi không sạt, nhưng ngươi trượt chân một lần nhớ đời.",
+          "effects": {
+            "stat.health": -4,
+            "stat.intellect": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tai_ngo_oan",
+    "category": "npc",
+    "title": "Ánh mắt không quen",
+    "text": "Lần đầu gặp, {npc} đã nhìn {name} bằng ánh mắt khó chịu, như thể ngươi nợ y điều gì. Trong mơ, ngươi thấy {pastSelf} quay lưng trước một người tên {pastName}.",
+    "themes": [
+      "karma"
+    ],
+    "conditions": {
+      "npc": {
+        "pastLife": [
+          "oan"
+        ]
+      }
+    },
+    "weight": 3,
+    "npcTrigger": "reunion",
+    "choices": [
+      {
+        "text": "Mời y chén rượu, hóa giải từ đầu",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Rượu ba tuần, mặt {npc} dịu lại. Mối oán kiếp trước nhạt đi một nửa.",
+          "effects": {
+            "npc": {
+              "grudge": -20,
+              "affinity": 10
+            },
+            "stat.daoHeart": 2,
+            "karma": 2
+          }
+        },
+        "fail": {
+          "text": "{npc} hất chén rượu. Có những nút thắt không gỡ bằng một bữa.",
+          "effects": {
+            "npc": {
+              "grudge": 5
+            },
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Tránh mặt",
+        "result": {
+          "text": "Không gặp thì không va. Nhưng nhân quả vẫn nằm đó.",
+          "effects": {
+            "stat.happiness": -1,
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Nhìn lại, không nhường",
+        "result": {
+          "text": "Hai người gườm nhau. Mối oán kiếp trước thêm một nét mực.",
+          "effects": {
+            "npc": {
+              "grudge": 10
+            },
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tai_ngo_ke_thu",
+    "category": "npc",
+    "title": "Kẻ thù không tên",
+    "text": "{npc} vừa gặp {name} đã đặt tay lên chuôi kiếm, không hiểu vì sao lòng đầy sát ý. Ngươi cũng thấy gáy lạnh: kiếp trước, {pastName} chết dưới tay {pastSelf}, hoặc ngược lại.",
+    "themes": [
+      "karma"
+    ],
+    "tags": [
+      "violence"
+    ],
+    "conditions": {
+      "npc": {
+        "pastLife": [
+          "ke_thu"
+        ]
+      }
+    },
+    "weight": 3,
+    "npcTrigger": "reunion",
+    "choices": [
+      {
+        "text": "Nói thẳng: chuyện kiếp trước, kiếp này bỏ đi",
+        "check": {
+          "stat": "stat.daoHeart",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "{npc} buông kiếm, thở dài. \"Ta không biết ngươi nói gì, nhưng ta tin.\"",
+          "effects": {
+            "npc": {
+              "grudge": -35,
+              "affinity": 15
+            },
+            "stat.daoHeart": 3,
+            "karma": 3
+          }
+        },
+        "fail": {
+          "text": "{npc} cười lạnh. Mấy lời đó không xóa được một vết thù khắc vào hồn.",
+          "effects": {
+            "npc": {
+              "grudge": 10
+            },
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Ra tay trước",
+        "result": {
+          "text": "Hai người giao thủ một chiêu rồi tách ra. Từ nay là kẻ thù kiếp này.",
+          "effects": {
+            "npc": {
+              "grudge": 20
+            },
+            "stat.health": -3,
+            "stat.physique": 1
+          }
+        }
+      },
+      {
+        "text": "Rời đi ngay trong đêm",
+        "result": {
+          "text": "Ngươi đổi đường về. Kẻ kia không đuổi, nhưng nhớ mặt.",
+          "effects": {
+            "stat.happiness": -2,
+            "stat.intellect": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tai_ngo_ke_thu_giac_mo",
+    "category": "npc",
+    "title": "Giấc mơ máu",
+    "text": "Ba đêm liền {name} mơ thấy {pastSelf} đứng giữa mưa máu, đối diện {pastName}. Sáng thứ tư, {npc} dọn tới ở ngay cạnh nhà, mặt mũi giống hệt người trong mộng.",
+    "themes": [
+      "karma"
+    ],
+    "tags": [
+      "dark"
+    ],
+    "conditions": {
+      "npc": {
+        "pastLife": [
+          "ke_thu",
+          "oan"
+        ]
+      }
+    },
+    "weight": 2,
+    "npcTrigger": "reunion",
+    "choices": [
+      {
+        "text": "Mang quà sang làm quen",
+        "result": {
+          "text": "{npc} nhận quà, nghi hoặc nhưng không từ chối. Thù oán lùi lại một bước.",
+          "effects": {
+            "silver": -10,
+            "npc": {
+              "grudge": -10,
+              "affinity": 8
+            },
+            "stat.daoHeart": 1
+          }
+        },
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 10
+            }
+          ]
+        }
+      },
+      {
+        "text": "Ngồi tĩnh tâm, không để giấc mơ dắt mũi",
+        "result": {
+          "text": "Mộng chỉ là mộng. Đạo tâm ngươi vững thêm một chút.",
+          "effects": {
+            "stat.daoHeart": 3,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Rình xem y làm gì",
+        "result": {
+          "text": "Ngươi rình, y cũng rình. Cả xóm tưởng hai người thầm thương nhau.",
+          "effects": {
+            "stat.intellect": 2,
+            "stat.happiness": 2
+          }
+        }
+      }
+    ]
+  }
+]

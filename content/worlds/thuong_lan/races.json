@@ -1,0 +1,59 @@
+[
+  {
+    "id": "nhan_toc",
+    "name": "Nhân tộc",
+    "regions": [
+      "thanh_van_chau",
+      "vo_chu_hoang_nguyen",
+      "dong_hai",
+      "trung_chau"
+    ],
+    "stance": "than_thien",
+    "description": "Đông nhất, yếu nhất lúc sinh ra, mạnh nhất về sau. Trời cho linh căn ít, nhưng cho cái tính không chịu thua."
+  },
+  {
+    "id": "yeu_toc",
+    "name": "Yêu tộc",
+    "regions": [
+      "van_thu_son_mach"
+    ],
+    "stance": "trung_lap",
+    "description": "Yêu thú tu thành hình người. Giữ hòa ước với Vạn Yêu Điện; thù không đội trời chung với kẻ săn yêu đan."
+  },
+  {
+    "id": "giao_toc",
+    "name": "Giao tộc",
+    "regions": [
+      "dong_hai"
+    ],
+    "stance": "trung_lap",
+    "description": "Người cá dưới biển Đông Hải, buôn trân châu với hải thị. Ai đào phủ cũ của giao long thì cả tộc nhớ mặt."
+  },
+  {
+    "id": "linh_toc",
+    "name": "Linh tộc",
+    "regions": [
+      "van_thu_son_mach"
+    ],
+    "stance": "than_thien",
+    "description": "Thảo mộc thành tinh, hiền lành, sợ lửa. Bị đan sư săn làm thuốc nên ít khi lộ mặt."
+  },
+  {
+    "id": "quy_toc",
+    "name": "Quỷ tộc",
+    "regions": [
+      "huyet_uyen"
+    ],
+    "stance": "thu_dich",
+    "description": "Sống ở U Minh dưới đáy Huyết Uyên. Coi người sống là khách, người chết là dân, và luôn mong khách thành dân."
+  },
+  {
+    "id": "thach_toc",
+    "name": "Thạch tộc",
+    "regions": [
+      "thai_co_chien_truong"
+    ],
+    "stance": "trung_lap",
+    "description": "Người đá thời Thái Cổ, ngủ ngàn năm. Tỉnh dậy không nhớ ai là bạn, ai là thù, nên đánh thử cho chắc."
+  }
+]

@@ -15,7 +15,6 @@
         "min": 14
       },
       "root": {
-        "tested": true,
         "usable": false
       },
       "stats": [
@@ -77,7 +76,6 @@
         "min": 14
       },
       "root": {
-        "tested": true,
         "usable": false
       },
       "stats": [

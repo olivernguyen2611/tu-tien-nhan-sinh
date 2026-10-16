@@ -43,6 +43,7 @@ import { careerLabel } from '../../systems/career';
 import { sectLabel } from '../../systems/sect';
 import { inventoryLabel } from '../../systems/items';
 import { fingerDef } from '../../systems/goldenFinger';
+import { featureOpen } from '../../systems/knowledge';
 
 const DOCK_LEFT = [
   { id: 'cultivate', glyph: '修', label: 'Tu luyện' },
@@ -171,12 +172,21 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   }, [state.log.length]);
 
   const dockActions: Record<string, () => void> = { bonds: () => setFamilyOpen(true), cultivate: () => setCultivateOpen(true), sect: () => setSectOpen(true), explore: () => setMarketOpen(true) };
-  const dockItem = (t: { id: string; glyph: string; label: string }) => (
+  // 9.R5b: before the life has heard of cultivation, the two left tabs read as mortal ones.
+  const mortalDock: Record<string, { glyph: string; label: string; open: boolean }> = {
+    cultivate: { glyph: '練', label: 'Rèn luyện', open: featureOpen(state, content, 'tab', 'tu_luyen') },
+    sect: { glyph: '江', label: 'Giang hồ', open: featureOpen(state, content, 'tab', 'tong_mon') },
+  };
+  const dockItem = (base: { id: string; glyph: string; label: string }) => {
+    const m = mortalDock[base.id];
+    const t = m && !m.open ? { ...base, glyph: m.glyph, label: m.label } : base;
+    return (
     <button class="dock-item" key={t.id} title={dockActions[t.id] ? t.label : 'Sắp có'} onClick={dockActions[t.id]}>
       <span class="glyph" aria-hidden="true">{t.glyph}</span>
       <span>{t.label}</span>
     </button>
-  );
+    );
+  };
 
   return (
     <div class="main-screen">

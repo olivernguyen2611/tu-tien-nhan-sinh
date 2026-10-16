@@ -35,7 +35,12 @@ export type PersonCheat =
   | { kind: 'realm'; realmId: string }
   | { kind: 'stage' }
   | { kind: 'root'; on: boolean }
-  | { kind: 'remove' };
+  | { kind: 'remove' }
+  // 9.R6b: set any number outright, swap a trait, reveal the nature, hand down a technique.
+  | { kind: 'set'; field: 'affinity' | 'favor' | 'grudge' | 'aptitude' | 'age' | 'lifespan' | 'progress' | 'insight'; value: number }
+  | { kind: 'trait'; slot: 'surface' | 'nature' | 'goal'; id: string }
+  | { kind: 'revealNature'; on: boolean }
+  | { kind: 'technique'; id: string | null };
 
 function devLog(state: GameState, text: string): GameState {
   const line: LogLine = { text: `[Dev] ${text}`, tone: 'normal' };
@@ -49,7 +54,63 @@ function devLog(state: GameState, text: string): GameState {
 /** The cheats a person takes: relatives have no ledger, realm or aptitude. */
 export function personCheatsAvailable(person: DevPerson): PersonCheat['kind'][] {
   const common: PersonCheat['kind'][] = ['affinity', 'age', 'lifespan', 'alive', 'root'];
-  return person.kind === 'npc' ? [...common, 'favor', 'grudge', 'aptitude', 'realm', 'stage', 'remove'] : common;
+  return person.kind === 'npc'
+    ? [...common, 'favor', 'grudge', 'aptitude', 'realm', 'stage', 'remove', 'set', 'trait', 'revealNature', 'technique']
+    : [...common, 'set', 'technique'];
+}
+
+const FIELD_NAMES: Record<string, string> = {
+  affinity: 'thiện cảm', favor: 'ân', grudge: 'oán', aptitude: 'tư chất', age: 'tuổi', lifespan: 'thọ nguyên', progress: 'tiến độ', insight: 'ngộ tính',
+};
+const TRAIT_NAMES = { surface: 'tính nết', nature: 'bản chất', goal: 'chí hướng' } as const;
+const traitList = (content: Content, slot: 'surface' | 'nature' | 'goal') => (slot === 'goal' ? content.npcTraits.goals : content.npcTraits[slot]);
+
+export interface SheetRow { label: string; value: string }
+
+/** 9.R6b: everything stored about a person, hidden parts included, for the dev panel. */
+export function devPersonSheet(state: GameState, content: Content, key: string): SheetRow[] {
+  const id = key.slice(key.indexOf(':') + 1);
+  const realmName = (rid: string, stage: number) => {
+    const r = content.cultivation.realms.realms.find((x) => x.id === rid);
+    return r ? `${r.name}${rid === content.cultivation.realms.realms[0].id ? '' : ` ${r.stages[stage] ?? ''}`}`.trim() : rid;
+  };
+  const tech = (tid?: string | null) => (tid ? content.techniques.find((t) => t.id === tid)?.name ?? tid : '—');
+  const nameOf = (nid: string | null) => (nid ? state.npcs.find((x) => x.id === nid)?.name ?? nid : '—');
+  const acts = (m?: Record<string, number>) => (m && Object.keys(m).length ? Object.entries(m).map(([k, v]) => `${k}@${v}`).join(', ') : '—');
+  if (key.startsWith('npc:')) {
+    const n = state.npcs.find((x) => x.id === id);
+    if (!n) return [];
+    const trait = (slot: 'surface' | 'nature' | 'goal', tid: string | null) => (tid ? traitList(content, slot).find((x) => x.id === tid)?.name ?? tid : '—');
+    return [
+      { label: 'Id', value: n.id },
+      { label: 'Giới tính · tuổi', value: `${n.gender} · ${n.age} / thọ ${n.lifespan}${n.alive ? '' : ' (đã mất)'}` },
+      { label: 'Thân phận', value: n.role },
+      { label: 'Linh căn · tư chất', value: `${n.root ? (n.acquired ? 'hậu thiên' : 'có') : 'không'} · ${n.aptitude}${n.rootTries ? ` · thử ${n.rootTries} lần` : ''}` },
+      { label: 'Tu vi', value: `${realmName(n.realm, n.stage)} · ${Math.round(n.progress)}%` },
+      { label: 'Công pháp', value: tech(n.technique) },
+      { label: 'Tính nết · bản chất', value: `${trait('surface', n.surface)} · ${trait('nature', n.nature)}${n.natureKnown ? ' (đã lộ)' : ' (ẩn)'}` },
+      { label: 'Chí hướng', value: trait('goal', n.goal) },
+      { label: 'Thiện cảm · ân · oán', value: `${n.affinity} · ${n.favor} · ${n.grudge}` },
+      { label: 'Thù truyền đời từ', value: nameOf(n.heirOf) },
+      { label: 'Đồ đệ', value: n.disciple ? `từ ${n.disciple.since} tuổi, chỉ điểm ${n.disciple.lastTaught ?? '—'}; ${acts(n.disciple.acts)}` : '—' },
+      { label: 'Đồng môn', value: n.sectmate ? `${n.sectmate.sect} · ${n.sectmate.kind}` : '—' },
+      { label: 'Môn nhân tông mình', value: n.member ? `từ ${n.member.since} tuổi` : '—' },
+      { label: 'Khí vận chi tử', value: n.chosen ? `${n.chosen.template}${n.chosen.role ? ` · ${n.chosen.role}` : ''}` : '—' },
+      { label: 'Bạn đời', value: state.romance.partner === n.id ? 'có' : '—' },
+      { label: 'Lần tương tác', value: `${acts(n.lastActs)}${n.lastGift !== undefined ? ` · tặng ${n.lastGift}` : ''}${n.lastBond ? ` · ${acts(n.lastBond)}` : ''}` },
+    ];
+  }
+  const r = state.family.find((x) => x.id === id);
+  if (!r) return [];
+  return [
+    { label: 'Id', value: r.id },
+    { label: 'Vai · giới tính · tuổi', value: `${r.role} · ${r.gender} · ${r.age} / thọ ${r.lifespan}${r.alive ? '' : ' (đã mất)'}` },
+    { label: 'Linh căn', value: r.root ? `${r.root.grade} [${r.root.elements.join(', ')}]${r.acquired ? ' hậu thiên' : ''}` : '—' },
+    { label: 'Thể chất', value: r.bodyId ?? '—' },
+    { label: 'Thiện cảm · ngộ tính', value: `${r.affinity} · ${r.insight ?? 0}` },
+    { label: 'Công pháp được truyền', value: tech(r.technique) },
+    { label: 'Lần tương tác', value: acts(r.lastActions) },
+  ];
 }
 
 const GRADE_ROOT: SpiritRoot = { grade: 'song', elements: ['kim', 'moc'] };
@@ -76,11 +137,40 @@ function cheatNpc(n: Npc, content: Content, c: PersonCheat): { npc: Npc | null; 
       return { npc: { ...n, stage: Math.min(r.stages.length - 1, n.stage + 1), progress: 0 }, what: `lên tầng ${Math.min(r.stages.length - 1, n.stage + 1) + 1}` };
     }
     case 'remove': return { npc: null, what: 'xóa khỏi thế giới' };
+    case 'set': {
+      if (c.field === 'insight') return { npc: n, what: '' };
+      const v = c.field === 'age' || c.field === 'lifespan' ? Math.max(0, Math.round(c.value)) : clamp(c.value);
+      const next = { ...n, [c.field]: v };
+      if (c.field === 'age') next.lifespan = Math.max(n.lifespan, v + 1);
+      if (c.field === 'lifespan') next.lifespan = Math.max(n.age + 1, v);
+      return { npc: next, what: `${FIELD_NAMES[c.field]} = ${next[c.field]}` };
+    }
+    case 'trait': {
+      const t = traitList(content, c.slot).find((x) => x.id === c.id);
+      return t ? { npc: { ...n, [c.slot]: t.id }, what: `${TRAIT_NAMES[c.slot]}: ${t.name}` } : { npc: n, what: '' };
+    }
+    case 'revealNature': return { npc: { ...n, natureKnown: c.on }, what: c.on ? 'lộ bản chất' : 'giấu bản chất' };
+    case 'technique': {
+      if (c.id === null) return { npc: { ...n, technique: undefined }, what: 'bỏ công pháp' };
+      const t = content.techniques.find((x) => x.id === c.id);
+      return t ? { npc: { ...n, technique: t.id }, what: `công pháp ${t.name}` } : { npc: n, what: '' };
+    }
   }
 }
 
-function cheatRelative(r: Relative, c: PersonCheat): { rel: Relative; what: string } {
+function cheatRelative(r: Relative, content: Content, c: PersonCheat): { rel: Relative; what: string } {
   switch (c.kind) {
+    case 'set': {
+      if (c.field === 'affinity' || c.field === 'insight') { const v = clamp(c.value); return { rel: { ...r, [c.field]: v }, what: `${FIELD_NAMES[c.field]} = ${v}` }; }
+      if (c.field === 'age') { const age = Math.max(0, Math.round(c.value)); return { rel: { ...r, age, lifespan: Math.max(r.lifespan, age + 1) }, what: `tuổi ${age}` }; }
+      if (c.field === 'lifespan') { const l = Math.max(r.age + 1, Math.round(c.value)); return { rel: { ...r, lifespan: l }, what: `thọ nguyên = ${l}` }; }
+      return { rel: r, what: '' };
+    }
+    case 'technique': {
+      if (c.id === null) return { rel: { ...r, technique: null }, what: 'bỏ công pháp' };
+      const t = content.techniques.find((x) => x.id === c.id);
+      return t ? { rel: { ...r, technique: t.id }, what: `công pháp ${t.name}` } : { rel: r, what: '' };
+    }
     case 'affinity': return { rel: { ...r, affinity: clamp(r.affinity + c.delta) }, what: `thiện cảm ${c.delta > 0 ? '+' : ''}${c.delta}` };
     case 'age': { const age = Math.max(0, r.age + c.delta); return { rel: { ...r, age, lifespan: Math.max(r.lifespan, age + 1) }, what: `tuổi ${age}` }; }
     case 'lifespan': return { rel: { ...r, lifespan: Math.max(r.age + 1, r.lifespan + c.delta) }, what: `thọ nguyên ${c.delta > 0 ? '+' : ''}${c.delta}` };
@@ -107,7 +197,7 @@ export function devPersonCheat(state: GameState, content: Content, key: string, 
   if (kind === 'rel') {
     const rel = state.family.find((x) => x.id === id);
     if (!rel) return state;
-    const r = cheatRelative(rel, cheat);
+    const r = cheatRelative(rel, content, cheat);
     if (!r.what) return state;
     return devLog({ ...state, family: state.family.map((x) => (x.id === id ? r.rel : x)) }, `${rel.name}: ${r.what}`);
   }

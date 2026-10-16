@@ -56,6 +56,7 @@
     "name": "Hậu duệ gia tộc tu tiên",
     "description": "Tổ tiên từng có người tu tiên. Gia tộc đã sa sút nhưng vẫn giữ vài viên linh thạch và một quyển gia phả.",
     "weight": 5,
+    "requiresKnowledge": "linh_can_la_gi",
     "effects": { "stat.luck": 5, "stat.comprehension": 5 },
     "silver": 80,
     "spiritStones": 3,

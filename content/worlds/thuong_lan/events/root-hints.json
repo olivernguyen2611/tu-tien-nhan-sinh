@@ -1,0 +1,254 @@
+[
+  {
+    "id": "dau_hieu_gio_am",
+    "category": "childhood",
+    "title": "Gió núi ấm lạ",
+    "text": "Mùa đông, cả xóm co ro bên bếp. Riêng {name} đứng ngoài sân, nói gió thổi qua người ấm như có ai hà hơi vào gáy. Bà nội bảo: con nít nói nhảm.",
+    "tags": [
+      "rare"
+    ],
+    "conditions": {
+      "age": {
+        "min": 4,
+        "max": 12
+      },
+      "root": {
+        "innate": true
+      }
+    },
+    "weight": 1.2,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đứng thêm chút nữa, hít thật sâu",
+        "result": {
+          "text": "Trong ngực có gì đó rần rần chạy một vòng rồi tắt. Đêm ấy ngủ ngon lạ thường.",
+          "effects": {
+            "stat.health": 2,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Vào bếp ngồi cho giống mọi người",
+        "result": {
+          "text": "Ngồi bên bếp mà vẫn thấy hơi nóng. Thôi kệ, ấm là được.",
+          "effects": {
+            "stat.happiness": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "dau_hieu_ba_do",
+    "category": "childhood",
+    "title": "Lời bà đỡ",
+    "text": "Bà đỡ năm xưa ghé chơi, nhìn {name} hồi lâu rồi nói với người trong nhà: \"Đứa này lúc lọt lòng không khóc, mắt mở trừng trừng nhìn trời. Ta đỡ ba trăm đứa, mới thấy hai đứa như vậy.\"",
+    "tags": [],
+    "conditions": {
+      "age": {
+        "min": 3,
+        "max": 10
+      },
+      "root": {
+        "innate": true
+      }
+    },
+    "weight": 1,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Hỏi đứa kia giờ ra sao",
+        "result": {
+          "text": "\"Bay đi rồi,\" bà nói, \"theo một ông áo xám, không thấy về.\" Cả nhà im lặng.",
+          "effects": {
+            "stat.intellect": 1,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Trừng mắt nhìn trời cho bà xem",
+        "result": {
+          "text": "Mỏi mắt, chảy nước mắt. Bà đỡ cười đến ho.",
+          "effects": {
+            "stat.happiness": 2,
+            "stat.charm": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "dau_hieu_mong_sao",
+    "category": "childhood",
+    "title": "Giấc mơ có sao",
+    "text": "Đêm nào {name} cũng mơ thấy mình nằm giữa trời sao, sao rơi như mưa vào người, mát lạnh. Tỉnh dậy, áo ướt đẫm mà không phải mồ hôi.",
+    "tags": [
+      "rare"
+    ],
+    "conditions": {
+      "age": {
+        "min": 6,
+        "max": 14
+      },
+      "root": {
+        "innate": true
+      }
+    },
+    "weight": 0.8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Kể với thầy đồ",
+        "result": {
+          "text": "Thầy đồ vuốt râu: \"Sách xưa chép, kẻ mộng sao rơi là có tiên duyên. Mà sách xưa cũng chép nhiều chuyện bậy.\"",
+          "effects": {
+            "stat.intellect": 2
+          }
+        }
+      },
+      {
+        "text": "Giữ kín, đêm sau mơ tiếp",
+        "result": {
+          "text": "Lần này ngươi thử nắm một ngôi sao. Nó lạnh buốt, rồi tan trong tay.",
+          "effects": {
+            "stat.daoHeart": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "dau_hieu_cay_heo",
+    "category": "childhood",
+    "title": "Cây khô gặp tay",
+    "text": "Cây đào sau nhà héo đã ba năm. Hôm {name} trèo lên ngồi chơi cả buổi, sáng sau cành khô nhú lộc non.",
+    "tags": [
+      "funny"
+    ],
+    "conditions": {
+      "age": {
+        "min": 5,
+        "max": 12
+      },
+      "root": {
+        "innate": true
+      }
+    },
+    "weight": 0.8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Ngày nào cũng trèo lên ngồi",
+        "result": {
+          "text": "Cây đào ra hoa trái mùa, hàng xóm kéo tới xem. Người nhà dựng chõng thu tiền vào cửa.",
+          "effects": {
+            "stat.happiness": 2,
+            "stat.charm": 1
+          }
+        }
+      },
+      {
+        "text": "Sợ quá, không dám trèo nữa",
+        "result": {
+          "text": "Cây đào lại héo. Ngươi thấy hơi có lỗi với nó.",
+          "effects": {
+            "stat.happiness": -1,
+            "stat.intellect": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "dau_hieu_mat_trai_co",
+    "category": "cultivation",
+    "title": "Mắt trái soi mình",
+    "text": "Soi gương, mắt trái của {name} chợt thấy trong người mình có một dòng sáng mờ chảy dọc sống lưng, như con suối nhỏ còn bị đá chặn.",
+    "tags": [
+      "rare"
+    ],
+    "conditions": {
+      "age": {
+        "min": 12
+      },
+      "root": {
+        "innate": true
+      },
+      "goldenFinger": {
+        "id": ["nhan_thau_co_duyen"],
+        "minLevel": 1
+      }
+    },
+    "weight": 2,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhìn cho kỹ",
+        "result": {
+          "text": "Dòng sáng có màu, có tiếng. Ngươi không biết gọi nó là gì, chỉ biết nó là của mình.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Nhắm mắt lại, sợ tốn thọ",
+        "result": {
+          "text": "Ngươi úp gương xuống. Dòng sáng vẫn chảy, có thấy hay không cũng vậy.",
+          "effects": {
+            "stat.happiness": 1,
+            "stat.health": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "dau_hieu_mat_trai_khong",
+    "category": "cultivation",
+    "title": "Mắt trái soi mình",
+    "text": "Soi gương, mắt trái của {name} nhìn khắp người: kinh mạch trơn như ống tre, không một tia sáng. Người khác có hay không thì chưa biết, chứ mình thì chắc là không.",
+    "tags": [
+      "funny"
+    ],
+    "conditions": {
+      "age": {
+        "min": 12
+      },
+      "root": {
+        "innate": false
+      },
+      "goldenFinger": {
+        "id": ["nhan_thau_co_duyen"],
+        "minLevel": 1
+      }
+    },
+    "weight": 2,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Thở dài, đi ăn cơm",
+        "result": {
+          "text": "Cơm vẫn ngon. Làm người phàm cũng có cái lợi: không ai bắt ngồi thiền.",
+          "effects": {
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Thề sẽ tìm kỳ ngộ mở kinh mạch",
+        "result": {
+          "text": "Lời thề nghe rất hay. Mắt trái nháy một cái như cười.",
+          "effects": {
+            "stat.daoHeart": 3,
+            "stat.happiness": -1
+          }
+        }
+      }
+    ]
+  }
+]

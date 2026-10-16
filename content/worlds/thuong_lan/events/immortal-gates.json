@@ -1,0 +1,50 @@
+[
+  {
+    "id": "the_gia_thu_linh",
+    "category": "cultivation",
+    "title": "Tộc quy thử linh",
+    "text": "Theo tộc quy, con cháu đủ sáu tuổi phải vào từ đường đặt tay lên Thử Linh Bàn trước bài vị tổ tiên. Trưởng lão ngồi trên cao, mắt nhắm mà không ngủ. Tới lượt {name}.",
+    "tags": [],
+    "weight": 0,
+    "choices": [
+      { "text": "Lạy ba lạy rồi đặt tay", "result": { "text": "Thử Linh Bàn kêu một tiếng trong. Trưởng lão mở một mắt.", "effects": { "testRoot": true, "stat.daoHeart": 1 } } },
+      { "text": "Đặt tay trước, lạy sau", "result": { "text": "Trưởng lão ho một tiếng. Thử Linh Bàn vẫn làm việc của nó.", "effects": { "testRoot": true, "stat.charm": -1, "stat.happiness": 1 } } }
+    ]
+  },
+  {
+    "id": "cung_dinh_thu_linh",
+    "category": "cultivation",
+    "title": "Quốc sư thử linh",
+    "text": "Triều đình có một vị quốc sư không bao giờ già. Con nhà quan đến tuổi được đưa vào cung một lần, nói là chúc thọ quốc sư, thật ra là để người nhìn. Năm nay tới {name}.",
+    "tags": ["rare"],
+    "weight": 0,
+    "choices": [
+      { "text": "Cúi đầu dâng trà", "result": { "text": "Quốc sư nhận trà, ngón tay chạm khẽ cổ tay ngươi. \"Ừm.\" Chỉ một tiếng ấy.", "effects": { "testRoot": true, "stat.charm": 1 } } },
+      { "text": "Ngẩng lên nhìn thẳng quốc sư", "result": { "text": "Thị vệ toan quát, quốc sư phất tay, kéo ngươi lại gần nhìn kỹ.", "effects": { "testRoot": true, "stat.daoHeart": 2, "stat.happiness": -1 } } }
+    ]
+  },
+  {
+    "id": "tien_nhan_de_mat",
+    "category": "cultivation",
+    "title": "Lão đạo ven đường",
+    "text": "Một lão đạo rách rưới xin nước uống ở đầu ngõ. Uống xong, lão không đi mà nhìn {name} chằm chằm: \"Đưa tay đây, lão xem cho một quẻ, không lấy tiền.\"",
+    "tags": ["rare"],
+    "weight": 0,
+    "choices": [
+      { "text": "Chìa tay ra", "result": { "text": "Lão bóp cổ tay ngươi, một luồng mát lạnh chạy lên vai. Lão lẩm bẩm gì đó, mắt sáng lên hoặc tối đi, khó mà đoán.", "effects": { "testRoot": true, "stat.luck": 1 } } },
+      { "text": "Không tin, đuổi đi", "result": { "text": "Lão cười khà khà: \"Duyên tới không đón, duyên đi khỏi tiễn.\" Rồi lão biến mất sau khúc quanh, nhanh hơn người thường đi nhiều.", "effects": { "stat.happiness": -2, "stat.intellect": 1 } } }
+    ]
+  },
+  {
+    "id": "vo_gia_gap_tu_si",
+    "category": "mortal",
+    "title": "Kiếm khách không đổ mồ hôi",
+    "text": "Trên đường áp tiêu, {name} gặp một kiếm khách đứng giữa mười tên cướp, áo không dính bụi. Đánh xong, người đó quay lại nhìn ngươi: \"Võ công khá. Đưa tay đây, để ta xem ngươi có đi xa hơn được không.\"",
+    "tags": ["rare"],
+    "weight": 0,
+    "choices": [
+      { "text": "Chắp tay, đưa cổ tay ra", "result": { "text": "Một luồng khí lạnh chạy khắp kinh mạch, đi qua những chỗ chân khí võ đạo chưa từng tới.", "effects": { "testRoot": true, "stat.daoHeart": 2 } } },
+      { "text": "Rút đao: muốn xem thì đánh trước", "result": { "text": "Ngươi chưa kịp thấy người ta rút kiếm thì đao đã gãy. Kiếm khách nắm cổ tay ngươi, xem xong mới buông.", "effects": { "testRoot": true, "stat.health": -3, "stat.physique": 1 } } }
+    ]
+  }
+]

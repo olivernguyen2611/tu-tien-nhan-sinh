@@ -8,6 +8,119 @@
 
 ## [Chưa phát hành]
 
+### 9.R9: Nhân quả xuyên kiếp (2026-10-16)
+- Hết một kiếp, những mối ràng buộc nặng nhất (đạo lữ, người mang ơn, người mang oán, tử địch; tối đa 4 mỗi kiếp, 8 tất cả) được ghi vào dữ liệu chung của trình duyệt và giữ qua 3 kiếp. Kiếp có dùng Developer Mode và thử thách tuần không ghi.
+- Kiếp sau, mỗi năm có xác suất một cố nhân quay lại thành người mới gặp, mang dấu vết kiếp trước: đạo lữ thấy quen thân, người mang ơn sẵn ân, kẻ thù sẵn oán (sổ ân oán sau đó chạy như thường: báo ân, báo thù). Mối càng nặng, kiếp càng gần thì càng sớm gặp. Đạo lữ kiếp trước chỉ tái ngộ khi đã đủ 18 tuổi.
+- 7 sự kiện "cố nhân tái ngộ" (`events/reunion.json`), chữ mới `{pastName}` (tên cố nhân kiếp trước) và `{pastSelf}` (tên ngươi kiếp trước). Thẻ Thông tin NPC thêm dòng **Tiền duyên** khi đã thân thiết, hoặc khi có Kim Thủ Chỉ Nhân quả bộ (bộ này còn tăng 5% cơ hội cố nhân tìm tới).
+- Developer Mode: nút "Cố nhân: Đạo lữ / Ân nhân / Oán / Kẻ thù".
+- Test: `tests/karma-ledger.test.ts`.
+
+### 9.R8: Sổ luân hồi (2026-10-15)
+- Thiên Thư thêm 3 tab: **Các kiếp** (mỗi kiếp: tên, tuổi, cảnh giới, lối sống, kết cục, điểm luân hồi; kèm thống kê tổng: số kiếp, thọ cao nhất, tuổi bình quân, tổng điểm), **Kết cục** (đã thấy / chưa thấy, chưa thấy hiện "???"), **Bản đồ** (đại vực đã đặt chân qua mọi kiếp).
+- `content/endings.json`: 17 kết cục, xét theo thứ tự, cái đầu tiên khớp là kết cục của kiếp (dùng cùng điều kiện với thành tựu); "Một đời bình thường" là kết cục dự phòng.
+- `src/systems/chronicle.ts` (thuần) + `chronicle` trong dữ liệu chung của trình duyệt; ghi lúc chết, kiếp có dùng Developer Mode không được ghi. Giữ 100 kiếp gần nhất.
+- Test: `tests/chronicle.test.ts`.
+
+### 9.R7f: danh nhân, phường thị bổ sung (2026-10-15)
+- `figures.json`: 25 danh nhân của Thương Lan (vua chúa, đại năng trấn giữ, chưởng môn, ma đầu, thương nhân). Bản đồ hiện họ dưới vùng đã đặt chân tới.
+- Ba phường thị mới (tổng 15): Chợ muối Xích Sa (Vô Chủ, trả bạc), Ngư thị Long Tích (Đông Hải), Thư các Đại Diễn (Trung Châu, bí tịch).
+
+### 9.R7e: sự kiện thiên hạ (2026-10-15)
+- `world-events.json`: 30 sự kiện thiên hạ chạy theo pha (báo trước, diễn ra, hậu quả): Tiên Ma đại chiến, bí cảnh Thái Cổ, long cung Đông Hải, băng cung Bắc Minh, đấu giá Kim Thiềm, thú triều, Đại Ung đổi ngôi, chiến tranh với Xích Sa, thiên kiêu đại hội, điềm phi thăng (chừa chỗ cho thượng giới), ôn dịch, đại hạn, ma đầu xuất thế…
+- Mỗi lúc có nhiều nhất một sự kiện; không có thì mỗi năm có `balance.worldEvents.startChance` (12%) bắt đầu một cái, theo luồng RNG riêng (không làm lệch seed cũ). Mỗi pha ghi một dòng tin đồn vào nhật ký, đổi trọng số chủ đề sự kiện và giá phường thị ở những vùng chịu ảnh hưởng.
+- Điều kiện sự kiện mới `worldEvent` (id, pha). 10 sự kiện đi kèm (`events/world-events.json`): ra tiền tuyến, vào bí cảnh, đấu giá, chặn thú triều, phò hoàng tử, thiên kiêu luận võ, dịch bệnh, mưa linh khí, lệnh trưng binh.
+- Bản đồ ghi sự kiện thiên hạ đang diễn ra. Developer mode: chọn sự kiện để bắt đầu hoặc dừng. Con cháu nối dõi sống tiếp trong cùng thời cuộc.
+- Test `cultivation.test.ts`: hàm cho năm trôi giờ đánh hết trận đấu do sự kiện mở ra (trước đó treo vô hạn khi gặp sự kiện có trận đấu).
+
+### 9.R7d: 38 tông môn tu tiên theo vùng (2026-10-15)
+- 32 tông môn mới, chia đủ tám đại vực (mỗi vùng ít nhất 3 tông môn hoặc thế lực), mỗi tông có tôn chỉ, truyền thống, tuyệt kỹ, giai thoại, nhân vật, công pháp, hiệu ứng, bổng lộc; ma tông trừ nghiệp mỗi năm và đổi danh tiếng khi gia nhập.
+- Tông môn có thêm `region`, `tier` (đại, trung, tiểu), `allies`; sáu tông cũ đi chiêu mộ khắp nơi (`roaming`), các tông còn lại chỉ nhận người **tự tìm tới vùng của họ**.
+- Bảng Tông môn chỉ hiện các tông bái nhập được ở chỗ đang đứng; tông các vùng khác gom trong mục gập "Tông môn các vùng khác".
+- Validate kiểm vùng, đồng minh, đối thủ của tông môn.
+
+### 9.R7c: phàm quốc, thế gia, chủng tộc (2026-10-15)
+- Ba file dữ liệu mới của Thương Lan: `nations.json` (5 phàm quốc: Đại Ung, Cảnh quốc, Lạc Hà, Bạch Lộc, Xích Sa), `clans.json` (12 tu tiên thế gia, mỗi nhà có nghề, dòng đích và dòng thứ), `races.json` (6 tộc: nhân, yêu, giao, linh, quỷ, thạch).
+- Bản đồ: vùng đã đặt chân tới hiện phàm quốc, thế gia, chủng tộc và thế lực giang hồ ở đó.
+- Validate kiểm vùng của từng mục và trùng id. Tên cho các vua ghi thêm vào kinh thánh thế giới.
+
+### 9.R7b: tám đại vực, sự kiện riêng mỗi vùng (2026-10-15)
+- Hai đại vực mới: **Huyết Uyên ma vực** (từ Trúc Cơ, linh khí 1,3; chuyện ma đạo gấp ba, tâm ma dễ sinh −15%; Uyên chủ Xích Phát Ma Quân) và **Thái Cổ chiến trường** (từ Kim Đan, linh khí 1,6; bí cảnh, kỳ vật nhiều nhất, chiến lợi phẩm +15%, khó chạy thoát −10%; Thủ Mộ Nhân).
+- 18 sự kiện vùng mới (`events/regions-2.json`): 3 cho mỗi vùng mới, 2 thêm cho mỗi vùng cũ, nên vùng nào cũng có ít nhất 3 sự kiện riêng.
+- Hai phường thị mới: Chợ đêm Huyết Nguyệt (Huyết Uyên, đan ma đạo rẻ) và Phá Cấm Phường (Thái Cổ, pháp bảo cổ, vật liệu).
+- Sổ tri thức thêm 2 mục cho hai vùng mới (mở vùng trên bản đồ).
+- Hộ vệ Trung Nguyên đổi tên Lạc Vân Tử (tránh gần tên trong tác phẩm khác).
+
+### 9.R7a: hàng rào tên cấm, kinh thánh thế giới (2026-10-15)
+- `docs/design/ten-cam.json`: danh sách tên riêng nổi bật của các tác phẩm có bản quyền (không đưa vào game). `npm run validate` báo lỗi khi nội dung dùng đúng tên đó (mọi kiểu hoa thường), dùng tên chỉ khác dấu thanh viết hoa như tên riêng, hoặc khi kho tên có thể ghép ra một tên trong danh sách. Nội dung hiện tại sạch.
+- `docs/design/the-gioi-thuong-lan.md`: lịch sử bốn thời kỳ, tám đại vực (thêm Huyết Uyên ma vực và Thái Cổ chiến trường), năm phàm quốc, mười hai thế gia, sáu tộc, khung ~40 tông môn, sự kiện thiên hạ, quy tắc đặt tên và thứ tự nhập dữ liệu 9.R7b–e.
+
+### 9.R6b: hồ sơ NPC đầy đủ trong chế độ thử nghiệm (2026-10-15)
+- Bảng dev "Người có quan hệ" có mục **Hồ sơ đầy đủ**: mọi thứ lưu về người đó, cả phần ẩn (bản chất chưa lộ, ân oán, thù truyền đời, đồ đệ, đồng môn, khí vận chi tử, lần tương tác; người thân thì linh căn, thể chất, ngộ tính, công pháp được truyền).
+- Chỉnh tự do: đặt thẳng một con số (thiện cảm, ân, oán, tư chất, tuổi, thọ nguyên, tiến độ; người thân có ngộ tính), đổi tính nết/bản chất/chí hướng, lộ hay giấu bản chất, truyền hoặc bỏ công pháp. Sinh/tử, cảnh giới, linh căn, xóa khỏi thế giới giữ như cũ.
+- Chưa làm: linh căn thật, khí vận, kim thủ chỉ riêng cho NPC (mô hình NPC chưa có, sẽ thêm khi NPC chủ động ở 9.6 cần tới).
+
+### 9.R6a: thẻ thông tin NPC, công tắc chế độ thử nghiệm (2026-10-15)
+- Mỗi người quen có mục **Thông tin** (gập/mở), hiện theo tầng thiện cảm (`balance.npcs.infoTiers` 30/60/85): Xa lạ (thân phận) → Quen biết (tính nết, thiện cảm) → Thân thiết (bản chất, chí hướng, ân oán, công pháp) → Tri kỷ (thọ nguyên, tư chất, bí mật như mối thù truyền đời). Bản chất giờ cũng lộ khi đã thân thiết.
+- Cảnh giới cao hơn mình quá `infoSeeAbove` (1) bậc thì **"Không nhìn thấu"**; thần thức (`divineSense`) đọc thêm một bậc, Đọc tâm (`readMind`) thấy hết mọi tầng. Tên tầng và câu chữ trong `npc-traits.json` (mục `info`).
+- **Cài đặt** có công tắc **Chế độ thử nghiệm**, bật phải qua hộp xác nhận; chạm ấn 仙 20 lần cũng hỏi lại. Đời nào chơi khi bật bị gắn `devUsed` (con cháu nối dõi giữ dấu): không tính thành tựu, thử thách tuần, điểm Luân Hồi, Thiên Thư và Sổ tri thức; màn hình qua đời ghi rõ.
+
+### 9.R5b: kiếp đầu là phàm nhân, mở khóa dần (2026-10-15)
+- Cửa vào tiên giới mở theo những gì đời này **sinh ra đã biết** (Sổ tri thức các kiếp trước). Điều đời này tự tìm ra chỉ mở cửa cho các kiếp sau.
+  - Cổng hội thu đồ, triều đình, cơ duyên xảo hợp đóng hẳn khi chưa biết (`immortalGates.closedUnknown`); cơ duyên phàm gian còn ×0,3.
+  - Hạ viện Vô Ưu và việc xin vào chùa khi không linh căn cần đã biết **Phật duyên** (mục tri thức mới, nghe được ở hội hương hỏa).
+  - Xuất thân "Hậu duệ gia tộc tu tiên" và 4 thiên phú luân hồi về tu tiên hiện "???" tới khi biết về linh căn; trời định không bao giờ cho xuất thân chưa biết.
+- Giao diện: chưa biết gì về tu tiên thì thẻ Tu luyện đọc là **Rèn luyện**, thẻ Tông môn đọc là **Giang hồ** và không liệt kê tiên môn; thuật ngữ như linh căn, linh khí, tu vi chưa gạch chân chú giải cho tới khi biết. Đã ở trong (có linh căn, đã vào tông, đang tu) thì mở như cũ.
+- Save cũ: trình duyệt đã chơi trước khi có Sổ tri thức được ghi sẵn 5 mục cơ bản (lời đồn tiên nhân, tiên môn thu đồ, linh căn, dẫn khí nhập thể, chính đạo tông môn) để không bị khóa oan.
+- Đo 200 đời (bot player): kiếp đầu chạm Luyện Khí 59,5% → **7%** (phần còn lại chủ yếu là kỳ ngộ tàn hồn trong nhẫn); người chơi đã biết hết vẫn 74,5%. Mục tiêu ≤ 3% của kế hoạch chưa đạt hẳn; có thể siết kỳ ngộ sau nếu cần.
+
+### 9.R4d: Tiên Võ song tu, dọn theo và save cũ (2026-10-15)
+- Võ giả bắt đầu tu tiên vào **tầng khởi đầu theo bậc võ đạo** (`balance.martial.conversion`): Tuyệt đỉnh tầng 2, Hóa cảnh tầng 4, Tam hoa tầng 7, Ngũ khí **thẳng Trúc Cơ sơ kỳ** (đạo cơ trung phẩm). Nhật ký có dòng riêng. Thân thể đã định hình bởi võ đạo nên tu chậm hơn ×0,9 (trừ linh căn Ngũ khí). Sức mạnh vẫn lấy phần lớn hơn giữa tu tiên và võ đạo (9.V1).
+- Save cũ: đời chưa thử linh căn bỏ lịch hẹn thử linh căn đại trà còn treo; cổng tiên duyên lo phần còn lại. Đời đã thử giữ nguyên.
+- Đo `simulate --first-life` (200 đời, bot player): vẫn 59,5% chạm Luyện Khí, chủ yếu nhờ các cửa vốn có (Phật duyên, quỷ tu, kỳ vật, xuất thân thế gia) mà bot đi rất chăm. Mục tiêu "kiếp đầu ≤ 3%" để 9.R5b siết (đóng cổng a–c và giảm các cửa khác ở kiếp đầu).
+
+### 9.R4c: công pháp không còn tặng mặc định (2026-10-15)
+- Thử ra linh căn không còn kèm Dẫn Khí Quyết. Có linh căn mà chưa có công pháp thì vẫn là phàm nhân, nhật ký nói rõ cần công pháp nhập môn và tìm ở đâu; học được công pháp là vào Luyện Khí.
+- Nguồn công pháp nhập môn: **thế gia truyền thừa** (hậu duệ gia tộc tu tiên, và con của người tu khi chơi tiếp bằng con cháu), **tông môn ban** (vào tông là được chấp sự đưa Dẫn Khí Quyết), **mua** (Chợ phiên huyện 60 lượng bạc, Kim Thiềm 3 linh thạch), cùng các nguồn cũ (kỳ ngộ, di tích, cao nhân võ đạo, kim thủ chỉ).
+- Kỳ vật mở linh căn cho người không có giờ chỉ cho linh căn; vào Luyện Khí khi có công pháp. Ngũ khí Tiên Võ đồng tu nhận Cửu Chuyển Kim Cốt Quyết rồi mới nhập Luyện Khí.
+- Bot mô phỏng mua công pháp ở phường thị nó vào được thay vì tự nhận. 200 đời (player): Luyện Khí 74,5%, Trúc Cơ 40,5%, Kim Đan 9,5%.
+
+### 9.R4b: năm cổng tiên duyên, bỏ thử linh căn đại trà (2026-10-15)
+- Không còn hẹn mọi đứa trẻ thử linh căn lúc 6–12 tuổi (`world.json` bỏ `rootTestEvent`). Thay bằng **năm cổng tiên duyên** (`content/worlds/thuong_lan/immortal-gates.json`, xác suất ở `balance.immortalGates`): mỗi năm cổng nào đủ điều kiện thì có xác suất mở, mang tới sự kiện thử linh căn của nó; mỗi cổng mở nhiều nhất một lần mỗi đời.
+  - a. **Tiên môn mở hội thu đồ** (8–16 tuổi): sự kiện tiên sư áo xám cũ.
+  - b. **Tu sĩ tọa trấn triều đình** (con nhà quan, 8–20 tuổi): quốc sư thử linh.
+  - c. **Tu tiên thế gia** (hậu duệ gia tộc tu tiên, 6–9 tuổi): gần như chắc chắn, theo tộc quy.
+  - d. **Cơ duyên xảo hợp** (6–40 tuổi, khí vận, ngộ tính hoặc căn cốt cao): lão đạo ven đường.
+  - e. **Cơ duyên phàm gian** (võ giả từ Tuyệt đỉnh): kiếm khách tu sĩ xem cổ tay.
+- Cổng a, d, e cần mục tri thức tương ứng trong Sổ tri thức; chưa biết thì xác suất chỉ còn 20% (kiếp đầu vẫn có thể gặp may). Khí vận cao thì dễ gặp hơn.
+- Sự kiện phàm nhân trước đây cần "đã thử, không có linh căn" (tiên nhân bay ngang, hội hương hỏa, hạ viện Vô Ưu, kỳ vật mở linh căn) nay đến được với người chưa ai thử. Tiên môn tuyển người trượt giờ là lần thử của người không có linh căn.
+- `npm run simulate` mặc định coi như người chơi đã biết hết Sổ tri thức; thêm `--first-life` để chơi kiếp đầu. 200 đời (bot player): vào Luyện Khí 89% → 76% (kiếp đầu 61,5%, phần lớn nhờ kỳ vật và các đường khác), Kim Đan 15% → 7%, tuổi thọ trung bình 124 → 82. Đây là thay đổi lớn về cân bằng theo đúng kế hoạch (ít người vào tiên đạo hơn); 9.R5b sẽ siết kiếp đầu thêm.
+- Mô tả Ngũ khí triều nguyên sửa lại cho khớp 9.V2 (tận cùng võ đạo, không tự vào Luyện Khí). Mục tiêu và bảng Tu luyện không còn hứa "tiên sư sẽ ghé". Test mới `tests/immortal-gates.test.ts`.
+
+### 9.R4a: linh căn ẩn (2026-10-15)
+- Linh căn giờ định sẵn **lúc sinh** theo seed và khí vận (luồng RNG riêng `seed:root`), dù có ai thử hay không. Thử linh căn chỉ là nhìn thấy nó; thử không còn tiêu RNG của đời.
+- 6 sự kiện dấu hiệu mới (`root-hints.json`): trẻ có linh căn đôi khi thấy gió ấm, bà đỡ nhận xét, mơ sao rơi, cây khô nhú lộc; Kim Thủ Chỉ Nhãn thấu cơ duyên soi được mình có hay không có linh căn. Điều kiện sự kiện mới `root.innate`.
+- Developer mode hiện linh căn ẩn bên cạnh linh căn.
+- Chưa bỏ thử linh căn đại trà: phần đó đi cùng bốn cổng tiên duyên ở 9.R4b để game không có lúc không ai vào được tu tiên.
+
+### 9.R5a: Sổ tri thức (2026-10-15)
+- Dữ liệu mới `content/worlds/thuong_lan/knowledge.json`: 29 mục tri thức chia 7 nhóm (tiên đạo, võ đạo, thế giới, thế lực, nhân vật, công pháp và bảo vật, bí cảnh). Mỗi mục có nguồn khám phá (sự kiện đã gặp, cờ, vật phẩm đang giữ, cảnh giới, bậc võ đạo, tông môn, vùng đang ở) và thứ nó mở khóa (cổng tiên duyên, thẻ giao diện, thuật ngữ, vùng, xuất thân; 9.R5b sẽ đọc).
+- Mỗi năm, nguồn nào đang đúng thì mục đó có xác suất được ghi vào sổ (`balance.knowledge`): nguồn chắc chắn (vd. bước vào Luyện Khí) luôn ghi; nguồn may rủi tối đa 1 mục mỗi năm, 3 mục mỗi kiếp. Dòng nhật ký "Ghi vào Sổ tri thức: …". RNG riêng theo seed nên không xê dịch phần còn lại của đời.
+- Tri thức giữ qua mọi kiếp (meta Thiên Thư) và truyền cho hậu duệ; kiếp mới sinh ra đã biết những gì kiếp trước biết. Thiên Thư có thẻ **Tri thức** mới, mục chưa biết hiện "???".
+- `npm run validate` kiểm tra nguồn và thứ được mở khóa có thật. Test mới `tests/knowledge.test.ts`.
+- Hiện game vẫn thử linh căn đại trà nên kiếp đầu gần như luôn biết "Linh căn", "Tiên môn thu đồ"; khi 9.R4 bỏ thử đại trà thì kiếp đầu còn khoảng 1–3 mục như kế hoạch.
+
+### 9.V2: tiểu cảnh võ đạo, tẩu hỏa, Ngũ khí là tận cùng (2026-10-15)
+- Mỗi bậc võ đạo có ba tiểu cảnh **sơ nhập / tiểu thành / đại thành**, lên theo số năm giữ bậc (`balance.martial.subStageYears`); mỗi tiểu cảnh cộng `combat.stagePct` sức mạnh. Bảng võ đạo hiện "Hóa cảnh tiểu thành". Save cũ bắt đầu ở sơ nhập.
+- Cưỡng ép xung quan Tuyệt đỉnh và Hóa cảnh quá số năm thường lệ có thể **tẩu hỏa** (mất sức khỏe); ở Hóa cảnh có chút khả năng rớt một bậc (`steps[].deviation`).
+- Theo chủ dự án (15/10 16:31): Ngũ khí triều nguyên là **tận cùng võ đạo**, không còn tự vào Luyện Khí. Muốn Tiên Võ đồng tu phải gặp tiên duyên: sự kiện hiếm `vd_tien_vo_dong_tu` (cần Ngũ khí + đã nhận kinh của cao nhân), chọn đi thì nhận linh căn Ngũ khí, Tiên Võ thể và Luyện Khí 1 (hiệu ứng mới `martialAscend`); chọn ở lại thì làm người phàm mạnh nhất.
+- Thọ nguyên Tam hoa giảm từ +30 xuống +25. Test mới `tests/martial-v2.test.ts`.
+
+### 9.V1: thước sức mạnh võ đạo mới (2026-10-15)
+- Theo chủ dự án (15/10 16:40): bậc cao chênh nhau ít hơn, Ngũ khí chỉ ngang Trúc Cơ hậu kỳ, viên mãn. `balance.martial.combatPower` từ 1 / 1,5 / 2 / 3 / 5 / 7 / 9 thành **1,5 / 2 / 2,8 / 4 / 7 / 18 / 40** (Tam lưu → Ngũ khí).
+- Tỉ lệ thắng trận theo công thức (Căn cốt 50): Hóa cảnh với Luyện Khí tầng 1 khoảng 31%; Tam hoa với Luyện Khí tầng 9 50%, với Trúc Cơ sơ kỳ 14%; Ngũ khí với Trúc Cơ hậu kỳ 40%, viên mãn 36%, Kim Đan sơ kỳ 3%.
+- Võ giả chạy nhanh theo cảnh giới tương đương (`speedEquivMul` 1,5): Hóa cảnh chạy như Luyện Khí, Ngũ khí như Trúc Cơ. Sức mạnh võ đạo được giữ cả khi đã nhập tu tiên (lấy cái lớn hơn), nên Tiên Võ đồng tu không làm người yếu đi.
+- `npm run simulate -- --duel` in bảng tỉ lệ thắng; test `tests/duel.test.ts` khóa các mốc trên.
+
 ### 9.R3d: đo Kim Thủ Chỉ bằng mô phỏng (2026-10-15)
 - `npm run simulate -- --fingers all --count 200 --profile player`: mỗi kim thủ chỉ chạy cùng seed với và không có nó; bot dùng mọi hành động đang mở (nên cái giá cũng được trả). Báo độ lệch tu luyện, thọ, linh thạch, chết trận, tâm ma, và so với mục tiêu theo bậc `balance.goldenFinger.impactTarget` (phàm +10%, hiếm +25%, cực hiếm +50%, nghịch thiên +100% trên trục mạnh nhất): yếu (dưới nửa), vừa, mạnh (trên gấp đôi).
 - Chỉnh theo số đo 200 đời: Bất diệt chiến hồn (thọ −44%: luyện tốn 3 Sức khỏe thay 6, cướp bóc ×1,2 thay ×1,4, thêm giảm thương 10%), Hỗn độn châu (thọ −42%: bỏ hao Sức khỏe mỗi năm, luyện tốn 1 đạo tâm thay 3, hỏng −10 Sức khỏe thay −15, thiên kiếp nặng thêm 10% thay 25%, thêm tốc tu 15% từ đầu), Ngộ đạo thạch bia (tâm ma +46%: hồi 2 năm, không hao đạo tâm khi ngộ được, ngộ hỏng mới hao 2 đạo tâm và +2 tâm ma), Nhãn thấu cơ duyên (thọ −24%: soi 4 năm một lần), Bình nhỏ thần bí và Mảnh vườn thần bí (bậc Phàm mà mạnh quá: bớt thọ, tốc tu, linh thạch mỗi năm; uống linh dịch 3 năm một lần, +4 Sức khỏe thay +8).

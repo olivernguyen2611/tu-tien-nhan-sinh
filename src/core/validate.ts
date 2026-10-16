@@ -3,7 +3,7 @@
 // and by the in-game loader.
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -59,6 +59,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'golden-fingers.json') return GoldenFingerFileSchema;
     if (rest === 'trait-combos.json') return TraitComboFileSchema;
     if (rest === 'codex.json') return CodexFileSchema;
+    if (rest === 'endings.json') return EndingFileSchema;
     if (rest === 'achievements.json') return AchievementFileSchema;
     return null;
   }
@@ -71,13 +72,20 @@ export function schemaFor(path: string): ZodTypeAny | null {
   if (rest === 'markets.json') return MarketFileSchema;
   if (rest === 'regions.json') return RegionFileSchema;
   if (rest === 'jianghu-factions.json') return JianghuFactionFileSchema;
+  if (rest === 'nations.json') return NationFileSchema;
+  if (rest === 'figures.json') return FigureFileSchema;
+  if (rest === 'world-events.json') return WorldEventFileSchema;
+  if (rest === 'clans.json') return WorldClanFileSchema;
+  if (rest === 'races.json') return RaceFileSchema;
+  if (rest === 'knowledge.json') return KnowledgeFileSchema;
+  if (rest === 'immortal-gates.json') return ImmortalGateFileSchema;
   if (rest === 'challenges.json') return ChallengeFileSchema;
   if (/^events\/[^/]+\.json$/.test(rest)) return EventFileSchema;
   return null;
 }
 
 /** Flags the engine sets itself (not via events). */
-export const ENGINE_FLAGS = ['no_aging_charm', 'no_parents', 'no_father', 'no_mother', 'mua_hang_gia', 'vo_dao_nhap_tien'];
+export const ENGINE_FLAGS = ['no_aging_charm', 'no_parents', 'no_father', 'no_mother', 'mua_hang_gia', 'vo_dao_nhap_tien', 'cao_nhan_vo_dao'];
 /** Words naming a parent in event text, and the flag the engine sets once that parent is gone. */
 // "cha ta", "mẹ hắn", "yêu thú mẹ"… are someone else's parents (task 3.9), not the player's.
 const PARENT_WORDS = [
@@ -99,6 +107,15 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   let martialFile: MartialFile | null = null;
   const regionFiles: { file: string; regions: Region[] }[] = [];
   const factionFiles: { file: string; factions: JianghuFaction[] }[] = [];
+  /** 9.R7c: nations, clans and races name the regions they live in. */
+  const loreFiles: { file: string; items: { id: string; region?: string; regions?: string[] }[] }[] = [];
+  const worldEventFiles: { file: string; events: WorldEvent[] }[] = [];
+  const figureFiles: { file: string; figures: Figure[] }[] = [];
+  const knowledgeFiles: { file: string; entries: KnowledgeEntry[] }[] = [];
+  const gateFiles: { file: string; gates: ImmortalGate[] }[] = [];
+  /** 9.R5b: things that wait for a Sổ tri thức entry. */
+  const knowledgeRefs: { file: string; what: string; id: string }[] = [];
+  let glossaryIds: string[] | null = null;
   const marketFiles: { file: string; markets: Market[] }[] = [];
   let chosenIds: string[] | null = null;
   let fingerIds: string[] | null = null;
@@ -166,6 +183,9 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       problems.push(...duplicates(file, 'tổ hợp ẩn', combos));
       comboTraits.push(...combos.map((c) => ({ file, combo: c.id, traits: c.traits })));
     }
+    if (schema === RebirthTalentFileSchema) {
+      for (const t of (parsed.data as { talents: { id: string; requiresKnowledge?: string }[] }).talents) if (t.requiresKnowledge) knowledgeRefs.push({ file, what: `thiên phú "${t.id}"`, id: t.requiresKnowledge });
+    }
     if (schema === RebirthTalentFileSchema) problems.push(...duplicates(file, 'thiên phú luân hồi', (parsed.data as { talents: { id: string }[] }).talents));
     if (schema === StatExtremesFileSchema) {
       const ids = new Set<string>();
@@ -183,6 +203,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     }
     if (schema === WorldSchema && (parsed.data as World).rootTestEvent) rootTests.push({ file, event: (parsed.data as World).rootTestEvent! });
     if (schema === OriginFileSchema) {
+      for (const o of parsed.data as Origin[]) if (o.requiresKnowledge) knowledgeRefs.push({ file, what: `xuất thân "${o.id}"`, id: o.requiresKnowledge });
       const seenOrigin = new Set<string>();
       for (const o of parsed.data as Origin[]) {
         if (seenOrigin.has(o.id)) problems.push({ file, level: 'error', message: `trùng id xuất thân "${o.id}"` });
@@ -241,6 +262,12 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === MartialFileSchema) martialFile = parsed.data as MartialFile;
     if (schema === RegionFileSchema) regionFiles.push({ file, regions: parsed.data as Region[] });
     if (schema === JianghuFactionFileSchema) factionFiles.push({ file, factions: parsed.data as JianghuFaction[] });
+    if (schema === WorldEventFileSchema) { worldEventFiles.push({ file, events: parsed.data as WorldEvent[] }); loreFiles.push({ file, items: parsed.data as WorldEvent[] }); }
+    if (schema === FigureFileSchema) figureFiles.push({ file, figures: parsed.data as Figure[] });
+    if (schema === NationFileSchema || schema === FigureFileSchema || schema === WorldClanFileSchema || schema === RaceFileSchema) loreFiles.push({ file, items: parsed.data as { id: string; region?: string; regions?: string[] }[] });
+    if (schema === KnowledgeFileSchema) knowledgeFiles.push({ file, entries: parsed.data as KnowledgeEntry[] });
+    if (schema === ImmortalGateFileSchema) gateFiles.push({ file, gates: parsed.data as ImmortalGate[] });
+    if (schema === GlossarySchema) glossaryIds = (parsed.data as { id: string }[]).map((x) => x.id);
     if (schema === MarketFileSchema) {
       problems.push(...duplicates(file, 'phường thị', parsed.data as Market[]));
       marketFiles.push({ file, markets: parsed.data as Market[] });
@@ -350,6 +377,45 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       for (const o of [...f.allies, ...f.rivals]) if (!ids.has(o) || o === f.id) problems.push({ file, level: 'error', message: `thế lực "${f.id}" nhắc tới thế lực lạ "${o}"` });
     }
   }
+  // 9.R7e: events that wait for a sự kiện thiên hạ name one that exists.
+  const worldEventIds = new Set(worldEventFiles.flatMap((f) => f.events.map((e) => e.id)));
+  for (const { file, event } of events) {
+    for (const c of [event.conditions, ...event.choices.map((ch) => ch.requires ?? {})]) {
+      for (const w of c.worldEvent?.id ?? []) if (!worldEventIds.has(w)) problems.push({ file, level: 'error', message: `sự kiện "${event.id}" chờ sự kiện thiên hạ lạ "${w}"` });
+    }
+  }
+  // 9.R7f: famous people name real realms and sects of their world.
+  for (const { file, figures } of figureFiles) {
+    const world = file.split('/')[1];
+    const sectIds = new Set(sectFiles.filter((f) => f.file.split('/')[1] === world).flatMap((f) => f.sects.map((x) => x.id)));
+    for (const f of figures) {
+      if (f.sect && !sectIds.has(f.sect)) problems.push({ file, level: 'error', message: `nhân vật "${f.id}" thuộc tông lạ "${f.sect}"` });
+      if (parsedShared.realms && !parsedShared.realms.realms.some((r) => r.id === f.realm)) problems.push({ file, level: 'error', message: `nhân vật "${f.id}" ở cảnh giới lạ "${f.realm}"` });
+    }
+  }
+  // 9.R7d: a sect sits in a real region of its world; allies and rival are sects of the same world.
+  for (const { file, sects } of sectFiles) {
+    const world = file.split('/')[1];
+    const regionIds = new Set(regionFiles.filter((r) => r.file.split('/')[1] === world).flatMap((r) => r.regions.map((x) => x.id)));
+    const ids = new Set(sects.map((x) => x.id));
+    for (const x of sects) {
+      if (x.region && regionIds.size > 0 && !regionIds.has(x.region)) problems.push({ file, level: 'error', message: `tông môn "${x.id}" ở vùng lạ "${x.region}"` });
+      if (!x.roaming && !x.region) problems.push({ file, level: 'error', message: `tông môn "${x.id}" không đi chiêu mộ khắp nơi (roaming) nên phải có region` });
+      for (const o of [...x.allies, ...(x.identity?.rival ? [x.identity.rival.sect] : [])]) {
+        if (!ids.has(o) || o === x.id) problems.push({ file, level: 'error', message: `tông môn "${x.id}" nhắc tới tông lạ "${o}"` });
+      }
+    }
+  }
+  for (const { file, items } of loreFiles) {
+    const world = file.split('/')[1];
+    const regionIds = new Set(regionFiles.filter((r) => r.file.split('/')[1] === world).flatMap((r) => r.regions.map((x) => x.id)));
+    problems.push(...duplicates(file, 'mục', items));
+    for (const x of items) {
+      for (const r of [...(x.region ? [x.region] : []), ...(x.regions ?? [])]) {
+        if (!regionIds.has(r)) problems.push({ file, level: 'error', message: `"${x.id}" ở vùng lạ "${r}"` });
+      }
+    }
+  }
   // Task 4.8: đại vực name real realms; their hooks act while the player stays, so no one-off stat.<x>.
   const regionIdsByWorld = new Map<string, Set<string>>();
   for (const { file, regions } of regionFiles) {
@@ -439,6 +505,51 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     }
   }
 
+  // 9.R5a: Sổ tri thức sources and unlocks name real things of the same world.
+  for (const { file, entries } of knowledgeFiles) {
+    const world = splitWorldPath(file).worldId ?? '';
+    const regions = regionIdsByWorld.get(world) ?? new Set<string>();
+    const sectIds = new Set(sectFiles.filter((f) => splitWorldPath(f.file).worldId === world).flatMap((f) => f.sects.map((x) => x.id)));
+    const origins = originIdsByWorld.get(world) ?? new Set<string>();
+    problems.push(...duplicates(file, 'tri thức', entries));
+    for (const e of entries) {
+      const err = (message: string) => problems.push({ file, level: 'error', message: `tri thức "${e.id}": ${message}` });
+      for (const s of e.sources) {
+        const known: Record<string, (x: string) => boolean> = {
+          event: (x) => seen.has(x), flag: (x) => flagsSet.has(x), item: (x) => !itemIds || itemIds.includes(x),
+          realm: (x) => !realmIds || realmIds.has(x), sect: (x) => sectIds.has(x), region: (x) => regions.has(x),
+        };
+        if (s.kind === 'martial') { if (s.stage === undefined) err('nguồn "martial" cần "stage"'); continue; }
+        if (!s.id) { if (s.kind !== 'sect') err(`nguồn "${s.kind}" cần "id"`); continue; }
+        if (!known[s.kind](s.id)) err(`nguồn ${s.kind} lạ "${s.id}"`);
+      }
+      for (const u of e.unlocks) {
+        if (u.kind === 'term' && glossaryIds && !glossaryIds.includes(u.id)) err(`mở thuật ngữ lạ "${u.id}"`);
+        if (u.kind === 'region' && !regions.has(u.id)) err(`mở vùng lạ "${u.id}"`);
+        if (u.kind === 'origin' && !origins.has(u.id)) err(`mở xuất thân lạ "${u.id}"`);
+      }
+    }
+  }
+
+  // 9.R5b: what waits for knowledge names a real entry (any world: shared files have no world).
+  const allKnowledge = new Set(knowledgeFiles.flatMap((k) => k.entries.map((e) => e.id)));
+  for (const { file, event } of events) {
+    for (const k of [...(event.conditions.knowledge?.all ?? []), ...(event.conditions.knowledge?.none ?? [])]) knowledgeRefs.push({ file, what: `sự kiện "${event.id}"`, id: k });
+  }
+  for (const r of knowledgeRefs) if (!allKnowledge.has(r.id)) problems.push({ file: r.file, level: 'error', message: `${r.what} cần tri thức lạ "${r.id}"` });
+
+  // 9.R4b: a gate brings an event of its world, names a real Sổ tri thức entry, and has its chance in balance.json.
+  for (const { file, gates } of gateFiles) {
+    const world = splitWorldPath(file).worldId;
+    const entries = new Set(knowledgeFiles.filter((k) => splitWorldPath(k.file).worldId === world).flatMap((k) => k.entries.map((e) => e.id)));
+    problems.push(...duplicates(file, 'cổng tiên duyên', gates));
+    for (const g of gates) {
+      if (!events.some((e) => e.event.id === g.event && splitWorldPath(e.file).worldId === world)) problems.push({ file, level: 'error', message: `cổng "${g.id}" dẫn tới sự kiện lạ "${g.event}"` });
+      if (g.requiresKnowledge && !entries.has(g.requiresKnowledge)) problems.push({ file, level: 'error', message: `cổng "${g.id}" cần tri thức lạ "${g.requiresKnowledge}"` });
+      if (parsedShared.balance && !(g.id in (parsedShared.balance.immortalGates?.chance ?? {}))) problems.push({ file, level: 'error', message: `cổng "${g.id}" thiếu immortalGates.chance trong balance.json` });
+    }
+  }
+
   for (const { file, event } of events) {
     const where = `sự kiện "${event.id}"`;
 
@@ -518,6 +629,15 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       || event.choices.some((c) => [c.result, c.success, c.fail, c.result?.fight?.win, c.result?.fight?.lose].some((o) => o?.effects.pastSect));
     if (pastNeeded && event.conditions.pastSect?.has !== true && !event.conditions.pastSect?.status) {
       problems.push({ file, level: 'error', message: `${where}: nhắc tới tông môn đời trước nhưng thiếu conditions.pastSect (has = true hoặc status)` });
+    }
+    // 9.R9: {pastName}, {pastSelf} need a cố nhân: the reunion trigger or conditions.npc.pastLife.
+    const allText = `${event.title} ${event.text} ${event.choices.map((c) => [c.text, c.result?.text, c.success?.text, c.fail?.text, c.result?.fight?.win.text, c.result?.fight?.lose.text].join(' ')).join(' ')}`;
+    if (/\{past(Name|Self)\}/.test(allText) && event.npcTrigger !== 'reunion' && !event.conditions.npc?.pastLife) {
+      problems.push({ file, level: 'error', message: `${where}: nhắc tới {pastName}/{pastSelf} nhưng không phải npcTrigger "reunion" và thiếu conditions.npc.pastLife` });
+    }
+    // 9.R9: a reunion event names which kinds of cố nhân it is for.
+    if (event.npcTrigger === 'reunion' && !event.conditions.npc?.pastLife) {
+      problems.push({ file, level: 'error', message: `${where}: npcTrigger "reunion" cần conditions.npc.pastLife (loại cố nhân)` });
     }
 
     event.choices.forEach((choice, i) => {

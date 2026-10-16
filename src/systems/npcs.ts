@@ -134,7 +134,7 @@ export function actor(state: GameState): Npc | undefined {
   return npcById(state, state.events.npc);
 }
 
-export type NpcTrigger = 'revenge' | 'repay' | 'reveal' | 'bond';
+export type NpcTrigger = 'reunion' | 'revenge' | 'repay' | 'reveal' | 'bond';
 
 /**
  * This year's NPC-driven visit, if any: someone with a grudge comes for revenge,
@@ -148,6 +148,8 @@ export function npcCalls(state: GameState, content: Content, rng: Rng): { trigge
   for (const n of state.npcs) {
     if (!n.alive) continue;
     const nat = natureOf(content, n);
+    // 9.R9: a cố nhân from a past life is met the year they come.
+    if (n.pastLife && !n.pastLife.met) out.push({ trigger: 'reunion', id: n.id });
     if (n.grudge >= cfg.revengeAt) {
       const stronger = order.indexOf(n.realm) > order.indexOf(state.cult.realm) ? cfg.revengeStrongerMul : 1;
       if (rng.chance(Math.min(1, cfg.revengeChance * stronger * (nat?.revengeMul ?? 1)))) out.push({ trigger: 'revenge', id: n.id });
@@ -157,7 +159,7 @@ export function npcCalls(state: GameState, content: Content, rng: Rng): { trigge
     // 9.0.3: a close friend shares something with the player.
     if (n.affinity >= cfg.bondAt && n.grudge < cfg.revengeAt && rng.chance(cfg.bondChance)) out.push({ trigger: 'bond', id: n.id });
   }
-  const rank: Record<NpcTrigger, number> = { revenge: 0, reveal: 1, repay: 2, bond: 3 };
+  const rank: Record<NpcTrigger, number> = { reunion: -1, revenge: 0, reveal: 1, repay: 2, bond: 3 };
   return out.sort((a, b) => rank[a.trigger] - rank[b.trigger]);
 }
 
@@ -268,4 +270,58 @@ export function npcLabel(content: Content, n: Npc, readMind = false): { surface:
     goal: t.goals.find((x) => x.id === n.goal)?.name ?? null,
     realm: `${realm?.name ?? ''}${stageName}`,
   };
+}
+
+export interface NpcInfoRow { label: string; value: string }
+export interface NpcInfo {
+  /** 0 xa lạ · 1 quen biết · 2 thân thiết · 3 tri kỷ. */
+  tier: number;
+  tierName: string;
+  /** null when the realm is too far above the player to read. */
+  realm: string | null;
+  nature: string | null;
+  rows: NpcInfoRow[];
+}
+
+/**
+ * 9.R6a: what the player knows of an NPC. Each layer of thiện cảm (balance.npcs.infoTiers) shows more;
+ * Đọc tâm (readMind) sees everything, thần thức (divineSense) reads one realm higher.
+ */
+export function npcInfo(state: GameState, content: Content, n: Npc): NpcInfo {
+  const cfg = content.balance.npcs;
+  const tiers = cfg.infoTiers ?? [30, 60, 85];
+  const readMind = hookSum(state, content, 'readMind') > 0;
+  const tier = readMind ? 3 : tiers.filter((t) => n.affinity >= t).length;
+  const t = content.npcTraits.info;
+  const label = npcLabel(content, n, readMind || tier >= 2);
+  const list = realmList(content);
+  const idx = (id: string) => list.findIndex((r) => r.id === id);
+  const seeAbove = (cfg.infoSeeAbove ?? 1) + (hookSum(state, content, 'divineSense') > 0 ? 1 : 0);
+  const seen = readMind || n.realm === 'pham_nhan' || idx(n.realm) <= idx(state.cult.realm) + seeAbove;
+  const rows: NpcInfoRow[] = [];
+  if (!seen) rows.push({ label: 'Tu vi', value: t?.unseen ?? '?' });
+  rows.push({ label: 'Thân phận', value: n.role });
+  if (tier >= 1) {
+    if (label.surface) rows.push({ label: 'Tính nết', value: label.surface });
+    rows.push({ label: 'Thiện cảm', value: String(Math.round(n.affinity)) });
+  }
+  if (tier >= 2) {
+    if (label.nature) rows.push({ label: 'Bản chất', value: label.nature });
+    if (label.goal) rows.push({ label: 'Chí hướng', value: label.goal });
+    rows.push({ label: 'Ân · Oán', value: `${Math.round(n.favor)} · ${Math.round(n.grudge)}` });
+    const tech = n.technique && content.techniques.find((x) => x.id === n.technique)?.name;
+    if (tech) rows.push({ label: 'Công pháp', value: tech });
+  }
+  // 9.R9: once met, a cố nhân's past life shows to a close bond, đọc tâm or the Nhân quả bộ.
+  const past = n.pastLife?.met ? t?.pastLife?.[n.pastLife.kind] : undefined;
+  if (past && n.pastLife && (tier >= 2 || state.goldenFinger?.id === 'nhan_qua_bo')) {
+    rows.push({ label: 'Tiền duyên', value: past.replaceAll('{name}', n.pastLife.name).replaceAll('{self}', n.pastLife.self) });
+  }
+  if (tier >= 3) {
+    rows.push({ label: 'Thọ nguyên', value: `${Math.max(0, Math.round(n.lifespan - n.age))} năm còn lại` });
+    rows.push({ label: 'Tư chất', value: n.root ? String(Math.round(n.aptitude)) : 'Không linh căn' });
+    const avenger = n.heirOf && state.npcs.find((x) => x.id === n.heirOf);
+    rows.push({ label: 'Bí mật', value: avenger ? `${t?.secretHeir ?? ''} ${avenger.name}`.trim() : t?.secretNone ?? '' });
+  }
+  return { tier, tierName: t?.tiers[tier] ?? '', realm: seen ? label.realm : null, nature: label.nature, rows };
 }

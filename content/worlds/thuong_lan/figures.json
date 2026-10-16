@@ -1,0 +1,216 @@
+[
+  {
+    "id": "trieu_khai",
+    "name": "Triệu Khải",
+    "title": "Ung Đế",
+    "realm": "pham_nhan",
+    "region": "thanh_van_chau",
+    "text": "Vua Đại Ung, bảy mươi tuổi, ngày nào cũng hỏi Khâm Thiên Giám đã tìm được thuốc trường sinh chưa."
+  },
+  {
+    "id": "giam_chinh_khuong",
+    "name": "Khuông Thiên Tường",
+    "title": "Giám chính Khâm Thiên Giám",
+    "realm": "truc_co",
+    "region": "thanh_van_chau",
+    "text": "Tu sĩ Trúc Cơ làm quan cho phàm nhân, bị đồng đạo cười, nhưng lương cao nhất Trung Nguyên."
+  },
+  {
+    "id": "lao_tieu_vuong",
+    "name": "Tiêu Bất Nhị",
+    "title": "Đao vương Trung Nguyên",
+    "realm": "pham_nhan",
+    "region": "thanh_van_chau",
+    "text": "Võ giả Ngũ khí triều nguyên duy nhất còn sống, một đao chém đôi thuyền chiến. Đã già, vẫn chưa ai dám đòi thách đấu."
+  },
+  {
+    "id": "lac_van_tu",
+    "name": "Lạc Vân Tử",
+    "title": "Ẩn sĩ câu mây",
+    "realm": "nguyen_anh",
+    "region": "thanh_van_chau",
+    "text": "Lão nhân câu cá trên mây, trấn giữ Trung Nguyên ba trăm năm."
+  },
+  {
+    "id": "ha_tam_nuong",
+    "name": "Hà Tam Nương",
+    "title": "Môn chủ Lạc Diệp Môn",
+    "realm": "truc_co",
+    "region": "thanh_van_chau",
+    "sect": "lac_diep_mon",
+    "text": "Đan sư nóng tính, nổ lò nhiều nhất Trung Nguyên mà đan bán chạy nhất Trung Nguyên."
+  },
+  {
+    "id": "bach_cot_ba_ba",
+    "name": "Bạch Cốt Bà Bà",
+    "title": "Chủ Vô Chủ Phường",
+    "realm": "nguyen_anh",
+    "region": "vo_chu_hoang_nguyen",
+    "text": "Bà lão chống gậy xương, không ai biết bao nhiêu tuổi. Ai gây chuyện trong phường thì thành một khúc gậy mới."
+  },
+  {
+    "id": "lao_mu",
+    "name": "Lão Mù",
+    "title": "Người giữ bảng Tán Tu Liên Minh",
+    "realm": "kim_dan",
+    "region": "vo_chu_hoang_nguyen",
+    "sect": "tan_tu_lien_minh",
+    "text": "Không mù. Nhớ mọi món nợ trong Vô Chủ hoang nguyên."
+  },
+  {
+    "id": "thiet_moc_ba",
+    "name": "Thiết Mộc Ba",
+    "title": "Khả hãn Xích Sa",
+    "realm": "pham_nhan",
+    "region": "vo_chu_hoang_nguyen",
+    "text": "Thủ lĩnh du mục, đánh Đại Ung mười năm một lần như hẹn. Nói chuyện với tán tu bằng ngựa và muối."
+  },
+  {
+    "id": "kim_mao_hong",
+    "name": "Kim Mao Hống",
+    "title": "Thú vương",
+    "realm": "hoa_than",
+    "region": "van_thu_son_mach",
+    "text": "Hống lông vàng tám nghìn năm, ngủ thì cả sơn mạch rón rén. Đã già, các đại yêu đang đếm ngày."
+  },
+  {
+    "id": "khuong_ba_nha",
+    "name": "Khương Bá Nha",
+    "title": "Tông chủ Ngự Thú Tông",
+    "realm": "nguyen_anh",
+    "region": "van_thu_son_mach",
+    "sect": "ngu_thu_tong",
+    "text": "Nói chuyện với thú nhiều hơn với người, cưỡi một con rồng đất đi họp."
+  },
+  {
+    "id": "xich_phat_ma_quan",
+    "name": "Xích Phát Ma Quân",
+    "title": "Uyên chủ Huyết Uyên",
+    "realm": "hoa_than",
+    "region": "huyet_uyen",
+    "sect": "ma_la_dien",
+    "text": "Ma đầu ngồi đáy vực ba nghìn năm. Ma tông nào cũng nộp cống. Hắn thấy chính đạo buồn cười."
+  },
+  {
+    "id": "am_that_nuong",
+    "name": "Âm Thất Nương",
+    "title": "Tông chủ Thi Âm Tông",
+    "realm": "nguyen_anh",
+    "region": "huyet_uyen",
+    "sect": "thi_am_tong",
+    "text": "Hát ru thi nô mỗi tối, giọng rất hay, không ai dám khen."
+  },
+  {
+    "id": "lam_phuong_hoang",
+    "name": "Lam Phượng Hoàng",
+    "title": "Giáo chủ Vạn Độc Giáo",
+    "realm": "nguyen_anh",
+    "region": "huyet_uyen",
+    "sect": "van_doc_giao",
+    "text": "Đẹp như hoa, độc như hoa. Quà của bà ai cũng sợ mở."
+  },
+  {
+    "id": "thuong_hai_lao_to",
+    "name": "Thương Hải Lão Tổ",
+    "title": "Lão tổ Đông Hải",
+    "realm": "hoa_than",
+    "region": "dong_hai",
+    "text": "Đại năng ngủ dưới đáy biển, mỗi lần trở mình là một trận sóng thần."
+  },
+  {
+    "id": "kim_da_bao",
+    "name": "Kim Đa Bảo",
+    "title": "Đảo chủ Thận Lâu Đảo",
+    "realm": "nguyen_anh",
+    "region": "dong_hai",
+    "sect": "than_lau_dao",
+    "text": "Mập, cười híp mắt, nhớ giá mọi thứ trên đời, kể cả giá mạng người."
+  },
+  {
+    "id": "au_duong_gia_chu",
+    "name": "Âu Dương Hải",
+    "title": "Gia chủ Âu Dương thế gia",
+    "realm": "kim_dan",
+    "region": "dong_hai",
+    "text": "Nắm nửa hải thị Đông Hải. Câu nào nói ra cũng có giá, câu nào không nói giá còn cao hơn."
+  },
+  {
+    "id": "thu_mo_nhan",
+    "name": "Thủ Mộ Nhân",
+    "title": "Người giữ mộ thần",
+    "realm": "hoa_than",
+    "region": "thai_co_chien_truong",
+    "sect": "thu_mo_tong",
+    "text": "Lão quét bụi trên di cốt thần tộc mỗi ngày, ai đào trộm thì quét luôn."
+  },
+  {
+    "id": "cuu_chi",
+    "name": "Cửu Chỉ",
+    "title": "Đường chủ Phá Cấm Đường",
+    "realm": "kim_dan",
+    "region": "thai_co_chien_truong",
+    "sect": "pha_cam_duong",
+    "text": "Còn chín ngón tay, giải được cấm chế mà ba đại tông bó tay."
+  },
+  {
+    "id": "man_thiet_son",
+    "name": "Mạnh Thiết Sơn",
+    "title": "Điện chủ Chiến Thần Điện",
+    "realm": "nguyen_anh",
+    "region": "thai_co_chien_truong",
+    "sect": "chien_than_dien",
+    "text": "Vai rộng bằng cửa, cả đời thử rút ngọn thương gãy trong tay di cốt chiến thần."
+  },
+  {
+    "id": "han_son_kiem_ton",
+    "name": "Hàn Sơn Kiếm Tôn",
+    "title": "Kiếm tôn tuyết vực",
+    "realm": "hoa_than",
+    "region": "bac_minh_tuyet_vuc",
+    "text": "Ngồi bất động giữa tuyết ba trăm năm, một vết kiếm của ông dài trăm dặm."
+  },
+  {
+    "id": "han_nguyet",
+    "name": "Hàn Nguyệt",
+    "title": "Cung chủ Băng Tâm Cung",
+    "realm": "nguyen_anh",
+    "region": "bac_minh_tuyet_vuc",
+    "sect": "bang_tam_cung",
+    "text": "Đẹp như tượng băng. Năm nào cũng xuống núi một lần, không ai biết để gặp ai."
+  },
+  {
+    "id": "thien_dien_dao_quan",
+    "name": "Thiên Diễn Đạo Quân",
+    "title": "Đạo quân Trung Châu",
+    "realm": "hoa_than",
+    "region": "trung_chau",
+    "text": "Đại năng mạnh nhất Thương Lan còn lộ mặt. Người ta đồn ông từng thấy Thông Thiên lộ trước khi đứt."
+  },
+  {
+    "id": "huyen_co_chan_nhan",
+    "name": "Huyền Cơ Chân Nhân",
+    "title": "Cung chủ Thái Huyền Đạo Cung",
+    "realm": "hoa_than",
+    "region": "trung_chau",
+    "sect": "thai_huyen_dao_cung",
+    "text": "Nói câu nào cũng như câu đố; đệ tử chép xong mới hiểu là lời mắng."
+  },
+  {
+    "id": "thien_toan_tu",
+    "name": "Thiên Toán Tử",
+    "title": "Các chủ Thiên Cơ Các",
+    "realm": "nguyen_anh",
+    "region": "trung_chau",
+    "sect": "thien_co_cac",
+    "text": "Mù mắt trái, lúc nào cũng mỉm cười như vừa đoán trúng chuyện gì."
+  },
+  {
+    "id": "kim_lao_ban",
+    "name": "Kim Lão Bản",
+    "title": "Minh chủ Kim Thiềm Thương Minh",
+    "realm": "hoa_than",
+    "region": "trung_chau",
+    "sect": "kim_thiem_thuong_minh",
+    "text": "Con cóc vàng tu thành người. Biết bí mật của mọi đại năng, bán từng cái một."
+  }
+]

@@ -60,8 +60,9 @@ export function combatPower(state: GameState, content: Content): number {
   const b = content.balance;
   const c = b.combat;
   const realm = b.realms[state.cult.realm];
-  // A mortal fights with the strength of their martial stage (balance.martial.combatPower).
-  const base = state.cult.realm === 'pham_nhan' ? Math.max(realm?.combatPower ?? 1, martialPower(state, content)) : realm?.combatPower ?? 1;
+  // The martial stage counts too (balance.martial.combatPower): a mortal fights with it, and 9.V1 keeps it
+  // after Tiên Võ đồng tu so a martial artist never grows weaker by starting to cultivate.
+  const base = Math.max(realm?.combatPower ?? 1, martialPower(state, content));
   const tech = currentTechnique(state, content);
   const techMul = tech ? b.techniques.gradeMul[tech.grade] ?? 1 : 1;
   const lineage = state.cult.lineage ?? tech?.lineage ?? 'tien';
@@ -80,12 +81,22 @@ export function combatPower(state: GameState, content: Content): number {
   return Math.round(power * 10) / 10;
 }
 
+/** 9.V1: the realm a martial artist moves like: the highest whose base power is at most martial power × speedEquivMul. */
+function martialSpeedRealm(state: GameState, content: Content): number {
+  const power = martialPower(state, content) * (content.balance.martial.speedEquivMul ?? 1);
+  if (power <= 0) return 0;
+  const realms = content.cultivation.realms.realms;
+  let best = 0;
+  realms.forEach((r, i) => { if ((content.balance.realms[r.id]?.combatPower ?? Infinity) <= power) best = i; });
+  return best;
+}
+
 /** Speed (K.4.1): decides who gets away. */
 export function combatSpeed(state: GameState, content: Content): number {
   const c = content.balance.combat;
   const path = mainPath(state, content);
   const mul = 1 + (path ? c.pathSpeed[path] ?? 0 : 0) + hookSum(state, content, 'speed');
-  return c.speedBase * (1 + realmIndex(content, state.cult.realm)) * Math.max(0.1, mul);
+  return c.speedBase * (1 + Math.max(realmIndex(content, state.cult.realm), martialSpeedRealm(state, content))) * Math.max(0.1, mul);
 }
 
 /** Build a foe from an event's spec, relative to the player. */

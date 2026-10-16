@@ -8,15 +8,16 @@ import type { DeathCause, GameState } from '../../core/types';
 import { STAT_LABELS } from '../../systems/deltas';
 import { activeCombos } from '../../systems/destiny';
 import { fingerDef } from '../../systems/goldenFinger';
-import { bodyLabel, rootLabel } from '../../systems/cultivation';
+import { bodyLabel, innateRootLabel, rootLabel } from '../../systems/cultivation';
 import { npcById } from '../../systems/npcs';
 import { romanceBlocked } from '../../systems/romance';
 import { devPeople, devPersonCheat, personCheatsAvailable, type PersonCheat } from '../../systems/devPeople';
+import { DevPersonSheet } from './DevPersonSheet';
 import type { SaveMeta } from '../../systems/save';
 import type { RewindOption } from '../../systems/timeline';
 import {
   DEV_STATS, devAddKarma, devAddLifespan, devAddMoney, devAddStat, devClearHeartDemon, devFillProgress, devFindEvents, devFoundClan, devFoundSect,
-  devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect,
+  devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devWorldEvent, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect, devPastTie,
   devAwakenBody, devResetBond, devChildrenRoot, devSetBody, devStartMartialQuest, devQuestStep, devMarry, devResetEventHistory, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
   devResetItemUse, devResetFingerCooldowns, devSetFingerLevel, devSetFlag, devSetGoldenFinger, devSetRealm, devSkipYears, devStartFight, devTakeChosen, devToggleTrait, devTriggerEvent,
 } from '../../systems/dev';
@@ -75,6 +76,7 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
   const [talentId, setTalentId] = useState(content.rebirthTalents.talents[0]?.id ?? '');
   const [templateId, setTemplateId] = useState(content.chosenOnes.templates[0]?.id ?? '');
   const [sectId, setSectId] = useState(content.sects[0]?.id ?? '');
+  const [worldEventId, setWorldEventId] = useState(content.worldEvents?.[0]?.id ?? '');
   const [flag, setFlag] = useState('');
   const roots = devRootOptions(content);
   const [rootKey, setRootKey] = useState(roots[0]?.key ?? '');
@@ -153,7 +155,7 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
         </Section>
 
         <Section title="Linh căn & võ đạo">
-          <p class="profile-note">Linh căn: {rootLabel(state, content)} · thể chất: {bodyLabel(state, content)} · võ đạo: {state.martial.stage < 0 ? 'chưa nhập môn' : content.martial.stages[state.martial.stage]?.name}</p>
+          <p class="profile-note">Linh căn: {rootLabel(state, content)}{innateRootLabel(state, content) && ` (ẩn: ${innateRootLabel(state, content)})`} · thể chất: {bodyLabel(state, content)} · võ đạo: {state.martial.stage < 0 ? 'chưa nhập môn' : content.martial.stages[state.martial.stage]?.name}</p>
           <div class="dev-event">
             <GPick value={rootKey} onChange={setRootKey} label="Linh căn" options={roots.map((r) => ({ id: r.key, name: r.label, group: r.group }))} />
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devSetRoot(state, content, roots.find((r) => r.key === rootKey)!.root))}>Đặt</button>
@@ -217,10 +219,22 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
             </Pick>
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devJoinSect(state, content, sectId))}>Vào tông</button>
           </div>
+          {(content.worldEvents ?? []).length > 0 && (
+            <div class="dev-event">
+              <Pick value={worldEventId} onChange={setWorldEventId} label="Sự kiện thiên hạ">
+                {(content.worldEvents ?? []).map((e) => <option key={e.id} value={e.id}>{e.name}</option>)}
+              </Pick>
+              <button class="chip-btn" disabled={!live} onClick={() => onChange(devWorldEvent(state, content, worldEventId))}>Bắt đầu</button>
+              <button class="chip-btn" disabled={!live || !state.world?.active} onClick={() => onChange(devWorldEvent(state, content, null))}>Dừng</button>
+            </div>
+          )}
           <div class="action-chips">
             <button class="chip-btn" disabled={!live || !!state.ownSect} onClick={() => onChange(devFoundSect(state, content))}>Khai tông miễn phí</button>
             <button class="chip-btn" disabled={!live || !!state.clan} onClick={() => onChange(devFoundClan(state, content))}>Lập gia tộc miễn phí</button>
             <button class="chip-btn" disabled={!live || !!state.pastSect} onClick={() => onChange(devPastSect(state))}>Có tông môn đời trước</button>
+            {([['dao_lu', 'Đạo lữ'], ['an', 'Ân nhân'], ['oan', 'Oán'], ['ke_thu', 'Kẻ thù']] as const).map(([k, label]) => (
+              <button key={k} class="chip-btn" disabled={!live || (k === 'dao_lu' && state.character.age < 18)} onClick={() => onChange(devPastTie(state, content, k))}>Cố nhân: {label}</button>
+            ))}
           </div>
           <div class="dev-event">
             <Pick value={templateId} onChange={setTemplateId} label="Khí vận chi tử">
@@ -236,7 +250,7 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
         </Section>
 
         <Section title="Người có quan hệ">
-          <p class="profile-note">Chọn tên một người thân hoặc người quen rồi chỉnh họ. Người thân không có sổ ân oán, cảnh giới hay tư chất.</p>
+          <p class="profile-note">Chọn tên một người thân hoặc người quen rồi chỉnh họ. Người thân không có sổ ân oán, cảnh giới hay tư chất. Mở "Hồ sơ đầy đủ" để xem mọi thứ (cả phần ẩn) và đặt số tùy ý.</p>
           {people.length === 0 ? <p class="profile-note">Chưa có ai.</p> : (
             <>
               <div class="dev-event">
@@ -268,6 +282,7 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
                       <button class="chip-btn" disabled={!live} onClick={() => cheat({ kind: 'realm', realmId: personRealm })}>Đặt cảnh giới</button>
                     </div>
                   )}
+                  <DevPersonSheet key={person.key} state={state} content={content} person={person} live={live} onCheat={(c) => cheat(c)} />
                 </>
               )}
             </>

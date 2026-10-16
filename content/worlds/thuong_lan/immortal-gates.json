@@ -1,0 +1,44 @@
+[
+  {
+    "id": "hoi_thu_do",
+    "name": "Tiên môn mở hội thu đồ",
+    "event": "thu_linh_can",
+    "conditions": { "age": { "min": 8, "max": 16 }, "realm": { "max": "pham_nhan" } },
+    "requiresKnowledge": "tien_mon_thu_do"
+  },
+  {
+    "id": "the_gia",
+    "name": "Tu tiên thế gia",
+    "event": "the_gia_thu_linh",
+    "conditions": { "age": { "min": 6, "max": 9 }, "realm": { "max": "pham_nhan" }, "origins": ["tu_tien_gia_toc"] }
+  },
+  {
+    "id": "hoang_that",
+    "name": "Tu sĩ tọa trấn triều đình",
+    "event": "cung_dinh_thu_linh",
+    "requiresKnowledge": "tin_don_tien_nhan",
+    "conditions": { "age": { "min": 8, "max": 20 }, "realm": { "max": "pham_nhan" }, "origins": ["quan_gia"] }
+  },
+  {
+    "id": "co_duyen",
+    "name": "Cơ duyên xảo hợp",
+    "event": "tien_nhan_de_mat",
+    "conditions": {
+      "age": { "min": 6, "max": 40 },
+      "realm": { "max": "pham_nhan" },
+      "anyOf": [
+        { "stats": [{ "stat": "stat.luck", "gte": 65 }] },
+        { "stats": [{ "stat": "stat.comprehension", "gte": 75 }] },
+        { "stats": [{ "stat": "stat.physique", "gte": 75 }] }
+      ]
+    },
+    "requiresKnowledge": "tin_don_tien_nhan"
+  },
+  {
+    "id": "pham_gian",
+    "name": "Cơ duyên phàm gian",
+    "event": "vo_gia_gap_tu_si",
+    "conditions": { "age": { "min": 16 }, "realm": { "max": "pham_nhan" }, "martial": { "min": 3 } },
+    "requiresKnowledge": "tin_don_tien_nhan"
+  }
+]
