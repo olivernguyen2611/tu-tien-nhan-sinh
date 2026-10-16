@@ -6,7 +6,7 @@ import { codexProgress, storyText, type Codex } from '../../systems/codex';
 import { knowledgeByGroup } from '../../systems/knowledge';
 import { TermText } from '../components/Tooltip';
 
-type Tab = 'lives' | 'endings' | 'regions' | 'knowledge' | 'traits' | 'combos' | 'fingers' | 'stories' | 'achievements';
+type Tab = 'lives' | 'endings' | 'regions' | 'special' | 'knowledge' | 'traits' | 'combos' | 'fingers' | 'stories' | 'achievements';
 
 /** 9.R5a: Sổ tri thức groups. */
 const GROUP_LABEL: Record<string, string> = {
@@ -30,10 +30,12 @@ export function CodexScreen({ content, codex, achievements, chronicle, onBack }:
   const p = codexProgress(codex, content);
   const cs = chronicleStats(chronicle, content);
   const endings = content.endings ?? [];
+  const origins = content.specialOrigins ?? [];
   const tabs: [Tab, string][] = [
     ['lives', `Các kiếp ${cs.lives}`],
     ['endings', `Kết cục ${cs.endings[0]}/${cs.endings[1]}`],
     ['regions', `Bản đồ ${cs.regions[0]}/${cs.regions[1]}`],
+    ['special', `Thiên cơ ${origins.filter((o) => (chronicle.special?.[o.id] ?? 0) > 0).length}/${origins.length}`],
     ['knowledge', `Tri thức ${p.knowledge[0]}/${p.knowledge[1]}`],
     ['traits', `Khí vận ${p.traits[0]}/${p.traits[1]}`],
     ['combos', `Tổ hợp ${p.combos[0]}/${p.combos[1]}`],
@@ -156,6 +158,20 @@ export function CodexScreen({ content, codex, achievements, chronicle, onBack }:
               <li class={`trait-chip ${seen ? 'r-luong' : 'r-pham locked'}`} key={r.id}>
                 <b>{seen ? r.name : '???'}</b>
                 <span>{seen ? r.description : 'Chưa kiếp nào đặt chân tới.'}</span>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+
+      {tab === 'special' && (
+        <ul class="trait-chips codex-list">
+          {origins.map((o) => {
+            const n = chronicle.special?.[o.id] ?? 0;
+            return (
+              <li class={`trait-chip ${n > 0 ? 'r-thien' : 'r-pham locked'}`} key={o.id}>
+                <b>{n > 0 ? `${o.name} · ${n} kiếp` : '???'}</b>
+                <span>{n > 0 ? o.text : 'Thiên cơ chưa từng lệch theo hướng này.'}</span>
               </li>
             );
           })}

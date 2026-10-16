@@ -138,6 +138,12 @@ export interface GameState {
   pastTies?: (KarmaTie & { met: boolean })[];
   /** 9.R11: options from Cài đặt that change play (gentle: no dark or mature events); absent in older saves. */
   options?: { gentle?: boolean };
+  /** 9.S1: which life on this browser (1 = the first); absent in older saves. */
+  lifeNo?: number;
+  /** 9.S1: karma the last life ended with (unlocks some tình tiết). */
+  pastKarma?: number;
+  /** 9.S1: Tình tiết đặc biệt hiếm drawn at birth; seen once the Thiên cơ biến động screen was shown. */
+  special?: { ids: string[]; seen: boolean };
   /**
    * Bế quan (task 4.1): the age the door opens again, and when it closed; null when not in seclusion.
    * fixed: set by an event, so reaching the peak does not end it early (the point is to sit out the years).

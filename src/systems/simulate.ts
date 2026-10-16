@@ -72,6 +72,7 @@ export interface LifeResult {
   finger: string | null;
   traits: string[];
   ending: string | null;
+  special: string[];
 }
 
 export interface SimOptions {
@@ -113,7 +114,8 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
   const botRng = new Rng(`bot:${seed}`);
   const realms = content.cultivation.realms.realms.map((r) => r.id);
   const knowledge = opts.knowledge === 'none' ? [] : (content.knowledge ?? []).map((e) => e.id);
-  const born = createLife({ seed, difficulty: opts.difficulty, goldenFinger: opts.goldenFinger, knowledge }, content);
+  // 9.S1: a seasoned player is on a later life, so a Tình tiết đặc biệt hiếm can come.
+  const born = createLife({ seed, difficulty: opts.difficulty, goldenFinger: opts.goldenFinger, knowledge, lifeNo: opts.knowledge === 'none' ? 1 : 10 }, content);
   const offered = opts.traits ? { ...born, destiny: { ...born.destiny, offered: opts.traits } } : rollDestiny(born, content);
   let s: GameState = confirmDestiny(offered, content);
   let peak = 0;
@@ -204,6 +206,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     finger: s.goldenFinger?.id ?? null,
     traits: [...s.traits],
     ending: lifeEnding(s, content, 1),
+    special: s.special?.ids ?? [],
   };
 }
 
@@ -272,6 +275,9 @@ export interface Report {
   byFinger: Record<string, Group>;
   byTrait: Record<string, Group>;
   byEnding: Record<string, number>;
+  /** 9.S1: Tình tiết đặc biệt hiếm drawn (share, mean age, Kim Đan share), and the share of lives with any. */
+  bySpecial: Record<string, Group>;
+  specialAny: number;
 }
 
 export interface Group { share: number; meanAge: number; kimDan: number }
@@ -315,6 +321,8 @@ export function summarize(results: LifeResult[], content: Content): Report {
     byGate: (() => { const o: Record<string, number> = {}; for (const r of results) for (const g of r.gates ?? []) o[g] = (o[g] ?? 0) + 1 / n; return o; })(),
     byFinger: groupBy(results, (r) => (r.finger ? [r.finger] : []), n, kd),
     byTrait: groupBy(results, (r) => r.traits ?? [], n, kd),
+    bySpecial: groupBy(results, (r) => r.special ?? [], n, kd),
+    specialAny: n ? results.filter((r) => (r.special ?? []).length > 0).length / n : 0,
     byEnding: (() => { const o: Record<string, number> = {}; for (const r of results) if (r.ending) o[r.ending] = (o[r.ending] ?? 0) + 1 / n; return o; })(),
     stonesLeft: (() => {
       const st = results.map((r) => r.stonesLeft).sort((a, b) => a - b);
@@ -378,6 +386,7 @@ export function formatReport(rep: Report, content: Content, title: string): stri
     'Sự kiện lặp dày nhất (lần mỗi 100 năm sống, nhiều nhất một đời): ' + rep.topRepeats.map((t) => `${t.id} ${t.perCentury.toFixed(1)} (${t.max})`).join(', '),
     // 9.R12: tiên duyên gates and kết cục.
     'Cổng tiên duyên mở: ' + (Object.entries(rep.byGate ?? {}).sort((a, b) => b[1] - a[1]).map(([g, v]) => `${g} ${p(v)}`).join(', ') || 'không'),
+    `Thiên cơ biến động: ${p(rep.specialAny ?? 0)} số đời` + (Object.keys(rep.bySpecial ?? {}).length ? ' (' + Object.entries(rep.bySpecial).map(([id, g]) => `${id} ${p(g.share)}`).join(', ') + ')' : ''),
     'Kết cục: ' + Object.entries(rep.byEnding ?? {}).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([e, v]) => `${e} ${p(v)}`).join(', '),
   ];
   return lines.join('\n');

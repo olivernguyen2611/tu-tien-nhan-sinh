@@ -801,6 +801,7 @@
     "claimShare": 0.5,
     "claimTreasury": 200
   },
+  "specialOrigins": { "minLives": 2, "chance": 0.04, "luckPer": 0.0008, "maxPerLife": 2 },
   "karmaLedger": {
     "perLife": 4, "max": 8, "maxLives": 3, "minWeight": 40, "enemyAt": 65,
     "chance": 0.03, "livesDecay": 0.6, "minAge": 12, "romanceMinAge": 18,

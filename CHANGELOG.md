@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### 9.S1: Khung Tình tiết Đặc biệt Hiếm (2026-10-16)
+- Lúc đầu thai, sau khi chốt khí vận, có xác suất nhỏ "thiên cơ biến động": đời này nhận một (đôi khi hai) tình tiết đặc biệt, hiện ở màn **Thiên cơ biến động** trước năm đầu tiên, nói rõ lợi và cái giá. **Kiếp đầu không bao giờ trúng.**
+- Dữ liệu ở `content/special-origins/*.json` (mỗi nhóm một file): nhóm (Hệ thống, Trùng sinh, Phế vật nghịch tập, Đường thành tiên, Dị số), điều kiện mở (số kiếp, Sổ tri thức, nhân quả kiếp trước), trọng số theo khí vận, loại trừ nhau, không đi cùng Kim Thủ Chỉ, cái giá, hiệu ứng, sự kiện khởi đầu. Tối đa một tình tiết "nền" mỗi đời. Số liệu ở `balance.specialOrigins` (4% mỗi đời từ kiếp thứ 2, khí vận cao thì nhiều hơn).
+- 3 tình tiết mẫu nhóm Dị số: **Túc tuệ**, **Long mạch dưới nền nhà**, **Mệnh phạm thiên sát** (mở khi kiếp trước nhiều ác nghiệp). Các nhóm lớn (Hệ thống, Trùng sinh, Phế vật, Thành tiên) đến ở 9.S2–9.S5.
+- Thiên Thư thêm tab **Thiên cơ** (đã gặp / chưa gặp, số kiếp từng trúng). Developer Mode ép được từng tình tiết. Bảng cân bằng và `npm run simulate` thống kê tỉ lệ trúng.
+- Test: `tests/special-origin.test.ts`.
+
 ### 9.R12: Bảng cân bằng trong Developer Mode (2026-10-16)
 - Developer Mode thêm mục **Bảng cân bằng**: chạy 20–200 đời bằng máy ngay trong trình duyệt (Web Worker, trang không bị đơ, dừng được giữa chừng), chọn cách chơi của máy và chạy như kiếp đầu.
 - Kết quả: phân bố tuổi chết, nguyên nhân chết, tỉ lệ đạt từng cảnh giới (kèm tuổi trung bình), theo linh căn, tỉ lệ mở từng cổng tiên duyên, theo Kim Thủ Chỉ, khí vận gặp nhiều nhất (thọ, tỉ lệ Kim Đan), tỉ lệ từng kết cục.

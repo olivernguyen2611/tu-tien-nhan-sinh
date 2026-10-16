@@ -21,15 +21,20 @@ export interface LifeRecord {
   path: string;
   ending: string | null;
   points: number;
+  /** 9.S1: karma at the end; the Tình tiết đặc biệt hiếm this life drew. */
+  karma?: number;
+  special?: string[];
 }
 
 export interface Chronicle {
   lives: LifeRecord[];
   endings: string[];
   regions: string[];
+  /** 9.S1: Tình tiết đặc biệt hiếm met, and how many lives drew each. */
+  special?: Record<string, number>;
 }
 
-export const EMPTY_CHRONICLE: Chronicle = { lives: [], endings: [], regions: [] };
+export const EMPTY_CHRONICLE: Chronicle = { lives: [], endings: [], regions: [], special: {} };
 /** Lives kept; older ones drop off (their endings and regions stay). */
 const MAX_LIVES = 100;
 
@@ -42,7 +47,7 @@ export function lifeEnding(state: GameState, content: Content, lives: number): s
 /** What one finished life adds to the Sổ luân hồi. */
 export function chronicleOf(state: GameState, content: Content, lives: number): Chronicle {
   const regions = [content.regions[0]?.id, ...state.region.visited].filter((r): r is string => !!r);
-  if (state.alive || !state.death) return { lives: [], endings: [], regions };
+  if (state.alive || !state.death) return { lives: [], endings: [], regions, special: {} };
   const ending = lifeEnding(state, content, lives);
   const record: LifeRecord = {
     key: `${state.seed}@${state.death.age}`,
@@ -53,15 +58,21 @@ export function chronicleOf(state: GameState, content: Content, lives: number): 
     path: sectLabel(state, content) ?? careerLabel(state, content) ?? 'Phàm nhân',
     ending,
     points: rebirthPoints(state, content).total,
+    karma: state.social.karma,
+    special: state.special?.ids ?? [],
   };
-  return { lives: [record], endings: ending ? [ending] : [], regions };
+  return { lives: [record], endings: ending ? [ending] : [], regions, special: Object.fromEntries((state.special?.ids ?? []).map((id) => [id, 1])) };
 }
 
 const union = (a: string[], b: string[]) => [...a, ...b.filter((x) => !a.includes(x))];
 
 export function mergeChronicle(a: Chronicle, b: Chronicle): Chronicle {
   const lives = [...a.lives.filter((l) => !b.lives.some((m) => m.key === l.key)), ...b.lives].slice(-MAX_LIVES);
-  return { lives, endings: union(a.endings, b.endings), regions: union(a.regions, b.regions) };
+  // A life already recorded adds no second count.
+  const fresh = b.lives.some((l) => !a.lives.some((m) => m.key === l.key)) || b.lives.length === 0;
+  const special = { ...(a.special ?? {}) };
+  if (fresh) for (const [id, n] of Object.entries(b.special ?? {})) special[id] = (special[id] ?? 0) + n;
+  return { lives, endings: union(a.endings, b.endings), regions: union(a.regions, b.regions), special };
 }
 
 /** A stored chronicle, tolerant of a missing or broken one. */
@@ -72,6 +83,7 @@ export function readChronicle(raw: unknown): Chronicle {
     lives: Array.isArray(c.lives) ? c.lives.filter((l) => l && typeof l.key === 'string' && typeof l.name === 'string') : [],
     endings: strings(c.endings),
     regions: strings(c.regions),
+    special: c.special && typeof c.special === 'object' ? Object.fromEntries(Object.entries(c.special).filter(([, n]) => typeof n === 'number')) : {},
   };
 }
 

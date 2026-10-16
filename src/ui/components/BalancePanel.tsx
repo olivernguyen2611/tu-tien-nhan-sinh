@@ -88,6 +88,7 @@ export function BalancePanel({ content }: { content: Content }) {
           <Bars title="Cổng tiên duyên mở" rows={Object.entries(report.byGate).sort((a, b) => b[1] - a[1]).map(([g, v]) => [name(content.immortalGates)(g), v])} />
           <Bars title="Kim Thủ Chỉ" rows={groupRows(report.byFinger, name(content.goldenFingers.fingers), 10)} />
           <Bars title="Khí vận gặp nhiều nhất" rows={groupRows(report.byTrait, name(content.traits), 10)} />
+          <Bars title={`Thiên cơ biến động (${pct(report.specialAny)} số đời)`} rows={groupRows(report.bySpecial, name(content.specialOrigins), 10)} />
           <Bars title="Kết cục" rows={Object.entries(report.byEnding).sort((a, b) => b[1] - a[1]).map(([id, v]) => [name(content.endings)(id), v])} />
         </div>
       )}

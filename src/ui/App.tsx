@@ -25,6 +25,8 @@ import { cueFor, loadSoundPref, playCue, saveSoundPref } from './audio';
 import { applyThemePref, loadThemePref, nextThemePref, type ThemePref } from './theme';
 import { applyPrefs, loadPrefs, type Prefs } from './prefs';
 import { setGentle } from '../systems/options';
+import { seeSpecial } from '../systems/specialOrigin';
+import { ThienCoScreen } from './screens/ThienCo';
 import { CreateCharacterScreen } from './screens/CreateCharacter';
 import { DeathScreen } from './screens/Death';
 import { DestinyRollScreen } from './screens/DestinyRoll';
@@ -333,7 +335,7 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
           if (cost > readMeta(store).rebirthPoints) return;
           setOriginCost(cost);
           // Tips only for the very first life on this browser.
-          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list, rebirthTalents: readMeta(store).rebirthTalents, pastSect: readMeta(store).pastSect, karmaLedger: readMeta(store).karmaLedger, gentle: prefs.gentle, knowledge: readMeta(store).codex.knowledge,
+          setLife(rollDestiny(createLife({ ...input, tutorial: readMeta(store).livesPlayed === 0, blessings: readMeta(store).blessings?.list, rebirthTalents: readMeta(store).rebirthTalents, pastSect: readMeta(store).pastSect, karmaLedger: readMeta(store).karmaLedger, gentle: prefs.gentle, lifeNo: readMeta(store).livesPlayed + 1, pastKarma: readMeta(store).chronicle.lives.at(-1)?.karma ?? 0, knowledge: readMeta(store).codex.knowledge,
             goldenFinger: input.goldenFinger ?? rollBirthFinger(input.seed, content, readMeta(store).livesPlayed, readMeta(store).fingerPity) }, content), content));
           setScreen('destiny');
         }}
@@ -371,6 +373,10 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         onRewind={() => { setLife(rewind(life, content)); setScreen('main'); }}
         onRebirth={() => openRebirth('death')} />
     );
+  }
+  // 9.S1: a Tình tiết đặc biệt hiếm is shown once before the first year.
+  if (screen === 'main' && life?.special && !life.special.seen) {
+    return <ThienCoScreen state={life} content={content} onContinue={() => setLife(seeSpecial(life))} />;
   }
   if (screen === 'main' && life) {
     return (

@@ -2,6 +2,7 @@
 // every other system; the UI panel only calls these. Every change is logged
 // with a [Dev] mark so a tested life is never mistaken for a real one.
 import { bringBack } from './karmaLedger';
+import { originDef, rollSpecialOrigin } from './specialOrigin';
 import type { Content } from '../core/content';
 import { APTITUDES, FightSchema, MORTAL_STATS } from '../core/schemas';
 import { advanceYear } from '../core/state';
@@ -284,6 +285,15 @@ export function devPastTie(state: GameState, content: Content, kind: KarmaTieKin
   const tie = { kind, name: 'Cố Nhân Dev', gender: state.character.gender === 'nam' ? 'nu' as const : 'nam' as const, self: 'Tiền Thân Dev', weight: 100, lives: 0, met: false };
   const s = { ...state, pastTies: [...(state.pastTies ?? []), tie] };
   return devLog(bringBack(s, content, s.pastTies.length - 1), `cố nhân kiếp trước (${kind})`);
+}
+
+/** 9.S1: force a Tình tiết đặc biệt hiếm on this life (its gains and costs given now; shown on the next screen). */
+export function devSpecial(state: GameState, content: Content, id: string): GameState {
+  if (!state.alive || state.special?.ids.includes(id)) return state;
+  const base = state.special ? { ...state, special: undefined } : state;
+  const s = rollSpecialOrigin(base, content, 0, id);
+  const merged = state.special ? { ...s, special: { ids: [...state.special.ids, id], seen: false } } : s;
+  return devLog(merged, `thiên cơ biến động: ${originDef(content, id)?.name ?? id}`);
 }
 
 /** Set or clear a flag. */

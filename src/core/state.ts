@@ -51,6 +51,9 @@ export interface NewLifeInput {
   karmaLedger?: KarmaTie[];
   /** 9.R11: hide sensitive events (Cài đặt). */
   gentle?: boolean;
+  /** 9.S1: lives begun on this browser, this one included. */
+  lifeNo?: number;
+  pastKarma?: number;
   /** 9.R5a: Sổ tri thức entries known by past lives (from the save meta). */
   knowledge?: string[];
 }
@@ -157,6 +160,8 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     pastSect: pastSectFor(input.pastSect, content),
     pastTies: pastTiesFor(input.karmaLedger),
     options: { gentle: !!input.gentle },
+    lifeNo: input.lifeNo ?? 1,
+    pastKarma: input.pastKarma ?? 0,
     ancestry: [],
     blessings,
     rebirthTalents,

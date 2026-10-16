@@ -18,7 +18,7 @@ import type { SaveMeta } from '../../systems/save';
 import type { RewindOption } from '../../systems/timeline';
 import {
   DEV_STATS, devAddKarma, devAddLifespan, devAddMoney, devAddStat, devClearHeartDemon, devFillProgress, devFindEvents, devFoundClan, devFoundSect,
-  devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devWorldEvent, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect, devPastTie,
+  devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devWorldEvent, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect, devPastTie, devSpecial,
   devAwakenBody, devResetBond, devChildrenRoot, devSetBody, devStartMartialQuest, devQuestStep, devMarry, devResetEventHistory, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
   devResetItemUse, devResetFingerCooldowns, devSetFingerLevel, devSetFlag, devSetGoldenFinger, devSetRealm, devSkipYears, devStartFight, devTakeChosen, devToggleTrait, devTriggerEvent,
 } from '../../systems/dev';
@@ -233,6 +233,9 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
             <button class="chip-btn" disabled={!live || !!state.ownSect} onClick={() => onChange(devFoundSect(state, content))}>Khai tông miễn phí</button>
             <button class="chip-btn" disabled={!live || !!state.clan} onClick={() => onChange(devFoundClan(state, content))}>Lập gia tộc miễn phí</button>
             <button class="chip-btn" disabled={!live || !!state.pastSect} onClick={() => onChange(devPastSect(state))}>Có tông môn đời trước</button>
+            {(content.specialOrigins ?? []).map((o) => (
+              <button key={o.id} class="chip-btn" disabled={!live || !!state.special?.ids.includes(o.id)} onClick={() => onChange(devSpecial(state, content, o.id))}>Thiên cơ: {o.name}</button>
+            ))}
             {([['dao_lu', 'Đạo lữ'], ['an', 'Ân nhân'], ['oan', 'Oán'], ['ke_thu', 'Kẻ thù']] as const).map(([k, label]) => (
               <button key={k} class="chip-btn" disabled={!live || (k === 'dao_lu' && state.character.age < 18)} onClick={() => onChange(devPastTie(state, content, k))}>Cố nhân: {label}</button>
             ))}

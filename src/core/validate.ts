@@ -4,7 +4,7 @@
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
 import { KY_KEYS } from '../systems/thienDaoKy';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, ThienDaoKyFileSchema, type ThienDaoKyFile, type Ending, MORTAL_STATS, APTITUDES, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, SpecialOriginFileSchema, type SpecialOrigin, ThienDaoKyFileSchema, type ThienDaoKyFile, type Ending, MORTAL_STATS, APTITUDES, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -61,6 +61,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'trait-combos.json') return TraitComboFileSchema;
     if (rest === 'codex.json') return CodexFileSchema;
     if (rest === 'endings.json') return EndingFileSchema;
+    if (rest.startsWith('special-origins/')) return SpecialOriginFileSchema;
     if (rest === 'thien-dao-ky.json') return ThienDaoKyFileSchema;
     if (rest === 'achievements.json') return AchievementFileSchema;
     return null;
@@ -114,6 +115,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   const worldEventFiles: { file: string; events: WorldEvent[] }[] = [];
   const figureFiles: { file: string; figures: Figure[] }[] = [];
   const knowledgeFiles: { file: string; entries: KnowledgeEntry[] }[] = [];
+  const originFiles: { file: string; origins: SpecialOrigin[] }[] = [];
   const gateFiles: { file: string; gates: ImmortalGate[] }[] = [];
   /** 9.R5b: things that wait for a Sổ tri thức entry. */
   const knowledgeRefs: { file: string; what: string; id: string }[] = [];
@@ -286,6 +288,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === FigureFileSchema) figureFiles.push({ file, figures: parsed.data as Figure[] });
     if (schema === NationFileSchema || schema === FigureFileSchema || schema === WorldClanFileSchema || schema === RaceFileSchema) loreFiles.push({ file, items: parsed.data as { id: string; region?: string; regions?: string[] }[] });
     if (schema === KnowledgeFileSchema) knowledgeFiles.push({ file, entries: parsed.data as KnowledgeEntry[] });
+    if (schema === SpecialOriginFileSchema) originFiles.push({ file, origins: parsed.data as SpecialOrigin[] });
     if (schema === ImmortalGateFileSchema) gateFiles.push({ file, gates: parsed.data as ImmortalGate[] });
     if (schema === GlossarySchema) glossaryIds = (parsed.data as { id: string }[]).map((x) => x.id);
     if (schema === MarketFileSchema) {
@@ -555,6 +558,18 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   const allKnowledge = new Set(knowledgeFiles.flatMap((k) => k.entries.map((e) => e.id)));
   for (const { file, event } of events) {
     for (const k of [...(event.conditions.knowledge?.all ?? []), ...(event.conditions.knowledge?.none ?? [])]) knowledgeRefs.push({ file, what: `sự kiện "${event.id}"`, id: k });
+  }
+  // 9.S1: tình tiết đặc biệt have unique ids and name real khí vận, events, Sổ tri thức entries and other tình tiết.
+  const originIds = originFiles.flatMap((f) => f.origins.map((o) => o.id));
+  const allEventIds = new Set(events.map((e) => e.event.id));
+  for (const { file, origins } of originFiles) {
+    for (const o of origins) {
+      if (originIds.filter((x) => x === o.id).length > 1) problems.push({ file, level: 'error', message: `trùng id tình tiết "${o.id}"` });
+      for (const t of Object.keys(o.traitWeight)) if (traitIds && !traitIds.has(t)) problems.push({ file, level: 'error', message: `tình tiết "${o.id}" nhắc tới khí vận không tồn tại "${t}"` });
+      for (const e of o.startEvents) if (!allEventIds.has(e.event)) problems.push({ file, level: 'error', message: `tình tiết "${o.id}" mở sự kiện không tồn tại "${e.event}"` });
+      for (const x of o.exclusiveWith) if (!originIds.includes(x)) problems.push({ file, level: 'error', message: `tình tiết "${o.id}" loại trừ tình tiết lạ "${x}"` });
+      for (const k of o.unlock.requiresKnowledge) knowledgeRefs.push({ file, what: `tình tiết "${o.id}"`, id: k });
+    }
   }
   for (const r of knowledgeRefs) if (!allKnowledge.has(r.id)) problems.push({ file: r.file, level: 'error', message: `${r.what} cần tri thức lạ "${r.id}"` });
 

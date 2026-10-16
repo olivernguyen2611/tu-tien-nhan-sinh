@@ -497,7 +497,7 @@ const ADD_HOOK = new RegExp(
       `element\\.(${ELEMENTS})\\.power`, `path\\.(${PATHS})\\.(affinity|power)`,
       `craft\\.(${CRAFTS})\\.(success|yield|affinity)`,
       'heartDemonResist', 'charmResist',
-      'npcAffinityStart', 'reunionChance', 'faction\\.(chinh|ma|tan_tu|yeu|trieu_dinh|giang_ho)\\.reputation', 'karmaShift',
+      'npcAffinityStart', 'reunionChance', 'specialOriginChance', 'faction\\.(chinh|ma|tan_tu|yeu|trieu_dinh|giang_ho)\\.reputation', 'karmaShift',
       'priceDiscount', 'incomePct', 'lootPct',
       'trigger\\.cheatDeath',
       // Task 3.3: a storage bag keeps the goods when a robber wins.
@@ -1806,6 +1806,13 @@ export const BalanceSchema = z
      * a tie needs minWeight (ân/oán), kẻ thù from enemyAt; yearly reunion chance × (1 + weight/100) × livesDecay^lives;
      * kinds: how the cố nhân first feels to the player.
      */
+    /**
+     * 9.S1 Tình tiết đặc biệt hiếm: chance a life (from minLives on) draws one, + luckPer × (khí vận − 50);
+     * maxPerLife tình tiết, at most one "nền".
+     */
+    specialOrigins: z.object({
+      minLives: z.number().int().min(2), chance: probability, luckPer: z.number().min(0), maxPerLife: z.number().int().min(1),
+    }).strict(),
     karmaLedger: z.object({
       perLife: z.number().int().min(0), max: z.number().int().min(0), maxLives: z.number().int().min(1),
       minWeight: z.number().min(0).max(100), enemyAt: z.number().min(0).max(100),
@@ -3571,6 +3578,41 @@ export const ThienDaoKyFileSchema = z.object({
   }).strict()).min(1),
 }).strict();
 export type ThienDaoKyFile = z.infer<typeof ThienDaoKyFileSchema>;
+
+/**
+ * 9.S1: content/special-origins/*.json — Tình tiết đặc biệt hiếm, decided at birth (never in a first life).
+ * group: he_thong / trung_sinh / phe_vat are "nền" (at most one a life); thanh_tien and khac stack.
+ * unlock: lives played, Sổ tri thức entries, the karma the last life left. weight × traitWeight[khí vận] when held.
+ * costs and effects: stat.<x>, lifespanPct, birthSilver once at birth; other hooks act all life (lifeHooks).
+ * startEvents: follow-ups booked at an age. excludesFinger: cannot sit beside a Kim Thủ Chỉ (the Hệ thống).
+ */
+export const SPECIAL_GROUPS = ['he_thong', 'trung_sinh', 'phe_vat', 'thanh_tien', 'khac'] as const;
+export const SpecialOriginFileSchema = z.array(
+  z.object({
+    id,
+    name: z.string().min(1),
+    group: z.enum(SPECIAL_GROUPS),
+    rarity: z.enum(['hiem', 'rat_hiem', 'cuc_hiem']).default('hiem'),
+    /** Shown on the Thiên cơ biến động screen. */
+    text: z.string().min(1),
+    /** What it costs, said plainly on the same screen. */
+    costText: z.string().min(1),
+    unlock: z.object({
+      livesMin: z.number().int().min(2).default(2),
+      requiresKnowledge: ids,
+      karmaMin: z.number().optional(),
+      karmaMax: z.number().optional(),
+    }).strict().default({}),
+    weight: z.number().min(0),
+    traitWeight: z.record(id, z.number().min(0)).default({}),
+    exclusiveWith: ids,
+    excludesFinger: z.boolean().default(false),
+    costs: z.array(EffectHookSchema).default([]),
+    effects: z.array(EffectHookSchema).default([]),
+    startEvents: z.array(z.object({ event: id, atAge: z.number().int().min(0) }).strict()).default([]),
+  }).strict(),
+);
+export type SpecialOrigin = z.infer<typeof SpecialOriginFileSchema>[number];
 
 /** 9.R8: content/endings.json — kết cục of a life, in order: the first whose check holds is the ending. */
 export const EndingFileSchema = z.array(

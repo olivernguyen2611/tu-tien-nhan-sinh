@@ -1,7 +1,7 @@
 // Loads all JSON under content/ at build time and checks it with the same
 // rules as `npm run validate`.
 import {
-  AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, type Nation, FigureFileSchema, type Figure, WorldEventFileSchema, type WorldEvent, WorldClanFileSchema, type WorldClan, RaceFileSchema, type Race, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, type CombatTexts, type Market, type FateTalent, type Item, type Lineage, type MartialFile, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile, NpcTraitsFileSchema, RankingTextsSchema, type RankingTexts, RomanceFileSchema, type RomanceFile, HeartDemonFileSchema, type HeartDemonFile, RecipeFileSchema, type RecipeFile, CorePatternFileSchema, type CorePattern, NascentSoulFileSchema, type NascentSoulFile, DisciplesFileSchema, type DisciplesFile, FoundingFileSchema, type FoundingFile, HeirFileSchema, type HeirFile, ChosenFileSchema, type ChosenFile, ClanFileSchema, type ClanFile, BlessingFileSchema, type BlessingFile, RebirthTalentFileSchema, type RebirthTalentFile, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, type TraitComboFile, CodexFileSchema, type CodexFile, EndingFileSchema, type Ending, ThienDaoKyFileSchema, type ThienDaoKyFile, AchievementFileSchema, type AchievementFile, ChallengeFileSchema, type ChallengeFile, type NpcTraitsFile,
+  AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, type Nation, FigureFileSchema, type Figure, WorldEventFileSchema, type WorldEvent, WorldClanFileSchema, type WorldClan, RaceFileSchema, type Race, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, type CombatTexts, type Market, type FateTalent, type Item, type Lineage, type MartialFile, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile, NpcTraitsFileSchema, RankingTextsSchema, type RankingTexts, RomanceFileSchema, type RomanceFile, HeartDemonFileSchema, type HeartDemonFile, RecipeFileSchema, type RecipeFile, CorePatternFileSchema, type CorePattern, NascentSoulFileSchema, type NascentSoulFile, DisciplesFileSchema, type DisciplesFile, FoundingFileSchema, type FoundingFile, HeirFileSchema, type HeirFile, ChosenFileSchema, type ChosenFile, ClanFileSchema, type ClanFile, BlessingFileSchema, type BlessingFile, RebirthTalentFileSchema, type RebirthTalentFile, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, type TraitComboFile, CodexFileSchema, type CodexFile, EndingFileSchema, type Ending, ThienDaoKyFileSchema, type ThienDaoKyFile, SpecialOriginFileSchema, type SpecialOrigin, AchievementFileSchema, type AchievementFile, ChallengeFileSchema, type ChallengeFile, type NpcTraitsFile,
   BalanceSchema, EventFileSchema, FamilyActionFileSchema, GlossarySchema, NpcActFileSchema, EffectLabelsSchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema,
   type Balance, type FamilyAction, type NpcAct, type EffectLabels, type GameEvent, type Glossary, type LifeTexts, type Names, type Origin, type StatExtremesFile, type Trait, type World,
 } from './schemas';
@@ -80,6 +80,8 @@ export interface Content {
   endings?: Ending[];
   /** 9.R10: Thiên Đạo Ký templates. */
   thienDaoKy?: ThienDaoKyFile;
+  /** 9.S1: Tình tiết đặc biệt hiếm, every special-origins/*.json. */
+  specialOrigins?: SpecialOrigin[];
   /** Task 5b.5: thành tựu, huy hiệu cuối đời, cáo phó. */
   achievements: AchievementFile;
   /** Task 5b.6: thử thách tuần of this world. */
@@ -211,6 +213,7 @@ export function loadContent(worldId: string = DEFAULT_WORLD_ID): Content {
     traitCombos: TraitComboFileSchema.parse(files['trait-combos.json']),
     codex: CodexFileSchema.parse(files['codex.json']),
     endings: EndingFileSchema.parse(files['endings.json'] ?? []),
+    specialOrigins: Object.entries(files).filter(([p]) => p.startsWith('special-origins/')).sort(([a], [b]) => a.localeCompare(b)).flatMap(([, d]) => SpecialOriginFileSchema.parse(d)),
     thienDaoKy: files['thien-dao-ky.json'] ? ThienDaoKyFileSchema.parse(files['thien-dao-ky.json']) : undefined,
     achievements: AchievementFileSchema.parse(files['achievements.json']),
     challenges: ChallengeFileSchema.parse(files[`${dir}challenges.json`] ?? []),

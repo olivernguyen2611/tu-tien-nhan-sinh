@@ -1,0 +1,38 @@
+[
+  {
+    "id": "tuc_tue",
+    "name": "Túc tuệ",
+    "group": "khac",
+    "rarity": "hiem",
+    "text": "Đứa trẻ chưa biết nói đã biết nhìn người. Trong đầu nó có những mảnh ký ức không thuộc về kiếp này: một con đường núi, một chén trà nguội, một cái tên.",
+    "costText": "Già trước tuổi, khó vui như trẻ con khác; nghĩ nhiều thì tâm ma cũng dễ bén.",
+    "weight": 3,
+    "traitWeight": { "linh_lung_tam": 2, "dai_tri_nhuoc_ngu": 2 },
+    "costs": [{ "hook": "stat.happiness", "add": -10 }, { "hook": "heartDemonResist", "add": -0.05 }],
+    "effects": [{ "hook": "stat.intellect", "add": 12 }, { "hook": "stat.comprehension", "add": 6 }, { "hook": "eventWeight.study", "mul": 1.5 }]
+  },
+  {
+    "id": "long_mach_duoi_nha",
+    "name": "Long mạch dưới nền nhà",
+    "group": "khac",
+    "rarity": "rat_hiem",
+    "text": "Căn nhà nơi ngươi chào đời đè đúng một nhánh long mạch nhỏ. Đêm đêm đất ấm, cỏ trước sân xanh quanh năm.",
+    "costText": "Kẻ tham dòm ngó: trộm cướp và kẻ lừa đảo tìm tới nhiều hơn.",
+    "unlock": { "livesMin": 3 },
+    "weight": 2,
+    "costs": [{ "hook": "eventWeight.plunder", "mul": 1.6 }, { "hook": "eventWeight.scam", "mul": 1.4 }],
+    "effects": [{ "hook": "cultivationSpeed", "add": 0.1 }, { "hook": "stat.health", "add": 6 }, { "hook": "eventWeight.herb", "mul": 1.5 }]
+  },
+  {
+    "id": "thien_sat_menh",
+    "name": "Mệnh phạm thiên sát",
+    "group": "khac",
+    "rarity": "rat_hiem",
+    "text": "Thầy bói xem lá số, tay run làm đổ chén trà: \"Sát khí xung thiên. Đứa nhỏ này hoặc thành đại hiệp, hoặc chết sớm.\"",
+    "costText": "Người thân dễ gặp họa; tai ương tìm tới thường hơn.",
+    "unlock": { "livesMin": 3, "karmaMax": -20 },
+    "weight": 2,
+    "costs": [{ "hook": "eventWeight.family_tragedy", "mul": 1.8 }, { "hook": "eventWeight.mishap", "mul": 1.3 }],
+    "effects": [{ "hook": "combatPower", "add": 0.15 }, { "hook": "stat.physique", "add": 8 }]
+  }
+]

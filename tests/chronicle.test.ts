@@ -44,7 +44,7 @@ describe('Sổ luân hồi (9.R8)', () => {
 
   it('tolerates a missing or broken store and keeps it across reads', () => {
     expect(readChronicle(undefined)).toEqual(EMPTY_CHRONICLE);
-    expect(readChronicle({ lives: [null, { key: 1 }], endings: [3, 'x'] })).toEqual({ lives: [], endings: ['x'], regions: [] });
+    expect(readChronicle({ lives: [null, { key: 1 }], endings: [3, 'x'] })).toEqual({ lives: [], endings: ['x'], regions: [], special: {} });
     const store = fakeStore();
     expect(readMeta(store).chronicle).toEqual(EMPTY_CHRONICLE);
     recordChronicle(store, chronicleOf(dead(60), content, 1));
