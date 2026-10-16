@@ -46,6 +46,15 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
   if (c.region && c.region.length > 0 && (!content || !c.region.includes(currentRegion(state, content)?.id ?? ''))) return false;
   if (c.anyOf && !c.anyOf.some((sub) => meets(state, sub, content))) return false;
   if (c.stage?.min !== undefined && state.cult.stage < c.stage.min) return false;
+  // 9.1: tầng and lối sống.
+  if (c.tier?.length || c.minTier || c.maxTier) {
+    const order = content?.world.tiers.map((t) => t.id) ?? [];
+    const at = order.indexOf(state.tier ?? order[0] ?? '');
+    if (c.tier?.length && !c.tier.includes(state.tier ?? order[0] ?? '')) return false;
+    if (c.minTier && at < order.indexOf(c.minTier)) return false;
+    if (c.maxTier && order.indexOf(c.maxTier) >= 0 && at > order.indexOf(c.maxTier)) return false;
+  }
+  if (c.lifestyle?.length && !c.lifestyle.some((l) => state.lifestyles?.[l]?.active)) return false;
   if (c.stage?.max !== undefined && state.cult.stage > c.stage.max) return false;
   if (c.career) {
     const k = c.career;

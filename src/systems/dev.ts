@@ -5,6 +5,7 @@ import { bringBack } from './karmaLedger';
 import { originDef, rollSpecialOrigin } from './specialOrigin';
 import { applyOutcome } from './events/engine';
 import { levelFor, systemDef } from './heThong';
+import { enterTier } from './tiers';
 import type { Content } from '../core/content';
 import { APTITUDES, FightSchema, MORTAL_STATS } from '../core/schemas';
 import { advanceYear } from '../core/state';
@@ -325,6 +326,11 @@ export function devDrift(state: GameState, add: number): GameState {
 export function devMerit(state: GameState, id: string, add: number): GameState {
   const points = { ...state.merit?.points, [id]: Math.max(0, (state.merit?.points[id] ?? 0) + add) };
   return devLog({ ...state, merit: { points, marks: state.merit?.marks ?? [] } }, `${id} +${add}`);
+}
+
+/** 9.1: move the life to a tầng (its screen shows; no realm change). */
+export function devSetTier(state: GameState, content: Content, tierId: string): GameState {
+  return devLog(enterTier(state, content, tierId), `tầng ${tierId}`);
 }
 
 /** Set or clear a flag. */

@@ -150,6 +150,12 @@ export interface GameState {
    */
   /** 9.S5: points on each thành thần path, and the marks passed (milestones "<id>:<at>", "<id>:ascend", "<id>:miss"). */
   merit?: { points: Record<string, number>; marks: string[] };
+  /** 9.1: tầng the life is in, the age it entered each, and a tier just entered whose screen is not shown yet. */
+  tier?: string;
+  tierHistory?: Record<string, number>;
+  tierScreen?: string | null;
+  /** 9.1: lối sống (deep lives) by id: first age, and whether it holds now. */
+  lifestyles?: Record<string, { since: number; active: boolean }>;
   trungSinh?: { memories: { id: string; age: number; recalled: boolean; state: 'waiting' | 'done' | 'broken'; false: boolean }[]; drift: number };
   /**
    * 9.S2 Hệ thống bound to this life: points, level (index into levels), the task in hand (until = last age),

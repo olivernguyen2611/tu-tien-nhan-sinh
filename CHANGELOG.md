@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### 9.1: Tầng và lối sống (2026-10-16)
+- Engine có khái niệm **tầng (cõi)**: Phàm gian → Tu chân giới → Linh giới (còn khóa). Tầng chỉ đi lên. Nhập đạo bằng bất kỳ cửa nào (linh căn, kỳ vật, Ngũ khí, Phật duyên…) đều qua một hàm chung, ghi tuổi vào tầng, hiện **màn nhập đạo** toàn màn hình kèm tóm tắt những năm ở phàm gian.
+- **Lối sống** (nhiều cái cùng lúc): Giang hồ, Quan trường, Thương lộ, Y lộ, Quân ngũ, Tu tiên; bật khi thỏa điều kiện, nhớ tuổi bắt đầu.
+- Dữ liệu ở `world.json` (`tiers`, `lifestyles`, kèm danh sách nút dock cho 9.7). Điều kiện sự kiện mới: `tier`, `minTier`, `maxTier`, `lifestyle`; validate báo tầng hoặc lối sống lạ.
+- **Save v4:** save cũ tự xếp vào Phàm gian, hoặc Tu chân giới nếu đã có cảnh giới; không hiện màn nhập đạo cho save cũ. Developer Mode: chuyển tầng.
+- Test: `tests/tiers.test.ts`.
+
 ### 9.S5: Đường thành thần, thành tiên cuối đời (2026-10-16)
 - 4 con đường không phải tu luyện cảnh giới, kiếp nào cũng đi được (phàm nhân hay tu sĩ): **Công đức** (sống thiện, làm thầy thuốc), **Hương hỏa** (được dân nhớ ơn, lập tông có đức), **Long khí** (làm quan, được triều đình trọng), **Văn đạo** (trí tuệ, ngộ tính cực cao, làm quan văn).
 - Mỗi năm sống đúng đạo của đường nào thì tích điểm đường ấy; sự kiện cũng cộng được (hiệu ứng mới `merit`). Hai mốc giữa đường có sự kiện nhỏ (dân lập miếu, thơ được hát…). Đủ ngưỡng và từ 50 tuổi: sự kiện **thành thần / thành tiên**, nhận thì đời kết thúc bằng kết cục riêng, từ chối thì sống thêm. Gần hết thọ mà mới được nửa đường: sự kiện lỡ duyên, rơi về phàm.

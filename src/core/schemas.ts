@@ -49,6 +49,12 @@ const BaseConditionsSchema = z
     /** innate (9.R4a): the untested root born with the life is usable (true) or not (false). */
     /** 9.R5b: Sổ tri thức entries this life knows (all) or does not know (none). */
     knowledge: z.object({ all: ids, none: ids }).partial().strict().optional(),
+    /** 9.1: in one of these tầng; at or past / at or below a tầng (world.json tiers order). */
+    tier: ids,
+    minTier: id.optional(),
+    maxTier: id.optional(),
+    /** 9.1: living one of these lối sống now. */
+    lifestyle: ids,
     /** 9.R7e: a sự kiện thiên hạ is under way (any of these ids; at this phase index when given). */
     worldEvent: z.object({ id: ids, phase: z.number().int().min(0).optional() }).strict().optional(),
     root: z.object({ tested: z.boolean().optional(), usable: z.boolean().optional(), minElements: z.number().int().min(1).optional(), innate: z.boolean().optional() }).strict().optional(),
@@ -461,6 +467,20 @@ export const WorldSchema = z
     sectRecruitEvent: z.string().regex(/^[a-z0-9_]+$/).optional(),
     /** Event booked for every life at an age in balance.roots.testAge (task 2.2). */
     rootTestEvent: z.string().regex(/^[a-z0-9_]+$/).optional(),
+    /**
+     * 9.1 Tầng (cõi), in order: the life is in the highest open one whose entry holds, and never drops back.
+     * `locked` tiers are not reachable yet (Linh giới). `dock`: buttons shown in this tier (used from 9.7).
+     */
+    tiers: z.array(z.object({
+      id: z.string().regex(/^[a-z0-9_]+$/), name: z.string().min(1), entry: ConditionsSchema.default({}),
+      dock: z.array(z.string().min(1)).default([]), locked: z.boolean().default(false),
+      /** Shown on the full-screen "nhập đạo" card when the life enters this tier. */
+      enterText: z.string().optional(),
+    }).strict()).default([]),
+    /** 9.1 Lối sống: the deep lives one is in (several at once), on while `entry` holds; the first age is kept. */
+    lifestyles: z.array(z.object({
+      id: z.string().regex(/^[a-z0-9_]+$/), name: z.string().min(1), entry: ConditionsSchema,
+    }).strict()).default([]),
   })
   .strict();
 export type World = z.infer<typeof WorldSchema>;

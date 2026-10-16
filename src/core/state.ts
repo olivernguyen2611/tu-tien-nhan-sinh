@@ -29,6 +29,7 @@ import { pastTiesFor, reunionYear } from '../systems/karmaLedger';
 import { systemYear } from '../systems/heThong';
 import { trungSinhYear } from '../systems/trungSinh';
 import { thanDaoYear } from '../systems/thanDao';
+import { syncTier } from '../systems/tiers';
 import { withCheckpoints } from '../systems/rewind';
 import { awakenGoldenFinger } from '../systems/goldenFinger';
 import { goldenFingerYear } from '../systems/fingerActions';
@@ -206,14 +207,17 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     log: [],
   };
   state.log.push({ age: 0, lines: [{ text: fillTemplate(origin.birthText, state), tone: 'normal' }] });
-  return state;
+  // 9.1: born in the first tầng.
+  return syncTier(state, content);
 }
 
 const withYear = (s: GameState): GameState => ({ ...s, log: [...s.log, { age: s.character.age, lines: [] }] });
 
 /** One year passes; at most one event is rolled for the player to answer. */
 export function advanceYear(state: GameState, content: Content): GameState {
-  const next = advanceYearOnce(state, content);
+  const once = advanceYearOnce(state, content);
+  // 9.1: tầng and lối sống follow what the year changed.
+  const next = once === state ? once : syncTier(once, content);
   // Developer mode records a snapshot of every year (backlog 6).
   if (next !== state) notifyYear(next);
   return next;
