@@ -253,6 +253,8 @@ export function hookActive(e: Hook, state: GameState, content: Content): boolean
   if (e.activeUntil && realmIndex(content, state.cult.realm) >= realmIndex(content, e.activeUntil.realm)) return false;
   if (e.activeIf?.minRootElements !== undefined && (state.cult.root?.elements.length ?? 0) < e.activeIf.minRootElements) return false;
   if (e.activeIf?.daoHeartBelow !== undefined && state.aptitudes.daoHeart >= e.activeIf.daoHeartBelow) return false;
+  if (e.activeIf?.flag && !state.flags[e.activeIf.flag]) return false;
+  if (e.activeIf?.noFlag && state.flags[e.activeIf.noFlag]) return false;
   return true;
 }
 

@@ -8,6 +8,14 @@
 
 ## [Chưa phát hành]
 
+### 9.S4: Phế vật nghịch tập (2026-10-16)
+- 5 tình tiết **Phế vật** (mở từ kiếp 3): Nghịch cảnh luyện thể, Ma công nghịch tu, Thôn phệ dị biến, Đan độc chi thể, Huyết mạch ẩn.
+- Nửa đời đầu chịu khổ: tu luyện chậm, đột phá khó; chuỗi sự kiện **sỉ nhục** (10 tuổi) → **thư từ hôn** (18 tuổi) → **bị đuổi khỏi tông môn hoặc nhà** (20 tuổi) → **thức tỉnh** con đường riêng (24 tuổi).
+- Thức tỉnh là một lần thử theo chỉ số; thất bại thì trọng thương và vài năm sau mới có cơ hội lại (có thể chết vì nó); từ chối thì sống tiếp như phàm nhân, cái giá vẫn còn. Thức tỉnh xong, cái giá mất và tu luyện bứt phá giữa đời.
+- Giữ luật linh căn bẩm sinh: chỉ **Huyết mạch ẩn** (kỳ ngộ lớn) mới cho linh căn; các đường khác với người không linh căn thì đi võ đạo, rèn thân.
+- Móc hiệu ứng mới: `activeIf.flag` / `activeIf.noFlag` (chỉ có tác dụng sau / trước khi có cờ); thẻ Thiên cơ ghi rõ "sau khi thức tỉnh" / "cho tới khi thức tỉnh".
+- Test: `tests/phe-vat.test.ts`.
+
 ### 9.S3: Trùng sinh (2026-10-16)
 - Tình tiết **Trùng sinh** (mở từ kiếp 3). Ở màn Thiên cơ biến động người chơi chọn một trong hai:
   - **Trùng sinh về tuổi nhỏ (thật):** mang theo 5 ký ức về những chuyện sắp xảy ra (bảo vật, tai họa, kẻ thù khi còn non, quý nhân, cơ duyên), nhớ lại dần theo cảnh giới. Tới đúng tuổi, ký ức thành sự kiện để ngươi hành động. Kinh nghiệm tu luyện kiếp trước giúp tu nhanh, đột phá dễ, nhưng chỉ tới Kim Đan. Không mang theo công pháp.

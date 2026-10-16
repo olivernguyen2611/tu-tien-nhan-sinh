@@ -1,5 +1,7 @@
 {
   "activeFrom": "từ {age} tuổi",
+  "activeFlag": "sau khi thức tỉnh",
+  "activeNoFlag": "cho tới khi thức tỉnh",
   "hooks": {
     "stat.*": { "text": "{name} {v}", "fmt": "int", "names": "stats" },
     "cultivationSpeed": { "text": "Tốc độ tu luyện {v}", "fmt": "pct" },

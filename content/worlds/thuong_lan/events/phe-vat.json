@@ -1,0 +1,509 @@
+[
+ {
+  "id": "pv_si_nhuc",
+  "category": "fortune",
+  "title": "Phế vật",
+  "text": "Trong học đường, thầy đọc tên từng đứa. Tới lượt {name}, cả lớp cười ồ: \"Phế vật cũng đòi học?\"",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Nghiến răng chịu đựng",
+    "result": {
+     "text": "Ngươi không nói gì. Đêm ấy ngươi ngồi bên giếng đến sáng.",
+     "effects": {
+      "stat.daoHeart": 4,
+      "stat.happiness": -6
+     }
+    }
+   },
+   {
+    "text": "Đánh nhau với đứa cười to nhất",
+    "result": {
+     "text": "Ngươi thua, mặt sưng một tuần. Nhưng từ đó đứa kia không cười nữa.",
+     "effects": {
+      "stat.physique": 2,
+      "stat.health": -5,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Cười theo cả lớp",
+    "result": {
+     "text": "Cười xong, ngực vẫn nặng. Ngươi bắt đầu tin mình đúng là phế vật.",
+     "effects": {
+      "stat.happiness": -3,
+      "stat.daoHeart": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pv_huy_hon",
+  "category": "fortune",
+  "title": "Thư từ hôn",
+  "text": "Nhà bên kia sai người mang thư tới, lời lẽ khách sáo: hôn ước định từ thuở nhỏ xin coi như chưa từng có. Ai cũng biết vì sao.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Nhận thư, chúc họ tìm được người xứng đáng",
+    "result": {
+     "text": "Ngươi nói rất bình thản. Người đưa thư lại là kẻ thấy ngượng.",
+     "effects": {
+      "stat.daoHeart": 5,
+      "stat.happiness": -5,
+      "stat.charm": 2
+     }
+    }
+   },
+   {
+    "text": "Xé thư trước mặt người đưa tin",
+    "result": {
+     "text": "Mảnh giấy bay đầy sân. Cả trấn bàn tán ba tháng.",
+     "effects": {
+      "stat.happiness": -3,
+      "stat.charm": -2,
+      "stat.physique": 1
+     }
+    }
+   },
+   {
+    "text": "Thề rằng ba mươi năm sau họ sẽ hối hận",
+    "result": {
+     "text": "Câu thề nói ra rồi thì không rút lại được. Từ đó ngươi tập luyện như điên.",
+     "effects": {
+      "stat.daoHeart": 3,
+      "stat.health": -3,
+      "stat.happiness": -4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pv_truc_xuat",
+  "category": "fortune",
+  "title": "Bị đuổi đi",
+  "text": "Không ai muốn nuôi một kẻ vô dụng mãi. Người ta mời ngươi đi, lời lẽ lịch sự hơn ngươi tưởng.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Lặng lẽ thu dọn rời tông",
+    "result": {
+     "text": "Ngươi xuống núi với một tay nải. Không ai tiễn.",
+     "effects": {
+      "leaveSect": true,
+      "stat.happiness": -8,
+      "stat.daoHeart": 4
+     }
+    },
+    "requires": {
+     "sect": {
+      "member": true
+     }
+    }
+   },
+   {
+    "text": "Rời nhà, tự lập",
+    "result": {
+     "text": "Ngươi bước ra khỏi cổng với ít bạc lẻ. Trời rộng hơn ngươi nghĩ.",
+     "effects": {
+      "silver": -20,
+      "stat.happiness": -6,
+      "stat.daoHeart": 4
+     }
+    },
+    "requires": {
+     "sect": {
+      "member": false
+     }
+    }
+   },
+   {
+    "text": "Quỳ xin ở lại",
+    "result": {
+     "text": "Ngươi quỳ ba ngày. Họ cho ở lại, ở kho củi. Ngươi chưa bao giờ thấy mình nhỏ bé như thế.",
+     "effects": {
+      "stat.happiness": -10,
+      "stat.daoHeart": -4,
+      "stat.health": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pv_tinh_nghich_canh",
+  "category": "fortune",
+  "title": "Nghịch cảnh luyện thể: thức tỉnh",
+  "text": "Thân thể tàn tạ đến cùng cực thì sinh ra biến: xương cốt bắt đầu hút lấy chính nỗi đau.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Lấy thân thử đau, cưỡng phá cửa ải",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Xương cốt rên lên rồi im bặt. Thân thể ngươi từ nay đã khác.",
+     "effects": {
+      "stat.physique": 10,
+      "stat.health": 5,
+      "stat.daoHeart": 4,
+      "setFlags": [
+       "phe_vat_tinh",
+       "pv_nghich_canh"
+      ],
+      "martialPromote": true
+     }
+    },
+    "fail": {
+     "text": "Ngươi gãy ba cái xương sườn. Nằm liệt nửa năm, nhưng thân thể đã quen đau thêm một chút.",
+     "effects": {
+      "stat.health": -25,
+      "stat.physique": 2,
+      "followUp": {
+       "event": "pv_tinh_nghich_canh",
+       "afterYears": [
+        3,
+        6
+       ]
+      }
+     }
+    }
+   },
+   {
+    "text": "Không dám thử, sống tiếp như phàm nhân",
+    "result": {
+     "text": "Ngươi lùi lại. Cơ hội như con chim, bay qua cửa sổ rồi thì thôi.",
+     "effects": {
+      "stat.daoHeart": -4,
+      "stat.happiness": 2,
+      "setFlags": [
+       "phe_vat_bo"
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pv_tinh_ma_nghich",
+  "category": "fortune",
+  "title": "Ma công nghịch tu: thức tỉnh",
+  "text": "Một quyển ma công rách nát rơi vào tay ngươi, mỗi chữ đều viết ngược.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Cho linh lực chảy ngược theo ma công",
+    "check": {
+     "stat": "stat.daoHeart",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Kinh mạch đảo chiều, linh lực cuồn cuộn như sông chảy ngược núi. Ngươi bật cười, tiếng cười hơi lạ.",
+     "effects": {
+      "stat.daoHeart": -3,
+      "stat.comprehension": 6,
+      "heartDemon": 4,
+      "karma": -5,
+      "setFlags": [
+       "phe_vat_tinh",
+       "pv_ma_nghich"
+      ]
+     }
+    },
+    "fail": {
+     "text": "Linh lực đảo chiều giữa chừng rồi dội ngược, ngươi thổ huyết.",
+     "effects": {
+      "stat.health": -28,
+      "heartDemon": 3,
+      "followUp": {
+       "event": "pv_tinh_ma_nghich",
+       "afterYears": [
+        4,
+        8
+       ]
+      }
+     }
+    },
+    "requires": {
+     "root": {
+      "usable": true
+     }
+    }
+   },
+   {
+    "text": "Thân không linh căn, ma công không nhập được",
+    "result": {
+     "text": "Ma công cần linh căn để chảy ngược. Ngươi đốt quyển sách, dồn sức vào rèn thân.",
+     "effects": {
+      "stat.physique": 5,
+      "stat.daoHeart": 3,
+      "setFlags": [
+       "phe_vat_tinh",
+       "pv_ma_nghich"
+      ]
+     }
+    },
+    "requires": {
+     "root": {
+      "usable": false
+     }
+    }
+   },
+   {
+    "text": "Không dám thử, sống tiếp như phàm nhân",
+    "result": {
+     "text": "Ngươi lùi lại. Cơ hội như con chim, bay qua cửa sổ rồi thì thôi.",
+     "effects": {
+      "stat.daoHeart": -4,
+      "stat.happiness": 2,
+      "setFlags": [
+       "phe_vat_bo"
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pv_tinh_thon_phe",
+  "category": "fortune",
+  "title": "Thôn phệ dị biến: thức tỉnh",
+  "text": "Ngươi nhặt được một mảnh tinh thạch lạ. Đan điền thủng của ngươi bỗng hút nó vào như cá gặp nước.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Để đan điền nuốt trọn tinh thạch",
+    "check": {
+     "stat": "stat.health",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Tinh thạch tan vào đan điền, vá kín chỗ thủng. Từ nay đan điền của ngươi nuốt được cả thứ người khác không dám đụng.",
+     "effects": {
+      "cultProgress": 40,
+      "stat.comprehension": 4,
+      "setFlags": [
+       "phe_vat_tinh",
+       "pv_thon_phe"
+      ]
+     }
+    },
+    "fail": {
+     "text": "Dị lực xé đan điền. Ngươi ngất ba ngày.",
+     "effects": {
+      "stat.health": -26,
+      "followUp": {
+       "event": "pv_tinh_thon_phe",
+       "afterYears": [
+        3,
+        7
+       ]
+      }
+     }
+    },
+    "requires": {
+     "root": {
+      "usable": true
+     }
+    }
+   },
+   {
+    "text": "Nuốt tinh thạch vào thân, không linh căn thì luyện vào máu thịt",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Tinh thạch tan vào máu thịt. Ngươi không có linh căn, nhưng thân thể này từ nay nuốt được dị lực.",
+     "effects": {
+      "stat.physique": 8,
+      "stat.health": 4,
+      "setFlags": [
+       "phe_vat_tinh",
+       "pv_thon_phe"
+      ],
+      "martialPromote": true
+     }
+    },
+    "fail": {
+     "text": "Dị lực xé thân, ngươi suýt chết.",
+     "effects": {
+      "stat.health": -28,
+      "followUp": {
+       "event": "pv_tinh_thon_phe",
+       "afterYears": [
+        3,
+        7
+       ]
+      }
+     }
+    },
+    "requires": {
+     "root": {
+      "usable": false
+     }
+    }
+   },
+   {
+    "text": "Không dám thử, sống tiếp như phàm nhân",
+    "result": {
+     "text": "Ngươi lùi lại. Cơ hội như con chim, bay qua cửa sổ rồi thì thôi.",
+     "effects": {
+      "stat.daoHeart": -4,
+      "stat.happiness": 2,
+      "setFlags": [
+       "phe_vat_bo"
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pv_tinh_dan_the",
+  "category": "fortune",
+  "title": "Đan độc chi thể: thức tỉnh",
+  "text": "Hai mươi năm thuốc tích trong cơ thể bỗng sôi lên. Ngươi sốt như lửa đốt.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Dẫn dược lực vào kinh mạch",
+    "check": {
+     "stat": "stat.health",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Dược lực hai mươi năm nổ tung một lượt, rồi hóa thành đan thể. Từ nay ngươi ngửi là biết thuốc.",
+     "effects": {
+      "stat.health": 8,
+      "stat.comprehension": 4,
+      "craftXp": {
+       "alchemy": 3
+      },
+      "setFlags": [
+       "phe_vat_tinh",
+       "pv_dan_the"
+      ]
+     }
+    },
+    "fail": {
+     "text": "Dược độc phát tác, da ngươi tím đen cả tháng.",
+     "effects": {
+      "stat.health": -25,
+      "followUp": {
+       "event": "pv_tinh_dan_the",
+       "afterYears": [
+        3,
+        6
+       ]
+      }
+     }
+    }
+   },
+   {
+    "text": "Không dám thử, sống tiếp như phàm nhân",
+    "result": {
+     "text": "Ngươi lùi lại. Cơ hội như con chim, bay qua cửa sổ rồi thì thôi.",
+     "effects": {
+      "stat.daoHeart": -4,
+      "stat.happiness": 2,
+      "setFlags": [
+       "phe_vat_bo"
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pv_tinh_huyet_mach",
+  "category": "fortune",
+  "title": "Huyết mạch ẩn: thức tỉnh",
+  "text": "Đêm trăng tròn, vết bớt sau gáy nóng rực. Trong máu ngươi có thứ gì đó thức dậy, rất cổ xưa.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Để huyết mạch thức tỉnh",
+    "check": {
+     "stat": "stat.daoHeart",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Máu sôi lên rồi lắng xuống. Một thứ cổ xưa trong ngươi đã mở mắt.",
+     "effects": {
+      "stat.daoHeart": 4,
+      "stat.physique": 6,
+      "grantRoot": true,
+      "setFlags": [
+       "phe_vat_tinh",
+       "pv_huyet_mach"
+      ]
+     }
+    },
+    "fail": {
+     "text": "Huyết mạch dội ngược, ngươi nôn ra máu đen.",
+     "effects": {
+      "stat.health": -26,
+      "followUp": {
+       "event": "pv_tinh_huyet_mach",
+       "afterYears": [
+        4,
+        8
+       ]
+      }
+     }
+    }
+   },
+   {
+    "text": "Không dám thử, sống tiếp như phàm nhân",
+    "result": {
+     "text": "Ngươi lùi lại. Cơ hội như con chim, bay qua cửa sổ rồi thì thôi.",
+     "effects": {
+      "stat.daoHeart": -4,
+      "stat.happiness": 2,
+      "setFlags": [
+       "phe_vat_bo"
+      ]
+     }
+    }
+   }
+  ]
+ }
+]

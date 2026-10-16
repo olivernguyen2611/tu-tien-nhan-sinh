@@ -50,6 +50,8 @@ export function describeEffect(e: EffectHook, content: Content): EffectLine | nu
   let text = template.replace('{name}', name).replace('{years}', String(e.years ?? '')).replace('{v}', format(l.fmt, v));
   text = text.charAt(0).toUpperCase() + text.slice(1);
   if (e.activeFrom) text += ` (${labels.activeFrom.replace('{age}', String(e.activeFrom.age))})`;
+  if (e.activeIf?.flag) text += ` (${labels.activeFlag})`;
+  if (e.activeIf?.noFlag) text += ` (${labels.activeNoFlag})`;
   const up = e.mul !== undefined ? e.mul > 1 : e.add === undefined || e.add >= 0;
   const bad = !!l.bad || labels.badWhenUp.includes(e.hook);
   return { text, good: e.mul === 0 && bad ? true : up !== bad };

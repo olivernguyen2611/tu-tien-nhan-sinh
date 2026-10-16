@@ -540,7 +540,8 @@ export const EffectHookSchema = z
     activeUntil: z.object({ realm: id }).strict().optional(),
     /** Only while these hold (task 2.4: Ngũ Hành Luân Chuyển Kinh, Tàng Phong Kiếm Kinh). */
     activeIf: z
-      .object({ minRootElements: z.number().int().min(1).optional(), daoHeartBelow: z.number().optional() })
+      // 9.S4: flag / noFlag: only once (or until) a flag is set, e.g. a Phế vật's hidden path awakens.
+      .object({ minRootElements: z.number().int().min(1).optional(), daoHeartBelow: z.number().optional(), flag: id.optional(), noFlag: id.optional() })
       .strict()
       .optional(),
   })
@@ -3779,6 +3780,9 @@ const EffectLabelSchema = z
 export const EffectLabelsSchema = z
   .object({
     activeFrom: z.string().min(1),
+    /** 9.S4: a flag-gated hook, e.g. "sau khi thức tỉnh" / "trước khi thức tỉnh". */
+    activeFlag: z.string().min(1).default('khi có cơ duyên'),
+    activeNoFlag: z.string().min(1).default('cho tới khi có cơ duyên'),
     hooks: z.record(z.string(), EffectLabelSchema),
     names: z.record(z.string(), z.record(z.string(), z.string())),
     badWhenUp: z.array(z.string()).default([]),
