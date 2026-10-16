@@ -315,6 +315,12 @@ export function devSystemBetray(state: GameState, content: Content): GameState {
   return devLog({ ...r.state, system: { ...state.system, gone: true, task: null } }, `hệ thống phản bội: ${r.text}`);
 }
 
+/** 9.S3: the past drifts further (Trùng sinh). */
+export function devDrift(state: GameState, add: number): GameState {
+  if (!state.trungSinh) return state;
+  return devLog({ ...state, trungSinh: { ...state.trungSinh, drift: Math.max(0, Math.min(100, state.trungSinh.drift + add)) } }, `lịch sử lệch ${add > 0 ? '+' : ''}${add}`);
+}
+
 /** Set or clear a flag. */
 export function devSetFlag(state: GameState, flag: string, on: boolean): GameState {
   const id = flag.trim();

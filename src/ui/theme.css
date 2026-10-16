@@ -987,3 +987,15 @@ html[data-motion='reduce'][data-fx]::after { display: none; }
 /* 9.S2 Hệ thống panel */
 .system-panel .bar { margin: 4px 0 10px; }
 .system-panel .bar > span { background: var(--gold); }
+
+/* 9.S3 Thiên cơ variants */
+.thien-co-variants { margin-top: 12px; }
+.variant-card { text-align: left; font: inherit; color: inherit; cursor: pointer; }
+.variant-card:disabled:not(.picked) { opacity: 0.45; cursor: default; }
+.variant-card.picked { outline: 2px solid var(--gold); }
+
+/* 9.S3 Ký ức kiếp trước */
+.memory-list { list-style: none; padding: 0; margin: 8px 0; display: grid; gap: 8px; }
+.memory-list .memory { display: grid; gap: 2px; padding: 8px 10px; border-radius: 8px; background: var(--surface-2); }
+.memory-list .memory.done { opacity: 0.7; }
+.memory-list .memory.broken { opacity: 0.55; text-decoration: line-through; }

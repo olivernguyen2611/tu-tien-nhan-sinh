@@ -16,6 +16,7 @@ import { GoldenFingerPanel } from '../components/GoldenFingerPanel';
 import { fingerActionViews } from '../../systems/fingerActions';
 import { systemActions, systemDef } from '../../systems/heThong';
 import { SystemPanel } from '../components/SystemPanel';
+import { MemoryPanel } from '../components/MemoryPanel';
 import { MarketPanel, type MarketAction } from '../components/MarketPanel';
 import { MapPanel } from '../components/MapPanel';
 import { currentRegion } from '../../systems/regions';
@@ -144,6 +145,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const [bagOpen, setBagOpen] = useState(false);
   const [fingerOpen, setFingerOpen] = useState(false);
   const [systemOpen, setSystemOpen] = useState(false);
+  const [memoryOpen, setMemoryOpen] = useState(false);
   const [marketOpen, setMarketOpen] = useState(false);
   const [mapOpen, setMapOpen] = useState(false);
   const [cultivateOpen, setCultivateOpen] = useState(false);
@@ -153,7 +155,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   }, [!!state.cult.coreForming, !!state.cult.heartDemonTrial, !!state.martial.quest?.game]);
   const [sectOpen, setSectOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
-  const anySheet = profileOpen || familyOpen || bagOpen || fingerOpen || systemOpen || marketOpen || mapOpen || cultivateOpen || sectOpen || devOpen;
+  const anySheet = profileOpen || familyOpen || bagOpen || fingerOpen || systemOpen || memoryOpen || marketOpen || mapOpen || cultivateOpen || sectOpen || devOpen;
   useBackClose(anySheet, () => {
     setProfileOpen(false); setFamilyOpen(false); setBagOpen(false); setFingerOpen(false); setMarketOpen(false);
     setMapOpen(false); setCultivateOpen(false); setSectOpen(false); setDevOpen(false);
@@ -216,6 +218,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             <button class={`icon-btn finger-btn${systemActions(state, content).some((a) => !a.blocked && a.id !== 'quit') ? ' ready' : ''}`}
               aria-label={heThong.name} title={heThong.name} onClick={() => setSystemOpen(true)}>統</button>
           )}
+          {state.trungSinh && <button class="icon-btn" aria-label="Ký ức kiếp trước" title="Ký ức kiếp trước" onClick={() => setMemoryOpen(true)}>憶</button>}
           <button class="icon-btn" aria-label="Túi đồ" title="Túi đồ" onClick={() => setBagOpen(true)}>囊</button>
           <button class="icon-btn" aria-label="Sổ lưu" title="Sổ lưu" onClick={onSaves}>簿</button>
           <span class="desktop-only">
@@ -313,6 +316,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       {bagOpen && <BagPanel state={state} content={content} onUse={onUseItem} onClose={() => setBagOpen(false)} />}
 
+      {memoryOpen && <MemoryPanel state={state} content={content} onClose={() => setMemoryOpen(false)} />}
       {systemOpen && <SystemPanel state={state} content={content} onAction={onSystemAction} onClose={() => setSystemOpen(false)} />}
       {fingerOpen && <GoldenFingerPanel state={state} content={content} onAction={onFingerAction} onClose={() => setFingerOpen(false)} />}
 

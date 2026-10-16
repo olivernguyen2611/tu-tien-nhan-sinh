@@ -1,0 +1,79 @@
+[
+ {
+  "id": "trung_sinh",
+  "name": "Trùng sinh",
+  "group": "trung_sinh",
+  "rarity": "rat_hiem",
+  "text": "Ngươi mở mắt trong thân thể một đứa trẻ, nhưng trong đầu là cả một đời người. Đời ấy đã kết thúc. Đời này vừa bắt đầu lại.",
+  "costText": "Phải chọn: trở về thân xác mình, hay chiếm lấy thân xác người khác.",
+  "weight": 2,
+  "unlock": {
+   "livesMin": 3
+  },
+  "variants": [
+   {
+    "id": "that",
+    "name": "Trùng sinh về tuổi nhỏ",
+    "text": "Đây là thân thể của chính ngươi, mười mấy năm trước khi mọi chuyện xảy ra. Ngươi nhớ những biến cố sắp tới và cách tu luyện đến Kim Đan.",
+    "costText": "Ký ức có chỗ sai; càng dùng ký ức, lịch sử càng lệch, ký ức cũ càng mất đúng. Không mang theo công pháp kiếp trước.",
+    "memories": true,
+    "costs": [
+     {
+      "hook": "stat.happiness",
+      "add": -5
+     }
+    ],
+    "effects": [
+     {
+      "hook": "stat.intellect",
+      "add": 5
+     },
+     {
+      "hook": "stat.daoHeart",
+      "add": 5
+     }
+    ]
+   },
+   {
+    "id": "doat_xa",
+    "name": "Đoạt xá",
+    "text": "Thân thể này vốn của một đứa trẻ khác. Hồn ngươi đè lên hồn nó. Tu vi kiếp trước tuy mất, ngộ tính và kinh nghiệm vẫn còn nguyên.",
+    "costText": "Nghiệp nặng; hồn cũ có lúc phản phệ; tâm ma dễ sinh; người thân của thân xác có thể nhận ra.",
+    "costs": [
+     {
+      "hook": "stat.happiness",
+      "add": -8
+     },
+     {
+      "hook": "heartDemonResist",
+      "add": -0.1
+     }
+    ],
+    "effects": [
+     {
+      "hook": "stat.comprehension",
+      "add": 10
+     },
+     {
+      "hook": "cultivationSpeed",
+      "add": 0.2
+     },
+     {
+      "hook": "breakthroughChance.major",
+      "add": 4
+     }
+    ],
+    "startEvents": [
+     {
+      "event": "ts_doat_xa_nhan_ra",
+      "atAge": 8
+     },
+     {
+      "event": "ts_doat_xa_phan_phe",
+      "atAge": 16
+     }
+    ]
+   }
+  ]
+ }
+]

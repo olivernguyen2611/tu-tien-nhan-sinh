@@ -8,6 +8,7 @@ import type { GameState } from '../core/types';
 import { act, settle } from './combat';
 import { attemptMajorBreakthrough, enterFirstRealm, majorBreakthroughInfo, rootUsable } from './cultivation';
 import { confirmDestiny, rollDestiny } from './destiny';
+import { seeSpecial } from './specialOrigin';
 import { doFingerAction, fingerActionViews } from './fingerActions';
 import { resolveChoice, findEvent, visibleChoices } from './events/engine';
 import { chooseFate } from './fate';
@@ -117,7 +118,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
   // 9.S1: a seasoned player is on a later life, so a Tình tiết đặc biệt hiếm can come.
   const born = createLife({ seed, difficulty: opts.difficulty, goldenFinger: opts.goldenFinger, knowledge, lifeNo: opts.knowledge === 'none' ? 1 : 10 }, content);
   const offered = opts.traits ? { ...born, destiny: { ...born.destiny, offered: opts.traits } } : rollDestiny(born, content);
-  let s: GameState = confirmDestiny(offered, content);
+  let s: GameState = seeSpecial(confirmDestiny(offered, content), content);
   let peak = 0;
   const reachedAt: Record<string, number> = {};
   let steps = 0;

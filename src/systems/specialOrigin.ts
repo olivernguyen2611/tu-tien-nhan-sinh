@@ -9,6 +9,7 @@ import type { GameState } from '../core/types';
 import { applyGainHooks, hookSum } from './cultivation';
 import { knowsFor } from './knowledge';
 import { bindSystem } from './heThong';
+import { bindTrungSinh } from './trungSinh';
 
 const BASE_GROUPS = ['he_thong', 'trung_sinh', 'phe_vat'];
 const ONCE = (e: EffectHook) => e.hook.startsWith('stat.') || e.hook === 'lifespanPct' || e.hook === 'birthSilver';
@@ -78,11 +79,34 @@ export function rollSpecialOrigin(state: GameState, content: Content, pastKarma 
 export function specialHooks(state: GameState, content: Content): EffectHook[] {
   return (state.special?.ids ?? []).flatMap((id) => {
     const o = originDef(content, id);
-    return o ? [...o.costs, ...o.effects].filter((e) => !ONCE(e)) : [];
+    const v = o?.variants.find((x) => x.id === state.special?.variants?.[id]);
+    return o ? [...o.costs, ...o.effects, ...(v ? [...v.costs, ...v.effects] : [])].filter((e) => !ONCE(e)) : [];
   });
 }
 
-/** The Thiên cơ biến động screen was shown. */
-export function seeSpecial(state: GameState): GameState {
-  return state.special && !state.special.seen ? { ...state, special: { ...state.special, seen: true } } : state;
+/** 9.S3: tình tiết of this life that still wait for the player to pick a variant. */
+export const pendingVariants = (state: GameState, content: Content) =>
+  (state.special?.ids ?? []).map((id) => originDef(content, id)).filter((o): o is SpecialOrigin => !!o && o.variants.length > 0 && !state.special?.variants?.[o.id]);
+
+/** 9.S3: pick a variant of a tình tiết: its gains, costs and start events apply; memories bind Trùng sinh. */
+export function chooseVariant(state: GameState, content: Content, originId: string, variantId: string): GameState {
+  const o = originDef(content, originId);
+  const v = o?.variants.find((x) => x.id === variantId);
+  if (!o || !v || !state.special?.ids.includes(o.id) || state.special.variants?.[o.id]) return state;
+  let s = applyGainHooks(state, [...v.costs, ...v.effects].filter(ONCE));
+  const followUps = v.startEvents.map((e) => ({ event: e.event, atAge: Math.max(e.atAge, s.character.age + 1) }));
+  s = {
+    ...s,
+    special: { ...state.special, variants: { ...state.special.variants, [o.id]: v.id } },
+    flags: { ...s.flags, [`origin_${o.id}_${v.id}`]: true },
+    events: { ...s.events, followUps: [...followUps, ...s.events.followUps] },
+  };
+  return v.memories ? bindTrungSinh(s, content) : s;
+}
+
+/** The Thiên cơ biến động screen was shown; a variant not picked falls to the first. */
+export function seeSpecial(state: GameState, content?: Content): GameState {
+  if (!state.special || state.special.seen) return state;
+  const s = content ? pendingVariants(state, content).reduce((st, o) => chooseVariant(st, content, o.id, o.variants[0].id), state) : state;
+  return { ...s, special: { ...s.special!, seen: true } };
 }

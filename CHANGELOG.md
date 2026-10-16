@@ -8,6 +8,15 @@
 
 ## [Chưa phát hành]
 
+### 9.S3: Trùng sinh (2026-10-16)
+- Tình tiết **Trùng sinh** (mở từ kiếp 3). Ở màn Thiên cơ biến động người chơi chọn một trong hai:
+  - **Trùng sinh về tuổi nhỏ (thật):** mang theo 5 ký ức về những chuyện sắp xảy ra (bảo vật, tai họa, kẻ thù khi còn non, quý nhân, cơ duyên), nhớ lại dần theo cảnh giới. Tới đúng tuổi, ký ức thành sự kiện để ngươi hành động. Kinh nghiệm tu luyện kiếp trước giúp tu nhanh, đột phá dễ, nhưng chỉ tới Kim Đan. Không mang theo công pháp.
+  - **Đoạt xá:** chiếm thân xác đứa trẻ khác; ngộ tính, tốc độ tu luyện cao, nhưng nghiệp nặng, tâm ma dễ sinh, hồn cũ phản phệ năm 16 tuổi, người nhà nhận ra năm 8 tuổi.
+- **Hiệu ứng cánh bướm:** lịch sử lệch dần mỗi năm và lệch mạnh mỗi lần dùng ký ức; ký ức càng về sau càng dễ sai. Một số ký ức sai ngay từ đầu (ký ức rạn nứt). Ký ức chưa nhớ ra thì trôi qua.
+- Nút **憶** trên thanh trên mở bảng Ký ức kiếp trước (ký ức đã nhớ, chưa nhớ, đã ứng nghiệm, đã lệch, độ lệch lịch sử).
+- Khung chung: tình tiết đặc biệt có thể có **lựa chọn** (`variants`) ở màn Thiên cơ biến động; số liệu ở `balance.trungSinh`, ký ức ở `worlds/thuong_lan/trung-sinh.json`, 11 sự kiện ở `events/trung-sinh.json`. Developer Mode: chỉnh độ lệch lịch sử.
+- Test: `tests/trung-sinh.test.ts`.
+
 ### 9.S2 + 9.S2b: Xuyên không và Hệ thống (2026-10-16)
 - Nhóm tình tiết **Xuyên không · Hệ thống** (12 tình tiết, `special-origins/xuyen-khong.json`): linh hồn từ thế giới khác lạc tới, ký ức mơ hồ, trong đầu có một "Hệ thống". Không đi cùng Kim Thủ Chỉ. Nút **統** trên thanh trên mở bảng Hệ thống.
 - Khung Hệ thống (`content/systems.json`, `src/systems/heThong.ts`): điểm và cấp (mỗi cấp cho hiệu ứng cả đời), **điểm danh** mỗi năm một lần, **nhiệm vụ** có hạn (đạt điều kiện thì thưởng, quá hạn thì phạt), **cửa hàng** đổi điểm (giá âm = bán thọ nguyên, bạc, linh thạch lấy điểm), **đoạn tuyệt** mất hết, không quay lại.

@@ -143,7 +143,12 @@ export interface GameState {
   /** 9.S1: karma the last life ended with (unlocks some tình tiết). */
   pastKarma?: number;
   /** 9.S1: Tình tiết đặc biệt hiếm drawn at birth; seen once the Thiên cơ biến động screen was shown. */
-  special?: { ids: string[]; seen: boolean };
+  special?: { ids: string[]; seen: boolean; variants?: Record<string, string> };
+  /**
+   * 9.S3 Trùng sinh: the memories this life brought (age it comes; recalled yet; done = played, broken =
+   * drifted or false), how far the past has drifted (0–100), whether the memory was false from the start.
+   */
+  trungSinh?: { memories: { id: string; age: number; recalled: boolean; state: 'waiting' | 'done' | 'broken'; false: boolean }[]; drift: number };
   /**
    * 9.S2 Hệ thống bound to this life: points, level (index into levels), the task in hand (until = last age),
    * last điểm danh and shop use, tasks done; gone once cut off or after a betrayal.

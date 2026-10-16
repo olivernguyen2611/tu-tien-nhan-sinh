@@ -26,7 +26,7 @@ import { cueFor, loadSoundPref, playCue, saveSoundPref } from './audio';
 import { applyThemePref, loadThemePref, nextThemePref, type ThemePref } from './theme';
 import { applyPrefs, loadPrefs, type Prefs } from './prefs';
 import { setGentle } from '../systems/options';
-import { seeSpecial } from '../systems/specialOrigin';
+import { chooseVariant, seeSpecial } from '../systems/specialOrigin';
 import { ThienCoScreen } from './screens/ThienCo';
 import { CreateCharacterScreen } from './screens/CreateCharacter';
 import { DeathScreen } from './screens/Death';
@@ -377,7 +377,7 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
   }
   // 9.S1: a Tình tiết đặc biệt hiếm is shown once before the first year.
   if (screen === 'main' && life?.special && !life.special.seen) {
-    return <ThienCoScreen state={life} content={content} onContinue={() => setLife(seeSpecial(life))} />;
+    return <ThienCoScreen state={life} content={content} onChoose={(o, v) => setLife(chooseVariant(life, content, o, v))} onContinue={() => setLife(seeSpecial(life, content))} />;
   }
   if (screen === 'main' && life) {
     return (

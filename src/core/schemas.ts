@@ -1813,6 +1813,13 @@ export const BalanceSchema = z
     specialOrigins: z.object({
       minLives: z.number().int().min(2), chance: probability, luckPer: z.number().min(0), maxPerLife: z.number().int().min(1),
     }).strict(),
+    /**
+     * 9.S3 Trùng sinh: memories a reborn soul brings, chance one is false from the start; the past drifts by
+     * driftPerYear and by driftPerMemory each time a memory is used; a memory breaks with drift/100 (≤ maxBreak).
+     */
+    trungSinh: z.object({
+      memories: z.number().int().min(1), falseChance: probability, driftPerYear: z.number().min(0), driftPerMemory: z.number().min(0), maxBreak: probability,
+    }).strict(),
     karmaLedger: z.object({
       perLife: z.number().int().min(0), max: z.number().int().min(0), maxLives: z.number().int().min(1),
       minWeight: z.number().min(0).max(100), enemyAt: z.number().min(0).max(100),
@@ -3612,6 +3619,16 @@ export const SpecialOriginFileSchema = z.array(
     startEvents: z.array(z.object({ event: id, atAge: z.number().int().min(0) }).strict()).default([]),
     /** 9.S2: a Hệ thống (systems.json) bound to this life. */
     system: id.optional(),
+    /**
+     * 9.S3: the player picks one on the Thiên cơ screen (e.g. Trùng sinh thật / Đoạt xá). Its gains, costs and
+     * start events apply once picked; `memories` binds the Trùng sinh memories (trung-sinh.json).
+     */
+    variants: z.array(z.object({
+      id, name: z.string().min(1), text: z.string().min(1), costText: z.string().min(1),
+      costs: z.array(EffectHookSchema).default([]), effects: z.array(EffectHookSchema).default([]),
+      startEvents: z.array(z.object({ event: id, atAge: z.number().int().min(0) }).strict()).default([]),
+      memories: z.boolean().default(false),
+    }).strict()).default([]),
   }).strict(),
 );
 export type SpecialOrigin = z.infer<typeof SpecialOriginFileSchema>[number];
@@ -3654,6 +3671,29 @@ export const SystemFileSchema = z.object({
 }).strict();
 export type SystemFile = z.infer<typeof SystemFileSchema>;
 export type SystemDef = SystemFile['systems'][number];
+
+/**
+ * 9.S3 Trùng sinh: content/worlds/<id>/trung-sinh.json. What a reborn soul remembers of the life to come:
+ * a treasure, a disaster, a future enemy or ally, a chance. Each is recalled once the realm allows; when its
+ * age comes the event plays, unless the past has drifted (hiệu ứng cánh bướm) or the memory was false.
+ */
+export const TrungSinhFileSchema = z.object({
+  /** Cultivation experience counts until this realm is reached. */
+  expUntil: id,
+  exp: z.array(EffectHookSchema).default([]),
+  memories: z.array(z.object({
+    id,
+    kind: z.enum(['bao_vat', 'tai_hoa', 'ke_thu', 'quy_nhan', 'co_duyen']),
+    /** As remembered, e.g. "Năm {age} tuổi, …". */
+    text: z.string().min(1),
+    age: z.object({ min: z.number().int().min(1), max: z.number().int().min(1) }).strict(),
+    recallRealm: id.default('pham_nhan'),
+    event: id,
+    /** When the past has drifted or the memory was false. */
+    broken: z.object({ text: z.string().min(1), effects: EffectsSchema.default({}) }).strict(),
+  }).strict()).min(1),
+}).strict();
+export type TrungSinhFile = z.infer<typeof TrungSinhFileSchema>;
 
 /** 9.R8: content/endings.json — kết cục of a life, in order: the first whose check holds is the ending. */
 export const EndingFileSchema = z.array(
