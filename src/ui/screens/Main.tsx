@@ -17,6 +17,7 @@ import { fingerActionViews } from '../../systems/fingerActions';
 import { systemActions, systemDef } from '../../systems/heThong';
 import { SystemPanel } from '../components/SystemPanel';
 import { MemoryPanel } from '../components/MemoryPanel';
+import { meritViews } from '../../systems/thanDao';
 import { MarketPanel, type MarketAction } from '../components/MarketPanel';
 import { MapPanel } from '../components/MapPanel';
 import { currentRegion } from '../../systems/regions';
@@ -351,6 +352,14 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
                 ))}
               </ul>
             )}
+            {/* 9.S5: the thành thần paths this life is on. */}
+            {meritViews(state, content).map((m) => (
+              <div class="stat-row merit-row" key={m.id} title={m.text}>
+                <span class="merit-name">{m.name}</span>
+                <div class="bar" aria-label={`${m.name} ${m.points}/${m.threshold}`}><span style={{ width: `${Math.min(100, (m.points / m.threshold) * 100)}%` }} /></div>
+                <span class="muted">{m.done ? 'viên mãn' : `${m.points}/${m.threshold}`}</span>
+              </div>
+            ))}
             {finger && (
               <ul class="trait-chips" aria-label="Kim Thủ Chỉ">
                 <li class="trait-chip r-than golden-finger">

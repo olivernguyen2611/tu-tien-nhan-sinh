@@ -148,6 +148,8 @@ export interface GameState {
    * 9.S3 Trùng sinh: the memories this life brought (age it comes; recalled yet; done = played, broken =
    * drifted or false), how far the past has drifted (0–100), whether the memory was false from the start.
    */
+  /** 9.S5: points on each thành thần path, and the marks passed (milestones "<id>:<at>", "<id>:ascend", "<id>:miss"). */
+  merit?: { points: Record<string, number>; marks: string[] };
   trungSinh?: { memories: { id: string; age: number; recalled: boolean; state: 'waiting' | 'done' | 'broken'; false: boolean }[]; drift: number };
   /**
    * 9.S2 Hệ thống bound to this life: points, level (index into levels), the task in hand (until = last age),

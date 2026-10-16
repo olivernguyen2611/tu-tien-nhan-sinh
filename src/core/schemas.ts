@@ -213,6 +213,8 @@ export const EffectsSchema = z
     learnTechnique: id.optional(),
     /** Thiên địa kỳ vật (task 2.11): a rootless mortal gains a root (balance.kyVat). */
     grantRoot: z.boolean().optional(),
+    /** 9.S5: points on a thành thần path (than-dao.json), e.g. { "cong_duc": 5 }. */
+    merit: z.record(id, z.number()).optional(),
     /** Thức tỉnh thể chất tiềm ẩn: a cultivator who already has a usable root awakens this special body (id in roots.json). */
     awakenBody: id.optional(),
     /** Task 3.4: meet someone new; they become this event's NPC ({npc} in texts). affinity is added to a stranger's 50. */
@@ -3695,6 +3697,29 @@ export const TrungSinhFileSchema = z.object({
   }).strict()).min(1),
 }).strict();
 export type TrungSinhFile = z.infer<typeof TrungSinhFileSchema>;
+
+/**
+ * 9.S5 Đường thành thần / thành tiên cuối đời: content/worlds/<id>/than-dao.json. Each path has its own
+ * points (Công đức, Hương hỏa, Long khí, Văn đạo) gained each year from how the life is lived (sources) and
+ * from events (`merit` effect); milestones along the way; past the threshold and minAge its ascend event
+ * comes (the ending is set by a flag); one near the end of life with half the points gets the miss event.
+ */
+export const ThanDaoFileSchema = z.object({
+  paths: z.array(z.object({
+    id,
+    name: z.string().min(1),
+    text: z.string().min(1),
+    sources: z.array(z.object({ when: BaseConditionsSchema, add: z.number() }).strict()).min(1),
+    milestones: z.array(z.object({ at: z.number().min(1), text: z.string().min(1), effects: EffectsSchema.default({}) }).strict()).default([]),
+    threshold: z.number().min(1),
+    minAge: z.number().int().min(0),
+    ascendEvent: id,
+    missEvent: id,
+  }).strict()).min(1),
+  /** The miss event comes this many years before the lifespan runs out. */
+  missWindow: z.number().int().min(1),
+}).strict();
+export type ThanDaoFile = z.infer<typeof ThanDaoFileSchema>;
 
 /** 9.R8: content/endings.json — kết cục of a life, in order: the first whose check holds is the ending. */
 export const EndingFileSchema = z.array(

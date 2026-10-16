@@ -243,13 +243,20 @@ function applyEffects(state: GameState, effects: Outcome['effects'], rng: Rng, c
   }
   for (const f of effects.setFlags ?? []) flags[f] = true;
   for (const f of effects.clearFlags ?? []) delete flags[f];
+  // 9.S5: points on a thành thần path.
+  let merit = state.merit;
+  if (effects.merit) {
+    const points = { ...merit?.points };
+    for (const [k, v] of Object.entries(effects.merit)) points[k] = Math.max(0, (points[k] ?? 0) + v);
+    merit = { points, marks: merit?.marks ?? [] };
+  }
   if (effects.followUp) {
     const [a, b] = effects.followUp.afterYears;
     followUps = [...followUps, { event: effects.followUp.event, atAge: state.character.age + rng.int(a, b) }];
   }
   // addItems / removeItems / addTraits: inventory and later traits come in GĐ 2–4.
 
-  return { ...state, stats, aptitudes, money, social, flags, events: { ...state.events, followUps } };
+  return { ...state, stats, aptitudes, money, social, flags, merit, events: { ...state.events, followUps } };
 }
 
 export interface ChoiceResult {

@@ -999,3 +999,7 @@ html[data-motion='reduce'][data-fx]::after { display: none; }
 .memory-list .memory { display: grid; gap: 2px; padding: 8px 10px; border-radius: 8px; background: var(--surface-2); }
 .memory-list .memory.done { opacity: 0.7; }
 .memory-list .memory.broken { opacity: 0.55; text-decoration: line-through; }
+
+/* 9.S5 thành thần paths */
+.merit-row { display: grid; grid-template-columns: 6.5em 1fr auto; align-items: center; gap: 8px; }
+.merit-row .bar > span { background: var(--gold); }

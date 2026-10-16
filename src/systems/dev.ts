@@ -321,6 +321,12 @@ export function devDrift(state: GameState, add: number): GameState {
   return devLog({ ...state, trungSinh: { ...state.trungSinh, drift: Math.max(0, Math.min(100, state.trungSinh.drift + add)) } }, `lịch sử lệch ${add > 0 ? '+' : ''}${add}`);
 }
 
+/** 9.S5: points on a thành thần path. */
+export function devMerit(state: GameState, id: string, add: number): GameState {
+  const points = { ...state.merit?.points, [id]: Math.max(0, (state.merit?.points[id] ?? 0) + add) };
+  return devLog({ ...state, merit: { points, marks: state.merit?.marks ?? [] } }, `${id} +${add}`);
+}
+
 /** Set or clear a flag. */
 export function devSetFlag(state: GameState, flag: string, on: boolean): GameState {
   const id = flag.trim();

@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### 9.S5: Đường thành thần, thành tiên cuối đời (2026-10-16)
+- 4 con đường không phải tu luyện cảnh giới, kiếp nào cũng đi được (phàm nhân hay tu sĩ): **Công đức** (sống thiện, làm thầy thuốc), **Hương hỏa** (được dân nhớ ơn, lập tông có đức), **Long khí** (làm quan, được triều đình trọng), **Văn đạo** (trí tuệ, ngộ tính cực cao, làm quan văn).
+- Mỗi năm sống đúng đạo của đường nào thì tích điểm đường ấy; sự kiện cũng cộng được (hiệu ứng mới `merit`). Hai mốc giữa đường có sự kiện nhỏ (dân lập miếu, thơ được hát…). Đủ ngưỡng và từ 50 tuổi: sự kiện **thành thần / thành tiên**, nhận thì đời kết thúc bằng kết cục riêng, từ chối thì sống thêm. Gần hết thọ mà mới được nửa đường: sự kiện lỡ duyên, rơi về phàm.
+- 4 kết cục mới: Công đức thành tiên, Hương hỏa thành thần, Thần hộ quốc, Văn Khúc tinh quân. Bảng nhân vật hiện thanh tiến độ các đường đang đi.
+- Dữ liệu `worlds/thuong_lan/than-dao.json`, 8 sự kiện `events/than-dao.json`. Simulate: khoảng 1–2% số đời đạt một đường. Developer Mode: cộng 30 điểm từng đường.
+- Test: `tests/than-dao.test.ts`.
+
 ### 9.S4: Phế vật nghịch tập (2026-10-16)
 - 5 tình tiết **Phế vật** (mở từ kiếp 3): Nghịch cảnh luyện thể, Ma công nghịch tu, Thôn phệ dị biến, Đan độc chi thể, Huyết mạch ẩn.
 - Nửa đời đầu chịu khổ: tu luyện chậm, đột phá khó; chuỗi sự kiện **sỉ nhục** (10 tuổi) → **thư từ hôn** (18 tuổi) → **bị đuổi khỏi tông môn hoặc nhà** (20 tuổi) → **thức tỉnh** con đường riêng (24 tuổi).

@@ -20,6 +20,46 @@
     }
   },
   {
+    "id": "than_dao_cong_duc",
+    "name": "Công đức thành tiên",
+    "text": "Cả đời làm thiện, cuối đời hóa khói thơm mà đi. Người ta bảo trên trời có thêm một vị tiên quan hiền lành.",
+    "check": {
+      "flagsAll": [
+        "than_dao_cong_duc"
+      ]
+    }
+  },
+  {
+    "id": "than_dao_huong_hoa",
+    "name": "Hương hỏa thành thần",
+    "text": "Đền thờ còn đó, khói hương chưa tắt. Ai thành tâm khấn, nghe nói đều được đáp lời.",
+    "check": {
+      "flagsAll": [
+        "than_dao_huong_hoa"
+      ]
+    }
+  },
+  {
+    "id": "than_dao_long_khi",
+    "name": "Thần hộ quốc",
+    "text": "Thân về với đất, hồn hòa vào long mạch. Mỗi khi nước nguy, có bóng người già đứng trên thành lâu.",
+    "check": {
+      "flagsAll": [
+        "than_dao_long_khi"
+      ]
+    }
+  },
+  {
+    "id": "than_dao_van_dao",
+    "name": "Văn Khúc tinh quân",
+    "text": "Một chữ hóa sao. Sĩ tử đời sau trước khi thi đều thắp hương, khấn đúng tên ngươi.",
+    "check": {
+      "flagsAll": [
+        "than_dao_van_dao"
+      ]
+    }
+  },
+  {
     "id": "hoa_dao",
     "name": "Hóa đạo",
     "text": "Đạo tâm viên mãn, thân tan vào thiên địa. Gió núi nơi ấy về sau mang theo một tia đạo vận cho kẻ đến sau.",

@@ -4,7 +4,7 @@
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
 import { KY_KEYS } from '../systems/thienDaoKy';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, SpecialOriginFileSchema, type SpecialOrigin, SystemFileSchema, type SystemFile, TrungSinhFileSchema, type TrungSinhFile, ThienDaoKyFileSchema, type ThienDaoKyFile, type Ending, MORTAL_STATS, APTITUDES, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, SpecialOriginFileSchema, type SpecialOrigin, SystemFileSchema, type SystemFile, TrungSinhFileSchema, type TrungSinhFile, ThanDaoFileSchema, type ThanDaoFile, ThienDaoKyFileSchema, type ThienDaoKyFile, type Ending, MORTAL_STATS, APTITUDES, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -83,6 +83,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
   if (rest === 'races.json') return RaceFileSchema;
   if (rest === 'knowledge.json') return KnowledgeFileSchema;
   if (rest === 'trung-sinh.json') return TrungSinhFileSchema;
+  if (rest === 'than-dao.json') return ThanDaoFileSchema;
   if (rest === 'immortal-gates.json') return ImmortalGateFileSchema;
   if (rest === 'challenges.json') return ChallengeFileSchema;
   if (/^events\/[^/]+\.json$/.test(rest)) return EventFileSchema;
@@ -120,6 +121,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   const originFiles: { file: string; origins: SpecialOrigin[] }[] = [];
   let systemsFile: { file: string; data: SystemFile } | null = null;
   const trungSinhFiles: { file: string; data: TrungSinhFile }[] = [];
+  const thanDaoFiles: { file: string; data: ThanDaoFile }[] = [];
   const gateFiles: { file: string; gates: ImmortalGate[] }[] = [];
   /** 9.R5b: things that wait for a Sổ tri thức entry. */
   const knowledgeRefs: { file: string; what: string; id: string }[] = [];
@@ -292,6 +294,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === FigureFileSchema) figureFiles.push({ file, figures: parsed.data as Figure[] });
     if (schema === NationFileSchema || schema === FigureFileSchema || schema === WorldClanFileSchema || schema === RaceFileSchema) loreFiles.push({ file, items: parsed.data as { id: string; region?: string; regions?: string[] }[] });
     if (schema === KnowledgeFileSchema) knowledgeFiles.push({ file, entries: parsed.data as KnowledgeEntry[] });
+    if (schema === ThanDaoFileSchema) thanDaoFiles.push({ file, data: parsed.data as ThanDaoFile });
     if (schema === TrungSinhFileSchema) trungSinhFiles.push({ file, data: parsed.data as TrungSinhFile });
     if (schema === SystemFileSchema) systemsFile = { file, data: parsed.data as SystemFile };
     if (schema === SpecialOriginFileSchema) originFiles.push({ file, origins: parsed.data as SpecialOrigin[] });
@@ -608,6 +611,21 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       if (m.age.min > m.age.max) problems.push({ file, level: 'error', message: `ký ức "${m.id}" có tuổi min > max` });
       if (realmIds.length && !realmIds.includes(m.recallRealm)) problems.push({ file, level: 'error', message: `ký ức "${m.id}" cần cảnh giới lạ "${m.recallRealm}"` });
     }
+  }
+
+  // 9.S5: thành thần paths play events of their world; milestones below the threshold; merit names a real path.
+  const meritPaths = new Set(thanDaoFiles.flatMap((f) => f.data.paths.map((p) => p.id)));
+  for (const { file, data } of thanDaoFiles) {
+    const world = splitWorldPath(file).worldId;
+    problems.push(...duplicates(file, 'đường thành thần', data.paths));
+    for (const p of data.paths) {
+      for (const ev of [p.ascendEvent, p.missEvent]) if (!events.some((e) => e.event.id === ev && splitWorldPath(e.file).worldId === world)) problems.push({ file, level: 'error', message: `đường "${p.id}" dẫn tới sự kiện lạ "${ev}"` });
+      for (const m of p.milestones) if (m.at >= p.threshold) problems.push({ file, level: 'error', message: `đường "${p.id}": mốc ${m.at} phải nhỏ hơn ngưỡng ${p.threshold}` });
+    }
+  }
+  for (const { file, event } of events) {
+    for (const c of event.choices) for (const o of [c.result, c.success, c.fail]) for (const k of Object.keys(o?.effects.merit ?? {}))
+      if (!meritPaths.has(k)) problems.push({ file, level: 'error', message: `sự kiện "${event.id}" cộng điểm cho đường lạ "${k}"` });
   }
 
   // 9.R4b: a gate brings an event of its world, names a real Sổ tri thức entry, and has its chance in balance.json.

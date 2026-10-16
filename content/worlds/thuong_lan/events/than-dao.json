@@ -1,0 +1,282 @@
+[
+ {
+  "id": "td_cong_duc_thanh_tien",
+  "category": "fortune",
+  "title": "Công đức viên mãn",
+  "text": "Đêm ấy trời không trăng mà sân nhà sáng như ban ngày. Một giọng nói không biết từ đâu: \"Công đức đã đủ. Ngươi có muốn bỏ thân phàm, lên làm tiên quan?\"",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Nhận lời",
+    "result": {
+     "text": "Ngươi gật đầu. Từ hôm ấy, thân thể nhẹ dần như khói. Khi đi, chỉ để lại một mùi hương sen.",
+     "effects": {
+      "setFlags": [
+       "than_dao_cong_duc"
+      ],
+      "stat.daoHeart": 10,
+      "stat.happiness": 10
+     }
+    }
+   },
+   {
+    "text": "Xin ở lại, còn nhiều người cần giúp",
+    "result": {
+     "text": "Giọng nói im lặng rất lâu, rồi cười: \"Như thế mới đúng là công đức.\" Ngươi được thêm vài năm.",
+     "effects": {
+      "lifespanYears": 10,
+      "karma": 10,
+      "stat.happiness": 5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "td_cong_duc_thieu",
+  "category": "fortune",
+  "title": "Còn thiếu một chút",
+  "text": "Ngươi biết đời mình sắp hết. Đếm lại những việc đã làm, thấy nhiều, mà vẫn chưa đủ để trời đất giữ lại.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Dùng chút sức cuối làm thêm việc thiện",
+    "result": {
+     "text": "Ngươi đem hết của cải phân phát. Không thành tiên, nhưng lòng nhẹ như mây.",
+     "effects": {
+      "silver": -200,
+      "karma": 10,
+      "stat.happiness": 8
+     }
+    }
+   },
+   {
+    "text": "Chấp nhận",
+    "result": {
+     "text": "Người ta sống một đời đã là đủ. Ngươi nhắm mắt, không tiếc.",
+     "effects": {
+      "stat.daoHeart": 6,
+      "stat.happiness": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "td_huong_hoa_thanh_than",
+  "category": "fortune",
+  "title": "Hương hỏa thành thần",
+  "text": "Trong giấc mơ, ngươi đứng trong ngôi đền của chính mình. Khói hương quấn quanh, nặng như những lời khấn. Một thần ấn hiện ra trên bàn thờ.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Nhận thần ấn",
+    "result": {
+     "text": "Ngươi đặt tay lên ấn. Từ nay, ở đâu có người khấn tên ngươi, ở đó ngươi nghe thấy.",
+     "effects": {
+      "setFlags": [
+       "than_dao_huong_hoa"
+      ],
+      "stat.daoHeart": 8,
+      "stat.happiness": 8
+     }
+    }
+   },
+   {
+    "text": "Đẩy thần ấn đi",
+    "result": {
+     "text": "Làm thần thì phải nghe khấn mãi mãi. Ngươi chọn làm người thêm ít năm.",
+     "effects": {
+      "lifespanYears": 5,
+      "stat.happiness": 4,
+      "stat.daoHeart": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "td_huong_hoa_thieu",
+  "category": "fortune",
+  "title": "Đền vắng",
+  "text": "Ngôi đền dựng cho ngươi lâu rồi ít khói. Người nhớ ơn già đi, con cháu họ không biết ngươi là ai.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Đến quét đền lần cuối",
+    "result": {
+     "text": "Ngươi tự tay quét sạch bàn thờ của mình. Hơi buồn cười, mà cũng thanh thản.",
+     "effects": {
+      "stat.daoHeart": 5,
+      "stat.happiness": 2
+     }
+    }
+   },
+   {
+    "text": "Bảo người ta dỡ đền đi",
+    "result": {
+     "text": "Đất ấy dựng lớp học thì hơn. Ngươi nghĩ vậy, và thấy mình đúng.",
+     "effects": {
+      "karma": 6,
+      "stat.happiness": 4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "td_long_khi_ho_quoc",
+  "category": "fortune",
+  "title": "Long khí hộ quốc",
+  "text": "Ngươi mơ thấy một con rồng đất cuộn quanh kinh thành, ngẩng đầu nhìn ngươi: \"Ngươi gánh nước này đủ lâu. Sau khi chết, có muốn gánh tiếp?\"",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Nhận lời thành thần hộ quốc",
+    "result": {
+     "text": "Ngươi gật đầu. Về sau, mỗi lần đất nước nguy nan, có người thấy bóng một vị quan già trên thành lâu.",
+     "effects": {
+      "setFlags": [
+       "than_dao_long_khi"
+      ],
+      "stat.daoHeart": 8,
+      "stat.happiness": 6
+     }
+    }
+   },
+   {
+    "text": "Từ chối, việc nước để người sau lo",
+    "result": {
+     "text": "Con rồng thở dài một hơi, thổi bay mũ quan của ngươi.",
+     "effects": {
+      "stat.happiness": 5,
+      "stat.daoHeart": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "td_long_khi_thieu",
+  "category": "fortune",
+  "title": "Ấn quan trả lại",
+  "text": "Tuổi già, ngươi trả ấn quan. Long khí quanh người tan dần như sương sớm.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Về quê dạy học",
+    "result": {
+     "text": "Ngươi dạy lũ trẻ đọc chữ. Có đứa sau này cũng làm quan, tốt hơn ngươi.",
+     "effects": {
+      "karma": 5,
+      "stat.happiness": 6
+     }
+    }
+   },
+   {
+    "text": "Viết hồi ký việc nước",
+    "result": {
+     "text": "Ngươi viết suốt ba năm. Sách không ai đọc, nhưng ngươi thấy nhẹ lòng.",
+     "effects": {
+      "stat.intellect": 2,
+      "stat.daoHeart": 4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "td_van_dao_tinh_quan",
+  "category": "fortune",
+  "title": "Văn Khúc giáng mộng",
+  "text": "Đêm khuya, bút trong tay ngươi tự viết ra một chữ phát sáng. Ánh sáng ấy bay lên, hòa vào một vì sao.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Theo chữ ấy mà đi",
+    "result": {
+     "text": "Ngươi buông bút. Người nhà sáng ra chỉ thấy trang giấy trắng và một chữ \"Đạo\".",
+     "effects": {
+      "setFlags": [
+       "than_dao_van_dao"
+      ],
+      "stat.daoHeart": 8,
+      "stat.happiness": 8
+     }
+    }
+   },
+   {
+    "text": "Giữ chữ ấy lại, viết tiếp",
+    "result": {
+     "text": "Ngươi chép chữ ấy vào sách. Sách thành, đời người cũng thành.",
+     "effects": {
+      "stat.intellect": 3,
+      "stat.happiness": 5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "td_van_dao_thieu",
+  "category": "fortune",
+  "title": "Bản thảo dở dang",
+  "text": "Mắt đã mờ, tay đã run. Quyển sách cả đời ngươi viết còn thiếu chương cuối.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Gắng viết cho xong",
+    "result": {
+     "text": "Ngươi viết dòng cuối rồi gục xuống bàn. Chữ còn ướt mực.",
+     "effects": {
+      "stat.intellect": 2,
+      "stat.health": -5,
+      "stat.daoHeart": 5
+     }
+    }
+   },
+   {
+    "text": "Giao lại cho học trò",
+    "result": {
+     "text": "Học trò viết chương cuối hay hơn ngươi tưởng. Ngươi cười, không ghen.",
+     "effects": {
+      "stat.happiness": 6,
+      "karma": 3
+     }
+    }
+   }
+  ]
+ }
+]
