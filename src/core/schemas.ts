@@ -14,7 +14,9 @@ export const NUMERIC_KEYS = [...STAT_KEYS, 'silver', 'spiritStones', 'karma', 'a
 /** Also readable by conditions and skill checks (task 2.8): craft levels and sect contribution. */
 export const CRAFT_KEYS = ['alchemy', 'forging', 'formation', 'talisman', 'farming', 'beast'].map((c) => `craft.${c}`);
 /** Task 3.9: faction reputation is readable too. */
-export const REPUTATION_KEYS = ['chinh', 'ma', 'tan_tu', 'yeu', 'trieu_dinh', 'giang_ho'].map((f) => `reputation.${f}`);
+/** Faction reputation keys; 9.9 added lang_xa (hương danh in the village). */
+export const FACTIONS = ['chinh', 'ma', 'tan_tu', 'yeu', 'trieu_dinh', 'giang_ho', 'lang_xa'] as const;
+export const REPUTATION_KEYS = FACTIONS.map((f) => `reputation.${f}`);
 export const READ_KEYS = [...NUMERIC_KEYS, ...CRAFT_KEYS, 'sect.contribution', ...REPUTATION_KEYS];
 const statKey = z.string().refine((k) => STAT_KEYS.includes(k) || CRAFT_KEYS.includes(k), (k) => ({ message: `"${k}" không phải chỉ số (dùng stat.<tên> hoặc craft.<nghệ>)` }));
 const numericKey = z.string().refine((k) => READ_KEYS.includes(k), (k) => ({ message: `"${k}" không phải giá trị đọc được` }));
@@ -57,6 +59,9 @@ const BaseConditionsSchema = z
     lifestyle: ids,
     /** 9.R7e: a sự kiện thiên hạ is under way (any of these ids; at this phase index when given). */
     worldEvent: z.object({ id: ids, phase: z.number().int().min(0).optional() }).strict().optional(),
+    /** 9.5 Thời cuộc: the pha thời thế now is one of these, and world variables are in range. */
+    worldPhase: ids,
+    worldVars: z.array(z.object({ id, gte: z.number().optional(), lte: z.number().optional() }).strict()).optional(),
     root: z.object({ tested: z.boolean().optional(), usable: z.boolean().optional(), minElements: z.number().int().min(1).optional(), innate: z.boolean().optional() }).strict().optional(),
     /** Stage within the current realm, 0-based (task 2.8: "Luyện Khí tầng 4+" = min 3). */
     stage: z.object({ min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional(),
@@ -148,6 +153,11 @@ const BaseConditionsSchema = z
         /** Their realm compared to the player's: -1 lower, 0 same, 1 higher. */
         minRealmGap: z.number().int().optional(),
         maxRealmGap: z.number().int().optional(),
+        /** 9.6: the kind of relation (relations.json) and the occupation they have now. */
+        kinds: z.array(id).optional(),
+        occupation: z.array(id).optional(),
+        /** 9.6: at least this many shared memories. */
+        minMemories: z.number().int().min(0).optional(),
       })
       .strict()
       .optional(),
@@ -209,7 +219,7 @@ export const EffectsSchema = z
     speedBuff: z.object({ mul: z.number().positive(), years: z.number().int().min(1) }).strict().optional(),
     /** Craft levels gained. */
     craftXp: z.record(z.enum(['alchemy', 'forging', 'formation', 'talisman', 'farming', 'beast']), z.number()).optional(),
-    reputation: z.record(z.enum(['chinh', 'ma', 'tan_tu', 'yeu', 'trieu_dinh', 'giang_ho']), z.number()).optional(),
+    reputation: z.record(z.enum(FACTIONS), z.number()).optional(),
     /** Added to the next big breakthrough only. */
     nextBreakthroughBonus: z.number().optional(),
     /** Fewer counted failures at the current peak (bình cảnh nới ra). */
@@ -253,6 +263,8 @@ export const EffectsSchema = z
     meetNpc: z
       .object({
         role: z.string().min(1),
+        /** 9.6: kind of relation (relations.json); default from the role text. */
+        kind: z.string().regex(/^[a-z0-9_]+$/).optional(),
         /** Task 3.9: always an adult (romance.minAge), e.g. someone rescued in a mature event. */
         adult: z.boolean().optional(),
         /** Playtest 2: about the player's age (balance.npcs.peerAgeOffset). */
@@ -436,9 +448,11 @@ export const EventSchema = z
     cooldownYears: z.number().int().min(0).default(0),
     oncePerLife: z.boolean().default(false),
     /** Task 3.4: not in the yearly pool; fires when an NPC's ledger calls for it (that NPC is the event's NPC). */
-    npcTrigger: z.enum(['reunion', 'revenge', 'repay', 'reveal', 'bond']).optional(),
+    npcTrigger: z.enum(['reunion', 'revenge', 'repay', 'reveal', 'bond', 'visit']).optional(),
     /** Task 4.10: fires as soon as it is eligible, ahead of the yearly roll (due follow-ups still come first). */
     urgent: z.boolean().default(false),
+    /** 9.10: a mortal meets the tầng above on purpose (tu sĩ nói chuyện linh thạch…): no tier-term warnings. */
+    crossTier: z.boolean().optional(),
     choices: z.array(ChoiceSchema).min(1),
   })
   .strict();
@@ -551,7 +565,7 @@ const ADD_HOOK = new RegExp(
       `element\\.(${ELEMENTS})\\.power`, `path\\.(${PATHS})\\.(affinity|power)`,
       `craft\\.(${CRAFTS})\\.(success|yield|affinity)`,
       'heartDemonResist', 'charmResist',
-      'npcAffinityStart', 'reunionChance', 'specialOriginChance', 'faction\\.(chinh|ma|tan_tu|yeu|trieu_dinh|giang_ho)\\.reputation', 'karmaShift',
+      'npcAffinityStart', 'reunionChance', 'specialOriginChance', 'faction\\.(chinh|ma|tan_tu|yeu|trieu_dinh|giang_ho|lang_xa)\\.reputation', 'karmaShift',
       'priceDiscount', 'incomePct', 'lootPct',
       'trigger\\.cheatDeath',
       // Task 3.3: a storage bag keeps the goods when a robber wins.
@@ -944,6 +958,16 @@ export const BalanceSchema = z
         /** 9.R6: thiện cảm needed for each layer of the NPC info card (quen, thân, tri kỷ), and how many realms above the player one can still be read. */
         infoTiers: z.tuple([z.number(), z.number(), z.number()]).optional(),
         infoSeeAbove: z.number().int().min(0).optional(),
+        /**
+         * 9.6 Người quen sâu hơn: chance a year that some acquaintance comes to the player on their own (npcTrigger
+         * "visit"), at least visitGapYears apart; memories kept per NPC; chance a year an adult NPC takes a new
+         * occupation; the age the life gets a neighbour and a childhood friend.
+         */
+        visitChance: probability,
+        visitGapYears: z.number().int().min(0),
+        memories: z.number().int().min(1),
+        occupationChance: probability,
+        childhoodAge: z.number().int().min(0),
       })
       .strict(),
     /** Task 5.4: founding a cultivation clan. */
@@ -1546,6 +1570,14 @@ export const BalanceSchema = z
         })
         .strict(),
     ),
+    /** 9.4 Quỹ thời gian: months in a year; months each mortal career takes (default for one not listed). */
+    time: z
+      .object({
+        monthsPerYear: z.number().int().min(1),
+        careerMonths: z.record(z.string(), z.number().int().min(0)),
+        careerMonthsDefault: z.number().int().min(0),
+      })
+      .strict(),
     /** Mortal careers (task 2.11). */
     careers: z
       .object({
@@ -1607,7 +1639,7 @@ export const BalanceSchema = z
         /** Stipend multiplier per rank index. */
         rankStipendMul: z.array(z.number().min(0)).min(1),
         karmaPerYear: z.record(id, z.number()),
-        joinReputation: z.record(id, z.record(z.enum(['chinh', 'ma', 'tan_tu', 'yeu', 'trieu_dinh', 'giang_ho']), z.number())),
+        joinReputation: z.record(id, z.record(z.enum(FACTIONS), z.number())),
         recruitAfterYears: range,
         /** Ký danh becomes the next rank after this many years. */
         outerAfterYears: z.number().int().min(0),
@@ -1926,7 +1958,7 @@ const ActivityCostSchema = z
     silver: z.number().int().min(0).optional(),
     spiritStones: z.number().int().min(0).optional(),
     health: z.number().int().min(0).optional(),
-    /** Months of the year (task 9.4 spends them; kept on the data until then). */
+    /** 9.4: months of the year this option takes (default: the activity's `months`). */
     months: z.number().int().min(0).max(12).optional(),
   })
   .strict();
@@ -1961,6 +1993,8 @@ export const ActivitySchema = z
     /** Shown in the menu only when these hold. */
     conditions: ConditionsSchema.partial().default({}),
     cost: z.array(ActivityCostSchema).default([]),
+    /** 9.4: months of the year it takes (a cost option's own `months` wins). */
+    months: z.number().int().min(0).max(12).default(0),
     /** When no cost option can be paid: a lesser free version. Without it the activity waits for money. */
     free: z.object({ outcomes: z.array(ActivityOutcomeSchema).min(1) }).strict().optional(),
     limit: z
@@ -1979,6 +2013,24 @@ export const ActivitySchema = z
   });
 export type Activity = z.infer<typeof ActivitySchema>;
 export const ActivityFileSchema = z.array(ActivitySchema);
+
+/**
+ * 9.7 Dock buttons (dock.json). A tier's `dock` in world.json lists which show; "nam" is the +1 năm button,
+ * always in the middle. The order here is the order on screen. `groups`: the activity groups listed in that
+ * button's sheet. `early`: shown before its tier when this tab is open or one of these lối sống is on;
+ * `alt` is its look while the tab is still closed (a mortal sees "Giang hồ", not "Tông môn").
+ */
+export const DockFileSchema = z.array(z.object({
+  id: z.string().regex(/^[a-z0-9_]+$/),
+  glyph: z.string().length(1),
+  label: z.string().min(1),
+  groups: z.array(z.enum(ACTIVITY_GROUPS)).default([]),
+  early: z.object({ tab: z.string().optional(), lifestyles: z.array(z.string()).default([]) }).strict().optional(),
+  alt: z.object({ glyph: z.string().length(1), label: z.string().min(1) }).strict().optional(),
+  /** This sheet also lists the activity groups no shown button takes (so nothing is out of reach). */
+  catchAll: z.boolean().default(false),
+}).strict());
+export type DockButton = z.infer<typeof DockFileSchema>[number];
 
 /**
  * Task 9.0.3: what the player can do with someone met along the way, by how close they are
@@ -2719,6 +2771,107 @@ export const JianghuFactionFileSchema = z.array(
 );
 export type JianghuFaction = z.infer<typeof JianghuFactionFileSchema>[number];
 
+/**
+ * 9.9 stat-labels.json: one set of stats, named by the life (nguyên tắc B). Đạo tâm reads Tâm tính for a mortal,
+ * Ý chí for a võ giả, Đạo tâm for a tu sĩ (first label whose `when` holds). Faction reputation shows only when its
+ * `when` holds or it is not 0; nhân quả shows as a number once `showWhen` holds, otherwise as hearsay.
+ */
+export const StatLabelsFileSchema = z.object({
+  daoHeart: z.array(z.object({ when: ConditionsSchema.partial().default({}), label: z.string().min(1), term: z.string().optional() }).strict()).min(1),
+  reputation: z.array(z.object({ key: z.enum(FACTIONS), name: z.string().min(1), negName: z.string().optional(), when: ConditionsSchema.partial().optional() }).strict()),
+  karma: z.object({
+    label: z.string().min(1),
+    showWhen: ConditionsSchema.partial(),
+    rumors: z.array(z.object({ min: z.number(), text: z.string().min(1) }).strict()).min(1),
+  }).strict(),
+  innerForce: z.object({ label: z.string().min(1), term: z.string().optional() }).strict(),
+}).strict();
+export type StatLabelsFile = z.infer<typeof StatLabelsFileSchema>;
+
+/**
+ * 9.10 Thuật ngữ theo tầng: content/worlds/<id>/tier-terms.json. Words of a higher tầng that events of a
+ * tầng should not use (validator warnings only), and self-address words only some may use (trẫm).
+ */
+const TermWordSchema = z.object({ word: z.string().min(1), use: z.string().min(1) }).strict();
+export const TierTermsFileSchema = z.object({
+  tiers: z.array(z.object({
+    tier: id,
+    /** Event categories that belong to this tầng even without a tier condition. */
+    categories: z.array(z.string()).default([]),
+    words: z.array(TermWordSchema).min(1),
+  }).strict()),
+  /** Words the player may not say of themself unless the event requires one of `allowFlags`. */
+  selfWords: z.array(TermWordSchema.extend({ allowFlags: ids })).default([]),
+}).strict();
+export type TierTermsFile = z.infer<typeof TierTermsFileSchema>;
+
+/**
+ * 9.6 relations.json: kinds of relation (bằng hữu, kẻ thù, chủ nợ…) shown under groups in the Nhân duyên tab,
+ * the role texts each kind takes by default, and the occupations an NPC can move into over the years.
+ */
+export const RelationsFileSchema = z.object({
+  groups: z.array(z.object({ id, name: z.string().min(1) }).strict()).min(1),
+  kinds: z.array(z.object({ id, name: z.string().min(1), group: id, roles: z.array(z.string().min(1)).default([]) }).strict()).min(1),
+  /** Kind for a role text no kind lists. */
+  defaultKind: id,
+  occupations: z.array(z.object({
+    id, name: z.string().min(1), minAge: z.number().int().min(0), weight: z.number().min(0),
+    /** Only cultivators (true) or only mortals (false). */
+    root: z.boolean().optional(),
+    /** Heard when a close NPC takes it up; {npc} = their name. */
+    news: z.string().min(1),
+  }).strict()).default([]),
+  /** Starting acquaintances (balance.npcs.childhoodAge): role, kind, peer or older. */
+  childhood: z.array(z.object({ role: z.string().min(1), kind: id, peer: z.boolean().default(false), affinity: z.number().default(55), text: z.string().min(1) }).strict()).default([]),
+}).strict();
+export type RelationsFile = z.infer<typeof RelationsFileSchema>;
+
+/**
+ * 9.5 Thời cuộc: content/worlds/<id>/world-state.json. World variables (0–100) drift each year toward the
+ * target the pha thời thế sets; four phases follow each other and reweight event themes; a dynasty reigns
+ * under niên hiệu (a new era when a ruler dies or a new dynasty takes over). Prices follow some variables.
+ */
+/** `mortalText`: what a phàm nhân hears instead (9.10: no words of the tầng above). */
+const WorldVarNoteSchema = z.object({ at: z.number(), text: z.string().min(1), mortalText: z.string().min(1).optional() }).strict();
+export const WorldStateFileSchema = z.object({
+  vars: z.array(z.object({
+    id, name: z.string().min(1),
+    start: z.tuple([z.number(), z.number()]),
+    /** Random change each year, ± this much. */
+    drift: z.number().min(0),
+    /** Share of the gap to the target closed each year. */
+    pull: z.number().min(0).max(1),
+    /** Target when the phase names none. */
+    mean: z.number().default(50),
+    /** Lines for the "Thời cuộc" log line when the variable falls to `low.at` or rises to `high.at`. */
+    low: WorldVarNoteSchema.optional(),
+    high: WorldVarNoteSchema.optional(),
+  }).strict()).min(1),
+  phases: z.array(z.object({
+    id, name: z.string().min(1), text: z.string().min(1),
+    years: z.tuple([z.number().int().min(1), z.number().int().min(1)]),
+    /** Next phase ids with weights. */
+    next: z.record(id, z.number().min(0)),
+    /** Targets of the world variables while this phase lasts. */
+    targets: z.record(id, z.number()).default({}),
+    eventWeight: z.record(z.string(), z.number().min(0)).default({}),
+    /** Entering this phase brings a new dynasty (đổi ngôi). */
+    newDynasty: z.boolean().default(false),
+  }).strict()).min(1),
+  dynasties: z.array(z.string().min(1)).min(2),
+  eraNames: z.array(z.string().min(1)).min(4),
+  reignYears: z.tuple([z.number().int().min(1), z.number().int().min(1)]),
+  /** Price multiplier at variable 0 and at 100 (straight line between), multiplied together. */
+  prices: z.array(z.object({ var: id, at0: z.number().positive(), at100: z.number().positive() }).strict()).default([]),
+  texts: z.object({
+    /** "{dynasty}", "{era}", "{old}" fill in. */
+    newEra: z.string().min(1),
+    newDynasty: z.string().min(1),
+    phase: z.string().min(1),
+  }).strict(),
+}).strict();
+export type WorldStateFile = z.infer<typeof WorldStateFileSchema>;
+
 /** 9.R7e: content/worlds/<id>/world-events.json — sự kiện thiên hạ that run in phases (báo trước, diễn ra, hậu quả). */
 export const WorldEventFileSchema = z.array(
   z
@@ -3035,7 +3188,8 @@ export const MartialFileSchema = z
     ascendEffects: z.array(EffectHookSchema),
     /** {years}, {need}, {next}, {stage}, {description}. */
     texts: z.object({
-      train: z.string().min(1), promote: z.string().min(1), fail: z.string().min(1), ascend: z.string().min(1),
+      /** 9.b: several lines take turns year by year (less repetition in the log). */
+      train: z.union([z.string().min(1), z.array(z.string().min(1)).min(1)]), promote: z.string().min(1), fail: z.string().min(1), ascend: z.string().min(1),
       /** 9.V2: logged on reaching the last stage (the end of the martial path; Tiên Võ đồng tu needs a tiên duyên). */
       peak: z.string().min(1).optional(),
       /** 9.V2: tẩu hỏa while forcing a breakthrough; and losing a stage to it. */
@@ -3295,7 +3449,7 @@ export const FoundingFileSchema = z
           recruitMul: z.number().min(0),
           karmaPerYear: z.number(),
           /** Faction reputation changed once on founding. */
-          reputation: z.record(z.enum(['chinh', 'ma', 'tan_tu', 'yeu', 'trieu_dinh', 'giang_ho']), z.number()),
+          reputation: z.record(z.enum(FACTIONS), z.number()),
           /** K.6 hooks on the founder while the rule stands. */
           effects: z.array(EffectHookSchema),
         })

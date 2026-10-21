@@ -10,7 +10,7 @@ export function MemoryPanel({ state, content, onClose }: { state: GameState; con
   if (!ts) return null;
   const realmName = (id: string) => content.cultivation.realms.realms.find((r) => r.id === id)?.name ?? id;
   return (
-    <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Ký ức kiếp trước" onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div class="modal-backdrop sheet" role="dialog" aria-modal="true" aria-label="Ký ức kiếp trước" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div class="event-card">
         <div class="kicker">Trùng sinh</div>
         <h2>Ký ức kiếp trước</h2>

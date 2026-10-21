@@ -8,6 +8,62 @@
 
 ## [Chưa phát hành]
 
+### Chơi thử Mốc A (2026-10-21)
+- Bot giao diện chơi tới 48 tuổi ở 390px và 1280px: dock Hành sự, quỹ tháng ("còn 11/12 tháng"), niên hiệu trên từng năm nhật ký, dòng Thời cuộc, hồ sơ có Tâm tính / Danh vọng / Nhân quả qua lời đồn đều chạy; không lỗi script.
+- Sửa: nút Ngao du có ghi chú dài tràn ngang màn hình điện thoại (giờ xuống dòng); phàm nhân nhận dòng thời cuộc dùng từ tu chân ("tán tu", "linh dược"), nay có `mortalText` riêng; Quan uy âm hiện là "Mất lòng quan phủ".
+- Đỡ lặp: Làm thuê, Dự tiệc kết giao, Áp tiêu, Ngao du, Luyện quyền buổi sớm ghép câu từ hai vế (16–36 tổ hợp mỗi việc); dòng "Một năm luyện võ" có 6 câu luân phiên; câu "gác việc tu hành" chỉ hiện cho tu sĩ. Đo lại 40 đời mỗi persona: câu lặp giảm 38→28% (nông dân), 36→20% (thương nhân), 51→37% (kẻ cướp), 62→52% (hiệp khách).
+- Sửa vòng lặp: kỳ ngộ "Lão thầy bói và trang sách cũ" quay lại mãi nếu cứ chọn "Để lại"; nay lần thứ hai có lựa chọn bỏ hẳn.
+
+### 9.8: Công cụ: simulate persona phàm nhân, dev mode thời cuộc (2026-10-21)
+- `npm run simulate -- --profile mortal`: sáu persona phàm nhân (nông dân an phận, thư sinh thi cử, thương nhân, kẻ cướp, hiệp khách, kẻ lười). Persona ở lại phàm gian (từ chối lựa chọn dẫn vào tông môn hay công pháp khi còn đường khác), theo nghề và hoạt động riêng, chọn lựa chọn đầu, ngẫu nhiên, thiện nhất hoặc ác nhất. In thêm một bảng so sánh.
+- Số đo mới cho mọi hồ sơ: số hoạt động khác nhau và sự kiện khác nhau mỗi đời, tỉ lệ năm có chuyện đáng kể (có sự kiện, hoặc hoạt động đổi chỉ số từ 2 điểm), bạc cuối đời (trung vị), nguyên nhân chết theo tầng.
+- Đo 1002 đời (167 mỗi persona): chỉ 4–11% vào tu tiên; tuổi thọ 66–75 (hiệp khách 130 nhờ võ đạo); sự kiện khác nhau 45–70; năm có chuyện 95–97%; câu lặp 27–62% (cao nhất ở hiệp khách, do dòng "Một năm luyện võ" và áp tiêu); bạc cuối đời chênh rất xa (kẻ lười 41, thư sinh ~7.500, hiệp khách ~16.600: cần xem lại kinh tế ở GĐ 10).
+- Dev mode: chuyển pha thời cuộc, đặt biến thời cuộc (0/25/50/75/100), thêm người quen theo loại quan hệ (chọn theo nhóm). Đổi tầng và tặng bạc/linh thạch đã có từ trước; tặng tài sản và đặt mức truy nã chờ hệ thống tài sản, truy nã của GĐ 10.
+
+### 9.10: Bảng tra văn hóa, cảnh báo thuật ngữ theo tầng (2026-10-21)
+- `docs/design/van-hoa.md`: một hệ khoa cử (Đồng sinh → Tú tài → Cử nhân → Cống sĩ → Tiến sĩ; Trạng nguyên, Bảng nhãn, Thám hoa), bảng xưng hô theo vai vế (tại hạ/các hạ, vãn bối/tiền bối, trẫm, bần đạo/bần tăng, lệnh lang/lệnh ái…), bảng thuật ngữ theo tầng (nội lực / chân khí / chân nguyên; bí kíp / công pháp; thần binh / pháp bảo; thuốc / đan dược…), điểm nhạy cảm.
+- Quy ước thầy trò: võ phàm gọi "sư phụ", tu tiên gọi "sư tôn"; đã sửa 29 chỗ trong sự kiện tu tiên.
+- `content/worlds/<id>/tier-terms.json` + validator **cảnh báo** khi sự kiện phàm gian dùng từ tầng trên, hoặc lựa chọn của người chơi tự xưng "trẫm" mà không phải vua. Sự kiện cố ý cho phàm nhân gặp tầng trên đặt `"crossTier": true`.
+- Lần chạy đầu: 6 cảnh báo; sửa 2 chỗ sai rõ, 4 sự kiện tu sĩ gặp phàm nhân đánh dấu `crossTier`.
+
+### 9.9: Đổi nhãn chỉ số theo tầng, danh vọng phe (2026-10-21)
+- Không thêm chỉ số 0–100 nào. `content/stat-labels.json` đặt tên cho cùng một con số theo đời người: đạo tâm hiện là **Tâm tính** (phàm nhân), **Ý chí** (võ giả), **Đạo tâm** (tu sĩ), cả ở hồ sơ, dòng thay đổi chỉ số lẫn gợi ý "Thử …" trong sự kiện.
+- **Danh vọng theo phe** chỉ hiện phe đang dính vào: Hương danh / Tiếng xấu (làng xã, phe mới `lang_xa`), Quan uy (quan trường), Hiệp danh / Ác danh (giang hồ), các phe tu chân khi đã khác 0. Save cũ được thêm `lang_xa` (saveVersion 6).
+- **Nội lực**: phàm nhân theo võ đạo thấy thanh Nội lực (tiến độ tới cấp võ đạo kế) thay cho thanh Tu vi "Chưa tu luyện".
+- **Nhân quả**: phàm nhân không thấy con số, chỉ nghe lời đồn của hàng xóm; dòng thay đổi cũng ẩn "Thiện ác". Vào Luyện Khí, hoặc gặp sự kiện mới *Cao tăng qua làng*, mới thấy rõ.
+- 3 sự kiện mới (`huong-danh.json`): Cao tăng qua làng, Cây cầu đầu làng, Lời đàm tiếu. Thuật ngữ mới: Nội lực, Nhân quả.
+
+### 9.6: Người quen sâu hơn (2026-10-21)
+- `content/relations.json`: loại quan hệ (bằng hữu, huynh đệ kết nghĩa, hàng xóm, ân nhân, thầy, học trò, đồng liêu, chủ, thuộc hạ, chủ nợ, con nợ, kẻ thù, đồng môn, người thương…) xếp vào nhóm; vai cũ trong sự kiện tự quy về loại. Tab Người quen chia nhóm **Bạn bè / Tình duyên / Công việc / Thù địch / Tông môn / Người quen khác** (tình duyên, tông môn, thù oán được ưu tiên). Bảng đổi tên thành Nhân duyên.
+- **Kỷ niệm**: mỗi người quen nhớ 5 việc gần nhất hai bên làm với nhau (sự kiện, tương tác, quà tặng); hiện trong thẻ Thông tin và dùng được trong văn bản qua `{npcMemory}`. Điều kiện mới cho NPC: `kinds`, `occupation`, `minMemories`.
+- **NPC chủ động** (`npcTrigger: "visit"`): mỗi năm có `balance.npcs.visitChance` một người quen tự tìm tới, cách nhau ít nhất `visitGapYears`; cùng một người không mang cùng một việc tới hai lần. 10 sự kiện: mượn tiền, thiệp mời cưới, rủ làm ăn, nhờ báo thù, bị tố cáo, bị bạn bán đứng, nhờ trông nhà, cố nhân ghé chơi (nhắc kỷ niệm), người quen thành đạt, cầu cứu lúc bệnh. Đo 60 năm: trung bình ~11 lần mỗi đời.
+- **Người quen đổi vai**: người lớn có thể theo nghề mới (bộ khoái, quan huyện, thương nhân, tiêu sư, thợ săn, lục lâm, lang y; tu sĩ thành tán tu, khách khanh); người thân thiết thì có tin đồn trong nhật ký; `{npcJob}` trong văn bản.
+- 6 tuổi có một hàng xóm và một bạn thuở nhỏ. Các phần chạy mỗi năm dùng luồng RNG riêng.
+
+### 9.5: Thế giới sống, thời cuộc (2026-10-21)
+- `content/worlds/<id>/world-state.json`: các biến thời cuộc 0–100 (triều cục, mùa màng, trị an, ôn dịch, chiến sự biên ải, chính ma căng thẳng) trôi mỗi năm về đích của pha thời thế; bốn pha **Thịnh thế → Trung suy → Loạn thế → Tân triều**, mỗi pha nhân trọng số sự kiện theo chủ đề; triều đại và **niên hiệu** tự đặt (đổi niên hiệu khi vua băng hà, đổi triều khi vào Tân triều). Tất cả chạy trên luồng RNG riêng (`seed:times:tuổi`) nên xúc xắc của đời người không đổi.
+- `GameState.times`; save cũ tự có thời cuộc ở năm kế tiếp. Điều kiện mới cho sự kiện/hoạt động: `worldPhase`, `worldVars` (vd. nạn đói khi `harvest ≤ 28`). Validator kiểm pha, biến, giá và sự kiện nhắc tới chúng.
+- Nhật ký: mỗi năm ghi kèm niên hiệu ("Tuổi 12 · Thái An năm thứ 12"); dòng **Thời cuộc** chỉ hiện khi đổi pha, đổi ngôi, hoặc mất mùa / được mùa lớn / giặc cướp / ôn dịch / biên ải / chính ma vượt ngưỡng (khoảng 10–15 dòng mỗi trăm năm).
+- Giá chợ theo mùa màng, biên ải, chính ma; Phường thị ghi "Thời giá (Loạn thế): hàng hóa đắt hơn thường 30%". Hồ sơ có dòng Thời thế; màn tổng kết đời có niên biểu ("Sinh năm Long Khánh thứ 19, mất năm Chiêu Minh thứ 1, trải hai triều (Đại Ung, Đại Viêm)").
+- 6 sự kiện thời cuộc: Năm đói, Bắt lính (vào Quân ngũ), Ôn dịch trong thành, Giặc chặn đường, Ân khoa của tân triều, Hội lớn mừng thái bình.
+
+### 9.4: Quỹ thời gian 12 tháng mỗi năm (2026-10-21)
+- Mỗi năm có `balance.time.monthsPerYear` tháng. Nghề chính của phàm nhân lấy tháng trước (`time.careerMonths`: quan 10, thương 8, y 8, võ lâm 6, tạp dịch 9). Mỗi hoạt động tốn 0–6 tháng (`months` trong JSON). Hết tháng thì chỉ còn các việc 0 tháng; dòng khóa ghi rõ "Cần 2 tháng, năm nay chỉ còn 1".
+- Tu sĩ: tháng còn trống cuối năm dồn vào tu luyện, nên tu vi năm đó nhân với `tháng tu / 12`. Bế quan vẫn khóa cả năm cho tu luyện. Không làm gì thì bấm +1 năm vẫn như cũ.
+- Dưới nút +1 năm có dòng nhỏ "Còn 7/12 tháng"; bảng Hành sự ghi số tháng còn lại; giá mỗi hoạt động có thêm số tháng.
+- Hoạt động mới: **Về thăm quê** (2 tháng, Nhân duyên), **Dự tiệc, kết giao** (1 tháng, mị lực), **Theo tiêu cục áp tiêu** (2 tháng, võ giả hoặc tu sĩ, kiếm bạc), **Làm thuê thời vụ** (3 tháng, phàm nhân). Ngao du tốn 1 tháng, Luyện quyền buổi sớm 0 tháng.
+- `npm run simulate -- --profile full`: bot "sống đủ" (chơi như `player`, thêm tới 4 tháng mỗi năm cho thăm quê, áp tiêu, ngao du, kết giao). Báo cáo thêm hạnh phúc trung bình, bạc cuối đời, số tháng hoạt động mỗi năm.
+- Đo trên 200 đời cùng seed: tu sĩ "chỉ tu" gần như không đổi; tu sĩ "sống đủ" đi từ Luyện Khí lên Trúc Cơ mất gấp ~1,35 lần (tốc độ chậm ~26%), nhưng hạnh phúc trung bình 82 so với 50, bạc cuối đời 27 so với 11, sống lâu hơn và số người tới Trúc Cơ tương đương (90 so với 85).
+
+### 9.7: Dock theo tầng và màn chính mới (2026-10-21)
+- Dock đọc `tiers[].dock` trong `world.json`; hình và tên nút nằm trong `content/dock.json` (thứ tự, nhóm hoạt động của từng bảng, nút hiện sớm theo tab hoặc lối sống). Nút **+1 năm** luôn ở giữa.
+- Phàm gian: **Bản thân · Hành sự · +1 năm · Nhân duyên · Gia sản**. Tu chân giới thêm **Tu luyện** và **Tông môn** (ba nút mỗi bên). Người có linh căn dùng được thấy Tu luyện sớm; người đi giang hồ thấy nút **Giang hồ** (mở bảng Tông môn) trước khi biết tới tông môn.
+- Bảng Tu luyện cũ tách đôi: **Bản thân** (thân phận, võ đạo, đường đời, bách nghệ, hoạt động học hành/nghề/sức khỏe) và **Tu luyện** (công pháp, tu vi, bế quan, động phủ, đột phá, đạo thống).
+- **Hành sự**: lưới nhóm việc (chữ Hán + tên, số việc làm được), bấm vào ra danh sách có giá, %, lý do khóa. Nhân duyên và Gia sản liệt kê hoạt động của nhóm mình. Nút 事 trên thanh trên bỏ.
+- Hồ sơ nhân vật và bảng Bản thân có dòng **Thân phận** (bậc nghề, cấp võ đạo, tông môn, lối sống, nơi ở).
+- Máy tính ≥ 1024px: bảng đang mở nằm bên phải nhật ký thay vì che màn, dock vẫn bấm được. Nhãn dock xuống dòng thay vì bị cắt (kiểm ảnh 320/390/1280, không tràn, không cắt chữ).
+- Validator: nút dock trùng id, tầng nhắc nút không có trong `dock.json`.
+
 ### 9.2: Khung Hoạt động (2026-10-21)
 - Mỗi việc người chơi chủ động làm là một **hoạt động JSON** (`content/activities/*.json`, `content/worlds/<id>/activities/*.json`): nhóm menu, biểu tượng, điều kiện, giá (bạc, linh thạch, sức khỏe, tháng), giới hạn lần mỗi năm và hồi chiêu nhiều năm, kiểm tra chỉ số hiện %, bảng kết quả có trọng số (số ngẫu nhiên trong khoảng, thưởng theo điều kiện, mở sự kiện kế tiếp), bản miễn phí khi hết tiền. Văn bản dùng pool của 9.3.
 - Engine `src/systems/activities.ts` (`activityViews`, `doActivity`); UI chỉ liệt kê và gửi `doActivity`. Nút **事** trên thanh trên mở bảng Hoạt động, chia theo nhóm.

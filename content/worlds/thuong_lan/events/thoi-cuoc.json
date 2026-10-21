@@ -1,0 +1,150 @@
+[
+  {
+    "id": "tc_nan_doi",
+    "category": "life",
+    "title": "Năm đói",
+    "text": "Mất mùa liền mấy vụ. Gạo trong chợ đắt như ngọc, ngoài cổng thành người đói ngồi thành hàng.",
+    "themes": ["family", "karma"],
+    "conditions": { "age": { "min": 12 }, "tier": ["pham_gian"], "worldVars": [{ "id": "harvest", "lte": 28 }] },
+    "weight": 14,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Nấu cháo phát cho người đói",
+        "requires": { "stats": [{ "stat": "silver", "gte": 15 }] },
+        "result": { "text": "Nồi cháo loãng mà người xếp hàng dài tới cuối phố. Có bà lão khóc, gọi ngươi là ân nhân.", "effects": { "silver": -15, "karma": 3, "stat.happiness": 2, "stat.daoHeart": 1 } }
+      },
+      {
+        "text": "Thắt lưng buộc bụng, giữ lấy phần nhà mình",
+        "result": { "text": "Cả nhà ăn cháo rau má qua mùa giáp hạt. Ai cũng gầy đi một vòng.", "effects": { "stat.health": -4, "stat.happiness": -3 } }
+      },
+      {
+        "text": "Vào rừng đào củ mài",
+        "check": { "stat": "stat.physique", "difficulty": 45 },
+        "success": { "text": "Ngươi đào được cả gùi củ mài, đủ cho nhà ăn tới vụ sau.", "effects": { "stat.physique": 1, "stat.happiness": 2 } },
+        "fail": { "text": "Đi cả ngày được hai củ, về còn bị ong đốt sưng mặt.", "effects": { "stat.health": -5, "stat.charm": -1 } }
+      }
+    ]
+  },
+  {
+    "id": "tc_bat_linh",
+    "category": "life",
+    "title": "Bắt lính",
+    "text": "Lý trưởng gõ mõ khắp làng: biên ải nguy cấp, mỗi nhà một suất đinh. Quan sai đứng đầu ngõ, tay cầm sổ.",
+    "themes": ["justice", "family_tragedy"],
+    "conditions": { "age": { "min": 16, "max": 45 }, "tier": ["pham_gian"], "worldVars": [{ "id": "border", "gte": 65 }], "flagsNone": ["quan_ngu"] },
+    "weight": 12,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đi lính",
+        "result": { "text": "Ngươi khoác áo chiến, theo đoàn quân ra biên ải. Người nhà đứng đầu làng tới khi bụi đường lắng hẳn.", "effects": { "setFlags": ["quan_ngu"], "stat.physique": 2, "stat.happiness": -6, "stat.daoHeart": 1 } }
+      },
+      {
+        "text": "Nộp bạc chuộc suất đinh",
+        "requires": { "stats": [{ "stat": "silver", "gte": 30 }] },
+        "result": { "text": "Ba mươi lạng đổi lấy một cái gạch tên trong sổ. Quan sai cười, cất bạc vào tay áo.", "effects": { "silver": -30, "stat.happiness": -2 } }
+      },
+      {
+        "text": "Trốn lên núi chờ qua đợt",
+        "check": { "stat": "stat.luck", "difficulty": 50 },
+        "success": { "text": "Ngươi trốn trong hang đá nửa tháng, ăn quả dại, đợt bắt lính qua thì lẳng lặng về.", "effects": { "stat.health": -2, "stat.happiness": 1 } },
+        "fail": { "text": "Bị bắt ở lưng chừng núi, bị đánh hai mươi trượng rồi vẫn phải đi lính.", "effects": { "setFlags": ["quan_ngu"], "stat.health": -10, "stat.happiness": -8 } }
+      }
+    ]
+  },
+  {
+    "id": "tc_on_dich",
+    "category": "life",
+    "title": "Ôn dịch trong thành",
+    "text": "Ôn dịch lan tới đầu ngõ. Nhà bên cạnh đã treo vải trắng, nhà đối diện đóng cửa ba ngày nay.",
+    "themes": ["mishap", "karma"],
+    "conditions": { "age": { "min": 10 }, "worldVars": [{ "id": "plague", "gte": 55 }] },
+    "weight": 14,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Giúp thầy thuốc sắc thuốc, chăm người bệnh",
+        "check": { "stat": "stat.health", "difficulty": 50 },
+        "success": { "text": "Ngươi sắc thuốc suốt một tháng, lây cũng không lây. Người khỏi bệnh nhớ mặt ngươi.", "effects": { "karma": 3, "stat.daoHeart": 2, "stat.happiness": 2 } },
+        "fail": { "text": "Ngươi lây bệnh, sốt mê man nửa tháng. Mạng giữ được, người rạc đi trông thấy.", "effects": { "karma": 2, "stat.health": -14 } }
+      },
+      {
+        "text": "Đóng chặt cửa, đợi dịch qua",
+        "result": { "text": "Ngươi ở trong nhà ba tháng, nghe tiếng khóc ngoài ngõ mà không dám mở cửa.", "effects": { "stat.happiness": -6 } }
+      }
+    ]
+  },
+  {
+    "id": "tc_giac_cuop",
+    "category": "life",
+    "title": "Giặc chặn đường",
+    "text": "Đường vắng, rừng thưa. Mấy gã bịt mặt từ bụi rậm bước ra, đao chĩa thẳng vào ngươi.",
+    "themes": ["plunder"],
+    "conditions": { "age": { "min": 14 }, "tier": ["pham_gian"], "worldVars": [{ "id": "security", "lte": 28 }] },
+    "weight": 10,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Nộp tiền mua đường",
+        "result": { "text": "Ngươi dốc túi, bọn cướp đếm xong còn chê ít. May mà chúng chỉ chê.", "effects": { "silver": -12, "stat.happiness": -3 } }
+      },
+      {
+        "text": "Rút gậy chống trả",
+        "check": { "stat": "stat.physique", "difficulty": 55 },
+        "success": { "text": "Ngươi quật ngã gã đầu đảng, cả bọn bỏ chạy. Người làng nghe chuyện, đồn ngươi một mình đánh mười.", "effects": { "stat.happiness": 4, "stat.physique": 1 } },
+        "fail": { "text": "Một đấu năm, ngươi bị đánh ngã, mất tiền lại thêm mấy vết thương.", "effects": { "silver": -12, "stat.health": -10 } }
+      },
+      {
+        "text": "Quay đầu bỏ chạy",
+        "check": { "stat": "stat.luck", "difficulty": 45 },
+        "success": { "text": "Ngươi chạy một mạch ba dặm, ngoái lại không thấy ai. Tim đập tới tối.", "effects": { "stat.health": -1, "stat.happiness": -1 } },
+        "fail": { "text": "Vấp rễ cây ngã sấp, bị lột sạch tới đôi giày.", "effects": { "silver": -15, "stat.charm": -1, "stat.happiness": -4 } }
+      }
+    ]
+  },
+  {
+    "id": "tc_an_khoa",
+    "category": "study",
+    "title": "Ân khoa của tân triều",
+    "text": "Tân triều mới dựng, mở ân khoa chiêu hiền. Bảng vàng dán khắp cổng thành, sĩ tử các châu đổ về kinh.",
+    "themes": ["study"],
+    "conditions": { "age": { "min": 16, "max": 50 }, "tier": ["pham_gian"], "worldPhase": ["tan_trieu"] },
+    "weight": 12,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Lên kinh ứng thí",
+        "check": { "stat": "stat.intellect", "difficulty": 55 },
+        "success": { "text": "Bài văn của ngươi lọt mắt quan chủ khảo. Tên ngươi treo trên bảng, cả làng mổ lợn ăn mừng.", "effects": { "stat.intellect": 2, "stat.happiness": 8, "setFlags": ["an_khoa_do"] } },
+        "fail": { "text": "Ngươi rớt. Trên đường về, ngồi quán nước nghe người ta bàn đề thi, mới biết mình hiểu sai đề.", "effects": { "stat.happiness": -4, "stat.intellect": 1 } }
+      },
+      {
+        "text": "Thôi, tân triều hay cựu triều thì ruộng vẫn phải cày",
+        "result": { "text": "Ngươi ở nhà cày ruộng. Mùa ấy lúa tốt, cũng là một loại bảng vàng.", "effects": { "stat.physique": 1, "stat.happiness": 1 } }
+      }
+    ]
+  },
+  {
+    "id": "tc_hoi_lon",
+    "category": "life",
+    "title": "Hội lớn mừng thái bình",
+    "text": "Thiên hạ thái bình, triều đình mở hội lớn ba ngày. Đèn treo kín phố, gánh hát dựng rạp ngay đầu chợ.",
+    "themes": ["funny", "market"],
+    "conditions": { "age": { "min": 8 }, "worldPhase": ["thinh_the"] },
+    "weight": 6,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Đi xem hội tới khuya",
+        "result": { "text": "Ngươi ăn hết bốn xâu kẹo hồ lô, xem múa lân tới lúc đèn tắt.", "effects": { "stat.happiness": 6 } }
+      },
+      {
+        "text": "Bày sạp bán hàng kiếm thêm",
+        "check": { "stat": "stat.charm", "difficulty": 45 },
+        "success": { "text": "Miệng ngọt như mía, ngươi bán sạch hàng trước giờ ngọ.", "effects": { "silver": 15, "stat.charm": 1 } },
+        "fail": { "text": "Sạp ngươi kẹp giữa hai sạp bán chè. Cả ngày chỉ bán được cho chính mình một bát.", "effects": { "silver": -3, "stat.happiness": -1 } }
+      }
+    ]
+  }
+]

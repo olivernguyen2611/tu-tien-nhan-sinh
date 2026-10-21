@@ -422,7 +422,7 @@
           "difficulty": 55
         },
         "success": {
-          "text": "Trưởng lão gật đầu. Từ nay ngươi có sư phụ.",
+          "text": "Trưởng lão gật đầu. Từ nay ngươi có sư tôn.",
           "effects": {
             "gainMaster": true,
             "stat.happiness": 5,

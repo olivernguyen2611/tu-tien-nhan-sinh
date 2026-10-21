@@ -267,6 +267,8 @@ button { font: inherit; color: inherit; }
   color: var(--jade);
 }
 .age-block p { margin: 0 0 4px; }
+/* 9.5: niên hiệu beside the age, quieter than it. */
+.age-block h3 .era { text-transform: none; letter-spacing: 0; color: var(--muted); font-weight: 500; }
 .age-block p.good { color: var(--good); }
 .age-block p.bad { color: var(--bad); }
 .age-block p.rare { color: var(--rare); font-weight: 600; }
@@ -286,6 +288,7 @@ button { font: inherit; color: inherit; }
 .dock {
   grid-area: dock;
   display: grid;
+  /* Columns come from the tier's buttons (inline style); this is the four-button default. */
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto minmax(0, 1fr) minmax(0, 1fr);
   align-items: end;
   gap: 4px;
@@ -356,6 +359,7 @@ button { font: inherit; color: inherit; }
 .stat-row .label b { color: var(--ink); font-weight: 600; }
 .stat-row.wide { grid-column: 1 / -1; }
 .leisure-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.leisure-row .chip-btn { white-space: normal; max-width: 100%; text-align: left; padding: 6px 12px; }
 .leisure-hint { margin: 0; flex: 1 1 100%; font-size: 0.75rem; color: var(--bad); }
 
 /* Event popup */
@@ -732,7 +736,9 @@ button { font: inherit; color: inherit; }
 @media (min-width: 720px) { .term-backdrop { place-items: center; } }
 
 /* ---------- Fast forward (task 1.11) ---------- */
-.age-wrap { position: relative; justify-self: center; }
+.age-wrap { position: relative; justify-self: center; display: flex; flex-direction: column; align-items: center; }
+/* 9.4: months still free this year, under the +1 năm button. */
+.months-left { font-size: 0.625rem; color: var(--muted); white-space: nowrap; margin-top: 2px; }
 .ff-btn {
   position: absolute;
   top: -30px; right: -18px;
@@ -1012,3 +1018,33 @@ html[data-motion='reduce'][data-fx]::after { display: none; }
 /* 9.2 Hoạt động */
 .activity-panel section + section { margin-top: 6px; }
 .activity-icon { color: var(--gold); font-weight: 700; margin-right: 2px; }
+
+/* 9.7 Dock labels may take two lines instead of being cut (narrow phones, six buttons, a sheet open beside). */
+.dock .dock-item > span:last-child { white-space: normal; text-align: center; line-height: 1.15; overflow: visible; overflow-wrap: normal; }
+.dock .dock-item { min-height: 64px; }
+@media (max-width: 420px) {
+  .dock.crowded { gap: 2px; padding: 0 4px 6px; }
+  .dock.crowded .dock-item { font-size: 0.625rem; }
+  .dock.crowded .dock-item .glyph { width: 30px; height: 30px; font-size: 1rem; }
+  .dock.crowded .age-btn { width: 70px; height: 70px; }
+  .dock.crowded .age-btn .big { font-size: 1.375rem; }
+}
+@media (max-width: 340px) { .dock.crowded { gap: 0; padding: 0 2px 6px; } .dock.crowded .dock-item { font-size: 0.5938rem; } }
+
+/* 9.7 Hành sự: a grid of group tiles, then one group's list. */
+.group-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; margin: 8px 0; }
+.group-tile { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 8px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--ink); cursor: pointer; text-align: center; }
+.group-tile:hover { border-color: var(--jade); }
+.group-tile .glyph { font-family: var(--font-story); font-size: 1.5rem; color: var(--gold); }
+.group-tile .group-name { font-weight: 600; }
+.group-tile .muted { font-size: 0.75rem; }
+.back-link { padding: 0; min-height: 36px; }
+
+/* 9.7 Wide screens: an open sheet sits right of the log instead of covering it, so +1 năm stays in reach. */
+@media (min-width: 1024px) {
+  .main-screen { --sheet-w: min(540px, 42vw); }
+  .main-screen:has(> .modal-backdrop.sheet) { max-width: none; margin: 0; width: calc(100vw - var(--sheet-w)); grid-template-columns: minmax(0, 1fr) 260px; }
+  .modal-backdrop.sheet { left: auto; width: var(--sheet-w); background: none; padding: 20px 20px 20px 0; place-items: stretch; animation: none; }
+  .modal-backdrop.sheet > .event-card { width: 100%; max-height: calc(100dvh - 40px); margin: 0; }
+  .modal-backdrop.sheet .event-card .crafts { display: block; }
+}

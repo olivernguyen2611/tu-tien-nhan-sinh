@@ -8,11 +8,17 @@ import type { GameState, Tone } from '../core/types';
 import { meets } from './events/conditions';
 import { applyOutcome, checkChance } from './events/engine';
 import { drawText } from './textPool';
+import { monthsLeft, monthsUsed } from './timeBudget';
 
 /** Menu headings, in menu order. */
 export const ACTIVITY_GROUP_NAMES: Record<ActivityGroup, string> = {
   ban_than: 'Bản thân', hoc_hanh: 'Học hành', nghe: 'Nghề', tai_san: 'Tài sản', quan_he: 'Quan hệ',
   giai_tri: 'Giải trí', suc_khoe: 'Sức khỏe', pham_phap: 'Phạm pháp', giang_ho: 'Giang hồ', tu_luyen: 'Tu luyện',
+};
+/** 9.7: the Hán character on each group's tile. */
+export const ACTIVITY_GROUP_GLYPHS: Record<ActivityGroup, string> = {
+  ban_than: '身', hoc_hanh: '學', nghe: '藝', tai_san: '財', quan_he: '緣',
+  giai_tri: '樂', suc_khoe: '體', pham_phap: '盜', giang_ho: '江', tu_luyen: '修',
 };
 
 type Cost = Activity['cost'][number];
@@ -40,11 +46,15 @@ function payable(state: GameState, content: Content, a: Activity): Cost | null |
   return fits.find((c) => state.money.silver >= (c.silver ?? 0) && state.money.spiritStones >= (c.spiritStones ?? 0) && state.stats.health > (c.health ?? 0)) ?? null;
 }
 
-function costText(c: Cost): string {
+/** Months this use takes: the option paid, or the activity's own (also for the free version). */
+const monthsFor = (a: Activity, pay: Cost | null | undefined) => pay?.months ?? a.months;
+
+function costText(c: Cost | null | undefined, months: number): string {
   const parts = [
-    c.spiritStones ? `${c.spiritStones} linh thạch` : '',
-    c.silver ? `${c.silver} lượng bạc` : '',
-    c.health ? `${c.health} sức khỏe` : '',
+    c?.spiritStones ? `${c.spiritStones} linh thạch` : '',
+    c?.silver ? `${c.silver} lượng bạc` : '',
+    c?.health ? `${c.health} sức khỏe` : '',
+    months ? `${months} tháng` : '',
   ].filter(Boolean);
   return parts.join(', ');
 }
@@ -52,7 +62,7 @@ function costText(c: Cost): string {
 /** What the cheapest option that applies asks for, to say what is missing. */
 function wanted(state: GameState, content: Content, a: Activity): string {
   const c = a.cost.find((x) => meets(state, x.when, content)) ?? a.cost[0];
-  return c ? costText(c) : '';
+  return c ? costText({ ...c, months: 0 }, 0) : '';
 }
 
 function usedThisYear(state: GameState, id: string): number {
@@ -70,7 +80,11 @@ function blockedReason(state: GameState, content: Content, a: Activity): string 
   if (last !== undefined && last !== state.character.age && state.character.age - last < a.limit.cooldownYears) {
     return `Còn ${last + a.limit.cooldownYears - state.character.age} năm nữa.`;
   }
-  if (payable(state, content, a) === null && !a.free) return `Cần ${wanted(state, content, a)}.`;
+  const pay = payable(state, content, a);
+  if (pay === null && !a.free) return `Cần ${wanted(state, content, a)}.`;
+  const need = monthsFor(a, pay);
+  const left = monthsLeft(state, content);
+  if (need > left) return left === 0 ? 'Năm nay đã hết thời gian.' : `Cần ${need} tháng, năm nay chỉ còn ${left}.`;
   return null;
 }
 
@@ -87,7 +101,7 @@ export function activityViews(state: GameState, content: Content): ActivityView[
         name: a.name,
         icon: a.icon,
         text: a.text,
-        cost: pay ? costText(pay) : pay === null ? 'miễn phí' : null,
+        cost: pay ? costText(pay, monthsFor(a, pay)) : pay === null ? ['miễn phí', costText(null, a.months)].filter(Boolean).join(', ') : costText(null, a.months) || null,
         // The free version has no check: the walk always happens.
         chance: a.check && pay !== null ? checkChance(state, content, a.check.stat, a.check.difficulty) : null,
         blocked: blockedReason(state, content, a),
@@ -152,7 +166,10 @@ export function doActivity(state: GameState, content: Content, id: string, targe
     ...r.state,
     rng: rng.getState(),
     log,
-    activities: { last: { ...prev?.last, [a.id]: age }, year: age, uses: { ...uses, [a.id]: (uses[a.id] ?? 0) + 1 } },
+    activities: {
+      last: { ...prev?.last, [a.id]: age }, year: age, uses: { ...uses, [a.id]: (uses[a.id] ?? 0) + 1 },
+      months: monthsUsed(state) + monthsFor(a, pay),
+    },
     events: { ...r.state.events, npc: state.events.npc },
   };
   if (outcome.startEvent && !next.events.pending) next = { ...next, events: { ...next.events, pending: outcome.startEvent, npc: target ?? null } };

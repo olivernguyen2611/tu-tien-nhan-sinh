@@ -10,7 +10,7 @@ import { extremeHasHook } from './extremes';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
-function careerDef(content: Content, id: string | null) {
+export function careerDef(content: Content, id: string | null) {
   return id ? content.careers.careers.find((c) => c.id === id) : undefined;
 }
 

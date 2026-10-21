@@ -1,6 +1,7 @@
 // Tặng vật phẩm cho người quen (task 9.0.2): chọn một món trong túi tặng bất kỳ người quen nào
 // (đồ đệ và đạo lữ đã có đường riêng). Hợp gu hay không tùy bản chất họ; tu sĩ dùng được đan dược,
 // pháp khí thì dùng thật; phàm nhân chỉ cất giữ; người đang lạnh nhạt có thể từ chối. Số ở balance.npcGift.
+import { remember } from './acquaintances';
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameState, LogLine, Npc, Tone } from '../core/types';
@@ -85,5 +86,6 @@ export function giftNpc(state: GameState, content: Content, npcId: string, itemI
   const log = s.log.slice();
   const last = log[log.length - 1];
   if (last) log[log.length - 1] = { ...last, lines: [...last.lines, ...lines] };
-  return { state: { ...s, log }, text: lines.map((l) => l.text).join(' '), tone: lines[0]?.tone ?? 'normal' };
+  // 9.6: kỷ niệm.
+  return { state: remember({ ...s, log }, content, npcId, `Tặng ${it.name}`), text: lines.map((l) => l.text).join(' '), tone: lines[0]?.tone ?? 'normal' };
 }

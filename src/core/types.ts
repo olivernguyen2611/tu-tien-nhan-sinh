@@ -109,6 +109,12 @@ export interface GameState {
   knowledgeNew?: string[];
   /** 9.R7e: the sự kiện thiên hạ under way (one at a time), and the age each one may come again. */
   world?: { active: { id: string; phase: number; left: number } | null; cooldown: Record<string, number> };
+  /** 9.5 Thời cuộc: pha thời thế, world variables (0–100), dynasty and niên hiệu; `eras` keeps every era of this life (`from` = age it began). */
+  times?: {
+    phase: string; phaseLeft: number; vars: Record<string, number>; notes: Record<string, 'low' | 'high' | null>;
+    dynasty: string; era: string; eraFrom: number; reignLeft: number;
+    eras: { dynasty: string; era: string; from: number }[];
+  };
   /** 9.R6a: developer mode was on during this life; it earns no records (thành tựu, thử thách tuần, điểm Luân Hồi, Thiên Thư, Sổ tri thức). */
   devUsed?: boolean;
   /** Task 5b.1: thiên phú luân hồi this life was born with (id → level), bought in earlier lives. */
@@ -152,7 +158,8 @@ export interface GameState {
   /** 9.S5: points on each thành thần path, and the marks passed (milestones "<id>:<at>", "<id>:ascend", "<id>:miss"). */
   merit?: { points: Record<string, number>; marks: string[] };
   /** 9.2: hoạt động used: age of the last use, and uses in `year` (the year counted). */
-  activities?: { last: Record<string, number>; year: number; uses: Record<string, number> };
+  /** 9.2 last use and uses this year of each activity; 9.4 months spent this year. */
+  activities?: { last: Record<string, number>; year: number; uses: Record<string, number>; months?: number };
   /** 9.3: last picks of each text pool (textPool.ts), so lines do not repeat. */
   textMemory?: Record<string, string[]>;
   /** 9.1: tầng the life is in, the age it entered each, and a tier just entered whose screen is not shown yet. */
@@ -300,7 +307,8 @@ export interface GameState {
   money: { silver: number; spiritStones: number };
   social: {
     karma: number; // -100 evil … +100 good
-    reputation: Record<'chinh' | 'ma' | 'tan_tu' | 'yeu' | 'trieu_dinh' | 'giang_ho', number>;
+    /** 9.9: lang_xa = hương danh (village); trieu_dinh = quan uy; giang_ho = hiệp danh (+) / ác danh (−). */
+    reputation: Record<'chinh' | 'ma' | 'tan_tu' | 'yeu' | 'trieu_dinh' | 'giang_ho' | 'lang_xa', number>;
   };
   flags: Record<string, boolean>;
   /** Tiên Thiên Khí Vận: offered at birth, kept after confirming. */
@@ -442,6 +450,11 @@ export interface Npc {
   /** Task 5c.9: recruited into the player's own sect (age joined), and the age of the last invitation (once a year each). */
   member?: { since: number };
   recruitTried?: number;
+  /** 9.6: kind of relation (relations.json), shared memories (newest last), occupation now, visit event id → age it came. */
+  kind?: string;
+  memories?: { age: number; text: string }[];
+  occupation?: string;
+  visits?: Record<string, number>;
   /** 9.R9: a cố nhân from a past life ({pastName}, {pastSelf}); met once the reunion event has come. */
   pastLife?: { kind: KarmaTieKind; name: string; self: string; met: boolean };
 }

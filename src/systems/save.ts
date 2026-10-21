@@ -16,7 +16,7 @@ import { BASIC_KNOWLEDGE } from './knowledge';
  * v4: tầng (9.1): an older life is put in Phàm gian, or Tu chân giới when it already has a realm (`placeTier`).
  * v5: hoạt động (9.2): the last Ngao du trip moves into the activity record (`moveLeisure`).
  */
-export const SAVE_VERSION = 5;
+export const SAVE_VERSION = 6;
 export const SLOT_COUNT = 9;
 const KEY_PREFIX = 'bachthe.save.';
 const META_KEY = 'bachthe.meta';
@@ -244,6 +244,12 @@ function moveLeisure(life: GameState): GameState {
   return { ...life, activities: age === null || age === undefined ? { last: {}, year: -1, uses: {} } : { last: { ngao_du: age }, year: age, uses: { ngao_du: 1 } } };
 }
 
+/** SaveVersion 6: hương danh (lang_xa) joins the faction reputations at 0. */
+function addVillageName(life: GameState): GameState {
+  if (life.social.reputation.lang_xa !== undefined) return life;
+  return { ...life, social: { ...life.social, reputation: { ...life.social.reputation, lang_xa: 0 } } };
+}
+
 function migrateSteps(save: SaveFile): SaveFile {
   // Fields added within saveVersion 1 get their empty defaults.
   let life = save.life as GameState & { extremes?: GameState['extremes'] };
@@ -346,7 +352,7 @@ function migrateSteps(save: SaveFile): SaveFile {
       },
     };
   }
-  life = moveLeisure(placeTier(restoreRoots(splitBody(life))));
+  life = addVillageName(moveLeisure(placeTier(restoreRoots(splitBody(life)))));
   // 9.R4d: no mass root test any more: an untested life drops the booked visit (the tiên duyên gates take over).
   const booked = life.events.followUps.filter((f) => /^thu_linh_can/.test(f.event));
   if (!life.cult.root && booked.length) life = { ...life, events: { ...life.events, followUps: life.events.followUps.filter((f) => !booked.includes(f)) } };

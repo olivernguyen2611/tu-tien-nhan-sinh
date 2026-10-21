@@ -2,6 +2,7 @@
 // rượu và ngao du, thân thì tâm sự và xin chỉ điểm, thù thì dò la, cầu hòa, đối đầu. Mỗi việc một lần mỗi năm.
 import { drawText } from './textPool';
 import type { Content } from '../core/content';
+import { remember } from './acquaintances';
 import { Rng } from '../core/rng';
 import type { NpcAct } from '../core/schemas';
 import type { GameState, LogLine, Npc, Tone } from '../core/types';
@@ -77,5 +78,6 @@ export function doNpcAct(state: GameState, content: Content, npcId: string, actI
   const log = s.log.slice();
   const last = log[log.length - 1];
   if (last) log[log.length - 1] = { ...last, lines: [...last.lines, line] };
-  return { state: { ...s, log }, text, tone };
+  // 9.6: kỷ niệm.
+  return { state: remember({ ...s, log }, content, npcId, act.name), text, tone };
 }

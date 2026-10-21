@@ -36,7 +36,7 @@ describe('6b.2 happiness', () => {
   it('an empty purse still allows a free walk', () => {
     let s = adult('free');
     s = { ...s, stats: { ...s.stats, happiness: 30 }, money: { silver: 0, spiritStones: 0 } };
-    expect(view(s).cost).toBe('miễn phí');
+    expect(view(s).cost).toBe('miễn phí, 1 tháng');
     const r = doActivity(s, content, 'ngao_du')!;
     expect(r.state.stats.happiness).toBeGreaterThanOrEqual(30 + trip.free!.outcomes[0].roll['stat.happiness'][0]);
   });

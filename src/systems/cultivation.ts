@@ -28,6 +28,7 @@ import { needsHeartDemonTrial, startHeartDemonTrial } from './heartDemon';
 import { tribulationPreview, undergoTribulation, type TribulationPreview } from './tribulation';
 import { blessingHooks } from './blessings';
 import { drawText } from './textPool';
+import { cultivationShare } from './timeBudget';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -342,7 +343,8 @@ export function aptitudeFactor(state: GameState, content: Content): number {
   return Math.max(cfg.aptitudeMin, cfg.aptitudeGrowth ** ((state.aptitudes.physique + state.aptitudes.comprehension - 100) / 100));
 }
 
-export function yearlyGain(state: GameState, content: Content): number {
+/** `used`: months activities took from the year (9.4); by default the current year's. */
+export function yearlyGain(state: GameState, content: Content, used?: number): number {
   const root = state.cult.root;
   const realm = content.balance.realms[state.cult.realm];
   if (!realm || state.cult.realm === 'pham_nhan') return 0;
@@ -371,7 +373,8 @@ export function yearlyGain(state: GameState, content: Content): number {
   // 9.R4d: a body set by martial training cultivates a little slower (the Ngũ khí root has its own bonus).
   const conv = content.balance.martial.conversion;
   const martialBody = conv && state.cult.root?.grade !== content.martial.ascend.rootGrade && conv.entries.some((e) => e.stage <= state.martial.stage) ? conv.speedMul : 1;
-  return realm.speedPct * rootMul * aptitude * qi * techniqueMul(state, content) * bonus * dual * secluded * injured * foundation * buffs * martialBody * bottleneckMul(state, content);
+  return realm.speedPct * rootMul * aptitude * qi * techniqueMul(state, content) * bonus * dual * secluded * injured * foundation * buffs * martialBody * bottleneckMul(state, content)
+    * cultivationShare(state, content, used);
 }
 
 /** PLAN G.2 bình cảnh: after N failed big breakthroughs at a realm's peak, cultivation slows. */
@@ -489,7 +492,8 @@ function pushLine(log: GameState['log'], line: LogLine): GameState['log'] {
 }
 
 /** One year of cultivation: fill the bar; a full bar tries the next stage (only inside a realm). */
-export function cultivateYear(state: GameState, content: Content): GameState {
+/** `used`: months activities took from the year that just passed (9.4). */
+export function cultivateYear(state: GameState, content: Content, used = 0): GameState {
   if (!state.alive || state.cult.realm === 'pham_nhan' || (!state.cult.root && !currentTechnique(state, content))) return state;
   const texts = content.cultivation.realms.texts;
   const cfg = content.balance.cultivation.minorFailure;
@@ -515,7 +519,7 @@ export function cultivateYear(state: GameState, content: Content): GameState {
     s = { ...s, cult: { ...s.cult, buffs: s.cult.buffs.filter((b) => s.character.age < b.until) } };
   }
   const wasFull = s.cult.progress >= 100;
-  const progress = Math.min(100, s.cult.progress + yearlyGain(s, content));
+  const progress = Math.min(100, s.cult.progress + yearlyGain(s, content, used));
   s = { ...s, cult: { ...s.cult, progress } };
   const lastStage = s.cult.stage >= realm.stages.length - 1;
 

@@ -30,7 +30,7 @@
     "id": "kvct_xk_mon_an_la",
     "category": "chosen",
     "title": "Món mì kỳ lạ",
-    "text": "{npc} lấy bột mì, chiên giòn, phơi khô, đóng thành bánh. \"Sư phụ, đổ nước sôi vào, chờ một nén nhang là ăn được!\" Ngoài chợ, người ta đã xếp hàng mua.",
+    "text": "{npc} lấy bột mì, chiên giòn, phơi khô, đóng thành bánh. \"Sư tôn, đổ nước sôi vào, chờ một nén nhang là ăn được!\" Ngoài chợ, người ta đã xếp hàng mua.",
     "themes": ["funny"],
     "tags": ["funny"],
     "conditions": { "chosen": { "template": ["xuyen_khong"] } },
@@ -39,7 +39,7 @@
       {
         "text": "Cho nó mở sạp",
         "result": {
-          "text": "Sạp mì đông nghịt. {npc} gửi ngươi một phần lời, kèm mẩu giấy: \"Phí bản quyền cho sư phụ.\"",
+          "text": "Sạp mì đông nghịt. {npc} gửi ngươi một phần lời, kèm mẩu giấy: \"Phí bản quyền cho sư tôn.\"",
           "effects": { "silver": 80, "stat.happiness": 3, "npc": { "affinity": 5 }, "followUp": { "event": "kvct_xk_bai_tho", "afterYears": [2, 3] } }
         }
       },
@@ -92,8 +92,8 @@
   {
     "id": "kvct_xk_npc",
     "category": "chosen",
-    "title": "\"Sư phụ là NPC\"",
-    "text": "Đang luyện công, {npc} bỗng hỏi: \"Sư phụ, có bao giờ người nghĩ mình chỉ là một nhân vật phụ trong câu chuyện của người khác không?\" Rồi nó nhìn ngươi bằng ánh mắt thương hại.",
+    "title": "\"Sư tôn là NPC\"",
+    "text": "Đang luyện công, {npc} bỗng hỏi: \"Sư tôn, có bao giờ người nghĩ mình chỉ là một nhân vật phụ trong câu chuyện của người khác không?\" Rồi nó nhìn ngươi bằng ánh mắt thương hại.",
     "themes": ["funny"],
     "tags": ["funny"],
     "conditions": { "chosen": { "template": ["xuyen_khong"] } },
@@ -119,7 +119,7 @@
           "fight": {
             "foe": { "name": "Đồ đệ", "intent": "teach", "fromNpc": true },
             "win": {
-              "text": "{npc} nằm sõng soài, nhìn trời: \"Được rồi, con sửa lại: sư phụ là trùm cuối.\"",
+              "text": "{npc} nằm sõng soài, nhìn trời: \"Được rồi, con sửa lại: sư tôn là trùm cuối.\"",
               "effects": { "followUp": { "event": "kvct_xk_nga_re", "afterYears": [1, 2] }, "stat.happiness": 4, "npc": { "affinity": 3 } }
             },
             "lose": {
@@ -162,7 +162,7 @@
     "id": "kvct_pv_huy_hon",
     "category": "chosen",
     "title": "Hủy hôn ước",
-    "text": "Gia tộc từng định hôn ước cho {npc} từ lúc còn nằm nôi nay kéo tới tận cửa, ném tờ hôn thư xuống đất: \"Phế vật không xứng với con gái nhà ta.\" Kẻ đi cùng là một tu sĩ trẻ, cười khẩy nhìn sư phụ của phế vật.",
+    "text": "Gia tộc từng định hôn ước cho {npc} từ lúc còn nằm nôi nay kéo tới tận cửa, ném tờ hôn thư xuống đất: \"Phế vật không xứng với con gái nhà ta.\" Kẻ đi cùng là một tu sĩ trẻ, cười khẩy nhìn sư tôn của phế vật.",
     "themes": ["justice"],
     "conditions": { "chosen": { "template": ["phe_vat_nghich_tap"] } },
     "weight": 0,
@@ -175,7 +175,7 @@
           "effects": { "stat.charm": 1, "reputation": { "giang_ho": 3 }, "npc": { "affinity": 10, "favor": 10 }, "followUp": { "event": "kvct_pv_chiec_nhan", "afterYears": [1, 3] } }
         },
         "fail": {
-          "text": "Họ cười to hơn. Ngươi bị gọi là \"sư phụ của phế vật\" suốt mấy năm sau.",
+          "text": "Họ cười to hơn. Ngươi bị gọi là \"sư tôn của phế vật\" suốt mấy năm sau.",
           "effects": { "stat.happiness": -4, "npc": { "affinity": 5 }, "followUp": { "event": "kvct_pv_chiec_nhan", "afterYears": [1, 3] } }
         }
       },
@@ -209,7 +209,7 @@
         "text": "Truyền âm chào vị tiền bối",
         "check": { "stat": "stat.daoHeart", "difficulty": 50 },
         "success": {
-          "text": "Tàn hồn im một lúc rồi cười: \"Thằng nhóc gặp được sư phụ không tham. Hiếm.\" Lão chỉ cho ngươi một chỗ bế tắc trong công pháp.",
+          "text": "Tàn hồn im một lúc rồi cười: \"Thằng nhóc gặp được sư tôn không tham. Hiếm.\" Lão chỉ cho ngươi một chỗ bế tắc trong công pháp.",
           "effects": { "stat.comprehension": 2, "nextBreakthroughBonus": 5, "followUp": { "event": "kvct_pv_thieu_chu", "afterYears": [2, 4] } }
         },
         "fail": {
@@ -230,7 +230,7 @@
     "id": "kvct_pv_thieu_chu",
     "category": "chosen",
     "title": "Thiếu chủ bị vả mặt",
-    "text": "{npc} đánh bại thiếu chủ một thế gia ở phường thị, trước mặt trăm người. Ba ngày sau, cha của thiếu chủ, một lão quái vật cảnh giới cao hơn ngươi, đứng trước cửa: \"Dạy đồ đệ không nghiêm, sư phụ trả nợ.\"",
+    "text": "{npc} đánh bại thiếu chủ một thế gia ở phường thị, trước mặt trăm người. Ba ngày sau, cha của thiếu chủ, một lão quái vật cảnh giới cao hơn ngươi, đứng trước cửa: \"Dạy đồ đệ không nghiêm, sư tôn trả nợ.\"",
     "themes": ["justice"],
     "tags": ["violence"],
     "conditions": { "chosen": { "template": ["phe_vat_nghich_tap"] } },
@@ -274,7 +274,7 @@
     "id": "kvct_ts_di_tuong",
     "category": "chosen",
     "title": "Đứa trẻ biết tên ngươi",
-    "text": "Một đứa trẻ chặn đường {name}, gọi đúng tên ngươi, đúng cả pháp hiệu ngươi chưa từng nói với ai. \"Sư phụ, lần này con tới sớm.\" Mắt nó đỏ hoe, như vừa đi một quãng đường rất dài.",
+    "text": "Một đứa trẻ chặn đường {name}, gọi đúng tên ngươi, đúng cả pháp hiệu ngươi chưa từng nói với ai. \"Sư tôn, lần này con tới sớm.\" Mắt nó đỏ hoe, như vừa đi một quãng đường rất dài.",
     "themes": ["fortune"],
     "tags": ["rare"],
     "conditions": { "realm": { "min": "truc_co" }, "chosen": { "has": false } },
@@ -363,7 +363,7 @@
     "id": "kvct_ts_dai_kiep",
     "category": "chosen",
     "title": "Lời cảnh báo",
-    "text": "{npc} quỳ trước mặt ngươi: \"Sư phụ, kiếp trước người chết trong một lần đột phá. Con không muốn thấy lần thứ hai.\" Nó dâng lên một cuốn sổ chép tay dày cộp, ghi toàn những chỗ người từng sai.",
+    "text": "{npc} quỳ trước mặt ngươi: \"Sư tôn, kiếp trước người chết trong một lần đột phá. Con không muốn thấy lần thứ hai.\" Nó dâng lên một cuốn sổ chép tay dày cộp, ghi toàn những chỗ người từng sai.",
     "themes": ["cultivation"],
     "conditions": { "chosen": { "template": ["trong_sinh"] } },
     "weight": 0,

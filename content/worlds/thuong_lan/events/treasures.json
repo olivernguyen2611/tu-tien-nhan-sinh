@@ -267,9 +267,18 @@
       },
       {
         "text": "Để lại, chưa phải lúc",
+        "requires": { "flagsNone": ["tan_quyen_de_lai"] },
         "result": {
           "text": "Ngươi đi. Lão thầy bói vẫn dùng xấp giấy ấy lót chân bàn, chắc còn lâu mới dùng việc khác.",
-          "effects": { "followUp": { "event": "tan_quyen_nua_truoc", "afterYears": [2, 4] }, "stat.daoHeart": 1 }
+          "effects": { "followUp": { "event": "tan_quyen_nua_truoc", "afterYears": [2, 4] }, "setFlags": ["tan_quyen_de_lai"], "stat.daoHeart": 1 }
+        }
+      },
+      {
+        "text": "Thôi, duyên không tới thì thôi",
+        "requires": { "flagsAll": ["tan_quyen_de_lai"] },
+        "result": {
+          "text": "Ngươi quay lưng đi hẳn. Năm sau ghé lại góc chợ, lão thầy bói đã dọn đi đâu mất, cái bàn cập kênh cũng không còn.",
+          "effects": { "clearFlags": ["tan_quyen_manh_moi", "tan_quyen_de_lai"], "stat.daoHeart": 1, "stat.happiness": -1 }
         }
       }
     ]

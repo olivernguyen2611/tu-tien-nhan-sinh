@@ -48,16 +48,12 @@ import { careerLabel } from '../../systems/career';
 import { sectLabel } from '../../systems/sect';
 import { inventoryLabel } from '../../systems/items';
 import { fingerDef } from '../../systems/goldenFinger';
-import { featureOpen } from '../../systems/knowledge';
+import { monthsLeft } from '../../systems/timeBudget';
+import { currentPhase, eraLabel } from '../../systems/worldState';
+import { dockGroups, dockView, identityLine, type DockView } from '../../systems/dock';
+import { ActivityList } from '../components/ActivityPanel';
+import { daoHeartLabel, innerForce, karmaView, reputationViews } from '../../systems/statLabels';
 
-const DOCK_LEFT = [
-  { id: 'cultivate', glyph: '修', label: 'Tu luyện' },
-  { id: 'sect', glyph: '宗', label: 'Tông môn' },
-];
-const DOCK_RIGHT = [
-  { id: 'bonds', glyph: '緣', label: 'Quan hệ' },
-  { id: 'explore', glyph: '遊', label: 'Khám phá' },
-];
 
 const APTITUDE_LABELS = [
   ['physique', 'Căn cốt', '骨', 'can_cot'],
@@ -153,21 +149,25 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const [marketOpen, setMarketOpen] = useState(false);
   const [mapOpen, setMapOpen] = useState(false);
   const [cultivateOpen, setCultivateOpen] = useState(false);
+  const [selfOpen, setSelfOpen] = useState(false);
   // Kết đan and tâm ma take over the screen; the Tu luyện sheet steps aside so its outcome shows in the log (task 4.2).
   useEffect(() => {
-    if (state.cult.coreForming || state.cult.heartDemonTrial || state.martial.quest?.game) setCultivateOpen(false);
+    if (state.cult.coreForming || state.cult.heartDemonTrial || state.martial.quest?.game) { setCultivateOpen(false); setSelfOpen(false); }
   }, [!!state.cult.coreForming, !!state.cult.heartDemonTrial, !!state.martial.quest?.game]);
   const [sectOpen, setSectOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
-  const anySheet = profileOpen || familyOpen || bagOpen || fingerOpen || systemOpen || activityOpen || memoryOpen || marketOpen || mapOpen || cultivateOpen || sectOpen || devOpen;
-  useBackClose(anySheet, () => {
-    setProfileOpen(false); setFamilyOpen(false); setBagOpen(false); setFingerOpen(false); setMarketOpen(false);
-    setMapOpen(false); setCultivateOpen(false); setSectOpen(false); setDevOpen(false);
-  });
+  const anySheet = profileOpen || familyOpen || bagOpen || fingerOpen || systemOpen || activityOpen || memoryOpen || marketOpen || mapOpen || cultivateOpen || selfOpen || sectOpen || devOpen;
+  const closeSheets = () => {
+    setProfileOpen(false); setFamilyOpen(false); setBagOpen(false); setFingerOpen(false); setMarketOpen(false); setSystemOpen(false);
+    setActivityOpen(false); setMemoryOpen(false); setMapOpen(false); setCultivateOpen(false); setSelfOpen(false); setSectOpen(false); setDevOpen(false);
+  };
+  useBackClose(anySheet, closeSheets);
   const logRef = useRef<HTMLElement>(null);
   const { character: c, stats, cult, money } = state;
   const origin = content.origins.find((o) => o.id === c.originId);
   const warn = extremeWarnings(state, content);
+  const force = innerForce(state, content);
+  const karma = karmaView(state, content);
   const finger = fingerDef(content, state.goldenFinger?.id);
   const heThong = systemDef(content, state.system?.id);
   const states = activeExtremes(state, content);
@@ -175,6 +175,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const tip = pendingTip(state, content);
   const region = currentRegion(state, content);
   const activities = activityViews(state, content);
+  const dock = dockView(state, content);
+  const acts = (id: string) => <ActivityList state={state} content={content} groups={dockGroups(state, content, id)} onAction={onActivity} />;
   const leisure = activities.find((a) => a.id === 'ngao_du') ?? { blocked: 'Chưa có.', cost: null };
   const sad = states.some((d) => d.stat === 'happiness' && d.zone === 'low');
   const showLeisure = state.alive && (sad || stats.happiness < content.balance.extremes.happinessRest);
@@ -183,22 +185,18 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
     logRef.current?.scrollTo({ top: logRef.current.scrollHeight, behavior: 'smooth' });
   }, [state.log.length]);
 
-  const dockActions: Record<string, () => void> = { bonds: () => setFamilyOpen(true), cultivate: () => setCultivateOpen(true), sect: () => setSectOpen(true), explore: () => setMarketOpen(true) };
-  // 9.R5b: before the life has heard of cultivation, the two left tabs read as mortal ones.
-  const mortalDock: Record<string, { glyph: string; label: string; open: boolean }> = {
-    cultivate: { glyph: '練', label: 'Rèn luyện', open: featureOpen(state, content, 'tab', 'tu_luyen') },
-    sect: { glyph: '江', label: 'Giang hồ', open: featureOpen(state, content, 'tab', 'tong_mon') },
+  // 9.7: one sheet open at a time; on a wide screen it sits beside the log, so the dock stays usable.
+  const openOnly = (open: (v: boolean) => void) => () => { closeSheets(); open(true); };
+  const dockActions: Record<string, () => void> = {
+    ban_than: openOnly(setSelfOpen), tu_luyen: openOnly(setCultivateOpen), hoat_dong: openOnly(setActivityOpen),
+    tong_mon: openOnly(setSectOpen), quan_he: openOnly(setFamilyOpen), gia_san: openOnly(setMarketOpen),
   };
-  const dockItem = (base: { id: string; glyph: string; label: string }) => {
-    const m = mortalDock[base.id];
-    const t = m && !m.open ? { ...base, glyph: m.glyph, label: m.label } : base;
-    return (
+  const dockItem = (t: DockView) => (
     <button class="dock-item" key={t.id} title={dockActions[t.id] ? t.label : 'Sắp có'} onClick={dockActions[t.id]}>
       <span class="glyph" aria-hidden="true">{t.glyph}</span>
       <span>{t.label}</span>
     </button>
-    );
-  };
+  );
 
   return (
     <div class="main-screen">
@@ -224,9 +222,6 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
               aria-label={heThong.name} title={heThong.name} onClick={() => setSystemOpen(true)}>統</button>
           )}
           {state.trungSinh && <button class="icon-btn" aria-label="Ký ức kiếp trước" title="Ký ức kiếp trước" onClick={() => setMemoryOpen(true)}>憶</button>}
-          {activities.length > 0 && (
-            <button class={`icon-btn finger-btn${activities.some((a) => !a.blocked) ? ' ready' : ''}`} aria-label="Hoạt động" title="Hoạt động" onClick={() => setActivityOpen(true)}>事</button>
-          )}
           <button class="icon-btn" aria-label="Túi đồ" title="Túi đồ" onClick={() => setBagOpen(true)}>囊</button>
           <button class="icon-btn" aria-label="Sổ lưu" title="Sổ lưu" onClick={onSaves}>簿</button>
           <span class="desktop-only">
@@ -253,14 +248,15 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         {saveWarning && <p class="save-warning" role="alert">{saveWarning}</p>}
         {state.log.map((y, i) => (
           <article class={`age-block${i === state.log.length - 1 ? ' current' : ''}`} key={y.age}>
-            <h3>{y.age === 0 ? 'Chào đời' : `Tuổi ${y.age}`}</h3>
+            <h3>{y.age === 0 ? 'Chào đời' : `Tuổi ${y.age}`}{eraLabel(state, y.age) && <span class="era"> · {eraLabel(state, y.age)}</span>}</h3>
             {y.lines.map((l) => <p class={l.tone === 'normal' ? '' : l.tone}><TermText text={l.text} /></p>)}
           </article>
         ))}
       </section>
 
-      <nav class="dock" aria-label="Hành động">
-        {DOCK_LEFT.map(dockItem)}
+      <nav class={`dock${dock.left.length + dock.right.length > 4 ? ' crowded' : ''}`} aria-label="Hành động"
+        style={{ gridTemplateColumns: `repeat(${dock.left.length}, minmax(0, 1fr)) auto repeat(${dock.right.length}, minmax(0, 1fr))` }}>
+        {dock.left.map(dockItem)}
         {state.alive ? (
           <div class="age-wrap">
             <button class="age-btn" onClick={onAdvance} aria-label="Qua một năm" disabled={!!state.events.pending || !!state.fate || !!state.combat || !!result}>
@@ -269,6 +265,9 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             </button>
             <button class="ff-btn" onClick={onFastForward} aria-label="Tua nhanh tới khi có chuyện" title="Tua nhanh tới khi có chuyện"
               disabled={!!state.events.pending || !!state.fate || !!state.combat || !!result}>»</button>
+            <span class="months-left" title="Tháng còn trống trong năm; cuối năm dồn vào nghề hoặc tu luyện">
+              {state.seclusion ? 'Bế quan' : `Còn ${monthsLeft(state, content)}/${content.balance.time.monthsPerYear} tháng`}
+            </span>
           </div>
         ) : (
           <button class="age-btn ended" onClick={onSummary} aria-label="Xem tổng kết đời người" disabled={!!result}>
@@ -276,7 +275,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             <span class="small">Tổng kết</span>
           </button>
         )}
-        {DOCK_RIGHT.map(dockItem)}
+        {dock.right.map(dockItem)}
       </nav>
 
       <section class="stats-panel" aria-label="Chỉ số">
@@ -294,8 +293,13 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             </button>
           </div>
         )}
-        <div class="stat-row wide"><span class="icon">修</span><Meter label="Tu vi" term="tu_vi" value={cult.progress} color="var(--bar-cult)"
-          text={cult.realm === 'pham_nhan' ? 'Chưa tu luyện' : `${realmLabel(state, content)} · ${Math.floor(cult.progress)}%`} /></div>
+        {force ? (
+          <div class="stat-row wide"><span class="icon">勁</span><Meter label={force.label} term={force.term} value={force.pct} color="var(--bar-cult)"
+            text={`${force.stage ?? 'Mới nhập môn'} · ${force.pct}%`} /></div>
+        ) : (
+          <div class="stat-row wide"><span class="icon">修</span><Meter label="Tu vi" term="tu_vi" value={cult.progress} color="var(--bar-cult)"
+            text={cult.realm === 'pham_nhan' ? 'Chưa tu luyện' : `${realmLabel(state, content)} · ${Math.floor(cult.progress)}%`} /></div>
+        )}
         <div class="stat-row wide"><span class="icon">壽</span><Meter label="Tuổi" term="tho_nguyen" value={c.age} max={cult.lifespan} color="var(--bar-life)" text={`${c.age} tuổi`} /></div>
       </section>
 
@@ -316,23 +320,24 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       {sectOpen && <SectPanel state={state} content={content} onAction={onSectAction} onClose={() => setSectOpen(false)} />}
 
-      {cultivateOpen && <CultivatePanel state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onClose={() => setCultivateOpen(false)} />}
+      {selfOpen && <CultivatePanel view="self" extra={acts('ban_than')} state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onClose={() => setSelfOpen(false)} />}
+      {cultivateOpen && <CultivatePanel view="cultivate" extra={acts('tu_luyen')} state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onClose={() => setCultivateOpen(false)} />}
 
       {mapOpen && <MapPanel state={state} content={content} unlimited={!!dev} onTravel={onTravel} onClose={() => setMapOpen(false)} />}
 
-      {marketOpen && <MarketPanel state={state} content={content} onAction={onMarket} onClose={() => setMarketOpen(false)} />}
+      {marketOpen && <MarketPanel extra={acts('gia_san')} state={state} content={content} onAction={onMarket} onClose={() => setMarketOpen(false)} />}
 
       {bagOpen && <BagPanel state={state} content={content} onUse={onUseItem} onClose={() => setBagOpen(false)} />}
 
       {memoryOpen && <MemoryPanel state={state} content={content} onClose={() => setMemoryOpen(false)} />}
-      {activityOpen && <ActivityPanel state={state} content={content} onAction={onActivity} onClose={() => setActivityOpen(false)} />}
+      {activityOpen && <ActivityPanel title="Hành sự" groups={dockGroups(state, content, 'hoat_dong')} state={state} content={content} onAction={onActivity} onClose={() => setActivityOpen(false)} />}
       {systemOpen && <SystemPanel state={state} content={content} onAction={onSystemAction} onClose={() => setSystemOpen(false)} />}
       {fingerOpen && <GoldenFingerPanel state={state} content={content} onAction={onFingerAction} onClose={() => setFingerOpen(false)} />}
 
-      {familyOpen && <FamilyPanel state={state} content={content} onAction={onFamilyAction} onRomance={onRomance} onGiftNpc={onGiftNpc} onNpcAct={onNpcAct} onBond={onBond} onSaveNpc={onSaveNpc} getSources={getSources} onImport={onImport} onDisciple={onDisciple} onClan={onClan} onClose={() => setFamilyOpen(false)} />}
+      {familyOpen && <FamilyPanel extra={acts('quan_he')} state={state} content={content} onAction={onFamilyAction} onRomance={onRomance} onGiftNpc={onGiftNpc} onNpcAct={onNpcAct} onBond={onBond} onSaveNpc={onSaveNpc} getSources={getSources} onImport={onImport} onDisciple={onDisciple} onClan={onClan} onClose={() => setFamilyOpen(false)} />}
 
       {profileOpen && (
-        <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Nhân vật" onClick={(e) => e.target === e.currentTarget && setProfileOpen(false)}>
+        <div class="modal-backdrop sheet" role="dialog" aria-modal="true" aria-label="Nhân vật" onClick={(e) => e.target === e.currentTarget && setProfileOpen(false)}>
           <div class="event-card">
             <div class="kicker">Nhân vật</div>
             <h2>{c.name}</h2>
@@ -340,12 +345,19 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
               {c.gender === 'nam' ? 'Nam' : 'Nữ'} · {origin?.name} · quê {c.hometown} · độ khó {difficultyName(state, content)}
             </p>
             <div class="profile-grid">
-              {APTITUDE_LABELS.map(([key, label, glyph, term]) => (
-                <div class="stat-row" key={key}><span class="icon">{glyph}</span><Meter label={label} term={term} value={state.aptitudes[key]} tone="auto" warn={warn.includes(key)} /></div>
-              ))}
+              {APTITUDE_LABELS.map(([key, label, glyph, term]) => {
+                const shown = key === 'daoHeart' ? daoHeartLabel(state, content) : { label, term };
+                return <div class="stat-row" key={key}><span class="icon">{glyph}</span><Meter label={shown.label} term={shown.term} value={state.aptitudes[key]} tone="auto" warn={warn.includes(key)} /></div>;
+              })}
             </div>
+            {reputationViews(state, content).length > 0 && (
+              <p class="profile-note">Danh vọng: {reputationViews(state, content).map((r) => `${r.name} ${r.value > 0 ? '+' : ''}${r.value}`).join(' · ')}</p>
+            )}
+            {karma && <p class="profile-note"><TermText text={`${karma.label}: ${karma.value !== null ? `${karma.value > 0 ? '+' : ''}${karma.value}` : karma.text}`} /></p>}
             <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>
             <p class="profile-root"><TermText text={`Thể chất: ${bodyLabel(state, content)}`} /></p>
+            {identityLine(state, content) && <p class="profile-note">Thân phận: {identityLine(state, content)}</p>}
+            {state.times && <p class="profile-note">Thời thế: {currentPhase(state, content)?.name ?? ''} · {state.times.dynasty}, {eraLabel(state, c.age)}</p>}
             {careerLabel(state, content) && <p class="profile-note">Đường đời: {careerLabel(state, content)}</p>}
             {sectLabel(state, content) && <p class="profile-note">Tông môn: {sectLabel(state, content)}</p>}
             {inventoryLabel(state, content) && <p class="profile-note">Mang theo: {inventoryLabel(state, content)}</p>}

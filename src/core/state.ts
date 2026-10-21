@@ -25,6 +25,8 @@ import { blessingRerolls } from '../systems/blessings';
 import { knowledgeYear, knowsFor } from '../systems/knowledge';
 import { gatesYear } from '../systems/immortalGates';
 import { worldEventsYear } from '../systems/worldEvents';
+import { initTimes, timesYear } from '../systems/worldState';
+import { acquaintanceYear, memoryText } from '../systems/acquaintances';
 import { pastTiesFor, reunionYear } from '../systems/karmaLedger';
 import { systemYear } from '../systems/heThong';
 import { trungSinhYear } from '../systems/trungSinh';
@@ -36,6 +38,7 @@ import { awakenGoldenFinger } from '../systems/goldenFinger';
 import { goldenFingerYear } from '../systems/fingerActions';
 import { ownedRebirthTalents, rebirthTalentBonus } from '../systems/rebirthTalents';
 import { pastSectFor } from '../systems/pastSect';
+import { monthsUsed } from '../systems/timeBudget';
 
 export interface NewLifeInput {
   seed: string;
@@ -82,6 +85,9 @@ export function fillTemplate(text: string, state: GameState, content?: Content):
     .replace(/\{npc\}/g, npc?.name ?? 'người kia')
     .replace(/\{npcRole\}/g, npc?.role ?? 'người quen')
     .replace(/\{npcKin\}/g, kin?.name ?? 'người thân')
+    // 9.6: the last kỷ niệm with the NPC, and what they do now.
+    .replace(/\{npcMemory\}/g, memoryText(state, npc))
+    .replace(/\{npcJob\}/g, content?.relations?.occupations.find((o) => o.id === npc?.occupation)?.name ?? npc?.role ?? 'người quen')
     // Task 3.4: the NPC's outward character and true nature, lower-case for mid-sentence use.
     .replace(/\{npcSurface\}/g, (content?.npcTraits.surface.find((x) => x.id === npc?.surface)?.name ?? 'dễ gần').toLowerCase())
     .replace(/\{npcNature\}/g, (content?.npcTraits.nature.find((x) => x.id === npc?.nature)?.name ?? 'khó đoán').toLowerCase())
@@ -190,7 +196,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     aptitudes,
     cult: { realm: 'pham_nhan', stage: 0, progress: 0, root: null, bodyId: null, lifespan, fails: {}, injuredUntil: null, technique: null, learned: [], scrolls: [], buffs: [], nextBonus: 0, wallSince: null, caveUntil: null, preceptBreaks: 0, lineagesAdopted: [], heartDemon: 0, coreForming: null, coreGrade: null, corePattern: null, soulForm: null, heartDemonTrial: null, foundation: null, lastMajorAttempt: null, lineage: null },
     money: { silver: origin.silver + rebirthTalentBonus(rebirthTalents, content, 'startSilver'), spiritStones: origin.spiritStones },
-    social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0, trieu_dinh: 0, giang_ho: 0 } },
+    social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0, trieu_dinh: 0, giang_ho: 0, lang_xa: 0 } },
     flags: origin.noParents ? { no_parents: true, no_father: true, no_mother: true } : {},
     destiny: { offered: [], rerollsLeft: Math.max(0, content.balance.traits.rerolls + (content.balance.difficulty[difficulty]?.rerollBonus ?? 0) + blessingRerolls(blessings, content) + rebirthTalentBonus(rebirthTalents, content, 'destinyRerolls')), confirmed: false,
       slots: Math.min(content.balance.traits.maxSlots, content.balance.traits.slots + rebirthTalentBonus(rebirthTalents, content, 'destinySlots')),
@@ -206,6 +212,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     },
     extremes: { streak: {}, active: {}, givenAt: {}, lastLeisure: null },
     activities: { last: {}, year: -1, uses: {} },
+    times: initTimes(input.seed, content, 0),
     log: [],
   };
   state.log.push({ age: 0, lines: [{ text: fillTemplate(origin.birthText, state), tone: 'normal' }] });
@@ -243,14 +250,16 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   state = withCheckpoints(state);
   // Task 5b.2: the Kim Thủ Chỉ awakens further once the realm allows.
   state = goldenFingerYear(awakenGoldenFinger(state, content), content);
+  // 9.4: the months activities took from the year that ends now.
+  const used = monthsUsed(state);
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content);
+  const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(acquaintanceYear(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content, used), content), content), content), content), content), content), content), content), content), content), content);
   // Task 4.1: in seclusion no ordinary event comes (follow-ups wait for the door to open);
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;
   // 9.R7e: the world moves on before the year's event is drawn.
-  const worldly = body.alive ? thanDaoYear(trungSinhYear(systemYear(reunionYear(worldEventsYear(secluded, content), content), content), content), content) : secluded;
+  const worldly = body.alive ? thanDaoYear(trungSinhYear(systemYear(reunionYear(timesYear(worldEventsYear(secluded, content), content), content), content), content), content) : secluded;
   const rolled = !body.alive ? worldly : state.seclusion ? rollSeclusionEvent(worldly, content) : rollYearEvent(gatesYear(worldly, content), content);
   // 9.R5a: what the year taught goes into the Sổ tri thức.
   const next = rolled.alive ? knowledgeYear(rolled, content) : rolled;

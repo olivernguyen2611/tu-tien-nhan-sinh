@@ -26,7 +26,7 @@ export function MapPanel({ state, content, unlimited, onTravel, onClose }: {
   const realmName = (id: string) => content.cultivation.realms.realms.find((r) => r.id === id)?.name ?? id;
 
   return (
-    <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Bản đồ đại vực" onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div class="modal-backdrop sheet" role="dialog" aria-modal="true" aria-label="Bản đồ đại vực" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div class="event-card">
         <div class="kicker">Khám phá</div>
         <h2>Bản đồ {content.world.name}</h2>

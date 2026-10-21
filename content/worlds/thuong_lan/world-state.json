@@ -1,0 +1,62 @@
+{
+  "vars": [
+    { "id": "stability", "name": "Triều cục", "start": [40, 80], "drift": 5, "pull": 0.25, "mean": 55,
+      "low": { "at": 20, "text": "Triều đình rối như canh hẹ: lệnh sáng ban, chiều thu, quan địa phương ai lo phận nấy." } },
+    { "id": "harvest", "name": "Mùa màng", "start": [45, 70], "drift": 18, "pull": 0.45, "mean": 58,
+      "low": { "at": 25, "text": "Hạn hán khắp Thanh Vân châu, ruộng nứt chân chim, giá gạo gấp đôi." },
+      "high": { "at": 85, "text": "Được mùa lớn, thóc chất đầy kho, gạo rẻ như cho." } },
+    { "id": "security", "name": "Trị an", "start": [45, 75], "drift": 8, "pull": 0.3, "mean": 55,
+      "low": { "at": 25, "text": "Giặc cướp nổi khắp các ngả đường, thương lữ phải đi thành đoàn, tiêu cục đắt hàng." } },
+    { "id": "plague", "name": "Ôn dịch", "start": [0, 10], "drift": 9, "pull": 0.5, "mean": 6,
+      "high": { "at": 55, "text": "Ôn dịch lan từ bến sông vào thành, nhà nhà treo lá ngải, thầy thuốc không kịp nghỉ." } },
+    { "id": "border", "name": "Chiến sự biên ải", "start": [10, 35], "drift": 10, "pull": 0.3, "mean": 25,
+      "high": { "at": 70, "text": "Biên ải đốt lửa hiệu, triều đình bắt lính khắp các châu, ngựa và sắt lên giá." } },
+    { "id": "tension", "name": "Chính ma căng thẳng", "start": [20, 50], "drift": 8, "pull": 0.2, "mean": 35,
+      "high": { "at": 75, "text": "Chính ma hai đạo gươm tuốt khỏi vỏ; tán tu đi đường đều cúi đầu, linh dược trong phường thị tăng giá.",
+        "mortalText": "Người đi rừng về kể đêm đêm trên núi xa có ánh sáng lóe như sấm; ai cũng bảo các tiên nhân đang đánh nhau to." } }
+  ],
+  "phases": [
+    {
+      "id": "thinh_the", "name": "Thịnh thế", "years": [18, 32],
+      "text": "Thiên hạ thái bình, chợ búa đông vui, trường thi chật kín sĩ tử. Tiêu cục thì ế, hiệp khách chỉ còn tranh nhau cái danh.",
+      "next": { "trung_suy": 1 },
+      "targets": { "stability": 78, "security": 72, "harvest": 62, "border": 15 },
+      "eventWeight": { "study": 1.3, "market": 1.3, "romance": 1.15, "plunder": 0.7, "justice": 0.8 }
+    },
+    {
+      "id": "trung_suy", "name": "Trung suy", "years": [12, 24],
+      "text": "Quan tham như rươi, thuế má mỗi năm một nặng, nông dân vay nợ đầu năm, cuối năm bán ruộng. Hắc đạo lên mặt, dân lại cần hiệp khách.",
+      "next": { "loan_the": 2, "thinh_the": 1 },
+      "targets": { "stability": 42, "security": 42, "harvest": 50, "border": 35 },
+      "eventWeight": { "justice": 1.4, "plunder": 1.25, "scam": 1.3, "study": 0.9 }
+    },
+    {
+      "id": "loan_the", "name": "Loạn thế", "years": [6, 14],
+      "text": "Thiên hạ đại loạn. Bắt lính, tị nạn, nạn đói nối nhau; thiên quy lỏng lẻo, ma tu nhân lúc nước đục mà thả câu. Thời của anh hùng, và của kẻ chết oan.",
+      "next": { "tan_trieu": 1 },
+      "targets": { "stability": 12, "security": 15, "harvest": 32, "border": 75, "tension": 65 },
+      "eventWeight": { "plunder": 1.8, "demonic": 1.5, "justice": 1.6, "family_tragedy": 1.5, "mishap": 1.3, "study": 0.6, "market": 0.8 }
+    },
+    {
+      "id": "tan_trieu", "name": "Tân triều", "years": [5, 10],
+      "text": "Tân triều dựng cờ, thanh trừng phe cũ, mở ân khoa chiêu hiền. Môn phái phải chọn phe; tông môn chọn hộ quốc hay đứng ngoài.",
+      "next": { "thinh_the": 1 },
+      "targets": { "stability": 58, "security": 50, "harvest": 52, "border": 30, "tension": 40 },
+      "eventWeight": { "study": 1.25, "sect": 1.3, "justice": 1.2 },
+      "newDynasty": true
+    }
+  ],
+  "dynasties": ["Đại Ung", "Đại Khang", "Đại Hằng", "Đại Viêm", "Đại Thuần", "Đại Cảnh", "Đại Tuyên"],
+  "eraNames": ["Thái An", "Hưng Vũ", "Cảnh Long", "Vĩnh Hòa", "Thiên Khải", "Gia Hựu", "Diên Bình", "Hàm Ninh", "Quang Định", "Thịnh Xương", "Long Khánh", "Bảo Thái", "Chiêu Minh", "Tuyên Hòa", "Kiến An", "Đoan Củng"],
+  "reignYears": [14, 40],
+  "prices": [
+    { "var": "harvest", "at0": 1.6, "at100": 0.85 },
+    { "var": "border", "at0": 0.95, "at100": 1.25 },
+    { "var": "tension", "at0": 0.95, "at100": 1.2 }
+  ],
+  "texts": {
+    "newEra": "Tiên đế băng hà, tân quân lên ngôi, đổi niên hiệu là {era}.",
+    "newDynasty": "Cơ nghiệp {old} sụp đổ. Nhà {dynasty} lên thay, niên hiệu {era}.",
+    "phase": "Thiên hạ chuyển sang thời {phase}: {text}"
+  }
+}

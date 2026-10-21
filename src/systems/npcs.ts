@@ -30,6 +30,8 @@ export interface NpcSpec {
   heirOf?: string | null;
   /** Family name to keep (an heir carries the dead one's surname). */
   surname?: string;
+  /** 9.6: kind of relation; default from the role. */
+  kind?: string;
 }
 
 function realmList(content: Content) {
@@ -42,6 +44,13 @@ function lifespanFor(content: Content, realm: string, rng: Rng): number {
   if (r?.lifespan) return r.lifespan + rng.int(-(r.lifespanVariance ?? 0), r.lifespanVariance ?? 0);
   const l = content.balance.lifespan;
   return l.mortalBase + rng.int(-l.mortalVariance, l.mortalVariance);
+}
+
+/** 9.6: the kind a role text belongs to (relations.json), or the default kind. */
+export function kindFor(content: Content, role: string): string | undefined {
+  const r = content.relations;
+  if (!r) return undefined;
+  return r.kinds.find((k) => k.roles.includes(role))?.id ?? r.defaultKind;
 }
 
 /** Meet someone new. Returns the state and the new NPC's id. */
@@ -64,6 +73,7 @@ export function createNpc(state: GameState, content: Content, spec: NpcSpec): { 
     lifespan: Math.max(age + 1, lifespanFor(content, realm, rng)),
     alive: true,
     role: spec.role,
+    kind: spec.kind ?? kindFor(content, spec.role),
     root,
     aptitude: rng.int(cfg.aptitude[0], cfg.aptitude[1]),
     realm,
@@ -134,7 +144,7 @@ export function actor(state: GameState): Npc | undefined {
   return npcById(state, state.events.npc);
 }
 
-export type NpcTrigger = 'reunion' | 'revenge' | 'repay' | 'reveal' | 'bond';
+export type NpcTrigger = 'reunion' | 'revenge' | 'repay' | 'reveal' | 'bond' | 'visit';
 
 /**
  * This year's NPC-driven visit, if any: someone with a grudge comes for revenge,
@@ -159,7 +169,7 @@ export function npcCalls(state: GameState, content: Content, rng: Rng): { trigge
     // 9.0.3: a close friend shares something with the player.
     if (n.affinity >= cfg.bondAt && n.grudge < cfg.revengeAt && rng.chance(cfg.bondChance)) out.push({ trigger: 'bond', id: n.id });
   }
-  const rank: Record<NpcTrigger, number> = { reunion: -1, revenge: 0, reveal: 1, repay: 2, bond: 3 };
+  const rank: Record<NpcTrigger, number> = { reunion: -1, revenge: 0, reveal: 1, repay: 2, bond: 3, visit: 4 };
   return out.sort((a, b) => rank[a.trigger] - rank[b.trigger]);
 }
 
@@ -300,7 +310,12 @@ export function npcInfo(state: GameState, content: Content, n: Npc): NpcInfo {
   const seen = readMind || n.realm === 'pham_nhan' || idx(n.realm) <= idx(state.cult.realm) + seeAbove;
   const rows: NpcInfoRow[] = [];
   if (!seen) rows.push({ label: 'Tu vi', value: t?.unseen ?? '?' });
-  rows.push({ label: 'Thân phận', value: n.role });
+  const kind = content.relations?.kinds.find((k) => k.id === n.kind)?.name;
+  rows.push({ label: 'Thân phận', value: kind && kind.toLowerCase() !== n.role ? `${kind} (${n.role})` : n.role });
+  // 9.6: what they do now, and the last things done together.
+  const job = content.relations?.occupations.find((o) => o.id === n.occupation)?.name;
+  if (job) rows.push({ label: 'Giờ làm', value: job });
+  if (n.memories?.length) rows.push({ label: 'Kỷ niệm', value: n.memories.slice().reverse().map((m) => `${m.text} (${m.age} tuổi)`).join(' · ') });
   if (tier >= 1) {
     if (label.surface) rows.push({ label: 'Tính nết', value: label.surface });
     rows.push({ label: 'Thiện cảm', value: String(Math.round(n.affinity)) });

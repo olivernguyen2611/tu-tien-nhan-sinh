@@ -193,7 +193,8 @@ export function trainMartial(state: GameState, content: Content): { state: GameS
   const texts = content.martial.texts;
   const years = state.martial.years + 1;
   let s: GameState = { ...state, martial: { ...state.martial, years, lastTrain: state.character.age } };
-  const lines: LogLine[] = [{ text: texts.train.replaceAll('{years}', String(years)).replaceAll('{next}', view.next ?? ''), tone: 'normal' }];
+  const train = typeof texts.train === 'string' ? [texts.train] : texts.train;
+  const lines: LogLine[] = [{ text: train[years % train.length].replaceAll('{years}', String(years)).replaceAll('{next}', view.next ?? ''), tone: 'normal' }];
   if (!view.gate) {
     const rng = Rng.fromState(s.rng);
     const ok = rng.chance(martialYearChance(s, content, years));

@@ -1,4 +1,5 @@
 // End-of-life summary: how the character died, a short epitaph and final numbers.
+import { lifeEraLine } from '../../systems/worldState';
 import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
 import { lifeSummary } from '../../systems/time';
@@ -70,6 +71,7 @@ export function DeathScreen({ state, content, rebirth, lives, onReadLog, onNewLi
         <h1>{c.name}</h1>
         <p class="cause">{s.causeText}</p>
         <p class="epitaph">“{s.epitaph}”</p>
+        {lifeEraLine(state) && <p class="cause">{lifeEraLine(state)}</p>}
         {lifeTitles(state, content).map((t) => <p class="life-title" key={t}>{t}</p>)}
         {badges.length > 0 && (
           <ul class="badges" aria-label="Huy hiệu cuối đời">

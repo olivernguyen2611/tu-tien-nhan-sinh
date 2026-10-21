@@ -234,6 +234,11 @@
       ]
     }
   },
+  "time": {
+    "monthsPerYear": 12,
+    "careerMonths": { "quan": 10, "thuong": 8, "vo_lam": 6, "y": 8, "tap_dich": 9 },
+    "careerMonthsDefault": 8
+  },
   "careers": {
     "joinAge": [14, 40],
     "income": [10, 25, 50, 100, 200],
@@ -456,6 +461,11 @@
     "coldBelow": 30,
     "bondChance": 0.12,
     "bondGapYears": 3,
+    "visitChance": 0.4,
+    "visitGapYears": 2,
+    "memories": 5,
+    "occupationChance": 0.05,
+    "childhoodAge": 6,
     "inheritShare": 0.5,
     "infoTiers": [30, 60, 85],
     "infoSeeAbove": 1

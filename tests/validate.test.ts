@@ -27,6 +27,7 @@ const balance = {
   defaultDifficulty: realBalance.defaultDifficulty,
   difficulty: realBalance.difficulty,
   careers: realBalance.careers,
+  time: realBalance.time,
   kyVat: realBalance.kyVat,
   techniques: realBalance.techniques,
   sects: realBalance.sects,

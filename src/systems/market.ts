@@ -11,6 +11,7 @@ import { hookSum } from './cultivation';
 import { addItems, itemById, removeItems } from './items';
 import { currentRegion } from './regions';
 import { worldPriceMul } from './worldEvents';
+import { timesPriceMul } from './worldState';
 import { gainScroll, techniqueById } from './technique';
 
 export type Currency = 'silver' | 'spiritStones';
@@ -38,7 +39,7 @@ function yearPick<T>(state: GameState, marketId: string, list: T[], key: (x: T) 
 function priceMul(state: GameState, content: Content, m: Market): number {
   // Task 3.10: priceDiscount hooks (Khéo Mồm, Mắt Tinh) make buying cheaper, up to balance.market.maxDiscount.
   const discount = Math.max(0, Math.min(content.balance.market.maxDiscount, hookSum(state, content, 'priceDiscount')));
-  return m.priceMul * bargainMul(state, m.id) * (1 - discount) * worldPriceMul(state, content);
+  return m.priceMul * bargainMul(state, m.id) * (1 - discount) * worldPriceMul(state, content) * timesPriceMul(state, content);
 }
 
 /** This year's price multiplier at a market after bargaining (1 when none). */

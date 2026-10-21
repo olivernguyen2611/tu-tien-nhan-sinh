@@ -309,5 +309,17 @@
     "term": "Bách nghệ",
     "definition": "Các nghề phụ của người tu: Luyện Đan, Luyện Khí, Trận Pháp, Phù Lục, Linh Thực, Ngự Thú. Cấp càng cao, danh hiệu càng kêu.",
     "aliases": []
+  },
+  {
+    "id": "noi_luc",
+    "term": "Nội lực",
+    "definition": "Công phu tích tụ trong người võ giả. Thanh nội lực đầy là đủ sức chạm tới cảnh giới võ đạo kế tiếp.",
+    "aliases": []
+  },
+  {
+    "id": "nhan_qua",
+    "term": "Nhân quả",
+    "definition": "Thiện ác ngươi gieo, sớm muộn đều có quả. Phàm nhân không tự thấy được, chỉ nghe lời người đời đồn; tu sĩ hay người được cao tăng điểm hóa mới nhìn rõ.",
+    "aliases": []
   }
 ]

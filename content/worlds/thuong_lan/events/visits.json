@@ -1,0 +1,127 @@
+[
+  {
+    "id": "vs_muon_tien", "category": "npc", "title": "Tới mượn tiền",
+    "text": "{npc} ghé nhà, ngồi xoa tay một hồi mới mở lời: trong nhà có việc gấp, muốn mượn hai mươi lạng.",
+    "conditions": { "age": { "min": 14 }, "npc": { "minAffinity": 25 } },
+    "weight": 3, "npcTrigger": "visit",
+    "choices": [
+      { "text": "Cho mượn hai mươi lạng", "requires": { "stats": [{ "stat": "silver", "gte": 20 }] },
+        "result": { "text": "{npc} cầm bạc, cúi đầu thật sâu: \"Ơn này ta ghi nhớ.\"", "effects": { "silver": -20, "karma": 1, "stat.happiness": 1, "npc": { "affinity": 5, "favor": 15 } } } },
+      { "text": "Biếu luôn mười lạng, không cần trả", "requires": { "stats": [{ "stat": "silver", "gte": 10 }] },
+        "result": { "text": "Ngươi dúi bạc vào tay {npc}, bảo coi như quà. Người ta đỏ mắt, mãi không nói được câu nào.", "effects": { "silver": -10, "karma": 2, "stat.happiness": 2, "npc": { "affinity": 10, "favor": 8 } } } },
+      { "text": "Từ chối khéo", "result": { "text": "Ngươi kể khổ trước. {npc} hiểu ý, uống cạn chén trà rồi về, lưng còng hơn lúc đến.", "effects": { "stat.happiness": -1, "npc": { "affinity": -8 } } } }
+    ]
+  },
+  {
+    "id": "vs_moi_cuoi", "category": "npc", "title": "Thiệp mời cưới",
+    "text": "{npc} mang thiệp đỏ tới tận cửa: tháng sau thành thân, nhất định phải tới uống rượu mừng.",
+    "conditions": { "age": { "min": 18 }, "npc": { "minAffinity": 35 } },
+    "weight": 3, "npcTrigger": "visit",
+    "choices": [
+      { "text": "Tới dự, mang quà mừng", "requires": { "stats": [{ "stat": "silver", "gte": 10 }] },
+        "result": { "text": "Ngươi uống tới say, cõng chú rể về phòng tân hôn nhầm hai lần. Cả tiệc cười nghiêng ngả.", "effects": { "silver": -10, "stat.happiness": 5, "npc": { "affinity": 8 } } } },
+      { "text": "Tới dự, tay không", "result": { "text": "Ngươi ăn hai bát cỗ, chúc ba câu. Nhà gái liếc ngươi suốt buổi.", "effects": { "stat.happiness": 3, "stat.charm": -1, "npc": { "affinity": -2 } } } },
+      { "text": "Viện cớ bận", "result": { "text": "Ngươi gửi lời chúc qua người khác. {npc} nghe xong chỉ gật đầu.", "effects": { "stat.happiness": -1, "npc": { "affinity": -6 } } } }
+    ]
+  },
+  {
+    "id": "vs_ru_lam_an", "category": "npc", "title": "Rủ làm ăn",
+    "text": "{npc} hạ giọng: mối hàng muối lậu từ miền biển, vốn ba mươi lạng, nửa năm gấp đôi. \"Ta chỉ rủ người tin được.\"",
+    "conditions": { "age": { "min": 18 }, "tier": ["pham_gian"], "npc": { "minAffinity": 30 } },
+    "weight": 3, "npcTrigger": "visit",
+    "choices": [
+      { "text": "Góp ba mươi lạng", "requires": { "stats": [{ "stat": "silver", "gte": 30 }] },
+        "check": { "stat": "stat.luck", "difficulty": 50 },
+        "success": { "text": "Thuyền muối về đủ, {npc} ôm bạc tới chia, mặt mày rạng rỡ.", "effects": { "silver": 30, "stat.happiness": 4, "npc": { "affinity": 6 } } },
+        "fail": { "text": "Thuyền bị quan quân bắt ở cửa sông. Ba mươi lạng trôi theo nước, {npc} trốn biệt mấy tháng.", "effects": { "silver": -30, "stat.happiness": -5, "npc": { "affinity": -3 } } } },
+      { "text": "Nghe thì hay, nhưng thôi", "result": { "text": "Ngươi rót trà, bảo để nghĩ thêm. Nghĩ tới khi {npc} về hẳn.", "effects": { "stat.intellect": 1, "npc": { "affinity": -2 } } } }
+    ]
+  },
+  {
+    "id": "vs_nho_bao_thu", "category": "npc", "title": "Nhờ báo thù",
+    "text": "{npc} tới, mắt đỏ ngầu: một tên ác bá trong trấn ức hiếp người nhà, quan phủ làm ngơ. \"Ngoài ngươi ra, ta chẳng còn ai để nhờ.\"",
+    "conditions": { "age": { "min": 18 }, "npc": { "minAffinity": 50 } },
+    "weight": 2, "npcTrigger": "visit", "themes": ["justice"],
+    "choices": [
+      { "text": "Đêm nay đi dạy cho hắn một bài học", "check": { "stat": "stat.physique", "difficulty": 55 },
+        "success": { "text": "Tên ác bá quỳ xin tha, thề không dám bén mảng. {npc} nắm tay ngươi rất lâu.", "effects": { "stat.happiness": 3, "stat.health": -3, "karma": 1, "npc": { "affinity": 8, "favor": 20 } } },
+        "fail": { "text": "Gia đinh của hắn đông hơn ngươi tưởng. Ngươi lết về được tới nhà, {npc} ngồi bôi thuốc cho ngươi tới sáng.", "effects": { "stat.health": -10, "npc": { "affinity": 4 } } } },
+      { "text": "Khuyên {npc} kiện lên phủ trên", "result": { "text": "Ngươi viết giúp lá đơn, chữ nào cũng nắn nót. {npc} cầm đơn đi, mặt vẫn chưa nguôi.", "effects": { "stat.intellect": 1, "stat.daoHeart": 1, "npc": { "affinity": -3 } } } },
+      { "text": "Khuyên buông bỏ", "result": { "text": "\"Oan oan tương báo bao giờ dứt.\" {npc} nghe xong, đứng dậy đi không chào.", "effects": { "stat.daoHeart": 2, "npc": { "affinity": -8 } } } }
+    ]
+  },
+  {
+    "id": "vs_to_cao", "category": "npc", "title": "Bị tố cáo",
+    "text": "Nha dịch tới gõ cửa: có người tố ngươi trốn thuế, giấu hàng cấm. Ngươi hỏi ai tố, họ chỉ cười. Ngươi đoán ra ngay là {npc}.",
+    "conditions": { "age": { "min": 18 }, "tier": ["pham_gian"], "npc": { "minGrudge": 40 } },
+    "weight": 3, "npcTrigger": "visit",
+    "choices": [
+      { "text": "Đút lót cho êm", "requires": { "stats": [{ "stat": "silver", "gte": 25 }] },
+        "result": { "text": "Hai mươi lăm lạng đổi lấy một câu \"chắc có hiểu lầm\". Nha dịch về, ngươi ngồi thừ cả buổi.", "effects": { "silver": -25, "stat.happiness": -3 } } },
+      { "text": "Ra công đường đối chất", "check": { "stat": "stat.intellect", "difficulty": 55 },
+        "success": { "text": "Ngươi đưa sổ sách ra, từng khoản rõ ràng. Quan huyện phẩy tay, {npc} bị mắng một trận vì vu cáo.", "effects": { "stat.happiness": 3, "stat.charm": 1, "npc": { "grudge": 10 } } },
+        "fail": { "text": "Lý lẽ không lọt tai quan. Ngươi bị phạt hai mươi trượng, nộp thêm mười lăm lạng.", "effects": { "stat.health": -6, "silver": -15, "stat.happiness": -4 } } },
+      { "text": "Tới nhà {npc} nói chuyện phải trái", "check": { "stat": "stat.charm", "difficulty": 55 },
+        "success": { "text": "Hai người cãi nhau tới khản giọng, cuối cùng {npc} rút đơn. Mối hiềm khích nhẹ đi một nửa.", "effects": { "stat.daoHeart": 1, "npc": { "grudge": -20, "affinity": 5 } } },
+        "fail": { "text": "{npc} đóng sập cửa. Ngươi đứng ngoài ngõ, hàng xóm thò đầu ra xem.", "effects": { "stat.happiness": -3, "npc": { "grudge": 5 } } } }
+    ]
+  },
+  {
+    "id": "vs_phan_boi", "category": "npc", "title": "Bị bạn bán đứng",
+    "text": "Ngươi mới biết: chuyện riêng mấy năm nay ngươi kể với {npc}, cả trấn đều đã nghe. Món hàng ngươi gửi {npc} giữ cũng đã bị bán.",
+    "conditions": { "age": { "min": 18 }, "npc": { "masked": true, "minAffinity": 30 } },
+    "weight": 2, "npcTrigger": "visit",
+    "choices": [
+      { "text": "Đòi lại cho bằng được", "check": { "stat": "stat.physique", "difficulty": 50 },
+        "success": { "text": "Ngươi tới tận nhà, {npc} đành nôn ra một nửa số bạc. Tình nghĩa coi như hết.", "effects": { "silver": 10, "stat.happiness": -2, "npc": { "affinity": -30, "grudge": 15, "reveal": true } } },
+        "fail": { "text": "{npc} chối phăng, còn kể với người ngoài rằng ngươi vu oan. Ngươi mất bạc lại mang tiếng.", "effects": { "stat.happiness": -6, "stat.charm": -1, "npc": { "affinity": -30, "grudge": 10, "reveal": true } } } },
+      { "text": "Coi như mất của, cắt đứt", "result": { "text": "Ngươi không nói với {npc} thêm lời nào. Từ đó, đi đường gặp nhau ngươi rẽ lối khác.", "effects": { "stat.daoHeart": 2, "stat.happiness": -3, "npc": { "affinity": -40, "reveal": true } } } }
+    ]
+  },
+  {
+    "id": "vs_nho_trong_nha", "category": "npc", "title": "Nhờ trông nhà",
+    "text": "{npc} phải đi xa nửa năm, nhờ ngươi trông giúp căn nhà và hai cụ già bên ấy.",
+    "conditions": { "age": { "min": 16 }, "npc": { "minAffinity": 40 } },
+    "weight": 2, "npcTrigger": "visit",
+    "choices": [
+      { "text": "Nhận lời", "result": { "text": "Nửa năm ngươi sang bổ củi, gánh nước cho hai cụ. Ngày {npc} về, hai cụ khen ngươi trước cả con mình.", "effects": { "karma": 2, "stat.health": -1, "stat.happiness": 2, "npc": { "affinity": 6, "favor": 15 } } } },
+      { "text": "Bận lắm, không nhận được", "result": { "text": "{npc} gật đầu, đi nhờ nhà khác. Ngươi thấy áy náy mấy hôm.", "effects": { "stat.happiness": -1, "npc": { "affinity": -4 } } } }
+    ]
+  },
+  {
+    "id": "vs_han_huyen", "category": "npc", "title": "Cố nhân ghé chơi",
+    "text": "{npc} ghé qua, ngồi chưa ấm chỗ đã nhắc lại {npcMemory}. Hai người cười, như chuyện mới hôm qua.",
+    "conditions": { "age": { "min": 12 }, "npc": { "minAffinity": 45, "minMemories": 1 } },
+    "weight": 3, "npcTrigger": "visit",
+    "choices": [
+      { "text": "Giữ lại ăn cơm, hàn huyên tới khuya", "result": { "text": "Một mâm cơm, mấy câu chuyện cũ. Lúc {npc} về, đèn trong nhà đã cạn dầu.", "effects": { "stat.happiness": 5, "npc": { "affinity": 6 } } } },
+      { "text": "Tiếp chén trà rồi tiễn khách", "result": { "text": "Ngươi bận việc, chỉ kịp uống một chén. {npc} bảo lần sau sẽ ở lâu hơn.", "effects": { "stat.happiness": 1, "npc": { "affinity": -1 } } } }
+    ]
+  },
+  {
+    "id": "vs_khoe_chuc", "category": "npc", "title": "Người quen thành đạt",
+    "text": "{npc} giờ làm {npcJob}, áo mới, giày mới, ghé qua nhà ngươi một chuyến. Nói chuyện chừng nửa canh giờ thì có bốn lần nhắc tới chức phận.",
+    "conditions": { "age": { "min": 20 }, "npc": { "occupation": ["bo_khoai", "quan_lai", "thuong_nhan", "khach_khanh"], "minAffinity": 30 } },
+    "weight": 3, "npcTrigger": "visit",
+    "choices": [
+      { "text": "Mở lời nhờ nâng đỡ", "check": { "stat": "stat.charm", "difficulty": 50 },
+        "success": { "text": "{npc} vỗ ngực hứa giúp, lần này giữ lời thật. Ngươi bớt được một mối phiền ở huyện.", "effects": { "silver": 15, "stat.happiness": 2, "npc": { "favor": 10 } } },
+        "fail": { "text": "{npc} ậm ừ, đổi sang chuyện thời tiết. Ngươi hiểu ra người ta giờ khác xưa rồi.", "effects": { "stat.happiness": -3, "npc": { "affinity": -3 } } } },
+      { "text": "Chúc mừng thật lòng", "result": { "text": "Ngươi rót rượu mừng. {npc} uống xong, bớt khoe hẳn, kể lại chuyện ngày còn nghèo.", "effects": { "stat.happiness": 2, "stat.daoHeart": 1, "npc": { "affinity": 6 } } } }
+    ]
+  },
+  {
+    "id": "vs_cau_cuu", "category": "npc", "title": "Cầu cứu lúc bệnh",
+    "text": "Người nhà {npc} chạy tới: {npc} đổ bệnh nặng, thầy thuốc bảo phải có sâm núi mới qua khỏi.",
+    "conditions": { "age": { "min": 14 }, "npc": { "minAffinity": 40 } },
+    "weight": 2, "npcTrigger": "visit",
+    "choices": [
+      { "text": "Bỏ tiền mua sâm", "requires": { "stats": [{ "stat": "silver", "gte": 25 }] },
+        "result": { "text": "Củ sâm đắt như cắt thịt, nhưng {npc} qua khỏi. Hôm khỏe lại, việc đầu tiên là tới nhà ngươi.", "effects": { "silver": -25, "karma": 3, "stat.happiness": 3, "npc": { "affinity": 10, "favor": 25 } } } },
+      { "text": "Lên núi tự tìm sâm", "check": { "stat": "stat.luck", "difficulty": 55 },
+        "success": { "text": "Ba ngày lội suối trèo đèo, ngươi tìm được một củ sâm già. {npc} khỏi bệnh, gọi ngươi là ân nhân cứu mạng.", "effects": { "stat.health": -4, "karma": 3, "npc": { "affinity": 10, "favor": 25 } } },
+        "fail": { "text": "Ngươi về tay không, chân sưng vì trẹo. May thay {npc} cũng gắng qua được, chỉ yếu đi nhiều.", "effects": { "stat.health": -6, "stat.happiness": -2, "npc": { "affinity": 4 } } } },
+      { "text": "Gửi chút quà thăm hỏi", "result": { "text": "Ngươi gửi gói đường với mấy quả trứng. Lòng thì có, mà sâm thì không.", "effects": { "stat.happiness": -2, "npc": { "affinity": 1 } } } }
+    ]
+  }
+]

@@ -1,0 +1,100 @@
+[
+  {
+    "id": "hd_cao_tang",
+    "category": "life",
+    "title": "Cao tăng qua làng",
+    "text": "Một lão tăng áo vá đi khất thực qua làng. Đứng trước cửa nhà ngươi hồi lâu, lão chắp tay: \"Thí chủ muốn nghe lão nạp nói về nhân quả của mình chăng?\"",
+    "themes": ["karma"],
+    "conditions": { "age": { "min": 14 }, "realm": { "max": "pham_nhan" }, "flagsNone": ["gap_cao_tang"] },
+    "weight": 3,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Mời lão vào, dâng bát cơm chay",
+        "result": {
+          "text": "Lão ăn xong, nhìn ngươi một lượt rồi kể vanh vách những việc thiện ác ngươi từng làm, không sót một chuyện. Từ đó ngươi tự thấy rõ cán cân nhân quả của mình.",
+          "effects": { "setFlags": ["gap_cao_tang"], "stat.daoHeart": 2, "stat.happiness": 1, "karma": 1 }
+        }
+      },
+      {
+        "text": "Xin lão xem giùm nhân duyên",
+        "result": {
+          "text": "Lão cười: \"Duyên tới thì tự tới.\" Rồi tiện miệng nói luôn chuyện thiện ác của ngươi, nghe mà giật mình. Ngươi bắt đầu để ý tới nhân quả.",
+          "effects": { "setFlags": ["gap_cao_tang"], "stat.intellect": 1, "stat.happiness": 2 }
+        }
+      },
+      {
+        "text": "Đuổi đi, nhà không có gì cho",
+        "result": {
+          "text": "Lão tăng không giận, chỉ niệm một câu Phật hiệu rồi đi. Đêm ấy ngươi trằn trọc mãi không ngủ được.",
+          "effects": { "stat.happiness": -2, "karma": -1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_sua_cau",
+    "category": "life",
+    "title": "Cây cầu đầu làng",
+    "text": "Mùa lũ cuốn sập cây cầu tre đầu làng. Lý trưởng gõ mõ gọi người góp sức, góp tiền dựng lại.",
+    "themes": ["karma"],
+    "conditions": { "age": { "min": 15 }, "tier": ["pham_gian"] },
+    "weight": 6,
+    "cooldownYears": 12,
+    "choices": [
+      {
+        "text": "Góp bạc dựng cầu",
+        "requires": { "stats": [{ "stat": "silver", "gte": 10 }] },
+        "result": {
+          "text": "Cầu mới dựng xong, đầu cầu khắc tên những nhà góp của, tên ngươi đứng ở hàng đầu.",
+          "effects": { "silver": -10, "reputation": { "lang_xa": 6 }, "karma": 2, "stat.happiness": 2 }
+        }
+      },
+      {
+        "text": "Xắn tay ra vác tre",
+        "result": {
+          "text": "Ba ngày liền ngươi lội nước vác tre, lưng đau ê ẩm, nhưng cả làng đều thấy.",
+          "effects": { "stat.health": -2, "stat.physique": 1, "reputation": { "lang_xa": 3 } }
+        }
+      },
+      {
+        "text": "Lờ đi, đi đò cũng được",
+        "result": {
+          "text": "Người ta nhìn ngươi đi đò qua sông, chẳng ai nói gì, nhưng ai cũng nhớ.",
+          "effects": { "reputation": { "lang_xa": -3 }, "stat.happiness": -1 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_loi_dam_tieu",
+    "category": "life",
+    "title": "Lời đàm tiếu",
+    "text": "Ngoài giếng làng người ta xì xào chuyện nhà ngươi, lời qua tiếng lại càng lúc càng to chuyện.",
+    "themes": ["family"],
+    "conditions": { "age": { "min": 16 }, "tier": ["pham_gian"] },
+    "weight": 5,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Ra giếng nói phải trái",
+        "check": { "stat": "stat.charm", "difficulty": 50 },
+        "success": {
+          "text": "Ngươi nói có lý có tình, mấy bà hay chuyện cứng họng, từ đó nể ngươi hơn.",
+          "effects": { "reputation": { "lang_xa": 4 }, "stat.happiness": 2 }
+        },
+        "fail": {
+          "text": "Càng cãi càng to chuyện, cả làng có thêm cớ để bàn.",
+          "effects": { "reputation": { "lang_xa": -4 }, "stat.happiness": -3 }
+        }
+      },
+      {
+        "text": "Mặc kệ, sống ngay thì sợ gì",
+        "result": {
+          "text": "Lời đồn rồi cũng nguội. Ngươi tự nhủ lòng mình thanh thản là được.",
+          "effects": { "stat.daoHeart": 1, "stat.happiness": -1 }
+        }
+      }
+    ]
+  }
+]

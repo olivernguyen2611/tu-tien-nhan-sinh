@@ -73,12 +73,19 @@
     }
   ],
   "texts": {
-    "train": "Một năm luyện võ, đã {years} năm hướng tới {next}.",
+    "train": [
+      "Một năm luyện võ, đã {years} năm hướng tới {next}.",
+      "Sáng đứng tấn, tối luyện quyền. Năm thứ {years} trên đường tới {next}.",
+      "Bao cát rách thêm hai cái. Đã {years} năm khổ luyện, {next} còn ở phía trước.",
+      "Mùa đông luyện quyền bên bờ suối đóng băng. {years} năm rồi, {next} vẫn chưa tới.",
+      "Một năm nữa trôi qua với đao kiếm. Năm thứ {years} hướng tới {next}.",
+      "Luyện mãi một chiêu tới khi nhắm mắt cũng ra đòn được. {years} năm hướng tới {next}."
+    ],
     "promote": "Võ công đột phá: {stage}. {description}",
     "fail": "Luyện đã lâu mà {next} vẫn chưa tới. Phải xem lại gân cốt và ngộ tính.",
     "ascend": "Ngũ khí trong ngũ tạng hóa thành linh căn Ngũ khí, thân hóa Tiên Võ thể. Tiên duyên đã tới: lão nhân áo vải dẫn ngươi bước qua cửa tiên, tiên võ đồng tu.",
     "peak": "Võ đạo đã tới tận cùng: xưa nay chưa ai đi xa hơn một bước. Muốn bước tiếp, phải có tiên duyên.",
-    "deviation": "Cưỡng ép xung quan, chân khí chạy ngược: tẩu hỏa nhập ma, nằm liệt mấy tháng.",
+    "deviation": "Cưỡng ép xung quan, nội lực chạy ngược: tẩu hỏa nhập ma, nằm liệt mấy tháng.",
     "crippled": "Kinh mạch rách nát, võ công tụt xuống {stage}."
   },
   "subStages": ["sơ nhập", "tiểu thành", "đại thành"],

@@ -17,7 +17,8 @@ function adult(age = 30): GameState {
 function visit(s: GameState, tries = 200): GameState | null {
   for (let i = 0; i < tries; i++) {
     const r = rollYearEvent({ ...s, rng: new Rng(`v${i}`).getState() }, content);
-    if (r.events.npc) return r;
+    // 9.6 visits roll on their own stream; these tests are about the ledger's calls.
+    if (r.events.npc && findEvent(content, r.events.pending ?? '')?.npcTrigger !== 'visit') return r;
   }
   return null;
 }

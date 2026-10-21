@@ -3,6 +3,7 @@ import type { Content } from '../../core/content';
 import { fillTemplate } from '../../core/state';
 import type { GameState, Tone } from '../../core/types';
 import { findEvent, visibleChoices } from '../../systems/events/engine';
+import { daoHeartLabel } from '../../systems/statLabels';
 import { TermText } from './Tooltip';
 import { useTapGuard } from './useTapGuard';
 
@@ -54,7 +55,7 @@ export function EventPopup({ state, content, result, onChoose, onClose }: {
                 <button key={c.index} class={`choice${c.hidden ? ` hidden-choice r-${trait?.rarity ?? 'pham'}` : ''}`}
                   disabled={c.disabled} onClick={() => onChoose(c.index)}>
                   {trait && <span class="choice-trait">[{trait.name}]</span>} {c.text}
-                  {c.check && <span class="hint">Thử {STAT_NAMES[c.check.stat] ?? c.check.stat}: {Math.round(c.check.chance * 100)}% thành công</span>}
+                  {c.check && <span class="hint">Thử {c.check.stat === 'stat.daoHeart' ? daoHeartLabel(state, content).label : STAT_NAMES[c.check.stat] ?? c.check.stat}: {Math.round(c.check.chance * 100)}% thành công</span>}
                   {c.disabled && <span class="hint">Chưa đủ điều kiện</span>}
                 </button>
               );

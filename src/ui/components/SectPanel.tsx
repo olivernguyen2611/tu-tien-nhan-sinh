@@ -48,7 +48,7 @@ export function SectPanel({ state, content, onAction, onClose }: {
   const realmName = (id: string) => content.cultivation.realms.realms.find((r) => r.id === id);
 
   return (
-    <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Tông môn" onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div class="modal-backdrop sheet" role="dialog" aria-modal="true" aria-label="Tông môn" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div class="event-card">
         <div class="kicker">Tông môn</div>
         {state.ownSect ? null : sect ? (

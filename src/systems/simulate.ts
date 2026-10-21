@@ -5,6 +5,7 @@ import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import { advanceYear, createLife } from '../core/state';
 import type { GameState } from '../core/types';
+import type { GameEvent } from '../core/schemas';
 import { act, settle } from './combat';
 import { attemptMajorBreakthrough, enterFirstRealm, majorBreakthroughInfo, rootUsable } from './cultivation';
 import { confirmDestiny, rollDestiny } from './destiny';
@@ -15,6 +16,7 @@ import { chooseFate } from './fate';
 import { placeStrand } from './goldenCore';
 import { meetIllusion } from './heartDemon';
 import { doActivity } from './activities';
+import { monthsUsed } from './timeBudget';
 import { caveView, rentCave } from './cave';
 import { runSeclusion } from './seclusion';
 import { doMission, joinSect, missionViews, requestMaster, masterBlocked, sectEligibility, sectTechniques } from './sect';
@@ -22,6 +24,8 @@ import { buyTreasury, treasuryViews } from './sectTreasury';
 import { learnBlocked, learnTechnique, techniqueById, techniqueCapReason, techniqueMaxRealm } from './technique';
 import { buyScroll, openMarkets, techniqueOffers } from './market';
 import { checkDeath } from './time';
+import { joinCareer } from './career';
+import { trainMartial } from './martial';
 import { lifeEnding } from './chronicle';
 import { BalanceSchema } from '../core/schemas';
 
@@ -30,8 +34,44 @@ import { BalanceSchema } from '../core/schemas';
  * `player` (6b, from the 2026-10-12 playtest) lives like a typical player: random choices, joins a sect, does the best mission
  * each year, asks for a master, spends contribution at the treasury, moves to the technique that reaches furthest, and breaks through at 40% or better.
  */
-export type BotProfile = 'random' | 'steady' | 'player';
-export const BOT_PROFILES: BotProfile[] = ['random', 'steady', 'player'];
+export type BotProfile = 'random' | 'steady' | 'player' | 'full' | MortalPersona;
+/** 9.4 `full` ("sống đủ") plays like `player` and also spends up to FULL_MONTHS of each year visiting home, escorting goods, travelling, feasting. */
+export const BOT_PROFILES: BotProfile[] = ['random', 'steady', 'player', 'full'];
+
+/**
+ * 9.8 Persona phàm nhân: lives that stay mortal (never seek an entry technique nor break through) and live
+ * one way. `choice`: first open choice, random, the kindest (karma up) or the cruellest (karma down).
+ */
+export type MortalPersona = 'nong_dan' | 'thu_sinh' | 'thuong_nhan' | 'ke_cuop' | 'hiep_khach' | 'ke_luoi';
+interface PersonaDef { name: string; career?: string; activities: string[]; months: number; train?: boolean; choice: 'first' | 'random' | 'good' | 'evil' }
+export const MORTAL_PERSONAS: Record<MortalPersona, PersonaDef> = {
+  nong_dan: { name: 'Nông dân an phận', activities: ['lam_thue', 've_tham_que', 'ket_giao'], months: 5, choice: 'first' },
+  thu_sinh: { name: 'Thư sinh thi cử', career: 'quan', activities: ['thu_quan', 'ket_giao', 'ngao_du'], months: 3, choice: 'first' },
+  thuong_nhan: { name: 'Thương nhân', career: 'thuong', activities: ['ket_giao', 'lam_thue', 'song_bac'], months: 4, choice: 'random' },
+  ke_cuop: { name: 'Kẻ cướp', activities: ['song_bac', 'luyen_quyen_som', 'ap_tieu'], months: 4, train: true, choice: 'evil' },
+  hiep_khach: { name: 'Hiệp khách', career: 'vo_lam', activities: ['luyen_quyen_som', 'ap_tieu', 'ngao_du', 'ket_giao'], months: 4, train: true, choice: 'good' },
+  ke_luoi: { name: 'Kẻ lười', activities: ['ngao_du', 'song_bac'], months: 2, choice: 'first' },
+};
+export const MORTAL_PROFILES = Object.keys(MORTAL_PERSONAS) as MortalPersona[];
+const personaOf = (p: BotProfile): PersonaDef | null => MORTAL_PERSONAS[p as MortalPersona] ?? null;
+
+/** A choice that leads into the Dao (joins a sect, takes up a technique): a mortal persona turns it down when it can. */
+function leadsToDao(event: GameEvent, index: number): boolean {
+  const c = event.choices[index];
+  return [c?.result, c?.success].some((o) => {
+    const eff = o?.effects as Record<string, unknown> | undefined;
+    return !!eff && (eff.joinSect !== undefined || eff.learnTechnique !== undefined);
+  });
+}
+
+/** Karma a choice moves (its plain result, or a check's success). */
+function choiceKarma(event: GameEvent, index: number): number {
+  const c = event.choices[index];
+  const eff = (c?.result ?? c?.success)?.effects as Record<string, unknown> | undefined;
+  return typeof eff?.karma === 'number' ? eff.karma : 0;
+}
+const FULL_MONTHS = 4;
+const FULL_ACTIVITIES = ['ve_tham_que', 'ap_tieu', 'ngao_du', 'ket_giao'];
 
 export interface LifeResult {
   seed: string;
@@ -55,6 +95,10 @@ export interface LifeResult {
   stuck: boolean;
   /** Years lived with happiness at 0; whether đạo tâm ever hit 0. */
   happyZeroYears: number;
+  /** 9.4: mean happiness over the years lived, silver left at the end, months spent on activities per year. */
+  happyMean?: number;
+  silverLeft?: number;
+  monthsPerYear?: number;
   /** Years lived with happiness / trí tuệ / mị lực at 95 or more (6c.4), and all years lived. */
   topYears: { happiness: number; intellect: number; charm: number; lived: number };
   daoHeartZero: boolean;
@@ -78,6 +122,11 @@ export interface LifeResult {
   lines?: number;
   repeatLines?: number;
   topLines?: [string, number][];
+  /** 9.8: different activities done, share of years with something notable, the tầng at death. */
+  activityKinds?: number;
+  eventKinds?: number;
+  eventfulShare?: number;
+  tier?: string;
 }
 
 /** 9.3: log lines of a life, counted with numbers blanked so "+12 linh thạch" and "+15 linh thạch" match. */
@@ -141,21 +190,38 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
   const reachedAt: Record<string, number> = {};
   let steps = 0;
   let happyZeroYears = 0;
+  let happySum = 0;
+  let monthsSum = 0;
   const topYears = { happiness: 0, intellect: 0, charm: 0, lived: 0 };
   let daoHeartZero = false;
   let fullBarYears = 0;
   let capYears = 0;
   const aptSum = (x: GameState) => x.aptitudes.physique + x.aptitudes.comprehension + x.aptitudes.luck;
   const aptStart = aptSum(s);
+  const persona = personaOf(profile);
+  const eventful = new Set<number>();
+  const statSum = (x: GameState) => x.stats.health + x.stats.happiness + x.stats.intellect + x.stats.charm + aptSum(x) + x.aptitudes.daoHeart;
+  /** An activity counts toward a notable year when it moves the stats by 2 or more in all. */
+  const doAct = (st: GameState, id: string): GameState => {
+    const r = doActivity(st, content, id);
+    if (!r) return st;
+    if (Math.abs(statSum(r.state) - statSum(st)) >= 2) eventful.add(st.character.age);
+    return r.state;
+  };
   while (s.alive && s.character.age < maxAge && steps++ < maxSteps) {
     peak = Math.max(peak, realms.indexOf(s.cult.realm));
     reachedAt[s.cult.realm] ??= s.character.age;
     if (s.events.pending) {
       opts.observe?.('event', s);
       const event = findEvent(content, s.events.pending);
-      const open = event ? visibleChoices(s, content, event).filter((c) => !c.disabled) : [];
+      const shown = event ? visibleChoices(s, content, event).filter((c) => !c.disabled) : [];
+      const mortalOnly = persona && event ? shown.filter((c) => !leadsToDao(event, c.index)) : shown;
+      const open = mortalOnly.length > 0 ? mortalOnly : shown;
       // An event with nothing to pick is cleared by choosing its first choice.
-      const pick = open.length === 0 ? 0 : profile === 'random' ? botRng.pick(open).index : open[0].index;
+      const byKarma = (sign: number) => [...open].sort((a, b) => sign * (choiceKarma(event!, b.index) - choiceKarma(event!, a.index)))[0].index;
+      const how = persona?.choice ?? (profile === 'random' ? 'random' : 'first');
+      const pick = open.length === 0 ? 0 : how === 'random' ? botRng.pick(open).index : how === 'good' ? byKarma(1) : how === 'evil' ? byKarma(-1) : open[0].index;
+      eventful.add(s.character.age);
       s = checkDeath(resolveChoice(s, content, pick).state, content);
       s = runSeclusion(s, content);
       continue;
@@ -177,31 +243,53 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     if (s.cult.coreForming) { s = placeStrand(s, content, s.cult.coreForming.offered[0]).state; continue; }
     if (s.cult.heartDemonTrial) { s = meetIllusion(s, content, 'face').state; continue; }
     // A rooted mortal finds an entry technique (9.R4c: bought at a market it can reach, or one it holds) and begins to cultivate.
-    if (s.cult.realm === 'pham_nhan' && rootUsable(s, content)) {
+    if (!persona && s.cult.realm === 'pham_nhan' && rootUsable(s, content)) {
       const learned = s.cult.technique ? { state: s } : buyEntryTechnique(s, content);
       if (learned) {
         const started = enterFirstRealm(learned.state, content);
         if (started !== s) { s = started; continue; }
       }
     }
-    if (profile === 'player' && !s.seclusion) s = playerYear(s, content);
+    if ((profile === 'player' || profile === 'full') && !s.seclusion) s = playerYear(s, content);
+    if (profile === 'full' && !s.seclusion && !s.events.pending && !s.combat) {
+      for (const id of FULL_ACTIVITIES) {
+        // A careful player escorts goods only while healthy.
+        if (monthsUsed(s) >= FULL_MONTHS || (id === 'ap_tieu' && s.stats.health < 60)) continue;
+        s = doAct(s, id);
+      }
+    }
+    if (persona && !s.seclusion && !s.events.pending && !s.combat) {
+      if (persona.career && s.career.id !== persona.career) s = joinCareer(s, content, persona.career)?.state ?? s;
+      if (persona.train) s = trainMartial(s, content)?.state ?? s;
+      // Gambling only with silver to spare; escorting only while healthy.
+      for (const id of persona.activities) {
+        if (monthsUsed(s) >= persona.months || s.events.pending || s.combat) break;
+        if ((id === 'song_bac' && s.money.silver < 30) || (id === 'ap_tieu' && s.stats.health < 60)) continue;
+        s = doAct(s, id);
+      }
+      if (s.stats.happiness < 30 && !s.events.pending) s = doAct(s, 'ngao_du');
+      if (s.events.pending || s.combat) continue;
+    }
     // 9.R3d: every bot uses each finger action that is open (so the finger's price is paid too).
     if (s.goldenFinger && !s.seclusion && !s.events.pending) {
       for (const v of fingerActionViews(s, content)) if (!v.blocked) s = doFingerAction(s, content, v.id)?.state ?? s;
       if (s.events.pending || s.combat) continue;
     }
-    const info = majorBreakthroughInfo(s, content);
+    const info = persona ? null : majorBreakthroughInfo(s, content);
     const minPct = profile === 'random' ? 0 : profile === 'player' ? 30 : 50;
     if (info && !info.blocked && info.chancePct >= minPct) {
       const r = attemptMajorBreakthrough(s, content);
       if (r) { s = checkDeath(r.state, content); continue; }
     }
     const before = s.character.age;
+    const spent = monthsUsed(s);
     s = s.seclusion ? runSeclusion(s, content) : advanceYear(s, content);
     s = checkDeath(s, content);
     const years = s.character.age - before;
     if (years > 0) {
       if (s.stats.happiness <= 0) happyZeroYears += years;
+      happySum += s.stats.happiness * years;
+      monthsSum += spent;
       topYears.lived += years;
       for (const k of ['happiness', 'intellect', 'charm'] as const) if (s.stats[k] >= 95) topYears[k] += years;
       if (s.aptitudes.daoHeart <= 0) daoHeartZero = true;
@@ -217,6 +305,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     peak: Math.max(peak, realms.indexOf(s.cult.realm)), rootGrade: s.cult.root?.grade ?? 'none', bodyId: s.cult.bodyId ?? null,
     martialStage: s.martial.stage, knowledge: s.knowledgeFound ?? 0, reachedAt, stage: s.cult.stage, stuck: s.alive,
     happyZeroYears, topYears, daoHeartZero, fullBarYears, capYears,
+    happyMean: topYears.lived ? happySum / topYears.lived : 0, silverLeft: s.money.silver, monthsPerYear: topYears.lived ? monthsSum / topYears.lived : 0,
     aptitudeGain: aptSum(s) - aptStart,
     aptitudeHigh: Math.max(s.aptitudes.physique, s.aptitudes.comprehension, s.aptitudes.luck) >= 90,
     seen: { ...(s.events.seen ?? {}) },
@@ -227,6 +316,10 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     ending: lifeEnding(s, content, 1),
     special: s.special?.ids ?? [],
     ...lineRepeats(s),
+    activityKinds: Object.keys(s.activities?.last ?? {}).length,
+    eventKinds: Object.keys(s.events.seen ?? {}).length,
+    eventfulShare: topYears.lived ? Math.min(1, eventful.size / topYears.lived) : 0,
+    tier: s.tier,
   };
 }
 
@@ -277,6 +370,10 @@ export interface Report {
   byRoot: Record<string, { share: number; meanAge: number; kimDan: number; capYears: number }>;
   /** Share of lives that ever sat at happiness 0, mean such years; share whose đạo tâm hit 0. */
   happyZero: { share: number; meanYears: number };
+  /** 9.4: mean happiness over all years, mean silver at death, mean months a year spent on activities. */
+  happyMean?: number;
+  silverLeft?: number;
+  monthsPerYear?: number;
   daoHeartZero: number;
   /** Share of all years lived with each stat at 95+. */
   topShare: { happiness: number; intellect: number; charm: number };
@@ -301,6 +398,12 @@ export interface Report {
   /** 9.3: share of log lines that repeat an earlier line of the same life; the lines repeated most (total uses). */
   repeatRate?: number;
   topLines?: [string, number][];
+  /** 9.8: mean different activities per life, share of years with something notable, silver at death (median), causes of death by tầng. */
+  activityKinds?: number;
+  eventKinds?: number;
+  eventfulShare?: number;
+  silverP50?: number;
+  causeByTier?: Record<string, Record<string, number>>;
 }
 
 export interface Group { share: number; meanAge: number; kimDan: number }
@@ -335,6 +438,9 @@ export function summarize(results: LifeResult[], content: Content): Report {
     byCause, reached, reachedAge, byRoot,
     topShare: (() => { const t = (k: 'happiness' | 'intellect' | 'charm') => results.reduce((a, r) => a + r.topYears[k], 0) / Math.max(1, results.reduce((a, r) => a + r.topYears.lived, 0)); return { happiness: t('happiness'), intellect: t('intellect'), charm: t('charm') }; })(),
     happyZero: { share: n ? sad.length / n : 0, meanYears: mean(results.map((r) => r.happyZeroYears)) },
+    happyMean: mean(results.map((r) => r.happyMean ?? 0)),
+    silverLeft: mean(results.map((r) => r.silverLeft ?? 0)),
+    monthsPerYear: mean(results.map((r) => r.monthsPerYear ?? 0)),
     daoHeartZero: n ? results.filter((r) => r.daoHeartZero).length / n : 0,
     fullBarYears: mean(results.map((r) => r.fullBarYears)),
     capYears: mean(results.map((r) => r.capYears)),
@@ -348,6 +454,15 @@ export function summarize(results: LifeResult[], content: Content): Report {
     specialAny: n ? results.filter((r) => (r.special ?? []).length > 0).length / n : 0,
     repeatRate: (() => { const t = results.reduce((a, r) => a + (r.lines ?? 0), 0); return t ? results.reduce((a, r) => a + (r.repeatLines ?? 0), 0) / t : 0; })(),
     topLines: (() => { const o = new Map<string, number>(); for (const r of results) for (const [k, c] of r.topLines ?? []) o.set(k, (o.get(k) ?? 0) + c); return [...o.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5); })(),
+    activityKinds: mean(results.map((r) => r.activityKinds ?? 0)),
+    eventKinds: mean(results.map((r) => r.eventKinds ?? 0)),
+    eventfulShare: mean(results.map((r) => r.eventfulShare ?? 0)),
+    silverP50: (() => { const v = results.map((r) => r.silverLeft ?? 0).sort((a, b) => a - b); return v[Math.floor(v.length / 2)] ?? 0; })(),
+    causeByTier: (() => {
+      const o: Record<string, Record<string, number>> = {};
+      for (const r of results) { const t = (o[r.tier ?? '?'] ??= {}); t[r.cause] = (t[r.cause] ?? 0) + 1; }
+      return o;
+    })(),
     byEnding: (() => { const o: Record<string, number> = {}; for (const r of results) if (r.ending) o[r.ending] = (o[r.ending] ?? 0) + 1 / n; return o; })(),
     stonesLeft: (() => {
       const st = results.map((r) => r.stonesLeft).sort((a, b) => a - b);
@@ -412,10 +527,25 @@ export function formatReport(rep: Report, content: Content, title: string): stri
     // 9.R12: tiên duyên gates and kết cục.
     'Cổng tiên duyên mở: ' + (Object.entries(rep.byGate ?? {}).sort((a, b) => b[1] - a[1]).map(([g, v]) => `${g} ${p(v)}`).join(', ') || 'không'),
     `Thiên cơ biến động: ${p(rep.specialAny ?? 0)} số đời` + (Object.keys(rep.bySpecial ?? {}).length ? ' (' + Object.entries(rep.bySpecial).map(([id, g]) => `${id} ${p(g.share)}`).join(', ') + ')' : ''),
+    `Hạnh phúc trung bình ${(rep.happyMean ?? 0).toFixed(1)} · bạc cuối đời ${Math.round(rep.silverLeft ?? 0)} · tháng hoạt động mỗi năm ${(rep.monthsPerYear ?? 0).toFixed(1)}`,
     `Câu lặp trong nhật ký: ${p(rep.repeatRate ?? 0)} số dòng` + ((rep.topLines ?? []).length ? '; lặp nhiều nhất: ' + rep.topLines!.map(([t, c]) => `"${t.slice(0, 50)}" ×${c}`).join(', ') : ''),
+    `Hoạt động khác nhau mỗi đời: ${(rep.activityKinds ?? 0).toFixed(1)} · sự kiện khác nhau ${(rep.eventKinds ?? 0).toFixed(1)} · năm có chuyện đáng kể: ${p(rep.eventfulShare ?? 0)} · bạc cuối đời trung vị ${rep.silverP50 ?? 0}`,
+    'Chết theo tầng: ' + Object.entries(rep.causeByTier ?? {}).map(([t, c]) => `${t}: ` + Object.entries(c).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([k, v]) => `${k} ${v}`).join(', ')).join(' | '),
     'Kết cục: ' + Object.entries(rep.byEnding ?? {}).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([e, v]) => `${e} ${p(v)}`).join(', '),
   ];
   return lines.join('\n');
+}
+
+/** 9.8: one row per persona phàm nhân, for the terminal. */
+export function formatPersonaTable(rows: { profile: BotProfile; report: Report }[]): string {
+  const p = (v: number) => `${Math.round(v * 100)}%`;
+  const head = 'Persona | Đời | Vào tu tiên | Tuổi TB | Hạnh phúc TB | Bạc cuối (TB/trung vị) | Hoạt động khác nhau | Sự kiện khác nhau | Năm có chuyện | Câu lặp | Chết vì (nhiều nhất)';
+  const lines = rows.map(({ profile, report: r }) => {
+    const causes = Object.entries(r.byCause).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([c, k]) => `${c} ${p(k / r.count)}`).join(', ');
+    return [personaOf(profile)?.name ?? profile, r.count, p(r.reached.luyen_khi ?? 0), r.age.mean.toFixed(1), (r.happyMean ?? 0).toFixed(1), `${Math.round(r.silverLeft ?? 0)}/${r.silverP50 ?? 0}`,
+      (r.activityKinds ?? 0).toFixed(1), (r.eventKinds ?? 0).toFixed(1), p(r.eventfulShare ?? 0), p(r.repeatRate ?? 0), causes].join(' | ');
+  });
+  return [head, ...lines].join('\n');
 }
 
 /** Run `count` lives with seeds `${prefix}-0 …` and summarise them. */

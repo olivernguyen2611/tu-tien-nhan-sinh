@@ -27,6 +27,7 @@ import { startWorldEvent } from './worldEvents';
 import { hoaCanhGift } from './martial';
 import { finishStep, questForStage } from './martialQuest';
 import { Rng } from '../core/rng';
+import { initTimes } from './worldState';
 import type { DeathCause } from '../core/types';
 import type { SaveMeta } from './save';
 
@@ -87,6 +88,35 @@ export function devMeetNpc(state: GameState, content: Content, kind: 'friend' | 
   const met = createNpc(state, content, { ...spec, realm: state.cult.realm, stage: state.cult.stage });
   const n = met.state.npcs.find((x) => x.id === met.id)!;
   return devLog(met.state, `gặp ${spec.role} ${n.name}`);
+}
+
+/** 9.8: meet someone of a relation kind (relations.json): a kẻ thù comes with a grudge, a chủ nợ with a debt of favour. */
+export function devMeetKind(state: GameState, content: Content, kindId: string): GameState {
+  const kind = content.relations?.kinds.find((k) => k.id === kindId);
+  if (!state.alive || !kind) return state;
+  const hostile = kind.group === 'thu_dich';
+  const met = createNpc(state, content, {
+    role: kind.roles[0] ?? kind.name, kind: kind.id, affinity: hostile ? 10 : 65, grudge: hostile ? 40 : 0,
+    realm: state.cult.realm, stage: state.cult.stage,
+  });
+  const n = met.state.npcs.find((x) => x.id === met.id)!;
+  return devLog(met.state, `gặp ${kind.name.toLowerCase()} ${n.name}`);
+}
+
+/** 9.8: turn the thời cuộc to a phase (it lasts its shortest span from now). */
+export function devSetPhase(state: GameState, content: Content, phaseId: string): GameState {
+  const phase = content.worldState?.phases.find((p) => p.id === phaseId);
+  const times = state.times ?? initTimes(state.seed, content, state.character.age);
+  if (!state.alive || !phase || !times) return state;
+  return devLog({ ...state, times: { ...times, phase: phase.id, phaseLeft: phase.years[0] } }, `thời cuộc: ${phase.name}`);
+}
+
+/** 9.8: set one world variable (0–100). The next year drifts it from there. */
+export function devSetWorldVar(state: GameState, content: Content, varId: string, value: number): GameState {
+  const v = content.worldState?.vars.find((x) => x.id === varId);
+  const times = state.times ?? initTimes(state.seed, content, state.character.age);
+  if (!state.alive || !v || !times) return state;
+  return devLog({ ...state, times: { ...times, vars: { ...times.vars, [varId]: clamp(value) } } }, `${v.name} = ${clamp(value)}`);
 }
 
 /** Skip `years` years; events that come up are dismissed unanswered. */

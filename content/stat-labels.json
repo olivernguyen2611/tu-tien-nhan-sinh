@@ -1,0 +1,28 @@
+{
+  "daoHeart": [
+    { "when": { "realm": { "min": "luyen_khi" } }, "label": "Đạo tâm", "term": "dao_tam" },
+    { "when": { "martial": { "min": 0 } }, "label": "Ý chí" },
+    { "label": "Tâm tính" }
+  ],
+  "reputation": [
+    { "key": "lang_xa", "name": "Hương danh", "negName": "Tiếng xấu", "when": { "tier": ["pham_gian"] } },
+    { "key": "trieu_dinh", "name": "Quan uy", "negName": "Mất lòng quan phủ", "when": { "lifestyle": ["quan_truong"] } },
+    { "key": "giang_ho", "name": "Hiệp danh", "negName": "Ác danh", "when": { "lifestyle": ["giang_ho"] } },
+    { "key": "chinh", "name": "Danh vọng chính đạo", "when": { "tier": ["tu_chan"] } },
+    { "key": "ma", "name": "Uy danh ma đạo" },
+    { "key": "tan_tu", "name": "Tiếng tăm tán tu" },
+    { "key": "yeu", "name": "Giao tình yêu tộc" }
+  ],
+  "karma": {
+    "label": "Nhân quả",
+    "showWhen": { "anyOf": [{ "realm": { "min": "luyen_khi" } }, { "flagsAll": ["gap_cao_tang"] }] },
+    "rumors": [
+      { "min": 40, "text": "Người trong vùng nói ngươi là bậc đại thiện, trẻ con gặp ngươi cũng chạy lại chào." },
+      { "min": 15, "text": "Hàng xóm nói ngươi là người hiền, cho vay không đòi lãi." },
+      { "min": -14, "text": "Hàng xóm chẳng khen chẳng chê, chỉ bảo ngươi cũng như bao người." },
+      { "min": -39, "text": "Sau lưng ngươi, người ta xì xào: kẻ ấy không nên dây vào." },
+      { "min": -100, "text": "Nhà nào có con nhỏ thấy ngươi đi qua là đóng cửa." }
+    ]
+  },
+  "innerForce": { "label": "Nội lực", "term": "noi_luc" }
+}

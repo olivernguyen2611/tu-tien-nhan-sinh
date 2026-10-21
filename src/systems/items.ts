@@ -163,7 +163,7 @@ export function consumeItem(state: GameState, content: Content, id: string): Use
 
   const before = s;
   for (const e of effects) s = applyUseEffect(s, e);
-  const changes = describeChanges(before, s);
+  const changes = describeChanges(before, s, content);
   const line: LogLine = { text: `${item.name}: ${text}${changes ? ` ${changes}.` : ''}`, tone };
   const log = s.log.slice();
   const last = log[log.length - 1];

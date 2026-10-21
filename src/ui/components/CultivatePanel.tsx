@@ -1,6 +1,8 @@
-// "Tu luyện" sheet: realm, root, yearly progress, and the big breakthrough button.
+// "Bản thân" and "Tu luyện" sheets (9.7 split one sheet in two): realm, root, yearly progress, breakthrough; võ đạo, đường đời, bách nghệ.
 import { Fold } from './Fold';
 import { useState } from 'preact/hooks';
+import type { ComponentChildren } from 'preact';
+import { identityLine } from '../../systems/dock';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
 import { bodyLabel, inBottleneck, majorBreakthroughInfo, realmLabel, rootLabel, rootUsable, yearlyGain } from '../../systems/cultivation';
@@ -18,9 +20,13 @@ import { recipeViews } from '../../systems/crafting';
 import { Meter } from './Meter';
 import { TermText } from './Tooltip';
 
-export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSeclude, onRentCave, onCraft, onClose }: {
+export function CultivatePanel({ state, content, view, extra, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSeclude, onRentCave, onCraft, onClose }: {
   state: GameState;
   content: Content;
+  /** 9.7: "self" is the Bản thân sheet (võ đạo, đường đời, bách nghệ), "cultivate" the Tu luyện one. */
+  view: 'self' | 'cultivate';
+  /** Rows shown under the sheet (the activities of its groups). */
+  extra?: ComponentChildren;
   /** Returns the outcome to show in the sheet. */
   onBreakthrough: () => { text: string; tone: Tone; changes: string } | null;
   /** Practise a craft this year; returns the log text, or null. */
@@ -62,15 +68,18 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
   const coreGrade = cult.coreGrade !== null ? content.cultivation.realms.coreGradeNames[cult.coreGrade - 1] : null;
   const pattern = content.corePatterns.find((p) => p.id === cult.corePattern);
   const soul = content.nascentSouls.forms.find((f) => f.id === cult.soulForm);
+  const self = view === 'self';
+  const identity = identityLine(state, content);
 
   return (
-    <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Tu luyện" onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div class="modal-backdrop sheet" role="dialog" aria-modal="true" aria-label={self ? 'Bản thân' : 'Tu luyện'} onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div class="event-card">
-        <div class="kicker">Tu luyện</div>
-        <h2>{realmLabel(state, content)}</h2>
+        <div class="kicker">{self ? 'Bản thân' : 'Tu luyện'}</div>
+        <h2>{self ? state.character.name : realmLabel(state, content)}</h2>
+        {self && identity && <p class="profile-note">Thân phận: {identity}</p>}
         <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>
         <p class="profile-root"><TermText text={`Thể chất: ${bodyLabel(state, content)}`} /></p>
-        {currentTechnique(state, content) && (
+        {!self && currentTechnique(state, content) && (
           <div class="technique">
             <p class="story"><b>Công pháp: {currentTechnique(state, content)!.name}</b></p>
             <p class="profile-note">{techniqueSummary(state, content)}</p>
@@ -78,7 +87,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
             {currentTechnique(state, content)!.note && <p class="profile-note">{currentTechnique(state, content)!.note}</p>}
           </div>
         )}
-        {state.cult.scrolls.length > 0 && state.alive && (
+        {(!self || mortal) && state.cult.scrolls.length > 0 && state.alive && (
           <Fold id="cult:Bí tịch" title="Bí tịch">
               {state.cult.scrolls.map((id) => {
                 const tech = techniqueById(content, id);
@@ -96,10 +105,10 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
               })}
           </Fold>
         )}
-        {foundation && <p class="profile-note"><TermText text={`Đạo cơ ${foundation.name}: ${foundation.description}`} /></p>}
-        {coreGrade && <p class="profile-note"><TermText text={`Kim Đan ${coreGrade}${pattern ? `, ${pattern.name}: ${pattern.summary}` : ''}`} /></p>}
-        {soul && <p class="profile-note"><TermText text={`Nguyên Anh: ${soul.name}. ${soul.summary}`} /></p>}
-        {mortal ? (
+        {!self && foundation && <p class="profile-note"><TermText text={`Đạo cơ ${foundation.name}: ${foundation.description}`} /></p>}
+        {!self && coreGrade && <p class="profile-note"><TermText text={`Kim Đan ${coreGrade}${pattern ? `, ${pattern.name}: ${pattern.summary}` : ''}`} /></p>}
+        {!self && soul && <p class="profile-note"><TermText text={`Nguyên Anh: ${soul.name}. ${soul.summary}`} /></p>}
+        {self && !mortal ? null : mortal ? (
           <p class="story">
             <TermText text={rootUsable(state, content) ? 'Có linh căn nhưng chưa nhập đạo: cần một công pháp nhập môn, tông môn hoặc tiên sư dẫn đường.' : cult.root ? 'Không có linh căn, linh khí không đọng lại trong người. Đường tu tiên tạm thời khép cửa.' : 'Chưa ai từng thử linh căn cho ngươi. Tiên môn thu đồ, tiên nhân để mắt… tiên duyên không hẹn trước.'} />
           </p>
@@ -110,7 +119,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
           </>
         )}
 
-        {seclusion.options.length > 0 && (
+        {!self && seclusion.options.length > 0 && (
           <Fold id="cult:seclusion" title={<TermText text="Bế quan" />}>
               <p class="profile-note">Tu vi ×{content.balance.seclusion.speedMul}, không có sự kiện. Năm tháng vẫn trôi, người thân vẫn già.</p>
               <div class="action-chips">
@@ -125,7 +134,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
           </Fold>
         )}
 
-        {cave.blocked !== 'Chưa tu hành.' && cave.blocked !== 'Đã qua đời.' && (
+        {!self && cave.blocked !== 'Chưa tu hành.' && cave.blocked !== 'Đã qua đời.' && (
           <Fold id="cult:Động phủ linh mạch" title="Động phủ linh mạch">
               <p class="profile-note">Thuê chỗ ngồi trên linh mạch: tu vi ×{cave.speedMul} suốt thời hạn thuê, cộng dồn với bế quan.{cave.until !== null ? ` Đang thuê tới năm ${cave.until} tuổi.` : ''}</p>
               <div class="action-chips">
@@ -141,7 +150,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
           </Fold>
         )}
 
-        {info && state.alive && (
+        {!self && info && state.alive && (
           <div class="breakthrough">
             <p class="story"><TermText text={`Đột phá ${info.target.name}: tỉ lệ thành công khoảng ${Math.round(info.chancePct)}%.`} /></p>
             {info.heartDemon && <p class="profile-note warn-note">Lòng còn vướng bận: trước khi đột phá phải qua tâm ma.</p>}
@@ -171,7 +180,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
             {result.changes && <span class="changes">{result.changes}</span>}
           </p>
         )}
-        {mortal && state.alive && (() => {
+        {self && mortal && state.alive && (() => {
           const m = martialView(state, content);
           return (
             <Fold id="cult:Võ đạo" title="Võ đạo">
@@ -202,7 +211,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
           );
         })()}
 
-        {mortal && state.alive && (
+        {self && mortal && state.alive && (
           <Fold id="cult:Đường đời" title="Đường đời">
               {currentCareer ? (
                 <p class="story">{currentCareer} · thu nhập {careerIncome(state, content)} lượng bạc mỗi năm.</p>
@@ -222,7 +231,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
           </Fold>
         )}
 
-        {paths && (
+        {!self && paths && (
           <Fold id="cult:Đạo thống · con đường" title="Đạo thống · con đường">
               {paths.lineage && (
                 <p class="profile-note"><b>{paths.lineage.name}</b>: {paths.lineage.strengths} Cái giá: {paths.lineage.costs}</p>
@@ -240,7 +249,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
           </Fold>
         )}
 
-        {crafts.length > 0 && (
+        {self && crafts.length > 0 && (
           <Fold id="cult:crafts" title={<TermText text="Bách nghệ" />}>
               <p class="profile-note">Mỗi năm chuyên tâm được một nghề.</p>
               {crafts.map((c) => (
@@ -274,7 +283,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
           </Fold>
         )}
 
-        {board.length > 0 && (
+        {board.length > 0 && self === mortal && (
           <Fold id="cult:rankings" title={content.rankings.title}>
               <p class="profile-note">{content.rankings.note}</p>
               <ol class="ranking">
@@ -291,6 +300,7 @@ export function CultivatePanel({ state, content, onBreakthrough, onPractice, onJ
           </Fold>
         )}
 
+        {extra}
         <button class="choice" onClick={onClose}>Đóng</button>
       </div>
     </div>
