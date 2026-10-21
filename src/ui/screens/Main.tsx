@@ -48,6 +48,7 @@ import { careerLabel } from '../../systems/career';
 import { sectLabel } from '../../systems/sect';
 import { inventoryLabel } from '../../systems/items';
 import { fingerDef } from '../../systems/goldenFinger';
+import { monthsLeft } from '../../systems/timeBudget';
 import { dockGroups, dockView, identityLine, type DockView } from '../../systems/dock';
 import { ActivityList } from '../components/ActivityPanel';
 
@@ -260,6 +261,9 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             </button>
             <button class="ff-btn" onClick={onFastForward} aria-label="Tua nhanh tới khi có chuyện" title="Tua nhanh tới khi có chuyện"
               disabled={!!state.events.pending || !!state.fate || !!state.combat || !!result}>»</button>
+            <span class="months-left" title="Tháng còn trống trong năm; cuối năm dồn vào nghề hoặc tu luyện">
+              {state.seclusion ? 'Bế quan' : `Còn ${monthsLeft(state, content)}/${content.balance.time.monthsPerYear} tháng`}
+            </span>
           </div>
         ) : (
           <button class="age-btn ended" onClick={onSummary} aria-label="Xem tổng kết đời người" disabled={!!result}>

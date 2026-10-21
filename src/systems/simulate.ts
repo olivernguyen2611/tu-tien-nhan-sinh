@@ -15,6 +15,7 @@ import { chooseFate } from './fate';
 import { placeStrand } from './goldenCore';
 import { meetIllusion } from './heartDemon';
 import { doActivity } from './activities';
+import { monthsUsed } from './timeBudget';
 import { caveView, rentCave } from './cave';
 import { runSeclusion } from './seclusion';
 import { doMission, joinSect, missionViews, requestMaster, masterBlocked, sectEligibility, sectTechniques } from './sect';
@@ -30,8 +31,11 @@ import { BalanceSchema } from '../core/schemas';
  * `player` (6b, from the 2026-10-12 playtest) lives like a typical player: random choices, joins a sect, does the best mission
  * each year, asks for a master, spends contribution at the treasury, moves to the technique that reaches furthest, and breaks through at 40% or better.
  */
-export type BotProfile = 'random' | 'steady' | 'player';
-export const BOT_PROFILES: BotProfile[] = ['random', 'steady', 'player'];
+export type BotProfile = 'random' | 'steady' | 'player' | 'full';
+/** 9.4 `full` ("sống đủ") plays like `player` and also spends up to FULL_MONTHS of each year visiting home, escorting goods, travelling, feasting. */
+export const BOT_PROFILES: BotProfile[] = ['random', 'steady', 'player', 'full'];
+const FULL_MONTHS = 4;
+const FULL_ACTIVITIES = ['ve_tham_que', 'ap_tieu', 'ngao_du', 'ket_giao'];
 
 export interface LifeResult {
   seed: string;
@@ -55,6 +59,10 @@ export interface LifeResult {
   stuck: boolean;
   /** Years lived with happiness at 0; whether đạo tâm ever hit 0. */
   happyZeroYears: number;
+  /** 9.4: mean happiness over the years lived, silver left at the end, months spent on activities per year. */
+  happyMean?: number;
+  silverLeft?: number;
+  monthsPerYear?: number;
   /** Years lived with happiness / trí tuệ / mị lực at 95 or more (6c.4), and all years lived. */
   topYears: { happiness: number; intellect: number; charm: number; lived: number };
   daoHeartZero: boolean;
@@ -141,6 +149,8 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
   const reachedAt: Record<string, number> = {};
   let steps = 0;
   let happyZeroYears = 0;
+  let happySum = 0;
+  let monthsSum = 0;
   const topYears = { happiness: 0, intellect: 0, charm: 0, lived: 0 };
   let daoHeartZero = false;
   let fullBarYears = 0;
@@ -184,7 +194,14 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
         if (started !== s) { s = started; continue; }
       }
     }
-    if (profile === 'player' && !s.seclusion) s = playerYear(s, content);
+    if ((profile === 'player' || profile === 'full') && !s.seclusion) s = playerYear(s, content);
+    if (profile === 'full' && !s.seclusion && !s.events.pending && !s.combat) {
+      for (const id of FULL_ACTIVITIES) {
+        // A careful player escorts goods only while healthy.
+        if (monthsUsed(s) >= FULL_MONTHS || (id === 'ap_tieu' && s.stats.health < 60)) continue;
+        s = doActivity(s, content, id)?.state ?? s;
+      }
+    }
     // 9.R3d: every bot uses each finger action that is open (so the finger's price is paid too).
     if (s.goldenFinger && !s.seclusion && !s.events.pending) {
       for (const v of fingerActionViews(s, content)) if (!v.blocked) s = doFingerAction(s, content, v.id)?.state ?? s;
@@ -197,11 +214,14 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
       if (r) { s = checkDeath(r.state, content); continue; }
     }
     const before = s.character.age;
+    const spent = monthsUsed(s);
     s = s.seclusion ? runSeclusion(s, content) : advanceYear(s, content);
     s = checkDeath(s, content);
     const years = s.character.age - before;
     if (years > 0) {
       if (s.stats.happiness <= 0) happyZeroYears += years;
+      happySum += s.stats.happiness * years;
+      monthsSum += spent;
       topYears.lived += years;
       for (const k of ['happiness', 'intellect', 'charm'] as const) if (s.stats[k] >= 95) topYears[k] += years;
       if (s.aptitudes.daoHeart <= 0) daoHeartZero = true;
@@ -217,6 +237,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     peak: Math.max(peak, realms.indexOf(s.cult.realm)), rootGrade: s.cult.root?.grade ?? 'none', bodyId: s.cult.bodyId ?? null,
     martialStage: s.martial.stage, knowledge: s.knowledgeFound ?? 0, reachedAt, stage: s.cult.stage, stuck: s.alive,
     happyZeroYears, topYears, daoHeartZero, fullBarYears, capYears,
+    happyMean: topYears.lived ? happySum / topYears.lived : 0, silverLeft: s.money.silver, monthsPerYear: topYears.lived ? monthsSum / topYears.lived : 0,
     aptitudeGain: aptSum(s) - aptStart,
     aptitudeHigh: Math.max(s.aptitudes.physique, s.aptitudes.comprehension, s.aptitudes.luck) >= 90,
     seen: { ...(s.events.seen ?? {}) },
@@ -277,6 +298,10 @@ export interface Report {
   byRoot: Record<string, { share: number; meanAge: number; kimDan: number; capYears: number }>;
   /** Share of lives that ever sat at happiness 0, mean such years; share whose đạo tâm hit 0. */
   happyZero: { share: number; meanYears: number };
+  /** 9.4: mean happiness over all years, mean silver at death, mean months a year spent on activities. */
+  happyMean?: number;
+  silverLeft?: number;
+  monthsPerYear?: number;
   daoHeartZero: number;
   /** Share of all years lived with each stat at 95+. */
   topShare: { happiness: number; intellect: number; charm: number };
@@ -335,6 +360,9 @@ export function summarize(results: LifeResult[], content: Content): Report {
     byCause, reached, reachedAge, byRoot,
     topShare: (() => { const t = (k: 'happiness' | 'intellect' | 'charm') => results.reduce((a, r) => a + r.topYears[k], 0) / Math.max(1, results.reduce((a, r) => a + r.topYears.lived, 0)); return { happiness: t('happiness'), intellect: t('intellect'), charm: t('charm') }; })(),
     happyZero: { share: n ? sad.length / n : 0, meanYears: mean(results.map((r) => r.happyZeroYears)) },
+    happyMean: mean(results.map((r) => r.happyMean ?? 0)),
+    silverLeft: mean(results.map((r) => r.silverLeft ?? 0)),
+    monthsPerYear: mean(results.map((r) => r.monthsPerYear ?? 0)),
     daoHeartZero: n ? results.filter((r) => r.daoHeartZero).length / n : 0,
     fullBarYears: mean(results.map((r) => r.fullBarYears)),
     capYears: mean(results.map((r) => r.capYears)),
@@ -412,6 +440,7 @@ export function formatReport(rep: Report, content: Content, title: string): stri
     // 9.R12: tiên duyên gates and kết cục.
     'Cổng tiên duyên mở: ' + (Object.entries(rep.byGate ?? {}).sort((a, b) => b[1] - a[1]).map(([g, v]) => `${g} ${p(v)}`).join(', ') || 'không'),
     `Thiên cơ biến động: ${p(rep.specialAny ?? 0)} số đời` + (Object.keys(rep.bySpecial ?? {}).length ? ' (' + Object.entries(rep.bySpecial).map(([id, g]) => `${id} ${p(g.share)}`).join(', ') + ')' : ''),
+    `Hạnh phúc trung bình ${(rep.happyMean ?? 0).toFixed(1)} · bạc cuối đời ${Math.round(rep.silverLeft ?? 0)} · tháng hoạt động mỗi năm ${(rep.monthsPerYear ?? 0).toFixed(1)}`,
     `Câu lặp trong nhật ký: ${p(rep.repeatRate ?? 0)} số dòng` + ((rep.topLines ?? []).length ? '; lặp nhiều nhất: ' + rep.topLines!.map(([t, c]) => `"${t.slice(0, 50)}" ×${c}`).join(', ') : ''),
     'Kết cục: ' + Object.entries(rep.byEnding ?? {}).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([e, v]) => `${e} ${p(v)}`).join(', '),
   ];

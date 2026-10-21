@@ -1546,6 +1546,14 @@ export const BalanceSchema = z
         })
         .strict(),
     ),
+    /** 9.4 Quỹ thời gian: months in a year; months each mortal career takes (default for one not listed). */
+    time: z
+      .object({
+        monthsPerYear: z.number().int().min(1),
+        careerMonths: z.record(z.string(), z.number().int().min(0)),
+        careerMonthsDefault: z.number().int().min(0),
+      })
+      .strict(),
     /** Mortal careers (task 2.11). */
     careers: z
       .object({
@@ -1926,7 +1934,7 @@ const ActivityCostSchema = z
     silver: z.number().int().min(0).optional(),
     spiritStones: z.number().int().min(0).optional(),
     health: z.number().int().min(0).optional(),
-    /** Months of the year (task 9.4 spends them; kept on the data until then). */
+    /** 9.4: months of the year this option takes (default: the activity's `months`). */
     months: z.number().int().min(0).max(12).optional(),
   })
   .strict();
@@ -1961,6 +1969,8 @@ export const ActivitySchema = z
     /** Shown in the menu only when these hold. */
     conditions: ConditionsSchema.partial().default({}),
     cost: z.array(ActivityCostSchema).default([]),
+    /** 9.4: months of the year it takes (a cost option's own `months` wins). */
+    months: z.number().int().min(0).max(12).default(0),
     /** When no cost option can be paid: a lesser free version. Without it the activity waits for money. */
     free: z.object({ outcomes: z.array(ActivityOutcomeSchema).min(1) }).strict().optional(),
     limit: z

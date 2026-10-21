@@ -8,6 +8,14 @@
 
 ## [Chưa phát hành]
 
+### 9.4: Quỹ thời gian 12 tháng mỗi năm (2026-10-21)
+- Mỗi năm có `balance.time.monthsPerYear` tháng. Nghề chính của phàm nhân lấy tháng trước (`time.careerMonths`: quan 10, thương 8, y 8, võ lâm 6, tạp dịch 9). Mỗi hoạt động tốn 0–6 tháng (`months` trong JSON). Hết tháng thì chỉ còn các việc 0 tháng; dòng khóa ghi rõ "Cần 2 tháng, năm nay chỉ còn 1".
+- Tu sĩ: tháng còn trống cuối năm dồn vào tu luyện, nên tu vi năm đó nhân với `tháng tu / 12`. Bế quan vẫn khóa cả năm cho tu luyện. Không làm gì thì bấm +1 năm vẫn như cũ.
+- Dưới nút +1 năm có dòng nhỏ "Còn 7/12 tháng"; bảng Hành sự ghi số tháng còn lại; giá mỗi hoạt động có thêm số tháng.
+- Hoạt động mới: **Về thăm quê** (2 tháng, Nhân duyên), **Dự tiệc, kết giao** (1 tháng, mị lực), **Theo tiêu cục áp tiêu** (2 tháng, võ giả hoặc tu sĩ, kiếm bạc), **Làm thuê thời vụ** (3 tháng, phàm nhân). Ngao du tốn 1 tháng, Luyện quyền buổi sớm 0 tháng.
+- `npm run simulate -- --profile full`: bot "sống đủ" (chơi như `player`, thêm tới 4 tháng mỗi năm cho thăm quê, áp tiêu, ngao du, kết giao). Báo cáo thêm hạnh phúc trung bình, bạc cuối đời, số tháng hoạt động mỗi năm.
+- Đo trên 200 đời cùng seed: tu sĩ "chỉ tu" gần như không đổi; tu sĩ "sống đủ" đi từ Luyện Khí lên Trúc Cơ mất gấp ~1,35 lần (tốc độ chậm ~26%), nhưng hạnh phúc trung bình 82 so với 50, bạc cuối đời 27 so với 11, sống lâu hơn và số người tới Trúc Cơ tương đương (90 so với 85).
+
 ### 9.7: Dock theo tầng và màn chính mới (2026-10-21)
 - Dock đọc `tiers[].dock` trong `world.json`; hình và tên nút nằm trong `content/dock.json` (thứ tự, nhóm hoạt động của từng bảng, nút hiện sớm theo tab hoặc lối sống). Nút **+1 năm** luôn ở giữa.
 - Phàm gian: **Bản thân · Hành sự · +1 năm · Nhân duyên · Gia sản**. Tu chân giới thêm **Tu luyện** và **Tông môn** (ba nút mỗi bên). Người có linh căn dùng được thấy Tu luyện sớm; người đi giang hồ thấy nút **Giang hồ** (mở bảng Tông môn) trước khi biết tới tông môn.

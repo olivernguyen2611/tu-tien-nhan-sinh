@@ -6,7 +6,7 @@
     "icon": "拳",
     "text": "Dậy trước gà gáy, ra bãi đất sau nhà đánh vài bài quyền.",
     "conditions": { "age": { "min": 10 } },
-    "cost": [{ "health": 2, "months": 1 }],
+    "cost": [{ "health": 2, "months": 0 }],
     "limit": { "perYear": 1, "cooldownYears": 1 },
     "outcomes": [
       {

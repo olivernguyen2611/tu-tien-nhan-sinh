@@ -7,6 +7,7 @@ import type { ActivityGroup } from '../../core/schemas';
 import type { GameState, Tone } from '../../core/types';
 import { ACTIVITY_GROUP_GLYPHS, ACTIVITY_GROUP_NAMES, activityViews } from '../../systems/activities';
 import { TermText } from './Tooltip';
+import { monthsLeft } from '../../systems/timeBudget';
 
 type ActResult = { text: string; tone: Tone; changes: string } | null;
 
@@ -67,7 +68,7 @@ export function ActivityPanel({ state, content, title, groups, onAction, onClose
   return (
     <div class="modal-backdrop sheet" role="dialog" aria-modal="true" aria-label={title} onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div class="event-card activity-panel">
-        <div class="kicker">Năm {state.character.age} tuổi</div>
+        <div class="kicker">Năm {state.character.age} tuổi · còn {monthsLeft(state, content)}/{content.balance.time.monthsPerYear} tháng</div>
         <h2>{open ? ACTIVITY_GROUP_NAMES[open] : title}</h2>
         {tiles.length === 0 && <p class="profile-note">Năm nay chưa có việc gì để làm ở đây.</p>}
         {open ? (

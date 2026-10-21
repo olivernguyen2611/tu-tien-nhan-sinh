@@ -36,6 +36,7 @@ import { awakenGoldenFinger } from '../systems/goldenFinger';
 import { goldenFingerYear } from '../systems/fingerActions';
 import { ownedRebirthTalents, rebirthTalentBonus } from '../systems/rebirthTalents';
 import { pastSectFor } from '../systems/pastSect';
+import { monthsUsed } from '../systems/timeBudget';
 
 export interface NewLifeInput {
   seed: string;
@@ -243,9 +244,11 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   state = withCheckpoints(state);
   // Task 5b.2: the Kim Thủ Chỉ awakens further once the realm allows.
   state = goldenFingerYear(awakenGoldenFinger(state, content), content);
+  // 9.4: the months activities took from the year that ends now.
+  const used = monthsUsed(state);
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content);
+  const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content, used), content), content), content), content), content), content), content), content), content), content), content);
   // Task 4.1: in seclusion no ordinary event comes (follow-ups wait for the door to open);
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;

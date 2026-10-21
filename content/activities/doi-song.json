@@ -1,0 +1,127 @@
+[
+  {
+    "id": "ve_tham_que",
+    "group": "quan_he",
+    "name": "Về thăm quê",
+    "icon": "鄉",
+    "text": "Gác mọi việc, về quê ở với người nhà vài tháng.",
+    "conditions": { "age": { "min": 16 } },
+    "months": 2,
+    "cost": [{ "silver": 3 }],
+    "free": {
+      "outcomes": [
+        {
+          "text": [
+            "Đi bộ mấy chục dặm về quê, tới nơi chân phồng rộp. Mẹ nấu nồi cháo, ngươi ăn ba bát.",
+            "Tay không về nhà, ngại chẳng dám nhìn hàng xóm. Người nhà chẳng hỏi gì, chỉ dọn thêm cái bát."
+          ],
+          "roll": { "stat.happiness": [4, 7] }
+        }
+      ]
+    },
+    "outcomes": [
+      {
+        "text": {
+          "lines": [
+            { "text": "Ngươi về đúng mùa gặt. Tu sĩ mà cũng xắn quần lội ruộng, cả làng kéo ra xem.", "when": { "tier": ["tu_chan"] } },
+            { "text": "Người trong làng gọi ngươi là tiên trưởng. Ngươi ngồi ăn bánh đa với họ, chẳng tiên chút nào.", "when": { "tier": ["tu_chan"] } }
+          ],
+          "linesShare": 0.3,
+          "parts": [
+            ["Ngươi về quê hai tháng,", "Ngươi mang ít quà về nhà,", "Ngươi về đúng dịp giỗ tổ,", "Ngươi về sửa lại mái nhà dột,"],
+            ["ngày ngủ tới trưa, tối ngồi nghe chuyện làng.", "mẹ cằn nhằn mua chi cho tốn mà vẫn cất kỹ.", "ăn cỗ, nghe các cụ kể chuyện ngày xưa.", "trèo lên mái mới thấy mình đã cao hơn cái ngõ."]
+          ]
+        },
+        "roll": { "stat.happiness": [7, 11] },
+        "bonus": [{ "when": { "tier": ["tu_chan"] }, "effects": { "stat.daoHeart": 1 } }]
+      }
+    ]
+  },
+  {
+    "id": "ket_giao",
+    "group": "quan_he",
+    "name": "Dự tiệc, kết giao",
+    "icon": "宴",
+    "text": "Một bữa tiệc, vài chén rượu, mấy người quen mới. Mị lực quyết định họ có nhớ tên ngươi.",
+    "conditions": { "age": { "min": 16 } },
+    "months": 1,
+    "cost": [
+      { "when": { "realm": { "min": "luyen_khi" } }, "spiritStones": 2 },
+      { "when": { "realm": { "max": "pham_nhan" } }, "silver": 8 }
+    ],
+    "check": { "stat": "stat.charm", "difficulty": 50 },
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi kể một chuyện cười, cả bàn cười nghiêng ngả. Tan tiệc có ba người hẹn gặp lại.",
+          "Ngươi rót rượu đúng lúc, nói đúng câu. Chủ tiệc tiễn ngươi tận cổng.",
+          "Một vị khách lạ ngồi cạnh nói chuyện với ngươi tới canh ba. Lúc chia tay hai bên đã xưng huynh gọi đệ."
+        ],
+        "effects": { "stat.charm": 1 },
+        "roll": { "stat.happiness": [3, 5] }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": [
+          "Ngươi ngồi góc bàn cả buổi, gắp hết đĩa lạc mà chẳng ai hỏi tên.",
+          "Lỡ lời chê món canh, hóa ra chủ nhà tự nấu. Không khí lạnh hơn cả canh.",
+          "Uống quá chén, sáng ra chỉ nhớ mình đã hát. Mọi người thì nhớ rõ hơn."
+        ],
+        "effects": { "stat.happiness": -2, "stat.charm": -1 }
+      }
+    ]
+  },
+  {
+    "id": "ap_tieu",
+    "group": "giang_ho",
+    "name": "Theo tiêu cục áp tiêu",
+    "icon": "鏢",
+    "text": "Hai tháng đường xa, giữ một xe hàng không phải của mình. Thân thủ quyết định tiền công hay thương tích.",
+    "conditions": { "age": { "min": 16 }, "anyOf": [{ "martial": { "min": 0 } }, { "realm": { "min": "luyen_khi" } }] },
+    "months": 2,
+    "limit": { "perYear": 1 },
+    "check": { "stat": "stat.physique", "difficulty": 45 },
+    "outcomes": [
+      {
+        "text": [
+          "Chuyến tiêu êm như ru. Ngươi chỉ phải đuổi hai con chó hoang và một gã say.",
+          "Giữa đường gặp toán cướp, ngươi rút đao đứng trước xe. Bọn chúng nhìn nhau rồi rút lui. Tiền công gấp đôi.",
+          "Mưa dầm cả tháng, xe sa lầy ba lần. Hàng tới nơi nguyên vẹn, ngươi thì không còn sợi chỉ khô."
+        ],
+        "effects": { "stat.health": -1 },
+        "roll": { "silver": [20, 40], "stat.happiness": [1, 3] }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": [
+          "Bọn cướp đông hơn ngươi tưởng. Giữ được nửa xe hàng, mất nửa tiền công, thêm một vết chém.",
+          "Trúng mai phục ở hẻm núi. Ngươi lết được về tiêu cục, chủ tiêu chỉ trả tiền thuốc."
+        ],
+        "effects": { "stat.happiness": -3 },
+        "roll": { "stat.health": [-6, -3], "silver": [3, 8] }
+      }
+    ]
+  },
+  {
+    "id": "lam_thue",
+    "group": "nghe",
+    "name": "Làm thuê thời vụ",
+    "icon": "傭",
+    "text": "Gánh hàng, gặt thuê, khuân vác ở bến. Ba tháng đổi lấy ít bạc vụn.",
+    "conditions": { "age": { "min": 12 }, "realm": { "max": "pham_nhan" } },
+    "months": 3,
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi gặt thuê cho nhà địa chủ. Lưng mỏi, tay chai, túi có thêm mấy lượng.",
+          "Khuân vác ở bến sông ba tháng. Cuối vụ chủ thuyền thưởng thêm một bữa thịt.",
+          "Gánh hàng cho phường buôn muối. Muối mặn, tiền công nhạt, nhưng vẫn là tiền."
+        ],
+        "effects": { "stat.health": -2, "stat.physique": 1 },
+        "roll": { "silver": [6, 12] }
+      }
+    ]
+  }
+]

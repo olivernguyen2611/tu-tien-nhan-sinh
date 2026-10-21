@@ -6,6 +6,7 @@
     "icon": "遊",
     "text": "Gác việc một chút, đi cho khuây khỏa.",
     "conditions": { "age": { "min": 8 } },
+    "months": 1,
     "cost": [
       { "when": { "realm": { "min": "luyen_khi" } }, "spiritStones": 3, "months": 1 },
       { "when": { "realm": { "max": "pham_nhan" } }, "silver": 5, "months": 1 }

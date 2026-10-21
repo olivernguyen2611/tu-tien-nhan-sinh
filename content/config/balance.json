@@ -234,6 +234,11 @@
       ]
     }
   },
+  "time": {
+    "monthsPerYear": 12,
+    "careerMonths": { "quan": 10, "thuong": 8, "vo_lam": 6, "y": 8, "tap_dich": 9 },
+    "careerMonthsDefault": 8
+  },
   "careers": {
     "joinAge": [14, 40],
     "income": [10, 25, 50, 100, 200],
