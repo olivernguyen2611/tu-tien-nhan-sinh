@@ -1,6 +1,7 @@
 // "Quan hệ" sheet: family members with affinity (tap one to act together), and people met
 // along the way (task 3.4: Người quen with realm, character and the favor/grudge ledger).
 import type { ComponentChildren } from 'preact';
+import { relationGroup } from '../../systems/acquaintances';
 import { DiscipleActs } from './DiscipleActs';
 import type { DiscipleAct } from '../../systems/discipleActs';
 import { useState } from 'preact/hooks';
@@ -52,11 +53,15 @@ export function FamilyPanel({ state, content, extra, onAction, onRomance, onGift
   const [tab, setTab] = useState<'family' | 'npcs' | 'bond'>('family');
   // Alive first, then the closest (or most hated) at the top.
   const npcs = state.npcs.slice().sort((a, b) => Number(b.alive) - Number(a.alive) || b.favor + b.grudge + b.affinity - (a.favor + a.grudge + a.affinity));
+  // 9.6: under Bạn bè / Tình duyên / Công việc / Thù địch / Tông môn headings.
+  const npcGroups = (content.relations?.groups ?? [{ id: 'all', name: '' }])
+    .map((g) => ({ ...g, list: npcs.filter((n) => !content.relations || relationGroup(state, content, n) === g.id) }))
+    .filter((g) => g.list.length > 0);
 
   return (
     <div class="modal-backdrop sheet" role="dialog" aria-modal="true" aria-label="Quan hệ" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div class="event-card">
-        <div class="kicker">Quan hệ</div>
+        <div class="kicker">Nhân duyên</div>
         <div class="tabs" role="tablist">
           <button role="tab" class={`tab${tab === 'family' ? ' on' : ''}`} aria-selected={tab === 'family'} onClick={() => setTab('family')}>Gia đình</button>
           <button role="tab" class={`tab${tab === 'npcs' ? ' on' : ''}`} aria-selected={tab === 'npcs'} onClick={() => setTab('npcs')}>
@@ -79,8 +84,11 @@ export function FamilyPanel({ state, content, extra, onAction, onRomance, onGift
         {tab === 'npcs' && (npcs.length === 0 ? (
           <p class="story">Giang hồ mênh mông, ngươi chưa quen được ai.</p>
         ) : (
+          <>{npcGroups.map((g) => (
+          <section key={g.id}>
+          {g.name && <h3 class="panel-sub">{g.name} ({g.list.filter((n) => n.alive).length})</h3>}
           <ul class="family-list">
-            {npcs.map((n) => {
+            {g.list.map((n) => {
               const l = npcInfo(state, content, n);
               const love = romanceLabel(state, content, n);
               const views = n.alive ? romanceViews(state, content, n.id) : [];
@@ -166,6 +174,8 @@ export function FamilyPanel({ state, content, extra, onAction, onRomance, onGift
               );
             })}
           </ul>
+          </section>
+          ))}</>
         ))}
         {tab === 'family' && state.family.some((r) => r.alive) && <p class="profile-note">Chạm vào một người để tương tác. Mỗi việc làm được một lần mỗi năm.</p>}
         {tab === 'family' && (state.family.length === 0 ? (

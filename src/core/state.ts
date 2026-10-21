@@ -26,6 +26,7 @@ import { knowledgeYear, knowsFor } from '../systems/knowledge';
 import { gatesYear } from '../systems/immortalGates';
 import { worldEventsYear } from '../systems/worldEvents';
 import { initTimes, timesYear } from '../systems/worldState';
+import { acquaintanceYear, memoryText } from '../systems/acquaintances';
 import { pastTiesFor, reunionYear } from '../systems/karmaLedger';
 import { systemYear } from '../systems/heThong';
 import { trungSinhYear } from '../systems/trungSinh';
@@ -84,6 +85,9 @@ export function fillTemplate(text: string, state: GameState, content?: Content):
     .replace(/\{npc\}/g, npc?.name ?? 'người kia')
     .replace(/\{npcRole\}/g, npc?.role ?? 'người quen')
     .replace(/\{npcKin\}/g, kin?.name ?? 'người thân')
+    // 9.6: the last kỷ niệm with the NPC, and what they do now.
+    .replace(/\{npcMemory\}/g, memoryText(state, npc))
+    .replace(/\{npcJob\}/g, content?.relations?.occupations.find((o) => o.id === npc?.occupation)?.name ?? npc?.role ?? 'người quen')
     // Task 3.4: the NPC's outward character and true nature, lower-case for mid-sentence use.
     .replace(/\{npcSurface\}/g, (content?.npcTraits.surface.find((x) => x.id === npc?.surface)?.name ?? 'dễ gần').toLowerCase())
     .replace(/\{npcNature\}/g, (content?.npcTraits.nature.find((x) => x.id === npc?.nature)?.name ?? 'khó đoán').toLowerCase())
@@ -250,7 +254,7 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   const used = monthsUsed(state);
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content, used), content), content), content), content), content), content), content), content), content), content), content);
+  const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(acquaintanceYear(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content, used), content), content), content), content), content), content), content), content), content), content), content);
   // Task 4.1: in seclusion no ordinary event comes (follow-ups wait for the door to open);
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;

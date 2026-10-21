@@ -23,6 +23,7 @@ import { addContribution, breakPrecept, grantMaster, joinSect, leaveSect, promot
 import { startBattle } from '../combat';
 import { changeNpc, createNpc, killNpc, npcCalls, type NpcTrigger } from '../npcs';
 import { markReunion } from '../karmaLedger';
+import { markVisit, pickVisit, remember } from '../acquaintances';
 import { hiddenByOptions } from '../options';
 import { applyRomance, romanceTarget } from '../romance';
 import { gainGoldenFinger, loseGoldenFinger, SURE_CHECK_FLAG } from '../goldenFinger';
@@ -120,6 +121,7 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
     npc = visit.npc;
     // 9.R9: a cố nhân's reunion comes once.
     if (visit.trigger === 'reunion') state = markReunion(state, visit.npc);
+    if (visit.trigger === 'visit') state = markVisit(state, visit.npc, visit.event);
   } else if (sure || rng.chance(popupChance(state, content))) {
     // "be_quan" events only break into a seclusion (rollSeclusionEvent).
     const all = content.events
@@ -171,7 +173,9 @@ function npcEvent(state: GameState, content: Content, rng: Rng): { npc: string; 
     if (pool.length === 0) continue;
     return { npc: call.id, event: rng.weighted(pool, (e) => e.weight).id, trigger: call.trigger };
   }
-  return null;
+  // 9.6: no ledger calls; someone may still come on their own.
+  const v = pickVisit(state, content, (e) => !hiddenByOptions(state, e));
+  return v ? { ...v, trigger: 'visit' } : null;
 }
 
 export interface ChoiceView {
@@ -336,6 +340,8 @@ export function resolveChoice(given: GameState, content: Content, choiceIndex: n
   else log.push({ age: state.character.age, lines });
   next = { ...next, log };
   if (outcome.fight) next = startBattle(next, content, outcome.fight, event.title);
+  // 9.6: kỷ niệm with the NPC of the event.
+  next = remember(next, content, next.events.npc, echoTitle(event.title, state, content));
   next = { ...next, events: { ...next.events, npc: null } };
   return { state: next, text, tone, success };
 }
@@ -356,12 +362,12 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   let next = state;
   // Task 3.4: someone new becomes the event's NPC; then the ledger changes for that NPC.
   if (fx.meetNpc) {
-    const { role, realm, stage, root, affinity, favor, grudge, peer } = fx.meetNpc;
+    const { role, kind, realm, stage, root, affinity, favor, grudge, peer } = fx.meetNpc;
     // Someone met to be courted, wed, or in a mature event is always of age (PLAN H).
     const minAge = fx.romance?.pursue || fx.romance?.marry || fx.meetNpc.adult ? content.balance.romance.minAge : undefined;
     // Playtest 2: someone to court is of the player's generation, not 10–15 years older.
     const peerAge = peer || !!fx.romance?.pursue || !!fx.romance?.marry;
-    const met = createNpc(next, content, { role, realm, stage, root, minAge, peer: peerAge, affinity: affinity === undefined ? undefined : 50 + affinity, favor, grudge });
+    const met = createNpc(next, content, { role, kind, realm, stage, root, minAge, peer: peerAge, affinity: affinity === undefined ? undefined : 50 + affinity, favor, grudge });
     next = { ...met.state, events: { ...met.state.events, npc: met.id } };
   }
   const npcId = next.events.npc;

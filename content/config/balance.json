@@ -461,6 +461,11 @@
     "coldBelow": 30,
     "bondChance": 0.12,
     "bondGapYears": 3,
+    "visitChance": 0.4,
+    "visitGapYears": 2,
+    "memories": 5,
+    "occupationChance": 0.05,
+    "childhoodAge": 6,
     "inheritShare": 0.5,
     "infoTiers": [30, 60, 85],
     "infoSeeAbove": 1

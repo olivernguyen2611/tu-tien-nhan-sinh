@@ -157,6 +157,10 @@ function npcMeets(state: GameState, c: NonNullable<Conditions['npc']>, content?:
   if (c.heir !== undefined && !!n.heirOf !== c.heir) return false;
   if (c.pastLife && (!n.pastLife || !c.pastLife.includes(n.pastLife.kind))) return false;
   if (c.natureKnown !== undefined && n.natureKnown !== c.natureKnown) return false;
+  // 9.6: kind of relation, what they do now, kỷ niệm shared.
+  if (c.kinds?.length && !c.kinds.includes(n.kind ?? '')) return false;
+  if (c.occupation?.length && !c.occupation.includes(n.occupation ?? '')) return false;
+  if (c.minMemories !== undefined && (n.memories?.length ?? 0) < c.minMemories) return false;
   if (c.masked !== undefined && (!content || isMasked(content, n) !== c.masked)) return false;
   if (c.minRealmGap !== undefined || c.maxRealmGap !== undefined) {
     const order = content?.cultivation.realms.realms.map((r) => r.id) ?? ['pham_nhan'];

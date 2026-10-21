@@ -151,6 +151,11 @@ const BaseConditionsSchema = z
         /** Their realm compared to the player's: -1 lower, 0 same, 1 higher. */
         minRealmGap: z.number().int().optional(),
         maxRealmGap: z.number().int().optional(),
+        /** 9.6: the kind of relation (relations.json) and the occupation they have now. */
+        kinds: z.array(id).optional(),
+        occupation: z.array(id).optional(),
+        /** 9.6: at least this many shared memories. */
+        minMemories: z.number().int().min(0).optional(),
       })
       .strict()
       .optional(),
@@ -256,6 +261,8 @@ export const EffectsSchema = z
     meetNpc: z
       .object({
         role: z.string().min(1),
+        /** 9.6: kind of relation (relations.json); default from the role text. */
+        kind: z.string().regex(/^[a-z0-9_]+$/).optional(),
         /** Task 3.9: always an adult (romance.minAge), e.g. someone rescued in a mature event. */
         adult: z.boolean().optional(),
         /** Playtest 2: about the player's age (balance.npcs.peerAgeOffset). */
@@ -439,7 +446,7 @@ export const EventSchema = z
     cooldownYears: z.number().int().min(0).default(0),
     oncePerLife: z.boolean().default(false),
     /** Task 3.4: not in the yearly pool; fires when an NPC's ledger calls for it (that NPC is the event's NPC). */
-    npcTrigger: z.enum(['reunion', 'revenge', 'repay', 'reveal', 'bond']).optional(),
+    npcTrigger: z.enum(['reunion', 'revenge', 'repay', 'reveal', 'bond', 'visit']).optional(),
     /** Task 4.10: fires as soon as it is eligible, ahead of the yearly roll (due follow-ups still come first). */
     urgent: z.boolean().default(false),
     choices: z.array(ChoiceSchema).min(1),
@@ -947,6 +954,16 @@ export const BalanceSchema = z
         /** 9.R6: thiện cảm needed for each layer of the NPC info card (quen, thân, tri kỷ), and how many realms above the player one can still be read. */
         infoTiers: z.tuple([z.number(), z.number(), z.number()]).optional(),
         infoSeeAbove: z.number().int().min(0).optional(),
+        /**
+         * 9.6 Người quen sâu hơn: chance a year that some acquaintance comes to the player on their own (npcTrigger
+         * "visit"), at least visitGapYears apart; memories kept per NPC; chance a year an adult NPC takes a new
+         * occupation; the age the life gets a neighbour and a childhood friend.
+         */
+        visitChance: probability,
+        visitGapYears: z.number().int().min(0),
+        memories: z.number().int().min(1),
+        occupationChance: probability,
+        childhoodAge: z.number().int().min(0),
       })
       .strict(),
     /** Task 5.4: founding a cultivation clan. */
@@ -2749,6 +2766,27 @@ export const JianghuFactionFileSchema = z.array(
     .strict(),
 );
 export type JianghuFaction = z.infer<typeof JianghuFactionFileSchema>[number];
+
+/**
+ * 9.6 relations.json: kinds of relation (bằng hữu, kẻ thù, chủ nợ…) shown under groups in the Nhân duyên tab,
+ * the role texts each kind takes by default, and the occupations an NPC can move into over the years.
+ */
+export const RelationsFileSchema = z.object({
+  groups: z.array(z.object({ id, name: z.string().min(1) }).strict()).min(1),
+  kinds: z.array(z.object({ id, name: z.string().min(1), group: id, roles: z.array(z.string().min(1)).default([]) }).strict()).min(1),
+  /** Kind for a role text no kind lists. */
+  defaultKind: id,
+  occupations: z.array(z.object({
+    id, name: z.string().min(1), minAge: z.number().int().min(0), weight: z.number().min(0),
+    /** Only cultivators (true) or only mortals (false). */
+    root: z.boolean().optional(),
+    /** Heard when a close NPC takes it up; {npc} = their name. */
+    news: z.string().min(1),
+  }).strict()).default([]),
+  /** Starting acquaintances (balance.npcs.childhoodAge): role, kind, peer or older. */
+  childhood: z.array(z.object({ role: z.string().min(1), kind: id, peer: z.boolean().default(false), affinity: z.number().default(55), text: z.string().min(1) }).strict()).default([]),
+}).strict();
+export type RelationsFile = z.infer<typeof RelationsFileSchema>;
 
 /**
  * 9.5 Thời cuộc: content/worlds/<id>/world-state.json. World variables (0–100) drift each year toward the

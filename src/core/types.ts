@@ -449,6 +449,11 @@ export interface Npc {
   /** Task 5c.9: recruited into the player's own sect (age joined), and the age of the last invitation (once a year each). */
   member?: { since: number };
   recruitTried?: number;
+  /** 9.6: kind of relation (relations.json), shared memories (newest last), occupation now, visit event id → age it came. */
+  kind?: string;
+  memories?: { age: number; text: string }[];
+  occupation?: string;
+  visits?: Record<string, number>;
   /** 9.R9: a cố nhân from a past life ({pastName}, {pastSelf}); met once the reunion event has come. */
   pastLife?: { kind: KarmaTieKind; name: string; self: string; met: boolean };
 }

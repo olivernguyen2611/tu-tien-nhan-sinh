@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### 9.6: Người quen sâu hơn (2026-10-21)
+- `content/relations.json`: loại quan hệ (bằng hữu, huynh đệ kết nghĩa, hàng xóm, ân nhân, thầy, học trò, đồng liêu, chủ, thuộc hạ, chủ nợ, con nợ, kẻ thù, đồng môn, người thương…) xếp vào nhóm; vai cũ trong sự kiện tự quy về loại. Tab Người quen chia nhóm **Bạn bè / Tình duyên / Công việc / Thù địch / Tông môn / Người quen khác** (tình duyên, tông môn, thù oán được ưu tiên). Bảng đổi tên thành Nhân duyên.
+- **Kỷ niệm**: mỗi người quen nhớ 5 việc gần nhất hai bên làm với nhau (sự kiện, tương tác, quà tặng); hiện trong thẻ Thông tin và dùng được trong văn bản qua `{npcMemory}`. Điều kiện mới cho NPC: `kinds`, `occupation`, `minMemories`.
+- **NPC chủ động** (`npcTrigger: "visit"`): mỗi năm có `balance.npcs.visitChance` một người quen tự tìm tới, cách nhau ít nhất `visitGapYears`; cùng một người không mang cùng một việc tới hai lần. 10 sự kiện: mượn tiền, thiệp mời cưới, rủ làm ăn, nhờ báo thù, bị tố cáo, bị bạn bán đứng, nhờ trông nhà, cố nhân ghé chơi (nhắc kỷ niệm), người quen thành đạt, cầu cứu lúc bệnh. Đo 60 năm: trung bình ~11 lần mỗi đời.
+- **Người quen đổi vai**: người lớn có thể theo nghề mới (bộ khoái, quan huyện, thương nhân, tiêu sư, thợ săn, lục lâm, lang y; tu sĩ thành tán tu, khách khanh); người thân thiết thì có tin đồn trong nhật ký; `{npcJob}` trong văn bản.
+- 6 tuổi có một hàng xóm và một bạn thuở nhỏ. Các phần chạy mỗi năm dùng luồng RNG riêng.
+
 ### 9.5: Thế giới sống, thời cuộc (2026-10-21)
 - `content/worlds/<id>/world-state.json`: các biến thời cuộc 0–100 (triều cục, mùa màng, trị an, ôn dịch, chiến sự biên ải, chính ma căng thẳng) trôi mỗi năm về đích của pha thời thế; bốn pha **Thịnh thế → Trung suy → Loạn thế → Tân triều**, mỗi pha nhân trọng số sự kiện theo chủ đề; triều đại và **niên hiệu** tự đặt (đổi niên hiệu khi vua băng hà, đổi triều khi vào Tân triều). Tất cả chạy trên luồng RNG riêng (`seed:times:tuổi`) nên xúc xắc của đời người không đổi.
 - `GameState.times`; save cũ tự có thời cuộc ở năm kế tiếp. Điều kiện mới cho sự kiện/hoạt động: `worldPhase`, `worldVars` (vd. nạn đói khi `harvest ≤ 28`). Validator kiểm pha, biến, giá và sự kiện nhắc tới chúng.
