@@ -451,6 +451,8 @@ export const EventSchema = z
     npcTrigger: z.enum(['reunion', 'revenge', 'repay', 'reveal', 'bond', 'visit']).optional(),
     /** Task 4.10: fires as soon as it is eligible, ahead of the yearly roll (due follow-ups still come first). */
     urgent: z.boolean().default(false),
+    /** 9.10: a mortal meets the tầng above on purpose (tu sĩ nói chuyện linh thạch…): no tier-term warnings. */
+    crossTier: z.boolean().optional(),
     choices: z.array(ChoiceSchema).min(1),
   })
   .strict();
@@ -2785,6 +2787,23 @@ export const StatLabelsFileSchema = z.object({
   innerForce: z.object({ label: z.string().min(1), term: z.string().optional() }).strict(),
 }).strict();
 export type StatLabelsFile = z.infer<typeof StatLabelsFileSchema>;
+
+/**
+ * 9.10 Thuật ngữ theo tầng: content/worlds/<id>/tier-terms.json. Words of a higher tầng that events of a
+ * tầng should not use (validator warnings only), and self-address words only some may use (trẫm).
+ */
+const TermWordSchema = z.object({ word: z.string().min(1), use: z.string().min(1) }).strict();
+export const TierTermsFileSchema = z.object({
+  tiers: z.array(z.object({
+    tier: id,
+    /** Event categories that belong to this tầng even without a tier condition. */
+    categories: z.array(z.string()).default([]),
+    words: z.array(TermWordSchema).min(1),
+  }).strict()),
+  /** Words the player may not say of themself unless the event requires one of `allowFlags`. */
+  selfWords: z.array(TermWordSchema.extend({ allowFlags: ids })).default([]),
+}).strict();
+export type TierTermsFile = z.infer<typeof TierTermsFileSchema>;
 
 /**
  * 9.6 relations.json: kinds of relation (bằng hữu, kẻ thù, chủ nợ…) shown under groups in the Nhân duyên tab,

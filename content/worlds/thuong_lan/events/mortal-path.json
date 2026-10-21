@@ -801,6 +801,7 @@
   },
   {
     "id": "dem_huyet_te",
+    "crossTier": true,
     "category": "mortal",
     "title": "Đêm huyết tế",
     "text": "Đêm trăng tròn, chín người bị dẫn ra một trận đồ vẽ bằng máu. Tiên sứ cởi áo choàng: hắn là tu sĩ U Hà Ma Tông. \"Linh căn không có, nhưng máu thịt thì có. Các ngươi góp chút máu, giúp bổn tọa Trúc Cơ, cũng coi như thành tiên.\"",
@@ -997,6 +998,7 @@
   },
   {
     "id": "linh_qua_nghin_nam",
+    "crossTier": true,
     "category": "mortal",
     "title": "Linh quả nghìn năm",
     "text": "Giữa rừng thiêng, một cây nhỏ mang đúng một quả đỏ như máu, tỏa hương khiến muông thú quanh đó nằm rạp.",
@@ -1059,7 +1061,7 @@
       {
         "text": "Bán cho tu sĩ",
         "result": {
-          "text": "Một tu sĩ Trúc Cơ trả cái giá đủ cho ba đời ăn tiêu.",
+          "text": "Một vị tiên nhân trả cái giá đủ cho ba đời ăn tiêu.",
           "effects": {
             "silver": 5000,
             "stat.happiness": 5,

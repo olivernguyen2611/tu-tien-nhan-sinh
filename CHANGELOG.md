@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### 9.10: Bảng tra văn hóa, cảnh báo thuật ngữ theo tầng (2026-10-21)
+- `docs/design/van-hoa.md`: một hệ khoa cử (Đồng sinh → Tú tài → Cử nhân → Cống sĩ → Tiến sĩ; Trạng nguyên, Bảng nhãn, Thám hoa), bảng xưng hô theo vai vế (tại hạ/các hạ, vãn bối/tiền bối, trẫm, bần đạo/bần tăng, lệnh lang/lệnh ái…), bảng thuật ngữ theo tầng (nội lực / chân khí / chân nguyên; bí kíp / công pháp; thần binh / pháp bảo; thuốc / đan dược…), điểm nhạy cảm.
+- Quy ước thầy trò: võ phàm gọi "sư phụ", tu tiên gọi "sư tôn"; đã sửa 29 chỗ trong sự kiện tu tiên.
+- `content/worlds/<id>/tier-terms.json` + validator **cảnh báo** khi sự kiện phàm gian dùng từ tầng trên, hoặc lựa chọn của người chơi tự xưng "trẫm" mà không phải vua. Sự kiện cố ý cho phàm nhân gặp tầng trên đặt `"crossTier": true`.
+- Lần chạy đầu: 6 cảnh báo; sửa 2 chỗ sai rõ, 4 sự kiện tu sĩ gặp phàm nhân đánh dấu `crossTier`.
+
 ### 9.9: Đổi nhãn chỉ số theo tầng, danh vọng phe (2026-10-21)
 - Không thêm chỉ số 0–100 nào. `content/stat-labels.json` đặt tên cho cùng một con số theo đời người: đạo tâm hiện là **Tâm tính** (phàm nhân), **Ý chí** (võ giả), **Đạo tâm** (tu sĩ), cả ở hồ sơ, dòng thay đổi chỉ số lẫn gợi ý "Thử …" trong sự kiện.
 - **Danh vọng theo phe** chỉ hiện phe đang dính vào: Hương danh / Tiếng xấu (làng xã, phe mới `lang_xa`), Quan uy (quan trường), Hiệp danh / Ác danh (giang hồ), các phe tu chân khi đã khác 0. Save cũ được thêm `lang_xa` (saveVersion 6).

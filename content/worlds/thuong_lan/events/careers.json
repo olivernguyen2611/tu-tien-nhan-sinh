@@ -298,6 +298,7 @@
   },
   {
     "id": "khach_deo_kiem",
+    "crossTier": true,
     "category": "mortal",
     "title": "Khách hàng đeo kiếm bay",
     "text": "Một tu sĩ hạ kiếm trước tiệm, muốn mua ba trăm thạch gạo. \"Bạc thì ta không có. Linh thạch, lấy không?\"",
@@ -741,6 +742,7 @@
   },
   {
     "id": "khach_nua_dem",
+    "crossTier": true,
     "category": "mortal",
     "title": "Khách nửa đêm",
     "text": "Nửa đêm có người đập cửa. Một tu sĩ máu me đầy người: \"Chữa cho ta. Đừng hỏi.\"",

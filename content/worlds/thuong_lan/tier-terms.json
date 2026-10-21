@@ -1,0 +1,32 @@
+{
+  "tiers": [
+    {
+      "tier": "pham_gian",
+      "categories": ["childhood", "study", "work", "mortal"],
+      "words": [
+        { "word": "linh lực", "use": "sức lực, nội lực" },
+        { "word": "pháp lực", "use": "sức lực, nội lực" },
+        { "word": "chân khí", "use": "nội lực" },
+        { "word": "chân nguyên", "use": "nội lực" },
+        { "word": "linh khí", "use": "khí trời, địa khí (phàm nhân chưa cảm được linh khí)" },
+        { "word": "đan dược", "use": "thuốc, cao đơn hoàn tán" },
+        { "word": "linh dược", "use": "thuốc quý, sâm núi" },
+        { "word": "linh đan", "use": "thuốc quý" },
+        { "word": "công pháp", "use": "bí kíp, võ công" },
+        { "word": "pháp bảo", "use": "thần binh, bảo vật" },
+        { "word": "phi kiếm", "use": "bảo kiếm" },
+        { "word": "linh thạch", "use": "bạc, vàng" },
+        { "word": "thần thức", "use": "tai mắt, linh tính" },
+        { "word": "đạo hữu", "use": "huynh đài, các hạ" },
+        { "word": "sư tôn", "use": "sư phụ" },
+        { "word": "Luyện Khí", "use": "tên cảnh giới tu tiên, phàm nhân chỉ nghe đồn: \"tiên nhân\"" },
+        { "word": "Trúc Cơ", "use": "tên cảnh giới tu tiên, phàm nhân chỉ nghe đồn: \"tiên nhân\"" },
+        { "word": "Kim Đan", "use": "tên cảnh giới tu tiên, phàm nhân chỉ nghe đồn: \"tiên nhân\"" },
+        { "word": "Nguyên Anh", "use": "tên cảnh giới tu tiên, phàm nhân chỉ nghe đồn: \"lão tổ\"" }
+      ]
+    }
+  ],
+  "selfWords": [
+    { "word": "trẫm", "use": "chỉ vua tự xưng; người thường xưng ta, tại hạ, tiểu nhân", "allowFlags": ["de_vuong"] }
+  ]
+}

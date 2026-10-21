@@ -107,14 +107,14 @@
         }
       },
       {
-        "text": "Tìm sư phụ chỉ điểm",
+        "text": "Tìm sư tôn chỉ điểm",
         "requires": {
           "flagsAll": [
             "co_su_phu"
           ]
         },
         "result": {
-          "text": "Sư phụ gõ đầu ngươi một cái: \"Nóng vội.\"",
+          "text": "Sư tôn gõ đầu ngươi một cái: \"Nóng vội.\"",
           "effects": {
             "nextBreakthroughBonus": 10,
             "stat.comprehension": 2

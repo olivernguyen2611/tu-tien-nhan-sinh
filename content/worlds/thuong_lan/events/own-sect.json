@@ -345,7 +345,7 @@
     "id": "bt_dan_phong_no",
     "category": "own_sect",
     "title": "Luyện Đan Phòng nổ tung",
-    "text": "\"Ầm!\" Mái Luyện Đan Phòng của {sect} bay lên trời rồi rơi xuống ao cá. Từ trong khói đen, một đệ tử bò ra, tóc dựng đứng: \"Sư phụ, con nghĩ con suýt luyện ra một loại đan mới.\"",
+    "text": "\"Ầm!\" Mái Luyện Đan Phòng của {sect} bay lên trời rồi rơi xuống ao cá. Từ trong khói đen, một đệ tử bò ra, tóc dựng đứng: \"Sư tôn, con nghĩ con suýt luyện ra một loại đan mới.\"",
     "themes": ["funny"],
     "tags": ["funny"],
     "conditions": { "ownSect": { "has": true, "building": { "id": "luyen_dan_phong", "min": 1 } } },

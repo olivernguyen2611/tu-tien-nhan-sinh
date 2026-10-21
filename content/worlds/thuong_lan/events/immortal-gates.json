@@ -43,7 +43,7 @@
     "tags": ["rare"],
     "weight": 0,
     "choices": [
-      { "text": "Chắp tay, đưa cổ tay ra", "result": { "text": "Một luồng khí lạnh chạy khắp kinh mạch, đi qua những chỗ chân khí võ đạo chưa từng tới.", "effects": { "testRoot": true, "stat.daoHeart": 2 } } },
+      { "text": "Chắp tay, đưa cổ tay ra", "result": { "text": "Một luồng khí lạnh chạy khắp kinh mạch, đi qua những chỗ nội lực võ đạo chưa từng tới.", "effects": { "testRoot": true, "stat.daoHeart": 2 } } },
       { "text": "Rút đao: muốn xem thì đánh trước", "result": { "text": "Ngươi chưa kịp thấy người ta rút kiếm thì đao đã gãy. Kiếm khách nắm cổ tay ngươi, xem xong mới buông.", "effects": { "testRoot": true, "stat.health": -3, "stat.physique": 1 } } }
     ]
   }

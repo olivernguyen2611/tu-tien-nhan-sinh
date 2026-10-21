@@ -99,7 +99,7 @@
     "id": "tm_cu_de_tu_cu",
     "category": "fortune",
     "title": "Đồ đệ năm xưa",
-    "text": "Một trưởng lão {pastSect} nhìn {name} luyện kiếm, bỗng sững người: đường kiếm ấy là do sư phụ {pastFounder} dạy riêng cho ông năm nào.",
+    "text": "Một trưởng lão {pastSect} nhìn {name} luyện kiếm, bỗng sững người: đường kiếm ấy là do sư tôn {pastFounder} dạy riêng cho ông năm nào.",
     "conditions": { "age": { "min": 14 }, "realm": { "min": "luyen_khi" }, "pastSect": { "status": ["met"] } },
     "weight": 0.5,
     "oncePerLife": true,

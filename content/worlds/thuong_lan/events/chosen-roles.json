@@ -3,13 +3,13 @@
     "id": "kvct_xk_nga_re",
     "category": "chosen",
     "title": "Ngã rẽ sư đồ",
-    "text": "{npc} đã lớn. Những thứ nó \"phát minh\" giờ cả phường thị bắt chước, những câu nó nói giờ có người chép thành sách. Đêm qua nó hỏi ngươi: \"Sư phụ, rốt cuộc người muốn con thành ai?\" Ngươi biết câu trả lời sẽ quyết định cả hai đời người.",
+    "text": "{npc} đã lớn. Những thứ nó \"phát minh\" giờ cả phường thị bắt chước, những câu nó nói giờ có người chép thành sách. Đêm qua nó hỏi ngươi: \"Sư tôn, rốt cuộc người muốn con thành ai?\" Ngươi biết câu trả lời sẽ quyết định cả hai đời người.",
     "themes": ["fortune"],
     "conditions": { "chosen": { "template": ["xuyen_khong"], "role": ["none"] } },
     "weight": 0,
     "choices": [
       {
-        "text": "Hộ đạo: \"Con cứ đi, sư phụ đi phía trước.\"",
+        "text": "Hộ đạo: \"Con cứ đi, sư tôn đi phía trước.\"",
         "result": {
           "text": "{npc} cười, nụ cười của người lần đầu thấy thế giới này là thật.",
           "effects": { "chosenRole": "protect", "stat.happiness": 4, "npc": { "affinity": 15, "favor": 10 }, "followUp": { "event": "kvct_bao_dap", "afterYears": [6, 10] } }
@@ -18,7 +18,7 @@
       {
         "text": "Lợi dụng: chiếm hết phát minh của nó về tay mình",
         "result": {
-          "text": "Ngươi lấy sổ ghi chép của nó, đóng ấn của mình lên mọi thứ nó làm ra. Linh thạch đổ về như nước. {npc} nhìn ngươi, rồi bật cười: \"Hóa ra sư phụ là phản diện.\"",
+          "text": "Ngươi lấy sổ ghi chép của nó, đóng ấn của mình lên mọi thứ nó làm ra. Linh thạch đổ về như nước. {npc} nhìn ngươi, rồi bật cười: \"Hóa ra sư tôn là phản diện.\"",
           "effects": { "chosenRole": "exploit", "spiritStones": 200, "cultProgress": 20, "karma": -15, "heartDemon": 8, "stat.daoHeart": -3, "npc": { "affinity": -40, "grudge": 40 }, "followUp": { "event": "kvct_phan_phe", "afterYears": [5, 9] } }
         }
       },
@@ -43,7 +43,7 @@
       {
         "text": "Hộ đạo: dặn nó giữ nhẫn cho kỹ",
         "result": {
-          "text": "Ngươi chỉ vào chiếc nhẫn: \"Giữ lấy. Ai muốn lấy, bước qua xác sư phụ trước.\" Đồ đệ cúi đầu rất lâu.",
+          "text": "Ngươi chỉ vào chiếc nhẫn: \"Giữ lấy. Ai muốn lấy, bước qua xác sư tôn trước.\" Đồ đệ cúi đầu rất lâu.",
           "effects": { "chosenRole": "protect", "stat.daoHeart": 2, "npc": { "affinity": 15, "favor": 15 }, "followUp": { "event": "kvct_bao_dap", "afterYears": [6, 10] } }
         }
       },
@@ -67,7 +67,7 @@
     "id": "kvct_ts_nga_re",
     "category": "chosen",
     "title": "Kiếp này chọn khác",
-    "text": "{npc} nói: \"Kiếp trước, sư phụ có ba cách đối với con. Con biết kết cục của cả ba. Lần này con để sư phụ chọn.\" Nó không nói kết cục nào tốt hơn.",
+    "text": "{npc} nói: \"Kiếp trước, sư tôn có ba cách đối với con. Con biết kết cục của cả ba. Lần này con để sư tôn chọn.\" Nó không nói kết cục nào tốt hơn.",
     "themes": ["fortune"],
     "conditions": { "chosen": { "template": ["trong_sinh"], "role": ["none"] } },
     "weight": 0,
@@ -99,7 +99,7 @@
     "id": "kvct_bao_dap",
     "category": "chosen",
     "title": "Đồ đệ thành danh",
-    "text": "Tên {npc} giờ đứng trên Thiên Kiêu Bảng. Hôm nay nó về núi, trước mặt bao người quỳ xuống trước {name}: \"Không có sư phụ, không có con hôm nay.\" Phía sau nó là mấy rương lễ vật.",
+    "text": "Tên {npc} giờ đứng trên Thiên Kiêu Bảng. Hôm nay nó về núi, trước mặt bao người quỳ xuống trước {name}: \"Không có sư tôn, không có con hôm nay.\" Phía sau nó là mấy rương lễ vật.",
     "themes": ["fortune"],
     "tags": ["rare"],
     "conditions": { "chosen": { "role": ["protect"] } },
@@ -133,7 +133,7 @@
     "id": "kvct_phan_phe",
     "category": "chosen",
     "title": "Phản phệ",
-    "text": "Ngày {name} xuất quan, trời đổ mưa máu. {npc} đứng giữa sân, khí tức đã khác hẳn năm xưa: \"Sư phụ, năm đó người lấy của con một thứ. Hôm nay con tới lấy lại, cả vốn lẫn lời.\"",
+    "text": "Ngày {name} xuất quan, trời đổ mưa máu. {npc} đứng giữa sân, khí tức đã khác hẳn năm xưa: \"Sư tôn, năm đó người lấy của con một thứ. Hôm nay con tới lấy lại, cả vốn lẫn lời.\"",
     "themes": ["justice"],
     "tags": ["violence", "dark"],
     "conditions": { "chosen": { "role": ["exploit"] } },
@@ -151,7 +151,7 @@
               "effects": { "karma": -10, "heartDemon": 10, "stat.happiness": -8, "npc": { "kill": true } }
             },
             "lose": {
-              "text": "Nó không giết ngươi. Nó chỉ lấy lại thứ của nó và một nửa tu vi của ngươi. \"Sống đi, sư phụ. Sống để nhìn con.\"",
+              "text": "Nó không giết ngươi. Nó chỉ lấy lại thứ của nó và một nửa tu vi của ngươi. \"Sống đi, sư tôn. Sống để nhìn con.\"",
               "effects": { "cultProgress": -50, "stat.health": -30, "stat.happiness": -10, "lifespanYears": -20 }
             }
           }
@@ -172,7 +172,7 @@
       {
         "text": "Bỏ chạy",
         "result": {
-          "text": "Ngươi chạy. Giang hồ biết chuyện, kể lại thành truyện: sư phụ phản diện bị nhân vật chính vả mặt.",
+          "text": "Ngươi chạy. Giang hồ biết chuyện, kể lại thành truyện: sư tôn phản diện bị nhân vật chính vả mặt.",
           "effects": { "reputation": { "chinh": -10, "giang_ho": -10 }, "stat.happiness": -10, "stat.charm": -2 }
         }
       }
@@ -182,7 +182,7 @@
     "id": "kvct_tro_ve",
     "category": "chosen",
     "title": "Thiên kiêu trở về",
-    "text": "Người đứng đầu Thiên Kiêu Bảng năm nay tên là {npc}. Một chiều, người ấy ghé ngang động phủ cũ, đứng ngoài cổng hỏi vọng vào: \"Sư phụ còn nhớ con không?\"",
+    "text": "Người đứng đầu Thiên Kiêu Bảng năm nay tên là {npc}. Một chiều, người ấy ghé ngang động phủ cũ, đứng ngoài cổng hỏi vọng vào: \"Sư tôn còn nhớ con không?\"",
     "themes": ["fortune"],
     "tags": ["rare"],
     "conditions": { "chosen": { "role": ["ignore"] } },
@@ -214,7 +214,7 @@
               "effects": { "stat.happiness": 8, "reputation": { "giang_ho": 5 }, "npc": { "affinity": 5 } }
             },
             "lose": {
-              "text": "Ngươi thua, thua đẹp. Nó đỡ ngươi dậy: \"Con đi xa được là nhờ năm đó sư phụ không giữ con lại.\"",
+              "text": "Ngươi thua, thua đẹp. Nó đỡ ngươi dậy: \"Con đi xa được là nhờ năm đó sư tôn không giữ con lại.\"",
               "effects": { "stat.daoHeart": 3, "stat.happiness": 2, "npc": { "affinity": 5 } }
             }
           }
