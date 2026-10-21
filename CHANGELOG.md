@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### Chơi thử Mốc A (2026-10-21)
+- Bot giao diện chơi tới 48 tuổi ở 390px và 1280px: dock Hành sự, quỹ tháng ("còn 11/12 tháng"), niên hiệu trên từng năm nhật ký, dòng Thời cuộc, hồ sơ có Tâm tính / Danh vọng / Nhân quả qua lời đồn đều chạy; không lỗi script.
+- Sửa: nút Ngao du có ghi chú dài tràn ngang màn hình điện thoại (giờ xuống dòng); phàm nhân nhận dòng thời cuộc dùng từ tu chân ("tán tu", "linh dược"), nay có `mortalText` riêng; Quan uy âm hiện là "Mất lòng quan phủ".
+- Đỡ lặp: Làm thuê, Dự tiệc kết giao, Áp tiêu, Ngao du, Luyện quyền buổi sớm ghép câu từ hai vế (16–36 tổ hợp mỗi việc); dòng "Một năm luyện võ" có 6 câu luân phiên; câu "gác việc tu hành" chỉ hiện cho tu sĩ. Đo lại 40 đời mỗi persona: câu lặp giảm 38→28% (nông dân), 36→20% (thương nhân), 51→37% (kẻ cướp), 62→52% (hiệp khách).
+- Sửa vòng lặp: kỳ ngộ "Lão thầy bói và trang sách cũ" quay lại mãi nếu cứ chọn "Để lại"; nay lần thứ hai có lựa chọn bỏ hẳn.
+
 ### 9.8: Công cụ: simulate persona phàm nhân, dev mode thời cuộc (2026-10-21)
 - `npm run simulate -- --profile mortal`: sáu persona phàm nhân (nông dân an phận, thư sinh thi cử, thương nhân, kẻ cướp, hiệp khách, kẻ lười). Persona ở lại phàm gian (từ chối lựa chọn dẫn vào tông môn hay công pháp khi còn đường khác), theo nghề và hoạt động riêng, chọn lựa chọn đầu, ngẫu nhiên, thiện nhất hoặc ác nhất. In thêm một bảng so sánh.
 - Số đo mới cho mọi hồ sơ: số hoạt động khác nhau và sự kiện khác nhau mỗi đời, tỉ lệ năm có chuyện đáng kể (có sự kiện, hoặc hoạt động đổi chỉ số từ 2 điểm), bạc cuối đời (trung vị), nguyên nhân chết theo tầng.

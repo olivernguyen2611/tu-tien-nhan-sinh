@@ -26,7 +26,7 @@
             { "text": "Ngươi về đúng mùa gặt. Tu sĩ mà cũng xắn quần lội ruộng, cả làng kéo ra xem.", "when": { "tier": ["tu_chan"] } },
             { "text": "Người trong làng gọi ngươi là tiên trưởng. Ngươi ngồi ăn bánh đa với họ, chẳng tiên chút nào.", "when": { "tier": ["tu_chan"] } }
           ],
-          "linesShare": 0.3,
+          "linesShare": 0.2,
           "parts": [
             ["Ngươi về quê hai tháng,", "Ngươi mang ít quà về nhà,", "Ngươi về đúng dịp giỗ tổ,", "Ngươi về sửa lại mái nhà dột,"],
             ["ngày ngủ tới trưa, tối ngồi nghe chuyện làng.", "mẹ cằn nhằn mua chi cho tốn mà vẫn cất kỹ.", "ăn cỗ, nghe các cụ kể chuyện ngày xưa.", "trèo lên mái mới thấy mình đã cao hơn cái ngõ."]
@@ -52,22 +52,36 @@
     "check": { "stat": "stat.charm", "difficulty": 50 },
     "outcomes": [
       {
-        "text": [
-          "Ngươi kể một chuyện cười, cả bàn cười nghiêng ngả. Tan tiệc có ba người hẹn gặp lại.",
-          "Ngươi rót rượu đúng lúc, nói đúng câu. Chủ tiệc tiễn ngươi tận cổng.",
-          "Một vị khách lạ ngồi cạnh nói chuyện với ngươi tới canh ba. Lúc chia tay hai bên đã xưng huynh gọi đệ."
-        ],
+        "text": {
+          "lines": [
+            { "text": "Ngươi kể một chuyện cười, cả bàn cười nghiêng ngả. Tan tiệc có ba người hẹn gặp lại." },
+            { "text": "Ngươi rót rượu đúng lúc, nói đúng câu. Chủ tiệc tiễn ngươi tận cổng." },
+            { "text": "Một vị khách lạ ngồi cạnh nói chuyện với ngươi tới canh ba. Lúc chia tay hai bên đã xưng huynh gọi đệ." }
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            ["Ngươi dự tiệc mừng thọ nhà hàng xóm,", "Ngươi được mời tới tiệc cưới ở đầu làng,", "Ngươi ngồi chung mâm với mấy người buôn,", "Ngươi tới hội đồng hương ở trấn,", "Ngươi dự tiệc tân gia của một người quen,"],
+            ["kể một chuyện cười, cả bàn cười nghiêng ngả.", "rót rượu đúng lúc, nói đúng câu.", "ngồi nghe nhiều hơn nói, ai cũng bảo ngươi dễ mến.", "tan tiệc có thêm hai người hẹn gặp lại.", "được chủ nhà tiễn tận cổng."]
+          ]
+        },
         "effects": { "stat.charm": 1 },
         "roll": { "stat.happiness": [3, 5] }
       }
     ],
     "failOutcomes": [
       {
-        "text": [
-          "Ngươi ngồi góc bàn cả buổi, gắp hết đĩa lạc mà chẳng ai hỏi tên.",
-          "Lỡ lời chê món canh, hóa ra chủ nhà tự nấu. Không khí lạnh hơn cả canh.",
-          "Uống quá chén, sáng ra chỉ nhớ mình đã hát. Mọi người thì nhớ rõ hơn."
-        ],
+        "text": {
+          "lines": [
+            { "text": "Ngươi ngồi góc bàn cả buổi, gắp hết đĩa lạc mà chẳng ai hỏi tên." },
+            { "text": "Lỡ lời chê món canh, hóa ra chủ nhà tự nấu. Không khí lạnh hơn cả canh." },
+            { "text": "Uống quá chén, sáng ra chỉ nhớ mình đã hát. Mọi người thì nhớ rõ hơn." }
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            ["Ngươi tới tiệc muộn,", "Ngươi ngồi nhầm mâm nhà gái,", "Ngươi uống quá chén,", "Ngươi lỡ lời chê món canh,"],
+            ["cả buổi chẳng ai hỏi tên.", "về nhà mới biết mình đã hát.", "chủ nhà cười mà mắt không cười.", "hôm sau cả xóm đem chuyện ra kể."]
+          ]
+        },
         "effects": { "stat.happiness": -2, "stat.charm": -1 }
       }
     ]
@@ -84,21 +98,35 @@
     "check": { "stat": "stat.physique", "difficulty": 45 },
     "outcomes": [
       {
-        "text": [
-          "Chuyến tiêu êm như ru. Ngươi chỉ phải đuổi hai con chó hoang và một gã say.",
-          "Giữa đường gặp toán cướp, ngươi rút đao đứng trước xe. Bọn chúng nhìn nhau rồi rút lui. Tiền công gấp đôi.",
-          "Mưa dầm cả tháng, xe sa lầy ba lần. Hàng tới nơi nguyên vẹn, ngươi thì không còn sợi chỉ khô."
-        ],
+        "text": {
+          "lines": [
+            { "text": "Chuyến tiêu êm như ru. Ngươi chỉ phải đuổi hai con chó hoang và một gã say." },
+            { "text": "Giữa đường gặp toán cướp, ngươi rút đao đứng trước xe. Bọn chúng nhìn nhau rồi rút lui. Tiền công gấp đôi." },
+            { "text": "Mưa dầm cả tháng, xe sa lầy ba lần. Hàng tới nơi nguyên vẹn, ngươi thì không còn sợi chỉ khô." }
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            ["Chuyến tiêu lên phủ", "Chuyến tiêu qua đèo", "Chuyến tiêu chở lụa xuống phương nam", "Chuyến tiêu áp tải bạc cho nhà buôn", "Chuyến tiêu đi đường sông"],
+            ["êm như ru, chỉ phải đuổi mấy con chó hoang.", "gặp toán cướp, ngươi rút đao đứng trước xe, chúng nhìn nhau rồi rút lui.", "gặp mưa dầm cả tháng, hàng tới nơi vẫn nguyên vẹn.", "đêm nào cũng thức canh, tới nơi mắt trũng sâu.", "xong xuôi, chủ hàng hẹn chuyến sau lại thuê ngươi."]
+          ]
+        },
         "effects": { "stat.health": -1 },
         "roll": { "silver": [20, 40], "stat.happiness": [1, 3] }
       }
     ],
     "failOutcomes": [
       {
-        "text": [
-          "Bọn cướp đông hơn ngươi tưởng. Giữ được nửa xe hàng, mất nửa tiền công, thêm một vết chém.",
-          "Trúng mai phục ở hẻm núi. Ngươi lết được về tiêu cục, chủ tiêu chỉ trả tiền thuốc."
-        ],
+        "text": {
+          "lines": [
+            { "text": "Bọn cướp đông hơn ngươi tưởng. Giữ được nửa xe hàng, mất nửa tiền công, thêm một vết chém." },
+            { "text": "Trúng mai phục ở hẻm núi. Ngươi lết được về tiêu cục, chủ tiêu chỉ trả tiền thuốc." }
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            ["Chuyến tiêu qua hẻm núi", "Chuyến tiêu ven rừng", "Chuyến tiêu đi đêm", "Chuyến tiêu đường sông"],
+            ["trúng mai phục, ngươi lết được về với một vết chém.", "gặp bọn cướp đông hơn ngươi tưởng, mất nửa xe hàng.", "bị cướp sạch, chủ tiêu chỉ trả tiền thuốc.", "gặp lũ quét, người còn mà hàng thì trôi."]
+          ]
+        },
         "effects": { "stat.happiness": -3 },
         "roll": { "stat.health": [-6, -3], "silver": [3, 8] }
       }
@@ -114,11 +142,18 @@
     "months": 3,
     "outcomes": [
       {
-        "text": [
-          "Ngươi gặt thuê cho nhà địa chủ. Lưng mỏi, tay chai, túi có thêm mấy lượng.",
-          "Khuân vác ở bến sông ba tháng. Cuối vụ chủ thuyền thưởng thêm một bữa thịt.",
-          "Gánh hàng cho phường buôn muối. Muối mặn, tiền công nhạt, nhưng vẫn là tiền."
-        ],
+        "text": {
+          "lines": [
+            { "text": "Ngươi gặt thuê cho nhà địa chủ. Lưng mỏi, tay chai, túi có thêm mấy lượng." },
+            { "text": "Khuân vác ở bến sông ba tháng. Cuối vụ chủ thuyền thưởng thêm một bữa thịt." },
+            { "text": "Gánh hàng cho phường buôn muối. Muối mặn, tiền công nhạt, nhưng vẫn là tiền." }
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            ["Ngươi gặt thuê cho nhà địa chủ,", "Ngươi khuân vác ở bến sông,", "Ngươi gánh hàng cho phường buôn muối,", "Ngươi phụ hồ dựng nhà cho phú hộ,", "Ngươi chăn trâu thuê cho ông lý,", "Ngươi đẩy xe gạo lên huyện,"],
+            ["lưng mỏi, tay chai, túi có thêm mấy lượng.", "cuối vụ chủ thưởng thêm một bữa thịt.", "tiền công nhạt, nhưng vẫn là tiền.", "trưa nào cũng chỉ cơm nắm muối vừng.", "tối về ngủ một mạch tới sáng.", "bị trừ một bữa công vì làm vỡ cái chum."]
+          ]
+        },
         "effects": { "stat.health": -2, "stat.physique": 1 },
         "roll": { "silver": [6, 12] }
       }

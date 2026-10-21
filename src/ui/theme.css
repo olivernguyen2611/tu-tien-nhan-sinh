@@ -359,6 +359,7 @@ button { font: inherit; color: inherit; }
 .stat-row .label b { color: var(--ink); font-weight: 600; }
 .stat-row.wide { grid-column: 1 / -1; }
 .leisure-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.leisure-row .chip-btn { white-space: normal; max-width: 100%; text-align: left; padding: 6px 12px; }
 .leisure-hint { margin: 0; flex: 1 1 100%; font-size: 0.75rem; color: var(--bad); }
 
 /* Event popup */

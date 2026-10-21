@@ -11,17 +11,29 @@
     "outcomes": [
       {
         "weight": 4,
-        "text": [
-          "Một mùa dậy sớm, mồ hôi thấm áo. Bước chân ngươi vững hơn hẳn.",
-          "Ngươi đánh quyền tới khi sương tan. Hàng xóm đi chợ về vẫn thấy ngươi đứng tấn.",
-          "Sáng nào cũng một trăm cú đấm vào bao cát. Bao rách trước khi tay ngươi rách.",
-          "Có đứa trẻ trong xóm ra đứng xem rồi bắt chước. Ngươi dạy nó một thế, tự thấy mình cũng hiểu thêm."
-        ],
+        "text": {
+          "lines": [
+            { "text": "Một mùa dậy sớm, mồ hôi thấm áo. Bước chân ngươi vững hơn hẳn." },
+            { "text": "Ngươi đánh quyền tới khi sương tan. Hàng xóm đi chợ về vẫn thấy ngươi đứng tấn." },
+            { "text": "Sáng nào cũng một trăm cú đấm vào bao cát. Bao rách trước khi tay ngươi rách." },
+            { "text": "Có đứa trẻ trong xóm ra đứng xem rồi bắt chước. Ngươi dạy nó một thế, tự thấy mình cũng hiểu thêm." }
+          ],
+          "linesShare": 0.3,
+          "parts": [
+            ["Trời chưa sáng ngươi đã ra bãi sau nhà,", "Mùa này ngươi luyện quyền bên bờ ao,", "Ngươi dậy trước gà gáy,", "Mưa phùn cũng không bỏ buổi nào,", "Ngươi luyện quyền dưới gốc đa đầu làng,"],
+            ["đánh quyền tới khi sương tan.", "đứng tấn tới mỏi rời hai chân.", "đấm bao cát tới khi bao rách.", "luyện đi luyện lại một thế tới thuộc.", "về tới nhà vẫn còn thở dốc."]
+          ]
+        },
         "effects": { "stat.physique": 1, "stat.health": 4 }
       },
       {
         "weight": 1,
-        "text": ["Trượt chân trên sương sớm, trẹo cổ chân. Nằm mấy hôm mới đi lại được."],
+        "text": [
+          "Trượt chân trên sương sớm, trẹo cổ chân. Nằm mấy hôm mới đi lại được.",
+          "Đấm hụt bao cát, trúng cột nhà. Tay sưng cả tuần.",
+          "Luyện quá sức giữa trời lạnh, về nhà sốt hai ngày.",
+          "Đứng tấn trên bờ ao, bờ lở. Ngươi ướt như chuột, cả xóm được một trận cười."
+        ],
         "effects": { "stat.health": -3, "stat.happiness": -2 }
       }
     ]

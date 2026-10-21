@@ -13,13 +13,20 @@
     ],
     "outcomes": [
       {
-        "text": [
-          "Ngươi gác việc tu hành, xuống núi dạo một vòng. Uống trà ở quán ven sông, nghe kể chuyện tới khi trời tối.",
-          "Ngươi lên thuyền đi ngược dòng mấy trăm dặm, ngắm hai bờ núi xanh. Về tới nơi mới nhớ ra chưa hỏi giá vé.",
-          "Ngươi ghé một trấn nhỏ đúng hội hoa đăng. Thả một chiếc đèn xuống sông, chẳng cầu gì, chỉ thấy lòng nhẹ đi.",
-          "Ngươi về thăm quê, ăn một bát mì đầu chợ. Mì vẫn dở, nhưng ngươi ăn hết.",
-          "Ngươi trèo lên đỉnh núi xem mặt trời mọc. Gió lạnh, mây trôi, mấy chuyện vướng bận bỗng nhỏ lại."
-        ],
+        "text": {
+          "lines": [
+            { "text": "Ngươi gác việc tu hành, xuống núi dạo một vòng. Uống trà ở quán ven sông, nghe kể chuyện tới khi trời tối.", "when": { "tier": ["tu_chan"] } },
+            { "text": "Ngươi lên thuyền đi ngược dòng mấy trăm dặm, ngắm hai bờ núi xanh. Về tới nơi mới nhớ ra chưa hỏi giá vé." },
+            { "text": "Ngươi ghé một trấn nhỏ đúng hội hoa đăng. Thả một chiếc đèn xuống sông, chẳng cầu gì, chỉ thấy lòng nhẹ đi." },
+            { "text": "Ngươi về thăm quê, ăn một bát mì đầu chợ. Mì vẫn dở, nhưng ngươi ăn hết." },
+            { "text": "Ngươi trèo lên đỉnh núi xem mặt trời mọc. Gió lạnh, mây trôi, mấy chuyện vướng bận bỗng nhỏ lại." }
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            ["Ngươi đi ngao du một chuyến,", "Ngươi theo đoàn hành hương lên chùa núi,", "Ngươi ghé chợ phiên ở trấn bên,", "Ngươi đi câu cá ở đầm sen,", "Ngươi lang thang một mình qua mấy làng,"],
+            ["nghe kể chuyện ở quán trà tới khi trời tối.", "thấy lòng nhẹ đi mấy phần.", "về mang theo một túi bánh và mấy câu chuyện.", "gặp một ông lão đánh cờ, thua ba ván mà vẫn vui.", "ngắm hai bờ núi xanh, chẳng nghĩ ngợi gì."]
+          ]
+        },
         "roll": { "stat.happiness": [8, 14] },
         "bonus": [{ "when": { "stats": [{ "stat": "stat.happiness", "lte": 20 }] }, "effects": { "stat.daoHeart": 1 } }]
       }
@@ -27,10 +34,17 @@
     "free": {
       "outcomes": [
         {
-          "text": [
-            "Trong túi chẳng còn gì, ngươi đi bộ ra bờ suối ngồi cả buổi. Không tốn đồng nào, mà cũng đỡ hơn.",
-            "Ngươi nằm dưới gốc cây đếm mây. Đếm tới đám thứ bảy mươi thì ngủ quên."
-          ],
+          "text": {
+            "lines": [
+              { "text": "Trong túi chẳng còn gì, ngươi đi bộ ra bờ suối ngồi cả buổi. Không tốn đồng nào, mà cũng đỡ hơn." },
+              { "text": "Ngươi nằm dưới gốc cây đếm mây. Đếm tới đám thứ bảy mươi thì ngủ quên." }
+            ],
+            "linesShare": 0.2,
+            "parts": [
+              ["Trong túi chẳng còn gì,", "Không có tiền đi xa,", "Rảnh mà nghèo,", "Chẳng có đồng nào,"],
+              ["ngươi đi bộ ra bờ suối ngồi cả buổi.", "ngươi nằm dưới gốc cây đếm mây, đếm mãi rồi ngủ quên.", "ngươi ra đầu làng xem người ta đánh cờ.", "ngươi trèo lên đồi sau nhà ngắm hoàng hôn."]
+            ]
+          },
           "roll": { "stat.happiness": [3, 5] },
           "bonus": [{ "when": { "stats": [{ "stat": "stat.happiness", "lte": 20 }] }, "effects": { "stat.daoHeart": 1 } }]
         }

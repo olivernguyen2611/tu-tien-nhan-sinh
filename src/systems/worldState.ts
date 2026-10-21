@@ -105,8 +105,9 @@ export function timesYear(state: GameState, content: Content): GameState {
     const prev = vars[v.id] ?? v.mean;
     const val = clamp(Math.round(prev + (target - prev) * v.pull + rng.int(-Math.round(v.drift), Math.round(v.drift))));
     vars[v.id] = val;
-    if (v.low && val <= v.low.at && notes[v.id] !== 'low') { notes[v.id] = 'low'; say(v.low.text); }
-    else if (v.high && val >= v.high.at && notes[v.id] !== 'high') { notes[v.id] = 'high'; say(v.high.text); }
+    const told = (n: { text: string; mortalText?: string }) => (state.cult.realm === 'pham_nhan' && n.mortalText) || n.text;
+    if (v.low && val <= v.low.at && notes[v.id] !== 'low') { notes[v.id] = 'low'; say(told(v.low)); }
+    else if (v.high && val >= v.high.at && notes[v.id] !== 'high') { notes[v.id] = 'high'; say(told(v.high)); }
     // Back to ordinary times: the next crossing is news again.
     else if ((!v.low || val > v.low.at + 10) && (!v.high || val < v.high.at - 10)) notes[v.id] = null;
   }

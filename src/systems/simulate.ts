@@ -200,13 +200,11 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
   const aptStart = aptSum(s);
   const persona = personaOf(profile);
   const eventful = new Set<number>();
-  const activityKinds = new Set<string>();
   const statSum = (x: GameState) => x.stats.health + x.stats.happiness + x.stats.intellect + x.stats.charm + aptSum(x) + x.aptitudes.daoHeart;
   /** An activity counts toward a notable year when it moves the stats by 2 or more in all. */
   const doAct = (st: GameState, id: string): GameState => {
     const r = doActivity(st, content, id);
     if (!r) return st;
-    activityKinds.add(id);
     if (Math.abs(statSum(r.state) - statSum(st)) >= 2) eventful.add(st.character.age);
     return r.state;
   };
@@ -318,7 +316,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     ending: lifeEnding(s, content, 1),
     special: s.special?.ids ?? [],
     ...lineRepeats(s),
-    activityKinds: activityKinds.size,
+    activityKinds: Object.keys(s.activities?.last ?? {}).length,
     eventKinds: Object.keys(s.events.seen ?? {}).length,
     eventfulShare: topYears.lived ? Math.min(1, eventful.size / topYears.lived) : 0,
     tier: s.tier,

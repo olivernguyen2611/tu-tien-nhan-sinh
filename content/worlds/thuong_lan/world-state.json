@@ -12,7 +12,8 @@
     { "id": "border", "name": "Chiến sự biên ải", "start": [10, 35], "drift": 10, "pull": 0.3, "mean": 25,
       "high": { "at": 70, "text": "Biên ải đốt lửa hiệu, triều đình bắt lính khắp các châu, ngựa và sắt lên giá." } },
     { "id": "tension", "name": "Chính ma căng thẳng", "start": [20, 50], "drift": 8, "pull": 0.2, "mean": 35,
-      "high": { "at": 75, "text": "Chính ma hai đạo gươm tuốt khỏi vỏ; tán tu đi đường đều cúi đầu, linh dược trong phường thị tăng giá." } }
+      "high": { "at": 75, "text": "Chính ma hai đạo gươm tuốt khỏi vỏ; tán tu đi đường đều cúi đầu, linh dược trong phường thị tăng giá.",
+        "mortalText": "Người đi rừng về kể đêm đêm trên núi xa có ánh sáng lóe như sấm; ai cũng bảo các tiên nhân đang đánh nhau to." } }
   ],
   "phases": [
     {

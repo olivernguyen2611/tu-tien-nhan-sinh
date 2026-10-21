@@ -6,7 +6,7 @@
   ],
   "reputation": [
     { "key": "lang_xa", "name": "Hương danh", "negName": "Tiếng xấu", "when": { "tier": ["pham_gian"] } },
-    { "key": "trieu_dinh", "name": "Quan uy", "when": { "lifestyle": ["quan_truong"] } },
+    { "key": "trieu_dinh", "name": "Quan uy", "negName": "Mất lòng quan phủ", "when": { "lifestyle": ["quan_truong"] } },
     { "key": "giang_ho", "name": "Hiệp danh", "negName": "Ác danh", "when": { "lifestyle": ["giang_ho"] } },
     { "key": "chinh", "name": "Danh vọng chính đạo", "when": { "tier": ["tu_chan"] } },
     { "key": "ma", "name": "Uy danh ma đạo" },

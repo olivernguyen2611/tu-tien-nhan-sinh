@@ -2831,7 +2831,8 @@ export type RelationsFile = z.infer<typeof RelationsFileSchema>;
  * target the pha thời thế sets; four phases follow each other and reweight event themes; a dynasty reigns
  * under niên hiệu (a new era when a ruler dies or a new dynasty takes over). Prices follow some variables.
  */
-const WorldVarNoteSchema = z.object({ at: z.number(), text: z.string().min(1) }).strict();
+/** `mortalText`: what a phàm nhân hears instead (9.10: no words of the tầng above). */
+const WorldVarNoteSchema = z.object({ at: z.number(), text: z.string().min(1), mortalText: z.string().min(1).optional() }).strict();
 export const WorldStateFileSchema = z.object({
   vars: z.array(z.object({
     id, name: z.string().min(1),
@@ -3187,7 +3188,8 @@ export const MartialFileSchema = z
     ascendEffects: z.array(EffectHookSchema),
     /** {years}, {need}, {next}, {stage}, {description}. */
     texts: z.object({
-      train: z.string().min(1), promote: z.string().min(1), fail: z.string().min(1), ascend: z.string().min(1),
+      /** 9.b: several lines take turns year by year (less repetition in the log). */
+      train: z.union([z.string().min(1), z.array(z.string().min(1)).min(1)]), promote: z.string().min(1), fail: z.string().min(1), ascend: z.string().min(1),
       /** 9.V2: logged on reaching the last stage (the end of the martial path; Tiên Võ đồng tu needs a tiên duyên). */
       peak: z.string().min(1).optional(),
       /** 9.V2: tẩu hỏa while forcing a breakthrough; and losing a stage to it. */
