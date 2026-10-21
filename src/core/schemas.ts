@@ -1981,6 +1981,24 @@ export type Activity = z.infer<typeof ActivitySchema>;
 export const ActivityFileSchema = z.array(ActivitySchema);
 
 /**
+ * 9.7 Dock buttons (dock.json). A tier's `dock` in world.json lists which show; "nam" is the +1 năm button,
+ * always in the middle. The order here is the order on screen. `groups`: the activity groups listed in that
+ * button's sheet. `early`: shown before its tier when this tab is open or one of these lối sống is on;
+ * `alt` is its look while the tab is still closed (a mortal sees "Giang hồ", not "Tông môn").
+ */
+export const DockFileSchema = z.array(z.object({
+  id: z.string().regex(/^[a-z0-9_]+$/),
+  glyph: z.string().length(1),
+  label: z.string().min(1),
+  groups: z.array(z.enum(ACTIVITY_GROUPS)).default([]),
+  early: z.object({ tab: z.string().optional(), lifestyles: z.array(z.string()).default([]) }).strict().optional(),
+  alt: z.object({ glyph: z.string().length(1), label: z.string().min(1) }).strict().optional(),
+  /** This sheet also lists the activity groups no shown button takes (so nothing is out of reach). */
+  catchAll: z.boolean().default(false),
+}).strict());
+export type DockButton = z.infer<typeof DockFileSchema>[number];
+
+/**
  * Task 9.0.3: what the player can do with someone met along the way, by how close they are
  * (content/npc-acts.json). Once a year per person per act. `enemy` acts are for people with a
  * grudge (or cold to the player); the others need affinity in [minAffinity, maxAffinity].

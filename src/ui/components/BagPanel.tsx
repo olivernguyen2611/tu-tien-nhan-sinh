@@ -22,7 +22,7 @@ export function BagPanel({ state, content, onUse, onClose }: {
     .filter((x) => x.item);
 
   return (
-    <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Túi đồ" onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div class="modal-backdrop sheet" role="dialog" aria-modal="true" aria-label="Túi đồ" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div class="event-card">
         <div class="kicker">Túi đồ</div>
         <h2>Hành trang</h2>

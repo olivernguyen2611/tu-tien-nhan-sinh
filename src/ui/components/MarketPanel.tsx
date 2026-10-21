@@ -1,5 +1,6 @@
 // "Phường thị" (task 3.2): pick a market, buy, sell, bargain once a year.
 // Playtest 2: markets of the current region, technique scrolls, auction houses.
+import type { ComponentChildren } from 'preact';
 import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
@@ -9,11 +10,13 @@ import { CURRENCY_LABEL, auctionBlocked, auctionLots, bargainChance, canBargain,
 
 export type MarketAction = { kind: 'buy' | 'sell'; itemId: string } | { kind: 'bargain' } | { kind: 'scroll'; techId: string } | { kind: 'bid'; lot: string; bid: number };
 
-export function MarketPanel({ state, content, onAction, onClose }: {
+export function MarketPanel({ state, content, extra, onAction, onClose }: {
   state: GameState;
   content: Content;
   onAction: (marketId: string, action: MarketAction) => { text: string; tone: Tone };
   onClose: () => void;
+  /** 9.7: rows under the sheet (the activities of its groups). */
+  extra?: ComponentChildren;
 }) {
   const markets = openMarkets(state, content);
   const [marketId, setMarketId] = useState(markets[0]?.id ?? '');
@@ -25,7 +28,7 @@ export function MarketPanel({ state, content, onAction, onClose }: {
     : [];
 
   return (
-    <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Phường thị" onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div class="modal-backdrop sheet" role="dialog" aria-modal="true" aria-label="Phường thị" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div class="event-card">
         <div class="kicker">Khám phá{currentRegion(state, content) ? ` · ${currentRegion(state, content)!.name}` : ''}</div>
         <h2>Phường thị</h2>
@@ -136,6 +139,7 @@ export function MarketPanel({ state, content, onAction, onClose }: {
           </>
         )}
         {result && result.text && <p class={`action-result ${result.tone}`} role="status">{result.text}</p>}
+        {extra}
         <button class="choice" onClick={onClose}>Đóng</button>
       </div>
     </div>

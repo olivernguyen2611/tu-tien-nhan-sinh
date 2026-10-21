@@ -8,6 +8,15 @@
 
 ## [Chưa phát hành]
 
+### 9.7: Dock theo tầng và màn chính mới (2026-10-21)
+- Dock đọc `tiers[].dock` trong `world.json`; hình và tên nút nằm trong `content/dock.json` (thứ tự, nhóm hoạt động của từng bảng, nút hiện sớm theo tab hoặc lối sống). Nút **+1 năm** luôn ở giữa.
+- Phàm gian: **Bản thân · Hành sự · +1 năm · Nhân duyên · Gia sản**. Tu chân giới thêm **Tu luyện** và **Tông môn** (ba nút mỗi bên). Người có linh căn dùng được thấy Tu luyện sớm; người đi giang hồ thấy nút **Giang hồ** (mở bảng Tông môn) trước khi biết tới tông môn.
+- Bảng Tu luyện cũ tách đôi: **Bản thân** (thân phận, võ đạo, đường đời, bách nghệ, hoạt động học hành/nghề/sức khỏe) và **Tu luyện** (công pháp, tu vi, bế quan, động phủ, đột phá, đạo thống).
+- **Hành sự**: lưới nhóm việc (chữ Hán + tên, số việc làm được), bấm vào ra danh sách có giá, %, lý do khóa. Nhân duyên và Gia sản liệt kê hoạt động của nhóm mình. Nút 事 trên thanh trên bỏ.
+- Hồ sơ nhân vật và bảng Bản thân có dòng **Thân phận** (bậc nghề, cấp võ đạo, tông môn, lối sống, nơi ở).
+- Máy tính ≥ 1024px: bảng đang mở nằm bên phải nhật ký thay vì che màn, dock vẫn bấm được. Nhãn dock xuống dòng thay vì bị cắt (kiểm ảnh 320/390/1280, không tràn, không cắt chữ).
+- Validator: nút dock trùng id, tầng nhắc nút không có trong `dock.json`.
+
 ### 9.2: Khung Hoạt động (2026-10-21)
 - Mỗi việc người chơi chủ động làm là một **hoạt động JSON** (`content/activities/*.json`, `content/worlds/<id>/activities/*.json`): nhóm menu, biểu tượng, điều kiện, giá (bạc, linh thạch, sức khỏe, tháng), giới hạn lần mỗi năm và hồi chiêu nhiều năm, kiểm tra chỉ số hiện %, bảng kết quả có trọng số (số ngẫu nhiên trong khoảng, thưởng theo điều kiện, mở sự kiện kế tiếp), bản miễn phí khi hết tiền. Văn bản dùng pool của 9.3.
 - Engine `src/systems/activities.ts` (`activityViews`, `doActivity`); UI chỉ liệt kê và gửi `doActivity`. Nút **事** trên thanh trên mở bảng Hoạt động, chia theo nhóm.

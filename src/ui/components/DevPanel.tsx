@@ -106,7 +106,7 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
   const flags = Object.keys(state.flags).filter((k) => state.flags[k]);
 
   return (
-    <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Developer mode" onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div class="modal-backdrop sheet" role="dialog" aria-modal="true" aria-label="Developer mode" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div class="event-card dev-panel">
         <div class="kicker">Developer mode</div>
         <h2>Bảng thử nghiệm</h2>

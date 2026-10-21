@@ -21,7 +21,7 @@ export function GoldenFingerPanel({ state, content, onAction, onClose }: {
   const asleep = g.level === 0 && !fingerAwake(state, content, f);
 
   return (
-    <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Kim Thủ Chỉ" onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div class="modal-backdrop sheet" role="dialog" aria-modal="true" aria-label="Kim Thủ Chỉ" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div class="event-card">
         <div class="kicker">Kim Thủ Chỉ{tier ? ` · ${tier}` : ''}</div>
         <h2>{f.name}</h2>

@@ -1,0 +1,15 @@
+[
+  { "id": "ban_than", "glyph": "身", "label": "Bản thân", "groups": ["ban_than", "hoc_hanh", "nghe", "suc_khoe"] },
+  {
+    "id": "tu_luyen", "glyph": "修", "label": "Tu luyện", "groups": ["tu_luyen"],
+    "early": { "tab": "tu_luyen" }
+  },
+  { "id": "hoat_dong", "glyph": "事", "label": "Hành sự", "groups": ["giai_tri", "pham_phap", "giang_ho"], "catchAll": true },
+  {
+    "id": "tong_mon", "glyph": "宗", "label": "Tông môn",
+    "early": { "tab": "tong_mon", "lifestyles": ["giang_ho"] },
+    "alt": { "glyph": "江", "label": "Giang hồ" }
+  },
+  { "id": "quan_he", "glyph": "緣", "label": "Nhân duyên", "groups": ["quan_he"] },
+  { "id": "gia_san", "glyph": "產", "label": "Gia sản", "groups": ["tai_san"] }
+]

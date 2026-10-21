@@ -19,7 +19,7 @@ export function SystemPanel({ state, content, onAction, onClose }: {
   const task = sys.task ? def.tasks.find((t) => t.id === sys.task!.id) : undefined;
 
   return (
-    <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label={def.name} onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div class="modal-backdrop sheet" role="dialog" aria-modal="true" aria-label={def.name} onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div class="event-card system-panel">
         <div class="kicker">Hệ thống{sys.gone ? ' · đã tắt' : ''}</div>
         <h2>{def.name}</h2>

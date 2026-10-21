@@ -1,5 +1,6 @@
 // "Quan hệ" sheet: family members with affinity (tap one to act together), and people met
 // along the way (task 3.4: Người quen with realm, character and the favor/grudge ledger).
+import type { ComponentChildren } from 'preact';
 import { DiscipleActs } from './DiscipleActs';
 import type { DiscipleAct } from '../../systems/discipleActs';
 import { useState } from 'preact/hooks';
@@ -19,7 +20,7 @@ import { NpcGiftRow } from './NpcGiftRow';
 import { ImportSection } from './ImportSection';
 import type { ImportSetup, SavedPerson } from '../../systems/npcLibrary';
 
-export function FamilyPanel({ state, content, onAction, onRomance, onGiftNpc, onNpcAct, onDisciple, onClan, onBond, onSaveNpc, getSources, onImport, onClose }: {
+export function FamilyPanel({ state, content, extra, onAction, onRomance, onGiftNpc, onNpcAct, onDisciple, onClan, onBond, onSaveNpc, getSources, onImport, onClose }: {
   state: GameState;
   content: Content;
   /** Returns the outcome text to show under the relative. */
@@ -42,6 +43,8 @@ export function FamilyPanel({ state, content, onAction, onRomance, onGiftNpc, on
   getSources: () => SavedPerson[];
   onImport: (person: SavedPerson, setup: ImportSetup) => { ok: boolean; text: string };
   onClose: () => void;
+  /** 9.7: rows under the sheet (the activities of its groups). */
+  extra?: ComponentChildren;
 }) {
   const age = state.character.age;
   const [open, setOpen] = useState<string | null>(null);
@@ -51,7 +54,7 @@ export function FamilyPanel({ state, content, onAction, onRomance, onGiftNpc, on
   const npcs = state.npcs.slice().sort((a, b) => Number(b.alive) - Number(a.alive) || b.favor + b.grudge + b.affinity - (a.favor + a.grudge + a.affinity));
 
   return (
-    <div class="modal-backdrop" role="dialog" aria-modal="true" aria-label="Quan hệ" onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div class="modal-backdrop sheet" role="dialog" aria-modal="true" aria-label="Quan hệ" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div class="event-card">
         <div class="kicker">Quan hệ</div>
         <div class="tabs" role="tablist">
@@ -201,6 +204,7 @@ export function FamilyPanel({ state, content, onAction, onRomance, onGiftNpc, on
         ))}
         {tab === 'bond' && <BondSection state={state} content={content} onBond={onBond} />}
         {tab === 'family' && <ClanSection state={state} content={content} onClan={onClan} />}
+        {extra}
         <button class="choice" onClick={onClose}>Đóng</button>
       </div>
     </div>
