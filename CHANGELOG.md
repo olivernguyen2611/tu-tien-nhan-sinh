@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### 9.8: Công cụ: simulate persona phàm nhân, dev mode thời cuộc (2026-10-21)
+- `npm run simulate -- --profile mortal`: sáu persona phàm nhân (nông dân an phận, thư sinh thi cử, thương nhân, kẻ cướp, hiệp khách, kẻ lười). Persona ở lại phàm gian (từ chối lựa chọn dẫn vào tông môn hay công pháp khi còn đường khác), theo nghề và hoạt động riêng, chọn lựa chọn đầu, ngẫu nhiên, thiện nhất hoặc ác nhất. In thêm một bảng so sánh.
+- Số đo mới cho mọi hồ sơ: số hoạt động khác nhau và sự kiện khác nhau mỗi đời, tỉ lệ năm có chuyện đáng kể (có sự kiện, hoặc hoạt động đổi chỉ số từ 2 điểm), bạc cuối đời (trung vị), nguyên nhân chết theo tầng.
+- Đo 1002 đời (167 mỗi persona): chỉ 4–11% vào tu tiên; tuổi thọ 66–75 (hiệp khách 130 nhờ võ đạo); sự kiện khác nhau 45–70; năm có chuyện 95–97%; câu lặp 27–62% (cao nhất ở hiệp khách, do dòng "Một năm luyện võ" và áp tiêu); bạc cuối đời chênh rất xa (kẻ lười 41, thư sinh ~7.500, hiệp khách ~16.600: cần xem lại kinh tế ở GĐ 10).
+- Dev mode: chuyển pha thời cuộc, đặt biến thời cuộc (0/25/50/75/100), thêm người quen theo loại quan hệ (chọn theo nhóm). Đổi tầng và tặng bạc/linh thạch đã có từ trước; tặng tài sản và đặt mức truy nã chờ hệ thống tài sản, truy nã của GĐ 10.
+
 ### 9.10: Bảng tra văn hóa, cảnh báo thuật ngữ theo tầng (2026-10-21)
 - `docs/design/van-hoa.md`: một hệ khoa cử (Đồng sinh → Tú tài → Cử nhân → Cống sĩ → Tiến sĩ; Trạng nguyên, Bảng nhãn, Thám hoa), bảng xưng hô theo vai vế (tại hạ/các hạ, vãn bối/tiền bối, trẫm, bần đạo/bần tăng, lệnh lang/lệnh ái…), bảng thuật ngữ theo tầng (nội lực / chân khí / chân nguyên; bí kíp / công pháp; thần binh / pháp bảo; thuốc / đan dược…), điểm nhạy cảm.
 - Quy ước thầy trò: võ phàm gọi "sư phụ", tu tiên gọi "sư tôn"; đã sửa 29 chỗ trong sự kiện tu tiên.

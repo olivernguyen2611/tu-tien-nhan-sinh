@@ -18,7 +18,7 @@ import type { SaveMeta } from '../../systems/save';
 import type { RewindOption } from '../../systems/timeline';
 import {
   DEV_STATS, devAddKarma, devAddLifespan, devAddMoney, devAddStat, devClearHeartDemon, devFillProgress, devFindEvents, devFoundClan, devFoundSect,
-  devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devWorldEvent, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect, devPastTie, devSpecial, devSystemPoints, devSystemBetray, devDrift, devMerit, devSetTier,
+  devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devWorldEvent, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect, devPastTie, devSpecial, devSystemPoints, devSystemBetray, devDrift, devMerit, devSetTier, devMeetKind, devSetPhase, devSetWorldVar,
   devAwakenBody, devResetBond, devChildrenRoot, devSetBody, devStartMartialQuest, devQuestStep, devMarry, devResetEventHistory, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
   devResetItemUse, devResetFingerCooldowns, devSetFingerLevel, devSetFlag, devSetGoldenFinger, devSetRealm, devSkipYears, devStartFight, devTakeChosen, devToggleTrait, devTriggerEvent,
 } from '../../systems/dev';
@@ -79,6 +79,8 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
   const [sectId, setSectId] = useState(content.sects[0]?.id ?? '');
   const [worldEventId, setWorldEventId] = useState(content.worldEvents?.[0]?.id ?? '');
   const [flag, setFlag] = useState('');
+  const [kindId, setKindId] = useState(content.relations?.kinds[0]?.id ?? '');
+  const [varId, setVarId] = useState(content.worldState?.vars[0]?.id ?? '');
   const roots = devRootOptions(content);
   const [rootKey, setRootKey] = useState(roots[0]?.key ?? '');
   const [bodyId, setBodyId] = useState(content.cultivation.roots.bodies[0]?.id ?? '');
@@ -243,6 +245,9 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
             {content.world.tiers.map((t) => (
               <button key={t.id} class="chip-btn" disabled={!live || state.tier === t.id} onClick={() => onChange(devSetTier(state, content, t.id))}>Tầng: {t.name}</button>
             ))}
+            {(content.worldState?.phases ?? []).map((p) => (
+              <button key={p.id} class="chip-btn" disabled={!live || state.times?.phase === p.id} onClick={() => onChange(devSetPhase(state, content, p.id))}>Thời cuộc: {p.name}</button>
+            ))}
             {(content.thanDao?.paths ?? []).map((p) => (
               <button key={p.id} class="chip-btn" disabled={!live} onClick={() => onChange(devMerit(state, p.id, 30))}>{p.name} +30</button>
             ))}
@@ -256,6 +261,28 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
             </Pick>
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devTakeChosen(state, content, templateId))}>Nhận đồ đệ</button>
           </div>
+          {content.worldState && (
+            <div class="dev-event">
+              <Pick value={varId} onChange={setVarId} label="Biến thời cuộc">
+                {content.worldState.vars.map((v) => <option key={v.id} value={v.id}>{v.name} ({state.times?.vars[v.id] ?? '?'})</option>)}
+              </Pick>
+              {[0, 25, 50, 75, 100].map((n) => (
+                <button key={n} class="chip-btn" disabled={!live} onClick={() => onChange(devSetWorldVar(state, content, varId, n))}>= {n}</button>
+              ))}
+            </div>
+          )}
+          {content.relations && (
+            <div class="dev-event">
+              <Pick value={kindId} onChange={setKindId} label="Loại quan hệ">
+                {content.relations.groups.map((g) => (
+                  <optgroup key={g.id} label={g.name}>
+                    {content.relations!.kinds.filter((k) => k.group === g.id).map((k) => <option key={k.id} value={k.id}>{k.name}</option>)}
+                  </optgroup>
+                ))}
+              </Pick>
+              <button class="chip-btn" disabled={!live} onClick={() => onChange(devMeetKind(state, content, kindId))}>Thêm người quen</button>
+            </div>
+          )}
           <div class="action-chips">
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devMeetNpc(state, content, 'friend'))}>Gặp bằng hữu</button>
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devMeetNpc(state, content, 'enemy'))}>Gặp kẻ thù (oán 40)</button>

@@ -1,9 +1,10 @@
 // npm run simulate -- --count 500 --profile both --difficulty normal --seed sim   (both = mọi hồ sơ: random, steady, player, full = "sống đủ")
+// 9.8: --profile mortal = sáu persona phàm nhân (nong_dan, thu_sinh, thuong_nhan, ke_cuop, hiep_khach, ke_luoi), in thêm một bảng so sánh.
 // Chạy hàng loạt đời giả lập để xem cân bằng (tuổi chết, cảnh giới, nguyên nhân chết, linh căn).
 // Dùng vite-node vì game nạp nội dung bằng import.meta.glob của Vite.
 import { loadContent } from '../src/core/content';
 import { duelTable } from '../src/systems/duel';
-import { BOT_PROFILES, fingerImpacts, formatReport, simulateMany, traitImpacts, type BotProfile } from '../src/systems/simulate';
+import { BOT_PROFILES, MORTAL_PROFILES, fingerImpacts, formatPersonaTable, formatReport, simulateMany, traitImpacts, type BotProfile, type Report } from '../src/systems/simulate';
 
 const args = process.argv.slice(2);
 const arg = (name: string, fallback: string) => {
@@ -15,9 +16,10 @@ const count = Math.max(1, Number(arg('count', '200')) || 200);
 const prefix = arg('seed', 'sim');
 const difficulty = arg('difficulty', '');
 const which = arg('profile', 'both');
-const profiles: BotProfile[] = which === 'both' ? BOT_PROFILES : BOT_PROFILES.filter((p) => p === which);
+const ALL: BotProfile[] = [...BOT_PROFILES, ...MORTAL_PROFILES];
+const profiles: BotProfile[] = which === 'both' ? BOT_PROFILES : which === 'mortal' ? MORTAL_PROFILES : ALL.filter((p) => p === which);
 if (profiles.length === 0) {
-  console.error(`--profile phải là ${BOT_PROFILES.join(' | ')} | both`);
+  console.error(`--profile phải là ${ALL.join(' | ')} | both | mortal`);
   process.exit(1);
 }
 
@@ -73,11 +75,14 @@ if (fingersArg) {
   console.log(`(${((Date.now() - started) / 1000).toFixed(1)}s)`);
   process.exit(0);
 }
+const rows: { profile: BotProfile; report: Report }[] = [];
 for (const profile of profiles) {
   const started = Date.now();
   // 9.R4b: --first-life plays with an empty Sổ tri thức (gates need luck).
   const firstLife = args.includes('--first-life');
   const { report } = simulateMany(content, count, prefix, { profile, difficulty: difficulty || undefined, knowledge: firstLife ? 'none' : 'all' });
+  rows.push({ profile, report });
   console.log(formatReport(report, content, `${profile} · ${difficulty || content.balance.defaultDifficulty}${firstLife ? ' · kiếp đầu' : ''}`));
   console.log(`(${((Date.now() - started) / 1000).toFixed(1)}s)\n`);
 }
+if (which === 'mortal') console.log(`== Persona phàm nhân ==\n${formatPersonaTable(rows)}`);
