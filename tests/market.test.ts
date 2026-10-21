@@ -24,7 +24,8 @@ const content: Content = {
 };
 
 const SONG: SpiritRoot = { grade: 'song', elements: ['kim', 'hoa'] };
-const mortal: GameState = { ...createLife({ seed: 'market', originId: 'nong_dan' }, content), character: { ...createLife({ seed: 'market', originId: 'nong_dan' }, content).character, age: 16 }, money: { silver: 100, spiritStones: 0 } };
+// 9.5: no thời cuộc here, so prices are the market's own.
+const mortal: GameState = { ...createLife({ seed: 'market', originId: 'nong_dan' }, content), character: { ...createLife({ seed: 'market', originId: 'nong_dan' }, content).character, age: 16 }, money: { silver: 100, spiritStones: 0 }, times: undefined };
 const rooted: GameState = { ...mortal, cult: { ...mortal.cult, root: SONG }, money: { silver: 100, spiritStones: 200 } };
 
 describe('market (task 3.2)', () => {

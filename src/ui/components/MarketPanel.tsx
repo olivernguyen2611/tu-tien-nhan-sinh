@@ -1,6 +1,7 @@
 // "Phường thị" (task 3.2): pick a market, buy, sell, bargain once a year.
 // Playtest 2: markets of the current region, technique scrolls, auction houses.
 import type { ComponentChildren } from 'preact';
+import { priceNote } from '../../systems/worldState';
 import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
@@ -32,6 +33,7 @@ export function MarketPanel({ state, content, extra, onAction, onClose }: {
       <div class="event-card">
         <div class="kicker">Khám phá{currentRegion(state, content) ? ` · ${currentRegion(state, content)!.name}` : ''}</div>
         <h2>Phường thị</h2>
+        {priceNote(state, content) && <p class="profile-note">{priceNote(state, content)}</p>}
         {markets.length === 0 ? (
           <p class="story">{state.character.age < content.balance.market.minAge
             ? 'Còn nhỏ quá, cha mẹ chưa cho đi chợ một mình.'

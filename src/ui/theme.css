@@ -267,6 +267,8 @@ button { font: inherit; color: inherit; }
   color: var(--jade);
 }
 .age-block p { margin: 0 0 4px; }
+/* 9.5: niên hiệu beside the age, quieter than it. */
+.age-block h3 .era { text-transform: none; letter-spacing: 0; color: var(--muted); font-weight: 500; }
 .age-block p.good { color: var(--good); }
 .age-block p.bad { color: var(--bad); }
 .age-block p.rare { color: var(--rare); font-weight: 600; }

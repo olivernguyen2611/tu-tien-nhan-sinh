@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### 9.5: Thế giới sống, thời cuộc (2026-10-21)
+- `content/worlds/<id>/world-state.json`: các biến thời cuộc 0–100 (triều cục, mùa màng, trị an, ôn dịch, chiến sự biên ải, chính ma căng thẳng) trôi mỗi năm về đích của pha thời thế; bốn pha **Thịnh thế → Trung suy → Loạn thế → Tân triều**, mỗi pha nhân trọng số sự kiện theo chủ đề; triều đại và **niên hiệu** tự đặt (đổi niên hiệu khi vua băng hà, đổi triều khi vào Tân triều). Tất cả chạy trên luồng RNG riêng (`seed:times:tuổi`) nên xúc xắc của đời người không đổi.
+- `GameState.times`; save cũ tự có thời cuộc ở năm kế tiếp. Điều kiện mới cho sự kiện/hoạt động: `worldPhase`, `worldVars` (vd. nạn đói khi `harvest ≤ 28`). Validator kiểm pha, biến, giá và sự kiện nhắc tới chúng.
+- Nhật ký: mỗi năm ghi kèm niên hiệu ("Tuổi 12 · Thái An năm thứ 12"); dòng **Thời cuộc** chỉ hiện khi đổi pha, đổi ngôi, hoặc mất mùa / được mùa lớn / giặc cướp / ôn dịch / biên ải / chính ma vượt ngưỡng (khoảng 10–15 dòng mỗi trăm năm).
+- Giá chợ theo mùa màng, biên ải, chính ma; Phường thị ghi "Thời giá (Loạn thế): hàng hóa đắt hơn thường 30%". Hồ sơ có dòng Thời thế; màn tổng kết đời có niên biểu ("Sinh năm Long Khánh thứ 19, mất năm Chiêu Minh thứ 1, trải hai triều (Đại Ung, Đại Viêm)").
+- 6 sự kiện thời cuộc: Năm đói, Bắt lính (vào Quân ngũ), Ôn dịch trong thành, Giặc chặn đường, Ân khoa của tân triều, Hội lớn mừng thái bình.
+
 ### 9.4: Quỹ thời gian 12 tháng mỗi năm (2026-10-21)
 - Mỗi năm có `balance.time.monthsPerYear` tháng. Nghề chính của phàm nhân lấy tháng trước (`time.careerMonths`: quan 10, thương 8, y 8, võ lâm 6, tạp dịch 9). Mỗi hoạt động tốn 0–6 tháng (`months` trong JSON). Hết tháng thì chỉ còn các việc 0 tháng; dòng khóa ghi rõ "Cần 2 tháng, năm nay chỉ còn 1".
 - Tu sĩ: tháng còn trống cuối năm dồn vào tu luyện, nên tu vi năm đó nhân với `tháng tu / 12`. Bế quan vẫn khóa cả năm cho tu luyện. Không làm gì thì bấm +1 năm vẫn như cũ.

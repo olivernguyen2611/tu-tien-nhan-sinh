@@ -25,6 +25,7 @@ import { blessingRerolls } from '../systems/blessings';
 import { knowledgeYear, knowsFor } from '../systems/knowledge';
 import { gatesYear } from '../systems/immortalGates';
 import { worldEventsYear } from '../systems/worldEvents';
+import { initTimes, timesYear } from '../systems/worldState';
 import { pastTiesFor, reunionYear } from '../systems/karmaLedger';
 import { systemYear } from '../systems/heThong';
 import { trungSinhYear } from '../systems/trungSinh';
@@ -207,6 +208,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     },
     extremes: { streak: {}, active: {}, givenAt: {}, lastLeisure: null },
     activities: { last: {}, year: -1, uses: {} },
+    times: initTimes(input.seed, content, 0),
     log: [],
   };
   state.log.push({ age: 0, lines: [{ text: fillTemplate(origin.birthText, state), tone: 'normal' }] });
@@ -253,7 +255,7 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;
   // 9.R7e: the world moves on before the year's event is drawn.
-  const worldly = body.alive ? thanDaoYear(trungSinhYear(systemYear(reunionYear(worldEventsYear(secluded, content), content), content), content), content) : secluded;
+  const worldly = body.alive ? thanDaoYear(trungSinhYear(systemYear(reunionYear(timesYear(worldEventsYear(secluded, content), content), content), content), content), content) : secluded;
   const rolled = !body.alive ? worldly : state.seclusion ? rollSeclusionEvent(worldly, content) : rollYearEvent(gatesYear(worldly, content), content);
   // 9.R5a: what the year taught goes into the Sổ tri thức.
   const next = rolled.alive ? knowledgeYear(rolled, content) : rolled;

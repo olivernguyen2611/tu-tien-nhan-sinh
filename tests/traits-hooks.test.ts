@@ -8,7 +8,7 @@ import { resolveChoice } from '../src/systems/events/engine';
 import { marketOffers } from '../src/systems/market';
 
 const content = loadContent();
-const life: GameState = { ...createLife({ seed: 'hooks', originId: 'nong_dan' }, content), traits: [] };
+const life: GameState = { ...createLife({ seed: 'hooks', originId: 'nong_dan' }, content), traits: [], times: undefined };
 const market = content.markets.find((m) => m.currency === 'silver')!;
 
 describe('priceDiscount (Khéo Mồm, Mắt Tinh)', () => {

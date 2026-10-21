@@ -109,6 +109,12 @@ export interface GameState {
   knowledgeNew?: string[];
   /** 9.R7e: the sự kiện thiên hạ under way (one at a time), and the age each one may come again. */
   world?: { active: { id: string; phase: number; left: number } | null; cooldown: Record<string, number> };
+  /** 9.5 Thời cuộc: pha thời thế, world variables (0–100), dynasty and niên hiệu; `eras` keeps every era of this life (`from` = age it began). */
+  times?: {
+    phase: string; phaseLeft: number; vars: Record<string, number>; notes: Record<string, 'low' | 'high' | null>;
+    dynasty: string; era: string; eraFrom: number; reignLeft: number;
+    eras: { dynasty: string; era: string; from: number }[];
+  };
   /** 9.R6a: developer mode was on during this life; it earns no records (thành tựu, thử thách tuần, điểm Luân Hồi, Thiên Thư, Sổ tri thức). */
   devUsed?: boolean;
   /** Task 5b.1: thiên phú luân hồi this life was born with (id → level), bought in earlier lives. */

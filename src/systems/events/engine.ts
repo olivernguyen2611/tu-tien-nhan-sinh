@@ -17,6 +17,7 @@ import { addMartialYears, martialAscend, martialAttempt, martialPromote } from '
 import { addPathAffinity } from '../paths';
 import { regionThemeMultiplier } from '../regions';
 import { worldThemeMultiplier } from '../worldEvents';
+import { timesThemeMultiplier } from '../worldState';
 import { chosenDisciple, isChosenEvent, setChosenRole, takeChosen } from '../chosen';
 import { addContribution, breakPrecept, grantMaster, joinSect, leaveSect, promoteSect } from '../sect';
 import { startBattle } from '../combat';
@@ -43,7 +44,7 @@ export function themeMultiplier(state: GameState, content: Content, event: GameE
     if (!e.hook.startsWith('eventWeight.') || e.mul === undefined || !hookActive(e, state, content)) continue;
     if (event.themes.includes(e.hook.slice('eventWeight.'.length))) mul *= e.mul;
   }
-  return mul * extremeThemeMultiplier(state, content, event.themes) * regionThemeMultiplier(state, content, event.themes) * worldThemeMultiplier(state, content, event.themes);
+  return mul * extremeThemeMultiplier(state, content, event.themes) * regionThemeMultiplier(state, content, event.themes) * worldThemeMultiplier(state, content, event.themes) * timesThemeMultiplier(state, content, event.themes);
 }
 
 /** Weight of an event for this life right now; 0 = cannot happen. */

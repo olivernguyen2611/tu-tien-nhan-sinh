@@ -57,6 +57,9 @@ const BaseConditionsSchema = z
     lifestyle: ids,
     /** 9.R7e: a sự kiện thiên hạ is under way (any of these ids; at this phase index when given). */
     worldEvent: z.object({ id: ids, phase: z.number().int().min(0).optional() }).strict().optional(),
+    /** 9.5 Thời cuộc: the pha thời thế now is one of these, and world variables are in range. */
+    worldPhase: ids,
+    worldVars: z.array(z.object({ id, gte: z.number().optional(), lte: z.number().optional() }).strict()).optional(),
     root: z.object({ tested: z.boolean().optional(), usable: z.boolean().optional(), minElements: z.number().int().min(1).optional(), innate: z.boolean().optional() }).strict().optional(),
     /** Stage within the current realm, 0-based (task 2.8: "Luyện Khí tầng 4+" = min 3). */
     stage: z.object({ min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional(),
@@ -2746,6 +2749,51 @@ export const JianghuFactionFileSchema = z.array(
     .strict(),
 );
 export type JianghuFaction = z.infer<typeof JianghuFactionFileSchema>[number];
+
+/**
+ * 9.5 Thời cuộc: content/worlds/<id>/world-state.json. World variables (0–100) drift each year toward the
+ * target the pha thời thế sets; four phases follow each other and reweight event themes; a dynasty reigns
+ * under niên hiệu (a new era when a ruler dies or a new dynasty takes over). Prices follow some variables.
+ */
+const WorldVarNoteSchema = z.object({ at: z.number(), text: z.string().min(1) }).strict();
+export const WorldStateFileSchema = z.object({
+  vars: z.array(z.object({
+    id, name: z.string().min(1),
+    start: z.tuple([z.number(), z.number()]),
+    /** Random change each year, ± this much. */
+    drift: z.number().min(0),
+    /** Share of the gap to the target closed each year. */
+    pull: z.number().min(0).max(1),
+    /** Target when the phase names none. */
+    mean: z.number().default(50),
+    /** Lines for the "Thời cuộc" log line when the variable falls to `low.at` or rises to `high.at`. */
+    low: WorldVarNoteSchema.optional(),
+    high: WorldVarNoteSchema.optional(),
+  }).strict()).min(1),
+  phases: z.array(z.object({
+    id, name: z.string().min(1), text: z.string().min(1),
+    years: z.tuple([z.number().int().min(1), z.number().int().min(1)]),
+    /** Next phase ids with weights. */
+    next: z.record(id, z.number().min(0)),
+    /** Targets of the world variables while this phase lasts. */
+    targets: z.record(id, z.number()).default({}),
+    eventWeight: z.record(z.string(), z.number().min(0)).default({}),
+    /** Entering this phase brings a new dynasty (đổi ngôi). */
+    newDynasty: z.boolean().default(false),
+  }).strict()).min(1),
+  dynasties: z.array(z.string().min(1)).min(2),
+  eraNames: z.array(z.string().min(1)).min(4),
+  reignYears: z.tuple([z.number().int().min(1), z.number().int().min(1)]),
+  /** Price multiplier at variable 0 and at 100 (straight line between), multiplied together. */
+  prices: z.array(z.object({ var: id, at0: z.number().positive(), at100: z.number().positive() }).strict()).default([]),
+  texts: z.object({
+    /** "{dynasty}", "{era}", "{old}" fill in. */
+    newEra: z.string().min(1),
+    newDynasty: z.string().min(1),
+    phase: z.string().min(1),
+  }).strict(),
+}).strict();
+export type WorldStateFile = z.infer<typeof WorldStateFileSchema>;
 
 /** 9.R7e: content/worlds/<id>/world-events.json — sự kiện thiên hạ that run in phases (báo trước, diễn ra, hậu quả). */
 export const WorldEventFileSchema = z.array(

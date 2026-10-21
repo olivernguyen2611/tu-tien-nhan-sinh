@@ -49,6 +49,7 @@ import { sectLabel } from '../../systems/sect';
 import { inventoryLabel } from '../../systems/items';
 import { fingerDef } from '../../systems/goldenFinger';
 import { monthsLeft } from '../../systems/timeBudget';
+import { currentPhase, eraLabel } from '../../systems/worldState';
 import { dockGroups, dockView, identityLine, type DockView } from '../../systems/dock';
 import { ActivityList } from '../components/ActivityPanel';
 
@@ -244,7 +245,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         {saveWarning && <p class="save-warning" role="alert">{saveWarning}</p>}
         {state.log.map((y, i) => (
           <article class={`age-block${i === state.log.length - 1 ? ' current' : ''}`} key={y.age}>
-            <h3>{y.age === 0 ? 'Chào đời' : `Tuổi ${y.age}`}</h3>
+            <h3>{y.age === 0 ? 'Chào đời' : `Tuổi ${y.age}`}{eraLabel(state, y.age) && <span class="era"> · {eraLabel(state, y.age)}</span>}</h3>
             {y.lines.map((l) => <p class={l.tone === 'normal' ? '' : l.tone}><TermText text={l.text} /></p>)}
           </article>
         ))}
@@ -343,6 +344,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>
             <p class="profile-root"><TermText text={`Thể chất: ${bodyLabel(state, content)}`} /></p>
             {identityLine(state, content) && <p class="profile-note">Thân phận: {identityLine(state, content)}</p>}
+            {state.times && <p class="profile-note">Thời thế: {currentPhase(state, content)?.name ?? ''} · {state.times.dynasty}, {eraLabel(state, c.age)}</p>}
             {careerLabel(state, content) && <p class="profile-note">Đường đời: {careerLabel(state, content)}</p>}
             {sectLabel(state, content) && <p class="profile-note">Tông môn: {sectLabel(state, content)}</p>}
             {inventoryLabel(state, content) && <p class="profile-note">Mang theo: {inventoryLabel(state, content)}</p>}
