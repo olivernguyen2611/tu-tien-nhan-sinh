@@ -9,7 +9,8 @@ import type { SaveMeta } from '../../systems/save';
 import type { RewindOption } from '../../systems/timeline';
 import type { ImportSetup, SavedPerson } from '../../systems/npcLibrary';
 import { activeExtremes, extremeWarnings } from '../../systems/extremes';
-import { leisureView } from '../../systems/leisure';
+import { activityViews } from '../../systems/activities';
+import { ActivityPanel } from '../components/ActivityPanel';
 import { DevPanel } from '../components/DevPanel';
 import { BagPanel } from '../components/BagPanel';
 import { GoldenFingerPanel } from '../components/GoldenFingerPanel';
@@ -65,7 +66,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onActivity, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -75,6 +76,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onFastForward: () => void;
   /** 6b.2 Ngao du: a trip to lift happiness, once a year. */
   onLeisure: () => void;
+  onActivity: (id: string) => { text: string; tone: Tone; changes: string } | null;
   /** Returns the outcome to show on the card. */
   onChoose: (index: number) => PopupResult;
   /** Task 5.4: gia tộc. */
@@ -146,6 +148,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const [bagOpen, setBagOpen] = useState(false);
   const [fingerOpen, setFingerOpen] = useState(false);
   const [systemOpen, setSystemOpen] = useState(false);
+  const [activityOpen, setActivityOpen] = useState(false);
   const [memoryOpen, setMemoryOpen] = useState(false);
   const [marketOpen, setMarketOpen] = useState(false);
   const [mapOpen, setMapOpen] = useState(false);
@@ -156,7 +159,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   }, [!!state.cult.coreForming, !!state.cult.heartDemonTrial, !!state.martial.quest?.game]);
   const [sectOpen, setSectOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
-  const anySheet = profileOpen || familyOpen || bagOpen || fingerOpen || systemOpen || memoryOpen || marketOpen || mapOpen || cultivateOpen || sectOpen || devOpen;
+  const anySheet = profileOpen || familyOpen || bagOpen || fingerOpen || systemOpen || activityOpen || memoryOpen || marketOpen || mapOpen || cultivateOpen || sectOpen || devOpen;
   useBackClose(anySheet, () => {
     setProfileOpen(false); setFamilyOpen(false); setBagOpen(false); setFingerOpen(false); setMarketOpen(false);
     setMapOpen(false); setCultivateOpen(false); setSectOpen(false); setDevOpen(false);
@@ -171,7 +174,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const goal = currentGoal(state, content);
   const tip = pendingTip(state, content);
   const region = currentRegion(state, content);
-  const leisure = leisureView(state, content);
+  const activities = activityViews(state, content);
+  const leisure = activities.find((a) => a.id === 'ngao_du') ?? { blocked: 'Chưa có.', cost: null };
   const sad = states.some((d) => d.stat === 'happiness' && d.zone === 'low');
   const showLeisure = state.alive && (sad || stats.happiness < content.balance.extremes.happinessRest);
 
@@ -220,6 +224,9 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
               aria-label={heThong.name} title={heThong.name} onClick={() => setSystemOpen(true)}>統</button>
           )}
           {state.trungSinh && <button class="icon-btn" aria-label="Ký ức kiếp trước" title="Ký ức kiếp trước" onClick={() => setMemoryOpen(true)}>憶</button>}
+          {activities.length > 0 && (
+            <button class={`icon-btn finger-btn${activities.some((a) => !a.blocked) ? ' ready' : ''}`} aria-label="Hoạt động" title="Hoạt động" onClick={() => setActivityOpen(true)}>事</button>
+          )}
           <button class="icon-btn" aria-label="Túi đồ" title="Túi đồ" onClick={() => setBagOpen(true)}>囊</button>
           <button class="icon-btn" aria-label="Sổ lưu" title="Sổ lưu" onClick={onSaves}>簿</button>
           <span class="desktop-only">
@@ -318,6 +325,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
       {bagOpen && <BagPanel state={state} content={content} onUse={onUseItem} onClose={() => setBagOpen(false)} />}
 
       {memoryOpen && <MemoryPanel state={state} content={content} onClose={() => setMemoryOpen(false)} />}
+      {activityOpen && <ActivityPanel state={state} content={content} onAction={onActivity} onClose={() => setActivityOpen(false)} />}
       {systemOpen && <SystemPanel state={state} content={content} onAction={onSystemAction} onClose={() => setSystemOpen(false)} />}
       {fingerOpen && <GoldenFingerPanel state={state} content={content} onAction={onFingerAction} onClose={() => setFingerOpen(false)} />}
 

@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### 9.2: Khung Hoạt động (2026-10-21)
+- Mỗi việc người chơi chủ động làm là một **hoạt động JSON** (`content/activities/*.json`, `content/worlds/<id>/activities/*.json`): nhóm menu, biểu tượng, điều kiện, giá (bạc, linh thạch, sức khỏe, tháng), giới hạn lần mỗi năm và hồi chiêu nhiều năm, kiểm tra chỉ số hiện %, bảng kết quả có trọng số (số ngẫu nhiên trong khoảng, thưởng theo điều kiện, mở sự kiện kế tiếp), bản miễn phí khi hết tiền. Văn bản dùng pool của 9.3.
+- Engine `src/systems/activities.ts` (`activityViews`, `doActivity`); UI chỉ liệt kê và gửi `doActivity`. Nút **事** trên thanh trên mở bảng Hoạt động, chia theo nhóm.
+- **Ngao du** chuyển sang JSON, hành vi giữ nguyên (số liệu rời `balance.leisure` về `activities/giai-tri.json`; `leisure.ts` bỏ). Save v5 giữ năm Ngao du gần nhất của save cũ.
+- Ba hoạt động mẫu chỉ viết bằng JSON: **Vào sòng bạc** (khí vận, thắng thua), **Đọc sách ở thư quán** (trí tuệ, câu ghép từ mảnh), **Luyện quyền buổi sớm** (căn cốt, trả sức khỏe).
+- Validator: id không trùng giữa các file, mỗi kết quả đổi ít nhất một chỉ số, pool có câu, sự kiện và vật phẩm được nhắc phải tồn tại. Chưa chuyển hành động gia đình và tông môn (chuyển dần khi chạm tới).
+
 ### 9.3: Văn bản có ngữ cảnh, chống lặp (2026-10-16)
 - Bộ chọn câu `textPool`: pool có điều kiện (thiện cảm, tâm trạng, tuổi, tầng, quan hệ), câu ghép từ mảnh, trí nhớ chống lặp lưu trong save (`textMemory`). Số ở `balance.text`.
 - Dùng pool cho: Bầu bạn, Song tu, hành động gia đình (Hỏi han…), NPC, Luận bàn/Luận đạo với đệ tử, trưởng lão từ chối thu đồ, năm yên ả, báo cáo tông môn tự lập, nhiệm vụ tông môn (kèm câu phụ thời tiết, người đi cùng), dòng đột phá tiểu cảnh giới.

@@ -151,6 +151,8 @@ export interface GameState {
    */
   /** 9.S5: points on each thành thần path, and the marks passed (milestones "<id>:<at>", "<id>:ascend", "<id>:miss"). */
   merit?: { points: Record<string, number>; marks: string[] };
+  /** 9.2: hoạt động used: age of the last use, and uses in `year` (the year counted). */
+  activities?: { last: Record<string, number>; year: number; uses: Record<string, number> };
   /** 9.3: last picks of each text pool (textPool.ts), so lines do not repeat. */
   textMemory?: Record<string, string[]>;
   /** 9.1: tầng the life is in, the age it entered each, and a tier just entered whose screen is not shown yet. */
@@ -333,7 +335,7 @@ export interface GameState {
     active: Record<string, number>;
     /** State id → age its once-effects were last given; "<id>#<n>" for its specials. */
     givenAt: Record<string, number>;
-    /** 6b.2: age of the last Ngao du trip. */
+    /** 6b.2: age of the last Ngao du trip; since 9.2 only read by the save v5 migration. */
     lastLeisure: number | null;
   };
   log: LogYear[];

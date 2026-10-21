@@ -14,7 +14,7 @@ import { resolveChoice, findEvent, visibleChoices } from './events/engine';
 import { chooseFate } from './fate';
 import { placeStrand } from './goldenCore';
 import { meetIllusion } from './heartDemon';
-import { goLeisure } from './leisure';
+import { doActivity } from './activities';
 import { caveView, rentCave } from './cave';
 import { runSeclusion } from './seclusion';
 import { doMission, joinSect, missionViews, requestMaster, masterBlocked, sectEligibility, sectTechniques } from './sect';
@@ -245,7 +245,7 @@ function playerYear(state: GameState, content: Content): GameState {
     if (buy) s = buyTreasury(s, content, buy.id)?.state ?? s;
   }
   // A player who sees the warning goes on a trip.
-  if (s.stats.happiness < 30) s = goLeisure(s, content)?.state ?? s;
+  if (s.stats.happiness < 30) s = doActivity(s, content, 'ngao_du')?.state ?? s;
   // 6b.14: with stones to spare (twice a long lease), rent a cave on a spirit vein.
   const lease = caveView(s, content).leases.at(-1);
   if (lease && !lease.blocked && s.money.spiritStones >= lease.cost * 2) s = rentCave(s, content, lease.years)?.state ?? s;

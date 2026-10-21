@@ -205,6 +205,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
       npc: null,
     },
     extremes: { streak: {}, active: {}, givenAt: {}, lastLeisure: null },
+    activities: { last: {}, year: -1, uses: {} },
     log: [],
   };
   state.log.push({ age: 0, lines: [{ text: fillTemplate(origin.birthText, state), tone: 'normal' }] });
