@@ -196,7 +196,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     aptitudes,
     cult: { realm: 'pham_nhan', stage: 0, progress: 0, root: null, bodyId: null, lifespan, fails: {}, injuredUntil: null, technique: null, learned: [], scrolls: [], buffs: [], nextBonus: 0, wallSince: null, caveUntil: null, preceptBreaks: 0, lineagesAdopted: [], heartDemon: 0, coreForming: null, coreGrade: null, corePattern: null, soulForm: null, heartDemonTrial: null, foundation: null, lastMajorAttempt: null, lineage: null },
     money: { silver: origin.silver + rebirthTalentBonus(rebirthTalents, content, 'startSilver'), spiritStones: origin.spiritStones },
-    social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0, trieu_dinh: 0, giang_ho: 0 } },
+    social: { karma: 0, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0, trieu_dinh: 0, giang_ho: 0, lang_xa: 0 } },
     flags: origin.noParents ? { no_parents: true, no_father: true, no_mother: true } : {},
     destiny: { offered: [], rerollsLeft: Math.max(0, content.balance.traits.rerolls + (content.balance.difficulty[difficulty]?.rerollBonus ?? 0) + blessingRerolls(blessings, content) + rebirthTalentBonus(rebirthTalents, content, 'destinyRerolls')), confirmed: false,
       slots: Math.min(content.balance.traits.maxSlots, content.balance.traits.slots + rebirthTalentBonus(rebirthTalents, content, 'destinySlots')),

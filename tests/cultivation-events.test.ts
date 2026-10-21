@@ -116,7 +116,7 @@ describe('task 2.8 events and their engine', () => {
   });
 
   it('U Hà invitation: leave the sect, switch to the Ma technique, reputation moves', () => {
-    const s = joinSect(life({}, { social: { karma: -5, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0, trieu_dinh: 0, giang_ho: 0 } } }), content, 'bich_lac_tong').state;
+    const s = joinSect(life({}, { social: { karma: -5, reputation: { chinh: 0, ma: 0, tan_tu: 0, yeu: 0, trieu_dinh: 0, giang_ho: 0, lang_xa: 0 } } }), content, 'bich_lac_tong').state;
     const r = pick(s, 'loi_moi_u_ha', 0).state;
     expect(r.sect.id).toBeNull();
     expect(r.cult.lineage).toBe('ma');

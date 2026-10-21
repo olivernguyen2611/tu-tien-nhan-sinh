@@ -400,7 +400,7 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
           const r = doActivity(life, content, id);
           if (!r) return null;
           setLife(checkDeath(r.state, content));
-          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state, content) };
         }}
         onSeclude={(years) => setLife(seclude(life, content, years))}
         onRentCave={(years) => { const r = rentCave(life, content, years); if (!r) return null; setLife(r.state); return r.text; }}
@@ -416,7 +416,7 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
           const r = npcId && act ? doDiscipleAct(life, content, npcId, act) : npcId ? teachDisciple(life, content, npcId) : recruitDisciple(life, content);
           if (!r) return null;
           setLife(r.state);
-          return { text: r.text, tone: 'good', changes: describeChanges(life, r.state) };
+          return { text: r.text, tone: 'good', changes: describeChanges(life, r.state, content) };
         }}
         onCraft={(recipeId) => {
           const r = craftRecipe(life, content, recipeId);
@@ -427,7 +427,7 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         onFamilyAction={(relId, actionId) => {
           const r = performFamilyAction(life, content, relId, actionId);
           setLife(checkDeath(r.state, content));
-          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state, content) };
         }}
         getSources={() => {
           // The book first, then the protagonist of every other slot (not the life being played).
@@ -455,24 +455,24 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         onBond={(target, action, arg) => {
           const r = doBond(life, content, target, action, arg);
           setLife(r.state);
-          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state, content) };
         }}
         onRomance={(npcId, action) => {
           const r = romanceAction(life, content, npcId, action);
           setLife(r.state);
-          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state, content) };
         }}
         onNpcAct={(npcId, actId) => {
           const r = doNpcAct(life, content, npcId, actId);
           if (!r) return null;
           setLife(r.state);
-          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state, content) };
         }}
         onGiftNpc={(npcId, itemId) => {
           const r = giftNpc(life, content, npcId, itemId);
           if (!r) return null;
           setLife(r.state);
-          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state, content) };
         }}
         onCombat={(action, itemId) => {
           const r = act(life, content, action, itemId);
@@ -497,19 +497,19 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         onUseItem={(itemId) => {
           const r = consumeItem(life, content, itemId);
           setLife(checkDeath(r.state, content));
-          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state, content) };
         }}
         onFingerAction={(actionId) => {
           const r = doFingerAction(life, content, actionId);
           if (!r) return null;
           setLife(checkDeath(r.state, content));
-          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state, content) };
         }}
         onSystemAction={(actionId) => {
           const r = doSystemAction(life, content, actionId);
           if (!r) return null;
           setLife(checkDeath(r.state, content));
-          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state, content) };
         }}
         onPractice={(craftId) => {
           const r = practiceCraft(life, content, craftId);
@@ -571,7 +571,7 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
           const r = attemptMajorBreakthrough(life, content);
           if (!r) return null;
           setLife(r.state);
-          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state, content) };
         }}
         onChoose={(i) => {
           const pendingEvent = findEvent(content, life.events.pending ?? '');
@@ -579,7 +579,7 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
           const r = resolveChoice(life, content, i);
           // An event may close the door for some years (task 4.1).
           setLife(runSeclusion(checkDeath(r.state, content), content));
-          return { title, text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+          return { title, text: r.text, tone: r.tone, changes: describeChanges(life, r.state, content) };
         }}
         onNewLife={() => setScreen('create')}
         onSummary={() => setScreen('death')}

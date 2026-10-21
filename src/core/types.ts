@@ -307,7 +307,8 @@ export interface GameState {
   money: { silver: number; spiritStones: number };
   social: {
     karma: number; // -100 evil … +100 good
-    reputation: Record<'chinh' | 'ma' | 'tan_tu' | 'yeu' | 'trieu_dinh' | 'giang_ho', number>;
+    /** 9.9: lang_xa = hương danh (village); trieu_dinh = quan uy; giang_ho = hiệp danh (+) / ác danh (−). */
+    reputation: Record<'chinh' | 'ma' | 'tan_tu' | 'yeu' | 'trieu_dinh' | 'giang_ho' | 'lang_xa', number>;
   };
   flags: Record<string, boolean>;
   /** Tiên Thiên Khí Vận: offered at birth, kept after confirming. */

@@ -14,7 +14,9 @@ export const NUMERIC_KEYS = [...STAT_KEYS, 'silver', 'spiritStones', 'karma', 'a
 /** Also readable by conditions and skill checks (task 2.8): craft levels and sect contribution. */
 export const CRAFT_KEYS = ['alchemy', 'forging', 'formation', 'talisman', 'farming', 'beast'].map((c) => `craft.${c}`);
 /** Task 3.9: faction reputation is readable too. */
-export const REPUTATION_KEYS = ['chinh', 'ma', 'tan_tu', 'yeu', 'trieu_dinh', 'giang_ho'].map((f) => `reputation.${f}`);
+/** Faction reputation keys; 9.9 added lang_xa (hương danh in the village). */
+export const FACTIONS = ['chinh', 'ma', 'tan_tu', 'yeu', 'trieu_dinh', 'giang_ho', 'lang_xa'] as const;
+export const REPUTATION_KEYS = FACTIONS.map((f) => `reputation.${f}`);
 export const READ_KEYS = [...NUMERIC_KEYS, ...CRAFT_KEYS, 'sect.contribution', ...REPUTATION_KEYS];
 const statKey = z.string().refine((k) => STAT_KEYS.includes(k) || CRAFT_KEYS.includes(k), (k) => ({ message: `"${k}" không phải chỉ số (dùng stat.<tên> hoặc craft.<nghệ>)` }));
 const numericKey = z.string().refine((k) => READ_KEYS.includes(k), (k) => ({ message: `"${k}" không phải giá trị đọc được` }));
@@ -217,7 +219,7 @@ export const EffectsSchema = z
     speedBuff: z.object({ mul: z.number().positive(), years: z.number().int().min(1) }).strict().optional(),
     /** Craft levels gained. */
     craftXp: z.record(z.enum(['alchemy', 'forging', 'formation', 'talisman', 'farming', 'beast']), z.number()).optional(),
-    reputation: z.record(z.enum(['chinh', 'ma', 'tan_tu', 'yeu', 'trieu_dinh', 'giang_ho']), z.number()).optional(),
+    reputation: z.record(z.enum(FACTIONS), z.number()).optional(),
     /** Added to the next big breakthrough only. */
     nextBreakthroughBonus: z.number().optional(),
     /** Fewer counted failures at the current peak (bình cảnh nới ra). */
@@ -561,7 +563,7 @@ const ADD_HOOK = new RegExp(
       `element\\.(${ELEMENTS})\\.power`, `path\\.(${PATHS})\\.(affinity|power)`,
       `craft\\.(${CRAFTS})\\.(success|yield|affinity)`,
       'heartDemonResist', 'charmResist',
-      'npcAffinityStart', 'reunionChance', 'specialOriginChance', 'faction\\.(chinh|ma|tan_tu|yeu|trieu_dinh|giang_ho)\\.reputation', 'karmaShift',
+      'npcAffinityStart', 'reunionChance', 'specialOriginChance', 'faction\\.(chinh|ma|tan_tu|yeu|trieu_dinh|giang_ho|lang_xa)\\.reputation', 'karmaShift',
       'priceDiscount', 'incomePct', 'lootPct',
       'trigger\\.cheatDeath',
       // Task 3.3: a storage bag keeps the goods when a robber wins.
@@ -1635,7 +1637,7 @@ export const BalanceSchema = z
         /** Stipend multiplier per rank index. */
         rankStipendMul: z.array(z.number().min(0)).min(1),
         karmaPerYear: z.record(id, z.number()),
-        joinReputation: z.record(id, z.record(z.enum(['chinh', 'ma', 'tan_tu', 'yeu', 'trieu_dinh', 'giang_ho']), z.number())),
+        joinReputation: z.record(id, z.record(z.enum(FACTIONS), z.number())),
         recruitAfterYears: range,
         /** Ký danh becomes the next rank after this many years. */
         outerAfterYears: z.number().int().min(0),
@@ -2768,6 +2770,23 @@ export const JianghuFactionFileSchema = z.array(
 export type JianghuFaction = z.infer<typeof JianghuFactionFileSchema>[number];
 
 /**
+ * 9.9 stat-labels.json: one set of stats, named by the life (nguyên tắc B). Đạo tâm reads Tâm tính for a mortal,
+ * Ý chí for a võ giả, Đạo tâm for a tu sĩ (first label whose `when` holds). Faction reputation shows only when its
+ * `when` holds or it is not 0; nhân quả shows as a number once `showWhen` holds, otherwise as hearsay.
+ */
+export const StatLabelsFileSchema = z.object({
+  daoHeart: z.array(z.object({ when: ConditionsSchema.partial().default({}), label: z.string().min(1), term: z.string().optional() }).strict()).min(1),
+  reputation: z.array(z.object({ key: z.enum(FACTIONS), name: z.string().min(1), negName: z.string().optional(), when: ConditionsSchema.partial().optional() }).strict()),
+  karma: z.object({
+    label: z.string().min(1),
+    showWhen: ConditionsSchema.partial(),
+    rumors: z.array(z.object({ min: z.number(), text: z.string().min(1) }).strict()).min(1),
+  }).strict(),
+  innerForce: z.object({ label: z.string().min(1), term: z.string().optional() }).strict(),
+}).strict();
+export type StatLabelsFile = z.infer<typeof StatLabelsFileSchema>;
+
+/**
  * 9.6 relations.json: kinds of relation (bằng hữu, kẻ thù, chủ nợ…) shown under groups in the Nhân duyên tab,
  * the role texts each kind takes by default, and the occupations an NPC can move into over the years.
  */
@@ -3409,7 +3428,7 @@ export const FoundingFileSchema = z
           recruitMul: z.number().min(0),
           karmaPerYear: z.number(),
           /** Faction reputation changed once on founding. */
-          reputation: z.record(z.enum(['chinh', 'ma', 'tan_tu', 'yeu', 'trieu_dinh', 'giang_ho']), z.number()),
+          reputation: z.record(z.enum(FACTIONS), z.number()),
           /** K.6 hooks on the founder while the rule stands. */
           effects: z.array(EffectHookSchema),
         })

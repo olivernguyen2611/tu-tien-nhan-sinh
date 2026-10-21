@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### 9.9: Đổi nhãn chỉ số theo tầng, danh vọng phe (2026-10-21)
+- Không thêm chỉ số 0–100 nào. `content/stat-labels.json` đặt tên cho cùng một con số theo đời người: đạo tâm hiện là **Tâm tính** (phàm nhân), **Ý chí** (võ giả), **Đạo tâm** (tu sĩ), cả ở hồ sơ, dòng thay đổi chỉ số lẫn gợi ý "Thử …" trong sự kiện.
+- **Danh vọng theo phe** chỉ hiện phe đang dính vào: Hương danh / Tiếng xấu (làng xã, phe mới `lang_xa`), Quan uy (quan trường), Hiệp danh / Ác danh (giang hồ), các phe tu chân khi đã khác 0. Save cũ được thêm `lang_xa` (saveVersion 6).
+- **Nội lực**: phàm nhân theo võ đạo thấy thanh Nội lực (tiến độ tới cấp võ đạo kế) thay cho thanh Tu vi "Chưa tu luyện".
+- **Nhân quả**: phàm nhân không thấy con số, chỉ nghe lời đồn của hàng xóm; dòng thay đổi cũng ẩn "Thiện ác". Vào Luyện Khí, hoặc gặp sự kiện mới *Cao tăng qua làng*, mới thấy rõ.
+- 3 sự kiện mới (`huong-danh.json`): Cao tăng qua làng, Cây cầu đầu làng, Lời đàm tiếu. Thuật ngữ mới: Nội lực, Nhân quả.
+
 ### 9.6: Người quen sâu hơn (2026-10-21)
 - `content/relations.json`: loại quan hệ (bằng hữu, huynh đệ kết nghĩa, hàng xóm, ân nhân, thầy, học trò, đồng liêu, chủ, thuộc hạ, chủ nợ, con nợ, kẻ thù, đồng môn, người thương…) xếp vào nhóm; vai cũ trong sự kiện tự quy về loại. Tab Người quen chia nhóm **Bạn bè / Tình duyên / Công việc / Thù địch / Tông môn / Người quen khác** (tình duyên, tông môn, thù oán được ưu tiên). Bảng đổi tên thành Nhân duyên.
 - **Kỷ niệm**: mỗi người quen nhớ 5 việc gần nhất hai bên làm với nhau (sự kiện, tương tác, quà tặng); hiện trong thẻ Thông tin và dùng được trong văn bản qua `{npcMemory}`. Điều kiện mới cho NPC: `kinds`, `occupation`, `minMemories`.

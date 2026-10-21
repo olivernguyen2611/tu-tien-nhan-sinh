@@ -52,6 +52,7 @@ import { monthsLeft } from '../../systems/timeBudget';
 import { currentPhase, eraLabel } from '../../systems/worldState';
 import { dockGroups, dockView, identityLine, type DockView } from '../../systems/dock';
 import { ActivityList } from '../components/ActivityPanel';
+import { daoHeartLabel, innerForce, karmaView, reputationViews } from '../../systems/statLabels';
 
 
 const APTITUDE_LABELS = [
@@ -165,6 +166,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const { character: c, stats, cult, money } = state;
   const origin = content.origins.find((o) => o.id === c.originId);
   const warn = extremeWarnings(state, content);
+  const force = innerForce(state, content);
+  const karma = karmaView(state, content);
   const finger = fingerDef(content, state.goldenFinger?.id);
   const heThong = systemDef(content, state.system?.id);
   const states = activeExtremes(state, content);
@@ -290,8 +293,13 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             </button>
           </div>
         )}
-        <div class="stat-row wide"><span class="icon">修</span><Meter label="Tu vi" term="tu_vi" value={cult.progress} color="var(--bar-cult)"
-          text={cult.realm === 'pham_nhan' ? 'Chưa tu luyện' : `${realmLabel(state, content)} · ${Math.floor(cult.progress)}%`} /></div>
+        {force ? (
+          <div class="stat-row wide"><span class="icon">勁</span><Meter label={force.label} term={force.term} value={force.pct} color="var(--bar-cult)"
+            text={`${force.stage ?? 'Mới nhập môn'} · ${force.pct}%`} /></div>
+        ) : (
+          <div class="stat-row wide"><span class="icon">修</span><Meter label="Tu vi" term="tu_vi" value={cult.progress} color="var(--bar-cult)"
+            text={cult.realm === 'pham_nhan' ? 'Chưa tu luyện' : `${realmLabel(state, content)} · ${Math.floor(cult.progress)}%`} /></div>
+        )}
         <div class="stat-row wide"><span class="icon">壽</span><Meter label="Tuổi" term="tho_nguyen" value={c.age} max={cult.lifespan} color="var(--bar-life)" text={`${c.age} tuổi`} /></div>
       </section>
 
@@ -337,10 +345,15 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
               {c.gender === 'nam' ? 'Nam' : 'Nữ'} · {origin?.name} · quê {c.hometown} · độ khó {difficultyName(state, content)}
             </p>
             <div class="profile-grid">
-              {APTITUDE_LABELS.map(([key, label, glyph, term]) => (
-                <div class="stat-row" key={key}><span class="icon">{glyph}</span><Meter label={label} term={term} value={state.aptitudes[key]} tone="auto" warn={warn.includes(key)} /></div>
-              ))}
+              {APTITUDE_LABELS.map(([key, label, glyph, term]) => {
+                const shown = key === 'daoHeart' ? daoHeartLabel(state, content) : { label, term };
+                return <div class="stat-row" key={key}><span class="icon">{glyph}</span><Meter label={shown.label} term={shown.term} value={state.aptitudes[key]} tone="auto" warn={warn.includes(key)} /></div>;
+              })}
             </div>
+            {reputationViews(state, content).length > 0 && (
+              <p class="profile-note">Danh vọng: {reputationViews(state, content).map((r) => `${r.name} ${r.value > 0 ? '+' : ''}${r.value}`).join(' · ')}</p>
+            )}
+            {karma && <p class="profile-note"><TermText text={`${karma.label}: ${karma.value !== null ? `${karma.value > 0 ? '+' : ''}${karma.value}` : karma.text}`} /></p>}
             <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>
             <p class="profile-root"><TermText text={`Thể chất: ${bodyLabel(state, content)}`} /></p>
             {identityLine(state, content) && <p class="profile-note">Thân phận: {identityLine(state, content)}</p>}
