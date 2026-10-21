@@ -4,7 +4,7 @@
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
 import { KY_KEYS } from '../systems/thienDaoKy';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, SpecialOriginFileSchema, type SpecialOrigin, SystemFileSchema, type SystemFile, TrungSinhFileSchema, type TrungSinhFile, ThanDaoFileSchema, type ThanDaoFile, ThienDaoKyFileSchema, type ThienDaoKyFile, type Ending, MORTAL_STATS, APTITUDES, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, SpecialOriginFileSchema, type SpecialOrigin, ActivityFileSchema, type Activity, STAT_KEYS, SystemFileSchema, type SystemFile, TrungSinhFileSchema, type TrungSinhFile, ThanDaoFileSchema, type ThanDaoFile, ThienDaoKyFileSchema, type ThienDaoKyFile, type Ending, MORTAL_STATS, APTITUDES, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -62,6 +62,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'codex.json') return CodexFileSchema;
     if (rest === 'endings.json') return EndingFileSchema;
     if (rest.startsWith('special-origins/')) return SpecialOriginFileSchema;
+    if (/^activities\/[^/]+\.json$/.test(rest)) return ActivityFileSchema;
     if (rest === 'systems.json') return SystemFileSchema;
     if (rest === 'thien-dao-ky.json') return ThienDaoKyFileSchema;
     if (rest === 'achievements.json') return AchievementFileSchema;
@@ -87,6 +88,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
   if (rest === 'immortal-gates.json') return ImmortalGateFileSchema;
   if (rest === 'challenges.json') return ChallengeFileSchema;
   if (/^events\/[^/]+\.json$/.test(rest)) return EventFileSchema;
+  if (/^activities\/[^/]+\.json$/.test(rest)) return ActivityFileSchema;
   return null;
 }
 
@@ -120,6 +122,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   const knowledgeFiles: { file: string; entries: KnowledgeEntry[] }[] = [];
   const originFiles: { file: string; origins: SpecialOrigin[] }[] = [];
   let systemsFile: { file: string; data: SystemFile } | null = null;
+  const activityFiles: { file: string; activities: Activity[] }[] = [];
   const trungSinhFiles: { file: string; data: TrungSinhFile }[] = [];
   const worldDefs = new Map<string, World>();
   const thanDaoFiles: { file: string; data: ThanDaoFile }[] = [];
@@ -299,6 +302,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     if (schema === ThanDaoFileSchema) thanDaoFiles.push({ file, data: parsed.data as ThanDaoFile });
     if (schema === TrungSinhFileSchema) trungSinhFiles.push({ file, data: parsed.data as TrungSinhFile });
     if (schema === SystemFileSchema) systemsFile = { file, data: parsed.data as SystemFile };
+    if (schema === ActivityFileSchema) activityFiles.push({ file, activities: parsed.data as Activity[] });
     if (schema === SpecialOriginFileSchema) originFiles.push({ file, origins: parsed.data as SpecialOrigin[] });
     if (schema === ImmortalGateFileSchema) gateFiles.push({ file, gates: parsed.data as ImmortalGate[] });
     if (schema === GlossarySchema) glossaryIds = (parsed.data as { id: string }[]).map((x) => x.id);
@@ -585,6 +589,27 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       for (const x of o.exclusiveWith) if (!originIds.includes(x)) problems.push({ file, level: 'error', message: `tình tiết "${o.id}" loại trừ tình tiết lạ "${x}"` });
       for (const k of o.unlock.requiresKnowledge) knowledgeRefs.push({ file, what: `tình tiết "${o.id}"`, id: k });
       if (o.system && !systemsFile?.data.systems.some((x) => x.id === o.system)) problems.push({ file, level: 'error', message: `tình tiết "${o.id}" gắn hệ thống lạ "${o.system}"` });
+    }
+  }
+  // 9.2: hoạt động: ids unique over every file, each outcome changes a stat, pools have lines, events and items exist.
+  const activityIds = activityFiles.flatMap((f) => f.activities.map((a) => a.id));
+  for (const { file, activities } of activityFiles) {
+    for (const a of activities) {
+      const err = (message: string) => problems.push({ file, level: 'error', message: `hoạt động "${a.id}": ${message}` });
+      if (activityIds.filter((x) => x === a.id).length > 1) err('trùng id');
+      const lists: [string, typeof a.outcomes][] = [['outcomes', a.outcomes], ['failOutcomes', a.failOutcomes ?? []], ['free', a.free?.outcomes ?? []]];
+      for (const [name, list] of lists) list.forEach((o, i) => {
+        const where = `${name} ${i + 1}`;
+        const keys = [...Object.entries(o.effects).filter(([, v]) => typeof v === 'number' && v !== 0).map(([k]) => k), ...Object.keys(o.roll)];
+        if (!keys.some((k) => STAT_KEYS.includes(k))) err(`${where} không đổi chỉ số nào (mỗi kết quả phải ảnh hưởng ít nhất một trong 8 chỉ số)`);
+        for (const [k, [lo, hi]] of Object.entries(o.roll)) if (lo > hi) err(`${where}: khoảng "${k}" ngược (${lo} > ${hi})`);
+        const pool = typeof o.text === 'string' ? [o.text] : Array.isArray(o.text) ? o.text : [...o.text.lines, ...o.text.parts.flat()];
+        if (pool.length === 0) err(`${where} không có câu nào`);
+        if (o.startEvent && !allEventIds.has(o.startEvent)) err(`${where} mở sự kiện không tồn tại "${o.startEvent}"`);
+        if (o.effects.followUp && !allEventIds.has(o.effects.followUp.event)) err(`${where} hẹn sự kiện không tồn tại "${o.effects.followUp.event}"`);
+        for (const it of o.effects.addItems ?? []) if (itemIds && !itemIds.includes(it)) err(`${where} cho vật phẩm lạ "${it}"`);
+      });
+      if (a.free && a.cost.length === 0) err('"free" chỉ dùng khi có "cost"');
     }
   }
   // 9.S2: Hệ thống: levels rise by points and act all life (no one-time stat hooks); items it gives exist.

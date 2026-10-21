@@ -14,8 +14,9 @@ import { BASIC_KNOWLEDGE } from './knowledge';
  * v2: after the per-version steps in `migrate`, missing fields are backfilled from a fresh life (`backfillLife`).
  * v3: a special body no longer stands in for the root; old "thể chất" lives get an ordinary root back (`restoreRoots`).
  * v4: tầng (9.1): an older life is put in Phàm gian, or Tu chân giới when it already has a realm (`placeTier`).
+ * v5: hoạt động (9.2): the last Ngao du trip moves into the activity record (`moveLeisure`).
  */
-export const SAVE_VERSION = 4;
+export const SAVE_VERSION = 5;
 export const SLOT_COUNT = 9;
 const KEY_PREFIX = 'bachthe.save.';
 const META_KEY = 'bachthe.meta';
@@ -236,6 +237,13 @@ function placeTier(life: GameState): GameState {
   return { ...life, tier: cultivator ? 'tu_chan' : 'pham_gian', tierHistory: cultivator ? { pham_gian: 0, tu_chan: life.character.age } : { pham_gian: 0 }, tierScreen: null };
 }
 
+/** SaveVersion 5: Ngao du became the activity "ngao_du"; its last trip is kept so it stays once a year. */
+function moveLeisure(life: GameState): GameState {
+  if (life.activities !== undefined) return life;
+  const age = life.extremes.lastLeisure;
+  return { ...life, activities: age === null || age === undefined ? { last: {}, year: -1, uses: {} } : { last: { ngao_du: age }, year: age, uses: { ngao_du: 1 } } };
+}
+
 function migrateSteps(save: SaveFile): SaveFile {
   // Fields added within saveVersion 1 get their empty defaults.
   let life = save.life as GameState & { extremes?: GameState['extremes'] };
@@ -338,7 +346,7 @@ function migrateSteps(save: SaveFile): SaveFile {
       },
     };
   }
-  life = placeTier(restoreRoots(splitBody(life)));
+  life = moveLeisure(placeTier(restoreRoots(splitBody(life))));
   // 9.R4d: no mass root test any more: an untested life drops the booked visit (the tiên duyên gates take over).
   const booked = life.events.followUps.filter((f) => /^thu_linh_can/.test(f.event));
   if (!life.cult.root && booked.length) life = { ...life, events: { ...life.events, followUps: life.events.followUps.filter((f) => !booked.includes(f)) } };

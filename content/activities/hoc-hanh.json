@@ -1,0 +1,35 @@
+[
+  {
+    "id": "thu_quan",
+    "group": "hoc_hanh",
+    "name": "Đọc sách ở thư quán",
+    "icon": "書",
+    "text": "Mất vài đồng tiền trà, ngồi cả ngày trong thư quán đầu phố.",
+    "conditions": { "age": { "min": 7 }, "tier": ["pham_gian"] },
+    "cost": [{ "silver": 2, "months": 1 }],
+    "check": { "stat": "stat.intellect", "difficulty": 35 },
+    "outcomes": [
+      {
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            ["Ngươi đọc một bộ sử cũ,", "Ngươi mượn một quyển địa chí,", "Ngươi lật một tập thơ của người xưa,", "Ngươi chép lại một quyển binh thư,", "Ngươi đọc ké bên một lão tú tài,"],
+            ["hiểu thêm vì sao triều đại nọ sụp đổ.", "nhớ được tên sông núi ba châu.", "thuộc lòng mấy câu, đọc lên nghe cũng ra dáng.", "nhìn ra mấy chỗ người viết tự mâu thuẫn.", "lão chỉ cho ngươi cách đọc chậm mà nhớ lâu."]
+          ]
+        },
+        "effects": { "stat.intellect": 2, "stat.happiness": 1 }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": [
+          "Chữ nghĩa nhảy múa trước mắt. Ngươi ngủ gục trên bàn tới khi chủ quán gõ vai.",
+          "Đọc ba trang quên hai. Tiền trà mất, đầu óc vẫn thế.",
+          "Ngồi cạnh bàn mấy công tử ồn ào, ngươi chẳng đọc nổi một dòng."
+        ],
+        "effects": { "stat.happiness": -1, "stat.intellect": 1 }
+      }
+    ]
+  }
+]

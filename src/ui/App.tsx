@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
-import { goLeisure } from '../systems/leisure';
+import { doActivity } from '../systems/activities';
 import { rentCave } from '../systems/cave';
 import type { Content } from '../core/content';
 import { advanceYear, createLife, fastForward, fillTemplate } from '../core/state';
@@ -395,7 +395,13 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         saveWarning={saveFailed ? 'Không lưu được: trình duyệt đang chặn hoặc đầy bộ nhớ. Hãy xuất file để giữ đời này.' : null}
         onAdvance={() => setLife(life.seclusion ? runSeclusion(life, content) : advanceYear(life, content))}
         onFastForward={() => setLife(life.seclusion ? runSeclusion(life, content) : fastForward(life, content, prefs.ffYears ?? content.balance.fastForward.maxYears))}
-        onLeisure={() => { const r = goLeisure(life, content); if (r) setLife(r.state); }}
+        onLeisure={() => { const r = doActivity(life, content, 'ngao_du'); if (r) setLife(checkDeath(r.state, content)); }}
+        onActivity={(id) => {
+          const r = doActivity(life, content, id);
+          if (!r) return null;
+          setLife(checkDeath(r.state, content));
+          return { text: r.text, tone: r.tone, changes: describeChanges(life, r.state) };
+        }}
         onSeclude={(years) => setLife(seclude(life, content, years))}
         onRentCave={(years) => { const r = rentCave(life, content, years); if (!r) return null; setLife(r.state); return r.text; }}
         onPlaceStrand={(element) => setLife(placeStrand(life, content, element).state)}

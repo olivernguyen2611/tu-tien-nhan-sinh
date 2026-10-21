@@ -1,0 +1,29 @@
+[
+  {
+    "id": "luyen_quyen_som",
+    "group": "suc_khoe",
+    "name": "Luyện quyền buổi sớm",
+    "icon": "拳",
+    "text": "Dậy trước gà gáy, ra bãi đất sau nhà đánh vài bài quyền.",
+    "conditions": { "age": { "min": 10 } },
+    "cost": [{ "health": 2, "months": 1 }],
+    "limit": { "perYear": 1, "cooldownYears": 1 },
+    "outcomes": [
+      {
+        "weight": 4,
+        "text": [
+          "Một mùa dậy sớm, mồ hôi thấm áo. Bước chân ngươi vững hơn hẳn.",
+          "Ngươi đánh quyền tới khi sương tan. Hàng xóm đi chợ về vẫn thấy ngươi đứng tấn.",
+          "Sáng nào cũng một trăm cú đấm vào bao cát. Bao rách trước khi tay ngươi rách.",
+          "Có đứa trẻ trong xóm ra đứng xem rồi bắt chước. Ngươi dạy nó một thế, tự thấy mình cũng hiểu thêm."
+        ],
+        "effects": { "stat.physique": 1, "stat.health": 4 }
+      },
+      {
+        "weight": 1,
+        "text": ["Trượt chân trên sương sớm, trẹo cổ chân. Nằm mấy hôm mới đi lại được."],
+        "effects": { "stat.health": -3, "stat.happiness": -2 }
+      }
+    ]
+  }
+]

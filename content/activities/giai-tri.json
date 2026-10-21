@@ -1,0 +1,84 @@
+[
+  {
+    "id": "ngao_du",
+    "group": "giai_tri",
+    "name": "Ngao du",
+    "icon": "遊",
+    "text": "Gác việc một chút, đi cho khuây khỏa.",
+    "conditions": { "age": { "min": 8 } },
+    "cost": [
+      { "when": { "realm": { "min": "luyen_khi" } }, "spiritStones": 3, "months": 1 },
+      { "when": { "realm": { "max": "pham_nhan" } }, "silver": 5, "months": 1 }
+    ],
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi gác việc tu hành, xuống núi dạo một vòng. Uống trà ở quán ven sông, nghe kể chuyện tới khi trời tối.",
+          "Ngươi lên thuyền đi ngược dòng mấy trăm dặm, ngắm hai bờ núi xanh. Về tới nơi mới nhớ ra chưa hỏi giá vé.",
+          "Ngươi ghé một trấn nhỏ đúng hội hoa đăng. Thả một chiếc đèn xuống sông, chẳng cầu gì, chỉ thấy lòng nhẹ đi.",
+          "Ngươi về thăm quê, ăn một bát mì đầu chợ. Mì vẫn dở, nhưng ngươi ăn hết.",
+          "Ngươi trèo lên đỉnh núi xem mặt trời mọc. Gió lạnh, mây trôi, mấy chuyện vướng bận bỗng nhỏ lại."
+        ],
+        "roll": { "stat.happiness": [8, 14] },
+        "bonus": [{ "when": { "stats": [{ "stat": "stat.happiness", "lte": 20 }] }, "effects": { "stat.daoHeart": 1 } }]
+      }
+    ],
+    "free": {
+      "outcomes": [
+        {
+          "text": [
+            "Trong túi chẳng còn gì, ngươi đi bộ ra bờ suối ngồi cả buổi. Không tốn đồng nào, mà cũng đỡ hơn.",
+            "Ngươi nằm dưới gốc cây đếm mây. Đếm tới đám thứ bảy mươi thì ngủ quên."
+          ],
+          "roll": { "stat.happiness": [3, 5] },
+          "bonus": [{ "when": { "stats": [{ "stat": "stat.happiness", "lte": 20 }] }, "effects": { "stat.daoHeart": 1 } }]
+        }
+      ]
+    }
+  },
+  {
+    "id": "song_bac",
+    "group": "giai_tri",
+    "name": "Vào sòng bạc",
+    "icon": "賭",
+    "text": "Ba con xúc xắc, một chén úp. Khí vận quyết định túi tiền nặng hay nhẹ.",
+    "conditions": { "age": { "min": 18 } },
+    "cost": [{ "silver": 10, "months": 0 }],
+    "limit": { "perYear": 2 },
+    "check": { "stat": "stat.luck", "difficulty": 55 },
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Ba lần đặt tài, ba lần ra tài. Nhà cái nhìn ngươi như nhìn quỷ.",
+          "Ngươi thắng một ván lớn rồi đứng dậy ngay. Ra tới cửa vẫn nghe tiếng chửi sau lưng.",
+          "Vận đỏ như son. Ngươi ôm bạc về, ngủ không yên vì sợ có người theo."
+        ],
+        "effects": { "stat.happiness": 4 },
+        "roll": { "silver": [14, 30] }
+      },
+      {
+        "weight": 1,
+        "text": ["Thắng to tới mức chủ sòng mời ngươi chén rượu, rồi lịch sự mời ngươi đừng quay lại."],
+        "effects": { "stat.happiness": 6, "karma": -1 },
+        "roll": { "silver": [40, 60] }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Thua sạch mười lượng, còn nợ thêm chén trà. Ngươi tự nhủ lần sau sẽ khôn hơn.",
+          "Ván cuối tưởng thắng, chén mở ra lại là xỉu. Ngươi đi về, đá bay một hòn sỏi.",
+          "Ngồi cạnh một gã mặt đỏ, gã thắng bao nhiêu ngươi thua bấy nhiêu. Về rồi mới ngờ là chim mồi."
+        ],
+        "effects": { "stat.happiness": -4 }
+      },
+      {
+        "weight": 1,
+        "text": ["Bắt được nhà cái chơi gian, ngươi lật bàn. Bạc không lấy lại được, mặt mũi còn sưng."],
+        "effects": { "stat.happiness": -3, "stat.health": -4 }
+      }
+    ]
+  }
+]

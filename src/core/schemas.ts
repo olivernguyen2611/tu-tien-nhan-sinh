@@ -850,20 +850,6 @@ export const BalanceSchema = z
     statGain: z
       .object({ stats: z.array(z.enum(['happiness', 'intellect', 'charm'])), softAt: z.number(), softMul: z.number().min(0), hardAt: z.number(), hardMul: z.number().min(0) })
       .strict(),
-    /** 6b.2 Ngao du: once a year, pay to lift happiness (silver for mortals, spirit stones for cultivators). */
-    leisure: z
-      .object({
-        minAge: z.number().int().min(0),
-        silver: z.number().int().min(0),
-        spiritStones: z.number().int().min(0),
-        happiness: z.tuple([z.number(), z.number()]),
-        /** Free walk when the purse is empty. */
-        freeHappiness: z.tuple([z.number(), z.number()]),
-        /** Đạo tâm gained when happiness was at or below this before the trip. */
-        daoHeartBelow: z.number(),
-        daoHeart: z.number(),
-      })
-      .strict(),
     /** 6b.14 Động phủ linh mạch: spirit stones per year by realm, speed while the lease runs, lease lengths (years) and the discount past one year. */
     caveRent: z
       .object({
@@ -1929,6 +1915,71 @@ export const FamilyActionSchema = z
   });
 export const FamilyActionFileSchema = z.array(FamilyActionSchema);
 
+/** 9.2 Khung Hoạt động: menu groups an activity sits in. */
+export const ACTIVITY_GROUPS = ['ban_than', 'hoc_hanh', 'nghe', 'tai_san', 'quan_he', 'giai_tri', 'suc_khoe', 'pham_phap', 'giang_ho', 'tu_luyen'] as const;
+export type ActivityGroup = (typeof ACTIVITY_GROUPS)[number];
+
+/** One way to pay; the first option whose `when` holds and that the purse can cover is paid. */
+const ActivityCostSchema = z
+  .object({
+    when: ConditionsSchema.partial().optional(),
+    silver: z.number().int().min(0).optional(),
+    spiritStones: z.number().int().min(0).optional(),
+    health: z.number().int().min(0).optional(),
+    /** Months of the year (task 9.4 spends them; kept on the data until then). */
+    months: z.number().int().min(0).max(12).optional(),
+  })
+  .strict();
+
+const ActivityOutcomeSchema = z
+  .object({
+    weight: z.number().min(0).default(1),
+    /** Only drawn when this holds. */
+    when: ConditionsSchema.partial().optional(),
+    /** A line, or a pool (task 9.3) with the anti-repeat memory. */
+    text: z.union([z.string().min(1), TextPoolSchema]),
+    effects: EffectsSchema.default({}),
+    /** Rolled each use and added to the effects, e.g. "stat.happiness": [8, 14]. */
+    roll: z.record(z.string(), z.tuple([z.number(), z.number()])).default({}),
+    /** Extra effects when these hold before the activity (e.g. đạo tâm for someone very unhappy). */
+    bonus: z.array(z.object({ when: ConditionsSchema.partial(), effects: EffectsSchema }).strict()).default([]),
+    /** An event that opens at once; mini-games and fights live inside events. */
+    startEvent: id.optional(),
+  })
+  .strict();
+export type ActivityOutcome = z.infer<typeof ActivityOutcomeSchema>;
+
+/** 9.2: one thing the player chooses to do (content/activities/*.json, worlds/<id>/activities/*.json). */
+export const ActivitySchema = z
+  .object({
+    id,
+    group: z.enum(ACTIVITY_GROUPS),
+    name: z.string().min(1),
+    /** One Hán character, like the dock. */
+    icon: z.string().refine((t) => [...t].length === 1, 'icon là đúng một chữ'),
+    text: z.string().min(1),
+    /** Shown in the menu only when these hold. */
+    conditions: ConditionsSchema.partial().default({}),
+    cost: z.array(ActivityCostSchema).default([]),
+    /** When no cost option can be paid: a lesser free version. Without it the activity waits for money. */
+    free: z.object({ outcomes: z.array(ActivityOutcomeSchema).min(1) }).strict().optional(),
+    limit: z
+      .object({ perYear: z.number().int().min(1).default(1), cooldownYears: z.number().int().min(1).default(1) })
+      .strict()
+      .default({ perYear: 1, cooldownYears: 1 }),
+    /** A check like an event's: the chance shows, success draws `outcomes`, failure `failOutcomes`. */
+    check: z.object({ stat: statKey, difficulty: z.number().min(0).max(100) }).strict().optional(),
+    outcomes: z.array(ActivityOutcomeSchema).min(1),
+    failOutcomes: z.array(ActivityOutcomeSchema).min(1).optional(),
+  })
+  .strict()
+  .superRefine((a, ctx) => {
+    if (a.check && !a.failOutcomes) ctx.addIssue({ code: 'custom', message: 'hoạt động có "check" phải có "failOutcomes"' });
+    if (!a.check && a.failOutcomes) ctx.addIssue({ code: 'custom', message: '"failOutcomes" chỉ dùng khi có "check"' });
+  });
+export type Activity = z.infer<typeof ActivitySchema>;
+export const ActivityFileSchema = z.array(ActivitySchema);
+
 /**
  * Task 9.0.3: what the player can do with someone met along the way, by how close they are
  * (content/npc-acts.json). Once a year per person per act. `enemy` acts are for people with a
@@ -2061,7 +2112,8 @@ export const LifeTextsSchema = z
     rewindAge6: z.string().min(1),
     rewindRealm: z.string().min(1),
     /** 6b.2 Ngao du: paid trip, free walk (empty purse), and the low-happiness hint under the stats. */
-    leisure: z.object({ paid: lines, free: lines, lowHint: z.string().min(1) }).strict(),
+    /** Ngao du itself is an activity (9.2, content/activities); this is the hint shown when spirits are low. */
+    leisure: z.object({ lowHint: z.string().min(1) }).strict(),
     /** 6b.14 Động phủ linh mạch: the line when a lease is taken ({years}, {cost}). */
     cave: z.object({ rent: z.string().min(1) }).strict(),
     /** plainCultivator: the plain pool for anyone past Phàm Nhân (playtest 2026-10-12). */

@@ -104,7 +104,6 @@
     "shortHappiness": -3
   },
   "caveRent": { "cost": { "luyen_khi": 10, "truc_co": 30, "kim_dan": 80, "nguyen_anh": 200, "hoa_than": 500 }, "speedMul": 1.5, "leases": [1, 10], "leaseDiscount": 0.1 },
-  "leisure": { "minAge": 8, "silver": 5, "spiritStones": 3, "happiness": [8, 14], "freeHappiness": [3, 5], "daoHeartBelow": 20, "daoHeart": 1 },
   "fastForward": {
     "maxYears": 10,
     "choices": [5, 10, 20, 50]
