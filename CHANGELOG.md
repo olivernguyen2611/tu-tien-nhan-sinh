@@ -8,6 +8,9 @@
 
 ## [Chưa phát hành]
 
+### Góp ý 23/10 · Tắt developer mode ở màn hình chính (2026-10-23)
+- Khi developer mode đang bật, dòng báo ở màn hình chính có nút **Tắt**. Không cần vào màn chơi mới tắt được.
+
 ### Góp ý 23/10 · Quan trường thêm chuyện, mưu phản dễ thấy (2026-10-23)
 - 28 sự kiện quan trường mới (`quan-truong-2.json`):
   - Thăng đường có thêm 10 án: bỏ vợ, một con gà hai chủ, bát canh có độc, cường hào chiếm đất, cháy chợ, án ma ám, gian lận thi Hương, nô tỳ bỏ trốn, thư lại nhận hối, buôn muối lậu.

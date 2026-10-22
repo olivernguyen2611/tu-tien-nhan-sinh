@@ -620,6 +620,7 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
       rebirthPoints={readMeta(store).rebirthPoints}
       devMode={devMode}
       onDevUnlock={() => toggleDev(true)}
+      onDevOff={() => toggleDev(false)}
       onContinue={() => latest !== null && loadSlot(latest)}
       onStart={() => {
         const free = firstFreeSlot(store);

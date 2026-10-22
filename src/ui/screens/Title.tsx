@@ -4,7 +4,7 @@ import { DEV_TAP_GAP_MS, DEV_TAPS, DEV_WARNING } from '../devMode';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import type { ThemePref } from '../theme';
 
-export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, onDevUnlock, onContinue, onStart, onSaves, onRebirth, onCodex, onChallenge, theme, onToggleTheme }: {
+export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, onDevUnlock, onDevOff, onContinue, onStart, onSaves, onRebirth, onCodex, onChallenge, theme, onToggleTheme }: {
   canContinue: boolean;
   livesPlayed: number;
   /** Task 5b.1: Luân Hồi points kept across lives. */
@@ -12,6 +12,8 @@ export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, 
   devMode: boolean;
   /** Called after the seal is tapped DEV_TAPS times in a row. */
   onDevUnlock: () => void;
+  /** Turns the developer mode off (a button shown while it is on). */
+  onDevOff: () => void;
   onContinue: () => void;
   onStart: () => void;
   onSaves: () => void;
@@ -50,7 +52,7 @@ export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, 
       </div>
       <div class="seal-mark" aria-hidden="true" onClick={tapSeal}>仙</div>
       {left !== null && <p class="dev-hint" role="status">Còn {left} lần nữa…</p>}
-      {devMode && <p class="dev-hint">Developer mode đang bật</p>}
+      {devMode && <p class="dev-hint">Developer mode đang bật · <button class="link-btn dev-off" onClick={onDevOff}>Tắt</button></p>}
       <h1>Bách Thế Luân Hồi</h1>
       <p class="subtitle">Trăm kiếp luân hồi, một đường cầu đạo</p>
       {canContinue && <button class="btn-primary start" onClick={onContinue}>Tiếp tục</button>}
