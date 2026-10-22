@@ -8,6 +8,20 @@
 
 ## [Chưa phát hành]
 
+### 12.10 Nội dung và cân bằng triều đình (2026-10-22)
+- 16 sự kiện thêm (`de-nghiep-them.json`):
+  - Đế nghiệp: thái hậu gọi, em gái bị chỉ hôn, tướng địch xin hàng, lính cướp của dân, kết thông gia với phiên trấn, tin đồn làm phản trong quân, sủng thần dò hỏi.
+  - Làm vua: sử quan không chịu sửa sử, điềm lành, các hoàng tử tranh nhau.
+  - Phản ứng của người thường: đổi triều, nghĩa quân qua làng, buôn bán thời chiến, thư sinh luận triều chính ở tửu lâu, tân quân đại xá, lão binh về làng.
+- Tổng nội dung GĐ 12: 57 sự kiện triều đình, quan trường, binh nghiệp; 60 sự kiện đế nghiệp (chưa tính 16 sự kiện quý tộc); 22 sự kiện làm vua.
+- Mô phỏng 80 đời mỗi persona (`npm run simulate -- --profile mortal`):
+  | Persona | Lên ngôi | Chết vì đế nghiệp |
+  |---|---|---|
+  | Hoàng tử tham vọng | 9% | 44% (48% số đời thất bại) |
+  | Thủ lĩnh nghĩa quân | 15% | 30% (35% số đời thất bại) |
+  | Quyền thần tham vọng | 3% (chỉ ~1/5 số đời leo đủ cao để mưu phản) | 6% |
+- Sáu persona cũ không đổi đáng kể: sống ≥ 40 tuổi từ 84% tới 100%, không ai lên ngôi.
+
 ### 12.9 Làm vua (2026-10-22)
 - Lên ngôi bằng đường nào (kế vị, khởi nghĩa, tạo phản) cũng thành hoàng đế, hoặc nữ hoàng. Đường kế vị giữ quốc hiệu cũ. Hai đường kia lập triều mới. Niên hiệu là của ngươi chừng nào còn ngồi ngai.
 - Bốn thanh triều chính: **Quốc khố**, **Dân tâm**, **Binh lực**, **Triều thần**. Mỗi năm có một dòng báo cáo. Các thanh trôi theo thời thế, theo đại sự của triều đình và theo việc ngươi làm. Có một khoản thuế cố định hằng năm.

@@ -284,3 +284,18 @@ describe('Làm vua (12.9)', () => {
     expect(abdicated.flags.thai_thuong_hoang).toBe(true);
   });
 });
+
+describe('Nội dung triều đình (12.10)', () => {
+  it('enough court, war, đế nghiệp and reign events, and no id is shared', () => {
+    const by = (cats: string[]) => content.events.filter((e) => cats.includes(e.category)).length;
+    expect(by(['royal', 'rebel', 'usurp'])).toBeGreaterThanOrEqual(55);
+    expect(by(['reign'])).toBeGreaterThanOrEqual(20);
+    const ids = content.events.map((e) => e.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it('every road has a bot persona that plays it', async () => {
+    const { MORTAL_PERSONAS } = await import('../src/systems/simulate');
+    for (const id of ['tham_vong', 'nghia_quan', 'quyen_than'] as const) expect(MORTAL_PERSONAS[id].choice).toBe('ambitious');
+  });
+});
