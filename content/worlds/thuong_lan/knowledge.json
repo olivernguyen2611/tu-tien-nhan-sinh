@@ -19,6 +19,16 @@
         "kind": "event",
         "id": "tien_mon_tuyen_do_truot",
         "chance": 0.18
+      },
+      {
+        "kind": "event",
+        "id": "gh_tin_don_tien_nhan",
+        "chance": 0.6
+      },
+      {
+        "kind": "event",
+        "id": "gh_tien_nhan_lam_do_cho",
+        "chance": 1
       }
     ],
     "unlocks": [

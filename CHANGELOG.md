@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### 11.6 Cầu nối giang hồ → tu tiên (2026-10-22)
+- Tin đồn tiên nhân ở quán trà; tiên nhân bay qua làm đổ hàng chợ (NC X2: đòi bồi thường, quỳ xin làm đồ đệ thì được xem linh căn bẩm sinh, lặng lẽ ghi hướng bay); kỳ vật xuất thế các phái tranh nhau. Hai sự kiện đầu là nguồn của mục tri thức "Lời đồn về tiên nhân".
+- Hoạt động "Tìm tiên tích" (mở khi đã ghi hướng bay, chưa xem linh căn): thường chỉ thấy mây, đôi khi gặp vách đá khắc võ học, mảnh ngọc lạ, hiếm khi gặp lão đạo ven đường (cơ duyên xem linh căn). Vẫn giữ luật linh căn bẩm sinh: không ai được linh căn nhờ chăm chỉ.
+- Thế lực giang hồ là bình phong của tu sĩ: chỉ lộ ra khi đã nhập đạo (Luyện Khí trở lên, từng có danh giang hồ hoặc ở một thế lực).
+- Validator thuật ngữ theo tầng (9.10) nay soát cả sự kiện giang hồ; bí kíp đổi "chân khí" thành "nội lực".
+
 ### 11.5 Võ lâm đại hội và minh chủ (2026-10-22)
 - Đại hội võ lâm thành hệ thống: mười năm một kỳ (năm tổ chức tùy thế giới của mỗi đời), mở cho võ giả từ Nhị lưu có hiệp danh 15. Ba vòng: vòng loại, đấu bảng, chung kết; đối thủ mạnh dần (Nhất lưu → Hóa cảnh), thắng thua theo chiến lực. Thưởng bạc, hiệp danh theo số vòng thắng.
 - Thắng cả ba vòng làm minh chủ võ lâm: bổng lộc mỗi năm, uy vọng 0–100 (mỗi năm tự hao một ít). Uy vọng về 0 thì bị phế; kỳ đại hội sau không lên đài giữ ngôi thì mất ngôi; tuổi già có thể trao lệnh bài.

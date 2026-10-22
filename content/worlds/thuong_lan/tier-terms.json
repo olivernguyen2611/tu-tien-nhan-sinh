@@ -2,7 +2,7 @@
   "tiers": [
     {
       "tier": "pham_gian",
-      "categories": ["childhood", "study", "work", "mortal"],
+      "categories": ["childhood", "study", "work", "mortal", "jianghu"],
       "words": [
         { "word": "linh lực", "use": "sức lực, nội lực" },
         { "word": "pháp lực", "use": "sức lực, nội lực" },

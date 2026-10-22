@@ -11,9 +11,9 @@
     { "id": "quy_tuc_cong", "name": "Quy Tức Công", "kind": "noi_cong", "grade": 2, "power": 0.03, "maxLevel": 6, "lifespan": 3, "needs": { "stat.comprehension": 40 }, "text": "Học rùa thở: chậm, sâu, dài. Người luyện thành ít bệnh, sống lâu." },
     { "id": "liet_hoa_dao", "name": "Liệt Hỏa Đao Pháp", "kind": "dao", "grade": 3, "power": 0.08, "maxLevel": 7, "needs": { "stat.physique": 55 }, "text": "Đao ra như lửa cháy rừng, càng đánh càng nóng." },
     { "id": "luu_van_kiem", "name": "Lưu Vân Kiếm Quyết", "kind": "kiem", "grade": 3, "power": 0.08, "maxLevel": 7, "needs": { "stat.comprehension": 55 }, "text": "Kiếm theo mây trôi, không có chiêu cố định. Người ngộ tính kém học mãi không vào." },
-    { "id": "hon_nguyen_nhat_khi", "name": "Hỗn Nguyên Nhất Khí Công", "kind": "noi_cong", "grade": 3, "power": 0.06, "maxLevel": 7, "lifespan": 5, "needs": { "stat.comprehension": 55 }, "text": "Nội công gốc của một môn phái lớn: một luồng chân khí chạy khắp chu thân." },
+    { "id": "hon_nguyen_nhat_khi", "name": "Hỗn Nguyên Nhất Khí Công", "kind": "noi_cong", "grade": 3, "power": 0.06, "maxLevel": 7, "lifespan": 5, "needs": { "stat.comprehension": 55 }, "text": "Nội công gốc của một môn phái lớn: một luồng nội lực chạy khắp chu thân." },
     { "id": "phi_hoa_trich_diep", "name": "Phi Hoa Trích Diệp", "kind": "am_khi", "grade": 3, "power": 0.07, "maxLevel": 7, "needs": { "stat.luck": 50, "stat.comprehension": 45 }, "text": "Ngắt lá làm phi đao, bẻ hoa làm ám khí. Tới mức này thì trong tay cái gì cũng giết được người." },
-    { "id": "huyet_anh_ma_trao", "name": "Huyết Ảnh Ma Trảo", "kind": "quyen", "grade": 3, "power": 0.1, "maxLevel": 7, "evil": true, "needs": { "stat.physique": 45 }, "text": "Tà công: luyện bằng máu tươi, mạnh rất nhanh, nhưng tâm tính kém thì chân khí quay ngược." },
+    { "id": "huyet_anh_ma_trao", "name": "Huyết Ảnh Ma Trảo", "kind": "quyen", "grade": 3, "power": 0.1, "maxLevel": 7, "evil": true, "needs": { "stat.physique": 45 }, "text": "Tà công: luyện bằng máu tươi, mạnh rất nhanh, nhưng tâm tính kém thì nội lực quay ngược." },
     { "id": "vo_danh_tan_quyen", "name": "Tàn quyển Vô Danh Thần Công", "kind": "noi_cong", "grade": 3, "power": 0.09, "maxLevel": 7, "fake": true, "needs": {}, "text": "Mấy trang giấy ố vàng, thiếu đầu thiếu đuôi. Không ai biết thật hay giả." }
   ],
   "weapons": [

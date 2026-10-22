@@ -910,5 +910,84 @@
     }
    }
   ]
+ },
+ {
+  "id": "tim_tien_tich",
+  "group": "giang_ho",
+  "name": "Tìm tiên tích",
+  "icon": "蹤",
+  "text": "Theo hướng đã ghi, lên núi tìm dấu vết của tiên nhân. Phần nhiều chỉ thấy mây, đôi khi thấy thứ khác.",
+  "conditions": {
+   "age": {
+    "min": 14
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "flagsAll": [
+    "ghi_huong_tien_tich"
+   ],
+   "root": {
+    "tested": false
+   }
+  },
+  "months": 3,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 2
+  },
+  "outcomes": [
+   {
+    "weight": 3,
+    "text": [
+     "Leo hết ba ngọn núi, chỉ thấy mây trắng và vách đá. Xuống núi chân run lẩy bẩy.",
+     "Ngươi lần theo dấu cũ tới một vách núi dựng đứng, đường cụt."
+    ],
+    "effects": {
+     "stat.physique": 1,
+     "stat.health": -1
+    }
+   },
+   {
+    "weight": 2,
+    "text": [
+     "Trong một hang đá, trên vách có mấy hình người múa kiếm khắc sâu vào đá như dao chém bùn. Ngươi ngồi nhìn ba ngày.",
+     "Bên một hồ nước trên đỉnh núi, có bia đá khắc chữ cổ. Đọc không hiểu, nhưng hình vẽ thì luyện được."
+    ],
+    "effects": {
+     "learnArt": {
+      "grades": [
+       3
+      ],
+      "evil": false
+     },
+     "stat.comprehension": 1
+    }
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Ngươi nhặt được một mảnh ngọc vỡ, ấm như có hơi người. Đem xuống núi, nhà buôn trả giá cao.",
+     "Dưới gốc tùng già có một chiếc hộp gỗ mục, trong còn mấy viên thuốc thơm lạ. Bán cho tiệm thuốc được khá bạc."
+    ],
+    "effects": {
+     "silver": 40,
+     "stat.luck": 1
+    }
+   },
+   {
+    "weight": 0.5,
+    "text": [
+     "Giữa đường núi, một lão đạo rách rưới đang ngồi nghỉ, như đã chờ ngươi từ lâu."
+    ],
+    "effects": {
+     "setFlags": [
+      "tien_duyen_co_duyen"
+     ],
+     "stat.daoHeart": 1
+    },
+    "startEvent": "tien_nhan_de_mat"
+   }
+  ]
  }
 ]
