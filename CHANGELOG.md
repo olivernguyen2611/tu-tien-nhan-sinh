@@ -8,6 +8,16 @@
 
 ## [Chưa phát hành]
 
+### 13.3 Đánh đổi thời gian trong tu tiên (2026-10-23)
+- Với tu sĩ, nhiều việc giờ tốn tháng của năm, tháng còn trống mới vào tu vi:
+  - nhiệm vụ tông: 3 tháng;
+  - luyện đan, luyện khí: 2 tháng;
+  - mỗi lần đổi ở bảo khố: 1 tháng;
+  - mỗi việc với đồ đệ: 1 tháng;
+  - luận bàn, luận đạo, truyền công, tặng đồ cho đạo lữ hay con cái: 1 tháng.
+- Hết tháng thì việc phải chờ sang năm, không còn làm hết mọi thứ mỗi năm được nữa. Số tháng ở `balance.time.actionMonths`.
+- Năm trống tự gộp: nhiều năm liền không có chuyện gì gộp thành một khối nhật ký "Tuổi 40–44: 5 năm khổ tu. Tu vi Luyện Khí tầng 3 từ 20% lên 65%." Phàm nhân thì "5 năm bình lặng trôi qua". Nhật ký ngắn hẳn khi tua nhanh.
+
 ### 13.2 Song giới: tu sĩ trở về phàm gian (2026-10-23)
 - Hoạt động mới cho tu sĩ còn giữ duyên phàm trần:
   - **Hạ sơn về quê** (3 tháng): gặp cha mẹ đã già, bạn cũ đã thành mộ, con cháu không nhận ra.

@@ -1791,6 +1791,8 @@ export const BalanceSchema = z
         monthsPerYear: z.number().int().min(1),
         careerMonths: z.record(z.string(), z.number().int().min(0)),
         careerMonthsDefault: z.number().int().min(0),
+        /** 13.3: months a cultivator's other doings take (mission, craft, treasury, disciple, bond). */
+        actionMonths: z.record(z.enum(['mission', 'craft', 'treasury', 'disciple', 'bond']), z.number().int().min(0)).optional(),
       })
       .strict(),
     /** 10.1 Học đường, học nghề (content/schooling.json has the schools and trades). */
@@ -2549,6 +2551,8 @@ export const LifeTextsSchema = z
     itemRepeat: lines,
     /** 9.3: a year with nothing in it. */
     quietYear: TextPoolSchema.default(['Một năm bình lặng trôi qua.']),
+    /** 13.3: quiet years in a row, folded: {years}; dao also {realm}, {from}, {to} (% of the bar). */
+    quietRun: z.object({ mortal: z.string().min(1), dao: z.string().min(1), peak: z.string().min(1) }).strict().default({ mortal: '{years} năm bình lặng trôi qua.', dao: '{years} năm khổ tu. Tu vi {realm} từ {from}% lên {to}%.', peak: '{years} năm khổ tu ở {realm} viên mãn, chờ cơ duyên đột phá.' }),
     /** 9.3: lead of the merged sổ thu chi line. */
     ledger: z.string().min(1).default('Sổ thu chi năm nay:'),
     deathOldAge: lines,

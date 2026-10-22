@@ -1,6 +1,7 @@
 // Bảo khố (task 5c.4): the sect treasury turns contribution into things the sect holds back for its
 // own: pills, artifacts, spirit stones, a year beside the spirit vein. Spending does not lower the
 // total contribution that promotion counts (state.sect.spent tracks it). Entries in sect-life.json.
+import { monthsShort, spendMonths } from './timeBudget';
 import type { Content } from '../core/content';
 import type { GameState } from '../core/types';
 import { addItems, itemById, pillOutgrown } from './items';
@@ -28,7 +29,7 @@ function blockedReason(state: GameState, content: Content, t: { cost: number; mi
   if ((state.sect.bought?.[t.id] ?? 0) >= t.limit) return 'Đã đổi hết suất của đời này.';
   const cost = treasuryCost(state, content, t);
   if (merit(state) < cost) return `Cần ${cost} cống hiến.`;
-  return null;
+  return monthsShort(state, content, 'treasury');
 }
 
 /** What the player can see in the treasury: every entry the sect sells, with why it is shut. */
@@ -58,7 +59,7 @@ export function buyTreasury(state: GameState, content: Content, id: string): { s
     sect: { ...state.sect, spent: (state.sect.spent ?? 0) + cost, bought: { ...state.sect.bought, [id]: (state.sect.bought?.[id] ?? 0) + 1 } },
     money: { ...state.money, spiritStones: state.money.spiritStones + t.spiritStones },
   };
-  s = addItems(s, t.items);
+  s = spendMonths(addItems(s, t.items), content, 'treasury');
   if (t.progress && s.cult.realm !== 'pham_nhan') s = { ...s, cult: { ...s.cult, progress: clamp(s.cult.progress + t.progress) } };
   const got = [
     ...t.items.map((i) => itemById(content, i)?.name ?? i),

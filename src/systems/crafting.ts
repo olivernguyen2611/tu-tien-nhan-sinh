@@ -3,6 +3,7 @@
 // with the craft level above the recipe's, Ngộ tính and craft.<id>.success hooks;
 // craft.<id>.yield hooks add to the count. A failed alchemy leaves a Phế Đan.
 // Recipes in recipes.json, numbers in balance.crafting.
+import { monthsShort, spendMonths } from './timeBudget';
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { Recipe } from '../core/schemas';
@@ -54,6 +55,7 @@ export function recipeViews(state: GameState, content: Content, craft: string): 
       else if (state.crafts.lastPractice === state.character.age) blocked = 'Năm nay đã luyện một nghề rồi.';
       else if (missing) blocked = `Thiếu ${itemName(content, missing[0])}.`;
       else if ((r.cost.spiritStones ?? 0) > state.money.spiritStones || (r.cost.silver ?? 0) > state.money.silver) blocked = 'Không đủ tiền.';
+      else blocked = monthsShort(state, content, 'craft');
       return { id: r.id, product: itemName(content, r.product), count: r.count, needs, chance: craftChance(state, content, r), blocked };
     });
 }
@@ -67,7 +69,7 @@ export function craftRecipe(state: GameState, content: Content, recipeId: string
   const texts = content.recipes.texts;
   const rng = Rng.fromState(state.rng);
   const used = Object.entries(recipe.materials).flatMap(([id, n]) => Array<string>(n).fill(id));
-  let s: GameState = removeItems(state, used);
+  let s: GameState = spendMonths(removeItems(state, used), content, 'craft');
   s = { ...s, money: { silver: s.money.silver - (recipe.cost.silver ?? 0), spiritStones: s.money.spiritStones - (recipe.cost.spiritStones ?? 0) } };
   const success = rng.chance(view.chance);
   const name = itemName(content, recipe.product);

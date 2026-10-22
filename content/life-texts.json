@@ -15,6 +15,11 @@
     "Viên đan trôi tuột xuống bụng, như ăn một hạt đậu.",
     "Không có linh căn, linh dược vào người cũng chỉ như nước lã."
   ],
+  "quietRun": {
+    "mortal": "{years} năm bình lặng trôi qua, ngày nào cũng giống ngày nào.",
+    "dao": "{years} năm khổ tu. Tu vi {realm} từ {from}% lên {to}%.",
+    "peak": "{years} năm khổ tu ở {realm} viên mãn, chờ một cơ duyên để đột phá."
+  },
   "quietYear": {
     "lines": [
       "Một năm bình lặng trôi qua.",

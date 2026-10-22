@@ -51,7 +51,7 @@ export function rewind(state: GameState, content: Content): GameState {
   const text = (offer.target === 'age6' ? t.rewindAge6 : t.rewindRealm)
     .replaceAll('{age}', String(state.death.age)).replaceAll('{back}', String(cp.character.age));
   // Lines up to the moment gone back to stay as the record; the rest is only memory now.
-  const log = state.log.filter((y) => y.age <= cp.character.age);
+  const log = state.log.filter((y) => (y.toAge ?? y.age) <= cp.character.age);
   const last = log[log.length - 1];
   log[log.length - 1] = { ...last, lines: [...last.lines, { text, tone: 'rare' }] };
   return {

@@ -1,6 +1,7 @@
 // Sư phụ và đồ đệ, ngoài chỉ điểm (task 5c.8): luận bàn, luận đạo, truyền công pháp đang tu,
 // tặng vật phẩm đang giữ. Mỗi việc một lần mỗi năm cho mỗi đồ đệ. Số trong balance.disciples.acts,
 // lời văn trong disciples.json `acts`. Người thầy cũng nhận lại chỉ số (mọi lựa chọn đều đổi chỉ số).
+import { monthsShort, spendMonths } from './timeBudget';
 import { drawText } from './textPool';
 import type { TextPool } from '../core/schemas';
 import type { Content } from '../core/content';
@@ -40,7 +41,7 @@ export function actBlocked(state: GameState, content: Content, npc: Npc, act: Di
     if (!npc.root) return 'Đồ đệ chưa có linh căn.';
   }
   if (act.kind === 'gift' && !(state.inventory[act.itemId] > 0)) return 'Không còn vật phẩm này.';
-  return null;
+  return monthsShort(state, content, 'disciple');
 }
 
 /** Techniques the master can hand down (learned, not yet passed to this disciple). */
@@ -74,7 +75,7 @@ export function doDiscipleAct(state: GameState, content: Content, npcId: string,
   const texts = content.disciples.acts;
   const rng = Rng.fromState(state.rng);
   const vars = { npc: npc.name, name: state.character.name, technique: '', item: '' };
-  let s: GameState = { ...state, rng: rng.getState() };
+  let s: GameState = spendMonths({ ...state, rng: rng.getState() }, content, 'disciple');
   // Mark the act done and give the disciple's progress (mortals take none).
   const mark = (n: Npc, progress: number, extra: Partial<Npc> = {}): Npc => ({
     ...n, ...extra,

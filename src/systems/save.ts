@@ -116,7 +116,7 @@ const LifeShape = z
     stats: z.record(z.number()),
     cult: z.object({ lifespan: z.number() }).passthrough(),
     events: z.object({ pending: z.string().nullable() }).passthrough(),
-    log: z.array(z.object({ age: z.number(), lines: z.array(z.object({ text: z.string() }).passthrough()) })),
+    log: z.array(z.object({ age: z.number(), lines: z.array(z.object({ text: z.string() }).passthrough()) }).passthrough()),
   })
   .passthrough();
 

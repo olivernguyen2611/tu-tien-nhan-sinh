@@ -237,7 +237,8 @@
   "time": {
     "monthsPerYear": 12,
     "careerMonths": { "quan": 10, "thuong": 8, "vo_lam": 6, "y": 8, "tap_dich": 9 },
-    "careerMonthsDefault": 8
+    "careerMonthsDefault": 8,
+    "actionMonths": { "mission": 3, "craft": 2, "treasury": 1, "disciple": 1, "bond": 1 }
   },
   "schooling": {
     "enrollAge": [6, 12],

@@ -8,8 +8,9 @@ export type Gender = 'nam' | 'nu';
 export type Tone = 'normal' | 'good' | 'bad' | 'rare';
 
 /** 9.3: `ledger` lines (income, stipend, sect report) of one year are merged into one sổ thu chi line. */
-export interface LogLine { text: string; tone: Tone; ledger?: boolean }
-export interface LogYear { age: number; lines: LogLine[] }
+export interface LogLine { text: string; tone: Tone; ledger?: boolean; /** 13.3: the line of a year with nothing in it. */ quiet?: boolean }
+/** toAge, run: 13.3 quiet years in a row folded into one block (last age; where the bar stood when the run began). */
+export interface LogYear { age: number; lines: LogLine[]; toAge?: number; run?: { progress: number } }
 
 export interface Relative {
   id: string;

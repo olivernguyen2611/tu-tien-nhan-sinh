@@ -273,7 +273,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         {saveWarning && <p class="save-warning" role="alert">{saveWarning}</p>}
         {state.log.map((y, i) => (
           <article class={`age-block${i === state.log.length - 1 ? ' current' : ''}`} key={y.age}>
-            <h3>{y.age === 0 ? 'Chào đời' : `Tuổi ${y.age}`}{eraLabel(state, y.age) && <span class="era"> · {eraLabel(state, y.age)}</span>}</h3>
+            <h3>{y.age === 0 ? 'Chào đời' : y.toAge ? `Tuổi ${y.age}–${y.toAge}` : `Tuổi ${y.age}`}{eraLabel(state, y.age) && <span class="era"> · {eraLabel(state, y.age)}</span>}</h3>
             {y.lines.map((l) => <p class={l.tone === 'normal' ? '' : l.tone}><TermText text={l.text} /></p>)}
           </article>
         ))}
