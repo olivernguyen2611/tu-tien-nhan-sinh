@@ -1,0 +1,728 @@
+[
+ {
+  "id": "stl_ke_chuyen_dau_lang",
+  "category": "mortal",
+  "title": "Ông lão kể chuyện",
+  "text": "Tối nào ông lão mù đầu làng cũng kể chuyện cho trẻ con: thời xưa trời đất có thần, đất có yêu khổng lồ, hai bên đánh nhau tới mức đại lục phía tây vỡ thành từng mảnh. \"Rồi thần chết hết,\" ông nói, \"chỉ còn cái cửa.\"",
+  "themes": [
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "age": {
+    "min": 6,
+    "max": 40
+   }
+  },
+  "weight": 1.0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Hỏi cái cửa nào",
+    "result": {
+     "text": "Ông lão cười, không đáp. Mấy hôm sau ông mất. Câu chuyện ở lại trong đầu ngươi.",
+     "effects": {
+      "stat.intellect": 1,
+      "stat.happiness": 1,
+      "setFlags": [
+       "su_nghe_co_tich"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Ngồi nghe hết",
+    "result": {
+     "text": "Chuyện dài tới nửa đêm, có cả đoạn một con đường bằng ánh sáng bắc lên trời rồi đứt. Ngươi về ngủ mơ thấy mình leo mãi không tới.",
+     "effects": {
+      "stat.happiness": 2,
+      "setFlags": [
+       "su_nghe_co_tich"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Chuyện bịa, đi chơi",
+    "result": {
+     "text": "Ngươi chạy đi bắt dế. Ông lão vẫn kể, cho đám trẻ khác.",
+     "effects": {
+      "stat.happiness": 2,
+      "stat.intellect": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "stl_bia_da_ven_song",
+  "category": "mortal",
+  "title": "Tấm bia bên sông",
+  "text": "Nước sông cạn, lộ ra một tấm bia đá phủ rêu. Chữ mòn gần hết, chỉ còn đọc được mấy chữ: \"...ước Trung Cổ... các tông không can phàm thế... năm thứ nhất...\"",
+  "themes": [
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "age": {
+    "min": 12
+   }
+  },
+  "weight": 1.0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Cạo rêu, đọc cho hết",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 45
+    },
+    "success": {
+     "text": "Đó là một bản chép hòa ước các tông ký sau Tiên Ma đại chiến. Năm ký ước được tính làm năm thứ nhất Thương Lan lịch, tới nay đã gần ba nghìn năm.",
+     "effects": {
+      "stat.intellect": 2,
+      "setFlags": [
+       "su_doc_bia_hoa_uoc"
+      ]
+     }
+    },
+    "fail": {
+     "text": "Ngươi đọc sai một nửa, đoán bừa nửa còn lại. Về kể cho người làng, ai cũng tưởng ngươi bịa.",
+     "effects": {
+      "stat.intellect": 1,
+      "stat.charm": -1
+     }
+    }
+   },
+   {
+    "text": "Lấy bia làm bàn giặt",
+    "result": {
+     "text": "Đá phẳng, giặt rất êm. Chữ trên bia mòn thêm một chút.",
+     "effects": {
+      "stat.happiness": 1,
+      "karma": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "stl_xuong_duoi_ruong",
+  "category": "mortal",
+  "title": "Xương dưới ruộng",
+  "text": "Cày tới góc ruộng, lưỡi cày vấp phải một khúc xương to bằng cột đình, cứng như đá. Cả làng kéo tới xem, có người nói là xương rồng.",
+  "themes": [
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "age": {
+    "min": 14
+   }
+  },
+  "weight": 1.0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Lập miếu nhỏ thờ",
+    "result": {
+     "text": "Ngươi đắp đất che lại, dựng một miếu con. Đêm ấy ngươi mơ thấy một bóng người cao ngất đứng nhìn về phía tây.",
+     "effects": {
+      "karma": 2,
+      "stat.happiness": 2,
+      "setFlags": [
+       "su_xuong_than"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Bán cho thương nhân lạ",
+    "result": {
+     "text": "Một người khách mặc áo xám trả sáu mươi lượng, vừa khiêng đi vừa lẩm bẩm: \"Xương thần tộc, ở tận chỗ này...\"",
+     "effects": {
+      "silver": 60,
+      "karma": -1,
+      "stat.happiness": 1,
+      "setFlags": [
+       "su_xuong_than"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Báo quan",
+    "result": {
+     "text": "Quan huyện sai lính khiêng đi, thưởng mười lượng. Năm sau không ai nhắc nữa.",
+     "effects": {
+      "silver": 10,
+      "stat.charm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "stl_tranh_vach_chua_co",
+  "category": "mortal",
+  "title": "Tranh vách chùa cổ",
+  "text": "Ngôi chùa đổ trên núi còn một bức tranh vách: một vị tăng gầy đi chân đất từ phía tây, sau lưng là đất nứt và xương trắng, trước mặt là người phàm quỳ đón.",
+  "themes": [
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "age": {
+    "min": 10
+   }
+  },
+  "weight": 1.0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Thắp một nén nhang",
+    "result": {
+     "text": "Dưới tranh có dòng chữ nhỏ: \"Linh khí cạn thì tu tâm.\" Ngươi không hiểu hết, nhưng thấy lòng nhẹ đi.",
+     "effects": {
+      "stat.happiness": 2,
+      "karma": 1,
+      "setFlags": [
+       "su_tranh_tang_tay"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Chép lại bức tranh",
+    "result": {
+     "text": "Ngươi chép mất cả buổi. Về nhà treo ở vách, khách tới ai cũng hỏi.",
+     "effects": {
+      "stat.intellect": 1,
+      "stat.charm": 1,
+      "setFlags": [
+       "su_tranh_tang_tay"
+      ]
+     }
+    }
+   }
+  ],
+  "crossTier": true
+ },
+ {
+  "id": "stl_kham_thien_chep_sach",
+  "category": "mortal",
+  "title": "Khâm Thiên Giám thuê người chép sách",
+  "text": "Khâm Thiên Giám treo bảng thuê người biết chữ chép lại sách cũ bị mối ăn. Lương thấp, việc lâu, nhưng được vào kho sách mà người thường không bao giờ thấy.",
+  "themes": [
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "age": {
+    "min": 16
+   },
+   "stats": [
+    {
+     "stat": "stat.intellect",
+     "gte": 55
+    }
+   ]
+  },
+  "weight": 1.0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Nhận việc",
+    "result": {
+     "text": "Trong kho có một cuộn \"Khế ước tiên phàm\": tổ tiên vua Đại Ung là phàm nhân không linh căn, được các tông giúp dựng nước sau đại chiến, đổi lại tiên môn được lên núi chọn trẻ có linh căn. Khâm Thiên Giám là con mắt triều đình nhìn sang giới tu tiên.",
+     "effects": {
+      "silver": 15,
+      "stat.intellect": 2,
+      "stat.happiness": -1,
+      "setFlags": [
+       "su_khe_uoc_tien_pham"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Lương thấp, thôi",
+    "result": {
+     "text": "Ngươi đi làm việc khác, kiếm gấp ba.",
+     "effects": {
+      "silver": 20,
+      "stat.intellect": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "stl_ngoc_gian_tang_kinh",
+  "category": "sect",
+  "title": "Ngọc giản phủ bụi",
+  "text": "Dọn tàng kinh các, ngươi thấy một ngọc giản cổ bị nhét sau kệ. Thần thức chạm vào, trong đó hiện ra một con đường bằng ánh sáng, chín nghìn bậc, từ Trung Châu lên tới thượng giới.",
+  "themes": [
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "sect": {
+    "member": true
+   }
+  },
+  "weight": 1.0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Đọc cho hết",
+    "check": {
+     "stat": "stat.comprehension",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Thông Thiên lộ. Thời Thượng Cổ, tu sĩ đắc đạo theo đường ấy lên trời, linh khí thượng giới theo đường ấy chảy xuống. Đoạn cuối ngọc giản chỉ có một câu: \"Đêm ấy đường đứt.\"",
+     "effects": {
+      "stat.comprehension": 2,
+      "setFlags": [
+       "su_thong_thien_lo"
+      ]
+     }
+    },
+    "fail": {
+     "text": "Ngọc giản quá cũ, thần thức ngươi bị chấn lui, đau đầu ba ngày.",
+     "effects": {
+      "stat.health": -4,
+      "stat.comprehension": 1
+     }
+    }
+   },
+   {
+    "text": "Nộp lên trưởng lão",
+    "result": {
+     "text": "Trưởng lão nhìn ngọc giản rất lâu, rồi cất đi, thưởng ngươi ít điểm cống hiến.",
+     "effects": {
+      "sectContribution": 20,
+      "stat.charm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "stl_mo_tan_tu_trung_co",
+  "category": "cultivation",
+  "title": "Mộ tán tu Trung Cổ",
+  "text": "Giữa hoang nguyên có một nấm mộ đá, bia khắc: \"Không phải ta muốn uống máu. Linh khí không đủ cho mọi người.\" Cửa mộ hé mở.",
+  "themes": [
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "region": [
+    "vo_chu_hoang_nguyen",
+    "huyet_uyen"
+   ]
+  },
+  "weight": 1.0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Vào xem",
+    "result": {
+     "text": "Trong mộ có thủ ký của một tán tu thời Trung Cổ: linh khí cạn dần, kẻ yếu không có phần, nên có người học cách lấy máu và oán khí thay linh khí. Ma đạo khởi từ đó, không phải từ ác tâm, mà từ đói.",
+     "effects": {
+      "stat.comprehension": 1,
+      "stat.daoHeart": -1,
+      "setFlags": [
+       "su_goc_ma_dao"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Lấp cửa mộ lại",
+    "result": {
+     "text": "Ngươi đẩy đá lấp cửa. Người chết rồi, để họ yên.",
+     "effects": {
+      "karma": 2,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "stl_ma_tu_giu_cua",
+  "category": "cultivation",
+  "title": "Lão ma giữ vực",
+  "text": "Ở đáy một khe vực sâu, một lão ma tu ngồi trên tảng đá, như đã ngồi đó mấy trăm năm. Lão không đánh, chỉ hỏi: \"Ngươi tưởng ma tông trốn xuống đây à?\"",
+  "tags": [
+   "violence"
+  ],
+  "themes": [
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co"
+   },
+   "region": [
+    "huyet_uyen"
+   ]
+  },
+  "weight": 1.0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Ngồi xuống nghe",
+    "result": {
+     "text": "Lão kể: dưới Huyết Uyên là cửa U Minh. Sau đại chiến, chính đạo đuổi ma tông xuống đây, nhưng thật ra cũng là để có kẻ giữ cửa. \"Chúng ta canh nó ba nghìn năm. Không ai cảm ơn.\"",
+     "effects": {
+      "stat.comprehension": 1,
+      "stat.daoHeart": 1,
+      "setFlags": [
+       "su_ma_giu_cua"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Chính tà bất lưỡng lập",
+    "result": {
+     "text": "Lão thở dài, đứng dậy.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Lão ma giữ vực",
+       "realm": "same",
+       "intent": "teach",
+       "powerMul": 1.2
+      },
+      "win": {
+       "text": "Lão ngã xuống tảng đá, mắt vẫn nhìn xuống đáy vực. Từ đó không ai ngồi đây nữa.",
+       "effects": {
+        "reputation": {
+         "chinh": 4,
+         "ma": -6
+        },
+        "karma": -2,
+        "stat.daoHeart": -1
+       }
+      },
+      "lose": {
+       "text": "Lão phẩy tay, ngươi văng lên miệng vực. \"Về đi. Chỗ này không cần thêm người chết.\"",
+       "effects": {
+        "stat.health": -12
+       }
+      }
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "stl_thach_nhan_hoi",
+  "category": "cultivation",
+  "title": "Thạch nhân hỏi đường",
+  "text": "Một khối đá giữa Thái Cổ chiến trường đứng dậy, rêu rơi lả tả. Nó cúi xuống nhìn ngươi, giọng như đá mài: \"Thần vương đâu? Cửa còn đóng chứ?\"",
+  "themes": [
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "kim_dan"
+   },
+   "region": [
+    "thai_co_chien_truong"
+   ]
+  },
+  "weight": 1.0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Nói thật: thần tộc đã mất",
+    "result": {
+     "text": "Thạch nhân đứng im rất lâu. Rồi nó nói: \"Vậy lệnh cuối cùng là giữ cửa,\" và ngồi xuống, hóa lại thành đá. Ngươi hiểu ra thạch tộc vốn là đạo binh thần tộc nặn từ đá, ngủ chờ một lệnh không bao giờ tới.",
+     "effects": {
+      "stat.comprehension": 2,
+      "stat.happiness": -3,
+      "setFlags": [
+       "su_thach_toc"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Nói dối: cửa còn đóng, thần vương bảo ngủ tiếp",
+    "result": {
+     "text": "Thạch nhân gật đầu, nằm xuống. Trước khi ngủ, nó đưa ngươi một mảnh đá ấm như tim người.",
+     "effects": {
+      "spiritStones": 150,
+      "karma": 1,
+      "stat.daoHeart": -1,
+      "setFlags": [
+       "su_thach_toc"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Lùi lại, không đáp",
+    "result": {
+     "text": "Thạch nhân đợi một lúc, rồi quay lưng đi về phía tây, mỗi bước rung cả mặt đất.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "stl_bich_hoa_giao_phu",
+  "category": "secret_realm",
+  "title": "Bích họa phủ giao long",
+  "text": "Trong phủ cũ của giao long dưới đáy Đông Hải, vách còn một bức bích họa: linh khí từ trời đổ xuống như thác, tu sĩ đứng dưới hứng như hứng mưa. Bức kế bên, thác ấy đã khô.",
+  "themes": [
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "kim_dan"
+   },
+   "region": [
+    "dong_hai"
+   ]
+  },
+  "weight": 1.0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Ngồi trước bức họa ngộ đạo",
+    "result": {
+     "text": "Ngươi ngồi ba ngày. Hóa ra linh khí hạ giới không tự sinh ra đủ, phần lớn từng được thượng giới rót xuống theo Thông Thiên lộ.",
+     "effects": {
+      "stat.comprehension": 2,
+      "cultProgress": 3,
+      "setFlags": [
+       "su_thac_linh_khi"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Cạy lấy ngọc khảm trên vách",
+    "result": {
+     "text": "Ngọc giao long còn linh tính, bán được giá. Bức họa mất đi đôi mắt.",
+     "effects": {
+      "spiritStones": 180,
+      "karma": -2,
+      "stat.daoHeart": -1,
+      "reputation": {
+       "yeu": -4
+      }
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "stl_than_trong_bang",
+  "category": "high_realm",
+  "title": "Người trong băng",
+  "text": "Dưới lớp băng nghìn trượng của Bắc Minh có một bóng người cao gấp ba người thường, mắt mở, một tay chỉ lên trời, tay kia ấn lên một cánh cửa đá.",
+  "themes": [
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "nguyen_anh"
+   },
+   "region": [
+    "bac_minh_tuyet_vuc"
+   ]
+  },
+  "weight": 1.0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Dùng thần thức chạm vào",
+    "check": {
+     "stat": "stat.daoHeart",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Một ý niệm sót lại tràn vào thức hải: \"Giữ cửa. Đừng để nó leo lên.\" Người này là thần tộc, chết khi đang giữ một cánh cửa giống cánh cửa ở Thái Cổ chiến trường.",
+     "effects": {
+      "stat.comprehension": 2,
+      "stat.daoHeart": 2,
+      "setFlags": [
+       "su_than_trong_bang"
+      ]
+     }
+    },
+    "fail": {
+     "text": "Băng lạnh tới tận thần hồn. Ngươi rút về, run suốt một tháng.",
+     "effects": {
+      "stat.health": -12,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Lạy ba lạy rồi đi",
+    "result": {
+     "text": "Băng nứt một tiếng rất khẽ, như đáp lễ.",
+     "effects": {
+      "karma": 2,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "stl_bac_thong_thien",
+  "category": "high_realm",
+  "title": "Bậc thứ nhất",
+  "text": "Giữa Trung Châu có một bậc đá trắng mọc lên từ đất, trơn như ngọc, không rêu, không bụi. Trên đó khắc ba chữ cổ: \"Thông Thiên lộ\". Phía trên bậc thứ nhất là trời không.",
+  "themes": [
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "nguyen_anh"
+   },
+   "region": [
+    "trung_chau"
+   ]
+  },
+  "weight": 1.0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Bước lên",
+    "check": {
+     "stat": "stat.daoHeart",
+     "difficulty": 70
+    },
+    "success": {
+     "text": "Chân ngươi chạm bậc đá, một con đường sáng hiện ra trong khoảnh khắc rồi đứt ngang giữa trời. Ở chỗ đứt, mép sáng nhẵn như bị chém, không phải tự gãy.",
+     "effects": {
+      "stat.comprehension": 2,
+      "cultProgress": 6,
+      "setFlags": [
+       "su_bac_thong_thien"
+      ]
+     }
+    },
+    "fail": {
+     "text": "Bậc đá hất ngươi xuống như hất bụi. Ngươi nằm dưới chân bậc đá nửa ngày mới dậy nổi.",
+     "effects": {
+      "stat.health": -15,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Đứng nhìn",
+    "result": {
+     "text": "Đại năng Trung Châu đi ngang bậc đá này mỗi ngày, không ai dừng. Ngươi đứng tới tối.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "stl_ghep_su",
+  "category": "cultivation",
+  "title": "Ghép lại sử cũ",
+  "text": "Một đêm tĩnh tọa, những mảnh chuyện cũ ngươi nhớ mang máng như từng đọc ở đâu, từng nghe ai kể, bỗng xếp lại thành một: cánh cửa thần tộc giữ, con đường ánh sáng bị chém đứt, ma đạo sinh ra vì đói linh khí.",
+  "themes": [
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "kim_dan"
+   },
+   "knowledge": {
+    "all": [
+     "su_thai_co_than_yeu",
+     "su_thong_thien_lo",
+     "su_doan_thien",
+     "su_goc_ma_dao"
+    ]
+   }
+  },
+  "weight": 4.0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Nghĩ tới cùng",
+    "result": {
+     "text": "Thuyết thứ ba: Thông Thiên lộ không tự đứt, cũng không phải thượng giới đóng cửa. Có kẻ chém nó, để thứ sau cánh cửa Thái Cổ không leo lên được. Hạ giới cạn là cái giá. Ngươi hiểu vì sao các đại năng không bao giờ nói chuyện này.",
+     "effects": {
+      "stat.comprehension": 3,
+      "stat.daoHeart": 2,
+      "stat.happiness": -2,
+      "setFlags": [
+       "su_ba_thuyet"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Dừng lại",
+    "result": {
+     "text": "Có những chuyện biết rồi thì không ngủ được. Ngươi thở ra, tiếp tục tu.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "cultProgress": 2
+     }
+    }
+   }
+  ]
+ }
+]

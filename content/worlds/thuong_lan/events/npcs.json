@@ -294,7 +294,7 @@
     "id": "hau_due_bao_thu",
     "category": "npc",
     "title": "Hậu duệ báo thù",
-    "text": "Một người lạ chặn cửa: \"Ta là {npc}. {npcKin} là cha ta. Ngươi còn nhớ không?\"",
+    "text": "Một người lạ chặn cửa: \"Ta là {npc}. Ngươi còn nhớ {npcKin} không? Đó là người thân của ta.\"",
     "tags": [
       "violence"
     ],

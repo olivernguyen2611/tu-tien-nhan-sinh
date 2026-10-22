@@ -1510,7 +1510,7 @@
       "foe": {
        "name": "Tri kỷ năm xưa",
        "realm": "same",
-       "intent": "kill",
+       "intent": "teach",
        "powerMul": 1.0,
        "path": "weapon",
        "lineage": "tien"

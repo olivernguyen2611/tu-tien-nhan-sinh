@@ -162,7 +162,7 @@
           "text": "Ngươi chờ ở khúc sông vắng. Kẻ mua được đan cũng già, nhưng chưa chắc đã yếu.",
           "effects": { "karma": -15 },
           "fight": {
-            "foe": { "name": "Lão quái mua đan", "realm": "same", "intent": "kill" },
+            "foe": { "name": "Lão quái mua đan", "realm": "same", "intent": "teach" },
             "win": {
               "text": "Viên đan còn ấm trong tay áo hắn. Ngươi nuốt luôn, không kịp nghĩ.",
               "effects": { "lifespanPct": 0.15, "heartDemon": 5, "stat.happiness": 5 }

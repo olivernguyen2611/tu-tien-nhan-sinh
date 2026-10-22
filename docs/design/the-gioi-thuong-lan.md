@@ -123,3 +123,25 @@ Chạy theo **pha** (báo trước → diễn ra → hậu quả), nối thời 
 | 9.R7c | `nations.json`, `clans.json`, `races.json` (schema, nạp, hiện trong Sổ tri thức / bản đồ) |
 | 9.R7d | Tông môn ~40 có vùng, đồng minh, đối thủ |
 | 9.R7e | `world-events.json`, `figures.json`, bí cảnh và phường thị bổ sung |
+
+## 11. Sử Thương Lan cho người chơi tự khám phá (tổng tra, 23/10)
+
+Claude bổ sung (chủ dự án xem lại sau). Mục 1 giữ nguyên; đây là phần "sự thật" phía sau, người chơi ghép lại qua nhiều đời. Sổ tri thức có nhóm mới **Sử Thương Lan** (`group: lich_su`, 14 mục), nguồn là cờ do sự kiện `events/su-thuong-lan.json` (tiền tố `stl_`) và các sự kiện cũ đặt.
+
+| Mảnh sử | Sự thật | Tìm ở đâu |
+|---|---|---|
+| Thần và yêu | Thần tộc sinh từ ánh sáng, cự yêu từ lòng đất; trận cuối vỡ đại lục tây. Yêu tộc là con cháu cự yêu. | Ông lão kể chuyện (phàm), xương dưới ruộng (phàm), hài cốt Thái Cổ |
+| Đạo binh bằng đá | Thạch tộc do thần tộc nặn làm đạo binh; ngủ chờ lệnh. | Thạch nhân hỏi đường (Thái Cổ, Kim Đan) |
+| Kẻ giữ cửa | Di cốt thần tộc đều chết khi giữ một cánh cửa đá. | Chữ "Thủ" trên hài cốt, người trong băng (Bắc Minh, Nguyên Anh) |
+| Thông Thiên lộ | Đường sáng chín nghìn bậc ở Trung Châu; linh khí thượng giới rót xuống theo đó. | Ngọc giản tàng kinh các, bích họa phủ giao long (Đông Hải), bậc thứ nhất (Trung Châu) |
+| Đoạn Thiên chi biến | Một đêm đường đứt; không ai phi thăng được từ đó. | Chuyện dân gian, cột sáng, yến đại năng |
+| Hạ giới cạn | Không còn linh khí thượng giới, linh mạch cạn dần. | Lão tổ thấy linh khí loãng, di ngôn đại năng |
+| Gốc ma đạo | Ma đạo sinh vì đói linh khí, không phải vì ác tâm. | Mộ tán tu Trung Cổ (Vô Chủ, Huyết Uyên) |
+| Tiên Ma đại chiến I, Thương Lan lịch | Ma đạo bị đẩy xuống Huyết Uyên; năm ký hòa ước là năm 1. | Tấm bia bên sông (phàm), chép sử cho Khâm Thiên Giám |
+| Cửa U Minh | Ma tông bị đuổi xuống Huyết Uyên cũng là để giữ cửa U Minh. | Lão ma giữ vực, sao chổi đỏ |
+| Người tăng phương tây | Phật môn từ tây sang, "linh khí cạn thì tu tâm". | Tranh vách chùa cổ (phàm), Vô Ưu Tự |
+| Khế ước tiên phàm | Tổ tiên vua Đại Ung là phàm nhân; tiên môn được chọn trẻ có linh căn, tu sĩ không can ngôi vua. | Khâm Thiên Giám thuê chép sách (phàm, trí lực ≥ 55) |
+| Cột sáng Trung Châu | Đại năng sắp thọ tận thử bước lên đường đã đứt. | Sự kiện thiên hạ "Điềm phi thăng" |
+| Thuyết thứ ba (bí mật cuối) | Có kẻ chém Thông Thiên lộ để thứ sau cánh cửa Thái Cổ không leo lên; hạ giới cạn là cái giá. | "Ghép lại sử cũ": Kim Đan, đời sinh ra đã biết 4 mảnh (từ các đời trước) |
+
+Chừa chỗ cho Tầng 3 (GĐ 14): thứ sau cánh cửa, kẻ đã chém đường, và việc nối lại Thông Thiên lộ.

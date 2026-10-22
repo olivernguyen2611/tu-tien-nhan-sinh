@@ -3679,7 +3679,8 @@ export const CourtFileSchema = z.object({
   texts: z.object({
     emperorName: z.string().min(1), heirName: z.string().min(1), founder: z.string().min(1), crowned: z.string().min(1), heirCrowned: z.string().min(1),
     temper: z.string().min(1), heirNamed: z.string().min(1), ministerRise: z.string().min(1), ministerFall: z.string().min(1),
-    amnesty: z.string().min(1), tax: z.string().min(1),
+    /** Tổng tra: several wordings of the yearly sưu thuế line, one drawn a year. */
+    amnesty: z.string().min(1), tax: lineOrLines,
   }).strict(),
 }).strict();
 export type CourtFile = z.infer<typeof CourtFileSchema>;
@@ -3909,7 +3910,7 @@ export const ImmortalGateFileSchema = z.array(
 export type ImmortalGate = z.infer<typeof ImmortalGateFileSchema>[number];
 
 /** 9.R5a: groups of the Sổ tri thức, and what one entry can be found through or open. */
-export const KNOWLEDGE_GROUPS = ['tien_dao', 'vo_dao', 'the_gioi', 'the_luc', 'nhan_vat', 'cong_phap', 'bi_canh'] as const;
+export const KNOWLEDGE_GROUPS = ['tien_dao', 'vo_dao', 'the_gioi', 'the_luc', 'nhan_vat', 'cong_phap', 'bi_canh', 'lich_su'] as const;
 export const KNOWLEDGE_SOURCES = ['event', 'flag', 'item', 'realm', 'martial', 'sect', 'region'] as const;
 export const KNOWLEDGE_UNLOCKS = ['gate', 'tab', 'term', 'region', 'origin'] as const;
 

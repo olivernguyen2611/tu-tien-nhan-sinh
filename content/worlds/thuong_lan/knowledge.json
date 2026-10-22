@@ -785,5 +785,311 @@
       }
     ],
     "unlocks": []
+  },
+  {
+    "id": "su_thai_co_than_yeu",
+    "group": "lich_su",
+    "name": "Thái Cổ: thần và yêu",
+    "text": "Thuở trời đất mới thành, thần tộc sinh từ ánh sáng, cự yêu sinh từ lòng đất. Hai bên tranh thiên hạ vạn năm. Trận cuối đánh vỡ đại lục phía tây thành Thái Cổ chiến trường; thần tộc chết gần hết, cự yêu lui về rừng sâu, con cháu nay là yêu tộc.",
+    "sources": [
+      {
+        "kind": "flag",
+        "id": "su_nghe_co_tich",
+        "chance": 1.0
+      },
+      {
+        "kind": "flag",
+        "id": "su_xuong_than",
+        "chance": 1.0
+      },
+      {
+        "kind": "event",
+        "id": "tcg2_thai_co_xuong_than",
+        "chance": 0.5
+      },
+      {
+        "kind": "region",
+        "id": "thai_co_chien_truong",
+        "chance": 0.05
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "su_thach_toc",
+    "group": "lich_su",
+    "name": "Đạo binh bằng đá",
+    "text": "Thạch tộc không phải một tộc tự sinh: thần tộc nặn họ từ đá làm đạo binh. Thần tộc mất, họ ngủ chờ một mệnh lệnh không bao giờ tới. Tỉnh dậy, họ chỉ còn nhớ một việc: giữ cửa.",
+    "sources": [
+      {
+        "kind": "flag",
+        "id": "su_thach_toc",
+        "chance": 1.0
+      },
+      {
+        "kind": "event",
+        "id": "vung_tc_thach_nhan",
+        "chance": 0.4
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "su_thu_mon",
+    "group": "lich_su",
+    "name": "Kẻ giữ cửa",
+    "text": "Di cốt thần tộc ở Thái Cổ chiến trường và dưới băng Bắc Minh đều chết trong một tư thế: giữ một cánh cửa đá. Phía sau cửa là gì, không sách nào chép. Thủ Mộ Tông giữ mộ, nhưng có lẽ thứ họ giữ không phải là mộ.",
+    "sources": [
+      {
+        "kind": "flag",
+        "id": "biet_thai_co_thu_mon",
+        "chance": 1.0
+      },
+      {
+        "kind": "flag",
+        "id": "su_than_trong_bang",
+        "chance": 1.0
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "su_thong_thien_lo",
+    "group": "lich_su",
+    "name": "Thông Thiên lộ",
+    "text": "Thời Thượng Cổ, giữa Trung Châu có con đường ánh sáng chín nghìn bậc nối lên thượng giới. Tu sĩ đắc đạo theo đó phi thăng, linh khí thượng giới theo đó rót xuống như thác. Đó là thời hạ giới giàu linh khí nhất.",
+    "sources": [
+      {
+        "kind": "flag",
+        "id": "su_thong_thien_lo",
+        "chance": 1.0
+      },
+      {
+        "kind": "flag",
+        "id": "su_thac_linh_khi",
+        "chance": 1.0
+      },
+      {
+        "kind": "flag",
+        "id": "su_bac_thong_thien",
+        "chance": 1.0
+      },
+      {
+        "kind": "flag",
+        "id": "du_yen_dai_nang",
+        "chance": 0.5
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "su_doan_thien",
+    "group": "lich_su",
+    "name": "Đoạn Thiên chi biến",
+    "text": "Cuối thời Thượng Cổ, một đêm Thông Thiên lộ đứt. Người bảo thượng giới đóng cửa, người bảo thiên đạo trừng phạt. Từ đó phi thăng chỉ còn là truyền thuyết, và chưa ai lên được để báo tin về.",
+    "sources": [
+      {
+        "kind": "flag",
+        "id": "su_nghe_co_tich",
+        "chance": 0.5
+      },
+      {
+        "kind": "flag",
+        "id": "thay_phi_thang",
+        "chance": 1.0
+      },
+      {
+        "kind": "flag",
+        "id": "su_bac_thong_thien",
+        "chance": 1.0
+      },
+      {
+        "kind": "flag",
+        "id": "du_yen_dai_nang",
+        "chance": 0.5
+      },
+      {
+        "kind": "flag",
+        "id": "su_thong_thien_lo",
+        "chance": 0.3
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "su_ha_gioi_can",
+    "group": "lich_su",
+    "name": "Hạ giới cạn dần",
+    "text": "Không còn linh khí thượng giới rót xuống, linh mạch hạ giới cứ vạn năm lại cạn đi một phần. Tu sĩ thời nay khổ hơn tiền nhân gấp bội; các đại năng biết, nhưng ít ai nói ra.",
+    "sources": [
+      {
+        "kind": "flag",
+        "id": "biet_ha_gioi_can",
+        "chance": 1.0
+      },
+      {
+        "kind": "flag",
+        "id": "su_thac_linh_khi",
+        "chance": 0.5
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "su_goc_ma_dao",
+    "group": "lich_su",
+    "name": "Gốc của ma đạo",
+    "text": "Ma đạo sinh vào đầu Trung Cổ, khi linh khí không còn đủ cho mọi người. Kẻ yếu không có phần, nên có người học cách lấy máu, oán khí, hồn phách thay linh khí. Từ đói mà thành, không phải từ ác tâm, nhưng đi lâu thì cũng thành ác.",
+    "sources": [
+      {
+        "kind": "flag",
+        "id": "su_goc_ma_dao",
+        "chance": 1.0
+      },
+      {
+        "kind": "flag",
+        "id": "su_ma_giu_cua",
+        "chance": 0.5
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "su_tien_ma_dai_chien",
+    "group": "lich_su",
+    "name": "Tiên Ma đại chiến lần thứ nhất",
+    "text": "Giữa Trung Cổ, các tông chính đạo hợp lực đẩy Ma đạo xuống vực sâu phía nam, đất ấy về sau gọi là Huyết Uyên. Từ đó tới nay, Tiên Ma đại chiến còn bùng lên nhiều lần, chưa lần nào thật sự kết thúc.",
+    "sources": [
+      {
+        "kind": "flag",
+        "id": "su_doc_bia_hoa_uoc",
+        "chance": 1.0
+      },
+      {
+        "kind": "flag",
+        "id": "su_goc_ma_dao",
+        "chance": 0.5
+      },
+      {
+        "kind": "event",
+        "id": "tcg2_dai_chien_tien_tuyen",
+        "chance": 0.4
+      },
+      {
+        "kind": "event",
+        "id": "tht_tien_ma_chieu_binh",
+        "chance": 0.3
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "su_cua_u_minh",
+    "group": "lich_su",
+    "name": "Cửa dưới Huyết Uyên",
+    "text": "Dưới đáy Huyết Uyên là cửa U Minh, nơi quỷ tộc ở. Chính đạo đuổi ma tông xuống đây cũng là để có kẻ giữ cửa. Ma tông canh nó ba nghìn năm, không ai cảm ơn.",
+    "sources": [
+      {
+        "kind": "flag",
+        "id": "su_ma_giu_cua",
+        "chance": 1.0
+      },
+      {
+        "kind": "flag",
+        "id": "biet_huyet_uyen_dong",
+        "chance": 1.0
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "su_phat_tay_lai",
+    "group": "lich_su",
+    "name": "Người tăng từ phương tây",
+    "text": "Phật môn không sinh ở Thương Lan. Một vị tăng đi chân đất từ phía tây, băng qua Thái Cổ chiến trường, dạy người phàm rằng linh khí cạn thì tu tâm. Vô Ưu Tự dựng trên chỗ ông dừng chân.",
+    "sources": [
+      {
+        "kind": "flag",
+        "id": "su_tranh_tang_tay",
+        "chance": 1.0
+      },
+      {
+        "kind": "sect",
+        "id": "vo_uu_tu",
+        "chance": 0.1
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "su_khe_uoc_tien_pham",
+    "group": "lich_su",
+    "name": "Khế ước tiên phàm",
+    "text": "Tổ tiên vua Đại Ung là phàm nhân không linh căn, được các tông giúp dựng nước sau đại chiến. Đổi lại, tiên môn được lên núi chọn trẻ có linh căn, còn tu sĩ không được can vào ngôi vua. Khâm Thiên Giám là con mắt triều đình nhìn sang giới tu tiên.",
+    "sources": [
+      {
+        "kind": "flag",
+        "id": "su_khe_uoc_tien_pham",
+        "chance": 1.0
+      },
+      {
+        "kind": "flag",
+        "id": "chep_su_thuong_lan",
+        "chance": 1.0
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "su_thuong_lan_lich",
+    "group": "lich_su",
+    "name": "Thương Lan lịch",
+    "text": "Sau Tiên Ma đại chiến lần thứ nhất, các tông ký hòa ước ở Trung Châu. Năm ký ước là năm thứ nhất Thương Lan lịch. Nay đã gần năm ba nghìn; hòa ước còn đó, nhưng chẳng tông nào thật lòng giữ.",
+    "sources": [
+      {
+        "kind": "flag",
+        "id": "su_doc_bia_hoa_uoc",
+        "chance": 1.0
+      },
+      {
+        "kind": "flag",
+        "id": "chep_su_thuong_lan",
+        "chance": 1.0
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "su_cot_sang",
+    "group": "lich_su",
+    "name": "Cột sáng Trung Châu",
+    "text": "Cứ vài trăm năm, lại có một cột sáng vọt lên từ Trung Châu: một đại năng thọ nguyên sắp cạn thử bước lên Thông Thiên lộ đã đứt. Cột sáng tắt, linh khí rơi như mưa. Chưa ai biết họ lên được hay tan giữa trời.",
+    "sources": [
+      {
+        "kind": "flag",
+        "id": "thay_phi_thang",
+        "chance": 1.0
+      },
+      {
+        "kind": "flag",
+        "id": "su_bac_thong_thien",
+        "chance": 0.5
+      }
+    ],
+    "unlocks": []
+  },
+  {
+    "id": "su_ba_thuyet",
+    "group": "lich_su",
+    "name": "Thuyết thứ ba",
+    "text": "Thông Thiên lộ không tự đứt, cũng không phải thượng giới đóng cửa: có kẻ chém nó, để thứ sau cánh cửa Thái Cổ không leo lên được. Hạ giới cạn là cái giá của việc ấy. Vì thế các đại năng không bao giờ nhắc tới.",
+    "sources": [
+      {
+        "kind": "flag",
+        "id": "su_ba_thuyet",
+        "chance": 1.0
+      }
+    ],
+    "unlocks": []
   }
 ]

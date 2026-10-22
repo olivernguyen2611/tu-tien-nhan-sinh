@@ -10,7 +10,7 @@ type Tab = 'lives' | 'endings' | 'regions' | 'special' | 'knowledge' | 'traits' 
 
 /** 9.R5a: Sổ tri thức groups. */
 const GROUP_LABEL: Record<string, string> = {
-  tien_dao: 'Tiên đạo', vo_dao: 'Võ đạo', the_gioi: 'Thế giới', the_luc: 'Thế lực', nhan_vat: 'Nhân vật', cong_phap: 'Công pháp, bảo vật', bi_canh: 'Bí cảnh',
+  tien_dao: 'Tiên đạo', vo_dao: 'Võ đạo', the_gioi: 'Thế giới', the_luc: 'Thế lực', nhan_vat: 'Nhân vật', cong_phap: 'Công pháp, bảo vật', bi_canh: 'Bí cảnh', lich_su: 'Sử Thương Lan',
 };
 
 const RARITY_LABEL: Record<string, string> = {

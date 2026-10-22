@@ -214,7 +214,7 @@
           "text": "Ngươi rút binh khí. Lão thôi cười.",
           "effects": { "stat.daoHeart": 1 },
           "fight": {
-            "foe": { "name": "Đại tu sĩ tham lam", "realm": "above", "intent": "kill" },
+            "foe": { "name": "Đại tu sĩ tham lam", "realm": "above", "intent": "teach" },
             "win": { "text": "Không ai ngờ, kể cả ngươi. Lão chạy, mang thương nặng.", "effects": { "stat.happiness": 8, "reputation": { "giang_ho": 5 } } },
             "lose": { "text": "Lão đánh ngươi gần chết, rồi chán, vì động thiên không lấy ra được khi chủ còn tỉnh. Lão bỏ đi.", "effects": { "stat.health": -30, "cultProgress": -30 } }
           }
