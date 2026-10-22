@@ -46,7 +46,8 @@ describe('tính cách NPC và sự kiện ân oán (task 3.4, npcs.md đã duy�
 
   it('a grudge brings the old acquaintance back for a real fight (E1)', () => {
     const m = createNpc(adult(), content, { role: 'kẻ thù', grudge: 80, root: true, realm: 'luyen_khi' });
-    const s = { ...m.state, npcs: m.state.npcs.map((n) => ({ ...n, nature: 'thu_dai' })) };
+    // A cultivator (10.5's revenge events are for mortals: vu cáo, đốt nhà, thuê người).
+    const s = { ...m.state, cult: { ...m.state.cult, realm: 'luyen_khi' }, npcs: m.state.npcs.map((n) => ({ ...n, nature: 'thu_dai' })) };
     const r = visit(s)!;
     expect(r.events.pending).toBe('co_nhan_tim_toi');
     expect(fillTemplate(findEvent(content, 'co_nhan_tim_toi')!.text, r, content)).toContain(npcById(r, m.id)!.name);

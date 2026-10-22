@@ -7,6 +7,7 @@ import type { EffectHook } from '../core/schemas';
 import type { GameState, LogLine } from '../core/types';
 import { hookSum } from './cultivation';
 import { extremeHasHook } from './extremes';
+import { examOf, examTitle, levelIndex, passedLevel } from './exams';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -46,6 +47,7 @@ export function careerViews(state: GameState, content: Content): CareerView[] {
     else if (state.character.age < minAge) blocked = `Đủ ${minAge} tuổi mới chọn được đường đời.`;
     else if (state.character.age > maxAge) blocked = 'Tuổi đã cao, khó bắt đầu lại.';
     else if (c.requires.rootless && (!state.cult.root || usableRoot(state, content))) blocked = 'Chỉ dành cho người đã thử mà không có linh căn.';
+    else if (c.requires.examRank && examOf(state).rank < levelIndex(content, c.requires.examRank)) blocked = `Phải đỗ ${content.exams?.levels.find((l) => l.id === c.requires.examRank)?.title ?? 'khoa cử'} mới đi được đường này.`;
     return { id: c.id, name: c.name, description: c.description, current, blocked };
   });
 }
@@ -58,6 +60,14 @@ function addLines(state: GameState, lines: LogLine[]): GameState['log'] {
   return log;
 }
 
+/** 10.2: the rung a career starts at (a Tiến sĩ enters Quan lộ higher). */
+function entryRung(state: GameState, content: Content, careerId: string): number {
+  const career = careerDef(content, careerId);
+  const passed = passedLevel(state, content);
+  const rung = passed && career ? career.entryByExam[passed.id] ?? 0 : 0;
+  return Math.min(rung, (career?.rungs.length ?? 1) - 1);
+}
+
 /** Take up a career (leaving the current one starts over). Null when not allowed now. */
 export function joinCareer(state: GameState, content: Content, careerId: string): { state: GameState; text: string } | null {
   const view = careerViews(state, content).find((v) => v.id === careerId);
@@ -67,8 +77,9 @@ export function joinCareer(state: GameState, content: Content, careerId: string)
   const lines: LogLine[] = [];
   const old = careerDef(content, state.career.id);
   if (old) lines.push({ text: texts.leaveText.replaceAll('{career}', old.name), tone: 'normal' });
-  lines.push({ text: texts.joinText.replaceAll('{career}', career.name).replaceAll('{rung}', career.rungs[0]), tone: 'good' });
-  const next: GameState = { ...state, career: { id: careerId, rung: 0, since: state.character.age } };
+  const rung = entryRung(state, content, careerId);
+  lines.push({ text: texts.joinText.replaceAll('{career}', career.name).replaceAll('{rung}', career.rungs[rung]), tone: 'good' });
+  const next: GameState = { ...state, career: { id: careerId, rung, since: state.character.age } };
   return { state: { ...next, log: addLines(next, lines) }, text: lines.map((l) => l.text).join(' ') };
 }
 
@@ -98,7 +109,9 @@ export function careerYear(state: GameState, content: Content): GameState {
   if (!state.alive || !career || state.cult.realm !== 'pham_nhan') return state;
   const rng = Rng.fromState(state.rng);
   const lines: LogLine[] = [];
-  let s: GameState = { ...state, money: { ...state.money, silver: state.money.silver + careerIncome(state, content) } };
+  // 10.3: while the life holds a job, the job pays (the larger of the two, see jobYear).
+  const income = state.job?.id ? 0 : careerIncome(state, content);
+  let s: GameState = { ...state, money: { ...state.money, silver: state.money.silver + income } };
 
   if (rng.chance(promotionChance(s, content))) {
     const rung = s.career.rung + 1;
@@ -123,6 +136,8 @@ export function lifeTitles(state: GameState, content: Content): string[] {
   const out: string[] = [];
   const career = careerDef(content, state.career.id);
   if (career?.title && state.career.rung >= career.rungs.length - 1) out.push(career.title);
+  const placed = examTitle(state, content);
+  if (placed) out.push(placed);
   if (state.cult.realm === 'pham_nhan' && state.character.age >= content.balance.careers.longLifeAge) out.push(content.careers.longLifeTitle);
   return out;
 }
@@ -134,8 +149,9 @@ export function forceJoinCareer(state: GameState, content: Content, careerId: st
   const career = careerDef(content, careerId);
   if (!career || state.career.id === careerId || state.cult.realm !== 'pham_nhan') return state;
   if (career.requires.rootless && (!state.cult.root || usableRoot(state, content))) return state;
-  const text = content.careers.joinText.replaceAll('{career}', career.name).replaceAll('{rung}', career.rungs[0]);
-  const next: GameState = { ...state, career: { id: careerId, rung: 0, since: state.character.age } };
+  const rung = entryRung(state, content, careerId);
+  const text = content.careers.joinText.replaceAll('{career}', career.name).replaceAll('{rung}', career.rungs[rung]);
+  const next: GameState = { ...state, career: { id: careerId, rung, since: state.character.age } };
   return { ...next, log: addLines(next, [{ text, tone: 'good' }]) };
 }
 

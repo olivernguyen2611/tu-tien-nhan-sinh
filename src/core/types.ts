@@ -34,6 +34,10 @@ export interface Relative {
   /** Hậu thiên linh căn opened by a gift; tries made with a thousand-year item. */
   acquired?: boolean;
   rootTries?: number;
+  /** 10.5: how a child is brought up (− strict, + spoiling), the temper they grow into, married off. */
+  rearing?: number;
+  temper?: string;
+  married?: boolean;
 }
 
 /** Quest chain of the martial path: one step a year; `game` is the mini-game being played. */
@@ -115,6 +119,24 @@ export interface GameState {
     dynasty: string; era: string; eraFrom: number; reignLeft: number;
     eras: { dynasty: string; era: string; from: number }[];
   };
+  /** 10.1 Học đường: the school attended now (null when not), since when, học lực 0–100, the teacher; `ever` = went to school once. */
+  school?: { at: string | null; since: number | null; grade: number; teacher: string | null; ever: boolean };
+  /** 10.1 Học nghề: the trade, its level (0 = học việc), years at this level, the master; learning = still under the master. */
+  trade?: { id: string | null; level: number; years: number; master: string | null; learning: boolean };
+  /** 10.3 Việc làm: the job held (null = none), its rung, hiệu suất 0–100, years at this rung, the boss and đồng liêu (NPC ids), since when; `past` = jobs left (and why). */
+  job?: {
+    id: string | null; rung: number; perf: number; years: number; boss: string | null; mates: string[]; since: number;
+    past: { id: string; rung: number; left: number; why: 'quit' | 'retire' | 'fired' }[];
+  };
+  /** 10.4 Tài sản: what the life owns (uid = its own number), debts (owed grows by the loan's rate), the crop sown this year, the next uid. */
+  assets?: { owned: OwnedAsset[]; loans: Loan[]; crop: string | null; nextUid: number };
+  /** 10.7 Giải trí: this year's lễ hội, tài nghệ (0–100), pets, ages at the sòng bạc (recent), the event a quẻ named and until when. */
+  pastime?: { festival: string | null; arts: Record<string, number>; pets: Pet[]; gambles: number[]; omen: { id: string; until: number } | null; nextUid: number };
+  /** 10.2 Khoa cử: index of the highest level passed (-1 = none), fails, the Đình placing, the life's calendar offset, age each level was last sat, the sitting in progress (blocks the year). */
+  exam?: {
+    rank: number; fails: number; placing: string | null; cycle: number; last: Record<string, number>;
+    sitting: ExamSitting | null;
+  };
   /** 9.R6a: developer mode was on during this life; it earns no records (thành tựu, thử thách tuần, điểm Luân Hồi, Thiên Thư, Sổ tri thức). */
   devUsed?: boolean;
   /** Task 5b.1: thiên phú luân hồi this life was born with (id → level), bought in earlier lives. */
@@ -186,7 +208,7 @@ export interface GameState {
    * (task 3.7), people who turned the player down or were left, rivals around the lover,
    * and the age each romance action was last done (once a year each).
    */
-  romance: { lover: string | null; couple: boolean; partner: string | null; exes: string[]; rivals: number; lastActions: Record<string, number>; /** Playtest 2: failed tries at a child since the last one (absent in older saves). */ birthTries?: number; /** 9.0.1: người đã cắt đứt hẳn (absent in older saves). */ cut?: string[] };
+  romance: { lover: string | null; couple: boolean; partner: string | null; exes: string[]; rivals: number; lastActions: Record<string, number>; /** Playtest 2: failed tries at a child since the last one (absent in older saves). */ birthTries?: number; /** 9.0.1: người đã cắt đứt hẳn (absent in older saves). */ cut?: string[]; /** 10.6: thê thiếp (NPC ids) besides the chính thất. */ concubines?: string[] };
   /** Thiên kiêu bảng (task 3.5): the world's prodigies and the player's rank last year (null = not on the board). */
   ranking: { prodigies: Prodigy[]; rank: number | null };
   /** Base aptitude 0–100 for each combat path (task 3.8); hooks add on top. */
@@ -457,6 +479,10 @@ export interface Npc {
   visits?: Record<string, number>;
   /** 9.R9: a cố nhân from a past life ({pastName}, {pastSelf}); met once the reunion event has come. */
   pastLife?: { kind: KarmaTieKind; name: string; self: string; met: boolean };
+  /** 10.5: silver between the two (+ they owe the player, − the player owes them); age of the kết nghĩa oath; tuyệt giao. */
+  owed?: number;
+  sworn?: number;
+  cut?: boolean;
 }
 
 /** Task 5c.1: who a sectmate is to the player. */
@@ -468,3 +494,23 @@ export type KarmaTieKind = 'dao_lu' | 'an' | 'oan' | 'ke_thu';
 export interface KarmaTie { kind: KarmaTieKind; name: string; gender: Gender; self: string; weight: number; lives: number }
 export interface PastSectRecord { world: string; name: string; lineage: string; founder: string; members: number; lives: number }
 export interface PastSect { name: string; lineage: string; founder: string; members: number; status: 'unknown' | 'met' | 'claimed' | 'spurned' }
+
+/** 10.2 One sitting of a khoa cử exam: rounds answered so far, score, the đề of each round, the incident (if one comes) and when. */
+export interface ExamSitting {
+  level: string;
+  round: number;
+  score: number;
+  prompts: string[];
+  incident: string | null;
+  incidentRound: number;
+  /** What happened, round by round (shown in the card, summed up in the log). */
+  lines: string[];
+}
+
+/** 10.4 One asset owned: which, bought at what age and price, a fake (đồ quý), the shop's way of trading. */
+/** 10.7: a pet the life keeps (born = the player's age when taken in). */
+export interface Pet { uid: number; id: string; name: string; since: number; age: number }
+
+export interface OwnedAsset { uid: number; id: string; since: number; paid: number; fake: boolean; strategy: string | null }
+/** 10.4 A debt: which loan, the lender (NPC id), what is owed now, since when. */
+export interface Loan { uid: number; id: string; lender: string | null; owed: number; since: number }

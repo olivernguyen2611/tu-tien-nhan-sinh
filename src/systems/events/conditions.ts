@@ -1,4 +1,9 @@
 // Does a life meet an event's (or a choice's) conditions? Pure, no RNG.
+import { lifeStage, schoolOf, tradeOf } from '../schooling';
+import { examBlocked, examOf, levelIndex } from '../exams';
+import { jobDef, jobOf } from '../jobs';
+import { debtTotal, ownedOf } from '../assets';
+import { festivalFor } from '../leisure';
 import type { Content } from '../../core/content';
 import type { GameEvent } from '../../core/schemas';
 import type { GameState } from '../../core/types';
@@ -108,6 +113,58 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     const v = state.times?.vars[w.id];
     return v === undefined || (w.gte !== undefined && v < w.gte) || (w.lte !== undefined && v > w.lte);
   })) return false;
+  // 10.1 Học đường, học nghề.
+  if (c.lifeStage?.length && content && !c.lifeStage.includes(lifeStage(content, state.character.age)?.id ?? '')) return false;
+  if (c.school) {
+    const sc = schoolOf(state);
+    if (c.school.enrolled !== undefined && c.school.enrolled !== !!sc.at) return false;
+    if (c.school.at !== undefined && sc.at !== c.school.at) return false;
+    if (c.school.ever !== undefined && c.school.ever !== sc.ever) return false;
+    if (c.school.gradeMin !== undefined && sc.grade < c.school.gradeMin) return false;
+    if (c.school.gradeMax !== undefined && sc.grade > c.school.gradeMax) return false;
+  }
+  if (c.trade) {
+    const t = tradeOf(state);
+    if (c.trade.any !== undefined && c.trade.any !== !!t.id) return false;
+    if (c.trade.id !== undefined && t.id !== c.trade.id) return false;
+    if (c.trade.learning !== undefined && c.trade.learning !== t.learning) return false;
+    if (c.trade.levelMin !== undefined && (!t.id || t.level < c.trade.levelMin)) return false;
+  }
+  if (c.gender !== undefined && state.character.gender !== c.gender) return false;
+  if (c.job) {
+    const j = jobOf(state);
+    const def = content ? jobDef(content, j.id) : undefined;
+    if (c.job.any !== undefined && c.job.any !== !!j.id) return false;
+    if (c.job.id !== undefined && j.id !== c.job.id) return false;
+    if (c.job.group !== undefined && def?.group !== c.job.group) return false;
+    if (c.job.rungMin !== undefined && (!j.id || j.rung < c.job.rungMin)) return false;
+    if (c.job.perfMin !== undefined && (!j.id || j.perf < c.job.perfMin)) return false;
+    if (c.job.perfMax !== undefined && (!j.id || j.perf > c.job.perfMax)) return false;
+    if (c.job.top !== undefined && (!def || (j.rung >= def.rungs.length - 1) !== c.job.top)) return false;
+  }
+  if (c.festival && content && !c.festival.includes(festivalFor(state, content) ?? '')) return false;
+  if (c.art && (state.pastime?.arts[c.art.id] ?? 0) < c.art.min) return false;
+  if (c.pet) {
+    const has = (state.pastime?.pets ?? []).some((p) => !c.pet!.id || p.id === c.pet!.id);
+    if (has !== (c.pet.any ?? true)) return false;
+  }
+  if (c.asset && content) {
+    const owned = ownedOf(state, content, c.asset.kind, c.asset.id).length;
+    if (c.asset.none ? owned > 0 : owned < (c.asset.count ?? 1)) return false;
+  }
+  if (c.debt) {
+    const owed = debtTotal(state);
+    if (c.debt.any !== undefined && (owed > 0) !== c.debt.any) return false;
+    if (c.debt.min !== undefined && owed < c.debt.min) return false;
+  }
+  if (c.exam && content) {
+    const ex = examOf(state);
+    if (c.exam.passed !== undefined && ex.rank < levelIndex(content, c.exam.passed)) return false;
+    if (c.exam.notPassed !== undefined && ex.rank >= levelIndex(content, c.exam.notPassed)) return false;
+    if (c.exam.failsMin !== undefined && ex.fails < c.exam.failsMin) return false;
+    if (c.exam.canSit !== undefined && (examBlocked(state, content) === null) !== c.exam.canSit) return false;
+    if (c.exam.placing?.length && !c.exam.placing.includes(ex.placing ?? '')) return false;
+  }
   if (c.flagsAll?.some((f) => !state.flags[f])) return false;
   if (c.itemsAll?.some((i) => !(state.inventory[i] > 0))) return false;
   if (c.flagsNone?.some((f) => state.flags[f])) return false;
@@ -130,6 +187,9 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
   if (c.family) {
     if (c.family.deadAny !== undefined && state.family.some((r) => !r.alive) !== c.family.deadAny) return false;
     if (c.family.parentAlive !== undefined && state.family.some((r) => r.alive && (r.role === 'father' || r.role === 'mother')) !== c.family.parentAlive) return false;
+    const ca = c.family.childAge;
+    if (ca && !state.family.some((r) => r.alive && r.role === 'child' && (ca.min === undefined || r.age >= ca.min) && (ca.max === undefined || r.age <= ca.max))) return false;
+    if (c.family.siblingAlive !== undefined && state.family.some((r) => r.alive && r.role === 'sibling') !== c.family.siblingAlive) return false;
   }
   if (c.lifespan) {
     const left = state.cult.lifespan - state.character.age;
@@ -162,6 +222,7 @@ function npcMeets(state: GameState, c: NonNullable<Conditions['npc']>, content?:
   if (c.occupation?.length && !c.occupation.includes(n.occupation ?? '')) return false;
   if (c.minMemories !== undefined && (n.memories?.length ?? 0) < c.minMemories) return false;
   if (c.masked !== undefined && (!content || isMasked(content, n) !== c.masked)) return false;
+  if (c.sworn !== undefined && !!n.sworn !== c.sworn) return false;
   if (c.minRealmGap !== undefined || c.maxRealmGap !== undefined) {
     const order = content?.cultivation.realms.realms.map((r) => r.id) ?? ['pham_nhan'];
     const gap = order.indexOf(n.realm) - order.indexOf(state.cult.realm);

@@ -14,6 +14,7 @@ import { learnTechnique } from './technique';
 import { childRootLabel } from './romance';
 import { clanInheritBonus } from './clan';
 import { heirInsightBonus } from './familyBond';
+import { inheritAssets } from './assets';
 
 export interface HeirOption {
   kind: 'child' | 'disciple';
@@ -77,7 +78,7 @@ export function continueAsHeir(state: GameState, content: Content, heirId: strin
 
   const share = cfg.inheritKarma;
   // Gia quy Độc đinh truyền thừa lets the heir keep more (task 5.4).
-  const keep = Math.min(1, cfg.inheritMoney + clanInheritBonus(state, content));
+  const keep = state.flags.di_chuc ? 1 : Math.min(1, cfg.inheritMoney + clanInheritBonus(state, content));
   const reputation = Object.fromEntries(Object.entries(state.social.reputation).map(([k, v]) => [k, scale(v, share)])) as GameState['social']['reputation'];
   // Each entry records who died and how the line went on from them.
   const ancestry = [...state.ancestry, {
@@ -105,6 +106,8 @@ export function continueAsHeir(state: GameState, content: Content, heirId: strin
     events: { pending: null, history: {}, followUps: [], npc: null },
     log: [],
   };
+  // 10.4: the estate (all of it with a di chúc) and the debts.
+  s = inheritAssets(state, s, content);
 
   if (child) {
     const { root, bodyId } = child.root ? { root: child.root, bodyId: child.bodyId ?? null } : rollRoot(rng, content);
@@ -120,6 +123,18 @@ export function continueAsHeir(state: GameState, content: Content, heirId: strin
   const lines: LogLine[] = [{ text: (child ? t.child : t.disciple).replaceAll('{name}', option.name).replaceAll('{parent}', parentName), tone: 'rare' }];
   if (s.ownSect) lines.push({ text: t.sect.replaceAll('{sect}', s.ownSect.name), tone: 'good' });
   s = { ...s, log: [{ age: option.age, lines }] };
+  // 10.5: the temper the upbringing made carries over.
+  const temper = child?.temper ? content.relations?.tempers.find((x) => x.id === child.temper) : undefined;
+  if (temper) {
+    const stats = { ...s.stats };
+    const apts = { ...s.aptitudes };
+    for (const [key, d] of Object.entries(temper.heirStats)) {
+      const k = key.replace(/^stat\./, '');
+      if (k in stats) stats[k as keyof typeof stats] = Math.max(0, Math.min(100, stats[k as keyof typeof stats] + d));
+      else if (k in apts) apts[k as keyof typeof apts] = Math.max(0, Math.min(100, apts[k as keyof typeof apts] + d));
+    }
+    s = { ...s, stats, aptitudes: apts };
+  }
   // Backlog 2 (Gia đạo): what the parent taught the child. The technique is learned once cultivation starts.
   if (child) {
     const bonus = heirInsightBonus(content, child);

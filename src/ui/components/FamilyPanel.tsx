@@ -7,7 +7,7 @@ import type { DiscipleAct } from '../../systems/discipleActs';
 import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
-import { availableActions, relationLabel } from '../../systems/relationships';
+import { availableActions, childTemperLabel, relationLabel } from '../../systems/relationships';
 import { npcInfo } from '../../systems/npcs';
 import { childRootLabel, romanceLabel, romanceNote, romanceViews, type RomanceAction } from '../../systems/romance';
 import { disciples, maxDisciples, recruitBlocked, teachBlocked } from '../../systems/disciples';
@@ -191,6 +191,7 @@ export function FamilyPanel({ state, content, extra, onAction, onRomance, onGift
                   <span class="relative-age">{r.alive ? `${r.age} tuổi` : `mất năm ${r.age} tuổi`}</span>
                 </button>
                 {childRootLabel(content, r) && <p class="profile-note npc-line">{childRootLabel(content, r)}</p>}
+                {childTemperLabel(content, r) && <p class="profile-note npc-line">{childTemperLabel(content, r)}</p>}
                 {r.alive && <Meter label="Thiện cảm" value={r.affinity} tone="auto" />}
                 {r.alive && open === r.id && (
                   <div class="action-chips">

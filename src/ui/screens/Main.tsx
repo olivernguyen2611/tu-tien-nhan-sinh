@@ -32,6 +32,7 @@ import { SectPanel, type SectAction } from '../components/SectPanel';
 import { FatePopup } from '../components/FatePopup';
 import { CorePopup } from '../components/CorePopup';
 import { MiniGamePopup, type QuestAction } from '../components/MiniGamePopup';
+import { ExamPopup, type ExamAction } from '../components/ExamPopup';
 import type { BondAction, BondTarget } from '../../systems/familyBond';
 import { HeartDemonPopup } from '../components/HeartDemonPopup';
 import type { HeartDemonOption } from '../../systems/heartDemon';
@@ -53,6 +54,12 @@ import { currentPhase, eraLabel } from '../../systems/worldState';
 import { dockGroups, dockView, identityLine, type DockView } from '../../systems/dock';
 import { ActivityList } from '../components/ActivityPanel';
 import { daoHeartLabel, innerForce, karmaView, reputationViews } from '../../systems/statLabels';
+import { lifeStage, schoolLine, tradeLine } from '../../systems/schooling';
+import { examLine } from '../../systems/exams';
+import { jobLine } from '../../systems/jobs';
+import { type AssetAction, assetsLine } from '../../systems/assets';
+import { AssetSection } from '../components/AssetSection';
+import { artsLine, petsLine } from '../../systems/leisure';
 
 
 const APTITUDE_LABELS = [
@@ -62,7 +69,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onActivity, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onActivity, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onAsset, onLearn, onTrain, onQuest, onExam, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -109,6 +116,9 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onPractice: (craftId: string) => string | null;
   /** Take up a mortal career from the "Tu luyện" sheet. */
   onJoinCareer: (careerId: string) => string | null;
+  /** 10.3: take a job from the Bản thân sheet. */
+  onTakeJob: (jobId: string) => string | null;
+  onAsset: (a: AssetAction) => string | null;
   /** A year of martial training (task 3.11). */
   onTrain: () => string | null;
   onBond: (target: BondTarget, action: BondAction, arg?: string) => { text: string; tone: Tone; changes: string };
@@ -118,6 +128,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   getSources: () => SavedPerson[];
   onImport: (person: SavedPerson, setup: ImportSetup) => { ok: boolean; text: string };
   onQuest: (a: QuestAction) => string | null;
+  /** 10.2: one round of the trường thi, or its incident. */
+  onExam: (a: ExamAction) => void;
   /** Practise a technique from a scroll (task 2.8). */
   onLearn: (techniqueId: string) => string | null;
   /** Nghịch Thiên Cải Mệnh: take a talent, or refresh the offer (task 2.7). */
@@ -152,8 +164,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const [selfOpen, setSelfOpen] = useState(false);
   // Kết đan and tâm ma take over the screen; the Tu luyện sheet steps aside so its outcome shows in the log (task 4.2).
   useEffect(() => {
-    if (state.cult.coreForming || state.cult.heartDemonTrial || state.martial.quest?.game) { setCultivateOpen(false); setSelfOpen(false); }
-  }, [!!state.cult.coreForming, !!state.cult.heartDemonTrial, !!state.martial.quest?.game]);
+    if (state.cult.coreForming || state.cult.heartDemonTrial || state.martial.quest?.game || state.exam?.sitting) { setCultivateOpen(false); setSelfOpen(false); setActivityOpen(false); }
+  }, [!!state.cult.coreForming, !!state.cult.heartDemonTrial, !!state.martial.quest?.game, !!state.exam?.sitting]);
   const [sectOpen, setSectOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
   const anySheet = profileOpen || familyOpen || bagOpen || fingerOpen || systemOpen || activityOpen || memoryOpen || marketOpen || mapOpen || cultivateOpen || selfOpen || sectOpen || devOpen;
@@ -320,12 +332,12 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       {sectOpen && <SectPanel state={state} content={content} onAction={onSectAction} onClose={() => setSectOpen(false)} />}
 
-      {selfOpen && <CultivatePanel view="self" extra={acts('ban_than')} state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onClose={() => setSelfOpen(false)} />}
-      {cultivateOpen && <CultivatePanel view="cultivate" extra={acts('tu_luyen')} state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onClose={() => setCultivateOpen(false)} />}
+      {selfOpen && <CultivatePanel view="self" extra={acts('ban_than')} state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onTakeJob={onTakeJob} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onClose={() => setSelfOpen(false)} />}
+      {cultivateOpen && <CultivatePanel view="cultivate" extra={acts('tu_luyen')} state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onTakeJob={onTakeJob} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onClose={() => setCultivateOpen(false)} />}
 
       {mapOpen && <MapPanel state={state} content={content} unlimited={!!dev} onTravel={onTravel} onClose={() => setMapOpen(false)} />}
 
-      {marketOpen && <MarketPanel extra={acts('gia_san')} state={state} content={content} onAction={onMarket} onClose={() => setMarketOpen(false)} />}
+      {marketOpen && <MarketPanel extra={<><AssetSection state={state} content={content} onAsset={onAsset} />{acts('gia_san')}</>} state={state} content={content} onAction={onMarket} onClose={() => setMarketOpen(false)} />}
 
       {bagOpen && <BagPanel state={state} content={content} onUse={onUseItem} onClose={() => setBagOpen(false)} />}
 
@@ -342,7 +354,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             <div class="kicker">Nhân vật</div>
             <h2>{c.name}</h2>
             <p class="story">
-              {c.gender === 'nam' ? 'Nam' : 'Nữ'} · {origin?.name} · quê {c.hometown} · độ khó {difficultyName(state, content)}
+              {c.gender === 'nam' ? 'Nam' : 'Nữ'} · {origin?.name} · quê {c.hometown}{lifeStage(content, c.age) ? ` · ${lifeStage(content, c.age)!.name}` : ''} · độ khó {difficultyName(state, content)}
             </p>
             <div class="profile-grid">
               {APTITUDE_LABELS.map(([key, label, glyph, term]) => {
@@ -359,6 +371,13 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             {identityLine(state, content) && <p class="profile-note">Thân phận: {identityLine(state, content)}</p>}
             {state.times && <p class="profile-note">Thời thế: {currentPhase(state, content)?.name ?? ''} · {state.times.dynasty}, {eraLabel(state, c.age)}</p>}
             {careerLabel(state, content) && <p class="profile-note">Đường đời: {careerLabel(state, content)}</p>}
+            {schoolLine(state, content) && <p class="profile-note">Học hành: {schoolLine(state, content)}</p>}
+            {tradeLine(state, content) && <p class="profile-note">Nghề: {tradeLine(state, content)}</p>}
+            {examLine(state, content) && <p class="profile-note">Khoa cử: {examLine(state, content)}</p>}
+            {jobLine(state, content) && <p class="profile-note">Việc làm: {jobLine(state, content)}</p>}
+            {assetsLine(state, content) && <p class="profile-note">Gia sản: {assetsLine(state, content)}</p>}
+            {artsLine(state, content) && <p class="profile-note">Tài nghệ: {artsLine(state, content)}</p>}
+            {petsLine(state, content) && <p class="profile-note">Thú nuôi: {petsLine(state, content)}</p>}
             {sectLabel(state, content) && <p class="profile-note">Tông môn: {sectLabel(state, content)}</p>}
             {inventoryLabel(state, content) && <p class="profile-note">Mang theo: {inventoryLabel(state, content)}</p>}
             <p class="profile-note"><TermText text="Tư chất tiên thiên định từ lúc sinh, chỉ đổi được nhờ kỳ ngộ hay khí vận." /></p>
@@ -412,6 +431,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
       {/* Kết đan sits above every sheet: the year waits for it (task 4.2). */}
       {state.cult.coreForming && <CorePopup state={state} content={content} onPlace={onPlaceStrand} />}
       {state.martial.quest?.game && <MiniGamePopup state={state} content={content} onAction={onQuest} />}
+      {state.exam?.sitting && <ExamPopup state={state} content={content} onAction={onExam} />}
       {state.cult.heartDemonTrial && <HeartDemonPopup state={state} content={content} onMeet={onMeetIllusion} />}
     </div>
   );

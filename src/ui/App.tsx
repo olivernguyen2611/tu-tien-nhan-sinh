@@ -55,6 +55,9 @@ import { learnTechnique } from '../systems/technique';
 import { chooseFate, rerollFate } from '../systems/fate';
 import { trainMartial } from '../systems/martial';
 import { beginQuestStep, miniGameHide, miniGameInput, miniGameQuit } from '../systems/martialQuest';
+import { answerExam, resolveIncident } from '../systems/exams';
+import { assetAction } from '../systems/assets';
+import { takeJob } from '../systems/jobs';
 import { romanceAction } from '../systems/romance';
 import { giftNpc } from '../systems/npcGift';
 import { doNpcAct } from '../systems/npcActs';
@@ -517,6 +520,18 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
           setLife(r.state);
           return r.text;
         }}
+        onAsset={(a) => {
+          const r = assetAction(life, content, a);
+          if (!r) return null;
+          setLife(r.state);
+          return r.text;
+        }}
+        onTakeJob={(jobId) => {
+          const r = takeJob(life, content, jobId);
+          if (!r) return null;
+          setLife(r.state);
+          return r.text;
+        }}
         onJoinCareer={(careerId) => {
           const r = joinCareer(life, content, careerId);
           if (!r) return null;
@@ -528,6 +543,10 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
           if (!r) return null;
           setLife(r.state);
           return r.text;
+        }}
+        onExam={(a) => {
+          const r = a.kind === 'answer' ? answerExam(life, content, a.approach) : resolveIncident(life, content, a.index);
+          if (r) setLife(r.state);
         }}
         onQuest={(a) => {
           if (a.kind === 'hide') { setLife(miniGameHide(life)); return null; }

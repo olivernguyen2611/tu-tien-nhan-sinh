@@ -8,6 +8,81 @@
 
 ## [Chưa phát hành]
 
+### 10.7 Giải trí và đời sống (2026-10-22)
+- 21 hoạt động giải trí mới (`activities/giai-tri.json`): tửu lâu, trà quán nghe chuyện, chiếu tài xỉu, cai cờ bạc, hội chợ, xem hát, lên chùa xin quẻ, xem bói, du ngoạn danh thắng, đi săn, câu cá, đọc sách, học đàn, đánh cờ, làm thơ, vẽ tranh, may y phục mới, ghé thanh lâu (không miêu tả), kiếm thú nuôi, chơi với thú nuôi. Mỗi hoạt động ghép văn bản từ nhiều mảnh (≥ 8 kiểu câu).
+- Mini-game trong sự kiện: chiếu bạc (đặt tài, xỉu, bát úp chẵn lẻ; Khí vận quyết định), chọn chỗ câu cá, chọn chỗ đi săn (có chim ưng thì thả chim).
+- Nghiện cờ bạc: ngồi chiếu quá nhiều trong vài năm thì nghiện, mỗi năm mất bạc và Hạnh phúc; hết bạc còn có thể phải cầm nhà. Cai được bằng Đạo tâm.
+- Quẻ và tin đồn là gợi ý thật: chúng gọi tên một sự kiện có thể tới và làm nó dễ tới hơn trong vài năm (`balance.pastime.omenMul`).
+- Lễ hội theo năm (`content/leisure.json`): Tết, Nguyên tiêu, Thanh minh, Đoan ngọ, Trung thu, Trùng cửu; mỗi năm một lễ, mỗi lễ 2 hoạt động riêng chỉ mở năm đó (12 hoạt động). Bảng Hành sự ghi lễ của năm.
+- Tài nghệ cầm, kỳ, thi, họa (0–100) lớn dần khi luyện, mở sự kiện văn nhân (thi hội văn nhân, tri âm, ván cờ với ông lão lạ). Hồ sơ có dòng "Tài nghệ:".
+- Thú nuôi: chó, mèo, ngựa cưng, chim ưng, gà chọi; có tên, lớn tuổi rồi mất (Hạnh phúc giảm), vài năm một lần tác động chỉ số; sự kiện chó sủa báo trộm, gà chọi ra trận, thú nuôi ốm. Hồ sơ có dòng "Thú nuôi:".
+- Điều kiện `festival`, `art`, `pet`; hiệu ứng `art`, `adoptPet`, `omen`, `gambled`; `sellAsset` nhận cả loại tài sản (vd. "house").
+
+### 10.6 Tình duyên và hôn nhân phàm tục (2026-10-22)
+- Hôn nhân sắp đặt: bà mối đưa canh thiếp (nghe lời, xem tuổi trước, từ chối); người nhà ép cưới người khác khi đã có người thương (bỏ trốn, quỳ xin, chia tay), bỏ trốn có chuỗi về làng xin tha thứ.
+- Gặp gỡ: hội đèn Nguyên tiêu, lên chùa cầu duyên, tỉ võ chiêu thân, hoạt động nhờ bà mối (bà mối có thể nói quá). Hiệu ứng `meetNpc.opposite` để mối mai luôn là người khác giới, đủ 18 tuổi.
+- Hẹn hò là hoạt động trong mục Nhân duyên: hẹn đi hội, du thuyền, ngắm trăng, viết thư tình.
+- Lễ cưới ngay sau khi thành thân: cưới nhỏ, cưới to (tốn bạc, được tiếng), góp bạc làm vốn.
+- Hôn nhân: lời mời gọi khi vợ chồng lạnh nhạt, ngoại tình bị phát hiện (xin lỗi, chối và bị đánh ghen, hòa ly); góa bụa và mối tái giá.
+- Nạp thiếp (nam, khá giả, từ 25 tuổi): thiếp là người quen thật (`romance.concubines`), thê thiếp tranh sủng. Chỉ kể bằng lời đời thường.
+- 12 sự kiện (`tinh-duyen.json`), 5 hoạt động (`activities/tinh-duyen.json`). Điều kiện `romance.concubine`, đích `concubine`; hiệu ứng `romance.concubine`.
+- Chưa làm: con chính/con thứ tranh gia tài (để 10.11 Gia tộc), "phu thê khác đường" (13.1).
+
+### 10.5 Quan hệ (2026-10-22)
+- 17 việc mới với người quen (`content/npc-acts.json`): khen, chê, kể chuyện cười, trêu chọc, cãi nhau, cho tiền, hỏi mượn tiền, cho vay, đòi nợ, trả nợ, rủ lên tửu lâu, đi hội, đi săn, kết nghĩa, tuyệt giao; với kẻ thù thêm đánh một trận và tố cáo lên quan. Việc lọc theo loại quan hệ, tuổi và chuyện giữa hai người (ai nợ ai, đã kết nghĩa chưa).
+- Nợ nần với người quen hiện ở mục Thông tin; kết nghĩa (qua việc hoặc sự kiện "Kết nghĩa kim lan") là lời thề: tuyệt giao, đánh hay tố cáo huynh đệ thì mất Đạo tâm, nghiệp xấu thêm; huynh đệ mất thì đau như mất người nhà. Tuyệt giao xong người ấy thành kẻ thù, cầu hòa được thì nối lại.
+- Con cái kiểu BitLife: dạy chữ, đánh đòn, chiều chuộng, kể chuyện xưa, lo dựng vợ gả chồng (con từ 18). Cách nuôi dồn lại thành tính nết lúc 16 tuổi (được chiều sinh hư, hiếu thuận, nghiêm cẩn, ngang bướng), hiện trong Gia đình và theo con khi con nối dõi (cộng/trừ chỉ số).
+- 7 sự kiện mới (`quan-he.json`): kẻ thù vu cáo, đốt nhà, thuê người đánh úp; huynh đệ gặp nạn; bạn rủ đi giang hồ; bạn hỏi vay vốn; bạn thân trở mặt.
+- Chưa làm: chuyển `family-actions.json` sang khung hoạt động (giữ nguyên chỗ cũ cho an toàn).
+
+### 10.4 Tài sản (2026-10-22)
+- 17 tài sản trong 6 loại (`content/assets.json`, số trong `balance.assets`): nhà (lều tranh → nhà ngói → trạch viện → phủ đệ), ruộng (tới 20 mẫu), cửa hiệu (quán trà, tiệm thuốc cần nghề thuốc, lò rèn cần nghề rèn, tửu lâu), trâu, ngựa, xe bò, thuyền, ngọc bội, tranh cổ, đồ cổ (có thể là đồ giả, bán mới biết).
+- Mỗi năm: thu và tốn phí; ruộng thu theo vụ chọn (lúa mùa / khoai / đậu) so với thời tiết, có lời đồn đúng 70%; cửa hiệu theo cách làm ăn (bình ổn, mở rộng, bán rẻ giúp người, buôn lậu có thể bị bắt); rủi ro (cháy, trộm, cường hào lấn ruộng, trâu chết, đắm thuyền…); vài năm một lần tài sản tác động chỉ số.
+- Thuế sưu ở Phàm gian từ 16 tuổi (Tú tài miễn thuế đinh), nặng hơn khi loạn thế; giấu ruộng khỏi sổ thuế là một hoạt động có rủi ro.
+- Vay nợ: phú hộ, cầm đồ, thương hội; chủ nợ là người quen thật; nợ để lâu thì bị xiết tài sản quý nhất, hết tài sản thì phải làm công trừ nợ.
+- Thừa kế: lập di chúc (từ 45 tuổi) thì người nối dõi nhận đủ cả bạc lẫn tài sản; không di chúc thì mỗi món có thể thất lạc. Nợ truyền sang đời sau.
+- Mục "Gia sản" trong bảng Gia sản: bán, tậu thêm theo loại, chọn vụ, chọn cách làm ăn, vay/trả nợ. Hồ sơ có dòng "Gia sản:".
+- 4 hoạt động (lập di chúc, giấu ruộng, thăm đồng, sửa sang nhà) và 8 sự kiện (năm hạn giá gạo gấp ba, cường hào chiếm ruộng, đồ cổ giả, chủ nợ tới cửa…).
+- Điều kiện mới `asset`, `debt`; hiệu ứng mới `buyAsset`, `sellAsset`, `loseAsset`, `shopStrategy`, `sowCrop`, `borrow`, `repayDebts`.
+
+### 10.3 Nghề nghiệp (2026-10-22)
+- 26 nghề trong 8 nhóm (`content/jobs.json`, số trong `balance.jobs`):
+  - Nông: làm ruộng (tá điền → địa chủ), chăn nuôi, đánh cá.
+  - Công: thợ rèn, mộc, gốm, may, đầu bếp, thợ xây.
+  - Thương: bán rong, tiểu nhị.
+  - Văn: thầy đồ, thư lại.
+  - Võ: hộ viện, đi lính, bộ khoái, tiêu sư.
+  - Y: bốc thuốc, bà đỡ.
+  - Nghệ: kép hát, nhạc công, họa sĩ.
+  - Hạ cửu lưu: phu khuân vác, mõ làng, đồ tể, phu đò.
+- Mỗi nghề có điều kiện vào nghề (tuổi, cấp học nghề của 10.1, bậc khoa cử của 10.2, giới, võ nghệ). Mỗi nghề cũng có số tháng làm trong năm, lương theo bậc, và chỉ số bị hao vài năm một lần. Chủ và đồng liêu là người quen thật.
+- Hiệu suất 0–100: mỗi năm dần trôi về mức mà chỉ số chính cho phép, tụt khi ốm. Hiệu suất cao thì lên bậc. Thấp thì bị nhắc, rồi bị đuổi, và vài năm sau nghề đó mới nhận lại.
+- Bậc cao nhất của bán rong, tiểu nhị, tiêu sư, bốc thuốc mở đường đời Thương lộ, Võ lâm, Y lộ (bốn bậc thang của 2.11 thành đỉnh của nhóm nghề). Khi vừa có việc vừa có đường đời thì chỉ nhận khoản lương lớn hơn.
+- Hoạt động ở nơi làm (nhóm Nghề): làm chăm, xin tăng lương, nịnh chủ, kết thân đồng liêu, ăn bớt, nghỉ việc, nghỉ hưu (từ 55 tuổi). Làm thêm: làm vụ mùa, chèo đò thuê.
+- Mục Việc làm trong Bản thân: xem việc đang làm, tìm việc theo nhóm, có lý do khi chưa vào được. Hồ sơ có thêm dòng Việc làm.
+- 14 sự kiện nghề:
+  - Chuyện ở nơi làm: chủ khen, đồng liêu cướp công, bị nhắc, tiệc về hưu.
+  - Ngã rẽ lớn của từng nhóm: địa chủ năm đói, rèn binh khí cho phản quân, thương hội ép giá, huyện lệnh đòi lễ (NC P5), thư lại sửa sổ, bộ khoái truy cướp, ca bệnh khó, gánh hát vào phủ, tin đồn ở bến.
+- Điều kiện mới `job`, `gender`; hiệu ứng mới `takeJob`, `quitJob`, `perf`, `jobPromote`. Simulate: persona phàm nhân đi làm (nông dân làm ruộng, thương nhân bán rong, hiệp khách làm tiêu sư…).
+
+### 10.2 Khoa cử (2026-10-22)
+- Năm bậc theo bảng tra 9.10: thi huyện (Đồng sinh) → thi viện (Tú tài) → thi Hương (Cử nhân) → thi Hội (Cống sĩ) → thi Đình (Tiến sĩ; ba người đầu là Trạng nguyên, Bảng nhãn, Thám hoa). Mỗi đời có lịch riêng: thi Hương ba năm một lần, thi Hội năm sau đó, đỗ thi Hội thì vào thi Đình ngay. Trung suy thì khó đỗ hơn, loạn thế chỉ mở thi huyện và thi viện, tân triều mở ân khoa mỗi năm. Mỗi bậc đòi tuổi, học lực và lộ phí.
+- Trường thi là mini-game 3 vòng: mỗi vòng có một đề, chọn Chính luận an toàn, Văn hoa hiểm hóc hoặc Đoán ý giám khảo. Tỉ lệ đạt hiện trên nút, tính theo học lực, trí tuệ, mị lực, khí vận và bậc thi. Một khoa có thể gặp một trong 6 sự cố: lều bên có tài liệu (làm thật, chép, tố cáo), bị vu oan, gặp đề lạ, lều dột, ốm giữa trường thi, giám khảo ra giá.
+- Quan lộ làm lại: phải đỗ Cử nhân mới ra làm quan. Các nấc giờ là chức quan (Huấn đạo, Tri huyện, Tri phủ, Thượng thư, Tể tướng); Tiến sĩ vào thẳng Tri huyện. Trạng nguyên, Bảng nhãn, Thám hoa thành danh hiệu cuối đời.
+- Hoạt động mới: Lều chõng đi thi, Ôn thi (người đã thôi học vẫn tăng học lực), Viết thuê (từ Đồng sinh), Mở lớp dạy chữ (từ Tú tài).
+- 11 sự kiện khoa cử (`khoa-cu.json`): bán ruộng lấy lộ phí, vinh quy bái tổ, lão sĩ tử, bà mối tìm Cử nhân, quan huyện mời làm Huấn đạo, vào cung tạ ơn…
+- Bỏ ba sự kiện thi cũ (Khảo thí ở huyện, Thi Hương, Thi Hội) vì đã có hệ thống thay. Save v7: Quan lộ cũ đổi thành bậc thi tương ứng (Tú tài, Cử nhân, Tiến sĩ…), sự kiện thi cũ đang chờ thì được xóa.
+- Simulate: Thư sinh đỗ Tú tài 71%, Cử nhân 27%, Tiến sĩ 14%. Tú tài chưa được miễn sưu vì game chưa có thuế; flag `tu_tai` đã có sẵn cho 10.4 dùng.
+
+### 10.1 Tuổi thơ và học hành (2026-10-22)
+- Giai đoạn tuổi (sơ sinh, nhi đồng, thiếu niên, trưởng thành) hiện trong hồ sơ; điều kiện sự kiện mới `lifeStage`.
+- Học đường (`content/schooling.json`, số trong `balance.schooling`): trường làng (3 lạng/năm) và tư thục (10 lạng/năm). Vào học thì thầy đồ và 2 bạn học thành người quen thật. Học lực 0–100 tăng theo trí tuệ mỗi năm; hết tiền thì thôi học, 16 tuổi thì ra trường. Đi học tốn 4–6 tháng trong quỹ năm.
+- Học nghề dưới tay một sư phụ: rèn, mộc, thuốc, may, bếp, gốm; lên bậc học việc → thợ phụ → thợ chính → thợ cả theo năm và căn cốt. Thợ chính nghề rèn/thuốc mở nghề phụ luyện khí/luyện đan.
+- 13 hoạt động học hành (chăm học, trốn học, chép bài, luyện chữ, nịnh thầy, xin học, nghe lỏm, theo võ đường, học 6 nghề…).
+- 25 sự kiện học đường (`hoc-duong.json`), gồm "Con học không vào" cho phía cha mẹ và chuỗi "Huynh đệ khác đường" (anh chị em có linh căn được đón lên núi, nhiều năm sau trở về).
+- Sự kiện Vào trường tư thục giờ cho vào học thật. Điều kiện mới `school`, `trade`, `family.siblingAlive`, `family.childAge`; hiệu ứng mới `grade`, `enrollSchool`, `leaveSchool`, `startTrade`, `tradeLevel`; chữ mẫu `{sibling}`, `{teacher}`, `{school}`.
+- Simulate: persona phàm nhân đi học và học nghề; báo cáo thêm tỉ lệ đi học/học nghề (Thư sinh 88% đi học, Nông dân/Thương nhân/Hiệp khách ~95% học nghề).
+
 ### Chơi thử Mốc A (2026-10-21)
 - Bot giao diện chơi tới 48 tuổi ở 390px và 1280px: dock Hành sự, quỹ tháng ("còn 11/12 tháng"), niên hiệu trên từng năm nhật ký, dòng Thời cuộc, hồ sơ có Tâm tính / Danh vọng / Nhân quả qua lời đồn đều chạy; không lỗi script.
 - Sửa: nút Ngao du có ghi chú dài tràn ngang màn hình điện thoại (giờ xuống dòng); phàm nhân nhận dòng thời cuộc dùng từ tu chân ("tán tu", "linh dược"), nay có `mortalText` riêng; Quan uy âm hiện là "Mất lòng quan phủ".

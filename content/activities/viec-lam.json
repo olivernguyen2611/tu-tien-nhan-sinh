@@ -1,0 +1,364 @@
+[
+  {
+    "id": "lam_cham",
+    "group": "nghe",
+    "name": "Làm chăm",
+    "icon": "勤",
+    "text": "Đến sớm về muộn, việc của người khác cũng làm luôn.",
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "job": {
+        "any": true
+      }
+    },
+    "months": 2,
+    "check": {
+      "stat": "stat.physique",
+      "difficulty": 40
+    },
+    "outcomes": [
+      {
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ngươi làm thêm cả buổi tối,",
+              "Ngươi nhận luôn phần việc khó nhất,",
+              "Cả tháng ngươi không nghỉ ngày nào,",
+              "Ngươi sửa lại chỗ hỏng mà không ai bảo,"
+            ],
+            [
+              "chủ nhìn thấy, gật đầu.",
+              "đồng liêu thì thầm sau lưng.",
+              "lưng đau mà lòng vững.",
+              "việc trôi chảy hẳn."
+            ]
+          ]
+        },
+        "effects": {
+          "perf": 8,
+          "stat.happiness": 1
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": [
+          "Cố quá thành quá cố: ngươi ngã bệnh mấy hôm, việc vẫn dồn đống.",
+          "Làm nhiều mà hỏng nhiều, chủ chỉ nhớ chỗ hỏng."
+        ],
+        "effects": {
+          "perf": 3,
+          "stat.happiness": -2
+        }
+      }
+    ]
+  },
+  {
+    "id": "xin_tang_luong",
+    "group": "nghe",
+    "name": "Xin tăng lương",
+    "icon": "薪",
+    "text": "Gõ cửa phòng chủ, nói một câu đã tập cả đêm.",
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "job": {
+        "any": true,
+        "perfMin": 55
+      }
+    },
+    "months": 1,
+    "check": {
+      "stat": "stat.charm",
+      "difficulty": 45
+    },
+    "outcomes": [
+      {
+        "text": [
+          "Chủ ngẫm một lúc rồi gật: \"Được, ngươi làm được việc.\"",
+          "Chủ thở dài nhưng vẫn thêm tiền công cho ngươi."
+        ],
+        "effects": {
+          "silver": 8,
+          "stat.happiness": 2
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": [
+          "Chủ cười nhạt: \"Còn chưa đủ đâu.\" Từ đó nhìn ngươi khác hẳn.",
+          "Chủ bảo nghĩ thêm. Ba tháng sau vẫn đang nghĩ."
+        ],
+        "effects": {
+          "perf": -4,
+          "stat.happiness": -2
+        }
+      }
+    ]
+  },
+  {
+    "id": "ninh_chu",
+    "group": "nghe",
+    "name": "Nịnh chủ",
+    "icon": "諂",
+    "text": "Mang quà biếu, khen con chủ thông minh, khen vợ chủ đẹp.",
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "job": {
+        "any": true
+      }
+    },
+    "months": 1,
+    "cost": [
+      {
+        "silver": 2
+      }
+    ],
+    "check": {
+      "stat": "stat.charm",
+      "difficulty": 40
+    },
+    "outcomes": [
+      {
+        "text": [
+          "Chủ cười híp mắt, vỗ vai ngươi.",
+          "Chủ khen ngươi biết điều. Đồng liêu nhìn nhau."
+        ],
+        "effects": {
+          "perf": 5,
+          "stat.daoHeart": -1
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": [
+          "Nịnh lộ quá, chủ nhíu mày.",
+          "Quà biếu không hợp ý, chủ đặt sang một bên."
+        ],
+        "effects": {
+          "perf": -2,
+          "stat.charm": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "ket_than_dong_lieu",
+    "group": "nghe",
+    "name": "Kết thân đồng liêu",
+    "icon": "友",
+    "text": "Mời đồng liêu chén rượu sau giờ làm.",
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "job": {
+        "any": true
+      }
+    },
+    "months": 1,
+    "cost": [
+      {
+        "silver": 2
+      }
+    ],
+    "outcomes": [
+      {
+        "text": [
+          "Rượu vào lời ra, mấy người thành anh em.",
+          "Có người kể cho ngươi chuyện nội bộ chẳng ai biết."
+        ],
+        "effects": {
+          "stat.charm": 1,
+          "stat.happiness": 2,
+          "perf": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "an_bot",
+    "group": "nghe",
+    "name": "Ăn bớt",
+    "icon": "竊",
+    "text": "Cân thiếu một chút, ghi sổ lệch một dòng.",
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "job": {
+        "any": true
+      }
+    },
+    "months": 1,
+    "check": {
+      "stat": "stat.luck",
+      "difficulty": 50
+    },
+    "outcomes": [
+      {
+        "text": [
+          "Không ai hay. Túi nặng thêm, lòng nhẹ đi.",
+          "Một chút thôi, ai mà biết."
+        ],
+        "effects": {
+          "silver": 10,
+          "karma": -2,
+          "stat.daoHeart": -1
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": [
+          "Chủ đối sổ, phát hiện. Ngươi bị phạt nửa tháng công.",
+          "Đồng liêu tố giác. Chủ không đuổi, nhưng không còn tin ngươi."
+        ],
+        "effects": {
+          "perf": -20,
+          "karma": -2,
+          "stat.happiness": -3
+        }
+      }
+    ]
+  },
+  {
+    "id": "nghi_viec",
+    "group": "nghe",
+    "name": "Nghỉ việc",
+    "icon": "辭",
+    "text": "Gói đồ, chào chủ, ra về.",
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "job": {
+        "any": true
+      }
+    },
+    "months": 0,
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi gửi lại chìa khóa, đi không ngoảnh lại.",
+          "Ngươi chào đồng liêu một lượt rồi đi."
+        ],
+        "effects": {
+          "quitJob": "quit",
+          "stat.happiness": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "nghi_huu",
+    "group": "nghe",
+    "name": "Nghỉ hưu",
+    "icon": "休",
+    "text": "Tuổi đã cao, gác nghề cho lớp sau.",
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "job": {
+        "any": true
+      },
+      "age": {
+        "min": 55
+      }
+    },
+    "months": 0,
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi giao lại việc cho người trẻ. Sáng mai không phải dậy sớm nữa.",
+          "Đồng liêu làm một bữa tiễn. Ngươi về nhà, ngồi ngắm vườn."
+        ],
+        "effects": {
+          "quitJob": "retire",
+          "stat.happiness": 5,
+          "stat.health": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "lam_vu_mua",
+    "group": "nghe",
+    "name": "Làm vụ mùa",
+    "icon": "穫",
+    "text": "Gặt thuê cho nhà giàu lúc vào mùa.",
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "age": {
+        "min": 12
+      }
+    },
+    "months": 2,
+    "outcomes": [
+      {
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ngươi gặt từ sáng tới tối,",
+              "Ngươi gánh lúa về sân nhà chủ,",
+              "Ngươi tuốt lúa cả đêm dưới trăng,"
+            ],
+            [
+              "được ít tiền công và mấy thúng thóc.",
+              "lưng đau ba ngày, túi có thêm mấy đồng.",
+              "chủ nhà còn đãi một bữa cơm mới."
+            ]
+          ]
+        },
+        "effects": {
+          "silver": 5,
+          "stat.health": -1,
+          "stat.physique": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "cheo_do_thue",
+    "group": "nghe",
+    "name": "Chèo đò thuê",
+    "icon": "渡",
+    "text": "Chèo đò đưa khách qua sông những ngày chợ phiên.",
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "age": {
+        "min": 14
+      }
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "text": [
+          "Khách qua sông kể cho ngươi chuyện trên huyện.",
+          "Có ông khách say rượu cho thêm tiền.",
+          "Nước lớn, đò chòng chành mà vẫn tới bến."
+        ],
+        "effects": {
+          "silver": 3,
+          "stat.physique": 1
+        }
+      }
+    ]
+  }
+]

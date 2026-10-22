@@ -1,0 +1,206 @@
+[
+  {
+    "id": "nho_mai_moi",
+    "group": "quan_he",
+    "name": "Nhờ bà mối",
+    "icon": "媒",
+    "text": "Mang trầu cau tới nhờ bà mối tìm cho một mối tử tế.",
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "lover": false,
+        "partner": false
+      }
+    },
+    "months": 1,
+    "cost": [
+      {
+        "silver": 8
+      }
+    ],
+    "check": {
+      "stat": "stat.luck",
+      "difficulty": 40
+    },
+    "outcomes": [
+      {
+        "text": [
+          "Bà mối dẫn ngươi đi xem mặt. Người kia đúng như lời kể, ngồi cúi đầu mà khóe miệng cười.",
+          "Bà mối kể người ta hiền như đất, ngươi gặp thì thấy cũng hiền thật."
+        ],
+        "effects": {
+          "meetNpc": {
+            "role": "người được mai mối",
+            "opposite": true,
+            "peer": true,
+            "affinity": 15
+          },
+          "romance": {
+            "pursue": true
+          },
+          "stat.happiness": 2
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": [
+          "Bà mối tả người ta đẹp như tiên. Gặp rồi mới biết bà mối nói quá ba phần.",
+          "Mối nói khéo quá, gặp mặt mới hay người ta đã có ý trung nhân."
+        ],
+        "effects": {
+          "meetNpc": {
+            "role": "người được mai mối",
+            "opposite": true,
+            "peer": true,
+            "affinity": -5
+          },
+          "romance": {
+            "pursue": true
+          },
+          "stat.happiness": -2
+        }
+      }
+    ]
+  },
+  {
+    "id": "hen_di_hoi",
+    "group": "quan_he",
+    "name": "Hẹn đi hội",
+    "icon": "會",
+    "text": "Rủ người thương đi hội làng, xem đánh đu, ăn bánh.",
+    "conditions": {
+      "romance": {
+        "target": "lover"
+      }
+    },
+    "months": 1,
+    "cost": [
+      {
+        "silver": 3
+      }
+    ],
+    "outcomes": [
+      {
+        "text": [
+          "Hai người đi giữa hội, tay suýt chạm tay. Cả buổi chẳng ai nhớ đã xem gì.",
+          "Ngươi thắng một chiếc trâm ở trò ném vòng, cài lên tóc người kia."
+        ],
+        "effects": {
+          "romance": {
+            "loverAffinity": 5
+          },
+          "stat.happiness": 3
+        }
+      }
+    ]
+  },
+  {
+    "id": "du_thuyen",
+    "group": "quan_he",
+    "name": "Du thuyền trên sông",
+    "icon": "舟",
+    "text": "Thuê chiếc đò nhỏ, chèo ra giữa sông lúc chiều.",
+    "conditions": {
+      "romance": {
+        "target": "beloved"
+      }
+    },
+    "months": 1,
+    "cost": [
+      {
+        "silver": 5
+      }
+    ],
+    "outcomes": [
+      {
+        "text": [
+          "Sóng vỗ mạn thuyền, hai người ngồi im mà không thấy dài.",
+          "Người kia hát một câu hò, ngươi chèo lạc nhịp mà không ai trách."
+        ],
+        "effects": {
+          "romance": {
+            "loverAffinity": 6
+          },
+          "stat.happiness": 3,
+          "stat.charm": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "ngam_trang",
+    "group": "quan_he",
+    "name": "Ngắm trăng",
+    "icon": "月",
+    "text": "Đêm rằm, ngồi bên bờ ao ngắm trăng.",
+    "conditions": {
+      "romance": {
+        "target": "beloved"
+      }
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "text": [
+          "Trăng tròn vành vạnh. Người kia bảo trăng giống cái bánh, ngươi cười tới đau bụng.",
+          "Hai người đếm sao tới khuya, đếm mãi không xong."
+        ],
+        "effects": {
+          "romance": {
+            "loverAffinity": 4
+          },
+          "stat.happiness": 2,
+          "stat.daoHeart": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "viet_thu_tinh",
+    "group": "quan_he",
+    "name": "Viết thư tình",
+    "icon": "箋",
+    "text": "Mài mực, viết mấy dòng gửi người thương.",
+    "conditions": {
+      "romance": {
+        "target": "lover"
+      }
+    },
+    "months": 1,
+    "check": {
+      "stat": "stat.intellect",
+      "difficulty": 40
+    },
+    "outcomes": [
+      {
+        "text": [
+          "Thư gửi đi, ba hôm sau có thư hồi âm, giấy còn thơm mùi hoa bưởi.",
+          "Người kia đọc thư, đỏ mặt, giấu vào tay áo."
+        ],
+        "effects": {
+          "romance": {
+            "loverAffinity": 6
+          },
+          "stat.intellect": 1
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": [
+          "Thư viết sai chính tả, người kia đọc xong cười cả tuần.",
+          "Thư gửi nhầm nhà hàng xóm. Cả xóm biết chuyện trước người nhận."
+        ],
+        "effects": {
+          "romance": {
+            "loverAffinity": 1
+          },
+          "stat.happiness": -1
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,420 @@
+[
+  {
+    "id": "ts_nam_han_gia_gao",
+    "category": "wealth",
+    "title": "Năm hạn, giá gạo gấp ba",
+    "text": "Trời không mưa suốt mùa, gạo ngoài chợ đắt gấp ba. Hũ gạo trong nhà đã thấy đáy.",
+    "themes": [
+      "wealth"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "worldVars": [
+        {
+          "id": "harvest",
+          "lte": 35
+        }
+      ],
+      "age": {
+        "min": 16
+      }
+    },
+    "weight": 8,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Vay phú hộ trong làng mà đong gạo",
+        "result": {
+          "text": "Có gạo ăn qua mùa giáp hạt. Còn món nợ thì để sang năm tính.",
+          "effects": {
+            "borrow": "vay_phu_ho",
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Lên núi đào củ mài ăn thay cơm",
+        "result": {
+          "text": "Củ mài chát, tay rớm máu, nhưng không mắc nợ ai.",
+          "effects": {
+            "stat.health": -4,
+            "stat.physique": 1
+          }
+        }
+      },
+      {
+        "text": "Bán một mẫu ruộng hương hỏa",
+        "result": {
+          "text": "Ruộng ông bà để lại đổi được mấy thúng gạo. Đêm đó trằn trọc mãi.",
+          "effects": {
+            "sellAsset": "ruong",
+            "stat.happiness": -6
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ts_cuong_hao_chiem_ruong",
+    "category": "wealth",
+    "title": "Cường hào chiếm ruộng",
+    "text": "Tên cường hào đầu làng sai gia đinh cắm cọc lấn sang ruộng nhà ngươi, bảo đất ấy xưa nay vẫn là của hắn.",
+    "themes": [
+      "wealth"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "asset": {
+        "kind": "land"
+      }
+    },
+    "weight": 5,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Lên huyện kiện",
+        "result": {
+          "text": "Quan huyện xử ngươi thắng, nhưng tiền lót tay tốn không ít. Tên cường hào từ đó lườm nguýt.",
+          "effects": {
+            "silver": -15,
+            "stat.happiness": 1,
+            "reputation": {
+              "lang_xa": 2
+            }
+          }
+        }
+      },
+      {
+        "text": "Nhịn cho yên chuyện",
+        "result": {
+          "text": "Mất một mẫu ruộng. Nuốt cục tức xuống bụng.",
+          "effects": {
+            "loseAsset": "ruong",
+            "stat.happiness": -5
+          }
+        }
+      },
+      {
+        "text": "Rủ trai làng ra nhổ cọc",
+        "result": {
+          "text": "Hai bên xô xát một trận. Cọc nhổ được, đầu cũng sưng một cục.",
+          "effects": {
+            "stat.health": -4,
+            "stat.physique": 1,
+            "reputation": {
+              "lang_xa": 3
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ts_do_co_gia",
+    "category": "wealth",
+    "title": "Người sành đồ cổ ghé thăm",
+    "text": "Một ông khách sành đồ cổ ghé chơi, cầm món đồ quý của ngươi lên soi rất lâu rồi lắc đầu.",
+    "themes": [
+      "wealth"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "asset": {
+        "id": "do_co"
+      }
+    },
+    "weight": 5,
+    "cooldownYears": 12,
+    "choices": [
+      {
+        "text": "Hỏi cho ra lẽ",
+        "result": {
+          "text": "Ông ta chỉ mấy chỗ sơn mới. Hóa ra bị lừa từ đầu. Đem bán đi cho xong.",
+          "effects": {
+            "sellAsset": "do_co",
+            "stat.intellect": 2,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Không tin, cất kỹ đi",
+        "result": {
+          "text": "Đồ của mình thì mình quý. Thật hay giả, ngắm vẫn thấy vui.",
+          "effects": {
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ts_chu_no_toi_cua",
+    "category": "wealth",
+    "title": "Chủ nợ tới cửa",
+    "text": "Chủ nợ dẫn theo hai gã lực điền đứng chắn ngõ, hỏi khi nào trả.",
+    "themes": [
+      "wealth"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "debt": {
+        "any": true
+      }
+    },
+    "weight": 7,
+    "cooldownYears": 3,
+    "choices": [
+      {
+        "text": "Gom hết bạc mà trả",
+        "result": {
+          "text": "Nợ sạch, nhà cũng sạch bạc. Nhưng đêm nay ngủ yên.",
+          "effects": {
+            "repayDebts": true,
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Xin khất thêm một năm",
+        "result": {
+          "text": "Hắn gật, nhưng lãi lại tăng. Hàng xóm đứng xem bàn tán.",
+          "effects": {
+            "stat.happiness": -3,
+            "stat.charm": -1
+          }
+        }
+      },
+      {
+        "text": "Trốn ra sau vườn",
+        "result": {
+          "text": "Hắn đợi tới tối mới về, để lại một câu dọa.",
+          "effects": {
+            "stat.happiness": -4,
+            "stat.health": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ts_ngua_quy_duoc_hoi",
+    "category": "wealth",
+    "title": "Có người hỏi mua ngựa",
+    "text": "Một viên thương nhân phương bắc nhìn con ngựa của ngươi không chớp mắt, ngỏ ý trả giá cao.",
+    "themes": [
+      "wealth"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "asset": {
+        "id": "ngua"
+      }
+    },
+    "weight": 5,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Bán",
+        "result": {
+          "text": "Được giá hơn hẳn ngoài chợ. Nhìn ngựa đi khuất mà tiếc.",
+          "effects": {
+            "sellAsset": "ngua",
+            "silver": 40,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Không bán",
+        "result": {
+          "text": "Vuốt bờm ngựa, ngươi lắc đầu. Có những thứ không đổi bằng bạc.",
+          "effects": {
+            "stat.happiness": 2,
+            "stat.charm": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ts_chay_nha_hang_xom",
+    "category": "wealth",
+    "title": "Nhà hàng xóm bốc cháy",
+    "text": "Nửa đêm có tiếng la, nhà bên cạnh lửa đã trùm lên mái.",
+    "themes": [
+      "wealth"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "asset": {
+        "kind": "house"
+      },
+      "age": {
+        "min": 12
+      }
+    },
+    "weight": 5,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Xách nước chạy sang dập lửa",
+        "result": {
+          "text": "Lửa tắt, tay bỏng mấy chỗ. Hàng xóm khóc mà cảm ơn mãi.",
+          "effects": {
+            "stat.health": -3,
+            "karma": 2,
+            "reputation": {
+              "lang_xa": 3
+            },
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Dỡ mái nhà mình cho lửa khỏi lan",
+        "result": {
+          "text": "Nhà mình không cháy, nhưng mái thì phải lợp lại.",
+          "effects": {
+            "silver": -10,
+            "stat.intellect": 1,
+            "stat.happiness": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ts_mua_tot_duoc_mua",
+    "category": "wealth",
+    "title": "Được mùa",
+    "text": "Năm nay lúa trĩu bông, sân phơi không đủ chỗ.",
+    "themes": [
+      "wealth"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "asset": {
+        "kind": "land"
+      },
+      "worldVars": [
+        {
+          "id": "harvest",
+          "gte": 65
+        }
+      ]
+    },
+    "weight": 5,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Mở tiệc mừng được mùa",
+        "result": {
+          "text": "Cả xóm kéo tới, ăn uống tới khuya.",
+          "effects": {
+            "silver": -8,
+            "stat.happiness": 4,
+            "reputation": {
+              "lang_xa": 2
+            }
+          }
+        }
+      },
+      {
+        "text": "Tích gạo phòng năm đói",
+        "result": {
+          "text": "Đong đầy mấy chum gạo. Có lúa trong nhà, lòng chẳng lo.",
+          "effects": {
+            "stat.happiness": 2,
+            "stat.intellect": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ts_thuong_lai_moi_hun",
+    "category": "wealth",
+    "title": "Thương lái rủ góp vốn",
+    "text": "Một thương lái quen mặt rủ góp vốn mở cửa hiệu trên huyện, hứa hai năm lãi gấp đôi.",
+    "themes": [
+      "wealth"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "age": {
+        "min": 20
+      },
+      "asset": {
+        "kind": "shop",
+        "none": true
+      }
+    },
+    "weight": 5,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Vay thương hội mà góp",
+        "result": {
+          "text": "Bạc vào tay hắn. Từ đó không thấy hắn quay lại làng.",
+          "effects": {
+            "borrow": "vay_thuong_hoi",
+            "silver": -300,
+            "stat.happiness": -6,
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Từ chối",
+        "result": {
+          "text": "Hắn bĩu môi bỏ đi. Mấy tháng sau nghe đồn hắn ôm tiền cả làng bên chạy mất.",
+          "effects": {
+            "stat.intellect": 2,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  }
+]

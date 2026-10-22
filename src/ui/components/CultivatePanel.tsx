@@ -8,6 +8,7 @@ import type { GameState, Tone } from '../../core/types';
 import { bodyLabel, inBottleneck, majorBreakthroughInfo, realmLabel, rootLabel, rootUsable, yearlyGain } from '../../systems/cultivation';
 import { craftViews } from '../../systems/crafts';
 import { careerIncome, careerLabel, careerViews } from '../../systems/career';
+import { jobLine, jobViews } from '../../systems/jobs';
 import { currentTechnique, learnBlocked, techniqueById, techniqueSummary } from '../../systems/technique';
 import { martialView, mortalManual } from '../../systems/martial';
 import { questView } from '../../systems/martialQuest';
@@ -20,7 +21,7 @@ import { recipeViews } from '../../systems/crafting';
 import { Meter } from './Meter';
 import { TermText } from './Tooltip';
 
-export function CultivatePanel({ state, content, view, extra, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSeclude, onRentCave, onCraft, onClose }: {
+export function CultivatePanel({ state, content, view, extra, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onLearn, onTrain, onQuest, onSeclude, onRentCave, onCraft, onClose }: {
   state: GameState;
   content: Content;
   /** 9.7: "self" is the Bản thân sheet (võ đạo, đường đời, bách nghệ), "cultivate" the Tu luyện one. */
@@ -33,6 +34,8 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
   onPractice: (craftId: string) => string | null;
   /** Take up a mortal career; returns the log text, or null. */
   onJoinCareer: (careerId: string) => string | null;
+  /** 10.3: take a job; returns the log text, or null. */
+  onTakeJob: (jobId: string) => string | null;
   /** Practise a technique from a scroll; returns the log text, or null. */
   onLearn: (techniqueId: string) => string | null;
   /** A year of martial training (task 3.11); returns the log text, or null. */
@@ -57,6 +60,10 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
   const [practiced, setPracticed] = useState<string | null>(null);
   const [joined, setJoined] = useState<string | null>(null);
   const [careerOpen, setCareerOpen] = useState(false);
+  const [jobOpen, setJobOpen] = useState(false);
+  const [hired, setHired] = useState<string | null>(null);
+  const jobs = mortal ? jobViews(state, content) : [];
+  const currentJob = jobLine(state, content);
   const careers = mortal ? careerViews(state, content) : [];
   const currentCareer = careerLabel(state, content);
   const paths = mortal ? null : pathsView(state, content);
@@ -228,6 +235,35 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
                 </div>
               ))}
               {joined && <p class="action-result good">{joined}</p>}
+          </Fold>
+        )}
+
+        {self && mortal && state.alive && jobs.length > 0 && (
+          <Fold id="cult:Việc làm" title="Việc làm">
+              {currentJob ? (
+                <p class="story">{currentJob}. Làm chăm, nịnh chủ hay ăn bớt ở mục Nghề bên dưới.</p>
+              ) : (
+                <p class="profile-note">Chưa có việc. Có việc thì có lương hằng năm; hiệu suất cao được lên bậc, thấp thì bị đuổi.</p>
+              )}
+              <button class="chip-btn" aria-expanded={jobOpen} onClick={() => setJobOpen(!jobOpen)}>{currentJob ? 'Đổi việc' : 'Tìm việc'}</button>
+              {jobOpen && (content.jobs?.groups ?? []).map((g) => {
+                const rows = jobs.filter((j) => j.group === g.id && !j.current);
+                if (rows.length === 0) return null;
+                return (
+                  <div key={g.id}>
+                    <h3 class="panel-sub">{g.glyph} {g.name}</h3>
+                    {rows.map((j) => (
+                      <div class="career-row" key={j.id}>
+                        <div class="craft-head"><b>{j.name}</b> · {j.pay} lượng/năm · {j.months} tháng</div>
+                        <p class="profile-note">{j.description}</p>
+                        <button class="chip-btn" disabled={!!j.blocked} onClick={() => { setHired(onTakeJob(j.id)); setJobOpen(false); }}>Xin làm</button>
+                        {j.blocked && <span class="craft-note">{j.blocked}</span>}
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
+              {hired && <p class="action-result good">{hired}</p>}
           </Fold>
         )}
 

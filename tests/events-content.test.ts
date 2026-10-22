@@ -10,8 +10,9 @@ import accident from '../content/worlds/thuong_lan/events/accident.json';
 const events: GameEvent[] = [childhood, study, work, funny, accident].flatMap((f) => EventFileSchema.parse(f));
 
 describe('mortal events of Thương Lan giới', () => {
-  it('has the 20 approved events', () => {
-    expect(events).toHaveLength(20);
+  // 10.2: Khảo thí ở huyện gave way to the khoa cử system.
+  it('has the 19 approved events left', () => {
+    expect(events).toHaveLength(19);
   });
 
   it('every trait-only choice is hidden', () => {

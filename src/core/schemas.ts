@@ -62,6 +62,29 @@ const BaseConditionsSchema = z
     /** 9.5 Thời cuộc: the pha thời thế now is one of these, and world variables are in range. */
     worldPhase: ids,
     worldVars: z.array(z.object({ id, gte: z.number().optional(), lte: z.number().optional() }).strict()).optional(),
+    /** 10.1: giai đoạn tuổi (schooling.json stages), at school (and học lực range), learning or knowing a trade. */
+    lifeStage: ids,
+    school: z.object({ enrolled: z.boolean().optional(), at: id.optional(), gradeMin: z.number().optional(), gradeMax: z.number().optional(), ever: z.boolean().optional() }).strict().optional(),
+    trade: z.object({ id: id.optional(), any: z.boolean().optional(), levelMin: z.number().int().optional(), learning: z.boolean().optional() }).strict().optional(),
+    /** 10.3: the character's gender. */
+    gender: z.enum(['nam', 'nu']).optional(),
+    /** 10.3 Việc làm: holding a job (or this one, or one of this nhóm nghề), rung and hiệu suất range, at the job's top rung. */
+    job: z.object({
+      any: z.boolean().optional(), id: id.optional(), group: id.optional(), rungMin: z.number().int().optional(),
+      perfMin: z.number().optional(), perfMax: z.number().optional(), top: z.boolean().optional(),
+    }).strict().optional(),
+    /** 10.4 Tài sản: owns at least `count` of these assets (or of this kind), owes money. */
+    asset: z.object({ id: id.optional(), kind: z.enum(['house', 'land', 'shop', 'animal', 'vehicle', 'valuable']).optional(), count: z.number().int().min(0).optional(), none: z.boolean().optional() }).strict().optional(),
+    debt: z.object({ min: z.number().optional(), any: z.boolean().optional() }).strict().optional(),
+    /** 10.7 Giải trí: this year's lễ hội is one of these (leisure.json); a tài nghệ at least this high; keeps a pet (of this kind). */
+    festival: ids.optional(),
+    art: z.object({ id, min: z.number() }).strict().optional(),
+    pet: z.object({ id: id.optional(), any: z.boolean().optional() }).strict().optional(),
+    /** 10.2 Khoa cử: highest level passed (exams.json level ids; none = -1), times failed, can sit the next exam this year, the Đình placing. */
+    exam: z.object({
+      passed: id.optional(), notPassed: id.optional(), failsMin: z.number().int().optional(),
+      canSit: z.boolean().optional(), placing: ids,
+    }).strict().optional(),
     root: z.object({ tested: z.boolean().optional(), usable: z.boolean().optional(), minElements: z.number().int().min(1).optional(), innate: z.boolean().optional() }).strict().optional(),
     /** Stage within the current realm, 0-based (task 2.8: "Luyện Khí tầng 4+" = min 3). */
     stage: z.object({ min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional(),
@@ -90,8 +113,10 @@ const BaseConditionsSchema = z
     romance: z
       .object({
         /** ex: the most recent person who turned the player down or was left, still alive. */
-        target: z.enum(['lover', 'partner', 'beloved', 'ex']).optional(),
+        target: z.enum(['lover', 'partner', 'beloved', 'ex', 'concubine']).optional(),
         lover: z.boolean().optional(),
+        /** 10.6: has a living thiếp (nạp thiếp), or not. */
+        concubine: z.boolean().optional(),
         couple: z.boolean().optional(),
         partner: z.boolean().optional(),
         /** The target's affinity range. */
@@ -131,7 +156,7 @@ const BaseConditionsSchema = z
       .strict()
       .optional(),
     /** Task 3.9: family state ({deceased} = a relative who has died). */
-    family: z.object({ deadAny: z.boolean().optional(), parentAlive: z.boolean().optional() }).strict().optional(),
+    family: z.object({ deadAny: z.boolean().optional(), parentAlive: z.boolean().optional(), siblingAlive: z.boolean().optional(), childAge: z.object({ min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional() }).strict().optional(),
     /** Task 4.10: nearEnd = years left ≤ balance.lifespan.pressureLeftPct of the lifespan; maxLeft = at most this many years left. */
     lifespan: z.object({ nearEnd: z.boolean().optional(), maxLeft: z.number().int().min(0).optional() }).strict().optional(),
     /** Task 3.4: the NPC this event is about (met earlier, or picked by an npcTrigger). */
@@ -150,6 +175,8 @@ const BaseConditionsSchema = z
         natureKnown: z.boolean().optional(),
         /** Their hidden nature does not match the face they show. */
         masked: z.boolean().optional(),
+        /** 10.5: sworn (kết nghĩa) with the player, or not. */
+        sworn: z.boolean().optional(),
         /** Their realm compared to the player's: -1 lower, 0 same, 1 higher. */
         minRealmGap: z.number().int().optional(),
         maxRealmGap: z.number().int().optional(),
@@ -242,6 +269,33 @@ export const EffectsSchema = z
     martialAscend: z.boolean().optional(),
     martialAttempt: z.boolean().optional(),
     martialYears: z.number().int().optional(),
+    /** 10.1: học lực ±; enter a school (schooling.json id) or leave it; take up a trade under a master, or gain a level of it. */
+    grade: z.number().optional(),
+    enrollSchool: id.optional(),
+    leaveSchool: z.boolean().optional(),
+    startTrade: id.optional(),
+    tradeLevel: z.number().int().optional(),
+    /** 10.2: lều chõng đi thi: sit the next exam held this year (the trường thi mini-game opens). */
+    sitExam: z.boolean().optional(),
+    /** 10.3: take a job (jobs.json id; its requirements still apply), leave it (retire = nghỉ hưu), hiệu suất ±, one rung up. */
+    takeJob: id.optional(),
+    quitJob: z.enum(['quit', 'retire', 'fired']).optional(),
+    perf: z.number().optional(),
+    jobPromote: z.boolean().optional(),
+    /** 10.4: buy an asset (assets.json id, at today's price), sell one, lose one (taken, burnt), set a shop's way of trading, sow a crop, borrow (loans id), repay all debts. */
+    buyAsset: id.optional(),
+    sellAsset: id.optional(),
+    loseAsset: id.optional(),
+    shopStrategy: id.optional(),
+    sowCrop: id.optional(),
+    borrow: id.optional(),
+    repayDebts: z.boolean().optional(),
+    /** 10.7: tài nghệ (cầm, kỳ, thi, họa) ±; take in a pet (leisure.json id, named from its pool); a quẻ or a rumour
+     *  that names an event likely to come (and makes it likelier); one more time at the sòng bạc (toward nghiện). */
+    art: z.record(id, z.number()).optional(),
+    adoptPet: id.optional(),
+    omen: z.boolean().optional(),
+    gambled: z.boolean().optional(),
     /** Extra % for the next martial breakthrough. */
     martialBonus: z.number().optional(),
     /** An elder of the sect takes you as a personal disciple. */
@@ -275,6 +329,8 @@ export const EffectsSchema = z
         affinity: z.number().optional(),
         favor: z.number().optional(),
         grudge: z.number().optional(),
+        /** 10.6: of the other gender (a match the family arranges). */
+        opposite: z.boolean().optional(),
       })
       .strict()
       .optional(),
@@ -319,6 +375,8 @@ export const EffectsSchema = z
         partnerProgress: z.number().optional(),
         /** Task 3.9: the lover's (else the đạo lữ's) affinity, when the event is about someone else. */
         loverAffinity: z.number().optional(),
+        /** 10.6: take the event's NPC as a thiếp. */
+        concubine: z.boolean().optional(),
       })
       .strict()
       .optional(),
@@ -331,6 +389,8 @@ export const EffectsSchema = z
         reveal: z.boolean().optional(),
         kill: z.boolean().optional(),
         role: z.string().min(1).optional(),
+        /** 10.5: swear the kết nghĩa oath with them. */
+        sworn: z.boolean().optional(),
       })
       .strict()
       .optional(),
@@ -339,7 +399,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1578,6 +1638,113 @@ export const BalanceSchema = z
         careerMonthsDefault: z.number().int().min(0),
       })
       .strict(),
+    /** 10.1 Học đường, học nghề (content/schooling.json has the schools and trades). */
+    schooling: z
+      .object({
+        /** Ages a child may enter a school; everyone leaves at leaveAge. */
+        enrollAge: range,
+        leaveAge: z.number().int().min(1),
+        /** Học lực gained in a school year: base + trí tuệ × intellectWeight, × months / school months. */
+        gradeBase: z.number(),
+        intellectWeight: z.number(),
+        classmates: z.number().int().min(0),
+        /** Học nghề: from this age; months a year; years at each level before the next (last value repeats). */
+        tradeMinAge: z.number().int().min(0),
+        tradeMonths: z.number().int().min(0),
+        tradeYears: z.array(z.number().int().min(1)).min(1),
+        /** Chance to pass to the next level once the years are served: base + (căn cốt + ngộ tính) × weight. */
+        tradeChance: z.object({ base: z.number(), weight: z.number() }).strict(),
+      })
+      .strict()
+      .optional(),
+    /** 10.2 Khoa cử (content/exams.json has the names and texts). Chance of an approach = base + Σ weight × value − level penalty − phase penalty. */
+    exams: z
+      .object({
+        rounds: z.number().int().min(1),
+        chanceMin: z.number(),
+        chanceMax: z.number(),
+        /** Chance one incident (gian lận, vu oan, đề lạ) comes in a sitting. */
+        incidentChance: z.number().min(0).max(1),
+        levels: z.record(z.object({
+          minAge: z.number().int().min(0),
+          minGrade: z.number().min(0),
+          fee: z.number().min(0),
+          /** Held every `interval` years (offset by the life's own calendar + offset); 0 = right after passing the level before (thi Đình). */
+          interval: z.number().int().min(0),
+          offset: z.number().int().min(0).default(0),
+          passScore: z.number(),
+          penalty: z.number(),
+          reward: z.object({ silver: z.number().default(0), happiness: z.number().default(0), reputation: z.number().default(0) }).strict(),
+        }).strict()),
+        approaches: z.record(z.object({
+          base: z.number(), win: z.number(), lose: z.number(),
+          /** Value names: grade (học lực) or a stat/aptitude. */
+          weights: z.record(z.number()),
+        }).strict()),
+        /** Penalty by thời thế phase; phases where only the lowest levels are held; phases that hold ân khoa (every level every year). */
+        phasePenalty: z.record(z.number()),
+        closedPhases: ids,
+        openLevels: ids,
+        anKhoaPhases: ids,
+        /** Score on the last level for each placing, best first. */
+        placings: z.array(z.object({ id, minScore: z.number() }).strict()),
+        failHappiness: z.number(),
+      })
+      .strict()
+      .optional(),
+    /** 10.3 Việc làm (content/jobs.json has the jobs). Hiệu suất 0–100 drifts each year toward target = targetBase + main stats × targetWeight. */
+    jobs: z
+      .object({
+        perfStart: z.number(),
+        drift: z.number().min(0).max(1),
+        targetBase: z.number(),
+        targetWeight: z.number(),
+        /** Hiệu suất lost in a year spent at under sickHealth sức khỏe. */
+        sickHealth: z.number(),
+        sickPerf: z.number(),
+        promoteAt: z.number(),
+        promoteChance: z.number().min(0).max(1),
+        yearsPerRung: z.number().int().min(1),
+        fireAt: z.number(),
+        fireChance: z.number().min(0).max(1),
+        /** Years before a fired life is taken back by the same trade. */
+        rehireYears: z.number().int().min(0),
+        /** Upkeep (jobs.json) applies once every this many years at the job. */
+        upkeepEvery: z.number().int().min(1),
+        retireAge: z.number().int().min(0),
+        colleagues: z.number().int().min(0),
+      })
+      .strict()
+      .optional(),
+    /** 10.7 Giải trí: pets act every petEvery years; gambling addictAt times within addictYears makes it nghiện (yearly loss); an omen's event weighs omenMul for omenYears. */
+    pastime: z.object({ petEvery: z.number().int().min(1), petDeathHappiness: z.number(), addictAt: z.number().int().min(1), addictYears: z.number().int().min(1), addictSilver: z.number(), addictHappiness: z.number(), omenMul: z.number().min(1), omenYears: z.number().int().min(1), artMax: z.number() }).strict().optional(),
+    /** 10.5 Quan hệ: a broken kết nghĩa oath (Đạo tâm, nghiệp), a sworn sibling's death (Hạnh phúc), the age a child's temper shows. */
+    kinship: z.object({ oathDaoHeart: z.number(), oathKarma: z.number(), swornDeathHappiness: z.number(), temperAge: z.number().int().min(1) }).strict().optional(),
+    /** 10.4 Tài sản (content/assets.json has the assets, crops, ways of trading and loans). */
+    assets: z
+      .object({
+        /** Prices follow the thời cuộc price multiplier this much (0 = fixed, 1 = fully). */
+        priceFollow: z.number().min(0).max(1),
+        /** Share of the price paid back when selling (a valuable found fake sells for fakeResale). */
+        resale: z.number().min(0).max(1),
+        fakeResale: z.number().min(0).max(1),
+        /** An asset's yearly stat effects apply once every this many years. */
+        statEvery: z.number().int().min(1),
+        /** Land: yield × (harvest/50) × crop fit: right guess, wrong guess, no crop chosen. */
+        cropFit: z.object({ right: z.number(), wrong: z.number(), none: z.number(), normal: z.number() }).strict(),
+        /** Chance the weather news is right. */
+        forecastTrue: z.number().min(0).max(1),
+        /** Shop profit spread: income × strategy × (1 ± spread). */
+        shopSpread: z.number().min(0),
+        /** Thuế: thuế đinh per head (Tú tài miễn), per mẫu, per shop; × phase multiplier. */
+        tax: z.object({ head: z.number(), land: z.number(), shop: z.number(), phaseMul: z.record(z.number()), exemptFlags: ids, minAge: z.number().int().min(0), shortHappiness: z.number(), forgiveBelow: z.number(), logAt: z.number(), logEvery: z.number().int().min(1) }).strict(),
+        /** Unpaid debts: years before the creditor comes for an asset or for labour. */
+        defaultYears: z.number().int().min(1),
+        /** Without a di chúc, each asset reaches the heir with this chance. */
+        noWillKeep: z.number().min(0).max(1),
+      })
+      .strict()
+      .optional(),
     /** Mortal careers (task 2.11). */
     careers: z
       .object({
@@ -1936,6 +2103,9 @@ export const FamilyActionSchema = z
     refused: ActionOutcomeSchema.optional(),
     mishapChance: z.number().min(0).max(1).default(0),
     mishap: ActionOutcomeSchema.optional(),
+    /** 10.5: how it brings a child up (− strict, + spoiling); marrying a child off (once, from 18). */
+    rearing: z.number().default(0),
+    marry: z.boolean().default(false),
     affinity: affinityRange,
     effects: familyEffects,
     texts: TextPoolSchema,
@@ -2056,6 +2226,15 @@ export const NpcActSchema = z
     reveal: z.boolean().default(false),
     /** Eases this much grudge on success. */
     grudgeEase: z.number().min(0).default(0),
+    /** 10.5: only for people of these relation kinds (relations.json) / not these; player at least this old. */
+    kinds: ids,
+    notKinds: ids,
+    minAge: z.number().int().min(0).optional(),
+    /** 10.5: what else it does: lend (cost becomes their debt), borrow (silver becomes the player's debt), collect / repay
+     *  a debt, swear the kết nghĩa oath, cut ties (tuyệt giao), report them to the quan, fight. */
+    special: z.enum(['lend', 'borrow', 'collect', 'repay', 'swear', 'cut', 'report', 'fight']).optional(),
+    /** 10.5: grudge it adds on success (a fight, a report, a quarrel). */
+    grudgeAdd: z.number().min(0).default(0),
     check: z.object({ stat: z.string().min(1), difficulty: z.number() }).strict().optional(),
     success: ActionOutcomeSchema,
     fail: ActionOutcomeSchema.optional(),
@@ -2396,7 +2575,10 @@ export const CareersFileSchema = z
             /** Flags from earlier events that make promotions easier. */
             bonusFlags: ids,
             bonusOrigins: ids,
-            requires: z.object({ rootless: z.boolean().optional() }).strict().default({}),
+            /** 10.2: examRank = the khoa cử level needed to take this path (Quan lộ needs Cử nhân). */
+            requires: z.object({ rootless: z.boolean().optional(), examRank: id.optional() }).strict().default({}),
+            /** 10.2: starting rung by the highest exam passed (Tiến sĩ starts higher). */
+            entryByExam: z.record(z.number().int().min(0)).default({}),
             /** {rung} = the new rung's name. */
             promoteText: z.string().min(1),
             /** End-of-life title when the last rung is reached. */
@@ -2809,6 +2991,139 @@ export type TierTermsFile = z.infer<typeof TierTermsFileSchema>;
  * 9.6 relations.json: kinds of relation (bằng hữu, kẻ thù, chủ nợ…) shown under groups in the Nhân duyên tab,
  * the role texts each kind takes by default, and the occupations an NPC can move into over the years.
  */
+/** 10.1 content/schooling.json: giai đoạn tuổi, schools, trades and their log lines. */
+export const SchoolingFileSchema = z.object({
+  stages: z.array(z.object({ id, name: z.string().min(1), maxAge: z.number().int().optional() }).strict()).min(1),
+  schools: z.array(z.object({
+    id, name: z.string().min(1), fee: z.number().min(0), months: z.number().int().min(0),
+    teacherRole: z.string().min(1), classmateRole: z.string().min(1),
+    /** Origins that may enter without the fee check failing them first (a poor child cannot pay a tư thục). */
+    minSilver: z.number().min(0).default(0),
+  }).strict()).min(1),
+  trades: z.array(z.object({
+    id, name: z.string().min(1), masterRole: z.string().min(1),
+    /** The bách nghệ it leads to if the life ever cultivates. */
+    craft: z.enum(['alchemy', 'forging', 'formation', 'talisman', 'farming', 'beast']).optional(),
+    /** Flag set at the third level (thợ chính): the job flags balance.crafts reads (nghe_ren, nghe_thuoc…). */
+    flag: id.optional(),
+    levels: z.array(z.string().min(1)).min(2),
+  }).strict()).min(1),
+  texts: z.object({
+    enroll: z.string().min(1), leave: z.string().min(1), dropOut: z.string().min(1),
+    tradeStart: z.string().min(1), tradeLevel: z.string().min(1),
+  }).strict(),
+}).strict();
+export type SchoolingFile = z.infer<typeof SchoolingFileSchema>;
+
+/** 10.2 content/exams.json: khoa cử levels (in order), the three ways to write, đề, incidents and log lines. Numbers: balance.exams. */
+const ExamOutcomeSchema = z.object({ text: z.string().min(1), score: z.number().default(0), disqualify: z.boolean().default(false), effects: EffectsSchema.default({}) }).strict();
+export const ExamsFileSchema = z.object({
+  levels: z.array(z.object({ id, name: z.string().min(1), title: z.string().min(1), flag: id }).strict()).min(1),
+  approaches: z.array(z.object({ id, name: z.string().min(1), hint: z.string().min(1), winText: z.array(z.string().min(1)).min(1), loseText: z.array(z.string().min(1)).min(1) }).strict()).min(1),
+  /** Đề, drawn per round; {level} = the exam's name. */
+  prompts: z.array(z.string().min(1)).min(3),
+  incidents: z.array(z.object({
+    id, title: z.string().min(1), text: z.string().min(1),
+    /** Exam levels it can come in (all when empty). */
+    levels: ids,
+    choices: z.array(z.object({
+      text: z.string().min(1),
+      outcome: ExamOutcomeSchema,
+      /** A gamble: with this chance the risk outcome happens instead. */
+      risk: z.object({ chance: z.number().min(0).max(1), outcome: ExamOutcomeSchema }).strict().optional(),
+    }).strict()).min(2),
+  }).strict()),
+  placings: z.array(z.object({ id, name: z.string().min(1), title: z.string().min(1) }).strict()),
+  texts: z.object({
+    begin: z.string().min(1), pass: z.string().min(1), fail: z.string().min(1), disqualified: z.string().min(1),
+    placing: z.string().min(1), round: z.string().min(1),
+  }).strict(),
+}).strict();
+export type ExamsFile = z.infer<typeof ExamsFileSchema>;
+
+/** 10.3 content/jobs.json: nhóm nghề and ~30 jobs, each a short ladder with pay, months, upkeep and who works there. */
+export const JobsFileSchema = z.object({
+  groups: z.array(z.object({ id, name: z.string().min(1), glyph: z.string().min(1) }).strict()).min(1),
+  jobs: z.array(z.object({
+    id, group: id, name: z.string().min(1), description: z.string().min(1),
+    rungs: z.array(z.string().min(1)).min(1),
+    /** Lượng bạc a year at each rung (last value repeats). */
+    pay: z.array(z.number().min(0)).min(1),
+    months: z.number().int().min(0).max(12),
+    /** Stats (or aptitudes) whose mean sets the hiệu suất the job settles at. */
+    mainStats: z.array(z.enum([...MORTAL_STATS, ...APTITUDES])).min(1),
+    /** Who may take it (any event conditions: age, học lực, khoa cử, nghề, giới…). */
+    requires: z.lazy(() => ConditionsSchema).default({}),
+    /** Why it is closed, shown when `requires` fails. */
+    requiresText: z.string().min(1).optional(),
+    /** What a year at the job does to the body and mind (stat./aptitude keys → delta). */
+    upkeep: z.record(z.number()).default({}),
+    bossRole: z.string().min(1),
+    mateRole: z.string().min(1),
+    /** The top rung leads onto a life path at this rung (the 4 ladders of 2.11 are the peaks). */
+    peak: z.object({ career: id, rung: z.number().int().min(0) }).strict().optional(),
+  }).strict()).min(1),
+  texts: z.object({
+    hired: z.string().min(1), promoted: z.string().min(1), fired: z.string().min(1), quit: z.string().min(1), retire: z.string().min(1),
+    warn: z.string().min(1), peak: z.string().min(1),
+  }).strict(),
+}).strict();
+export type JobsFile = z.infer<typeof JobsFileSchema>;
+
+/** 10.4 content/assets.json: nhà, ruộng, cửa hiệu, súc vật, xe thuyền, đồ quý; crops for the ruộng mini-game; ways to run a shop; loans. */
+const AssetRiskSchema = z.object({ id, chance: z.number().min(0).max(1), text: z.string().min(1), lose: z.boolean().default(false), silver: z.number().default(0), effects: z.record(z.number()).default({}) }).strict();
+export const AssetsFileSchema = z.object({
+  assets: z.array(z.object({
+    id, kind: z.enum(['house', 'land', 'shop', 'animal', 'vehicle', 'valuable']), name: z.string().min(1), description: z.string().min(1),
+    price: z.number().min(0),
+    /** Lượng bạc a year: income (land and shops: before the harvest / way of trading) and upkeep. */
+    income: z.number().default(0),
+    upkeep: z.number().default(0),
+    /** Months a year it takes (a shop to run, a field to farm). */
+    months: z.number().int().min(0).max(12).default(0),
+    /** Stats (stat./aptitude keys) it moves every statEvery years while owned. */
+    stats: z.record(z.number()).default({}),
+    risks: z.array(AssetRiskSchema).default([]),
+    /** How many one may own (a house: one; buying another sells the old). */
+    maxOwn: z.number().int().min(1).default(1),
+    /** Đồ quý: chance it is a fake (found out when sold, or by an event). */
+    fakeChance: z.number().min(0).max(1).default(0),
+    requires: z.lazy(() => ConditionsSchema).default({}),
+    requiresText: z.string().min(1).optional(),
+  }).strict()).min(1),
+  crops: z.array(z.object({ id, name: z.string().min(1), weather: z.enum(['wet', 'dry', 'any']), text: z.string().min(1) }).strict()).min(1),
+  weather: z.array(z.object({ id: z.enum(['wet', 'dry', 'normal']), news: z.string().min(1) }).strict()).min(1),
+  strategies: z.array(z.object({ id, name: z.string().min(1), profit: z.number(), risk: z.number().min(0).max(1), karma: z.number().default(0), illegal: z.boolean().default(false), caughtText: z.string().min(1).optional() }).strict()).min(1),
+  loans: z.array(z.object({ id, name: z.string().min(1), amount: z.number().min(0), rate: z.number().min(0), lenderRole: z.string().min(1) }).strict()).min(1),
+  texts: z.object({
+    bought: z.string().min(1), sold: z.string().min(1), soldFake: z.string().min(1), lost: z.string().min(1), harvest: z.string().min(1), shop: z.string().min(1),
+    tax: z.string().min(1), taxShort: z.string().min(1), borrowed: z.string().min(1), repaid: z.string().min(1), seized: z.string().min(1), bonded: z.string().min(1),
+  }).strict(),
+}).strict();
+export type AssetsFile = z.infer<typeof AssetsFileSchema>;
+
+/** 10.7 Giải trí (content/leisure.json): lễ hội (one a year), tài nghệ, thú nuôi, lời quẻ, nghiện cờ bạc. */
+export const LeisureFileSchema = z.object({
+  festivals: z.array(z.object({ id, name: z.string().min(1), text: z.string().min(1) }).strict()).min(1),
+  arts: z.array(z.object({ id, name: z.string().min(1) }).strict()).min(1),
+  pets: z.array(z.object({
+    id, name: z.string().min(1), lifespan: z.number().int().min(1),
+    /** Stats (stat. keys) it moves every balance.pastime.petEvery years. */
+    stats: z.record(z.number()).default({}),
+    names: z.array(z.string().min(1)).min(1),
+  }).strict()).min(1),
+  texts: z.object({
+    /** {festival}, {text}. */
+    festival: z.string().min(1),
+    /** {pet} (kind), {name}. */
+    adopted: z.string().min(1), petDied: z.string().min(1),
+    /** {hint}: the title of the event the quẻ names. */
+    omen: z.array(z.string().min(1)).min(1), omenNone: z.string().min(1),
+    addicted: z.string().min(1), addictedYear: z.string().min(1),
+  }).strict(),
+}).strict();
+export type LeisureFile = z.infer<typeof LeisureFileSchema>;
+
 export const RelationsFileSchema = z.object({
   groups: z.array(z.object({ id, name: z.string().min(1) }).strict()).min(1),
   kinds: z.array(z.object({ id, name: z.string().min(1), group: id, roles: z.array(z.string().min(1)).default([]) }).strict()).min(1),
@@ -2823,6 +3138,10 @@ export const RelationsFileSchema = z.object({
   }).strict()).default([]),
   /** Starting acquaintances (balance.npcs.childhoodAge): role, kind, peer or older. */
   childhood: z.array(z.object({ role: z.string().min(1), kind: id, peer: z.boolean().default(false), affinity: z.number().default(55), text: z.string().min(1) }).strict()).default([]),
+  /** 10.5: the temper a child grows into by the rearing tally (first whose range holds); {child} in text. heirStats: what it gives a child who carries the line on. */
+  tempers: z.array(z.object({ id, name: z.string().min(1), min: z.number().optional(), max: z.number().optional(), text: z.string().min(1), affinity: z.number().default(0), heirStats: z.record(z.number()).default({}) }).strict()).default([]),
+  /** 10.5: kết nghĩa texts: an oath broken, a sworn sibling dies ({npc}). */
+  oath: z.object({ broken: z.string().min(1), died: z.string().min(1) }).strict().optional(),
 }).strict();
 export type RelationsFile = z.infer<typeof RelationsFileSchema>;
 

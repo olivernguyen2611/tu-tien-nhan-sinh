@@ -8,6 +8,7 @@ import type { GameState, Tone } from '../../core/types';
 import { ACTIVITY_GROUP_GLYPHS, ACTIVITY_GROUP_NAMES, activityViews } from '../../systems/activities';
 import { TermText } from './Tooltip';
 import { monthsLeft } from '../../systems/timeBudget';
+import { festivalLine } from '../../systems/leisure';
 
 type ActResult = { text: string; tone: Tone; changes: string } | null;
 
@@ -70,6 +71,7 @@ export function ActivityPanel({ state, content, title, groups, onAction, onClose
       <div class="event-card activity-panel">
         <div class="kicker">Năm {state.character.age} tuổi · còn {monthsLeft(state, content)}/{content.balance.time.monthsPerYear} tháng</div>
         <h2>{open ? ACTIVITY_GROUP_NAMES[open] : title}</h2>
+        {(!open || open === 'giai_tri') && festivalLine(state, content) && <p class="profile-note">{festivalLine(state, content)}</p>}
         {tiles.length === 0 && <p class="profile-note">Năm nay chưa có việc gì để làm ở đây.</p>}
         {open ? (
           <>

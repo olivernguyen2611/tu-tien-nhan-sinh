@@ -1,0 +1,771 @@
+[
+  {
+    "id": "cham_hoc",
+    "group": "hoc_hanh",
+    "name": "Chăm học",
+    "icon": "勤",
+    "text": "Thức khuya dậy sớm, đèn dầu cháy tới canh ba.",
+    "conditions": {
+      "school": {
+        "enrolled": true
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "months": 1,
+    "check": {
+      "stat": "stat.intellect",
+      "difficulty": 30
+    },
+    "outcomes": [
+      {
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ngươi chép lại bài thầy giảng ba lượt,",
+              "Ngươi học thuộc một thiên sách cũ,",
+              "Đêm nào ngươi cũng ôn bài bên đèn dầu,",
+              "Ngươi hỏi thầy tới khi thầy hết kiên nhẫn,",
+              "Ngươi làm thêm bài văn thầy không giao,"
+            ],
+            [
+              "thầy gật đầu khen một câu.",
+              "sáng ra đọc làu làu không vấp.",
+              "mắt thâm mà đầu thì sáng ra.",
+              "bạn học nhìn ngươi như nhìn quái vật.",
+              "cuối tháng điểm bình đứng đầu lớp."
+            ]
+          ]
+        },
+        "effects": {
+          "grade": 4,
+          "stat.intellect": 1
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": [
+          "Chữ vào tai này ra tai kia, sáng ra quên gần hết.",
+          "Học tới khuya rồi ngủ gục trên sách, dầu đèn cháy hết."
+        ],
+        "effects": {
+          "grade": 1,
+          "stat.happiness": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "tron_hoc",
+    "group": "hoc_hanh",
+    "name": "Trốn học",
+    "icon": "逃",
+    "text": "Ra bờ sông bắt cá, ra đồng thả diều.",
+    "conditions": {
+      "school": {
+        "enrolled": true
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ngươi trốn học ra bờ sông,",
+              "Ngươi lẻn ra đồng thả diều,",
+              "Ngươi theo lũ bạn đi hái trộm ổi,",
+              "Ngươi trốn ra chợ xem múa rối,"
+            ],
+            [
+              "chơi tới chiều mới mò về.",
+              "vui quên cả trời đất.",
+              "về nhà mặt tỉnh bơ như chưa có gì.",
+              "học lực thì tụt, nhưng lòng thì nhẹ tênh."
+            ]
+          ]
+        },
+        "effects": {
+          "grade": -2,
+          "stat.happiness": 4
+        }
+      },
+      {
+        "weight": 1,
+        "text": [
+          "Vừa ra tới cổng thì gặp thầy. Ngươi bị phạt chép phạt trăm lần chữ 'lễ'.",
+          "Mẹ bắt quả tang ngoài bờ sông, xách tai về tới tận nhà."
+        ],
+        "effects": {
+          "grade": -1,
+          "stat.happiness": -3
+        }
+      }
+    ]
+  },
+  {
+    "id": "chep_bai",
+    "group": "hoc_hanh",
+    "name": "Chép bài bạn",
+    "icon": "抄",
+    "text": "Mượn vở bạn chép cho xong bài thầy giao.",
+    "conditions": {
+      "school": {
+        "enrolled": true
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "check": {
+      "stat": "stat.luck",
+      "difficulty": 45
+    },
+    "outcomes": [
+      {
+        "text": [
+          "Chép trót lọt, thầy còn khen chữ ngươi sạch sẽ.",
+          "Ngươi chép xong trước giờ thầy tới, đổi cho bạn nửa cái bánh."
+        ],
+        "effects": {
+          "grade": 1,
+          "stat.happiness": 1,
+          "karma": -1
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": [
+          "Chép sai y hệt bạn, thầy gọi cả hai lên đứng góc lớp.",
+          "Thầy nhìn hai bài giống nhau tới từng vết mực, lặng lẽ cầm roi."
+        ],
+        "effects": {
+          "grade": -2,
+          "stat.happiness": -3,
+          "stat.charm": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "danh_nhau_ban_hoc",
+    "group": "hoc_hanh",
+    "name": "Đánh nhau với bạn học",
+    "icon": "鬥",
+    "text": "Có đứa trêu ngươi suốt cả tháng, hôm nay hết nhịn.",
+    "conditions": {
+      "school": {
+        "enrolled": true
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "check": {
+      "stat": "stat.physique",
+      "difficulty": 45
+    },
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi vật nó xuống bùn. Từ đó cả lớp gọi ngươi là đại ca.",
+          "Hai đứa lăn lộn sau trường, ngươi đứng dậy trước. Nó không trêu nữa."
+        ],
+        "effects": {
+          "stat.happiness": 2,
+          "stat.physique": 1,
+          "grade": -1
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": [
+          "Ngươi về nhà với con mắt tím bầm, còn bị thầy phạt quỳ.",
+          "Nó to hơn ngươi tưởng. Ngươi nằm hai ngày, mất cả một bài kiểm."
+        ],
+        "effects": {
+          "stat.health": -4,
+          "stat.happiness": -2
+        }
+      }
+    ]
+  },
+  {
+    "id": "ninh_thay",
+    "group": "hoc_hanh",
+    "name": "Nịnh thầy",
+    "icon": "諂",
+    "text": "Mang biếu thầy gói chè, khen thầy chữ đẹp.",
+    "conditions": {
+      "school": {
+        "enrolled": true
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "cost": [
+      {
+        "silver": 2
+      }
+    ],
+    "check": {
+      "stat": "stat.charm",
+      "difficulty": 40
+    },
+    "outcomes": [
+      {
+        "text": [
+          "Thầy nhận chè, mắt dịu đi. Cuối tháng điểm bình của ngươi cao lạ thường.",
+          "Thầy cười khà khà, giảng riêng cho ngươi một đoạn sách khó."
+        ],
+        "effects": {
+          "grade": 2,
+          "stat.charm": 1
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": [
+          "Thầy đặt gói chè lại: \"Học cho tử tế, đừng học cái nịnh.\" Cả lớp nghe thấy.",
+          "Thầy không nói gì, chỉ nhìn ngươi lâu tới mức ngươi muốn chui xuống gầm bàn."
+        ],
+        "effects": {
+          "stat.charm": -1,
+          "stat.happiness": -2
+        }
+      }
+    ]
+  },
+  {
+    "id": "luyen_chu",
+    "group": "hoc_hanh",
+    "name": "Luyện chữ đẹp",
+    "icon": "筆",
+    "text": "Mài mực, căng giấy, tập viết một nét cho tới khi ưng.",
+    "conditions": {
+      "school": {
+        "enrolled": true
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ngươi tập viết chữ 'vĩnh' cả trăm lần,",
+              "Ngươi chép lại một bài thơ cổ bằng lối chữ chân,",
+              "Ngươi tập nét ngang cho thẳng như kẻ chỉ,",
+              "Ngươi viết câu đối cho nhà hàng xóm,"
+            ],
+            [
+              "nét chữ đã ra dáng hơn.",
+              "thầy cầm lên ngắm, không nói gì mà cất vào ngăn.",
+              "tay mỏi mà lòng thì yên.",
+              "được biếu lại một đĩa xôi."
+            ]
+          ]
+        },
+        "effects": {
+          "grade": 1,
+          "stat.charm": 1,
+          "stat.intellect": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "xin_hoc_truong_lang",
+    "group": "hoc_hanh",
+    "name": "Xin vào trường làng",
+    "icon": "入",
+    "text": "Trường làng học phí rẻ, thầy đồ hiền, nhận cả con nhà nghèo.",
+    "conditions": {
+      "age": {
+        "min": 6,
+        "max": 12
+      },
+      "school": {
+        "enrolled": false
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "cost": [
+      {
+        "silver": 3
+      }
+    ],
+    "outcomes": [
+      {
+        "text": [
+          "Người nhà dắt ngươi tới trường làng, dặn thầy cứ đánh nếu lười.",
+          "Ngươi ôm bó đuốc tre và cái bảng con tới trường làng."
+        ],
+        "effects": {
+          "enrollSchool": "truong_lang",
+          "stat.happiness": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "tu_hoc_len",
+    "group": "hoc_hanh",
+    "name": "Tự học lén",
+    "icon": "讀",
+    "text": "Không được đi học thì tự tìm chữ mà học.",
+    "conditions": {
+      "age": {
+        "min": 6,
+        "max": 17
+      },
+      "school": {
+        "enrolled": false
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "months": 1,
+    "check": {
+      "stat": "stat.intellect",
+      "difficulty": 40
+    },
+    "outcomes": [
+      {
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ngươi xin được mấy tờ giấy gói hàng có chữ,",
+              "Ngươi vẽ chữ trên cát bằng que tre,",
+              "Ngươi nhờ ông lão bán hàng nước chỉ cho mấy chữ,",
+              "Ngươi đọc mấy câu đối dán ở đình làng,"
+            ],
+            [
+              "học được thêm chục chữ.",
+              "tự đọc ra được tên mình.",
+              "đọc chưa trôi mà đã hiểu được ý.",
+              "về nhà đọc lại cho em nghe."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.intellect": 1,
+          "grade": 1
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": [
+          "Nhìn chữ như nhìn đàn kiến bò, ngươi bỏ cuộc giữa chừng.",
+          "Không ai chỉ, ngươi đọc sai cả nửa trang mà không biết."
+        ],
+        "effects": {
+          "stat.happiness": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "nghe_lom",
+    "group": "hoc_hanh",
+    "name": "Nghe lỏm ngoài cửa lớp",
+    "icon": "聽",
+    "text": "Đứng ngoài cửa sổ trường làng, nghe thầy giảng ké.",
+    "conditions": {
+      "age": {
+        "min": 6,
+        "max": 14
+      },
+      "school": {
+        "enrolled": false
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Thầy đồ giả vờ không thấy. Ngươi học ké được mấy chữ.",
+          "Ngươi thuộc bài trước cả đứa ngồi bàn đầu, mà không ai biết."
+        ],
+        "effects": {
+          "stat.intellect": 1,
+          "stat.daoHeart": 1
+        }
+      },
+      {
+        "weight": 1,
+        "text": [
+          "Bị con chó nhà thầy đuổi chạy ba vòng quanh ao.",
+          "Đứng nghe tới mỏi chân thì trời đổ mưa, chẳng nhớ được chữ nào."
+        ],
+        "effects": {
+          "stat.happiness": -2
+        }
+      }
+    ]
+  },
+  {
+    "id": "lam_muon_som",
+    "group": "nghe",
+    "name": "Làm mướn từ nhỏ",
+    "icon": "傭",
+    "text": "Chăn trâu, nhặt củi, trông em cho nhà người ta lấy mấy đồng.",
+    "conditions": {
+      "age": {
+        "min": 8,
+        "max": 15
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "months": 3,
+    "outcomes": [
+      {
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ngươi chăn trâu thuê cho nhà phú hộ,",
+              "Ngươi nhặt củi bán ngoài chợ,",
+              "Ngươi trông em cho nhà hàng xóm,",
+              "Ngươi mò cua bắt ốc ngoài đồng,"
+            ],
+            [
+              "được mấy đồng lẻ đưa mẹ cất.",
+              "chân tay rám nắng, người gầy mà rắn.",
+              "tối về ngủ không kịp rửa chân.",
+              "cuối mùa được thưởng thêm bát gạo."
+            ]
+          ]
+        },
+        "roll": {
+          "silver": [
+            2,
+            5
+          ]
+        },
+        "effects": {
+          "stat.physique": 1,
+          "stat.health": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "theo_vo_duong",
+    "group": "suc_khoe",
+    "name": "Theo võ đường làng",
+    "icon": "武",
+    "text": "Võ đường đầu làng nhận trẻ từ tám tuổi, dạy đứng tấn, đấm bao cát.",
+    "conditions": {
+      "age": {
+        "min": 8,
+        "max": 40
+      },
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "months": 3,
+    "cost": [
+      {
+        "silver": 4
+      }
+    ],
+    "outcomes": [
+      {
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ngươi đứng tấn tới khi hai chân run,",
+              "Ngươi tập đấm bao cát với đám trẻ trong làng,",
+              "Võ sư dạy ngươi một bài quyền mới,",
+              "Ngươi đấu tập với một sư huynh to con,"
+            ],
+            [
+              "tối về ăn ba bát cơm.",
+              "nội lực dường như dày thêm một chút.",
+              "võ sư bảo ngươi có gân cốt tốt.",
+              "ngã mấy lần mà lần nào cũng đứng dậy."
+            ]
+          ]
+        },
+        "effects": {
+          "martialYears": 1,
+          "stat.physique": 1,
+          "stat.health": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "hoc_nghe_ren",
+    "group": "nghe",
+    "name": "Học nghề rèn",
+    "icon": "鍛",
+    "text": "Lò rèn đầu chợ cần đứa học việc, mỗi ngày quai búa tới khi tay rã.",
+    "conditions": {
+      "age": {
+        "min": 12,
+        "max": 30
+      },
+      "trade": {
+        "any": false
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi dập đầu bái thầy, từ nay theo thầy học nghề.",
+          "Thầy nhìn tay ngươi một lúc rồi gật đầu nhận."
+        ],
+        "effects": {
+          "startTrade": "ren",
+          "stat.happiness": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "hoc_nghe_moc",
+    "group": "nghe",
+    "name": "Học nghề mộc",
+    "icon": "木",
+    "text": "Thợ mộc trong làng nhận học trò, dạy từ cái bào cái đục.",
+    "conditions": {
+      "age": {
+        "min": 12,
+        "max": 30
+      },
+      "trade": {
+        "any": false
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi dập đầu bái thầy, từ nay theo thầy học nghề.",
+          "Thầy nhìn tay ngươi một lúc rồi gật đầu nhận."
+        ],
+        "effects": {
+          "startTrade": "moc",
+          "stat.happiness": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "hoc_nghe_thuoc",
+    "group": "nghe",
+    "name": "Học nghề thuốc",
+    "icon": "藥",
+    "text": "Tiệm thuốc trong trấn cần người phụ, học nhận mặt trăm vị thuốc.",
+    "conditions": {
+      "age": {
+        "min": 12,
+        "max": 30
+      },
+      "trade": {
+        "any": false
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi dập đầu bái thầy, từ nay theo thầy học nghề.",
+          "Thầy nhìn tay ngươi một lúc rồi gật đầu nhận."
+        ],
+        "effects": {
+          "startTrade": "thuoc",
+          "stat.happiness": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "hoc_nghe_may",
+    "group": "nghe",
+    "name": "Học nghề may",
+    "icon": "縫",
+    "text": "Bà thợ may đầu phố nhận học việc, ngồi cả ngày bên khung cửi.",
+    "conditions": {
+      "age": {
+        "min": 12,
+        "max": 30
+      },
+      "trade": {
+        "any": false
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi dập đầu bái thầy, từ nay theo thầy học nghề.",
+          "Thầy nhìn tay ngươi một lúc rồi gật đầu nhận."
+        ],
+        "effects": {
+          "startTrade": "may",
+          "stat.happiness": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "hoc_nghe_bep",
+    "group": "nghe",
+    "name": "Học nghề bếp",
+    "icon": "灶",
+    "text": "Tửu lâu trong trấn cần phụ bếp, chặt rau thái thịt từ sáng tới tối.",
+    "conditions": {
+      "age": {
+        "min": 12,
+        "max": 30
+      },
+      "trade": {
+        "any": false
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi dập đầu bái thầy, từ nay theo thầy học nghề.",
+          "Thầy nhìn tay ngươi một lúc rồi gật đầu nhận."
+        ],
+        "effects": {
+          "startTrade": "bep",
+          "stat.happiness": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "hoc_nghe_gom",
+    "group": "nghe",
+    "name": "Học nghề gốm",
+    "icon": "陶",
+    "text": "Lò gốm bên sông nhận học việc, nhào đất nặn hình từ tờ mờ sáng.",
+    "conditions": {
+      "age": {
+        "min": 12,
+        "max": 30
+      },
+      "trade": {
+        "any": false
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi dập đầu bái thầy, từ nay theo thầy học nghề.",
+          "Thầy nhìn tay ngươi một lúc rồi gật đầu nhận."
+        ],
+        "effects": {
+          "startTrade": "gom",
+          "stat.happiness": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "cham_lam_voi_thay",
+    "group": "nghe",
+    "name": "Chăm làm với thầy",
+    "icon": "匠",
+    "text": "Làm thêm giờ trong xưởng, học lỏm những ngón thầy không dạy.",
+    "conditions": {
+      "trade": {
+        "learning": true
+      }
+    },
+    "months": 2,
+    "outcomes": [
+      {
+        "weight": 4,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ngươi ở lại xưởng tới tối,",
+              "Ngươi làm lại một món hỏng của khách,",
+              "Ngươi xem thầy làm một món khó,",
+              "Ngươi tự làm thử một món mới,"
+            ],
+            [
+              "tay nghề nhích lên từng chút.",
+              "thầy không khen mà cũng không chửi, thế là tốt.",
+              "nhìn ra được một mẹo nhỏ.",
+              "món đầu xấu, món thứ ba đã ra hình."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.physique": 1,
+          "stat.happiness": -1
+        }
+      },
+      {
+        "weight": 1,
+        "text": [
+          "Thầy giao ngươi làm trọn một món cho khách quen. Khách khen, thầy cho ngươi lên một bậc."
+        ],
+        "effects": {
+          "tradeLevel": 1,
+          "stat.happiness": 4
+        }
+      }
+    ]
+  }
+]

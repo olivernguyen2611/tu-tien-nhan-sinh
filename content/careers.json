@@ -3,12 +3,14 @@
     {
       "id": "quan",
       "name": "Quan lộ",
-      "description": "Đèn sách mười năm, lều chõng đi thi. Đỗ thì làm quan, trượt thì làm thầy đồ.",
+      "description": "Đỗ Cử nhân thì được bổ làm quan nhỏ, Tiến sĩ vào thẳng chức tri huyện. Thăng hay giáng còn nhờ tài trị dân và miệng lưỡi.",
       "mainStats": ["intellect", "charm"],
-      "rungs": ["Tú tài", "Cử nhân", "Tiến sĩ", "Tri phủ", "Tể tướng"],
-      "bonusFlags": ["tu_tai"],
-      "promoteText": "Bảng vàng có tên ngươi: từ nay là {rung}.",
-      "title": "Trạng nguyên khai khoa"
+      "rungs": ["Huấn đạo", "Tri huyện", "Tri phủ", "Thượng thư", "Tể tướng"],
+      "bonusFlags": ["tien_si"],
+      "requires": { "examRank": "huong" },
+      "entryByExam": { "dinh": 1 },
+      "promoteText": "Chiếu chỉ ban xuống: ngươi được thăng làm {rung}.",
+      "title": "Tể tướng một triều"
     },
     {
       "id": "thuong",

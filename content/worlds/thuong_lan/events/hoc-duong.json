@@ -1,0 +1,1373 @@
+[
+  {
+    "id": "hd_ngay_dau_den_truong",
+    "category": "study",
+    "title": "Ngày đầu tới trường",
+    "text": "Trường làng thấp lè tè, mười mấy đứa trẻ ngồi bệt trên chiếu. {teacher} đặt cây roi mây lên bàn, nhìn cả lớp một lượt.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "school": {
+        "enrolled": true
+      },
+      "tier": [
+        "pham_gian"
+      ],
+      "age": {
+        "max": 12
+      }
+    },
+    "weight": 20,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Ngồi bàn đầu, mắt không rời thầy",
+        "result": {
+          "text": "Thầy hỏi một câu, ngươi đáp được. Thầy không khen, nhưng cây roi mây nằm yên cả buổi.",
+          "effects": {
+            "grade": 3,
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Làm quen với đứa ngồi cạnh",
+        "result": {
+          "text": "Hai đứa chia nhau củ khoai lùi. Từ đó có bạn đi học cùng.",
+          "effects": {
+            "stat.happiness": 3,
+            "stat.charm": 1
+          }
+        }
+      },
+      {
+        "text": "Khóc đòi về",
+        "result": {
+          "text": "Thầy để ngươi khóc chán rồi đưa cho cái bảng con. Chiều về ngươi vẫn còn sụt sịt.",
+          "effects": {
+            "stat.happiness": -2,
+            "stat.daoHeart": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_thay_kiem_bai",
+    "category": "study",
+    "title": "Thầy kiểm bài",
+    "text": "Sáng nay {teacher} gọi từng đứa lên đọc thuộc bài. Đứa trước ngươi vừa ăn ba roi.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "school": {
+        "enrolled": true
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "weight": 8,
+    "cooldownYears": 2,
+    "choices": [
+      {
+        "text": "Đứng lên đọc",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Ngươi đọc một mạch không vấp. Thầy gật đầu cho ngồi.",
+          "effects": {
+            "grade": 3,
+            "stat.happiness": 2
+          }
+        },
+        "fail": {
+          "text": "Đọc tới nửa bài thì tắc. Ba roi vào lòng bàn tay, đau tới tối.",
+          "effects": {
+            "grade": -1,
+            "stat.health": -1,
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Giả đau bụng xin ra ngoài",
+        "result": {
+          "text": "Thầy nhìn ngươi lâu một lúc rồi cho đi. Lần sau thầy gọi ngươi lên đầu tiên.",
+          "effects": {
+            "stat.happiness": 1,
+            "grade": -1,
+            "stat.charm": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_ban_hoc_giau",
+    "category": "study",
+    "title": "Bạn học con nhà giàu",
+    "text": "Con nhà phú hộ trong lớp có hộp bút sơn mài, ngày nào cũng khoe. Hôm nay nó đánh rơi một cây bút ngọc.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "school": {
+        "enrolled": true
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "weight": 8,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Nhặt lên trả lại",
+        "result": {
+          "text": "Nó ngạc nhiên rồi cười, chia cho ngươi miếng bánh đậu xanh. Từ đó hay rủ ngươi về nhà chơi.",
+          "effects": {
+            "stat.charm": 1,
+            "karma": 1,
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Giấu đi",
+        "result": {
+          "text": "Cả lớp bị lục cặp. Ngươi giấu kỹ, không ai biết, nhưng đêm nào cũng nằm mơ thấy cây bút.",
+          "effects": {
+            "silver": 5,
+            "karma": -2,
+            "stat.daoHeart": -2
+          }
+        }
+      },
+      {
+        "text": "Mặc kệ",
+        "result": {
+          "text": "Đứa khác nhặt được. Chuyện không liên quan tới ngươi.",
+          "effects": {
+            "stat.happiness": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_de_thi_cuoi_nam",
+    "category": "study",
+    "title": "Bình văn cuối năm",
+    "text": "Cuối năm thầy bình văn cả lớp, đứa đứng đầu được biếu một thếp giấy tốt.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "school": {
+        "enrolled": true,
+        "gradeMin": 20
+      },
+      "tier": [
+        "pham_gian"
+      ],
+      "age": {
+        "min": 9
+      }
+    },
+    "weight": 8,
+    "cooldownYears": 3,
+    "choices": [
+      {
+        "text": "Dốc sức viết",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Bài của ngươi được thầy đọc to cho cả lớp nghe. Thếp giấy về tay ngươi.",
+          "effects": {
+            "grade": 4,
+            "stat.happiness": 4
+          }
+        },
+        "fail": {
+          "text": "Bài văn có ý mà chữ xấu, thầy chấm hạng ba.",
+          "effects": {
+            "grade": 1,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Viết cho xong",
+        "result": {
+          "text": "Bài văn tròn trịa mà nhạt. Thầy phê một chữ: \"Được.\"",
+          "effects": {
+            "grade": 1,
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_hoc_kem",
+    "category": "study",
+    "title": "Học mãi không vào",
+    "text": "Mấy tháng nay học lực của ngươi tụt dần. Chữ thầy dạy hôm trước, hôm sau đã quên.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "school": {
+        "enrolled": true,
+        "gradeMax": 25
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "weight": 8,
+    "cooldownYears": 4,
+    "choices": [
+      {
+        "text": "Xin thầy kèm thêm",
+        "result": {
+          "text": "Thầy thở dài nhưng vẫn ở lại kèm ngươi mỗi chiều. Dần dần chữ cũng vào đầu.",
+          "effects": {
+            "grade": 4,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Thôi học, về giúp nhà",
+        "result": {
+          "text": "Ngươi gấp sách lại. Người nhà không nói gì, chỉ giao thêm việc đồng.",
+          "effects": {
+            "leaveSchool": true,
+            "stat.physique": 2,
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Học vẹt cho qua",
+        "result": {
+          "text": "Đọc làu làu mà không hiểu câu nào. Thầy biết, nhưng chẳng buồn nói.",
+          "effects": {
+            "grade": 1,
+            "stat.intellect": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_thay_om",
+    "category": "study",
+    "title": "Thầy đồ ốm",
+    "text": "{teacher} ốm nặng, cả tuần không dạy. Lũ học trò mừng như được hội.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "school": {
+        "enrolled": true
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "weight": 8,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Mang cháo tới thăm thầy",
+        "result": {
+          "text": "Thầy gắng ngồi dậy ăn mấy thìa, rồi giảng cho ngươi riêng một bài ngay bên giường bệnh.",
+          "effects": {
+            "grade": 2,
+            "karma": 1,
+            "stat.happiness": 1
+          }
+        }
+      },
+      {
+        "text": "Rủ bạn ra đồng chơi",
+        "result": {
+          "text": "Một tuần vui như tết. Thầy khỏi bệnh thì cả lớp quên sạch bài cũ.",
+          "effects": {
+            "stat.happiness": 3,
+            "grade": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_chu_dep_duoc_khen",
+    "category": "study",
+    "title": "Chữ đẹp được khen",
+    "text": "Trong làng có đám cưới, nhà trai nhờ thầy tìm đứa học trò chữ đẹp viết câu đối.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "school": {
+        "enrolled": true,
+        "gradeMin": 30
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "weight": 8,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Xin viết",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Câu đối dán lên cổng, khách tới ai cũng khen. Nhà trai biếu ngươi một gói bánh và mấy đồng.",
+          "effects": {
+            "stat.charm": 2,
+            "silver": 3,
+            "stat.happiness": 3
+          }
+        },
+        "fail": {
+          "text": "Tay run, nét chữ méo một góc. Nhà trai vẫn dán, nhưng dán ở cổng sau.",
+          "effects": {
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Nhường bạn",
+        "result": {
+          "text": "Bạn ngươi viết, được khen. Nó nhớ ơn ngươi mãi.",
+          "effects": {
+            "stat.daoHeart": 1,
+            "karma": 1,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_sach_hiem",
+    "category": "study",
+    "title": "Quyển sách hiếm",
+    "text": "Trong tủ sách của thầy có một quyển sử ký chép tay, thầy cấm học trò đụng vào.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "school": {
+        "enrolled": true,
+        "gradeMin": 25
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "weight": 8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Xin phép thầy cho mượn",
+        "result": {
+          "text": "Thầy ngần ngừ rồi cho mượn ba ngày. Ngươi chép lại được một nửa.",
+          "effects": {
+            "grade": 3,
+            "stat.intellect": 2
+          }
+        }
+      },
+      {
+        "text": "Lén mượn đọc",
+        "result": {
+          "text": "Đọc say mê tới quên trả. Thầy biết, phạt ngươi quét sân một tháng, nhưng vẫn cho đọc hết.",
+          "effects": {
+            "grade": 2,
+            "stat.intellect": 2,
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Thôi, luật là luật",
+        "result": {
+          "text": "Ngươi không đụng tới. Thầy để ý, sau này giao cho ngươi giữ chìa khóa tủ sách.",
+          "effects": {
+            "stat.daoHeart": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_bi_bat_nat",
+    "category": "study",
+    "title": "Bị bắt nạt",
+    "text": "Mấy đứa lớn trong lớp chặn đường ngươi ở bờ ao, đòi nộp nửa phần cơm trưa.",
+    "themes": [
+      "study",
+      "violence"
+    ],
+    "conditions": {
+      "school": {
+        "enrolled": true
+      },
+      "tier": [
+        "pham_gian"
+      ],
+      "age": {
+        "max": 15
+      }
+    },
+    "weight": 8,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Đánh lại",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Ngươi húc ngã thằng cầm đầu xuống ao. Từ đó chẳng ai dám chặn đường ngươi nữa.",
+          "effects": {
+            "stat.physique": 1,
+            "stat.happiness": 3,
+            "stat.daoHeart": 1
+          }
+        },
+        "fail": {
+          "text": "Ba đánh một, ngươi về nhà mặt mũi bầm dập.",
+          "effects": {
+            "stat.health": -5,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Mách thầy",
+        "result": {
+          "text": "Thầy phạt cả bọn. Chúng ghét ngươi ra mặt nhưng không dám động tay.",
+          "effects": {
+            "stat.happiness": 1,
+            "stat.charm": -1
+          }
+        }
+      },
+      {
+        "text": "Nộp cơm cho xong",
+        "result": {
+          "text": "Ngươi đói suốt buổi chiều. Bọn chúng hôm sau lại tới.",
+          "effects": {
+            "stat.health": -2,
+            "stat.happiness": -3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_thi_vo_lop",
+    "category": "study",
+    "title": "Thi đọc thơ đầu xuân",
+    "text": "Đầu xuân, làng tổ chức cho trẻ con đọc thơ ở đình. Đứa nào hay được ông lý thưởng.",
+    "themes": [
+      "study",
+      "festival"
+    ],
+    "conditions": {
+      "school": {
+        "enrolled": true
+      },
+      "tier": [
+        "pham_gian"
+      ],
+      "age": {
+        "min": 7,
+        "max": 15
+      }
+    },
+    "weight": 8,
+    "cooldownYears": 4,
+    "choices": [
+      {
+        "text": "Lên đọc",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Ngươi đọc vang cả sân đình. Ông lý thưởng mấy đồng, các cụ gật gù.",
+          "effects": {
+            "stat.charm": 2,
+            "silver": 2,
+            "stat.happiness": 3
+          }
+        },
+        "fail": {
+          "text": "Lên tới nơi thì quên sạch, đứng như trời trồng. Cả làng cười.",
+          "effects": {
+            "stat.charm": -1,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Đứng dưới xem",
+        "result": {
+          "text": "Ngươi xem bạn đọc, tự nhủ sang năm sẽ lên.",
+          "effects": {
+            "stat.happiness": 1,
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_cha_me_hoi_bai",
+    "category": "study",
+    "title": "Cha hỏi bài",
+    "text": "Tối nay cha ngồi ở hiên, gọi ngươi tới đọc bài học hôm nay.",
+    "themes": [
+      "study",
+      "family"
+    ],
+    "conditions": {
+      "school": {
+        "enrolled": true
+      },
+      "tier": [
+        "pham_gian"
+      ],
+      "family": {
+        "parentAlive": true
+      },
+      "flagsNone": [
+        "no_father"
+      ]
+    },
+    "weight": 8,
+    "cooldownYears": 3,
+    "choices": [
+      {
+        "text": "Đọc ngay",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 40
+        },
+        "success": {
+          "text": "Ngươi đọc trôi chảy. Cha không khen, nhưng sáng ra có thêm quả trứng trong bát cơm.",
+          "effects": {
+            "grade": 1,
+            "stat.happiness": 3
+          }
+        },
+        "fail": {
+          "text": "Đọc được hai câu thì ấp úng. Cha thở dài, bắt ngồi học tới khuya.",
+          "effects": {
+            "grade": 2,
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Kể chuyện ở trường cho cha nghe",
+        "result": {
+          "text": "Cha nghe chuyện thầy đồ ngủ gật, cười tới chảy nước mắt. Quên luôn chuyện hỏi bài.",
+          "effects": {
+            "stat.happiness": 2,
+            "stat.charm": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_ban_than_chuyen_lang",
+    "category": "study",
+    "title": "Bạn thân chuyển đi",
+    "text": "Đứa bạn thân nhất trong lớp sắp theo cả nhà chuyển lên huyện.",
+    "themes": [
+      "study",
+      "friendship"
+    ],
+    "conditions": {
+      "school": {
+        "enrolled": true
+      },
+      "tier": [
+        "pham_gian"
+      ],
+      "age": {
+        "max": 15
+      }
+    },
+    "weight": 8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Tặng nó cái bảng con",
+        "result": {
+          "text": "Nó ôm cái bảng khóc. Hai đứa hứa lớn lên sẽ gặp lại.",
+          "effects": {
+            "stat.happiness": -2,
+            "stat.charm": 1,
+            "karma": 1
+          }
+        }
+      },
+      {
+        "text": "Giả vờ không buồn",
+        "result": {
+          "text": "Ngươi đứng xa nhìn xe nó khuất. Tối về mới khóc.",
+          "effects": {
+            "stat.happiness": -4,
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_thay_doi_tro",
+    "category": "study",
+    "title": "Thầy đồ giao việc",
+    "text": "{teacher} giao ngươi trông lớp nửa buổi để thầy đi ăn giỗ.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "school": {
+        "enrolled": true,
+        "gradeMin": 35
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "weight": 8,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Trông nghiêm như thầy",
+        "result": {
+          "text": "Cả lớp im phăng phắc. Thầy về khen ngươi được việc.",
+          "effects": {
+            "grade": 2,
+            "stat.charm": 1,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Cho cả lớp nghỉ chơi",
+        "result": {
+          "text": "Cả lớp quý ngươi như đại ca. Thầy về thấy lớp tan hoang, phạt ngươi trước tiên.",
+          "effects": {
+            "stat.happiness": 2,
+            "grade": -2,
+            "stat.charm": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_khong_tien_dong_hoc",
+    "category": "study",
+    "title": "Không đủ tiền đóng học",
+    "text": "Năm nay mất mùa, nhà không đủ tiền đóng học cho ngươi.",
+    "themes": [
+      "study",
+      "family"
+    ],
+    "conditions": {
+      "school": {
+        "enrolled": true
+      },
+      "tier": [
+        "pham_gian"
+      ],
+      "family": {
+        "parentAlive": true
+      },
+      "worldVars": [
+        {
+          "id": "harvest",
+          "lte": 40
+        }
+      ]
+    },
+    "weight": 8,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Xin thầy cho nợ",
+        "result": {
+          "text": "Thầy gật đầu: \"Học đi, tiền tính sau.\" Ngươi học chăm hơn hẳn.",
+          "effects": {
+            "grade": 2,
+            "stat.daoHeart": 1,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Thôi học đi làm phụ nhà",
+        "result": {
+          "text": "Ngươi treo cái bảng con lên vách. Thầy đi qua nhà, nhìn vào mà không nói gì.",
+          "effects": {
+            "leaveSchool": true,
+            "silver": 3,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Vừa học vừa đi làm mướn",
+        "result": {
+          "text": "Sáng đi học, chiều chăn trâu thuê. Người gầy rộc mà không bỏ buổi nào.",
+          "effects": {
+            "silver": 3,
+            "stat.health": -3,
+            "grade": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_hoc_tro_cung_lop_do",
+    "category": "study",
+    "title": "Bạn học đỗ đạt",
+    "text": "Đứa bạn học cũ vừa đỗ khảo thí ở huyện, cả làng kéo nhau đi mừng.",
+    "themes": [
+      "study",
+      "friendship"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "age": {
+        "min": 15,
+        "max": 30
+      },
+      "school": {
+        "ever": true
+      }
+    },
+    "weight": 8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Tới mừng bạn",
+        "result": {
+          "text": "Nó vẫn nhớ ngươi, nắm tay kể chuyện ngày còn ngồi chung chiếu.",
+          "effects": {
+            "stat.happiness": 2,
+            "stat.charm": 1
+          }
+        }
+      },
+      {
+        "text": "Ở nhà, tự nhủ phải cố",
+        "result": {
+          "text": "Đêm ấy ngươi thắp đèn đọc sách tới sáng.",
+          "effects": {
+            "stat.intellect": 1,
+            "stat.daoHeart": 1,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Bĩu môi: đỗ thì đã sao",
+        "result": {
+          "text": "Hàng xóm nghe được, đồn ngươi ghen tị. Ngươi tức mà không cãi được.",
+          "effects": {
+            "stat.charm": -1,
+            "stat.happiness": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_tu_hoc_duoc_sach",
+    "category": "study",
+    "title": "Được cho sách",
+    "text": "Một ông khách trọ trong làng thấy ngươi đứng nghe lỏm ngoài trường, bèn cho ngươi một quyển sách vỡ lòng.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "age": {
+        "min": 6,
+        "max": 14
+      },
+      "school": {
+        "enrolled": false
+      }
+    },
+    "weight": 8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận và cảm ơn",
+        "result": {
+          "text": "Ngươi giữ quyển sách như vàng. Mỗi tối dò từng chữ dưới ánh trăng.",
+          "effects": {
+            "stat.intellect": 2,
+            "grade": 2,
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Đem bán lấy tiền",
+        "result": {
+          "text": "Bán được mấy đồng mua bánh. Ăn xong thấy tiếc.",
+          "effects": {
+            "silver": 2,
+            "stat.happiness": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_thay_nhan_hoc_khong_tien",
+    "category": "study",
+    "title": "Thầy đồ nhận học không tiền",
+    "text": "{hometown} có thầy đồ già thấy ngươi hay đứng ngoài cửa lớp, bảo: \"Vào đây mà học, tiền nong tính sau.\"",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "age": {
+        "min": 6,
+        "max": 12
+      },
+      "school": {
+        "enrolled": false,
+        "ever": false
+      }
+    },
+    "weight": 6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Vào học ngay",
+        "result": {
+          "text": "Ngươi lau chân thật sạch rồi mới dám bước vào lớp.",
+          "effects": {
+            "enrollSchool": "truong_lang",
+            "stat.happiness": 4,
+            "karma": 1
+          }
+        }
+      },
+      {
+        "text": "Nhà còn việc, xin thôi",
+        "result": {
+          "text": "Thầy gật đầu, bảo lúc nào muốn thì cứ tới.",
+          "effects": {
+            "stat.physique": 1,
+            "stat.happiness": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_hoc_nghe_thay_kho",
+    "category": "work",
+    "title": "Thầy dạy nghề khó tính",
+    "text": "{teacher} quăng cái món ngươi làm hỏng xuống đất: \"Làm lại. Làm tới khi nào ra hồn thì thôi.\"",
+    "themes": [
+      "work"
+    ],
+    "conditions": {
+      "trade": {
+        "learning": true
+      }
+    },
+    "weight": 8,
+    "cooldownYears": 4,
+    "choices": [
+      {
+        "text": "Cắn răng làm lại",
+        "result": {
+          "text": "Ngươi làm tới nửa đêm. Sáng ra thầy cầm lên xem, không nói gì mà đặt lên kệ.",
+          "effects": {
+            "stat.physique": 1,
+            "stat.daoHeart": 2,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Cãi lại thầy",
+        "result": {
+          "text": "Thầy đuổi ngươi ra ngoài đứng một buổi. Mấy hôm sau mới cho vào xưởng.",
+          "effects": {
+            "stat.happiness": -3,
+            "stat.charm": -1
+          }
+        }
+      },
+      {
+        "text": "Bỏ về nhà",
+        "result": {
+          "text": "Người nhà lại phải mang lễ tới xin thầy nhận lại. Ngươi ngượng mãi.",
+          "effects": {
+            "stat.happiness": -2,
+            "silver": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_hoc_nghe_don_dat",
+    "category": "work",
+    "title": "Đơn hàng đầu tiên",
+    "text": "Có khách quen của thầy cần gấp một món, thầy bận nên giao cho ngươi làm.",
+    "themes": [
+      "work"
+    ],
+    "conditions": {
+      "trade": {
+        "learning": true,
+        "levelMin": 1
+      }
+    },
+    "weight": 8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Làm cẩn thận",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Khách hài lòng, trả thêm tiền công. Thầy chia cho ngươi một phần.",
+          "effects": {
+            "tradeLevel": 1,
+            "silver": 4,
+            "stat.happiness": 4
+          }
+        },
+        "fail": {
+          "text": "Món hàng có vết lỗi, thầy phải sửa lại. Khách chẳng nói gì, thầy thì nói nhiều.",
+          "effects": {
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Xin thầy làm cùng",
+        "result": {
+          "text": "Thầy làm, ngươi phụ. Học được mấy ngón tay nghề.",
+          "effects": {
+            "stat.intellect": 1,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_vo_duong_so_tai",
+    "category": "study",
+    "title": "Võ đường so tài",
+    "text": "Võ đường làng tổ chức đấu tập, đứa nào thắng được võ sư dạy riêng một chiêu.",
+    "themes": [
+      "study",
+      "martial"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "age": {
+        "min": 8,
+        "max": 20
+      }
+    },
+    "weight": 8,
+    "cooldownYears": 4,
+    "choices": [
+      {
+        "text": "Lên đấu",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Ngươi thắng hai trận liền. Võ sư gật gù, dạy riêng cho ngươi một thế quyền.",
+          "effects": {
+            "martialYears": 1,
+            "stat.physique": 1,
+            "stat.happiness": 3
+          }
+        },
+        "fail": {
+          "text": "Bị quật ngã ngay hiệp đầu. Đau lưng ba ngày.",
+          "effects": {
+            "stat.health": -3,
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Đứng xem học lỏm",
+        "result": {
+          "text": "Ngươi nhìn kỹ từng thế. Về nhà tập theo, cũng ra được dáng.",
+          "effects": {
+            "stat.comprehension": 1,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_huynh_de_khac_duong",
+    "category": "childhood",
+    "title": "Huynh đệ khác đường",
+    "text": "Tiên sư đi qua làng, thử linh căn cho trẻ con. {sibling} có linh căn, được đón lên núi. Ngươi thì không.",
+    "themes": [
+      "family"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "age": {
+        "min": 8,
+        "max": 16
+      },
+      "family": {
+        "siblingAlive": true
+      },
+      "root": {
+        "usable": false
+      },
+      "flagsNone": [
+        "huynh_de_khac_duong"
+      ]
+    },
+    "weight": 4,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Tiễn {sibling} tới đầu làng",
+        "result": {
+          "text": "{sibling} quay lại nhìn ngươi mãi. Ngươi vẫy tay tới khi bóng người khuất sau núi.",
+          "effects": {
+            "setFlags": [
+              "huynh_de_khac_duong"
+            ],
+            "followUp": {
+              "event": "hd_huynh_de_tro_ve",
+              "afterYears": [
+                8,
+                14
+              ]
+            },
+            "stat.happiness": -3,
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Trốn vào chuồng trâu mà khóc",
+        "result": {
+          "text": "Không ai tìm thấy ngươi cả buổi chiều. Tối về, người nhà chỉ lặng lẽ xoa đầu.",
+          "effects": {
+            "setFlags": [
+              "huynh_de_khac_duong"
+            ],
+            "followUp": {
+              "event": "hd_huynh_de_tro_ve",
+              "afterYears": [
+                8,
+                14
+              ]
+            },
+            "stat.happiness": -5,
+            "stat.daoHeart": -1
+          }
+        }
+      },
+      {
+        "text": "Tự nhủ: không tiên thì làm người",
+        "result": {
+          "text": "Ngươi về nhà, lấy sách ra đọc. Đời phàm cũng còn dài.",
+          "effects": {
+            "setFlags": [
+              "huynh_de_khac_duong"
+            ],
+            "followUp": {
+              "event": "hd_huynh_de_tro_ve",
+              "afterYears": [
+                8,
+                14
+              ]
+            },
+            "stat.intellect": 1,
+            "stat.daoHeart": 3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_huynh_de_tro_ve",
+    "category": "childhood",
+    "title": "Người tu trở về",
+    "text": "{sibling} trở về thăm nhà, áo trắng phấp phới, trẻ mãi như ngày đi. Còn ngươi tóc đã điểm sương nơi thái dương.",
+    "themes": [
+      "family"
+    ],
+    "conditions": {
+      "flagsAll": [
+        "huynh_de_khac_duong"
+      ],
+      "family": {
+        "siblingAlive": true
+      }
+    },
+    "weight": 0,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Ôm lấy {sibling}",
+        "result": {
+          "text": "Hai anh em ngồi tới khuya. {sibling} kể chuyện núi tiên, ngươi kể chuyện làng. Chuyện nào cũng xa lạ với người kia.",
+          "effects": {
+            "stat.happiness": 4,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Hỏi xin một viên thuốc trường thọ",
+        "result": {
+          "text": "{sibling} lặng đi, rồi đặt vào tay ngươi một viên thuốc. \"Chỉ kéo thêm được vài năm thôi.\"",
+          "effects": {
+            "stat.health": 5,
+            "stat.happiness": 1
+          }
+        }
+      },
+      {
+        "text": "Giữ khoảng cách",
+        "result": {
+          "text": "Ngươi chào hỏi như với người lạ. {sibling} đi rồi, ngươi ngồi ngoài hiên một mình rất lâu.",
+          "effects": {
+            "stat.happiness": -3,
+            "stat.charm": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_con_hoc_khong_vao",
+    "category": "mortal",
+    "title": "Con học không vào",
+    "text": "Thầy đồ nhắn tới: con ngươi học hành chẳng ra sao, ngồi lớp chỉ vẽ bậy lên chiếu.",
+    "themes": [
+      "family",
+      "study"
+    ],
+    "conditions": {
+      "family": {
+        "childAge": {
+          "min": 7,
+          "max": 14
+        }
+      },
+      "age": {
+        "min": 24
+      }
+    },
+    "weight": 8,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Đánh cho một trận",
+        "result": {
+          "text": "Con khóc tới tối. Mấy hôm sau có ngồi học, nhưng nhìn ngươi như nhìn người lạ.",
+          "effects": {
+            "stat.happiness": -3,
+            "karma": -1
+          }
+        }
+      },
+      {
+        "text": "Ngồi kèm con học mỗi tối",
+        "result": {
+          "text": "Ngươi tự dạy con từng chữ. Chậm, nhưng con bắt đầu thích đọc.",
+          "effects": {
+            "stat.happiness": 2,
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Cho con thôi học, theo nghề nhà",
+        "result": {
+          "text": "Con mừng ra mặt. Ngươi tự nhủ không phải ai cũng sinh ra để đọc sách.",
+          "effects": {
+            "stat.happiness": 1,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Đút lót thầy cho con lên lớp",
+        "result": {
+          "text": "Thầy nhận quà, con được lên lớp. Chữ nghĩa thì vẫn chẳng hơn.",
+          "effects": {
+            "silver": -5,
+            "stat.happiness": 1,
+            "karma": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_hoc_tro_ngheo",
+    "category": "study",
+    "title": "Bạn học nghèo",
+    "text": "Đứa bạn ngồi cạnh nhà nghèo, trưa nào cũng nhịn đói ngồi nhìn người ta ăn.",
+    "themes": [
+      "study",
+      "friendship"
+    ],
+    "conditions": {
+      "school": {
+        "enrolled": true
+      },
+      "tier": [
+        "pham_gian"
+      ]
+    },
+    "weight": 8,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Chia nửa nắm cơm",
+        "result": {
+          "text": "Từ đó hai đứa ăn chung một nắm cơm. Nó nhớ ơn ngươi cả đời.",
+          "effects": {
+            "karma": 2,
+            "stat.happiness": 1,
+            "stat.health": -1
+          }
+        }
+      },
+      {
+        "text": "Rủ nó đi làm mướn sau giờ học",
+        "result": {
+          "text": "Hai đứa chăn trâu thuê, có tiền mua bánh. Học thì hơi đuối.",
+          "effects": {
+            "silver": 2,
+            "grade": -1,
+            "stat.physique": 1
+          }
+        }
+      },
+      {
+        "text": "Làm như không thấy",
+        "result": {
+          "text": "Ngươi ăn hết phần mình. Bữa cơm hôm ấy không ngon lắm.",
+          "effects": {
+            "stat.daoHeart": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "hd_roi_truong_thanh_nien",
+    "category": "childhood",
+    "title": "Tuổi mười lăm",
+    "text": "Mười lăm tuổi, đám bạn học đứa thì thi cử, đứa theo nghề, đứa đã lấy vợ gả chồng.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "age": {
+        "min": 15,
+        "max": 15
+      }
+    },
+    "weight": 12,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Theo đường chữ nghĩa",
+        "result": {
+          "text": "Ngươi quyết đi thi. Đèn dầu nhà ngươi cháy khuya hơn hẳn.",
+          "effects": {
+            "stat.intellect": 1,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Theo một nghề cho chắc",
+        "result": {
+          "text": "Ngươi nghĩ: có nghề trong tay thì đói không tới.",
+          "effects": {
+            "stat.physique": 1,
+            "stat.happiness": 1
+          }
+        }
+      },
+      {
+        "text": "Chưa biết, cứ sống đã",
+        "result": {
+          "text": "Ngươi nằm trên đê nhìn mây. Còn trẻ, còn nhiều năm để nghĩ.",
+          "effects": {
+            "stat.happiness": 3
+          }
+        }
+      }
+    ]
+  }
+]

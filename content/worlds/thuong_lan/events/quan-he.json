@@ -1,0 +1,466 @@
+[
+  {
+    "id": "qh_ke_thu_vu_cao",
+    "category": "npc",
+    "title": "Bị vu cáo",
+    "text": "Quan sai gõ cửa: có người tố ngươi trộm trâu của làng bên. Đầu đơn ký tên {npc}.",
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "npc": {
+        "heir": false
+      }
+    },
+    "weight": 1,
+    "cooldownYears": 8,
+    "npcTrigger": "revenge",
+    "choices": [
+      {
+        "text": "Lên huyện đối chất",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Ngươi kể rõ ngày giờ, có người làm chứng. Quan huyện phạt {npc} tội vu cáo.",
+          "effects": {
+            "stat.happiness": 2,
+            "stat.intellect": 1,
+            "npc": {
+              "grudge": 10
+            }
+          }
+        },
+        "fail": {
+          "text": "Lời ngươi không ai tin. Bị phạt hai mươi lượng, tiếng xấu bay khắp làng.",
+          "effects": {
+            "silver": -20,
+            "stat.happiness": -5,
+            "stat.charm": -2
+          }
+        }
+      },
+      {
+        "text": "Lót tay quan sai cho xong",
+        "result": {
+          "text": "Mất mười lăm lượng, chuyện được ém đi. {npc} cười khẩy.",
+          "effects": {
+            "silver": -15,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Sang tận nhà {npc} hỏi cho ra lẽ",
+        "result": {
+          "text": "Hai bên to tiếng giữa sân. Hàng xóm kéo tới can.",
+          "effects": {
+            "stat.daoHeart": 1,
+            "stat.health": -2,
+            "npc": {
+              "grudge": 5
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "qh_ke_thu_dot_nha",
+    "category": "npc",
+    "title": "Lửa đêm",
+    "text": "Nửa đêm có mùi khói. Đống rơm sau nhà bốc cháy, bóng người chạy vụt ra ngõ, dáng giống {npc}.",
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "npc": {
+        "heir": false
+      },
+      "asset": {
+        "kind": "house"
+      }
+    },
+    "weight": 1,
+    "cooldownYears": 8,
+    "npcTrigger": "revenge",
+    "choices": [
+      {
+        "text": "Dập lửa trước đã",
+        "result": {
+          "text": "Cả nhà xách nước tới sáng. Lửa tắt, mất nửa kho thóc.",
+          "effects": {
+            "silver": -25,
+            "stat.health": -3,
+            "stat.happiness": -4
+          }
+        }
+      },
+      {
+        "text": "Đuổi theo bóng người",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Ngươi tóm được {npc} ở bờ ao. Giải lên lý trưởng, y phải đền bạc.",
+          "effects": {
+            "silver": 20,
+            "stat.physique": 1,
+            "stat.happiness": 2,
+            "npc": {
+              "grudge": 10
+            }
+          }
+        },
+        "fail": {
+          "text": "Đuổi tới bìa rừng thì mất dấu. Quay về, lửa đã liếm sang mái.",
+          "effects": {
+            "silver": -40,
+            "stat.happiness": -6
+          }
+        }
+      }
+    ],
+    "tags": [
+      "violence"
+    ]
+  },
+  {
+    "id": "qh_ke_thu_thue_nguoi",
+    "category": "npc",
+    "title": "Bị đánh úp",
+    "text": "Đi chợ về qua bãi tha ma, ba gã lạ mặt cầm gậy chặn đường. \"Có người trả bạc để dạy ngươi một bài.\"",
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "npc": {
+        "heir": false
+      },
+      "age": {
+        "min": 14
+      }
+    },
+    "weight": 1,
+    "cooldownYears": 8,
+    "npcTrigger": "revenge",
+    "choices": [
+      {
+        "text": "Đánh trả",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Ngươi giật được gậy, ba gã bỏ chạy. Một tên khai ra người thuê là {npc}.",
+          "effects": {
+            "stat.physique": 1,
+            "stat.daoHeart": 1,
+            "npc": {
+              "grudge": 5
+            }
+          }
+        },
+        "fail": {
+          "text": "Ba đánh một. Ngươi nằm bẹp mấy ngày.",
+          "effects": {
+            "stat.health": -10,
+            "stat.happiness": -4
+          }
+        }
+      },
+      {
+        "text": "Ném túi bạc rồi chạy",
+        "result": {
+          "text": "Mất ít bạc, giữ được lành lặn.",
+          "effects": {
+            "silver": -10,
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Hỏi xem ai thuê, trả gấp đôi",
+        "result": {
+          "text": "Bọn chúng nhìn nhau, cầm bạc của ngươi rồi bỏ đi. Có tiền mua tiên cũng được.",
+          "effects": {
+            "silver": -25,
+            "stat.intellect": 1,
+            "npc": {
+              "grudge": -5
+            }
+          }
+        }
+      }
+    ],
+    "tags": [
+      "violence"
+    ]
+  },
+  {
+    "id": "qh_huynh_de_gap_nan",
+    "category": "npc",
+    "title": "Huynh đệ gặp nạn",
+    "text": "Có người chạy tới báo: huynh đệ kết nghĩa {npc} bị bắt oan, đang bị giam trên huyện.",
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "npc": {
+        "sworn": true
+      }
+    },
+    "weight": 1,
+    "cooldownYears": 15,
+    "npcTrigger": "bond",
+    "choices": [
+      {
+        "text": "Bỏ bạc ra chuộc",
+        "result": {
+          "text": "Ba mươi lượng đổi được một người. {npc} ra khỏi ngục, quỳ xuống trước mặt ngươi.",
+          "effects": {
+            "silver": -30,
+            "stat.happiness": 3,
+            "stat.daoHeart": 2,
+            "npc": {
+              "affinity": 10,
+              "favor": 20
+            }
+          }
+        }
+      },
+      {
+        "text": "Lên huyện kêu oan",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Ngươi tìm ra chứng cứ, quan huyện thả người. Tiếng nghĩa khí của ngươi lan khắp vùng.",
+          "effects": {
+            "stat.intellect": 1,
+            "stat.charm": 2,
+            "npc": {
+              "affinity": 8,
+              "favor": 15
+            }
+          }
+        },
+        "fail": {
+          "text": "Kêu oan không được, chỉ vào thăm được một lần. {npc} vẫn cười bảo ngươi đừng lo.",
+          "effects": {
+            "stat.happiness": -4,
+            "npc": {
+              "affinity": 4
+            }
+          }
+        }
+      },
+      {
+        "text": "Mặc kệ",
+        "result": {
+          "text": "Lời thề năm xưa còn đó. Ngươi quay lưng, nhưng lòng không quay được.",
+          "effects": {
+            "stat.daoHeart": -8,
+            "stat.happiness": -5,
+            "karma": -3,
+            "npc": {
+              "affinity": -30,
+              "grudge": 20
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "qh_ban_than_ru_giang_ho",
+    "category": "npc",
+    "title": "Rủ đi giang hồ",
+    "text": "{npc} đeo bọc hành lý đứng trước cửa: \"Làng này nhỏ quá. Đi với ta, xem thiên hạ rộng thế nào.\"",
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "npc": {
+        "minAffinity": 70
+      },
+      "age": {
+        "min": 16,
+        "max": 40
+      }
+    },
+    "weight": 1,
+    "cooldownYears": 20,
+    "npcTrigger": "bond",
+    "choices": [
+      {
+        "text": "Khăn gói lên đường",
+        "result": {
+          "text": "Một năm rong ruổi, ăn ngủ bờ bụi mà chẳng thấy khổ. Về làng, ngươi khác hẳn.",
+          "effects": {
+            "stat.physique": 2,
+            "stat.charm": 2,
+            "stat.happiness": 4,
+            "stat.health": -2,
+            "npc": {
+              "affinity": 10
+            }
+          }
+        }
+      },
+      {
+        "text": "Ở lại, tiễn một đoạn",
+        "result": {
+          "text": "Tiễn tới đầu làng, {npc} vẫy tay rồi đi khuất. Ngươi đứng nhìn rất lâu.",
+          "effects": {
+            "stat.happiness": -2,
+            "stat.daoHeart": 1,
+            "npc": {
+              "affinity": 2
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "qh_ban_than_nho_von",
+    "category": "npc",
+    "title": "Bạn thân hỏi vay vốn",
+    "text": "{npc} sang chơi, ngập ngừng mãi mới nói: muốn mở sạp hàng mà thiếu ba mươi lượng.",
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "npc": {
+        "minAffinity": 60
+      },
+      "age": {
+        "min": 18
+      },
+      "stats": [
+        {
+          "stat": "silver",
+          "gte": 30
+        }
+      ]
+    },
+    "weight": 1,
+    "cooldownYears": 12,
+    "npcTrigger": "bond",
+    "choices": [
+      {
+        "text": "Cho vay",
+        "result": {
+          "text": "{npc} cầm bạc, nắm tay ngươi thật chặt.",
+          "effects": {
+            "silver": -30,
+            "stat.happiness": 2,
+            "npc": {
+              "affinity": 8,
+              "favor": 15
+            }
+          }
+        }
+      },
+      {
+        "text": "Góp vốn làm chung",
+        "result": {
+          "text": "Hai người cùng bày sạp. Lời lỗ chia đôi, vui buồn chia đôi.",
+          "effects": {
+            "silver": -30,
+            "stat.charm": 1,
+            "stat.happiness": 2,
+            "npc": {
+              "affinity": 6
+            }
+          }
+        }
+      },
+      {
+        "text": "Từ chối khéo",
+        "result": {
+          "text": "{npc} cười gượng, bảo không sao. Nhưng mấy tháng sau mới sang chơi lại.",
+          "effects": {
+            "stat.happiness": -1,
+            "npc": {
+              "affinity": -6
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "qh_ban_phan_boi",
+    "category": "npc",
+    "title": "Bạn thân trở mặt",
+    "text": "Ngươi nghe được {npc} nói xấu sau lưng mình ở quán nước, còn kể cả chuyện ngươi tâm sự riêng.",
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "npc": {
+        "masked": true
+      }
+    },
+    "weight": 1,
+    "cooldownYears": 0,
+    "npcTrigger": "reveal",
+    "choices": [
+      {
+        "text": "Tới hỏi thẳng",
+        "result": {
+          "text": "{npc} không chối, còn cười. Hóa ra bao năm nay ngươi chưa từng hiểu người này.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "stat.happiness": -4,
+            "npc": {
+              "affinity": -25,
+              "grudge": 10,
+              "reveal": true
+            }
+          }
+        }
+      },
+      {
+        "text": "Im lặng, xa dần",
+        "result": {
+          "text": "Ngươi không nói gì, chỉ thôi sang chơi. Có những người, biết vậy là đủ.",
+          "effects": {
+            "stat.intellect": 1,
+            "stat.happiness": -3,
+            "npc": {
+              "affinity": -15,
+              "reveal": true
+            }
+          }
+        }
+      }
+    ]
+  }
+]

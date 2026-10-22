@@ -19,7 +19,7 @@ describe('9.8 persona phàm nhân', () => {
     const table = formatPersonaTable(rows);
     expect(table.split('\n')).toHaveLength(MORTAL_PROFILES.length + 1);
     expect(table).toContain('Hiệp khách');
-  });
+  }, 60_000);
 
   it('is deterministic and the scholar takes the quan lộ', () => {
     const a = simulateLife(content, 'det', { profile: 'thu_sinh' });

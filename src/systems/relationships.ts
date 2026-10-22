@@ -61,6 +61,18 @@ export function relationLabel(r: Relative, playerAge: number): string {
   return r.gender === 'nam' ? 'Em trai' : 'Em gái';
 }
 
+/** 10.5: the temper a rearing tally grows into (relations.json tempers, first whose range holds). */
+export function temperFor(content: Content, rearing: number) {
+  return content.relations?.tempers.find((t) => (t.min === undefined || rearing >= t.min) && (t.max === undefined || rearing <= t.max));
+}
+
+/** "Tính nết: Hiếu thuận · đã thành gia" for a child, or null. */
+export function childTemperLabel(content: Content, r: Relative): string | null {
+  const name = r.temper ? content.relations?.tempers.find((t) => t.id === r.temper)?.name : undefined;
+  const parts = [name ? `Tính nết: ${name}` : null, r.married ? 'đã thành gia' : null].filter(Boolean);
+  return parts.length ? parts.join(' · ') : null;
+}
+
 /** One year for the family (called after the player ages). */
 export function ageFamily(state: GameState, content: Content): GameState {
   if (state.family.length === 0) return state;
@@ -90,7 +102,12 @@ export function ageFamily(state: GameState, content: Content): GameState {
       lines.push({ text: `${relationLabel(r, state.character.age)} ${r.name} qua đời, hưởng thọ ${age} tuổi.${change ? ` ${change}.` : ''}`, tone: 'bad' });
       return { ...r, age, alive: false };
     }
-    return { ...r, age, affinity: clamp(r.affinity - cfg.affinityDecay) };
+    const grown = { ...r, age, affinity: clamp(r.affinity - cfg.affinityDecay) };
+    // 10.5: a child shows the temper their upbringing made.
+    const temper = r.role === 'child' && !r.temper && age === content.balance.kinship?.temperAge ? temperFor(content, r.rearing ?? 0) : undefined;
+    if (!temper) return grown;
+    lines.push({ text: temper.text.replace(/\{child\}/g, r.name), tone: temper.affinity >= 0 ? 'good' : 'normal' });
+    return { ...grown, temper: temper.id, affinity: clamp(grown.affinity + temper.affinity) };
   });
 
   // A younger sibling may be born while both parents live and the mother is young enough.
@@ -148,6 +165,9 @@ export function availableActions(state: GameState, content: Content, r: Relative
     .filter((a) => age >= a.minAge && (a.maxAge === undefined || age <= a.maxAge))
     .filter((a) => a.roles.length === 0 || a.roles.includes(r.role))
     .filter((a) => a.minTargetAge === undefined || r.age >= a.minTargetAge)
+    .filter((a) => !a.marry || !r.married)
+    // 10.5: rearing a child ends once their temper has set.
+    .filter((a) => !a.rearing || !r.temper)
     .filter((a) => (r.role !== 'sibling' && r.role !== 'child') || r.age >= 3 || a.id === 'hoi_han')
     .map((a) => {
       const done = r.lastActions[a.id] === age;
@@ -211,7 +231,7 @@ export function performFamilyAction(state: GameState, content: Content, relative
     ...next,
     rng: rng.getState(),
     family: next.family.map((x) => (x.id === relativeId
-      ? { ...x, affinity: clamp(x.affinity + gain), lastActions: { ...x.lastActions, [actionId]: state.character.age } }
+      ? { ...x, affinity: clamp(x.affinity + gain), lastActions: { ...x.lastActions, [actionId]: state.character.age }, ...(action.rearing ? { rearing: (x.rearing ?? 0) + action.rearing } : {}), ...(action.marry && tone !== 'bad' ? { married: true } : {}) }
       : x)),
   };
   const log = next.log.slice();

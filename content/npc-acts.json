@@ -287,5 +287,536 @@
         "Lời qua tiếng lại, rồi động tay. Ngươi ăn một đòn đau, đành lui."
       ]
     }
+  },
+  {
+    "id": "khen",
+    "name": "Khen một câu",
+    "minAffinity": 30,
+    "check": {
+      "stat": "stat.charm",
+      "difficulty": 35
+    },
+    "success": {
+      "affinity": [
+        2,
+        5
+      ],
+      "effects": {
+        "stat.charm": 1
+      },
+      "texts": [
+        "Ngươi khen {npc} một câu đúng chỗ. Người ta cười tít mắt, cả buổi vui vẻ.",
+        "\"Dạo này trông khác hẳn.\" {npc} sờ mặt, ngượng mà vui.",
+        "Ngươi khen tay nghề của {npc}. Y kể luôn bí quyết, dặn đừng nói ai.",
+        "Một lời khen nhẹ như gió, {npc} nhớ tới mấy ngày."
+      ]
+    },
+    "fail": {
+      "affinity": [
+        -3,
+        0
+      ],
+      "effects": {
+        "stat.charm": -1
+      },
+      "texts": [
+        "Khen quá lố, {npc} nheo mắt hỏi ngươi định nhờ gì.",
+        "{npc} nghe khen mà tưởng bị mỉa, mặt sa sầm."
+      ]
+    }
+  },
+  {
+    "id": "che",
+    "name": "Chê thẳng mặt",
+    "grudgeAdd": 3,
+    "success": {
+      "affinity": [
+        -6,
+        -2
+      ],
+      "effects": {
+        "stat.daoHeart": 1
+      },
+      "texts": [
+        "Ngươi nói thẳng chỗ dở của {npc}. Người ta đỏ mặt, nhưng đêm về chắc phải nghĩ.",
+        "\"Làm thế là sai.\" {npc} cãi lấy được, rồi im. Lời thật thì mất lòng.",
+        "Ngươi chê cách {npc} ăn ở. Hai người không nói với nhau cả buổi.",
+        "Ngươi chỉ ra cái sai của {npc} trước mặt người khác. Đúng, nhưng chẳng ai vui."
+      ]
+    }
+  },
+  {
+    "id": "ke_chuyen_cuoi",
+    "name": "Kể chuyện cười",
+    "check": {
+      "stat": "stat.charm",
+      "difficulty": 40
+    },
+    "success": {
+      "affinity": [
+        3,
+        6
+      ],
+      "effects": {
+        "stat.happiness": 2
+      },
+      "texts": [
+        "Ngươi kể chuyện anh hà tiện đi chợ. {npc} cười sặc nước trà.",
+        "Chuyện cười cũ rích, nhưng ngươi kể duyên, {npc} cười chảy nước mắt.",
+        "{npc} nghe xong đập đùi, kể lại một chuyện còn buồn cười hơn.",
+        "Hai người cười tới mức hàng xóm sang hỏi có chuyện gì."
+      ]
+    },
+    "fail": {
+      "affinity": [
+        -2,
+        0
+      ],
+      "effects": {
+        "stat.happiness": -1
+      },
+      "texts": [
+        "Kể xong chỉ có mình ngươi cười. {npc} gãi đầu, gượng gạo.",
+        "{npc} không hiểu chỗ buồn cười ở đâu, ngươi phải giảng lại. Càng giảng càng nhạt."
+      ]
+    }
+  },
+  {
+    "id": "treu_choc",
+    "name": "Trêu chọc",
+    "minAffinity": 50,
+    "check": {
+      "stat": "stat.charm",
+      "difficulty": 45
+    },
+    "grudgeAdd": 0,
+    "success": {
+      "affinity": [
+        1,
+        4
+      ],
+      "effects": {
+        "stat.happiness": 2
+      },
+      "texts": [
+        "Ngươi giấu đôi giày của {npc}. Y đi chân đất tìm khắp xóm, rồi cười mắng ngươi.",
+        "Ngươi bắt chước giọng {npc}, y đuổi đánh ngươi chạy vòng sân.",
+        "Trêu một câu, {npc} đáp trả hai câu. Hòa.",
+        "Ngươi bỏ con nhái vào giỏ của {npc}. Tiếng hét nghe tới đầu làng."
+      ]
+    },
+    "fail": {
+      "affinity": [
+        -6,
+        -2
+      ],
+      "effects": {
+        "stat.happiness": -2
+      },
+      "texts": [
+        "Trêu quá trớn, {npc} giận thật, bỏ về không chào.",
+        "{npc} không ưa trò đùa ấy. Ánh mắt lạnh hẳn."
+      ]
+    }
+  },
+  {
+    "id": "cai_nhau",
+    "name": "Cãi nhau",
+    "grudgeAdd": 6,
+    "success": {
+      "affinity": [
+        -8,
+        -3
+      ],
+      "effects": {
+        "stat.happiness": -2,
+        "stat.daoHeart": 1
+      },
+      "texts": [
+        "Chuyện nhỏ thành chuyện to. Ngươi và {npc} cãi nhau tới khản cổ.",
+        "Lời qua tiếng lại, cả xóm ra xem. Ngươi thắng lý, thua tình.",
+        "{npc} lôi chuyện từ ba năm trước ra nói. Ngươi lôi chuyện năm năm trước.",
+        "Cãi xong mới nhận ra chẳng ai nhớ cãi vì chuyện gì."
+      ]
+    }
+  },
+  {
+    "id": "cho_tien",
+    "name": "Cho tiền",
+    "cost": 10,
+    "minAge": 14,
+    "success": {
+      "affinity": [
+        4,
+        8
+      ],
+      "effects": {
+        "stat.happiness": 1
+      },
+      "texts": [
+        "Ngươi dúi vào tay {npc} một ít bạc. Người ta nhìn ngươi, không nói gì mà mắt đỏ hoe.",
+        "\"Cầm lấy mà lo việc nhà.\" {npc} cảm ơn mãi.",
+        "{npc} từ chối ba lần, lần thứ tư mới nhận.",
+        "Bạc không nhiều, nhưng đúng lúc. {npc} nhớ ơn."
+      ]
+    }
+  },
+  {
+    "id": "muon_tien",
+    "name": "Hỏi mượn tiền",
+    "minAffinity": 55,
+    "minAge": 14,
+    "special": "borrow",
+    "silver": [
+      10,
+      40
+    ],
+    "check": {
+      "stat": "stat.charm",
+      "difficulty": 40
+    },
+    "success": {
+      "affinity": [
+        -3,
+        0
+      ],
+      "effects": {
+        "stat.happiness": 1
+      },
+      "texts": [
+        "{npc} đếm bạc đưa ngươi, dặn khi nào có thì trả.",
+        "\"Bạn bè cả, cầm đi.\" {npc} còn đưa thêm mấy đồng.",
+        "{npc} thở dài, mở hòm lấy bạc. Món nợ này ngươi phải nhớ.",
+        "Mượn được bạc rồi, lòng lại nặng hơn túi."
+      ]
+    },
+    "fail": {
+      "affinity": [
+        -6,
+        -2
+      ],
+      "effects": {
+        "stat.happiness": -2
+      },
+      "texts": [
+        "{npc} kêu dạo này cũng túng, ngươi ngượng chín mặt.",
+        "{npc} nhìn ngươi lâu, rồi lắc đầu. Tình bạn bỗng có vết."
+      ]
+    }
+  },
+  {
+    "id": "cho_vay",
+    "name": "Cho vay",
+    "cost": 20,
+    "minAffinity": 40,
+    "minAge": 16,
+    "special": "lend",
+    "success": {
+      "affinity": [
+        3,
+        6
+      ],
+      "effects": {
+        "stat.happiness": 1
+      },
+      "texts": [
+        "{npc} cầm bạc, hứa cuối năm trả đủ.",
+        "\"Ơn này ta không quên.\" {npc} viết giấy nợ cẩn thận.",
+        "Ngươi cho {npc} vay, coi như gửi bạc vào lòng người.",
+        "{npc} cảm ơn rối rít. Còn trả hay không thì để xem."
+      ]
+    }
+  },
+  {
+    "id": "doi_no",
+    "name": "Đòi nợ",
+    "special": "collect",
+    "check": {
+      "stat": "stat.charm",
+      "difficulty": 45
+    },
+    "grudgeAdd": 2,
+    "success": {
+      "affinity": [
+        -5,
+        -1
+      ],
+      "effects": {
+        "stat.happiness": 2
+      },
+      "texts": [
+        "{npc} gom bạc trả đủ, mặt hơi khó coi.",
+        "Đòi mãi mới được. {npc} trả xong thì tránh mặt ngươi mấy hôm.",
+        "{npc} trả nợ, còn biếu thêm ít quà. Người tử tế hiếm thật.",
+        "Bạc về tay, quan hệ cũng nguội đi một chút."
+      ]
+    },
+    "fail": {
+      "affinity": [
+        -8,
+        -3
+      ],
+      "effects": {
+        "stat.happiness": -3
+      },
+      "texts": [
+        "{npc} kêu khất thêm, ngươi về tay không.",
+        "{npc} chối là đã trả rồi. Giấy nợ đâu? Ngươi lục mãi không thấy."
+      ]
+    }
+  },
+  {
+    "id": "tra_no",
+    "name": "Trả nợ",
+    "special": "repay",
+    "success": {
+      "affinity": [
+        3,
+        6
+      ],
+      "effects": {
+        "stat.happiness": 3
+      },
+      "texts": [
+        "Ngươi trả {npc} đủ cả gốc lẫn lãi, nhẹ cả người.",
+        "{npc} nhận bạc, vỗ vai ngươi: \"Biết ngay là ngươi giữ chữ tín.\"",
+        "Trả xong món nợ, ngủ ngon hẳn.",
+        "{npc} không ngờ ngươi trả sớm thế, mời ở lại ăn cơm."
+      ]
+    }
+  },
+  {
+    "id": "di_tuu_lau",
+    "name": "Rủ lên tửu lâu",
+    "cost": 8,
+    "minAffinity": 50,
+    "minAge": 16,
+    "success": {
+      "affinity": [
+        4,
+        8
+      ],
+      "effects": {
+        "stat.happiness": 3,
+        "stat.health": -1
+      },
+      "texts": [
+        "Hai người gọi hai bình rượu, một đĩa lạc, ngồi tới lúc tửu lâu đóng cửa.",
+        "Trên lầu nhìn xuống phố, {npc} kể chuyện thiên hạ, ngươi kể chuyện trong làng.",
+        "{npc} say, đòi làm thơ. Thơ dở, nhưng cả lầu vỗ tay.",
+        "Tiền rượu ngươi trả, tiền chuyện {npc} trả."
+      ]
+    }
+  },
+  {
+    "id": "di_hoi",
+    "name": "Rủ đi hội",
+    "cost": 3,
+    "minAffinity": 40,
+    "success": {
+      "affinity": [
+        4,
+        7
+      ],
+      "effects": {
+        "stat.happiness": 3,
+        "stat.charm": 1
+      },
+      "texts": [
+        "Hội làng đông như kiến. Ngươi và {npc} chen nhau xem đánh đu, ăn bánh đúc.",
+        "{npc} thắng một con gà ở trò ném vòng, ôm về như ôm vàng.",
+        "Hai người xem hát chèo tới khuya, về còn nhại lại mấy câu.",
+        "Đi hội về, chân mỏi mà lòng vui."
+      ]
+    }
+  },
+  {
+    "id": "di_san",
+    "name": "Rủ đi săn",
+    "minAffinity": 55,
+    "minAge": 14,
+    "check": {
+      "stat": "stat.physique",
+      "difficulty": 40
+    },
+    "success": {
+      "affinity": [
+        4,
+        8
+      ],
+      "effects": {
+        "stat.physique": 1,
+        "stat.happiness": 2
+      },
+      "texts": [
+        "Hai người vào rừng từ sáng, chiều về khiêng được con hoẵng.",
+        "{npc} bắn trượt ba phát, ngươi trượt bốn. Về tay không mà cười cả đường.",
+        "Đi săn gặp mưa, hai người trú dưới gốc cây kể chuyện ma.",
+        "Ngươi bẫy được con thỏ, {npc} bảo là thỏ của y."
+      ]
+    },
+    "fail": {
+      "affinity": [
+        0,
+        3
+      ],
+      "effects": {
+        "stat.health": -4
+      },
+      "texts": [
+        "Đuổi con lợn rừng, ngươi trượt chân ngã xuống khe. {npc} kéo lên, cả hai lấm lem.",
+        "Con hươu chạy mất, cái cành gai thì ở lại trên tay ngươi."
+      ]
+    }
+  },
+  {
+    "id": "ket_nghia",
+    "name": "Kết nghĩa",
+    "minAffinity": 85,
+    "minAge": 16,
+    "special": "swear",
+    "check": {
+      "stat": "stat.charm",
+      "difficulty": 40
+    },
+    "success": {
+      "affinity": [
+        10,
+        15
+      ],
+      "effects": {
+        "stat.happiness": 5,
+        "stat.daoHeart": 2
+      },
+      "texts": [
+        "Hai người thắp hương trước trời đất, thề sống chết có nhau. Từ nay là huynh đệ.",
+        "Một chén rượu hòa máu, tám lạy trời đất. {npc} nắm tay ngươi thật chặt.",
+        "Không cần nhiều lời, hai người quỳ xuống cùng lúc. Lời thề đã nói thì phải giữ.",
+        "Dưới gốc đa đầu làng, ngươi và {npc} kết nghĩa kim lan."
+      ]
+    },
+    "fail": {
+      "affinity": [
+        -3,
+        0
+      ],
+      "effects": {
+        "stat.happiness": -2
+      },
+      "texts": [
+        "{npc} ngập ngừng, bảo chuyện lớn thế để nghĩ thêm.",
+        "{npc} cười, bảo bạn bè là đủ, cần gì thề thốt."
+      ]
+    }
+  },
+  {
+    "id": "tuyet_giao",
+    "name": "Tuyệt giao",
+    "special": "cut",
+    "grudgeAdd": 15,
+    "notKinds": [
+      "thay",
+      "chu"
+    ],
+    "success": {
+      "affinity": [
+        -40,
+        -30
+      ],
+      "effects": {
+        "stat.happiness": -3,
+        "stat.daoHeart": 1
+      },
+      "texts": [
+        "Ngươi cắt vạt áo trước mặt {npc}: từ nay hai người không còn quen biết.",
+        "\"Đường ai nấy đi.\" Ngươi quay lưng, {npc} đứng lặng hồi lâu.",
+        "Ngươi trả lại món quà năm xưa. {npc} hiểu, không giữ.",
+        "Một câu nói ra, mười năm tình nghĩa thành người dưng."
+      ]
+    }
+  },
+  {
+    "id": "danh",
+    "name": "Đánh cho một trận",
+    "minAge": 12,
+    "special": "fight",
+    "check": {
+      "stat": "stat.physique",
+      "difficulty": 50
+    },
+    "grudgeAdd": 15,
+    "enemy": true,
+    "success": {
+      "affinity": [
+        -10,
+        -5
+      ],
+      "effects": {
+        "stat.physique": 1,
+        "stat.daoHeart": -1
+      },
+      "texts": [
+        "Ngươi xông vào đánh {npc} một trận nhừ tử. Hả giận, nhưng lòng không yên.",
+        "Hai người lăn lộn giữa đường. Ngươi đứng dậy trước.",
+        "{npc} bị đánh sưng mặt, chỉ tay thề sẽ trả.",
+        "Đánh xong mới thấy tay mình cũng rớm máu."
+      ]
+    },
+    "fail": {
+      "affinity": [
+        -6,
+        -2
+      ],
+      "effects": {
+        "stat.health": -6,
+        "stat.happiness": -3
+      },
+      "texts": [
+        "Ngươi xông vào, rồi nằm đo đất. {npc} khỏe hơn ngươi tưởng.",
+        "Đánh nhau chưa được mấy hiệp, ngươi đã ôm bụng chạy."
+      ]
+    }
+  },
+  {
+    "id": "to_cao",
+    "name": "Tố cáo lên quan",
+    "minAge": 16,
+    "special": "report",
+    "check": {
+      "stat": "stat.intellect",
+      "difficulty": 50
+    },
+    "grudgeAdd": 20,
+    "enemy": true,
+    "success": {
+      "affinity": [
+        -15,
+        -10
+      ],
+      "effects": {
+        "stat.intellect": 1,
+        "stat.happiness": 2
+      },
+      "texts": [
+        "Ngươi viết đơn, kể đủ tội trạng của {npc}. Quan huyện cho bắt người tra hỏi.",
+        "Chứng cứ rõ ràng, {npc} bị phạt nặng. Cả làng xì xào.",
+        "{npc} bị gọi lên huyện. Ngươi đứng ngoài cổng nghe tiếng roi.",
+        "Quan sai tới tận nhà {npc}. Ngươi nhìn từ xa, lòng không biết vui hay buồn."
+      ]
+    },
+    "fail": {
+      "affinity": [
+        -5,
+        -2
+      ],
+      "effects": {
+        "stat.happiness": -4,
+        "stat.charm": -1
+      },
+      "texts": [
+        "Đơn kiện không đủ chứng, quan mắng ngươi vu cáo.",
+        "{npc} lót tay quan sai, ngươi bị đuổi về, còn mất tiền giấy bút."
+      ]
+    }
   }
 ]

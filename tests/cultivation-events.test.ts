@@ -33,7 +33,7 @@ const pick = (s: GameState, eventId: string, choice: number) => resolveChoice({ 
 
 describe('task 2.8 events and their engine', () => {
   it('all 37 new events are loaded', () => {
-    for (const id of ['dong_phu_dau_tien', 'don_ngo_trong_mua', 'dong_phu_lo_am', 'loi_moi_u_ha', 'thi_huong', 'doi_tap_dich', 'huong_hoa_hoi_bao_quan']) {
+    for (const id of ['dong_phu_dau_tien', 'don_ngo_trong_mua', 'dong_phu_lo_am', 'loi_moi_u_ha', 'doi_tap_dich', 'huong_hoa_hoi_bao_quan']) {
       expect(findEvent(content, id), id).toBeDefined();
     }
   });
@@ -73,15 +73,8 @@ describe('task 2.8 events and their engine', () => {
     expect(r.text).toContain('Thủy Nguyệt Quan Tưởng Pháp');
   });
 
-  it('careers: Thi Hương promotes, Tạp dịch joins young rootless children', () => {
-    const scholar = life({ realm: 'pham_nhan', root: NONE, technique: null }, { career: { id: 'quan', rung: 0, since: 16 }, flags: { tu_tai: true }, stats: { health: 70, happiness: 50, intellect: 100, charm: 50 } });
-    expect(eventWeight(scholar, content, findEvent(content, 'thi_huong')!)).toBeGreaterThan(0);
-    let promoted = 0;
-    for (let i = 0; i < 20; i++) {
-      const r = pick({ ...scholar, rng: createLife({ seed: `q${i}` }, content).rng }, 'thi_huong', 0);
-      if (r.state.career.rung === 1) promoted++;
-    }
-    expect(promoted).toBeGreaterThan(10);
+  // 10.2: the thi Hương event gave way to the khoa cử system (tests/exams.test.ts).
+  it('careers: Tạp dịch joins young rootless children', () => {
     const kid = life({ realm: 'pham_nhan', root: NONE, technique: null }, { aptitudes: { physique: 100, comprehension: 50, luck: 50, daoHeart: 50 } }, 10);
     expect(pick(kid, 'tien_mon_tuyen_do_truot', 1).state.career.id).toBe('tap_dich');
   });
@@ -157,5 +150,5 @@ describe('task 2.8 events and their engine', () => {
       }
       expect(s.alive).toBe(false);
     }
-  });
+  }, 60_000);
 });

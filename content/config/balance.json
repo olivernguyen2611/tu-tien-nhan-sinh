@@ -239,6 +239,72 @@
     "careerMonths": { "quan": 10, "thuong": 8, "vo_lam": 6, "y": 8, "tap_dich": 9 },
     "careerMonthsDefault": 8
   },
+  "schooling": {
+    "enrollAge": [6, 12],
+    "leaveAge": 16,
+    "gradeBase": 3,
+    "intellectWeight": 0.08,
+    "classmates": 2,
+    "tradeMinAge": 12,
+    "tradeMonths": 4,
+    "tradeYears": [2, 3, 4],
+    "tradeChance": { "base": 0.3, "weight": 0.004 }
+  },
+  "exams": {
+    "rounds": 3,
+    "chanceMin": 0.05,
+    "chanceMax": 0.92,
+    "incidentChance": 0.3,
+    "levels": {
+      "huyen": { "minAge": 10, "minGrade": 15, "fee": 1, "interval": 1, "passScore": 3, "penalty": 0, "reward": { "silver": 0, "happiness": 5, "reputation": 1 } },
+      "vien": { "minAge": 12, "minGrade": 30, "fee": 2, "interval": 1, "passScore": 4, "penalty": 0.1, "reward": { "silver": 5, "happiness": 8, "reputation": 3 } },
+      "huong": { "minAge": 15, "minGrade": 45, "fee": 5, "interval": 3, "offset": 0, "passScore": 5, "penalty": 0.28, "reward": { "silver": 20, "happiness": 10, "reputation": 5 } },
+      "hoi": { "minAge": 16, "minGrade": 60, "fee": 10, "interval": 3, "offset": 2, "passScore": 6, "penalty": 0.5, "reward": { "silver": 30, "happiness": 10, "reputation": 5 } },
+      "dinh": { "minAge": 16, "minGrade": 0, "fee": 0, "interval": 0, "passScore": 2, "penalty": 0.1, "reward": { "silver": 100, "happiness": 15, "reputation": 10 } }
+    },
+    "approaches": {
+      "chinh_luan": { "base": 0.1, "win": 2, "lose": 0, "weights": { "grade": 0.004, "intellect": 0.004 } },
+      "van_hoa": { "base": 0, "win": 3, "lose": -1, "weights": { "grade": 0.003, "intellect": 0.002, "charm": 0.004 } },
+      "doan_y": { "base": 0.1, "win": 3, "lose": -1, "weights": { "grade": 0.002, "luck": 0.005 } }
+    },
+    "phasePenalty": { "trung_suy": 0.06, "loan_the": 0.1 },
+    "closedPhases": ["loan_the"],
+    "openLevels": ["huyen", "vien"],
+    "anKhoaPhases": ["tan_trieu"],
+    "placings": [{ "id": "trang_nguyen", "minScore": 9 }, { "id": "bang_nhan", "minScore": 8 }, { "id": "tham_hoa", "minScore": 7 }],
+    "failHappiness": -6
+  },
+  "jobs": {
+    "perfStart": 50,
+    "drift": 0.25,
+    "targetBase": 25,
+    "targetWeight": 0.5,
+    "sickHealth": 30,
+    "sickPerf": -10,
+    "promoteAt": 65,
+    "promoteChance": 0.45,
+    "yearsPerRung": 3,
+    "fireAt": 22,
+    "fireChance": 0.5,
+    "rehireYears": 5,
+    "upkeepEvery": 3,
+    "retireAge": 55,
+    "colleagues": 2
+  },
+  "pastime": { "petEvery": 2, "petDeathHappiness": -6, "addictAt": 6, "addictYears": 3, "addictSilver": -15, "addictHappiness": -3, "omenMul": 4, "omenYears": 3, "artMax": 100 },
+  "kinship": { "oathDaoHeart": -10, "oathKarma": -5, "swornDeathHappiness": -8, "temperAge": 16 },
+  "assets": {
+    "priceFollow": 0.6,
+    "resale": 0.7,
+    "fakeResale": 0.1,
+    "statEvery": 3,
+    "cropFit": { "right": 1.4, "wrong": 0.6, "none": 0.8, "normal": 1 },
+    "forecastTrue": 0.7,
+    "shopSpread": 0.3,
+    "tax": { "head": 2, "land": 1, "shop": 6, "phaseMul": { "thinh_the": 0.8, "trung_suy": 1.2, "loan_the": 1.8, "tan_trieu": 1 }, "exemptFlags": ["tu_tai"], "minAge": 16, "shortHappiness": 1, "forgiveBelow": 3, "logAt": 15, "logEvery": 5 },
+    "defaultYears": 4,
+    "noWillKeep": 0.6
+  },
   "careers": {
     "joinAge": [14, 40],
     "income": [10, 25, 50, 100, 200],

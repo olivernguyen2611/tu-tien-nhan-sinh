@@ -4,7 +4,7 @@
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
 import { KY_KEYS } from '../systems/thienDaoKy';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, SpecialOriginFileSchema, type SpecialOrigin, ActivityFileSchema, type Activity, DockFileSchema, type DockButton, WorldStateFileSchema, type WorldStateFile, RelationsFileSchema, type RelationsFile, StatLabelsFileSchema, TierTermsFileSchema, type TierTermsFile, STAT_KEYS, SystemFileSchema, type SystemFile, TrungSinhFileSchema, type TrungSinhFile, ThanDaoFileSchema, type ThanDaoFile, ThienDaoKyFileSchema, type ThienDaoKyFile, type Ending, MORTAL_STATS, APTITUDES, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, SpecialOriginFileSchema, type SpecialOrigin, ActivityFileSchema, type Activity, DockFileSchema, type DockButton, WorldStateFileSchema, type WorldStateFile, RelationsFileSchema, type RelationsFile, StatLabelsFileSchema, SchoolingFileSchema, ExamsFileSchema, JobsFileSchema, AssetsFileSchema, LeisureFileSchema, TierTermsFileSchema, type TierTermsFile, STAT_KEYS, SystemFileSchema, type SystemFile, TrungSinhFileSchema, type TrungSinhFile, ThanDaoFileSchema, type ThanDaoFile, ThienDaoKyFileSchema, type ThienDaoKyFile, type Ending, MORTAL_STATS, APTITUDES, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -67,6 +67,11 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'dock.json') return DockFileSchema;
     if (rest === 'relations.json') return RelationsFileSchema;
     if (rest === 'stat-labels.json') return StatLabelsFileSchema;
+    if (rest === 'schooling.json') return SchoolingFileSchema;
+    if (rest === 'exams.json') return ExamsFileSchema;
+    if (rest === 'jobs.json') return JobsFileSchema;
+    if (rest === 'assets.json') return AssetsFileSchema;
+    if (rest === 'leisure.json') return LeisureFileSchema;
     if (rest === 'thien-dao-ky.json') return ThienDaoKyFileSchema;
     if (rest === 'achievements.json') return AchievementFileSchema;
     return null;
@@ -135,7 +140,7 @@ export function tierTermWarnings(event: GameEvent, terms: TierTermsFile, lowest?
 }
 
 /** Flags the engine sets itself (not via events). */
-export const ENGINE_FLAGS = ['no_aging_charm', 'no_parents', 'no_father', 'no_mother', 'mua_hang_gia', 'vo_dao_nhap_tien', 'cao_nhan_vo_dao'];
+export const ENGINE_FLAGS = ['no_aging_charm', 'no_parents', 'no_father', 'no_mother', 'mua_hang_gia', 'vo_dao_nhap_tien', 'cao_nhan_vo_dao', 'moi_cuoi', 'da_tung_cuoi', 'goa_bua', 'tai_gia', 'boi_uoc', 'di_chuc', 'giau_ruong', 'buon_lau', 'lam_tru_no', 'nghien_bac'];
 /** Words naming a parent in event text, and the flag the engine sets once that parent is gone. */
 // "cha ta", "mẹ hắn", "yêu thú mẹ"… are someone else's parents (task 3.9), not the player's.
 const PARENT_WORDS = [
@@ -914,6 +919,122 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     });
   }
 
+  // 10.1: schools and trades named anywhere (effects, conditions) exist in schooling.json.
+  const schooling = files['schooling.json'] ? SchoolingFileSchema.safeParse(files['schooling.json']) : null;
+  if (schooling?.success) {
+    const schoolIds = schooling.data.schools.map((x) => x.id);
+    const tradeIds = schooling.data.trades.map((x) => x.id);
+    const walk = (file: string, o: unknown) => {
+      if (Array.isArray(o)) { for (const v of o) walk(file, v); return; }
+      if (!o || typeof o !== 'object') return;
+      const r = o as Record<string, unknown>;
+      if (typeof r.enrollSchool === 'string' && !schoolIds.includes(r.enrollSchool)) problems.push({ file, level: 'error', message: `trường lạ "${r.enrollSchool}"` });
+      if (typeof r.startTrade === 'string' && !tradeIds.includes(r.startTrade)) problems.push({ file, level: 'error', message: `nghề lạ "${r.startTrade}"` });
+      const sc = r.school as { at?: unknown } | undefined;
+      if (sc && typeof sc === 'object' && typeof sc.at === 'string' && !schoolIds.includes(sc.at)) problems.push({ file, level: 'error', message: `điều kiện trường lạ "${sc.at}"` });
+      const tr = r.trade as { id?: unknown } | undefined;
+      if (tr && typeof tr === 'object' && typeof tr.id === 'string' && !tradeIds.includes(tr.id)) problems.push({ file, level: 'error', message: `điều kiện nghề lạ "${tr.id}"` });
+      for (const v of Object.values(r)) walk(file, v);
+    };
+    for (const [file, raw] of Object.entries(files)) if (/events\/|activities\//.test(file)) walk(file, raw);
+  }
+
+  // 10.3: jobs name real groups and careers; takeJob and job conditions name real jobs and groups.
+  const jobsFile = files['jobs.json'] ? JobsFileSchema.safeParse(files['jobs.json']) : null;
+  if (jobsFile?.success) {
+    const groupIds = jobsFile.data.groups.map((g) => g.id);
+    const jobIds = jobsFile.data.jobs.map((j) => j.id);
+    const careersRaw = files['careers.json'] ? CareersFileSchema.safeParse(files['careers.json']) : null;
+    const careerIds = careersRaw?.success ? careersRaw.data.careers.map((c) => c.id) : undefined;
+    problems.push(...duplicates('jobs.json', 'nghề', jobsFile.data.jobs));
+    for (const j of jobsFile.data.jobs) {
+      if (!groupIds.includes(j.group)) problems.push({ file: 'jobs.json', level: 'error', message: `nghề "${j.id}": nhóm lạ "${j.group}"` });
+      if (j.peak && careerIds && !careerIds.includes(j.peak.career)) problems.push({ file: 'jobs.json', level: 'error', message: `nghề "${j.id}": đường đời lạ "${j.peak.career}"` });
+      if (j.pay.length > j.rungs.length) problems.push({ file: 'jobs.json', level: 'error', message: `nghề "${j.id}": nhiều mức lương hơn số bậc` });
+    }
+    const walkJob = (file: string, o: unknown) => {
+      if (Array.isArray(o)) { for (const v of o) walkJob(file, v); return; }
+      if (!o || typeof o !== 'object') return;
+      const r = o as Record<string, unknown>;
+      if (typeof r.takeJob === 'string' && !jobIds.includes(r.takeJob)) problems.push({ file, level: 'error', message: `nghề lạ "${r.takeJob}"` });
+      const jb = r.job as { id?: unknown; group?: unknown } | undefined;
+      if (jb && typeof jb === 'object' && typeof jb.id === 'string' && !jobIds.includes(jb.id)) problems.push({ file, level: 'error', message: `điều kiện nghề lạ "${jb.id}"` });
+      if (jb && typeof jb === 'object' && typeof jb.group === 'string' && !groupIds.includes(jb.group)) problems.push({ file, level: 'error', message: `điều kiện nhóm nghề lạ "${jb.group}"` });
+      for (const v of Object.values(r)) walkJob(file, v);
+    };
+    for (const [file, raw] of Object.entries(files)) if (/events\/|activities\//.test(file)) walkJob(file, raw);
+  }
+
+  // 10.4: effects and conditions name real assets, crops, ways of trading and loans.
+  const assetsFile = files['assets.json'] ? AssetsFileSchema.safeParse(files['assets.json']) : null;
+  if (assetsFile?.success) {
+    const a = assetsFile.data;
+    problems.push(...duplicates('assets.json', 'tài sản', a.assets));
+    const known: Record<string, string[]> = {
+      buyAsset: a.assets.map((x) => x.id), sellAsset: [...a.assets.map((x) => x.id), ...new Set(a.assets.map((x) => x.kind))], loseAsset: a.assets.map((x) => x.id),
+      sowCrop: a.crops.map((x) => x.id), shopStrategy: a.strategies.map((x) => x.id), borrow: a.loans.map((x) => x.id),
+    };
+    const walkAsset = (file: string, o: unknown) => {
+      if (Array.isArray(o)) { for (const v of o) walkAsset(file, v); return; }
+      if (!o || typeof o !== 'object') return;
+      const r = o as Record<string, unknown>;
+      for (const [k, list] of Object.entries(known)) if (typeof r[k] === 'string' && !list.includes(r[k] as string)) problems.push({ file, level: 'error', message: `${k}: id lạ "${r[k]}"` });
+      const as = r.asset as { id?: unknown } | undefined;
+      if (as && typeof as === 'object' && typeof as.id === 'string' && !known.buyAsset.includes(as.id)) problems.push({ file, level: 'error', message: `điều kiện tài sản lạ "${as.id}"` });
+      for (const v of Object.values(r)) walkAsset(file, v);
+    };
+    for (const [file, raw] of Object.entries(files)) if (/events\/|activities\//.test(file)) walkAsset(file, raw);
+  }
+
+  // 10.7: festivals, arts and pets named in conditions and effects exist.
+  const leisureFile = files['leisure.json'] ? LeisureFileSchema.safeParse(files['leisure.json']) : null;
+  if (leisureFile?.success) {
+    const l = leisureFile.data;
+    problems.push(...duplicates('leisure.json', 'lễ hội', l.festivals), ...duplicates('leisure.json', 'thú nuôi', l.pets));
+    const fest = l.festivals.map((x) => x.id), arts = l.arts.map((x) => x.id), pets = l.pets.map((x) => x.id);
+    const walkLeisure = (file: string, o: unknown) => {
+      if (Array.isArray(o)) { for (const v of o) walkLeisure(file, v); return; }
+      if (!o || typeof o !== 'object') return;
+      const r = o as Record<string, unknown>;
+      const bad = (what: string, v: unknown, list: string[]) => { if (typeof v === 'string' && !list.includes(v)) problems.push({ file, level: 'error', message: `${what} lạ "${v}"` }); };
+      if (Array.isArray(r.festival)) for (const f of r.festival) bad('lễ hội', f, fest);
+      bad('thú nuôi', r.adoptPet, pets);
+      if (r.pet && typeof r.pet === 'object') bad('thú nuôi', (r.pet as { id?: unknown }).id, pets);
+      if (r.art && typeof r.art === 'object') {
+        const a = r.art as Record<string, unknown>;
+        if (typeof a.id === 'string') bad('tài nghệ', a.id, arts);
+        else for (const k of Object.keys(a)) bad('tài nghệ', k, arts);
+      }
+      for (const v of Object.values(r)) walkLeisure(file, v);
+    };
+    for (const [file, raw] of Object.entries(files)) if (/events\/|activities\//.test(file)) walkLeisure(file, raw);
+  }
+
+  // 10.2: exams.json and balance.exams name the same levels, approaches and placings; conditions and careers name real levels.
+  const exams = files['exams.json'] ? ExamsFileSchema.safeParse(files['exams.json']) : null;
+  const examCfg = parsedShared.balance?.exams;
+  if (exams?.success && examCfg) {
+    const levelIds = exams.data.levels.map((l) => l.id);
+    const same = (what: string, a: string[], b: string[]) => {
+      for (const x of a) if (!b.includes(x)) problems.push({ file: 'exams.json', level: 'error', message: `${what} "${x}" có trong exams.json mà thiếu trong balance.exams` });
+      for (const x of b) if (!a.includes(x)) problems.push({ file: 'config/balance.json', level: 'error', message: `${what} "${x}" có trong balance.exams mà thiếu trong exams.json` });
+    };
+    same('khoa thi', levelIds, Object.keys(examCfg.levels));
+    same('cách làm bài', exams.data.approaches.map((a) => a.id), Object.keys(examCfg.approaches));
+    same('thứ hạng', exams.data.placings.map((p) => p.id), examCfg.placings.map((p) => p.id));
+    for (const inc of exams.data.incidents) for (const l of inc.levels) if (!levelIds.includes(l)) problems.push({ file: 'exams.json', level: 'error', message: `sự cố "${inc.id}" nhắc khoa thi lạ "${l}"` });
+    const walkExam = (file: string, o: unknown) => {
+      if (Array.isArray(o)) { for (const v of o) walkExam(file, v); return; }
+      if (!o || typeof o !== 'object') return;
+      const r = o as Record<string, unknown>;
+      const ex = r.exam as { passed?: unknown; notPassed?: unknown } | undefined;
+      for (const l of [ex?.passed, ex?.notPassed]) if (ex && typeof ex === 'object' && typeof l === 'string' && !levelIds.includes(l)) problems.push({ file, level: 'error', message: `điều kiện khoa thi lạ "${l}"` });
+      const rq = r.requires as { examRank?: unknown } | undefined;
+      if (rq && typeof rq === 'object' && typeof rq.examRank === 'string' && !levelIds.includes(rq.examRank)) problems.push({ file, level: 'error', message: `đường đời đòi khoa thi lạ "${rq.examRank}"` });
+      for (const v of Object.values(r)) walkExam(file, v);
+    };
+    for (const [file, raw] of Object.entries(files)) if (/events\/|activities\/|careers\.json/.test(file)) walkExam(file, raw);
+  }
   return problems;
 }
 

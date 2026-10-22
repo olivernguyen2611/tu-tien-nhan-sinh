@@ -117,80 +117,6 @@
     ]
   },
   {
-    "id": "thi_huong",
-    "category": "mortal",
-    "title": "Thi Hương",
-    "text": "Kỳ thi ở phủ, ba ngày nhốt trong lều thi chật như lồng gà.",
-    "conditions": {
-      "age": {
-        "min": 17,
-        "max": 35
-      },
-      "career": {
-        "id": "quan",
-        "maxRung": 0
-      },
-      "flagsAll": [
-        "tu_tai"
-      ]
-    },
-    "weight": 6,
-    "cooldownYears": 3,
-    "choices": [
-      {
-        "text": "Dốc sức",
-        "check": {
-          "stat": "stat.intellect",
-          "difficulty": 65
-        },
-        "success": {
-          "text": "Cử nhân! Cả họ mở tiệc.",
-          "effects": {
-            "careerPromote": true,
-            "reputation": {
-              "trieu_dinh": 10
-            },
-            "stat.happiness": 10
-          }
-        },
-        "fail": {
-          "text": "Trượt. Ba năm nữa thi lại.",
-          "effects": {
-            "stat.happiness": -8
-          }
-        }
-      },
-      {
-        "text": "Viết thẳng về tệ nạn quan trường",
-        "check": {
-          "stat": "stat.intellect",
-          "difficulty": 75
-        },
-        "success": {
-          "text": "Quan chủ khảo đỏ mặt, nhưng không dám đánh trượt.",
-          "effects": {
-            "careerPromote": true,
-            "karma": 3,
-            "setFlags": [
-              "thanh_quan"
-            ],
-            "stat.daoHeart": 5
-          }
-        },
-        "fail": {
-          "text": "Bài bị đánh dấu \"cuồng sĩ\".",
-          "effects": {
-            "reputation": {
-              "trieu_dinh": -10
-            },
-            "stat.happiness": -8,
-            "stat.daoHeart": 3
-          }
-        }
-      }
-    ]
-  },
-  {
     "id": "an_oan_o_huyen",
     "category": "mortal",
     "title": "Án oan ở huyện",
@@ -201,7 +127,7 @@
     "conditions": {
       "career": {
         "id": "quan",
-        "minRung": 2
+        "minRung": 1
       }
     },
     "weight": 4,

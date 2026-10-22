@@ -1,5 +1,10 @@
 // EventEngine (PLAN.md task 1.5): each year pick at most one event, the player
 // chooses, the outcome is applied. Pure functions over GameState + Content.
+import { addGrade, addTradeLevel, enrollSchool, leaveSchool, startTrade } from '../schooling';
+import { beginExam } from '../exams';
+import { addPerf, promoteJob, quitJob, takeJob } from '../jobs';
+import { addArt, adoptPet, castOmen, noteGamble, omenMul } from '../leisure';
+import { borrow, buyAsset, loseAsset, repayDebts, sellAsset, setStrategy, sowCrop } from '../assets';
 import { ordinaryAptitude, ordinaryStat } from '../aptitudeGain';
 import type { Content } from '../../core/content';
 import { Rng } from '../../core/rng';
@@ -72,6 +77,8 @@ export function eventWeight(state: GameState, content: Content, event: GameEvent
   // Playtest 2026-10-12: each time it already happened this life, it grows rarer.
   const seen = state.events.seen?.[event.id] ?? (last !== undefined ? 1 : 0);
   if (seen > 0) w *= content.balance.events.repeatDecay ** seen;
+  // 10.7: what a quẻ named comes more readily.
+  w *= omenMul(state, content, event.id);
   return Math.max(0, w);
 }
 
@@ -362,19 +369,21 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   let next = state;
   // Task 3.4: someone new becomes the event's NPC; then the ledger changes for that NPC.
   if (fx.meetNpc) {
-    const { role, kind, realm, stage, root, affinity, favor, grudge, peer } = fx.meetNpc;
+    const { role, kind, realm, stage, root, affinity, favor, grudge, peer, opposite } = fx.meetNpc;
     // Someone met to be courted, wed, or in a mature event is always of age (PLAN H).
-    const minAge = fx.romance?.pursue || fx.romance?.marry || fx.meetNpc.adult ? content.balance.romance.minAge : undefined;
+    const minAge = fx.romance?.pursue || fx.romance?.marry || fx.romance?.concubine || fx.meetNpc.adult ? content.balance.romance.minAge : undefined;
     // Playtest 2: someone to court is of the player's generation, not 10–15 years older.
     const peerAge = peer || !!fx.romance?.pursue || !!fx.romance?.marry;
-    const met = createNpc(next, content, { role, kind, realm, stage, root, minAge, peer: peerAge, affinity: affinity === undefined ? undefined : 50 + affinity, favor, grudge });
+    const gender = opposite ? (next.character.gender === 'nam' ? 'nu' : 'nam') : undefined;
+    const met = createNpc(next, content, { role, kind, realm, stage, root, minAge, peer: peerAge, gender, affinity: affinity === undefined ? undefined : 50 + affinity, favor, grudge });
     next = { ...met.state, events: { ...met.state.events, npc: met.id } };
   }
   const npcId = next.events.npc;
   if (fx.romance) next = applyRomance(next, content, npcId, fx.romance);
   if (fx.npc && npcId) {
-    const { affinity, favor, grudge, reveal, kill, role } = fx.npc;
+    const { affinity, favor, grudge, reveal, kill, role, sworn } = fx.npc;
     next = changeNpc(next, content, npcId, { affinity, favor, grudge, reveal });
+    if (sworn) next = { ...next, npcs: next.npcs.map((n) => (n.id === npcId ? { ...n, sworn: next.character.age, kind: 'huynh_de' } : n)) };
     if (role) next = { ...next, npcs: next.npcs.map((n) => (n.id === npcId ? { ...n, role } : n)) };
     if (kill) next = killNpc(next, content, npcId);
   }
@@ -470,6 +479,32 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
     if (parent) next = { ...next, family: next.family.map((r) => (r.id === parent.id ? { ...r, lifespan: r.age + 1 } : r)) };
   }
   if (fx.martialYears) next = addMartialYears(next, fx.martialYears);
+  // 10.1 Học đường, học nghề.
+  if (fx.enrollSchool) next = enrollSchool(next, content, fx.enrollSchool);
+  if (fx.leaveSchool) next = leaveSchool(next);
+  if (fx.grade) next = addGrade(next, fx.grade);
+  if (fx.startTrade) next = startTrade(next, content, fx.startTrade);
+  if (fx.tradeLevel) next = addTradeLevel(next, content, fx.tradeLevel);
+  // 10.2: lều chõng đi thi (the trường thi card opens).
+  if (fx.sitExam) next = beginExam(next, content);
+  // 10.3 Việc làm.
+  if (fx.quitJob) next = quitJob(next, content, fx.quitJob);
+  if (fx.takeJob) next = takeJob(next, content, fx.takeJob)?.state ?? next;
+  if (fx.perf) next = addPerf(next, fx.perf);
+  if (fx.jobPromote) next = promoteJob(next, content);
+  // 10.4 Tài sản.
+  if (fx.sellAsset) next = sellAsset(next, content, fx.sellAsset)?.state ?? next;
+  if (fx.buyAsset) next = buyAsset(next, content, fx.buyAsset)?.state ?? next;
+  if (fx.loseAsset) next = loseAsset(next, content, fx.loseAsset);
+  if (fx.shopStrategy) next = setStrategy(next, content, fx.shopStrategy);
+  if (fx.sowCrop) next = sowCrop(next, content, fx.sowCrop);
+  if (fx.borrow) next = borrow(next, content, fx.borrow)?.state ?? next;
+  if (fx.repayDebts) next = repayDebts(next, content)?.state ?? next;
+  // 10.7 Giải trí.
+  if (fx.art) next = addArt(next, content, fx.art);
+  if (fx.adoptPet) next = adoptPet(next, content, fx.adoptPet);
+  if (fx.gambled) next = noteGamble(next);
+  if (fx.omen) next = castOmen(next, content);
   if (fx.martialBonus) next = { ...next, martial: { ...next.martial, bonus: next.martial.bonus + fx.martialBonus } };
   if (fx.martialPromote) next = martialPromote(next, content);
   if (fx.martialAscend) next = martialAscend(next, content);

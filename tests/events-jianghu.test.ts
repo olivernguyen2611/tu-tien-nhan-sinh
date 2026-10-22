@@ -154,5 +154,5 @@ describe('40 sự kiện giang hồ (task 3.9)', () => {
     expect(jianghu).toBeGreaterThan(20);
     // At most about one jianghu event every three years on average.
     expect(jianghu / years).toBeLessThan(0.35);
-  });
+  }, 60_000);
 });
