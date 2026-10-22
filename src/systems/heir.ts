@@ -35,8 +35,10 @@ export function heirOptions(state: GameState, content: Content): HeirOption[] {
   const min = content.balance.heir.minAge;
   const children = state.family.filter((r) => r.role === 'child' && r.alive && r.age >= min).map((r) => ({
     kind: 'child' as const, id: r.id, name: r.name, age: r.age,
-    label: [r.gender === 'nam' ? 'Con trai' : 'Con gái', childRootLabel(content, r)].filter(Boolean).join(' · '),
+    label: [r.gender === 'nam' ? 'Con trai' : 'Con gái', childRootLabel(content, r), r.id === state.kin?.heir ? 'Người nối dõi' : ''].filter(Boolean).join(' · '),
   }));
+  // 10.11: the chosen người nối dõi comes first.
+  children.sort((a, b) => (b.id === state.kin?.heir ? 1 : 0) - (a.id === state.kin?.heir ? 1 : 0));
   const disciples = state.npcs.filter((n) => n.alive && n.disciple && n.age >= min).map((n) => ({
     kind: 'disciple' as const, id: n.id, name: n.name, age: n.age,
     label: `Đồ đệ · ${realmLabel(content, n.realm, n.stage)}`,

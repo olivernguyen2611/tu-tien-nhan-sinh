@@ -8,6 +8,14 @@
 
 ## [Chưa phát hành]
 
+### 10.11 Gia tộc phàm tục (2026-10-22)
+- Sinh ra trong một họ, không chỉ một nhà: lên 6 tuổi được ra mắt họ hàng ở từ đường. Tộc trưởng và 3–5 người họ nội, họ ngoại (chú, bác, cô, cậu, dì, anh chị em họ) là người quen thật, nằm trong nhóm "Họ hàng" (`content/kin.json`).
+- Gia phả ba đời trở lên trong hồ sơ: ông bà (hoặc tiên tổ ở các đời trước của dòng), cha mẹ, bản thân, con cái; người nối dõi được ghi rõ.
+- Phân gia năm sau khi cha mất, nếu còn anh chị em: chia đều, giành phần trưởng (được nhiều, anh em nguội lòng), hoặc nhường hết đi xa lập nghiệp (anh em quý, thêm nghiệp lành).
+- Làm chủ một nhà: lập gia quy (cần kiệm, hiếu học, thượng võ, tích thiện, hòa thuận; mỗi năm nhích chỉ số một chút), tế tổ, tu sửa từ đường, đi họp họ, chọn người nối dõi (con trưởng, đứa giỏi nhất, đứa hiếu thảo nhất; người được chọn đứng đầu danh sách người kế thừa).
+- Sự kiện: con chính con thứ tranh gia sản (có thê thiếp), con bất hiếu, người trong họ làm nhục gia môn, họ hàng hỏi vay, anh em họ rủ làm ăn, tộc trưởng gọi lên dặn dò, dì cậu mai mối, đám giỗ họ.
+- 10 sự kiện (`gia-toc.json`), 5 hoạt động (`activities/gia-toc.json`). Điều kiện `kin`; hiệu ứng `shareEstate`, `chooseHeir`, `kinRule`, `worship`, `repairShrine`, `childrenAffinity`; số cân bằng ở `balance.kin`. Đời cũ (save cũ) gặp họ hàng ở năm kế tiếp.
+
 ### 10.10 Ra đi và kết đời phàm (2026-10-22)
 - Chuyển nhà sang châu khác (mục Bản thân): người quen cũ nhạt tình (trừ người bên gối), đời thành tha hương; ở đất mới có hàng xóm mới, về già có lúc nhớ quê và về thăm.
 - Tang lễ khi cha hoặc mẹ mất: làm lớn cho trọn đạo hiếu, vừa phải, hoặc giản dị thờ tại tâm (bạc, tiếng trong làng, Hạnh phúc, Đạo tâm).

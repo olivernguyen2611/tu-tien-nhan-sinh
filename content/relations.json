@@ -21,6 +21,10 @@
       "name": "Tông môn"
     },
     {
+      "id": "ho_hang",
+      "name": "Họ hàng"
+    },
+    {
       "id": "khac",
       "name": "Người quen khác"
     }
@@ -158,6 +162,38 @@
       "group": "khac",
       "roles": [
         "người quen"
+      ]
+    },
+    {
+      "id": "toc_truong",
+      "name": "Tộc trưởng",
+      "group": "ho_hang",
+      "roles": [
+        "tộc trưởng"
+      ]
+    },
+    {
+      "id": "ho_noi",
+      "name": "Họ nội",
+      "group": "ho_hang",
+      "roles": [
+        "chú",
+        "bác",
+        "cô",
+        "anh họ",
+        "chị họ",
+        "em họ"
+      ]
+    },
+    {
+      "id": "ho_ngoai",
+      "name": "Họ ngoại",
+      "group": "ho_hang",
+      "roles": [
+        "cậu",
+        "dì",
+        "anh họ bên ngoại",
+        "chị họ bên ngoại"
       ]
     }
   ],

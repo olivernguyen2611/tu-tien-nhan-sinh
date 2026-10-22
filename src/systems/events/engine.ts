@@ -7,6 +7,7 @@ import { addArt, adoptPet, castOmen, noteGamble, omenMul } from '../leisure';
 import { catchDisease, cureAilment, injure, noteDrink } from '../health';
 import { addJailYears, addWanted, arrest, bribe, commitCrime, fleeLaw, imprison, sentence, tryEscape } from '../law';
 import { checkDeath } from '../time';
+import { childrenAffinity, chooseHeir, repairShrine, setRule, shareEstate, worship } from '../kin';
 import { borrow, buyAsset, loseAsset, repayDebts, sellAsset, setStrategy, sowCrop } from '../assets';
 import { ordinaryAptitude, ordinaryStat } from '../aptitudeGain';
 import type { Content } from '../../core/content';
@@ -530,6 +531,13 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.fleeLaw) next = fleeLaw(next, content);
   if (fx.arrest) next = arrest(next, content);
   if (fx.sentence) next = sentence(next, content);
+  // 10.11 Gia tộc.
+  if (fx.shareEstate) next = shareEstate(next, content, fx.shareEstate);
+  if (fx.chooseHeir) next = chooseHeir(next, content, fx.chooseHeir);
+  if (fx.kinRule) next = setRule(next, content, fx.kinRule);
+  if (fx.worship) next = worship(next);
+  if (fx.repairShrine) next = repairShrine(next, content);
+  if (fx.childrenAffinity) next = childrenAffinity(next, fx.childrenAffinity);
   // 10.10: moving far: old acquaintances (not family) cool, the life is tha hương.
   if (fx.moveHome) {
     const d = content.balance.leaving?.moveAffinity ?? 0;

@@ -4,7 +4,7 @@
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
 import { KY_KEYS } from '../systems/thienDaoKy';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, SpecialOriginFileSchema, type SpecialOrigin, ActivityFileSchema, type Activity, DockFileSchema, type DockButton, WorldStateFileSchema, type WorldStateFile, RelationsFileSchema, type RelationsFile, StatLabelsFileSchema, SchoolingFileSchema, ExamsFileSchema, JobsFileSchema, AssetsFileSchema, LeisureFileSchema, HealthFileSchema, CrimesFileSchema, TierTermsFileSchema, type TierTermsFile, STAT_KEYS, SystemFileSchema, type SystemFile, TrungSinhFileSchema, type TrungSinhFile, ThanDaoFileSchema, type ThanDaoFile, ThienDaoKyFileSchema, type ThienDaoKyFile, type Ending, MORTAL_STATS, APTITUDES, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, SpecialOriginFileSchema, type SpecialOrigin, ActivityFileSchema, type Activity, DockFileSchema, type DockButton, WorldStateFileSchema, type WorldStateFile, RelationsFileSchema, type RelationsFile, StatLabelsFileSchema, SchoolingFileSchema, ExamsFileSchema, JobsFileSchema, AssetsFileSchema, LeisureFileSchema, HealthFileSchema, CrimesFileSchema, KinFileSchema, TierTermsFileSchema, type TierTermsFile, STAT_KEYS, SystemFileSchema, type SystemFile, TrungSinhFileSchema, type TrungSinhFile, ThanDaoFileSchema, type ThanDaoFile, ThienDaoKyFileSchema, type ThienDaoKyFile, type Ending, MORTAL_STATS, APTITUDES, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -74,6 +74,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'leisure.json') return LeisureFileSchema;
     if (rest === 'health.json') return HealthFileSchema;
     if (rest === 'crimes.json') return CrimesFileSchema;
+    if (rest === 'kin.json') return KinFileSchema;
     if (rest === 'thien-dao-ky.json') return ThienDaoKyFileSchema;
     if (rest === 'achievements.json') return AchievementFileSchema;
     return null;
@@ -142,7 +143,7 @@ export function tierTermWarnings(event: GameEvent, terms: TierTermsFile, lowest?
 }
 
 /** Flags the engine sets itself (not via events). */
-export const ENGINE_FLAGS = ['no_aging_charm', 'no_parents', 'no_father', 'no_mother', 'mua_hang_gia', 'vo_dao_nhap_tien', 'cao_nhan_vo_dao', 'moi_cuoi', 'da_tung_cuoi', 'goa_bua', 'tai_gia', 'boi_uoc', 'di_chuc', 'giau_ruong', 'buon_lau', 'lam_tru_no', 'nghien_bac', 'nghien_ruou', 'da_cai_ruou', 'tien_an', 'vuot_nguc', 'tha_huong'];
+export const ENGINE_FLAGS = ['no_aging_charm', 'no_parents', 'no_father', 'no_mother', 'mua_hang_gia', 'vo_dao_nhap_tien', 'cao_nhan_vo_dao', 'moi_cuoi', 'da_tung_cuoi', 'goa_bua', 'tai_gia', 'boi_uoc', 'di_chuc', 'giau_ruong', 'buon_lau', 'lam_tru_no', 'nghien_bac', 'nghien_ruou', 'da_cai_ruou', 'tien_an', 'vuot_nguc', 'tha_huong', 'tu_tai_gia'];
 /** Words naming a parent in event text, and the flag the engine sets once that parent is gone. */
 // "cha ta", "mẹ hắn", "yêu thú mẹ"… are someone else's parents (task 3.9), not the player's.
 const PARENT_WORDS = [
@@ -1019,6 +1020,9 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   const crimesFile = files['crimes.json'] ? CrimesFileSchema.safeParse(files['crimes.json']) : null;
   const crimeIds = crimesFile?.success ? crimesFile.data.crimes.map((c) => c.id) : null;
   if (crimesFile?.success) problems.push(...duplicates('crimes.json', 'tội danh', crimesFile.data.crimes));
+  const kinFile = files['kin.json'] ? KinFileSchema.safeParse(files['kin.json']) : null;
+  const kinRules = kinFile?.success ? kinFile.data.rules.map((r) => r.id) : null;
+  if (kinFile?.success) problems.push(...duplicates('kin.json', 'gia quy', kinFile.data.rules));
   const healthFile = files['health.json'] ? HealthFileSchema.safeParse(files['health.json']) : null;
   if (healthFile?.success) {
     const h = healthFile.data;
@@ -1032,6 +1036,7 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       bad('bệnh', r.catchDisease, dis);
       bad('thương tật', r.injure, inj);
       if (crimeIds) bad('tội danh', r.crime, crimeIds);
+      if (kinRules) bad('gia quy', r.kinRule, kinRules);
       if (r.ailment && typeof r.ailment === 'object') bad('bệnh', (r.ailment as { id?: unknown }).id, dis);
       if (r.injury && typeof r.injury === 'object') bad('thương tật', (r.injury as { id?: unknown }).id, inj);
       for (const v of Object.values(r)) walkHealth(file, v);

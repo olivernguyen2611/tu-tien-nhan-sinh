@@ -85,6 +85,11 @@ const BaseConditionsSchema = z
     /** 10.8 Sức khỏe: has a bệnh (this one / any / a lây one); has a thương tật (this one / any). */
     ailment: z.object({ id: id.optional(), any: z.boolean().optional(), contagious: z.boolean().optional() }).strict().optional(),
     injury: z.object({ id: id.optional(), any: z.boolean().optional() }).strict().optional(),
+    /** 10.11 Gia tộc: phân gia done; a người nối dõi chosen; từ đường at least; this gia quy kept; tế tổ times; living siblings. */
+    kin: z.object({
+      split: z.boolean().optional(), heir: z.boolean().optional(), shrineMin: z.number().int().optional(),
+      rule: id.optional(), ritesMin: z.number().int().optional(), siblings: z.boolean().optional(), met: z.boolean().optional(),
+    }).strict().optional(),
     /** 10.9 Phạm pháp: mức truy nã, in ngục, đang hầu tòa, có tiền án, số lần vượt ngục. */
     law: z.object({
       wantedMin: z.number().int().optional(), wantedMax: z.number().int().optional(), jailed: z.boolean().optional(),
@@ -325,6 +330,14 @@ export const EffectsSchema = z
     wanted: z.number().int().optional(),
     fleeLaw: z.boolean().optional(),
     arrest: z.boolean().optional(),
+    /** 10.11 Gia tộc: phân gia (how the estate is shared), chọn người nối dõi, lập gia quy, tế tổ, tu sửa từ đường,
+     *  every living child's affinity ±. */
+    shareEstate: z.enum(['equal', 'eldest', 'yield']).optional(),
+    chooseHeir: z.enum(['eldest', 'ablest', 'filial']).optional(),
+    kinRule: id.optional(),
+    worship: z.boolean().optional(),
+    repairShrine: z.boolean().optional(),
+    childrenAffinity: z.number().optional(),
     /** 10.10: move to a far châu (old acquaintances cool, flag tha_huong). */
     moveHome: z.boolean().optional(),
     /** 10.9–10.10: this life ends now, this way. */
@@ -432,7 +445,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1749,6 +1762,16 @@ export const BalanceSchema = z
       })
       .strict()
       .optional(),
+    /** 10.11 Gia tộc phàm tục: the họ is met at meetAge; how many họ hàng; the estate a father leaves [min, max] and
+     *  the eldest's share when he takes it; siblings' affinity by the way it is shared; karma for giving it all away. */
+    kin: z.object({
+      meetAge: z.number().int(), relatives: z.tuple([z.number().int(), z.number().int()]), affinity: z.tuple([z.number(), z.number()]), elderAffinity: z.number(),
+      estate: z.tuple([z.number().int(), z.number().int()]), eldestShare: z.number(),
+      siblingAffinity: z.object({ equal: z.number(), eldest: z.number(), yield: z.number() }).strict(), yieldKarma: z.number(),
+      passedOver: z.number(), maxRules: z.number().int().min(1), shrineMax: z.number().int().min(1),
+      /** The phân gia event, the year after the father dies (when siblings live). */
+      splitEvent: z.string(),
+    }).strict().optional(),
     /** 10.10 Ra đi và kết đời phàm: moving far cools old ties; the age a quy ẩn opens; tang lễ events by the parent who died. */
     leaving: z.object({ moveAffinity: z.number(), hermitAge: z.number().int(), funeralAge: z.number().int(), funeralEvents: z.record(z.string()) }).strict().optional(),
     /** 10.9 Phạm pháp: bộ khoái, công đường, ngục. */
@@ -3237,6 +3260,27 @@ export const CrimesFileSchema = z.object({
   }).strict(),
 }).strict();
 export type CrimesFile = z.infer<typeof CrimesFileSchema>;
+
+/** 10.11 Gia tộc phàm tục (content/kin.json): tộc trưởng, họ hàng, forebears in the gia phả, gia quy, lời văn. */
+export const KinFileSchema = z.object({
+  elder: z.object({ role: z.string().min(1), kind: id, ageOffset: z.tuple([z.number().int(), z.number().int()]) }).strict(),
+  relatives: z.array(z.object({ role: z.string().min(1), kind: id, paternal: z.boolean(), ageOffset: z.tuple([z.number().int(), z.number().int()]) }).strict()).min(1),
+  forebears: z.array(z.object({ role: z.string().min(1), gender: z.enum(['nam', 'nu']), paternal: z.boolean() }).strict()).min(1),
+  /** Yearly stats (stat. keys) while the rule is kept. */
+  rules: z.array(z.object({ id, name: z.string().min(1), text: z.string().min(1), stats: z.record(z.number()).default({}) }).strict()).min(1),
+  texts: z.object({
+    /** {elder}, {count}. */
+    met: z.string().min(1),
+    /** {silver}, {pot}. */
+    split: z.object({ equal: z.string().min(1), eldest: z.string().min(1), yield: z.string().min(1) }).strict(),
+    /** {child}. */
+    heir: z.string().min(1), noHeir: z.string().min(1),
+    /** {rule}, {text}. */
+    rule: z.string().min(1),
+    ancestors: z.string().min(1), forebears: z.string().min(1), parents: z.string().min(1), self: z.string().min(1), children: z.string().min(1),
+  }).strict(),
+}).strict();
+export type KinFile = z.infer<typeof KinFileSchema>;
 
 export const RelationsFileSchema = z.object({
   groups: z.array(z.object({ id, name: z.string().min(1) }).strict()).min(1),

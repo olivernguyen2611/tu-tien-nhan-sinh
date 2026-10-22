@@ -151,6 +151,11 @@ export function ageFamily(state: GameState, content: Content): GameState {
   const after = content.balance.leaving && state.character.age >= content.balance.leaving.funeralAge
     ? funerals.map((role) => ({ event: content.balance.leaving!.funeralEvents[role], atAge: state.character.age })).filter((f) => !!f.event)
     : [];
+  // 10.11: the year after the father dies, the phân gia (when brothers and sisters live).
+  const split = content.balance.kin?.splitEvent;
+  if (split && funerals.includes('father') && !state.kin?.split && family.some((r) => r.role === 'sibling' && r.alive) && state.character.age >= (content.balance.leaving?.funeralAge ?? 0)) {
+    after.push({ event: split, atAge: state.character.age + 1 });
+  }
   const events = after.length ? { ...state.events, followUps: [...state.events.followUps, ...after] } : state.events;
   return { ...state, rng: rng.getState(), family, flags, events, stats: { ...state.stats, happiness: clamp(happiness) }, aptitudes: { ...state.aptitudes, daoHeart }, log };
 }

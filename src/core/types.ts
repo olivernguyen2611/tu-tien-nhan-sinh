@@ -131,6 +131,12 @@ export interface GameState {
   /** 10.4 Tài sản: what the life owns (uid = its own number), debts (owed grows by the loan's rate), the crop sown this year, the next uid. */
   assets?: { owned: OwnedAsset[]; loans: Loan[]; crop: string | null; nextUid: number };
   /** 10.7 Giải trí: this year's lễ hội, tài nghệ (0–100), pets, ages at the sòng bạc (recent), the event a quẻ named and until when. */
+  /** 10.11 Gia tộc phàm tục: tộc trưởng, họ hàng (NPC ids), forebears for the gia phả, phân gia done, người nối dõi,
+   *  gia quy, từ đường level, tế tổ times. */
+  kin?: {
+    elder: string | null; relatives: string[]; forebears: { role: string; name: string }[]; split: boolean;
+    heir: string | null; rules: string[]; shrine: number; rites: number;
+  };
   /** 10.9 Phạm pháp: mức truy nã, ngục (ra ngục năm until), đang hầu tòa, tiền án, vượt ngục, the last crime. */
   law?: {
     wanted: number; jail: { until: number; crime: string } | null; trial: { crime: string; score: number } | null;

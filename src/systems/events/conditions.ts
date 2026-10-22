@@ -153,6 +153,16 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
       && (!c.ailment!.contagious || (content?.health?.diseases.find((d) => d.id === a.id)?.contagious ?? false)));
     if (has !== (c.ailment.any ?? true)) return false;
   }
+  if (c.kin) {
+    const k = state.kin;
+    if (c.kin.met !== undefined && !!k !== c.kin.met) return false;
+    if (c.kin.split !== undefined && (k?.split ?? false) !== c.kin.split) return false;
+    if (c.kin.heir !== undefined && !!k?.heir !== c.kin.heir) return false;
+    if (c.kin.shrineMin !== undefined && (k?.shrine ?? 0) < c.kin.shrineMin) return false;
+    if (c.kin.rule !== undefined && !(k?.rules ?? []).includes(c.kin.rule)) return false;
+    if (c.kin.ritesMin !== undefined && (k?.rites ?? 0) < c.kin.ritesMin) return false;
+    if (c.kin.siblings !== undefined && state.family.some((r) => r.role === 'sibling' && r.alive) !== c.kin.siblings) return false;
+  }
   if (c.law) {
     const l = state.law;
     const wanted = l?.wanted ?? 0;

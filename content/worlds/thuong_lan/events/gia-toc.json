@@ -1,0 +1,616 @@
+[
+ {
+  "id": "gt_phan_gia",
+  "category": "family",
+  "title": "Phân gia",
+  "text": "Tang lễ xong, anh chị em ngồi lại quanh chiếc rương gỗ đựng giấy tờ ruộng đất. Ai cũng im lặng, chờ người khác mở lời.",
+  "themes": [
+   "family"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Chia đều cho anh chị em",
+    "result": {
+     "text": "Ngươi đề nghị chia đều. Mọi người thở phào. Tộc trưởng gật đầu: \"Thế là phải.\"",
+     "effects": {
+      "shareEstate": "equal",
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Giành phần trưởng",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 45
+    },
+    "success": {
+     "text": "Ngươi viện lệ \"con trưởng giữ hương hỏa\", lấy phần lớn. Có người cãi, rồi im.",
+     "effects": {
+      "shareEstate": "eldest",
+      "stat.happiness": -1
+     }
+    },
+    "fail": {
+     "text": "Ngươi đòi phần lớn, cả nhà lời qua tiếng lại. Cuối cùng vẫn lấy được, nhưng tình anh em sứt mẻ.",
+     "effects": {
+      "shareEstate": "eldest",
+      "stat.happiness": -4
+     }
+    }
+   },
+   {
+    "text": "Nhường hết, đi xa lập nghiệp",
+    "result": {
+     "text": "Ngươi đứng dậy: \"Phần của ta, để lại cho các em.\" Rồi khoác tay nải lên vai ra đi.",
+     "effects": {
+      "shareEstate": "yield",
+      "stat.daoHeart": 3,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "gt_lap_gia_quy",
+  "category": "family",
+  "title": "Lập gia quy",
+  "text": "Tấm biển gỗ đã bào nhẵn, chỉ chờ chữ. Nhà này sẽ giữ phép gì?",
+  "themes": [
+   "family"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Cần kiệm",
+    "result": {
+     "text": "\"Cần kiệm\". Hai chữ ấy treo giữa nhà.",
+     "effects": {
+      "kinRule": "can_kiem",
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Hiếu học",
+    "result": {
+     "text": "\"Hiếu học\". Con cháu nhà này phải biết chữ.",
+     "effects": {
+      "kinRule": "hieu_hoc",
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Thượng võ",
+    "result": {
+     "text": "\"Thượng võ\". Sân nhà từ nay sáng nào cũng có tiếng hô.",
+     "effects": {
+      "kinRule": "thuong_vo",
+      "stat.physique": 1
+     }
+    }
+   },
+   {
+    "text": "Tích thiện",
+    "result": {
+     "text": "\"Tích thiện\". Đời mình không hưởng thì để phúc cho con cháu.",
+     "effects": {
+      "kinRule": "tich_thien",
+      "karma": 2,
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Hòa thuận",
+    "result": {
+     "text": "\"Hòa thuận\". Anh em một nhà, đừng để người ngoài cười.",
+     "effects": {
+      "kinRule": "hoa_thuan",
+      "stat.happiness": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "gt_chon_noi_doi",
+  "category": "family",
+  "title": "Chọn người nối dõi",
+  "text": "Ngươi gọi các con tới trước bàn thờ tổ tiên. Chúng đứng thành hàng, đứa nào cũng cúi đầu.",
+  "themes": [
+   "family"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Con trưởng, theo lệ",
+    "result": {
+     "text": "Đúng phép xưa nay, con trưởng giữ hương hỏa.",
+     "effects": {
+      "chooseHeir": "eldest",
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Đứa giỏi giang nhất",
+    "result": {
+     "text": "Ngươi chọn đứa có tài nhất, mặc ai nói gì.",
+     "effects": {
+      "chooseHeir": "ablest",
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Đứa hiếu thảo nhất",
+    "result": {
+     "text": "Tài có thể học, hiếu thì không. Ngươi chọn đứa biết thương người nhất.",
+     "effects": {
+      "chooseHeir": "filial",
+      "stat.happiness": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "gt_tranh_gia_san",
+  "category": "family",
+  "title": "Con chính con thứ",
+  "text": "Ngươi đã già. Con của chính thất và con của thiếp bắt đầu không nhìn mặt nhau. Ai cũng sợ gia sản về tay người kia.",
+  "themes": [
+   "family"
+  ],
+  "conditions": {
+   "age": {
+    "min": 55
+   },
+   "romance": {
+    "concubine": true
+   },
+   "kin": {
+    "met": true
+   }
+  },
+  "weight": 3,
+  "cooldownYears": 15,
+  "choices": [
+   {
+    "text": "Gọi hết lại, chia rõ ràng",
+    "result": {
+     "text": "Ngươi viết di chúc ngay trước mặt các con: chia theo đầu người, không phân chính thứ. Có đứa mím môi, nhưng không dám cãi.",
+     "effects": {
+      "childrenAffinity": -3,
+      "stat.daoHeart": 2,
+      "setFlags": [
+       "di_chuc"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Dồn cho dòng chính",
+    "result": {
+     "text": "Ngươi tuyên bố gia sản về dòng chính thất. Con của thiếp lặng lẽ thu dọn ra ở riêng.",
+     "effects": {
+      "childrenAffinity": -10,
+      "chooseHeir": "eldest",
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Mặc kệ chúng",
+    "result": {
+     "text": "Ngươi giả điếc. Chúng cãi nhau tới tận ngày ngươi nhắm mắt.",
+     "effects": {
+      "childrenAffinity": -6,
+      "stat.happiness": -4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "gt_con_bat_hieu",
+  "category": "family",
+  "title": "Con bất hiếu",
+  "text": "Một đứa con ngươi say rượu đánh bạc, nợ nần khắp làng, còn lớn tiếng cãi lại ngươi trước mặt người ngoài.",
+  "themes": [
+   "family"
+  ],
+  "conditions": {
+   "age": {
+    "min": 45
+   },
+   "kin": {
+    "met": true
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 12,
+  "choices": [
+   {
+    "text": "Mời họ hàng tới, phạt trước từ đường",
+    "result": {
+     "text": "Trước bàn thờ tổ tiên, nó quỳ ba canh giờ. Cả họ nhìn. Nó khóc, hứa sửa.",
+     "effects": {
+      "childrenAffinity": -2,
+      "stat.daoHeart": 2,
+      "reputation": {
+       "lang_xa": 1
+      }
+     }
+    }
+   },
+   {
+    "text": "Trả nợ cho nó, khuyên nhủ",
+    "result": {
+     "text": "Ngươi lặng lẽ đi trả từng món nợ. Nó cúi gằm mặt.",
+     "effects": {
+      "silver": -40,
+      "childrenAffinity": 3,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Đuổi ra khỏi nhà",
+    "result": {
+     "text": "\"Nhà này không có đứa con như mày!\" Cửa đóng sầm. Đêm ấy ngươi không ngủ.",
+     "effects": {
+      "childrenAffinity": -8,
+      "stat.happiness": -5,
+      "reputation": {
+       "lang_xa": -1
+      }
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "gt_lam_nhuc_gia_mon",
+  "category": "family",
+  "title": "Làm nhục gia môn",
+  "text": "Cả làng đồn ầm: người trong họ ngươi bị bắt quả tang trộm trâu. Tộc trưởng triệu tập họp họ.",
+  "themes": [
+   "family"
+  ],
+  "conditions": {
+   "age": {
+    "min": 25
+   },
+   "kin": {
+    "met": true
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 15,
+  "choices": [
+   {
+    "text": "Đề nghị đuổi khỏi họ",
+    "result": {
+     "text": "Tên kẻ ấy bị gạch khỏi gia phả. Họ giữ được thể diện, nhưng có người khóc.",
+     "effects": {
+      "reputation": {
+       "lang_xa": 2
+      },
+      "stat.daoHeart": 1,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Xin cho một cơ hội",
+    "result": {
+     "text": "Ngươi đứng ra bảo lãnh. Tộc trưởng nhìn ngươi lâu, rồi đồng ý. Người ấy về sau thành người tử tế.",
+     "effects": {
+      "karma": 3,
+      "stat.happiness": 2,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Không nói gì",
+    "result": {
+     "text": "Ngươi ngồi im suốt buổi họp. Xong việc, ai về nhà nấy.",
+     "effects": {
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "gt_hk_muon_tien",
+  "category": "family",
+  "title": "Họ hàng hỏi vay",
+  "text": "{npc} tới chơi, ngồi mãi không về. Mãi sau mới ấp úng: \"Nhà dạo này túng quá...\"",
+  "themes": [
+   "family"
+  ],
+  "conditions": {
+   "npc": {
+    "kinds": [
+     "ho_noi",
+     "ho_ngoai"
+    ]
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Cho vay",
+    "result": {
+     "text": "Ngươi đưa ba mươi lượng. {npc} rối rít cảm ơn, hứa sang năm trả.",
+     "effects": {
+      "silver": -30,
+      "npc": {
+       "affinity": 10,
+       "favor": 10
+      },
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Cho luôn, không lấy lại",
+    "result": {
+     "text": "\"Người một nhà cả, cầm lấy mà lo.\" {npc} rơm rớm nước mắt.",
+     "effects": {
+      "silver": -20,
+      "npc": {
+       "affinity": 15,
+       "favor": 15
+      },
+      "karma": 2,
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Từ chối khéo",
+    "result": {
+     "text": "Ngươi kể khổ còn hơn. {npc} ra về, từ đó ít sang chơi.",
+     "effects": {
+      "npc": {
+       "affinity": -10
+      },
+      "stat.happiness": -1
+     }
+    }
+   }
+  ],
+  "npcTrigger": "visit"
+ },
+ {
+  "id": "gt_hk_ru_lam_an",
+  "category": "family",
+  "title": "Anh em họ rủ làm ăn",
+  "text": "{npc} sang bàn: \"Hai anh em mình góp vốn buôn chuyến muối ngược lên mạn ngược, lãi gấp ba.\"",
+  "themes": [
+   "family"
+  ],
+  "conditions": {
+   "npc": {
+    "kinds": [
+     "ho_noi",
+     "ho_ngoai"
+    ]
+   },
+   "age": {
+    "min": 18
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Góp vốn",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Chuyến hàng trót lọt. Hai anh em chia nhau tiền lãi, rủ nhau đi uống rượu.",
+     "effects": {
+      "silver": 60,
+      "npc": {
+       "affinity": 10
+      },
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Gặp cướp giữa đường, mất trắng. {npc} gãi đầu xin lỗi.",
+     "effects": {
+      "silver": -40,
+      "npc": {
+       "affinity": -5
+      },
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Không góp",
+    "result": {
+     "text": "\"Anh em làm ăn chung, dễ mất lòng.\" {npc} gật gù hiểu ý.",
+     "effects": {
+      "stat.intellect": 1
+     }
+    }
+   }
+  ],
+  "npcTrigger": "visit"
+ },
+ {
+  "id": "gt_toc_truong_goi",
+  "category": "family",
+  "title": "Tộc trưởng gọi",
+  "text": "Tộc trưởng {npc} cho người gọi ngươi lên từ đường. Ông ngồi uống trà, chậm rãi: \"Họ ta mấy đời chưa có người đỗ đạt. Ta trông vào đời các cháu.\"",
+  "themes": [
+   "family"
+  ],
+  "conditions": {
+   "npc": {
+    "kinds": [
+     "toc_truong"
+    ]
+   },
+   "age": {
+    "min": 12,
+    "max": 40
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Hứa sẽ cố gắng",
+    "result": {
+     "text": "Ông vỗ vai ngươi, cho một xâu tiền mua sách.",
+     "effects": {
+      "silver": 10,
+      "npc": {
+       "affinity": 8
+      },
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Thưa thật mình không thích học",
+    "result": {
+     "text": "Ông thở dài: \"Thôi thì mỗi người một số.\"",
+     "effects": {
+      "npc": {
+       "affinity": -3
+      },
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ],
+  "npcTrigger": "visit"
+ },
+ {
+  "id": "gt_di_mai_moi",
+  "category": "family",
+  "title": "Dì cậu mai mối",
+  "text": "{npc} sang chơi, kéo ngươi ra góc nhà thì thầm: \"Bên làng kia có người tử tế lắm, để ta nói giúp cho.\"",
+  "themes": [
+   "family"
+  ],
+  "conditions": {
+   "npc": {
+    "kinds": [
+     "ho_ngoai",
+     "ho_noi"
+    ]
+   },
+   "age": {
+    "min": 18,
+    "max": 35
+   },
+   "romance": {
+    "partner": false
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Nhờ nói giúp",
+    "result": {
+     "text": "{npc} vui vẻ nhận lời, mấy hôm sau dắt người tới xem mặt.",
+     "effects": {
+      "meetNpc": {
+       "role": "người được mối",
+       "kind": "tinh_nhan",
+       "adult": true,
+       "opposite": true
+      },
+      "stat.happiness": 2
+     }
+    }
+   },
+   {
+    "text": "Cảm ơn, để tự tính",
+    "result": {
+     "text": "{npc} lắc đầu: \"Kén chọn quá rồi ế đấy.\"",
+     "effects": {
+      "stat.happiness": -1,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ],
+  "npcTrigger": "visit"
+ },
+ {
+  "id": "gt_dam_gio_ho",
+  "category": "family",
+  "title": "Đám giỗ họ",
+  "text": "Hôm nay giỗ cụ tổ. Cả họ kéo về, cỗ bày kín ba gian nhà.",
+  "themes": [
+   "family"
+  ],
+  "conditions": {
+   "kin": {
+    "met": true
+   },
+   "age": {
+    "min": 8
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Xắn tay vào bếp",
+    "result": {
+     "text": "Ngươi thái thịt, đồ xôi từ tờ mờ sáng. Các bà các cô khen nức nở.",
+     "effects": {
+      "stat.happiness": 2,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Ngồi mâm trên với các cụ",
+    "result": {
+     "text": "Các cụ hỏi chuyện, ngươi đối đáp lễ phép. Có cụ bảo: \"Thằng này khá.\"",
+     "effects": {
+      "stat.intellect": 1,
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Đi chơi với đám anh em họ",
+    "result": {
+     "text": "Một lũ kéo nhau ra bờ sông tắm, về bị mắng, vẫn cười như nắc nẻ.",
+     "effects": {
+      "stat.happiness": 3,
+      "stat.health": -1
+     }
+    }
+   }
+  ]
+ }
+]
