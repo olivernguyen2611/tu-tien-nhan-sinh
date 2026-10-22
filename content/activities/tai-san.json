@@ -1,0 +1,47 @@
+[
+  {
+    "id": "lap_di_chuc", "group": "tai_san", "name": "Lập di chúc", "icon": "囑",
+    "text": "Mời lý trưởng làm chứng, ghi rõ ruộng nào nhà nào để lại cho ai.",
+    "conditions": { "tier": ["pham_gian"], "age": { "min": 45 }, "flagsNone": ["di_chuc"] },
+    "months": 1, "cost": [{ "silver": 5 }],
+    "outcomes": [
+      { "text": ["Tờ di chúc đóng dấu son cất vào hòm, lòng nhẹ hẳn. Sau này con cháu khỏi tranh nhau.", "Viết xong di chúc, ngồi đọc lại mà thấy một đời mình gói gọn trong mấy dòng."],
+        "effects": { "setFlags": ["di_chuc"], "stat.happiness": 2 } }
+    ]
+  },
+  {
+    "id": "giau_ruong", "group": "tai_san", "name": "Giấu ruộng khỏi sổ thuế", "icon": "隱",
+    "text": "Đút lót thư lại, khai bớt mấy mẫu ruộng trong sổ điền bạ năm nay.",
+    "conditions": { "tier": ["pham_gian"], "realm": { "max": "pham_nhan" }, "asset": { "kind": "land" }, "flagsNone": ["giau_ruong"] },
+    "months": 1, "cost": [{ "silver": 3 }],
+    "check": { "stat": "stat.luck", "difficulty": 50 },
+    "outcomes": [
+      { "text": ["Thư lại nhận gói bạc, ngòi bút lướt qua tên ngươi. Năm nay khỏi thuế ruộng.", "Sổ điền bạ năm nay bỗng thiếu mất mấy mẫu, chẳng ai hỏi."],
+        "effects": { "setFlags": ["giau_ruong"], "karma": -1, "stat.happiness": 2 } }
+    ],
+    "failOutcomes": [
+      { "text": ["Gặp đúng viên thư lại thanh liêm. Bị phạt bạc, còn bị bêu tên ở đình làng.", "Hàng xóm ghen ăn tố giác, quan huyện phạt một khoản nặng."],
+        "effects": { "silver": -20, "reputation": { "trieu_dinh": -5 }, "stat.happiness": -4 } }
+    ]
+  },
+  {
+    "id": "tham_dong", "group": "tai_san", "name": "Thăm đồng", "icon": "田",
+    "text": "Xắn quần lội ruộng, nhổ cỏ, đắp bờ, xem lúa lên ra sao.",
+    "conditions": { "asset": { "kind": "land" } },
+    "months": 1,
+    "outcomes": [
+      { "text": ["Gió đồng thổi mát, lúa xanh rì. Đứng ngắm mãi không chán.", "Đắp lại khúc bờ lở, chân lấm bùn mà lòng khoan khoái."],
+        "effects": { "stat.happiness": 2, "stat.health": 1 } }
+    ]
+  },
+  {
+    "id": "sua_sang_nha", "group": "tai_san", "name": "Sửa sang nhà cửa", "icon": "修",
+    "text": "Thay mấy viên ngói vỡ, quét lại vôi, trồng thêm khóm hoa trước sân.",
+    "conditions": { "asset": { "kind": "house" } },
+    "months": 1, "cost": [{ "silver": 5 }],
+    "outcomes": [
+      { "text": ["Nhà cửa sáng sủa hẳn, người trong nhà ai cũng vui.", "Sửa xong chỗ dột, đêm mưa ngủ một mạch tới sáng."],
+        "effects": { "stat.happiness": 3 } }
+    ]
+  }
+]

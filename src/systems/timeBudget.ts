@@ -3,6 +3,7 @@
 // year of visits and errands is a year of slower tu vi. Bế quan locks the whole year for cultivation.
 import { schoolMonths } from './schooling';
 import { jobMonths } from './jobs';
+import { assetMonths } from './assets';
 import type { Content } from '../core/content';
 import type { GameState } from '../core/types';
 
@@ -22,7 +23,7 @@ export function careerMonths(state: GameState, content: Content): number {
 
 /** Months still free this year for activities. */
 export function monthsLeft(state: GameState, content: Content): number {
-  return Math.max(0, content.balance.time.monthsPerYear - careerMonths(state, content) - jobMonths(state, content) - schoolMonths(state, content) - monthsUsed(state));
+  return Math.max(0, content.balance.time.monthsPerYear - careerMonths(state, content) - jobMonths(state, content) - assetMonths(state, content) - schoolMonths(state, content) - monthsUsed(state));
 }
 
 /** Share of the year that goes to cultivation, given the months activities took. */

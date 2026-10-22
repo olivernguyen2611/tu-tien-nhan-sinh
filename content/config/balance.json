@@ -291,6 +291,18 @@
     "retireAge": 55,
     "colleagues": 2
   },
+  "assets": {
+    "priceFollow": 0.6,
+    "resale": 0.7,
+    "fakeResale": 0.1,
+    "statEvery": 3,
+    "cropFit": { "right": 1.4, "wrong": 0.6, "none": 0.8, "normal": 1 },
+    "forecastTrue": 0.7,
+    "shopSpread": 0.3,
+    "tax": { "head": 2, "land": 1, "shop": 6, "phaseMul": { "thinh_the": 0.8, "trung_suy": 1.2, "loan_the": 1.8, "tan_trieu": 1 }, "exemptFlags": ["tu_tai"], "minAge": 16, "shortHappiness": 1, "forgiveBelow": 3, "logAt": 15, "logEvery": 5 },
+    "defaultYears": 4,
+    "noWillKeep": 0.6
+  },
   "careers": {
     "joinAge": [14, 40],
     "income": [10, 25, 50, 100, 200],

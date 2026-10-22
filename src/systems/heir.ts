@@ -14,6 +14,7 @@ import { learnTechnique } from './technique';
 import { childRootLabel } from './romance';
 import { clanInheritBonus } from './clan';
 import { heirInsightBonus } from './familyBond';
+import { inheritAssets } from './assets';
 
 export interface HeirOption {
   kind: 'child' | 'disciple';
@@ -77,7 +78,7 @@ export function continueAsHeir(state: GameState, content: Content, heirId: strin
 
   const share = cfg.inheritKarma;
   // Gia quy Độc đinh truyền thừa lets the heir keep more (task 5.4).
-  const keep = Math.min(1, cfg.inheritMoney + clanInheritBonus(state, content));
+  const keep = state.flags.di_chuc ? 1 : Math.min(1, cfg.inheritMoney + clanInheritBonus(state, content));
   const reputation = Object.fromEntries(Object.entries(state.social.reputation).map(([k, v]) => [k, scale(v, share)])) as GameState['social']['reputation'];
   // Each entry records who died and how the line went on from them.
   const ancestry = [...state.ancestry, {
@@ -105,6 +106,8 @@ export function continueAsHeir(state: GameState, content: Content, heirId: strin
     events: { pending: null, history: {}, followUps: [], npc: null },
     log: [],
   };
+  // 10.4: the estate (all of it with a di chúc) and the debts.
+  s = inheritAssets(state, s, content);
 
   if (child) {
     const { root, bodyId } = child.root ? { root: child.root, bodyId: child.bodyId ?? null } : rollRoot(rng, content);

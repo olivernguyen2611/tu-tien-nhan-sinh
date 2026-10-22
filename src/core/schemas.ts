@@ -73,6 +73,9 @@ const BaseConditionsSchema = z
       any: z.boolean().optional(), id: id.optional(), group: id.optional(), rungMin: z.number().int().optional(),
       perfMin: z.number().optional(), perfMax: z.number().optional(), top: z.boolean().optional(),
     }).strict().optional(),
+    /** 10.4 Tài sản: owns at least `count` of these assets (or of this kind), owes money. */
+    asset: z.object({ id: id.optional(), kind: z.enum(['house', 'land', 'shop', 'animal', 'vehicle', 'valuable']).optional(), count: z.number().int().min(0).optional(), none: z.boolean().optional() }).strict().optional(),
+    debt: z.object({ min: z.number().optional(), any: z.boolean().optional() }).strict().optional(),
     /** 10.2 Khoa cử: highest level passed (exams.json level ids; none = -1), times failed, can sit the next exam this year, the Đình placing. */
     exam: z.object({
       passed: id.optional(), notPassed: id.optional(), failsMin: z.number().int().optional(),
@@ -271,6 +274,14 @@ export const EffectsSchema = z
     quitJob: z.enum(['quit', 'retire', 'fired']).optional(),
     perf: z.number().optional(),
     jobPromote: z.boolean().optional(),
+    /** 10.4: buy an asset (assets.json id, at today's price), sell one, lose one (taken, burnt), set a shop's way of trading, sow a crop, borrow (loans id), repay all debts. */
+    buyAsset: id.optional(),
+    sellAsset: id.optional(),
+    loseAsset: id.optional(),
+    shopStrategy: id.optional(),
+    sowCrop: id.optional(),
+    borrow: id.optional(),
+    repayDebts: z.boolean().optional(),
     /** Extra % for the next martial breakthrough. */
     martialBonus: z.number().optional(),
     /** An elder of the sect takes you as a personal disciple. */
@@ -368,7 +379,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1685,6 +1696,31 @@ export const BalanceSchema = z
       })
       .strict()
       .optional(),
+    /** 10.4 Tài sản (content/assets.json has the assets, crops, ways of trading and loans). */
+    assets: z
+      .object({
+        /** Prices follow the thời cuộc price multiplier this much (0 = fixed, 1 = fully). */
+        priceFollow: z.number().min(0).max(1),
+        /** Share of the price paid back when selling (a valuable found fake sells for fakeResale). */
+        resale: z.number().min(0).max(1),
+        fakeResale: z.number().min(0).max(1),
+        /** An asset's yearly stat effects apply once every this many years. */
+        statEvery: z.number().int().min(1),
+        /** Land: yield × (harvest/50) × crop fit: right guess, wrong guess, no crop chosen. */
+        cropFit: z.object({ right: z.number(), wrong: z.number(), none: z.number(), normal: z.number() }).strict(),
+        /** Chance the weather news is right. */
+        forecastTrue: z.number().min(0).max(1),
+        /** Shop profit spread: income × strategy × (1 ± spread). */
+        shopSpread: z.number().min(0),
+        /** Thuế: thuế đinh per head (Tú tài miễn), per mẫu, per shop; × phase multiplier. */
+        tax: z.object({ head: z.number(), land: z.number(), shop: z.number(), phaseMul: z.record(z.number()), exemptFlags: ids, minAge: z.number().int().min(0), shortHappiness: z.number(), forgiveBelow: z.number(), logAt: z.number(), logEvery: z.number().int().min(1) }).strict(),
+        /** Unpaid debts: years before the creditor comes for an asset or for labour. */
+        defaultYears: z.number().int().min(1),
+        /** Without a di chúc, each asset reaches the heir with this chance. */
+        noWillKeep: z.number().min(0).max(1),
+      })
+      .strict()
+      .optional(),
     /** Mortal careers (task 2.11). */
     careers: z
       .object({
@@ -2997,6 +3033,38 @@ export const JobsFileSchema = z.object({
   }).strict(),
 }).strict();
 export type JobsFile = z.infer<typeof JobsFileSchema>;
+
+/** 10.4 content/assets.json: nhà, ruộng, cửa hiệu, súc vật, xe thuyền, đồ quý; crops for the ruộng mini-game; ways to run a shop; loans. */
+const AssetRiskSchema = z.object({ id, chance: z.number().min(0).max(1), text: z.string().min(1), lose: z.boolean().default(false), silver: z.number().default(0), effects: z.record(z.number()).default({}) }).strict();
+export const AssetsFileSchema = z.object({
+  assets: z.array(z.object({
+    id, kind: z.enum(['house', 'land', 'shop', 'animal', 'vehicle', 'valuable']), name: z.string().min(1), description: z.string().min(1),
+    price: z.number().min(0),
+    /** Lượng bạc a year: income (land and shops: before the harvest / way of trading) and upkeep. */
+    income: z.number().default(0),
+    upkeep: z.number().default(0),
+    /** Months a year it takes (a shop to run, a field to farm). */
+    months: z.number().int().min(0).max(12).default(0),
+    /** Stats (stat./aptitude keys) it moves every statEvery years while owned. */
+    stats: z.record(z.number()).default({}),
+    risks: z.array(AssetRiskSchema).default([]),
+    /** How many one may own (a house: one; buying another sells the old). */
+    maxOwn: z.number().int().min(1).default(1),
+    /** Đồ quý: chance it is a fake (found out when sold, or by an event). */
+    fakeChance: z.number().min(0).max(1).default(0),
+    requires: z.lazy(() => ConditionsSchema).default({}),
+    requiresText: z.string().min(1).optional(),
+  }).strict()).min(1),
+  crops: z.array(z.object({ id, name: z.string().min(1), weather: z.enum(['wet', 'dry', 'any']), text: z.string().min(1) }).strict()).min(1),
+  weather: z.array(z.object({ id: z.enum(['wet', 'dry', 'normal']), news: z.string().min(1) }).strict()).min(1),
+  strategies: z.array(z.object({ id, name: z.string().min(1), profit: z.number(), risk: z.number().min(0).max(1), karma: z.number().default(0), illegal: z.boolean().default(false), caughtText: z.string().min(1).optional() }).strict()).min(1),
+  loans: z.array(z.object({ id, name: z.string().min(1), amount: z.number().min(0), rate: z.number().min(0), lenderRole: z.string().min(1) }).strict()).min(1),
+  texts: z.object({
+    bought: z.string().min(1), sold: z.string().min(1), soldFake: z.string().min(1), lost: z.string().min(1), harvest: z.string().min(1), shop: z.string().min(1),
+    tax: z.string().min(1), taxShort: z.string().min(1), borrowed: z.string().min(1), repaid: z.string().min(1), seized: z.string().min(1), bonded: z.string().min(1),
+  }).strict(),
+}).strict();
+export type AssetsFile = z.infer<typeof AssetsFileSchema>;
 
 export const RelationsFileSchema = z.object({
   groups: z.array(z.object({ id, name: z.string().min(1) }).strict()).min(1),

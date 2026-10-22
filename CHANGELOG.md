@@ -8,6 +8,16 @@
 
 ## [Chưa phát hành]
 
+### 10.4 Tài sản (2026-10-22)
+- 17 tài sản trong 6 loại (`content/assets.json`, số trong `balance.assets`): nhà (lều tranh → nhà ngói → trạch viện → phủ đệ), ruộng (tới 20 mẫu), cửa hiệu (quán trà, tiệm thuốc cần nghề thuốc, lò rèn cần nghề rèn, tửu lâu), trâu, ngựa, xe bò, thuyền, ngọc bội, tranh cổ, đồ cổ (có thể là đồ giả, bán mới biết).
+- Mỗi năm: thu và tốn phí; ruộng thu theo vụ chọn (lúa mùa / khoai / đậu) so với thời tiết, có lời đồn đúng 70%; cửa hiệu theo cách làm ăn (bình ổn, mở rộng, bán rẻ giúp người, buôn lậu có thể bị bắt); rủi ro (cháy, trộm, cường hào lấn ruộng, trâu chết, đắm thuyền…); vài năm một lần tài sản tác động chỉ số.
+- Thuế sưu ở Phàm gian từ 16 tuổi (Tú tài miễn thuế đinh), nặng hơn khi loạn thế; giấu ruộng khỏi sổ thuế là một hoạt động có rủi ro.
+- Vay nợ: phú hộ, cầm đồ, thương hội; chủ nợ là người quen thật; nợ để lâu thì bị xiết tài sản quý nhất, hết tài sản thì phải làm công trừ nợ.
+- Thừa kế: lập di chúc (từ 45 tuổi) thì người nối dõi nhận đủ cả bạc lẫn tài sản; không di chúc thì mỗi món có thể thất lạc. Nợ truyền sang đời sau.
+- Mục "Gia sản" trong bảng Gia sản: bán, tậu thêm theo loại, chọn vụ, chọn cách làm ăn, vay/trả nợ. Hồ sơ có dòng "Gia sản:".
+- 4 hoạt động (lập di chúc, giấu ruộng, thăm đồng, sửa sang nhà) và 8 sự kiện (năm hạn giá gạo gấp ba, cường hào chiếm ruộng, đồ cổ giả, chủ nợ tới cửa…).
+- Điều kiện mới `asset`, `debt`; hiệu ứng mới `buyAsset`, `sellAsset`, `loseAsset`, `shopStrategy`, `sowCrop`, `borrow`, `repayDebts`.
+
 ### 10.3 Nghề nghiệp (2026-10-22)
 - 26 nghề trong 8 nhóm (`content/jobs.json`, số trong `balance.jobs`):
   - Nông: làm ruộng (tá điền → địa chủ), chăn nuôi, đánh cá.

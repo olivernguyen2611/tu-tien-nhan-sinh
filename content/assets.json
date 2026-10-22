@@ -1,0 +1,76 @@
+{
+  "assets": [
+    { "id": "leu_tranh", "kind": "house", "name": "Lều tranh", "description": "Mái rạ vách đất, mưa to là dột, nhưng là chỗ của mình.", "price": 10, "upkeep": 1, "stats": { "stat.happiness": 1 },
+      "risks": [{ "id": "leu_sap", "chance": 0.04, "text": "Một trận gió lớn thổi bay mái {asset}, cả nhà ngủ dưới trời sao mấy đêm.", "lose": true, "effects": { "stat.happiness": -6, "stat.health": -2 } }] },
+    { "id": "nha_ngoi", "kind": "house", "name": "Nhà ngói", "description": "Ba gian hai chái, ngói đỏ tường gạch, hàng xóm nhìn khác hẳn.", "price": 120, "upkeep": 3, "stats": { "stat.happiness": 3, "stat.charm": 1 },
+      "risks": [{ "id": "chay_nha", "chance": 0.02, "text": "Lửa bếp bén sang vách, {asset} cháy mất một nửa.", "silver": -40, "effects": { "stat.happiness": -8 } }] },
+    { "id": "trach_vien", "kind": "house", "name": "Trạch viện", "description": "Sân trong có hòn non bộ, gia nhân đi lại nhẹ chân.", "price": 600, "upkeep": 12, "stats": { "stat.happiness": 4, "stat.charm": 2, "stat.health": 1 },
+      "risks": [{ "id": "trom_vao", "chance": 0.05, "text": "Đêm qua trộm vào {asset}, cuỗm đi một rương bạc.", "silver": -80, "effects": { "stat.happiness": -5 } }] },
+    { "id": "phu_de", "kind": "house", "name": "Phủ đệ", "description": "Cổng son, sư tử đá, người qua đường phải ngước nhìn.", "price": 3000, "upkeep": 30, "stats": { "stat.happiness": 5, "stat.charm": 3 },
+      "risks": [{ "id": "quan_soi", "chance": 0.03, "text": "Có quan lại ghé {asset} \"thăm hỏi\", về tay không thì không chịu.", "silver": -200, "effects": { "stat.happiness": -4 } }] },
+
+    { "id": "ruong", "kind": "land", "name": "Ruộng", "description": "Một mẫu ruộng nước. Trời thương thì no, trời ghét thì đói.", "price": 40, "income": 8, "months": 4, "maxOwn": 20, "stats": { "stat.physique": 1 },
+      "risks": [{ "id": "cuong_hao_lan", "chance": 0.015, "text": "Cường hào trong làng rời cột mốc, một mẫu {asset} thành của người ta.", "lose": true, "effects": { "stat.happiness": -6 } }] },
+
+    { "id": "quan_tra", "kind": "shop", "name": "Quán trà", "description": "Mấy bộ bàn ghế bên đường, khách qua lại kể chuyện thiên hạ.", "price": 150, "income": 30, "months": 3, "stats": { "stat.charm": 1, "stat.intellect": 1 },
+      "risks": [{ "id": "du_con_quay", "chance": 0.04, "text": "Đám du côn tới {asset} đập phá, đòi tiền \"giữ chỗ\".", "silver": -20, "effects": { "stat.happiness": -4 } }] },
+    { "id": "tiem_thuoc", "kind": "shop", "name": "Tiệm thuốc", "description": "Tủ trăm ngăn thơm mùi cam thảo, người bệnh tìm tới gõ cửa cả đêm.", "price": 300, "income": 60, "months": 4, "stats": { "stat.intellect": 2 },
+      "requires": { "trade": { "id": "thuoc" } }, "requiresText": "Phải biết nghề bốc thuốc.",
+      "risks": [{ "id": "thuoc_sai", "chance": 0.03, "text": "Một thang thuốc của {asset} bị kêu là làm hại người, phải đền bồi.", "silver": -50, "effects": { "stat.happiness": -5 } }] },
+    { "id": "lo_ren", "kind": "shop", "name": "Lò rèn", "description": "Đe sắt, bễ thổi, tiếng búa vang từ sáng tới tối.", "price": 250, "income": 50, "months": 4, "stats": { "stat.physique": 2, "stat.health": -1 },
+      "requires": { "trade": { "id": "ren" } }, "requiresText": "Phải biết nghề rèn.",
+      "risks": [{ "id": "bong_lo", "chance": 0.04, "text": "Than bắn ra khỏi lò, bỏng một mảng tay.", "effects": { "stat.health": -5 } }] },
+    { "id": "tuu_lau", "kind": "shop", "name": "Tửu lâu", "description": "Hai tầng lầu, rượu ngon món lạ, quan khách ra vào tấp nập.", "price": 1200, "income": 220, "upkeep": 40, "months": 5, "stats": { "stat.charm": 2, "stat.health": -1 },
+      "risks": [{ "id": "say_danh_nhau", "chance": 0.05, "text": "Khách say đánh nhau tan nát nửa {asset}.", "silver": -100, "effects": { "stat.happiness": -4 } }] },
+
+    { "id": "trau", "kind": "animal", "name": "Trâu", "description": "Con trâu là đầu cơ nghiệp. Cày thay người, ruộng đỡ cực.", "price": 30, "income": 4, "maxOwn": 3, "stats": { "stat.health": 1 },
+      "risks": [{ "id": "trau_chet", "chance": 0.05, "text": "{asset} già yếu nằm xuống không dậy nữa, cả nhà buồn mấy hôm.", "lose": true, "effects": { "stat.happiness": -4 } }] },
+    { "id": "ngua", "kind": "animal", "name": "Ngựa", "description": "Lông mượt, chân dài, cưỡi ra chợ ai cũng ngoái nhìn.", "price": 80, "upkeep": 3, "stats": { "stat.charm": 2, "stat.physique": 1 },
+      "risks": [{ "id": "nga_ngua", "chance": 0.04, "text": "{asset} lồng lên giữa đường, người ngã một cú đau điếng.", "effects": { "stat.health": -6 } }] },
+
+    { "id": "xe_bo", "kind": "vehicle", "name": "Xe bò", "description": "Bánh gỗ kẽo kẹt, chở được nửa xe lúa ra chợ huyện.", "price": 40, "income": 6, "stats": { "stat.happiness": 1 },
+      "risks": [{ "id": "gay_truc", "chance": 0.04, "text": "{asset} gãy trục giữa đường lầy, phải thuê người sửa.", "silver": -8, "effects": { "stat.happiness": -2 } }] },
+    { "id": "thuyen", "kind": "vehicle", "name": "Thuyền", "description": "Thuyền gỗ mui nan, chở khách chở hàng xuôi ngược bến sông.", "price": 120, "income": 15, "months": 2, "stats": { "stat.physique": 1, "stat.happiness": 1 },
+      "risks": [{ "id": "dam_thuyen", "chance": 0.03, "text": "Nước lũ đánh lật {asset}, may mà người còn bơi được vào bờ.", "lose": true, "effects": { "stat.health": -6, "stat.happiness": -5 } }] },
+
+    { "id": "ngoc_boi", "kind": "valuable", "name": "Ngọc bội", "description": "Miếng ngọc xanh đeo bên hông, cầm trong tay mát rượi.", "price": 60, "maxOwn": 3, "fakeChance": 0.15, "stats": { "stat.charm": 1 },
+      "risks": [{ "id": "mat_ngoc", "chance": 0.03, "text": "Đi chợ về thì {asset} đã không cánh mà bay.", "lose": true, "effects": { "stat.happiness": -4 } }] },
+    { "id": "tranh_co", "kind": "valuable", "name": "Tranh cổ", "description": "Bức sơn thủy ố vàng, người bán thề là của danh họa tiền triều.", "price": 150, "maxOwn": 3, "fakeChance": 0.3, "stats": { "stat.intellect": 1, "stat.happiness": 1 } },
+    { "id": "do_co", "kind": "valuable", "name": "Đồ cổ", "description": "Chiếc đỉnh đồng phủ rỉ xanh, nghe đâu đào được từ mộ vua.", "price": 300, "maxOwn": 3, "fakeChance": 0.4, "stats": { "stat.happiness": 2 } }
+  ],
+  "crops": [
+    { "id": "lua_mua", "name": "Lúa mùa", "weather": "wet", "text": "Cấy lúa mùa, trông vào mưa thuận." },
+    { "id": "khoai", "name": "Khoai lang", "weather": "dry", "text": "Trồng khoai, hạn mấy cũng còn củ." },
+    { "id": "dau", "name": "Đậu", "weather": "any", "text": "Gieo đậu, không được nhiều nhưng chẳng mất mùa." }
+  ],
+  "weather": [
+    { "id": "wet", "news": "Các cụ trong làng bảo năm nay mưa nhiều, kiến tha trứng lên cao từ sớm." },
+    { "id": "dry", "news": "Người ta đồn năm nay nắng hạn, giếng làng đã cạn sớm hơn mọi năm." },
+    { "id": "normal", "news": "Trời đất năm nay xem chừng bình thường, không hạn không lũ." }
+  ],
+  "strategies": [
+    { "id": "binh_on", "name": "Buôn bán bình ổn", "profit": 1, "risk": 0 },
+    { "id": "mo_rong", "name": "Mở rộng làm ăn", "profit": 1.4, "risk": 0.15 },
+    { "id": "ha_gia", "name": "Bán rẻ giúp người nghèo", "profit": 0.6, "risk": 0, "karma": 2 },
+    { "id": "buon_lau", "name": "Buôn lậu muối sắt", "profit": 2.2, "risk": 0.2, "karma": -2, "illegal": true, "caughtText": "Quan sai lục {asset}, bắt được hàng lậu. Nộp phạt {silver} lượng mới yên." }
+  ],
+  "loans": [
+    { "id": "vay_phu_ho", "name": "Vay phú hộ trong làng", "amount": 50, "rate": 0.25, "lenderRole": "Phú hộ cho vay" },
+    { "id": "vay_cam_do", "name": "Vay tiệm cầm đồ", "amount": 20, "rate": 0.4, "lenderRole": "Chủ tiệm cầm đồ" },
+    { "id": "vay_thuong_hoi", "name": "Vay thương hội", "amount": 300, "rate": 0.2, "lenderRole": "Quản sự thương hội" }
+  ],
+  "texts": {
+    "bought": "Bỏ ra {silver} lượng tậu được {asset}.",
+    "sold": "Bán {asset}, thu về {silver} lượng.",
+    "soldFake": "Đem {asset} đi bán mới biết là đồ giả. Người ta chỉ trả {silver} lượng.",
+    "lost": "Mất {asset}.",
+    "harvest": "Thu hoạch {count} mẫu ruộng được {silver} lượng.",
+    "shop": "{asset} năm nay lời lỗ: {silver} lượng.",
+    "tax": "Nộp thuế sưu {silver} lượng cho quan huyện.",
+    "taxShort": "Không đủ bạc nộp thuế, còn thiếu {silver} lượng, bị lý trưởng ghi tên.",
+    "borrowed": "{loan}: cầm về {silver} lượng, lãi tính từ hôm nay.",
+    "repaid": "Trả hết nợ {silver} lượng, nhẹ cả người.",
+    "seized": "{lender} dẫn người tới cửa xiết nợ, mang {asset} đi.",
+    "bonded": "{lender} tới đòi nợ, nhà chẳng còn gì đáng giá, đành ở làm công trừ nợ."
+  }
+}

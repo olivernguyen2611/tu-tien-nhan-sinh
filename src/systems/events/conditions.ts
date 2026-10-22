@@ -2,6 +2,7 @@
 import { lifeStage, schoolOf, tradeOf } from '../schooling';
 import { examBlocked, examOf, levelIndex } from '../exams';
 import { jobDef, jobOf } from '../jobs';
+import { debtTotal, ownedOf } from '../assets';
 import type { Content } from '../../core/content';
 import type { GameEvent } from '../../core/schemas';
 import type { GameState } from '../../core/types';
@@ -139,6 +140,15 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (c.job.perfMin !== undefined && (!j.id || j.perf < c.job.perfMin)) return false;
     if (c.job.perfMax !== undefined && (!j.id || j.perf > c.job.perfMax)) return false;
     if (c.job.top !== undefined && (!def || (j.rung >= def.rungs.length - 1) !== c.job.top)) return false;
+  }
+  if (c.asset && content) {
+    const owned = ownedOf(state, content, c.asset.kind, c.asset.id).length;
+    if (c.asset.none ? owned > 0 : owned < (c.asset.count ?? 1)) return false;
+  }
+  if (c.debt) {
+    const owed = debtTotal(state);
+    if (c.debt.any !== undefined && (owed > 0) !== c.debt.any) return false;
+    if (c.debt.min !== undefined && owed < c.debt.min) return false;
   }
   if (c.exam && content) {
     const ex = examOf(state);

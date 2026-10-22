@@ -3,6 +3,7 @@
 import { addGrade, addTradeLevel, enrollSchool, leaveSchool, startTrade } from '../schooling';
 import { beginExam } from '../exams';
 import { addPerf, promoteJob, quitJob, takeJob } from '../jobs';
+import { borrow, buyAsset, loseAsset, repayDebts, sellAsset, setStrategy, sowCrop } from '../assets';
 import { ordinaryAptitude, ordinaryStat } from '../aptitudeGain';
 import type { Content } from '../../core/content';
 import { Rng } from '../../core/rng';
@@ -486,6 +487,14 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.takeJob) next = takeJob(next, content, fx.takeJob)?.state ?? next;
   if (fx.perf) next = addPerf(next, fx.perf);
   if (fx.jobPromote) next = promoteJob(next, content);
+  // 10.4 Tài sản.
+  if (fx.sellAsset) next = sellAsset(next, content, fx.sellAsset)?.state ?? next;
+  if (fx.buyAsset) next = buyAsset(next, content, fx.buyAsset)?.state ?? next;
+  if (fx.loseAsset) next = loseAsset(next, content, fx.loseAsset);
+  if (fx.shopStrategy) next = setStrategy(next, content, fx.shopStrategy);
+  if (fx.sowCrop) next = sowCrop(next, content, fx.sowCrop);
+  if (fx.borrow) next = borrow(next, content, fx.borrow)?.state ?? next;
+  if (fx.repayDebts) next = repayDebts(next, content)?.state ?? next;
   if (fx.martialBonus) next = { ...next, martial: { ...next.martial, bonus: next.martial.bonus + fx.martialBonus } };
   if (fx.martialPromote) next = martialPromote(next, content);
   if (fx.martialAscend) next = martialAscend(next, content);

@@ -1052,3 +1052,9 @@ html[data-motion='reduce'][data-fx]::after { display: none; }
 /* 10.2 Trường thi */
 .exam-lines { margin: 0.25rem 0 0.5rem; padding-left: 1.1rem; font-size: 0.875rem; color: var(--muted); }
 .exam-lines li { margin: 0.15rem 0; }
+
+/* 10.4 Gia sản */
+.chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.chip-row .chip-btn { white-space: normal; text-align: left; padding: 4px 12px; }
+.chip-btn[aria-pressed="true"] { background: var(--jade); color: var(--bg); }
+.asset-more { margin-top: 10px; }

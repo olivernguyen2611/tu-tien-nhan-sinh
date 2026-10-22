@@ -57,6 +57,8 @@ import { daoHeartLabel, innerForce, karmaView, reputationViews } from '../../sys
 import { lifeStage, schoolLine, tradeLine } from '../../systems/schooling';
 import { examLine } from '../../systems/exams';
 import { jobLine } from '../../systems/jobs';
+import { type AssetAction, assetsLine } from '../../systems/assets';
+import { AssetSection } from '../components/AssetSection';
 
 
 const APTITUDE_LABELS = [
@@ -66,7 +68,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onActivity, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onLearn, onTrain, onQuest, onExam, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onActivity, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onAsset, onLearn, onTrain, onQuest, onExam, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -115,6 +117,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onJoinCareer: (careerId: string) => string | null;
   /** 10.3: take a job from the Bản thân sheet. */
   onTakeJob: (jobId: string) => string | null;
+  onAsset: (a: AssetAction) => string | null;
   /** A year of martial training (task 3.11). */
   onTrain: () => string | null;
   onBond: (target: BondTarget, action: BondAction, arg?: string) => { text: string; tone: Tone; changes: string };
@@ -333,7 +336,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       {mapOpen && <MapPanel state={state} content={content} unlimited={!!dev} onTravel={onTravel} onClose={() => setMapOpen(false)} />}
 
-      {marketOpen && <MarketPanel extra={acts('gia_san')} state={state} content={content} onAction={onMarket} onClose={() => setMarketOpen(false)} />}
+      {marketOpen && <MarketPanel extra={<><AssetSection state={state} content={content} onAsset={onAsset} />{acts('gia_san')}</>} state={state} content={content} onAction={onMarket} onClose={() => setMarketOpen(false)} />}
 
       {bagOpen && <BagPanel state={state} content={content} onUse={onUseItem} onClose={() => setBagOpen(false)} />}
 
@@ -371,6 +374,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             {tradeLine(state, content) && <p class="profile-note">Nghề: {tradeLine(state, content)}</p>}
             {examLine(state, content) && <p class="profile-note">Khoa cử: {examLine(state, content)}</p>}
             {jobLine(state, content) && <p class="profile-note">Việc làm: {jobLine(state, content)}</p>}
+            {assetsLine(state, content) && <p class="profile-note">Gia sản: {assetsLine(state, content)}</p>}
             {sectLabel(state, content) && <p class="profile-note">Tông môn: {sectLabel(state, content)}</p>}
             {inventoryLabel(state, content) && <p class="profile-note">Mang theo: {inventoryLabel(state, content)}</p>}
             <p class="profile-note"><TermText text="Tư chất tiên thiên định từ lúc sinh, chỉ đổi được nhờ kỳ ngộ hay khí vận." /></p>

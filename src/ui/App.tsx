@@ -56,6 +56,7 @@ import { chooseFate, rerollFate } from '../systems/fate';
 import { trainMartial } from '../systems/martial';
 import { beginQuestStep, miniGameHide, miniGameInput, miniGameQuit } from '../systems/martialQuest';
 import { answerExam, resolveIncident } from '../systems/exams';
+import { assetAction } from '../systems/assets';
 import { takeJob } from '../systems/jobs';
 import { romanceAction } from '../systems/romance';
 import { giftNpc } from '../systems/npcGift';
@@ -515,6 +516,12 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         }}
         onPractice={(craftId) => {
           const r = practiceCraft(life, content, craftId);
+          if (!r) return null;
+          setLife(r.state);
+          return r.text;
+        }}
+        onAsset={(a) => {
+          const r = assetAction(life, content, a);
           if (!r) return null;
           setLife(r.state);
           return r.text;

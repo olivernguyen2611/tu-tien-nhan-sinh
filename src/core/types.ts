@@ -124,6 +124,8 @@ export interface GameState {
     id: string | null; rung: number; perf: number; years: number; boss: string | null; mates: string[]; since: number;
     past: { id: string; rung: number; left: number; why: 'quit' | 'retire' | 'fired' }[];
   };
+  /** 10.4 Tài sản: what the life owns (uid = its own number), debts (owed grows by the loan's rate), the crop sown this year, the next uid. */
+  assets?: { owned: OwnedAsset[]; loans: Loan[]; crop: string | null; nextUid: number };
   /** 10.2 Khoa cử: index of the highest level passed (-1 = none), fails, the Đình placing, the life's calendar offset, age each level was last sat, the sitting in progress (blocks the year). */
   exam?: {
     rank: number; fails: number; placing: string | null; cycle: number; last: Record<string, number>;
@@ -494,3 +496,8 @@ export interface ExamSitting {
   /** What happened, round by round (shown in the card, summed up in the log). */
   lines: string[];
 }
+
+/** 10.4 One asset owned: which, bought at what age and price, a fake (đồ quý), the shop's way of trading. */
+export interface OwnedAsset { uid: number; id: string; since: number; paid: number; fake: boolean; strategy: string | null }
+/** 10.4 A debt: which loan, the lender (NPC id), what is owed now, since when. */
+export interface Loan { uid: number; id: string; lender: string | null; owed: number; since: number }
