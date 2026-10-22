@@ -8,6 +8,60 @@
 
 ## [Chưa phát hành]
 
+### 12.10 Nội dung và cân bằng triều đình (2026-10-22)
+- 16 sự kiện thêm (`de-nghiep-them.json`):
+  - Đế nghiệp: thái hậu gọi, em gái bị chỉ hôn, tướng địch xin hàng, lính cướp của dân, kết thông gia với phiên trấn, tin đồn làm phản trong quân, sủng thần dò hỏi.
+  - Làm vua: sử quan không chịu sửa sử, điềm lành, các hoàng tử tranh nhau.
+  - Phản ứng của người thường: đổi triều, nghĩa quân qua làng, buôn bán thời chiến, thư sinh luận triều chính ở tửu lâu, tân quân đại xá, lão binh về làng.
+- Tổng nội dung GĐ 12: 57 sự kiện triều đình, quan trường, binh nghiệp; 60 sự kiện đế nghiệp (chưa tính 16 sự kiện quý tộc); 22 sự kiện làm vua.
+- Mô phỏng 80 đời mỗi persona (`npm run simulate -- --profile mortal`):
+  | Persona | Lên ngôi | Chết vì đế nghiệp |
+  |---|---|---|
+  | Hoàng tử tham vọng | 9% | 44% (48% số đời thất bại) |
+  | Thủ lĩnh nghĩa quân | 15% | 30% (35% số đời thất bại) |
+  | Quyền thần tham vọng | 3% (chỉ ~1/5 số đời leo đủ cao để mưu phản) | 6% |
+- Sáu persona cũ không đổi đáng kể: sống ≥ 40 tuổi từ 84% tới 100%, không ai lên ngôi.
+
+### 12.9 Làm vua (2026-10-22)
+- Lên ngôi bằng đường nào (kế vị, khởi nghĩa, tạo phản) cũng thành hoàng đế, hoặc nữ hoàng. Đường kế vị giữ quốc hiệu cũ. Hai đường kia lập triều mới. Niên hiệu là của ngươi chừng nào còn ngồi ngai.
+- Bốn thanh triều chính: **Quốc khố**, **Dân tâm**, **Binh lực**, **Triều thần**. Mỗi năm có một dòng báo cáo. Các thanh trôi theo thời thế, theo đại sự của triều đình và theo việc ngươi làm. Có một khoản thuế cố định hằng năm.
+- 10 việc triều chính (hoạt động, mỗi năm làm được 1–3 việc tùy tháng): giảm thuế, tăng thuế, mở ân khoa, duyệt binh, xây cung điện, trị thủy khai hoang, tuần du, đại xá, thanh trừng triều thần, yến ẩm hậu cung.
+- Một thanh xuống dưới 15 là có biến: **dân biến**, **giặc vây biên thành**, **cung biến** (có thể chết), **quốc khố cạn**. Một thanh về 0 là **mất nước**: trốn, ra hàng (bị giam lỏng) hoặc giữ tiết.
+- Việc thiện, việc ác được ghi lại. Hơn kém 5 việc thì thành **minh quân** hay **bạo quân**, tính cách hoàng đế trong triều đình đổi theo. Danh hiệu ở màn kết đời: Minh quân một đời, Bạo quân sử chép, Vua khai quốc, Vua mất nước, Từng ngồi ngai vàng.
+- 19 sự kiện (`lam-vua.json`): lập hậu hoặc chọn hoàng phu (từ 18 tuổi), tuyển tú, lập thái tử, nhường ngôi làm thái thượng hoàng, **cầu tiên** (phương sĩ dâng tiên đan, ra biển tìm tiên sơn; không có linh căn thì không thành tiên được), gian thần, lão thần can gián, biên cảnh cáo cấp (có thể thân chinh), thiên tai, thích khách, công thần kiêu ngạo (chỉ vua khai quốc), dư đảng triều cũ, vi hành, cùng bốn biến và mất nước.
+- Chưa làm: di sản của triều đại sang kiếp sau. Để dành cho phần Luân Hồi.
+
+### 12.8 Quan lại, tướng lĩnh tạo phản (2026-10-22)
+- Quan từ Tam phẩm trở lên, hoặc tướng từ Thiên hộ trở lên, mở được đường **tạo phản**: hoạt động Mưu đồ đại sự (quan) hoặc Ủng binh tự trọng (tướng), hoặc qua sự kiện (môn khách rủ rê dưới hôn quân, bạo quân; triều đình đòi giao binh quyền; anh hùng thời loạn).
+- Ba thanh: **Quyền thế**, **Binh quyền**, **Danh nghĩa**. Ba hoạt động mưu phản: Kết vây cánh, Nuôi tử sĩ, Tạo danh nghĩa.
+- Mỗi lần quyền thế tăng là thêm một người biết chuyện. Càng nhiều người biết, càng dễ **bại lộ**. Khi bại lộ: khởi sự ngay trong đêm, giết kẻ tố giác, bỏ trốn ra biên ải, hoặc tự trói xin tội.
+- Đủ quyền thế 50, binh quyền 35, danh nghĩa 35 thì chờ **thời cơ**: thời loạn, trung suy, hôn quân, bạo quân hay triều đình đang có đại sự thì dễ tới hơn. Khởi sự ba bước (thời cơ, hịch khởi binh, vào điện). Thành thì lập triều mới, bại thì tru di hoặc lưu vong.
+- Sự kiện đời mưu phản: mật thư bị chặn, đồng mưu dao động, chiếu triệu về kinh, điềm lành, mưu sĩ dâng kế, thiên tử hôn ám.
+- Phía trung thần: tố giác đồng liêu mưu phản, dẹp loạn phản thần (khi tại ngũ), tru di tam tộc của một đại thần.
+- Bot "Quyền thần tham vọng" (`--profile quyen_than`): khoảng 5% số đời leo được tới Tam phẩm mà mưu phản; trong số đó khoảng 20% lên ngôi, phần lớn còn lại chết.
+
+### 12.7 Khởi nghĩa thời loạn (2026-10-22)
+- Thường dân dựng cờ khởi nghĩa được khi thiên hạ đang **Loạn thế** hoặc **Trung suy**. Đường khởi nghĩa có ba thanh: **Dân tâm**, **Binh lực**, **Lương thảo**. Lá cờ và căn cứ được đặt tên ngẫu nhiên (ví dụ "Hắc kỳ quân" ở núi Ngọa Ngưu).
+- Năm mồi lửa (`khoi-nghia.json`): quan sai đánh chết người vì thuế, kho lương quan giữa nạn đói, đồng dao "thạch nhân một mắt", đường cùng khi bị truy nã, nghĩa quân mất thủ lĩnh đi qua làng. Thêm hoạt động **Tụ nghĩa** (nhóm Phạm pháp).
+- Mỗi năm: quân ăn lương, dân tâm kéo thêm người và lương. Hết lương thì quân bỏ đi. Phần lớn các năm có **Quyết sách trong năm**: chiêu binh, cướp kho lương, đánh một tòa thành, chiêu hiền, nghiêm quân kỷ, hay thả quân cướp bóc.
+- Đánh thành theo binh lực, tài cầm quân, dân tâm, lương thảo, so với quân giữ thành (thành sau mạnh hơn thành trước). Chiếm đủ 5 thành thì đánh vào kinh thành. Vào được kinh thì lập triều đại mới, đổi quốc hiệu và niên hiệu.
+- Ngoài thời loạn, quan quân dễ dẹp tan nghĩa quân. Hết binh lực thì tan rã. Thua thì có khi bị xử tử, có khi trốn thoát.
+- Triều đình có thể sai sứ **chiêu an**: nhận thì giải tán quân và được làm quan, hoặc xé chiếu, hoặc giả nhận để lừa lương.
+- Sự kiện đời nghĩa quân: phó tướng làm phản, quân sư tới trại, quan quân vây tiễu, dân mang cơm nước, liên minh nghĩa quân (hoặc bày tiệc giết), xưng vương, ôn dịch trong trại, quê nhà bị liên lụy.
+- Bot "Thủ lĩnh nghĩa quân" (`--profile nghia_quan`): 200 đời, khoảng 13–18% lên ngôi, khoảng 30% số đời thất bại chết vì đế nghiệp.
+
+### 12.6 Hoàng thất tranh ngôi (2026-10-22)
+- Xuất thân mới **Hoàng tử, công chúa** (80 điểm ở Cầu đầu thai, cực hiếm khi tự rơi vào): con ruột hoàng đế, 3000 lượng, có 2–5 anh em cùng tranh ngôi, mẫu thân là hoàng hậu hoặc phi tần.
+- Khung đế nghiệp chung (`throne.json`, `src/systems/throne.ts`), dùng cho cả 12.6–12.9. Đường hoàng thất có ba thanh: **Thánh sủng**, **Thế lực triều thần**, **Nghi kỵ** (hiện ở màn chính, dòng "Ngai vàng").
+- Lập trữ: khi hoàng đế già, người chọn thái tử theo thánh sủng, thế lực, con trưởng, con hoàng hậu, trừ nghi kỵ. Người đứng đầu dễ được chọn nhưng không chắc chắn. Công chúa cần nhiều hơn để được lập.
+- Khi niên hiệu đổi (vua băng): thái tử lên ngôi; không được lập thì về làm nhàn vương. Nếu triều đại mất nước thì hoàng tộc bị phế làm thứ dân, có khi bị giết.
+- Nghi kỵ quá cao: **chén rượu ngự ban** (uống, giả điên, khởi binh ngay đêm ấy nếu đủ thế lực, hoặc trèo tường trốn).
+- Lập trữ không thành: chấp nhận làm hiền vương, rời cung, hoặc **binh biến** ba bước (mưu binh biến, đêm khởi sự, bức cung). Thất bại là ra pháp trường, cả nhà liên lụy.
+- 5 hoạt động mưu ngôi: Dưỡng danh, Kết đảng, Xin đi lập công, Ẩn nhẫn, Hãm hại. Hãm hại tới mức thánh sủng của thái tử dưới 20 thì thái tử bị phế.
+- 21 sự kiện (`hoang-that.json`): phụ hoàng hỏi bài, thu săn, mẫu phi tranh sủng, hoàng huynh bắt nạt, bệnh nặng thuở nhỏ, mừng thọ, đại thần đầu quân, phụ hoàng thử lòng, bị vu cáo, phong vương (ở kinh hay ra đất phong), ngoại thích, huynh đệ tương tàn, thái tử giám quốc, Đông cung bị nghi, hòa thân (công chúa, từ 18 tuổi), nữ trữ quân bị can ("gà mái gáy sáng") và chuỗi lập trữ, chén rượu, binh biến.
+- Lên ngôi thì làm vua (12.9). Hoàng tộc không nộp sưu thuế, không bị bắt lính.
+- Bot "Hoàng tử tham vọng" (`npm run simulate -- --profile tham_vong`): 100 đời, khoảng 16–19% lên ngôi, 35–40% chết vì đế nghiệp.
+
 ### 12.4 Xuất thân hoàng tộc và quý tộc (2026-10-22)
 - Hai xuất thân mới, rất hiếm khi số mệnh tự rơi vào. Muốn chọn chắc thì phải trả điểm Luân Hồi ở Cầu đầu thai, như Con nhà quan và Hậu duệ gia tộc tu tiên.
   - **Con nhà quyền quý** (25 điểm): thế gia trong kinh, 600 lượng, khẩu tài và học lực cao.

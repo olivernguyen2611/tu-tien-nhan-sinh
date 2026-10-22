@@ -9,6 +9,7 @@ import { addNetRenown, addRenown } from '../jianghu';
 import { addMerit, factionMission, factionTeach, hideFromHunt, joinFaction, leaveFaction } from '../jhFactions';
 import { addWound, buyWeapon, gainWeapon, learnArt, practiseArt } from '../martialArts';
 import { addPrestige, wulinResign, wulinTournament } from '../wulin';
+import { addReignBars, addThroneBars, hitRival, reignDeed, reignEnd, setThroneStep, throneAscend, throneBattle, throneFail, throneStart } from '../throne';
 import { addArmyMerit, armyBattle, armyJoin, armyLeave } from '../army';
 import { addOfficeEvidence, addOfficeMerit, officeDefend, officeJoin, officeResign, setOfficeFaction, setOfficeStyle } from '../office';
 import { catchDisease, cureAilment, injure, noteDrink } from '../health';
@@ -563,6 +564,17 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.wulinTournament) next = wulinTournament(next, content);
   if (fx.wulinPrestige) next = addPrestige(next, content, fx.wulinPrestige);
   if (fx.wulinResign) next = wulinResign(next, content);
+  // 12.6–12.9 Đế nghiệp.
+  if (fx.throneStart) next = throneStart(next, content, fx.throneStart);
+  if (fx.throneBar) next = addThroneBars(next, content, fx.throneBar);
+  if (fx.throneRival || fx.throneRivalDies) next = hitRival(next, content, fx.throneRival ?? 0, !!fx.throneRivalDies);
+  if (fx.throneStep !== undefined) next = setThroneStep(next, fx.throneStep);
+  if (fx.throneBattle) next = throneBattle(next, content);
+  if (fx.throneAscend) next = throneAscend(next, content);
+  if (fx.throneFail) next = throneFail(next, content, fx.throneFail);
+  if (fx.reignBar) next = addReignBars(next, fx.reignBar);
+  if (fx.reignDeed) next = reignDeed(next, content, fx.reignDeed);
+  if (fx.reignEnd) next = reignEnd(next, content, fx.reignEnd);
   // 12.3 Binh nghiệp.
   if (fx.armyJoin) next = armyJoin(next, content, fx.armyJoin);
   if (fx.armyMerit) next = addArmyMerit(next, fx.armyMerit);

@@ -149,6 +149,17 @@ export interface GameState {
     emperor: { name: string; age: number; temper: string }; heir: { name: string; age: number } | null;
     minister: { name: string; sway: number } | null; affairs: { id: string; until: number }[]; started: Record<string, number>;
   };
+  /** 12.6–12.8 Đế nghiệp: the road to the throne the life is on, its bars (0–100) and road-specific state: royal (place in
+   *  line, the mother's rank, siblings in line, the thái tử named: 'self', a sibling's name or null), rebel (banner, base,
+   *  cities taken), usurp (minister or warlord, people in the plot); `step` is a coup's progress. */
+  throne?: {
+    path: 'royal' | 'rebel' | 'usurp'; bars: Record<string, number>; since: number; step: number;
+    rank?: number; mother?: 'hau' | 'phi'; rivals?: { name: string; favor: number; power: number; alive: boolean }[]; heir?: string | null;
+    banner?: string; base?: string; cities?: number; kind?: 'minister' | 'warlord'; plotters?: number;
+  } | null;
+  /** 12.9 Làm vua: since when, the dynasty and niên hiệu, how the throne was had, bars (treasury, people, army, court),
+   *  good and bad deeds, whether this life founded the dynasty. */
+  reign?: { since: number; dynasty: string; era: string; how: 'royal' | 'rebel' | 'usurp'; bars: Record<string, number>; good: number; bad: number; founder: boolean } | null;
   /** 12.3 Binh nghiệp: quân hàm, quân công toward the next, joined at, drafted or volunteer, trận fought / won; or null
    *  once out (deserted is remembered in flags). */
   army?: { rank: number; merit: number; since: number; via: 'draft' | 'volunteer'; battles: number; wins: number; best: number } | null;

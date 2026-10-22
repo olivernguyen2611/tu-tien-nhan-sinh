@@ -1,0 +1,1338 @@
+[
+ {
+  "id": "tv_lap_hau",
+  "category": "reign",
+  "title": "Lập hậu",
+  "text": "Lễ bộ dâng lên một cuốn danh sách con gái các nhà thế gia, kèm lời tâu: hậu vị bỏ trống thì lòng người không yên.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   },
+   "gender": "nam",
+   "age": {
+    "min": 18
+   },
+   "romance": {
+    "partner": false
+   }
+  },
+  "weight": 3,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Chọn con gái nhà trọng thần",
+    "result": {
+     "text": "Hai họ kết thông gia. Triều đình vững thêm một bậc, hậu cung thì thêm một người ngươi chưa quen.",
+     "effects": {
+      "meetNpc": {
+       "role": "hoàng hậu",
+       "opposite": true,
+       "adult": true,
+       "peer": true,
+       "affinity": 0
+      },
+      "romance": {
+       "marry": {
+        "affinity": 40
+       }
+      },
+      "reignBar": {
+       "court": 8
+      },
+      "stat.happiness": 2
+     }
+    }
+   },
+   {
+    "text": "Chọn người con gái mình thương",
+    "result": {
+     "text": "Ngươi lập một cô gái xuất thân hàn vi. Triều thần xì xào, ngươi thì cười nhiều hơn.",
+     "effects": {
+      "meetNpc": {
+       "role": "hoàng hậu",
+       "opposite": true,
+       "adult": true,
+       "peer": true,
+       "affinity": 0
+      },
+      "romance": {
+       "marry": {
+        "affinity": 40
+       }
+      },
+      "reignBar": {
+       "court": -4,
+       "people": 3
+      },
+      "stat.happiness": 6
+     }
+    }
+   },
+   {
+    "text": "Gác lại, chưa lập",
+    "result": {
+     "text": "Ngươi bảo việc nước còn bộn bề. Lễ bộ lui ra, mặt buồn như đưa đám.",
+     "effects": {
+      "reignBar": {
+       "court": -3
+      },
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_chon_phu",
+  "category": "reign",
+  "title": "Chọn hoàng phu",
+  "text": "Tông nhân phủ dâng lên danh sách con trai các nhà công hầu. Triều thần nói, nữ hoàng cũng phải có người kế tự.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   },
+   "gender": "nu",
+   "age": {
+    "min": 18
+   },
+   "romance": {
+    "partner": false
+   }
+  },
+  "weight": 3,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Chọn con nhà công hầu",
+    "result": {
+     "text": "Hôn lễ long trọng. Hoàng phu ít nói, triều đình thì yên tâm hơn.",
+     "effects": {
+      "meetNpc": {
+       "role": "hoàng phu",
+       "opposite": true,
+       "adult": true,
+       "peer": true,
+       "affinity": 0
+      },
+      "romance": {
+       "marry": {
+        "affinity": 40
+       }
+      },
+      "reignBar": {
+       "court": 8
+      },
+      "stat.happiness": 2
+     }
+    }
+   },
+   {
+    "text": "Chọn người mình thương",
+    "result": {
+     "text": "Ngươi chọn một thư sinh nghèo từng gặp ở hội hoa đăng. Cả triều trố mắt.",
+     "effects": {
+      "meetNpc": {
+       "role": "hoàng phu",
+       "opposite": true,
+       "adult": true,
+       "peer": true,
+       "affinity": 0
+      },
+      "romance": {
+       "marry": {
+        "affinity": 40
+       }
+      },
+      "reignBar": {
+       "court": -4,
+       "people": 3
+      },
+      "stat.happiness": 6
+     }
+    }
+   },
+   {
+    "text": "Không lấy ai",
+    "result": {
+     "text": "Ngươi bảo thiên hạ là phu quân của trẫm. Triều thần không dám cãi, nhưng lo.",
+     "effects": {
+      "reignBar": {
+       "court": -4
+      },
+      "stat.daoHeart": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_tuyen_tu",
+  "category": "reign",
+  "title": "Tuyển tú",
+  "text": "Lễ bộ xin mở đợt tuyển tú, để hậu cung đông đúc, hoàng tự nối dõi.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   },
+   "gender": "nam",
+   "age": {
+    "min": 20,
+    "max": 60
+   },
+   "romance": {
+    "partner": true
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Chuẩn tấu, tuyển rộng",
+    "result": {
+     "text": "Mấy trăm thiếu nữ vào cung. Dân gian có câu \"sinh con gái chớ nhan sắc\".",
+     "effects": {
+      "reignBar": {
+       "people": -5,
+       "treasury": -4
+      },
+      "reignDeed": "bad",
+      "stat.happiness": 3
+     }
+    }
+   },
+   {
+    "text": "Chỉ tuyển vài người, không ép ai",
+    "result": {
+     "text": "Chỉ những nhà tự nguyện mới đưa con vào cung. Lễ bộ lẩm bẩm mãi.",
+     "effects": {
+      "reignBar": {
+       "people": 1
+      },
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Bãi bỏ lệ tuyển tú",
+    "result": {
+     "text": "Chiếu bãi bỏ được dán khắp nơi. Nhà nhà có con gái thắp hương tạ ơn.",
+     "effects": {
+      "reignBar": {
+       "people": 6,
+       "court": -2
+      },
+      "reignDeed": "good",
+      "karma": 2,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_lap_thai_tu",
+  "category": "reign",
+  "title": "Lập thái tử",
+  "text": "Ngươi đã có tuổi. Ba lần trong một tháng, triều thần quỳ ngoài điện xin lập trữ quân.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true,
+    "yearsMin": 5
+   },
+   "age": {
+    "min": 45
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 15,
+  "choices": [
+   {
+    "text": "Lập con trưởng",
+    "result": {
+     "text": "Lập đích lập trưởng, đúng phép tổ tông. Triều thần thở phào.",
+     "effects": {
+      "reignBar": {
+       "court": 8
+      },
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Lập đứa con hiền nhất",
+    "result": {
+     "text": "Ngươi bỏ qua con trưởng. Người được lập giỏi giang, nhưng từ đó Đông cung không yên.",
+     "effects": {
+      "reignBar": {
+       "court": -4,
+       "people": 4
+      },
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Chưa lập",
+    "result": {
+     "text": "\"Trẫm còn khỏe.\" Triều thần lui ra, mỗi người một bụng toan tính.",
+     "effects": {
+      "reignBar": {
+       "court": -7
+      },
+      "stat.happiness": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_nhuong_ngoi",
+  "category": "reign",
+  "title": "Nhường ngôi",
+  "text": "Ngươi đã ngồi ngai vàng nhiều năm. Một sáng soi gương, thấy tóc bạc trắng, tay cầm bút không còn vững.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true,
+    "yearsMin": 10
+   },
+   "age": {
+    "min": 60
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 5,
+  "choices": [
+   {
+    "text": "Nhường ngôi, làm thái thượng hoàng",
+    "result": {
+     "text": "Ngươi trao ngọc tỷ cho người kế vị, lui về hậu cung trồng hoa. Lần đầu sau bao năm, ngươi ngủ một mạch tới sáng.",
+     "effects": {
+      "reignEnd": "abdicate",
+      "stat.happiness": 8,
+      "stat.daoHeart": 3
+     }
+    }
+   },
+   {
+    "text": "Còn sống ngày nào, còn ngồi ngày ấy",
+    "result": {
+     "text": "Ngươi cất gương đi, gọi thái giám mang tấu chương tới.",
+     "effects": {
+      "reignBar": {
+       "court": -2
+      },
+      "stat.happiness": -1,
+      "stat.health": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_cau_tien",
+  "category": "reign",
+  "title": "Cầu tiên",
+  "text": "Một phương sĩ râu tóc bạc phơ dâng lên hộp ngọc, trong có một viên tiên đan đỏ rực: \"Bệ hạ uống vào, thọ cùng trời đất.\"",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   },
+   "age": {
+    "min": 40
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Uống thử",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Uống xong, người nóng bừng ba ngày rồi khỏe ra thật. Phương sĩ được phong quốc sư. Có điều, ngươi vẫn chưa bay lên được.",
+     "effects": {
+      "stat.health": 5,
+      "stat.happiness": 2,
+      "reignBar": {
+       "treasury": -5
+      }
+     }
+    },
+    "fail": {
+     "text": "Viên đan là chu sa trộn thủy ngân. Ngươi thổ huyết nửa đêm, thái y cứu được, nhưng thọ nguyên tổn hại.",
+     "effects": {
+      "stat.health": -25,
+      "lifespanYears": -5,
+      "reignDeed": "bad"
+     }
+    }
+   },
+   {
+    "text": "Sai người ra biển tìm tiên sơn",
+    "result": {
+     "text": "Mấy chục chiếc thuyền lớn rời bến, chở theo ba ngàn đồng nam đồng nữ. Không chiếc nào quay về.",
+     "effects": {
+      "reignBar": {
+       "treasury": -15,
+       "people": -6
+      },
+      "reignDeed": "bad",
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Chém phương sĩ",
+    "result": {
+     "text": "\"Thọ cùng trời đất? Vậy để xem ngươi có chết không.\" Phương sĩ chết. Trên đầu ngươi, trời vẫn xanh như cũ.",
+     "effects": {
+      "reignBar": {
+       "people": 2
+      },
+      "stat.daoHeart": 2,
+      "karma": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_gian_than",
+  "category": "reign",
+  "title": "Gian thần",
+  "text": "Một viên thái giám khéo nói, việc gì cũng khiến ngươi vui. Dần dần, tấu chương phải qua tay hắn mới tới được ngự án.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Tin dùng",
+    "result": {
+     "text": "Năm ấy ngươi vui hơn hẳn. Có điều tin dữ không bao giờ tới tai ngươi nữa.",
+     "effects": {
+      "reignBar": {
+       "court": -8,
+       "people": -4
+      },
+      "reignDeed": "bad",
+      "stat.happiness": 4
+     }
+    }
+   },
+   {
+    "text": "Chém để làm gương",
+    "result": {
+     "text": "Đầu hắn treo ngoài cửa Ngọ. Trăm quan run sợ, rồi bắt đầu nói thật.",
+     "effects": {
+      "reignBar": {
+       "court": 6
+      },
+      "reignDeed": "good",
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Giữ bên mình, nhưng không cho đụng tới chính sự",
+    "result": {
+     "text": "Hắn vẫn khéo nói. Ngươi vẫn tự đọc tấu chương.",
+     "effects": {
+      "reignBar": {
+       "court": 2
+      },
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_trung_than_can",
+  "category": "reign",
+  "title": "Lão thần can gián",
+  "text": "Một vị lão thần quỳ giữa điện, đầu đội tấu chương, kể mười điều sai của ngươi, điều nào cũng có thật.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Nghe, sửa",
+    "result": {
+     "text": "Ngươi đứng dậy, đỡ lão thần lên. Sử quan chép lại chuyện ấy, đời sau đọc còn rơm rớm.",
+     "effects": {
+      "reignBar": {
+       "court": 8,
+       "people": 4
+      },
+      "reignDeed": "good",
+      "stat.daoHeart": 2
+     }
+    }
+   },
+   {
+    "text": "Đánh trượng, đuổi về quê",
+    "result": {
+     "text": "Lão thần bị đánh tám mươi trượng, khiêng ra khỏi cung. Từ đó trong triều không ai can nữa.",
+     "effects": {
+      "reignBar": {
+       "court": -10
+      },
+      "reignDeed": "bad",
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Khen ngợi, rồi quên",
+    "result": {
+     "text": "Ngươi thưởng lão một tấm lụa. Tấu chương bị xếp vào kho.",
+     "effects": {
+      "reignBar": {
+       "court": 1
+      },
+      "stat.charm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_bien_canh",
+  "category": "reign",
+  "title": "Biên cảnh cáo cấp",
+  "text": "Khói lửa báo động nổi lên ở biên ải phía bắc. Kỵ binh thảo nguyên đã vượt sông, đốt ba trấn.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Ngự giá thân chinh",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi mặc giáp, đi trước ba quân. Quân giặc tan, biên ải yên được mười năm.",
+     "effects": {
+      "reignBar": {
+       "army": 10,
+       "people": 6
+      },
+      "reignDeed": "good",
+      "stat.physique": 1,
+      "fame": 3
+     }
+    },
+    "fail": {
+     "text": "Ngươi trúng tên ở trận đầu, phải khiêng về kinh. Quân giặc cướp bóc một mùa rồi rút.",
+     "effects": {
+      "reignBar": {
+       "army": -10,
+       "people": -5
+      },
+      "stat.health": -20
+     }
+    }
+   },
+   {
+    "text": "Sai đại tướng đi đánh",
+    "result": {
+     "text": "Đại tướng thắng trận, về kinh được dân chúng hoan nghênh, có phần còn hơn cả ngươi.",
+     "effects": {
+      "reignBar": {
+       "army": 6,
+       "treasury": -6,
+       "court": -2
+      },
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Cắt đất, nộp cống cầu hòa",
+    "result": {
+     "text": "Ba châu biên giới về tay giặc. Biên ải yên, lòng người thì không.",
+     "effects": {
+      "reignBar": {
+       "people": -10,
+       "army": -4,
+       "treasury": 4
+      },
+      "reignDeed": "bad",
+      "stat.happiness": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_thien_tai",
+  "category": "reign",
+  "title": "Thiên tai",
+  "text": "Đê sông lớn vỡ, nước tràn ba phủ. Dân đói kéo nhau lên kinh, ăn mày khắp các cổng thành.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Mở quốc khố cứu tế",
+    "result": {
+     "text": "Thóc gạo chở đi theo từng đoàn xe. Quốc khố vơi, lòng dân đầy.",
+     "effects": {
+      "reignBar": {
+       "treasury": -12,
+       "people": 10
+      },
+      "reignDeed": "good",
+      "karma": 3,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Đóng cửa thành, không cho dân đói vào",
+    "result": {
+     "text": "Kinh thành yên. Ngoài cổng thành, xác người chất cao.",
+     "effects": {
+      "reignBar": {
+       "people": -14
+      },
+      "reignDeed": "bad",
+      "karma": -4,
+      "stat.daoHeart": -2
+     }
+    }
+   },
+   {
+    "text": "Bắt quan địa phương lo, ai để chết người thì chém",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Quan lại sợ mất đầu, ai nấy dốc sức. Dân qua được nạn.",
+     "effects": {
+      "reignBar": {
+       "people": 6,
+       "court": -3
+      },
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Quan lại vơ vét thêm để lo cho đủ. Dân khổ gấp đôi.",
+     "effects": {
+      "reignBar": {
+       "people": -8,
+       "court": -2
+      },
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_thich_khach",
+  "category": "reign",
+  "title": "Thích khách trong cung",
+  "text": "Đêm khuya, một tiểu thái giám cầm dao găm lao về phía long sàng.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Né",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Lưỡi dao sượt qua vai. Cấm quân lôi hắn ra, tra tấn ba ngày vẫn không khai ai sai khiến.",
+     "effects": {
+      "reignBar": {
+       "court": -2
+      },
+      "stat.health": -3,
+      "stat.daoHeart": 1
+     }
+    },
+    "fail": {
+     "text": "Ngươi trúng một nhát vào bụng. Thái y cứu được, nhưng ngươi gầy rộc đi nửa năm.",
+     "effects": {
+      "reignBar": {
+       "court": -4
+      },
+      "stat.health": -30
+     }
+    }
+   },
+   {
+    "text": "Quát hỏi ai sai hắn",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Tiểu thái giám run lẩy bẩy, đánh rơi dao, khai ra một vị thân vương. Ngươi biết phải làm gì.",
+     "effects": {
+      "reignBar": {
+       "court": 6
+      },
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Hắn không nghe, lao tới.",
+     "effects": {
+      "reignBar": {
+       "court": -4
+      },
+      "stat.health": -25
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_cong_than",
+  "category": "reign",
+  "title": "Công thần kiêu ngạo",
+  "text": "Mấy vị công thần theo ngươi từ ngày đầu, nay cậy công, đi kiệu vào cửa cung, mắng cả tể tướng.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true,
+    "how": [
+     "rebel",
+     "usurp"
+    ]
+   }
+  },
+  "weight": 2.5,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Mở tiệc, chén rượu tước binh quyền",
+    "result": {
+     "text": "Trong tiệc ngươi nói chuyện về tuổi già, về ruộng vườn. Hôm sau, cả mấy vị đều dâng sớ xin về quê, kèm ấn tướng.",
+     "effects": {
+      "reignBar": {
+       "court": 6,
+       "army": -3
+      },
+      "reignDeed": "good",
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Diệt công thần",
+    "result": {
+     "text": "Từng người một, mỗi người một tội. Đến năm thứ ba, không ai còn sống để kể chuyện ngày khởi nghiệp.",
+     "effects": {
+      "reignBar": {
+       "court": 5,
+       "army": -8
+      },
+      "reignDeed": "bad",
+      "karma": -5,
+      "stat.daoHeart": -3
+     }
+    }
+   },
+   {
+    "text": "Dung túng",
+    "result": {
+     "text": "Họ có công thật. Có điều triều thần nhìn thấy cả.",
+     "effects": {
+      "reignBar": {
+       "court": -7,
+       "army": 3
+      },
+      "stat.charm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_du_dang",
+  "category": "reign",
+  "title": "Dư đảng triều cũ",
+  "text": "Ở phương nam, có kẻ phò một người tự xưng con cháu triều cũ, dựng cờ phục quốc.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true,
+    "how": [
+     "rebel",
+     "usurp"
+    ]
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Đem quân dẹp",
+    "result": {
+     "text": "Quân triều đình kéo xuống phía nam. Cờ phục quốc đổ sau một mùa.",
+     "effects": {
+      "reignBar": {
+       "army": -4,
+       "treasury": -5,
+       "people": 2
+      },
+      "stat.physique": 1
+     }
+    }
+   },
+   {
+    "text": "Phong tước cho con cháu triều cũ, cho thờ tổ tiên",
+    "result": {
+     "text": "Người con cháu triều cũ được phong công, giữ hương hỏa. Cờ phục quốc không còn ai cầm.",
+     "effects": {
+      "reignBar": {
+       "people": 6,
+       "court": 2
+      },
+      "reignDeed": "good",
+      "karma": 2,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Truy sát tận gốc",
+    "result": {
+     "text": "Mọi người mang họ triều cũ đều bị truy lùng. Phương nam yên, nhưng là cái yên của nghĩa địa.",
+     "effects": {
+      "reignBar": {
+       "people": -8,
+       "court": 3
+      },
+      "reignDeed": "bad",
+      "karma": -5,
+      "stat.daoHeart": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_vi_hanh",
+  "category": "reign",
+  "title": "Vi hành",
+  "text": "Ngươi thay áo thường dân, cùng hai thị vệ lẻn ra khỏi cung, muốn tận mắt xem thiên hạ sống ra sao.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Ngồi quán nghe dân chửi",
+    "result": {
+     "text": "Ngươi nghe người ta chửi thuế, chửi quan, chửi cả… ngươi. Về cung, ngươi ngồi im rất lâu.",
+     "effects": {
+      "reignBar": {
+       "people": 3
+      },
+      "stat.intellect": 1,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Xử luôn một vụ quan tham giữa phố",
+    "result": {
+     "text": "Ngươi rút lệnh bài, tri huyện quỳ rạp. Chuyện được kể khắp chợ, mỗi người thêm một ít.",
+     "effects": {
+      "reignBar": {
+       "people": 6,
+       "court": -2
+      },
+      "reignDeed": "good",
+      "fame": 2,
+      "stat.charm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_dan_bien",
+  "category": "reign",
+  "title": "Dân biến",
+  "text": "Dân tâm đã cạn. Mấy châu nổi dậy cùng lúc, giết quan, đốt sổ thuế. Có nơi đã dựng cờ xưng vương.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Hạ chiếu tội kỷ, giảm thuế ba năm",
+    "result": {
+     "text": "Ngươi tự nhận tội trước thiên hạ. Thuế giảm, lòng dân dịu xuống.",
+     "effects": {
+      "reignBar": {
+       "people": 18,
+       "treasury": -12
+      },
+      "reignDeed": "good",
+      "stat.daoHeart": 2,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Đem quân đàn áp",
+    "result": {
+     "text": "Máu chảy mấy châu. Dân im, nhưng là cái im của kẻ đang nghiến răng.",
+     "effects": {
+      "reignBar": {
+       "people": 6,
+       "army": -10
+      },
+      "reignDeed": "bad",
+      "karma": -4,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Chiêu an thủ lĩnh, phong quan",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Thủ lĩnh dân biến nhận chiếu, giải tán quân. Dân quay về ruộng.",
+     "effects": {
+      "reignBar": {
+       "people": 12,
+       "court": -3
+      },
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Thủ lĩnh xé chiếu. Dân biến lan sang hai châu nữa.",
+     "effects": {
+      "reignBar": {
+       "people": -4,
+       "army": -4
+      },
+      "stat.happiness": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_giac_vay_bien",
+  "category": "reign",
+  "title": "Giặc vây biên thành",
+  "text": "Binh lực đã cạn. Quân giặc vây chặt biên thành, cấp báo tới kinh ba lần trong một ngày.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Dốc quốc khố mộ quân",
+    "result": {
+     "text": "Bạc trắng đổi lấy giáo mác. Biên thành giữ được.",
+     "effects": {
+      "reignBar": {
+       "army": 18,
+       "treasury": -15
+      },
+      "stat.physique": 1
+     }
+    }
+   },
+   {
+    "text": "Cầu hòa, gả công chúa",
+    "result": {
+     "text": "Một vị công chúa lên đường hòa thân. Biên thành yên, triều thần cúi đầu.",
+     "effects": {
+      "reignBar": {
+       "army": 8,
+       "court": -5,
+       "people": -3
+      },
+      "reignDeed": "bad",
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Thân chinh",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Ngươi đứng trên tường thành suốt bảy ngày. Quân giặc rút.",
+     "effects": {
+      "reignBar": {
+       "army": 15,
+       "people": 5
+      },
+      "reignDeed": "good",
+      "fame": 2,
+      "stat.physique": 1
+     }
+    },
+    "fail": {
+     "text": "Ngươi bị thương, quân vỡ. Biên thành mất.",
+     "effects": {
+      "reignBar": {
+       "army": -5,
+       "people": -6
+      },
+      "stat.health": -20
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_cung_bien",
+  "category": "reign",
+  "title": "Cung biến",
+  "text": "Triều thần đã chán ngươi. Đêm nay, có tiếng giáp sắt ngoài cửa tẩm cung, tiếng gọi nhau khe khẽ.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Gọi cấm quân hộ giá",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Cấm quân còn trung thành. Kẻ đầu mưu bị bắt ngay trong đêm.",
+     "effects": {
+      "reignBar": {
+       "court": 14
+      },
+      "stat.luck": 1,
+      "stat.happiness": -2
+     }
+    },
+    "fail": {
+     "text": "Cấm quân đứng ngoài nhìn. Cửa tẩm cung mở.",
+     "effects": {
+      "reignEnd": "death",
+      "stat.happiness": -10
+     }
+    }
+   },
+   {
+    "text": "Một mình bước ra, hỏi họ muốn gì",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 65
+    },
+    "success": {
+     "text": "Ngươi đứng giữa đám giáo mác, nói về ngày đầu khởi nghiệp, về ân và nghĩa. Từng người hạ giáo.",
+     "effects": {
+      "reignBar": {
+       "court": 12
+      },
+      "reignDeed": "good",
+      "stat.charm": 2
+     }
+    },
+    "fail": {
+     "text": "Không ai muốn nghe.",
+     "effects": {
+      "reignEnd": "death",
+      "stat.happiness": -10
+     }
+    }
+   },
+   {
+    "text": "Trốn ra cửa sau",
+    "result": {
+     "text": "Ngươi chạy khỏi cung trong đêm, tóc tai rũ rượi. Ngai vàng ở lại.",
+     "effects": {
+      "reignEnd": "exile",
+      "stat.happiness": -8,
+      "stat.health": -5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_quoc_kho_can",
+  "category": "reign",
+  "title": "Quốc khố cạn",
+  "text": "Hộ bộ tâu: quốc khố chỉ còn đủ phát lương nửa tháng. Quan lại nhìn nhau, quân sĩ bắt đầu xì xào.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Tăng thuế",
+    "result": {
+     "text": "Thuế tăng gấp rưỡi. Quốc khố đầy lên, dân thì gầy đi.",
+     "effects": {
+      "reignBar": {
+       "treasury": 18,
+       "people": -10
+      },
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Bán quan tước",
+    "result": {
+     "text": "Ai có bạc là có mũ áo. Quốc khố đầy, triều đình bẩn.",
+     "effects": {
+      "reignBar": {
+       "treasury": 15,
+       "court": -8
+      },
+      "reignDeed": "bad",
+      "karma": -2,
+      "stat.charm": -1
+     }
+    }
+   },
+   {
+    "text": "Cắt chi tiêu trong cung, tự mình làm gương",
+    "result": {
+     "text": "Ngươi ăn mỗi bữa ba món, mặc áo vá. Hậu cung kêu ca, triều thần nể phục.",
+     "effects": {
+      "reignBar": {
+       "treasury": 10,
+       "court": 4
+      },
+      "reignDeed": "good",
+      "stat.happiness": -3,
+      "stat.daoHeart": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_mat_nuoc",
+  "category": "reign",
+  "title": "Mất nước",
+  "text": "Mọi thứ đã sụp. Quân giặc đã vào kinh, tiếng reo hò vọng tới tận tẩm cung. Thái giám run rẩy dâng lên dải lụa trắng.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Cải trang trốn khỏi kinh",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ngươi lẫn vào dòng người chạy loạn, ra khỏi kinh thành. Từ đây ngươi chỉ là một lão già vô danh.",
+     "effects": {
+      "reignEnd": "exile",
+      "stat.happiness": -10,
+      "stat.health": -5
+     }
+    },
+    "fail": {
+     "text": "Ngươi bị nhận ra ở cổng thành.",
+     "effects": {
+      "reignEnd": "death",
+      "stat.happiness": -10
+     }
+    }
+   },
+   {
+    "text": "Mở cổng thành ra hàng",
+    "result": {
+     "text": "Ngươi cởi long bào, dâng ngọc tỷ. Kẻ thắng cho ngươi sống, trong một tòa phủ có lính canh suốt đời.",
+     "effects": {
+      "reignEnd": "exile",
+      "setFlags": [
+       "bi_giam_long"
+      ],
+      "stat.happiness": -12,
+      "stat.daoHeart": -2
+     }
+    }
+   },
+   {
+    "text": "Giữ tiết, không chịu nhục",
+    "result": {
+     "text": "Ngươi thay long bào chỉnh tề, ngồi lên ngai lần cuối.",
+     "effects": {
+      "reignEnd": "death",
+      "stat.happiness": -10,
+      "stat.daoHeart": 3
+     }
+    }
+   }
+  ]
+ }
+]

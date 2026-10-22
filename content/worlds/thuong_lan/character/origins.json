@@ -85,5 +85,17 @@
     "spiritStones": 0,
     "rebirthCost": 50,
     "birthText": "Ngươi chào đời trong vương phủ, tên được ghi vào ngọc điệp của hoàng tộc ngay hôm sau. Quê gốc của dòng họ ở {hometown}, nhưng ngươi sẽ lớn lên trong kinh thành."
+  },
+  {
+    "id": "hoang_tu",
+    "name": "Hoàng tử, công chúa",
+    "description": "Con ruột của hoàng đế đương triều, sinh ra trong cấm cung. Trên đầu là phụ hoàng, bên cạnh là mấy anh em cùng nhìn về một chiếc ghế. Ngai vàng chỉ có một.",
+    "weight": 0.3,
+    "royal": true,
+    "effects": { "stat.charm": 12, "stat.intellect": 6, "stat.happiness": 5, "stat.health": 5 },
+    "silver": 3000,
+    "spiritStones": 0,
+    "rebirthCost": 80,
+    "birthText": "Ngươi chào đời trong cấm cung, tiếng khóc đầu tiên được thái giám chạy đi bẩm lên tận ngự thư phòng. Tên ngươi ghi vào ngọc điệp ngay đêm ấy. Quê tổ của hoàng tộc ở {hometown}, nhưng ngươi sẽ lớn lên sau mười hai lớp cửa cung."
   }
 ]

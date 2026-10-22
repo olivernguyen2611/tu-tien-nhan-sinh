@@ -17,7 +17,7 @@
     "name": "Tu sĩ tọa trấn triều đình",
     "event": "cung_dinh_thu_linh",
     "requiresKnowledge": "tin_don_tien_nhan",
-    "conditions": { "age": { "min": 8, "max": 20 }, "realm": { "max": "pham_nhan" }, "origins": ["quan_gia", "quy_toc", "hoang_than"] }
+    "conditions": { "age": { "min": 8, "max": 20 }, "realm": { "max": "pham_nhan" }, "origins": ["quan_gia", "quy_toc", "hoang_than", "hoang_tu"] }
   },
   {
     "id": "co_duyen",

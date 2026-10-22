@@ -1,0 +1,1214 @@
+[
+ {
+  "id": "kn_moi_lua_thue",
+  "category": "rebel",
+  "title": "Quan sai đòi thuế",
+  "text": "Quan sai về làng đòi sưu lần thứ ba trong năm. Lão hàng xóm không có tiền nộp, bị đánh gục ngay giữa sân đình. Cả làng đứng nhìn, mắt đỏ ngầu.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 18,
+    "max": 55
+   },
+   "worldPhase": [
+    "loan_the",
+    "trung_suy"
+   ],
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "office": {
+    "held": false
+   },
+   "army": {
+    "serving": false
+   },
+   "law": {
+    "jailed": false
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Nhặt đòn gánh, hô một tiếng",
+    "result": {
+     "text": "Ngươi hô một tiếng, cả làng ùa theo. Quan sai bỏ chạy, để lại một con ngựa và cuốn sổ thuế. Đốt sổ xong, không ai còn đường lui.",
+     "effects": {
+      "throneStart": "rebel",
+      "stat.charm": 1,
+      "stat.daoHeart": 2,
+      "karma": 1
+     }
+    }
+   },
+   {
+    "text": "Góp tiền nộp thay lão",
+    "result": {
+     "text": "Ngươi dốc túi nộp thay. Quan sai cười khẩy bỏ đi. Lão hàng xóm sống, nhưng làng ngươi nghèo thêm một bậc.",
+     "effects": {
+      "silver": -20,
+      "karma": 2,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Đóng cửa, coi như không thấy",
+    "result": {
+     "text": "Đêm ấy ngươi không ngủ được. Sáng ra, người ta khiêng lão hàng xóm ra bãi tha ma.",
+     "effects": {
+      "stat.daoHeart": -2,
+      "stat.happiness": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kn_moi_lua_kho_luong",
+  "category": "rebel",
+  "title": "Kho lương quan",
+  "text": "Nạn đói đã sang tháng thứ ba. Trẻ con trong làng gầy như que củi, mà kho lương của huyện nha vẫn khóa ba lớp, lính canh ngày ngày ăn thịt.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 18,
+    "max": 55
+   },
+   "worldPhase": [
+    "loan_the",
+    "trung_suy"
+   ],
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "office": {
+    "held": false
+   },
+   "army": {
+    "serving": false
+   },
+   "law": {
+    "jailed": false
+   },
+   "court": {
+    "affair": [
+     "thien_tai",
+     "tang_thue",
+     "on_dich"
+    ]
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Đêm nay phá kho phát thóc",
+    "result": {
+     "text": "Ngươi dẫn trai làng phá cửa kho, chia thóc cho cả mười làng quanh đó. Sáng ra, người ta gọi ngươi là đại ca. Chiều đến, lệnh truy nã dán khắp huyện.",
+     "effects": {
+      "throneStart": "rebel",
+      "throneBar": {
+       "grain": 15
+      },
+      "karma": 3,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Dẫn dân tới huyện nha xin mở kho",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Tri huyện sợ dân đông, mở một kho cứu đói. Làng ngươi qua được mùa giáp hạt.",
+     "effects": {
+      "karma": 2,
+      "stat.charm": 1,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Lính huyện vác roi ra đuổi. Ngươi lĩnh mười roi, về nằm liệt ba hôm.",
+     "effects": {
+      "stat.health": -6,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Vào rừng đào củ, tự lo thân",
+    "result": {
+     "text": "Ngươi sống được qua mùa đói. Còn nhiều người khác thì không.",
+     "effects": {
+      "stat.health": -2,
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kn_moi_lua_dong_dao",
+  "category": "rebel",
+  "title": "Đồng dao lạ",
+  "text": "Trẻ con khắp chợ hát một bài đồng dao không ai dạy: \"Thạch nhân một mắt, lật đổ thiên hạ\". Tuần trước, người đào mương đầu làng vừa đào được một tượng đá một mắt.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 18,
+    "max": 55
+   },
+   "worldPhase": [
+    "loan_the",
+    "trung_suy"
+   ],
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "office": {
+    "held": false
+   },
+   "army": {
+    "serving": false
+   },
+   "law": {
+    "jailed": false
+   }
+  },
+  "weight": 0.8,
+  "cooldownYears": 15,
+  "choices": [
+   {
+    "text": "Mượn điềm trời dựng cờ",
+    "result": {
+     "text": "Ngươi dựng tượng đá giữa sân đình, tuyên rằng trời đã đổi mệnh. Người tới xem đông như hội, kẻ ở lại cầm giáo cũng không ít.",
+     "effects": {
+      "throneStart": "rebel",
+      "throneBar": {
+       "people": 8
+      },
+      "karma": -1,
+      "stat.charm": 2
+     }
+    }
+   },
+   {
+    "text": "Báo lên quan",
+    "result": {
+     "text": "Tượng đá bị đập vụn, đám trẻ hát đồng dao bị đánh đòn. Ngươi được thưởng năm lượng, mà ra đường thấy ai cũng nhìn mình.",
+     "effects": {
+      "silver": 5,
+      "karma": -2,
+      "stat.charm": -1
+     }
+    }
+   },
+   {
+    "text": "Cười cho qua",
+    "result": {
+     "text": "Ngươi bảo chuyện tầm phào. Mấy tháng sau, làng bên có người dựng cờ thật.",
+     "effects": {
+      "stat.happiness": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kn_moi_lua_bi_truy",
+  "category": "rebel",
+  "title": "Đường cùng",
+  "text": "Lệnh truy nã đã dán tới tận đầu làng. Trên núi có một sơn trại của những kẻ cũng đường cùng như ngươi, họ nhắn xuống: thiếu một người cầm đầu.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 18,
+    "max": 55
+   },
+   "worldPhase": [
+    "loan_the",
+    "trung_suy"
+   ],
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "office": {
+    "held": false
+   },
+   "army": {
+    "serving": false
+   },
+   "law": {
+    "wantedMin": 2,
+    "jailed": false
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Lên núi, dựng cờ thay trời hành đạo",
+    "result": {
+     "text": "Ngươi lên núi, dựng một lá cờ thật to. Từ kẻ bị truy nã, ngươi thành kẻ triều đình phải đem quân đi đánh.",
+     "effects": {
+      "throneStart": "rebel",
+      "throneBar": {
+       "troops": 5
+      },
+      "stat.daoHeart": 1,
+      "stat.physique": 1
+     }
+    }
+   },
+   {
+    "text": "Trốn đi phương xa",
+    "result": {
+     "text": "Ngươi đi về phía nam, đổi tên, sống như một cái bóng.",
+     "effects": {
+      "stat.happiness": -2,
+      "stat.luck": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kn_nghia_quan_moi",
+  "category": "rebel",
+  "title": "Nghĩa quân qua làng",
+  "text": "Một toán nghĩa quân áo vải đi qua làng, không cướp một hạt thóc. Thủ lĩnh của họ vừa tử trận, bọn họ đang tìm người dẫn đầu, và có kẻ chỉ tay về phía ngươi.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 18,
+    "max": 55
+   },
+   "worldPhase": [
+    "loan_the",
+    "trung_suy"
+   ],
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "office": {
+    "held": false
+   },
+   "army": {
+    "serving": false
+   },
+   "law": {
+    "jailed": false
+   },
+   "court": {
+    "affair": [
+     "khoi_nghia"
+    ]
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Nhận làm thủ lĩnh",
+    "result": {
+     "text": "Ngươi nhận lá cờ còn dính máu. Mấy trăm người quỳ xuống, gọi ngươi là chúa công.",
+     "effects": {
+      "throneStart": "rebel",
+      "throneBar": {
+       "troops": 10,
+       "people": 4
+      },
+      "stat.charm": 1,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Cho họ ăn một bữa rồi tiễn đi",
+    "result": {
+     "text": "Bọn họ ăn xong, cúi chào rồi đi. Ngươi đứng nhìn tới khi lá cờ khuất sau đồi.",
+     "effects": {
+      "silver": -10,
+      "karma": 2,
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Đóng cửa",
+    "result": {
+     "text": "Ngươi cài then cửa. Nửa đêm có tiếng gõ, rồi thôi.",
+     "effects": {
+      "stat.daoHeart": -1,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kn_quyet_sach_nam",
+  "category": "rebel",
+  "title": "Quyết sách trong năm",
+  "text": "Trong đại trướng, các đầu lĩnh ngồi quanh đống lửa chờ ngươi lên tiếng. Năm nay nghĩa quân làm gì?",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "rebel"
+    ]
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Chiêu binh mãi mã",
+    "result": {
+     "text": "Cờ chiêu binh cắm khắp các chợ. Trai tráng kéo về, có điều miệng ăn cũng nhiều thêm.",
+     "effects": {
+      "throneBar": {
+       "troops": 12,
+       "grain": -8
+      },
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Cướp kho lương của quan",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Đội kỵ binh nhỏ của ngươi đốt cổng kho lúc nửa đêm, chở về mấy chục xe lương.",
+     "effects": {
+      "throneBar": {
+       "grain": 20,
+       "troops": -2
+      },
+      "stat.physique": 1
+     }
+    },
+    "fail": {
+     "text": "Quan quân đã mai phục sẵn. Đội kỵ binh không về được nửa.",
+     "effects": {
+      "throneBar": {
+       "troops": -10
+      },
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Đánh một tòa thành",
+    "result": {
+     "text": "Thang mây dựng lên, trống trận nổi dậy.",
+     "effects": {
+      "throneBattle": true,
+      "stat.physique": 1
+     }
+    }
+   },
+   {
+    "text": "Chiêu hiền nạp sĩ",
+    "result": {
+     "text": "Ngươi mở trướng tiếp thư sinh thi trượt, tướng cũ bị cách chức, thầy thuốc giang hồ. Kẻ có tài có chỗ dùng.",
+     "effects": {
+      "throneBar": {
+       "people": 6,
+       "troops": 3
+      },
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Nghiêm quân kỷ, không phạm một cây kim của dân",
+    "result": {
+     "text": "Ngươi chém đầu một tên lính cướp gà trước ba quân. Từ đó, đi tới đâu dân cũng mở cổng làng.",
+     "effects": {
+      "throneBar": {
+       "people": 10,
+       "grain": -4
+      },
+      "karma": 2,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Thả quân cướp bóc",
+    "result": {
+     "text": "Ba ngày ba đêm, mười làng chung quanh bị vét sạch. Quân no say, dân chửi rủa.",
+     "effects": {
+      "throneBar": {
+       "grain": 18,
+       "troops": 4,
+       "people": -14
+      },
+      "karma": -5,
+      "stat.daoHeart": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kn_chieu_an",
+  "category": "rebel",
+  "title": "Chiêu an",
+  "text": "Sứ giả triều đình tới trại, mang theo thánh chỉ chiêu an: buông giáo thì tha tội, thủ lĩnh được phong quan, quân sĩ được về quê cày ruộng.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "rebel"
+    ]
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Nhận chiêu an",
+    "result": {
+     "text": "Ngươi quỳ nhận thánh chỉ. Nghĩa quân giải tán, kẻ khóc kẻ cười. Ngươi mặc áo quan, thấy cổ áo chật lạ.",
+     "effects": {
+      "throneFail": "quiet",
+      "officeJoin": "recommend",
+      "setFlags": [
+       "nhan_chieu_an"
+      ],
+      "silver": 200,
+      "stat.happiness": 1,
+      "stat.daoHeart": -2
+     }
+    }
+   },
+   {
+    "text": "Xé thánh chỉ",
+    "result": {
+     "text": "Ngươi xé thánh chỉ trước mặt sứ giả. Ba quân hô vang. Từ nay không còn đường về.",
+     "effects": {
+      "throneBar": {
+       "people": 6,
+       "troops": 3
+      },
+      "stat.daoHeart": 2,
+      "karma": -1
+     }
+    }
+   },
+   {
+    "text": "Giả vờ nhận, lừa lấy lương thảo",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Triều đình chở tới ba trăm xe lương làm lễ an phủ. Xe cuối vừa vào trại, ngươi trở mặt.",
+     "effects": {
+      "throneBar": {
+       "grain": 25,
+       "people": -3
+      },
+      "stat.intellect": 1,
+      "karma": -2
+     }
+    },
+    "fail": {
+     "text": "Sứ giả nhìn thấu. Quan quân ập tới ngay đêm ấy.",
+     "effects": {
+      "throneBar": {
+       "troops": -18
+      },
+      "stat.health": -6
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kn_cong_kinh",
+  "category": "rebel",
+  "title": "Đánh vào kinh thành",
+  "text": "Đã chiếm được nửa thiên hạ. Trước mặt ngươi là kinh thành, tường cao chín trượng, cấm quân giữ từng lỗ châu mai. Bên trong là ngai vàng.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "rebel"
+    ]
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Dốc toàn quân công thành",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 70
+    },
+    "success": {
+     "text": "Đến ngày thứ bảy, cửa Nam vỡ. Ngươi cưỡi ngựa qua cổng thành giữa tiếng reo hò, đi thẳng tới điện Thái Hòa.",
+     "effects": {
+      "throneAscend": true,
+      "stat.happiness": 6,
+      "karma": -2
+     }
+    },
+    "fail": {
+     "text": "Thành vững như núi. Nửa quân của ngươi nằm lại dưới chân tường.",
+     "effects": {
+      "throneBar": {
+       "troops": -30,
+       "people": -5
+      },
+      "stat.health": -10
+     }
+    }
+   },
+   {
+    "text": "Vây thành, chờ trong thành loạn",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 85
+    },
+    "success": {
+     "text": "Ba tháng vây hãm, trong thành hết lương. Một viên tướng giữ cửa mở cổng ra hàng.",
+     "effects": {
+      "throneAscend": true,
+      "stat.intellect": 1,
+      "stat.happiness": 5
+     }
+    },
+    "fail": {
+     "text": "Viện binh các trấn kéo về, đánh vào lưng quân ngươi.",
+     "effects": {
+      "throneBar": {
+       "troops": -25,
+       "grain": -10
+      },
+      "stat.happiness": -4
+     }
+    }
+   },
+   {
+    "text": "Lui về giữ đất đã chiếm",
+    "result": {
+     "text": "Ngươi lui quân. Trời còn dài, đất còn rộng.",
+     "effects": {
+      "throneBar": {
+       "people": 2
+      },
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kn_pho_tuong_phan",
+  "category": "rebel",
+  "title": "Phó tướng làm phản",
+  "text": "Phó tướng thân tín nhất của ngươi bí mật nhận ấn quan của triều đình. Đêm nay hắn định mở cổng trại.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "rebel"
+    ]
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Ra tay trước",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi mời hắn uống rượu, đao phủ nấp sau bình phong. Trại yên, chỉ có ngươi mất ngủ.",
+     "effects": {
+      "throneBar": {
+       "troops": -3
+      },
+      "stat.daoHeart": -1,
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Hắn đã đề phòng. Trại vỡ một nửa, hắn mang theo ba ngàn quân về hàng triều đình.",
+     "effects": {
+      "throneBar": {
+       "troops": -22,
+       "people": -4
+      },
+      "stat.happiness": -4
+     }
+    }
+   },
+   {
+    "text": "Gọi hắn tới, nói chuyện thẳng",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Hắn quỳ xuống khóc, xé ấn quan trước mặt ngươi. Từ đó hắn là kẻ liều mạng nhất trong quân.",
+     "effects": {
+      "throneBar": {
+       "troops": 4
+      },
+      "stat.charm": 1,
+      "karma": 1
+     }
+    },
+    "fail": {
+     "text": "Hắn rút đao. Ngươi thoát được, vai lãnh một nhát.",
+     "effects": {
+      "throneBar": {
+       "troops": -15
+      },
+      "stat.health": -12
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kn_quan_su",
+  "category": "rebel",
+  "title": "Quân sư tới trại",
+  "text": "Một thư sinh rách rưới đứng trước cổng trại ba ngày không chịu đi, nói chỉ cần gặp chủ tướng một lần.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "rebel"
+    ]
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 12,
+  "choices": [
+   {
+    "text": "Ra tận cổng đón vào",
+    "result": {
+     "text": "Thư sinh vẽ một tấm bản đồ, chỉ ba tòa thành nên đánh và hai tòa nên bỏ. Ngươi phong hắn làm quân sư.",
+     "effects": {
+      "throneBar": {
+       "troops": 4,
+       "people": 4
+      },
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Đuổi đi",
+    "result": {
+     "text": "\"Thư sinh biết gì chuyện đánh trận.\" Mấy năm sau, ngươi nghe nói hắn làm quân sư cho một đạo nghĩa quân khác.",
+     "effects": {
+      "stat.happiness": -1,
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kn_quan_trieu_vay",
+  "category": "rebel",
+  "title": "Quan quân vây tiễu",
+  "text": "Triều đình sai một viên đại tướng dẫn quân vây tiễu. Đuốc quan quân sáng rực một dải núi.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "rebel"
+    ]
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Giao chiến",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi dẫn tử sĩ xuyên giữa đội hình địch, chém rơi soái kỳ. Quan quân rút, bỏ lại cả lương thảo.",
+     "effects": {
+      "throneBar": {
+       "troops": 5,
+       "grain": 10,
+       "people": 4
+      },
+      "stat.physique": 1
+     }
+    },
+    "fail": {
+     "text": "Thua một trận lớn. Nghĩa quân chạy tán loạn vào rừng.",
+     "effects": {
+      "throneBar": {
+       "troops": -20,
+       "people": -3
+      },
+      "stat.health": -10
+     }
+    }
+   },
+   {
+    "text": "Rút vào núi sâu",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Quan quân lùng cả tháng không thấy bóng. Mùa mưa tới, họ rút về.",
+     "effects": {
+      "throneBar": {
+       "grain": -6
+      },
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Đường rút bị chặn. Ngươi mất cả đội hậu quân.",
+     "effects": {
+      "throneBar": {
+       "troops": -12,
+       "grain": -8
+      },
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kn_dan_ung_ho",
+  "category": "rebel",
+  "title": "Dân mang cơm nước",
+  "text": "Nghe tin nghĩa quân đi qua, dân mười làng đem cơm nắm, nước chè ra tận đường cái.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "rebel"
+    ],
+    "barMin": {
+     "people": 50
+    }
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 5,
+  "choices": [
+   {
+    "text": "Nhận, trả công bằng bạc",
+    "result": {
+     "text": "Ngươi bắt quân trả tiền đủ cho từng nắm cơm. Dân càng thương.",
+     "effects": {
+      "throneBar": {
+       "grain": 8,
+       "people": 3
+      },
+      "silver": -20,
+      "karma": 1,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Nhận cả, hứa ngày sau báo đáp",
+    "result": {
+     "text": "Lương thảo đầy thêm. Lời hứa ấy ngươi nhớ, hoặc không.",
+     "effects": {
+      "throneBar": {
+       "grain": 12
+      },
+      "stat.happiness": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kn_lien_minh",
+  "category": "rebel",
+  "title": "Liên minh nghĩa quân",
+  "text": "Thủ lĩnh một đạo nghĩa quân khác sai người tới: hai nhà hợp lại thì đủ sức đánh kinh thành, có điều chỉ được một người làm chủ.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "rebel"
+    ]
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Mời hắn tới bàn, ép hắn nhường",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Hắn nhìn quân ngươi đông hơn, cúi đầu nhận làm phó. Hai đạo quân hợp làm một.",
+     "effects": {
+      "throneBar": {
+       "troops": 15,
+       "people": 2
+      },
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Hắn bỏ về, từ đó hai nhà thành thù.",
+     "effects": {
+      "throneBar": {
+       "people": -2
+      },
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Bày tiệc Hồng Môn",
+    "result": {
+     "text": "Hắn tới, không về. Quân của hắn thành quân của ngươi, và cả thiên hạ biết ngươi là người thế nào.",
+     "effects": {
+      "throneBar": {
+       "troops": 12,
+       "people": -8
+      },
+      "karma": -5,
+      "stat.daoHeart": -2
+     }
+    }
+   },
+   {
+    "text": "Mỗi người một ngả",
+    "result": {
+     "text": "Ngươi tiễn sứ giả về. Hai lá cờ, hai con đường.",
+     "effects": {
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kn_xung_vuong",
+  "category": "rebel",
+  "title": "Xưng vương",
+  "text": "Đã có ba tòa thành. Các đầu lĩnh khuyên ngươi xưng vương, dựng triều nghi, để thiên hạ biết ai là chủ.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "rebel"
+    ],
+    "citiesMin": 3
+   },
+   "flagsNone": [
+    "xung_vuong"
+   ]
+  },
+  "weight": 2.0,
+  "cooldownYears": 20,
+  "choices": [
+   {
+    "text": "Xưng vương",
+    "result": {
+     "text": "Ngươi lên đài cao, đội mũ miện tự chế. Quân sĩ phấn chấn, còn triều đình thì quyết đem đại quân tới.",
+     "effects": {
+      "throneBar": {
+       "troops": 6,
+       "people": -3
+      },
+      "setFlags": [
+       "xung_vuong"
+      ],
+      "stat.happiness": 3,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Cao xây tường, rộng tích lương, chậm xưng vương",
+    "result": {
+     "text": "Ngươi gạt đi. Tường thành dày thêm, kho lương đầy thêm.",
+     "effects": {
+      "throneBar": {
+       "grain": 10
+      },
+      "stat.intellect": 1,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kn_on_dich_trai",
+  "category": "rebel",
+  "title": "Ôn dịch trong trại",
+  "text": "Ôn dịch bùng phát trong doanh trại. Mỗi sáng lại khiêng ra mấy chục cái xác.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "rebel"
+    ]
+   }
+  },
+  "weight": 0.8,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Cách ly người bệnh, đốt trại cũ",
+    "result": {
+     "text": "Mất một phần ba quân, nhưng dịch dừng lại.",
+     "effects": {
+      "throneBar": {
+       "troops": -10
+      },
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Tự mình vào trại bệnh chăm sóc",
+    "check": {
+     "stat": "stat.health",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Ngươi không nhiễm bệnh. Quân sĩ nhìn ngươi như nhìn thần.",
+     "effects": {
+      "throneBar": {
+       "troops": -5,
+       "people": 8
+      },
+      "stat.charm": 2,
+      "karma": 2
+     }
+    },
+    "fail": {
+     "text": "Ngươi nhiễm dịch, nằm liệt một tháng, suýt chết.",
+     "effects": {
+      "throneBar": {
+       "troops": -8
+      },
+      "stat.health": -25
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kn_que_nha",
+  "category": "rebel",
+  "title": "Quê nhà bị liên lụy",
+  "text": "Quan phủ không bắt được ngươi, bèn bắt người làng ngươi tống ngục. Tin truyền tới trại khi lá thư đã nhòe nước mắt.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "rebel"
+    ]
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 15,
+  "choices": [
+   {
+    "text": "Đem quân về cứu làng",
+    "result": {
+     "text": "Ngươi phá ngục, đưa cả làng lên núi. Từ nay họ cũng là nghĩa quân.",
+     "effects": {
+      "throneBar": {
+       "troops": 4,
+       "people": 4,
+       "grain": -6
+      },
+      "stat.happiness": 1,
+      "karma": 1
+     }
+    }
+   },
+   {
+    "text": "Nén lòng, việc lớn làm trọng",
+    "result": {
+     "text": "Ngươi không về. Mấy tháng sau mới biết làng ấy đã bị đốt.",
+     "effects": {
+      "stat.happiness": -6,
+      "stat.daoHeart": -2,
+      "throneBar": {
+       "troops": 2
+      }
+     }
+    }
+   }
+  ]
+ }
+]

@@ -1,0 +1,248 @@
+[
+ {
+  "id": "muu_do_dai_su",
+  "group": "quan_he",
+  "name": "Mưu đồ đại sự",
+  "icon": "謀",
+  "text": "Quyền cao chức trọng, mà trên đầu vẫn còn một người. Ngươi bắt đầu tính tới chuyện không ai dám nói ra.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "office": {
+    "held": true,
+    "rankMin": 4
+   }
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Ngươi gặp riêng ba người tin cẩn nhất, nói nửa câu. Cả ba đều hiểu."
+    ],
+    "effects": {
+     "throneStart": "usurp",
+     "stat.intellect": 1,
+     "stat.daoHeart": -1
+    }
+   }
+  ]
+ },
+ {
+  "id": "ung_binh",
+  "group": "nghe",
+  "name": "Ủng binh tự trọng",
+  "icon": "擁",
+  "text": "Đạo quân này do ngươi nuôi, ngươi luyện. Ngươi bắt đầu tính xem nó còn nghe ai khác không.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "army": {
+    "serving": true,
+    "rankMin": 4
+   }
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Ngươi thay mấy viên phó tướng bằng người của mình. Ấn tướng nặng hơn ngày thường."
+    ],
+    "effects": {
+     "throneStart": "usurp",
+     "stat.charm": 1,
+     "stat.daoHeart": -1
+    }
+   }
+  ]
+ },
+ {
+  "id": "ket_vay_canh",
+  "group": "quan_he",
+  "name": "Kết vây cánh",
+  "icon": "羽",
+  "text": "Mời rượu, tặng lễ, hứa hẹn. Mỗi người thêm vào là một bàn tay, và một cái miệng.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "usurp"
+    ]
+   }
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "check": {
+   "stat": "stat.charm",
+   "difficulty": 55
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Hai vị thị lang và một tướng giữ cửa thành nhận lễ của ngươi.",
+     "Một nhà thế gia gả con gái cho cháu ngươi. Hai nhà thành một."
+    ],
+    "effects": {
+     "throneBar": {
+      "power": 6
+     },
+     "stat.charm": 1,
+     "silver": -80
+    }
+   }
+  ],
+  "failOutcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Người ngươi lôi kéo cười trừ, nhận lễ rồi đóng cửa không tiếp."
+    ],
+    "effects": {
+     "throneBar": {
+      "cause": -2
+     },
+     "stat.happiness": -2,
+     "silver": -80
+    }
+   }
+  ]
+ },
+ {
+  "id": "nuoi_tu_si",
+  "group": "quan_he",
+  "name": "Nuôi tử sĩ",
+  "icon": "死",
+  "text": "Mua ngựa, rèn giáp, nuôi kẻ liều mạng trong trang trại ngoại thành.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "usurp"
+    ]
+   }
+  },
+  "months": 3,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Ba trăm tử sĩ tập võ trong một sơn trang không ai biết chủ.",
+     "Một xưởng rèn ở núi xa đỏ lửa suốt đêm."
+    ],
+    "effects": {
+     "throneBar": {
+      "troops": 7
+     },
+     "stat.physique": 1,
+     "silver": -200
+    }
+   }
+  ]
+ },
+ {
+  "id": "tao_danh_nghia",
+  "group": "quan_he",
+  "name": "Tạo danh nghĩa",
+  "icon": "名",
+  "text": "Truyền đồng dao, dựng điềm lành, phao tin hôn quân. Thiên hạ cần một lý do.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "usurp"
+    ]
+   }
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "check": {
+   "stat": "stat.intellect",
+   "difficulty": 55
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Bài đồng dao về \"chân mệnh thiên tử\" chạy khắp ba châu.",
+     "Ngươi mở kho phát chẩn ở quê nhà, dân gọi ngươi là \"phật sống\"."
+    ],
+    "effects": {
+     "throneBar": {
+      "cause": 7
+     },
+     "stat.intellect": 1,
+     "karma": -1
+    }
+   }
+  ],
+  "failOutcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Tin đồn ngươi tung ra quay ngược về chính ngươi."
+    ],
+    "effects": {
+     "throneBar": {
+      "cause": -3
+     },
+     "stat.happiness": -2
+    }
+   }
+  ]
+ }
+]

@@ -77,7 +77,8 @@ export function timesYear(state: GameState, content: Content): GameState {
     const next = file.phases.find((p) => p.id === nextId)!;
     t = { ...t, phase: next.id, phaseLeft: rng.int(next.years[0], next.years[1]) };
     say(fill(file.texts.phase, { phase: next.name, text: next.text }));
-    if (next.newDynasty) {
+    // 12.9: a ruler's dynasty falls by the reign's own bars, not by the turn of the phase.
+    if (next.newDynasty && !state.reign) {
       const old = t.dynasty;
       // A long life outlasts the list: dynasties come back (never the one that just fell).
       const fresh = file.dynasties.filter((d) => d !== old && !t.eras.some((e) => e.dynasty === d));
@@ -87,7 +88,7 @@ export function timesYear(state: GameState, content: Content): GameState {
       say(fill(file.texts.newDynasty, { old, dynasty, era }));
     }
   }
-  if (t.eraFrom !== age) {
+  if (t.eraFrom !== age && !state.reign) {
     if (t.reignLeft > 1) t = { ...t, reignLeft: t.reignLeft - 1 };
     else {
       const era = pickEra(file, t, rng);

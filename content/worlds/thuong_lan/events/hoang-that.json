@@ -1,0 +1,1799 @@
+[
+ {
+  "id": "dn_phu_hoang_hoi_bai",
+  "category": "royal",
+  "title": "Phụ hoàng hỏi bài",
+  "text": "Phụ hoàng ghé thư phòng hoàng tử, cầm quyển sách trên bàn ngươi lật vài trang, rồi hỏi một câu không có trong sách.",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 6,
+    "max": 14
+   }
+  },
+  "weight": 3,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Đáp theo ý mình",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ngươi đáp chậm mà chắc. Phụ hoàng nhìn ngươi lâu hơn thường lệ, trước khi đi còn xoa đầu ngươi một cái.",
+     "effects": {
+      "throneBar": {
+       "favor": 8
+      },
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Ngươi ấp úng nửa ngày. Phụ hoàng đặt sách xuống, quay sang hỏi hoàng huynh, hoàng huynh đáp trôi chảy.",
+     "effects": {
+      "throneBar": {
+       "favor": -4
+      },
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Đọc thuộc lòng lời thái phó giảng",
+    "result": {
+     "text": "Đúng từng chữ thái phó dạy. Phụ hoàng gật đầu, không khen cũng không chê.",
+     "effects": {
+      "throneBar": {
+       "favor": 2
+      },
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_thu_san",
+  "category": "royal",
+  "title": "Thu săn",
+  "text": "Mùa thu, ngự giá ra bãi săn ngoài thành. Phụ hoàng hứa: con nào săn được con hươu đầu tiên, được ban cung ngọc.",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 10,
+    "max": 18
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Phóng ngựa đi trước",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Mũi tên của ngươi cắm ngay cổ con hươu đầu đàn. Cả bãi săn hô vang, phụ hoàng tự tay trao cung ngọc.",
+     "effects": {
+      "throneBar": {
+       "favor": 7,
+       "power": 3
+      },
+      "stat.physique": 1,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Ngựa vấp rễ cây, ngươi ngã nhào xuống bụi gai. Hoàng huynh cưỡi ngựa qua, cười một tiếng.",
+     "effects": {
+      "stat.health": -4,
+      "throneBar": {
+       "favor": -2
+      }
+     }
+    }
+   },
+   {
+    "text": "Nhường con hươu cho hoàng huynh",
+    "result": {
+     "text": "Ngươi đã ngắm trúng, rồi hạ cung xuống. Phụ hoàng thấy hết, không nói gì. Đêm ấy trong trướng, người khen ngươi \"biết lễ\".",
+     "effects": {
+      "throneBar": {
+       "favor": 3,
+       "suspicion": -4
+      },
+      "throneRival": 2,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Mải đuổi bướm trong rừng",
+    "result": {
+     "text": "Ngươi về trướng tay không, chỉ có một vòng hoa dại. Phụ hoàng phì cười.",
+     "effects": {
+      "throneBar": {
+       "favor": 1
+      },
+      "stat.happiness": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_mau_phi_tranh_sung",
+  "category": "royal",
+  "title": "Mẫu phi tranh sủng",
+  "text": "Mẫu phi kéo ngươi vào phòng trong, dặn nhỏ: mai phụ hoàng tới, con nhớ khóc lóc kể rằng hoàng hậu hắt hủi mẹ con ta.",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 5,
+    "max": 14
+   },
+   "flagsNone": [
+    "no_mother"
+   ]
+  },
+  "weight": 1.5,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Làm theo lời mẫu phi",
+    "result": {
+     "text": "Ngươi khóc thật to. Phụ hoàng dỗ ngươi, cau mày nhìn về phía cung hoàng hậu.",
+     "effects": {
+      "throneBar": {
+       "favor": 4,
+       "suspicion": 2
+      },
+      "stat.charm": 1,
+      "karma": -1
+     }
+    }
+   },
+   {
+    "text": "Không chịu nói dối",
+    "result": {
+     "text": "Ngươi lắc đầu. Mẫu phi thở dài, nhưng đêm ấy vẫn ôm ngươi ngủ.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "throneBar": {
+       "favor": -1
+      }
+     }
+    }
+   },
+   {
+    "text": "Nghĩ cách khác: dâng phụ hoàng bức tranh mẫu phi vẽ",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Phụ hoàng ngắm tranh hồi lâu, đêm ấy ngự giá tới cung mẫu phi. Không ai phải khóc.",
+     "effects": {
+      "throneBar": {
+       "favor": 5
+      },
+      "stat.intellect": 1,
+      "stat.happiness": 1
+     }
+    },
+    "fail": {
+     "text": "Bức tranh bị thái giám đánh rơi xuống ao. Phụ hoàng chẳng hay biết gì.",
+     "effects": {
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_hoang_huynh_bat_nat",
+  "category": "royal",
+  "title": "Hoàng huynh bắt nạt",
+  "text": "Hoàng huynh lớn hơn ngươi mấy tuổi, chặn đường ngươi ở ngự hoa viên, giật lấy con dế ngươi nuôi, giẫm nát.",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 5,
+    "max": 13
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Nhịn",
+    "result": {
+     "text": "Ngươi cúi đầu đi qua. Có người đứng sau hòn non bộ đã thấy, về kể lại với phụ hoàng.",
+     "effects": {
+      "throneBar": {
+       "suspicion": -2,
+       "favor": 1
+      },
+      "stat.daoHeart": 1,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Chạy đi mách phụ hoàng",
+    "result": {
+     "text": "Hoàng huynh bị phạt quỳ trước điện. Từ hôm ấy, hắn nhìn ngươi bằng ánh mắt khác hẳn.",
+     "effects": {
+      "throneBar": {
+       "favor": 2
+      },
+      "throneRival": -3,
+      "stat.charm": -1
+     }
+    }
+   },
+   {
+    "text": "Lao vào đánh lại",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Hai đứa lăn lộn trên cỏ. Hoàng huynh chảy máu mũi trước. Phụ hoàng nghe chuyện, cười: \"Có khí phách.\"",
+     "effects": {
+      "throneBar": {
+       "favor": 3,
+       "power": 1
+      },
+      "stat.physique": 1
+     }
+    },
+    "fail": {
+     "text": "Ngươi bị đè xuống, mặt sưng vù. Thái giám chạy tới can, ai cũng bảo ngươi gây sự trước.",
+     "effects": {
+      "stat.health": -3,
+      "throneBar": {
+       "favor": -2
+      }
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_benh_nang_thuo_nho",
+  "category": "royal",
+  "title": "Bệnh nặng thuở nhỏ",
+  "text": "Ngươi sốt li bì ba ngày, thái y kê đơn nào cũng không hạ. Trong cung có kẻ đã bắt đầu thì thầm chuyện hậu sự.",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 2,
+    "max": 9
+   }
+  },
+  "weight": 1,
+  "cooldownYears": 20,
+  "choices": [
+   {
+    "text": "Gắng gượng qua cơn",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 45
+    },
+    "success": {
+     "text": "Đêm thứ tư, cơn sốt lui. Mở mắt ra, ngươi thấy phụ hoàng ngồi bên giường, áo bào chưa thay.",
+     "effects": {
+      "throneBar": {
+       "favor": 6
+      },
+      "stat.health": -2,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Ngươi qua khỏi, nhưng người yếu hẳn đi, mấy năm liền không cưỡi nổi ngựa.",
+     "effects": {
+      "stat.health": -8,
+      "stat.physique": -1,
+      "throneBar": {
+       "favor": 2
+      }
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_mung_tho",
+  "category": "royal",
+  "title": "Mừng thọ phụ hoàng",
+  "text": "Thánh thọ sắp tới. Các hoàng tử, công chúa đều lo lễ vật: kẻ dâng ngọc, kẻ dâng tranh, có kẻ cho người lên tận núi tuyết tìm sâm.",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 8,
+    "max": 40
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Tự tay viết một bài phú",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Bài phú được đọc to giữa yến tiệc. Phụ hoàng sai người chép lại, treo trong ngự thư phòng.",
+     "effects": {
+      "throneBar": {
+       "favor": 6
+      },
+      "stat.intellect": 1,
+      "fame": 1
+     }
+    },
+    "fail": {
+     "text": "Bài phú có một câu tối nghĩa. Có vị đại thần cố ý đọc chậm câu ấy, cả điện cười khẽ.",
+     "effects": {
+      "stat.happiness": -2,
+      "throneBar": {
+       "favor": -2
+      }
+     }
+    }
+   },
+   {
+    "text": "Dâng một pho tượng ngọc",
+    "result": {
+     "text": "Pho tượng ngọc lớn bằng người thật. Phụ hoàng khen \"có lòng\", rồi cho cất vào kho.",
+     "effects": {
+      "silver": -300,
+      "throneBar": {
+       "favor": 3
+      },
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Dâng một tờ sớ can",
+    "result": {
+     "text": "Ngươi dâng sớ xin giảm thuế cho vùng bị lụt, thay cho lễ vật. Phụ hoàng sầm mặt, nhưng đám đại thần nhìn ngươi bằng ánh mắt khác.",
+     "effects": {
+      "throneBar": {
+       "favor": -3,
+       "power": 5
+      },
+      "karma": 2,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_dai_than_dau_quan",
+  "category": "royal",
+  "title": "Đại thần đầu quân",
+  "text": "Một vị thượng thư nhân lúc tan triều đi chậm lại, đợi ngươi ở chân bậc đá: \"Điện hạ là bậc minh chủ. Lão thần nguyện theo.\"",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 16,
+    "max": 50
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Nhận",
+    "result": {
+     "text": "Từ nay trong triều có người lên tiếng cho ngươi. Cũng từ nay, có người ghi chép từng lần ngươi gặp ai.",
+     "effects": {
+      "throneBar": {
+       "power": 8,
+       "suspicion": 6
+      },
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Khéo léo từ chối",
+    "result": {
+     "text": "\"Thượng thư là trọng thần của phụ hoàng, bản vương đâu dám.\" Câu ấy đến tai phụ hoàng, người cười khen ngươi hiểu chuyện.",
+     "effects": {
+      "throneBar": {
+       "favor": 3,
+       "suspicion": -4
+      },
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Đem chuyện tâu lên phụ hoàng",
+    "result": {
+     "text": "Vị thượng thư bị giáng ra ngoài. Phụ hoàng tin ngươi hơn, còn triều thần thì sợ ngươi hơn.",
+     "effects": {
+      "throneBar": {
+       "favor": 6,
+       "power": -4
+      },
+      "karma": -2,
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_phu_hoang_thu_long",
+  "category": "royal",
+  "title": "Phụ hoàng thử lòng",
+  "text": "Giữa đêm, phụ hoàng gọi riêng ngươi vào tẩm cung, ho mấy tiếng rồi hỏi: \"Nếu trẫm mai này không còn, con định làm gì?\"",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 16,
+    "max": 60
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Quỳ xuống khóc, không dám nghĩ tới",
+    "result": {
+     "text": "Ngươi khóc thật lòng hay giả, chính ngươi cũng không rõ. Phụ hoàng thở dài, bảo ngươi lui ra.",
+     "effects": {
+      "throneBar": {
+       "favor": 3,
+       "suspicion": -3
+      },
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Thẳng thắn bày kế trị quốc",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Ngươi nói một mạch tới canh ba: thuế, đê điều, biên ải. Phụ hoàng im lặng nghe hết, rồi khẽ gật.",
+     "effects": {
+      "throneBar": {
+       "favor": 6,
+       "suspicion": 5
+      },
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Ngươi nói quá hăng, như thể ngai vàng đã là của mình. Phụ hoàng nhìn ngươi, ánh mắt lạnh dần.",
+     "effects": {
+      "throneBar": {
+       "suspicion": 14,
+       "favor": -3
+      },
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "\"Nhi thần chỉ mong phụ hoàng vạn tuế\"",
+    "result": {
+     "text": "Câu trả lời ai cũng biết. Phụ hoàng phẩy tay, không rõ là hài lòng hay thất vọng.",
+     "effects": {
+      "throneBar": {
+       "suspicion": -5
+      },
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_bi_vu_cao",
+  "category": "royal",
+  "title": "Bị vu cáo",
+  "text": "Có kẻ dâng mật tấu: hoàng tử, công chúa nhà ngươi riêng nuôi tử sĩ, ngấm ngầm câu kết cấm quân. Trong tờ tấu có cả tên mấy người ngươi chưa từng gặp.",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 16,
+    "max": 60
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Vào điện tự biện",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi chỉ ra từng chỗ bịa đặt. Kẻ dâng tấu bị lôi ra, khai là người của hoàng huynh.",
+     "effects": {
+      "throneBar": {
+       "suspicion": -6,
+       "favor": 3
+      },
+      "throneRival": -8,
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Lời biện không ai nghe. Ngươi bị cấm túc nửa năm, người hầu cận bị thay sạch.",
+     "effects": {
+      "throneBar": {
+       "suspicion": 12,
+       "favor": -6,
+       "power": -5
+      },
+      "stat.happiness": -4
+     }
+    }
+   },
+   {
+    "text": "Nhờ đại thần lên tiếng",
+    "requires": {
+     "throne": {
+      "barMin": {
+       "power": 30
+      }
+     }
+    },
+    "result": {
+     "text": "Mấy vị lão thần dâng sớ bảo lãnh. Mật tấu bị gác lại, nhưng phụ hoàng hỏi: sao nhiều người bênh con thế?",
+     "effects": {
+      "throneBar": {
+       "suspicion": 6,
+       "power": 2
+      },
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Quỳ nhận tội dù không có tội",
+    "result": {
+     "text": "Ngươi dập đầu xin phạt. Phụ hoàng phạt ngươi một năm bổng lộc, rồi bỗng thấy ngươi đáng thương.",
+     "effects": {
+      "throneBar": {
+       "suspicion": -8,
+       "favor": -2
+      },
+      "silver": -200,
+      "stat.happiness": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_phong_vuong",
+  "category": "royal",
+  "title": "Phong vương",
+  "text": "Ngươi đã thành niên. Chiếu chỉ ban xuống phong ngươi làm thân vương, kèm một câu hỏi: ở lại kinh thành, hay ra trấn giữ đất phong?",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 16,
+    "max": 25
+   },
+   "flagsNone": [
+    "dn_phong_vuong"
+   ]
+  },
+  "weight": 4,
+  "cooldownYears": 20,
+  "choices": [
+   {
+    "text": "Ở lại kinh thành",
+    "result": {
+     "text": "Ngươi ở gần phụ hoàng, gần triều đình, gần cả những con mắt dõi theo.",
+     "effects": {
+      "throneBar": {
+       "favor": 3,
+       "suspicion": 3
+      },
+      "setFlags": [
+       "dn_phong_vuong"
+      ],
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Ra trấn đất phong",
+    "result": {
+     "text": "Đất phong xa kinh nghìn dặm, nhưng có thành, có lính, có thuế. Ở đó ngươi là chủ.",
+     "effects": {
+      "throneBar": {
+       "power": 7,
+       "favor": -3,
+       "suspicion": -5
+      },
+      "setFlags": [
+       "dn_phong_vuong",
+       "dn_ra_phien"
+      ],
+      "stat.intellect": 1,
+      "silver": 300
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_ngoai_thich",
+  "category": "royal",
+  "title": "Ngoại thích",
+  "text": "Họ ngoại của ngươi là một thế gia lớn. Cậu ngươi tới phủ, mang theo danh sách mười hai vị quan trong triều: \"Đều là người nhà cả.\"",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 16,
+    "max": 50
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Dựa vào họ ngoại",
+    "result": {
+     "text": "Từ nay, trong triều có mười hai tiếng nói cho ngươi. Phụ hoàng ghét nhất là ngoại thích.",
+     "effects": {
+      "throneBar": {
+       "power": 10,
+       "suspicion": 8
+      },
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Giữ khoảng cách",
+    "result": {
+     "text": "Ngươi tiếp trà, nhận lễ, nhưng không nhận danh sách. Cậu ngươi về, mặt không vui.",
+     "effects": {
+      "throneBar": {
+       "suspicion": -2
+      },
+      "stat.daoHeart": 1,
+      "stat.charm": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_huynh_de_tuong_tan",
+  "category": "royal",
+  "title": "Huynh đệ tương tàn",
+  "text": "Một cung nữ lạ mặt bưng tới bát canh yến, nói là quà của hoàng huynh. Con chó nhỏ dưới chân ngươi cứ sủa mãi.",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ],
+    "rivals": true
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 14,
+    "max": 60
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Đổ đi, lặng lẽ tra xét",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi lần ra đầu mối, nắm được chứng cứ. Một ngày nào đó, nó sẽ có ích.",
+     "effects": {
+      "throneRival": -6,
+      "stat.intellect": 1,
+      "throneBar": {
+       "power": 2
+      }
+     }
+    },
+    "fail": {
+     "text": "Cung nữ kia đã nhảy giếng tự vẫn. Đầu mối đứt, chỉ còn nỗi sợ.",
+     "effects": {
+      "stat.happiness": -3,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Ăn thử một thìa cho biết",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 40
+    },
+    "success": {
+     "text": "Chỉ là canh yến. Hoàng huynh quả thật có lòng, hoặc chỉ muốn ngươi nghĩ vậy.",
+     "effects": {
+      "stat.happiness": 2,
+      "stat.luck": 1
+     }
+    },
+    "fail": {
+     "text": "Bụng quặn đau như dao cắt. Thái y cứu được ngươi, nhưng gan ruột đã tổn.",
+     "effects": {
+      "stat.health": -25,
+      "throneBar": {
+       "favor": 3
+      }
+     }
+    }
+   },
+   {
+    "text": "Mang bát canh tới trước mặt phụ hoàng",
+    "result": {
+     "text": "Phụ hoàng sai người thử canh. Con chó thử độc chết ngay. Hoàng huynh bị giam lỏng, nhưng phụ hoàng nhìn ngươi cũng chẳng vui gì.",
+     "effects": {
+      "throneRival": -14,
+      "throneBar": {
+       "suspicion": 4
+      },
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_thai_tu_giam_quoc",
+  "category": "royal",
+  "title": "Thái tử giám quốc",
+  "text": "Phụ hoàng lâm bệnh, chiếu cho thái tử giám quốc. Tấu chương chất cao trên án, mỗi bản là một chuyện sống chết.",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ],
+    "heir": "self"
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 16
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Thức trắng xem từng bản",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ba tháng giám quốc, việc nào cũng gọn. Phụ hoàng khỏi bệnh, lật xem phê chú, cười bảo: \"Được.\"",
+     "effects": {
+      "throneBar": {
+       "power": 6,
+       "favor": 4
+      },
+      "stat.intellect": 1,
+      "stat.health": -2
+     }
+    },
+    "fail": {
+     "text": "Ngươi xử sai một vụ án lớn, quan lại cả một tỉnh náo loạn. Phụ hoàng phải tự tay sửa lại.",
+     "effects": {
+      "throneBar": {
+       "favor": -6,
+       "suspicion": 4
+      },
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Mọi việc đều tâu hỏi phụ hoàng",
+    "result": {
+     "text": "Việc nhỏ cũng mang tới giường bệnh hỏi ý. Phụ hoàng mệt, nhưng an lòng.",
+     "effects": {
+      "throneBar": {
+       "suspicion": -6,
+       "power": -2
+      },
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Nhân dịp thay người của mình vào",
+    "result": {
+     "text": "Mấy chức quan trọng yếu đổi chủ. Phụ hoàng khỏi bệnh, nhìn danh sách quan mới rất lâu.",
+     "effects": {
+      "throneBar": {
+       "power": 10,
+       "suspicion": 12
+      },
+      "stat.charm": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_dong_cung_bi_nghi",
+  "category": "royal",
+  "title": "Đông cung bị nghi",
+  "text": "Phụ hoàng càng già càng đa nghi. Có lời đồn thái tử nóng lòng, đã sai người may sẵn long bào.",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ],
+    "heir": "self"
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 20
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Đóng cửa đông cung, chép kinh",
+    "result": {
+     "text": "Ngươi chép kinh Phật mỗi ngày, gửi lên phụ hoàng. Lời đồn tự tắt.",
+     "effects": {
+      "throneBar": {
+       "suspicion": -8,
+       "power": -3
+      },
+      "stat.daoHeart": 2
+     }
+    }
+   },
+   {
+    "text": "Truy cho ra kẻ tung tin",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Kẻ tung tin là người của một hoàng huynh. Ngươi để mặc phụ hoàng xử, tay mình vẫn sạch.",
+     "effects": {
+      "throneBar": {
+       "suspicion": -4
+      },
+      "throneRival": -10,
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Truy mãi không ra, chỉ khiến phụ hoàng nghĩ ngươi có tật giật mình.",
+     "effects": {
+      "throneBar": {
+       "suspicion": 8
+      },
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_hoa_than",
+  "category": "royal",
+  "title": "Hòa thân",
+  "text": "Khả hãn thảo nguyên sai sứ tới cầu thân, xin một vị công chúa. Ánh mắt cả triều đều đổ về phía ngươi.",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ],
+    "heir": "other"
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 18,
+    "max": 26
+   },
+   "gender": "nu",
+   "romance": {
+    "partner": false
+   }
+  },
+  "weight": 3,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Nhận chiếu hòa thân",
+    "result": {
+     "text": "Đoàn xe hồi môn dài ba dặm ra khỏi cổng Bắc. Ngươi ngoảnh lại kinh thành lần cuối. Từ nay ngai vàng là chuyện của người khác.",
+     "effects": {
+      "throneFail": "quiet",
+      "setFlags": [
+       "hoa_than",
+       "roi_cung"
+      ],
+      "meetNpc": {
+       "role": "khả hãn thảo nguyên",
+       "opposite": true,
+       "adult": true,
+       "peer": false,
+       "affinity": 0
+      },
+      "romance": {
+       "marry": {
+        "affinity": 30
+       }
+      },
+      "silver": 1000,
+      "stat.happiness": -6,
+      "stat.daoHeart": 2
+     }
+    }
+   },
+   {
+    "text": "Khóc xin phụ hoàng",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Phụ hoàng mềm lòng, chọn một quận chúa trong họ đi thay. Ngươi ở lại, nhưng cả triều biết ngươi nợ phụ hoàng một ân.",
+     "effects": {
+      "throneBar": {
+       "favor": -2
+      },
+      "stat.happiness": 3
+     }
+    },
+    "fail": {
+     "text": "\"Quốc sự làm trọng.\" Phụ hoàng quay mặt đi. Tháng sau, ngươi lên xe ra biên ải.",
+     "effects": {
+      "throneFail": "quiet",
+      "setFlags": [
+       "hoa_than",
+       "roi_cung"
+      ],
+      "meetNpc": {
+       "role": "khả hãn thảo nguyên",
+       "opposite": true,
+       "adult": true,
+       "peer": false,
+       "affinity": 0
+      },
+      "romance": {
+       "marry": {
+        "affinity": 20
+       }
+      },
+      "stat.happiness": -8
+     }
+    }
+   },
+   {
+    "text": "Tự xin xuất gia",
+    "result": {
+     "text": "Ngươi cắt tóc trước điện Phật trong cung. Khả hãn không thể cưới một ni cô, còn ngươi thì không thể tranh ngôi nữa.",
+     "effects": {
+      "throneFail": "quiet",
+      "setFlags": [
+       "roi_cung"
+      ],
+      "stat.daoHeart": 4,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_nu_tru",
+  "category": "royal",
+  "title": "Gà mái gáy sáng",
+  "text": "Ngươi là nữ trữ quân đầu tiên của triều đại. Sớ can dâng lên như tuyết: \"Gà mái gáy sáng, nước tất có loạn.\"",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ],
+    "heir": "self"
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 16
+   },
+   "gender": "nu"
+  },
+  "weight": 3,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Lên triều tranh luận",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Ngươi dẫn sử sách, từng đời một, chỉ ra loạn nước đều do đàn ông. Mấy vị lão thần đỏ mặt ngồi xuống.",
+     "effects": {
+      "throneBar": {
+       "power": 8
+      },
+      "stat.intellect": 1,
+      "fame": 2
+     }
+    },
+    "fail": {
+     "text": "Ngươi nói hay, nhưng triều thần không cần lý lẽ, chỉ cần một cái cớ.",
+     "effects": {
+      "throneBar": {
+       "power": -6
+      },
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Mặc kệ, lo làm việc",
+    "result": {
+     "text": "Ngươi phê tấu chương, đi tuần đê, dẹp nạn trộm. Một năm sau, số sớ can ít đi một nửa.",
+     "effects": {
+      "throneBar": {
+       "favor": 4,
+       "power": 2
+      },
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Bắt kẻ cầm đầu trị tội",
+    "result": {
+     "text": "Kẻ cầm đầu bị đánh tám mươi trượng, đày ra biên. Triều đình im lặng, theo kiểu của những kẻ đang sợ.",
+     "effects": {
+      "throneBar": {
+       "power": 5,
+       "suspicion": 6
+      },
+      "karma": -2,
+      "stat.charm": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_lap_tru_khong_thanh",
+  "category": "royal",
+  "title": "Lập trữ không thành",
+  "text": "Chiếu lập trữ đọc xong, không có tên ngươi. Trên đường về phủ, ngươi đi ngang Đông cung, đèn đuốc sáng trưng, người ra người vào chúc tụng.",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ],
+    "heir": "other"
+   },
+   "realm": {
+    "max": "pham_nhan"
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Chấp nhận, làm một hiền vương",
+    "result": {
+     "text": "Ngươi tới Đông cung chúc mừng, uống ba chén, cười ba lần. Về phủ, ngươi cất bộ giáp vào rương.",
+     "effects": {
+      "throneBar": {
+       "suspicion": -12
+      },
+      "stat.daoHeart": 2,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Không cam lòng",
+    "result": {
+     "text": "Đêm ấy ngươi ngồi một mình tới sáng. Sáng ra, ngươi cho gọi mấy người tin cẩn nhất.",
+     "effects": {
+      "followUp": {
+       "event": "dn_binh_bien_1",
+       "afterYears": [
+        1,
+        2
+       ]
+      },
+      "stat.daoHeart": -1,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Xin rời cung, đi ngao du",
+    "result": {
+     "text": "Ngươi dâng sớ xin đi thăm danh sơn. Phụ hoàng chuẩn ngay, có lẽ cũng thấy nhẹ người.",
+     "effects": {
+      "throneFail": "quiet",
+      "setFlags": [
+       "roi_cung"
+      ],
+      "stat.happiness": 2,
+      "stat.daoHeart": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_chen_ruou_ban_chet",
+  "category": "royal",
+  "title": "Chén rượu ngự ban",
+  "text": "Thái giám tổng quản tới phủ, bưng một khay gấm đỏ, trên đặt một chén rượu. \"Bệ hạ ban rượu. Điện hạ uống đi, cho tròn chữ hiếu.\"",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "realm": {
+    "max": "pham_nhan"
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Uống",
+    "result": {
+     "text": "Ngươi nâng chén, nhìn về phía hoàng cung một lần cuối, rồi uống cạn. Rượu ngọt, ngọt tới lạ.",
+     "effects": {
+      "die": "execution",
+      "stat.happiness": -10
+     }
+    }
+   },
+   {
+    "text": "Giả điên",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Ngươi hất chén rượu, cười như dại, bò trên đất tranh cơm với chó. Phụ hoàng nghe tâu, thở dài: \"Thôi, để nó sống.\"",
+     "effects": {
+      "throneBar": {
+       "suspicion": -60,
+       "favor": -25,
+       "power": -20
+      },
+      "setFlags": [
+       "gia_dien"
+      ],
+      "stat.charm": -5,
+      "stat.happiness": -5
+     }
+    },
+    "fail": {
+     "text": "Thái giám nhìn ngươi diễn hồi lâu, rồi ra hiệu. Hai tên lực sĩ giữ chặt ngươi, rót rượu vào miệng.",
+     "effects": {
+      "die": "execution",
+      "stat.happiness": -10
+     }
+    }
+   },
+   {
+    "text": "Đêm nay khởi binh",
+    "requires": {
+     "throne": {
+      "barMin": {
+       "power": 45
+      }
+     }
+    },
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Ngươi chém thái giám, phi ngựa về doanh cấm quân. Đã tới bước này, chỉ còn một đường.",
+     "effects": {
+      "throneStep": 2,
+      "followUp": {
+       "event": "dn_binh_bien_3",
+       "afterYears": [
+        0,
+        0
+       ]
+      },
+      "stat.physique": 1,
+      "stat.daoHeart": -2
+     }
+    },
+    "fail": {
+     "text": "Cửa phủ đã bị khóa từ ngoài. Ngươi chưa kịp rút kiếm.",
+     "effects": {
+      "die": "execution",
+      "stat.health": -30
+     }
+    }
+   },
+   {
+    "text": "Trèo tường trốn khỏi kinh",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ngươi trèo qua tường hậu viện, cải trang thành tiều phu, lẩn ra khỏi thành. Từ nay ngươi không còn là hoàng tộc.",
+     "effects": {
+      "throneFail": "commoner",
+      "wanted": 3,
+      "stat.health": -3,
+      "stat.happiness": -6
+     }
+    },
+    "fail": {
+     "text": "Cấm quân đã chờ sẵn dưới chân tường.",
+     "effects": {
+      "die": "execution",
+      "stat.health": -20
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_binh_bien_1",
+  "category": "royal",
+  "title": "Mưu binh biến",
+  "text": "Trong mật thất, mấy người tin cẩn nhất của ngươi trải tấm bản đồ hoàng thành. Muốn làm, phải có cấm quân.",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ],
+    "step": 0
+   },
+   "realm": {
+    "max": "pham_nhan"
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Lôi kéo thống lĩnh cấm quân",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 75
+    },
+    "success": {
+     "text": "Thống lĩnh nghe xong, rót cho ngươi một chén rượu, uống trước. Cửa cung từ nay có người mở.",
+     "effects": {
+      "throneStep": 1,
+      "followUp": {
+       "event": "dn_binh_bien_2",
+       "afterYears": [
+        1,
+        1
+       ]
+      },
+      "throneBar": {
+       "power": 6
+      },
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Thống lĩnh từ chối, mặt không đổi sắc. Ngươi không biết hắn có báo lên hay không.",
+     "effects": {
+      "throneBar": {
+       "suspicion": 15
+      },
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Dùng vàng mua chuộc",
+    "requires": {
+     "stats": [
+      {
+       "stat": "silver",
+       "gte": 1000
+      }
+     ]
+    },
+    "result": {
+     "text": "Ba rương vàng đổi lấy mấy cánh cửa cung mở đúng giờ.",
+     "effects": {
+      "throneStep": 1,
+      "followUp": {
+       "event": "dn_binh_bien_2",
+       "afterYears": [
+        1,
+        1
+       ]
+      },
+      "silver": -1000,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Thôi, chưa phải lúc",
+    "result": {
+     "text": "Ngươi cuộn bản đồ lại, đốt trong lò. Mấy người tin cẩn nhìn nhau, không ai nói gì.",
+     "effects": {
+      "throneBar": {
+       "suspicion": -3
+      },
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_binh_bien_2",
+  "category": "royal",
+  "title": "Đêm khởi sự",
+  "text": "Canh ba, cửa Bắc mở hé. Ngươi mặc giáp, dẫn mấy trăm tử sĩ lặng lẽ tiến vào. Người đang ở giữa đường là thái tử.",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ],
+    "step": 1
+   },
+   "realm": {
+    "max": "pham_nhan"
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Phục binh chặn đường thái tử",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 72
+    },
+    "success": {
+     "text": "Thái tử ngã ngựa ở cửa cung. Trời chưa sáng, trong hoàng thành không còn ai dám cản đường ngươi.",
+     "effects": {
+      "throneStep": 1,
+      "followUp": {
+       "event": "dn_binh_bien_3",
+       "afterYears": [
+        1,
+        1
+       ]
+      },
+      "throneRivalDies": true,
+      "karma": -6,
+      "stat.daoHeart": -3
+     }
+    },
+    "fail": {
+     "text": "Thái tử đã biết trước. Cấm quân phía hắn ập tới từ hai bên.",
+     "effects": {
+      "throneFail": "death",
+      "stat.health": -30
+     }
+    }
+   },
+   {
+    "text": "Tự mình xông trận",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 90
+    },
+    "success": {
+     "text": "Ngươi đi đầu, kiếm nhuốm máu tới chuôi. Trời sáng, ngươi đứng trước điện Thái Hòa, chung quanh không còn ai.",
+     "effects": {
+      "throneStep": 1,
+      "followUp": {
+       "event": "dn_binh_bien_3",
+       "afterYears": [
+        1,
+        1
+       ]
+      },
+      "throneRivalDies": true,
+      "karma": -6,
+      "stat.physique": 1,
+      "stat.health": -8
+     }
+    },
+    "fail": {
+     "text": "Một mũi tên xuyên qua giáp. Ngươi ngã xuống bậc đá, tiếng hô giết vẫn chưa dứt.",
+     "effects": {
+      "throneFail": "death",
+      "stat.health": -40
+     }
+    }
+   },
+   {
+    "text": "Quay về, dừng lại",
+    "result": {
+     "text": "Ngươi ra hiệu lui quân. Cửa Bắc đóng lại như chưa từng mở. Nhưng đêm ấy có quá nhiều người thấy ngươi mặc giáp.",
+     "effects": {
+      "throneStep": "reset",
+      "throneBar": {
+       "suspicion": 25
+      },
+      "stat.happiness": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_binh_bien_3",
+  "category": "royal",
+  "title": "Bức cung",
+  "text": "Trời sáng. Ngươi đứng trước long sàng, áo giáp còn dính máu. Phụ hoàng ngồi dậy, nhìn ngươi rất lâu.",
+  "themes": [
+   "royal"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ],
+    "step": 2
+   },
+   "realm": {
+    "max": "pham_nhan"
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Ép phụ hoàng viết chiếu truyền ngôi",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 70
+    },
+    "success": {
+     "text": "Phụ hoàng cầm bút, run tay viết chiếu thoái vị. Ngươi quỳ nhận, không dám ngẩng đầu.",
+     "effects": {
+      "throneAscend": true,
+      "karma": -3,
+      "stat.happiness": 4,
+      "stat.daoHeart": -2
+     }
+    },
+    "fail": {
+     "text": "Ngoài cửa điện bỗng vang tiếng tù và: quân cần vương từ ngoại thành đã tới. Người theo ngươi buông giáo trước.",
+     "effects": {
+      "throneFail": "death",
+      "stat.happiness": -10
+     }
+    }
+   },
+   {
+    "text": "Quỳ xuống nhận tội, xin tha cho người theo mình",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 95
+    },
+    "success": {
+     "text": "Phụ hoàng nhắm mắt: \"Trẫm già rồi.\" Ba hôm sau, chiếu truyền ngôi ban xuống, nhưng người không bao giờ gặp ngươi nữa.",
+     "effects": {
+      "throneAscend": true,
+      "stat.daoHeart": 1,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Phụ hoàng gọi cấm quân. Chúng nhìn ngươi, rồi nhìn người, và chọn người.",
+     "effects": {
+      "throneFail": "death",
+      "stat.happiness": -10
+     }
+    }
+   }
+  ]
+ }
+]

@@ -1,0 +1,995 @@
+[
+ {
+  "id": "dn_thai_hau",
+  "category": "royal",
+  "title": "Thái hậu gọi",
+  "text": "Thái hậu, bà nội của ngươi, cho gọi vào cung Từ Ninh. Bà nhìn ngươi rất lâu rồi đưa cho một chuỗi tràng hạt: \"Đứa nào sống lâu, đứa ấy thắng.\"",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "age": {
+    "min": 12,
+    "max": 30
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 20,
+  "choices": [
+   {
+    "text": "Ghi nhớ lời bà",
+    "result": {
+     "text": "Ngươi đeo chuỗi tràng hạt vào cổ tay. Từ đó, ngươi ít nói hơn, nghe nhiều hơn.",
+     "effects": {
+      "throneBar": {
+       "suspicion": -5,
+       "favor": 2
+      },
+      "stat.daoHeart": 2
+     }
+    }
+   },
+   {
+    "text": "Xin bà nói giúp với phụ hoàng",
+    "result": {
+     "text": "Bà cười, gật đầu. Mấy hôm sau, phụ hoàng gọi ngươi tới hỏi han lâu hơn mọi khi.",
+     "effects": {
+      "throneBar": {
+       "favor": 5
+      },
+      "stat.charm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "dn_hoang_muoi",
+  "category": "royal",
+  "title": "Hoàng muội cầu cứu",
+  "text": "Cô em gái út khóc lóc chạy tới: nàng bị chỉ hôn cho một lão tướng ngoài sáu mươi.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "age": {
+    "min": 18,
+    "max": 45
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 20,
+  "choices": [
+   {
+    "text": "Vào điện xin phụ hoàng đổi ý",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Phụ hoàng nghĩ một hồi, đổi người khác. Hoàng muội từ đó coi ngươi như núi dựa.",
+     "effects": {
+      "throneBar": {
+       "favor": -2,
+       "power": 3
+      },
+      "karma": 2,
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Phụ hoàng quở: \"Việc của trẫm, đến lượt ngươi dạy?\"",
+     "effects": {
+      "throneBar": {
+       "favor": -5,
+       "suspicion": 3
+      },
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Khuyên nàng nhẫn",
+    "result": {
+     "text": "Ngươi nói vài lời an ủi. Hôn lễ diễn ra đúng hẹn, nàng không bao giờ nhìn ngươi như trước nữa.",
+     "effects": {
+      "stat.happiness": -2,
+      "stat.daoHeart": -1,
+      "throneBar": {
+       "suspicion": -2
+      }
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kn_thu_linh_dich",
+  "category": "rebel",
+  "title": "Thủ lĩnh quân địch xin hàng",
+  "text": "Một viên tướng quan quân bị bắt sống, quỳ trước trướng xin hàng, nguyện dẫn đường đánh thành cũ của mình.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "rebel"
+    ]
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Nhận hàng, trọng dụng",
+    "result": {
+     "text": "Hắn dẫn đường thật. Tòa thành ấy mở cổng mà không cần một mũi tên.",
+     "effects": {
+      "throneBattle": true,
+      "throneBar": {
+       "troops": 4
+      },
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Chém để tế cờ",
+    "result": {
+     "text": "Đầu hắn treo trên cột cờ. Quân sĩ phấn chấn, nhưng từ đó không viên tướng nào dám hàng ngươi nữa.",
+     "effects": {
+      "throneBar": {
+       "troops": 3,
+       "people": -2
+      },
+      "karma": -2,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Thả về",
+    "result": {
+     "text": "Ngươi trả lại ngựa, tiễn hắn ra khỏi trại. Tin ấy lan khắp quan quân.",
+     "effects": {
+      "throneBar": {
+       "people": 5
+      },
+      "karma": 2,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kn_ky_luat",
+  "category": "rebel",
+  "title": "Lính cướp của dân",
+  "text": "Một tên lính dưới trướng cướp gà của bà cụ ở làng bên. Bà cụ chống gậy tới tận cổng trại.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "rebel"
+    ]
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Chém, đền gấp mười",
+    "result": {
+     "text": "Cả làng tận mắt thấy. Tối ấy, ba chục trai làng tới xin đầu quân.",
+     "effects": {
+      "throneBar": {
+       "people": 6,
+       "troops": 3
+      },
+      "karma": 1,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Đền tiền cho bà cụ, phạt roi",
+    "result": {
+     "text": "Bà cụ cầm tiền về. Quân sĩ biết lệnh có răng, nhưng răng không sắc lắm.",
+     "effects": {
+      "throneBar": {
+       "people": 2
+      },
+      "silver": -10,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Đuổi bà cụ đi",
+    "result": {
+     "text": "Bà cụ bị xô ngã ngoài cổng trại. Cả vùng nhớ chuyện ấy.",
+     "effects": {
+      "throneBar": {
+       "people": -8
+      },
+      "karma": -3,
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tp_thong_gia",
+  "category": "usurp",
+  "title": "Kết thông gia với phiên trấn",
+  "text": "Một vị phiên trấn nắm năm vạn quân muốn gả con gái cho con trai ngươi, hoặc cưới con gái ngươi. Ai cũng hiểu đó không chỉ là chuyện cưới xin.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "usurp"
+    ]
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 15,
+  "choices": [
+   {
+    "text": "Nhận lời",
+    "result": {
+     "text": "Lễ cưới linh đình. Từ nay năm vạn quân kia là người nhà.",
+     "effects": {
+      "throneBar": {
+       "troops": 12,
+       "power": 4
+      },
+      "silver": -300,
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Từ chối khéo",
+    "result": {
+     "text": "Ngươi viện cớ tuổi tác. Vị phiên trấn không vui, nhưng cũng không làm gì.",
+     "effects": {
+      "throneBar": {
+       "cause": 2
+      },
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tp_dao_ngu_trong_quan",
+  "category": "usurp",
+  "title": "Tin đồn trong quân",
+  "text": "Trong quân bắt đầu có lời đồn chủ tướng muốn làm phản. Có kẻ sợ, có kẻ mừng.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "usurp"
+    ]
+   },
+   "army": {
+    "serving": true
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Tập hợp ba quân, nói rõ",
+    "result": {
+     "text": "Ngươi đứng trên đài cao, nói về lương bổng nợ đọng, về hôn quân gian thần. Ba quân hô vang tên ngươi.",
+     "effects": {
+      "throneBar": {
+       "troops": 8,
+       "cause": 4
+      },
+      "stat.charm": 1,
+      "karma": -1
+     }
+    }
+   },
+   {
+    "text": "Bắt kẻ tung tin",
+    "result": {
+     "text": "Mấy cái đầu rơi. Lời đồn tắt, nhưng nỗi sợ thì không.",
+     "effects": {
+      "throneBar": {
+       "troops": -3
+      },
+      "stat.daoHeart": -2,
+      "karma": -2
+     }
+    }
+   },
+   {
+    "text": "Phủ nhận, thưởng thêm lương",
+    "result": {
+     "text": "Ngươi mở kho phát lương. Quân sĩ no bụng thì ít bàn chuyện.",
+     "effects": {
+      "throneBar": {
+       "troops": 3
+      },
+      "silver": -150,
+      "stat.charm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tp_sung_than",
+  "category": "usurp",
+  "title": "Sủng thần dò hỏi",
+  "text": "Một vị sủng thần của thiên tử bỗng tới thăm phủ ngươi, hỏi han rất kỹ chuyện gia nhân, chuyện ngựa nuôi.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "usurp"
+    ]
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Đãi rượu, đút lót",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Hắn về, tâu với thiên tử rằng ngươi chỉ mê nuôi cá.",
+     "effects": {
+      "throneBar": {
+       "power": 2
+      },
+      "silver": -200,
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Hắn nhận vàng rồi vẫn tâu thật.",
+     "effects": {
+      "followUp": {
+       "event": "tp_bai_lo",
+       "afterYears": [
+        0,
+        0
+       ]
+      },
+      "silver": -200,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Tiếp lạnh nhạt",
+    "result": {
+     "text": "Hắn về, không nói gì. Đó mới là điều đáng sợ.",
+     "effects": {
+      "throneBar": {
+       "cause": 1
+      },
+      "stat.daoHeart": -1,
+      "stat.luck": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_su_quan",
+  "category": "reign",
+  "title": "Sử quan",
+  "text": "Sử quan chép rằng năm ấy ngươi giết oan một vị đại thần. Ngươi đòi xem quốc sử, sử quan quỳ xuống, ôm chặt cuốn sách.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "reign": {
+    "active": true
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 20,
+  "choices": [
+   {
+    "text": "Thôi, để y chép",
+    "result": {
+     "text": "Ngươi quay đi. Đời sau đọc tới đoạn ấy, có người chép miệng, có người khen ngươi biết sợ sử.",
+     "effects": {
+      "reignBar": {
+       "court": 6
+      },
+      "reignDeed": "good",
+      "stat.daoHeart": 2
+     }
+    }
+   },
+   {
+    "text": "Bắt sửa lại",
+    "result": {
+     "text": "Sử quan không sửa, bị chém. Em y kế chức, chép y như cũ. Ngươi chém nốt. Người em thứ ba cầm bút, ngươi thôi.",
+     "effects": {
+      "reignBar": {
+       "court": -8
+      },
+      "reignDeed": "bad",
+      "karma": -3,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_dieu_lanh",
+  "category": "reign",
+  "title": "Điềm lành",
+  "text": "Các châu dâng tấu: lúa một gốc chín bông, hươu trắng hiện ở núi, nước sông trong ba ngày.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "reign": {
+    "active": true
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Mở lễ tạ trời",
+    "result": {
+     "text": "Đại lễ ở đàn Nam Giao kéo dài ba ngày. Dân chúng tin rằng trời đứng về phía ngươi.",
+     "effects": {
+      "reignBar": {
+       "people": 5,
+       "treasury": -4
+      },
+      "stat.happiness": 2
+     }
+    }
+   },
+   {
+    "text": "\"Điềm lành ở lòng người, không ở hươu trắng\"",
+    "result": {
+     "text": "Ngươi bác bỏ hết tấu chương, chỉ hỏi chuyện mùa màng. Triều thần nể phục.",
+     "effects": {
+      "reignBar": {
+       "court": 4
+      },
+      "reignDeed": "good",
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tv_hoang_tu_tranh",
+  "category": "reign",
+  "title": "Các hoàng tử tranh nhau",
+  "text": "Các con ngươi đã lớn, mỗi đứa một phe, kéo bè kết đảng trong triều như ngươi ngày xưa.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "reign": {
+    "active": true
+   },
+   "age": {
+    "min": 45
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Thẳng tay dẹp phe cánh",
+    "result": {
+     "text": "Mấy vị quan đứng sau các hoàng tử bị cách chức. Các con ngươi im lặng, nhưng nhìn ngươi bằng ánh mắt lạ.",
+     "effects": {
+      "reignBar": {
+       "court": 6
+      },
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Để chúng tự đấu, người mạnh nhất kế vị",
+    "result": {
+     "text": "Ngươi ngồi nhìn. Triều đình loạn như ổ ong.",
+     "effects": {
+      "reignBar": {
+       "court": -8
+      },
+      "stat.intellect": 1,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Gọi cả bọn tới, kể chuyện năm xưa",
+    "result": {
+     "text": "Ngươi kể chuyện anh em mình ngày trước, kể tới đâu mắt các con đỏ tới đó.",
+     "effects": {
+      "reignBar": {
+       "court": 3
+      },
+      "stat.charm": 1,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tc_doi_trieu",
+  "category": "court",
+  "title": "Đổi triều",
+  "text": "Triều đại cũ vừa mất. Lý trưởng gọi cả làng ra đình nghe đọc chiếu của tân triều, rồi dặn: từ nay viết niên hiệu mới, ai viết sai thì đánh đòn.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "age": {
+    "min": 14
+   },
+   "worldPhase": [
+    "tan_trieu"
+   ]
+  },
+  "weight": 1.5,
+  "cooldownYears": 20,
+  "choices": [
+   {
+    "text": "Treo cờ tân triều trước cửa",
+    "result": {
+     "text": "Nhà ngươi là nhà đầu tiên treo cờ. Lý trưởng gật gù.",
+     "effects": {
+      "stat.charm": 1,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Lén thắp nén nhang cho triều cũ",
+    "result": {
+     "text": "Ngươi đốt nhang sau vườn. Không ai thấy, trừ con chó.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "karma": 1
+     }
+    }
+   },
+   {
+    "text": "Ai làm vua cũng vậy",
+    "result": {
+     "text": "Ngươi ra đồng cày tiếp. Đổi triều thì thóc vẫn là thóc.",
+     "effects": {
+      "stat.happiness": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tc_nghia_quan_qua",
+  "category": "court",
+  "title": "Nghĩa quân qua làng",
+  "text": "Một đạo nghĩa quân đi qua, cờ đỏ rợp đường. Họ xin thóc, xin trai tráng, hứa ngày thành công sẽ miễn thuế ba năm.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "age": {
+    "min": 14
+   },
+   "court": {
+    "affair": [
+     "khoi_nghia"
+    ]
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Góp thóc",
+    "result": {
+     "text": "Ngươi đổ nửa bồ thóc vào bao của họ. Thủ lĩnh ghi tên ngươi vào sổ.",
+     "effects": {
+      "silver": -15,
+      "karma": 1,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Đóng cửa, giấu thóc",
+    "result": {
+     "text": "Ngươi chôn thóc dưới gầm giường. Nghĩa quân đi, quan quân tới, lại hỏi y như vậy.",
+     "effects": {
+      "stat.happiness": -1,
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Báo cho quan quân",
+    "result": {
+     "text": "Ngươi được thưởng mấy lượng. Nửa tháng sau, có người đốt nhà kho của ngươi.",
+     "effects": {
+      "silver": 8,
+      "karma": -3,
+      "stat.happiness": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tc_thuong_nhan_chien",
+  "category": "court",
+  "title": "Buôn bán thời chiến",
+  "text": "Chiến sự nổ ra, giá muối, giá sắt tăng gấp năm. Bạn hàng rủ ngươi chở một chuyến lên biên ải bán cho quân doanh.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "age": {
+    "min": 18
+   },
+   "court": {
+    "affair": [
+     "ngoai_xam",
+     "khoi_nghia"
+    ]
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Chở đi",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Chuyến hàng tới nơi trót lọt. Ngươi về với một túi bạc nặng trĩu.",
+     "effects": {
+      "silver": 120,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Giữa đường gặp loạn binh, mất sạch hàng, may còn giữ được mạng.",
+     "effects": {
+      "silver": -60,
+      "stat.health": -6
+     }
+    }
+   },
+   {
+    "text": "Giữ hàng chờ giá lên nữa",
+    "result": {
+     "text": "Giá lên thật. Có điều hàng xóm nhìn ngươi như nhìn kẻ ăn cướp.",
+     "effects": {
+      "silver": 60,
+      "karma": -2,
+      "stat.charm": -1
+     }
+    }
+   },
+   {
+    "text": "Đem muối bán rẻ cho làng",
+    "result": {
+     "text": "Ngươi bán theo giá cũ. Lời ít, nhưng cả làng có muối ăn.",
+     "effects": {
+      "karma": 3,
+      "stat.charm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tc_thu_sinh_luan_trieu",
+  "category": "court",
+  "title": "Thư sinh luận triều chính",
+  "text": "Ở tửu lâu, một đám thư sinh say rượu bàn chuyện triều đình, có kẻ to gan chửi cả thiên tử. Người ở bàn bên cạnh lặng lẽ đứng dậy đi ra.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "age": {
+    "min": 16,
+    "max": 50
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Kéo đám bạn về ngay",
+    "result": {
+     "text": "Ngươi lôi từng đứa ra khỏi tửu lâu. Đêm ấy, quan quân tới bắt hết những ai còn ngồi lại.",
+     "effects": {
+      "stat.intellect": 1,
+      "karma": 1
+     }
+    }
+   },
+   {
+    "text": "Hùa theo chửi",
+    "result": {
+     "text": "Sướng miệng một trận. Sáng hôm sau, ngươi bị gọi lên nha môn hỏi chuyện.",
+     "effects": {
+      "stat.happiness": 1,
+      "wanted": 1
+     }
+    }
+   },
+   {
+    "text": "Lặng lẽ trả tiền rồi về",
+    "result": {
+     "text": "Ngươi không nghe, không thấy, không nói.",
+     "effects": {
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tc_vua_moi_dai_xa",
+  "category": "court",
+  "title": "Tân quân đại xá",
+  "text": "Tân quân lên ngôi, ban chiếu đại xá thiên hạ, giảm thuế một năm. Chợ phiên đông như hội.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "age": {
+    "min": 14
+   },
+   "worldPhase": [
+    "tan_trieu",
+    "thinh_the"
+   ]
+  },
+  "weight": 0.8,
+  "cooldownYears": 20,
+  "choices": [
+   {
+    "text": "Mở tiệc ăn mừng",
+    "result": {
+     "text": "Cả xóm mổ lợn, uống rượu suốt hai ngày.",
+     "effects": {
+      "stat.happiness": 4,
+      "silver": -10
+     }
+    }
+   },
+   {
+    "text": "Dành dụm tiền thuế được miễn",
+    "result": {
+     "text": "Ngươi chôn số bạc dành được dưới gốc cây cau.",
+     "effects": {
+      "silver": 15,
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tc_lao_binh",
+  "category": "court",
+  "title": "Lão binh về làng",
+  "text": "Một lão binh cụt tay về làng sau hai mươi năm chinh chiến. Tối nào lão cũng ngồi đầu đình, kể chuyện trận mạc cho lũ trẻ.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "age": {
+    "min": 8,
+    "max": 30
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 20,
+  "choices": [
+   {
+    "text": "Ngồi nghe",
+    "result": {
+     "text": "Lão kể về một đêm tuyết ở biên ải, về người bạn chết trong vòng tay lão. Ngươi ngồi tới khuya.",
+     "effects": {
+      "stat.intellect": 1,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Xin lão dạy múa đao",
+    "result": {
+     "text": "Lão cười móm mém, cầm cây gậy dạy ngươi ba thế đao. Tay lão run, mà thế đao không run.",
+     "effects": {
+      "stat.physique": 1,
+      "stat.happiness": 1
+     }
+    }
+   }
+  ]
+ }
+]

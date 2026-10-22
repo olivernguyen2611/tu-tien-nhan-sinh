@@ -1,0 +1,84 @@
+[
+ {
+  "id": "tu_nghia",
+  "group": "pham_phap",
+  "name": "Tụ nghĩa",
+  "icon": "義",
+  "text": "Thời loạn, quan tham, dân đói. Ngươi lén gặp những kẻ cùng chí hướng, bàn chuyện dựng cờ.",
+  "conditions": {
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 18,
+    "max": 55
+   },
+   "worldPhase": [
+    "loan_the",
+    "trung_suy"
+   ],
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "office": {
+    "held": false
+   },
+   "army": {
+    "serving": false
+   },
+   "law": {
+    "jailed": false
+   },
+   "tier": [
+    "pham_gian"
+   ]
+  },
+  "months": 3,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 2
+  },
+  "check": {
+   "stat": "stat.charm",
+   "difficulty": 55
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Ba đêm liền, trong miếu hoang có người thề máu. Sáng ngày thứ tư, lá cờ của ngươi bay trên núi."
+    ],
+    "effects": {
+     "throneStart": "rebel",
+     "stat.charm": 1,
+     "stat.daoHeart": 1
+    }
+   }
+  ],
+  "failOutcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Có kẻ trong đám đem chuyện tố lên quan. Ngươi phải trốn biệt mấy tháng."
+    ],
+    "effects": {
+     "wanted": 1,
+     "stat.happiness": -3
+    }
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Người ta nghe ngươi nói, gật gù, rồi ai về nhà nấy. Thời chưa tới."
+    ],
+    "effects": {
+     "stat.happiness": -1,
+     "stat.intellect": 1
+    }
+   }
+  ]
+ }
+]
