@@ -123,6 +123,18 @@ export function continueAsHeir(state: GameState, content: Content, heirId: strin
   const lines: LogLine[] = [{ text: (child ? t.child : t.disciple).replaceAll('{name}', option.name).replaceAll('{parent}', parentName), tone: 'rare' }];
   if (s.ownSect) lines.push({ text: t.sect.replaceAll('{sect}', s.ownSect.name), tone: 'good' });
   s = { ...s, log: [{ age: option.age, lines }] };
+  // 10.5: the temper the upbringing made carries over.
+  const temper = child?.temper ? content.relations?.tempers.find((x) => x.id === child.temper) : undefined;
+  if (temper) {
+    const stats = { ...s.stats };
+    const apts = { ...s.aptitudes };
+    for (const [key, d] of Object.entries(temper.heirStats)) {
+      const k = key.replace(/^stat\./, '');
+      if (k in stats) stats[k as keyof typeof stats] = Math.max(0, Math.min(100, stats[k as keyof typeof stats] + d));
+      else if (k in apts) apts[k as keyof typeof apts] = Math.max(0, Math.min(100, apts[k as keyof typeof apts] + d));
+    }
+    s = { ...s, stats, aptitudes: apts };
+  }
   // Backlog 2 (Gia đạo): what the parent taught the child. The technique is learned once cultivation starts.
   if (child) {
     const bonus = heirInsightBonus(content, child);

@@ -291,6 +291,7 @@
     "retireAge": 55,
     "colleagues": 2
   },
+  "kinship": { "oathDaoHeart": -10, "oathKarma": -5, "swornDeathHappiness": -8, "temperAge": 16 },
   "assets": {
     "priceFollow": 0.6,
     "resale": 0.7,

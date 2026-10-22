@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### 10.5 Quan hệ (2026-10-22)
+- 17 việc mới với người quen (`content/npc-acts.json`): khen, chê, kể chuyện cười, trêu chọc, cãi nhau, cho tiền, hỏi mượn tiền, cho vay, đòi nợ, trả nợ, rủ lên tửu lâu, đi hội, đi săn, kết nghĩa, tuyệt giao; với kẻ thù thêm đánh một trận và tố cáo lên quan. Việc lọc theo loại quan hệ, tuổi và chuyện giữa hai người (ai nợ ai, đã kết nghĩa chưa).
+- Nợ nần với người quen hiện ở mục Thông tin; kết nghĩa (qua việc hoặc sự kiện "Kết nghĩa kim lan") là lời thề: tuyệt giao, đánh hay tố cáo huynh đệ thì mất Đạo tâm, nghiệp xấu thêm; huynh đệ mất thì đau như mất người nhà. Tuyệt giao xong người ấy thành kẻ thù, cầu hòa được thì nối lại.
+- Con cái kiểu BitLife: dạy chữ, đánh đòn, chiều chuộng, kể chuyện xưa, lo dựng vợ gả chồng (con từ 18). Cách nuôi dồn lại thành tính nết lúc 16 tuổi (được chiều sinh hư, hiếu thuận, nghiêm cẩn, ngang bướng), hiện trong Gia đình và theo con khi con nối dõi (cộng/trừ chỉ số).
+- 7 sự kiện mới (`quan-he.json`): kẻ thù vu cáo, đốt nhà, thuê người đánh úp; huynh đệ gặp nạn; bạn rủ đi giang hồ; bạn hỏi vay vốn; bạn thân trở mặt.
+- Chưa làm: chuyển `family-actions.json` sang khung hoạt động (giữ nguyên chỗ cũ cho an toàn).
+
 ### 10.4 Tài sản (2026-10-22)
 - 17 tài sản trong 6 loại (`content/assets.json`, số trong `balance.assets`): nhà (lều tranh → nhà ngói → trạch viện → phủ đệ), ruộng (tới 20 mẫu), cửa hiệu (quán trà, tiệm thuốc cần nghề thuốc, lò rèn cần nghề rèn, tửu lâu), trâu, ngựa, xe bò, thuyền, ngọc bội, tranh cổ, đồ cổ (có thể là đồ giả, bán mới biết).
 - Mỗi năm: thu và tốn phí; ruộng thu theo vụ chọn (lúa mùa / khoai / đậu) so với thời tiết, có lời đồn đúng 70%; cửa hiệu theo cách làm ăn (bình ổn, mở rộng, bán rẻ giúp người, buôn lậu có thể bị bắt); rủi ro (cháy, trộm, cường hào lấn ruộng, trâu chết, đắm thuyền…); vài năm một lần tài sản tác động chỉ số.

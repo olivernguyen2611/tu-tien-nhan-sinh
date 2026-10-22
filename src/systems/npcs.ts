@@ -185,6 +185,7 @@ export function ageNpcs(state: GameState, content: Content): GameState {
   const rng = Rng.fromState(state.rng);
   const realms = realmList(content);
   const lines: LogLine[] = [];
+  let swornLost = 0;
   const out: Npc[] = [];
 
   for (const n0 of state.npcs) {
@@ -237,11 +238,18 @@ export function ageNpcs(state: GameState, content: Content): GameState {
         const who = state.romance.partner === n.id ? 'bạn đời' : state.romance.lover === n.id ? 'người thương' : n.role;
         lines.push({ text: `Nghe tin ${who} ${n.name} ${how}.`, tone: n.grudge > 0 ? 'normal' : 'bad' });
       }
+      // 10.5: a sworn sibling's death weighs like kin's.
+      if (n.sworn && content.balance.kinship) {
+        swornLost += content.balance.kinship.swornDeathHappiness;
+        const t = content.relations?.oath?.died;
+        if (t) lines.push({ text: t.replaceAll('{npc}', n.name), tone: 'bad' });
+      }
     }
     out.push(n);
   }
 
   let s: GameState = { ...state, rng: rng.getState(), npcs: forgetExtra(out, cfg.max) };
+  if (swornLost) s = { ...s, stats: { ...s.stats, happiness: clamp(s.stats.happiness + swornLost) } };
   if (lines.length > 0) {
     const log = s.log.slice();
     const last = log[log.length - 1];
@@ -315,6 +323,10 @@ export function npcInfo(state: GameState, content: Content, n: Npc): NpcInfo {
   // 9.6: what they do now, and the last things done together.
   const job = content.relations?.occupations.find((o) => o.id === n.occupation)?.name;
   if (job) rows.push({ label: 'Giờ làm', value: job });
+  // 10.5: an oath, a cut tie, silver between the two.
+  if (n.sworn) rows.push({ label: 'Kết nghĩa', value: `từ năm ${n.sworn} tuổi` });
+  if (n.cut) rows.push({ label: 'Quan hệ', value: 'Đã tuyệt giao' });
+  if (n.owed) rows.push({ label: 'Nợ nần', value: n.owed > 0 ? `nợ ngươi ${n.owed} lượng` : `ngươi nợ ${-n.owed} lượng` });
   if (n.memories?.length) rows.push({ label: 'Kỷ niệm', value: n.memories.slice().reverse().map((m) => `${m.text} (${m.age} tuổi)`).join(' · ') });
   if (tier >= 1) {
     if (label.surface) rows.push({ label: 'Tính nết', value: label.surface });

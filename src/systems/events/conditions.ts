@@ -215,6 +215,7 @@ function npcMeets(state: GameState, c: NonNullable<Conditions['npc']>, content?:
   if (c.occupation?.length && !c.occupation.includes(n.occupation ?? '')) return false;
   if (c.minMemories !== undefined && (n.memories?.length ?? 0) < c.minMemories) return false;
   if (c.masked !== undefined && (!content || isMasked(content, n) !== c.masked)) return false;
+  if (c.sworn !== undefined && !!n.sworn !== c.sworn) return false;
   if (c.minRealmGap !== undefined || c.maxRealmGap !== undefined) {
     const order = content?.cultivation.realms.realms.map((r) => r.id) ?? ['pham_nhan'];
     const gap = order.indexOf(n.realm) - order.indexOf(state.cult.realm);

@@ -169,6 +169,8 @@ const BaseConditionsSchema = z
         natureKnown: z.boolean().optional(),
         /** Their hidden nature does not match the face they show. */
         masked: z.boolean().optional(),
+        /** 10.5: sworn (kết nghĩa) with the player, or not. */
+        sworn: z.boolean().optional(),
         /** Their realm compared to the player's: -1 lower, 0 same, 1 higher. */
         minRealmGap: z.number().int().optional(),
         maxRealmGap: z.number().int().optional(),
@@ -371,6 +373,8 @@ export const EffectsSchema = z
         reveal: z.boolean().optional(),
         kill: z.boolean().optional(),
         role: z.string().min(1).optional(),
+        /** 10.5: swear the kết nghĩa oath with them. */
+        sworn: z.boolean().optional(),
       })
       .strict()
       .optional(),
@@ -1696,6 +1700,8 @@ export const BalanceSchema = z
       })
       .strict()
       .optional(),
+    /** 10.5 Quan hệ: a broken kết nghĩa oath (Đạo tâm, nghiệp), a sworn sibling's death (Hạnh phúc), the age a child's temper shows. */
+    kinship: z.object({ oathDaoHeart: z.number(), oathKarma: z.number(), swornDeathHappiness: z.number(), temperAge: z.number().int().min(1) }).strict().optional(),
     /** 10.4 Tài sản (content/assets.json has the assets, crops, ways of trading and loans). */
     assets: z
       .object({
@@ -2079,6 +2085,9 @@ export const FamilyActionSchema = z
     refused: ActionOutcomeSchema.optional(),
     mishapChance: z.number().min(0).max(1).default(0),
     mishap: ActionOutcomeSchema.optional(),
+    /** 10.5: how it brings a child up (− strict, + spoiling); marrying a child off (once, from 18). */
+    rearing: z.number().default(0),
+    marry: z.boolean().default(false),
     affinity: affinityRange,
     effects: familyEffects,
     texts: TextPoolSchema,
@@ -2199,6 +2208,15 @@ export const NpcActSchema = z
     reveal: z.boolean().default(false),
     /** Eases this much grudge on success. */
     grudgeEase: z.number().min(0).default(0),
+    /** 10.5: only for people of these relation kinds (relations.json) / not these; player at least this old. */
+    kinds: ids,
+    notKinds: ids,
+    minAge: z.number().int().min(0).optional(),
+    /** 10.5: what else it does: lend (cost becomes their debt), borrow (silver becomes the player's debt), collect / repay
+     *  a debt, swear the kết nghĩa oath, cut ties (tuyệt giao), report them to the quan, fight. */
+    special: z.enum(['lend', 'borrow', 'collect', 'repay', 'swear', 'cut', 'report', 'fight']).optional(),
+    /** 10.5: grudge it adds on success (a fight, a report, a quarrel). */
+    grudgeAdd: z.number().min(0).default(0),
     check: z.object({ stat: z.string().min(1), difficulty: z.number() }).strict().optional(),
     success: ActionOutcomeSchema,
     fail: ActionOutcomeSchema.optional(),
@@ -3080,6 +3098,10 @@ export const RelationsFileSchema = z.object({
   }).strict()).default([]),
   /** Starting acquaintances (balance.npcs.childhoodAge): role, kind, peer or older. */
   childhood: z.array(z.object({ role: z.string().min(1), kind: id, peer: z.boolean().default(false), affinity: z.number().default(55), text: z.string().min(1) }).strict()).default([]),
+  /** 10.5: the temper a child grows into by the rearing tally (first whose range holds); {child} in text. heirStats: what it gives a child who carries the line on. */
+  tempers: z.array(z.object({ id, name: z.string().min(1), min: z.number().optional(), max: z.number().optional(), text: z.string().min(1), affinity: z.number().default(0), heirStats: z.record(z.number()).default({}) }).strict()).default([]),
+  /** 10.5: kết nghĩa texts: an oath broken, a sworn sibling dies ({npc}). */
+  oath: z.object({ broken: z.string().min(1), died: z.string().min(1) }).strict().optional(),
 }).strict();
 export type RelationsFile = z.infer<typeof RelationsFileSchema>;
 

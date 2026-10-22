@@ -377,8 +377,9 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   const npcId = next.events.npc;
   if (fx.romance) next = applyRomance(next, content, npcId, fx.romance);
   if (fx.npc && npcId) {
-    const { affinity, favor, grudge, reveal, kill, role } = fx.npc;
+    const { affinity, favor, grudge, reveal, kill, role, sworn } = fx.npc;
     next = changeNpc(next, content, npcId, { affinity, favor, grudge, reveal });
+    if (sworn) next = { ...next, npcs: next.npcs.map((n) => (n.id === npcId ? { ...n, sworn: next.character.age, kind: 'huynh_de' } : n)) };
     if (role) next = { ...next, npcs: next.npcs.map((n) => (n.id === npcId ? { ...n, role } : n)) };
     if (kill) next = killNpc(next, content, npcId);
   }

@@ -244,5 +244,118 @@
       "Một câu nói hớ làm {rel} im lặng cả bữa cơm. Ngươi thấy mình dại.",
       "Cãi nhau xong, ngươi ra sân đứng một mình, {rel} đóng cửa cái rầm."
     ]
+  },
+  {
+    "id": "day_chu",
+    "name": "Dạy chữ",
+    "roles": [
+      "child"
+    ],
+    "minTargetAge": 4,
+    "rearing": -1,
+    "affinity": [
+      2,
+      5
+    ],
+    "effects": {
+      "stat.intellect": 1
+    },
+    "texts": [
+      "Ngươi cầm tay {rel} viết từng nét chữ. Nét đầu run run, nét sau đã thẳng.",
+      "{Rel} đọc được mấy chữ đầu tiên, chạy khắp nhà khoe.",
+      "Dạy tới chữ \"nhân\", {rel} hỏi sao người lại hai nét. Ngươi nghĩ mãi mới trả lời được.",
+      "Ngươi dạy {rel} đếm từ một tới trăm. Tới bốn mươi bảy thì {rel} ngủ gục."
+    ]
+  },
+  {
+    "id": "danh_don",
+    "name": "Đánh đòn",
+    "roles": [
+      "child"
+    ],
+    "minTargetAge": 4,
+    "rearing": -3,
+    "affinity": [
+      -6,
+      -2
+    ],
+    "effects": {
+      "stat.happiness": -2
+    },
+    "texts": [
+      "{Rel} nghịch ngợm làm vỡ bát, ngươi phạt mấy roi. {Rel} khóc tới tối.",
+      "Mấy roi vào mông, {rel} hứa không dám nữa. Hứa thôi.",
+      "Đánh xong ngươi cũng xót. {Rel} nằm úp mặt, không thèm ăn cơm.",
+      "{Rel} trốn học đi tắm sông. Về nhà, roi mây đã chờ sẵn."
+    ]
+  },
+  {
+    "id": "chieu_chuong",
+    "name": "Chiều chuộng",
+    "roles": [
+      "child"
+    ],
+    "minTargetAge": 2,
+    "cost": 3,
+    "rearing": 3,
+    "affinity": [
+      4,
+      8
+    ],
+    "effects": {
+      "stat.happiness": 2
+    },
+    "texts": [
+      "{Rel} đòi kẹo kéo, ngươi mua luôn hai cây. {Rel} cười tít mắt.",
+      "Ngươi cõng {rel} đi chơi phố, muốn gì mua nấy.",
+      "{Rel} làm nũng, ngươi chịu thua. Việc nhà hôm nay để mai.",
+      "Ngươi may cho {rel} bộ áo mới. {Rel} mặc ngủ luôn không chịu cởi."
+    ]
+  },
+  {
+    "id": "ke_chuyen_xua",
+    "name": "Kể chuyện xưa",
+    "roles": [
+      "child"
+    ],
+    "minTargetAge": 3,
+    "rearing": 1,
+    "affinity": [
+      3,
+      6
+    ],
+    "effects": {
+      "stat.happiness": 1,
+      "stat.intellect": 1
+    },
+    "texts": [
+      "Ngươi kể chuyện người hiếu tử xưa. {Rel} nghe xong ôm ngươi một cái.",
+      "Chuyện ông tiên râu bạc kể tới nửa chừng, {rel} đã ngủ say.",
+      "{Rel} hỏi ngươi hồi nhỏ có nghịch không. Ngươi kể, {rel} cười lăn lộn.",
+      "Đêm mưa, ngươi kể chuyện cổ tích. {Rel} rúc vào chăn, mắt tròn xoe."
+    ]
+  },
+  {
+    "id": "ga_cuoi_con",
+    "name": "Lo dựng vợ gả chồng",
+    "roles": [
+      "child"
+    ],
+    "minTargetAge": 18,
+    "cost": 30,
+    "marry": true,
+    "affinity": [
+      5,
+      10
+    ],
+    "effects": {
+      "stat.happiness": 5
+    },
+    "texts": [
+      "Ngươi nhờ mối tìm cho {rel} một nhà tử tế. Đám cưới linh đình, cả xóm tới mừng.",
+      "Cưới xong, {rel} lạy ngươi ba lạy. Ngươi quay đi lau mắt.",
+      "Ngươi lo sính lễ chu đáo. Nhà bên kia gật gù khen nhà ngươi biết lễ.",
+      "Đám cưới nhỏ mà ấm. {Rel} cười suốt buổi."
+    ]
   }
 ]

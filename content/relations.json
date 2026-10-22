@@ -1,43 +1,307 @@
 {
   "groups": [
-    { "id": "ban_be", "name": "Bạn bè" },
-    { "id": "tinh_duyen", "name": "Tình duyên" },
-    { "id": "cong_viec", "name": "Công việc" },
-    { "id": "thu_dich", "name": "Thù địch" },
-    { "id": "tong_mon", "name": "Tông môn" },
-    { "id": "khac", "name": "Người quen khác" }
+    {
+      "id": "ban_be",
+      "name": "Bạn bè"
+    },
+    {
+      "id": "tinh_duyen",
+      "name": "Tình duyên"
+    },
+    {
+      "id": "cong_viec",
+      "name": "Công việc"
+    },
+    {
+      "id": "thu_dich",
+      "name": "Thù địch"
+    },
+    {
+      "id": "tong_mon",
+      "name": "Tông môn"
+    },
+    {
+      "id": "khac",
+      "name": "Người quen khác"
+    }
   ],
   "kinds": [
-    { "id": "ban_huu", "name": "Bằng hữu", "group": "ban_be", "roles": ["bằng hữu", "bạn thuở nhỏ", "bạn đồng song", "tri âm ở tửu lâu", "người quen ở tửu lâu", "cố nhân"] },
-    { "id": "huynh_de", "name": "Huynh đệ kết nghĩa", "group": "ban_be", "roles": ["huynh đệ kết nghĩa"] },
-    { "id": "hang_xom", "name": "Hàng xóm", "group": "khac", "roles": ["hàng xóm"] },
-    { "id": "an_nhan", "name": "Ân nhân", "group": "khac", "roles": ["ân nhân", "người mang ơn", "người được cứu"] },
-    { "id": "thay", "name": "Thầy", "group": "cong_viec", "roles": ["thầy dạy chữ", "thầy dạy nghề", "sư phụ"] },
-    { "id": "hoc_tro", "name": "Học trò", "group": "cong_viec", "roles": ["học trò"] },
-    { "id": "dong_lieu", "name": "Đồng liêu", "group": "cong_viec", "roles": ["đồng liêu"] },
-    { "id": "chu", "name": "Chủ", "group": "cong_viec", "roles": ["chủ"] },
-    { "id": "thuoc_ha", "name": "Thuộc hạ", "group": "cong_viec", "roles": ["thuộc hạ"] },
-    { "id": "chu_no", "name": "Chủ nợ", "group": "cong_viec", "roles": ["chủ nợ"] },
-    { "id": "con_no", "name": "Con nợ", "group": "cong_viec", "roles": ["con nợ"] },
-    { "id": "ke_thu", "name": "Kẻ thù", "group": "thu_dich", "roles": ["kẻ thù", "ma tu U Hà", "gã tán tu"] },
-    { "id": "dong_mon", "name": "Đồng môn", "group": "tong_mon", "roles": ["đồng môn", "kiếm tu Tàng Phong"] },
-    { "id": "tinh_nhan", "name": "Người thương", "group": "tinh_duyen", "roles": ["người gặp ở hội đèn", "người đã đính ước", "người cũ"] },
-    { "id": "nguoi_quen", "name": "Người quen", "group": "khac", "roles": ["người quen"] }
+    {
+      "id": "ban_huu",
+      "name": "Bằng hữu",
+      "group": "ban_be",
+      "roles": [
+        "bằng hữu",
+        "bạn thuở nhỏ",
+        "bạn đồng song",
+        "tri âm ở tửu lâu",
+        "người quen ở tửu lâu",
+        "cố nhân"
+      ]
+    },
+    {
+      "id": "huynh_de",
+      "name": "Huynh đệ kết nghĩa",
+      "group": "ban_be",
+      "roles": [
+        "huynh đệ kết nghĩa"
+      ]
+    },
+    {
+      "id": "hang_xom",
+      "name": "Hàng xóm",
+      "group": "khac",
+      "roles": [
+        "hàng xóm"
+      ]
+    },
+    {
+      "id": "an_nhan",
+      "name": "Ân nhân",
+      "group": "khac",
+      "roles": [
+        "ân nhân",
+        "người mang ơn",
+        "người được cứu"
+      ]
+    },
+    {
+      "id": "thay",
+      "name": "Thầy",
+      "group": "cong_viec",
+      "roles": [
+        "thầy dạy chữ",
+        "thầy dạy nghề",
+        "sư phụ"
+      ]
+    },
+    {
+      "id": "hoc_tro",
+      "name": "Học trò",
+      "group": "cong_viec",
+      "roles": [
+        "học trò"
+      ]
+    },
+    {
+      "id": "dong_lieu",
+      "name": "Đồng liêu",
+      "group": "cong_viec",
+      "roles": [
+        "đồng liêu"
+      ]
+    },
+    {
+      "id": "chu",
+      "name": "Chủ",
+      "group": "cong_viec",
+      "roles": [
+        "chủ"
+      ]
+    },
+    {
+      "id": "thuoc_ha",
+      "name": "Thuộc hạ",
+      "group": "cong_viec",
+      "roles": [
+        "thuộc hạ"
+      ]
+    },
+    {
+      "id": "chu_no",
+      "name": "Chủ nợ",
+      "group": "cong_viec",
+      "roles": [
+        "chủ nợ"
+      ]
+    },
+    {
+      "id": "con_no",
+      "name": "Con nợ",
+      "group": "cong_viec",
+      "roles": [
+        "con nợ"
+      ]
+    },
+    {
+      "id": "ke_thu",
+      "name": "Kẻ thù",
+      "group": "thu_dich",
+      "roles": [
+        "kẻ thù",
+        "ma tu U Hà",
+        "gã tán tu"
+      ]
+    },
+    {
+      "id": "dong_mon",
+      "name": "Đồng môn",
+      "group": "tong_mon",
+      "roles": [
+        "đồng môn",
+        "kiếm tu Tàng Phong"
+      ]
+    },
+    {
+      "id": "tinh_nhan",
+      "name": "Người thương",
+      "group": "tinh_duyen",
+      "roles": [
+        "người gặp ở hội đèn",
+        "người đã đính ước",
+        "người cũ"
+      ]
+    },
+    {
+      "id": "nguoi_quen",
+      "name": "Người quen",
+      "group": "khac",
+      "roles": [
+        "người quen"
+      ]
+    }
   ],
   "defaultKind": "nguoi_quen",
   "occupations": [
-    { "id": "bo_khoai", "name": "bộ khoái", "minAge": 18, "weight": 3, "root": false, "news": "Nghe tin {npc} giờ đeo đao làm bộ khoái ở huyện nha." },
-    { "id": "quan_lai", "name": "quan huyện", "minAge": 25, "weight": 1, "root": false, "news": "Nghe tin {npc} thi đỗ, được bổ làm quan một huyện." },
-    { "id": "thuong_nhan", "name": "thương nhân", "minAge": 18, "weight": 3, "root": false, "news": "Nghe tin {npc} buôn muối phát tài, đã mở cửa hiệu ở trấn trên." },
-    { "id": "tieu_su", "name": "tiêu sư", "minAge": 18, "weight": 2, "root": false, "news": "Nghe tin {npc} theo tiêu cục, năm nay đi áp tiêu tận biên ải." },
-    { "id": "san_tac", "name": "thợ săn", "minAge": 16, "weight": 2, "root": false, "news": "Nghe tin {npc} lên núi làm thợ săn, mùa đông nào cũng mang da hổ xuống chợ." },
-    { "id": "tac_tu", "name": "lục lâm thảo khấu", "minAge": 20, "weight": 1, "root": false, "news": "Nghe đồn {npc} lên núi làm cướp, quan phủ đã dán cáo thị." },
-    { "id": "lang_y", "name": "lang y", "minAge": 22, "weight": 2, "root": false, "news": "Nghe tin {npc} học được nghề thuốc, giờ ngồi bắt mạch ở đầu chợ." },
-    { "id": "tan_tu", "name": "tán tu", "minAge": 18, "weight": 3, "root": true, "news": "Nghe tin {npc} rời nhà làm tán tu, đi khắp nơi tìm cơ duyên." },
-    { "id": "khach_khanh", "name": "khách khanh của một gia tộc", "minAge": 30, "weight": 1, "root": true, "news": "Nghe tin {npc} được một gia tộc tu tiên mời làm khách khanh." }
+    {
+      "id": "bo_khoai",
+      "name": "bộ khoái",
+      "minAge": 18,
+      "weight": 3,
+      "root": false,
+      "news": "Nghe tin {npc} giờ đeo đao làm bộ khoái ở huyện nha."
+    },
+    {
+      "id": "quan_lai",
+      "name": "quan huyện",
+      "minAge": 25,
+      "weight": 1,
+      "root": false,
+      "news": "Nghe tin {npc} thi đỗ, được bổ làm quan một huyện."
+    },
+    {
+      "id": "thuong_nhan",
+      "name": "thương nhân",
+      "minAge": 18,
+      "weight": 3,
+      "root": false,
+      "news": "Nghe tin {npc} buôn muối phát tài, đã mở cửa hiệu ở trấn trên."
+    },
+    {
+      "id": "tieu_su",
+      "name": "tiêu sư",
+      "minAge": 18,
+      "weight": 2,
+      "root": false,
+      "news": "Nghe tin {npc} theo tiêu cục, năm nay đi áp tiêu tận biên ải."
+    },
+    {
+      "id": "san_tac",
+      "name": "thợ săn",
+      "minAge": 16,
+      "weight": 2,
+      "root": false,
+      "news": "Nghe tin {npc} lên núi làm thợ săn, mùa đông nào cũng mang da hổ xuống chợ."
+    },
+    {
+      "id": "tac_tu",
+      "name": "lục lâm thảo khấu",
+      "minAge": 20,
+      "weight": 1,
+      "root": false,
+      "news": "Nghe đồn {npc} lên núi làm cướp, quan phủ đã dán cáo thị."
+    },
+    {
+      "id": "lang_y",
+      "name": "lang y",
+      "minAge": 22,
+      "weight": 2,
+      "root": false,
+      "news": "Nghe tin {npc} học được nghề thuốc, giờ ngồi bắt mạch ở đầu chợ."
+    },
+    {
+      "id": "tan_tu",
+      "name": "tán tu",
+      "minAge": 18,
+      "weight": 3,
+      "root": true,
+      "news": "Nghe tin {npc} rời nhà làm tán tu, đi khắp nơi tìm cơ duyên."
+    },
+    {
+      "id": "khach_khanh",
+      "name": "khách khanh của một gia tộc",
+      "minAge": 30,
+      "weight": 1,
+      "root": true,
+      "news": "Nghe tin {npc} được một gia tộc tu tiên mời làm khách khanh."
+    }
   ],
   "childhood": [
-    { "role": "hàng xóm", "kind": "hang_xom", "peer": false, "affinity": 55, "text": "Nhà bên có {npc}, người hay sang mượn cái cối giã gạo rồi quên trả." },
-    { "role": "bạn thuở nhỏ", "kind": "ban_huu", "peer": true, "affinity": 62, "text": "Ngươi quen {npc}, đứa trẻ cùng ngõ, hai đứa trèo cây hái trộm ổi nhà người ta." }
-  ]
+    {
+      "role": "hàng xóm",
+      "kind": "hang_xom",
+      "peer": false,
+      "affinity": 55,
+      "text": "Nhà bên có {npc}, người hay sang mượn cái cối giã gạo rồi quên trả."
+    },
+    {
+      "role": "bạn thuở nhỏ",
+      "kind": "ban_huu",
+      "peer": true,
+      "affinity": 62,
+      "text": "Ngươi quen {npc}, đứa trẻ cùng ngõ, hai đứa trèo cây hái trộm ổi nhà người ta."
+    }
+  ],
+  "tempers": [
+    {
+      "id": "nuong_chieu",
+      "name": "Được chiều sinh hư",
+      "min": 5,
+      "text": "{child} lớn lên quen được chiều, muốn gì phải có nấy. Người nhà thương mà cũng lắc đầu.",
+      "affinity": 5,
+      "heirStats": {
+        "stat.happiness": 5,
+        "stat.daoHeart": -5
+      }
+    },
+    {
+      "id": "hieu_thuan",
+      "name": "Hiếu thuận",
+      "min": 1,
+      "max": 4,
+      "text": "{child} lớn lên hiền lành, biết thương người nhà. Hàng xóm ai cũng khen.",
+      "affinity": 8,
+      "heirStats": {
+        "stat.charm": 3,
+        "stat.happiness": 3
+      }
+    },
+    {
+      "id": "nghiem_can",
+      "name": "Nghiêm cẩn",
+      "min": -4,
+      "max": 0,
+      "text": "{child} lớn lên chín chắn, ít nói mà làm việc gì cũng đâu ra đấy.",
+      "affinity": 0,
+      "heirStats": {
+        "stat.intellect": 3,
+        "stat.daoHeart": 3
+      }
+    },
+    {
+      "id": "ngang_buong",
+      "name": "Ngang bướng",
+      "max": -5,
+      "text": "{child} lớn lên cứng đầu, đòn roi nhiều quá thành ra lì. Nói gì cũng cãi.",
+      "affinity": -10,
+      "heirStats": {
+        "stat.physique": 3,
+        "stat.charm": -3
+      }
+    }
+  ],
+  "oath": {
+    "broken": "Phụ lời thề kết nghĩa với {npc}. Đêm ấy ngủ không yên, như có ai đứng ở đầu giường.",
+    "died": "Huynh đệ kết nghĩa {npc} không còn. Ngươi đốt nén hương, rót chén rượu cũ."
+  }
 }

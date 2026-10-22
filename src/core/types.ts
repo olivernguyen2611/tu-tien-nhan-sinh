@@ -34,6 +34,10 @@ export interface Relative {
   /** Hậu thiên linh căn opened by a gift; tries made with a thousand-year item. */
   acquired?: boolean;
   rootTries?: number;
+  /** 10.5: how a child is brought up (− strict, + spoiling), the temper they grow into, married off. */
+  rearing?: number;
+  temper?: string;
+  married?: boolean;
 }
 
 /** Quest chain of the martial path: one step a year; `game` is the mini-game being played. */
@@ -473,6 +477,10 @@ export interface Npc {
   visits?: Record<string, number>;
   /** 9.R9: a cố nhân from a past life ({pastName}, {pastSelf}); met once the reunion event has come. */
   pastLife?: { kind: KarmaTieKind; name: string; self: string; met: boolean };
+  /** 10.5: silver between the two (+ they owe the player, − the player owes them); age of the kết nghĩa oath; tuyệt giao. */
+  owed?: number;
+  sworn?: number;
+  cut?: boolean;
 }
 
 /** Task 5c.1: who a sectmate is to the player. */

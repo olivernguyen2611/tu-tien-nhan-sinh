@@ -440,7 +440,8 @@
             "npc": {
               "affinity": 15,
               "favor": 20,
-              "role": "huynh đệ kết nghĩa"
+              "role": "huynh đệ kết nghĩa",
+              "sworn": true
             }
           }
         }
