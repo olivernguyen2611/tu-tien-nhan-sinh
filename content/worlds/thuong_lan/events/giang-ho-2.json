@@ -311,7 +311,11 @@
     "max": "pham_nhan"
    },
    "age": {
-    "min": 16
+    "min": 16,
+    "max": 60
+   },
+   "martial": {
+    "min": 0
    }
   },
   "weight": 0.5,

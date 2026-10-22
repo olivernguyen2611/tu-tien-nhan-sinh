@@ -8,6 +8,15 @@
 
 ## [Chưa phát hành]
 
+### 12.1 Triều đại và đại sự (2026-10-22)
+- Triều đình thành hệ thống (`court.json`, `src/systems/court.ts`), dựa trên thời cuộc 9.5. Mỗi triều có hoàng đế mang tên niên hiệu («Thái An đế») và tính cách: minh quân, vua bình thường, hôn quân, bạo quân. Tính cách kéo thời cuộc mỗi năm và định mức sưu thuế. Có thái tử được lập dần, có quyền thần nổi lên khi vua yếu, mất thế khi tân quân thanh trừng.
+- Đổi niên hiệu nghĩa là vua băng: thái tử lên ngôi, nếu chưa có thái tử đủ lớn thì nổ ra tranh ngôi. Tân quân thường đại xá thiên hạ, người đang ở ngục được thả về.
+- 8 đại sự nổ ra theo thời cuộc và kéo dài vài năm: tranh ngôi, thiên tai, ôn dịch, ngoại xâm, khởi nghĩa, quyền thần chuyên quyền, tăng thuế, thiên tử tuần du. Khi đang diễn ra, chúng làm tăng sưu thuế và giá cả, làm nghề này phất nghề kia lụn (thiên tai thì nhà nông thu kém, ngoại xâm thì nghề võ được giá, ôn dịch thì lang y đắt khách), và có thể bắt lính.
+- Người phàm từ 18 tuổi nộp sưu thuế mỗi năm theo mức của triều đình (ghi vào sổ thu chi).
+- 11 sự kiện cho người phàm (`trieu-dinh.json`): mất mùa, dân đói trước cửa, hàng xóm mắc dịch, quyên góp quân lương, nghĩa quân qua làng, bè đảng đòi lễ, thuế nặng, xa giá đi qua, quân hai phe tranh ngôi, chiếu giảm thuế của minh quân, bạo quân bắt phu xây cung.
+- Hồ sơ có dòng "Triều đình:". Điều kiện `court` (đại sự, tính cách vua, quyền thần, mức thuế).
+- Mô phỏng: bạc cuối đời của người phàm giảm khoảng 25% vì sưu thuế; tuổi thọ không đổi.
+
 ### 11.7 Nội dung và cân bằng giang hồ (2026-10-22)
 - 23 sự kiện giang hồ mới (`giang-ho-2.json`): áp tiêu (tiêu sư phản bội, qua ải biên, đứa trẻ trong rương tiêu), sơn trại (mời lên núi, bắt con tin, nội loạn tranh ngôi), sát thủ (bại lộ, mục tiêu là ân nhân), bang chiến (tranh bến cảng, bang chủ nghi kỵ, thu tiền bảo kê), tỉ võ (đá quán, luận kiếm đỉnh núi, kẻ thách đấu trẻ tuổi), hành hiệp (cứu nạn lũ, tham quan cướp lương, hiệp khách giả danh, người ăn xin bí ẩn), phản bội (huynh đệ bán đứng, sư đệ cướp bí kíp, tri kỷ trở mặt), cùng hai chuyện khách điếm. Tính cả 11.1–11.6, giang hồ có 70 sự kiện mới.
 - Thêm 15 bí kíp và 10 binh khí phàm (tổng 30 bí kíp, 18 binh khí), có thêm một tàn quyển giả và một tà công.

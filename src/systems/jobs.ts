@@ -9,6 +9,7 @@ import { careerDef, careerIncome } from './career';
 import { hookSum } from './cultivation';
 import { meets } from './events/conditions';
 import { extremeHasHook } from './extremes';
+import { courtJobMul } from './court';
 import { meetAside, schoolOf } from './schooling';
 
 type Job = NonNullable<GameState['job']>;
@@ -120,7 +121,8 @@ export function jobPay(state: GameState, content: Content): number {
   const def = jobDef(content, j.id);
   if (!def) return 0;
   const base = def.pay[Math.min(j.rung, def.pay.length - 1)];
-  return Math.max(0, Math.round(base * (1 + hookSum(state, content, 'incomePct'))));
+  // 12.1: an đại sự lifts or sinks some trades.
+  return Math.max(0, Math.round(base * (1 + hookSum(state, content, 'incomePct')) * courtJobMul(state, content, def.group)));
 }
 
 /** Months the job takes this year. */

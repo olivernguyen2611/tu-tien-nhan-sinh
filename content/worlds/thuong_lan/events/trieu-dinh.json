@@ -1,0 +1,734 @@
+[
+ {
+  "id": "tr_thien_tai_mat_mua",
+  "category": "court",
+  "title": "Mất mùa",
+  "text": "Năm nay ruộng nhà ngươi trơ gốc rạ. Chum gạo chỉ còn đủ ăn nửa tháng.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "court": {
+    "affair": [
+     "thien_tai"
+    ]
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 12
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Bán bớt đồ đạc mua gạo",
+    "result": {
+     "text": "Cái tủ gỗ, chiếc áo bông tốt nhất đều ra chợ. Đổi được mấy đấu gạo.",
+     "effects": {
+      "silver": 15,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Ăn cháo cầm cự",
+    "result": {
+     "text": "Mỗi ngày một bữa cháo loãng, cả nhà gầy rộc mà vẫn sống.",
+     "effects": {
+      "stat.health": -3,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Lên rừng đào củ, bẫy thú",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 40
+    },
+    "success": {
+     "text": "Ngươi đào được cả gánh củ mài, bẫy được con hoẵng. Cả nhà no một tuần.",
+     "effects": {
+      "stat.physique": 1,
+      "stat.health": -1
+     }
+    },
+    "fail": {
+     "text": "Rừng cũng đã bị người đói vét sạch. Ngươi về tay không, lại trật chân.",
+     "effects": {
+      "stat.health": -4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tr_dan_doi_truoc_cua",
+  "category": "court",
+  "title": "Dân đói trước cửa",
+  "text": "Sáng ra, trước cửa nhà ngươi có hai người gầy trơ xương, một lớn một nhỏ, ngồi xin ăn. Đầu ngõ còn mấy người nữa.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "court": {
+    "affair": [
+     "thien_tai",
+     "khoi_nghia"
+    ]
+   },
+   "age": {
+    "min": 16
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 5,
+  "choices": [
+   {
+    "text": "Nấu cháo phát cho cả ngõ",
+    "result": {
+     "text": "Nồi cháo lớn hết trong một buổi sáng. Có người quỳ xuống lạy ngươi.",
+     "effects": {
+      "silver": -10,
+      "karma": 2,
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Đóng cửa",
+    "result": {
+     "text": "Tiếng trẻ con khóc ngoài cửa tới tận trưa. Ngươi ngồi trong nhà, nuốt không trôi.",
+     "effects": {
+      "karma": -1,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Bán gạo giá cao",
+    "result": {
+     "text": "Ngươi đem gạo tích trữ ra bán giá gấp ba. Túi bạc đầy, người trong làng nhìn ngươi khác hẳn.",
+     "effects": {
+      "silver": 30,
+      "karma": -3,
+      "stat.charm": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tr_on_dich_hang_xom",
+  "category": "court",
+  "title": "Hàng xóm mắc dịch",
+  "text": "Nhà bên có người lên cơn sốt, nôn mửa. Người trong ngõ xì xào: ôn dịch đã tới.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "court": {
+    "affair": [
+     "on_dich"
+    ]
+   },
+   "age": {
+    "min": 14
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Sang chăm sóc",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 45
+    },
+    "success": {
+     "text": "Ngươi nấu thuốc, lau người cho họ suốt nửa tháng. Họ qua khỏi, ngươi cũng không sao.",
+     "effects": {
+      "karma": 2,
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Họ qua khỏi, còn ngươi thì lăn ra sốt.",
+     "effects": {
+      "karma": 2,
+      "catchDisease": "dich_ta",
+      "stat.health": -4
+     }
+    }
+   },
+   {
+    "text": "Đóng chặt cửa nhà mình",
+    "result": {
+     "text": "Ngươi lấy vải bịt mặt, không ra khỏi nhà cả tháng.",
+     "effects": {
+      "stat.happiness": -2,
+      "stat.health": 1
+     }
+    }
+   },
+   {
+    "text": "Báo lý trưởng đưa đi cách ly",
+    "result": {
+     "text": "Người bệnh bị khiêng ra lều ngoài đồng. Ngõ nhỏ yên, nhưng nhà bên không nhìn mặt ngươi nữa.",
+     "effects": {
+      "stat.intellect": 1,
+      "stat.charm": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tr_quyen_gop_quan_luong",
+  "category": "court",
+  "title": "Quyên góp quân lương",
+  "text": "Quan huyện về làng, đọc chiếu: mỗi nhà góp quân lương đánh giặc. Lính đứng sau, tay lăm lăm giáo.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "court": {
+    "affair": [
+     "ngoai_xam",
+     "tranh_ngoi"
+    ]
+   },
+   "age": {
+    "min": 18
+   },
+   "realm": {
+    "max": "pham_nhan"
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Góp đủ phần",
+    "result": {
+     "text": "Ngươi góp đủ phần. Quan huyện gật đầu, ghi tên vào sổ.",
+     "effects": {
+      "silver": -15,
+      "karma": 1,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Giấu bớt thóc",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 45
+    },
+    "success": {
+     "text": "Lính lật tung nhà mà không thấy hầm thóc sau bếp.",
+     "effects": {
+      "stat.happiness": 1
+     }
+    },
+    "fail": {
+     "text": "Lính tìm ra hầm thóc. Ngươi bị phạt gấp đôi, còn ăn mấy roi.",
+     "effects": {
+      "silver": -25,
+      "stat.health": -2
+     }
+    }
+   },
+   {
+    "text": "Tích trữ lương thực bán cho quân",
+    "result": {
+     "text": "Ngươi mua gom thóc khắp vùng, bán lại cho quân doanh. Lãi to, có điều người ta gọi ngươi là kẻ buôn trên xác lính.",
+     "effects": {
+      "silver": 40,
+      "karma": -2,
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tr_nghia_quan_qua_lang",
+  "category": "court",
+  "title": "Nghĩa quân qua làng",
+  "text": "Một toán nghĩa quân áo vải cờ đỏ kéo vào làng. Thủ lĩnh đứng giữa sân đình: \"Chúng ta đánh quan tham, không cướp của dân. Ai có lòng thì góp lương.\"",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "court": {
+    "affair": [
+     "khoi_nghia"
+    ]
+   },
+   "age": {
+    "min": 16
+   },
+   "realm": {
+    "max": "pham_nhan"
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Góp lương cho nghĩa quân",
+    "result": {
+     "text": "Ngươi khiêng ra một bao gạo. Thủ lĩnh chắp tay cảm tạ.",
+     "effects": {
+      "silver": -10,
+      "karma": 1,
+      "setFlags": [
+       "giup_nghia_quan"
+      ],
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Đi theo nghĩa quân",
+    "result": {
+     "text": "Ngươi gói ít đồ, theo đoàn người áo vải ra khỏi làng. Tên ngươi được ghi vào sổ của nghĩa quân.",
+     "effects": {
+      "setFlags": [
+       "theo_nghia_quan"
+      ],
+      "wanted": 1,
+      "stat.physique": 1,
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Lén báo quan",
+    "result": {
+     "text": "Đêm ấy quan quân vây làng, nghĩa quân chạy kịp. Quan huyện thưởng ngươi ít bạc.",
+     "effects": {
+      "silver": 10,
+      "karma": -2,
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tr_be_dang_doi_le",
+  "category": "court",
+  "title": "Bè đảng đòi lễ",
+  "text": "Một gã xưng là người của tướng phủ tới tận nhà, cười nhạt: \"Năm nay ai muốn làm ăn yên ổn thì phải có chút lễ cho tướng gia.\"",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "court": {
+    "affair": [
+     "quyen_than"
+    ]
+   },
+   "age": {
+    "min": 18
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Nộp lễ cho yên chuyện",
+    "result": {
+     "text": "Ngươi đưa túi bạc. Gã cân lên tay, hừ một tiếng rồi đi.",
+     "effects": {
+      "silver": -20,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Từ chối khéo",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ngươi nói quanh co tới khi gã chán, bỏ đi tìm nhà khác.",
+     "effects": {
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Hôm sau cửa hàng ngươi bị đập phá, kẻ làm thì không ai dám chỉ.",
+     "effects": {
+      "stat.health": -3,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Viết đơn tố lên ngự sử",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Đơn tới tay một ngự sử cương trực. Gã kia bị bắt, cả phố khen ngươi gan.",
+     "effects": {
+      "karma": 2,
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Đơn bị chặn lại giữa đường. Mấy hôm sau, ngươi bị đánh giữa chợ.",
+     "effects": {
+      "stat.health": -5,
+      "stat.happiness": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tr_thue_nang",
+  "category": "court",
+  "title": "Thuế nặng",
+  "text": "Sổ thuế năm nay dài thêm mấy dòng: thuế muối, thuế cửa, thuế khói bếp. Cả làng ngồi ở đình, mặt ai cũng xám.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "court": {
+    "taxMin": 45
+   },
+   "age": {
+    "min": 18
+   },
+   "realm": {
+    "max": "pham_nhan"
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Cắn răng nộp đủ",
+    "result": {
+     "text": "Ngươi nộp đủ. Bữa cơm từ đó ít thịt hẳn.",
+     "effects": {
+      "silver": -15,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Trốn thuế",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ngươi khai thiếu mấy miệng ăn, thư lại không để ý.",
+     "effects": {
+      "stat.happiness": 1
+     }
+    },
+    "fail": {
+     "text": "Bị phát hiện. Phạt gấp ba, tên ngươi còn bị ghi vào sổ.",
+     "effects": {
+      "silver": -20,
+      "wanted": 1,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Cùng cả làng lên huyện xin giảm",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Quan huyện thấy đông người, sợ sinh biến, giảm cho làng một nửa.",
+     "effects": {
+      "stat.happiness": 2,
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Lính đuổi đánh cả đoàn. Ngươi về với vết roi trên lưng.",
+     "effects": {
+      "stat.health": -3,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tr_xa_gia_tuan_du",
+  "category": "court",
+  "title": "Xa giá đi qua",
+  "text": "Hoàng đế tuần du qua huyện. Đường đất được rải cát vàng, dân hai bên phải quỳ.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "court": {
+    "affair": [
+     "thien_tu_tuan_du"
+    ]
+   },
+   "age": {
+    "min": 10
+   }
+  },
+  "weight": 2.0,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Quỳ ven đường ngắm xa giá",
+    "result": {
+     "text": "Ngươi chỉ thấy cờ quạt, ngựa ngự, và một tấm rèm vàng. Nhưng cả đời sẽ kể lại.",
+     "effects": {
+      "stat.happiness": 2
+     }
+    }
+   },
+   {
+    "text": "Dâng sớ kêu oan cho làng",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Thị vệ giật tờ sớ, nhưng rèm vàng hé mở. Một tháng sau, quan huyện tham bị cách chức.",
+     "effects": {
+      "karma": 2,
+      "stat.charm": 2
+     }
+    },
+    "fail": {
+     "text": "Ngươi bị thị vệ đánh ngã, lôi ra khỏi đường.",
+     "effects": {
+      "stat.health": -5,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Bán hàng cho đoàn tùy tùng",
+    "result": {
+     "text": "Tùy tùng mua sạch gánh hàng của ngươi, trả bạc không mặc cả.",
+     "effects": {
+      "silver": 25,
+      "stat.charm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tr_hai_phe_qua_lang",
+  "category": "court",
+  "title": "Quân hai phe",
+  "text": "Quân của hai thân vương tranh ngôi lần lượt đi qua làng. Phe nào tới cũng hỏi: \"Theo ai?\"",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "court": {
+    "affair": [
+     "tranh_ngoi"
+    ]
+   },
+   "age": {
+    "min": 14
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 2,
+  "choices": [
+   {
+    "text": "Trốn vào núi",
+    "result": {
+     "text": "Cả nhà dắt nhau lên núi ở một tháng. Về thì nhà bị lục tung.",
+     "effects": {
+      "stat.health": -2,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Mở cửa đón phe nào tới cũng được",
+    "result": {
+     "text": "Ai tới cũng có cơm rượu. Tốn kém mà yên thân.",
+     "effects": {
+      "silver": -10,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Đoán phe thắng mà theo",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Phe ngươi theo thắng. Quan mới về huyện nhớ mặt ngươi.",
+     "effects": {
+      "silver": 20,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Phe ngươi theo thua. Quân phe kia về đốt nhà ngươi.",
+     "effects": {
+      "stat.health": -6,
+      "stat.happiness": -4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tr_minh_quan_giam_thue",
+  "category": "court",
+  "title": "Chiếu giảm thuế",
+  "text": "Chiếu chỉ từ kinh thành: thiên hạ được mùa, hoàng đế giảm thuế ba năm cho dân. Cả làng mổ lợn ăn mừng.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "court": {
+    "temper": [
+     "minh_quan"
+    ]
+   },
+   "age": {
+    "min": 12
+   }
+  },
+  "weight": 0.6,
+  "cooldownYears": 15,
+  "choices": [
+   {
+    "text": "Góp tiền mổ lợn ăn mừng",
+    "result": {
+     "text": "Đình làng rộn tiếng trống tới khuya.",
+     "effects": {
+      "silver": -3,
+      "stat.happiness": 3
+     }
+    }
+   },
+   {
+    "text": "Để dành bạc",
+    "result": {
+     "text": "Ngươi cất số bạc thuế được giảm vào hũ. Năm sau biết đâu lại khác.",
+     "effects": {
+      "silver": 5,
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tr_bao_quan_bat_phu",
+  "category": "court",
+  "title": "Bắt phu xây cung",
+  "text": "Hoàng đế muốn xây hành cung trên núi. Lý trưởng đọc danh sách: nhà nào có trai tráng phải đi phu ba năm.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "court": {
+    "temper": [
+     "bao_quan"
+    ]
+   },
+   "age": {
+    "min": 16,
+    "max": 50
+   },
+   "realm": {
+    "max": "pham_nhan"
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Đi phu",
+    "result": {
+     "text": "Ba năm khiêng đá, ngươi về còn da bọc xương, vai chai như gỗ.",
+     "effects": {
+      "stat.health": -6,
+      "stat.physique": 1,
+      "silver": 5
+     }
+    }
+   },
+   {
+    "text": "Nộp bạc chuộc",
+    "result": {
+     "text": "Ngươi nộp bạc chuộc. Người khác đi thay.",
+     "effects": {
+      "silver": -30,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Trốn đi",
+    "result": {
+     "text": "Ngươi bỏ làng mà đi. Lý trưởng gạch tên ngươi, ghi thêm chữ \"đào phu\".",
+     "effects": {
+      "wanted": 1,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ }
+]

@@ -2,7 +2,7 @@
 // rules as `npm run validate`.
 import {
   AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, type Nation, FigureFileSchema, type Figure, WorldEventFileSchema, type WorldEvent, WorldClanFileSchema, type WorldClan, RaceFileSchema, type Race, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, type CombatTexts, type Market, type FateTalent, type Item, type Lineage, type MartialFile, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile, NpcTraitsFileSchema, RankingTextsSchema, type RankingTexts, RomanceFileSchema, type RomanceFile, HeartDemonFileSchema, type HeartDemonFile, RecipeFileSchema, type RecipeFile, CorePatternFileSchema, type CorePattern, NascentSoulFileSchema, type NascentSoulFile, DisciplesFileSchema, type DisciplesFile, FoundingFileSchema, type FoundingFile, HeirFileSchema, type HeirFile, ChosenFileSchema, type ChosenFile, ClanFileSchema, type ClanFile, BlessingFileSchema, type BlessingFile, RebirthTalentFileSchema, type RebirthTalentFile, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, type TraitComboFile, CodexFileSchema, type CodexFile, EndingFileSchema, type Ending, ThienDaoKyFileSchema, type ThienDaoKyFile, SpecialOriginFileSchema, type SpecialOrigin, SystemFileSchema, type SystemDef, TrungSinhFileSchema, type TrungSinhFile, ThanDaoFileSchema, type ThanDaoFile, AchievementFileSchema, type AchievementFile, ChallengeFileSchema, type ChallengeFile, type NpcTraitsFile,
-  ActivityFileSchema, type Activity, DockFileSchema, type DockButton, WorldStateFileSchema, type WorldStateFile, RelationsFileSchema, type RelationsFile, SchoolingFileSchema, type SchoolingFile, ExamsFileSchema, type ExamsFile, JobsFileSchema, type JobsFile, AssetsFileSchema, type AssetsFile, LeisureFileSchema, type LeisureFile, HealthFileSchema, type HealthFile, CrimesFileSchema, type CrimesFile, KinFileSchema, type KinFile, CalendarFileSchema, type CalendarFile, JianghuFileSchema, type JianghuFile, MartialArtsFileSchema, type MartialArtsFile, WulinFileSchema, type WulinFile, StatLabelsFileSchema, type StatLabelsFile,
+  ActivityFileSchema, type Activity, DockFileSchema, type DockButton, WorldStateFileSchema, type WorldStateFile, RelationsFileSchema, type RelationsFile, SchoolingFileSchema, type SchoolingFile, ExamsFileSchema, type ExamsFile, JobsFileSchema, type JobsFile, AssetsFileSchema, type AssetsFile, LeisureFileSchema, type LeisureFile, HealthFileSchema, type HealthFile, CrimesFileSchema, type CrimesFile, KinFileSchema, type KinFile, CalendarFileSchema, type CalendarFile, JianghuFileSchema, type JianghuFile, MartialArtsFileSchema, type MartialArtsFile, WulinFileSchema, type WulinFile, CourtFileSchema, type CourtFile, StatLabelsFileSchema, type StatLabelsFile,
   BalanceSchema, EventFileSchema, FamilyActionFileSchema, GlossarySchema, NpcActFileSchema, EffectLabelsSchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema,
   type Balance, type FamilyAction, type NpcAct, type EffectLabels, type GameEvent, type Glossary, type LifeTexts, type Names, type Origin, type StatExtremesFile, type Trait, type World,
 } from './schemas';
@@ -53,6 +53,7 @@ export interface Content {
   nations?: Nation[];
   /** 9.5 Thời cuộc of this world. */
   worldState?: WorldStateFile;
+  court?: CourtFile;
   /** 9.R7f: đại năng and famous people. */
   figures?: Figure[];
   /** 9.R7e: sự kiện thiên hạ. */
@@ -222,6 +223,7 @@ export function loadContent(worldId: string = DEFAULT_WORLD_ID): Content {
     figures: FigureFileSchema.parse(files[`${dir}figures.json`] ?? []),
     worldEvents: WorldEventFileSchema.parse(files[`${dir}world-events.json`] ?? []),
     worldState: files[`${dir}world-state.json`] ? WorldStateFileSchema.parse(files[`${dir}world-state.json`]) : undefined,
+    court: files[`${dir}court.json`] ? CourtFileSchema.parse(files[`${dir}court.json`]) : undefined,
     worldClans: WorldClanFileSchema.parse(files[`${dir}clans.json`] ?? []),
     races: RaceFileSchema.parse(files[`${dir}races.json`] ?? []),
     knowledge: KnowledgeFileSchema.parse(files[`${dir}knowledge.json`] ?? []),

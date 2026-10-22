@@ -37,6 +37,7 @@ import { knowledgeYear, knowsFor } from '../systems/knowledge';
 import { gatesYear } from '../systems/immortalGates';
 import { worldEventsYear } from '../systems/worldEvents';
 import { initTimes, timesYear } from '../systems/worldState';
+import { courtYear } from '../systems/court';
 import { acquaintanceYear, memoryText } from '../systems/acquaintances';
 import { pastTiesFor, reunionYear } from '../systems/karmaLedger';
 import { systemYear } from '../systems/heThong';
@@ -283,7 +284,7 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;
   // 9.R7e: the world moves on before the year's event is drawn.
-  const worldly = body.alive ? thanDaoYear(trungSinhYear(systemYear(reunionYear(timesYear(worldEventsYear(secluded, content), content), content), content), content), content) : secluded;
+  const worldly = body.alive ? thanDaoYear(trungSinhYear(systemYear(reunionYear(courtYear(timesYear(worldEventsYear(secluded, content), content), content), content), content), content), content) : secluded;
   const rolled = !body.alive ? worldly : state.seclusion ? rollSeclusionEvent(worldly, content) : rollYearEvent(gatesYear(worldly, content), content);
   // 9.R5a: what the year taught goes into the Sổ tri thức.
   const next = rolled.alive ? knowledgeYear(rolled, content) : rolled;

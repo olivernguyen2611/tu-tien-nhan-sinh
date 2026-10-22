@@ -97,6 +97,8 @@ const BaseConditionsSchema = z
     jianghu: z.object({
       fameMin: z.number().optional(), fameMax: z.number().optional(), infamyMin: z.number().optional(), infamyMax: z.number().optional(), alias: z.boolean().optional(),
     }).strict().optional(),
+    /** 12.1: an đại sự running (one of these); the emperor's temper; a quyền thần holds power; sưu thuế at least. */
+    court: z.object({ affair: z.array(z.string()).optional(), noAffair: z.array(z.string()).optional(), temper: z.array(z.string()).optional(), minister: z.boolean().optional(), taxMin: z.number().optional() }).strict().optional(),
     /** 11.5: a đại hội is held this year; is minh chủ; uy vọng at least; has been minh chủ; has contested a đại hội. */
     wulin: z.object({ open: z.boolean().optional(), leader: z.boolean().optional(), prestigeMin: z.number().optional(), held: z.boolean().optional(), contested: z.boolean().optional() }).strict().optional(),
     /** 11.3: knows this art / at least this many; carries a binh khí; nội thương at least / at most. */
@@ -1827,6 +1829,15 @@ export const BalanceSchema = z
       missionMerit: z.tuple([z.number(), z.number()]), missionFailMerit: z.number(), missionFailHealth: z.number(), missionRenown: z.number(), taKarma: z.number(),
       teachCost: z.number(), teachBonus: z.number(), huntYears: z.number().int(), hideYears: z.number().int(), betrayFame: z.number(), betrayInfamy: z.number(), chinhKarmaMin: z.number(),
     }).strict().optional(),
+    /** 12.1 Triều đình: the age a thái tử counts as grown; chance a grown heir is still contested; chance a new emperor
+     *  purges the quyền thần; chance of an amnesty at a crowning; age a thái tử may be named and the yearly chance; the
+     *  quyền thần's yearly chance to rise; most affairs at once and years before one recurs; sưu thuế: the age it is paid
+     *  from and the bạc at 100; the ages called by bắt lính. */
+    court: z.object({
+      heirAdult: z.number().int(), contestChance: z.number(), purgeChance: z.number(), amnestyChance: z.number(), heirFrom: z.number().int(), heirChance: z.number(),
+      ministerChance: z.number(), maxAffairs: z.number().int().min(1), affairGap: z.number().int().min(0), taxAge: z.number().int(), taxSilver: z.number(),
+      draftAge: z.tuple([z.number().int(), z.number().int()]),
+    }).strict().optional(),
     /** 11.5 Võ lâm đại hội: held every `every` years; the field's võ đạo stage and × per round; how sharply chiến lực
      *  decides a round; bạc, hiệp danh, hạnh phúc by rounds won; health lost when beaten; a minh chủ's uy vọng at the
      *  start and its yearly drift, the stipend, hiệp danh kept on stepping down. */
@@ -3404,6 +3415,38 @@ export const JianghuFileSchema = z.object({
   }).strict(),
 }).strict();
 export type JianghuFile = z.infer<typeof JianghuFileSchema>;
+
+/** 12.1 Triều đại và đại sự (content/worlds/<id>/court.json): the emperor's tempers (base sưu thuế, pull on the world
+ *  variables per year, how readily a quyền thần rises and grows), the đại sự that start from the world, the bắt lính event,
+ *  and lời văn. An affair starts when the world variables are below / above the given values (or the phase is one of
+ *  these, a quyền thần holds power, the emperor has this temper; onDeath = a tranh ngôi when an emperor dies). */
+export const CourtFileSchema = z.object({
+  tempers: z.array(z.object({
+    id, name: z.string().min(1), weight: z.number().min(0), tax: z.number(), vars: z.record(z.number()).default({}),
+    ministerMul: z.number().min(0).default(1), ministerDrift: z.number().default(0),
+  }).strict()).min(1),
+  affairs: z.array(z.object({
+    id, name: z.string().min(1), text: z.string().min(1), endText: z.string().min(1).optional(),
+    when: z.object({
+      below: z.record(z.number()).optional(), above: z.record(z.number()).optional(), phases: z.array(z.string()).optional(),
+      minister: z.boolean().optional(), tempers: z.array(z.string()).optional(), onDeath: z.boolean().optional(),
+    }).strict(),
+    chance: z.number().min(0).max(1), years: z.tuple([z.number().int().min(1), z.number().int().min(1)]),
+    tax: z.number().optional(), priceMul: z.number().optional(), draft: z.boolean().optional(),
+    /** Pay × for a job group (jobs.json group). */
+    jobs: z.record(z.number()).default({}),
+    /** Pull on the world variables per year while it runs. */
+    vars: z.record(z.number()).default({}),
+  }).strict()),
+  /** The event a grown man gets when the army calls (12.3). */
+  draftEvent: z.string().min(1).optional(),
+  texts: z.object({
+    emperorName: z.string().min(1), heirName: z.string().min(1), founder: z.string().min(1), crowned: z.string().min(1), heirCrowned: z.string().min(1),
+    temper: z.string().min(1), heirNamed: z.string().min(1), ministerRise: z.string().min(1), ministerFall: z.string().min(1),
+    amnesty: z.string().min(1), tax: z.string().min(1),
+  }).strict(),
+}).strict();
+export type CourtFile = z.infer<typeof CourtFileSchema>;
 
 /** 11.5 Võ lâm đại hội (content/wulin.json): the round names and lời văn ({round}; {prestige}, {silver}). */
 export const WulinFileSchema = z.object({

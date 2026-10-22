@@ -126,7 +126,9 @@ export function timesPriceMul(state: GameState, content: Content): number {
   const file = content.worldState;
   const t = state.times;
   if (!file || !t) return 1;
-  return file.prices.reduce((m, p) => {
+  // 12.1: the đại sự running at court (thiên tai, ngoại xâm…) add their own.
+  const affairs = (state.court?.affairs ?? []).reduce((m, a) => m * (content.court?.affairs.find((d) => d.id === a.id)?.priceMul ?? 1), 1);
+  return affairs * file.prices.reduce((m, p) => {
     const v = t.vars[p.var] ?? 50;
     return m * (p.at0 + ((p.at100 - p.at0) * v) / 100);
   }, 1);

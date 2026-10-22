@@ -6,6 +6,7 @@ import { debtTotal, ownedOf } from '../assets';
 import { festivalFor } from '../leisure';
 import { jianghuOf } from '../jianghu';
 import { wulinOpen } from '../wulin';
+import { courtTax } from '../court';
 import type { Content } from '../../core/content';
 import type { GameEvent } from '../../core/schemas';
 import type { GameState } from '../../core/types';
@@ -174,6 +175,15 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (f.rankMin !== undefined && (!m || m.rank < f.rankMin)) return false;
     if (f.meritMin !== undefined && (!m || m.merit < f.meritMin)) return false;
     if (f.hunted !== undefined && !!state.jianghu?.hunted !== f.hunted) return false;
+  }
+  if (c.court) {
+    const k = state.court;
+    const running = k?.affairs.map((a) => a.id) ?? [];
+    if (c.court.affair && !c.court.affair.some((a) => running.includes(a))) return false;
+    if (c.court.noAffair && c.court.noAffair.some((a) => running.includes(a))) return false;
+    if (c.court.temper && (!k || !c.court.temper.includes(k.emperor.temper))) return false;
+    if (c.court.minister !== undefined && !!k?.minister !== c.court.minister) return false;
+    if (c.court.taxMin !== undefined && (!content || courtTax(state, content) < c.court.taxMin)) return false;
   }
   if (c.wulin) {
     const w = state.wulin;

@@ -143,6 +143,12 @@ export interface GameState {
     left?: string[];
     hunted?: { by: string; until: number } | null;
   };
+  /** 12.1 Triều đình: the emperor (named by the niên hiệu, his temper), the thái tử, the quyền thần (sway 0–100), the đại sự
+   *  running (until age) and the age each one last started. */
+  court?: {
+    emperor: { name: string; age: number; temper: string }; heir: { name: string; age: number } | null;
+    minister: { name: string; sway: number } | null; affairs: { id: string; until: number }[]; started: Record<string, number>;
+  };
   /** 11.5 Võ lâm đại hội: the age last contested, most rounds won, the minh chủ seat (since, uy vọng), times won it. */
   wulin?: { last: number | null; best: number; leader: { since: number; prestige: number } | null; held: number };
   /** 11.3 Võ học phàm tục: bí kíp known (tầng, xp toward the next), the binh khí carried, nội thương 0–100. */

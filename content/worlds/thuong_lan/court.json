@@ -1,0 +1,32 @@
+{
+  "tempers": [
+    { "id": "minh_quan", "name": "minh quân", "weight": 2, "tax": 15, "vars": { "stability": 2, "security": 1 }, "ministerMul": 0.5, "ministerDrift": -4 },
+    { "id": "trung_quan", "name": "vua bình thường", "weight": 4, "tax": 25, "vars": {}, "ministerMul": 1, "ministerDrift": 0 },
+    { "id": "hon_quan", "name": "hôn quân", "weight": 2, "tax": 40, "vars": { "stability": -2, "security": -1 }, "ministerMul": 2, "ministerDrift": 4 },
+    { "id": "bao_quan", "name": "bạo quân", "weight": 1, "tax": 55, "vars": { "stability": -3, "tension": 2 }, "ministerMul": 1, "ministerDrift": -2 }
+  ],
+  "affairs": [
+    { "id": "tranh_ngoi", "name": "Tranh ngôi", "text": "Tiên đế băng hà không để lại người nối ngôi đủ lớn. Các thân vương đem quân về kinh, {emperor} ngồi chưa vững ngai.", "endText": "Cuộc tranh ngôi đã ngã ngũ, kinh thành trở lại yên ổn.", "when": { "onDeath": true }, "chance": 1, "years": [1, 3], "tax": 10, "draft": true, "vars": { "stability": -5, "security": -3 } },
+    { "id": "thien_tai", "name": "Thiên tai", "text": "Hạn hán liền mấy tháng, châu chấu bay kín trời. Ruộng nương nứt nẻ, giá gạo vọt lên.", "endText": "Mưa đã về, ruộng đồng xanh trở lại.", "when": { "below": { "harvest": 30 } }, "chance": 0.5, "years": [1, 3], "priceMul": 1.3, "jobs": { "nong": 0.6, "thuong": 1.2 }, "vars": { "stability": -1 } },
+    { "id": "on_dich", "name": "Ôn dịch", "text": "Ôn dịch lan khắp các châu phía nam, triều đình đóng cửa ải, cấm người qua lại.", "endText": "Dịch bệnh đã lui, các cửa ải mở lại.", "when": { "above": { "plague": 60 } }, "chance": 0.5, "years": [1, 2], "jobs": { "y": 1.6, "thuong": 0.7, "nghe_thuat": 0.6 }, "vars": { "stability": -2 } },
+    { "id": "ngoai_xam", "name": "Ngoại xâm", "text": "Giặc ngoài tràn qua biên ải. Chiếu chỉ ban xuống: các châu huyện bắt lính, nộp thêm quân lương.", "endText": "Giặc đã lui, quân lính lục tục trở về.", "when": { "above": { "border": 65 } }, "chance": 0.4, "years": [2, 5], "tax": 15, "priceMul": 1.15, "draft": true, "jobs": { "vo": 1.4, "cong": 1.15 }, "vars": { "stability": -1 } },
+    { "id": "khoi_nghia", "name": "Khởi nghĩa", "text": "Nông dân mấy châu đói khổ dựng cờ khởi nghĩa, phá kho lương, đuổi quan huyện. Triều đình sai quân đi dẹp.", "endText": "Cuộc khởi nghĩa đã tàn, khắp nơi treo đầu người làm gương.", "when": { "below": { "stability": 30, "security": 45 } }, "chance": 0.35, "years": [2, 6], "tax": 10, "draft": true, "jobs": { "thuong": 0.7, "vo": 1.3 }, "vars": { "security": -3 } },
+    { "id": "quyen_than", "name": "Quyền thần chuyên quyền", "text": "Quyền thần {minister} nắm hết triều chính, bè đảng cài khắp châu huyện. Quan nào không đút lót thì bị cách chức.", "endText": "Bè đảng của quyền thần đã tan, triều chính bớt ngột ngạt.", "when": { "minister": true, "below": { "stability": 60 } }, "chance": 0.25, "years": [3, 8], "tax": 10, "jobs": { "van": 0.8 }, "vars": { "stability": -2 } },
+    { "id": "tang_thue", "name": "Tăng thuế", "text": "Quốc khố trống rỗng, triều đình ban chiếu tăng sưu thuế khắp thiên hạ.", "endText": "Triều đình giảm sưu thuế về như cũ.", "when": { "phases": ["trung_suy", "loan_the"] }, "chance": 0.2, "years": [2, 4], "tax": 20, "vars": { "stability": -1 } },
+    { "id": "thien_tu_tuan_du", "name": "Thiên tử tuần du", "text": "Hoàng đế ngự giá tuần du phương nam, các châu huyện dọc đường sửa sang đường sá, lo nghênh giá.", "endText": "Xa giá đã về kinh.", "when": { "tempers": ["minh_quan", "trung_quan"], "above": { "stability": 60 } }, "chance": 0.08, "years": [1, 1], "jobs": { "nghe_thuat": 1.3, "thuong": 1.2 }, "vars": { "stability": 1 } }
+  ],
+  "draftEvent": "tr_bat_linh",
+  "texts": {
+    "emperorName": "{era} đế",
+    "heirName": "Thái tử {name}",
+    "founder": "{emperor} khai quốc, lập nên nhà {dynasty}.",
+    "crowned": "{old} băng hà. Triều thần tôn {emperor} lên ngôi.",
+    "heirCrowned": "{old} băng hà. {heir} lên ngôi, tức {emperor}.",
+    "temper": "Thiên hạ dần biết {emperor} là một {temper}.",
+    "heirNamed": "{emperor} lập {heir}.",
+    "ministerRise": "{minister} được trọng dụng, quyền nghiêng triều dã.",
+    "ministerFall": "Quyền thần {minister} thất thế, bè đảng tan rã.",
+    "amnesty": "Tân quân đại xá thiên hạ. Cửa ngục mở, ngươi được thả về.",
+    "tax": "Nộp sưu thuế {silver} lượng."
+  }
+}
