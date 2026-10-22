@@ -14,12 +14,6 @@
     "bargainLose": "Bà bán hàng nhìn ngươi từ đầu tới chân rồi nâng giá.",
     "regions": [
       "thanh_van_chau"
-    ],
-    "techniques": [
-      {
-        "id": "dan_khi_quyet",
-        "price": 60
-      }
     ]
   },
   {
@@ -42,7 +36,7 @@
     "techniques": [
       {
         "id": "dan_khi_quyet",
-        "price": 3
+        "price": 15
       }
     ]
   },

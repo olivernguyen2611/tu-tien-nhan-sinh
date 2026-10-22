@@ -8,6 +8,10 @@
 
 ## [Chưa phát hành]
 
+### Góp ý 23/10 · Bí tịch tu tiên không bán ở chợ phàm (2026-10-23)
+- Chợ phiên phàm nhân không còn bán công pháp tu tiên (trước có Dẫn Khí Quyết 60 lượng bạc). Phường thị tu sĩ bán Dẫn Khí Quyết giá 15 linh thạch (trước 3).
+- Người có linh căn mà chưa vào tông môn vẫn có đường kiếm công pháp nhập môn: hai kỳ ngộ mới, tán tu bán bí tịch (150 lượng hoặc ba tháng làm công) và tu sĩ hấp hối để lại bí tịch.
+
 ### Góp ý 23/10 · Phàm nhân không thấy chuyện tu tiên (2026-10-23)
 - Khi còn là phàm nhân: ẩn linh thạch, thanh Tu vi, dòng Linh căn/Thể chất trong hồ sơ và tab Tu luyện. Chỉ khi có linh căn dùng được và có công pháp (hoặc bí tịch) thì tab Tu luyện mới mở; lần tu luyện đầu tiên đưa người chơi vào đạo, từ đó mọi thứ của tu sĩ hiện ra.
 - Đã nhập đạo thì ẩn bớt chuyện phàm trần: nhóm Giang hồ trong thanh hành động (`tier.hideGroups`), các dòng võ lâm, thế lực giang hồ trong hồ sơ và mục giang hồ ở tab Tông môn.

@@ -1,0 +1,138 @@
+[
+ {
+  "id": "tdu_tan_tu_ban_bi_tich",
+  "category": "cultivation",
+  "title": "Tán tu túng tiền",
+  "text": "Ở góc chợ, một gã đạo sĩ áo vá nhìn ngươi chằm chằm, rồi kéo vào ngõ vắng: \"Ngươi có linh căn, ta nhìn là biết. Ta kẹt tiền về núi, bán rẻ cho ngươi cuốn nhập môn này.\" Trong tay hắn là một cuốn sách mỏng, gáy chỉ đã sờn.",
+  "themes": [
+   "fortune"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "root": {
+    "usable": true
+   },
+   "sect": {
+    "member": false
+   },
+   "age": {
+    "min": 10,
+    "max": 60
+   }
+  },
+  "weight": 1.2,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Trả một trăm năm mươi lượng",
+    "requires": {
+     "stats": [
+      {
+       "stat": "silver",
+       "gte": 150
+      }
+     ]
+    },
+    "result": {
+     "text": "Gã đạo sĩ đếm bạc, nhét sách vào tay ngươi rồi biến mất sau góc phố nhanh như chưa từng có. Trên bìa sách: Dẫn Khí Quyết. Phàm nhân bỏ cả đời không mua được thứ này.",
+     "effects": {
+      "silver": -150,
+      "gainTechnique": "dan_khi_quyet",
+      "stat.happiness": 3
+     }
+    }
+   },
+   {
+    "text": "Theo hắn làm phu khuân đồ ba tháng thay tiền",
+    "result": {
+     "text": "Ba tháng vác hòm qua sáu ngọn núi, vai ngươi tróc cả da. Lúc chia tay, hắn ném cho ngươi cuốn sách: \"Đáng đồng tiền. Đừng tu sai chỗ mà nổ kinh mạch.\"",
+     "effects": {
+      "gainTechnique": "dan_khi_quyet",
+      "stat.health": -6,
+      "stat.physique": 1
+     }
+    }
+   },
+   {
+    "text": "Nghi là lừa, bỏ đi",
+    "result": {
+     "text": "Ngươi quay lưng. Gã đạo sĩ thở dài, cất sách vào ngực áo. Đêm ấy ngươi nằm mãi không ngủ, cứ nghĩ tới cái gáy sách sờn.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tdu_tu_si_hap_hoi",
+  "category": "cultivation",
+  "title": "Tu sĩ hấp hối bên suối",
+  "text": "Bên bờ suối có một người áo xanh nằm sấp, sau lưng cắm ba mũi phi tiêu đen. Hắn còn thở. Thấy ngươi, mắt hắn sáng lên một chút: \"Có linh căn… tốt… lại đây.\"",
+  "themes": [
+   "fortune"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "root": {
+    "usable": true
+   },
+   "sect": {
+    "member": false
+   },
+   "age": {
+    "min": 10,
+    "max": 60
+   }
+  },
+  "weight": 0.6,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Đỡ hắn dậy, cho uống nước",
+    "result": {
+     "text": "Hắn uống hai ngụm, nhét vào tay ngươi một cuốn sách thấm máu: \"Đừng để kẻ đuổi theo ta thấy.\" Rồi hắn nhắm mắt. Ngươi chôn hắn dưới gốc liễu, mang sách về giấu dưới gối.",
+     "effects": {
+      "gainTechnique": "dan_khi_quyet",
+      "karma": 2,
+      "stat.daoHeart": 1,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Lục túi hắn rồi chạy",
+    "result": {
+     "text": "Ngươi lấy được cuốn sách và mấy viên đá sáng lấp lánh. Chạy được nửa đường thì nghe sau lưng có tiếng cười lạnh. May mà ngươi chạy nhanh.",
+     "effects": {
+      "gainTechnique": "dan_khi_quyet",
+      "spiritStones": 2,
+      "karma": -3,
+      "stat.health": -3
+     }
+    }
+   },
+   {
+    "text": "Chạy đi gọi người",
+    "result": {
+     "text": "Ngươi dẫn người làng quay lại thì bờ suối chỉ còn một vệt máu. Không ai tin ngươi.",
+     "effects": {
+      "stat.happiness": -2,
+      "stat.charm": -1
+     }
+    }
+   }
+  ]
+ }
+]
