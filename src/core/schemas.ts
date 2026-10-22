@@ -213,9 +213,11 @@ const BaseConditionsSchema = z
       .strict()
       .optional(),
     /** Task 3.9: family state ({deceased} = a relative who has died). */
-    family: z.object({ deadAny: z.boolean().optional(), parentAlive: z.boolean().optional(), siblingAlive: z.boolean().optional(), childAge: z.object({ min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional() }).strict().optional(),
+    family: z.object({ deadAny: z.boolean().optional(), parentAlive: z.boolean().optional(), /** 13.2: one of these relatives is alive. */ alive: z.array(z.enum(['father', 'mother', 'sibling', 'child'])).optional(), siblingAlive: z.boolean().optional(), childAge: z.object({ min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional() }).strict().optional(),
     /** Task 4.10: nearEnd = years left ≤ balance.lifespan.pressureLeftPct of the lifespan; maxLeft = at most this many years left. */
     lifespan: z.object({ nearEnd: z.boolean().optional(), maxLeft: z.number().int().min(0).optional() }).strict().optional(),
+    /** 13.2: years since the latest of these events or activities (never: since entering the current tầng). */
+    ago: z.object({ of: z.array(z.string().min(1)).min(1), min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional(),
     /** Task 3.4: the NPC this event is about (met earlier, or picked by an npcTrigger). */
     npc: z
       .object({
@@ -1980,6 +1982,8 @@ export const BalanceSchema = z
     /** 10.9 Phạm pháp: bộ khoái, công đường, ngục. */
     law: z.object({
       maxWanted: z.number().int().min(1), decayEvery: z.number().int().min(1), fleeWanted: z.number().int().min(1),
+      /** 13.2: karma lost when bộ khoái come for a tu sĩ who simply walks away. */
+      slipKarma: z.number().min(0).default(0),
       fine: z.tuple([z.number(), z.number()]), beatingHealth: z.number(), jailYears: z.tuple([z.number().int(), z.number().int()]), exileYears: z.number().int(),
       bribeCost: z.number(), bribeHonest: z.number(), bribeScore: z.number(),
       escapeBase: z.number(), escapePerFail: z.number(), escapeMin: z.number(), escapeFailYears: z.number().int(),
@@ -3466,6 +3470,8 @@ export const CrimesFileSchema = z.object({
   verdicts: z.object({ acquit: z.string().min(1), fine: z.string().min(1), beating: z.string().min(1), jail: z.string().min(1), exile: z.string().min(1), death: z.string().min(1) }).strict(),
   texts: z.object({
     exposed: z.array(z.string().min(1)).min(1), caught: z.string().min(1), released: z.string().min(1),
+    /** 13.2: bộ khoái come for a tu sĩ and cannot hold one. */
+    slipped: z.string().min(1).optional(),
     escaped: z.string().min(1), escapeFail: z.string().min(1), cooled: z.string().min(1), fled: lineOrLines,
     bribeOk: z.string().min(1), bribeHonest: z.string().min(1), poor: z.string().min(1),
     /** Mức truy nã 0–5 in words, for the profile. */

@@ -1,0 +1,894 @@
+[
+ {
+  "id": "sg_ha_son_cha_me",
+  "category": "cultivation",
+  "title": "Cha mẹ đã già",
+  "text": "Cổng nhà vẫn cái cổng tre năm xưa, chỉ thấp hơn trong trí nhớ. Cha mẹ ngồi ở hiên, mắt đã mờ, phải sờ lên mặt ngươi một hồi lâu mới chịu tin là con mình về.",
+  "themes": [
+   "family"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "family": {
+    "alive": [
+     "father",
+     "mother"
+    ]
+   },
+   "flagsNone": [
+    "no_father",
+    "no_mother"
+   ]
+  },
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Ở lại hầu hạ một mùa",
+    "result": {
+     "text": "Ngươi bổ củi, gánh nước, đêm ngồi đấm lưng cho mẹ. Hết mùa, cả nhà ra tận đầu làng tiễn.",
+     "effects": {
+      "familyAffinity": 8,
+      "stat.happiness": 8,
+      "cultProgress": -5
+     }
+    }
+   },
+   {
+    "text": "Lén cho cha mẹ uống đan cường thân",
+    "requires": {
+     "stats": [
+      {
+       "stat": "spiritStones",
+       "gte": 10
+      }
+     ]
+    },
+    "result": {
+     "text": "Viên đan tan trong chén trà. Mấy hôm sau cha đã tự đi ra đồng được. Ngươi biết, dùng tiên đan cho phàm nhân là gieo một chút nhân quả.",
+     "effects": {
+      "familyAffinity": 5,
+      "karma": -1,
+      "stat.happiness": 5,
+      "spiritStones": -10
+     }
+    }
+   },
+   {
+    "text": "Để lại bạc rồi đi ngay",
+    "requires": {
+     "stats": [
+      {
+       "stat": "silver",
+       "gte": 30
+      }
+     ]
+    },
+    "result": {
+     "text": "Một túi bạc nặng đặt lên bàn. Mẹ không nhìn túi bạc, chỉ nhìn ngươi.",
+     "effects": {
+      "silver": -30,
+      "familyAffinity": 2,
+      "stat.daoHeart": 1,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sg_ha_son_ban_cu",
+  "category": "cultivation",
+  "title": "Bạn cũ đã thành mộ",
+  "text": "Ngươi hỏi thăm đám bạn chăn trâu năm xưa. Ông lão bán nước chỉ lên đồi: \"Thằng ấy à? Mất từ năm lụt lớn rồi. Còn đứa kia đi lính, chẳng thấy về.\"",
+  "themes": [
+   "family"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ]
+  },
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Lên đồi thắp hương",
+    "result": {
+     "text": "Mộ thấp, cỏ cao. Ngươi nhổ cỏ, đặt lên một nắm xôi như ngày bé hai đứa chia nhau.",
+     "effects": {
+      "karma": 1,
+      "stat.daoHeart": 2,
+      "stat.happiness": -4
+     }
+    }
+   },
+   {
+    "text": "Tìm con cháu họ, để lại chút bạc",
+    "requires": {
+     "stats": [
+      {
+       "stat": "silver",
+       "gte": 20
+      }
+     ]
+    },
+    "result": {
+     "text": "Con cháu người bạn cũ nhìn ngươi như nhìn người lạ. Bạc thì vẫn nhận.",
+     "effects": {
+      "silver": -20,
+      "karma": 2,
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Lặng lẽ đi tiếp",
+    "result": {
+     "text": "Tu tiên là thế. Người ở lại, kẻ đi; kẻ đi rồi cũng phải quen.",
+     "effects": {
+      "stat.daoHeart": 3,
+      "stat.happiness": -6
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sg_ha_son_chau_chat",
+  "category": "cultivation",
+  "title": "Con cháu không nhận ra",
+  "text": "Trong sân nhà cũ, một lũ trẻ đang chơi đá cầu. Ngươi gọi tên đứa con út, cả lũ ngẩn ra. Một bà lão tóc bạc bước ra, nhìn ngươi rất lâu, rồi run run gọi một tiếng như hồi còn ba tuổi.",
+  "themes": [
+   "family"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "family": {
+    "childAge": {
+     "min": 45
+    }
+   }
+  },
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Ôm lấy đứa con nay đã già hơn mình",
+    "result": {
+     "text": "Lũ chắt chạy đi gọi cả họ. Đêm ấy nhà đỏ đèn, người ta bày cả bàn thờ ra vì tưởng ông tổ hiển linh.",
+     "effects": {
+      "familyAffinity": 8,
+      "stat.happiness": 10,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Xưng là người quen của tổ phụ",
+    "result": {
+     "text": "Ngươi uống chén trà, kể vài chuyện xưa như kể chuyện người khác, rồi đi. Đứa con già tiễn ra tới cổng, mãi không hỏi gì.",
+     "effects": {
+      "stat.daoHeart": 3,
+      "stat.happiness": -3,
+      "familyAffinity": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sg_thu_nha_den_muon",
+  "category": "cultivation",
+  "title": "Thư nhà đến muộn",
+  "text": "Lá thư nhà lạc qua ba trạm dịch, tới tay ngươi thì đã muộn ba năm. Nét chữ run run của người viết thuê: \"Mẹ con bệnh nặng, ngày nào cũng hỏi con có về không.\"",
+  "themes": [
+   "family"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "family": {
+    "alive": [
+     "mother"
+    ]
+   },
+   "flagsNone": [
+    "no_mother"
+   ],
+   "ago": {
+    "of": [
+     "ha_son"
+    ],
+    "min": 15
+   }
+  },
+  "weight": 2,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Hạ sơn ngay",
+    "result": {
+     "text": "Ngươi bay suốt ba ngày đêm. Làng đã khác, đường đã khác. Mẹ nằm trên giường, thấy ngươi thì cười như hồi ngươi còn bé đi học về.",
+     "effects": {
+      "familyAffinity": 15,
+      "stat.happiness": 12,
+      "cultProgress": -8
+     }
+    }
+   },
+   {
+    "text": "Gửi đan dược theo người đưa thư",
+    "requires": {
+     "stats": [
+      {
+       "stat": "spiritStones",
+       "gte": 15
+      }
+     ]
+    },
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 45
+    },
+    "success": {
+     "text": "Viên đan tới kịp. Thư sau báo mẹ đã ăn được cháo, ra được tới hiên ngồi phơi nắng.",
+     "effects": {
+      "spiritStones": -15,
+      "familyAffinity": 6,
+      "karma": 2,
+      "stat.happiness": 5
+     }
+    },
+    "fail": {
+     "text": "Đan tới nơi thì mẹ đã đi được nửa tháng. Thư báo tang đến cùng một chuyến với thư cảm ơn.",
+     "effects": {
+      "spiritStones": -15,
+      "stat.happiness": -12,
+      "stat.daoHeart": -2
+     }
+    }
+   },
+   {
+    "text": "Đang ở cửa ải đột phá, gác lại",
+    "result": {
+     "text": "Ngươi gấp lá thư cất dưới gối. Một ngày, rồi một tháng. Cửa ải chưa qua, mà lá thư cũng chưa mở lại.",
+     "effects": {
+      "stat.daoHeart": 3,
+      "stat.happiness": -6,
+      "setFlags": [
+       "no_ve_nha"
+      ],
+      "followUp": {
+       "event": "sg_tieng_me_goi",
+       "afterYears": [
+        4,
+        6
+       ]
+      }
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sg_tieng_me_goi",
+  "category": "cultivation",
+  "title": "Tiếng mẹ gọi",
+  "text": "Lúc vận công đến chỗ hiểm nhất, giữa tịch mịch bỗng có tiếng gọi tên tục của ngươi. Giọng mẹ. Linh khí loạn trong kinh mạch như bầy ong vỡ tổ.",
+  "themes": [
+   "heart_demon",
+   "family"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "flagsAll": [
+    "no_ve_nha"
+   ],
+   "flagsNone": [
+    "no_mother"
+   ]
+  },
+  "weight": 0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Cắn răng định thần",
+    "check": {
+     "stat": "stat.daoHeart",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi đè được tâm ma xuống. Nhưng từ đó mỗi lần nhập định, nơi đáy lòng vẫn có một tiếng gọi rất khẽ.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "clearFlags": [
+       "no_ve_nha"
+      ],
+      "stat.happiness": -4
+     }
+    },
+    "fail": {
+     "text": "Linh khí nghịch lên tâm mạch, ngươi thổ huyết. Tâm ma đã có chỗ ngồi.",
+     "effects": {
+      "heartDemon": 10,
+      "stat.health": -10,
+      "nextBreakthroughBonus": -10,
+      "clearFlags": [
+       "no_ve_nha"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Ngưng công, về làng một chuyến",
+    "result": {
+     "text": "Ngươi bỏ dở cửa ải, về làng ở lại ba tháng: quét sân, sửa mái, thắp hương ở từ đường. Lúc đi, tiếng gọi trong lòng đã lặng.",
+     "effects": {
+      "stat.happiness": -6,
+      "stat.daoHeart": 4,
+      "karma": 1,
+      "clearFlags": [
+       "no_ve_nha"
+      ],
+      "cultProgress": -5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sg_may_kiep_tren_thon",
+  "category": "cultivation",
+  "title": "Mây kiếp trên thôn nhà",
+  "text": "Ngươi đã chạm tới viên mãn Trúc Cơ. Đêm qua mây đen tụ ngay trên đỉnh làng, nơi người nhà ngươi đang ngủ. Thiên kiếp không chọn chỗ, nhưng ngươi thì có thể chọn.",
+  "themes": [
+   "tribulation",
+   "family"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co",
+    "max": "truc_co"
+   },
+   "stage": {
+    "min": 3
+   },
+   "flagsAll": [
+    "giu_duyen"
+   ]
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Độ kiếp ngay tại chỗ",
+    "result": {
+     "text": "Ngươi ngồi xuống giữa sân đình, bảo dân làng tránh xa. Dù vậy, khi lôi giáng xuống, một góc làng vẫn bốc cháy.",
+     "effects": {
+      "nextBreakthroughBonus": 5,
+      "karma": -6,
+      "stat.happiness": -6,
+      "familyAffinity": -4
+     }
+    }
+   },
+   {
+    "text": "Bay xa trăm dặm rồi mới độ",
+    "result": {
+     "text": "Ngươi đi vội, chỗ ngồi không chọn được, linh khí chưa yên. Nhưng không ai liên lụy.",
+     "effects": {
+      "nextBreakthroughBonus": -5,
+      "karma": 2,
+      "stat.daoHeart": 2
+     }
+    }
+   },
+   {
+    "text": "Dựng trận pháp che chắn cho làng rồi mới độ",
+    "requires": {
+     "stats": [
+      {
+       "stat": "spiritStones",
+       "gte": 40
+      }
+     ]
+    },
+    "result": {
+     "text": "Mười hai cột trận cắm quanh làng, tốn một túi linh thạch. Lôi đánh xuống, chỉ có mấy con gà sợ mà đẻ non.",
+     "effects": {
+      "spiritStones": -40,
+      "nextBreakthroughBonus": -2,
+      "karma": 5,
+      "reputation": {
+       "lang_xa": 10
+      },
+      "stat.happiness": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sg_chieu_moi_quoc_su",
+  "category": "cultivation",
+  "title": "Chiếu mời quốc sư",
+  "text": "Sứ giả triều đình quỳ trước động phủ, hai tay dâng chiếu vàng: thánh thượng tuổi cao, nghe danh tiên trưởng, xin mời về kinh làm quốc sư, luyện một lò đan trường sinh.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "kim_dan"
+   },
+   "worldPhase": [
+    "trung_suy",
+    "loan_the"
+   ]
+  },
+  "weight": 2,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Về kinh, luyện đan thật",
+    "requires": {
+     "stats": [
+      {
+       "stat": "spiritStones",
+       "gte": 50
+      }
+     ]
+    },
+    "result": {
+     "text": "Lò đan cháy bốn mươi chín ngày. Vua uống xong, đứng dậy đi lại được, cả triều quỳ tung hô. Ngươi biết mình đã nhúng tay vào vận số một triều đại.",
+     "effects": {
+      "spiritStones": -50,
+      "karma": -3,
+      "reputation": {
+       "trieu_dinh": 20
+      },
+      "stat.happiness": 3,
+      "silver": 500,
+      "setFlags": [
+       "quoc_su"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Về kinh, dâng đan giả lấy của",
+    "result": {
+     "text": "Viên đan bằng chu sa và mật ong, bọc lá vàng. Quốc khố mở cho ngươi chọn. Vua uống xong thấy khỏe hẳn mấy tháng.",
+     "effects": {
+      "spiritStones": 80,
+      "silver": 800,
+      "karma": -8,
+      "stat.daoHeart": -3,
+      "setFlags": [
+       "quoc_su_gia"
+      ],
+      "followUp": {
+       "event": "sg_quoc_su_truy_cuu",
+       "afterYears": [
+        3,
+        5
+       ]
+      }
+     }
+    }
+   },
+   {
+    "text": "Từ chối, đóng cửa động phủ",
+    "result": {
+     "text": "Sứ giả về tâu. Vua nổi giận, sai quan địa phương làm khó người nhà ngươi một trận.",
+     "effects": {
+      "familyAffinity": -6,
+      "reputation": {
+       "trieu_dinh": -10
+      },
+      "stat.daoHeart": 3,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sg_quoc_su_truy_cuu",
+  "category": "cultivation",
+  "title": "Tiên đan hóa độc",
+  "text": "Vua băng hà. Tân đế lên ngôi, việc đầu tiên là sai người truy tìm \"yêu đạo dâng đan giả\". Tranh vẽ mặt ngươi dán khắp kinh thành.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "flagsAll": [
+    "quoc_su_gia"
+   ]
+  },
+  "weight": 0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Mặc kệ, phàm nhân làm gì được tu sĩ",
+    "result": {
+     "text": "Đúng là không ai bắt nổi ngươi. Nhưng tháng sau một tu sĩ chấp pháp tìm tới: giết vua bằng đan giả là đại tội với thiên quy.",
+     "effects": {
+      "setFlags": [
+       "pham_thien_quy"
+      ],
+      "clearFlags": [
+       "quoc_su_gia"
+      ],
+      "karma": -4,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Trả lại của cải, dâng một viên đan thật cho tân đế",
+    "requires": {
+     "stats": [
+      {
+       "stat": "spiritStones",
+       "gte": 60
+      },
+      {
+       "stat": "silver",
+       "gte": 500
+      }
+     ]
+    },
+    "result": {
+     "text": "Tân đế nhận đan, xóa lệnh truy nã. Món nợ với vua cũ thì chẳng trả được nữa.",
+     "effects": {
+      "spiritStones": -60,
+      "silver": -500,
+      "karma": 3,
+      "clearFlags": [
+       "quoc_su_gia"
+      ],
+      "stat.daoHeart": 2
+     }
+    }
+   },
+   {
+    "text": "Mai danh ẩn tích ở vùng biên",
+    "result": {
+     "text": "Ngươi bỏ động phủ, sang đại vực khác. Tên tuổi năm xưa dần chìm.",
+     "effects": {
+      "moveHome": true,
+      "clearFlags": [
+       "quoc_su_gia"
+      ],
+      "stat.happiness": -4,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sg_chat_tim_toi",
+  "category": "cultivation",
+  "title": "Chắt tìm tới",
+  "text": "Một thiếu niên áo vá quỳ trước sơn môn, tay cầm miếng ngọc bội ngươi để lại cho con trai cả hơn trăm năm trước. Nó là chắt của ngươi: gia tộc sắp bị quan phủ tịch biên, cả họ không còn ai để cầu.",
+  "themes": [
+   "family"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "age": {
+    "min": 110
+   },
+   "family": {
+    "childAge": {
+     "min": 70
+    }
+   },
+   "flagsNone": [
+    "dut_duyen"
+   ]
+  },
+  "weight": 2,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Dùng pháp thuật dọa quan phủ",
+    "result": {
+     "text": "Một đạo lôi đánh gãy cột cờ nha môn. Án tịch biên bị xóa ngay trong đêm. Nhưng thiên quy đã ghi một nét.",
+     "effects": {
+      "familyAffinity": 8,
+      "karma": -5,
+      "setFlags": [
+       "pham_thien_quy"
+      ],
+      "stat.happiness": 6
+     }
+    }
+   },
+   {
+    "text": "Giúp theo lối phàm: bạc và quan hệ",
+    "requires": {
+     "stats": [
+      {
+       "stat": "silver",
+       "gte": 200
+      }
+     ]
+    },
+    "result": {
+     "text": "Ngươi xuống núi, đổi linh thạch lấy bạc, lo lót từ huyện lên phủ. Mất nửa năm, nhưng không ai nói được ngươi phạm luật trời.",
+     "effects": {
+      "silver": -200,
+      "familyAffinity": 10,
+      "karma": 3,
+      "stat.happiness": 8
+     }
+    }
+   },
+   {
+    "text": "Đuổi đi: đã dứt duyên phàm trần",
+    "result": {
+     "text": "Thằng bé quỳ tới tối rồi bỏ đi. Đạo tâm ngươi lạnh như đá.",
+     "effects": {
+      "stat.daoHeart": 5,
+      "familyAffinity": -10,
+      "stat.happiness": -5,
+      "setFlags": [
+       "chat_oan"
+      ],
+      "followUp": {
+       "event": "sg_chat_oan_han",
+       "afterYears": [
+        8,
+        12
+       ]
+      }
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sg_chat_oan_han",
+  "category": "cultivation",
+  "title": "Con cháu oán hận",
+  "text": "Họ của ngươi đã tan tác. Đứa chắt năm xưa giờ là một tán tu mắt đỏ ngầu, đứng chặn trên đường núi: \"Tổ tông gì thứ người như ngươi!\"",
+  "themes": [
+   "family"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "flagsAll": [
+    "chat_oan"
+   ]
+  },
+  "weight": 0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Nhận lỗi, truyền cho nó một bộ công pháp",
+    "result": {
+     "text": "Nó cầm bộ công pháp, khóc như đứa trẻ rồi đi. Một mối nợ đã trả được một nửa.",
+     "effects": {
+      "karma": 4,
+      "stat.daoHeart": -2,
+      "stat.happiness": 2,
+      "clearFlags": [
+       "chat_oan"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Đánh cho nó tỉnh",
+    "result": {
+     "text": "Nó lao vào ngươi như con thú bị thương.",
+     "effects": {
+      "clearFlags": [
+       "chat_oan"
+      ]
+     },
+     "fight": {
+      "foe": {
+       "name": "Đứa chắt oán hận",
+       "realm": "below",
+       "intent": "teach"
+      },
+      "win": {
+       "text": "Ngươi đánh ngất nó, đặt nó nằm ở một quán trọ, trả tiền phòng ba tháng.",
+       "effects": {
+        "karma": 1,
+        "stat.happiness": -3
+       }
+      },
+      "lose": {
+       "text": "Đòn của kẻ oán hận nặng hơn ngươi tưởng.",
+       "effects": {
+        "stat.health": -12,
+        "stat.happiness": -5
+       }
+      }
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sg_lu_lut_que",
+  "category": "cultivation",
+  "title": "Lũ về quê nhà",
+  "text": "Mưa suốt nửa tháng. Ngươi đứng trên mây nhìn xuống, thấy nước sông đã lên tới mái nhà ở {hometown}. Dân làng ngồi trên nóc, có người bế con giơ lên trời.",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "flagsNone": [
+    "dut_duyen"
+   ]
+  },
+  "weight": 1.5,
+  "cooldownYears": 20,
+  "choices": [
+   {
+    "text": "Thi pháp rẽ nước cứu cả làng",
+    "result": {
+     "text": "Nước rẽ làm đôi như có tay ai vạch. Cả làng lập miếu thờ \"tiên ông\". Tông môn thì gửi thư khiển trách: can thiệp phàm trần là phạm thiên quy.",
+     "effects": {
+      "karma": 6,
+      "reputation": {
+       "lang_xa": 15
+      },
+      "sectContribution": -15,
+      "setFlags": [
+       "pham_thien_quy"
+      ],
+      "stat.happiness": 6
+     }
+    }
+   },
+   {
+    "text": "Bơi thuyền cứu người như một phàm nhân",
+    "result": {
+     "text": "Ba ngày ba đêm không dùng một chút linh lực. Cứu được mười mấy người, còn ngươi thì sốt li bì.",
+     "effects": {
+      "karma": 4,
+      "stat.health": -10,
+      "stat.physique": 1,
+      "reputation": {
+       "lang_xa": 5
+      }
+     }
+    }
+   },
+   {
+    "text": "Đứng nhìn: sinh tử phàm trần là số trời",
+    "result": {
+     "text": "Ngươi quay mặt đi. Đạo tâm vững thêm một chút, lòng thì nặng thêm nhiều.",
+     "effects": {
+      "stat.daoHeart": 3,
+      "stat.happiness": -8
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sg_chap_phap_toi",
+  "category": "cultivation",
+  "title": "Tu sĩ chấp pháp",
+  "text": "Một tu sĩ áo đen, ngực thêu chữ \"Luật\", đứng trước cửa động phủ: \"Ngươi dùng pháp thuật can thiệp phàm trần. Thiên quy không vì lòng tốt mà miễn.\"",
+  "themes": [
+   "karma"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "flagsAll": [
+    "pham_thien_quy"
+   ]
+  },
+  "weight": 4,
+  "choices": [
+   {
+    "text": "Nhận phạt",
+    "result": {
+     "text": "Ngươi nộp linh thạch chuộc tội, lại phải diện bích ba tháng. Tu vi chậm lại một quãng.",
+     "effects": {
+      "spiritStones": -30,
+      "cultProgress": -10,
+      "clearFlags": [
+       "pham_thien_quy"
+      ],
+      "stat.daoHeart": 2
+     }
+    }
+   },
+   {
+    "text": "Cãi lý: cứu người cũng là đạo",
+    "check": {
+     "stat": "stat.comprehension",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Hắn im lặng rất lâu, rồi gạch tên ngươi khỏi sổ: \"Lần sau, đừng để ta thấy.\"",
+     "effects": {
+      "clearFlags": [
+       "pham_thien_quy"
+      ],
+      "stat.daoHeart": 3,
+      "stat.comprehension": 1
+     }
+    },
+    "fail": {
+     "text": "\"Đạo của ngươi không phải luật của trời.\" Hắn phạt gấp đôi.",
+     "effects": {
+      "spiritStones": -50,
+      "clearFlags": [
+       "pham_thien_quy"
+      ],
+      "stat.happiness": -5
+     }
+    }
+   },
+   {
+    "text": "Rút kiếm",
+    "result": {
+     "text": "Hắn thở dài, rút ra một cây thước sắt.",
+     "effects": {
+      "clearFlags": [
+       "pham_thien_quy"
+      ]
+     },
+     "fight": {
+      "foe": {
+       "name": "Tu sĩ chấp pháp",
+       "realm": "same",
+       "intent": "teach",
+       "powerMul": 1.3
+      },
+      "win": {
+       "text": "Hắn thua, bỏ đi, nhưng tên ngươi đã vào sổ đen của Chấp Pháp Đường.",
+       "effects": {
+        "karma": -4,
+        "stat.happiness": 2,
+        "reputation": {
+         "chinh": -10
+        }
+       }
+      },
+      "lose": {
+       "text": "Thước sắt đánh gãy ba xương sườn của ngươi. Hắn vẫn thu đủ tiền phạt.",
+       "effects": {
+        "stat.health": -20,
+        "spiritStones": -30
+       }
+      }
+     }
+    }
+   }
+  ]
+ }
+]

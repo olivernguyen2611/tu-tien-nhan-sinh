@@ -8,6 +8,22 @@
 
 ## [Chưa phát hành]
 
+### 13.2 Song giới: tu sĩ trở về phàm gian (2026-10-23)
+- Hoạt động mới cho tu sĩ còn giữ duyên phàm trần:
+  - **Hạ sơn về quê** (3 tháng): gặp cha mẹ đã già, bạn cũ đã thành mộ, con cháu không nhận ra.
+  - **Gửi bạc về nhà**.
+  - **Đổi bạc lấy linh thạch** ở chợ đen: 200 lượng được 10 viên, có khi bị lừa. Tiền phàm từ nay có chỗ dùng.
+- 12 sự kiện song giới:
+  - Thư nhà đến muộn khi mẹ bệnh nặng: hạ sơn, gửi đan, hoặc gác lại thì vài năm sau thành tâm ma "tiếng mẹ gọi".
+  - Mây kiếp tụ trên thôn nhà.
+  - Chiếu mời làm quốc sư: luyện đan thật, dâng đan giả rồi bị tân đế truy cứu, hoặc từ chối.
+  - Chắt tìm tới xin cứu gia tộc, đuổi đi thì về sau bị con cháu oán hận.
+  - Lũ về quê nhà.
+  - Tu sĩ chấp pháp tới khi phạm thiên quy.
+- Thiên quy: dùng pháp thuật can thiệp phàm trần thì bị ghi tên, tu sĩ chấp pháp tìm tới phạt.
+- Bộ khoái không bắt nổi tu sĩ: không lên công đường, lệnh truy nã hết hiệu lực, nhưng Nhân quả giảm.
+- Điều kiện mới: `ago` (bao nhiêu năm từ lần cuối một sự kiện hay hoạt động), `family.alive` (còn cha, mẹ, anh chị em hay con).
+
 ### 13.1 Nhập đạo là một cột mốc (2026-10-23)
 - Ngay sau màn nhập đạo, người chơi phải chọn **Dứt duyên phàm trần** hay **Giữ duyên phàm trần**:
   - Dứt duyên: bỏ nghề, ấn quan, quân ngũ, ngai vàng. Ruộng vườn, cửa hiệu để lại cho người nhà, chỉ mang theo 20% số bạc. Tu nhanh hơn 10%, nhưng người thân phàm mỗi năm một xa.

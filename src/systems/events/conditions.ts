@@ -326,7 +326,15 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (c.family.parentAlive !== undefined && state.family.some((r) => r.alive && (r.role === 'father' || r.role === 'mother')) !== c.family.parentAlive) return false;
     const ca = c.family.childAge;
     if (ca && !state.family.some((r) => r.alive && r.role === 'child' && (ca.min === undefined || r.age >= ca.min) && (ca.max === undefined || r.age <= ca.max))) return false;
+    if (c.family.alive && !state.family.some((r) => r.alive && c.family!.alive!.includes(r.role))) return false;
     if (c.family.siblingAlive !== undefined && state.family.some((r) => r.alive && r.role === 'sibling') !== c.family.siblingAlive) return false;
+  }
+  if (c.ago) {
+    const at = Math.max(...c.ago.of.map((id) => state.events.history[id] ?? state.activities?.last?.[id] ?? -Infinity));
+    const from = at === -Infinity ? (state.tier ? state.tierHistory?.[state.tier] ?? 0 : 0) : at;
+    const years = state.character.age - from;
+    if (c.ago.min !== undefined && years < c.ago.min) return false;
+    if (c.ago.max !== undefined && years > c.ago.max) return false;
   }
   if (c.lifespan) {
     const left = state.cult.lifespan - state.character.age;
