@@ -75,5 +75,7 @@ export function worldEventsYear(state: GameState, content: Content): GameState {
   if (!rng.chance(cfg.startChance)) return state;
   const open = events.filter((e) => (world.cooldown[e.id] ?? -1) <= age);
   if (open.length === 0) return state;
-  return startWorldEvent({ ...state, world }, content, rng.weighted(open, (e) => e.weight).id);
+  // 13.4: the thời cuộc leans on what comes (chính ma căng thẳng makes a đại chiến likelier).
+  const lean = (e: WorldEvent) => e.varWeight.reduce((m, v) => ((state.times?.vars[v.var] ?? -Infinity) >= v.gte ? m * v.mul : m), 1);
+  return startWorldEvent({ ...state, world }, content, rng.weighted(open, (e) => e.weight * lean(e)).id);
 }

@@ -1,0 +1,597 @@
+[
+ {
+  "id": "kd_so_ngo",
+  "category": "cultivation",
+  "title": "Kình địch",
+  "text": "Ở Thiên Kiêu đài, giữa trăm người, có một ánh mắt nhìn ngươi không rời. Đó là {npc}, cùng lứa với ngươi, cùng cảnh giới với ngươi, và có vẻ không ưa ngươi chút nào. Người ta bắt đầu nhắc hai cái tên cùng một lúc.",
+  "themes": [
+   "ranking"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co"
+   },
+   "npc": {
+    "present": true
+   }
+  },
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Chủ động chắp tay chào",
+    "result": {
+     "text": "{npc} gật đầu đáp lễ, lạnh nhạt. \"Hẹn gặp ở chỗ cao hơn.\"",
+     "effects": {
+      "npc": {
+       "affinity": 5
+      },
+      "stat.charm": 1,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Nhìn lại, không chớp mắt",
+    "result": {
+     "text": "Hai ánh mắt chạm nhau giữa không trung. Có người bên cạnh lẩm bẩm: \"Mười năm nữa, hai người này tất có một trận.\"",
+     "effects": {
+      "npc": {
+       "grudge": 5
+      },
+      "stat.daoHeart": 2
+     }
+    }
+   },
+   {
+    "text": "Lờ đi, chẳng đáng bận tâm",
+    "result": {
+     "text": "{npc} cười nhạt. Từ hôm ấy, tu luyện chăm như phát cuồng, chỉ để ngươi phải nhớ tên.",
+     "effects": {
+      "npc": {
+       "grudge": 10
+      },
+      "stat.happiness": 1,
+      "stat.comprehension": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kd_dai_bi",
+  "category": "cultivation",
+  "title": "Đại bỉ gặp nhau",
+  "text": "Thăm thẻ ở đại bỉ, trời xui đất khiến thế nào ngươi lại bốc trúng {npc}. Dưới đài ồn như chợ: ai cũng muốn biết thiên kiêu nào hơn thiên kiêu nào.",
+  "themes": [
+   "ranking"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co"
+   },
+   "npc": {
+    "present": true
+   }
+  },
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Đánh hết sức",
+    "result": {
+     "text": "Hai người bước lên đài.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Kình địch",
+       "intent": "teach",
+       "fromNpc": true
+      },
+      "win": {
+       "text": "Ngươi thắng sát nút. {npc} đứng dậy, lau máu khóe miệng: \"Lần sau sẽ khác.\"",
+       "effects": {
+        "npc": {
+         "grudge": 8
+        },
+        "stat.happiness": 6,
+        "reputation": {
+         "chinh": 5
+        },
+        "stat.daoHeart": 2
+       }
+      },
+      "lose": {
+       "text": "Ngươi thua. Không ai cười, vì ai cũng thấy ngươi chỉ thua nửa chiêu. Nhưng nửa chiêu ấy, {npc} sẽ nhắc cả đời.",
+       "effects": {
+        "stat.happiness": -6,
+        "stat.daoHeart": 3,
+        "npc": {
+         "affinity": 3
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Giữ sức, chỉ đỡ không công",
+    "result": {
+     "text": "Ngươi đỡ ba mươi chiêu rồi nhận thua. {npc} biết ngươi chưa dốc lòng, giận đến tái mặt.",
+     "effects": {
+      "npc": {
+       "grudge": 12
+      },
+      "stat.daoHeart": 1,
+      "stat.charm": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kd_luan_dao",
+  "category": "cultivation",
+  "title": "Mời luận đạo trước cả tông",
+  "text": "{npc} đã lên một cảnh giới cao hơn ngươi. Hôm nay hắn tới tận sơn môn, trước mặt mọi người mời ngươi luận đạo, giọng không giấu được vẻ đắc ý.",
+  "themes": [
+   "ranking"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co"
+   },
+   "npc": {
+    "present": true
+   }
+  },
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Nhận lời dù kém một cảnh giới",
+    "result": {
+     "text": "Cả tông kéo ra xem.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Kình địch",
+       "intent": "teach",
+       "fromNpc": true
+      },
+      "win": {
+       "text": "Vượt cấp mà thắng. Tin này truyền khắp đại vực, {npc} đóng cửa ba năm không gặp ai.",
+       "effects": {
+        "stat.happiness": 10,
+        "stat.daoHeart": 4,
+        "reputation": {
+         "chinh": 10
+        },
+        "npc": {
+         "grudge": 15
+        }
+       }
+      },
+      "lose": {
+       "text": "Ngươi thua như ai cũng đoán. Nhưng ngươi đỡ được lâu hơn ai cũng đoán.",
+       "effects": {
+        "stat.daoHeart": -5,
+        "stat.happiness": -4,
+        "stat.physique": 1
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Hẹn mười năm sau",
+    "result": {
+     "text": "\"Mười năm. Ta sẽ đợi ngươi ở cảnh giới ấy.\" {npc} cười, phất tay áo bỏ đi. Lời hẹn đã nói, không rút lại được.",
+     "effects": {
+      "stat.daoHeart": 5,
+      "setFlags": [
+       "kd_hen_uoc"
+      ],
+      "nextBreakthroughBonus": 5
+     }
+    }
+   },
+   {
+    "text": "Luận bằng lời, không động thủ",
+    "check": {
+     "stat": "stat.comprehension",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Hai người ngồi đối diện suốt ba ngày, nói về đạo. Lúc đứng dậy, cả hai đều ngộ ra điều mới. Từ đó, kình địch thành tri kỷ đối thủ.",
+     "effects": {
+      "stat.comprehension": 2,
+      "npc": {
+       "affinity": 20
+      },
+      "setFlags": [
+       "kd_tri_ky"
+      ]
+     }
+    },
+    "fail": {
+     "text": "Ngươi bị hắn bẻ lý từng câu. Không mất máu, nhưng mất mặt.",
+     "effects": {
+      "stat.happiness": -5,
+      "stat.charm": -1,
+      "stat.comprehension": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kd_cung_vao_bi_canh",
+  "category": "secret_realm",
+  "title": "Cùng vào bí cảnh",
+  "text": "Cửa bí cảnh mở. Tới nơi, ngươi gặp {npc} đã đứng chờ ở đó. Bên trong đầy cấm chế, một người khó qua, hai người thì có cơ hội.",
+  "themes": [
+   "bi_canh"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co"
+   },
+   "npc": {
+    "present": true
+   }
+  },
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Bắt tay hợp sức",
+    "result": {
+     "text": "Hai người cùng phá ba tầng cấm chế, chia đôi một mạch linh tủy. Đây là lần đầu ngươi thấy {npc} cười.",
+     "effects": {
+      "npc": {
+       "affinity": 12
+      },
+      "setFlags": [
+       "kd_hop_suc"
+      ],
+      "spiritStones": 60,
+      "stat.happiness": 4
+     }
+    }
+   },
+   {
+    "text": "Đi một mình, đề phòng sau lưng",
+    "result": {
+     "text": "Ngươi tự mở đường. Lấy được ít hơn, nhưng ngủ được yên.",
+     "effects": {
+      "spiritStones": 25,
+      "stat.daoHeart": 2,
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Đi trước, giành lấy bảo vật",
+    "result": {
+     "text": "Ngươi lừa {npc} vào một nhánh đường cụt rồi tự lấy kỳ vật. Một kẻ thù mới đã thành.",
+     "effects": {
+      "spiritStones": 90,
+      "karma": -6,
+      "npc": {
+       "grudge": 25
+      },
+      "stat.daoHeart": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kd_nga_re",
+  "category": "cultivation",
+  "title": "Ngã rẽ",
+  "text": "Ngươi bị ba tu sĩ ma đạo vây ở một khe núi. Ngay lúc nguy cấp, {npc} hiện ra trên đỉnh vách. Người ấy đứng nhìn rất lâu, như đang cân nhắc điều gì.",
+  "themes": [
+   "demonic"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co"
+   },
+   "npc": {
+    "present": true
+   }
+  },
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Gọi tên {npc}",
+    "result": {
+     "text": "Ngươi gọi một tiếng.",
+     "effects": {
+      "stat.daoHeart": 1
+     },
+     "fight": {
+      "foe": {
+       "name": "Ba ma tu",
+       "realm": "same",
+       "intent": "kill",
+       "plural": true,
+       "powerMul": 1.1
+      },
+      "win": {
+       "text": "{npc} nhảy xuống đứng cạnh ngươi. Hai người đánh lui ma tu. Lúc chia tay, không ai nói cảm ơn, nhưng cả hai đều biết.",
+       "effects": {
+        "npc": {
+         "affinity": 15,
+         "favor": 10
+        },
+        "stat.happiness": 5
+       }
+      },
+      "lose": {
+       "text": "{npc} quay lưng bỏ đi. Ngươi chạy thoát với nửa cái mạng, và một mối hận.",
+       "effects": {
+        "stat.health": -20,
+        "npc": {
+         "grudge": 20
+        },
+        "stat.daoHeart": -2
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Không cầu xin, tự liều mạng xông ra",
+    "result": {
+     "text": "Ngươi không nhìn lên vách đá thêm lần nào nữa.",
+     "effects": {
+      "stat.daoHeart": 3
+     },
+     "fight": {
+      "foe": {
+       "name": "Ba ma tu",
+       "realm": "same",
+       "intent": "kill",
+       "plural": true,
+       "powerMul": 1.1
+      },
+      "win": {
+       "text": "Ngươi tự mở đường máu. Trên vách đá, {npc} lặng lẽ gật đầu rồi biến mất.",
+       "effects": {
+        "npc": {
+         "affinity": 8
+        },
+        "stat.physique": 1,
+        "stat.happiness": 4
+       }
+      },
+      "lose": {
+       "text": "Ngươi gục xuống. Tỉnh dậy đã ở một hang đá, vết thương đã được băng. Không ai để lại tên.",
+       "effects": {
+        "stat.health": -15,
+        "npc": {
+         "favor": 15
+        },
+        "stat.happiness": -2
+       }
+      }
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kd_ket_cuc",
+  "category": "cultivation",
+  "title": "Trận cuối",
+  "text": "Mấy chục năm, mấy lần gặp. Hôm nay {npc} gửi chiến thư, chỉ ghi một dòng: \"Giữa ta và ngươi, phải có một kết cục.\"",
+  "themes": [
+   "ranking"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co"
+   },
+   "npc": {
+    "present": true
+   }
+  },
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Sinh tử chiến",
+    "result": {
+     "text": "Hai người hẹn nhau ở đỉnh núi không tên.",
+     "effects": {
+      "setFlags": [
+       "kinh_dich_ket"
+      ]
+     },
+     "fight": {
+      "foe": {
+       "name": "Kình địch",
+       "intent": "teach",
+       "fromNpc": true
+      },
+      "win": {
+       "text": "Ngươi thắng. Lúc {npc} ngã xuống, trong lòng ngươi trống rỗng như mất đi nửa con đường đã đi.",
+       "effects": {
+        "npc": {
+         "kill": true
+        },
+        "stat.daoHeart": 5,
+        "stat.happiness": -4,
+        "karma": -3
+       }
+      },
+      "lose": {
+       "text": "Ngươi thua, nhưng {npc} không ra tay kết liễu: \"Còn ngươi, ta mới còn đường để đi.\"",
+       "effects": {
+        "stat.health": -25,
+        "npc": {
+         "affinity": 10
+        },
+        "stat.daoHeart": -3
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Hóa giải: mời uống một chén rượu thay cho trận đánh",
+    "check": {
+     "stat": "stat.daoHeart",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Hai người uống tới sáng, kể chuyện mấy chục năm. Kình địch một đời, đến cuối thành bạn già.",
+     "effects": {
+      "setFlags": [
+       "kinh_dich_ket",
+       "kd_tri_ky"
+      ],
+      "npc": {
+       "affinity": 30,
+       "grudge": -30
+      },
+      "stat.happiness": 8,
+      "stat.daoHeart": 2
+     }
+    },
+    "fail": {
+     "text": "{npc} hất chén rượu: \"Ngươi coi thường ta?\" Trận đánh vẫn phải diễn ra, ngươi thua vì ra tay không dứt khoát.",
+     "effects": {
+      "setFlags": [
+       "kinh_dich_ket"
+      ],
+      "stat.health": -15,
+      "npc": {
+       "grudge": 10
+      },
+      "stat.happiness": -4
+     }
+    }
+   },
+   {
+    "text": "Không tới",
+    "result": {
+     "text": "Ngươi đốt chiến thư. {npc} đứng chờ trên đỉnh núi ba ngày ba đêm, rồi đi, từ đó không ai thấy nữa.",
+     "effects": {
+      "setFlags": [
+       "kinh_dich_ket"
+      ],
+      "stat.daoHeart": -2,
+      "stat.happiness": -3,
+      "reputation": {
+       "chinh": -5
+      }
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "kd_tho_dan_gia",
+  "category": "market",
+  "title": "Thọ đan giá rẻ",
+  "text": "Một đan sư mặt mũi phúc hậu ở phường thị bày bán Diên Thọ Đan, giá chỉ bằng ba phần mười chỗ khác. Viên đan sáng lấp lánh, mùi thơm ngọt.",
+  "themes": [
+   "market",
+   "scam"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   }
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Mua một viên",
+    "requires": {
+     "stats": [
+      {
+       "stat": "spiritStones",
+       "gte": 20
+      }
+     ]
+    },
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 65
+    },
+    "success": {
+     "text": "Đan thật. Ngươi thêm mười năm thọ nguyên, mà không hiểu vì sao hắn bán rẻ thế.",
+     "effects": {
+      "spiritStones": -20,
+      "lifespanYears": 10,
+      "stat.happiness": 4
+     }
+    },
+    "fail": {
+     "text": "Đan giả: bột chu sa bọc mật ong. Ngươi đau bụng bảy ngày. Quay lại thì sạp đã dẹp.",
+     "effects": {
+      "spiritStones": -20,
+      "stat.health": -10,
+      "stat.happiness": -4
+     }
+    }
+   },
+   {
+    "text": "Dùng thần thức dò xét",
+    "check": {
+     "stat": "stat.comprehension",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Đan giả. Ngươi vạch mặt hắn giữa chợ, tán tu quanh đó cảm ơn rối rít.",
+     "effects": {
+      "reputation": {
+       "tan_tu": 8
+      },
+      "karma": 2,
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Thần thức ngươi chưa đủ sâu, không nhận ra gì. Ngươi ngần ngừ bỏ đi.",
+     "effects": {
+      "stat.intellect": 1,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Bỏ qua",
+    "result": {
+     "text": "Của rẻ là của ôi. Ngươi đi thẳng.",
+     "effects": {
+      "stat.happiness": -1,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ }
+]

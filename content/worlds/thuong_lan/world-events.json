@@ -5,6 +5,7 @@
     "kind": "war",
     "regions": ["huyet_uyen", "vo_chu_hoang_nguyen", "trung_chau"],
     "weight": 0.6,
+    "varWeight": [{ "var": "tension", "gte": 60, "mul": 4 }],
     "cooldownYears": 120,
     "phases": [
       {
@@ -609,6 +610,63 @@
         "years": 1,
         "text": "Linh thú quý hiếm xuống núi tìm nước sau mùa khô. Ngự Thú Tông và Khương gia cùng đi bắt.",
         "eventWeight": { "beast": 2, "fortune": 1.3 }
+      }
+    ]
+  },
+  {
+    "id": "tong_mon_diet_mon",
+    "name": "Tịch Dương Môn bị diệt",
+    "kind": "war",
+    "regions": [],
+    "weight": 0.5,
+    "varWeight": [{ "var": "tension", "gte": 55, "mul": 2.5 }],
+    "cooldownYears": 80,
+    "phases": [
+      {
+        "name": "Đêm máu",
+        "years": 1,
+        "text": "Tịch Dương Môn, một tông nhỏ mấy trăm năm tuổi, bị đánh úp trong một đêm. Hộ sơn đại trận vỡ, ánh lửa soi đỏ ba ngọn núi.",
+        "eventWeight": { "demonic": 1.4 }
+      },
+      {
+        "name": "Dư âm",
+        "years": 3,
+        "text": "Đệ tử Tịch Dương Môn còn sống tản mát khắp nơi. Phế tích trên núi thành chỗ kẻ nhặt đồ tranh nhau.",
+        "eventWeight": { "plunder": 1.5, "fortune": 1.2 }
+      }
+    ]
+  },
+  {
+    "id": "linh_mach_kho_kiet",
+    "name": "Linh mạch khô kiệt",
+    "kind": "calamity",
+    "regions": [],
+    "weight": 0.5,
+    "cooldownYears": 70,
+    "phases": [
+      {
+        "name": "Khô cạn",
+        "years": 3,
+        "text": "Linh mạch lớn dưới phường thị Trung Châu khô dần, linh thạch đào lên toàn đá xám. Giá linh thạch nhảy vọt, tông nhỏ phải giải tán đệ tử.",
+        "eventWeight": { "market": 1.3, "plunder": 1.3 },
+        "priceMul": 1.25
+      }
+    ]
+  },
+  {
+    "id": "chinh_ma_nghi_hoa",
+    "name": "Chính ma nghị hòa",
+    "kind": "omen",
+    "regions": [],
+    "weight": 0.4,
+    "varWeight": [{ "var": "tension", "gte": 70, "mul": 2 }],
+    "cooldownYears": 90,
+    "phases": [
+      {
+        "name": "Hội nghị",
+        "years": 1,
+        "text": "Chưởng môn các đại tông và ma tôn ngồi chung một bàn ở Vô Chủ hoang nguyên, lập ước trăm năm. Người ta đồn mỗi bên đều giấu sát thủ sau rèm.",
+        "eventWeight": { "court": 1.2, "demonic": 0.6 }
       }
     ]
   }

@@ -130,7 +130,7 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
   const sureHook = lifeHooks(state, content)
     .find((h) => h.hook === 'trigger.everyNYears' && h.years && h.tag && age > 0 && age % h.years === 0 && hookActive(h, state, content));
   // A due follow-up whose event no longer fits (a draftee who has since taken office…) is dropped.
-  const stale = state.events.followUps.filter((f) => f.atAge <= age && !meets(state, findEvent(content, f.event)?.conditions, content));
+  const stale = state.events.followUps.filter((f) => f.atAge <= age && !meets(f.npc ? { ...state, events: { ...state.events, npc: f.npc } } : state, findEvent(content, f.event)?.conditions, content));
   let followUps = stale.length ? state.events.followUps.filter((f) => !stale.includes(f)) : state.events.followUps;
   const due = sureHook ? undefined : followUps.find((f) => f.atAge <= age && findEvent(content, f.event));
   let picked: string | null = null;
@@ -142,6 +142,7 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
   const visit = due || urgent || sure ? null : npcEvent(state, content, rng);
   if (due) {
     picked = due.event;
+    npc = due.npc ?? null;
     followUps = followUps.filter((f) => f !== due);
   } else if (urgent) {
     picked = urgent.id;

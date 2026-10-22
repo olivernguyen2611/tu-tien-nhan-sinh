@@ -28,7 +28,7 @@ describe('13.3 Đánh đổi thời gian', () => {
     const m = missionViews(s, content)[0];
     expect(m.blocked).toBeNull();
     const done = doMission(s, content, m.id)!;
-    expect(monthsLeft(done.state, content)).toBe(monthsLeft(s, content) - content.balance.time.actionMonths!.mission);
+    expect(monthsLeft(done.state, content)).toBe(monthsLeft(s, content) - content.balance.time.actionMonths!.mission!);
     const busy = { ...s, activities: { last: {}, year: 30, uses: {}, months: 11 } };
     expect(missionViews(busy, content)[0].blocked).toContain('tháng');
   });

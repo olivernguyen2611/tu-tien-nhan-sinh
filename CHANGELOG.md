@@ -8,6 +8,28 @@
 
 ## [Chưa phát hành]
 
+### 13.4 Tu chân giới tự chuyển động (2026-10-23)
+- **Kình địch suốt đời.** Từ Trúc Cơ, một người cùng lứa thành kình địch của ngươi: một tu sĩ đã quen, nếu không thì một thiên kiêu mới. Chuỗi 6 lần gặp, cách nhau 8–15 năm:
+  1. sơ ngộ ở Thiên Kiêu đài;
+  2. đại bỉ;
+  3. mời luận đạo trước cả tông, lúc đối phương đã cao hơn một cảnh giới;
+  4. cùng vào bí cảnh;
+  5. ngã rẽ, cứu hay bỏ mặc;
+  6. trận cuối.
+  Kình địch luôn đuổi kịp cảnh giới của ngươi và không bao giờ bị quên khỏi sổ người quen.
+- Thời cuộc nghiêng sự kiện thiên hạ: khi Chính ma căng thẳng lên cao, Tiên Ma đại chiến dễ nổ ra hơn gấp bốn.
+- 3 sự kiện thiên hạ mới: Tịch Dương Môn bị diệt, Linh mạch khô kiệt (giá tăng 25%), Chính ma nghị hòa.
+- 7 sự kiện gắn với sự kiện thiên hạ:
+  - đệ tử tông bị diệt xin che chở;
+  - phế tích Tịch Dương;
+  - tranh mỏ linh thạch;
+  - hộ vệ hội nghị nghị hòa;
+  - truyền thừa của đại năng tọa hóa;
+  - chiêu binh đại chiến;
+  - nhặt đồ sau trận.
+- Thọ đan giá rẻ ở phường thị: thật hay giả.
+- Sự kiện hẹn sẵn có thể gắn với một NPC (`followUps[].npc`); sự kiện thiên hạ có `varWeight`. Số liệu kình địch ở `balance.rival`.
+
 ### 13.3 Đánh đổi thời gian trong tu tiên (2026-10-23)
 - Với tu sĩ, nhiều việc giờ tốn tháng của năm, tháng còn trống mới vào tu vi:
   - nhiệm vụ tông: 3 tháng;

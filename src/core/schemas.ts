@@ -1931,6 +1931,11 @@ export const BalanceSchema = z
     }).strict().optional(),
     /** Thân phận: while reigning, holding office or in the army, events of these categories / themes / ids come at `mul` of their weight
      *  (a thiên tử is not asked to mind a neighbour's house). */
+    /** 13.4 Kình địch: from this realm a peer (age within ageGap) becomes the rival; the chain's events, one every gapYears; at the steps in aheadAt the rival is a realm ahead. */
+    rival: z.object({
+      fromRealm: z.string().min(1), ageGap: z.number().int().min(0), aheadAt: z.array(z.number().int().min(0)).default([]),
+      gapYears: z.tuple([z.number().int().min(1), z.number().int().min(1)]), role: z.string().min(1), steps: z.array(z.string().min(1)).min(1),
+    }).strict().optional(),
     /** 13.1 Nhập đạo: hooks by the flag of the bond chosen (dứt / giữ duyên), the share of silver kept on cutting, the yearly affinity drift of kin after cutting. */
     daoBond: z.object({
       hooks: z.record(z.string(), z.array(EffectHookSchema)).default({}),
@@ -3756,6 +3761,8 @@ export const WorldEventFileSchema = z.array(
       /** Where it is felt; empty = everywhere. Outside these regions only the news reaches the player. */
       regions: z.array(id).default([]),
       weight: z.number().positive(),
+      /** 13.4: weight × mul while a thời cuộc var is at least gte (Chính ma căng thẳng → đại chiến). */
+      varWeight: z.array(z.object({ var: id, gte: z.number(), mul: z.number().positive() }).strict()).default([]),
       cooldownYears: z.number().int().min(0),
       phases: z
         .array(

@@ -1,4 +1,5 @@
 // Creating a new life. Pure: same seed + same input → same character.
+import { rivalYear } from '../systems/rival';
 import { daoBondYear } from '../systems/daoBond';
 import { ageNpcs, npcById } from '../systems/npcs';
 import type { Content } from './content';
@@ -314,7 +315,7 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;
   // 9.R7e: the world moves on before the year's event is drawn.
   const worldly = body.alive ? thanDaoYear(trungSinhYear(systemYear(reunionYear(courtThroneYear(timesYear(worldEventsYear(secluded, content), content), content), content), content), content), content) : secluded;
-  const rolled = !body.alive ? worldly : state.seclusion ? rollSeclusionEvent(worldly, content) : rollYearEvent(gatesYear(worldly, content), content);
+  const rolled = !body.alive ? worldly : state.seclusion ? rollSeclusionEvent(worldly, content) : rollYearEvent(gatesYear(rivalYear(worldly, content), content), content);
   // 9.R5a: what the year taught goes into the Sổ tri thức.
   const next = rolled.alive ? knowledgeYear(rolled, content) : rolled;
   // The year's log block exists before family news and the event are added to it.
