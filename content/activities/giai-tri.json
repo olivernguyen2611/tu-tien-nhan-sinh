@@ -190,7 +190,8 @@
         },
         "effects": {
           "stat.happiness": 3,
-          "stat.health": -1
+          "stat.health": -1,
+          "drank": true
         }
       },
       {
@@ -216,7 +217,8 @@
             "kind": "ban_huu",
             "peer": true,
             "affinity": 10
-          }
+          },
+          "drank": true
         }
       }
     ]
@@ -1635,7 +1637,8 @@
         },
         "effects": {
           "stat.health": 1,
-          "stat.happiness": 2
+          "stat.happiness": 2,
+          "drank": true
         }
       }
     ]

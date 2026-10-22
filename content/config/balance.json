@@ -291,6 +291,7 @@
     "retireAge": 55,
     "colleagues": 2
   },
+  "ailments": { "childChance": 0.05, "adultChance": 0.025, "oldFrom": 50, "oldPerYear": 0.004, "maxAilments": 2, "contagion": 0.3, "contagionDeath": 0.3, "doctorGoodShare": 0.55, "doctorGood": 1.25, "doctorBad": 0.55, "shamanHarm": 4, "selfPerLevel": 0.2, "drinkAt": 6, "drinkYears": 3, "drinkHealth": -3, "drinkHappiness": -1, "drinkSilver": -6 },
   "pastime": { "petEvery": 2, "petDeathHappiness": -6, "addictAt": 6, "addictYears": 3, "addictSilver": -15, "addictHappiness": -3, "omenMul": 4, "omenYears": 3, "artMax": 100 },
   "kinship": { "oathDaoHeart": -10, "oathKarma": -5, "swornDeathHappiness": -8, "temperAge": 16 },
   "assets": {

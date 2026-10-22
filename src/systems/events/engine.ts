@@ -4,6 +4,7 @@ import { addGrade, addTradeLevel, enrollSchool, leaveSchool, startTrade } from '
 import { beginExam } from '../exams';
 import { addPerf, promoteJob, quitJob, takeJob } from '../jobs';
 import { addArt, adoptPet, castOmen, noteGamble, omenMul } from '../leisure';
+import { catchDisease, cureAilment, injure, noteDrink } from '../health';
 import { borrow, buyAsset, loseAsset, repayDebts, sellAsset, setStrategy, sowCrop } from '../assets';
 import { ordinaryAptitude, ordinaryStat } from '../aptitudeGain';
 import type { Content } from '../../core/content';
@@ -505,6 +506,11 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.adoptPet) next = adoptPet(next, content, fx.adoptPet);
   if (fx.gambled) next = noteGamble(next);
   if (fx.omen) next = castOmen(next, content);
+  // 10.8 Sức khỏe.
+  if (fx.catchDisease) next = catchDisease(next, content, fx.catchDisease);
+  if (fx.cure) next = cureAilment(next, content, fx.cure);
+  if (fx.injure) next = injure(next, content, fx.injure);
+  if (fx.drank) next = noteDrink(next);
   if (fx.martialBonus) next = { ...next, martial: { ...next.martial, bonus: next.martial.bonus + fx.martialBonus } };
   if (fx.martialPromote) next = martialPromote(next, content);
   if (fx.martialAscend) next = martialAscend(next, content);

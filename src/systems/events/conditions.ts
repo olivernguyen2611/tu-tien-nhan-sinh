@@ -148,6 +148,15 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     const has = (state.pastime?.pets ?? []).some((p) => !c.pet!.id || p.id === c.pet!.id);
     if (has !== (c.pet.any ?? true)) return false;
   }
+  if (c.ailment) {
+    const has = (state.body?.ailments ?? []).some((a) => (!c.ailment!.id || a.id === c.ailment!.id)
+      && (!c.ailment!.contagious || (content?.health?.diseases.find((d) => d.id === a.id)?.contagious ?? false)));
+    if (has !== (c.ailment.any ?? true)) return false;
+  }
+  if (c.injury) {
+    const has = (state.body?.injuries ?? []).some((i) => !c.injury!.id || i === c.injury!.id);
+    if (has !== (c.injury.any ?? true)) return false;
+  }
   if (c.asset && content) {
     const owned = ownedOf(state, content, c.asset.kind, c.asset.id).length;
     if (c.asset.none ? owned > 0 : owned < (c.asset.count ?? 1)) return false;

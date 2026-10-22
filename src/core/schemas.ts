@@ -80,6 +80,9 @@ const BaseConditionsSchema = z
     festival: ids.optional(),
     art: z.object({ id, min: z.number() }).strict().optional(),
     pet: z.object({ id: id.optional(), any: z.boolean().optional() }).strict().optional(),
+    /** 10.8 Sức khỏe: has a bệnh (this one / any / a lây one); has a thương tật (this one / any). */
+    ailment: z.object({ id: id.optional(), any: z.boolean().optional(), contagious: z.boolean().optional() }).strict().optional(),
+    injury: z.object({ id: id.optional(), any: z.boolean().optional() }).strict().optional(),
     /** 10.2 Khoa cử: highest level passed (exams.json level ids; none = -1), times failed, can sit the next exam this year, the Đình placing. */
     exam: z.object({
       passed: id.optional(), notPassed: id.optional(), failsMin: z.number().int().optional(),
@@ -296,6 +299,12 @@ export const EffectsSchema = z
     adoptPet: id.optional(),
     omen: z.boolean().optional(),
     gambled: z.boolean().optional(),
+    /** 10.8 Sức khỏe: try to cure the worst bệnh (by whom), fall ill (health.json id, or "random"), a thương tật for life,
+     *  one more cup (toward nghiện rượu). */
+    cure: z.enum(['doctor', 'shop', 'shaman', 'self', 'rare']).optional(),
+    catchDisease: id.optional(),
+    injure: id.optional(),
+    drank: z.boolean().optional(),
     /** Extra % for the next martial breakthrough. */
     martialBonus: z.number().optional(),
     /** An elder of the sect takes you as a personal disciple. */
@@ -399,7 +408,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1716,6 +1725,14 @@ export const BalanceSchema = z
       })
       .strict()
       .optional(),
+    /** 10.8 Sức khỏe: a mortal falls ill (chance by age), bệnh spread to the household, lang trung good or bad,
+     *  thầy cúng may hurt, nghề thuốc cures by level, drinking drinkAt times in drinkYears makes it nghiện. */
+    ailments: z.object({
+      childChance: z.number(), adultChance: z.number(), oldFrom: z.number().int(), oldPerYear: z.number(), maxAilments: z.number().int().min(1),
+      contagion: z.number(), contagionDeath: z.number(), doctorGoodShare: z.number(), doctorGood: z.number(), doctorBad: z.number(),
+      shamanHarm: z.number(), selfPerLevel: z.number(),
+      drinkAt: z.number().int().min(1), drinkYears: z.number().int().min(1), drinkHealth: z.number(), drinkHappiness: z.number(), drinkSilver: z.number(),
+    }).strict().optional(),
     /** 10.7 Giải trí: pets act every petEvery years; gambling addictAt times within addictYears makes it nghiện (yearly loss); an omen's event weighs omenMul for omenYears. */
     pastime: z.object({ petEvery: z.number().int().min(1), petDeathHappiness: z.number(), addictAt: z.number().int().min(1), addictYears: z.number().int().min(1), addictSilver: z.number(), addictHappiness: z.number(), omenMul: z.number().min(1), omenYears: z.number().int().min(1), artMax: z.number() }).strict().optional(),
     /** 10.5 Quan hệ: a broken kết nghĩa oath (Đạo tâm, nghiệp), a sworn sibling's death (Hạnh phúc), the age a child's temper shows. */
@@ -3123,6 +3140,41 @@ export const LeisureFileSchema = z.object({
   }).strict(),
 }).strict();
 export type LeisureFile = z.infer<typeof LeisureFileSchema>;
+
+/** 10.8 Sức khỏe (content/health.json): bệnh có tên, thương tật vĩnh viễn, lời văn. */
+export const HealthFileSchema = z.object({
+  diseases: z.array(z.object({
+    id, name: z.string().min(1), weight: z.number().min(0).default(1),
+    minAge: z.number().int().optional(), maxAge: z.number().int().optional(),
+    contagious: z.boolean().default(false),
+    /** Health lost each year it lasts [min, max]; happiness lost each year. */
+    health: z.tuple([z.number(), z.number()]), happiness: z.number().default(0),
+    /** Chance a year that it passes on its own. */
+    selfHeal: z.number().min(0).max(1),
+    /** Chance each way of curing works (before the doctor's skill). */
+    cure: z.object({ doctor: z.number(), shop: z.number(), shaman: z.number(), self: z.number(), rare: z.number() }).strict(),
+    onset: z.array(z.string().min(1)).min(1),
+    healed: z.string().min(1),
+  }).strict()).min(1),
+  injuries: z.array(z.object({
+    id, name: z.string().min(1),
+    /** Stats moved once, for good (stat. keys). */
+    stats: z.record(z.number()).default({}),
+    /** Set for good, so events, jobs and activities can read it. */
+    flag: id,
+    text: z.string().min(1),
+  }).strict()).min(1),
+  texts: z.object({
+    /** {disease}. */
+    worse: z.array(z.string().min(1)).min(1), cureFail: z.array(z.string().min(1)).min(1),
+    doctorGood: z.array(z.string().min(1)).min(1), doctorBad: z.array(z.string().min(1)).min(1),
+    shamanHarm: z.string().min(1), noAilment: z.string().min(1),
+    /** {who} (role), {name}, {disease}. */
+    spread: z.string().min(1), spreadDied: z.string().min(1),
+    drunk: z.string().min(1), drunkYear: z.string().min(1),
+  }).strict(),
+}).strict();
+export type HealthFile = z.infer<typeof HealthFileSchema>;
 
 export const RelationsFileSchema = z.object({
   groups: z.array(z.object({ id, name: z.string().min(1) }).strict()).min(1),

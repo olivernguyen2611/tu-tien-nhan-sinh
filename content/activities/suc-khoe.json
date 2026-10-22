@@ -5,26 +5,61 @@
     "name": "Luyện quyền buổi sớm",
     "icon": "拳",
     "text": "Dậy trước gà gáy, ra bãi đất sau nhà đánh vài bài quyền.",
-    "conditions": { "age": { "min": 10 } },
-    "cost": [{ "health": 2, "months": 0 }],
-    "limit": { "perYear": 1, "cooldownYears": 1 },
+    "conditions": {
+      "age": {
+        "min": 10
+      }
+    },
+    "cost": [
+      {
+        "health": 2,
+        "months": 0
+      }
+    ],
+    "limit": {
+      "perYear": 1,
+      "cooldownYears": 1
+    },
     "outcomes": [
       {
         "weight": 4,
         "text": {
           "lines": [
-            { "text": "Một mùa dậy sớm, mồ hôi thấm áo. Bước chân ngươi vững hơn hẳn." },
-            { "text": "Ngươi đánh quyền tới khi sương tan. Hàng xóm đi chợ về vẫn thấy ngươi đứng tấn." },
-            { "text": "Sáng nào cũng một trăm cú đấm vào bao cát. Bao rách trước khi tay ngươi rách." },
-            { "text": "Có đứa trẻ trong xóm ra đứng xem rồi bắt chước. Ngươi dạy nó một thế, tự thấy mình cũng hiểu thêm." }
+            {
+              "text": "Một mùa dậy sớm, mồ hôi thấm áo. Bước chân ngươi vững hơn hẳn."
+            },
+            {
+              "text": "Ngươi đánh quyền tới khi sương tan. Hàng xóm đi chợ về vẫn thấy ngươi đứng tấn."
+            },
+            {
+              "text": "Sáng nào cũng một trăm cú đấm vào bao cát. Bao rách trước khi tay ngươi rách."
+            },
+            {
+              "text": "Có đứa trẻ trong xóm ra đứng xem rồi bắt chước. Ngươi dạy nó một thế, tự thấy mình cũng hiểu thêm."
+            }
           ],
           "linesShare": 0.3,
           "parts": [
-            ["Trời chưa sáng ngươi đã ra bãi sau nhà,", "Mùa này ngươi luyện quyền bên bờ ao,", "Ngươi dậy trước gà gáy,", "Mưa phùn cũng không bỏ buổi nào,", "Ngươi luyện quyền dưới gốc đa đầu làng,"],
-            ["đánh quyền tới khi sương tan.", "đứng tấn tới mỏi rời hai chân.", "đấm bao cát tới khi bao rách.", "luyện đi luyện lại một thế tới thuộc.", "về tới nhà vẫn còn thở dốc."]
+            [
+              "Trời chưa sáng ngươi đã ra bãi sau nhà,",
+              "Mùa này ngươi luyện quyền bên bờ ao,",
+              "Ngươi dậy trước gà gáy,",
+              "Mưa phùn cũng không bỏ buổi nào,",
+              "Ngươi luyện quyền dưới gốc đa đầu làng,"
+            ],
+            [
+              "đánh quyền tới khi sương tan.",
+              "đứng tấn tới mỏi rời hai chân.",
+              "đấm bao cát tới khi bao rách.",
+              "luyện đi luyện lại một thế tới thuộc.",
+              "về tới nhà vẫn còn thở dốc."
+            ]
           ]
         },
-        "effects": { "stat.physique": 1, "stat.health": 4 }
+        "effects": {
+          "stat.physique": 1,
+          "stat.health": 4
+        }
       },
       {
         "weight": 1,
@@ -34,7 +69,436 @@
           "Luyện quá sức giữa trời lạnh, về nhà sốt hai ngày.",
           "Đứng tấn trên bờ ao, bờ lở. Ngươi ướt như chuột, cả xóm được một trận cười."
         ],
-        "effects": { "stat.health": -3, "stat.happiness": -2 }
+        "effects": {
+          "stat.health": -3,
+          "stat.happiness": -2
+        }
+      }
+    ]
+  },
+  {
+    "id": "moi_lang_trung",
+    "group": "suc_khoe",
+    "name": "Mời lang trung",
+    "icon": "醫",
+    "text": "Mời thầy thuốc trong huyện tới bắt mạch, kê đơn.",
+    "conditions": {
+      "ailment": {
+        "any": true
+      }
+    },
+    "cost": [
+      {
+        "silver": 15
+      }
+    ],
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Ngươi nằm nghe thầy bắt mạch, đắp chăn uống thuốc theo đơn.",
+          "Thầy thuốc châm cứu mấy mũi, dặn kiêng gió kiêng lạnh."
+        ],
+        "effects": {
+          "cure": "doctor",
+          "stat.happiness": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "boc_thuoc",
+    "group": "suc_khoe",
+    "name": "Bốc thuốc tiệm",
+    "icon": "藥",
+    "text": "Ra tiệm thuốc bắc tả bệnh, xin vài thang về sắc.",
+    "conditions": {
+      "ailment": {
+        "any": true
+      }
+    },
+    "cost": [
+      {
+        "silver": 5
+      }
+    ],
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Ông chủ tiệm nghe kể xong, gói cho bốn thang. Bếp nhà thơm mùi cam thảo.",
+          "Thuốc sắc đặc quánh, đắng tới tận cuống họng."
+        ],
+        "effects": {
+          "cure": "shop",
+          "stat.health": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "moi_thay_cung",
+    "group": "suc_khoe",
+    "name": "Mời thầy cúng",
+    "icon": "符",
+    "text": "Rẻ thì rẻ, linh thì chưa chắc. Thầy cúng đốt bùa trừ tà.",
+    "conditions": {
+      "ailment": {
+        "any": true
+      }
+    },
+    "cost": [
+      {
+        "silver": 3
+      }
+    ],
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Thầy cúng múa kiếm gỗ quanh giường, đốt một đạo bùa hòa vào nước bắt uống.",
+          "Trống chiêng inh ỏi nửa đêm. Hàng xóm không ngủ được, nhưng người nhà ngươi yên tâm hơn."
+        ],
+        "effects": {
+          "cure": "shaman",
+          "stat.happiness": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "tu_bat_mach",
+    "group": "suc_khoe",
+    "name": "Tự bốc thuốc",
+    "icon": "診",
+    "text": "Có nghề thuốc trong tay, tự bắt mạch cho mình.",
+    "conditions": {
+      "ailment": {
+        "any": true
+      },
+      "trade": {
+        "id": "thuoc",
+        "levelMin": 1
+      }
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Ngươi tự bắt mạch, lật sách thuốc tra từng vị. Thầy thuốc tự chữa cho mình, khó nhất là giữ bình tĩnh.",
+          "Ngươi lên núi hái thuốc về tự sắc. Biết đúng vị, chỉ không biết có đúng liều."
+        ],
+        "effects": {
+          "cure": "self",
+          "stat.intellect": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "sam_tram_nam",
+    "group": "suc_khoe",
+    "name": "Mua thuốc quý",
+    "icon": "參",
+    "text": "Nhân sâm trăm năm, linh chi núi đá. Đắt như vàng, chỉ phú quý mới mua nổi.",
+    "conditions": {
+      "ailment": {
+        "any": true
+      }
+    },
+    "cost": [
+      {
+        "silver": 150
+      }
+    ],
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Củ sâm nằm trong hộp gấm, râu dài như râu ông lão. Ngươi thái từng lát ngậm.",
+          "Chủ tiệm thuốc lấy ra một tai linh chi tím. Tiền trao, bệnh lui."
+        ],
+        "effects": {
+          "cure": "rare",
+          "stat.health": 5
+        }
+      }
+    ]
+  },
+  {
+    "id": "nhin_an_trai_gioi",
+    "group": "suc_khoe",
+    "name": "Ăn chay giữ giới",
+    "icon": "齋",
+    "text": "Một tháng ăn chay, ngủ sớm, bớt rượu thịt.",
+    "conditions": {
+      "age": {
+        "min": 14
+      }
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Một tháng rau dưa, người nhẹ hẳn đi. Đầu óc cũng thanh hơn.",
+          "Ăn chay tới ngày thứ mười thì thèm thịt phát điên. Ngươi vẫn giữ được."
+        ],
+        "effects": {
+          "stat.daoHeart": 1,
+          "stat.health": 2
+        }
+      },
+      {
+        "weight": 1,
+        "text": [
+          "Ăn uống kham khổ quá, người xanh xao. Mẹ nhìn mà xót."
+        ],
+        "effects": {
+          "stat.health": -2,
+          "stat.happiness": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "an_uong_dieu_do",
+    "group": "suc_khoe",
+    "name": "Ăn uống điều độ",
+    "icon": "粥",
+    "text": "Bữa nào ra bữa nấy, không ăn quá no, không uống quá say.",
+    "conditions": {
+      "age": {
+        "min": 12
+      }
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Cả năm cơm canh đúng bữa. Bụng không đau, người không ốm.",
+          "Bỏ thói ăn đêm, bỏ thói ăn vội. Da dẻ hồng hào thấy rõ."
+        ],
+        "effects": {
+          "stat.health": 3,
+          "stat.happiness": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "tap_duong_sinh",
+    "group": "suc_khoe",
+    "name": "Tập dưỡng sinh",
+    "icon": "氣",
+    "text": "Sáng sớm ra bờ sông vươn vai thở dài, theo các cụ.",
+    "conditions": {
+      "age": {
+        "min": 40
+      }
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Mấy ông bà già trong làng tập cùng. Tập xong ngồi uống chè, kể chuyện ngày xưa.",
+          "Hít vào thật sâu, thở ra thật chậm. Gân cốt dãn ra, đêm ngủ ngon hơn."
+        ],
+        "effects": {
+          "stat.health": 3,
+          "stat.happiness": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "tam_suoi_nong",
+    "group": "suc_khoe",
+    "name": "Tắm suối nước nóng",
+    "icon": "泉",
+    "text": "Lên núi tắm suối nước nóng, nghe đồn trị được đau lưng.",
+    "conditions": {
+      "age": {
+        "min": 16
+      }
+    },
+    "cost": [
+      {
+        "silver": 6
+      }
+    ],
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Nước nóng bốc hơi nghi ngút, mùi lưu huỳnh hăng hắc. Ngâm một canh giờ, xương cốt rã rời mà dễ chịu.",
+          "Suối nóng giữa rừng, bên trên có thác đổ. Ngươi ngâm tới khi da nhăn như táo khô."
+        ],
+        "effects": {
+          "stat.health": 3,
+          "stat.happiness": 2,
+          "stat.charm": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "uong_thuoc_bo",
+    "group": "suc_khoe",
+    "name": "Uống thuốc bổ",
+    "icon": "補",
+    "text": "Mấy thang thuốc bổ cho khí huyết, người có tuổi hay dùng.",
+    "conditions": {
+      "age": {
+        "min": 30
+      }
+    },
+    "cost": [
+      {
+        "silver": 20
+      }
+    ],
+    "outcomes": [
+      {
+        "weight": 4,
+        "text": [
+          "Thuốc bổ đen như mực, ngọt hậu. Mùa đông năm nay không ốm lần nào.",
+          "Thang thuốc có cả táo đỏ, kỷ tử. Ngươi uống như uống chè."
+        ],
+        "effects": {
+          "stat.health": 4
+        }
+      },
+      {
+        "weight": 1,
+        "text": [
+          "Bổ quá hóa nóng, mồm mọc đầy nhiệt. Ăn gì cũng đau."
+        ],
+        "effects": {
+          "stat.health": -1,
+          "stat.happiness": -2
+        }
+      }
+    ]
+  },
+  {
+    "id": "thuoc_duong_nhan",
+    "group": "suc_khoe",
+    "name": "Thuốc dưỡng nhan",
+    "icon": "顏",
+    "text": "Bí phương giữ da mặt tươi trẻ, đắt khủng khiếp. Có kẻ bán giả.",
+    "conditions": {
+      "age": {
+        "min": 25
+      }
+    },
+    "cost": [
+      {
+        "silver": 200
+      }
+    ],
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Hũ cao trắng muốt, thơm mùi hoa nhài. Ba tháng sau, nếp nhăn nơi đuôi mắt mờ hẳn.",
+          "Đắp mặt bằng ngọc trai tán nhỏ trộn sữa. Người trong phố hỏi ngươi có bí quyết gì."
+        ],
+        "effects": {
+          "stat.charm": 6,
+          "stat.happiness": 2
+        }
+      },
+      {
+        "weight": 1,
+        "text": [
+          "Hũ cao trắng muốt hóa ra là bột gạo trộn mỡ lợn. Ngươi mất tiền mà mặt nổi mẩn."
+        ],
+        "effects": {
+          "stat.charm": -1,
+          "stat.happiness": -4
+        }
+      }
+    ]
+  },
+  {
+    "id": "cai_ruou",
+    "group": "suc_khoe",
+    "name": "Cai rượu",
+    "icon": "戒",
+    "text": "Đập vò rượu cuối cùng, thề không uống nữa.",
+    "conditions": {
+      "flagsAll": [
+        "nghien_ruou"
+      ]
+    },
+    "months": 1,
+    "check": {
+      "stat": "stat.daoHeart",
+      "difficulty": 55
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Đêm đầu tiên ngươi vã mồ hôi lạnh. Nửa năm sau, tay đã thôi run.",
+          "Vợ con mừng ra mặt. Ngươi đi qua tửu lâu mà không ngoái lại."
+        ],
+        "effects": {
+          "clearFlags": [
+            "nghien_ruou"
+          ],
+          "setFlags": [
+            "da_cai_ruou"
+          ],
+          "stat.daoHeart": 2,
+          "stat.health": 3
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Được ba ngày, nhìn vò rượu như nhìn người yêu cũ. Ngươi lại rót.",
+          "Bạn nhậu tới rủ \"một chén thôi\". Một chén thành một vò."
+        ],
+        "effects": {
+          "stat.happiness": -2,
+          "stat.daoHeart": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "song_chung_thuong_tat",
+    "group": "suc_khoe",
+    "name": "Tập sống với thương tật",
+    "icon": "忍",
+    "text": "Tập lại từ đầu: cách đi, cách cầm, cách nhìn đời.",
+    "conditions": {
+      "injury": {
+        "any": true
+      }
+    },
+    "months": 1,
+    "limit": {
+      "perYear": 1,
+      "cooldownYears": 3
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Ngươi tập đi bằng gậy, rồi bỏ được gậy. Chậm, nhưng tự đi.",
+          "Người ta nhìn, kệ người ta. Ngươi học được cách mỉm cười đáp lại."
+        ],
+        "effects": {
+          "stat.daoHeart": 2,
+          "stat.happiness": 3
+        }
       }
     ]
   }

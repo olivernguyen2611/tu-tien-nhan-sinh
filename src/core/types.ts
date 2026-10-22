@@ -131,6 +131,8 @@ export interface GameState {
   /** 10.4 Tài sản: what the life owns (uid = its own number), debts (owed grows by the loan's rate), the crop sown this year, the next uid. */
   assets?: { owned: OwnedAsset[]; loans: Loan[]; crop: string | null; nextUid: number };
   /** 10.7 Giải trí: this year's lễ hội, tài nghệ (0–100), pets, ages at the sòng bạc (recent), the event a quẻ named and until when. */
+  /** 10.8 Sức khỏe: bệnh now (id, since age), thương tật for life, ages a cup was drunk (toward nghiện rượu). */
+  body?: { ailments: { id: string; since: number }[]; injuries: string[]; drinks: number[] };
   pastime?: { festival: string | null; arts: Record<string, number>; pets: Pet[]; gambles: number[]; omen: { id: string; until: number } | null; nextUid: number };
   /** 10.2 Khoa cử: index of the highest level passed (-1 = none), fails, the Đình placing, the life's calendar offset, age each level was last sat, the sitting in progress (blocks the year). */
   exam?: {

@@ -8,6 +8,15 @@
 
 ## [Chưa phát hành]
 
+### 10.8 Sức khỏe, bệnh tật, ngoại hình (2026-10-22)
+- Bệnh có tên (`content/health.json`): phong hàn, sốt rét, kiết lỵ, thương hàn, bệnh lao, đậu mùa, dịch tả. Trẻ nhỏ và người già dễ mắc hơn; mỗi năm bệnh trừ Sức khỏe tới khi tự khỏi, được chữa, hoặc giết người. Bệnh lây có thể truyền sang người nhà, người già và trẻ nhỏ có khi không qua khỏi. Tu sĩ không mắc bệnh phàm.
+- Chữa bệnh (mục Sức khỏe): mời lang trung (gặp thầy giỏi hay thầy dở), bốc thuốc tiệm, mời thầy cúng (rẻ, ít linh, có khi hại), tự bốc thuốc nếu có nghề thuốc (giỏi nghề thì dễ khỏi), thuốc quý trăm lượng gần như chắc khỏi.
+- Thương tật vĩnh viễn: què chân, mù một mắt, sẹo mặt, cụt ngón tay, đau lưng kinh niên; đổi chỉ số một lần và đặt flag cùng tên để sự kiện, nghề đọc.
+- Nghiện rượu: uống ở tửu lâu, rượu cúc nhiều lần thì nghiện, mỗi năm mất bạc, Sức khỏe, Hạnh phúc. Cai bằng Đạo tâm; có sự kiện tái nghiện.
+- Rèn thân và ngoại hình: ăn chay giữ giới, ăn uống điều độ, tập dưỡng sinh, tắm suối nước nóng, thuốc bổ, thuốc dưỡng nhan (đắt, có hàng giả), tập sống với thương tật.
+- 12 sự kiện (`suc-khoe.json`): đậu mùa về làng, dịch tả, ngã từ mái nhà, cháy nhà hàng xóm, tai nạn lúc làm việc, bạn nhậu rủ, tái nghiện, lang băm, thần y qua làng, bị chê cười, sợi tóc bạc đầu tiên, ho mãi không dứt.
+- Hồ sơ có dòng "Thân thể:". Điều kiện `ailment`, `injury`; hiệu ứng `catchDisease`, `cure`, `injure`, `drank`; số cân bằng ở `balance.ailments`.
+
 ### 10.7 Giải trí và đời sống (2026-10-22)
 - 21 hoạt động giải trí mới (`activities/giai-tri.json`): tửu lâu, trà quán nghe chuyện, chiếu tài xỉu, cai cờ bạc, hội chợ, xem hát, lên chùa xin quẻ, xem bói, du ngoạn danh thắng, đi săn, câu cá, đọc sách, học đàn, đánh cờ, làm thơ, vẽ tranh, may y phục mới, ghé thanh lâu (không miêu tả), kiếm thú nuôi, chơi với thú nuôi. Mỗi hoạt động ghép văn bản từ nhiều mảnh (≥ 8 kiểu câu).
 - Mini-game trong sự kiện: chiếu bạc (đặt tài, xỉu, bát úp chẵn lẻ; Khí vận quyết định), chọn chỗ câu cá, chọn chỗ đi săn (có chim ưng thì thả chim).
