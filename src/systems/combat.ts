@@ -9,6 +9,7 @@ import { hasHook, hookSum } from './cultivation';
 import { applyOutcome } from './events/engine';
 import { itemById, removeItems } from './items';
 import { martialPower } from './martial';
+import { artsBonus, woundFromDefeat } from './martialArts';
 import { mainPath as mainPathOf } from './paths';
 import { breakPrecept } from './sect';
 import { sectDefense } from './ownSect';
@@ -72,7 +73,7 @@ export function combatPower(state: GameState, content: Content): number {
   const artifactMul = (pathCfg?.artifactBonusMul ?? 1) + hookSum(state, content, 'artifactPct');
   const unarmed = artifact === 0 ? pathCfg?.unarmedCombatPower ?? 0 : 0;
   const bonus = hookSum(state, content, 'combatPower') - artifact + artifact * artifactMul
-    + (pathCfg?.combatPower ?? 0) + (path ? hookSum(state, content, `path.${path}.power`) : 0) + unarmed;
+    + (pathCfg?.combatPower ?? 0) + (path ? hookSum(state, content, `path.${path}.power`) : 0) + unarmed + artsBonus(state, content);
   const power = base
     * (1 + c.stagePct * state.cult.stage)
     * (c.physiqueBase + state.aptitudes.physique / c.physiqueDivisor)
@@ -343,6 +344,10 @@ function end(s: GameState, content: Content, battle: Battle, how: 'lost' | 'fled
     next = lost.state;
     lines.push(...lost.lines);
     if (next.stats.health > 0) {
+      // 11.3: a mortal walks away with nội thương.
+      const w = woundFromDefeat(next, content);
+      next = w.state;
+      if (w.line) lines.push(w.line);
       const o = applyOutcome({ ...next, rng: rng.getState(), events: { ...next.events, npc: battle.npcId } }, content, battle.outcomes.lose, rng);
       next = o.state;
       lines.push({ text: o.text, tone: 'bad' });

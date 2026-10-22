@@ -1,0 +1,56 @@
+{
+  "arts": [
+    { "id": "manh_ho_quyen", "name": "Mãnh Hổ Quyền", "kind": "quyen", "grade": 1, "power": 0.03, "maxLevel": 5, "needs": {}, "text": "Quyền pháp nhà quê, đấm thẳng như hổ vồ mồi. Dễ học, khó thành." },
+    { "id": "lien_hoan_cuoc", "name": "Liên Hoàn Cước", "kind": "cuoc", "grade": 1, "power": 0.03, "maxLevel": 5, "needs": {}, "text": "Ba cước liền một hơi, cước sau nhanh hơn cước trước." },
+    { "id": "khai_son_dao", "name": "Khai Sơn Đao Pháp", "kind": "dao", "grade": 1, "power": 0.035, "maxLevel": 5, "needs": { "stat.physique": 30 }, "text": "Mười hai đường đao bổ thẳng, chém củi cũng dùng được." },
+    { "id": "thanh_phong_kiem", "name": "Thanh Phong Kiếm Pháp", "kind": "kiem", "grade": 1, "power": 0.035, "maxLevel": 5, "needs": { "stat.comprehension": 30 }, "text": "Kiếm pháp nhập môn của các võ quán, nhẹ như gió lướt." },
+    { "id": "thiet_bo_sam", "name": "Thiết Bố Sam", "kind": "quyen", "grade": 2, "power": 0.05, "maxLevel": 5, "needs": { "stat.physique": 45 }, "text": "Luyện da như vải sắt: chịu được đòn trước, rồi mới nói tới đánh." },
+    { "id": "bach_dieu_thuong", "name": "Bách Điểu Triều Phượng Thương", "kind": "thuong", "grade": 2, "power": 0.055, "maxLevel": 6, "needs": { "stat.physique": 40 }, "text": "Mũi thương rung như trăm con chim vỗ cánh, không biết đâm vào đâu." },
+    { "id": "mai_hoa_cham", "name": "Mai Hoa Châm", "kind": "am_khi", "grade": 2, "power": 0.05, "maxLevel": 6, "needs": { "stat.luck": 35 }, "text": "Năm cây kim bay ra thành hình hoa mai. Trúng một cây là tê nửa người." },
+    { "id": "dap_tuyet_vo_ngan", "name": "Đạp Tuyết Vô Ngân", "kind": "khinh_cong", "grade": 2, "power": 0.04, "maxLevel": 6, "needs": { "stat.comprehension": 40 }, "text": "Khinh công đi trên tuyết không để lại dấu. Không đánh được ai, nhưng không ai đuổi kịp." },
+    { "id": "quy_tuc_cong", "name": "Quy Tức Công", "kind": "noi_cong", "grade": 2, "power": 0.03, "maxLevel": 6, "lifespan": 3, "needs": { "stat.comprehension": 40 }, "text": "Học rùa thở: chậm, sâu, dài. Người luyện thành ít bệnh, sống lâu." },
+    { "id": "liet_hoa_dao", "name": "Liệt Hỏa Đao Pháp", "kind": "dao", "grade": 3, "power": 0.08, "maxLevel": 7, "needs": { "stat.physique": 55 }, "text": "Đao ra như lửa cháy rừng, càng đánh càng nóng." },
+    { "id": "luu_van_kiem", "name": "Lưu Vân Kiếm Quyết", "kind": "kiem", "grade": 3, "power": 0.08, "maxLevel": 7, "needs": { "stat.comprehension": 55 }, "text": "Kiếm theo mây trôi, không có chiêu cố định. Người ngộ tính kém học mãi không vào." },
+    { "id": "hon_nguyen_nhat_khi", "name": "Hỗn Nguyên Nhất Khí Công", "kind": "noi_cong", "grade": 3, "power": 0.06, "maxLevel": 7, "lifespan": 5, "needs": { "stat.comprehension": 55 }, "text": "Nội công gốc của một môn phái lớn: một luồng chân khí chạy khắp chu thân." },
+    { "id": "phi_hoa_trich_diep", "name": "Phi Hoa Trích Diệp", "kind": "am_khi", "grade": 3, "power": 0.07, "maxLevel": 7, "needs": { "stat.luck": 50, "stat.comprehension": 45 }, "text": "Ngắt lá làm phi đao, bẻ hoa làm ám khí. Tới mức này thì trong tay cái gì cũng giết được người." },
+    { "id": "huyet_anh_ma_trao", "name": "Huyết Ảnh Ma Trảo", "kind": "quyen", "grade": 3, "power": 0.1, "maxLevel": 7, "evil": true, "needs": { "stat.physique": 45 }, "text": "Tà công: luyện bằng máu tươi, mạnh rất nhanh, nhưng tâm tính kém thì chân khí quay ngược." },
+    { "id": "vo_danh_tan_quyen", "name": "Tàn quyển Vô Danh Thần Công", "kind": "noi_cong", "grade": 3, "power": 0.09, "maxLevel": 7, "fake": true, "needs": {}, "text": "Mấy trang giấy ố vàng, thiếu đầu thiếu đuôi. Không ai biết thật hay giả." }
+  ],
+  "weapons": [
+    { "id": "thiet_con", "name": "Thiết côn", "kind": "thuong", "grade": 1, "power": 0.04, "price": 15, "text": "Cây côn sắt nặng tay, dân phu cũng hay mang." },
+    { "id": "doan_dao_sat", "name": "Đoản đao sắt", "kind": "dao", "grade": 1, "power": 0.05, "price": 20, "text": "Lưỡi đao ngắn, rèn ở lò làng." },
+    { "id": "phi_tieu", "name": "Túi phi tiêu", "kind": "am_khi", "grade": 1, "power": 0.05, "price": 25, "text": "Mười hai mũi tiêu sắt, mài sắc cả bốn cạnh." },
+    { "id": "thanh_cuong_kiem", "name": "Thanh cương kiếm", "kind": "kiem", "grade": 1, "power": 0.06, "price": 30, "text": "Kiếm thép xanh, thứ kiếm mà kiếm khách nào cũng từng đeo." },
+    { "id": "hong_anh_thuong", "name": "Hồng anh thương", "kind": "thuong", "grade": 2, "power": 0.09, "price": 70, "text": "Thương dài chín thước, chùm tua đỏ dưới mũi để máu không chảy xuống cán." },
+    { "id": "bach_luyen_dao", "name": "Bách luyện cương đao", "kind": "dao", "grade": 2, "power": 0.11, "price": 110, "text": "Thép gấp trăm lần, vân như sóng nước. Chém sắt như chém bùn thì chưa tới, nhưng gần." },
+    { "id": "thu_tien_kiem", "name": "Thu Thủy kiếm", "kind": "kiem", "grade": 3, "power": 0.16, "price": 280, "text": "Kiếm sáng như nước mùa thu, do một danh tượng rèn ba năm mới xong." },
+    { "id": "hac_ngoc_cung", "name": "Hắc Ngọc cung tiễn", "kind": "am_khi", "grade": 3, "power": 0.15, "price": 260, "text": "Cung gỗ mun bịt ngọc, bắn trăm bước xuyên giáp." }
+  ],
+  "kinds": {
+    "quyen": { "name": "Quyền", "path": "body" },
+    "cuoc": { "name": "Cước", "path": "body" },
+    "dao": { "name": "Đao", "path": "weapon" },
+    "kiem": { "name": "Kiếm", "path": "sword" },
+    "thuong": { "name": "Thương", "path": "weapon" },
+    "am_khi": { "name": "Ám khí", "path": "arts" },
+    "khinh_cong": { "name": "Khinh công", "path": "arts" },
+    "noi_cong": { "name": "Nội công", "path": "spell" }
+  },
+  "texts": {
+    "learned": "Ngươi học được {art} ({kind}). {text}",
+    "known": "{art} ngươi đã biết, đọc lại chỉ thấy quen.",
+    "unfit": "Ngươi đọc {art} mà không vào: sức này, ngộ tính này chưa đủ để luyện.",
+    "nothing": "Ngươi chưa có bí kíp nào để luyện.",
+    "levelUp": "{art} lên tầng {level}/{max}.",
+    "maxed": "{art} đã luyện tới tận cùng.",
+    "practice": ["Ngươi luyện {art} một mùa, chiêu thức thuần thêm một chút.", "Sáng tối đều luyện {art}, mồ hôi rơi xuống đá cũng thành vệt.", "Ngươi tự đánh {art} với cái bóng của mình tới khi trăng lặn."],
+    "deviation": "Chân khí trong người bỗng chạy ngược khi luyện {art}. Ngươi thổ huyết, ngã vật ra đất: tẩu hỏa nhập ma.",
+    "fakeExposed": "Luyện tới tầng này mới biết {art} là đồ giả: những trang sau viết bừa.",
+    "bought": "Bỏ {silver} lượng mua được {weapon}. {text}",
+    "poor": "Thợ rèn đưa ra món tốt nhất, ngươi sờ túi rồi lắc đầu.",
+    "better": "Binh khí đang dùng còn tốt hơn những gì lò rèn này có.",
+    "wounded": "Trận thua để lại nội thương: ngực đau âm ỉ, thở sâu là ho.",
+    "woundHurt": "Nội thương cũ trở trời lại đau, cả mùa không làm được việc nặng.",
+    "healed": "Nội thương đỡ được nhiều phần."
+  }
+}

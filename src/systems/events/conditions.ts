@@ -174,6 +174,15 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (f.meritMin !== undefined && (!m || m.merit < f.meritMin)) return false;
     if (f.hunted !== undefined && !!state.jianghu?.hunted !== f.hunted) return false;
   }
+  if (c.arts) {
+    const a = state.martialArts;
+    const known = a?.known ?? [];
+    if (c.arts.knows !== undefined && !known.some((k) => k.id === c.arts!.knows)) return false;
+    if (c.arts.countMin !== undefined && known.length < c.arts.countMin) return false;
+    if (c.arts.weapon !== undefined && !!a?.weapon !== c.arts.weapon) return false;
+    if (c.arts.woundMin !== undefined && (a?.wound ?? 0) < c.arts.woundMin) return false;
+    if (c.arts.woundMax !== undefined && (a?.wound ?? 0) > c.arts.woundMax) return false;
+  }
   if (c.kin) {
     const k = state.kin;
     if (c.kin.met !== undefined && !!k !== c.kin.met) return false;

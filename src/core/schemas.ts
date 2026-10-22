@@ -97,6 +97,8 @@ const BaseConditionsSchema = z
     jianghu: z.object({
       fameMin: z.number().optional(), fameMax: z.number().optional(), infamyMin: z.number().optional(), infamyMax: z.number().optional(), alias: z.boolean().optional(),
     }).strict().optional(),
+    /** 11.3: knows this art / at least this many; carries a binh khí; nội thương at least / at most. */
+    arts: z.object({ knows: id.optional(), countMin: z.number().int().optional(), weapon: z.boolean().optional(), woundMin: z.number().optional(), woundMax: z.number().optional() }).strict().optional(),
     /** 11.2: in a thế lực (this one, of these kinds / sides, at least this rank or cống hiến); hunted after a phản bang. */
     faction: z.object({
       member: z.boolean().optional(), id: id.optional(), kinds: z.array(z.enum(JIANGHU_KINDS_EARLY)).optional(), alignments: z.array(z.enum(JIANGHU_ALIGNMENTS_EARLY)).optional(),
@@ -362,6 +364,13 @@ export const EffectsSchema = z
     leaveFaction: z.enum(['quit', 'betray']).optional(),
     /** Lying low: the hunt after a phản bang ends balance.factions.hideYears sooner. */
     hideFromHunt: z.boolean().optional(),
+    /** 11.3 Võ học: learn a bí kíp (an id, or one drawn by grade / kind / tà công); practise the bí kíp; buy at the lò rèn
+     *  ("best" the purse allows, or an id); win a binh khí; nội thương ± (a new one costs thọ nguyên). */
+    learnArt: z.union([id, z.object({ grades: z.array(z.number().int()).optional(), kinds: z.array(z.string()).optional(), evil: z.boolean().optional() }).strict()]).optional(),
+    practiseArt: z.boolean().optional(),
+    buyWeapon: z.string().min(1).optional(),
+    gainWeapon: id.optional(),
+    wound: z.number().optional(),
     /** 10.10: move to a far châu (old acquaintances cool, flag tha_huong). */
     moveHome: z.boolean().optional(),
     /** 10.9–10.10: this life ends now, this way. */
@@ -469,7 +478,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt', 'learnArt', 'practiseArt', 'buyWeapon', 'gainWeapon', 'wound'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1811,6 +1820,15 @@ export const BalanceSchema = z
       rankMerit: z.array(z.number()).min(1), missionPay: z.array(z.number()).min(1), stipend: z.array(z.number()).min(1),
       missionMerit: z.tuple([z.number(), z.number()]), missionFailMerit: z.number(), missionFailHealth: z.number(), missionRenown: z.number(), taKarma: z.number(),
       teachCost: z.number(), teachBonus: z.number(), huntYears: z.number().int(), hideYears: z.number().int(), betrayFame: z.number(), betrayInfamy: z.number(), chinhKarmaMin: z.number(),
+    }).strict().optional(),
+    /** 11.3 Võ học phàm tục: cap on chiến lực from bí kíp; × for a binh khí matching a known art; nội thương per lost fight,
+     *  thọ nguyên it costs, chiến lực lost per point, healed per year, the level that hurts (health);
+     *  tẩu hỏa chances (base, fake tàn quyển from tầng fakeFrom, tà công, đạo tâm below lowWillBelow) and what it costs;
+     *  path aptitude a new art adds. */
+    arts: z.object({
+      maxBonus: z.number(), weaponFit: z.number(), woundPerLoss: z.number(), woundLifespan: z.number(), woundPower: z.number(), woundHeal: z.number(),
+      woundHurtAt: z.number(), woundHurt: z.number(), pathAffinity: z.number(),
+      deviation: z.object({ base: z.number(), fake: z.number(), fakeFrom: z.number().int(), evil: z.number(), lowWill: z.number(), lowWillBelow: z.number(), health: z.number(), wound: z.number() }).strict(),
     }).strict().optional(),
     /** 10.13 Lịch lễ hội thật: days either side of a real lễ hội; the share of years that take it; festival event weight ×. */
     calendar: z.object({ windowDays: z.number().int().min(0), share: z.number().min(0).max(1), boost: z.number().min(1) }).strict().optional(),
@@ -3372,6 +3390,23 @@ export const JianghuFileSchema = z.object({
   }).strict(),
 }).strict();
 export type JianghuFile = z.infer<typeof JianghuFileSchema>;
+
+/** 11.3 Võ học phàm tục (content/martial-arts.json): bí kíp (power per tầng, needs as stat.<x> minimums; tà công, tàn quyển
+ *  giả, nội công that adds thọ nguyên once trained to its peak), phàm binh khí, the kinds (name, combat path) and lời văn. */
+export const MartialArtsFileSchema = z.object({
+  arts: z.array(z.object({
+    id, name: z.string().min(1), kind: z.string().min(1), grade: z.number().int().min(1), power: z.number().min(0), maxLevel: z.number().int().min(1),
+    needs: z.record(z.number()).default({}), evil: z.boolean().optional(), fake: z.boolean().optional(), lifespan: z.number().optional(), text: z.string().min(1),
+  }).strict()).min(1),
+  weapons: z.array(z.object({ id, name: z.string().min(1), kind: z.string().min(1), grade: z.number().int().min(1), power: z.number().min(0), price: z.number().min(0), text: z.string().min(1) }).strict()).default([]),
+  kinds: z.record(z.object({ name: z.string().min(1), path: z.string().min(1) }).strict()),
+  texts: z.object({
+    learned: z.string().min(1), known: z.string().min(1), unfit: z.string().min(1), nothing: z.string().min(1), levelUp: z.string().min(1), maxed: z.string().min(1),
+    practice: z.array(z.string().min(1)).min(1), deviation: z.string().min(1), fakeExposed: z.string().min(1),
+    bought: z.string().min(1), poor: z.string().min(1), better: z.string().min(1), wounded: z.string().min(1), woundHurt: z.string().min(1), healed: z.string().min(1),
+  }).strict(),
+}).strict();
+export type MartialArtsFile = z.infer<typeof MartialArtsFileSchema>;
 
 /** 10.13 Lịch lễ hội thật (content/calendar.json): the real dates (dương lịch) of each lễ hội in leisure.json, by year.
  *  In the days around one, the game's lễ hội that year is likely that one and festival events come more often. */

@@ -368,5 +368,292 @@
         }
       }
     ]
-  }
+  },
+ {
+  "id": "hoc_vo_quan",
+  "group": "giang_ho",
+  "name": "Học võ ở võ quán",
+  "icon": "館",
+  "text": "Nộp bạc cho võ quán đầu trấn, theo sư phụ học một bộ quyền cước nhập môn.",
+  "conditions": {
+   "age": {
+    "min": 8
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "law": {
+    "trial": false
+   }
+  },
+  "months": 2,
+  "cost": [
+   {
+    "silver": 8
+   }
+  ],
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 3
+  },
+  "check": {
+   "stat": "stat.comprehension",
+   "difficulty": 30
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Sư phụ võ quán dạy ngươi một bộ võ, đánh sai là ăn thước vào lưng.",
+     "Ngươi đứng tấn ba tháng mới được dạy chiêu đầu tiên."
+    ],
+    "effects": {
+     "learnArt": {
+      "grades": [
+       1
+      ]
+     },
+     "stat.physique": 1
+    }
+   }
+  ],
+  "failOutcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Học mãi không vào, sư phụ bảo về nhà gánh nước còn hơn.",
+     "Bạn học đánh ngươi bầm mặt, chiêu nào cũng chưa thuộc."
+    ],
+    "effects": {
+     "stat.happiness": -2,
+     "stat.health": -1
+    }
+   }
+  ]
+ },
+ {
+  "id": "luyen_bi_kip",
+  "group": "giang_ho",
+  "name": "Luyện bí kíp",
+  "icon": "譜",
+  "text": "Mở bí kíp đang có ra luyện tiếp. Luyện lâu thì lên tầng, luyện sai thì hại thân.",
+  "conditions": {
+   "age": {
+    "min": 8
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "arts": {
+    "countMin": 1
+   }
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 2
+  },
+  "outcomes": [
+   {
+    "weight": 2,
+    "text": [
+     "Ngươi ra bãi đất sau nhà, giở bí kíp ra luyện.",
+     "Đêm khuya, ngươi thắp đèn luyện theo từng hình vẽ trong bí kíp."
+    ],
+    "effects": {
+     "practiseArt": true,
+     "stat.physique": 1
+    }
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Ngươi ngồi nghiền ngẫm từng chữ trong bí kíp trước khi luyện.",
+     "Ngươi luyện chậm mà chắc, đánh xong một bài thì ngồi thở."
+    ],
+    "effects": {
+     "practiseArt": true,
+     "stat.daoHeart": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "mua_binh_khi",
+  "group": "giang_ho",
+  "name": "Ghé lò rèn",
+  "icon": "鍛",
+  "text": "Tới lò rèn xem binh khí. Món tốt thì đắt, món rẻ thì giòn.",
+  "conditions": {
+   "age": {
+    "min": 14
+   },
+   "realm": {
+    "max": "pham_nhan"
+   }
+  },
+  "months": 1,
+  "limit": {
+   "perYear": 1
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Ngươi đứng xem thợ rèn quai búa cả buổi.",
+     "Lò rèn nóng như lò bát quái, tiếng búa vang khắp ngõ."
+    ],
+    "effects": {
+     "buyWeapon": "best",
+     "stat.happiness": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "duong_noi_thuong",
+  "group": "giang_ho",
+  "name": "Dưỡng nội thương",
+  "icon": "養",
+  "text": "Mời lang y bốc thuốc, nằm yên vận khí cho vết thương cũ mau lành.",
+  "conditions": {
+   "arts": {
+    "woundMin": 1
+   }
+  },
+  "months": 2,
+  "cost": [
+   {
+    "silver": 10
+   }
+  ],
+  "limit": {
+   "perYear": 1
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Mấy chục thang thuốc đắng, ngực bớt đau hẳn.",
+     "Ngươi nằm yên một mùa, mỗi sáng tập thở theo lời lang y."
+    ],
+    "effects": {
+     "wound": -25,
+     "stat.health": 3
+    }
+   }
+  ]
+ },
+ {
+  "id": "cau_cao_nhan_chi_diem",
+  "group": "giang_ho",
+  "name": "Cầu cao nhân chỉ điểm",
+  "icon": "師",
+  "text": "Nghe nói có lão nhân ở quán trà đầu bến từng là cao thủ. Thử tới xin học một chiêu.",
+  "conditions": {
+   "age": {
+    "min": 16
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "arts": {
+    "countMin": 1
+   }
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 3
+  },
+  "check": {
+   "stat": "stat.comprehension",
+   "difficulty": 50
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Lão nhân nhìn ngươi đánh một bài, lắc đầu, rồi dạy lại từ đầu.",
+     "Ba ngày rót trà, sang ngày thứ tư lão mới chịu đứng dậy múa cho xem."
+    ],
+    "effects": {
+     "learnArt": {
+      "grades": [
+       2
+      ]
+     },
+     "stat.comprehension": 1
+    }
+   }
+  ],
+  "failOutcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Lão nhân uống hết ấm trà ngươi mời rồi đi ngủ, chẳng nói câu nào.",
+     "Lão bảo ngươi căn cơ chưa tới, xin học nữa là phí trà."
+    ],
+    "effects": {
+     "stat.happiness": -2
+    }
+   }
+  ]
+ },
+ {
+  "id": "hoc_len_vo",
+  "group": "giang_ho",
+  "name": "Học lén võ",
+  "icon": "窺",
+  "text": "Nấp sau tường võ quán, nhìn lén người ta dạy võ rồi về tự tập. Bị bắt là ăn đòn.",
+  "conditions": {
+   "age": {
+    "min": 8
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "law": {
+    "trial": false
+   }
+  },
+  "months": 1,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 3
+  },
+  "check": {
+   "stat": "stat.intellect",
+   "difficulty": 45
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Ngươi nhìn qua khe tường, nhớ được trọn một bài, đêm về tự tập.",
+     "Leo lên cây đa sau võ quán, ngươi xem hết buổi dạy mà không ai hay."
+    ],
+    "effects": {
+     "learnArt": {
+      "grades": [
+       1
+      ]
+     },
+     "stat.comprehension": 1
+    }
+   }
+  ],
+  "failOutcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Bị đệ tử võ quán túm được, đánh một trận rồi ném ra cổng.",
+     "Ngươi nhìn mãi mà chẳng hiểu gì, lại bị chó nhà võ quán đuổi chạy."
+    ],
+    "effects": {
+     "stat.health": -3,
+     "stat.happiness": -1
+    }
+   }
+  ]
+ }
 ]

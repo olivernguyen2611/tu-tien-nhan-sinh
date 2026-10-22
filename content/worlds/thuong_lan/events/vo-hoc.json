@@ -1,0 +1,442 @@
+[
+ {
+  "id": "vh_lao_nhan_quan_tra",
+  "category": "jianghu",
+  "title": "Lão nhân ở quán trà",
+  "text": "Ngươi đang múa mấy đường võ trước quán trà thì một lão già ngồi góc quán cười khẩy: \"Tấn bộ lỏng như bùn, đánh ai được?\"",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 12
+   }
+  },
+  "weight": 0.6,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Quỳ xuống xin chỉ giáo",
+    "check": {
+     "stat": "stat.comprehension",
+     "difficulty": 45
+    },
+    "success": {
+     "text": "Lão già nhìn ngươi hồi lâu, rồi đứng dậy, chỉ ba chiêu. Ba chiêu ấy ngươi nhớ suốt đời.",
+     "variants": [
+      "Lão gõ đũa vào khớp gối ngươi: \"Chỗ này.\" Rồi dạy hết một bộ.",
+      "Lão bắt ngươi rót trà bảy ngày, ngày thứ tám mới chịu dạy."
+     ],
+     "effects": {
+      "learnArt": {
+       "grades": [
+        2,
+        3
+       ],
+       "evil": false
+      },
+      "stat.comprehension": 1
+     }
+    },
+    "fail": {
+     "text": "Lão già lắc đầu: \"Căn cơ chưa tới.\" Rồi trả tiền trà, bỏ đi.",
+     "effects": {
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Mời lão một ấm trà ngon",
+    "result": {
+     "text": "Lão uống hết ấm trà, thuận miệng chỉ cho ngươi một bài quyền cước nhập môn.",
+     "effects": {
+      "silver": -3,
+      "learnArt": {
+       "grades": [
+        1
+       ]
+      },
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Cãi lại: \"Lão biết gì mà nói\"",
+    "result": {
+     "text": "Lão già cười to, đứng dậy đi. Về sau ngươi mới nghe người ta kể lão là ai, hối không kịp.",
+     "effects": {
+      "stat.happiness": -1,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "vh_tan_quyen_cho_troi",
+  "category": "jianghu",
+  "title": "Tàn quyển ở chợ trời",
+  "text": "Một gã bán đồ cũ dúi vào tay ngươi mấy trang giấy ố vàng: \"Bí kíp thất truyền của một đại môn phái đấy, hai mươi lượng thôi.\" Chữ trong ấy nhìn cũng ra dáng.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 14
+   }
+  },
+  "weight": 0.6,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Mua ngay, kẻo người khác mua mất",
+    "result": {
+     "text": "Ngươi ôm mấy trang giấy về như ôm vàng. Thật hay giả, luyện rồi mới biết.",
+     "effects": {
+      "silver": -20,
+      "learnArt": "vo_danh_tan_quyen",
+      "stat.happiness": 2
+     }
+    }
+   },
+   {
+    "text": "Mặc cả",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 40
+    },
+    "success": {
+     "text": "Gã kêu trời kêu đất rồi cũng bán tám lượng.",
+     "effects": {
+      "silver": -8,
+      "learnArt": "vo_danh_tan_quyen",
+      "stat.happiness": 1
+     }
+    },
+    "fail": {
+     "text": "Gã giật lại mấy trang giấy, bảo ngươi không có mắt nhìn của quý.",
+     "effects": {
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Lắc đầu bỏ đi",
+    "result": {
+     "text": "Bí kíp thất truyền mà bán ở chợ trời, ngươi không tin. Trên đường về còn thấy gã bán cho người thứ hai.",
+     "effects": {
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "vh_kiem_khach_hap_hoi",
+  "category": "jianghu",
+  "title": "Kiếm khách hấp hối",
+  "text": "Bên vệ đường, một kiếm khách nằm trong vũng máu, tay còn ôm chặt một cuốn sách. Xa xa có tiếng vó ngựa đang đuổi tới.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 15
+   }
+  },
+  "weight": 0.6,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Đỡ người ấy dậy, nghe lời trăng trối",
+    "result": {
+     "text": "Người ấy dúi cuốn sách vào tay ngươi: \"Đừng để chúng lấy được.\" Rồi tắt thở. Ngươi chôn cất người ấy dưới gốc cây.",
+     "effects": {
+      "learnArt": {
+       "grades": [
+        2,
+        3
+       ],
+       "evil": false
+      },
+      "karma": 1,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Giật lấy cuốn sách rồi chạy",
+    "result": {
+     "text": "Ngươi chạy một mạch, sau lưng tiếng vó ngựa mỗi lúc một xa. Đêm ấy nằm mơ thấy đôi mắt người kia.",
+     "effects": {
+      "learnArt": {
+       "grades": [
+        2,
+        3
+       ],
+       "evil": false
+      },
+      "karma": -2,
+      "stat.daoHeart": -2
+     }
+    }
+   },
+   {
+    "text": "Đứng ra chặn kẻ đuổi",
+    "result": {
+     "text": "Ba gã áo đen ghìm cương, rút đao.",
+     "effects": {
+      "stat.happiness": -1
+     },
+     "fight": {
+      "foe": {
+       "name": "Toán áo đen",
+       "realm": "same",
+       "intent": "kill",
+       "powerMul": 1.0,
+       "path": "weapon",
+       "lineage": "tien"
+      },
+      "win": {
+       "text": "Ba gã bỏ chạy, để lại một thanh đao tốt. Kiếm khách gắng gượng trao cho ngươi cuốn sách trước khi đi.",
+       "effects": {
+        "learnArt": {
+         "grades": [
+          3
+         ],
+         "evil": false
+        },
+        "gainWeapon": "bach_luyen_dao",
+        "fame": 4,
+        "stat.happiness": 3
+       }
+      },
+      "lose": {
+       "text": "Ngươi bị đánh ngã. Chúng lấy cuốn sách rồi đi, không thèm giết ngươi.",
+       "effects": {
+        "stat.health": -5,
+        "stat.happiness": -3
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Làm như không thấy",
+    "result": {
+     "text": "Ngươi đi tiếp. Tiếng vó ngựa phía sau dừng lại, rồi im hẳn.",
+     "effects": {
+      "stat.daoHeart": -1,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "vh_tho_ren_lang_bat",
+  "category": "jianghu",
+  "title": "Thợ rèn lang bạt",
+  "text": "Một ông thợ rèn gánh đe búa đi qua làng, xin ngủ nhờ một đêm. Đồ nghề của ông, thép nào cũng ánh xanh.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 14
+   }
+  },
+  "weight": 0.6,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Cho ở nhờ, mời cơm",
+    "result": {
+     "text": "Sáng hôm sau ông thợ rèn để lại một cây thương, bảo là trả ơn cơm. Hai người thành chỗ quen biết.",
+     "effects": {
+      "gainWeapon": "hong_anh_thuong",
+      "meetNpc": {
+       "role": "thợ rèn lang bạt",
+       "kind": "vo_lam_nhan",
+       "adult": true,
+       "affinity": 20
+      },
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Đặt rèn một thanh đao tốt",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 35
+    },
+    "success": {
+     "text": "Ông thợ rèn đỏ lửa ba ngày, đưa ra một thanh đao vân như sóng nước.",
+     "effects": {
+      "silver": -60,
+      "gainWeapon": "bach_luyen_dao",
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Thép không ưng, ông thợ rèn trả lại bạc rồi đi tiếp.",
+     "effects": {
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Đóng cửa không tiếp",
+    "result": {
+     "text": "Ông thợ rèn gánh đồ đi tiếp. Nghe nói làng bên được ông rèn cho cả bộ nông cụ.",
+     "effects": {
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "vh_ma_dau_truyen_cong",
+  "category": "jianghu",
+  "title": "Ma đầu truyền công",
+  "text": "Một kẻ mặt trắng bệch chặn đường ngươi: \"Ta xem cốt cách ngươi được. Muốn mạnh nhanh, ta dạy. Chỉ là phải luyện bằng máu.\"",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 16
+   },
+   "stats": [
+    {
+     "stat": "stat.physique",
+     "gte": 40
+    }
+   ]
+  },
+  "weight": 0.4,
+  "cooldownYears": 15,
+  "choices": [
+   {
+    "text": "Nhận học",
+    "result": {
+     "text": "Ngươi học Huyết Ảnh Ma Trảo. Đêm luyện xong, nhìn bàn tay mình đỏ như máu.",
+     "effects": {
+      "learnArt": "huyet_anh_ma_trao",
+      "karma": -3,
+      "infamy": 3,
+      "stat.daoHeart": -2
+     }
+    }
+   },
+   {
+    "text": "Từ chối, đi đường khác",
+    "result": {
+     "text": "Kẻ kia cười nhạt, không ép. Ngươi đi một đoạn mới dám thở mạnh.",
+     "effects": {
+      "stat.daoHeart": 2
+     }
+    }
+   },
+   {
+    "text": "Báo quan, báo các môn phái",
+    "result": {
+     "text": "Quan phủ dán cáo thị truy bắt. Người giang hồ biết chuyện, khen ngươi có gan.",
+     "effects": {
+      "fame": 3,
+      "stat.charm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "vh_noi_thuong_tai_phat",
+  "category": "jianghu",
+  "title": "Nội thương tái phát",
+  "text": "Đang giữa trưa, ngực ngươi bỗng nhói lên. Một ngụm máu trào ra khóe miệng: vết thương cũ chưa lành hẳn.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "arts": {
+    "woundMin": 30
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Nằm nghỉ, vận khí điều tức",
+    "result": {
+     "text": "Ngươi nằm im ba ngày, khí huyết dần thông.",
+     "effects": {
+      "wound": -10,
+      "stat.health": -2,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Cắn răng làm tiếp",
+    "result": {
+     "text": "Ngươi lau máu, làm cho xong việc. Thân thể cứng hơn, mà vết thương cũng sâu hơn.",
+     "effects": {
+      "wound": 5,
+      "stat.health": -4,
+      "stat.physique": 1
+     }
+    }
+   },
+   {
+    "text": "Tìm lang y bốc thuốc",
+    "result": {
+     "text": "Lang y bắt mạch, lắc đầu mấy lần, rồi kê một thang thuốc đắng nghét.",
+     "effects": {
+      "silver": -10,
+      "wound": -20,
+      "stat.health": 1
+     }
+    }
+   }
+  ]
+ }
+]

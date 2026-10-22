@@ -143,6 +143,8 @@ export interface GameState {
     left?: string[];
     hunted?: { by: string; until: number } | null;
   };
+  /** 11.3 Võ học phàm tục: bí kíp known (tầng, xp toward the next), the binh khí carried, nội thương 0–100. */
+  martialArts?: { known: { id: string; level: number; xp: number }[]; weapon: string | null; wound: number };
   /** 10.13: the real lễ hội this week (set from the device's date when a life starts or loads), or null. */
   realFestival?: string | null;
   kin?: {

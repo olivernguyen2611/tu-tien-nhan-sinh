@@ -8,6 +8,15 @@
 
 ## [Chưa phát hành]
 
+### 11.3 Võ học phàm tục (2026-10-22)
+- 15 bí kíp võ công phàm (`content/martial-arts.json`): quyền, cước, đao, kiếm, thương, ám khí, khinh công, nội công; mỗi bí kíp có phẩm, 5–7 tầng, đòi hỏi Căn cốt / Ngộ tính / Khí vận, tăng chiến lực theo tầng và kéo về một trong năm con đường chiến đấu. Nội công luyện tới tầng cuối thêm thọ nguyên.
+- 8 phàm binh khí có phẩm: mua ở lò rèn (món tốt nhất túi tiền cho phép), được tặng, đoạt từ kẻ thua. Binh khí cùng loại với bí kíp đang luyện mạnh gấp rưỡi.
+- Nội thương: người phàm thua trận mang nội thương (trừ thọ nguyên, giảm chiến lực), mỗi năm tự lành một ít; nặng thì trở trời lại đau. Dưỡng nội thương bằng thuốc.
+- Tẩu hỏa nhập ma khi luyện: tàn quyển giả (vỡ lẽ từ tầng 4, mất luôn bí kíp), tà công, Đạo tâm thấp.
+- 6 hoạt động (Giang hồ): học võ ở võ quán, học lén võ, luyện bí kíp, ghé lò rèn, dưỡng nội thương, cầu cao nhân chỉ điểm.
+- 6 sự kiện (`vo-hoc.json`): lão nhân ở quán trà, tàn quyển ở chợ trời, kiếm khách hấp hối (đoạt bí kíp), thợ rèn lang bạt (thành người quen), ma đầu truyền tà công, nội thương tái phát.
+- Hồ sơ có dòng "Võ học:". Điều kiện `arts`; hiệu ứng `learnArt`, `practiseArt`, `buyWeapon`, `gainWeapon`, `wound`. Dev mode: học hết bí kíp, thêm / chữa nội thương. Mô phỏng có cột "Bí kíp TB" (hiệp khách ~8.7, kẻ cướp ~4).
+
 ### 11.2 Môn phái và bang hội võ lâm (2026-10-22)
 - Gia nhập thế lực giang hồ (mục Hành sự → Giang hồ): bái nhập danh môn chính phái (thử Căn cốt, 8–25 tuổi), vào bang hội / tiêu cục / thương hội (thử Mị lực), đầu quân hắc đạo (sơn trại, giáo phái, sát thủ lâu; cần ác danh hoặc thẻ bài người ta để lại). Mỗi thế lực có luật riêng: thế gia chỉ nhận người trong họ (trừ vài nhà nhận gia tướng, khách khanh), Thiếu Lâm nhận từ 6 tới 30 tuổi, Huyết Sát Lâu đòi ác danh.
 - Cấp bậc theo loại thế lực (đệ tử ký danh tới trưởng lão; bang chúng tới hộ pháp; sát thủ Đồng bài tới Huyết bài…), lên bậc bằng cống hiến; bậc cao có bổng lộc hằng năm.

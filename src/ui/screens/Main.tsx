@@ -65,6 +65,7 @@ import { lawLine } from '../../systems/law';
 import { lineageLine } from '../../systems/kin';
 import { jianghuLine } from '../../systems/jianghu';
 import { factionLine } from '../../systems/jhFactions';
+import { martialArtsLine } from '../../systems/martialArts';
 
 
 const APTITUDE_LABELS = [
@@ -388,6 +389,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             {lineageLine(state, content) && <p class="profile-note">Gia phả: {lineageLine(state, content)}</p>}
             {jianghuLine(state, content) && <p class="profile-note">Giang hồ: {jianghuLine(state, content)}</p>}
             {factionLine(state, content) && <p class="profile-note">Thế lực: {factionLine(state, content)}</p>}
+            {martialArtsLine(state, content) && <p class="profile-note">Võ học: {martialArtsLine(state, content)}</p>}
             {sectLabel(state, content) && <p class="profile-note">Tông môn: {sectLabel(state, content)}</p>}
             {inventoryLabel(state, content) && <p class="profile-note">Mang theo: {inventoryLabel(state, content)}</p>}
             <p class="profile-note"><TermText text="Tư chất tiên thiên định từ lúc sinh, chỉ đổi được nhờ kỳ ngộ hay khí vận." /></p>

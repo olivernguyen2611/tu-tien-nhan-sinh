@@ -25,6 +25,7 @@ import { clanName } from './clan';
 import { sectById } from './sect';
 import { startWorldEvent } from './worldEvents';
 import { hoaCanhGift } from './martial';
+import { addWound, artsOf } from './martialArts';
 import { finishStep, questForStage } from './martialQuest';
 import { Rng } from '../core/rng';
 import { initTimes } from './worldState';
@@ -539,6 +540,18 @@ export function devResetEventHistory(state: GameState): GameState {
 /** 10.13: play as if this were a real lễ hội week (null = none). */
 export function devSetRealFestival(state: GameState, id: string | null): GameState {
   return devLog({ ...state, realFestival: id }, id ? `giả làm tuần lễ hội thật: ${id}` : 'bỏ tuần lễ hội thật');
+}
+
+/** 11.3: every bí kíp at tầng 1 (needs ignored) and the best binh khí; or nội thương ±. */
+export function devLearnAllArts(state: GameState, content: Content): GameState {
+  const a = artsOf(state);
+  const known = [...a.known, ...(content.martialArts?.arts ?? []).filter((x) => !a.known.some((k) => k.id === x.id)).map((x) => ({ id: x.id, level: 1, xp: 0 }))];
+  const best = (content.martialArts?.weapons ?? []).slice().sort((x, y) => y.power - x.power)[0];
+  return devLog({ ...state, martialArts: { ...a, known, weapon: best?.id ?? a.weapon } }, `học hết ${known.length} bí kíp võ học`);
+}
+
+export function devWound(state: GameState, content: Content, d: number): GameState {
+  return devLog(addWound(state, content, d), `nội thương ${d > 0 ? '+' : ''}${d}`);
 }
 
 /** 9.R6a: a life touched by developer mode is marked for good and earns no records. */

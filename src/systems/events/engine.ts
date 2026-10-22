@@ -7,6 +7,7 @@ import { addArt, adoptPet, castOmen, noteGamble, omenMul } from '../leisure';
 import { festivalBoost } from '../calendar';
 import { addNetRenown, addRenown } from '../jianghu';
 import { addMerit, factionMission, factionTeach, hideFromHunt, joinFaction, leaveFaction } from '../jhFactions';
+import { addWound, buyWeapon, gainWeapon, learnArt, practiseArt } from '../martialArts';
 import { catchDisease, cureAilment, injure, noteDrink } from '../health';
 import { addJailYears, addWanted, arrest, bribe, commitCrime, fleeLaw, imprison, sentence, tryEscape } from '../law';
 import { checkDeath } from '../time';
@@ -549,6 +550,12 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.factionTeach) next = factionTeach(next, content);
   if (fx.leaveFaction) next = leaveFaction(next, content, fx.leaveFaction);
   if (fx.hideFromHunt) next = hideFromHunt(next, content);
+  // 11.3 Võ học phàm tục.
+  if (fx.learnArt) next = learnArt(next, content, fx.learnArt);
+  if (fx.practiseArt) next = practiseArt(next, content);
+  if (fx.buyWeapon) next = buyWeapon(next, content, fx.buyWeapon);
+  if (fx.gainWeapon) next = gainWeapon(next, content, fx.gainWeapon);
+  if (fx.wound) next = addWound(next, content, fx.wound);
   if (fx.worship) next = worship(next);
   if (fx.repairShrine) next = repairShrine(next, content);
   if (fx.childrenAffinity) next = childrenAffinity(next, fx.childrenAffinity);
