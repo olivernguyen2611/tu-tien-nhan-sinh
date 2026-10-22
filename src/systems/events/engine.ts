@@ -187,6 +187,12 @@ function repaidRecently(state: GameState, content: Content): boolean {
   return content.events.some((e) => e.npcTrigger === 'repay' && state.events.history[e.id] !== undefined && state.character.age - state.events.history[e.id] < gap);
 }
 
+/** Audit: some revenge event already happened within balance.npcs.revengeGapYears. */
+function avengedRecently(state: GameState, content: Content): boolean {
+  const gap = content.balance.npcs.revengeGapYears;
+  return content.events.some((e) => e.npcTrigger === 'revenge' && state.events.history[e.id] !== undefined && state.character.age - state.events.history[e.id] < gap);
+}
+
 /** 9.0.3: some shared (bond) event already happened within balance.npcs.bondGapYears. */
 function bondedRecently(state: GameState, content: Content): boolean {
   const gap = content.balance.npcs.bondGapYears;
@@ -199,6 +205,7 @@ function npcEvent(state: GameState, content: Content, rng: Rng): { npc: string; 
     // 6c.6: kindness repaid is a moment, not a yearly chore.
     if (call.trigger === 'repay' && repaidRecently(state, content)) continue;
     if (call.trigger === 'bond' && bondedRecently(state, content)) continue;
+    if (call.trigger === 'revenge' && avengedRecently(state, content)) continue;
     const withNpc = { ...state, events: { ...state.events, npc: call.id } };
     const pool = content.events.filter((e) => e.npcTrigger === call.trigger && e.weight > 0 && !hiddenByOptions(state, e) && meets(withNpc, e.conditions, content));
     if (pool.length === 0) continue;

@@ -845,8 +845,8 @@
  {
   "id": "tcg2_dieu_phi_thang_nhin",
   "category": "cultivation",
-  "title": "Có người phi thăng",
-  "text": "Trời rạch một đường sáng. Có người phi thăng. Cả tu chân giới đều ngẩng nhìn, ai cũng tính xem mình còn bao nhiêu năm.",
+  "title": "Cột sáng Trung Châu",
+  "text": "Trời rạch một đường sáng từ Trung Châu lên tận mây. Có đại năng thử bước lên Thông Thiên lộ, con đường đã đứt từ Thượng Cổ. Cả tu chân giới đều ngẩng nhìn, ai cũng tính xem mình còn bao nhiêu năm.",
   "themes": [
    "lore"
   ],
@@ -869,7 +869,7 @@
    {
     "text": "Ngồi thiền dưới ánh sáng ấy",
     "result": {
-     "text": "Dư quang tiên giới rơi xuống như mưa. Ngươi thấy, rất mờ, một con đường đi tiếp.",
+     "text": "Dư quang rơi xuống như mưa. Ngươi thấy, rất mờ, một con đường đi tiếp, rồi đứt ngang giữa trời.",
      "effects": {
       "cultProgress": 8,
       "stat.comprehension": 1,
@@ -882,7 +882,7 @@
    {
     "text": "Hỏi người ấy là ai",
     "result": {
-     "text": "Không ai biết. Người phi thăng ở hạ giới hai nghìn năm, nhưng không ai nhớ tên.",
+     "text": "Không ai biết. Cột sáng tắt rồi, trời không có tiếng đáp. Người lên được hay tan giữa đường, ba nghìn năm nay chưa ai trả lời được.",
      "effects": {
       "stat.daoHeart": 2,
       "stat.happiness": -1

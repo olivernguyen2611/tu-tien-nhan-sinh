@@ -1162,6 +1162,8 @@ export const BalanceSchema = z
         repayChance: probability,
         /** 6c.6: at least this many years between two repay visits (Báo ân), whoever it is. */
         repayGapYears: z.number().int().min(0),
+        /** Audit: years between two revenge visits (an heir who was fled from comes back, but not every year). */
+        revengeGapYears: z.number().int().min(0).default(0),
         /** Revenge chance × this when the NPC's realm is above the player's. */
         revengeStrongerMul: z.number().min(0),
         /** Chance a year that a masked NPC (nature ≠ surface) shows their true face. */

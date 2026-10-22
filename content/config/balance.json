@@ -561,7 +561,7 @@
     "revengeAt": 30,
     "revengeChance": 0.2,
     "repayAt": 30,
-    "repayChance": 0.15, "repayGapYears": 8,
+    "repayChance": 0.15, "repayGapYears": 8, "revengeGapYears": 4,
     "revengeStrongerMul": 2,
     "revealChance": 0.05,
     "bondAt": 60,

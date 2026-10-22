@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### Tổng tra 1: sửa lỗi vặt (2026-10-23)
+- Kết cục "Đế vương" trước đây không đời nào đạt được (đọc một cờ không sự kiện nào đặt). Nay: lên ngôi và còn ngồi ngai tới lúc chết (không mất nước, không nhường ngôi).
+- Lựa chọn "Mang về cho con" ở sự kiện phàm nhân nhặt được linh vật bị khóa vĩnh viễn (cờ `co_con` không ai đặt). Nay mở khi còn con sống.
+- Hậu duệ báo thù: kẻ thù bị bỏ chạy từng quay lại năm nào cũng tới (có đời 18 lần). Nay hai lần báo thù cách nhau ít nhất `balance.npcs.revengeGapYears` = 4 năm.
+- Sự kiện "Có người phi thăng" mâu thuẫn với sử Thương Lan (từ Đoạn Thiên chi biến chưa ai phi thăng được). Đổi thành "Cột sáng Trung Châu": có đại năng thử bước lên Thông Thiên lộ đã đứt, lên được hay không không ai biết.
+
 ### 13.7e Phẩm cấp 4 bậc (2026-10-23)
 - Trúc Cơ, Kim Đan, Nguyên Anh và Hóa Thần dùng chung một thang 4 bậc: Hạ, Trung, Thượng, Cực. Mỗi cảnh giới có tên riêng cho các bậc:
   - Trúc Cơ: Hạ phẩm đạo cơ … Thiên Đạo Trúc Cơ;
