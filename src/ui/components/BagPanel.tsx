@@ -3,6 +3,7 @@ import { useState } from 'preact/hooks';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
 import { itemById, useBlocker } from '../../systems/items';
+import { daoView } from '../../systems/daoGate';
 
 const KIND_LABEL: Record<string, string> = {
   pill: 'Đan dược', artifact: 'Pháp bảo', array: 'Trận bàn', talisman: 'Bùa', material: 'Nguyên liệu', misc: 'Vật dụng',
@@ -27,7 +28,7 @@ export function BagPanel({ state, content, onUse, onClose }: {
         <div class="kicker">Túi đồ</div>
         <h2>Hành trang</h2>
         <p class="profile-note">
-          {state.money.silver} lượng bạc · {state.money.spiritStones} linh thạch
+          {state.money.silver} lượng bạc{daoView(state).stones ? ` · ${state.money.spiritStones} linh thạch` : ''}
         </p>
         {items.length === 0 && result === null ? (
           <p class="story">Túi rỗng, chỉ có gió lùa qua.</p>

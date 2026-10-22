@@ -77,7 +77,9 @@ describe('9.R4b tiên duyên gates', () => {
       if (opened(kid(`gs${i}`, 6))) seasoned++;
       if (opened(kid(`gs${i}`, 6, 'nong_dan', []))) first++;
     }
-    expect(seasoned / 300).toBeGreaterThan(0.5);
+    // Góp ý 23/10: the hội thu đồ came too often; still several times a first life's odds.
+    expect(seasoned / 300).toBeGreaterThan(0.15);
+    expect(seasoned / 300).toBeGreaterThan(4 * (first / 300));
     expect(first / 300).toBeLessThan(0.05);
   });
 });

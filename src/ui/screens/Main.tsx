@@ -32,6 +32,7 @@ import { SectPanel, type SectAction } from '../components/SectPanel';
 import { FatePopup } from '../components/FatePopup';
 import { CorePopup } from '../components/CorePopup';
 import { MiniGamePopup, type QuestAction } from '../components/MiniGamePopup';
+import { FormationPopup, type BeastAction, type FieldAction, type FormationAction } from '../components/FormationPopup';
 import { ExamPopup, type ExamAction } from '../components/ExamPopup';
 import type { BondAction, BondTarget } from '../../systems/familyBond';
 import { HeartDemonPopup } from '../components/HeartDemonPopup';
@@ -71,6 +72,7 @@ import { courtLine } from '../../systems/court';
 import { officeLine } from '../../systems/office';
 import { armyLine } from '../../systems/army';
 import { throneLine } from '../../systems/throne';
+import { daoView } from '../../systems/daoGate';
 
 
 const APTITUDE_LABELS = [
@@ -80,7 +82,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onActivity, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onAsset, onLearn, onTrain, onQuest, onExam, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onActivity, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onAsset, onLearn, onTrain, onQuest, onFormation, onBeast, onField, onExam, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -139,6 +141,9 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   getSources: () => SavedPerson[];
   onImport: (person: SavedPerson, setup: ImportSetup) => { ok: boolean; text: string };
   onQuest: (a: QuestAction) => string | null;
+  onFormation: (a: FormationAction) => string | null;
+  onBeast: (a: BeastAction) => string | null;
+  onField: (a: FieldAction) => string | null;
   /** 10.2: one round of the trường thi, or its incident. */
   onExam: (a: ExamAction) => void;
   /** Practise a technique from a scroll (task 2.8). */
@@ -190,6 +195,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const origin = content.origins.find((o) => o.id === c.originId);
   const warn = extremeWarnings(state, content);
   const force = innerForce(state, content);
+  const dao = daoView(state);
   const karma = karmaView(state, content);
   const finger = fingerDef(content, state.goldenFinger?.id);
   const heThong = systemDef(content, state.system?.id);
@@ -231,7 +237,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         </div>
         <div class="purse">
           <span class="silver">{money.silver} <Term id="luong_bac">lượng bạc</Term></span>
-          <span class="stone">{money.spiritStones} <Term id="linh_thach">linh thạch</Term></span>
+          {dao.stones && <span class="stone">{money.spiritStones} <Term id="linh_thach">linh thạch</Term></span>}
         </div>
         <div class="top-actions">
           {dev && <button class="icon-btn dev-btn" aria-label="Developer mode" title="Developer mode" onClick={() => setDevOpen(true)}>Dev</button>}
@@ -271,7 +277,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         {saveWarning && <p class="save-warning" role="alert">{saveWarning}</p>}
         {state.log.map((y, i) => (
           <article class={`age-block${i === state.log.length - 1 ? ' current' : ''}`} key={y.age}>
-            <h3>{y.age === 0 ? 'Chào đời' : `Tuổi ${y.age}`}{eraLabel(state, y.age) && <span class="era"> · {eraLabel(state, y.age)}</span>}</h3>
+            <h3>{y.age === 0 ? 'Chào đời' : y.toAge ? `Tuổi ${y.age}–${y.toAge}` : `Tuổi ${y.age}`}{eraLabel(state, y.age) && <span class="era"> · {eraLabel(state, y.age)}</span>}</h3>
             {y.lines.map((l) => <p class={l.tone === 'normal' ? '' : l.tone}><TermText text={l.text} /></p>)}
           </article>
         ))}
@@ -319,10 +325,10 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         {force ? (
           <div class="stat-row wide"><span class="icon">勁</span><Meter label={force.label} term={force.term} value={force.pct} color="var(--bar-cult)"
             text={`${force.stage ?? 'Mới nhập môn'} · ${force.pct}%`} /></div>
-        ) : (
+        ) : dao.cultivation ? (
           <div class="stat-row wide"><span class="icon">修</span><Meter label="Tu vi" term="tu_vi" value={cult.progress} color="var(--bar-cult)"
-            text={cult.realm === 'pham_nhan' ? 'Chưa tu luyện' : `${realmLabel(state, content)} · ${Math.floor(cult.progress)}%`} /></div>
-        )}
+            text={`${realmLabel(state, content)} · ${Math.floor(cult.progress)}%`} /></div>
+        ) : null}
         <div class="stat-row wide"><span class="icon">壽</span><Meter label="Tuổi" term="tho_nguyen" value={c.age} max={cult.lifespan} color="var(--bar-life)" text={`${c.age} tuổi`} /></div>
       </section>
 
@@ -343,8 +349,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       {sectOpen && <SectPanel state={state} content={content} onAction={onSectAction} onClose={() => setSectOpen(false)} />}
 
-      {selfOpen && <CultivatePanel view="self" extra={acts('ban_than')} state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onTakeJob={onTakeJob} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onClose={() => setSelfOpen(false)} />}
-      {cultivateOpen && <CultivatePanel view="cultivate" extra={acts('tu_luyen')} state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onTakeJob={onTakeJob} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onClose={() => setCultivateOpen(false)} />}
+      {selfOpen && <CultivatePanel view="self" extra={acts('ban_than')} state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onTakeJob={onTakeJob} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onFormation={onFormation} onBeast={onBeast} onField={onField} onClose={() => setSelfOpen(false)} />}
+      {cultivateOpen && <CultivatePanel view="cultivate" extra={acts('tu_luyen')} state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onTakeJob={onTakeJob} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onFormation={onFormation} onBeast={onBeast} onField={onField} onClose={() => setCultivateOpen(false)} />}
 
       {mapOpen && <MapPanel state={state} content={content} unlimited={!!dev} onTravel={onTravel} onClose={() => setMapOpen(false)} />}
 
@@ -377,8 +383,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
               <p class="profile-note">Danh vọng: {reputationViews(state, content).map((r) => `${r.name} ${r.value > 0 ? '+' : ''}${r.value}`).join(' · ')}</p>
             )}
             {karma && <p class="profile-note"><TermText text={`${karma.label}: ${karma.value !== null ? `${karma.value > 0 ? '+' : ''}${karma.value}` : karma.text}`} /></p>}
-            <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>
-            <p class="profile-root"><TermText text={`Thể chất: ${bodyLabel(state, content)}`} /></p>
+            {dao.root && <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>}
+            {dao.root && <p class="profile-root"><TermText text={`Thể chất: ${bodyLabel(state, content)}`} /></p>}
             {identityLine(state, content) && <p class="profile-note">Thân phận: {identityLine(state, content)}</p>}
             {state.times && <p class="profile-note">Thời thế: {currentPhase(state, content)?.name ?? ''} · {state.times.dynasty}, {eraLabel(state, c.age)}</p>}
             {careerLabel(state, content) && <p class="profile-note">Đường đời: {careerLabel(state, content)}</p>}
@@ -392,10 +398,10 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             {healthLine(state, content) && <p class="profile-note">Thân thể: {healthLine(state, content)}</p>}
             {lawLine(state, content) && <p class="profile-note">Quan phủ: {lawLine(state, content)}</p>}
             {lineageLine(state, content) && <p class="profile-note">Gia phả: {lineageLine(state, content)}</p>}
-            {jianghuLine(state, content) && <p class="profile-note">Giang hồ: {jianghuLine(state, content)}</p>}
-            {factionLine(state, content) && <p class="profile-note">Thế lực: {factionLine(state, content)}</p>}
+            {dao.jianghu && jianghuLine(state, content) && <p class="profile-note">Giang hồ: {jianghuLine(state, content)}</p>}
+            {dao.jianghu && factionLine(state, content) && <p class="profile-note">Thế lực: {factionLine(state, content)}</p>}
             {martialArtsLine(state, content) && <p class="profile-note">Võ học: {martialArtsLine(state, content)}</p>}
-            {wulinLine(state, content) && <p class="profile-note">Võ lâm: {wulinLine(state, content)}</p>}
+            {dao.jianghu && wulinLine(state, content) && <p class="profile-note">Võ lâm: {wulinLine(state, content)}</p>}
             {courtLine(state, content) && <p class="profile-note">Triều đình: {courtLine(state, content)}</p>}
             {officeLine(state, content) && <p class="profile-note">Quan trường: {officeLine(state, content)}</p>}
             {armyLine(state, content) && <p class="profile-note">Binh nghiệp: {armyLine(state, content)}</p>}
@@ -453,6 +459,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
       {/* Kết đan sits above every sheet: the year waits for it (task 4.2). */}
       {state.cult.coreForming && <CorePopup state={state} content={content} onPlace={onPlaceStrand} />}
       {state.martial.quest?.game && <MiniGamePopup state={state} content={content} onAction={onQuest} />}
+      {state.formation?.game && <FormationPopup state={state} content={content} onAction={onFormation} />}
       {state.exam?.sitting && <ExamPopup state={state} content={content} onAction={onExam} />}
       {state.cult.heartDemonTrial && <HeartDemonPopup state={state} content={content} onMeet={onMeetIllusion} />}
     </div>

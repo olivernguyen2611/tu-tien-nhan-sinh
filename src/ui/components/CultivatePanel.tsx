@@ -6,6 +6,7 @@ import { identityLine } from '../../systems/dock';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
 import { bodyLabel, inBottleneck, majorBreakthroughInfo, realmLabel, rootLabel, rootUsable, yearlyGain } from '../../systems/cultivation';
+import { daoView } from '../../systems/daoGate';
 import { craftViews } from '../../systems/crafts';
 import { careerIncome, careerLabel, careerViews } from '../../systems/career';
 import { jobLine, jobViews } from '../../systems/jobs';
@@ -17,11 +18,16 @@ import { pathsView } from '../../systems/paths';
 import { rankingBoard } from '../../systems/rankings';
 import { seclusionView } from '../../systems/seclusion';
 import { caveView } from '../../systems/cave';
+import { activeFormation, formationViews } from '../../systems/formation';
+import type { BeastAction, FieldAction, FormationAction } from './FormationPopup';
+import { fieldView, harvestChance } from '../../systems/spiritField';
+import { beastBlocked, beastView, captureChance } from '../../systems/spiritBeast';
+import { currentTier, tierName } from '../../systems/realmGrade';
 import { recipeViews } from '../../systems/crafting';
 import { Meter } from './Meter';
 import { TermText } from './Tooltip';
 
-export function CultivatePanel({ state, content, view, extra, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onLearn, onTrain, onQuest, onSeclude, onRentCave, onCraft, onClose }: {
+export function CultivatePanel({ state, content, view, extra, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onLearn, onTrain, onQuest, onSeclude, onRentCave, onCraft, onFormation, onBeast, onField, onClose }: {
   state: GameState;
   content: Content;
   /** 9.7: "self" is the Bản thân sheet (võ đạo, đường đời, bách nghệ), "cultivate" the Tu luyện one. */
@@ -44,6 +50,12 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
   onQuest: (a: QuestAction) => string | null;
   /** Task 4.7: make one batch of a recipe; returns the log text, or null. */
   onCraft: (recipeId: string) => string | null;
+  /** 13.7b: lay a trận (opens the trận kỳ game). */
+  onFormation?: (a: FormationAction) => string | null;
+  /** 13.7c: hatch, capture, feed or release the linh thú. */
+  onBeast?: (a: BeastAction) => string | null;
+  /** 13.7d: sow in the linh điền. */
+  onField?: (a: FieldAction) => string | null;
   /** Task 4.1: bế quan; the sheet closes so the log shows the years. */
   onSeclude: (years: number) => void;
   /** 6b.14: rent a cave on a spirit vein for this many years; returns the log line. */
@@ -57,6 +69,10 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
   const gain = yearlyGain(state, content);
   const info = majorBreakthroughInfo(state, content);
   const crafts = craftViews(state, content);
+  const formations = formationViews(state, content);
+  const laid = activeFormation(state, content);
+  const pet = beastView(state, content);
+  const field = fieldView(state, content);
   const [practiced, setPracticed] = useState<string | null>(null);
   const [joined, setJoined] = useState<string | null>(null);
   const [careerOpen, setCareerOpen] = useState(false);
@@ -73,6 +89,8 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
   const [caveNote, setCaveNote] = useState<string | null>(null);
   const foundation = content.cultivation.realms.foundations.find((g) => g.id === cult.foundation);
   const coreGrade = cult.coreGrade !== null ? content.cultivation.realms.coreGradeNames[cult.coreGrade - 1] : null;
+  const tier = currentTier(state, content);
+  const grade = tier !== null ? `${tierName(content, cult.realm, tier)} (${content.cultivation.realms.realmGrades?.tiers[tier - 1]})` : null;
   const pattern = content.corePatterns.find((p) => p.id === cult.corePattern);
   const soul = content.nascentSouls.forms.find((f) => f.id === cult.soulForm);
   const self = view === 'self';
@@ -84,8 +102,8 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
         <div class="kicker">{self ? 'Bản thân' : 'Tu luyện'}</div>
         <h2>{self ? state.character.name : realmLabel(state, content)}</h2>
         {self && identity && <p class="profile-note">Thân phận: {identity}</p>}
-        <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>
-        <p class="profile-root"><TermText text={`Thể chất: ${bodyLabel(state, content)}`} /></p>
+        {daoView(state).root && <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>}
+        {daoView(state).root && <p class="profile-root"><TermText text={`Thể chất: ${bodyLabel(state, content)}`} /></p>}
         {!self && currentTechnique(state, content) && (
           <div class="technique">
             <p class="story"><b>Công pháp: {currentTechnique(state, content)!.name}</b></p>
@@ -113,11 +131,12 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
           </Fold>
         )}
         {!self && foundation && <p class="profile-note"><TermText text={`Đạo cơ ${foundation.name}: ${foundation.description}`} /></p>}
+        {!self && grade && <p class="profile-note">Phẩm cấp: <b>{grade}</b></p>}
         {!self && coreGrade && <p class="profile-note"><TermText text={`Kim Đan ${coreGrade}${pattern ? `, ${pattern.name}: ${pattern.summary}` : ''}`} /></p>}
         {!self && soul && <p class="profile-note"><TermText text={`Nguyên Anh: ${soul.name}. ${soul.summary}`} /></p>}
-        {self && !mortal ? null : mortal ? (
+        {self && !mortal ? null : mortal ? !cult.root ? null : (
           <p class="story">
-            <TermText text={rootUsable(state, content) ? 'Có linh căn nhưng chưa nhập đạo: cần một công pháp nhập môn, tông môn hoặc tiên sư dẫn đường.' : cult.root ? 'Không có linh căn, linh khí không đọng lại trong người. Đường tu tiên tạm thời khép cửa.' : 'Chưa ai từng thử linh căn cho ngươi. Tiên môn thu đồ, tiên nhân để mắt… tiên duyên không hẹn trước.'} />
+            <TermText text={rootUsable(state, content) ? 'Có linh căn nhưng chưa nhập đạo: cần một công pháp nhập môn, tông môn hoặc tiên sư dẫn đường.' : 'Không có linh căn, linh khí không đọng lại trong người. Đường tu tiên tạm thời khép cửa.'} />
           </p>
         ) : (
           <>
@@ -300,6 +319,59 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
                     Luyện tập{c.cost > 0 && <span class="chip-cost"> · {c.cost} bạc</span>}
                   </button>
                   {c.blocked && <span class="craft-note">{c.blocked}</span>}
+                  {c.id === 'farming' && onField && field && (
+                    <details class="recipes">
+                      <summary>Linh điền · {field.growing.length}/{field.plots} ô · gặt thành {Math.round(harvestChance(state, content) * 100)}%</summary>
+                      {field.news && <p class="craft-note">{field.news}</p>}
+                      {field.growing.map((g, i) => (
+                        <p class="craft-note" key={i}>{g.herb}: chín năm {g.ready} tuổi{g.fit === 'wrong' ? ' (trồng trái tiết)' : g.fit === 'right' ? ' (hợp tiết)' : ''}</p>
+                      ))}
+                      {field.herbs.map((h) => (
+                        <div class="recipe" key={h.id}>
+                          <button class="chip-btn" disabled={!!h.blocked} title={h.blocked ?? undefined} onClick={() => setPracticed(onField({ kind: 'sow', id: h.id }))}>
+                            Gieo {h.name} · {h.seedCost} linh thạch · {h.years} năm
+                          </button>
+                          <span class="craft-note">{h.text}{h.blocked && ` · ${h.blocked}`}</span>
+                        </div>
+                      ))}
+                    </details>
+                  )}
+                  {c.id === 'beast' && onBeast && state.cult.realm !== 'pham_nhan' && (
+                    <details class="recipes">
+                      <summary>Linh thú{pet && ` · ${pet.name} (${pet.species}, ${pet.stage})`}</summary>
+                      {pet ? (
+                        <>
+                          <p class="craft-note">{pet.text} Đã theo ngươi {pet.years} năm.</p>
+                          <Meter label={pet.stage} value={pet.growth} color="var(--bar-cult)" text="" />
+                          {pet.feeds.filter((f) => f.have > 0).map((f) => (
+                            <button class="chip-btn" key={f.item} onClick={() => setPracticed(onBeast({ kind: 'feed', item: f.item }))}>Cho ăn {f.name} ({f.have})</button>
+                          ))}
+                          <button class="chip-btn" onClick={() => setPracticed(onBeast({ kind: 'release' }))}>Thả về rừng</button>
+                        </>
+                      ) : (
+                        <>
+                          <button class="chip-btn" disabled={!!beastBlocked(state, content, 'hatch')} title={beastBlocked(state, content, 'hatch') ?? undefined} onClick={() => setPracticed(onBeast({ kind: 'hatch' }))}>Ấp trứng linh thú</button>
+                          <button class="chip-btn" disabled={!!beastBlocked(state, content, 'capture')} title={beastBlocked(state, content, 'capture') ?? undefined} onClick={() => setPracticed(onBeast({ kind: 'capture' }))}>
+                            Thu phục linh thú · {Math.round(captureChance(state, content) * 100)}%
+                          </button>
+                          {beastBlocked(state, content, 'capture') && <span class="craft-note">{beastBlocked(state, content, 'capture')}</span>}
+                        </>
+                      )}
+                    </details>
+                  )}
+                  {c.id === 'formation' && onFormation && formations.length > 0 && (
+                    <details class="recipes">
+                      <summary>Bày trận{laid && ` · ${laid.name} tới ${laid.until} tuổi`}</summary>
+                      {formations.map((f) => (
+                        <div class="recipe" key={f.id}>
+                          <button class="chip-btn" disabled={!!f.blocked} title={f.blocked ?? undefined} onClick={() => setPracticed(onFormation({ kind: 'begin', id: f.id }))}>
+                            {f.name} · {f.cost} linh thạch · {f.years} năm
+                          </button>
+                          <span class="craft-note">{f.text}{f.blocked && ` · ${f.blocked}`}</span>
+                        </div>
+                      ))}
+                    </details>
+                  )}
                   {recipeViews(state, content, c.id).length > 0 && (
                     <details class="recipes">
                       <summary>Luyện chế</summary>

@@ -1,0 +1,563 @@
+[
+ {
+  "id": "tcg_tong_diet_nguoi_song_sot",
+  "category": "cultivation",
+  "title": "Đệ tử tông diệt",
+  "text": "Một thiếu nữ áo cháy xém, ôm lệnh bài Tịch Dương Môn, quỳ giữa đường xin ngươi cho theo. Sau lưng nàng, ba kẻ áo đen đang đuổi tới.",
+  "themes": [
+   "demonic"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "tong_mon_diet_mon"
+    ],
+    "phase": 1
+   }
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Che chở nàng",
+    "result": {
+     "text": "Ba kẻ áo đen thấy ngươi đứng chắn đường thì dừng lại.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Ba sát thủ áo đen",
+       "realm": "same",
+       "intent": "kill",
+       "plural": true
+      },
+      "win": {
+       "text": "Sát thủ bỏ chạy. Nàng dập đầu ba cái, nguyện làm người hầu trả ơn.",
+       "effects": {
+        "karma": 6,
+        "meetNpc": {
+         "role": "Đệ tử Tịch Dương Môn",
+         "root": true,
+         "realm": "luyen_khi",
+         "favor": 40,
+         "affinity": 60
+        },
+        "stat.happiness": 4
+       }
+      },
+      "lose": {
+       "text": "Ngươi bị đánh lui. Nàng bị bắt đi, tiếng thét vọng mãi trong rừng.",
+       "effects": {
+        "stat.health": -15,
+        "stat.daoHeart": -3,
+        "stat.happiness": -6
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Chỉ đường cho nàng trốn",
+    "result": {
+     "text": "Ngươi chỉ một lối mòn sau núi. Nàng chạy đi, không kịp hỏi tên ngươi.",
+     "effects": {
+      "karma": 2,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Mặc kệ, tránh xa thị phi",
+    "result": {
+     "text": "Ngươi rẽ sang đường khác. Đêm ấy mơ thấy lửa.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.happiness": -3,
+      "karma": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg_tong_diet_phe_tich",
+  "category": "plunder",
+  "title": "Phế tích Tịch Dương",
+  "text": "Núi Tịch Dương còn bốc khói. Người ta đồn tàng kinh các chưa cháy hết, trong đống đổ nát còn cả túi trữ vật của các trưởng lão.",
+  "themes": [
+   "plunder"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "tong_mon_diet_mon"
+    ],
+    "phase": 1
+   }
+  },
+  "weight": 2,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Lên núi nhặt nhạnh",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Dưới một xà nhà cháy dở, ngươi nhặt được một túi trữ vật còn nguyên cấm chế.",
+     "effects": {
+      "spiritStones": 70,
+      "karma": -2,
+      "stat.happiness": 4
+     }
+    },
+    "fail": {
+     "text": "Lẫn trong đám nhặt đồ có kẻ giết người cướp của. Ngươi chạy xuống núi với một vết chém sau lưng.",
+     "effects": {
+      "stat.health": -14,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Chôn cất những người đã chết",
+    "result": {
+     "text": "Ba ngày đào huyệt. Không ai trả công, chỉ có gió núi.",
+     "effects": {
+      "karma": 6,
+      "stat.daoHeart": 3,
+      "stat.health": -3
+     }
+    }
+   },
+   {
+    "text": "Không đến",
+    "result": {
+     "text": "Nhặt của người chết, không phải việc của ngươi.",
+     "effects": {
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg_linh_mach_kho",
+  "category": "plunder",
+  "title": "Tranh mỏ linh thạch",
+  "text": "Linh mạch khô, giá linh thạch vọt lên gấp rưỡi. Ở rìa núi có một mạch nhỏ vừa lộ ra, ba nhóm tán tu đã dựng lều canh, nhìn nhau như mèo nhìn chó.",
+  "themes": [
+   "plunder"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "linh_mach_kho_kiet"
+    ]
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 5,
+  "choices": [
+   {
+    "text": "Giành lấy bằng tay không",
+    "result": {
+     "text": "Ngươi xông vào giữa ba phe.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Đám tán tu giữ mỏ",
+       "realm": "same",
+       "intent": "rob",
+       "plural": true
+      },
+      "win": {
+       "text": "Mỏ thuộc về ngươi một mùa. Đào được kha khá trước khi đại tông tới thu.",
+       "effects": {
+        "spiritStones": 80,
+        "reputation": {
+         "tan_tu": -5
+        },
+        "stat.happiness": 4
+       }
+      },
+      "lose": {
+       "text": "Bị ba phe cùng đánh, ngươi mất cả túi linh thạch mang theo.",
+       "effects": {
+        "spiritStones": -20,
+        "stat.health": -10
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Đứng ra chia mỏ cho cả ba phe",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ba phe đồng ý chia, nhờ ngươi làm người giữ cân. Họ trả công bằng một phần linh thạch.",
+     "effects": {
+      "spiritStones": 35,
+      "reputation": {
+       "tan_tu": 8
+      },
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Không ai nghe. Ngươi bị chửi là kẻ ngoài muốn ăn chặn.",
+     "effects": {
+      "stat.happiness": -3,
+      "stat.charm": -1
+     }
+    }
+   },
+   {
+    "text": "Đi chỗ khác tu luyện",
+    "result": {
+     "text": "Linh khí mỏng thì tu chậm, nhưng mạng còn.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "cultProgress": -5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg_nghi_hoa_ho_ve",
+  "category": "sect",
+  "title": "Hộ vệ hội nghị",
+  "text": "Tông môn chọn ngươi theo đoàn hộ vệ tới hội nghị chính ma. Trên đường đi, trong đoàn có một người mà ngươi chắc chắn đã thấy ở Huyết Uyên năm nào.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "chinh_ma_nghi_hoa"
+    ]
+   },
+   "sect": {
+    "member": true
+   }
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Báo cho trưởng lão dẫn đoàn",
+    "result": {
+     "text": "Trưởng lão cho người theo dõi. Đêm ấy bắt được một thích khách ma đạo trước khi kịp ra tay.",
+     "effects": {
+      "sectContribution": 40,
+      "reputation": {
+       "chinh": 8
+      },
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Tự mình theo dõi",
+    "result": {
+     "text": "Ngươi bám theo hắn tới tận rừng trúc.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Thích khách ma đạo",
+       "realm": "same",
+       "intent": "kill"
+      },
+      "win": {
+       "text": "Hắn chết dưới tay ngươi. Hội nghị diễn ra yên ổn, tên ngươi được ghi vào sổ công.",
+       "effects": {
+        "sectContribution": 60,
+        "reputation": {
+         "chinh": 10,
+         "ma": -10
+        },
+        "stat.happiness": 5
+       }
+      },
+      "lose": {
+       "text": "Hắn trốn thoát. Hội nghị suýt đổ máu.",
+       "effects": {
+        "stat.health": -12,
+        "stat.daoHeart": -2
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Im lặng: nghị hòa không phải chuyện của ngươi",
+    "result": {
+     "text": "Hội nghị kết thúc trong căng thẳng. Ba năm sau mới có người nói ra vụ ám sát hụt.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg_dai_nang_truyen_thua",
+  "category": "fortune",
+  "title": "Truyền thừa của đại năng",
+  "text": "Một vị đại năng tọa hóa, động phủ của người ấy hiện ra giữa mây. Truyền thừa chỉ chờ người hữu duyên, mà ai cũng tin mình hữu duyên.",
+  "themes": [
+   "ky_vat"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "dai_nang_toa_hoa"
+    ]
+   }
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Vào động phủ thử vận",
+    "check": {
+     "stat": "stat.comprehension",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Qua chín cửa khảo nghiệm, ngươi đứng trước tượng đá đại năng. Một luồng sáng chui vào mi tâm, mang theo một bộ công pháp hợp với ngươi.",
+     "effects": {
+      "gainFittingTechnique": true,
+      "stat.comprehension": 2,
+      "stat.happiness": 6
+     }
+    },
+    "fail": {
+     "text": "Đến cửa thứ năm thì bị đẩy ra. Ngộ được một chút, mất nhiều sức.",
+     "effects": {
+      "stat.comprehension": 1,
+      "stat.health": -8
+     }
+    }
+   },
+   {
+    "text": "Canh ở ngoài, chờ kẻ đi ra",
+    "result": {
+     "text": "Ngươi ngồi chờ ở cửa động. Người đi ra thì nhiều, người cầm được gì thì ít.",
+     "effects": {
+      "karma": -1,
+      "spiritStones": 15,
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Thắp hương bái tạ rồi đi",
+    "result": {
+     "text": "Ngươi bái ba lạy trước cửa động. Không được gì, nhưng lòng thanh thản.",
+     "effects": {
+      "karma": 2,
+      "stat.daoHeart": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg_dai_chien_chieu_binh",
+  "category": "sect",
+  "title": "Chiêu binh đại chiến",
+  "text": "Tiên Ma đại chiến nổ ra. Tông môn treo bảng chiêu binh: ai ra tiền tuyến được cống hiến gấp ba, ai ở lại phải nộp linh thạch quân nhu.",
+  "themes": [
+   "demonic"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "tien_ma_dai_chien"
+    ],
+    "phase": 1
+   },
+   "sect": {
+    "member": true
+   }
+  },
+  "weight": 4,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Xin ra tiền tuyến",
+    "result": {
+     "text": "Ngươi cùng một đội đệ tử trấn giữ một cửa ải.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Toán ma tu tiên phong",
+       "realm": "same",
+       "intent": "kill",
+       "plural": true,
+       "powerMul": 1.15
+      },
+      "win": {
+       "text": "Cửa ải giữ vững. Ngươi về tông với chiến công và mấy vết sẹo.",
+       "effects": {
+        "sectContribution": 120,
+        "reputation": {
+         "chinh": 10
+        },
+        "stat.physique": 2,
+        "stat.happiness": 3
+       }
+      },
+      "lose": {
+       "text": "Cửa ải vỡ. Ngươi được đồng môn cõng về, tu vi tổn hại.",
+       "effects": {
+        "stat.health": -25,
+        "cultProgress": -15,
+        "stat.daoHeart": -2
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Nộp linh thạch, ở lại hậu phương",
+    "requires": {
+     "stats": [
+      {
+       "stat": "spiritStones",
+       "gte": 40
+      }
+     ]
+    },
+    "result": {
+     "text": "Ngươi nộp linh thạch, ngày ngày nghe tin dữ từ tiền tuyến.",
+     "effects": {
+      "spiritStones": -40,
+      "stat.happiness": -2,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Lặng lẽ trốn khỏi tông",
+    "result": {
+     "text": "Ngươi xuống núi lúc nửa đêm. Từ nay tên ngươi trong tông bị gạch, đồng môn gọi ngươi là kẻ đào binh.",
+     "effects": {
+      "leaveSect": true,
+      "reputation": {
+       "chinh": -15
+      },
+      "karma": -4,
+      "stat.happiness": -4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg_hau_chien_nhat_do",
+  "category": "plunder",
+  "title": "Chiến trường sau trận",
+  "text": "Chiến sự lắng xuống. Trên con đường về Trung Châu, xác pháp bảo vỡ nằm đầy hai bên, kẻ nhặt đồ đi thành đoàn. Có một thi thể đệ tử chính đạo còn ôm chặt túi trữ vật.",
+  "themes": [
+   "plunder"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "tien_ma_dai_chien"
+    ],
+    "phase": 2
+   }
+  },
+  "weight": 2,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Lấy túi, chôn người",
+    "result": {
+     "text": "Ngươi chôn người ấy cẩn thận, ghi tên lên một tấm bia gỗ. Túi trữ vật thì giữ lại.",
+     "effects": {
+      "spiritStones": 45,
+      "karma": 1,
+      "stat.happiness": 2
+     }
+    }
+   },
+   {
+    "text": "Mang túi về trả cho tông môn của người ấy",
+    "result": {
+     "text": "Sư môn người chết cảm tạ, trả ơn bằng một lọ đan.",
+     "effects": {
+      "addItems": [
+       "hoi_xuan_dan"
+      ],
+      "karma": 4,
+      "reputation": {
+       "chinh": 5
+      },
+      "stat.happiness": 2
+     }
+    }
+   },
+   {
+    "text": "Đi qua, không động vào",
+    "result": {
+     "text": "Người chết đã chết. Ngươi đi tiếp, không ngoảnh lại.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ }
+]

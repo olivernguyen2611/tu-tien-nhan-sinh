@@ -1,0 +1,1738 @@
+[
+ {
+  "id": "qt2_an_ly_hon",
+  "category": "office",
+  "title": "Án bỏ vợ",
+  "text": "Một gã thư sinh đòi viết hưu thư bỏ vợ vì \"vợ không biết chữ\". Người vợ quỳ dưới công đường, tay còn dính bột bánh, mười năm nay bán bánh nuôi hắn đi học.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Mắng thư sinh vô ơn, xử không cho bỏ",
+    "result": {
+     "text": "Ngươi phê tám chữ: \"Tào khang chi thê, bất khả hạ đường.\" Cả huyện truyền tai, đám thư sinh trong huyện bỗng thương vợ hẳn.",
+     "effects": {
+      "officeMerit": 4,
+      "karma": 2,
+      "reputation": {
+       "lang_xa": 3
+      },
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Theo luật mà xử, cho bỏ",
+    "result": {
+     "text": "Luật không có điều nào cấm. Ngươi cho bỏ, người đàn bà lặng lẽ thu gánh bánh ra về.",
+     "effects": {
+      "officeMerit": 1,
+      "karma": -1,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Bắt thư sinh làm thơ tạ vợ trước công đường",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 40
+    },
+    "success": {
+     "text": "Hắn ấp úng nửa canh giờ mới ra bốn câu, câu nào cũng nhắc tới bánh. Hai vợ chồng dắt nhau về, cả công đường cười ồ.",
+     "effects": {
+      "officeMerit": 3,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Hắn làm thơ chê ngươi. Ngươi phạt hắn mười roi, rồi thấy mình hơi trẻ con.",
+     "effects": {
+      "officeMerit": -1,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_an_trom_ga",
+  "category": "office",
+  "title": "Một con gà, hai chủ",
+  "text": "Hai bà hàng xóm cùng ôm một con gà mái lên công đường, bà nào cũng thề đó là gà nhà mình. Con gà thì không có ý kiến.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Hỏi mỗi bà sáng nay cho gà ăn gì, rồi mổ diều gà",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 35
+    },
+    "success": {
+     "text": "Trong diều toàn thóc nếp, đúng lời bà áo xanh. Bà kia bị phạt đền ba con gà. Dân trong huyện gọi ngươi là \"Bao Thanh Thiên xử gà\".",
+     "effects": {
+      "officeMerit": 3,
+      "reputation": {
+       "lang_xa": 2
+      },
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Mổ ra chỉ thấy sỏi. Con gà chết oan, hai bà cùng khóc, ngươi phải đền mỗi bà nửa con.",
+     "effects": {
+      "silver": -2,
+      "officeMerit": -1,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Thả gà giữa sân, gà chạy về nhà ai thì của người ấy",
+    "result": {
+     "text": "Con gà đứng ngơ ngác giữa sân rồi chạy thẳng vào bếp nha môn. Ngươi ăn cơm gà ba bữa, công đường im lặng ba ngày.",
+     "effects": {
+      "stat.happiness": 2,
+      "officeMerit": -1,
+      "karma": -1
+     }
+    }
+   },
+   {
+    "text": "Mỗi bà một nửa",
+    "result": {
+     "text": "Hai bà nhìn nhau, nhìn ngươi, rồi rủ nhau về, gà vẫn còn nguyên. Hóa ra họ chỉ cần có người phân xử.",
+     "effects": {
+      "officeMerit": 2,
+      "stat.charm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_an_dau_doc",
+  "category": "office",
+  "title": "Bát canh có độc",
+  "text": "Một lão phú hộ chết sau bát canh của nàng dâu. Cả họ nhà chồng trói nàng giải lên, đòi xử lăng trì.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Cho khám nghiệm tử thi kỹ lưỡng",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngỗ tác tìm thấy độc trong bình rượu chứ không phải bát canh. Bình rượu là quà của đứa cháu đang mong chia gia tài. Nàng dâu được tha, cả huyện bái phục.",
+     "effects": {
+      "officeMerit": 7,
+      "karma": 2,
+      "reputation": {
+       "lang_xa": 4
+      },
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Khám mãi không ra. Ngươi tạm giam nàng dâu, đêm nào cũng nghe tiếng khóc vọng từ ngục.",
+     "effects": {
+      "officeMerit": -2,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Xử theo lời cả họ",
+    "result": {
+     "text": "Án khép nhanh, họ nhà chồng lạy tạ. Ba năm sau, đứa cháu của lão phú hộ chết vì say, trong nhà còn nửa bình rượu cũ.",
+     "effects": {
+      "officeMerit": 2,
+      "karma": -4,
+      "stat.daoHeart": -2
+     }
+    }
+   },
+   {
+    "text": "Nhận lễ của họ nhà chồng, xử nhanh",
+    "result": {
+     "text": "Bạc nặng tay, án nhẹ lòng. Ngươi cố không nghĩ tới đôi mắt của nàng dâu.",
+     "effects": {
+      "silver": 60,
+      "officeEvidence": 10,
+      "karma": -5,
+      "stat.daoHeart": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_an_cuong_hao",
+  "category": "office",
+  "title": "Cường hào chiếm đất",
+  "text": "Cả làng ký đơn tố cường hào họ Đổng lấn ruộng, đánh chết một tá điền. Nhà họ Đổng có người làm tri phủ.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Bắt Đổng lão gia, xử thẳng tay",
+    "check": {
+     "stat": "stat.daoHeart",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi cho lính vây Đổng trang lúc canh năm. Chứng cứ đủ, Đổng lão gia đền mạng. Dân làng đốt pháo suốt ba ngày.",
+     "effects": {
+      "officeMerit": 8,
+      "karma": 3,
+      "reputation": {
+       "lang_xa": 6
+      },
+      "stat.daoHeart": 2
+     }
+    },
+    "fail": {
+     "text": "Đổng lão gia chưa bị bắt thì công văn khiển trách từ phủ đã về. Ngươi bị phạt ba tháng lương.",
+     "effects": {
+      "silver": -30,
+      "officeMerit": -2,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Bắt lão đền tiền, chuyện khác bỏ qua",
+    "result": {
+     "text": "Nhà tá điền nhận năm mươi lượng. Không ai vui, nhưng cũng không ai chết thêm.",
+     "effects": {
+      "officeMerit": 2,
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Xé đơn, ăn cỗ nhà họ Đổng",
+    "result": {
+     "text": "Mâm cỗ mười hai món, chén nào cũng đầy. Từ hôm ấy, dân làng đi qua nha môn đều nhổ nước bọt.",
+     "effects": {
+      "silver": 50,
+      "officeEvidence": 8,
+      "karma": -3,
+      "reputation": {
+       "lang_xa": -4
+      },
+      "stat.happiness": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_an_hoa_hoan",
+  "category": "office",
+  "title": "Cháy chợ",
+  "text": "Chợ huyện cháy trụi một dãy hàng. Có người nói thấy hai gã lạ mặt cầm đuốc, có người lại nói chủ hàng tơ tự đốt để khỏi trả nợ.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Tra sổ nợ của chủ hàng tơ",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Sổ sách lộ ra hắn nợ ba nhà, cả ba nhà đều mất hàng trong đám cháy. Hắn khai nhận. Ngươi trích bạc phạt dựng lại chợ.",
+     "effects": {
+      "officeMerit": 5,
+      "karma": 1,
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Sổ sách rối như canh hẹ. Ngươi đành xử cho xong, ai cũng tiếc tiền mình.",
+     "effects": {
+      "officeMerit": -1,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Xuất kho cho dân dựng lại chợ trước đã",
+    "result": {
+     "text": "Án chưa xử, chợ đã dựng xong. Dân cũng chẳng còn ai nhắc chuyện ai đốt.",
+     "effects": {
+      "officeMerit": 3,
+      "silver": -20,
+      "reputation": {
+       "lang_xa": 3
+      },
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Bắt đại hai gã ăn mày cho xong",
+    "result": {
+     "text": "Hai gã ăn mày chịu đòn, khai đủ thứ. Ngươi ngủ ngon, có điều trong chợ có người nhìn ngươi rất lạ.",
+     "effects": {
+      "officeMerit": 1,
+      "karma": -3,
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_an_ma_quai",
+  "category": "office",
+  "title": "Án ma ám",
+  "text": "Một nhà trong huyện kêu có ma: đêm nào cũng nghe gõ cửa, sáng ra mất gạo. Dân đòi nha môn mời thầy pháp.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Đích thân phục đêm",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 40
+    },
+    "success": {
+     "text": "Canh ba, \"ma\" chui qua lỗ chó: một thằng bé mồ côi đói lả. Ngươi cho nó vào nha môn làm chân sai vặt. Từ đó huyện bớt một con ma.",
+     "effects": {
+      "officeMerit": 3,
+      "karma": 3,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Ngươi ngủ gật lúc canh hai, sáng dậy mất luôn đôi hia. Ma huyện này coi bộ khá tinh.",
+     "effects": {
+      "stat.health": -1,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Mời thầy pháp cho dân yên lòng",
+    "result": {
+     "text": "Thầy pháp nhảy múa ba ngày, lấy năm lượng. Ma vẫn tới, nhưng dân đã yên lòng.",
+     "effects": {
+      "silver": -5,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Phạt nhà ấy tội đồn nhảm",
+    "result": {
+     "text": "Từ đó không ai dám kêu có ma nữa, nhưng gạo nhà nào cũng vẫn mất.",
+     "effects": {
+      "officeMerit": -1,
+      "stat.intellect": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_an_khoa_cu_gian",
+  "category": "office",
+  "title": "Gian lận thi Hương",
+  "text": "Có tờ cáo giấu tên: một thí sinh đỗ đầu kỳ thi huyện nhờ mua đề. Thí sinh ấy là con trai của một vị đồng liêu.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Cho hắn thi lại trước mặt mọi người",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Hắn cầm bút run run, một chữ không viết nổi. Ngươi gạch tên, tiến cử người đỗ thứ hai, một thư sinh nghèo. Sĩ tử khắp vùng ca ngợi.",
+     "effects": {
+      "officeMerit": 6,
+      "karma": 2,
+      "reputation": {
+       "trieu_dinh": 2
+      },
+      "stat.daoHeart": 1
+     }
+    },
+    "fail": {
+     "text": "Hắn làm bài tạm được. Đồng liêu từ đó coi ngươi như kẻ thù.",
+     "effects": {
+      "officeMerit": -2,
+      "stat.charm": -1
+     }
+    }
+   },
+   {
+    "text": "Đốt tờ cáo",
+    "result": {
+     "text": "Ngươi đốt tờ cáo, đồng liêu mời ngươi ba bữa rượu. Có điều thư sinh nghèo đứng thứ hai thì treo cổ ở miếu thành hoàng.",
+     "effects": {
+      "silver": 30,
+      "karma": -4,
+      "stat.daoHeart": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_an_no_bo_tron",
+  "category": "office",
+  "title": "Nô tỳ bỏ trốn",
+  "text": "Một nhà giàu bắt về một nô tỳ bỏ trốn, đòi nha môn đánh năm mươi trượng. Cô gái mười sáu tuổi, lưng đầy vết roi cũ.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Xét lại văn tự bán thân",
+    "result": {
+     "text": "Văn tự đã quá hạn hai năm. Ngươi tuyên cô gái được tự do, nhà giàu tức đỏ mặt.",
+     "effects": {
+      "officeMerit": 4,
+      "karma": 3,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Theo luật đánh trượng",
+    "result": {
+     "text": "Năm mươi trượng. Cô gái không kêu một tiếng. Ngươi bỗng thấy công đường rất lạnh.",
+     "effects": {
+      "karma": -3,
+      "stat.happiness": -2,
+      "officeMerit": 1
+     }
+    }
+   },
+   {
+    "text": "Bỏ bạc chuộc cô ra",
+    "result": {
+     "text": "Năm mươi lượng. Cô gái lạy ngươi, rồi theo một đoàn buôn về quê.",
+     "effects": {
+      "silver": -50,
+      "karma": 3,
+      "stat.happiness": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_an_quan_lai_an_hoi",
+  "category": "office",
+  "title": "Thư lại nhận hối",
+  "text": "Dân tố gã thư lại già trong nha môn ăn tiền của dân mỗi lần đóng dấu. Hắn đã hầu ba đời tri huyện, biết mọi chuyện, kể cả chuyện của ngươi.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Đuổi hắn, công bố trước dân",
+    "result": {
+     "text": "Hắn bị đuổi, dân vỗ tay. Tối ấy hắn gửi cho thượng ty một lá thư dài.",
+     "effects": {
+      "officeMerit": 5,
+      "officeEvidence": 5,
+      "reputation": {
+       "lang_xa": 4
+      },
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Gọi riêng, bắt hắn nôn ra",
+    "result": {
+     "text": "Hắn nôn ra ba trăm lượng, chia ngươi một nửa \"cho phải lẽ\". Từ đó hắn càng trung thành.",
+     "effects": {
+      "silver": 150,
+      "officeEvidence": 10,
+      "karma": -2,
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Cho hắn về hưu êm đẹp",
+    "result": {
+     "text": "Hắn về quê, để lại cuốn sổ tay ghi đủ mánh khóe của nha môn. Ngươi đọc mà toát mồ hôi.",
+     "effects": {
+      "officeMerit": 2,
+      "stat.intellect": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_an_buon_muoi",
+  "category": "office",
+  "title": "Buôn muối lậu",
+  "text": "Lính bắt được một đoàn buôn muối lậu, cầm đầu là một gã cao lớn, mắt nhìn thẳng. Hắn nói: \"Muối quan giá gấp mười, dân miền núi ăn nhạt ba năm rồi.\"",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Xử đúng luật",
+    "result": {
+     "text": "Luật muối nặng nhất trong các luật. Gã cao lớn ra pháp trường mà vẫn cười.",
+     "effects": {
+      "officeMerit": 4,
+      "karma": -1,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Tịch thu muối, tha người",
+    "result": {
+     "text": "Ngươi tịch thu muối, đem phát cho dân miền núi, tha người. Thượng ty mà biết thì không hay.",
+     "effects": {
+      "officeMerit": -1,
+      "officeEvidence": 5,
+      "karma": 3,
+      "reputation": {
+       "lang_xa": 4
+      },
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Dâng sớ xin hạ giá muối quan",
+    "result": {
+     "text": "Sớ đi ba tháng, về một câu \"đã xem\". Nhưng tên ngươi bắt đầu được nhắc tới trong kinh.",
+     "effects": {
+      "officeMerit": 3,
+      "reputation": {
+       "trieu_dinh": 2
+      },
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_vh_quan_tro",
+  "category": "office",
+  "title": "Quán trọ đen",
+  "text": "Ngươi giả làm khách buôn, trọ ở một quán ven đường. Nửa đêm nghe tiếng mài dao ngoài bếp, chủ quán và hai gã làm công thì thầm chuyện \"hàng béo\".",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Lặng lẽ trốn ra, sáng mai dẫn lính tới",
+    "result": {
+     "text": "Sáng ra lính vây quán, đào được mười mấy bộ xương dưới vườn rau. Ngươi tự dưng không thích ăn rau nữa.",
+     "effects": {
+      "officeMerit": 7,
+      "karma": 2,
+      "reputation": {
+       "lang_xa": 4
+      },
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Lộ thân phận, quát bắt ngay",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ba gã quỳ rạp khi thấy ấn quan. Ngươi giải về huyện, án mười năm khép lại.",
+     "effects": {
+      "officeMerit": 7,
+      "karma": 2,
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Chúng không tin, xông vào. Ngươi phải nhảy cửa sổ chạy, rách cả áo, nhưng sáng hôm sau vẫn bắt được.",
+     "effects": {
+      "officeMerit": 4,
+      "stat.health": -3
+     }
+    }
+   },
+   {
+    "text": "Giả ngủ, sáng sớm đi luôn",
+    "result": {
+     "text": "Ngươi trả tiền rồi đi, không nói gì. Đường về dài hơn thường lệ.",
+     "effects": {
+      "stat.daoHeart": -2,
+      "karma": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_vh_dan_doi",
+  "category": "office",
+  "title": "Làng đói",
+  "text": "Ngươi qua một làng trên núi, nhà nào cũng nấu cháo rễ cây. Sổ sách nha môn ghi làng này năm nay \"được mùa\".",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Mở kho phát chẩn ngay",
+    "result": {
+     "text": "Ngươi viết lệnh mở kho. Làng sống qua mùa đông, còn gã lý trưởng khai man thì bị đánh trượng.",
+     "effects": {
+      "officeMerit": 6,
+      "silver": -20,
+      "karma": 3,
+      "reputation": {
+       "lang_xa": 5
+      },
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Tra lại ai làm sổ",
+    "result": {
+     "text": "Lần ra thư lại ăn chặn thóc thuế ba năm. Ngươi bắt hắn nhả ra, đem chia lại cho làng.",
+     "effects": {
+      "officeMerit": 5,
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Ghi nhận, về rồi tính",
+    "result": {
+     "text": "Về tới nha môn, việc ngập đầu. Mùa đông năm ấy làng trên núi có mấy cái tang.",
+     "effects": {
+      "karma": -2,
+      "stat.daoHeart": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_vh_cao_nhan",
+  "category": "office",
+  "title": "Ông lão câu cá",
+  "text": "Bên bờ sông, một ông lão câu cá bằng lưỡi thẳng. Ngươi hỏi chuyện, ông lão nói về trị thủy, về thuế khóa, về lòng người, câu nào cũng trúng.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Thành tâm mời ông về làm mưu sĩ",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ông lão cười, gật đầu. Từ đó nha môn có thêm một người không chức tước mà việc gì cũng chạy.",
+     "effects": {
+      "officeMerit": 6,
+      "stat.intellect": 2
+     }
+    },
+    "fail": {
+     "text": "Ông lão lắc đầu, chỉ để lại một câu: \"Làm quan như câu cá, đừng tham con to.\"",
+     "effects": {
+      "stat.daoHeart": 2
+     }
+    }
+   },
+   {
+    "text": "Ghi lại lời ông, về làm theo",
+    "result": {
+     "text": "Ngươi chép kín ba trang giấy. Năm ấy huyện làm được vài việc ra hồn.",
+     "effects": {
+      "officeMerit": 3,
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Coi như lão già lẩm cẩm",
+    "result": {
+     "text": "Ngươi đi tiếp. Sau này mới nghe nói ông lão từng làm Thượng thư hai triều.",
+     "effects": {
+      "stat.luck": -1,
+      "stat.intellect": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_vh_bi_nhan_ra",
+  "category": "office",
+  "title": "Bị nhận ra",
+  "text": "Đang vi hành thì bị một gã bán đậu phụ nhận ra: \"Ơ, đây chẳng phải quan lớn sao!\" Cả chợ quay lại nhìn.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Cười, ngồi xuống nghe dân kể",
+    "result": {
+     "text": "Ngươi ngồi giữa chợ nghe chuyện tới chiều. Dân kể đủ thứ, có thứ ngươi chưa từng nghe trong nha môn.",
+     "effects": {
+      "officeMerit": 4,
+      "reputation": {
+       "lang_xa": 3
+      },
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Chối bay, chạy mất",
+    "result": {
+     "text": "Ngươi chối, kéo mũ chạy. Từ đó dân trong huyện gọi đùa ngươi là \"quan chạy\".",
+     "effects": {
+      "stat.happiness": -1,
+      "stat.charm": -1
+     }
+    }
+   },
+   {
+    "text": "Mua hết đậu phụ của gã",
+    "result": {
+     "text": "Ngươi mua cả gánh, phát cho trẻ con. Gã bán đậu phụ khoe khắp nơi quan lớn ăn đậu nhà gã.",
+     "effects": {
+      "silver": -3,
+      "stat.happiness": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_vh_nu_oan",
+  "category": "office",
+  "title": "Tiếng khóc ở miếu",
+  "text": "Đêm vi hành, nghe tiếng khóc ở miếu hoang. Một thiếu phụ bế con, kể chồng bị bắt đi phu đắp đê, ba năm không về, nha môn bảo đã chết mà không đưa xác.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Tra sổ phu dịch",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 45
+    },
+    "success": {
+     "text": "Lần ra tên chồng nàng trong sổ một mỏ đá tư của nhà quyền quý. Ngươi đòi người về. Người ta gọi ngươi là quan có mắt.",
+     "effects": {
+      "officeMerit": 6,
+      "karma": 3,
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Sổ sách bị đốt hết. Ngươi chỉ có thể cho nàng ít bạc.",
+     "effects": {
+      "silver": -10,
+      "karma": 1,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Cho bạc, khuyên nàng về quê",
+    "result": {
+     "text": "Nàng cầm bạc, cúi đầu đi. Tiếng khóc ở miếu ấy còn ám ngươi mấy đêm.",
+     "effects": {
+      "silver": -10,
+      "karma": 1,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_vh_cuop",
+  "category": "office",
+  "title": "Giặc cỏ chặn đường",
+  "text": "Đường vi hành vắng người, mười mấy tên cướp cầm gậy gộc nhảy ra. Chúng không biết ngươi là ai, chỉ thấy cái túi.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Đưa túi, ghi nhớ mặt từng đứa",
+    "result": {
+     "text": "Ngươi đưa túi, cười. Một tháng sau, cả bọn bị bắt gọn ở sào huyệt. Đứa cầm đầu nhìn ngươi trên công đường, tái mặt.",
+     "effects": {
+      "silver": -15,
+      "officeMerit": 6,
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Nói cho chúng nghe vì sao đi cướp",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Hóa ra chúng là dân mất ruộng. Ngươi hứa cấp đất hoang cho khai khẩn. Cả bọn bỏ gậy, theo ngươi về huyện.",
+     "effects": {
+      "officeMerit": 8,
+      "karma": 3,
+      "reputation": {
+       "lang_xa": 4
+      },
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Chúng không nghe, đánh ngươi một trận rồi lấy túi.",
+     "effects": {
+      "silver": -15,
+      "stat.health": -4
+     }
+    }
+   },
+   {
+    "text": "Bỏ chạy",
+    "result": {
+     "text": "Ngươi chạy thục mạng ba dặm. Về nha môn, phái lính đi lùng nhưng chẳng còn ai.",
+     "effects": {
+      "stat.physique": 1,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_vh_than_dong",
+  "category": "office",
+  "title": "Thần đồng chăn trâu",
+  "text": "Trên lưng trâu, một thằng bé vừa thổi sáo vừa đọc vanh vách sách Mạnh Tử. Hỏi ra, nó học lỏm bên ngoài trường làng.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Bỏ bạc cho nó đi học",
+    "result": {
+     "text": "Ngươi cấp cho nó suất học trong trường huyện. Mười mấy năm sau, sổ khoa bảng có một cái tên quen.",
+     "effects": {
+      "silver": -20,
+      "karma": 2,
+      "officeMerit": 3,
+      "stat.happiness": 2
+     }
+    }
+   },
+   {
+    "text": "Khen một câu rồi đi",
+    "result": {
+     "text": "Ngươi khen nó thông minh. Nó cười, rồi quay lại chăn trâu.",
+     "effects": {
+      "stat.charm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_vh_quan_ham_hai",
+  "category": "office",
+  "title": "Quan dưới lộng hành",
+  "text": "Ở một trấn nhỏ, ngươi thấy gã trấn trưởng dưới quyền mình bắt dân nộp \"tiền đón quan\" để chuẩn bị cho chuyến tuần du của chính ngươi.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Lột mũ hắn ngay giữa chợ",
+    "result": {
+     "text": "Ngươi rút ấn ra. Gã trấn trưởng quỳ rạp. Tiền trả lại cho dân, dân hô vạn tuế làm ngươi giật mình.",
+     "effects": {
+      "officeMerit": 6,
+      "reputation": {
+       "lang_xa": 5
+      },
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Âm thầm cho người điều tra",
+    "result": {
+     "text": "Ba tháng sau có đủ chứng cứ, hắn bị giải lên phủ. Không ồn ào nhưng chắc chắn.",
+     "effects": {
+      "officeMerit": 5,
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Để hắn thu, chia phần",
+    "result": {
+     "text": "Hắn biết điều, gửi ngươi một nửa. Thêm một người biết chuyện của ngươi.",
+     "effects": {
+      "silver": 40,
+      "officeEvidence": 10,
+      "karma": -3,
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_kinh_sat",
+  "category": "office",
+  "title": "Kinh sát ba năm",
+  "text": "Ba năm một lần, triều đình khảo hạch quan lại khắp nơi. Đoàn khảo công đã tới, mở từng cuốn sổ, hỏi từng tên lính.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0.8,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Trình bày chính tích, sổ sách minh bạch",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Đoàn khảo công phê chữ \"Trác dị\". Tên ngươi được trình lên bộ Lại.",
+     "effects": {
+      "officeMerit": 10,
+      "reputation": {
+       "trieu_dinh": 3
+      },
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Sổ sách có mấy chỗ lệch. Ngươi bị phê \"Bình thường\", không thăng không giáng.",
+     "effects": {
+      "officeMerit": -2,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Lót tay đoàn khảo công",
+    "result": {
+     "text": "Mỗi người một phong bì. Ngươi được phê \"Thượng\", đoàn khảo công thì được thêm một chỗ ghi tên ngươi.",
+     "effects": {
+      "silver": -80,
+      "officeMerit": 8,
+      "officeEvidence": 6,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Mặc kệ, việc ai nấy làm",
+    "result": {
+     "text": "Ngươi vẫn ngồi công đường như thường. Họ ghi chép, rồi đi. Chẳng biết khen hay chê.",
+     "effects": {
+      "officeMerit": 2,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_tieu_phi",
+  "category": "office",
+  "title": "Dẹp phỉ",
+  "text": "Một toán thổ phỉ trên núi Hắc Phong cướp đoàn lương nộp triều, giết ba lính áp tải. Thượng ty hạn ngươi trong ba tháng phải dẹp yên.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true,
+    "rankMax": 4
+   }
+  },
+  "weight": 0.8,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Đích thân dẫn binh vây núi",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi chặn hết đường tiếp tế, ba tuần sau bọn phỉ đói lả ra hàng. Triều đình ban khen, thăng chức.",
+     "effects": {
+      "officeMerit": 6,
+      "careerPromote": true,
+      "reputation": {
+       "trieu_dinh": 3
+      },
+      "stat.daoHeart": 1
+     }
+    },
+    "fail": {
+     "text": "Bọn phỉ phục kích, lính tan tác. Ngươi về với một mũi tên găm vào vai.",
+     "effects": {
+      "officeMerit": -4,
+      "stat.health": -6
+     }
+    }
+   },
+   {
+    "text": "Chiêu an, cho chúng làm hương binh",
+    "result": {
+     "text": "Thủ lĩnh phỉ ra hàng, nhận làm đội trưởng hương binh. Huyện yên, nhưng thượng ty bảo ngươi \"mềm tay\".",
+     "effects": {
+      "officeMerit": 4,
+      "karma": 1,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Bỏ bạc thuê giang hồ",
+    "result": {
+     "text": "Một nhóm hiệp khách nhận bạc, lên núi một đêm. Sáng ra phỉ tan, công về ngươi.",
+     "effects": {
+      "silver": -100,
+      "officeMerit": 6,
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_on_dich",
+  "category": "office",
+  "title": "Ôn dịch",
+  "text": "Một trận dịch tả lan ra từ bến đò. Mỗi ngày mấy chục cái xác, thầy thuốc bỏ chạy hết.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true
+   }
+  },
+  "weight": 0.5,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Lập trại cách ly, ở lại cùng dân",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ngươi ở trong trại bốn mươi ngày, đốt xác, đun nước sôi, phát thuốc. Dịch tắt. Dân lập sinh từ thờ ngươi lúc còn sống.",
+     "effects": {
+      "officeMerit": 10,
+      "karma": 3,
+      "reputation": {
+       "lang_xa": 8
+      },
+      "careerPromote": true,
+      "stat.daoHeart": 2
+     }
+    },
+    "fail": {
+     "text": "Ngươi cũng nhiễm bệnh, nằm liệt nửa tháng. Dịch rồi cũng tắt, nhưng ai cũng thấy ngươi gầy rộc.",
+     "effects": {
+      "officeMerit": 6,
+      "karma": 2,
+      "stat.health": -10
+     }
+    }
+   },
+   {
+    "text": "Đóng cửa thành, mặc ngoài thành tự lo",
+    "result": {
+     "text": "Trong thành an toàn. Ngoài thành thì ngươi không dám nghĩ tới.",
+     "effects": {
+      "officeMerit": 1,
+      "karma": -4,
+      "stat.daoHeart": -2
+     }
+    }
+   },
+   {
+    "text": "Dâng sớ xin thuốc, ngồi chờ",
+    "result": {
+     "text": "Thuốc về sau ba tháng, đủ cho một nửa số người còn sống.",
+     "effects": {
+      "officeMerit": 2,
+      "stat.happiness": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_hoang_de_tuan_du",
+  "category": "office",
+  "title": "Ngự giá tuần du",
+  "text": "Thánh giá tuần du đi ngang hạt ngươi cai quản. Cả nha môn chạy như kiến, đường sá phải sửa, dân phải quỳ đón.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true,
+    "atCourt": false
+   }
+  },
+  "weight": 0.4,
+  "cooldownYears": 15,
+  "choices": [
+   {
+    "text": "Đón tiếp chu đáo mà không phiền dân",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Hoàng đế thấy đường sạch, dân no, quan không phô trương, khen một câu \"có tài kinh bang\". Chưa đầy tháng sau, chiếu thăng chức về tới.",
+     "effects": {
+      "officeMerit": 8,
+      "careerPromote": true,
+      "reputation": {
+       "trieu_dinh": 4
+      },
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Đón tiếp tươm tất nhưng một con ngựa ngự bị què. Hoàng đế nhíu mày, ngươi toát mồ hôi suốt ba ngày.",
+     "effects": {
+      "officeMerit": -2,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Bắt dân đóng góp, đón cho thật lớn",
+    "result": {
+     "text": "Lầu hoa dựng ba tầng, pháo nổ ba ngày. Hoàng đế vui, dân thì nhịn đói ba tháng.",
+     "effects": {
+      "officeMerit": 6,
+      "karma": -3,
+      "reputation": {
+       "lang_xa": -5
+      },
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Quỳ đường dâng sớ kể nỗi khổ dân",
+    "result": {
+     "text": "Thị vệ đè ngươi xuống. Hoàng đế đọc sớ, im lặng hồi lâu, rồi giảm thuế hạt ngươi ba năm.",
+     "effects": {
+      "officeMerit": 5,
+      "karma": 3,
+      "reputation": {
+       "lang_xa": 6
+      },
+      "stat.daoHeart": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_tien_cu_hien_tai",
+  "category": "office",
+  "title": "Thư tiến cử",
+  "text": "Một vị Thượng thư cũ, nay về hưu ở hạt ngươi, gọi ngươi tới uống trà. Ông nói kinh thành đang thiếu người, hỏi ngươi có muốn ông viết một lá thư.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true,
+    "rankMax": 5
+   }
+  },
+  "weight": 0.4,
+  "cooldownYears": 20,
+  "choices": [
+   {
+    "text": "Cúi đầu cảm tạ",
+    "result": {
+     "text": "Lá thư bay về kinh. Năm sau, chiếu thăng chức về tới. Ông lão cười, nói: \"Đừng làm ta xấu hổ.\"",
+     "effects": {
+      "careerPromote": true,
+      "officeMerit": 3,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Từ chối, muốn tự mình thăng tiến",
+    "result": {
+     "text": "Ông lão gật gù: \"Còn trẻ mà biết giữ mình.\" Ông dạy ngươi vài điều về triều đình.",
+     "effects": {
+      "officeMerit": 4,
+      "stat.daoHeart": 2,
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_cong_trinh",
+  "category": "office",
+  "title": "Đào kênh dẫn nước",
+  "text": "Ba năm hạn liên tiếp, ruộng nứt nẻ. Có người đề xuất đào một con kênh dài ba mươi dặm từ sông lớn, tốn công khủng khiếp.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true,
+    "atCourt": false
+   }
+  },
+  "weight": 0.6,
+  "cooldownYears": 12,
+  "choices": [
+   {
+    "text": "Dốc sức đào kênh",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Kênh xong sau hai năm. Ruộng xanh trở lại, dân đặt tên kênh theo tên ngươi. Tin tới kinh thành.",
+     "effects": {
+      "officeMerit": 12,
+      "reputation": {
+       "lang_xa": 6
+      },
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Kênh đào được nửa thì sụt lở, chết mấy người phu. Ngươi bị khiển trách.",
+     "effects": {
+      "officeMerit": -4,
+      "karma": -1,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Xin triều đình cấp bạc",
+    "result": {
+     "text": "Sớ đi, bạc chưa về. Dân vẫn chờ mưa.",
+     "effects": {
+      "officeMerit": 1,
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Nhân dịp này mà thu thêm \"tiền kênh\"",
+    "result": {
+     "text": "Kênh chưa đào, tiền đã thu xong. Ngươi khoác thêm một chiếc áo lông cáo.",
+     "effects": {
+      "silver": 120,
+      "officeEvidence": 12,
+      "karma": -4,
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_su_doan",
+  "category": "office",
+  "title": "Tiếp sứ ngoại bang",
+  "text": "Sứ đoàn nước láng giềng vào triều, ra một câu đối hiểm hóc ngay giữa điện, cả triều im phăng phắc.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true,
+    "atCourt": true
+   }
+  },
+  "weight": 0.6,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Bước ra đối lại",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Vế đối của ngươi khiến sứ thần đỏ mặt, cúi đầu. Hoàng đế cười lớn, ban ngự tửu.",
+     "effects": {
+      "officeMerit": 10,
+      "reputation": {
+       "trieu_dinh": 5
+      },
+      "careerPromote": true,
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Ngươi đối vụng, sứ thần cười khẩy. Cả triều nhìn ngươi như nhìn kẻ làm mất mặt quốc thể.",
+     "effects": {
+      "officeMerit": -5,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Im lặng, để người khác lo",
+    "result": {
+     "text": "Một vị Hàn lâm trẻ đối được. Hắn thăng chức, ngươi thì không.",
+     "effects": {
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_hoang_de_hoi",
+  "category": "office",
+  "title": "Hoàng đế hỏi kế",
+  "text": "Buổi chầu sớm, hoàng đế bỗng gọi tên ngươi: \"Khanh nghĩ thế nào về chuyện biên cương?\"",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true,
+    "atCourt": true
+   }
+  },
+  "weight": 0.8,
+  "cooldownYears": 5,
+  "choices": [
+   {
+    "text": "Trình bày một kế sách đã chuẩn bị từ lâu",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi nói nửa canh giờ, cả triều lặng nghe. Hoàng đế phê \"chuẩn\", giao ngươi lo liệu.",
+     "effects": {
+      "officeMerit": 10,
+      "reputation": {
+       "trieu_dinh": 4
+      },
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Kế sách có lỗ hổng, một vị lão thần chỉ ra ngay giữa triều. Ngươi đỏ mặt lui về.",
+     "effects": {
+      "officeMerit": -3,
+      "stat.charm": -1
+     }
+    }
+   },
+   {
+    "text": "Nói theo ý hoàng đế",
+    "result": {
+     "text": "Ngươi đoán ý, nói đúng điều ngài muốn nghe. Ngài gật đầu hài lòng.",
+     "effects": {
+      "officeMerit": 5,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Tâu thật, dù trái ý",
+    "result": {
+     "text": "Hoàng đế cau mày, bãi triều. Đêm ấy, một thái giám mang tới một hộp trà, không nói gì.",
+     "effects": {
+      "officeMerit": 2,
+      "karma": 2,
+      "stat.daoHeart": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_dong_lieu_ha_be",
+  "category": "office",
+  "title": "Đồng liêu hạ bệ",
+  "text": "Một đồng liêu ganh ghét ngươi, dâng sớ vu ngươi kết bè với giặc. Tờ sớ đã lên tới án thư hoàng đế.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true,
+    "rankMin": 2
+   }
+  },
+  "weight": 0.7,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Dâng sớ tự biện, kèm chứng cứ",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Lời biện của ngươi rõ ràng, đồng liêu kia bị giáng ba cấp. Hoàng đế càng tin ngươi.",
+     "effects": {
+      "officeMerit": 6,
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Lời biện không đủ sức. Ngươi bị phạt một năm lương, tên ngươi bị ghi vào sổ đen.",
+     "effects": {
+      "silver": -80,
+      "officeEvidence": 8,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Nhờ người quen trong cung nói giúp",
+    "result": {
+     "text": "Thái giám thân cận nói vài câu. Chuyện chìm xuồng, ngươi thì mất một số bạc lớn.",
+     "effects": {
+      "silver": -150,
+      "officeMerit": 1,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Âm thầm trả đũa",
+    "result": {
+     "text": "Nửa năm sau, đồng liêu ấy bị lộ chuyện tham ô, đúng những chuyện ngươi biết. Không ai hỏi ai gửi thư.",
+     "effects": {
+      "officeMerit": 3,
+      "karma": -2,
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qt2_duoi_mot_nguoi",
+  "category": "office",
+  "title": "Dưới một người",
+  "text": "Ngươi đã đứng đầu bách quan, trên vạn người mà dưới một người. Đêm ấy, ngồi một mình trong phủ, ngươi nhìn mãi lên ngọn đèn, nghĩ tới chiếc ghế rồng.",
+  "themes": [
+   "office"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "office": {
+    "held": true,
+    "rankMin": 6
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Bắt đầu mưu đồ đại sự",
+    "result": {
+     "text": "Ngươi thổi tắt đèn. Trong bóng tối, ngươi gọi một môn khách thân tín tới, nói nửa câu. Hắn hiểu.",
+     "effects": {
+      "throneStart": "usurp",
+      "stat.daoHeart": -2,
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Tận trung với vua",
+    "result": {
+     "text": "Ngươi viết một bài biểu tỏ lòng trung, sáng sau dâng lên. Hoàng đế ban một thanh ngọc như ý.",
+     "effects": {
+      "officeMerit": 4,
+      "karma": 2,
+      "stat.daoHeart": 2
+     }
+    }
+   },
+   {
+    "text": "Nghĩ tới chuyện cáo lão",
+    "result": {
+     "text": "Ở đỉnh cao, gió lớn nhất. Ngươi bắt đầu nghĩ tới mảnh vườn ở quê.",
+     "effects": {
+      "stat.happiness": 2
+     }
+    }
+   }
+  ]
+ }
+]

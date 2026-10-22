@@ -74,7 +74,11 @@ export function throneStart(state: GameState, content: Content, path: 'rebel' | 
     const base = rng.pick(file.bases);
     const fame = Math.max(state.social.reputation.lang_xa, state.jianghu?.fame ?? 0);
     const throne: Throne = { path, bars: { people: clamp(30 + fame / 3), troops: 20, grain: 25 }, since: age, step: 0, banner, base, cities: 0 };
-    return pushLines({ ...state, throne, army: null, flags: { ...state.flags, tung_khoi_nghia: true } }, [{ text: fill(file.texts.rebelStart, { banner, base }), tone: 'rare' }]);
+    // A rebel leaves the job and the quan seal behind.
+    const quit = state.job?.id ? quitJob(state, content, 'quit') : state;
+    const official = !!content.office && quit.career.id === content.office.career;
+    const left = official ? { ...quit, office: undefined, career: { id: null, rung: 0, since: 0 } } : quit;
+    return pushLines({ ...left, throne, army: null, flags: { ...left.flags, tung_khoi_nghia: true } }, [{ text: fill(file.texts.rebelStart, { banner, base }), tone: 'rare' }]);
   }
   const kind = state.army ? 'warlord' : 'minister';
   const rank = state.army?.rank ?? state.career.rung;

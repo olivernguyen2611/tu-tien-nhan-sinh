@@ -68,6 +68,9 @@ import { continueAsHeir } from '../systems/heir';
 import { buyProperty, foundClan } from '../systems/clan';
 import { meetIllusion } from '../systems/heartDemon';
 import { craftRecipe } from '../systems/crafting';
+import { beginFormation, formationInput, formationQuit } from '../systems/formation';
+import { feedBeast, gainBeast, releaseBeast } from '../systems/spiritBeast';
+import { sowHerb } from '../systems/spiritField';
 import { doDiscipleAct } from '../systems/discipleActs';
 import { recruitDisciple, teachDisciple } from '../systems/disciples';
 import { build, decide, donate, foundSect } from '../systems/ownSect';
@@ -551,6 +554,25 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
           const r = a.kind === 'answer' ? answerExam(life, content, a.approach) : resolveIncident(life, content, a.index);
           if (r) setLife(r.state);
         }}
+        onField={(a) => {
+          const r = sowHerb(life, content, a.id);
+          if (!r) return null;
+          setLife(r.state);
+          return r.text;
+        }}
+        onBeast={(a) => {
+          const r = a.kind === 'feed' ? feedBeast(life, content, a.item) : a.kind === 'release' ? releaseBeast(life, content) : gainBeast(life, content, a.kind);
+          if (!r) return null;
+          setLife(r.state);
+          return r.text;
+        }}
+        onFormation={(a) => {
+          if (a.kind === 'input') { const r = formationInput(life, content, a.symbol); setLife(r.state); return r.done ? r.text : null; }
+          if (a.kind === 'quit') { const r = formationQuit(life, content); setLife(r.state); return r.text; }
+          const r = beginFormation(life, content, a.id);
+          if (r) setLife(r);
+          return null;
+        }}
         onQuest={(a) => {
           if (a.kind === 'hide') { setLife(miniGameHide(life)); return null; }
           if (a.kind === 'input') { const r = miniGameInput(life, content, a.symbol); setLife(r.state); return r.done ? r.text : null; }
@@ -620,6 +642,7 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
       rebirthPoints={readMeta(store).rebirthPoints}
       devMode={devMode}
       onDevUnlock={() => toggleDev(true)}
+      onDevOff={() => toggleDev(false)}
       onContinue={() => latest !== null && loadSlot(latest)}
       onStart={() => {
         const free = firstFreeSlot(store);

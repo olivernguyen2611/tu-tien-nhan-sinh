@@ -15,8 +15,14 @@
     "text": "Ngồi ngai vàng tới hơi thở cuối, sử sách chép tên bằng mực son.",
     "check": {
       "flagsAll": [
-        "de_vuong"
-      ]
+        "len_ngoi"
+      ],
+      "holds": {
+        "flagsNone": [
+          "mat_nuoc",
+          "thai_thuong_hoang"
+        ]
+      }
     }
   },
   {

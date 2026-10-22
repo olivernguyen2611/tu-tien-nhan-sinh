@@ -104,7 +104,7 @@ function forgetExtra(npcs: Npc[], max: number): Npc[] {
   const out = npcs.slice();
   while (out.length > max) {
     // Disciples and a khí vận chi tử are never forgotten.
-    const weight = (n: Npc) => (n.alive ? 1000 : 0) + (n.disciple || n.chosen ? 5000 : 0) + Math.abs(n.affinity - 50) + n.favor + n.grudge;
+    const weight = (n: Npc) => (n.alive ? 1000 : 0) + (n.disciple || n.chosen || n.rival ? 5000 : 0) + Math.abs(n.affinity - 50) + n.favor + n.grudge;
     let low = 0;
     for (let i = 1; i < out.length - 1; i++) if (weight(out[i]) < weight(out[low])) low = i;
     out.splice(low, 1);

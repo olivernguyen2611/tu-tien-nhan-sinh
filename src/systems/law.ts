@@ -45,6 +45,12 @@ export function arrest(state: GameState, content: Content, crime?: string): Game
   const law = lawOf(state);
   const id = crime ?? law.lastCrime ?? content.crimes?.crimes[0]?.id;
   if (!id || law.jail || !content.crimes) return state;
+  // 13.2: phép vua không bắt nổi tu sĩ; the mortal hunt ends, the deed weighs on karma.
+  if (state.cult.realm !== 'pham_nhan' && content.crimes.texts.slipped) {
+    const slipped = withLaw(state, { wanted: 0 });
+    return pushLines({ ...slipped, social: { ...slipped.social, karma: slipped.social.karma - (content.balance.law?.slipKarma ?? 0) } },
+      [{ text: fill(content.crimes.texts.slipped, { crime: crimeDef(content, id)?.name.toLowerCase() ?? id }), tone: 'normal' }]);
+  }
   const s = withLaw(state, { trial: { crime: id, score: 0 } });
   return pushLines({ ...s, events: { ...s.events, pending: s.events.pending ?? TRIAL_EVENT } },
     [{ text: fill(content.crimes.texts.caught, { crime: crimeDef(content, id)?.name.toLowerCase() ?? id }), tone: 'bad' }]);

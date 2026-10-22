@@ -1,0 +1,171 @@
+[
+ {
+  "id": "ha_son",
+  "group": "quan_he",
+  "name": "Hạ sơn về quê",
+  "icon": "歸",
+  "text": "Rời động phủ, về thăm quê cũ. Đường xa, lòng người còn xa hơn. Mất ba tháng tu luyện.",
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "flagsNone": [
+    "dut_duyen"
+   ]
+  },
+  "months": 3,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 3
+  },
+  "outcomes": [
+   {
+    "weight": 3,
+    "when": {
+     "family": {
+      "alive": [
+       "father",
+       "mother"
+      ]
+     },
+     "flagsNone": [
+      "no_father",
+      "no_mother"
+     ]
+    },
+    "text": "Ngươi đi bộ đoạn đường cuối vào làng, như ngày xưa.",
+    "effects": {
+     "familyAffinity": 3,
+     "stat.happiness": 2
+    },
+    "startEvent": "sg_ha_son_cha_me"
+   },
+   {
+    "weight": 2,
+    "when": {
+     "family": {
+      "childAge": {
+       "min": 45
+      }
+     }
+    },
+    "text": "Ngươi đứng trước cổng nhà cũ rất lâu mới dám gõ cửa.",
+    "effects": {
+     "familyAffinity": 2,
+     "stat.happiness": 1
+    },
+    "startEvent": "sg_ha_son_chau_chat"
+   },
+   {
+    "weight": 2,
+    "text": "Làng đã đổi khác: cây đa đầu làng bị sét đánh, giếng cũ lấp mất. Ngươi đi tìm những gương mặt quen.",
+    "effects": {
+     "stat.happiness": 1
+    },
+    "startEvent": "sg_ha_son_ban_cu"
+   },
+   {
+    "weight": 2,
+    "text": [
+     "Ngươi ở lại quê một mùa, ăn cơm nhà, ngủ giường cũ. Tu vi chẳng tăng, lòng thì yên.",
+     "Chợ phiên vẫn họp ngày rằm. Ngươi mua một gói kẹo mạch nha, ăn hết một mình trên đê.",
+     "Người trong họ mở tiệc đón \"tiên nhân\". Ngươi uống say lần đầu sau nhiều năm."
+    ],
+    "effects": {
+     "familyAffinity": 5,
+     "stat.happiness": 6,
+     "stat.daoHeart": -1
+    }
+   }
+  ]
+ },
+ {
+  "id": "cho_den_linh_thach",
+  "group": "tai_san",
+  "name": "Đổi bạc lấy linh thạch",
+  "icon": "晶",
+  "text": "Ở chợ đen ven phường thị, có kẻ nhận bạc phàm đổi linh thạch. Giá cắt cổ, nhưng tiền phàm cũng có chỗ dùng.",
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ]
+  },
+  "cost": [
+   {
+    "silver": 200
+   }
+  ],
+  "months": 1,
+  "limit": {
+   "perYear": 2,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "weight": 4,
+    "text": [
+     "Gã chủ sạp đếm bạc ba lần mới đưa ra mười viên linh thạch, viên nào cũng sứt mẻ.",
+     "Mười viên linh thạch đổi một túi bạc. Gã buôn cười tươi như bắt được vàng.",
+     "Chợ đen dưới chân cầu Lạc Hà mở lúc nửa đêm. Lão chủ đếm bạc chậm như rùa, đếm linh thạch nhanh như chớp."
+    ],
+    "effects": {
+     "spiritStones": 10,
+     "stat.happiness": 1
+    }
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Gã buôn tráo một nửa thành đá thường sơn màu. Lúc ngươi quay lại, sạp đã dẹp.",
+     "Ngươi đổi xong thì phát hiện ba viên linh thạch là đá sơn màu. Lão chủ đã biến mất cùng cái sạp.",
+     "Quan binh ập vào khám chợ, ngươi phải bỏ chạy, bỏ lại nửa túi bạc."
+    ],
+    "effects": {
+     "spiritStones": 5,
+     "stat.happiness": -3,
+     "stat.intellect": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "gui_bac_ve_nha",
+  "group": "quan_he",
+  "name": "Gửi bạc về nhà",
+  "icon": "寄",
+  "text": "Nhờ người đưa thư gửi một túi bạc về nuôi gia đình ở phàm gian.",
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "flagsNone": [
+    "dut_duyen"
+   ]
+  },
+  "cost": [
+   {
+    "silver": 50
+   }
+  ],
+  "months": 0,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Thư hồi âm tới sau nửa năm: cả nhà khỏe, đã sửa lại mái nhà, có để phần ngươi một vò rượu.",
+     "Người nhà nhận bạc, nhờ người viết thư hỏi bao giờ ngươi về.",
+     "Người đưa thư quen đường, cầm bạc đi không nói một lời. Ba tháng sau thư nhà về, nét chữ run run."
+    ],
+    "effects": {
+     "familyAffinity": 4,
+     "stat.happiness": 2,
+     "karma": 1
+    }
+   }
+  ]
+ }
+]

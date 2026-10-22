@@ -11,6 +11,8 @@ import { addWound, buyWeapon, gainWeapon, learnArt, practiseArt } from '../marti
 import { addPrestige, wulinResign, wulinTournament } from '../wulin';
 import { addReignBars, addThroneBars, hitRival, reignDeed, reignEnd, setThroneStep, throneAscend, throneBattle, throneFail, throneStart } from '../throne';
 import { addArmyMerit, armyBattle, armyJoin, armyLeave } from '../army';
+import { familyAffinity, leaveMortalLife } from '../daoBond';
+import { boCo } from '../realmGrade';
 import { addOfficeEvidence, addOfficeMerit, officeDefend, officeJoin, officeResign, setOfficeFaction, setOfficeStyle } from '../office';
 import { catchDisease, cureAilment, injure, noteDrink } from '../health';
 import { addJailYears, addWanted, arrest, bribe, commitCrime, fleeLaw, imprison, sentence, tryEscape } from '../law';
@@ -23,6 +25,7 @@ import { Rng } from '../../core/rng';
 import type { GameEvent } from '../../core/schemas';
 import { fillTemplate } from '../../core/state';
 import { extremeThemeMultiplier } from '../extremes';
+import { standingMul } from '../standing';
 import type { GameState, LogLine, Tone } from '../../core/types';
 import { meets, readValue } from './conditions';
 import { addProgress, addSpeedBuff, enterFirstRealm, awakenBody, grantRoot, hookActive, hookSum, lifeHooks, reducePeakFails, revealRoot, startCultivating } from '../cultivation';
@@ -83,7 +86,7 @@ export function eventWeight(state: GameState, content: Content, event: GameEvent
   if (!meets(judged, event.conditions, content)) return 0;
   // 10.9: in ngục only ngục events come.
   if (state.law?.jail && !event.conditions.law?.jailed) return 0;
-  let w = event.weight * themeMultiplier(state, content, event);
+  let w = event.weight * themeMultiplier(state, content, event) * standingMul(state, content, event);
   // G.4, playtest 2026-10-12: kỳ ngộ come more often to the lucky.
   const ev = content.balance.events;
   if (event.luckAffected || ev.luckCategories.includes(event.category)) w *= Math.max(ev.luckMin, 1 + (state.aptitudes.luck - 50) * ev.luckPerPoint);
@@ -127,9 +130,11 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
   // 10.10: it comes before a due follow-up (a tang lễ…), which then waits a year.
   const sureHook = lifeHooks(state, content)
     .find((h) => h.hook === 'trigger.everyNYears' && h.years && h.tag && age > 0 && age % h.years === 0 && hookActive(h, state, content));
-  const due = sureHook ? undefined : state.events.followUps.find((f) => f.atAge <= age && findEvent(content, f.event));
+  // A due follow-up whose event no longer fits (a draftee who has since taken office…) is dropped.
+  const stale = state.events.followUps.filter((f) => f.atAge <= age && !meets(f.npc ? { ...state, events: { ...state.events, npc: f.npc } } : state, findEvent(content, f.event)?.conditions, content));
+  let followUps = stale.length ? state.events.followUps.filter((f) => !stale.includes(f)) : state.events.followUps;
+  const due = sureHook ? undefined : followUps.find((f) => f.atAge <= age && findEvent(content, f.event));
   let picked: string | null = null;
-  let followUps = state.events.followUps;
 
   let npc: string | null = null;
   // Task 4.10: an urgent event (đại hạn) skips the roll as soon as it is eligible.
@@ -138,6 +143,7 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
   const visit = due || urgent || sure ? null : npcEvent(state, content, rng);
   if (due) {
     picked = due.event;
+    npc = due.npc ?? null;
     followUps = followUps.filter((f) => f !== due);
   } else if (urgent) {
     picked = urgent.id;
@@ -181,6 +187,12 @@ function repaidRecently(state: GameState, content: Content): boolean {
   return content.events.some((e) => e.npcTrigger === 'repay' && state.events.history[e.id] !== undefined && state.character.age - state.events.history[e.id] < gap);
 }
 
+/** Audit: some revenge event already happened within balance.npcs.revengeGapYears. */
+function avengedRecently(state: GameState, content: Content): boolean {
+  const gap = content.balance.npcs.revengeGapYears;
+  return content.events.some((e) => e.npcTrigger === 'revenge' && state.events.history[e.id] !== undefined && state.character.age - state.events.history[e.id] < gap);
+}
+
 /** 9.0.3: some shared (bond) event already happened within balance.npcs.bondGapYears. */
 function bondedRecently(state: GameState, content: Content): boolean {
   const gap = content.balance.npcs.bondGapYears;
@@ -193,6 +205,7 @@ function npcEvent(state: GameState, content: Content, rng: Rng): { npc: string; 
     // 6c.6: kindness repaid is a moment, not a yearly chore.
     if (call.trigger === 'repay' && repaidRecently(state, content)) continue;
     if (call.trigger === 'bond' && bondedRecently(state, content)) continue;
+    if (call.trigger === 'revenge' && avengedRecently(state, content)) continue;
     const withNpc = { ...state, events: { ...state.events, npc: call.id } };
     const pool = content.events.filter((e) => e.npcTrigger === call.trigger && e.weight > 0 && !hiddenByOptions(state, e) && meets(withNpc, e.conditions, content));
     if (pool.length === 0) continue;
@@ -580,6 +593,10 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.armyMerit) next = addArmyMerit(next, fx.armyMerit);
   if (fx.armyBattle) next = armyBattle(next, content);
   if (fx.armyLeave) next = armyLeave(next, content, fx.armyLeave);
+  // 13.1 Nhập đạo: dứt duyên phàm trần.
+  if (fx.leaveMortal) next = leaveMortalLife(next, content);
+  if (fx.boCo) next = boCo(next, content);
+  if (fx.familyAffinity) next = familyAffinity(next, fx.familyAffinity);
   // 12.2 Quan trường.
   if (fx.officeJoin) next = officeJoin(next, content, fx.officeJoin);
   if (fx.officeStyle) next = setOfficeStyle(next, content, fx.officeStyle);

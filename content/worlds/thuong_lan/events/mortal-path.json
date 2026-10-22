@@ -972,9 +972,11 @@
       {
         "text": "Mang về cho con",
         "requires": {
-          "flagsAll": [
-            "co_con"
-          ]
+          "family": {
+            "alive": [
+              "child"
+            ]
+          }
         },
         "result": {
           "text": "Con ngươi có linh căn. Ngươi không có, nhưng thấy đủ.",

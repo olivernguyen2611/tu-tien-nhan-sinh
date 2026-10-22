@@ -8,8 +8,9 @@ export type Gender = 'nam' | 'nu';
 export type Tone = 'normal' | 'good' | 'bad' | 'rare';
 
 /** 9.3: `ledger` lines (income, stipend, sect report) of one year are merged into one sổ thu chi line. */
-export interface LogLine { text: string; tone: Tone; ledger?: boolean }
-export interface LogYear { age: number; lines: LogLine[] }
+export interface LogLine { text: string; tone: Tone; ledger?: boolean; /** 13.3: the line of a year with nothing in it. */ quiet?: boolean }
+/** toAge, run: 13.3 quiet years in a row folded into one block (last age; where the bar stood when the run began). */
+export interface LogYear { age: number; lines: LogLine[]; toAge?: number; run?: { progress: number } }
 
 export interface Relative {
   id: string;
@@ -54,6 +55,16 @@ export interface MartialQuest {
 }
 
 /** A mini-game of the martial quest: enter `target` in order; more than `allowed` mistakes lose. */
+/** 13.7b: place trận kỳ along tương sinh; `given` slots are set already, the rest are filled in order. */
+export interface FormationGame {
+  id: string;
+  target: string[];
+  given: number[];
+  input: string[];
+  mistakes: number;
+  allowed: number;
+}
+
 export interface MiniGame {
   kind: 'ngu_hanh' | 'dieu_tuc';
   /** ngu_hanh: follow the tương sinh or the tương khắc cycle. */
@@ -162,6 +173,14 @@ export interface GameState {
   reign?: { since: number; dynasty: string; era: string; how: 'royal' | 'rebel' | 'usurp'; bars: Record<string, number>; good: number; bad: number; founder: boolean } | null;
   /** 12.3 Binh nghiệp: quân hàm, quân công toward the next, joined at, drafted or volunteer, trận fought / won; or null
    *  once out (deserted is remembered in flags). */
+  /** 13.4 Kình địch suốt đời: the NPC, the next meeting of the chain (index into balance.rival.steps) and the age it is due. */
+  rival?: { npc: string; step: number; next: number } | null;
+  /** 13.7d: what grows in the linh điền (ripe at `ready`; `right`: sown in a year that suited it, `wrong` in one that did not). */
+  field?: { plots: { herb: string; planted: number; ready: number; fit: 'right' | 'normal' | 'wrong' }[] };
+  /** 13.7c: the linh thú bound by khế ước. */
+  beast?: { species: string; name: string; stage: number; exp: number; since: number } | null;
+  /** 13.7b: the trận laid at the cave or sect (until that age) and a trận kỳ game in progress. */
+  formation?: { active: { id: string; until: number } | null; game: FormationGame | null };
   army?: { rank: number; merit: number; since: number; via: 'draft' | 'volunteer'; battles: number; wins: number; best: number } | null;
   /** 12.2 Quan trường (the rank is career.rung): tax style, phe (and the quyền thần served), chính tích toward the next rank, tội chứng 0–100, how the
    *  office was had, the age of the last đàn hặc, the highest rank held. */
@@ -363,6 +382,8 @@ export interface GameState {
     /** Task 4.2: the core being formed (blocks the year), and the Kim Đan grade 1–9 once formed. */
     coreForming: { round: number; offered: string[]; placed: string[]; purity: number; cracks: number; chancePct: number } | null;
     coreGrade: number | null;
+    /** 13.7e: phẩm cấp 1–4 rolled on entering Nguyên Anh / Hóa Thần, and a Trúc Cơ tier raised by bổ cơ. Trúc Cơ and Kim Đan otherwise come from foundation / coreGrade. */
+    grades?: Record<string, number>;
     /** Đan văn of the golden core (task 4.2, core-patterns.json). */
     corePattern: string | null;
     /** Hình thái Nguyên Anh (task 4.3, nascent-souls.json). */
@@ -405,7 +426,8 @@ export interface GameState {
     /** Playtest 2026-10-12: event id → times it happened this life (repeats grow rarer). Absent in old saves. */
     seen?: Record<string, number>;
     /** Follow-up events booked by earlier choices. */
-    followUps: { event: string; atAge: number }[];
+    /** npc: 13.4, the event is about this NPC (a kình địch's next meeting). */
+    followUps: { event: string; atAge: number; npc?: string }[];
     /** Task 3.4: id of the NPC the pending event is about ({npc}). */
     npc: string | null;
   };
@@ -517,6 +539,8 @@ export interface Npc {
   rootTries?: number;
   /** Task 4.9: the player's disciple, and the age they were last taught. */
   disciple?: { since: number; lastTaught: number | null; /** Task 5c.8: age of the last time each extra act was done (once a year each). */ acts?: Record<string, number> };
+  /** 13.4: the life's kình địch (never forgotten). */
+  rival?: boolean;
   /** Task 5c.8: the technique a master handed down to this NPC (speeds their cultivation by its grade). */
   technique?: string;
   /** Task 5.5: a khí vận chi tử (template id) and the age of the player when they came. */

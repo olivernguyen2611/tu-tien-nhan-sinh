@@ -8,6 +8,7 @@ import { Rng } from '../core/rng';
 import type { GameState, LogLine, Npc } from '../core/types';
 import { meets } from './events/conditions';
 import { createNpc, kindFor } from './npcs';
+import { standingMul } from './standing';
 
 export function kindName(content: Content, n: Npc): string | null {
   return content.relations?.kinds.find((k) => k.id === n.kind)?.name ?? null;
@@ -104,8 +105,8 @@ export function pickVisit(state: GameState, content: Content, eligible: (e: Cont
   const people = rng.shuffle(state.npcs.filter((n) => n.alive && !n.pastLife));
   for (const n of people) {
     const withNpc = { ...state, events: { ...state.events, npc: n.id } };
-    const pool = visits.filter((e) => n.visits?.[e.id] === undefined && meets(withNpc, e.conditions, content));
-    if (pool.length > 0) return { npc: n.id, event: rng.weighted(pool, (e) => e.weight).id };
+    const pool = visits.filter((e) => n.visits?.[e.id] === undefined && standingMul(state, content, e) > 0 && meets(withNpc, e.conditions, content));
+    if (pool.length > 0) return { npc: n.id, event: rng.weighted(pool, (e) => e.weight * standingMul(state, content, e)).id };
   }
   return null;
 }

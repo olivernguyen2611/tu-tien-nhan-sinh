@@ -67,6 +67,8 @@ const BaseConditionsSchema = z
     /** 9.5 Thời cuộc: the pha thời thế now is one of these, and world variables are in range. */
     worldPhase: ids,
     worldVars: z.array(z.object({ id, gte: z.number().optional(), lte: z.number().optional() }).strict()).optional(),
+    /** 13.7e: the realm has been reached and its phẩm cấp (1–4) is at most `max`. */
+    gradeMax: z.object({ realm: id, max: z.number().int().min(1).max(4) }).strict().optional(),
     /** 10.1: giai đoạn tuổi (schooling.json stages), at school (and học lực range), learning or knowing a trade. */
     lifeStage: ids,
     school: z.object({ enrolled: z.boolean().optional(), at: id.optional(), gradeMin: z.number().optional(), gradeMax: z.number().optional(), ever: z.boolean().optional() }).strict().optional(),
@@ -213,9 +215,11 @@ const BaseConditionsSchema = z
       .strict()
       .optional(),
     /** Task 3.9: family state ({deceased} = a relative who has died). */
-    family: z.object({ deadAny: z.boolean().optional(), parentAlive: z.boolean().optional(), siblingAlive: z.boolean().optional(), childAge: z.object({ min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional() }).strict().optional(),
+    family: z.object({ deadAny: z.boolean().optional(), parentAlive: z.boolean().optional(), /** 13.2: one of these relatives is alive. */ alive: z.array(z.enum(['father', 'mother', 'sibling', 'child'])).optional(), siblingAlive: z.boolean().optional(), childAge: z.object({ min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional() }).strict().optional(),
     /** Task 4.10: nearEnd = years left ≤ balance.lifespan.pressureLeftPct of the lifespan; maxLeft = at most this many years left. */
     lifespan: z.object({ nearEnd: z.boolean().optional(), maxLeft: z.number().int().min(0).optional() }).strict().optional(),
+    /** 13.2: years since the latest of these events or activities (never: since entering the current tầng). */
+    ago: z.object({ of: z.array(z.string().min(1)).min(1), min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional(),
     /** Task 3.4: the NPC this event is about (met earlier, or picked by an npcTrigger). */
     npc: z
       .object({
@@ -412,6 +416,12 @@ export const EffectsSchema = z
     reignDeed: z.enum(['good', 'bad']).optional(),
     reignEnd: z.enum(['death', 'exile', 'abdicate']).optional(),
     armyJoin: z.enum(['draft', 'volunteer']).optional(),
+    /** 13.1 Dứt duyên phàm trần: leave job, office, army, throne; the gia sản stays with the family, a share of the silver is kept. */
+    leaveMortal: z.boolean().optional(),
+    /** 13.7e Bổ cơ: the Trúc Cơ phẩm cấp goes up one. */
+    boCo: z.boolean().optional(),
+    /** 13.1: every living parent, sibling and child's affinity ±. */
+    familyAffinity: z.number().optional(),
     armyMerit: z.number().optional(),
     armyBattle: z.boolean().optional(),
     armyLeave: z.enum(['discharge', 'desert', 'scatter']).optional(),
@@ -539,7 +549,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt', 'learnArt', 'practiseArt', 'buyWeapon', 'gainWeapon', 'wound', 'wulinTournament', 'wulinPrestige', 'wulinResign', 'officeJoin', 'officeStyle', 'officeFaction', 'officeMerit', 'officeEvidence', 'officeDefend', 'officeResign', 'armyJoin', 'armyMerit', 'armyBattle', 'armyLeave', 'throneStart', 'throneBar', 'throneRival', 'throneRivalDies', 'throneStep', 'throneBattle', 'throneAscend', 'throneFail', 'reignBar', 'reignDeed', 'reignEnd'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt', 'learnArt', 'practiseArt', 'buyWeapon', 'gainWeapon', 'wound', 'wulinTournament', 'wulinPrestige', 'wulinResign', 'officeJoin', 'officeStyle', 'officeFaction', 'officeMerit', 'officeEvidence', 'officeDefend', 'officeResign', 'armyJoin', 'armyMerit', 'armyBattle', 'armyLeave', 'leaveMortal', 'boCo', 'familyAffinity', 'throneStart', 'throneBar', 'throneRival', 'throneRivalDies', 'throneStep', 'throneBattle', 'throneAscend', 'throneFail', 'reignBar', 'reignDeed', 'reignEnd'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -722,8 +732,12 @@ export const WorldSchema = z
     tiers: z.array(z.object({
       id: z.string().regex(/^[a-z0-9_]+$/), name: z.string().min(1), entry: ConditionsSchema.default({}),
       dock: z.array(z.string().min(1)).default([]), locked: z.boolean().default(false),
+      /** Activity groups the dock sheets no longer list in this tier (the phàm gian giang hồ once in the Dao). */
+      hideGroups: z.array(z.string().min(1)).default([]),
       /** Shown on the full-screen "nhập đạo" card when the life enters this tier. */
       enterText: z.string().optional(),
+      /** 13.1: the event that comes right after entering (nhập đạo: dứt hay giữ duyên phàm trần). */
+      enterEvent: z.string().optional(),
     }).strict()).default([]),
     /** 9.1 Lối sống: the deep lives one is in (several at once), on while `entry` holds; the first age is kept. */
     lifestyles: z.array(z.object({
@@ -745,6 +759,9 @@ export const NamesSchema = z
     femaleMiddle: z.array(z.string().min(1)).min(1),
     femaleGiven: z.array(z.string().min(1)).min(2),
     hometowns: z.array(z.string().min(1)).min(1),
+    /** Share of given names taken whole from the curated lists, and of one-syllable given names (góp ý 23/10). */
+    curatedShare: z.number().min(0).max(1).default(0.3),
+    singleShare: z.number().min(0).max(1).default(0),
   })
   .strict();
 
@@ -1145,6 +1162,8 @@ export const BalanceSchema = z
         repayChance: probability,
         /** 6c.6: at least this many years between two repay visits (Báo ân), whoever it is. */
         repayGapYears: z.number().int().min(0),
+        /** Audit: years between two revenge visits (an heir who was fled from comes back, but not every year). */
+        revengeGapYears: z.number().int().min(0).default(0),
         /** Revenge chance × this when the NPC's realm is above the player's. */
         revengeStrongerMul: z.number().min(0),
         /** Chance a year that a masked NPC (nature ≠ surface) shows their true face. */
@@ -1778,6 +1797,8 @@ export const BalanceSchema = z
         monthsPerYear: z.number().int().min(1),
         careerMonths: z.record(z.string(), z.number().int().min(0)),
         careerMonthsDefault: z.number().int().min(0),
+        /** 13.3: months a cultivator's other doings take (mission, craft, treasury, disciple, bond). */
+        actionMonths: z.record(z.enum(['mission', 'craft', 'treasury', 'disciple', 'bond']), z.number().int().min(0)).optional(),
       })
       .strict(),
     /** 10.1 Học đường, học nghề (content/schooling.json has the schools and trades). */
@@ -1914,6 +1935,50 @@ export const BalanceSchema = z
       reignStart: z.record(z.enum(['royal', 'rebel', 'usurp']), z.record(z.string(), z.number())), reignDrift: z.number(), reignIncome: z.record(z.string(), z.number()), dangerAt: z.number(), deedTitle: z.number(),
       phaseDrift: z.record(z.string(), z.record(z.string(), z.number())), affairDrift: z.record(z.string(), z.record(z.string(), z.number())),
     }).strict().optional(),
+    /** Thân phận: while reigning, holding office or in the army, events of these categories / themes / ids come at `mul` of their weight
+     *  (a thiên tử is not asked to mind a neighbour's house). */
+    /** 13.4 Kình địch: from this realm a peer (age within ageGap) becomes the rival; the chain's events, one every gapYears; at the steps in aheadAt the rival is a realm ahead. */
+    rival: z.object({
+      fromRealm: z.string().min(1), ageGap: z.number().int().min(0), aheadAt: z.array(z.number().int().min(0)).default([]),
+      gapYears: z.tuple([z.number().int().min(1), z.number().int().min(1)]), role: z.string().min(1), steps: z.array(z.string().min(1)).min(1),
+    }).strict().optional(),
+    /** 13.7e Phẩm cấp 4 bậc (index 0 = Hạ … 3 = Cực): power, speed (Nguyên Anh, Hóa Thần; Trúc Cơ and Kim Đan keep their own), lifespan % on entering (Nguyên Anh, Hóa Thần),
+     * breakthrough points out of the realm (Kim Đan, Nguyên Anh; Trúc Cơ keeps foundationBonus). Đạo cơ id → tier, Kim Đan grade 1–9 → tier.
+     * A tier rolled on entering: d100 + (ngộ tính + đạo tâm − 100) × rollPerPoint + (previous tier − 2) × prevBonus against thresholds (tiers 2–4); tiers 3–4 of
+     * highDaoHeartRealms need đạo tâm ≥ highDaoHeart. Never above the previous realm's tier + 1. A realm with no tier recorded (an old save) takes defaultTier. */
+    realmGrade: z.object({
+      realms: z.array(z.string().min(1)).min(1),
+      power: z.array(z.number()).length(4), speed: z.array(z.number()).length(4), lifespanPct: z.array(z.number()).length(4), breakthrough: z.array(z.number()).length(4),
+      foundationTier: z.record(z.string(), z.number().int().min(1).max(4)), coreTier: z.array(z.number().int().min(1).max(4)).length(9),
+      rollPerPoint: z.number(), prevBonus: z.number(), thresholds: z.array(z.number()).length(3),
+      highDaoHeart: z.number(), highDaoHeartRealms: z.array(z.string()).default([]), defaultTier: z.number().int().min(1).max(4),
+    }).strict().optional(),
+    /** 13.7d Linh thực: plots (more with a cave or a sect of one's own), harvest chance, yield change in a wrong / right year, craft xp per harvest. */
+    spiritField: z.object({
+      plots: z.number().int().min(1), plotsCave: z.number().int().min(0), plotsOwnSect: z.number().int().min(0),
+      successBase: z.number(), successPerLevel: z.number(), wrongYield: z.number().int(), rightYield: z.number().int(), xp: z.number().int().min(0),
+    }).strict().optional(),
+    /** 13.7c Ngự thú: exp to reach each stage, the share of the master's power each stage adds, exp a year and per nội đan fed, exp ×(1 + level × levelExpMul), capture chance, the craft level to try, happiness when it dies of age. */
+    spiritBeast: z.object({
+      stageExp: z.array(z.number().int().min(0)).length(4), stagePower: z.array(z.number().min(0)).length(4), yearExp: z.number().min(0),
+      feedExp: z.record(z.string(), z.number().min(0)), levelExpMul: z.number().min(0), captureBase: z.number(), capturePerLevel: z.number(),
+      captureMin: z.number().int().min(0), oldHappiness: z.number(),
+    }).strict().optional(),
+    /** 13.7b Bày trận: mistakes allowed in the trận kỳ game (base + one per `perLevel` craft levels), craft xp on a win / a loss, slots given at this length. */
+    formation: z.object({
+      allowedBase: z.number().int().min(0), perLevel: z.number().int().min(1), xpWin: z.number().int().min(0), xpLose: z.number().int().min(0),
+      secondGivenAt: z.number().int().min(2),
+    }).strict().optional(),
+    /** 13.1 Nhập đạo: hooks by the flag of the bond chosen (dứt / giữ duyên), the share of silver kept on cutting, the yearly affinity drift of kin after cutting. */
+    daoBond: z.object({
+      hooks: z.record(z.string(), z.array(EffectHookSchema)).default({}),
+      silverKeep: z.number().min(0).max(1), cutFlag: z.string().min(1), cutDrift: z.number().min(0),
+    }).strict().optional(),
+    standing: z.record(z.enum(['reign', 'office', 'army']), z.object({
+      mul: z.number().min(0), categories: z.array(z.string()).default([]), themes: z.array(z.string()).default([]), ids: z.array(z.string()).default([]),
+      /** Activities closed to this standing (unless their conditions speak of it). */
+      activityGroups: z.array(z.string()).default([]), activityIds: z.array(z.string()).default([]),
+    }).strict()).optional(),
     army: z.object({
       pay: z.array(z.number()).min(1), meritNeed: z.array(z.number()).min(1), promoteChance: z.number(), foe: z.array(z.number()).min(1),
       warMul: z.number(), peaceMul: z.number(), sharpness: z.number(), leadFrom: z.number().int(), leadWeight: z.number(), peaceBattle: z.number(),
@@ -1957,6 +2022,8 @@ export const BalanceSchema = z
     /** 10.9 Phạm pháp: bộ khoái, công đường, ngục. */
     law: z.object({
       maxWanted: z.number().int().min(1), decayEvery: z.number().int().min(1), fleeWanted: z.number().int().min(1),
+      /** 13.2: karma lost when bộ khoái come for a tu sĩ who simply walks away. */
+      slipKarma: z.number().min(0).default(0),
       fine: z.tuple([z.number(), z.number()]), beatingHealth: z.number(), jailYears: z.tuple([z.number().int(), z.number().int()]), exileYears: z.number().int(),
       bribeCost: z.number(), bribeHonest: z.number(), bribeScore: z.number(),
       escapeBase: z.number(), escapePerFail: z.number(), escapeMin: z.number(), escapeFailYears: z.number().int(),
@@ -2373,7 +2440,7 @@ export const FamilyActionSchema = z
 export const FamilyActionFileSchema = z.array(FamilyActionSchema);
 
 /** 9.2 Khung Hoạt động: menu groups an activity sits in. */
-export const ACTIVITY_GROUPS = ['ban_than', 'hoc_hanh', 'nghe', 'tai_san', 'quan_he', 'giai_tri', 'suc_khoe', 'pham_phap', 'giang_ho', 'tu_luyen'] as const;
+export const ACTIVITY_GROUPS = ['ban_than', 'hoc_hanh', 'nghe', 'tai_san', 'quan_he', 'giai_tri', 'suc_khoe', 'pham_phap', 'giang_ho', 'tu_luyen', 'tu_hanh'] as const;
 export type ActivityGroup = (typeof ACTIVITY_GROUPS)[number];
 
 /** One way to pay; the first option whose `when` holds and that the purse can cover is paid. */
@@ -2522,6 +2589,8 @@ export const LifeTextsSchema = z
     itemRepeat: lines,
     /** 9.3: a year with nothing in it. */
     quietYear: TextPoolSchema.default(['Một năm bình lặng trôi qua.']),
+    /** 13.3: quiet years in a row, folded: {years}; dao also {realm}, {from}, {to} (% of the bar). */
+    quietRun: z.object({ mortal: z.string().min(1), dao: z.string().min(1), peak: z.string().min(1) }).strict().default({ mortal: '{years} năm bình lặng trôi qua.', dao: '{years} năm khổ tu. Tu vi {realm} từ {from}% lên {to}%.', peak: '{years} năm khổ tu ở {realm} viên mãn, chờ cơ duyên đột phá.' }),
     /** 9.3: lead of the merged sổ thu chi line. */
     ledger: z.string().min(1).default('Sổ thu chi năm nay:'),
     deathOldAge: lines,
@@ -2683,6 +2752,14 @@ export const RealmsFileSchema = z
     foundations: z.array(z.object({ id, name: z.string().min(1), description: z.string().min(1) }).strict()).min(1),
     /** Shown as a greyed-out "???" after the last realm. */
     beyond: z.object({ name: z.string().min(1), description: z.string().min(1) }).strict(),
+    /** 13.7e Phẩm cấp: the four tiers (Hạ → Cực), each graded realm's own names for them, and the lines on taking one. {grade}. */
+    realmGrades: z.object({
+      tiers: z.array(z.string().min(1)).length(4),
+      names: z.record(id, z.array(z.string().min(1)).length(4)),
+      enter: z.string().min(1),
+      capped: z.string().min(1),
+      boCo: z.string().min(1),
+    }).strict().optional(),
   })
   .strict();
 export type RealmsFile = z.infer<typeof RealmsFileSchema>;
@@ -3443,6 +3520,8 @@ export const CrimesFileSchema = z.object({
   verdicts: z.object({ acquit: z.string().min(1), fine: z.string().min(1), beating: z.string().min(1), jail: z.string().min(1), exile: z.string().min(1), death: z.string().min(1) }).strict(),
   texts: z.object({
     exposed: z.array(z.string().min(1)).min(1), caught: z.string().min(1), released: z.string().min(1),
+    /** 13.2: bộ khoái come for a tu sĩ and cannot hold one. */
+    slipped: z.string().min(1).optional(),
     escaped: z.string().min(1), escapeFail: z.string().min(1), cooled: z.string().min(1), fled: lineOrLines,
     bribeOk: z.string().min(1), bribeHonest: z.string().min(1), poor: z.string().min(1),
     /** Mức truy nã 0–5 in words, for the profile. */
@@ -3723,6 +3802,8 @@ export const WorldEventFileSchema = z.array(
       /** Where it is felt; empty = everywhere. Outside these regions only the news reaches the player. */
       regions: z.array(id).default([]),
       weight: z.number().positive(),
+      /** 13.4: weight × mul while a thời cuộc var is at least gte (Chính ma căng thẳng → đại chiến). */
+      varWeight: z.array(z.object({ var: id, gte: z.number(), mul: z.number().positive() }).strict()).default([]),
       cooldownYears: z.number().int().min(0),
       phases: z
         .array(
@@ -3887,6 +3968,8 @@ export const MarketFileSchema = z.array(
       regions: ids.optional(),
       /** Playtest 2: items sold here even when not `forSale` or not of `kinds` (a local speciality). */
       items: ids,
+      /** 13.7: everyday materials on the stall every year, not counted in `stock`. */
+      staples: z.array(id).default([]),
       /** Playtest 2: technique scrolls on sale (price in this market's currency). */
       techniques: z.array(z.object({ id, price: z.number().int().min(1) }).strict()).default([]),
       /** Playtest 2: only this many wares on the stall each year, picked anew every year (omit = all). */
@@ -4229,15 +4312,43 @@ export const HeartDemonFileSchema = z
   .strict();
 export type HeartDemonFile = z.infer<typeof HeartDemonFileSchema>;
 
-/** content/recipes.json (task 4.7): Luyện đan and Luyện khí recipes. {product}, {count}. */
+/** content/recipes.json (task 4.7): Luyện đan and Luyện khí recipes; 13.7 Phù lục and Trận pháp. {product}, {count}. */
 export const RecipeFileSchema = z
   .object({
-    texts: z.object({ success: z.string().min(1), fail: z.string().min(1), failAlchemy: z.string().min(1) }).strict(),
+    texts: z.object({
+      success: z.string().min(1), fail: z.string().min(1), failAlchemy: z.string().min(1),
+      /** 13.7: a craft's own success and fail lines (vẽ phù, bày trận…). */
+      byCraft: z.record(z.string(), z.object({ success: z.string().min(1), fail: z.string().min(1) }).strict()).optional(),
+    }).strict(),
+    /** 13.7d Linh thực: what a cultivator sows in the linh điền (weather: the year it likes, from assets.json weather, or any). */
+    herbs: z.array(z.object({
+      id, name: z.string().min(1), text: z.string().min(1), product: id, count: z.number().int().min(1), years: z.number().int().min(1),
+      weather: z.enum(['wet', 'dry', 'normal', 'any']), minLevel: z.number().int().min(0).max(100), seedCost: z.number().int().min(0),
+    }).strict()).default([]),
+    herbTexts: z.object({ sow: z.string().min(1), sowRight: z.string().min(1), sowWrong: z.string().min(1), harvest: z.string().min(1), fail: z.string().min(1) }).strict().optional(),
+    /** 13.7c Ngự thú: species of linh thú (an egg hatches into one with `egg`; capture finds one at the realm). */
+    beasts: z.array(z.object({
+      id, name: z.string().min(1), text: z.string().min(1), element: z.string().min(1), egg: z.boolean().default(false),
+      minRealm: z.string().min(1), power: z.number().min(0), lifespan: z.number().int().min(1), hooks: z.array(EffectHookSchema).default([]),
+    }).strict()).default([]),
+    beastTexts: z.object({
+      stages: z.array(z.string().min(1)).length(4), hatch: z.string().min(1), capture: z.string().min(1), captureFail: z.string().min(1),
+      feed: z.string().min(1), grow: z.string().min(1), old: z.string().min(1), release: z.string().min(1), names: z.array(z.string().min(1)).min(1),
+    }).strict().optional(),
+    /** 13.7b: trận a cultivator lays at a cave or sect by placing trận kỳ (a ngũ hành game); hooks last `years`. */
+    formations: z.array(z.object({
+      id, name: z.string().min(1), text: z.string().min(1), minLevel: z.number().int().min(0).max(100),
+      cost: z.number().int().min(0), years: z.number().int().min(1), length: z.number().int().min(3).max(5),
+      hooks: z.array(EffectHookSchema).min(1),
+    }).strict()).default([]),
+    formationTexts: z.object({
+      intro: z.string().min(1), win: z.string().min(1), lose: z.string().min(1), noPlace: z.string().min(1), active: z.string().min(1), ended: z.string().min(1),
+    }).strict().optional(),
     recipes: z.array(
       z
         .object({
           id,
-          craft: z.enum(['alchemy', 'forging']),
+          craft: z.enum(['alchemy', 'forging', 'talisman', 'formation']),
           product: id,
           count: z.number().int().min(1).default(1),
           /** Craft level needed. */

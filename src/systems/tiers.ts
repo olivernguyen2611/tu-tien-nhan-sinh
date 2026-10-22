@@ -30,7 +30,14 @@ function pushLine(state: GameState, line: LogLine): GameState {
 export function enterTier(state: GameState, content: Content, tierId: string): GameState {
   const t = tierDef(content, tierId);
   if (!t || state.tier === tierId) return state;
-  const s: GameState = { ...state, tier: tierId, tierHistory: { ...state.tierHistory, [tierId]: state.character.age }, tierScreen: tierId };
+  let s: GameState = { ...state, tier: tierId, tierHistory: { ...state.tierHistory, [tierId]: state.character.age }, tierScreen: tierId };
+  // 13.1: the tier's own event comes right after (now, or next year if one is already waiting).
+  const ev = t.enterEvent;
+  if (ev && !s.events.history[ev]) {
+    s = s.events.pending
+      ? { ...s, events: { ...s.events, followUps: [...s.events.followUps, { event: ev, atAge: s.character.age + 1 }] } }
+      : { ...s, events: { ...s.events, pending: ev, npc: null } };
+  }
   return pushLine(s, { text: `Bước vào ${t.name}.`, tone: 'rare' });
 }
 

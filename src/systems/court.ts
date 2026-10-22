@@ -162,9 +162,10 @@ export function courtYear(state: GameState, content: Content): GameState {
   for (const p of pulls) for (const [k, v] of Object.entries(p)) if (k in vars) vars[k] = clamp(vars[k] + v);
   s = { ...s, court: c, times: { ...t, vars } };
 
-  // Sưu thuế, paid by a grown mortal who is not in ngục.
+  // Sưu thuế, paid by a grown mortal who is not in ngục; quan lại are exempt from both sưu thuế and bắt lính.
   const tax = courtTax(s, content);
-  if (s.cult.realm === 'pham_nhan' && age >= cfg.taxAge && !s.law?.jail && !s.reign && !s.throne && tax > 0 && s.alive) {
+  const official = !!content.office && s.career.id === content.office.career;
+  if (s.cult.realm === 'pham_nhan' && age >= cfg.taxAge && !s.law?.jail && !s.reign && !s.throne && !official && tax > 0 && s.alive) {
     const due = Math.min(s.money.silver, Math.round((tax / 100) * cfg.taxSilver));
     if (due > 0) {
       s = { ...s, money: { ...s.money, silver: s.money.silver - due } };
@@ -174,7 +175,7 @@ export function courtYear(state: GameState, content: Content): GameState {
   // The army calls: a grown man gets the bắt lính event once per affair.
   const draft = activeDefs(c, content).find((a) => a.draft);
   if (draft && file.draftEvent && s.character.gender === 'nam' && s.cult.realm === 'pham_nhan' && age >= cfg.draftAge[0] && age <= cfg.draftAge[1]
-    && !s.law?.jail && !s.reign && !s.throne && !s.flags[`bat_linh_${draft.id}_${c.started[draft.id]}`] && content.events.some((e) => e.id === file.draftEvent)) {
+    && !s.law?.jail && !s.reign && !s.throne && !official && !s.army && !s.flags[`bat_linh_${draft.id}_${c.started[draft.id]}`] && content.events.some((e) => e.id === file.draftEvent)) {
     s = { ...s, flags: { ...s.flags, [`bat_linh_${draft.id}_${c.started[draft.id]}`]: true }, events: { ...s.events, followUps: [...s.events.followUps, { event: file.draftEvent, atAge: age }] } };
   }
   return pushLines(s, lines);

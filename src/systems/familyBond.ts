@@ -5,6 +5,7 @@
 // rare chance that needs such an item (balance.familyBond.rootGift), not a reward for effort.
 // What a child learns carries to them if they take over the line (heir.ts). Numbers in
 // balance.familyBond, texts in family-bond.json.
+import { monthsShort, spendMonths } from './timeBudget';
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import { ordinaryAptitude } from './aptitudeGain';
@@ -95,7 +96,7 @@ function blockedFor(state: GameState, content: Content, t: BondTarget, action: B
     if (!usableGrade(content, root)) return 'Chưa có linh căn thì chưa tu được công pháp.';
   }
   if (action === 'gift' && Object.values(state.inventory).every((n) => !n)) return 'Trong túi không có gì để tặng.';
-  return null;
+  return monthsShort(state, content, 'bond');
 }
 
 function describe(content: Content, r: Relative): string {
@@ -260,7 +261,7 @@ export function doBond(state: GameState, content: Content, target: BondTarget, a
     };
   }
   next = applyNumbers(next, a.playerEffects, content, rng);
-  next = { ...next, rng: rng.getState() };
+  next = spendMonths({ ...next, rng: rng.getState() }, content, 'bond');
   const log = next.log.slice();
   const last = log[log.length - 1];
   const entry: LogLine = { text: line, tone };

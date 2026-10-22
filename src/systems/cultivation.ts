@@ -1,5 +1,9 @@
 // Cultivation (GĐ 2). Task 2.2: the spirit-root test and how a root is shown.
 // Task 2.3: yearly cultivation (PLAN.md G.1), Luyện Khí stages (G.2).
+import { formationHooks } from './formation';
+import { beastHooks } from './spiritBeast';
+import { gradeBreakthrough, gradeSpeedMul, rollRealmTier } from './realmGrade';
+import { daoBondHooks } from './daoBond';
 import { specialHooks } from './specialOrigin';
 import { systemHooks } from './heThong';
 import { trungSinhHooks } from './trungSinh';
@@ -297,6 +301,12 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
     ...specialHooks(state, content),
     ...systemHooks(state, content),
     ...trungSinhHooks(state, content),
+    // 13.1: dứt hay giữ duyên phàm trần.
+    ...daoBondHooks(state, content),
+    // 13.7b: the trận laid at the cave or sect.
+    ...formationHooks(state, content),
+    // 13.7c: the linh thú fights beside its master.
+    ...beastHooks(state, content),
   ];
 }
 
@@ -368,7 +378,8 @@ export function yearlyGain(state: GameState, content: Content, used?: number): n
   const coreGrade = state.cult.coreGrade;
   const foundation = state.cult.realm === 'truc_co' && state.cult.foundation
     ? content.balance.majorBreakthrough.foundationSpeed[state.cult.foundation] ?? 1
-    : coreGrade !== null ? content.balance.coreForming.gradeSpeed[coreGrade - 1] ?? 1 : 1;
+    // 13.7e: in Nguyên Anh and Hóa Thần the realm's own phẩm cấp sets it.
+    : gradeSpeedMul(state, content) ?? (coreGrade !== null ? content.balance.coreForming.gradeSpeed[coreGrade - 1] ?? 1 : 1);
   const buffs = state.cult.buffs.filter((b) => state.character.age < b.until).reduce((m, b) => m * b.mul, 1);
   // 9.R4d: a body set by martial training cultivates a little slower (the Ngũ khí root has its own bonus).
   const conv = content.balance.martial.conversion;
@@ -398,7 +409,7 @@ export function breakthroughPct(state: GameState, content: Content, basePct: num
     + hookSum(state, content, 'breakthroughChance')
     + hookSum(state, content, major ? 'breakthroughChance.major' : 'breakthroughChance.minor')
     + hookSum(state, content, `breakthroughChance.at.${state.cult.realm}`)
-    + (major ? state.cult.nextBonus : 0)
+    + (major ? state.cult.nextBonus + gradeBreakthrough(state, content) : 0)
     + state.itemUse.nextBreakthrough;
   // A pill is a one-off the player spends, so it is added at face value; only the ceiling limits it.
   const pill = breakthroughItem(state, content, major)?.breakthrough?.add ?? 0;
@@ -690,6 +701,11 @@ export function majorSuccess(before: GameState, s0: GameState, content: Content,
     s = applyGainHooks({ ...s, cult: { ...s.cult, soulForm: form.id } }, form.effects);
     text = `${text} ${line}`;
   }
+  // 13.7e: Nguyên Anh and Hóa Thần roll their phẩm cấp.
+  const graded = rollRealmTier({ ...s, log }, content, rng);
+  s = graded.state;
+  log = graded.line ? pushLine(s.log, graded.line) : s.log;
+  if (graded.line) text = `${text} ${graded.line.text}`;
   // Nghịch Thiên Cải Mệnh: choose a fate talent before the next year (task 2.7).
   const done = offerFate({ ...s, rng: rng.getState(), log }, content);
   return { state: done, success: true, text, tone };

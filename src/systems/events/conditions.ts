@@ -23,6 +23,7 @@ import { goldenFingerMeets } from '../goldenFinger';
 import { pastSectMeets } from '../pastSect';
 import { hasUsableInnateRoot } from '../cultivation';
 import { bornKnowing } from '../knowledge';
+import { realmTier } from '../realmGrade';
 
 export type Conditions = Partial<GameEvent['conditions']>;
 
@@ -113,6 +114,8 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     const a = state.world?.active;
     if (!a || !c.worldEvent.id.includes(a.id) || (c.worldEvent.phase !== undefined && c.worldEvent.phase !== a.phase)) return false;
   }
+  // 13.7e: the phẩm cấp of a realm reached is at most this.
+  if (c.gradeMax && content && (realmTier(state, content, c.gradeMax.realm) ?? 5) > c.gradeMax.max) return false;
   // 9.5 Thời cuộc.
   if (c.worldPhase?.length && !c.worldPhase.includes(state.times?.phase ?? '')) return false;
   if (c.worldVars?.some((w) => {
@@ -326,7 +329,15 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (c.family.parentAlive !== undefined && state.family.some((r) => r.alive && (r.role === 'father' || r.role === 'mother')) !== c.family.parentAlive) return false;
     const ca = c.family.childAge;
     if (ca && !state.family.some((r) => r.alive && r.role === 'child' && (ca.min === undefined || r.age >= ca.min) && (ca.max === undefined || r.age <= ca.max))) return false;
+    if (c.family.alive && !state.family.some((r) => r.alive && c.family!.alive!.includes(r.role))) return false;
     if (c.family.siblingAlive !== undefined && state.family.some((r) => r.alive && r.role === 'sibling') !== c.family.siblingAlive) return false;
+  }
+  if (c.ago) {
+    const at = Math.max(...c.ago.of.map((id) => state.events.history[id] ?? state.activities?.last?.[id] ?? -Infinity));
+    const from = at === -Infinity ? (state.tier ? state.tierHistory?.[state.tier] ?? 0 : 0) : at;
+    const years = state.character.age - from;
+    if (c.ago.min !== undefined && years < c.ago.min) return false;
+    if (c.ago.max !== undefined && years > c.ago.max) return false;
   }
   if (c.lifespan) {
     const left = state.cult.lifespan - state.character.age;

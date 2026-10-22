@@ -1,0 +1,450 @@
+[
+ {
+  "id": "san_yeu_thu",
+  "group": "tu_hanh",
+  "name": "Săn yêu thú",
+  "icon": "獵",
+  "text": "Vào rừng sâu săn yêu thú lấy nội đan, da xương. Cảnh giới càng cao, rừng càng sâu, thú càng dữ.",
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "age": {
+    "min": 14
+   },
+   "stats": [
+    {
+     "stat": "stat.health",
+     "gte": 30
+    }
+   ]
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 2,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "weight": 3,
+    "when": {
+     "realm": {
+      "min": "luyen_khi",
+      "max": "luyen_khi"
+     }
+    },
+    "text": [
+     "Ngươi phục ba ngày bên vũng nước, hạ được một con yêu lang. Nội đan còn ấm.",
+     "Một con lợn rừng một sừng lao ra, bị ngươi chém ngã. Thịt nướng được, nội đan bán được.",
+     "Ở bìa Vạn Thú Sơn Mạch, một con báo đốm mắt đỏ rình ngươi cả buổi. Rốt cuộc kẻ đi săn là ngươi."
+    ],
+    "effects": {
+     "addItems": [
+      "noi_dan_1"
+     ],
+     "stat.physique": 1
+    }
+   },
+   {
+    "weight": 3,
+    "when": {
+     "realm": {
+      "min": "truc_co",
+      "max": "truc_co"
+     }
+    },
+    "text": [
+     "Ngươi hạ một con mãng xà hai đầu trong đầm lầy, lấy được nội đan cấp hai.",
+     "Đàn hỏa hồ vây ngươi một đêm, sáng ra ngươi xách về hai bộ da và một viên nội đan.",
+     "Ở vùng giữa Vạn Thú Sơn Mạch, ngươi đánh lui một bầy thiết bối lang, đổi lấy nội đan con đầu đàn."
+    ],
+    "effects": {
+     "addItems": [
+      "noi_dan_2"
+     ],
+     "stat.physique": 1
+    }
+   },
+   {
+    "weight": 3,
+    "when": {
+     "realm": {
+      "min": "kim_dan",
+      "max": "nguyen_anh"
+     }
+    },
+    "text": [
+     "Yêu thú cấp ba ở Hắc Phong Lĩnh không dễ chết. Ngươi mất nửa tháng mới hạ được, nội đan sáng như than hồng.",
+     "Con ưng cánh sắt cấp ba lao xuống như mũi tên. Ngươi gãy hai xương sườn, nó gãy cổ.",
+     "Ngươi đuổi một con tê giác lửa từ Hắc Phong Lĩnh tới tận bờ sông, rồi kết liễu nó giữa dòng nước sôi sùng sục."
+    ],
+    "effects": {
+     "addItems": [
+      "noi_dan_3"
+     ],
+     "stat.physique": 1,
+     "stat.health": -4
+    }
+   },
+   {
+    "weight": 3,
+    "when": {
+     "realm": {
+      "min": "hoa_than"
+     }
+    },
+    "text": [
+     "Ngươi xuống tận đáy vực, đánh nhau với một con giao long già ba ngày ba đêm.",
+     "Ở rìa Bắc Minh Tuyết Vực, ngươi hạ một con băng giao ngủ dưới lớp băng vạn năm.",
+     "Ngoài khơi Đông Hải, một con cự kình yêu hóa nổi lên. Mặt biển đỏ ba ngày."
+    ],
+    "effects": {
+     "addItems": [
+      "noi_dan_4"
+     ],
+     "stat.physique": 2,
+     "stat.health": -6
+    }
+   },
+   {
+    "weight": 2,
+    "text": [
+     "Rừng sâu không thấy bóng thú, chỉ thấy dấu chân rất lớn. Ngươi về tay không, đôi giày rách.",
+     "Yêu thú đánh hơi được sát khí của ngươi từ xa, trốn sạch. Đi một tháng, hái được mấy cây nấm.",
+     "Ngươi rình nhầm hang một con gấu già đang ngủ đông. Nó không phải yêu thú, nhưng vẫn đuổi ngươi chạy ba dặm."
+    ],
+    "effects": {
+     "stat.happiness": -2,
+     "stat.physique": 1
+    }
+   },
+   {
+    "weight": 1.5,
+    "text": [
+     "Một con yêu thú lớn hơn ngươi tưởng chặn đường."
+    ],
+    "effects": {
+     "stat.health": -2
+    },
+    "startEvent": "th_yeu_thu_chan_duong"
+   }
+  ]
+ },
+ {
+  "id": "kham_pha_di_tich",
+  "group": "tu_hanh",
+  "name": "Khám phá di tích",
+  "icon": "墟",
+  "text": "Lần theo bản đồ cũ hoặc lời đồn tìm tới di tích của tu sĩ đời trước. Có khi được báo vật, có khi gặp cấm chế.",
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "age": {
+    "min": 14
+   },
+   "stats": [
+    {
+     "stat": "stat.health",
+     "gte": 30
+    }
+   ]
+  },
+  "months": 3,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 2
+  },
+  "outcomes": [
+   {
+    "weight": 3,
+    "text": [
+     "Trong hang đá có một bộ hài cốt ngồi xếp bằng, bên cạnh là túi trữ vật đã mục. Bên trong còn mấy viên linh thạch.",
+     "Di tích chỉ còn mấy bức tường đổ, nhưng dưới nền gạch có một hộp ngọc.",
+     "Bia mộ khắc niên hiệu một vương triều đã mất từ thời Thái Cổ. Bên dưới là mấy viên linh thạch đã mờ màu."
+    ],
+    "effects": {
+     "spiritStones": 30,
+     "stat.luck": 1
+    }
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Trên vách đá khắc một bộ công pháp, chữ đã mờ. Ngươi ngồi chép suốt bảy ngày.",
+     "Trên nóc một gian thạch thất có những nét kiếm khắc vội, như người viết biết mình sắp chết. Ngươi đọc ra một bộ công pháp.",
+     "Một ngọc giản nứt vỡ chỉ còn đọc được nửa đầu. Nửa đầu cũng đủ để ngươi tu."
+    ],
+    "effects": {
+     "gainFittingTechnique": true,
+     "stat.comprehension": 1
+    }
+   },
+   {
+    "weight": 2,
+    "text": [
+     "Một trận pháp cổ vẫn còn chạy. Ngươi lùi lại kịp, nhưng tóc mai đã cháy.",
+     "Một con rối đá đứng dậy khi ngươi bước qua ngưỡng cửa, đấm ngươi văng ra ngoài.",
+     "Cấm chế bùng lên đúng lúc ngươi chạm tay vào hộp ngọc. Hộp vỡ, tay ngươi bỏng."
+    ],
+    "effects": {
+     "stat.health": -8,
+     "stat.intellect": 1
+    }
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Di tích này có chủ: một tàn hồn cổ tu canh cửa."
+    ],
+    "effects": {
+     "stat.daoHeart": 1
+    },
+    "startEvent": "th_tan_hon_canh_cua"
+   },
+   {
+    "weight": 2,
+    "text": [
+     "Ngươi tìm thấy một gốc linh chi mọc trên mộ cổ.",
+     "Trên nấm mồ không tên ở Thái Cổ Chiến Trường mọc một gốc linh thảo. Đất ở đó nuôi bằng máu của cả một đạo quân.",
+     "Linh thảo mọc kín sân một đạo quán bỏ hoang. Không ai hái, vì không ai còn nhớ đường lên."
+    ],
+    "effects": {
+     "addItems": [
+      "linh_thao_tram_nam"
+     ],
+     "stat.luck": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "nhan_viec_tan_tu",
+  "group": "tu_hanh",
+  "name": "Nhận việc ở bảng treo thưởng",
+  "icon": "榜",
+  "text": "Tán Tu Liên Minh treo bảng: hộ tống, tìm thuốc, diệt yêu, đòi nợ. Việc nào cũng có giá.",
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "sect": {
+    "member": false
+   },
+   "age": {
+    "min": 14
+   },
+   "stats": [
+    {
+     "stat": "stat.health",
+     "gte": 30
+    }
+   ]
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 2,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "weight": 4,
+    "text": [
+     "Hộ tống một thương đội qua núi. Đi về bình an, nhận đủ thù lao.",
+     "Tìm hộ một lão đan sư ba gốc Huyết Sâm. Lão trả công sòng phẳng.",
+     "Truy một tên trộm linh thạch tới tận chợ đen Lạc Hà, bắt sống được hắn.",
+     "Hộ tống một tiểu thư thế gia về nhà chồng. Dọc đường nàng khóc, tới nơi thì cười. Tiền công đủ."
+    ],
+    "effects": {
+     "spiritStones": 25,
+     "reputation": {
+      "tan_tu": 3
+     },
+     "stat.charm": 1
+    }
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Việc diệt yêu hóa ra là bẫy: chủ thuê muốn cướp túi người nhận việc."
+    ],
+    "effects": {
+     "stat.intellect": 1
+    },
+    "startEvent": "th_viec_bay"
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Đòi nợ cho người ta, con nợ là một bà lão nghèo. Ngươi bỏ việc, trả lại tiền cọc.",
+     "Việc là giết một tán tu \"phản bội\". Gặp rồi mới biết hắn chỉ lỡ thấy chủ thuê làm điều xấu. Ngươi thả hắn đi.",
+     "Người thuê muốn ngươi phá đập nước của một làng phàm để lấy mạch linh khí bên dưới. Ngươi trả tiền cọc."
+    ],
+    "effects": {
+     "karma": 2,
+     "stat.daoHeart": 1,
+     "stat.happiness": -1
+    }
+   }
+  ]
+ },
+ {
+  "id": "du_luan_dao_hoi",
+  "group": "tu_hanh",
+  "name": "Dự luận đạo hội",
+  "icon": "論",
+  "text": "Ngồi nghe các tu sĩ luận đạo ở phường thị, có khi chen một câu.",
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ]
+  },
+  "months": 1,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "weight": 4,
+    "text": [
+     "Một lão tu kể chuyện \"đạo khả đạo phi thường đạo\" ba canh giờ. Ngươi ngộ được một chữ.",
+     "Hai kiếm tu cãi nhau về kiếm ý, suýt đánh nhau. Ngươi nghe mà sáng ra một chiêu.",
+     "Một ni cô từ Vô Ưu Tự giảng chữ \"không\". Ngươi nghe không hiểu, nhưng đêm ấy ngủ rất ngon, sáng dậy thấy tu vi nhích lên.",
+     "Một lão tán tu kể chuyện Đạo Tổ ngồi dưới gốc cây cổ thụ suốt nghìn năm. Chuyện có thật hay không không biết, nhưng đạo lý thì thật."
+    ],
+    "effects": {
+     "stat.comprehension": 1,
+     "cultProgress": 3
+    }
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Ngươi đứng lên nói một câu, cả hội lặng đi rồi vỗ tay. Có người tới hỏi tên.",
+     "Ngươi hỏi vặn một vị chân nhân trước mặt mọi người, ông ta không đáp được. Hôm sau tên ngươi được truyền khắp phường thị.",
+     "Ngươi kể chuyện mình vượt kiếp, cả hội lặng đi. Một thiếu nữ tán tu lén ghi lại từng câu."
+    ],
+    "effects": {
+     "stat.charm": 2,
+     "reputation": {
+      "tan_tu": 3
+     }
+    }
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Ngươi nói hớ một câu, bị cả hội cười. Đỏ mặt về phòng.",
+     "Ngươi nói về ngũ hành mà nhầm thủy sinh mộc thành thủy khắc mộc. Lũ trẻ ngồi hàng đầu cười tới chảy nước mắt.",
+     "Ngươi luận hăng quá, ngủ gật lúc người khác nói. Tỉnh dậy thì hội đã tan, áo bị ai vẽ một con rùa."
+    ],
+    "effects": {
+     "stat.happiness": -2,
+     "stat.comprehension": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "hai_linh_duoc",
+  "group": "tu_hanh",
+  "name": "Hái linh dược",
+  "icon": "採",
+  "text": "Lên núi tìm linh dược trăm năm. Phải biết nhìn, biết chờ, biết tránh rắn.",
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ]
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 2,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "weight": 4,
+    "text": [
+     "Ngươi hái được một gốc linh thảo trăm năm, rễ còn dính đất.",
+     "Mất ba ngày leo vách đá, được một nắm linh thảo.",
+     "Ngươi theo một con sóc trắng tìm tới một hốc đá đầy linh thảo. Ngươi chừa lại cho con sóc một nửa."
+    ],
+    "effects": {
+     "addItems": [
+      "linh_thao_tram_nam"
+     ],
+     "stat.health": -1
+    }
+   },
+   {
+    "weight": 0.3,
+    "text": [
+     "Hiếm hoi lắm mới gặp: một gốc linh chi nghìn năm giữa khe đá.",
+     "Khe đá có một con rắn canh. Con rắn già tới mức chẳng buồn cắn, chỉ nhìn ngươi đào linh chi đi.",
+     "Linh chi nghìn năm mọc ngay trên đầu một pho tượng đá. Không biết ai đã đặt nó ở đó."
+    ],
+    "effects": {
+     "addItems": [
+      "linh_chi_ngan_nam"
+     ],
+     "stat.luck": 1
+    }
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Hái nhầm độc thảo, ngươi nôn mửa cả đêm.",
+     "Ngươi bị một bầy ong độc đốt sưng mặt, trông như vừa luyện thành Kim Thân.",
+     "Nấm hái về ăn thử, ngươi thấy cả rừng nhảy múa suốt ba ngày."
+    ],
+    "effects": {
+     "stat.health": -6,
+     "stat.intellect": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "cuop_doat_tu_si",
+  "group": "pham_phap",
+  "name": "Chặn đường cướp đoạt",
+  "icon": "劫",
+  "text": "Phục ở chỗ vắng, chặn đường một tu sĩ đi một mình. Lời nhiều, nghiệp cũng nhiều.",
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "age": {
+    "min": 14
+   },
+   "stats": [
+    {
+     "stat": "stat.health",
+     "gte": 30
+    }
+   ]
+  },
+  "months": 1,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 2
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Một tu sĩ trẻ đi qua, túi trữ vật căng phồng."
+    ],
+    "effects": {
+     "karma": -3,
+     "stat.daoHeart": -1
+    },
+    "startEvent": "th_chan_duong"
+   }
+  ]
+ }
+]

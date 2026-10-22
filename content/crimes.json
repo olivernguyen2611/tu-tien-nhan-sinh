@@ -266,6 +266,7 @@
       "Người ta đồn ầm lên. Đi đâu ngươi cũng thấy có kẻ nhìn theo."
     ],
     "caught": "Ngươi bị trói giải lên công đường vì tội {crime}.",
+    "slipped": "Bộ khoái tới bắt ngươi vì tội {crime}. Xích sắt quấn lên tay ngươi thì đứt như chỉ mục, cả đám vứt đao bỏ chạy. Phép vua không trói nổi tu sĩ, nhưng trời thì có mắt.",
     "released": "Mãn hạn tù. Ngươi bước ra khỏi ngục, nắng chói tới hoa mắt. Đời ngoài kia vẫn chạy như chưa từng thiếu ngươi.",
     "escaped": "Đêm mưa to, ngươi chui ra khỏi đường hầm, lăn xuống mương nước. Phía sau, chiêng báo động vang lên. Ngươi đã tự do, và bị truy nã khắp nơi.",
     "escapeFail": "Đường hầm sập giữa chừng. Cai ngục lôi ngươi ra, án tăng thêm {years} năm, cùm thêm một đôi.",

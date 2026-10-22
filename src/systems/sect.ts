@@ -1,6 +1,7 @@
 // Sect life (task 2.5): joining, ranks (Ký danh → Ngoại môn → Nội môn → Chân
 // truyền), yearly stipend, one mission a year for contribution, sect techniques
 // by rank, and asking an elder to be one's master.
+import { monthsShort, spendMonths } from './timeBudget';
 import { drawText } from './textPool';
 import { ordinaryAptitude, ordinaryStat } from './aptitudeGain';
 import type { Content } from '../core/content';
@@ -227,7 +228,7 @@ export function missionViews(state: GameState, content: Content): MissionView[] 
     chance: checkChance(state, content, m.stat, m.difficulty),
     blocked: !state.alive ? 'Đã hết một đời.'
       : state.sect.lastMission === state.character.age ? 'Năm nay đã làm một nhiệm vụ rồi.'
-      : missionRest(state, content),
+      : missionRest(state, content) ?? monthsShort(state, content, 'mission'),
   }));
 }
 
@@ -261,6 +262,7 @@ export function doMission(state: GameState, content: Content, missionId: string)
     money: { ...state.money, spiritStones: state.money.spiritStones + out.spiritStones },
     sect: { ...state.sect, lastMission: state.character.age },
   };
+  next = spendMonths(next, content, 'mission');
   // 6c.2: a failed mission of higher rank can leave a wound.
   const risk = content.balance.sects.missionFail;
   const hurt = !success && state.sect.rank >= risk.minRank && rng.chance(risk.injuryChance);

@@ -8,6 +8,195 @@
 
 ## [Chưa phát hành]
 
+### Tổng tra 1: sửa lỗi vặt (2026-10-23)
+- Kết cục "Đế vương" trước đây không đời nào đạt được (đọc một cờ không sự kiện nào đặt). Nay: lên ngôi và còn ngồi ngai tới lúc chết (không mất nước, không nhường ngôi).
+- Lựa chọn "Mang về cho con" ở sự kiện phàm nhân nhặt được linh vật bị khóa vĩnh viễn (cờ `co_con` không ai đặt). Nay mở khi còn con sống.
+- Hậu duệ báo thù: kẻ thù bị bỏ chạy từng quay lại năm nào cũng tới (có đời 18 lần). Nay hai lần báo thù cách nhau ít nhất `balance.npcs.revengeGapYears` = 4 năm.
+- Sự kiện "Có người phi thăng" mâu thuẫn với sử Thương Lan (từ Đoạn Thiên chi biến chưa ai phi thăng được). Đổi thành "Cột sáng Trung Châu": có đại năng thử bước lên Thông Thiên lộ đã đứt, lên được hay không không ai biết.
+
+### 13.7e Phẩm cấp 4 bậc (2026-10-23)
+- Trúc Cơ, Kim Đan, Nguyên Anh và Hóa Thần dùng chung một thang 4 bậc: Hạ, Trung, Thượng, Cực. Mỗi cảnh giới có tên riêng cho các bậc:
+  - Trúc Cơ: Hạ phẩm đạo cơ … Thiên Đạo Trúc Cơ;
+  - Kim Đan: Hạ phẩm Kim Đan … Vô Hà Kim Đan;
+  - Nguyên Anh: Phàm Anh, Linh Anh, Huyền Anh, Thánh Anh;
+  - Hóa Thần: Tàn Thần, Chân Thần, Đạo Thần, Hợp Đạo Thần.
+- Cách tính bậc:
+  - Trúc Cơ lấy bậc từ đạo cơ; Kim Đan gom 9 phẩm thành 4 bậc.
+  - Nguyên Anh và Hóa Thần tung bậc khi vừa vào, theo ngộ tính, đạo tâm và bậc của cảnh giới trước.
+  - Hóa Thần muốn đạt bậc 3–4 cần đạo tâm từ 70.
+  - Bậc sau không vượt bậc trước quá 1.
+- Chỉ bậc của cảnh giới hiện tại có tác dụng:
+  - chiến lực ×0,9 / 1 / 1,15 / 1,3;
+  - tốc độ tu luyện ×0,9–1,2 ở Nguyên Anh và Hóa Thần (Trúc Cơ, Kim Đan giữ cách tính cũ);
+  - thọ nguyên +0–20% khi vào Nguyên Anh, Hóa Thần;
+  - đột phá rời Kim Đan, Nguyên Anh −10 tới +15.
+- Phẩm cấp hiện trong bảng Tu luyện.
+- Save cũ không cần chuyển: bậc được suy từ đạo cơ, phẩm Kim Đan đã có. Đang ở Nguyên Anh thì theo bậc Kim Đan, đang ở Hóa Thần thì nhận bậc Trung.
+- **Bổ cơ:** chuỗi 2 sự kiện hiếm cho tu sĩ đạo cơ Hạ, Trung phẩm. Lời đồn trong tạp ký dẫn tới Huyết Long Mộc ở đáy Huyết Uyên; nếu thành, đạo cơ lên một bậc, mỗi đời một lần.
+- **10 sự kiện cho đời Nguyên Anh dài:**
+  - hậu bối cầu chỉ điểm, cố nhân tọa hóa, giám bảo cho Kim Thiềm, tiểu bối thách đấu;
+  - cô độc, yến của đại năng, yêu thú nghìn năm, chép sử cho Khâm Thiên Giám;
+  - thư cũ ba trăm năm, linh khí hạ giới loãng dần.
+  - Đời 426 năm có 8,5% năm bình lặng.
+
+### 13.7c–d Ngự thú và Linh thực (2026-10-23)
+- **Ngự thú:** mỗi tu sĩ có một linh thú theo bên, chọn trong 6 loài:
+  - Hỏa Ly, Thanh Phong Điêu (dễ bỏ chạy), Huyền Giáp Quy (giảm thương tích);
+  - Kim Mao Hầu (nhặt thêm chiến lợi phẩm), Liệt Địa Hùng, Băng Giao (đỡ thiên kiếp).
+  - Có linh thú bằng hai cách: ấp Trứng linh thú, hoặc thu phục (từ Ngự Thú cấp 10). Thu phục tốn lượt luyện nghề của năm, có thể hỏng và bị cào.
+  - Linh thú lớn dần theo năm và khi được cho ăn nội đan, qua 4 bậc: Ấu thú, Thiếu thú, Thành thú, Thú vương. Cấp Ngự Thú cao thì lớn nhanh hơn.
+  - Mỗi bậc thêm một phần chiến lực cho chủ. Linh thú chết già theo tuổi thọ của loài. Có thể thả về rừng.
+- **Linh thực:** tu sĩ có linh điền:
+  - 2 ô; thêm 1 khi thuê động phủ, thêm 2 khi có tông môn riêng.
+  - 5 loại để gieo: linh thảo, băng tâm liên, ngộ đạo trà, linh chi nghìn năm, chu quả vạn năm.
+  - Mỗi loại ưa một kiểu năm (mưa, hạn, hay năm nào cũng được), dùng chung thời tiết và lời đồn của ruộng phàm gian 10.4.
+  - Gieo trái tiết thì chín muộn một năm và được ít hơn.
+  - Tới mùa thì tự gặt. Tỉ lệ gặt thành tăng theo cấp Linh Thực; Mảnh vườn thần bí và các khí vận hợp nghề cho thêm sản lượng.
+- Cả hai nằm trong mục Bách nghệ, dưới nghề Ngự Thú và Linh Thực.
+
+### 13.7a–b Phù lục và Trận pháp (2026-10-23)
+- **Phù lục:** có 8 công thức vẽ phù, mỗi mẻ được nhiều lá, cần Phù chỉ và Linh chu sa:
+  - Hỏa Cầu, Thần Hành, Kim Cang, Tụ Linh, Thanh Tâm, Thiên Lôi, Hộ Thân Linh, Phá Không.
+  - Ba loại phù mới: Kim Cang Phù (đỡ đòn, hồi sức), Tụ Linh Phù (thêm tu vi), Thanh Tâm Phù (thêm đạo tâm).
+- **Trận pháp:** có 4 công thức luyện trận bàn, trong đó có Hộ Phủ Trận Bàn mới (giảm thương tích, dễ bỏ chạy).
+- **Bày trận:** khi có động phủ thuê, có tông môn hoặc tự khai tông, có thể bày một trong 3 trận:
+  - Tụ Linh Trận: tu nhanh hơn;
+  - Mê Tung Trận: dễ bỏ chạy;
+  - Hộ Phủ Đại Trận: giảm thương tích và sát thương thiên kiếp.
+  - Bày trận là một mini game: cắm trận kỳ theo vòng ngũ hành tương sinh. Cấp nghề cao thì được sai nhiều lần hơn. Trận giữ 10–20 năm.
+- Vẽ phù và bày trận có câu văn riêng khi thành hay hỏng.
+- Phù chỉ và chu sa luôn có bán ở Kim Thiềm, Vô Chủ Phường, Vạn Bảo Phường, Huyết Nguyệt Thị và Đại Điển Thư Các, không tính vào số hàng bày mỗi năm.
+
+### 13.6 Nội dung và cân bằng tầng 2 (2026-10-23)
+- **38 sự kiện song giới mới**, tổng cộng 61:
+  - về quê: đám cưới, giỗ tổ, lũ trẻ đòi xem phép, người xưa đã già, mộ tổ sạt lở, giếng làng cạn, hội làng;
+  - thiên quy: trừ yêu, cầu mưa, phát đan, tu sĩ ức hiếp phàm nhân, dạy võ cho thiếu niên không linh căn;
+  - triều đình: Khâm Thiên Giám mời làm Thiếu giám, hoàng tử cầu đạo, vua đòi tiên dược, lăng đế vương;
+  - gia tộc: cháu có linh căn, họ hàng cậy thế, gia tộc lụn bại, thờ người còn sống;
+  - đạo lữ phàm: bệnh nặng, đứa con hỏi vì sao cha mẹ không cùng già;
+  - bạn cũ: làm quan, ăn mày, kẻ thù cũ xin lỗi, thầy đồ cũ;
+  - phàm gian biến động nhìn từ trên núi: tân đế cầu quốc sư, ôn dịch, đại hạn, lũ sông Lạc, chiến loạn, sao chổi, nhật thực, đại khoa.
+- **16 sự kiện tu chân giới mới** gắn với sự kiện thiên hạ, tổng cộng 41:
+  - thú triều và thú vương;
+  - ngọc bài và hài cốt đại năng ở bí cảnh Thái Cổ;
+  - giao nhân ở Long cung, băng cung Bắc Minh;
+  - sứ giả yêu tộc, truy nã ma đầu, tán tu nổi loạn, hải tặc tu sĩ;
+  - thiên tài mới nổi, tranh chỗ ngồi linh mạch;
+  - có người phi thăng, di ngôn đại năng;
+  - tiền tuyến Tiên Ma, ma tu xin tha.
+- Văn bản cho hoạt động tu sĩ: mỗi kết quả có thêm một đến hai câu, có địa danh Thương Lan.
+- Săn yêu thú và khám phá di tích cần từ 14 tuổi và Sức khỏe từ 30. Yêu thú chặn đường đánh cho trọng thương thay vì giết.
+- Giả lập: thêm tùy chọn chọn sẵn lựa chọn ở một sự kiện, hoạt động tu sĩ mỗi năm, và số đo tỉ lệ năm bình lặng.
+- Số đo trên đời tu sĩ giữ duyên:
+  - năm bình lặng khoảng 4%, chỉ tiêu dưới 10%;
+  - đời nào cũng về quê và gặp hậu quả;
+  - đời 376 năm đi hết chuỗi kình địch.
+
+### 13.5 Hoạt động tu sĩ (2026-10-23)
+- **Nhóm Tu hành** mới trong Hoạt động, 6 việc, mỗi việc tốn tháng:
+  - săn yêu thú (yêu đan theo cảnh giới);
+  - khám phá di tích;
+  - nhận việc của tán tu (chỉ người không có tông môn);
+  - dự luận đạo hội;
+  - hái linh dược;
+  - cướp đoạt tu sĩ khác (nhóm Phạm pháp).
+- 4 sự kiện đi kèm hoạt động: yêu thú chặn đường, tàn hồn canh cửa, việc là cái bẫy, bị chặn đường cướp.
+- **Đại sự mỗi cảnh giới:**
+  - Trúc Cơ: tranh động phủ;
+  - Kim Đan: tranh linh mạch giữa ba thế lực;
+  - Nguyên Anh: đại vực mới mở, yêu vương;
+  - Hóa Thần: ngộ đạo.
+
+### 13.4 Tu chân giới tự chuyển động (2026-10-23)
+- **Kình địch suốt đời.** Từ Trúc Cơ, một người cùng lứa thành kình địch của ngươi: một tu sĩ đã quen, nếu không thì một thiên kiêu mới. Chuỗi 6 lần gặp, cách nhau 8–15 năm:
+  1. sơ ngộ ở Thiên Kiêu đài;
+  2. đại bỉ;
+  3. mời luận đạo trước cả tông, lúc đối phương đã cao hơn một cảnh giới;
+  4. cùng vào bí cảnh;
+  5. ngã rẽ, cứu hay bỏ mặc;
+  6. trận cuối.
+  Kình địch luôn đuổi kịp cảnh giới của ngươi và không bao giờ bị quên khỏi sổ người quen.
+- Thời cuộc nghiêng sự kiện thiên hạ: khi Chính ma căng thẳng lên cao, Tiên Ma đại chiến dễ nổ ra hơn gấp bốn.
+- 3 sự kiện thiên hạ mới: Tịch Dương Môn bị diệt, Linh mạch khô kiệt (giá tăng 25%), Chính ma nghị hòa.
+- 7 sự kiện gắn với sự kiện thiên hạ:
+  - đệ tử tông bị diệt xin che chở;
+  - phế tích Tịch Dương;
+  - tranh mỏ linh thạch;
+  - hộ vệ hội nghị nghị hòa;
+  - truyền thừa của đại năng tọa hóa;
+  - chiêu binh đại chiến;
+  - nhặt đồ sau trận.
+- Thọ đan giá rẻ ở phường thị: thật hay giả.
+- Sự kiện hẹn sẵn có thể gắn với một NPC (`followUps[].npc`); sự kiện thiên hạ có `varWeight`. Số liệu kình địch ở `balance.rival`.
+
+### 13.3 Đánh đổi thời gian trong tu tiên (2026-10-23)
+- Với tu sĩ, nhiều việc giờ tốn tháng của năm, tháng còn trống mới vào tu vi:
+  - nhiệm vụ tông: 3 tháng;
+  - luyện đan, luyện khí: 2 tháng;
+  - mỗi lần đổi ở bảo khố: 1 tháng;
+  - mỗi việc với đồ đệ: 1 tháng;
+  - luận bàn, luận đạo, truyền công, tặng đồ cho đạo lữ hay con cái: 1 tháng.
+- Hết tháng thì việc phải chờ sang năm, không còn làm hết mọi thứ mỗi năm được nữa. Số tháng ở `balance.time.actionMonths`.
+- Năm trống tự gộp: nhiều năm liền không có chuyện gì gộp thành một khối nhật ký "Tuổi 40–44: 5 năm khổ tu. Tu vi Luyện Khí tầng 3 từ 20% lên 65%." Phàm nhân thì "5 năm bình lặng trôi qua". Nhật ký ngắn hẳn khi tua nhanh.
+
+### 13.2 Song giới: tu sĩ trở về phàm gian (2026-10-23)
+- Hoạt động mới cho tu sĩ còn giữ duyên phàm trần:
+  - **Hạ sơn về quê** (3 tháng): gặp cha mẹ đã già, bạn cũ đã thành mộ, con cháu không nhận ra.
+  - **Gửi bạc về nhà**.
+  - **Đổi bạc lấy linh thạch** ở chợ đen: 200 lượng được 10 viên, có khi bị lừa. Tiền phàm từ nay có chỗ dùng.
+- 12 sự kiện song giới:
+  - Thư nhà đến muộn khi mẹ bệnh nặng: hạ sơn, gửi đan, hoặc gác lại thì vài năm sau thành tâm ma "tiếng mẹ gọi".
+  - Mây kiếp tụ trên thôn nhà.
+  - Chiếu mời làm quốc sư: luyện đan thật, dâng đan giả rồi bị tân đế truy cứu, hoặc từ chối.
+  - Chắt tìm tới xin cứu gia tộc, đuổi đi thì về sau bị con cháu oán hận.
+  - Lũ về quê nhà.
+  - Tu sĩ chấp pháp tới khi phạm thiên quy.
+- Thiên quy: dùng pháp thuật can thiệp phàm trần thì bị ghi tên, tu sĩ chấp pháp tìm tới phạt.
+- Bộ khoái không bắt nổi tu sĩ: không lên công đường, lệnh truy nã hết hiệu lực, nhưng Nhân quả giảm.
+- Điều kiện mới: `ago` (bao nhiêu năm từ lần cuối một sự kiện hay hoạt động), `family.alive` (còn cha, mẹ, anh chị em hay con).
+
+### 13.1 Nhập đạo là một cột mốc (2026-10-23)
+- Ngay sau màn nhập đạo, người chơi phải chọn **Dứt duyên phàm trần** hay **Giữ duyên phàm trần**:
+  - Dứt duyên: bỏ nghề, ấn quan, quân ngũ, ngai vàng. Ruộng vườn, cửa hiệu để lại cho người nhà, chỉ mang theo 20% số bạc. Tu nhanh hơn 10%, nhưng người thân phàm mỗi năm một xa.
+  - Giữ duyên: giữ gia đình, gia sản, nghề. Tu chậm hơn 5%, và mở các chuyện song giới.
+- Phu thê khác đường: khi đạo lữ là phàm nhân, có thể chọn ở lại (mười mấy năm sau là chuyện tóc bạc, tóc xanh), đi tìm kỳ vật nghìn năm mở hậu thiên linh căn cho người ấy, hoặc chia tay (hai mươi năm sau nghe tin người cũ).
+- Huynh đệ khác đường: anh chị em không có linh căn, mười năm sau gặp lại.
+- Võ nhập tiên: ba chuyện riêng cho người đi lên từ võ đạo (huynh đệ giang hồ cũ cầu cứu, ngoại hiệu bị cười, dung hợp võ với đạo).
+- Khảo hạch ngoại môn: cứu đồng môn hay nhặt lệnh bài.
+- Hiệu ứng sự kiện mới `leaveMortal`, `familyAffinity`; tầng có `enterEvent`; số liệu ở `balance.daoBond`.
+
+### Góp ý 23/10 · Kho tên họ lớn hơn (2026-10-23)
+- 109 họ (trước ít hơn nhiều), 50 tên đệm nam, 48 tên đệm nữ, 90 tên nam, 78 tên nữ, 62 tên đặt sẵn mỗi giới (có cả tên mộc mạc như Thiết Trụ, Thúy Hoa), 20 quê quán.
+- Tên đặt sẵn chỉ còn 15% (trước 30%), 12% là tên một chữ, còn lại ghép đệm + tên. Ít lặp tên hơn hẳn.
+
+### Góp ý 23/10 · Bí tịch tu tiên không bán ở chợ phàm (2026-10-23)
+- Chợ phiên phàm nhân không còn bán công pháp tu tiên (trước có Dẫn Khí Quyết 60 lượng bạc). Phường thị tu sĩ bán Dẫn Khí Quyết giá 15 linh thạch (trước 3).
+- Người có linh căn mà chưa vào tông môn vẫn có đường kiếm công pháp nhập môn: hai kỳ ngộ mới, tán tu bán bí tịch (150 lượng hoặc ba tháng làm công) và tu sĩ hấp hối để lại bí tịch.
+
+### Góp ý 23/10 · Phàm nhân không thấy chuyện tu tiên (2026-10-23)
+- Khi còn là phàm nhân: ẩn linh thạch, thanh Tu vi, dòng Linh căn/Thể chất trong hồ sơ và tab Tu luyện. Chỉ khi có linh căn dùng được và có công pháp (hoặc bí tịch) thì tab Tu luyện mới mở; lần tu luyện đầu tiên đưa người chơi vào đạo, từ đó mọi thứ của tu sĩ hiện ra.
+- Đã nhập đạo thì ẩn bớt chuyện phàm trần: nhóm Giang hồ trong thanh hành động (`tier.hideGroups`), các dòng võ lâm, thế lực giang hồ trong hồ sơ và mục giang hồ ở tab Tông môn.
+- Sổ tri thức không còn tự mở tab Tu luyện cho người chưa có linh căn.
+
+### Góp ý 23/10 · Tiên sư thử linh căn hiếm hơn (2026-10-23)
+- Tiên môn mở hội thu đồ: 3%/năm trong tuổi 8–16 (trước 12%). Với người đã biết tin tiên môn thu đồ, khoảng 15% số đời được tiên sư thử linh căn khi còn nhỏ (trước 41%). Các đường tiên duyên khác giữ nguyên.
+
+### Góp ý 23/10 · Tắt developer mode ở màn hình chính (2026-10-23)
+- Khi developer mode đang bật, dòng báo ở màn hình chính có nút **Tắt**. Không cần vào màn chơi mới tắt được.
+
+### Góp ý 23/10 · Quan trường thêm chuyện, mưu phản dễ thấy (2026-10-23)
+- 28 sự kiện quan trường mới (`quan-truong-2.json`):
+  - Thăng đường có thêm 10 án: bỏ vợ, một con gà hai chủ, bát canh có độc, cường hào chiếm đất, cháy chợ, án ma ám, gian lận thi Hương, nô tỳ bỏ trốn, thư lại nhận hối, buôn muối lậu.
+  - Vi hành có thêm 8 chuyện dọc đường: quán trọ đen, làng đói, ông lão câu cá, bị dân nhận ra, tiếng khóc ở miếu, giặc cỏ chặn đường, thần đồng chăn trâu, quan dưới lộng hành.
+  - 9 chuyện quan trường tự đến: kinh sát ba năm, dẹp phỉ, ôn dịch, ngự giá tuần du, thư tiến cử, đào kênh, tiếp sứ ngoại bang, hoàng đế hỏi kế, đồng liêu hạ bệ. Vài chuyện làm tốt được thăng chức ngay.
+- Mưu phản: hoạt động "Mưu đồ đại sự" đổi tên thành **Mưu phản**, cùng ba hoạt động mưu phản khác chuyển sang nhóm **Nghề**, cạnh các việc quan. Trước đây nó nằm lẫn trong nhóm Quan hệ nên khó thấy. Quan Nhị phẩm, Nhất phẩm còn có sự kiện **Dưới một người** mời mưu đồ đại sự.
+
+### Góp ý 23/10 · Thân phận và bắt lính (2026-10-23)
+- Quan lại không còn bị bắt lính, không phải nộp sưu thuế. Sự kiện "Bắt lính" cũ của thời cuộc (biên ải nguy cấp) giờ chỉ đến với nam phàm nhân không làm quan, không tại ngũ, không làm vua, và "Đi lính" thật sự vào quân ngũ. "Bắt phu xây cung" cũng vậy.
+- Sự kiện hẹn sẵn (follow-up) không còn hợp điều kiện lúc tới hạn thì bỏ qua: bị gọi lính rồi kịp nhậm chức thì thôi.
+- Thân phận (`balance.standing`): khi làm vua, làm quan hoặc tại ngũ, những sự kiện và hoạt động của thường dân không còn tới. Thiên tử không ai tới mượn tiền, nhờ trông nhà, rủ buôn chung; không làm thuê, chèo đò, đi thi, mua quan, móc túi. Quan không chèo đò thuê, không áp tiêu. Lính không đi thi, không bái nhập môn phái.
+- Làm quan hoặc làm vua thì bỏ nghề làm thuê (lệ triều không cho kiêm nghề). Khởi nghĩa thì bỏ cả ấn quan.
+
 ### 12.10 Nội dung và cân bằng triều đình (2026-10-22)
 - 16 sự kiện thêm (`de-nghiep-them.json`):
   - Đế nghiệp: thái hậu gọi, em gái bị chỉ hôn, tướng địch xin hàng, lính cướp của dân, kết thông gia với phiên trấn, tin đồn làm phản trong quân, sủng thần dò hỏi.

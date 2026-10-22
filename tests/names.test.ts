@@ -93,7 +93,7 @@ describe('names', () => {
   });
 
   it('the name lists have no duplicates', () => {
-    for (const [key, list] of Object.entries(N)) expect(new Set(list).size, key).toBe(list.length);
+    for (const [key, list] of Object.entries(N)) if (Array.isArray(list)) expect(new Set(list).size, key).toBe(list.length);
   });
 });
 

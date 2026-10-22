@@ -1,15 +1,20 @@
 // Creating a new life. Pure: same seed + same input → same character.
+import { rivalYear } from '../systems/rival';
+import { daoBondYear } from '../systems/daoBond';
+import { formationYear } from '../systems/formation';
+import { beastYear } from '../systems/spiritBeast';
+import { fieldYear } from '../systems/spiritField';
 import { ageNpcs, npcById } from '../systems/npcs';
 import type { Content } from './content';
 import { Rng } from './rng';
 import { APTITUDES, MORTAL_STATS } from './schemas';
-import type { GameState, Gender, KarmaTie, PastSectRecord } from './types';
+import type { GameState, Gender, KarmaTie, LogYear, PastSectRecord } from './types';
 import { rollSeclusionEvent, rollYearEvent } from '../systems/events/engine';
 import { ageFamily, createFamily } from '../systems/relationships';
 import { ageExtremes } from '../systems/extremes';
 import { ageBody, checkDeath } from '../systems/time';
 import { makeName, splitName } from '../systems/names';
-import { cultivateYear, rootTestAge } from '../systems/cultivation';
+import { cultivateYear, realmLabel, rootTestAge } from '../systems/cultivation';
 import { applyJobCrafts } from '../systems/crafts';
 import { careerYear } from '../systems/career';
 import { schoolYear } from '../systems/schooling';
@@ -260,13 +265,32 @@ function mergeLedger(state: GameState, content: Content): GameState {
   return { ...state, log: [...state.log.slice(0, -1), { ...block, lines }] };
 }
 
+/** 13.3: a quiet year after quiet years joins them in one block ("5 năm khổ tu, tu vi từ … lên …"). */
+function foldQuiet(state: GameState, content: Content): GameState {
+  const log = state.log;
+  const cur = log[log.length - 1];
+  const prev = log[log.length - 2];
+  const quiet = (y: LogYear | undefined) => !!y && y.lines.length === 1 && !!y.lines[0].quiet && !!y.run;
+  if (!quiet(cur) || !quiet(prev) || state.events.pending) return state;
+  const years = cur.age - prev.age + 1;
+  const t = content.lifeTexts.quietRun;
+  const dao = state.cult.realm !== 'pham_nhan';
+  const text = (!dao ? t.mortal : prev.run!.progress >= 100 ? t.peak : t.dao)
+    .replaceAll('{years}', String(years))
+    .replaceAll('{realm}', realmLabel(state, content))
+    .replaceAll('{from}', String(Math.round(prev.run!.progress)))
+    .replaceAll('{to}', String(Math.round(state.cult.progress)));
+  const merged: LogYear = { age: prev.age, toAge: cur.age, lines: [{ text, tone: 'normal', quiet: true }], run: prev.run };
+  return { ...state, log: [...log.slice(0, -2), merged] };
+}
+
 const withYear = (s: GameState): GameState => ({ ...s, log: [...s.log, { age: s.character.age, lines: [] }] });
 
 /** One year passes; at most one event is rolled for the player to answer. */
 export function advanceYear(state: GameState, content: Content): GameState {
   const once = advanceYearOnce(state, content);
   // 9.1: tầng and lối sống follow what the year changed.
-  const next = once === state ? once : mergeLedger(syncTier(once, content), content);
+  const next = once === state ? once : foldQuiet(mergeLedger(syncTier(once, content), content), content);
   // Developer mode records a snapshot of every year (backlog 6).
   if (next !== state) notifyYear(next);
   return next;
@@ -288,13 +312,13 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   const used = monthsUsed(state);
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(pastimeYear(assetsYear(jobYear(schoolYear(careerOfficeYear(applyJobCrafts(cultivateYear(ageExtremes(wulinYear(artsYear(factionYear(kinYear(lawYear(healthYear(ageBody(acquaintanceYear(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content, used), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content);
+  const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(pastimeYear(assetsYear(jobYear(schoolYear(careerOfficeYear(applyJobCrafts(cultivateYear(ageExtremes(wulinYear(artsYear(factionYear(kinYear(lawYear(healthYear(ageBody(acquaintanceYear(ageNpcs(fieldYear(beastYear(formationYear(daoBondYear(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content, used), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content);
   // Task 4.1: in seclusion no ordinary event comes (follow-ups wait for the door to open);
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;
   // 9.R7e: the world moves on before the year's event is drawn.
   const worldly = body.alive ? thanDaoYear(trungSinhYear(systemYear(reunionYear(courtThroneYear(timesYear(worldEventsYear(secluded, content), content), content), content), content), content), content) : secluded;
-  const rolled = !body.alive ? worldly : state.seclusion ? rollSeclusionEvent(worldly, content) : rollYearEvent(gatesYear(worldly, content), content);
+  const rolled = !body.alive ? worldly : state.seclusion ? rollSeclusionEvent(worldly, content) : rollYearEvent(gatesYear(rivalYear(worldly, content), content), content);
   // 9.R5a: what the year taught goes into the Sổ tri thức.
   const next = rolled.alive ? knowledgeYear(rolled, content) : rolled;
   // The year's log block exists before family news and the event are added to it.
@@ -308,7 +332,7 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   const quiet = !next.events.pending && block.lines.length === 0;
   // 9.3: a quiet year says so in many ways (its own seed stream, the life's rng is untouched).
   const still = quiet ? drawText(next, content, 'quietYear', content.lifeTexts.quietYear, {}, new Rng(`${next.seed}:quiet:${age}`)) : null;
-  if (still) log[log.length - 1] = { ...block, lines: [{ text: still.text, tone: 'normal' }] };
+  if (still) log[log.length - 1] = { ...block, lines: [{ text: still.text, tone: 'normal', quiet: true }], run: { progress: state.cult.progress } };
   // 6b.2: every year eases happiness back toward its resting point; a quiet year eases it more.
   return { ...(still?.state ?? next), stats: { ...next.stats, happiness: easeHappiness(next.stats.happiness, quiet, content) }, log };
 }

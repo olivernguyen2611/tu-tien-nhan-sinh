@@ -32,3 +32,27 @@ export function cultivationShare(state: GameState, content: Content, used = mont
   const total = content.balance.time.monthsPerYear;
   return Math.max(0, total - used) / total;
 }
+
+/** 13.3: other things a cultivator does that eat months (sect missions, crafting, the bảo khố, disciples, đạo lữ and children). */
+export type TimedAction = 'mission' | 'craft' | 'treasury' | 'disciple' | 'bond';
+
+/** Months this action takes (balance.time.actionMonths); mortals live by their trade, so 0 for them. */
+export function actionMonths(state: GameState, content: Content, kind: TimedAction): number {
+  return state.cult.realm === 'pham_nhan' ? 0 : content.balance.time.actionMonths?.[kind] ?? 0;
+}
+
+/** Why the action does not fit in the year, or null. */
+export function monthsShort(state: GameState, content: Content, kind: TimedAction): string | null {
+  const need = actionMonths(state, content, kind);
+  return need > 0 && monthsLeft(state, content) < need ? `Năm nay không còn đủ ${need} tháng.` : null;
+}
+
+/** Spend the action's months from this year. */
+export function spendMonths(state: GameState, content: Content, kind: TimedAction): GameState {
+  const need = actionMonths(state, content, kind);
+  if (need === 0) return state;
+  const age = state.character.age;
+  const a = state.activities;
+  const same = a && a.year === age;
+  return { ...state, activities: { last: a?.last ?? {}, year: age, uses: same ? a.uses : {}, months: monthsUsed(state) + need } };
+}

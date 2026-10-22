@@ -90,6 +90,96 @@
      "stat.intellect": 1
     },
     "startEvent": "qt_an_trom_trau"
+   },
+   {
+    "text": [
+     "Một gã thư sinh kéo vợ lên công đường."
+    ],
+    "effects": {
+     "stat.intellect": 1
+    },
+    "startEvent": "qt2_an_ly_hon"
+   },
+   {
+    "text": [
+     "Hai bà hàng xóm ôm một con gà tới."
+    ],
+    "effects": {
+     "stat.intellect": 1
+    },
+    "startEvent": "qt2_an_trom_ga"
+   },
+   {
+    "text": [
+     "Có án đầu độc trong nhà phú hộ."
+    ],
+    "effects": {
+     "stat.intellect": 1
+    },
+    "startEvent": "qt2_an_dau_doc"
+   },
+   {
+    "text": [
+     "Cả làng ký đơn tố cường hào."
+    ],
+    "effects": {
+     "stat.intellect": 1
+    },
+    "startEvent": "qt2_an_cuong_hao"
+   },
+   {
+    "text": [
+     "Chợ huyện vừa cháy."
+    ],
+    "effects": {
+     "stat.intellect": 1
+    },
+    "startEvent": "qt2_an_hoa_hoan"
+   },
+   {
+    "text": [
+     "Dân kêu có ma."
+    ],
+    "effects": {
+     "stat.intellect": 1
+    },
+    "startEvent": "qt2_an_ma_quai"
+   },
+   {
+    "text": [
+     "Có tờ cáo giấu tên về kỳ thi."
+    ],
+    "effects": {
+     "stat.intellect": 1
+    },
+    "startEvent": "qt2_an_khoa_cu_gian"
+   },
+   {
+    "text": [
+     "Một nhà giàu giải tới một nô tỳ."
+    ],
+    "effects": {
+     "stat.intellect": 1
+    },
+    "startEvent": "qt2_an_no_bo_tron"
+   },
+   {
+    "text": [
+     "Dân tố thư lại trong nha môn."
+    ],
+    "effects": {
+     "stat.intellect": 1
+    },
+    "startEvent": "qt2_an_quan_lai_an_hoi"
+   },
+   {
+    "text": [
+     "Lính bắt được một đoàn buôn muối lậu."
+    ],
+    "effects": {
+     "stat.intellect": 1
+    },
+    "startEvent": "qt2_an_buon_muoi"
    }
   ]
  },
@@ -201,6 +291,86 @@
      "silver": -10,
      "stat.happiness": -1
     }
+   },
+   {
+    "weight": 0.8,
+    "text": [
+     "Ngươi trọ lại một quán ven đường."
+    ],
+    "effects": {
+     "stat.physique": 1
+    },
+    "startEvent": "qt2_vh_quan_tro"
+   },
+   {
+    "weight": 0.8,
+    "text": [
+     "Ngươi lên một làng trên núi."
+    ],
+    "effects": {
+     "stat.physique": 1
+    },
+    "startEvent": "qt2_vh_dan_doi"
+   },
+   {
+    "weight": 0.8,
+    "text": [
+     "Ngươi đi dọc bờ sông."
+    ],
+    "effects": {
+     "stat.physique": 1
+    },
+    "startEvent": "qt2_vh_cao_nhan"
+   },
+   {
+    "weight": 0.8,
+    "text": [
+     "Ngươi ra chợ."
+    ],
+    "effects": {
+     "stat.physique": 1
+    },
+    "startEvent": "qt2_vh_bi_nhan_ra"
+   },
+   {
+    "weight": 0.8,
+    "text": [
+     "Đêm xuống, ngươi đi ngang miếu hoang."
+    ],
+    "effects": {
+     "stat.physique": 1
+    },
+    "startEvent": "qt2_vh_nu_oan"
+   },
+   {
+    "weight": 0.8,
+    "text": [
+     "Ngươi đi qua một quãng đường vắng."
+    ],
+    "effects": {
+     "stat.physique": 1
+    },
+    "startEvent": "qt2_vh_cuop"
+   },
+   {
+    "weight": 0.8,
+    "text": [
+     "Ngươi đi ngang cánh đồng."
+    ],
+    "effects": {
+     "stat.physique": 1
+    },
+    "startEvent": "qt2_vh_than_dong"
+   },
+   {
+    "weight": 0.8,
+    "text": [
+     "Ngươi ghé một trấn nhỏ."
+    ],
+    "effects": {
+     "stat.physique": 1
+    },
+    "startEvent": "qt2_vh_quan_ham_hai"
    }
   ]
  },

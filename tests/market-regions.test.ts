@@ -30,7 +30,7 @@ describe('markets by region and auctions (playtest 2)', () => {
 
   it('a stocked stall changes from year to year and sells local specialities', () => {
     const at = (age: number) => marketOffers(cultivator('thanh_van_chau', 3000, age), content, 'kim_thiem').map((o) => o.item.id).join();
-    expect(marketOffers(cultivator('thanh_van_chau'), content, 'kim_thiem')).toHaveLength(8);
+    expect(marketOffers(cultivator('thanh_van_chau'), content, 'kim_thiem')).toHaveLength(8 + 2); // 13.7: plus the staples (phù chỉ, chu sa)
     expect(new Set([30, 31, 32, 33, 34].map(at)).size).toBeGreaterThan(2);
     const sea = new Set([30, 31, 32, 33, 34, 35, 36].flatMap((a) => marketOffers(cultivator('dong_hai', 3000, a), content, 'hai_thi').map((o) => o.item.id)));
     expect(sea.has('tran_chau_giao_nhan')).toBe(true);

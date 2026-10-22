@@ -237,7 +237,8 @@
   "time": {
     "monthsPerYear": 12,
     "careerMonths": { "quan": 10, "thuong": 8, "vo_lam": 6, "y": 8, "tap_dich": 9 },
-    "careerMonthsDefault": 8
+    "careerMonthsDefault": 8,
+    "actionMonths": { "mission": 3, "craft": 2, "treasury": 1, "disciple": 1, "bond": 1 }
   },
   "schooling": {
     "enrollAge": [6, 12],
@@ -295,6 +296,33 @@
   "jianghu": { "aliasAt": 30, "max": 100, "ranks": [1, 15, 35, 60, 85], "crimeInfamy": 1, "stageFame": 3, "aliasKinds": ["vo_lam_nhan"] },
   "court": { "heirAdult": 16, "contestChance": 0.2, "purgeChance": 0.5, "amnestyChance": 0.7, "heirFrom": 25, "heirChance": 0.15, "ministerChance": 0.05, "maxAffairs": 2, "affairGap": 6, "taxAge": 18, "taxSilver": 10, "draftAge": [18, 45] },
   "throne": { "rivals": [2, 5], "heirAge": 50, "heirChance": 0.25, "heirWeights": { "favor": 1, "power": 0.5, "first": 15, "queen": 10, "suspicion": 0.5 }, "womanNeeds": 15, "banAt": 80, "suspicionDrift": -3, "adultAge": 16, "deposeBelow": 20, "softCap": 110, "rivalGrowth": [0, 4], "heirPower": 3, "siblingDeath": 0.005, "fallDeath": 0.3, "rebelPhases": ["loan_the", "trung_suy"], "crushChance": 0.35, "crushDeath": 0.35, "capitalCities": 5, "garrison": 35, "garrisonPerCity": 6, "battleLoss": 15, "battleWin": { "troops": 10, "grain": 10, "people": 4 }, "amnestyChance": 0.12, "rebelDecision": 0.6, "rebelUpkeep": 6, "rebelDraw": 0.06, "discoverBase": 0.02, "discoverPerPlotter": 0.008, "riseNeeds": { "power": 50, "troops": 35, "cause": 35 }, "riseChance": 0.6, "risePhases": ["loan_the", "trung_suy"], "riseTempers": ["hon_quan", "bao_quan"], "reignStart": { "royal": { "treasury": 60, "people": 55, "army": 55, "court": 60 }, "rebel": { "treasury": 35, "people": 70, "army": 65, "court": 35 }, "usurp": { "treasury": 50, "people": 45, "army": 60, "court": 45 } }, "reignDrift": 2, "reignIncome": { "treasury": 5, "court": 1 }, "dangerAt": 15, "deedTitle": 5, "phaseDrift": { "thinh_the": { "treasury": 2, "people": 1 }, "loan_the": { "people": -3, "treasury": -2 }, "trung_suy": { "treasury": -1 } }, "affairDrift": { "thien_tai": { "people": -5, "treasury": -4 }, "on_dich": { "people": -3 }, "ngoai_xam": { "army": -6, "treasury": -3 }, "khoi_nghia": { "people": -4, "army": -3 }, "quyen_than": { "court": -5 } } },
+  "rival": {
+    "fromRealm": "truc_co",
+    "ageGap": 12,
+    "aheadAt": [2],
+    "gapYears": [8, 15],
+    "role": "Kình địch",
+    "steps": ["kd_so_ngo", "kd_dai_bi", "kd_luan_dao", "kd_cung_vao_bi_canh", "kd_nga_re", "kd_ket_cuc"]
+  },
+  "spiritBeast": { "stageExp": [0, 30, 90, 200], "stagePower": [0.05, 0.12, 0.22, 0.35], "yearExp": 2, "feedExp": { "noi_dan_1": 6, "noi_dan_2": 14, "noi_dan_3": 30, "noi_dan_4": 60 }, "levelExpMul": 0.01, "captureBase": 0.3, "capturePerLevel": 0.01, "captureMin": 10, "oldHappiness": -12 },
+  "realmGrade": {
+    "realms": ["truc_co", "kim_dan", "nguyen_anh", "hoa_than"],
+    "power": [0.9, 1.0, 1.15, 1.3], "speed": [0.9, 1.0, 1.1, 1.2], "lifespanPct": [0, 0.05, 0.1, 0.2], "breakthrough": [-10, 0, 8, 15],
+    "foundationTier": { "ha": 1, "trung": 2, "thuong": 3, "hoan_my": 4 }, "coreTier": [4, 3, 3, 2, 2, 2, 1, 1, 1],
+    "rollPerPoint": 0.3, "prevBonus": 12, "thresholds": [35, 72, 92], "highDaoHeart": 70, "highDaoHeartRealms": ["hoa_than"], "defaultTier": 2
+  },
+  "spiritField": { "plots": 2, "plotsCave": 1, "plotsOwnSect": 2, "successBase": 0.75, "successPerLevel": 0.003, "wrongYield": -1, "rightYield": 0, "xp": 2 },
+  "formation": { "allowedBase": 1, "perLevel": 30, "xpWin": 4, "xpLose": 1, "secondGivenAt": 5 },
+  "daoBond": {
+    "hooks": {
+      "dut_duyen": [{ "hook": "cultivationSpeed", "add": 0.1 }],
+      "giu_duyen": [{ "hook": "cultivationSpeed", "add": -0.05 }]
+    },
+    "silverKeep": 0.2,
+    "cutFlag": "dut_duyen",
+    "cutDrift": 2
+  },
+  "standing": { "reign": { "mul": 0, "categories": ["wealth", "work", "market", "plunder", "law", "jianghu", "beast", "mortal", "leisure", "romance", "fortune", "demonic", "rogue"], "themes": ["mishap"], "ids": ["vs_muon_tien", "vs_ru_lam_an", "vs_nho_trong_nha", "vs_nho_bao_thu", "vs_khoe_chuc", "qh_ban_than_nho_von", "qh_ban_than_ru_giang_ho", "gt_hk_ru_lam_an", "gt_hk_muon_tien", "gt_phan_gia", "bond_nho_viec", "hd_sua_cau", "hd_loi_dam_tieu", "hd_cao_tang", "tc_bat_linh", "tc_giac_cuop", "tc_nan_doi", "tc_hoi_lon", "ld_hang_sau", "ld_lac_trong_hang", "sk_lang_bam", "sk_ban_nhau_ru", "sk_than_y", "sk_dich_dau_mua", "sk_tai_nan_lao_dong", "sk_chay_nha_hang_xom", "tr_minh_quan_giam_thue", "tr_be_dang_doi_le", "cc_linh_bai_tran", "cc_giac_toi_gan", "tr_thue_nang", "tr_nghia_quan_qua_lang"], "activityGroups": ["giang_ho", "pham_phap", "hoc_hanh", "nghe"], "activityIds": ["chuyen_nha_xa", "nho_mai_moi", "hen_di_hoi", "viet_thu_tinh", "ve_tham_que", "hop_ho", "boc_thuoc", "theo_vo_duong", "chieu_bac", "mua_thu_nuoi", "hoi_cho", "song_bac"] }, "office": { "mul": 0, "categories": ["work"], "themes": [], "ids": ["tc_bat_linh", "tr_bat_linh", "tr_bao_quan_bat_phu", "ng_thu_lai_sua_so"], "activityGroups": [], "activityIds": ["lam_thue", "cheo_do_thue", "lam_vu_mua", "viet_thue", "ap_tieu", "nhan_ap_tieu_xa", "dau_quan_hac_dao", "xem_bang_treo_thuong", "chuyen_nha_xa", "mua_quan", "hoc_nghe_bep", "hoc_nghe_gom", "hoc_nghe_may", "hoc_nghe_moc", "hoc_nghe_ren", "hoc_nghe_thuoc"] }, "army": { "mul": 0, "categories": ["work"], "themes": [], "ids": ["tc_bat_linh", "tr_bao_quan_bat_phu"], "activityGroups": [], "activityIds": ["lam_thue", "cheo_do_thue", "lam_vu_mua", "viet_thue", "ap_tieu", "nhan_ap_tieu_xa", "mo_lop_day_chu", "dau_quan_hac_dao", "gia_nhap_bang_hoi", "bai_nhap_mon_phai", "chuyen_nha_xa", "mua_quan", "leu_chong_di_thi", "on_thi", "hop_ho", "nho_mai_moi", "hoc_nghe_bep", "hoc_nghe_gom", "hoc_nghe_may", "hoc_nghe_moc", "hoc_nghe_ren", "hoc_nghe_thuoc"] } },
   "army": { "pay": [5, 8, 12, 20, 35, 60, 100, 160], "meritNeed": [10, 20, 35, 55, 80, 110, 150], "promoteChance": 0.5, "foe": [0.85, 0.95, 1.05, 1.2, 1.4, 1.7, 2.1, 2.5], "warMul": 1, "peaceMul": 0.75, "sharpness": 2, "leadFrom": 3, "leadWeight": 1, "peaceBattle": 0.25, "winMerit": [6, 7, 8, 10, 12, 14, 16, 20], "winSilver": [3, 5, 8, 15, 25, 40, 60, 100], "loseDeath": 0.02, "loseMaim": 0.04, "loseHealth": 5, "draftYears": 2, "retireAge": 55, "leaveAfter": 3, "desertWanted": 2, "joinAge": [16, 40] },
   "office": { "salary": [25, 45, 70, 100, 150, 220, 320, 480], "yearsPerRank": 3, "meritNeed": [20, 30, 45, 60, 80, 100, 130], "meritBase": 6, "meritPerPoint": 0.2, "meritRand": [-3, 5], "promoteChance": [0.4, 0.3, 0.22, 0.15, 0.1, 0.06, 0.03], "evidenceDecay": 3, "impeachBase": 0.02, "impeachPerEvidence": 0.006, "impeachGap": 3, "buyCost": [400, 1200], "buyCap": 3, "buyEvidence": 15, "defendBase": 0.55, "defendPerPoint": 0.01, "defendPerEvidence": 0.008, "bribeCost": 60, "bribeBonus": 0.2, "dismissEvidence": 40, "executeEvidence": 75, "purgeChance": 0.6, "joinAge": [20, 50] },
   "wulin": { "every": 10, "foeStage": [3, 4, 6], "foeMul": [1, 1.2, 1], "sharpness": 2, "silver": [0, 20, 60, 200], "fame": [1, 4, 8, 20], "happiness": [-2, 1, 3, 10], "loseHealth": 5, "prestigeStart": 50, "prestigeDrift": -2, "stipend": 40, "stepDownFame": 5 },
@@ -302,7 +330,7 @@
   "factions": { "rankMerit": [30, 80, 160, 280, 450], "missionPay": [8, 15, 30, 50, 80], "stipend": [0, 5, 15, 30, 60], "missionMerit": [8, 16], "missionFailMerit": -4, "missionFailHealth": -5, "missionRenown": 3, "taKarma": -2, "teachCost": 40, "teachBonus": 10, "huntYears": 8, "hideYears": 1, "betrayFame": 5, "betrayInfamy": 10, "chinhKarmaMin": -20 },
   "calendar": { "windowDays": 3, "share": 0.7, "boost": 3 },
   "leaving": { "moveAffinity": -15, "hermitAge": 55, "funeralAge": 12, "funeralEvents": { "father": "ld_tang_cha", "mother": "ld_tang_me" } },
-  "law": { "maxWanted": 5, "decayEvery": 3, "fleeWanted": 2, "fine": [20, 60], "beatingHealth": -15, "jailYears": [2, 5], "exileYears": 3, "bribeCost": 50, "bribeHonest": 0.3, "bribeScore": 2, "escapeBase": 0.35, "escapePerFail": 0.08, "escapeMin": 0.05, "escapeFailYears": 2, "recordBars": ["thu_lai", "bo_khoai", "linh", "thay_do"] },
+  "law": { "slipKarma": 2, "maxWanted": 5, "decayEvery": 3, "fleeWanted": 2, "fine": [20, 60], "beatingHealth": -15, "jailYears": [2, 5], "exileYears": 3, "bribeCost": 50, "bribeHonest": 0.3, "bribeScore": 2, "escapeBase": 0.35, "escapePerFail": 0.08, "escapeMin": 0.05, "escapeFailYears": 2, "recordBars": ["thu_lai", "bo_khoai", "linh", "thay_do"] },
   "ailments": { "childChance": 0.05, "adultChance": 0.025, "oldFrom": 50, "oldPerYear": 0.004, "maxAilments": 2, "contagion": 0.3, "contagionDeath": 0.3, "doctorGoodShare": 0.55, "doctorGood": 1.25, "doctorBad": 0.55, "shamanHarm": 4, "selfPerLevel": 0.2, "drinkAt": 6, "drinkYears": 3, "drinkHealth": -3, "drinkHappiness": -1, "drinkSilver": -6 },
   "pastime": { "petEvery": 2, "petDeathHappiness": -6, "addictAt": 6, "addictYears": 3, "addictSilver": -15, "addictHappiness": -3, "omenMul": 4, "omenYears": 3, "artMax": 100 },
   "kinship": { "oathDaoHeart": -10, "oathKarma": -5, "swornDeathHappiness": -8, "temperAge": 16 },
@@ -533,7 +561,7 @@
     "revengeAt": 30,
     "revengeChance": 0.2,
     "repayAt": 30,
-    "repayChance": 0.15, "repayGapYears": 8,
+    "repayChance": 0.15, "repayGapYears": 8, "revengeGapYears": 4,
     "revengeStrongerMul": 2,
     "revealChance": 0.05,
     "bondAt": 60,
@@ -863,7 +891,7 @@
     "wish": 4
   },
   "immortalGates": {
-    "chance": { "hoi_thu_do": 0.12, "the_gia": 0.9, "hoang_that": 0.06, "co_duyen": 0.008, "pham_gian": 0.03 },
+    "chance": { "hoi_thu_do": 0.03, "the_gia": 0.9, "hoang_that": 0.06, "co_duyen": 0.008, "pham_gian": 0.03 },
     "unknownMul": 0.3,
     "closedUnknown": ["hoi_thu_do", "hoang_that", "co_duyen"],
     "luckWeight": 1

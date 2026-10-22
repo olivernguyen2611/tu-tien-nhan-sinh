@@ -14,12 +14,6 @@
     "bargainLose": "Bà bán hàng nhìn ngươi từ đầu tới chân rồi nâng giá.",
     "regions": [
       "thanh_van_chau"
-    ],
-    "techniques": [
-      {
-        "id": "dan_khi_quyet",
-        "price": 60
-      }
     ]
   },
   {
@@ -42,8 +36,12 @@
     "techniques": [
       {
         "id": "dan_khi_quyet",
-        "price": 3
+        "price": 15
       }
+    ],
+    "staples": [
+      "phu_chi",
+      "linh_chu_sa"
     ]
   },
   {
@@ -81,6 +79,10 @@
         "id": "u_ha_huyet_anh_cong",
         "price": 260
       }
+    ],
+    "staples": [
+      "phu_chi",
+      "linh_chu_sa"
     ]
   },
   {
@@ -204,7 +206,11 @@
       }
     ],
     "bargainWin": "Tiểu nhị chạy vào hỏi chưởng quỹ rồi chạy ra: \"Được, giảm cho đạo hữu.\"",
-    "bargainLose": "Tiểu nhị lắc đầu: \"Vạn Bảo Phường không trả giá.\" Rồi đổi bảng giá mới."
+    "bargainLose": "Tiểu nhị lắc đầu: \"Vạn Bảo Phường không trả giá.\" Rồi đổi bảng giá mới.",
+    "staples": [
+      "phu_chi",
+      "linh_chu_sa"
+    ]
   },
   {
     "id": "dau_gia_kim_thiem",
@@ -414,7 +420,11 @@
       }
     ],
     "bargainWin": "Lão bán hàng cười khanh khách: \"Hợp mắt, bớt cho một chút. Lần sau mang người tới đổi.\"",
-    "bargainLose": "Lão bán hàng liếm môi, nhìn cổ tay ngươi lâu hơn cần thiết. Giá không giảm."
+    "bargainLose": "Lão bán hàng liếm môi, nhìn cổ tay ngươi lâu hơn cần thiết. Giá không giảm.",
+    "staples": [
+      "phu_chi",
+      "linh_chu_sa"
+    ]
   },
   {
     "id": "pha_cam_phuong",
@@ -530,6 +540,10 @@
       }
     ],
     "bargainWin": "Chủ quầy gật gù: \"Đọc hay. Bớt cho một phần.\"",
-    "bargainLose": "Chủ quầy lắc đầu: \"Đọc sai ba chữ. Giá giữ nguyên, kèm một lời khuyên đi học lại.\""
+    "bargainLose": "Chủ quầy lắc đầu: \"Đọc sai ba chữ. Giá giữ nguyên, kèm một lời khuyên đi học lại.\"",
+    "staples": [
+      "phu_chi",
+      "linh_chu_sa"
+    ]
   }
 ]

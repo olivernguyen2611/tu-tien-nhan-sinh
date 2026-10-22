@@ -1,8 +1,8 @@
 [
  {
   "id": "muu_do_dai_su",
-  "group": "quan_he",
-  "name": "Mưu đồ đại sự",
+  "group": "nghe",
+  "name": "Mưu phản",
   "icon": "謀",
   "text": "Quyền cao chức trọng, mà trên đầu vẫn còn một người. Ngươi bắt đầu tính tới chuyện không ai dám nói ra.",
   "conditions": {
@@ -87,7 +87,7 @@
  },
  {
   "id": "ket_vay_canh",
-  "group": "quan_he",
+  "group": "nghe",
   "name": "Kết vây cánh",
   "icon": "羽",
   "text": "Mời rượu, tặng lễ, hứa hẹn. Mỗi người thêm vào là một bàn tay, và một cái miệng.",
@@ -147,7 +147,7 @@
  },
  {
   "id": "nuoi_tu_si",
-  "group": "quan_he",
+  "group": "nghe",
   "name": "Nuôi tử sĩ",
   "icon": "死",
   "text": "Mua ngựa, rèn giáp, nuôi kẻ liều mạng trong trang trại ngoại thành.",
@@ -188,7 +188,7 @@
  },
  {
   "id": "tao_danh_nghia",
-  "group": "quan_he",
+  "group": "nghe",
   "name": "Tạo danh nghĩa",
   "icon": "名",
   "text": "Truyền đồng dao, dựng điềm lành, phao tin hôn quân. Thiên hạ cần một lý do.",
