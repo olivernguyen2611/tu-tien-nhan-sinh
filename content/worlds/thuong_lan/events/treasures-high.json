@@ -89,7 +89,7 @@
         "text": "Đợi người thắng ra khỏi sảnh, chặn đường",
         "result": { "text": "Hắn chưa kịp bước qua bậc cửa thì ngươi đã đứng đó.", "effects": {},
           "fight": {
-            "foe": { "name": "Đại tu sĩ mua đan", "realm": "same", "powerMul": 1.4, "intent": "kill" },
+            "foe": { "name": "Đại tu sĩ mua đan", "realm": "same", "powerMul": 1.4, "intent": "teach" },
             "win": { "text": "Hộp ngọc rơi vào tay ngươi, còn ấm. Ngươi đi trong đêm, không ngoái lại.", "effects": { "addItems": ["hoa_than_dan"], "karma": -25, "heartDemon": 8, "setFlags": ["hoai_bich"], "stat.daoHeart": -5, "followUp": { "event": "lo_bi_mat", "afterYears": [2, 5] } } },
             "lose": { "text": "Hắn không giết, chỉ nhìn ngươi như nhìn con kiến, rồi bước qua.", "effects": { "stat.health": -40, "stat.happiness": -10 } }
           } }

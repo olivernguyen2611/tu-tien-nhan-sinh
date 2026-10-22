@@ -8,6 +8,21 @@
 
 ## [Chưa phát hành]
 
+### Tổng tra 3: Nợ cũ và những trận đánh "không giết" (2026-10-23)
+- 15 sự kiện "Nợ cũ" (`no-cu.json`): những lựa chọn từ nhiều năm trước quay lại. Gã sư huynh béo năm xưa, nghĩa quân nhớ mặt người thợ rèn báo quan, phú hộ gửi thư nặc danh, hồ ly trả ơn, trưởng lão Vạn Yêu Điện đòi nợ nội đan, Tô gia treo thưởng, chấp sự Vô Chủ Phường, Hàn gia tranh linh mạch, thiếu gia thế gia tái đấu, người ở phòng đấu giá bên cạnh, gã bán đan giả, kẻ hạ độc trong cung, tân vương hỏi tội quốc sư cũ, lời tâu "chỉnh đốn quan lại", đêm xem sao của Thiếu giám. Mỗi sự kiện đọc một cờ trước đây đặt xong là bị quên.
+- 12 trận đánh có lời kể "nó không giết ngươi", "sư huynh kịp cứu", "chỉ lấy long châu" nhưng đối thủ lại mang ý giết (thua là chết). Nay đổi thành ý dạy dỗ hoặc cướp cho khớp lời kể: giữ cổng sơn môn, dẹp nội loạn, đồ đệ phản sư, đại tu sĩ mua đan, kẻ phá chợ, lão quái nhòm động thiên, tri kỷ trở mặt, kiếm khách hấp hối, long châu, Kinh địch "ngã rẽ" (nhánh tự liều mạng, có người cứu)…
+- Test cân bằng tầng 2 đổi sang đời mẫu m136:159 (564 năm, 7,4% năm trống).
+- Dòng nộp sưu thuế hằng năm có 5 cách viết (trước đây một câu lặp lại mỗi năm). Hậu duệ báo thù không còn mặc định người bị giết là cha.
+
+### Tổng tra 2: Sử Thương Lan (2026-10-23)
+- Sổ tri thức có nhóm mới **Sử Thương Lan** với 14 mảnh sử: Thái Cổ thần và yêu, đạo binh bằng đá, kẻ giữ cửa, Thông Thiên lộ, Đoạn Thiên chi biến, hạ giới cạn dần, gốc của ma đạo, Tiên Ma đại chiến, cửa U Minh, người tăng phương tây, khế ước tiên phàm, Thương Lan lịch, cột sáng Trung Châu, và một bí mật cuối.
+- 13 sự kiện khám phá (`su-thuong-lan.json`):
+  - phàm nhân cũng gặp được: ông lão kể chuyện, tấm bia bên sông, xương dưới ruộng, tranh vách chùa cổ, Khâm Thiên Giám thuê chép sách;
+  - tu sĩ gặp theo vùng và cảnh giới: ngọc giản trong tàng kinh các, mộ tán tu Trung Cổ, lão ma giữ vực, thạch nhân hỏi đường, bích họa phủ giao long, người trong băng, bậc thứ nhất của Thông Thiên lộ;
+  - "Ghép lại sử cũ": Kim Đan, đời sinh ra đã biết bốn mảnh từ các đời trước, mở ra bí mật cuối.
+- Các cờ sử cũ (biết hạ giới cạn, chữ "Thủ", cửa dưới Huyết Uyên, chép sử, dự yến đại năng, thấy cột sáng) nay đều ghi vào Sổ tri thức.
+- Thiết kế ghi ở `docs/design/the-gioi-thuong-lan.md` mục 11.
+
 ### Tổng tra 1: sửa lỗi vặt (2026-10-23)
 - Kết cục "Đế vương" trước đây không đời nào đạt được (đọc một cờ không sự kiện nào đặt). Nay: lên ngôi và còn ngồi ngai tới lúc chết (không mất nước, không nhường ngôi).
 - Lựa chọn "Mang về cho con" ở sự kiện phàm nhân nhặt được linh vật bị khóa vĩnh viễn (cờ `co_con` không ai đặt). Nay mở khi còn con sống.

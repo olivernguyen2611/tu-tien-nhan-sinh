@@ -145,7 +145,7 @@
           "text": "Hai thầy trò lao vào nhau. Hào quang quanh người nó sáng tới chói mắt.",
           "effects": {},
           "fight": {
-            "foe": { "name": "Đồ đệ phản sư", "intent": "kill", "fromNpc": true, "powerMul": 1.6 },
+            "foe": { "name": "Đồ đệ phản sư", "intent": "teach", "fromNpc": true, "powerMul": 1.6 },
             "win": {
               "text": "{npc} ngã xuống, mắt vẫn mở. Trời thôi mưa. Ngươi thắng, mà thấy như thiên đạo vừa quay mặt đi.",
               "effects": { "karma": -10, "heartDemon": 10, "stat.happiness": -8, "npc": { "kill": true } }

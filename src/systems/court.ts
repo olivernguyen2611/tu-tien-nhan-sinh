@@ -169,7 +169,9 @@ export function courtYear(state: GameState, content: Content): GameState {
     const due = Math.min(s.money.silver, Math.round((tax / 100) * cfg.taxSilver));
     if (due > 0) {
       s = { ...s, money: { ...s.money, silver: s.money.silver - due } };
-      lines.push({ text: fill(file.texts.tax, { silver: due }), tone: 'normal', ledger: true });
+      const say = file.texts.tax;
+      const text = typeof say === 'string' ? say : new Rng(`${s.seed}:tax:${age}`).pick(say);
+      lines.push({ text: fill(text, { silver: due }), tone: 'normal', ledger: true });
     }
   }
   // The army calls: a grown man gets the bắt lính event once per affair.

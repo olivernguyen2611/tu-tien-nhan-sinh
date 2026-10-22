@@ -1,0 +1,884 @@
+[
+ {
+  "id": "nc_su_huynh_beo",
+  "category": "sect",
+  "title": "Gã sư huynh năm ấy",
+  "text": "Gã sư huynh béo từng bị phạt quét sân vì ngươi, nay vẫn kẹt ở Luyện Khí, gặp ngươi ngoài sơn môn thì cúi đầu né sang lề đường.",
+  "themes": [
+   "sect"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co"
+   },
+   "sect": {
+    "member": true
+   },
+   "flagsAll": [
+    "ke_thu_su_huynh_beo"
+   ]
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Gọi hắn lại, chỉ cho một chiêu",
+    "result": {
+     "text": "Hắn ngẩn ra, rồi đỏ mặt cảm ơn. Năm sau hắn Trúc Cơ, gặp ai cũng kể ngươi là người tốt.",
+     "effects": {
+      "karma": 3,
+      "stat.charm": 1,
+      "sectContribution": 10
+     }
+    }
+   },
+   {
+    "text": "Đòi lại ba khối linh thạch năm xưa",
+    "result": {
+     "text": "Hắn móc túi trả đủ, cả lãi. Trong lòng ngươi sướng một chút, rồi thấy hơi nhỏ nhen.",
+     "effects": {
+      "spiritStones": 10,
+      "stat.happiness": 2,
+      "karma": -1
+     }
+    }
+   },
+   {
+    "text": "Đi qua như không thấy",
+    "result": {
+     "text": "Chuyện cũ như bụi. Ngươi không ngoái lại.",
+     "effects": {
+      "stat.daoHeart": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nc_phan_quan_bao_thu",
+  "category": "mortal",
+  "title": "Kẻ nhớ mặt",
+  "text": "Thời loạn, nghĩa quân chiếm huyện. Người cầm đầu đứng trước lò rèn của ngươi: \"Năm ấy ngươi báo quan, ba anh em ta bị chém.\"",
+  "tags": [
+   "violence"
+  ],
+  "themes": [
+   "life"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 20
+   },
+   "worldPhase": [
+    "loan_the",
+    "trung_suy"
+   ],
+   "flagsAll": [
+    "ke_thu_phan_quan"
+   ]
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Quỳ xin tha",
+    "result": {
+     "text": "Hắn nhổ một bãi, đập tan lò rèn rồi đi. Ngươi sống, nhưng mất nghề.",
+     "effects": {
+      "stat.happiness": -8,
+      "silver": -30,
+      "stat.charm": -2
+     }
+    }
+   },
+   {
+    "text": "Nói lý: ta chỉ là thợ, không phải quan",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Hắn im một lúc lâu, rồi bắt ngươi rèn giáo cho quân hắn, không trả tiền. Thế là còn sống.",
+     "effects": {
+      "stat.health": -4,
+      "stat.happiness": -3
+     }
+    },
+    "fail": {
+     "text": "Hắn không nghe. Một roi quất ngang lưng, ngươi nằm liệt nửa tháng.",
+     "effects": {
+      "stat.health": -15
+     }
+    }
+   },
+   {
+    "text": "Bỏ trốn trong đêm",
+    "result": {
+     "text": "Ngươi mang theo búa và chút bạc, đi về phía núi.",
+     "effects": {
+      "stat.happiness": -4,
+      "stat.daoHeart": 1,
+      "silver": -10
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nc_phu_ho_tra_dua",
+  "category": "mortal",
+  "title": "Thư nặc danh",
+  "text": "Một lá thư nặc danh gửi lên trên, tố ngươi ăn hối lộ. Nét chữ chẳng khó đoán: phú hộ năm ấy vẫn chưa quên.",
+  "themes": [
+   "life"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 22
+   },
+   "flagsAll": [
+    "ke_thu_phu_ho"
+   ]
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Mở sổ sách ra đối chất",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Sổ sạch, lời ngay. Quan trên phạt kẻ vu cáo, phú hộ mất nửa ruộng.",
+     "effects": {
+      "stat.intellect": 1,
+      "stat.charm": 2,
+      "karma": 2
+     }
+    },
+    "fail": {
+     "text": "Sổ có một chỗ sai thật, dù không phải do ngươi. Ngươi bị phạt ba tháng bổng.",
+     "effects": {
+      "silver": -40,
+      "stat.happiness": -5
+     }
+    }
+   },
+   {
+    "text": "Mang lễ tới nhà phú hộ cầu hòa",
+    "result": {
+     "text": "Hắn nhận lễ, cười to. Từ đó hắn coi ngươi là người của hắn, còn ngươi thì không ngủ ngon.",
+     "effects": {
+      "silver": -50,
+      "stat.happiness": -3,
+      "karma": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nc_ho_ly_bao_an",
+  "category": "fortune",
+  "title": "Cô gái áo trắng",
+  "text": "Một cô gái áo trắng, chân hơi khập khiễng, đặt trước cửa ngươi một giỏ linh quả rồi đi, không nói câu nào. Dưới gấu áo lộ ra một chóp đuôi trắng.",
+  "themes": [
+   "beast"
+  ],
+  "conditions": {
+   "age": {
+    "min": 16
+   },
+   "flagsAll": [
+    "ho_ly_bao_an"
+   ]
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Gọi theo cảm ơn",
+    "result": {
+     "text": "Cô quay lại, cười, rồi biến mất sau rặng tre. Giỏ quả ngọt như mật.",
+     "effects": {
+      "stat.health": 6,
+      "stat.happiness": 4,
+      "karma": 1
+     }
+    }
+   },
+   {
+    "text": "Mang quả đi bán",
+    "result": {
+     "text": "Một giỏ linh quả bán được giá tốt. Từ đó không còn ai đặt gì trước cửa nữa.",
+     "effects": {
+      "silver": 40,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nc_van_yeu_dien_tim",
+  "category": "beast",
+  "title": "Trưởng lão Vạn Yêu Điện",
+  "text": "Một lão hồ ly hóa hình tóc bạc chặn đường ngươi, mắt đỏ ngầu: \"Nội đan của con ta, ngươi dùng có ngon không?\"",
+  "tags": [
+   "violence"
+  ],
+  "themes": [
+   "beast",
+   "combat"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co"
+   },
+   "flagsAll": [
+    "ke_thu_van_yeu_dien"
+   ]
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Đánh",
+    "result": {
+     "text": "Yêu khí cuộn như bão.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Trưởng lão Vạn Yêu Điện",
+       "realm": "above",
+       "intent": "teach"
+      },
+      "win": {
+       "text": "Lão bị đánh lui, rít lên: \"Vạn Yêu Điện nhớ tên ngươi.\"",
+       "effects": {
+        "stat.physique": 1,
+        "stat.health": -8,
+        "reputation": {
+         "yeu": -10
+        }
+       }
+      },
+      "lose": {
+       "text": "Móng vuốt cào ngang ngực. Lão để ngươi sống, để ngươi nhớ.",
+       "effects": {
+        "stat.health": -20,
+        "reputation": {
+         "yeu": -5
+        }
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Quỳ xuống nhận tội, dâng linh thạch",
+    "result": {
+     "text": "Lão nhìn ngươi rất lâu, rồi lấy linh thạch, quay đi. Nợ máu không trả bằng đá, nhưng lão già rồi.",
+     "effects": {
+      "spiritStones": -150,
+      "karma": 4,
+      "stat.daoHeart": 1,
+      "reputation": {
+       "yeu": 3
+      }
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nc_to_gia_truy",
+  "category": "plunder",
+  "title": "Tô gia treo thưởng",
+  "text": "Trên vách phường thị dán một tờ cáo thị: Tô gia treo thưởng năm trăm linh thạch cho kẻ nào bắt được tên cướp ở hẻm núi năm ấy. Bức họa vẽ hơi giống ngươi.",
+  "themes": [
+   "combat"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "flagsAll": [
+    "ke_thu_to_gia"
+   ]
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Đổi tên, rời vùng",
+    "result": {
+     "text": "Ngươi đi biệt mấy năm. Lệnh truy nã hết hạn, Tô gia cũng quên dần.",
+     "effects": {
+      "stat.happiness": -4,
+      "cultProgress": -2,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Xé cáo thị",
+    "result": {
+     "text": "Ngươi xé ngay trước mặt hộ vệ Tô gia.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Hộ vệ Tô gia",
+       "realm": "same",
+       "intent": "teach"
+      },
+      "win": {
+       "text": "Ba tên hộ vệ nằm la liệt. Tô gia không dám treo thưởng lần hai.",
+       "effects": {
+        "stat.physique": 1,
+        "reputation": {
+         "tan_tu": 4
+        },
+        "karma": -1
+       }
+      },
+      "lose": {
+       "text": "Hộ vệ đông quá. Ngươi chạy thoát, để lại một vệt máu dài.",
+       "effects": {
+        "stat.health": -14
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Sửa bức họa cho xấu đi",
+    "result": {
+     "text": "Đêm ấy ngươi vẽ thêm râu và cái mụn ruồi. Hôm sau cả phường thị đi tìm một gã râu xồm.",
+     "effects": {
+      "stat.happiness": 3,
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nc_vo_chu_chap_su",
+  "category": "market",
+  "title": "Chấp sự Vô Chủ Phường",
+  "text": "Chấp sự Vô Chủ Phường năm ấy ăn chia với gã bán bản đồ, nay vẫn ngồi ghế cũ. Thấy ngươi bước vào, lão cười rất tươi, cười tươi quá.",
+  "themes": [
+   "market"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co"
+   },
+   "flagsAll": [
+    "ke_thu_vo_chu_phuong"
+   ]
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Tìm chứng cứ lão ăn chia",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi nộp sổ sách lên Tán Tu Liên Minh. Lão mất ghế, phường thị bớt một con sâu.",
+     "effects": {
+      "stat.intellect": 1,
+      "reputation": {
+       "tan_tu": 6
+      },
+      "karma": 2
+     }
+    },
+    "fail": {
+     "text": "Lão nhanh tay hơn. Ngươi bị cấm vào phường thị một năm.",
+     "effects": {
+      "stat.happiness": -4,
+      "spiritStones": -20
+     }
+    }
+   },
+   {
+    "text": "Nuốt giận, mua bán như thường",
+    "result": {
+     "text": "Lão hét giá gấp đôi với ngươi. Ngươi trả, nhớ thêm một món nợ.",
+     "effects": {
+      "spiritStones": -30,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nc_han_gia_ep",
+  "category": "cultivation",
+  "title": "Hàn gia chặn đường",
+  "text": "Hàn gia vẫn chưa quên lần bị từ hôn. Linh mạch ngươi đang dùng bỗng bị họ tranh chấp, nói là đất của Hàn gia từ ba đời trước.",
+  "themes": [
+   "politics"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co"
+   },
+   "flagsAll": [
+    "ke_thu_han_gia"
+   ]
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Đấu một trận định đất",
+    "result": {
+     "text": "Hàn gia cử ra người mạnh nhất cùng lứa.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Đệ tử Hàn gia",
+       "realm": "same",
+       "intent": "teach"
+      },
+      "win": {
+       "text": "Ngươi thắng. Hàn gia rút đơn, từ nay gặp thì chào.",
+       "effects": {
+        "stat.physique": 1,
+        "stat.charm": 1
+       }
+      },
+      "lose": {
+       "text": "Ngươi thua, nhường linh mạch. Tu luyện chậm đi mấy năm.",
+       "effects": {
+        "stat.health": -8,
+        "cultProgress": -4
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Nhường cho xong chuyện",
+    "result": {
+     "text": "Ngươi đi tìm chỗ khác. Hàn gia hả giận, coi như xóa nợ.",
+     "effects": {
+      "cultProgress": -3,
+      "stat.daoHeart": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nc_the_gia_thieu_gia",
+  "category": "cultivation",
+  "title": "Thiếu gia năm ấy",
+  "text": "Gã thiếu gia thế gia thua ngươi năm xưa nay đã Trúc Cơ, mang theo hai hộ vệ đến \"lĩnh giáo\" lần nữa.",
+  "themes": [
+   "combat"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "age": {
+    "min": 20
+   },
+   "flagsAll": [
+    "ke_thu_the_gia"
+   ]
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Tiếp chiêu",
+    "result": {
+     "text": "Lần này hắn không coi thường ngươi nữa.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Thiếu gia thế gia",
+       "realm": "same",
+       "intent": "teach"
+      },
+      "win": {
+       "text": "Hắn thua lần thứ hai, ngồi bệt xuống đất cười: \"Được, ta phục.\" Từ thù hóa bạn.",
+       "effects": {
+        "stat.charm": 2,
+        "karma": 1,
+        "meetNpc": {
+         "role": "Thiếu gia thế gia",
+         "root": true,
+         "affinity": 55
+        }
+       }
+      },
+      "lose": {
+       "text": "Hắn rửa được nhục, đi mà không nói một lời. Ngươi thấy nhẹ nhõm lạ.",
+       "effects": {
+        "stat.health": -8,
+        "stat.daoHeart": 1
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Mời hắn uống rượu",
+    "result": {
+     "text": "Hắn ngạc nhiên, rồi ngồi xuống. Ba vò rượu, chuyện cũ thành chuyện cười.",
+     "effects": {
+      "stat.happiness": 4,
+      "silver": -5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nc_doi_thu_dau_gia",
+  "category": "market",
+  "title": "Người ở phòng bên",
+  "text": "Kẻ ở phòng VIP bên cạnh năm ấy, người bị ngươi cướp viên Trúc Cơ Đan, gửi tới một tấm thiếp: mời ngươi tới hải thị đấu giá một lần nữa, \"cho công bằng\".",
+  "themes": [
+   "market"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co"
+   },
+   "stats": [
+    {
+     "stat": "spiritStones",
+     "gte": 100
+    }
+   ],
+   "flagsAll": [
+    "ke_thu_doi_thu_dau_gia"
+   ]
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Nhận lời",
+    "result": {
+     "text": "Hai bên nâng giá tới lúc cả hội trường im phăng phắc. Cuối cùng ngươi buông thẻ, hắn thắng với giá gấp năm. Hắn cười, ngươi cũng cười.",
+     "effects": {
+      "stat.happiness": 4,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Gửi lại một câu: ta không rảnh",
+    "result": {
+     "text": "Hắn tức tới mức mua luôn món kia với giá gấp mười, rồi đem tặng người khác.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.happiness": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nc_ban_hang_gia_tra_dua",
+  "category": "market",
+  "title": "Gã bán đan giả",
+  "text": "Gã bán đan giả bị ngươi bêu khắp phường thị nay đổi tên, mở sạp mới, và rao rằng ngươi là kẻ bán đan giả.",
+  "themes": [
+   "market"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "flagsAll": [
+    "ke_thu_ban_hang_gia"
+   ]
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Mang viên đan giả cũ ra làm chứng",
+    "result": {
+     "text": "Ngươi vẫn giữ viên đan bột mì. Cả phường thị cười, gã cuốn sạp chạy lần thứ hai.",
+     "effects": {
+      "stat.charm": 2,
+      "stat.happiness": 3
+     }
+    }
+   },
+   {
+    "text": "Mặc kệ",
+    "result": {
+     "text": "Tin đồn sống được ba tháng. Vài người không mua bán với ngươi nữa.",
+     "effects": {
+      "stat.charm": -1,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nc_hoang_cung_ke_ha_doc",
+  "category": "mortal",
+  "title": "Kẻ hạ độc",
+  "text": "Ba năm sau vụ hương trầm, một thái giám lén nhét vào tay ngươi mảnh giấy: \"Người hạ độc biết ngươi đã nhìn ra. Đừng uống trà trong cung.\"",
+  "themes": [
+   "life"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 25
+   },
+   "flagsAll": [
+    "ke_thu_hoang_cung"
+   ]
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Âm thầm tra tiếp",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Lần theo hương trầm, ngươi tìm ra một phi tần. Ngươi tâu lên, hoàng hậu thưởng hậu, cung cấm bớt một con rắn.",
+     "effects": {
+      "silver": 120,
+      "stat.intellect": 2,
+      "karma": 2
+     }
+    },
+    "fail": {
+     "text": "Ngươi tra tới nửa đường thì thái giám kia chết đuối trong hồ sen. Ngươi dừng tay.",
+     "effects": {
+      "stat.happiness": -6,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Xin cáo lão về quê",
+    "result": {
+     "text": "Ngự y rời cung thì không ai còn để ý. Ngươi mở một tiệm thuốc nhỏ, sống bình yên.",
+     "effects": {
+      "stat.happiness": 3,
+      "silver": -20
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nc_quoc_su_trieu_moi",
+  "category": "court",
+  "title": "Triều mới, quốc sư cũ",
+  "text": "Vua được ngươi cho thêm tuổi thọ nay đã băng hà. Tân vương lên ngôi, câu đầu tiên hỏi quan là: \"Tên đạo sĩ luyện đan cho tiên đế đâu?\"",
+  "themes": [
+   "politics"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "kim_dan"
+   },
+   "flagsAll": [
+    "quoc_su"
+   ]
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Về kinh gặp tân vương",
+    "result": {
+     "text": "Tân vương trẻ, sợ chết hơn cả tiên đế. Ngươi luyện thêm một lò, đổi lấy một tòa quan đạo và tiếng là quốc sư hai triều.",
+     "effects": {
+      "spiritStones": 100,
+      "stat.charm": 2,
+      "karma": -1,
+      "cultProgress": -3
+     }
+    }
+   },
+   {
+    "text": "Không về nữa",
+    "result": {
+     "text": "Tân vương chém ba ngự y cho đỡ giận. Ngươi nghe tin, ngồi im rất lâu.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.happiness": -3,
+      "karma": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nc_thanh_quan_bi_ghet",
+  "category": "office",
+  "title": "Lời tâu năm ấy",
+  "text": "Câu \"chỉnh đốn quan lại\" năm ngươi đỗ đầu, có kẻ nhớ. Mấy vị đại thần đổi sắc mặt khi ấy, nay dâng sớ đẩy ngươi ra biên ải.",
+  "themes": [
+   "life"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 24
+   },
+   "flagsAll": [
+    "thanh_quan"
+   ]
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Nhận lệnh, đi biên ải",
+    "result": {
+     "text": "Gió cát ba năm, ngươi gầy rạc, nhưng cả vùng biên khen ngươi là quan thanh liêm.",
+     "effects": {
+      "stat.health": -6,
+      "stat.charm": 3,
+      "karma": 3
+     }
+    }
+   },
+   {
+    "text": "Viết sớ biện bạch",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Thiên tử đọc sớ, cười bảo: \"Trẫm nhớ người này.\" Lệnh bị hủy.",
+     "effects": {
+      "stat.intellect": 1,
+      "stat.happiness": 4
+     }
+    },
+    "fail": {
+     "text": "Sớ bị giữ lại ở Thượng thư sảnh. Ngươi vẫn phải đi, lại thêm tiếng cứng đầu.",
+     "effects": {
+      "stat.happiness": -5,
+      "stat.charm": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nc_thieu_giam_xem_sao",
+  "category": "office",
+  "title": "Đêm xem sao",
+  "text": "Làm Thiếu giám mấy năm, một đêm trực đài quan tinh, ngươi thấy một ngôi sao lạ phía tây sáng lên rồi tắt, đúng chỗ Thái Cổ chiến trường.",
+  "themes": [
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "flagsAll": [
+    "thieu_giam"
+   ]
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Ghi vào sổ trình lên",
+    "result": {
+     "text": "Giám chính đọc xong, đốt sổ. \"Có những thứ Khâm Thiên Giám thấy mà không chép.\" Ông giao ngươi chép lại bản khế ước tiên phàm cho đỡ buồn.",
+     "effects": {
+      "stat.intellect": 2,
+      "stat.happiness": -1,
+      "setFlags": [
+       "su_khe_uoc_tien_pham"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Coi như không thấy",
+    "result": {
+     "text": "Ngươi về ngủ. Sáng ra đã quên, chỉ còn cảm giác lạnh gáy.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.happiness": 1
+     }
+    }
+   }
+  ]
+ }
+]

@@ -365,7 +365,7 @@
       "foe": {
        "name": "Ba ma tu",
        "realm": "same",
-       "intent": "kill",
+       "intent": "teach",
        "plural": true,
        "powerMul": 1.1
       },

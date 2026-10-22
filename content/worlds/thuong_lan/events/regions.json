@@ -49,7 +49,7 @@
           "text": "Kẻ gây rối là một tu sĩ đeo mặt nạ, đang đập sạp hàng.",
           "effects": {},
           "fight": {
-            "foe": { "name": "Kẻ phá chợ", "realm": "same", "intent": "kill", "lineage": "ma" },
+            "foe": { "name": "Kẻ phá chợ", "realm": "same", "intent": "teach", "lineage": "ma" },
             "win": {
               "text": "Bà Bà gật đầu, thưởng ngươi một túi linh thạch và một ánh nhìn dài, như đang ước lượng xương ngươi.",
               "effects": { "spiritStones": 80, "reputation": { "ma": 10 }, "stat.daoHeart": -1 }

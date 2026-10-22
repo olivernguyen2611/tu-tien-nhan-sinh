@@ -27,6 +27,12 @@
     "ministerRise": "{minister} được trọng dụng, quyền nghiêng triều dã.",
     "ministerFall": "Quyền thần {minister} thất thế, bè đảng tan rã.",
     "amnesty": "Tân quân đại xá thiên hạ. Cửa ngục mở, ngươi được thả về.",
-    "tax": "Nộp sưu thuế {silver} lượng."
+    "tax": [
+      "Nộp sưu thuế {silver} lượng.",
+      "Lý trưởng gõ cửa thu sưu: {silver} lượng.",
+      "Mùa thuế tới, ngươi đếm ra {silver} lượng nộp quan.",
+      "Sưu thuế năm nay {silver} lượng, nộp xong thấy túi nhẹ hẳn.",
+      "Nha dịch ghi tên vào sổ thuế, lấy đi {silver} lượng."
+    ]
   }
 }

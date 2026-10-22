@@ -210,7 +210,7 @@
       "foe": {
        "name": "Toán áo đen",
        "realm": "same",
-       "intent": "kill",
+       "intent": "rob",
        "powerMul": 1.0,
        "path": "weapon",
        "lineage": "tien"

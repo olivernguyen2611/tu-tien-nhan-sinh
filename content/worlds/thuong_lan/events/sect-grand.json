@@ -297,8 +297,7 @@
               "powerMul": 1.15,
               "element": "random",
               "lineage": "ma",
-              "intent": "kill",
-              "mercy": 0.2
+              "intent": "teach"
             },
             "win": {
               "text": "Gã áo đen bỏ chạy, ngươi được các trưởng lão nhắc tên trước toàn tông.",
@@ -547,8 +546,7 @@
               "powerMul": 1.1,
               "element": "random",
               "lineage": "ma",
-              "intent": "kill",
-              "mercy": 0.3
+              "intent": "teach"
             },
             "win": {
               "text": "Kẻ cầm đầu bị bắt sống. Chưởng môn ban thưởng, ghi tên ngươi vào sổ công trạng.",

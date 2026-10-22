@@ -14,7 +14,7 @@ const life = (seed: string) => {
 
 describe('13.6 chỉ tiêu tầng 2', () => {
   it('a long cultivator life: few quiet years, a home visit, a rival chain that ends', () => {
-    const { r, s } = life('m136:31');
+    const { r, s } = life('m136:159');
     expect(s.tier).toBe('tu_chan');
     expect(r.age).toBeGreaterThanOrEqual(300);
     expect(r.quietShare!).toBeLessThan(0.1);

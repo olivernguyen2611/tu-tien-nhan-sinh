@@ -242,7 +242,7 @@
           "text": "Lão quái vật ra tay, không lưu tình.",
           "effects": {},
           "fight": {
-            "foe": { "name": "Gia chủ thế gia", "realm": "above", "powerMul": 0.6, "intent": "kill" },
+            "foe": { "name": "Gia chủ thế gia", "realm": "above", "powerMul": 0.6, "intent": "teach" },
             "win": {
               "text": "Lão quái vật bỏ chạy, để lại một cánh tay áo. Đồ đệ quỳ xuống, lần đầu khóc trước mặt ngươi.",
               "effects": { "followUp": { "event": "kvct_pv_nga_re", "afterYears": [1, 2] }, "stat.happiness": 5, "reputation": { "giang_ho": 8 }, "npc": { "affinity": 15, "favor": 15 } }
