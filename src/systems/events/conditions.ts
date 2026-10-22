@@ -162,6 +162,18 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (c.jianghu.infamyMax !== undefined && j.infamy > c.jianghu.infamyMax) return false;
     if (c.jianghu.alias !== undefined && !!j.alias !== c.jianghu.alias) return false;
   }
+  if (c.faction) {
+    const f = c.faction;
+    const m = state.jianghu?.faction ?? null;
+    const def = m ? content?.jianghuFactions?.find((x) => x.id === m.id) : undefined;
+    if (f.member !== undefined && !!m !== f.member) return false;
+    if (f.id !== undefined && m?.id !== f.id) return false;
+    if (f.kinds && (!def || !f.kinds.includes(def.kind))) return false;
+    if (f.alignments && (!def || !f.alignments.includes(def.alignment))) return false;
+    if (f.rankMin !== undefined && (!m || m.rank < f.rankMin)) return false;
+    if (f.meritMin !== undefined && (!m || m.merit < f.meritMin)) return false;
+    if (f.hunted !== undefined && !!state.jianghu?.hunted !== f.hunted) return false;
+  }
   if (c.kin) {
     const k = state.kin;
     if (c.kin.met !== undefined && !!k !== c.kin.met) return false;

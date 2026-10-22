@@ -31,6 +31,9 @@ export const StatConditionSchema = z
   })
   .strict();
 
+/** 11.2: the jianghu kinds and sides, early so conditions and effects can name them (JIANGHU_KINDS below is the same list). */
+const JIANGHU_KINDS_EARLY = ['mon_phai', 'the_gia', 'giao_phai', 'bang_hoi', 'sat_thu', 'tieu_cuc', 'thuong_hoi'] as const;
+const JIANGHU_ALIGNMENTS_EARLY = ['chinh', 'ta', 'trung_lap', 'ma'] as const;
 const BaseConditionsSchema = z
   .object({
     age: z.object({ min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional(),
@@ -93,6 +96,11 @@ const BaseConditionsSchema = z
     /** 11.1 Danh vọng giang hồ: hiệp danh, ác danh, has a ngoại hiệu. */
     jianghu: z.object({
       fameMin: z.number().optional(), fameMax: z.number().optional(), infamyMin: z.number().optional(), infamyMax: z.number().optional(), alias: z.boolean().optional(),
+    }).strict().optional(),
+    /** 11.2: in a thế lực (this one, of these kinds / sides, at least this rank or cống hiến); hunted after a phản bang. */
+    faction: z.object({
+      member: z.boolean().optional(), id: id.optional(), kinds: z.array(z.enum(JIANGHU_KINDS_EARLY)).optional(), alignments: z.array(z.enum(JIANGHU_ALIGNMENTS_EARLY)).optional(),
+      rankMin: z.number().int().optional(), meritMin: z.number().optional(), hunted: z.boolean().optional(),
     }).strict().optional(),
     /** 10.9 Phạm pháp: mức truy nã, in ngục, đang hầu tòa, có tiền án, số lần vượt ngục. */
     law: z.object({
@@ -345,6 +353,15 @@ export const EffectsSchema = z
     /** 11.1: hiệp danh ± and ác danh ± (reputation.giang_ho follows as their difference). */
     fame: z.number().optional(),
     infamy: z.number().optional(),
+    /** 11.2: join a thế lực (kinds / sides / one id; its entrance rule applies); cống hiến ±; a nhiệm vụ done or failed;
+     *  đổi cống hiến lấy võ học; leave in peace or phản bang. */
+    joinFaction: z.object({ kinds: z.array(z.enum(JIANGHU_KINDS_EARLY)).optional(), alignments: z.array(z.enum(JIANGHU_ALIGNMENTS_EARLY)).optional(), id: id.optional() }).strict().optional(),
+    factionMerit: z.number().optional(),
+    factionMission: z.enum(['success', 'fail']).optional(),
+    factionTeach: z.boolean().optional(),
+    leaveFaction: z.enum(['quit', 'betray']).optional(),
+    /** Lying low: the hunt after a phản bang ends balance.factions.hideYears sooner. */
+    hideFromHunt: z.boolean().optional(),
     /** 10.10: move to a far châu (old acquaintances cool, flag tha_huong). */
     moveHome: z.boolean().optional(),
     /** 10.9–10.10: this life ends now, this way. */
@@ -452,7 +469,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1787,6 +1804,14 @@ export const BalanceSchema = z
     jianghu: z.object({
       aliasAt: z.number(), max: z.number(), ranks: z.array(z.number()).min(1), crimeInfamy: z.number(), stageFame: z.number(), aliasKinds: z.array(z.string()).default([]),
     }).strict().optional(),
+    /** 11.2 Môn phái, bang hội: cống hiến for each rank up; bạc a nhiệm vụ pays and the yearly stipend by rank; cống hiến a
+     *  nhiệm vụ earns [min, max] or loses; health lost on a failed one; danh a nhiệm vụ brings; karma of a tà one; đổi võ học
+     *  (cost, training bonus); phản bang (years hunted, danh lost and gained); karma a chính phái wants. */
+    factions: z.object({
+      rankMerit: z.array(z.number()).min(1), missionPay: z.array(z.number()).min(1), stipend: z.array(z.number()).min(1),
+      missionMerit: z.tuple([z.number(), z.number()]), missionFailMerit: z.number(), missionFailHealth: z.number(), missionRenown: z.number(), taKarma: z.number(),
+      teachCost: z.number(), teachBonus: z.number(), huntYears: z.number().int(), hideYears: z.number().int(), betrayFame: z.number(), betrayInfamy: z.number(), chinhKarmaMin: z.number(),
+    }).strict().optional(),
     /** 10.13 Lịch lễ hội thật: days either side of a real lễ hội; the share of years that take it; festival event weight ×. */
     calendar: z.object({ windowDays: z.number().int().min(0), share: z.number().min(0).max(1), boost: z.number().min(1) }).strict().optional(),
     /** 10.10 Ra đi và kết đời phàm: moving far cools old ties; the age a quy ẩn opens; tang lễ events by the parent who died. */
@@ -3019,8 +3044,8 @@ export const RegionFileSchema = z.array(
 export type Region = z.infer<typeof RegionFileSchema>[number];
 
 /** 9.W: kinds and stances of giang hồ forces (kept apart from the cultivation sects in sects.json). */
-export const JIANGHU_KINDS = ['mon_phai', 'the_gia', 'giao_phai', 'bang_hoi', 'sat_thu', 'tieu_cuc', 'thuong_hoi'] as const;
-export const JIANGHU_ALIGNMENTS = ['chinh', 'ta', 'trung_lap', 'ma'] as const;
+export const JIANGHU_KINDS = JIANGHU_KINDS_EARLY;
+export const JIANGHU_ALIGNMENTS = JIANGHU_ALIGNMENTS_EARLY;
 
 /** content/worlds/<id>/jianghu-factions.json (9.W): thế gia, môn phái, giáo phái, bang hội of the mortal world. Joining comes in 11.2. */
 export const JianghuFactionFileSchema = z.array(
@@ -3042,6 +3067,16 @@ export const JianghuFactionFileSchema = z.array(
       allies: z.array(id).default([]),
       rivals: z.array(id).default([]),
       notable: z.array(z.object({ name: z.string().min(1), title: z.string().min(1), text: z.string().min(1) }).strict()).default([]),
+      /** 11.2: ranks of its own (else the kind's in jianghu.json); who it takes, beyond the kind's rule. */
+      ranks: z.array(z.string().min(1)).min(3).optional(),
+      join: z.object({
+        age: z.tuple([z.number().int(), z.number().int()]).optional(),
+        /** A thế gia that does take outsiders (khách khanh, gia tướng). */
+        open: z.boolean().optional(),
+        fameMin: z.number().optional(), infamyMin: z.number().optional(),
+        /** Holding this flag stands in for the ác danh (a thẻ bài an envoy left). */
+        flag: id.optional(),
+      }).strict().optional(),
     })
     .strict(),
 );
@@ -3312,6 +3347,24 @@ export const JianghuFileSchema = z.object({
     /** A thương tật (health.json id) gives its own trait word. */
     injury: z.record(z.string().min(1)).default({}),
   }).strict(),
+  /** 11.2: thế lực by kind (ranks, ages it takes, born members only, danh needed) and lời văn. */
+  factions: z.object({
+    kinds: z.record(z.object({
+      ranks: z.array(z.string().min(1)).min(3), age: z.tuple([z.number().int(), z.number().int()]),
+      bornOnly: z.boolean().optional(), fameMin: z.number().optional(), infamyMin: z.number().optional(),
+    }).strict()),
+    texts: z.object({
+      /** {faction}, {rank}. */
+      joined: z.string().min(1), promoted: z.string().min(1), none: z.string().min(1),
+      blocked: z.object({ age: z.string().min(1), born: z.string().min(1), fame: z.string().min(1), infamy: z.string().min(1), karma: z.string().min(1), left: z.string().min(1) }).strict(),
+      /** {faction}, {silver}. */
+      mission: z.object({ chinh: aliasPool, ta: aliasPool, trung_lap: aliasPool }).strict(),
+      missionFail: aliasPool,
+      /** {faction}, {signature}. */
+      taught: z.string().min(1), teachPoor: z.string().min(1),
+      left: z.string().min(1), betrayed: z.string().min(1), huntOver: z.string().min(1),
+    }).strict(),
+  }).strict().optional(),
   texts: z.object({
     /** {alias}. */
     alias: z.object({ hiep: z.string().min(1), ac: z.string().min(1) }).strict(),

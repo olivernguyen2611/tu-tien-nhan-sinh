@@ -362,7 +362,9 @@
      "text": "Gã chỉ cười, để lại một tấm thẻ gỗ khắc hình đầu sói: \"Khi nào nghĩ thông, cầm thẻ tới bến Hạ Khẩu.\"",
      "effects": {
       "stat.intellect": 1,
-      "setFlags": ["the_go_dau_soi"]
+      "setFlags": [
+       "the_go_dau_soi"
+      ]
      }
     }
    },
@@ -384,6 +386,406 @@
       "fame": 2,
       "infamy": 1,
       "stat.happiness": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "jh_bi_truy_sat",
+  "category": "jianghu",
+  "title": "Truy sát",
+  "text": "Đêm khuya, ngói trên mái khẽ kêu. Ngươi chưa kịp đứng dậy thì cửa sổ đã bật tung: người của thế lực cũ đã tìm tới.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "faction": {
+    "hunted": true
+   }
+  },
+  "weight": 3,
+  "cooldownYears": 2,
+  "choices": [
+   {
+    "text": "Rút đao nghênh chiến",
+    "result": {
+     "text": "Ba bóng áo đen lao vào, đao quang loang loáng.",
+     "effects": {
+      "stat.happiness": -1
+     },
+     "fight": {
+      "foe": {
+       "name": "Sát thủ truy sát",
+       "realm": "same",
+       "intent": "kill",
+       "powerMul": 1.0,
+       "path": "weapon",
+       "lineage": "tien"
+      },
+      "win": {
+       "text": "Kẻ cuối cùng ngã xuống. Ngươi lau máu trên mặt, biết đây chưa phải lần cuối.",
+       "effects": {
+        "stat.happiness": -1,
+        "fame": 2
+       }
+      },
+      "lose": {
+       "text": "Ngươi trúng mấy nhát, phải nhảy xuống sông mới thoát.",
+       "effects": {
+        "stat.health": -10,
+        "stat.happiness": -3
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Phá vách chạy trốn",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ngươi chui qua lỗ chó sau vườn, chạy một mạch tới sáng. Bọn chúng mất dấu.",
+     "effects": {
+      "stat.health": -2,
+      "hideFromHunt": true
+     }
+    },
+    "fail": {
+     "text": "Chạy chưa xa đã bị đuổi kịp, ăn một nhát vào lưng.",
+     "effects": {
+      "stat.health": -8,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Ném túi bạc, xin một con đường sống",
+    "result": {
+     "text": "Gã cầm đầu cân túi bạc trong tay, cười khẩy rồi rút đi. Lần sau giá sẽ cao hơn.",
+     "effects": {
+      "silver": -40,
+      "stat.happiness": -2,
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "jh_bang_chien",
+  "category": "jianghu",
+  "title": "Bang chiến",
+  "text": "Tin dữ về tổng đàn: thế lực đối địch kéo người tới gây sự, đã có huynh đệ bị thương. Ai cũng nhìn về phía ngươi.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "faction": {
+    "member": true,
+    "kinds": [
+     "mon_phai",
+     "bang_hoi",
+     "giao_phai",
+     "the_gia"
+    ]
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 5,
+  "choices": [
+   {
+    "text": "Xông lên tuyến đầu",
+    "result": {
+     "text": "Ngươi dẫn đầu đám huynh đệ, lao thẳng vào giữa trận.",
+     "effects": {
+      "stat.daoHeart": 1
+     },
+     "fight": {
+      "foe": {
+       "name": "Cao thủ phe địch",
+       "realm": "same",
+       "intent": "teach",
+       "powerMul": 1.05,
+       "path": "body",
+       "lineage": "tien"
+      },
+      "win": {
+       "text": "Phe địch tan tác. Cả thế lực nhắc tên ngươi suốt mấy tháng.",
+       "effects": {
+        "factionMerit": 20,
+        "stat.happiness": 3,
+        "fame": 2
+       }
+      },
+      "lose": {
+       "text": "Ngươi bị đánh văng khỏi trận, nằm liệt mấy ngày. Trận ấy hòa.",
+       "effects": {
+        "factionMerit": 5,
+        "stat.health": -8
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Ở phía sau lo thuốc men cho người bị thương",
+    "result": {
+     "text": "Không vẻ vang gì, nhưng mấy huynh đệ sống được là nhờ ngươi.",
+     "effects": {
+      "factionMerit": 8,
+      "stat.charm": 1,
+      "karma": 1
+     }
+    }
+   },
+   {
+    "text": "Cáo bệnh ở nhà",
+    "result": {
+     "text": "Trận ấy thua. Có kẻ bảo ngươi nhát, có kẻ bảo ngươi khôn.",
+     "effects": {
+      "factionMerit": -8,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "jh_truong_boi_giao_viec",
+  "category": "jianghu",
+  "title": "Việc kín",
+  "text": "Trưởng bối gọi ngươi vào phòng riêng, cài then cửa: \"Có một việc không thể giao cho người ngoài.\"",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "faction": {
+    "member": true,
+    "rankMin": 2
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Nhận việc, làm cho trọn",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Việc xong không để lại dấu vết. Trưởng bối nhìn ngươi bằng ánh mắt khác hẳn.",
+     "effects": {
+      "factionMerit": 25,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Việc lộ ra một nửa. Trưởng bối không trách, nhưng cũng không giao việc nữa.",
+     "effects": {
+      "factionMerit": -5,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Hỏi rõ trước khi nhận",
+    "result": {
+     "text": "Trưởng bối im lặng một lúc rồi kể hết. Biết nhiều hơn, cũng lo nhiều hơn.",
+     "effects": {
+      "stat.intellect": 1,
+      "factionMerit": 5
+     }
+    }
+   },
+   {
+    "text": "Từ chối khéo",
+    "result": {
+     "text": "\"Đệ tử tài hèn, sợ hỏng việc lớn.\" Trưởng bối gật gù, nụ cười có phần nhạt.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "factionMerit": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "jh_noi_gian",
+  "category": "jianghu",
+  "title": "Nội gián",
+  "text": "Ngươi tình cờ thấy một huynh đệ lén đưa thư cho người lạ ở sau chợ. Trên phong thư có dấu của thế lực đối địch.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "faction": {
+    "member": true
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Báo lên trên",
+    "result": {
+     "text": "Kẻ nội gián bị bắt. Trên thưởng công, dưới có kẻ nhìn ngươi đầy thù hằn.",
+     "effects": {
+      "factionMerit": 15,
+      "stat.charm": -1
+     }
+    }
+   },
+   {
+    "text": "Tìm hắn nói chuyện riêng",
+    "result": {
+     "text": "Hắn quỳ xuống kể chuyện người nhà bị bắt làm con tin. Ngươi giúp hắn cứu người, rồi cả hai giữ kín chuyện.",
+     "effects": {
+      "karma": 3,
+      "stat.daoHeart": 2,
+      "meetNpc": {
+       "role": "người giang hồ",
+       "kind": "vo_lam_nhan",
+       "affinity": 75
+      }
+     }
+    }
+   },
+   {
+    "text": "Ép hắn nộp bạc để im miệng",
+    "result": {
+     "text": "Hắn nghiến răng đưa bạc. Ngươi có thêm tiền, và thêm một kẻ muốn ngươi chết.",
+     "effects": {
+      "silver": 30,
+      "infamy": 2,
+      "karma": -2,
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "jh_lenh_tan_ac",
+  "category": "jianghu",
+  "title": "Lệnh tàn ác",
+  "text": "Lệnh từ trên đưa xuống: đốt trụi một thôn đã chứa chấp kẻ thù của thế lực. Trong thôn có cả người già trẻ nhỏ.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "faction": {
+    "member": true,
+    "alignments": [
+     "ta",
+     "ma"
+    ]
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Tuân lệnh",
+    "result": {
+     "text": "Lửa cháy suốt đêm. Ngươi không nhìn lại. Cống hiến của ngươi tăng vọt.",
+     "effects": {
+      "factionMerit": 25,
+      "infamy": 6,
+      "karma": -6,
+      "stat.daoHeart": -4
+     }
+    }
+   },
+   {
+    "text": "Lén báo cho dân trong thôn chạy trước",
+    "result": {
+     "text": "Thôn cháy rụi mà không ai chết. Trên nghi ngờ, ngươi giả như không biết gì.",
+     "effects": {
+      "karma": 5,
+      "stat.daoHeart": 3,
+      "factionMerit": -10
+     }
+    }
+   },
+   {
+    "text": "Phản bang ngay đêm ấy",
+    "result": {
+     "text": "Ngươi quay đao về phía đám đồng bọn rồi biến mất vào rừng. Từ nay ngươi là kẻ bị truy sát.",
+     "effects": {
+      "leaveFaction": "betray",
+      "karma": 4,
+      "stat.daoHeart": 2,
+      "fame": 3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "jh_su_mon_thu_tai",
+  "category": "jianghu",
+  "title": "Đồng môn tỉ thí",
+  "text": "Mỗi năm một lần, thế lực cho đệ tử tỉ thí với nhau để xếp thứ bậc. Đối thủ của ngươi là một kẻ mới nổi.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "faction": {
+    "member": true,
+    "kinds": [
+     "mon_phai",
+     "the_gia"
+    ]
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Lên đài",
+    "result": {
+     "text": "Hai bên ôm quyền, trống đánh ba hồi.",
+     "effects": {
+      "stat.physique": 1
+     },
+     "fight": {
+      "foe": {
+       "name": "Đồng môn",
+       "realm": "same",
+       "intent": "teach",
+       "powerMul": 0.95,
+       "path": "sword",
+       "lineage": "tien"
+      },
+      "win": {
+       "text": "Ngươi thắng gọn. Trưởng bối gật đầu, ghi tên ngươi lên bảng.",
+       "effects": {
+        "factionMerit": 12,
+        "stat.happiness": 2
+       }
+      },
+      "lose": {
+       "text": "Ngươi thua sát nút, về luyện thêm.",
+       "effects": {
+        "factionMerit": 3,
+        "stat.happiness": -2,
+        "martialBonus": 3
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Nhường đối thủ",
+    "result": {
+     "text": "Ngươi cố ý chậm một nhịp. Kẻ kia thắng, nhìn ngươi đầy biết ơn.",
+     "effects": {
+      "stat.charm": 2,
+      "factionMerit": 2
      }
     }
    }

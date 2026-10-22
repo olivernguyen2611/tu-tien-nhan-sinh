@@ -136,7 +136,13 @@ export interface GameState {
   /** 10.11 Gia tộc phàm tục: tộc trưởng, họ hàng (NPC ids), forebears for the gia phả, phân gia done, người nối dõi,
    *  gia quy, từ đường level, tế tổ times. */
   /** 11.1: hiệp danh (fame) and ác danh (infamy), 0–100 each; the ngoại hiệu and the age it was given. */
-  jianghu?: { fame: number; infamy: number; alias: string | null; aliasAt: number | null };
+  jianghu?: {
+    fame: number; infamy: number; alias: string | null; aliasAt: number | null;
+    /** 11.2: the thế lực the life is in (rank index, cống hiến, joined at, nhiệm vụ done); thế lực left; hunted after a phản bang. */
+    faction?: { id: string; rank: number; merit: number; since: number; missions: number } | null;
+    left?: string[];
+    hunted?: { by: string; until: number } | null;
+  };
   /** 10.13: the real lễ hội this week (set from the device's date when a life starts or loads), or null. */
   realFestival?: string | null;
   kin?: {

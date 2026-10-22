@@ -1,0 +1,372 @@
+[
+  {
+    "id": "bai_nhap_mon_phai",
+    "group": "giang_ho",
+    "name": "Bái nhập danh môn",
+    "icon": "門",
+    "text": "Lên núi xin bái nhập một danh môn chính phái. Cửa nào cũng có bài thử riêng.",
+    "conditions": {
+      "law": {
+        "trial": false
+      },
+      "faction": {
+        "member": false
+      },
+      "age": {
+        "min": 8,
+        "max": 25
+      }
+    },
+    "months": 2,
+    "limit": {
+      "perYear": 1,
+      "cooldownYears": 2
+    },
+    "check": {
+      "stat": "stat.physique",
+      "difficulty": 40
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Ngươi quỳ trước sơn môn từ sáng tới tối, rồi được gọi vào thử tài.",
+          "Ngươi leo hết chín trăm bậc đá, tới nơi vẫn còn đứng vững."
+        ],
+        "effects": {
+          "joinFaction": {
+            "kinds": [
+              "mon_phai"
+            ],
+            "alignments": [
+              "chinh"
+            ]
+          },
+          "stat.physique": 1
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Bài thử quá sức. Người gác cổng bảo năm sau hẵng tới.",
+          "Ngươi gục giữa chừng con đường đá, được người ta khiêng xuống núi."
+        ],
+        "effects": {
+          "stat.happiness": -2,
+          "stat.health": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "gia_nhap_bang_hoi",
+    "group": "giang_ho",
+    "name": "Vào bang, vào hội",
+    "icon": "幫",
+    "text": "Tìm tới một bang hội, tiêu cục hay thương hội đang cần người.",
+    "conditions": {
+      "law": {
+        "trial": false
+      },
+      "faction": {
+        "member": false
+      },
+      "age": {
+        "min": 10
+      }
+    },
+    "months": 1,
+    "limit": {
+      "perYear": 1,
+      "cooldownYears": 2
+    },
+    "check": {
+      "stat": "stat.charm",
+      "difficulty": 35
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Ngươi được một gã quen giới thiệu, mời chén rượu ra mắt.",
+          "Ngươi tới tận nơi xin việc, nói năng đâu ra đấy."
+        ],
+        "effects": {
+          "joinFaction": {
+            "kinds": [
+              "bang_hoi",
+              "tieu_cuc",
+              "thuong_hoi"
+            ],
+            "alignments": [
+              "chinh",
+              "trung_lap"
+            ]
+          },
+          "stat.charm": 1
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Họ nghe ngươi nói xong thì bảo về chờ tin. Tin chẳng bao giờ tới.",
+          "Gã quản sự chê ngươi gầy, đuổi về."
+        ],
+        "effects": {
+          "stat.happiness": -2
+        }
+      }
+    ]
+  },
+  {
+    "id": "dau_quan_hac_dao",
+    "group": "giang_ho",
+    "name": "Đầu quân hắc đạo",
+    "icon": "黑",
+    "text": "Tìm tới chốn hắc đạo: sơn trại, giáo phái, sát thủ lâu. Ở đó người ta không hỏi quá khứ.",
+    "conditions": {
+      "law": {
+        "trial": false
+      },
+      "faction": {
+        "member": false
+      },
+      "age": {
+        "min": 14
+      }
+    },
+    "months": 1,
+    "limit": {
+      "perYear": 1,
+      "cooldownYears": 2
+    },
+    "check": {
+      "stat": "stat.physique",
+      "difficulty": 45
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Ngươi tới điểm hẹn, có kẻ bịt mắt dẫn đi một quãng rất xa.",
+          "Ngươi nộp đầu danh trạng, máu còn chưa khô."
+        ],
+        "effects": {
+          "joinFaction": {
+            "kinds": [
+              "bang_hoi",
+              "giao_phai",
+              "sat_thu"
+            ],
+            "alignments": [
+              "ta",
+              "ma"
+            ]
+          },
+          "stat.daoHeart": -2,
+          "karma": -2
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Bọn chúng thử tay ngươi bằng một trận đòn. Ngươi bò về.",
+          "Chúng bảo ngươi chưa đủ độc ác. Không biết nên mừng hay buồn."
+        ],
+        "effects": {
+          "stat.health": -4,
+          "stat.happiness": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "lam_nhiem_vu_bang",
+    "group": "giang_ho",
+    "name": "Làm nhiệm vụ cho thế lực",
+    "icon": "令",
+    "text": "Nhận một việc thế lực giao: hộ tống, đòi nợ, dẹp loạn, điều tra.",
+    "conditions": {
+      "law": {
+        "trial": false
+      },
+      "faction": {
+        "member": true
+      }
+    },
+    "months": 2,
+    "limit": {
+      "perYear": 2,
+      "cooldownYears": 1
+    },
+    "check": {
+      "stat": "stat.physique",
+      "difficulty": 45
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Ngươi nhận lệnh, lên đường.",
+          "Lệnh bài trong tay, ngươi đi ngay trong đêm."
+        ],
+        "effects": {
+          "factionMission": "success",
+          "stat.physique": 1
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Ngươi nhận lệnh, lên đường.",
+          "Lệnh bài trong tay, ngươi đi ngay trong đêm."
+        ],
+        "effects": {
+          "factionMission": "fail",
+          "stat.happiness": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "doi_cong_hien_vo_hoc",
+    "group": "giang_ho",
+    "name": "Đổi cống hiến lấy võ học",
+    "icon": "授",
+    "text": "Đem cống hiến tích được xin trưởng bối truyền thêm võ học của môn.",
+    "conditions": {
+      "law": {
+        "trial": false
+      },
+      "faction": {
+        "member": true,
+        "meritMin": 40
+      }
+    },
+    "months": 1,
+    "limit": {
+      "perYear": 1,
+      "cooldownYears": 2
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Trưởng bối gật đầu, dẫn ngươi vào luyện võ trường phía sau.",
+          "Ngươi được đưa vào tàng thư các, đọc một đêm không ngủ."
+        ],
+        "effects": {
+          "factionTeach": true,
+          "stat.intellect": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "ta_su_roi_mon",
+    "group": "giang_ho",
+    "name": "Tạ sư, rời đi",
+    "icon": "辭",
+    "text": "Xin rời thế lực trong êm đẹp. Đi rồi không quay lại được.",
+    "conditions": {
+      "law": {
+        "trial": false
+      },
+      "faction": {
+        "member": true
+      }
+    },
+    "months": 0,
+    "limit": {
+      "perYear": 1,
+      "cooldownYears": 1
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Ngươi dập đầu ba cái trước điện, rồi xuống núi.",
+          "Ngươi trả lại lệnh bài, ôm quyền chào từng người."
+        ],
+        "effects": {
+          "leaveFaction": "quit",
+          "stat.happiness": -1,
+          "stat.daoHeart": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "phan_bang",
+    "group": "giang_ho",
+    "name": "Phản bang",
+    "icon": "叛",
+    "text": "Mang theo bí mật và của cải, bỏ đi trong đêm. Họ sẽ không tha.",
+    "conditions": {
+      "law": {
+        "trial": false
+      },
+      "faction": {
+        "member": true
+      }
+    },
+    "months": 0,
+    "limit": {
+      "perYear": 1,
+      "cooldownYears": 1
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Ngươi lẻn vào kho, gói lấy những gì giá trị nhất rồi trốn qua cửa sau.",
+          "Ngươi đem bí mật của thế lực bán cho kẻ thù của nó, rồi biến mất."
+        ],
+        "effects": {
+          "leaveFaction": "betray",
+          "silver": 40,
+          "stat.daoHeart": -3,
+          "karma": -3
+        }
+      }
+    ]
+  },
+  {
+    "id": "an_minh_tranh_truy_sat",
+    "group": "giang_ho",
+    "name": "Ẩn mình tránh truy sát",
+    "icon": "隱",
+    "text": "Đổi chỗ ở, đổi tên, ban ngày không ra đường.",
+    "conditions": {
+      "law": {
+        "trial": false
+      },
+      "faction": {
+        "hunted": true
+      }
+    },
+    "months": 3,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Ngươi trú trong một ngôi miếu hoang suốt mấy tháng, ăn rau dại sống qua ngày.",
+          "Ngươi cạo râu, đổi giọng, sống như một kẻ khác."
+        ],
+        "effects": {
+          "stat.happiness": -2,
+          "stat.daoHeart": 1,
+          "hideFromHunt": true
+        }
+      }
+    ]
+  }
+]

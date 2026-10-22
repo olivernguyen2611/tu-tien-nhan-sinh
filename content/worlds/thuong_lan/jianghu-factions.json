@@ -11,7 +11,8 @@
     "entry": "Xuất gia (dứt tình duyên) hoặc làm tục gia đệ tử; qua ba năm gánh nước bổ củi.",
     "allies": ["nga_mi", "vo_dang"],
     "rivals": ["thien_ma_than_giao"],
-    "notable": [{ "name": "Huyền Tâm", "title": "Phương trượng", "text": "Ba mươi năm chưa rời núi, nói ít tới mức đệ tử phải đoán ý qua tiếng gõ mõ." }]
+    "notable": [{ "name": "Huyền Tâm", "title": "Phương trượng", "text": "Ba mươi năm chưa rời núi, nói ít tới mức đệ tử phải đoán ý qua tiếng gõ mõ." }],
+    "join": { "age": [6, 30] }
   },
   {
     "id": "hoa_son",
@@ -95,7 +96,8 @@
     "entry": "Ai cũng vào được, bắt đầu từ một túi.",
     "allies": ["banh_gia"],
     "rivals": ["luc_lam_minh"],
-    "notable": [{ "name": "Lỗ", "title": "Trưởng lão chín túi", "text": "Biết chuyện nhà ai cũng rõ hơn chính chủ, đổi lại chỉ xin một bát rượu." }]
+    "notable": [{ "name": "Lỗ", "title": "Trưởng lão chín túi", "text": "Biết chuyện nhà ai cũng rõ hơn chính chủ, đổi lại chỉ xin một bát rượu." }],
+    "join": { "age": [6, 60] }
   },
   {
     "id": "mo_dung_the_gia",
@@ -137,7 +139,8 @@
     "entry": "Sinh ra trong họ; người ngoài chỉ làm khách khanh, không được học độc.",
     "allies": [],
     "rivals": ["banh_gia"],
-    "notable": [{ "name": "Đường lão thái", "title": "Trưởng lão", "text": "Pha trà ngon nhất Trung Nguyên. Khách nào cũng uống, nhưng chẳng ai dám uống chén thứ hai." }]
+    "notable": [{ "name": "Đường lão thái", "title": "Trưởng lão", "text": "Pha trà ngon nhất Trung Nguyên. Khách nào cũng uống, nhưng chẳng ai dám uống chén thứ hai." }],
+    "join": { "open": true }
   },
   {
     "id": "nam_cung_the_gia",
@@ -151,7 +154,8 @@
     "entry": "Sinh ra trong họ; đệ tử ngoại môn phải qua tỉ kiếm.",
     "allies": ["hoa_son"],
     "rivals": ["mo_dung_the_gia"],
-    "notable": [{ "name": "Nam Cung Liệt", "title": "Thiếu gia", "text": "Kiếm nhanh, miệng còn nhanh hơn kiếm, nên kẻ thù nhiều hơn bạn." }]
+    "notable": [{ "name": "Nam Cung Liệt", "title": "Thiếu gia", "text": "Kiếm nhanh, miệng còn nhanh hơn kiếm, nên kẻ thù nhiều hơn bạn." }],
+    "join": { "open": true }
   },
   {
     "id": "banh_gia",
@@ -165,7 +169,8 @@
     "entry": "Sinh ra trong họ; võ sĩ ngoại họ được nhận làm gia tướng.",
     "allies": ["cai_bang"],
     "rivals": ["duong_mon"],
-    "notable": [{ "name": "Bành Đại Hổ", "title": "Gia chủ", "text": "Giận lên thì chém bàn, nguôi rồi tự đi đóng bàn mới." }]
+    "notable": [{ "name": "Bành Đại Hổ", "title": "Gia chủ", "text": "Giận lên thì chém bàn, nguôi rồi tự đi đóng bàn mới." }],
+    "join": { "open": true }
   },
   {
     "id": "thien_ma_than_giao",
@@ -193,7 +198,8 @@
     "entry": "Làm xong một vụ ám sát lâu giao.",
     "allies": [],
     "rivals": ["nga_mi"],
-    "notable": [{ "name": "Tam Nương", "title": "Lâu chủ", "text": "Mở quán trà làm bình phong. Trà dở, nhưng khách vẫn đông lạ thường." }]
+    "notable": [{ "name": "Tam Nương", "title": "Lâu chủ", "text": "Mở quán trà làm bình phong. Trà dở, nhưng khách vẫn đông lạ thường." }],
+    "join": { "infamyMin": 25 }
   },
   {
     "id": "luc_lam_minh",
@@ -207,7 +213,8 @@
     "entry": "Sơn tặc có tiếng thì được mời; người thường thì phải nộp đầu danh trạng.",
     "allies": [],
     "rivals": ["thien_ha_tieu_cuc", "cai_bang"],
-    "notable": [{ "name": "Hắc Báo", "title": "Minh chủ", "text": "Thuở nhỏ là tiêu sư, bị chủ quỵt tiền công nên lên núi. Giờ ghét nhất là tiêu cục." }]
+    "notable": [{ "name": "Hắc Báo", "title": "Minh chủ", "text": "Thuở nhỏ là tiêu sư, bị chủ quỵt tiền công nên lên núi. Giờ ghét nhất là tiêu cục." }],
+    "join": { "infamyMin": 10, "flag": "the_go_dau_soi" }
   },
   {
     "id": "thien_ha_tieu_cuc",
@@ -221,7 +228,8 @@
     "entry": "Võ nghệ từ Nhị lưu trở lên.",
     "allies": [],
     "rivals": ["luc_lam_minh"],
-    "notable": [{ "name": "Lý Trọng Tín", "title": "Tổng tiêu đầu", "text": "Hai mươi năm áp tiêu chưa mất món nào, trừ một lần mất vợ vào tay khách hàng." }]
+    "notable": [{ "name": "Lý Trọng Tín", "title": "Tổng tiêu đầu", "text": "Hai mươi năm áp tiêu chưa mất món nào, trừ một lần mất vợ vào tay khách hàng." }],
+    "join": { "fameMin": 5 }
   },
   {
     "id": "van_bao_thuong_hoi",

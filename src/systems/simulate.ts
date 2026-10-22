@@ -51,8 +51,8 @@ export const MORTAL_PERSONAS: Record<MortalPersona, PersonaDef> = {
   nong_dan: { name: 'Nông dân an phận', jobs: ['lam_ruong'], assets: ['leu_tranh', 'ruong', 'trau'], activities: ['hoc_nghe_moc', 'lam_thue', 've_tham_que', 'ket_giao', 'lam_cham', 'te_to', 'an_uong_dieu_do', 'hop_ho'], months: 6, choice: 'first' },
   thu_sinh: { name: 'Thư sinh thi cử', career: 'quan', jobs: ['thay_do', 'thu_lai'], activities: ['xin_hoc_truong_lang', 'leu_chong_di_thi', 'cham_hoc', 'on_thi', 'thu_quan', 'ket_giao', 'ngao_du', 'doc_sach', 'te_to'], months: 5, choice: 'first' },
   thuong_nhan: { name: 'Thương nhân', career: 'thuong', jobs: ['ban_rong', 'tieu_nhi'], assets: ['quan_tra', 'nha_ngoi'], activities: ['hoc_nghe_may', 'lam_cham', 'xin_tang_luong', 'ket_giao', 'lam_thue', 'song_bac', 'tuu_lau'], months: 5, choice: 'random' },
-  ke_cuop: { name: 'Kẻ cướp', jobs: ['do_te', 'phu_khuan_vac'], activities: ['tron_hoc', 'pp_moc_tui', 'pp_trom_nha_giau', 'pp_cuop_duong', 'pp_lua_dao', 'pp_tron_di_xa', 'pp_gianh_cho', 'pp_ket_giao_ban_tu', 'pp_dao_ham', 'an_bot', 'song_bac', 'luyen_quyen_som'], months: 6, train: true, choice: 'evil' },
-  hiep_khach: { name: 'Hiệp khách', career: 'vo_lam', jobs: ['tieu_su', 'ho_vien'], activities: ['theo_vo_duong', 'hoc_nghe_ren', 'luyen_quyen_som', 'ap_tieu', 'ngao_du', 'ket_giao'], months: 5, train: true, choice: 'good' },
+  ke_cuop: { name: 'Kẻ cướp', jobs: ['do_te', 'phu_khuan_vac'], activities: ['tron_hoc', 'pp_moc_tui', 'pp_trom_nha_giau', 'pp_cuop_duong', 'pp_lua_dao', 'pp_tron_di_xa', 'pp_gianh_cho', 'pp_ket_giao_ban_tu', 'pp_dao_ham', 'an_bot', 'song_bac', 'luyen_quyen_som', 'dau_quan_hac_dao', 'lam_nhiem_vu_bang'], months: 6, train: true, choice: 'evil' },
+  hiep_khach: { name: 'Hiệp khách', career: 'vo_lam', jobs: ['tieu_su', 'ho_vien'], activities: ['theo_vo_duong', 'hoc_nghe_ren', 'luyen_quyen_som', 'ap_tieu', 'ngao_du', 'ket_giao', 'bai_nhap_mon_phai', 'lam_nhiem_vu_bang', 'doi_cong_hien_vo_hoc'], months: 5, train: true, choice: 'good' },
   ke_luoi: { name: 'Kẻ lười', activities: ['ngao_du', 'song_bac', 'tuu_lau'], months: 4, choice: 'first' },
 };
 export const MORTAL_PROFILES = Object.keys(MORTAL_PERSONAS) as MortalPersona[];
@@ -136,6 +136,8 @@ export interface LifeResult {
   schooled?: boolean;
   /** 11.1: given a ngoại hiệu. */
   alias?: boolean;
+  /** 11.2: was in a thế lực at some point. */
+  faction?: boolean;
   tradeLevel?: number;
   /** 10.2: highest khoa cử level passed (-1 = none). */
   examRank?: number;
@@ -359,6 +361,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     tier: s.tier,
     schooled: !!s.school?.ever,
     alias: !!s.jianghu?.alias,
+    faction: !!s.jianghu?.faction || (s.jianghu?.left?.length ?? 0) > 0,
     tradeLevel: s.trade?.id ? s.trade.level : -1,
     examRank: s.exam?.rank ?? -1,
   };
@@ -447,6 +450,7 @@ export interface Report {
   /** 10.1: share of lives that went to school, and that learnt a trade. */
   schooledShare?: number;
   aliasShare?: number;
+  factionShare?: number;
   tradeShare?: number;
   /** 10.2: share of lives reaching at least Tú tài, Cử nhân, Tiến sĩ. */
   examShares?: [number, number, number];
@@ -506,6 +510,7 @@ export function summarize(results: LifeResult[], content: Content): Report {
     eventfulShare: mean(results.map((r) => r.eventfulShare ?? 0)),
     schooledShare: mean(results.map((r) => (r.schooled ? 1 : 0))),
     aliasShare: mean(results.map((r) => (r.alias ? 1 : 0))),
+    factionShare: mean(results.map((r) => (r.faction ? 1 : 0))),
     tradeShare: mean(results.map((r) => ((r.tradeLevel ?? -1) >= 0 ? 1 : 0))),
     examShares: [1, 2, 4].map((k) => mean(results.map((r) => ((r.examRank ?? -1) >= k ? 1 : 0)))) as [number, number, number],
     silverP50: (() => { const v = results.map((r) => r.silverLeft ?? 0).sort((a, b) => a - b); return v[Math.floor(v.length / 2)] ?? 0; })(),
@@ -591,11 +596,11 @@ export function formatReport(rep: Report, content: Content, title: string): stri
 /** 9.8: one row per persona phàm nhân, for the terminal. */
 export function formatPersonaTable(rows: { profile: BotProfile; report: Report }[]): string {
   const p = (v: number) => `${Math.round(v * 100)}%`;
-  const head = 'Persona | Đời | Vào tu tiên | Tuổi TB | Hạnh phúc TB | Bạc cuối (TB/trung vị) | Hoạt động khác nhau | Sự kiện khác nhau | Năm có chuyện | Câu lặp | Đi học/Học nghề | Tú tài/Cử nhân/Tiến sĩ | Ngoại hiệu | Chết vì (nhiều nhất)';
+  const head = 'Persona | Đời | Vào tu tiên | Tuổi TB | Hạnh phúc TB | Bạc cuối (TB/trung vị) | Hoạt động khác nhau | Sự kiện khác nhau | Năm có chuyện | Câu lặp | Đi học/Học nghề | Tú tài/Cử nhân/Tiến sĩ | Ngoại hiệu | Thế lực | Chết vì (nhiều nhất)';
   const lines = rows.map(({ profile, report: r }) => {
     const causes = Object.entries(r.byCause).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([c, k]) => `${c} ${p(k / r.count)}`).join(', ');
     return [personaOf(profile)?.name ?? profile, r.count, p(r.reached.luyen_khi ?? 0), r.age.mean.toFixed(1), (r.happyMean ?? 0).toFixed(1), `${Math.round(r.silverLeft ?? 0)}/${r.silverP50 ?? 0}`,
-      (r.activityKinds ?? 0).toFixed(1), (r.eventKinds ?? 0).toFixed(1), p(r.eventfulShare ?? 0), p(r.repeatRate ?? 0), `${p(r.schooledShare ?? 0)}/${p(r.tradeShare ?? 0)}`, (r.examShares ?? [0, 0, 0]).map(p).join('/'), p(r.aliasShare ?? 0), causes].join(' | ');
+      (r.activityKinds ?? 0).toFixed(1), (r.eventKinds ?? 0).toFixed(1), p(r.eventfulShare ?? 0), p(r.repeatRate ?? 0), `${p(r.schooledShare ?? 0)}/${p(r.tradeShare ?? 0)}`, (r.examShares ?? [0, 0, 0]).map(p).join('/'), p(r.aliasShare ?? 0), p(r.factionShare ?? 0), causes].join(' | ');
   });
   return [head, ...lines].join('\n');
 }

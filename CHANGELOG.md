@@ -8,6 +8,14 @@
 
 ## [Chưa phát hành]
 
+### 11.2 Môn phái và bang hội võ lâm (2026-10-22)
+- Gia nhập thế lực giang hồ (mục Hành sự → Giang hồ): bái nhập danh môn chính phái (thử Căn cốt, 8–25 tuổi), vào bang hội / tiêu cục / thương hội (thử Mị lực), đầu quân hắc đạo (sơn trại, giáo phái, sát thủ lâu; cần ác danh hoặc thẻ bài người ta để lại). Mỗi thế lực có luật riêng: thế gia chỉ nhận người trong họ (trừ vài nhà nhận gia tướng, khách khanh), Thiếu Lâm nhận từ 6 tới 30 tuổi, Huyết Sát Lâu đòi ác danh.
+- Cấp bậc theo loại thế lực (đệ tử ký danh tới trưởng lão; bang chúng tới hộ pháp; sát thủ Đồng bài tới Huyết bài…), lên bậc bằng cống hiến; bậc cao có bổng lộc hằng năm.
+- Làm nhiệm vụ cho thế lực: được cống hiến, bạc theo bậc; chính phái thêm hiệp danh, tà phái thêm ác danh và nghiệp xấu. Đổi cống hiến lấy võ học của môn (luyện võ nhanh hơn).
+- Rời đi: tạ sư (cửa đóng lại) hoặc phản bang (cướp được ít bạc, mất hiệp danh, bị truy sát 8 năm; ẩn mình rút ngắn).
+- 6 sự kiện mới: truy sát, bang chiến, trưởng bối giao việc kín, nội gián, lệnh tàn ác của tà phái, đồng môn tỉ thí. Hồ sơ có dòng "Thế lực:".
+- Điều kiện `faction`; hiệu ứng `joinFaction`, `factionMission`, `factionMerit`, `factionTeach`, `leaveFaction`, `hideFromHunt`. Mô phỏng có cột "Thế lực" (hiệp khách 100%, kẻ cướp 83%).
+
 ### 11.1 Hiệp danh, ác danh và ngoại hiệu (2026-10-22)
 - Danh vọng giang hồ tách thành hiệp danh và ác danh, cả hai cùng cao được (0–100 mỗi bên), mỗi bên có năm bậc danh xưng (Có chút tiếng… Danh chấn giang hồ; Tiếng xấu… Đại ma đầu). Sự kiện cũ cộng `reputation.giang_ho` thì phần dương vào hiệp danh, phần âm vào ác danh; lưu cũ đọc dấu của danh vọng cũ.
 - Ngoại hiệu tự sinh khi một bên đạt 30: [đặc điểm] + [binh khí hoặc thú], theo con đường chiến đấu mạnh nhất (vd. «Thiết Thủ Hắc Ưng», «Huyết Thủ Phán Quan Bút»); thương tật cho chữ riêng (mù một mắt thành «Độc Nhãn …»). Người giang hồ (kiểu quan hệ mới) cũng có ngoại hiệu, hiện trong mục thông tin người quen.
