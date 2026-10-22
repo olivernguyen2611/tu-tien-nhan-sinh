@@ -14,13 +14,13 @@ import { standingAllows } from './standing';
 
 /** Menu headings, in menu order. */
 export const ACTIVITY_GROUP_NAMES: Record<ActivityGroup, string> = {
-  ban_than: 'Bản thân', hoc_hanh: 'Học hành', nghe: 'Nghề', tai_san: 'Tài sản', quan_he: 'Quan hệ',
+  ban_than: 'Bản thân', hoc_hanh: 'Học hành', nghe: 'Nghề', tai_san: 'Tài sản', quan_he: 'Quan hệ', tu_hanh: 'Tu hành',
   giai_tri: 'Giải trí', suc_khoe: 'Sức khỏe', pham_phap: 'Phạm pháp', giang_ho: 'Giang hồ', tu_luyen: 'Tu luyện',
 };
 /** 9.7: the Hán character on each group's tile. */
 export const ACTIVITY_GROUP_GLYPHS: Record<ActivityGroup, string> = {
   ban_than: '身', hoc_hanh: '學', nghe: '藝', tai_san: '財', quan_he: '緣',
-  giai_tri: '樂', suc_khoe: '體', pham_phap: '盜', giang_ho: '江', tu_luyen: '修',
+  giai_tri: '樂', suc_khoe: '體', pham_phap: '盜', giang_ho: '江', tu_luyen: '修', tu_hanh: '遊',
 };
 
 type Cost = Activity['cost'][number];

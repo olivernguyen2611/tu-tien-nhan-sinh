@@ -8,6 +8,21 @@
 
 ## [Chưa phát hành]
 
+### 13.5 Hoạt động tu sĩ (2026-10-23)
+- **Nhóm Tu hành** mới trong Hoạt động, 6 việc, mỗi việc tốn tháng:
+  - săn yêu thú (yêu đan theo cảnh giới);
+  - khám phá di tích;
+  - nhận việc của tán tu (chỉ người không có tông môn);
+  - dự luận đạo hội;
+  - hái linh dược;
+  - cướp đoạt tu sĩ khác (nhóm Phạm pháp).
+- 4 sự kiện đi kèm hoạt động: yêu thú chặn đường, tàn hồn canh cửa, việc là cái bẫy, bị chặn đường cướp.
+- **Đại sự mỗi cảnh giới:**
+  - Trúc Cơ: tranh động phủ;
+  - Kim Đan: tranh linh mạch giữa ba thế lực;
+  - Nguyên Anh: đại vực mới mở, yêu vương;
+  - Hóa Thần: ngộ đạo.
+
 ### 13.4 Tu chân giới tự chuyển động (2026-10-23)
 - **Kình địch suốt đời.** Từ Trúc Cơ, một người cùng lứa thành kình địch của ngươi: một tu sĩ đã quen, nếu không thì một thiên kiêu mới. Chuỗi 6 lần gặp, cách nhau 8–15 năm:
   1. sơ ngộ ở Thiên Kiêu đài;

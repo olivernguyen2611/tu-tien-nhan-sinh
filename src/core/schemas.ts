@@ -2407,7 +2407,7 @@ export const FamilyActionSchema = z
 export const FamilyActionFileSchema = z.array(FamilyActionSchema);
 
 /** 9.2 Khung Hoạt động: menu groups an activity sits in. */
-export const ACTIVITY_GROUPS = ['ban_than', 'hoc_hanh', 'nghe', 'tai_san', 'quan_he', 'giai_tri', 'suc_khoe', 'pham_phap', 'giang_ho', 'tu_luyen'] as const;
+export const ACTIVITY_GROUPS = ['ban_than', 'hoc_hanh', 'nghe', 'tai_san', 'quan_he', 'giai_tri', 'suc_khoe', 'pham_phap', 'giang_ho', 'tu_luyen', 'tu_hanh'] as const;
 export type ActivityGroup = (typeof ACTIVITY_GROUPS)[number];
 
 /** One way to pay; the first option whose `when` holds and that the purse can cover is paid. */

@@ -1,0 +1,740 @@
+[
+ {
+  "id": "th_yeu_thu_chan_duong",
+  "category": "beast",
+  "title": "Yêu thú chặn đường",
+  "text": "Bụi cây rẽ ra. Con thú cao hơn ngươi hai cái đầu, mắt đỏ như than, đang chảy dãi nhìn ngươi.",
+  "themes": [
+   "beast"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   }
+  },
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Đánh",
+    "result": {
+     "text": "Ngươi rút binh khí.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Yêu thú rừng sâu",
+       "realm": "same",
+       "intent": "kill",
+       "powerMul": 1.15
+      },
+      "win": {
+       "text": "Con thú ngã xuống. Ngươi mổ được một viên nội đan to bằng quả trứng gà.",
+       "effects": {
+        "addItems": [
+         "noi_dan_2"
+        ],
+        "stat.physique": 1,
+        "stat.happiness": 3
+       }
+      },
+      "lose": {
+       "text": "Ngươi bị hất văng vào gốc cây, lết về được tới bìa rừng.",
+       "effects": {
+        "stat.health": -15,
+        "stat.happiness": -3
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Dùng phù chạy trốn",
+    "result": {
+     "text": "Một tấm Thần Hành Phù cháy trong tay, ngươi đã ở ngoài mười dặm.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "th_tan_hon_canh_cua",
+  "category": "fortune",
+  "title": "Tàn hồn canh cửa",
+  "text": "Một bóng người mờ như khói ngồi trước cửa đá: \"Ba nghìn năm ta chờ một kẻ đáp được một câu. Đáp sai, ở lại với ta.\"",
+  "themes": [
+   "ky_vat"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   }
+  },
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Nghe câu hỏi, đáp",
+    "check": {
+     "stat": "stat.comprehension",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Bóng người cười lớn, tan vào gió. Cửa đá mở, bên trong là di vật của y.",
+     "effects": {
+      "gainFittingTechnique": true,
+      "spiritStones": 40,
+      "stat.comprehension": 2
+     }
+    },
+    "fail": {
+     "text": "\"Sai.\" Một luồng âm khí quét qua thần hồn ngươi. Ngươi chạy thoát, nhưng mất ngủ nửa năm.",
+     "effects": {
+      "stat.daoHeart": -4,
+      "stat.health": -8
+     }
+    }
+   },
+   {
+    "text": "Cúi chào rồi lui",
+    "result": {
+     "text": "\"Biết lui cũng là một loại trí.\" Bóng người phẩy tay, một viên ngọc lăn ra trước chân ngươi.",
+     "effects": {
+      "spiritStones": 15,
+      "stat.daoHeart": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "th_viec_bay",
+  "category": "plunder",
+  "title": "Việc treo thưởng là bẫy",
+  "text": "Tới chỗ hẹn diệt yêu, không thấy yêu đâu, chỉ thấy bốn tán tu đứng chặn hai đầu khe núi. \"Đưa túi trữ vật ra, tha mạng.\"",
+  "themes": [
+   "plunder"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   }
+  },
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Đánh ra",
+    "result": {
+     "text": "Ngươi rút kiếm.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Bốn tán tu cướp",
+       "realm": "same",
+       "intent": "rob",
+       "plural": true
+      },
+      "win": {
+       "text": "Bọn chúng chạy tán loạn, để lại cả tiền cọc. Ngươi báo lên Tán Tu Liên Minh.",
+       "effects": {
+        "spiritStones": 30,
+        "reputation": {
+         "tan_tu": 5
+        },
+        "stat.happiness": 3
+       }
+      },
+      "lose": {
+       "text": "Ngươi mất túi linh thạch và một ít máu.",
+       "effects": {
+        "spiritStones": -25,
+        "stat.health": -10
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Đưa túi, giữ mạng",
+    "result": {
+     "text": "Ngươi ném túi trữ vật. Bọn chúng cười ha hả bỏ đi.",
+     "effects": {
+      "spiritStones": -25,
+      "stat.happiness": -5,
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "th_chan_duong",
+  "category": "plunder",
+  "title": "Chặn đường",
+  "text": "Gã tu sĩ trẻ thấy ngươi bước ra thì tái mặt, tay đã sờ lên chuôi kiếm.",
+  "tags": [
+   "violence"
+  ],
+  "themes": [
+   "plunder"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   }
+  },
+  "weight": 0,
+  "choices": [
+   {
+    "text": "Ra tay cướp",
+    "result": {
+     "text": "Ngươi xông lên trước khi hắn kịp niệm chú.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Tu sĩ đi đường",
+       "realm": "same",
+       "intent": "teach"
+      },
+      "win": {
+       "text": "Hắn quỳ xuống dâng túi. Ngươi lấy hết, để hắn chạy.",
+       "effects": {
+        "spiritStones": 45,
+        "karma": -6,
+        "reputation": {
+         "tan_tu": -5
+        },
+        "stat.daoHeart": -2
+       }
+      },
+      "lose": {
+       "text": "Gã trẻ tuổi mạnh hơn vẻ ngoài. Ngươi bị đánh cho chạy về.",
+       "effects": {
+        "stat.health": -12,
+        "stat.happiness": -3
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Đổi ý, chỉ hỏi đường",
+    "result": {
+     "text": "Gã thở phào, chỉ đường cho ngươi tận tình.",
+     "effects": {
+      "karma": 1,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ds_tc_dong_phu",
+  "category": "cultivation",
+  "title": "Đại sự Trúc Cơ: động phủ riêng",
+  "text": "Trúc Cơ rồi, ở chung với đệ tử Luyện Khí thấy chật. Có người bán một ngọn núi nhỏ có linh tuyền, giá đắt nhưng cả đời chỉ một lần.",
+  "themes": [
+   "cultivation"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co",
+    "max": "truc_co"
+   }
+  },
+  "weight": 2,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Mua núi, mở động phủ",
+    "requires": {
+     "stats": [
+      {
+       "stat": "spiritStones",
+       "gte": 80
+      }
+     ]
+    },
+    "result": {
+     "text": "Ngươi đục vách đá, dựng cửa, khắc tên mình lên bia. Từ nay có chỗ của riêng mình.",
+     "effects": {
+      "spiritStones": -80,
+      "setFlags": [
+       "ds_tc_dong_phu"
+      ],
+      "stat.happiness": 8,
+      "cultProgress": 10,
+      "followUp": {
+       "event": "ds_tc_ke_tranh_nui",
+       "afterYears": [
+        3,
+        6
+       ]
+      }
+     }
+    }
+   },
+   {
+    "text": "Chưa đủ tiền, hẹn mấy năm sau",
+    "result": {
+     "text": "Người bán cười: \"Núi không chạy đâu, ngươi thì chưa chắc.\"",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ds_tc_ke_tranh_nui",
+  "category": "cultivation",
+  "title": "Kẻ tranh núi",
+  "text": "Một gia tộc tu tiên dưới chân núi tuyên bố ngọn núi của ngươi vốn là đất tổ của họ. Họ cử người tới đòi.",
+  "themes": [
+   "cultivation"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co"
+   },
+   "flagsAll": [
+    "ds_tc_dong_phu"
+   ]
+  },
+  "weight": 0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Đánh một trận phân định",
+    "result": {
+     "text": "Gia chủ đích thân ra mặt.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Gia chủ họ Mạc",
+       "realm": "same",
+       "intent": "teach"
+      },
+      "win": {
+       "text": "Họ Mạc thua, ký giấy nhường núi. Từ đó chẳng ai dám tới đòi.",
+       "effects": {
+        "stat.happiness": 5,
+        "reputation": {
+         "tan_tu": 5
+        },
+        "stat.daoHeart": 2
+       }
+      },
+      "lose": {
+       "text": "Ngươi thua, phải chia linh tuyền cho họ một nửa.",
+       "effects": {
+        "stat.health": -12,
+        "cultProgress": -5,
+        "stat.happiness": -4
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Lật giấy tờ, cãi lý",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Khế ước cũ ghi rõ họ đã bán núi từ trăm năm trước. Họ đỏ mặt bỏ về.",
+     "effects": {
+      "stat.intellect": 1,
+      "stat.happiness": 3
+     }
+    },
+    "fail": {
+     "text": "Giấy tờ mập mờ. Ngươi phải trả thêm một khoản để yên chuyện.",
+     "effects": {
+      "spiritStones": -30,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Chia linh tuyền, kết làm láng giềng",
+    "result": {
+     "text": "Họ Mạc nhận lời, tết đến còn mang rượu lên biếu.",
+     "effects": {
+      "karma": 3,
+      "cultProgress": -3,
+      "stat.charm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ds_kd_linh_mach",
+  "category": "cultivation",
+  "title": "Đại sự Kim Đan: tranh linh mạch",
+  "text": "Dưới Vân Mộng Trạch vừa phát hiện một linh mạch trung phẩm. Ba thế lực đã cắm cờ, ai cũng biết ai giữ được linh mạch này thì giữ được trăm năm cơ nghiệp.",
+  "themes": [
+   "plunder"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "kim_dan",
+    "max": "kim_dan"
+   }
+  },
+  "weight": 2,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Cắm cờ của mình",
+    "result": {
+     "text": "Ngươi bay tới, cắm một lá cờ, ngồi xếp bằng trên đỉnh mạch. Ba thế lực nhìn ngươi như nhìn kẻ điên.",
+     "effects": {
+      "setFlags": [
+       "ds_kd_cam_co"
+      ],
+      "stat.daoHeart": 2,
+      "stat.happiness": 2,
+      "followUp": {
+       "event": "ds_kd_ba_the_luc",
+       "afterYears": [
+        1,
+        2
+       ]
+      }
+     }
+    }
+   },
+   {
+    "text": "Liên thủ với một phe, chia phần",
+    "result": {
+     "text": "Ngươi theo phe Bích Lạc Tông, đổi lại được hứa một phần linh thạch mỗi năm.",
+     "effects": {
+      "setFlags": [
+       "ds_kd_lien_thu"
+      ],
+      "spiritStones": 40,
+      "reputation": {
+       "chinh": 5
+      },
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Đứng ngoài",
+    "result": {
+     "text": "Linh mạch dẫu quý, không đáng một cái mạng.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ds_kd_ba_the_luc",
+  "category": "cultivation",
+  "title": "Ba thế lực ép tới",
+  "text": "Một năm sau, ba thế lực cùng ép tới. Phái tới đàm phán là một lão Kim Đan hậu kỳ, giọng ôn hòa mà mắt thì lạnh.",
+  "themes": [
+   "plunder"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "kim_dan"
+   },
+   "flagsAll": [
+    "ds_kd_cam_co"
+   ]
+  },
+  "weight": 0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Đánh một trận lập uy",
+    "result": {
+     "text": "Lão Kim Đan thở dài, rút ra một cây phất trần.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Lão Kim Đan hậu kỳ",
+       "realm": "same",
+       "intent": "teach",
+       "powerMul": 1.2
+      },
+      "win": {
+       "text": "Lão thua, ba thế lực rút đi. Linh mạch thuộc về ngươi, mỗi năm tu vi tăng nhanh hơn.",
+       "effects": {
+        "setFlags": [
+         "ds_kd_giu_mach"
+        ],
+        "speedBuff": {
+         "mul": 1.15,
+         "years": 20
+        },
+        "cultProgress": 20,
+        "stat.happiness": 8,
+        "reputation": {
+         "tan_tu": 10
+        }
+       }
+      },
+      "lose": {
+       "text": "Ngươi thua, phải rời linh mạch, lá cờ bị đốt.",
+       "effects": {
+        "stat.health": -20,
+        "stat.happiness": -6,
+        "stat.daoHeart": -2
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Đề nghị chia bốn phần",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Lão Kim Đan cười: \"Có gan, có trí.\" Bốn bên lập khế ước chia linh mạch.",
+     "effects": {
+      "spiritStones": 60,
+      "stat.charm": 2,
+      "karma": 2
+     }
+    },
+    "fail": {
+     "text": "Không ai chịu chia với kẻ đến sau. Ngươi đành rút.",
+     "effects": {
+      "stat.happiness": -4,
+      "stat.charm": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ds_na_dai_vuc_moi",
+  "category": "cultivation",
+  "title": "Đại sự Nguyên Anh: mở động phủ ở đại vực mới",
+  "text": "Nguyên Anh rồi, Thương Lan giới bỗng thấy nhỏ. Bên kia Vô Chủ hoang nguyên có một vùng đất chưa ai cắm cờ, linh khí dày, yêu thú dữ.",
+  "themes": [
+   "cultivation"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "nguyen_anh",
+    "max": "nguyen_anh"
+   }
+  },
+  "weight": 2,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Lên đường khai hoang",
+    "result": {
+     "text": "Ngươi bay suốt ba tháng, chọn một ngọn núi lửa đã tắt làm động phủ.",
+     "effects": {
+      "setFlags": [
+       "ds_na_khai_hoang"
+      ],
+      "moveHome": true,
+      "stat.happiness": 4,
+      "stat.daoHeart": 2,
+      "followUp": {
+       "event": "ds_na_yeu_vuong",
+       "afterYears": [
+        2,
+        4
+       ]
+      }
+     }
+    }
+   },
+   {
+    "text": "Ở lại, củng cố cơ nghiệp cũ",
+    "result": {
+     "text": "Đi xa thì được, nhưng ai giữ nhà? Ngươi ở lại.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ds_na_yeu_vuong",
+  "category": "beast",
+  "title": "Yêu vương lãnh địa",
+  "text": "Vùng đất mới có chủ: một con yêu vương ngàn năm coi cả dãy núi là lãnh địa. Nó gửi một con quạ đen tới, trong mỏ ngậm lời thách đấu.",
+  "themes": [
+   "beast"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "nguyen_anh"
+   },
+   "flagsAll": [
+    "ds_na_khai_hoang"
+   ]
+  },
+  "weight": 0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Nhận lời thách đấu",
+    "result": {
+     "text": "Trận đánh làm sụp nửa ngọn núi.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Yêu vương ngàn năm",
+       "realm": "same",
+       "intent": "teach",
+       "powerMul": 1.25
+      },
+      "win": {
+       "text": "Yêu vương bại, quỳ xin làm hộ sơn thú cho động phủ của ngươi.",
+       "effects": {
+        "stat.happiness": 8,
+        "reputation": {
+         "yeu": -10
+        },
+        "stat.physique": 2,
+        "addItems": [
+         "noi_dan_4"
+        ]
+       }
+      },
+      "lose": {
+       "text": "Ngươi bị thương nặng, phải lùi về sườn núi bên kia, chia đất với nó.",
+       "effects": {
+        "stat.health": -25,
+        "stat.daoHeart": -2
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Thương lượng chia lãnh địa",
+    "check": {
+     "stat": "stat.comprehension",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Yêu vương đồng ý: núi phía đông của ngươi, rừng phía tây của nó. Mấy trăm năm sau hai bên vẫn giữ lời.",
+     "effects": {
+      "karma": 3,
+      "stat.daoHeart": 3,
+      "reputation": {
+       "yeu": 10
+      }
+     }
+    },
+    "fail": {
+     "text": "Yêu vương chỉ hiểu một thứ ngôn ngữ: răng nanh.",
+     "effects": {
+      "stat.health": -10,
+      "stat.happiness": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ds_ht_ngo_dao",
+  "category": "cultivation",
+  "title": "Đại sự Hóa Thần: thiên địa dị tượng",
+  "text": "Đêm ấy trời không trăng, nhưng quanh động phủ ngươi sáng như ban ngày. Chim thú quỳ rạp. Đây là thời khắc ngộ đạo, cả đời may ra có một lần.",
+  "themes": [
+   "cultivation"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "hoa_than"
+   }
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Nhập định, theo dị tượng",
+    "check": {
+     "stat": "stat.daoHeart",
+     "difficulty": 70
+    },
+    "success": {
+     "text": "Ngươi ngồi bất động bốn mươi chín ngày. Khi mở mắt, thấy đạo trong một cánh hoa rơi.",
+     "effects": {
+      "stat.comprehension": 4,
+      "stat.daoHeart": 3,
+      "cultProgress": 25,
+      "setFlags": [
+       "ngo_dao_hoa_than"
+      ]
+     }
+    },
+    "fail": {
+     "text": "Một ý niệm lạc nhịp, dị tượng tan biến. Ngươi tiếc suốt trăm năm.",
+     "effects": {
+      "stat.comprehension": 1,
+      "stat.happiness": -6
+     }
+    }
+   },
+   {
+    "text": "Gọi đồ đệ tới cùng ngộ",
+    "result": {
+     "text": "Lũ đồ đệ ngồi quanh ngươi, mỗi đứa ngộ được một chút. Còn ngươi chỉ ngộ được nửa phần.",
+     "effects": {
+      "stat.comprehension": 2,
+      "karma": 3,
+      "stat.happiness": 4
+     }
+    }
+   }
+  ]
+ }
+]

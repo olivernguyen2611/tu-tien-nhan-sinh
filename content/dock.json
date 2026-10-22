@@ -4,7 +4,7 @@
     "id": "tu_luyen", "glyph": "修", "label": "Tu luyện", "groups": ["tu_luyen"],
     "early": { "tab": "tu_luyen" }
   },
-  { "id": "hoat_dong", "glyph": "事", "label": "Hành sự", "groups": ["giai_tri", "pham_phap", "giang_ho"], "catchAll": true },
+  { "id": "hoat_dong", "glyph": "事", "label": "Hành sự", "groups": ["tu_hanh", "giai_tri", "pham_phap", "giang_ho"], "catchAll": true },
   {
     "id": "tong_mon", "glyph": "宗", "label": "Tông môn",
     "early": { "tab": "tong_mon", "lifestyles": ["giang_ho"] },
