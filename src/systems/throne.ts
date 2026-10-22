@@ -233,7 +233,10 @@ export function reignEnd(state: GameState, content: Content, how: 'death' | 'exi
   const file = content.throne;
   const r = reignOf(state);
   if (!file || !r) return state;
-  const s: GameState = { ...state, reign: null, flags: { ...state.flags, ...(how !== 'abdicate' ? { mat_nuoc: true } : { thai_thuong_hoang: true }) } };
+  // The deeds outlive the reign, for the death-screen title.
+  const margin = content.balance.throne?.deedTitle ?? 5;
+  const deeds: Record<string, boolean> = r.good - r.bad >= margin ? { minh_quan_mot_doi: true } : r.bad - r.good >= margin ? { bao_quan_su_chep: true } : {};
+  const s: GameState = { ...state, reign: null, flags: { ...state.flags, ...deeds, ...(how !== 'abdicate' ? { mat_nuoc: true } : { thai_thuong_hoang: true }) } };
   // The throne passes on: a new niên hiệu starts next year (a fallen dynasty is replaced by the times).
   const times = s.times ? { ...s.times, reignLeft: 1 } : s.times;
   const out = pushLines({ ...s, times }, [{ text: how === 'abdicate' ? file.texts.abdicate : file.texts.fallen, tone: how === 'abdicate' ? 'normal' : 'bad' }]);
@@ -336,6 +339,7 @@ export function throneYear(state: GameState, content: Content): GameState {
   if (r && r.since < age) {
     const bars = { ...r.bars };
     const drift = (d: Record<string, number> | undefined) => { for (const [k, v] of Object.entries(d ?? {})) if (k in bars) bars[k] = clamp(bars[k] + v); };
+    drift(cfg.reignIncome);
     drift(cfg.phaseDrift[s.times?.phase ?? '']);
     for (const a of s.court?.affairs ?? []) drift(cfg.affairDrift[a.id]);
     for (const k of Object.keys(bars)) bars[k] = clamp(bars[k] + rng.int(-cfg.reignDrift, cfg.reignDrift));
@@ -373,8 +377,8 @@ export function reignTitle(state: GameState, content: Content): string | null {
   const r = state.reign;
   const margin = content.balance.throne?.deedTitle ?? 5;
   if (state.flags.mat_nuoc) return file.titles.lost;
-  if (r && r.good - r.bad >= margin) return file.titles.good;
-  if (r && r.bad - r.good >= margin) return file.titles.bad;
+  if ((r && r.good - r.bad >= margin) || state.flags.minh_quan_mot_doi) return file.titles.good;
+  if ((r && r.bad - r.good >= margin) || state.flags.bao_quan_su_chep) return file.titles.bad;
   if (state.flags.khai_quoc) return file.titles.founder;
   return file.titles.plain;
 }

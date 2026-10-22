@@ -1911,7 +1911,7 @@ export const BalanceSchema = z
       rebelPhases: z.array(z.string()), crushChance: z.number(), crushDeath: z.number().min(0).max(1), capitalCities: z.number().int(), garrison: z.number(), garrisonPerCity: z.number(),
       battleLoss: z.number(), battleWin: z.object({ troops: z.number(), grain: z.number(), people: z.number() }).strict(), amnestyChance: z.number(), rebelDecision: z.number().min(0).max(1), rebelUpkeep: z.number(), rebelDraw: z.number().min(0),
       discoverBase: z.number(), discoverPerPlotter: z.number(), riseNeeds: z.record(z.string(), z.number()), riseChance: z.number().min(0).max(1), risePhases: z.array(z.string()), riseTempers: z.array(z.string()),
-      reignStart: z.record(z.enum(['royal', 'rebel', 'usurp']), z.record(z.string(), z.number())), reignDrift: z.number(), dangerAt: z.number(), deedTitle: z.number(),
+      reignStart: z.record(z.enum(['royal', 'rebel', 'usurp']), z.record(z.string(), z.number())), reignDrift: z.number(), reignIncome: z.record(z.string(), z.number()), dangerAt: z.number(), deedTitle: z.number(),
       phaseDrift: z.record(z.string(), z.record(z.string(), z.number())), affairDrift: z.record(z.string(), z.record(z.string(), z.number())),
     }).strict().optional(),
     army: z.object({

@@ -1,0 +1,411 @@
+[
+ {
+  "id": "giam_thue",
+  "group": "nghe",
+  "name": "Giảm thuế",
+  "icon": "寬",
+  "text": "Hạ chiếu giảm thuế cho thiên hạ. Quốc khố vơi đi, lòng dân đầy lên.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "months": 1,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 2
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Chiếu giảm thuế dán tới tận làng xa. Có cụ già quỳ giữa đường lạy về phía kinh thành.",
+     "Năm ấy nông dân giữ được thêm ba đấu thóc mỗi mẫu."
+    ],
+    "effects": {
+     "reignBar": {
+      "treasury": -10,
+      "people": 8
+     },
+     "reignDeed": "good",
+     "karma": 1,
+     "stat.happiness": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "tang_thue",
+  "group": "nghe",
+  "name": "Tăng thuế",
+  "icon": "賦",
+  "text": "Quốc khố cần bạc. Hộ bộ đã soạn sẵn tờ chiếu.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "months": 1,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Thuế ruộng tăng hai phần. Quốc khố đầy, chợ quê vắng.",
+     "Thêm thuế muối, thuế sắt. Dân bắt đầu ăn nhạt."
+    ],
+    "effects": {
+     "reignBar": {
+      "treasury": 12,
+      "people": -7
+     },
+     "stat.happiness": -1
+    }
+   }
+  ]
+ },
+ {
+  "id": "mo_an_khoa",
+  "group": "nghe",
+  "name": "Mở ân khoa",
+  "icon": "科",
+  "text": "Mở một kỳ thi đặc cách, kén người tài cho triều đình.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 3
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Kỳ ân khoa chọn được ba mươi tiến sĩ, có người về sau thành danh thần.",
+     "Sĩ tử bốn phương đổ về kinh. Triều đình thêm máu mới."
+    ],
+    "effects": {
+     "reignBar": {
+      "court": 8,
+      "treasury": -4
+     },
+     "reignDeed": "good",
+     "stat.intellect": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "duyet_binh",
+  "group": "nghe",
+  "name": "Duyệt binh, tăng quân",
+  "icon": "閱",
+  "text": "Ra thao trường duyệt quân, thưởng tướng sĩ, mộ thêm binh.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Mười vạn quân dàn trận dưới chân thành, tiếng hô vang tới kinh.",
+     "Ngươi tự tay bắn ba mũi tên trúng hồng tâm. Ba quân reo hò."
+    ],
+    "effects": {
+     "reignBar": {
+      "army": 10,
+      "treasury": -8
+     },
+     "stat.physique": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "xay_cung",
+  "group": "nghe",
+  "name": "Xây cung điện mới",
+  "icon": "殿",
+  "text": "Cung cũ chật hẹp, tường ẩm mốc. Thợ khắp thiên hạ được triệu về kinh.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "months": 3,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 5
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Cung mới xây ba năm mới xong, mái lợp ngói lưu ly vàng óng. Dân phu chết không ít.",
+     "Vườn ngự uyển mới có hồ, có núi giả, có cả một khu rừng mai."
+    ],
+    "effects": {
+     "reignBar": {
+      "treasury": -15,
+      "people": -5
+     },
+     "reignDeed": "bad",
+     "stat.happiness": 6
+    }
+   }
+  ]
+ },
+ {
+  "id": "tri_thuy",
+  "group": "nghe",
+  "name": "Trị thủy, khai hoang",
+  "icon": "渠",
+  "text": "Đắp đê, đào kênh, khai hoang đất mới. Việc nặng, lợi lâu.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "months": 3,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 2
+  },
+  "check": {
+   "stat": "stat.intellect",
+   "difficulty": 50
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Con kênh mới nối hai con sông lớn. Thuyền lương đi nhanh gấp đôi.",
+     "Mười vạn mẫu đất hoang thành ruộng tốt."
+    ],
+    "effects": {
+     "reignBar": {
+      "people": 6,
+      "treasury": -6
+     },
+     "reignDeed": "good",
+     "stat.intellect": 1
+    }
+   }
+  ],
+  "failOutcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Đê đắp không kịp mùa lũ, công sức đổ sông đổ biển."
+    ],
+    "effects": {
+     "reignBar": {
+      "treasury": -8,
+      "people": -2
+     },
+     "stat.happiness": -2
+    }
+   }
+  ]
+ },
+ {
+  "id": "tuan_du",
+  "group": "nghe",
+  "name": "Tuần du thiên hạ",
+  "icon": "巡",
+  "text": "Ngự giá đi tuần các châu, xem dân tình, gặp quan lại địa phương.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "months": 3,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 3
+  },
+  "check": {
+   "stat": "stat.charm",
+   "difficulty": 45
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Đi tới đâu, dân bày hương án tới đó. Ngươi gặp mấy vị quan thanh liêm, cất nhắc ngay.",
+     "Ngươi xử mấy vụ quan tham giữa đường, cả nước kháo nhau."
+    ],
+    "effects": {
+     "reignBar": {
+      "people": 5,
+      "court": 3,
+      "treasury": -6
+     },
+     "stat.charm": 1
+    }
+   }
+  ],
+  "failOutcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Đoàn ngự giá dài mười dặm, đi tới đâu dân phải đón rước tới đó. Ai cũng mệt."
+    ],
+    "effects": {
+     "reignBar": {
+      "people": -4,
+      "treasury": -8
+     },
+     "stat.happiness": -1
+    }
+   }
+  ]
+ },
+ {
+  "id": "dai_xa",
+  "group": "nghe",
+  "name": "Đại xá thiên hạ",
+  "icon": "赦",
+  "text": "Hạ chiếu đại xá. Ngục mở cửa, kẻ có tội được làm lại.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "months": 1,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 5
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Chiếu đại xá ban xuống. Ngoài cửa ngục, người nhà đứng chờ từ sáng sớm.",
+     "Mấy ngàn tù nhân được tha. Có kẻ về làng làm ăn tử tế, có kẻ không."
+    ],
+    "effects": {
+     "reignBar": {
+      "people": 6,
+      "court": -2
+     },
+     "reignDeed": "good",
+     "karma": 2,
+     "stat.daoHeart": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "thanh_trung",
+  "group": "nghe",
+  "name": "Thanh trừng triều thần",
+  "icon": "肅",
+  "text": "Lập danh sách những kẻ hai lòng. Ngự sử đài sẽ lo phần còn lại.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 4
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Ba mươi vị đại thần bị bắt trong một đêm. Sáng ra, triều đình im phăng phắc.",
+     "Cả một phe trong triều bị nhổ tận gốc. Những người còn lại cúi đầu thấp hơn."
+    ],
+    "effects": {
+     "reignBar": {
+      "court": 10,
+      "people": -3
+     },
+     "reignDeed": "bad",
+     "karma": -4,
+     "stat.daoHeart": -2
+    }
+   }
+  ]
+ },
+ {
+  "id": "yen_am",
+  "group": "nghe",
+  "name": "Yến ẩm hậu cung",
+  "icon": "宴",
+  "text": "Gác tấu chương sang một bên, mở tiệc ca múa suốt ba ngày.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "reign": {
+    "active": true
+   }
+  },
+  "months": 1,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Đàn sáo không dứt, rượu ngự chảy như suối. Ngươi say mèm, cười ha hả.",
+     "Ba ngày không thiết triều. Tấu chương chất cao ngang đầu người."
+    ],
+    "effects": {
+     "reignBar": {
+      "court": -3,
+      "treasury": -4
+     },
+     "stat.happiness": 5,
+     "stat.health": -1
+    }
+   }
+  ]
+ }
+]

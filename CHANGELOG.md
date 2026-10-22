@@ -8,6 +8,15 @@
 
 ## [Chưa phát hành]
 
+### 12.9 Làm vua (2026-10-22)
+- Lên ngôi bằng đường nào (kế vị, khởi nghĩa, tạo phản) cũng thành hoàng đế, hoặc nữ hoàng. Đường kế vị giữ quốc hiệu cũ. Hai đường kia lập triều mới. Niên hiệu là của ngươi chừng nào còn ngồi ngai.
+- Bốn thanh triều chính: **Quốc khố**, **Dân tâm**, **Binh lực**, **Triều thần**. Mỗi năm có một dòng báo cáo. Các thanh trôi theo thời thế, theo đại sự của triều đình và theo việc ngươi làm. Có một khoản thuế cố định hằng năm.
+- 10 việc triều chính (hoạt động, mỗi năm làm được 1–3 việc tùy tháng): giảm thuế, tăng thuế, mở ân khoa, duyệt binh, xây cung điện, trị thủy khai hoang, tuần du, đại xá, thanh trừng triều thần, yến ẩm hậu cung.
+- Một thanh xuống dưới 15 là có biến: **dân biến**, **giặc vây biên thành**, **cung biến** (có thể chết), **quốc khố cạn**. Một thanh về 0 là **mất nước**: trốn, ra hàng (bị giam lỏng) hoặc giữ tiết.
+- Việc thiện, việc ác được ghi lại. Hơn kém 5 việc thì thành **minh quân** hay **bạo quân**, tính cách hoàng đế trong triều đình đổi theo. Danh hiệu ở màn kết đời: Minh quân một đời, Bạo quân sử chép, Vua khai quốc, Vua mất nước, Từng ngồi ngai vàng.
+- 19 sự kiện (`lam-vua.json`): lập hậu hoặc chọn hoàng phu (từ 18 tuổi), tuyển tú, lập thái tử, nhường ngôi làm thái thượng hoàng, **cầu tiên** (phương sĩ dâng tiên đan, ra biển tìm tiên sơn; không có linh căn thì không thành tiên được), gian thần, lão thần can gián, biên cảnh cáo cấp (có thể thân chinh), thiên tai, thích khách, công thần kiêu ngạo (chỉ vua khai quốc), dư đảng triều cũ, vi hành, cùng bốn biến và mất nước.
+- Chưa làm: di sản của triều đại sang kiếp sau. Để dành cho phần Luân Hồi.
+
 ### 12.8 Quan lại, tướng lĩnh tạo phản (2026-10-22)
 - Quan từ Tam phẩm trở lên, hoặc tướng từ Thiên hộ trở lên, mở được đường **tạo phản**: hoạt động Mưu đồ đại sự (quan) hoặc Ủng binh tự trọng (tướng), hoặc qua sự kiện (môn khách rủ rê dưới hôn quân, bạo quân; triều đình đòi giao binh quyền; anh hùng thời loạn).
 - Ba thanh: **Quyền thế**, **Binh quyền**, **Danh nghĩa**. Ba hoạt động mưu phản: Kết vây cánh, Nuôi tử sĩ, Tạo danh nghĩa.

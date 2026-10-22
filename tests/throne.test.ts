@@ -6,7 +6,7 @@ import type { GameState } from '../src/core/types';
 import { initCourt } from '../src/systems/court';
 import { meets } from '../src/systems/events/conditions';
 import { applyOutcome } from '../src/systems/events/engine';
-import { hitRival, initRoyal, throneAscend, throneLine, throneOf, throneYear } from '../src/systems/throne';
+import { hitRival, initRoyal, reignTitle, throneAscend, throneLine, throneOf, throneYear } from '../src/systems/throne';
 
 const content = loadContent();
 const cfg = content.balance.throne!;
@@ -227,5 +227,60 @@ describe('Quan lại, tướng lĩnh tạo phản (12.8)', () => {
   it('the loyal side has its own events: reporting a plotter, putting down a rebel general', () => {
     expect(content.events.find((e) => e.id === 'tp_to_giac_dong_lieu')!.conditions.throne?.none).toBe(true);
     expect(content.events.find((e) => e.id === 'tp_dep_phan')!.conditions.army?.serving).toBe(true);
+  });
+});
+
+describe('Làm vua (12.9)', () => {
+  const king = (how: 'royal' | 'rebel' = 'rebel'): GameState => {
+    const s = createLife({ seed: 'lam-vua', originId: how === 'royal' ? 'hoang_tu' : 'nong_dan' }, content);
+    const grown: GameState = { ...s, character: { ...s.character, age: 35 }, court: initCourt(s, content) };
+    const road = how === 'royal' ? { ...grown, throne: { ...initRoyal(grown, content)!, since: 0, heir: 'self' as const } } : fx(grown, { throneStart: 'rebel' });
+    return fx(road, { throneAscend: true });
+  };
+
+  it('the throne keeps its niên hiệu while the life reigns, with a yearly report of four bars', () => {
+    const s = king();
+    expect(Object.keys(s.reign!.bars).sort()).toEqual(Object.keys(file.bars.reign!).sort());
+    const era = s.times!.era;
+    const next = throneYear({ ...s, character: { ...s.character, age: 36 } }, content);
+    expect(next.times!.era).toBe(era);
+    expect(next.log[next.log.length - 1].lines.some((l) => l.text.startsWith('Triều chính'))).toBe(true);
+    expect(throneLine(next, content)).toContain(s.reign!.dynasty);
+  });
+
+  it('a bar near zero brings its threat event; at zero the dynasty falls', () => {
+    const s = { ...king(), character: { ...king().character, age: 36 } };
+    const low = throneYear({ ...s, reign: { ...s.reign!, bars: { treasury: 60, people: 5, army: 60, court: 60 } } }, content);
+    expect(low.events.followUps.some((f) => f.event === file.events.threats.people)).toBe(true);
+    const gone = throneYear({ ...s, reign: { ...s.reign!, bars: { treasury: 60, people: 60, army: -20, court: 60 } } }, content);
+    expect(gone.events.followUps.some((f) => f.event === file.events.deposed)).toBe(true);
+    const fallen = fx(s, { reignEnd: 'exile' });
+    expect(fallen.reign).toBeNull();
+    expect(reignTitle(fallen, content)).toBe(file.titles.lost);
+  });
+
+  it('deeds make the ruler a minh quân or a bạo quân, and the court’s temper follows', () => {
+    let good = king();
+    for (let i = 0; i < cfg.deedTitle; i++) good = fx(good, { reignDeed: 'good' });
+    expect(reignTitle(good, content)).toBe(file.titles.good);
+    expect(good.court!.emperor.temper).toBe('minh_quan');
+    let bad = king();
+    for (let i = 0; i < cfg.deedTitle; i++) bad = fx(bad, { reignDeed: 'bad' });
+    expect(reignTitle(bad, content)).toBe(file.titles.bad);
+    // The title outlives the reign.
+    expect(reignTitle(fx(bad, { reignEnd: 'abdicate' }), content)).toBe(file.titles.bad);
+    expect(reignTitle(king(), content)).toBe(file.titles.founder);
+  });
+
+  it('ten court decisions an emperor can take each year, and reign events only for a ruler', () => {
+    const acts = content.activities!.filter((a) => a.conditions.reign?.active);
+    expect(acts.length).toBeGreaterThanOrEqual(10);
+    const commoner = createLife({ seed: 'lam-vua', originId: 'nong_dan' }, content);
+    for (const a of acts) expect(meets({ ...commoner, character: { ...commoner.character, age: 30 } }, a.conditions, content)).toBe(false);
+    const reign = content.events.filter((e) => e.category === 'reign');
+    expect(reign.length).toBeGreaterThanOrEqual(15);
+    expect(reign.every((e) => e.conditions.reign?.active)).toBe(true);
+    const abdicated = fx(king(), { reignEnd: 'abdicate' });
+    expect(abdicated.flags.thai_thuong_hoang).toBe(true);
   });
 });

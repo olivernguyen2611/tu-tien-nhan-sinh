@@ -30,6 +30,7 @@ import { checkDeath } from './time';
 import { joinCareer } from './career';
 import { trainMartial } from './martial';
 import { lifeEnding } from './chronicle';
+import { reignTitle } from './throne';
 import { BalanceSchema } from '../core/schemas';
 
 /**
@@ -55,9 +56,9 @@ export const MORTAL_PERSONAS: Record<MortalPersona, PersonaDef> = {
   ke_cuop: { name: 'Kẻ cướp', jobs: ['do_te', 'phu_khuan_vac'], activities: ['tron_hoc', 'pp_moc_tui', 'pp_trom_nha_giau', 'pp_cuop_duong', 'pp_lua_dao', 'pp_tron_di_xa', 'pp_gianh_cho', 'pp_ket_giao_ban_tu', 'pp_dao_ham', 'an_bot', 'song_bac', 'luyen_quyen_som', 'dau_quan_hac_dao', 'lam_nhiem_vu_bang', 'hoc_vo_quan', 'luyen_bi_kip', 'mua_binh_khi', 'len_loi_dai'], months: 6, train: true, choice: 'evil' },
   hiep_khach: { name: 'Hiệp khách', career: 'vo_lam', jobs: ['tieu_su', 'ho_vien'], activities: ['theo_vo_duong', 'hoc_nghe_ren', 'luyen_quyen_som', 'ap_tieu', 'ngao_du', 'ket_giao', 'bai_nhap_mon_phai', 'lam_nhiem_vu_bang', 'doi_cong_hien_vo_hoc', 'hoc_vo_quan', 'luyen_bi_kip', 'luyen_bi_kip', 'mua_binh_khi', 'duong_noi_thuong', 'cau_cao_nhan_chi_diem', 'nhan_ap_tieu_xa', 'xem_bang_treo_thuong', 'hanh_hiep', 'len_loi_dai', 'tim_tien_tich'], months: 5, train: true, choice: 'good' },
   ke_luoi: { name: 'Kẻ lười', activities: ['ngao_du', 'song_bac', 'tuu_lau'], months: 4, choice: 'first' },
-  nghia_quan: { name: 'Thủ lĩnh nghĩa quân', origin: 'nong_dan', jobs: ['lam_ruong'], activities: ['tu_nghia', 'luyen_quyen_som', 'ket_giao', 'doc_sach', 'lam_thue'], months: 5, train: true, choice: 'ambitious' },
-  quyen_than: { name: 'Quyền thần tham vọng', career: 'quan', jobs: ['thay_do', 'thu_lai'], activities: ['xin_hoc_truong_lang', 'leu_chong_di_thi', 'cham_hoc', 'on_thi', 'thu_quan', 'ket_giao', 'doc_sach', 'thang_duong', 'chon_phe_canh', 'muu_do_dai_su', 'ket_vay_canh', 'nuoi_tu_si', 'tao_danh_nghia'], months: 9, choice: 'ambitious' },
-  tham_vong: { name: 'Hoàng tử tham vọng', origin: 'hoang_tu', activities: ['duong_danh', 'ket_dang', 'lap_cong', 'an_nhan', 'ham_hai', 'cham_hoc', 'doc_sach', 'ket_giao'], months: 6, choice: 'ambitious' },
+  nghia_quan: { name: 'Thủ lĩnh nghĩa quân', origin: 'nong_dan', jobs: ['lam_ruong'], activities: ['tu_nghia', 'luyen_quyen_som', 'ket_giao', 'doc_sach', 'lam_thue', 'giam_thue', 'tang_thue', 'mo_an_khoa', 'duyet_binh', 'tri_thuy', 'tuan_du', 'dai_xa'], months: 5, train: true, choice: 'ambitious' },
+  quyen_than: { name: 'Quyền thần tham vọng', career: 'quan', jobs: ['thay_do', 'thu_lai'], activities: ['xin_hoc_truong_lang', 'leu_chong_di_thi', 'cham_hoc', 'on_thi', 'thu_quan', 'ket_giao', 'doc_sach', 'thang_duong', 'chon_phe_canh', 'muu_do_dai_su', 'ket_vay_canh', 'nuoi_tu_si', 'tao_danh_nghia', 'giam_thue', 'tang_thue', 'mo_an_khoa', 'duyet_binh', 'tri_thuy', 'tuan_du', 'dai_xa'], months: 9, choice: 'ambitious' },
+  tham_vong: { name: 'Hoàng tử tham vọng', origin: 'hoang_tu', activities: ['duong_danh', 'ket_dang', 'lap_cong', 'an_nhan', 'ham_hai', 'cham_hoc', 'doc_sach', 'ket_giao', 'giam_thue', 'tang_thue', 'mo_an_khoa', 'duyet_binh', 'tri_thuy', 'tuan_du', 'dai_xa'], months: 6, choice: 'ambitious' },
 };
 /** 12.10: how far a choice goes toward the throne (its plain result, or a check's success). */
 function choiceAmbition(event: GameEvent, index: number, state: GameState): number {
@@ -67,11 +68,12 @@ function choiceAmbition(event: GameEvent, index: number, state: GameState): numb
   // A bar that runs low is worth more.
   const cur = (k: string) => state.throne?.bars[k] ?? 50;
   const need = (k: string) => Math.max(0.2, Math.min(2, (70 - cur(k)) / 30));
-  const bars = Object.entries((eff.throneBar ?? {}) as Record<string, number>).reduce((s, [k, v]) => s + (k === 'suspicion' ? -v / 2 : v * need(k)), 0);
+  const bars = Object.entries((eff.throneBar ?? {}) as Record<string, number>).reduce((s, [k, v]) => s + (k === 'suspicion' ? -v / 2 : v * need(k)), 0)
+    + Object.entries((eff.reignBar ?? {}) as Record<string, number>).reduce((s, [k, v]) => s + v * Math.max(0.2, Math.min(2, (70 - (state.reign?.bars[k] ?? 50)) / 30)), 0);
   const step = typeof eff.throneStep === 'number' ? 20 * eff.throneStep : 0;
   const fu = (eff.followUp as { event?: string } | undefined)?.event;
   return (eff.throneAscend ? 100 : 0) + (eff.throneStart ? 30 : 0) + step + (eff.throneBattle ? ((state.throne?.bars.troops ?? 0) >= 40 ? 25 : -5) : 0) + (fu && /binh_bien|khoi_su|kn_|tp_/.test(fu) ? 15 : 0)
-    + bars + (typeof eff.throneRival === 'number' ? -eff.throneRival / 2 : 0) + (eff.throneFail ? -50 : 0) + (eff.die ? -100 : 0);
+    + bars + (typeof eff.throneRival === 'number' ? -eff.throneRival / 2 : 0) + (eff.throneFail ? -50 : 0) + (eff.reignEnd && eff.reignEnd !== 'abdicate' ? -80 : 0) + (eff.die ? -100 : 0);
 }
 export const MORTAL_PROFILES = Object.keys(MORTAL_PERSONAS) as MortalPersona[];
 /** 10.12: everyday pastimes any mortal persona tries a few of each year (the ones not open are skipped). */
@@ -169,6 +171,9 @@ export interface LifeResult {
   throneTried?: boolean;
   reigned?: boolean;
   throneDied?: boolean;
+  /** 12.9: how a reign ended (fell, abdicated, or the ruler died on the throne) and the title it left. */
+  reignEnd?: 'fell' | 'abdicated' | 'died' | null;
+  reignTitle?: string | null;
   /** 12.3: served in the army; became a tướng. */
   soldier?: boolean;
   general?: boolean;
@@ -407,6 +412,8 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     executed: s.death?.cause === 'execution',
     throneTried: !!(s.flags.tung_khoi_nghia || s.flags.tung_muu_phan || s.flags.len_ngoi || content.origins.find((o) => o.id === s.character.originId)?.royal),
     reigned: !!s.flags.len_ngoi,
+    reignEnd: !s.flags.len_ngoi ? null : s.flags.mat_nuoc ? 'fell' : s.flags.thai_thuong_hoang ? 'abdicated' : 'died',
+    reignTitle: reignTitle(s, content),
     throneDied: !!s.flags.bi_tru_di || (s.death?.cause === 'execution' && !s.flags.len_ngoi && (!!s.throne || !!content.origins.find((o) => o.id === s.character.originId)?.royal)),
     soldier: !!s.flags.tung_tong_quan,
     general: !!s.flags.phong_tuong,
