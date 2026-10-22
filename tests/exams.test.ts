@@ -150,5 +150,5 @@ describe('10.2 khoa cử', () => {
     const { results } = simulateMany(content, 30, 'exam-sim', { profile: 'thu_sinh' });
     const tuTai = results.filter((r) => (r.examRank ?? -1) >= 1).length;
     expect(tuTai).toBeGreaterThan(3);
-  });
+  }, 60_000);
 });

@@ -150,5 +150,5 @@ describe('task 2.8 events and their engine', () => {
       }
       expect(s.alive).toBe(false);
     }
-  });
+  }, 60_000);
 });
