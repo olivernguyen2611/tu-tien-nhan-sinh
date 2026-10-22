@@ -35,6 +35,7 @@
         "gia_san"
       ],
       "hideGroups": ["giang_ho"],
+      "enterEvent": "nd_nhap_dao_lua_chon",
       "enterText": "Linh khí lần đầu chảy qua kinh mạch. Thế gian vẫn là thế gian ấy, nhưng ngươi đã không còn nhìn nó bằng đôi mắt phàm nhân. Từ nay, mỗi năm đều phải chọn: sống, hay tu."
     },
     {

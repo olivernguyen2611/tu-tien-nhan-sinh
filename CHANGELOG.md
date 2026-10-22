@@ -8,6 +8,16 @@
 
 ## [Chưa phát hành]
 
+### 13.1 Nhập đạo là một cột mốc (2026-10-23)
+- Ngay sau màn nhập đạo, người chơi phải chọn **Dứt duyên phàm trần** hay **Giữ duyên phàm trần**:
+  - Dứt duyên: bỏ nghề, ấn quan, quân ngũ, ngai vàng. Ruộng vườn, cửa hiệu để lại cho người nhà, chỉ mang theo 20% số bạc. Tu nhanh hơn 10%, nhưng người thân phàm mỗi năm một xa.
+  - Giữ duyên: giữ gia đình, gia sản, nghề. Tu chậm hơn 5%, và mở các chuyện song giới.
+- Phu thê khác đường: khi đạo lữ là phàm nhân, có thể chọn ở lại (mười mấy năm sau là chuyện tóc bạc, tóc xanh), đi tìm kỳ vật nghìn năm mở hậu thiên linh căn cho người ấy, hoặc chia tay (hai mươi năm sau nghe tin người cũ).
+- Huynh đệ khác đường: anh chị em không có linh căn, mười năm sau gặp lại.
+- Võ nhập tiên: ba chuyện riêng cho người đi lên từ võ đạo (huynh đệ giang hồ cũ cầu cứu, ngoại hiệu bị cười, dung hợp võ với đạo).
+- Khảo hạch ngoại môn: cứu đồng môn hay nhặt lệnh bài.
+- Hiệu ứng sự kiện mới `leaveMortal`, `familyAffinity`; tầng có `enterEvent`; số liệu ở `balance.daoBond`.
+
 ### Góp ý 23/10 · Kho tên họ lớn hơn (2026-10-23)
 - 109 họ (trước ít hơn nhiều), 50 tên đệm nam, 48 tên đệm nữ, 90 tên nam, 78 tên nữ, 62 tên đặt sẵn mỗi giới (có cả tên mộc mạc như Thiết Trụ, Thúy Hoa), 20 quê quán.
 - Tên đặt sẵn chỉ còn 15% (trước 30%), 12% là tên một chữ, còn lại ghép đệm + tên. Ít lặp tên hơn hẳn.

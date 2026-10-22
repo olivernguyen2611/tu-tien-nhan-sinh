@@ -11,6 +11,7 @@ import { addWound, buyWeapon, gainWeapon, learnArt, practiseArt } from '../marti
 import { addPrestige, wulinResign, wulinTournament } from '../wulin';
 import { addReignBars, addThroneBars, hitRival, reignDeed, reignEnd, setThroneStep, throneAscend, throneBattle, throneFail, throneStart } from '../throne';
 import { addArmyMerit, armyBattle, armyJoin, armyLeave } from '../army';
+import { familyAffinity, leaveMortalLife } from '../daoBond';
 import { addOfficeEvidence, addOfficeMerit, officeDefend, officeJoin, officeResign, setOfficeFaction, setOfficeStyle } from '../office';
 import { catchDisease, cureAilment, injure, noteDrink } from '../health';
 import { addJailYears, addWanted, arrest, bribe, commitCrime, fleeLaw, imprison, sentence, tryEscape } from '../law';
@@ -583,6 +584,9 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.armyMerit) next = addArmyMerit(next, fx.armyMerit);
   if (fx.armyBattle) next = armyBattle(next, content);
   if (fx.armyLeave) next = armyLeave(next, content, fx.armyLeave);
+  // 13.1 Nhập đạo: dứt duyên phàm trần.
+  if (fx.leaveMortal) next = leaveMortalLife(next, content);
+  if (fx.familyAffinity) next = familyAffinity(next, fx.familyAffinity);
   // 12.2 Quan trường.
   if (fx.officeJoin) next = officeJoin(next, content, fx.officeJoin);
   if (fx.officeStyle) next = setOfficeStyle(next, content, fx.officeStyle);

@@ -412,6 +412,10 @@ export const EffectsSchema = z
     reignDeed: z.enum(['good', 'bad']).optional(),
     reignEnd: z.enum(['death', 'exile', 'abdicate']).optional(),
     armyJoin: z.enum(['draft', 'volunteer']).optional(),
+    /** 13.1 Dứt duyên phàm trần: leave job, office, army, throne; the gia sản stays with the family, a share of the silver is kept. */
+    leaveMortal: z.boolean().optional(),
+    /** 13.1: every living parent, sibling and child's affinity ±. */
+    familyAffinity: z.number().optional(),
     armyMerit: z.number().optional(),
     armyBattle: z.boolean().optional(),
     armyLeave: z.enum(['discharge', 'desert', 'scatter']).optional(),
@@ -539,7 +543,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt', 'learnArt', 'practiseArt', 'buyWeapon', 'gainWeapon', 'wound', 'wulinTournament', 'wulinPrestige', 'wulinResign', 'officeJoin', 'officeStyle', 'officeFaction', 'officeMerit', 'officeEvidence', 'officeDefend', 'officeResign', 'armyJoin', 'armyMerit', 'armyBattle', 'armyLeave', 'throneStart', 'throneBar', 'throneRival', 'throneRivalDies', 'throneStep', 'throneBattle', 'throneAscend', 'throneFail', 'reignBar', 'reignDeed', 'reignEnd'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt', 'learnArt', 'practiseArt', 'buyWeapon', 'gainWeapon', 'wound', 'wulinTournament', 'wulinPrestige', 'wulinResign', 'officeJoin', 'officeStyle', 'officeFaction', 'officeMerit', 'officeEvidence', 'officeDefend', 'officeResign', 'armyJoin', 'armyMerit', 'armyBattle', 'armyLeave', 'leaveMortal', 'familyAffinity', 'throneStart', 'throneBar', 'throneRival', 'throneRivalDies', 'throneStep', 'throneBattle', 'throneAscend', 'throneFail', 'reignBar', 'reignDeed', 'reignEnd'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -726,6 +730,8 @@ export const WorldSchema = z
       hideGroups: z.array(z.string().min(1)).default([]),
       /** Shown on the full-screen "nhập đạo" card when the life enters this tier. */
       enterText: z.string().optional(),
+      /** 13.1: the event that comes right after entering (nhập đạo: dứt hay giữ duyên phàm trần). */
+      enterEvent: z.string().optional(),
     }).strict()).default([]),
     /** 9.1 Lối sống: the deep lives one is in (several at once), on while `entry` holds; the first age is kept. */
     lifestyles: z.array(z.object({
@@ -1921,6 +1927,11 @@ export const BalanceSchema = z
     }).strict().optional(),
     /** Thân phận: while reigning, holding office or in the army, events of these categories / themes / ids come at `mul` of their weight
      *  (a thiên tử is not asked to mind a neighbour's house). */
+    /** 13.1 Nhập đạo: hooks by the flag of the bond chosen (dứt / giữ duyên), the share of silver kept on cutting, the yearly affinity drift of kin after cutting. */
+    daoBond: z.object({
+      hooks: z.record(z.string(), z.array(EffectHookSchema)).default({}),
+      silverKeep: z.number().min(0).max(1), cutFlag: z.string().min(1), cutDrift: z.number().min(0),
+    }).strict().optional(),
     standing: z.record(z.enum(['reign', 'office', 'army']), z.object({
       mul: z.number().min(0), categories: z.array(z.string()).default([]), themes: z.array(z.string()).default([]), ids: z.array(z.string()).default([]),
       /** Activities closed to this standing (unless their conditions speak of it). */

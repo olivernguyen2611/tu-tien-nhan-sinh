@@ -1,4 +1,5 @@
 // Creating a new life. Pure: same seed + same input → same character.
+import { daoBondYear } from '../systems/daoBond';
 import { ageNpcs, npcById } from '../systems/npcs';
 import type { Content } from './content';
 import { Rng } from './rng';
@@ -288,7 +289,7 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   const used = monthsUsed(state);
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(pastimeYear(assetsYear(jobYear(schoolYear(careerOfficeYear(applyJobCrafts(cultivateYear(ageExtremes(wulinYear(artsYear(factionYear(kinYear(lawYear(healthYear(ageBody(acquaintanceYear(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content, used), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content);
+  const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(pastimeYear(assetsYear(jobYear(schoolYear(careerOfficeYear(applyJobCrafts(cultivateYear(ageExtremes(wulinYear(artsYear(factionYear(kinYear(lawYear(healthYear(ageBody(acquaintanceYear(ageNpcs(daoBondYear(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content), content, used), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content);
   // Task 4.1: in seclusion no ordinary event comes (follow-ups wait for the door to open);
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;

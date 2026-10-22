@@ -1,0 +1,790 @@
+[
+ {
+  "id": "nd_nhap_dao_lua_chon",
+  "category": "cultivation",
+  "title": "Ngã rẽ nhập đạo",
+  "text": "Đêm ấy linh khí chạy trọn một chu thiên. {name} ngồi trên bậc cửa đến tận canh tư, nhìn về phía đèn đóm nhà người. Tiên lộ không thấy điểm cuối, còn phàm duyên chỉ có một đời. Người đi trước đều nói: phải chọn.",
+  "themes": [
+   "cultivation"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   }
+  },
+  "weight": 0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Dứt duyên phàm trần, một lòng hướng đạo",
+    "result": {
+     "text": "Ngươi để lại khế ruộng, chìa khóa nhà và phần lớn số bạc, chỉ mang một bọc hành lý ra đi. Người nhà gọi với theo, ngươi không ngoảnh lại. Lòng nhẹ hẳn, linh khí cũng như chảy nhanh hơn.",
+     "effects": {
+      "setFlags": [
+       "dut_duyen"
+      ],
+      "leaveMortal": true,
+      "familyAffinity": -10,
+      "stat.daoHeart": 3,
+      "stat.happiness": -4
+     }
+    }
+   },
+   {
+    "text": "Giữ duyên phàm trần, tu tiên mà vẫn là người nhà",
+    "result": {
+     "text": "Ngươi vẫn ăn cơm nhà, vẫn đi chợ phiên, đêm về mới ngồi thổ nạp. Tu chậm hơn một chút, nhưng mỗi năm vẫn có chỗ để về, có người để nhớ.",
+     "effects": {
+      "setFlags": [
+       "giu_duyen"
+      ],
+      "familyAffinity": 5,
+      "stat.happiness": 4,
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nd_pt_khac_duong",
+  "category": "romance",
+  "title": "Phu thê khác đường",
+  "text": "Sáng nay chải tóc cho {lover}, ngươi thấy sợi tóc bạc đầu tiên. Còn tóc ngươi thì đen hơn cả năm ngoái. {lover} không có linh căn. Một người đi lên, một người ở lại, khoảng cách ấy mỗi năm một xa.",
+  "themes": [
+   "romance",
+   "family"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "age": {
+    "min": 18
+   },
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "romance": {
+    "target": "partner",
+    "targetRooted": false
+   }
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Ở lại bên {lover}, tu chậm cũng được",
+    "result": {
+     "text": "Ngươi cất bớt đan dược, bớt những lần bế quan dài. {lover} không hỏi, chỉ đêm nào cũng để phần một bát canh nóng.",
+     "effects": {
+      "setFlags": [
+       "pt_o_lai"
+      ],
+      "npc": {
+       "affinity": 10
+      },
+      "stat.happiness": 5,
+      "stat.daoHeart": -1,
+      "followUp": {
+       "event": "nd_pt_toc_bac",
+       "afterYears": [
+        10,
+        14
+       ]
+      }
+     }
+    }
+   },
+   {
+    "text": "Đi tìm kỳ vật nghìn năm, mở linh căn cho {lover}",
+    "result": {
+     "text": "Người ta bảo linh căn là trời sinh, nhưng kỳ vật nghìn năm đôi khi mở được hậu thiên linh căn. Mười phần chưa chắc được một. Ngươi vẫn lên đường dò hỏi.",
+     "effects": {
+      "setFlags": [
+       "pt_tim_ky_vat"
+      ],
+      "npc": {
+       "affinity": 6
+      },
+      "stat.daoHeart": 2,
+      "stat.happiness": 2,
+      "followUp": {
+       "event": "nd_pt_ky_vat_tin",
+       "afterYears": [
+        2,
+        4
+       ]
+      }
+     }
+    }
+   },
+   {
+    "text": "Chia tay, để {lover} sống trọn một kiếp người",
+    "result": {
+     "text": "Ngươi để lại toàn bộ gia sản và một lá thư. {lover} đọc xong, không khóc, chỉ đóng cửa ba ngày. Đường tu từ nay chỉ còn một người.",
+     "effects": {
+      "romance": {
+       "lose": true
+      },
+      "setFlags": [
+       "pt_chia_ly"
+      ],
+      "stat.daoHeart": 4,
+      "stat.happiness": -12,
+      "followUp": {
+       "event": "nd_pt_tin_cu",
+       "afterYears": [
+        18,
+        25
+       ]
+      }
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nd_pt_toc_bac",
+  "category": "romance",
+  "title": "Tóc bạc, tóc xanh",
+  "text": "Mười mấy năm trôi qua. {lover} lưng đã còng, tóc đã bạc, còn ngươi vẫn như ngày mới cưới. Hàng xóm mới dọn tới tưởng ngươi là con của {lover}, còn khen \"đứa con hiếu thảo\".",
+  "themes": [
+   "romance",
+   "family"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "age": {
+    "min": 18
+   },
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "romance": {
+    "target": "partner",
+    "targetRooted": false
+   },
+   "flagsAll": [
+    "pt_o_lai"
+   ]
+  },
+  "weight": 0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Dọn tới nơi không ai quen biết",
+    "result": {
+     "text": "Hai người dọn tới một thị trấn ven sông. Ở đây không ai hỏi, ngươi cứ việc gọi {lover} là phu quân, là nương tử.",
+     "effects": {
+      "moveHome": true,
+      "npc": {
+       "affinity": 6
+      },
+      "stat.happiness": 3
+     }
+    }
+   },
+   {
+    "text": "Dùng linh thạch đổi đan dược kéo dài tuổi thọ cho {lover}",
+    "requires": {
+     "stats": [
+      {
+       "stat": "spiritStones",
+       "gte": 40
+      }
+     ]
+    },
+    "result": {
+     "text": "Viên Duyên Thọ Đan phàm nhân uống vào chỉ thêm được mười năm, mà đắt gấp mười lần giá cho tu sĩ. Ngươi vẫn mua. {lover} cười: \"Thêm mười năm cằn nhằn ngươi.\"",
+     "effects": {
+      "spiritStones": -40,
+      "npc": {
+       "affinity": 15
+      },
+      "stat.happiness": 6,
+      "karma": 1
+     }
+    }
+   },
+   {
+    "text": "Mặc kệ thiên hạ nói gì",
+    "result": {
+     "text": "Ngươi vẫn nắm tay {lover} đi chợ. Người ta xì xào ba năm rồi thôi. Thiên hạ quên nhanh hơn ngươi tưởng.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.happiness": 2,
+      "stat.charm": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nd_pt_ky_vat_tin",
+  "category": "fortune",
+  "title": "Tin về kỳ vật",
+  "text": "Một tán tu say rượu ở phường thị buột miệng: trong Hắc Phong Lĩnh có một gốc linh chi đã nghìn năm, yêu thú giữ bên cạnh chưa từng rời. Ngươi nhớ tới {lover}.",
+  "themes": [
+   "ky_vat",
+   "romance"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "age": {
+    "min": 18
+   },
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "romance": {
+    "target": "partner",
+    "targetRooted": false
+   },
+   "flagsAll": [
+    "pt_tim_ky_vat"
+   ]
+  },
+  "weight": 0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Vào Hắc Phong Lĩnh đoạt linh chi",
+    "result": {
+     "text": "Ngươi lần vào rừng sâu. Mùi tanh nồng xộc vào mũi trước khi thấy bóng con thú.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Yêu lang giữ linh chi",
+       "realm": "same",
+       "intent": "teach",
+       "powerMul": 1.2
+      },
+      "win": {
+       "text": "Ngươi mang về gốc Linh Chi Nghìn Năm còn nguyên rễ. Đưa cho {lover} thì được hay không, phải xem trời.",
+       "effects": {
+        "addItems": [
+         "linh_chi_ngan_nam"
+        ],
+        "stat.happiness": 6,
+        "stat.physique": 1
+       }
+      },
+      "lose": {
+       "text": "Ngươi bị cắn một vết sâu đến xương, đành rút ra khỏi rừng. Năm sau còn có thể tới lần nữa, nếu nó chưa bị kẻ khác lấy.",
+       "effects": {
+        "stat.health": -18,
+        "stat.happiness": -4
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Hỏi mua lại của kẻ khác",
+    "requires": {
+     "stats": [
+      {
+       "stat": "spiritStones",
+       "gte": 200
+      }
+     ]
+    },
+    "result": {
+     "text": "Gốc linh chi đã bị người ta đào trước. Ngươi trả giá hai trăm linh thạch, gần như dốc sạch túi.",
+     "effects": {
+      "spiritStones": -200,
+      "addItems": [
+       "linh_chi_ngan_nam"
+      ],
+      "stat.happiness": 3
+     }
+    }
+   },
+   {
+    "text": "Thôi, chuyện trời định thì để trời",
+    "result": {
+     "text": "Ngươi ngồi rất lâu ở quán rượu. Về nhà, nhìn {lover} ngủ, lòng nặng trĩu.",
+     "effects": {
+      "clearFlags": [
+       "pt_tim_ky_vat"
+      ],
+      "stat.daoHeart": 1,
+      "stat.happiness": -5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nd_pt_tin_cu",
+  "category": "romance",
+  "title": "Tin người cũ",
+  "text": "Hơn hai mươi năm sau, ngươi đi ngang quê cũ. Bà hàng nước kể: người năm xưa bị bỏ lại đã tái giá, con cháu đầy nhà, năm ngoái mới mất, lúc đi còn dặn con cháu không được oán ai.",
+  "themes": [
+   "romance"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "age": {
+    "min": 18
+   },
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "flagsAll": [
+    "pt_chia_ly"
+   ]
+  },
+  "weight": 0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Ra mộ thắp một nén hương",
+    "result": {
+     "text": "Cỏ trên mộ đã xanh. Ngươi đứng tới lúc nén hương tàn hẳn, rồi đi, không để lại tên.",
+     "effects": {
+      "karma": 1,
+      "stat.daoHeart": 3,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Đi tiếp, không ngoảnh lại",
+    "result": {
+     "text": "Đã chọn rồi thì đừng nhìn lại. Ngươi rảo bước, đến đầu làng mới thấy mắt cay.",
+     "effects": {
+      "stat.daoHeart": 5,
+      "stat.happiness": -6
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nd_huynh_de_khac_duong",
+  "category": "cultivation",
+  "title": "Huynh đệ khác đường",
+  "text": "Ngày ngươi bắt đầu tu luyện, {sibling} cũng lén đặt tay lên đá thử linh. Đá lạnh ngắt. Từ hôm ấy {sibling} ít nói hẳn, ăn cơm xong là ra đồng.",
+  "themes": [
+   "family"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "family": {
+    "siblingAlive": true
+   },
+   "age": {
+    "max": 40
+   }
+  },
+  "weight": 2,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Đưa {sibling} một phần bạc, dặn cứ sống cho tốt",
+    "requires": {
+     "stats": [
+      {
+       "stat": "silver",
+       "gte": 20
+      }
+     ]
+    },
+    "result": {
+     "text": "{sibling} cầm bạc, gật đầu. Năm sau {sibling} mở được một sạp hàng nhỏ, thư gửi lên núi bao giờ cũng kèm một gói mứt gừng.",
+     "effects": {
+      "silver": -20,
+      "familyAffinity": 4,
+      "setFlags": [
+       "hd_nang_do"
+      ],
+      "stat.happiness": 3,
+      "followUp": {
+       "event": "nd_huynh_de_ve_sau",
+       "afterYears": [
+        10,
+        14
+       ]
+      }
+     }
+    }
+   },
+   {
+    "text": "Hứa sẽ tìm tiên duyên cho {sibling}",
+    "result": {
+     "text": "\"Thiên hạ rộng lớn, ắt có cách.\" Ngươi nói thế, nhưng chính ngươi cũng chưa chắc. {sibling} cười, mắt sáng lên lần đầu sau nhiều tháng.",
+     "effects": {
+      "setFlags": [
+       "hd_hua_hen"
+      ],
+      "stat.daoHeart": -1,
+      "stat.happiness": 2,
+      "followUp": {
+       "event": "nd_huynh_de_ve_sau",
+       "afterYears": [
+        10,
+        14
+       ]
+      }
+     }
+    }
+   },
+   {
+    "text": "Đường ai nấy đi",
+    "result": {
+     "text": "Ngươi bận tu luyện, không để ý. Lâu dần, hai người gặp nhau chỉ còn gật đầu.",
+     "effects": {
+      "familyAffinity": -4,
+      "setFlags": [
+       "hd_lanh_nhat"
+      ],
+      "stat.daoHeart": 1,
+      "followUp": {
+       "event": "nd_huynh_de_ve_sau",
+       "afterYears": [
+        10,
+        14
+       ]
+      }
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nd_huynh_de_ve_sau",
+  "category": "cultivation",
+  "title": "Mười năm sau",
+  "text": "Mười năm. {sibling} giờ đã có vợ con, tóc mai lấm tấm. Hôm ngươi về, {sibling} đứng ở đầu ngõ, không biết nên gọi tên hay gọi tiên trưởng.",
+  "themes": [
+   "family"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "family": {
+    "siblingAlive": true
+   }
+  },
+  "weight": 0,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Gọi tên {sibling} như hồi nhỏ",
+    "result": {
+     "text": "{sibling} ngẩn ra, rồi bật cười, kéo ngươi vào nhà uống rượu đến khuya. Lũ trẻ nấp sau cửa nhìn trộm vị \"tiên nhân\" say khướt.",
+     "effects": {
+      "familyAffinity": 6,
+      "stat.happiness": 6
+     }
+    }
+   },
+   {
+    "text": "Để lại cho cháu một viên đan cường thân",
+    "result": {
+     "text": "Đứa cháu lớn nhất uống viên đan, năm ấy không ốm một ngày. {sibling} mang chuyện ấy kể cho cả làng.",
+     "effects": {
+      "familyAffinity": 4,
+      "karma": 1,
+      "stat.happiness": 3,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Ngồi một lát rồi đi",
+    "result": {
+     "text": "Câu chuyện cứ đứt quãng. Lúc tiễn ngươi, {sibling} nói nhỏ: \"Ở trên ấy… có lạnh không?\"",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.happiness": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nd_vo_huynh_de_cu",
+  "category": "cultivation",
+  "title": "Huynh đệ giang hồ năm xưa",
+  "text": "Ba gã hán tử mặt đầy sẹo quỳ ở chân núi suốt một ngày. Họ là huynh đệ giang hồ năm xưa của ngươi: bang bị một đám tu sĩ tán tu chiếm, không ai đánh lại.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "flagsAll": [
+    "vo_dao_nhap_tien"
+   ]
+  },
+  "weight": 2,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Xuống núi, dùng pháp thuật dẹp đám tán tu",
+    "result": {
+     "text": "Một kiếm quang lóe lên, đám tán tu bỏ chạy. Huynh đệ reo hò, nhưng tối ấy có tu sĩ chấp pháp gửi thư nhắc: dùng pháp thuật trước mắt phàm nhân là phạm thiên quy.",
+     "effects": {
+      "fame": 10,
+      "karma": -2,
+      "stat.happiness": 4,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Chỉ dùng võ công năm xưa mà đánh",
+    "result": {
+     "text": "Không dùng một chút linh lực, chỉ bằng quyền cước. Ngươi bị thương không nhẹ nhưng thắng, và không ai nói được ngươi phạm luật.",
+     "effects": {
+      "fame": 6,
+      "stat.health": -10,
+      "stat.physique": 2,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Đưa họ ít bạc, khuyên tìm nơi khác",
+    "requires": {
+     "stats": [
+      {
+       "stat": "silver",
+       "gte": 30
+      }
+     ]
+    },
+    "result": {
+     "text": "\"Ta không còn là người giang hồ nữa.\" Mấy gã cầm bạc đi, không ai ngoảnh lại.",
+     "effects": {
+      "silver": -30,
+      "fame": -5,
+      "stat.daoHeart": 2,
+      "stat.happiness": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nd_vo_ngoai_hieu",
+  "category": "cultivation",
+  "title": "Ngoại hiệu bị cười",
+  "text": "Một đệ tử trẻ nghe ai đó gọi ngươi là \"{alias}\", ôm bụng cười: \"Tu sĩ mà còn ngoại hiệu như phường mãi võ!\"",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "flagsAll": [
+    "vo_dao_nhap_tien"
+   ],
+   "jianghu": {
+    "alias": true
+   }
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Mời hắn ra sân luận bàn một chiêu",
+    "result": {
+     "text": "Hắn rút pháp kiếm. Ngươi chỉ lắc người né, bước vào trong vòng kiếm.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Đệ tử miệng lưỡi",
+       "realm": "same",
+       "intent": "teach"
+      },
+      "win": {
+       "text": "Một quyền vào ngực, hắn ngồi bệt xuống đất. Hôm sau cả tông gọi ngươi đúng bằng cái ngoại hiệu ấy, không ai dám cười nữa.",
+       "effects": {
+        "stat.happiness": 5,
+        "stat.physique": 1,
+        "fame": 3
+       }
+      },
+      "lose": {
+       "text": "Pháp kiếm nhanh hơn ngươi tưởng. Ngươi thua, hắn càng cười to.",
+       "effects": {
+        "stat.health": -6,
+        "stat.happiness": -4
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Cười xòa: \"Ngoại hiệu ấy ta đổi bằng máu, không bán\"",
+    "result": {
+     "text": "Đệ tử kia đỏ mặt. Mấy sư huynh ngồi gần đó gật gù.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.charm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nd_vo_doi_chieu",
+  "category": "cultivation",
+  "title": "Võ và đạo",
+  "text": "Ngồi thổ nạp, ngươi nhận ra linh khí trong kinh mạch chạy theo đúng lộ tuyến của bộ nội công học năm mười bảy tuổi. Võ và đạo hóa ra không cách nhau xa như người ta nói.",
+  "themes": [
+   "cultivation"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "flagsAll": [
+    "vo_dao_nhap_tien"
+   ]
+  },
+  "weight": 1.5,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Dung hợp chiêu thức cũ với pháp thuật",
+    "result": {
+     "text": "Mất trọn ba tháng. Từ đó mỗi chiêu pháp thuật của ngươi đều có bóng quyền cước.",
+     "effects": {
+      "stat.physique": 2,
+      "stat.comprehension": 1,
+      "cultProgress": 10
+     }
+    }
+   },
+   {
+    "text": "Bỏ hết lối cũ, học lại từ đầu",
+    "result": {
+     "text": "Khó như bắt tay phải viết chữ trái. Nhưng đạo tâm ngươi vững hơn.",
+     "effects": {
+      "stat.daoHeart": 3,
+      "stat.physique": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "nd_ngoai_mon_khao_hach",
+  "category": "sect",
+  "title": "Khảo hạch ngoại môn",
+  "text": "Trong bí cảnh khảo hạch, ngươi nghe tiếng thét. Một đồng môn bị yêu lang cắn vào chân, nằm co bên gốc cây. Lệnh bài khảo hạch của hắn rơi ngay cạnh chân ngươi.",
+  "themes": [
+   "sect"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi",
+    "max": "truc_co"
+   },
+   "sect": {
+    "member": true,
+    "maxRank": 0
+   }
+  },
+  "weight": 2,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Cứu người trước, lệnh bài tính sau",
+    "check": {
+     "stat": "stat.comprehension",
+     "difficulty": 45
+    },
+    "success": {
+     "text": "Ngươi đuổi được yêu lang, cõng người về, kịp nộp lệnh bài ngay lúc cổng bí cảnh đóng. Trưởng lão ghi tên cả hai.",
+     "effects": {
+      "karma": 5,
+      "sectContribution": 30,
+      "stat.happiness": 5,
+      "stat.daoHeart": 2
+     }
+    },
+    "fail": {
+     "text": "Cứu được người thì lỡ giờ. Năm nay ngươi trượt khảo hạch, nhưng đồng môn kia nhớ ơn suốt đời.",
+     "effects": {
+      "karma": 5,
+      "stat.happiness": -3,
+      "stat.daoHeart": 3
+     }
+    }
+   },
+   {
+    "text": "Nhặt lệnh bài, đi tiếp",
+    "result": {
+     "text": "Ngươi chắc chắn qua khảo hạch. Đêm ấy ngủ không yên, cứ nghe tiếng thét trong bí cảnh.",
+     "effects": {
+      "karma": -10,
+      "sectContribution": 40,
+      "stat.daoHeart": -5
+     }
+    }
+   },
+   {
+    "text": "Cứu người, rồi đòi chia nửa số lệnh bài săn được",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Hắn đồng ý ngay. Cả hai cùng qua khảo hạch, từ đó thành bạn cùng làm nhiệm vụ.",
+     "effects": {
+      "sectContribution": 25,
+      "karma": 2,
+      "stat.charm": 1,
+      "stat.happiness": 3
+     }
+    },
+    "fail": {
+     "text": "Hắn cho là ngươi lợi dụng lúc người ta nguy, về kể khắp ngoại môn.",
+     "effects": {
+      "karma": 1,
+      "stat.charm": -2,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ }
+]
