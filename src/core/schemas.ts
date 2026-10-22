@@ -325,6 +325,8 @@ export const EffectsSchema = z
     wanted: z.number().int().optional(),
     fleeLaw: z.boolean().optional(),
     arrest: z.boolean().optional(),
+    /** 10.10: move to a far châu (old acquaintances cool, flag tha_huong). */
+    moveHome: z.boolean().optional(),
     /** 10.9–10.10: this life ends now, this way. */
     die: z.enum(DEATH_CAUSES).optional(),
     /** Extra % for the next martial breakthrough. */
@@ -430,7 +432,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1747,6 +1749,8 @@ export const BalanceSchema = z
       })
       .strict()
       .optional(),
+    /** 10.10 Ra đi và kết đời phàm: moving far cools old ties; the age a quy ẩn opens; tang lễ events by the parent who died. */
+    leaving: z.object({ moveAffinity: z.number(), hermitAge: z.number().int(), funeralAge: z.number().int(), funeralEvents: z.record(z.string()) }).strict().optional(),
     /** 10.9 Phạm pháp: bộ khoái, công đường, ngục. */
     law: z.object({
       maxWanted: z.number().int().min(1), decayEvery: z.number().int().min(1), fleeWanted: z.number().int().min(1),
@@ -4273,6 +4277,15 @@ export const LifeCheckSchema = z
     inSect: z.boolean().optional(),
     career: z.boolean().optional(),
     rooted: z.boolean().optional(),
+    /** 10.10: an event condition on the state at the end (job, exam, law, asset, art, pet, injury…). */
+    holds: z.lazy(() => ConditionsSchema.partial()).optional(),
+    /** 10.10: different jobs held in the life; reached the top rung of one; crimes done; never caught for any. */
+    jobsMin: z.number().int().min(1).optional(),
+    jobEver: ids.optional(),
+    silverMax: z.number().int().optional(),
+    jobTop: z.boolean().optional(),
+    crimesMin: z.number().int().min(1).optional(),
+    neverCaught: z.boolean().optional(),
   })
   .strict();
 export type LifeCheck = z.infer<typeof LifeCheckSchema>;

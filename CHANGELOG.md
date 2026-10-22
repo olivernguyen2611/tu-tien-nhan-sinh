@@ -8,6 +8,17 @@
 
 ## [Chưa phát hành]
 
+### 10.10 Ra đi và kết đời phàm (2026-10-22)
+- Chuyển nhà sang châu khác (mục Bản thân): người quen cũ nhạt tình (trừ người bên gối), đời thành tha hương; ở đất mới có hàng xóm mới, về già có lúc nhớ quê và về thăm.
+- Tang lễ khi cha hoặc mẹ mất: làm lớn cho trọn đạo hiếu, vừa phải, hoặc giản dị thờ tại tâm (bạc, tiếng trong làng, Hạnh phúc, Đạo tâm).
+- Kiểu kết đời mới: Quy ẩn (từ 55 tuổi, tự chọn, đời khép lại bằng một đoạn tóm tắt), Xuất gia (hoặc tu tại gia, đời vẫn tiếp), Mất tích (lạc trong hang núi), Chết đói (nạn đói khi mùa màng mất, túi rỗng), cùng Xử trảm từ 10.9. Màn tổng kết, Thiên Đạo Ký và kết cục đều có lời riêng cho từng kiểu.
+- 30 danh hiệu cuối đời cho đời phàm: Phú Ông Keo Kiệt, Lãng Tử Tình Trường, Tên Trộm Không Ai Bắt Được, Ông Đồ Cả Làng Kính, Kẻ Cờ Bạc Tán Gia, Vua Vượt Ngục, Danh Đề Bảng Vàng, Địa Chủ Một Vùng, Cầm Sư, Tàn Mà Không Phế, Chết Vẫn Còn Nợ, Thọ Chung Chính Tẩm… 20 thành tựu phàm gian (6 thành tựu ẩn), 7 kết cục mới.
+- Thiên Đạo Ký có thêm câu theo lối sống phàm (trộm cướp, đỗ đạt, bậc thầy trong nghề, địa chủ), một đoạn về quan phủ và thương tật.
+- Kiểm tra cuối đời (`LifeCheck`) đọc được điều kiện sự kiện (`holds`), số nghề đã làm, đã lên bậc cao nhất, nghề từng làm, số tội đã phạm, chưa từng bị bắt, bạc tối đa.
+- Sự kiện chắc chắn tới theo chu kỳ (Hệ thống, Tử Khí Đông Lai) không còn bị một sự kiện nối tiếp (vd. tang lễ) chiếm chỗ; sự kiện nối tiếp chờ sang năm.
+- 10 sự kiện (`ket-doi.json`), 3 hoạt động (`activities/ket-doi.json`); hiệu ứng `moveHome`; số cân bằng ở `balance.leaving`.
+- Chưa làm: "tìm dấu tích kiếp trước" của người mất tích ở đời sau.
+
 ### 10.9 Phạm pháp, quan phủ, ngục tù (2026-10-22)
 - 10 tội danh (`content/crimes.json`): móc túi, trộm vặt, trộm nhà giàu, lừa đảo, buôn lậu muối sắt, cướp đường, đánh người, đầu độc, giết người, đốt nhà. Mỗi tội là một hoạt động mục Phạm pháp: thành thì có bạc, mất nghiệp, có thể bị lộ; hỏng thì bị bắt tại chỗ.
 - Mức truy nã 0–5: tăng khi bị lộ, nguội dần sau vài năm không phạm tội. Truy nã cao thì bộ khoái gõ cửa, cáo thị dán ở chợ, bạn thơ ấu làm bộ khoái chặn cổng thành (sự kiện mẫu X1). Có thể trốn đi thật xa (thành tha hương) hoặc ra đầu thú.

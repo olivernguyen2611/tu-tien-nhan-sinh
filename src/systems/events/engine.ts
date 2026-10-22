@@ -112,16 +112,18 @@ export function popupChance(state: GameState, content: Content): number {
 export function rollYearEvent(state: GameState, content: Content): GameState {
   const rng = Rng.fromState(state.rng);
   const age = state.character.age;
-  const due = state.events.followUps.find((f) => f.atAge <= age && findEvent(content, f.event));
+  // Tử Khí Đông Lai (trigger.everyNYears): every N years of age an event of that theme is sure to come;
+  // 10.10: it comes before a due follow-up (a tang lễ…), which then waits a year.
+  const sureHook = lifeHooks(state, content)
+    .find((h) => h.hook === 'trigger.everyNYears' && h.years && h.tag && age > 0 && age % h.years === 0 && hookActive(h, state, content));
+  const due = sureHook ? undefined : state.events.followUps.find((f) => f.atAge <= age && findEvent(content, f.event));
   let picked: string | null = null;
   let followUps = state.events.followUps;
 
   let npc: string | null = null;
   // Task 4.10: an urgent event (đại hạn) skips the roll as soon as it is eligible.
   const urgent = due ? undefined : content.events.find((e) => e.urgent && eventWeight(state, content, e) > 0);
-  // Tử Khí Đông Lai (trigger.everyNYears): every N years of age an event of that theme is sure to come.
-  const sure = due || urgent ? undefined : lifeHooks(state, content)
-    .find((h) => h.hook === 'trigger.everyNYears' && h.years && h.tag && age > 0 && age % h.years === 0 && hookActive(h, state, content));
+  const sure = due || urgent ? undefined : sureHook;
   const visit = due || urgent || sure ? null : npcEvent(state, content, rng);
   if (due) {
     picked = due.event;
@@ -528,6 +530,12 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.fleeLaw) next = fleeLaw(next, content);
   if (fx.arrest) next = arrest(next, content);
   if (fx.sentence) next = sentence(next, content);
+  // 10.10: moving far: old acquaintances (not family) cool, the life is tha hương.
+  if (fx.moveHome) {
+    const d = content.balance.leaving?.moveAffinity ?? 0;
+    const home = new Set([next.romance.partner, next.romance.lover, ...(next.romance.concubines ?? [])]);
+    next = { ...next, flags: { ...next.flags, tha_huong: true }, npcs: next.npcs.map((n) => (n.alive && !home.has(n.id) ? { ...n, affinity: Math.max(0, Math.min(100, n.affinity + d)) } : n)) };
+  }
   if (fx.martialBonus) next = { ...next, martial: { ...next.martial, bonus: next.martial.bonus + fx.martialBonus } };
   if (fx.martialPromote) next = martialPromote(next, content);
   if (fx.martialAscend) next = martialAscend(next, content);

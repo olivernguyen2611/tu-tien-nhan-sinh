@@ -83,10 +83,13 @@ export function ageFamily(state: GameState, content: Content): GameState {
   let daoHeart = state.aptitudes.daoHeart;
   const { surname } = splitName(state.character.name, content.names);
 
+  // 10.10–10.11: a parent's death brings the tang lễ (and, for the father, the phân gia) this year.
+  const funerals: string[] = [];
   const family = state.family.map((r) => {
     if (!r.alive) return r;
     const age = r.age + 1;
     if (age >= r.lifespan) {
+      if (r.role === 'father' || r.role === 'mother') funerals.push(r.role);
       // Grief: even a relative you drifted from hurts; a close one hurts most.
       const [distant, close] = cfg.grief[r.role];
       const loss = Math.round(distant + (close - distant) * (r.affinity / 100));
@@ -145,7 +148,11 @@ export function ageFamily(state: GameState, content: Content): GameState {
     else log.push({ age: state.character.age, lines });
   }
 
-  return { ...state, rng: rng.getState(), family, flags, stats: { ...state.stats, happiness: clamp(happiness) }, aptitudes: { ...state.aptitudes, daoHeart }, log };
+  const after = content.balance.leaving && state.character.age >= content.balance.leaving.funeralAge
+    ? funerals.map((role) => ({ event: content.balance.leaving!.funeralEvents[role], atAge: state.character.age })).filter((f) => !!f.event)
+    : [];
+  const events = after.length ? { ...state.events, followUps: [...state.events.followUps, ...after] } : state.events;
+  return { ...state, rng: rng.getState(), family, flags, events, stats: { ...state.stats, happiness: clamp(happiness) }, aptitudes: { ...state.aptitudes, daoHeart }, log };
 }
 
 export interface ActionView {

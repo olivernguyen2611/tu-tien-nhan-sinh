@@ -134,7 +134,7 @@ export interface GameState {
   /** 10.9 Phạm pháp: mức truy nã, ngục (ra ngục năm until), đang hầu tòa, tiền án, vượt ngục, the last crime. */
   law?: {
     wanted: number; jail: { until: number; crime: string } | null; trial: { crime: string; score: number } | null;
-    convictions: number; escapes: number; failedEscapes: number; lastCrime: string | null; lastCrimeAge: number | null;
+    convictions: number; escapes: number; failedEscapes: number; lastCrime: string | null; lastCrimeAge: number | null; crimes?: number;
   };
   /** 10.8 Sức khỏe: bệnh now (id, since age), thương tật for life, ages a cup was drunk (toward nghiện rượu). */
   body?: { ailments: { id: string; since: number }[]; injuries: string[]; drinks: number[] };

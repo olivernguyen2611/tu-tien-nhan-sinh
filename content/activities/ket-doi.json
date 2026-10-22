@@ -1,0 +1,94 @@
+[
+  {
+    "id": "chuyen_nha_xa",
+    "group": "ban_than",
+    "name": "Chuyển nhà sang châu khác",
+    "icon": "遷",
+    "text": "Bán bớt đồ đạc, thuê xe, tới một vùng đất mới. Người quen cũ ở xa, tình nghĩa nhạt dần.",
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "law": {
+        "jailed": false,
+        "trial": false
+      }
+    },
+    "cost": [
+      {
+        "silver": 30
+      }
+    ],
+    "months": 3,
+    "limit": {
+      "perYear": 1,
+      "cooldownYears": 5
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Xe bò lọc cọc ra khỏi cổng làng. Ngươi ngoái lại nhìn cây đa lần cuối.",
+          "Thuyền xuôi ba ngày ba đêm. Tới nơi, giọng nói người ta lạ hoắc, món ăn cũng lạ."
+        ],
+        "effects": {
+          "moveHome": true,
+          "stat.happiness": -2,
+          "stat.intellect": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "quy_an",
+    "group": "ban_than",
+    "name": "Quy ẩn",
+    "icon": "隱",
+    "text": "Gác lại thế sự, vào núi dựng lều tranh. Những năm còn lại trôi qua như một giấc mộng dài.",
+    "conditions": {
+      "age": {
+        "min": 55
+      },
+      "law": {
+        "jailed": false,
+        "trial": false
+      }
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": "Ngươi ngồi trước hiên nhà, nghĩ về chuyện quy ẩn.",
+        "effects": {
+          "stat.daoHeart": 1
+        },
+        "startEvent": "ld_quy_an"
+      }
+    ]
+  },
+  {
+    "id": "xuat_gia",
+    "group": "ban_than",
+    "name": "Xuất gia",
+    "icon": "僧",
+    "text": "Cạo tóc quy y, bỏ lại hồng trần.",
+    "conditions": {
+      "age": {
+        "min": 16
+      },
+      "law": {
+        "jailed": false,
+        "trial": false
+      }
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": "Ngươi lên chùa, quỳ trước tượng Phật rất lâu.",
+        "effects": {
+          "stat.daoHeart": 1
+        },
+        "startEvent": "ld_xuat_gia"
+      }
+    ]
+  }
+]

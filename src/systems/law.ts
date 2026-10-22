@@ -56,7 +56,7 @@ export function commitCrime(state: GameState, content: Content, id: string): Gam
   if (!def || !file || jailed(state)) return state;
   const age = state.character.age;
   const rng = new Rng(`${state.seed}:crime:${age}:${id}:${lawOf(state).convictions + lawOf(state).escapes}`);
-  let s = withLaw(state, { lastCrime: id, lastCrimeAge: age });
+  let s = withLaw(state, { lastCrime: id, lastCrimeAge: age, crimes: (lawOf(state).crimes ?? 0) + 1 });
   s = { ...s, social: { ...s.social, karma: s.social.karma + def.karma } };
   if (!rng.chance(checkChance(state, content, def.stat, def.difficulty))) {
     s = pushLines(s, [{ text: rng.pick(def.fail), tone: 'bad' }]);
