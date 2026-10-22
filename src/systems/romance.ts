@@ -48,8 +48,9 @@ function ofAge(content: Content, n: Npc | undefined): n is Npc {
 }
 
 /** Lover, partner, or the partner if there is one (else the lover). */
-export function romanceTarget(state: GameState, target: 'lover' | 'partner' | 'beloved' | 'ex'): Npc | undefined {
+export function romanceTarget(state: GameState, target: 'lover' | 'partner' | 'beloved' | 'ex' | 'concubine'): Npc | undefined {
   const r = state.romance;
+  if (target === 'concubine') return (r.concubines ?? []).map((id) => npcById(state, id)).find((n) => n?.alive);
   if (target === 'ex') return [...r.exes].reverse().map((id) => npcById(state, id)).find((n) => n?.alive);
   const id = target === 'lover' ? r.lover : target === 'partner' ? r.partner : r.partner ?? r.lover;
   return npcById(state, id);
@@ -64,6 +65,7 @@ export function romanceMeets(state: GameState, c: NonNullable<GameEvent['conditi
   if (c.lover !== undefined && ofAge(content, lover) !== c.lover) return false;
   if (c.couple !== undefined && (ofAge(content, lover) && r.couple) !== c.couple) return false;
   if (c.partner !== undefined && ofAge(content, partner) !== c.partner) return false;
+  if (c.concubine !== undefined && !!romanceTarget(state, 'concubine') !== c.concubine) return false;
   if (c.ex !== undefined && r.exes.some((id) => ofAge(content, npcById(state, id))) !== c.ex) return false;
   if (c.target) {
     const t = romanceTarget(state, c.target);
@@ -78,13 +80,17 @@ export function romanceMeets(state: GameState, c: NonNullable<GameEvent['conditi
 /** Event effects on romance, applied to the event's NPC. */
 export function applyRomance(
   state: GameState, content: Content, npcId: string | null,
-  fx: { pursue?: boolean; lose?: boolean; couple?: boolean; rival?: number; rivalExposed?: boolean; marry?: { affinity?: number }; partnerProgress?: number; loverAffinity?: number },
+  fx: { pursue?: boolean; lose?: boolean; couple?: boolean; rival?: number; rivalExposed?: boolean; marry?: { affinity?: number }; partnerProgress?: number; loverAffinity?: number; concubine?: boolean },
 ): GameState {
   let s = state;
   // Task 3.7: a match (political or not) with the event's NPC; the progress of the đạo lữ.
   if (fx.marry && npcId && !s.romance.partner && !romanceBlocked(s, content) && ofAge(content, npcById(s, npcId))) {
     s = wed(s, npcId);
     if (fx.marry.affinity !== undefined) s = { ...s, npcs: s.npcs.map((n) => (n.id === npcId ? { ...n, affinity: clamp(fx.marry!.affinity!) } : n)) };
+  }
+  // 10.6: a thiếp beside the chính thất.
+  if (fx.concubine && npcId && s.romance.partner && s.romance.partner !== npcId && !romanceBlocked(s, content) && ofAge(content, npcById(s, npcId))) {
+    s = { ...s, romance: { ...s.romance, concubines: [...(s.romance.concubines ?? []).filter((x) => x !== npcId), npcId] }, npcs: s.npcs.map((n) => (n.id === npcId ? { ...n, role: 'thiếp' } : n)) };
   }
   if (fx.partnerProgress && s.romance.partner) {
     const id = s.romance.partner;
@@ -106,7 +112,9 @@ export function applyRomance(
 
 function wed(state: GameState, id: string): GameState {
   const r = state.romance;
-  return { ...state, romance: { ...r, partner: id, lover: r.lover === id ? null : r.lover, couple: r.lover === id ? false : r.couple, rivals: 0 } };
+  // 10.6: the wedding feast comes next (event td_le_cuoi); a widow(er) marrying again is tái giá.
+  const flags = { ...state.flags, moi_cuoi: true, da_tung_cuoi: true, ...(state.flags.goa_bua ? { goa_bua: false, tai_gia: true } : {}) };
+  return { ...state, flags, romance: { ...r, partner: id, lover: r.lover === id ? null : r.lover, couple: r.lover === id ? false : r.couple, rivals: 0 } };
 }
 
 function loseRomance(r: GameState['romance'], id: string): GameState['romance'] {
@@ -461,9 +469,14 @@ export function romanceYear(state: GameState, content: Content): GameState {
       ...s,
       romance: { ...s.romance, lover: s.romance.lover === id ? null : s.romance.lover, couple: s.romance.lover === id ? false : s.romance.couple, partner: s.romance.partner === id ? null : s.romance.partner },
       stats: { ...s.stats, happiness: clamp(s.stats.happiness + b.griefHappiness) },
+      // 10.6: góa bụa (a tái giá may come).
+      ...(s.romance.partner === id ? { flags: { ...s.flags, goa_bua: true } } : {}),
     };
     lines.push({ text: t.died.replace(/\{npc\}/g, n.name), tone: 'bad' });
   }
+  // 10.6: a thiếp who died is let go.
+  const concubines = s.romance.concubines?.filter((id) => npcById(s, id)?.alive);
+  if (concubines && concubines.length !== s.romance.concubines!.length) s = { ...s, romance: { ...s.romance, concubines } };
   if (s.romance.lover && s.romance.rivals > 0) s = changeNpc(s, content, s.romance.lover, { affinity: b.rivalAffinityPerYear * s.romance.rivals });
   s = marriageYear(s, content, lines);
   // Task 3.7: children meet the root test at the same age as the player once did.

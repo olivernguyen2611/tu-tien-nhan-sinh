@@ -206,7 +206,7 @@ export interface GameState {
    * (task 3.7), people who turned the player down or were left, rivals around the lover,
    * and the age each romance action was last done (once a year each).
    */
-  romance: { lover: string | null; couple: boolean; partner: string | null; exes: string[]; rivals: number; lastActions: Record<string, number>; /** Playtest 2: failed tries at a child since the last one (absent in older saves). */ birthTries?: number; /** 9.0.1: người đã cắt đứt hẳn (absent in older saves). */ cut?: string[] };
+  romance: { lover: string | null; couple: boolean; partner: string | null; exes: string[]; rivals: number; lastActions: Record<string, number>; /** Playtest 2: failed tries at a child since the last one (absent in older saves). */ birthTries?: number; /** 9.0.1: người đã cắt đứt hẳn (absent in older saves). */ cut?: string[]; /** 10.6: thê thiếp (NPC ids) besides the chính thất. */ concubines?: string[] };
   /** Thiên kiêu bảng (task 3.5): the world's prodigies and the player's rank last year (null = not on the board). */
   ranking: { prodigies: Prodigy[]; rank: number | null };
   /** Base aptitude 0–100 for each combat path (task 3.8); hooks add on top. */

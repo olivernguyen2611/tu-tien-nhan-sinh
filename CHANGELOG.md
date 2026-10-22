@@ -8,6 +8,16 @@
 
 ## [Chưa phát hành]
 
+### 10.6 Tình duyên và hôn nhân phàm tục (2026-10-22)
+- Hôn nhân sắp đặt: bà mối đưa canh thiếp (nghe lời, xem tuổi trước, từ chối); người nhà ép cưới người khác khi đã có người thương (bỏ trốn, quỳ xin, chia tay), bỏ trốn có chuỗi về làng xin tha thứ.
+- Gặp gỡ: hội đèn Nguyên tiêu, lên chùa cầu duyên, tỉ võ chiêu thân, hoạt động nhờ bà mối (bà mối có thể nói quá). Hiệu ứng `meetNpc.opposite` để mối mai luôn là người khác giới, đủ 18 tuổi.
+- Hẹn hò là hoạt động trong mục Nhân duyên: hẹn đi hội, du thuyền, ngắm trăng, viết thư tình.
+- Lễ cưới ngay sau khi thành thân: cưới nhỏ, cưới to (tốn bạc, được tiếng), góp bạc làm vốn.
+- Hôn nhân: lời mời gọi khi vợ chồng lạnh nhạt, ngoại tình bị phát hiện (xin lỗi, chối và bị đánh ghen, hòa ly); góa bụa và mối tái giá.
+- Nạp thiếp (nam, khá giả, từ 25 tuổi): thiếp là người quen thật (`romance.concubines`), thê thiếp tranh sủng. Chỉ kể bằng lời đời thường.
+- 12 sự kiện (`tinh-duyen.json`), 5 hoạt động (`activities/tinh-duyen.json`). Điều kiện `romance.concubine`, đích `concubine`; hiệu ứng `romance.concubine`.
+- Chưa làm: con chính/con thứ tranh gia tài (để 10.11 Gia tộc), "phu thê khác đường" (13.1).
+
 ### 10.5 Quan hệ (2026-10-22)
 - 17 việc mới với người quen (`content/npc-acts.json`): khen, chê, kể chuyện cười, trêu chọc, cãi nhau, cho tiền, hỏi mượn tiền, cho vay, đòi nợ, trả nợ, rủ lên tửu lâu, đi hội, đi săn, kết nghĩa, tuyệt giao; với kẻ thù thêm đánh một trận và tố cáo lên quan. Việc lọc theo loại quan hệ, tuổi và chuyện giữa hai người (ai nợ ai, đã kết nghĩa chưa).
 - Nợ nần với người quen hiện ở mục Thông tin; kết nghĩa (qua việc hoặc sự kiện "Kết nghĩa kim lan") là lời thề: tuyệt giao, đánh hay tố cáo huynh đệ thì mất Đạo tâm, nghiệp xấu thêm; huynh đệ mất thì đau như mất người nhà. Tuyệt giao xong người ấy thành kẻ thù, cầu hòa được thì nối lại.

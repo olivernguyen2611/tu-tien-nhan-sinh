@@ -1,0 +1,884 @@
+[
+  {
+    "id": "td_canh_thiep",
+    "category": "romance",
+    "title": "Canh thiếp gửi tới",
+    "text": "Bà mối ngồi chật hiên nhà, đưa ra tờ canh thiếp: con nhà tử tế ở làng bên, môn đăng hộ đối. Người nhà đã gật đầu trước cả ngươi.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18,
+        "max": 32
+      },
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "romance": {
+        "lover": false,
+        "partner": false
+      },
+      "flagsNone": [
+        "no_parents"
+      ]
+    },
+    "weight": 6,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Nghe lời người nhà",
+        "result": {
+          "text": "Lễ dạm ngõ, lễ ăn hỏi, rồi lễ cưới. Ngươi gặp người kia lần đầu trong ngày rước dâu. Người ta cũng ngượng như ngươi.",
+          "effects": {
+            "meetNpc": {
+              "role": "người được mai mối",
+              "opposite": true,
+              "adult": true,
+              "peer": true,
+              "affinity": 0
+            },
+            "romance": {
+              "marry": {
+                "affinity": 45
+              }
+            },
+            "silver": -20,
+            "stat.happiness": 2
+          },
+          "variants": [
+            "Cưới xong mới biết người kia nấu cơm khéo, tính tình hiền lành. Không yêu mà thương, cũng là duyên.",
+            "Đêm tân hôn hai người ngồi hai đầu giường, nói chuyện mùa màng tới sáng."
+          ]
+        }
+      },
+      {
+        "text": "Xem tuổi trước đã",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Thầy tướng gật gù: tuổi hợp, mệnh tương sinh. Ngươi yên lòng nhận lời, đám cưới vui như hội.",
+          "effects": {
+            "meetNpc": {
+              "role": "người được mai mối",
+              "opposite": true,
+              "adult": true,
+              "peer": true,
+              "affinity": 10
+            },
+            "romance": {
+              "marry": {
+                "affinity": 60
+              }
+            },
+            "silver": -22,
+            "stat.happiness": 4
+          }
+        },
+        "fail": {
+          "text": "Thầy tướng lắc đầu: tuổi xung khắc, lấy nhau thì khổ. Mối hỏi đành thôi, bà mối tiếc tiền trầu.",
+          "effects": {
+            "stat.happiness": -1,
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Từ chối, chưa muốn thành gia",
+        "result": {
+          "text": "Người nhà giận mấy hôm, bà mối đi khắp xóm kể ngươi kén cá chọn canh.",
+          "effects": {
+            "stat.happiness": -2,
+            "stat.daoHeart": 1,
+            "reputation": {
+              "lang_xa": -2
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "td_ep_cuoi_nguoi_khac",
+    "category": "romance",
+    "title": "Người nhà ép cưới",
+    "text": "Người nhà đã nhận sính lễ của nhà khác cho ngươi, trong khi lòng ngươi chỉ có {lover}.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18,
+        "max": 35
+      },
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "romance": {
+        "target": "lover",
+        "couple": true,
+        "partner": false
+      },
+      "flagsNone": [
+        "no_parents"
+      ]
+    },
+    "weight": 5,
+    "cooldownYears": 0,
+    "choices": [
+      {
+        "text": "Bỏ trốn cùng người thương",
+        "result": {
+          "text": "Đêm không trăng, hai người dắt nhau ra bến đò. Sáng ra cả làng xôn xao. Ở một nơi xa lạ, hai người bái trời đất thành thân.",
+          "effects": {
+            "romance": {
+              "marry": {}
+            },
+            "setFlags": [
+              "bo_tron"
+            ],
+            "stat.happiness": 5,
+            "stat.daoHeart": 2,
+            "reputation": {
+              "lang_xa": -6
+            },
+            "followUp": {
+              "event": "td_bo_tron_ve_lang",
+              "afterYears": [
+                3,
+                6
+              ]
+            }
+          }
+        }
+      },
+      {
+        "text": "Quỳ xin người nhà",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Ngươi quỳ từ sáng tới chiều. Cuối cùng người nhà thở dài, đi trả sính lễ, cưới {lover} cho ngươi.",
+          "effects": {
+            "romance": {
+              "marry": {}
+            },
+            "stat.happiness": 6,
+            "silver": -15
+          }
+        },
+        "fail": {
+          "text": "Người nhà không lay chuyển. {lover} khóc mà đi. Ngươi nhìn theo, không đuổi.",
+          "effects": {
+            "romance": {
+              "lose": true
+            },
+            "stat.happiness": -8,
+            "stat.daoHeart": -2
+          }
+        }
+      },
+      {
+        "text": "Nghe lời, chia tay",
+        "result": {
+          "text": "Ngươi viết một lá thư rồi đốt đi. {lover} hiểu, không trách, chỉ không nhìn ngươi nữa.",
+          "effects": {
+            "romance": {
+              "lose": true
+            },
+            "stat.happiness": -10,
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ],
+    "oncePerLife": true
+  },
+  {
+    "id": "td_bo_tron_ve_lang",
+    "category": "romance",
+    "title": "Về làng xin tha thứ",
+    "text": "Mấy năm bỏ xứ, nhớ nhà không chịu nổi. Ngươi dắt người bạn đời về làng, đứng trước cổng mà chân không bước nổi.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "flagsAll": [
+        "bo_tron"
+      ],
+      "romance": {
+        "target": "partner"
+      }
+    },
+    "weight": 0,
+    "cooldownYears": 0,
+    "choices": [
+      {
+        "text": "Vào quỳ trước bàn thờ tổ",
+        "result": {
+          "text": "Người nhà nhìn hai người hồi lâu rồi bảo vào ăn cơm. Chuyện cũ không ai nhắc nữa.",
+          "effects": {
+            "clearFlags": [
+              "bo_tron"
+            ],
+            "stat.happiness": 6,
+            "reputation": {
+              "lang_xa": 4
+            },
+            "romance": {
+              "loverAffinity": 5
+            }
+          }
+        }
+      },
+      {
+        "text": "Quay đi, sống ở đất mới",
+        "result": {
+          "text": "Đất mới đã thành quê. Ngươi gửi về một lá thư, không chờ hồi âm.",
+          "effects": {
+            "clearFlags": [
+              "bo_tron"
+            ],
+            "stat.happiness": -2,
+            "stat.daoHeart": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "td_hoi_den",
+    "category": "romance",
+    "title": "Hội đèn Nguyên tiêu",
+    "text": "Đêm hội đèn, phố sáng rực. Một người đứng trước gian đèn đố chữ, nghĩ mãi chưa ra câu cuối.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "lover": false,
+        "partner": false
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Giúp giải câu đố",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 45
+        },
+        "success": {
+          "text": "Ngươi giải xong, người kia cười, tặng lại chiếc đèn thỏ vừa thắng được.",
+          "effects": {
+            "meetNpc": {
+              "role": "người gặp ở hội đèn",
+              "opposite": true,
+              "affinity": 15
+            },
+            "romance": {
+              "pursue": true
+            },
+            "stat.happiness": 4
+          }
+        },
+        "fail": {
+          "text": "Ngươi giải sai, cả đám đông cười ồ. Người kia cũng cười, nhưng rồi đi mất.",
+          "effects": {
+            "stat.happiness": -1,
+            "stat.charm": -1
+          }
+        }
+      },
+      {
+        "text": "Chỉ đứng ngắm đèn",
+        "result": {
+          "text": "Đèn đẹp, người đẹp, ngươi về nhà lòng vui mà không biết tên ai.",
+          "effects": {
+            "stat.happiness": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "td_chua_cau_duyen",
+    "category": "romance",
+    "title": "Lên chùa cầu duyên",
+    "text": "Ngày rằm lên chùa, ngươi xin một quẻ. Vừa quay ra thì va phải một người đang bưng mâm lễ.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "romance": {
+        "lover": false,
+        "partner": false
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Xin lỗi, nhặt giúp",
+        "result": {
+          "text": "Hai người cùng cúi nhặt hoa quả. Ngẩng lên, chạm mắt nhau. Sư thầy đứng xa niệm Phật rất to.",
+          "effects": {
+            "meetNpc": {
+              "role": "người gặp ở chùa",
+              "opposite": true,
+              "affinity": 12
+            },
+            "romance": {
+              "pursue": true
+            },
+            "stat.charm": 1,
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Đọc quẻ trước",
+        "result": {
+          "text": "Quẻ bảo duyên chưa tới. Ngươi quay lại thì người kia đã đi rồi. Quẻ linh thật.",
+          "effects": {
+            "stat.intellect": 1,
+            "stat.happiness": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "td_ti_vo_chieu_than",
+    "category": "romance",
+    "title": "Tỉ võ chiêu thân",
+    "text": "Phú hộ trên huyện dựng lôi đài kén rể cho con gái, ai đánh thắng ba trận thì được cưới.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18,
+        "max": 35
+      },
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "gender": "nam",
+      "romance": {
+        "partner": false
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 12,
+    "choices": [
+      {
+        "text": "Lên lôi đài",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Ba trận ba thắng. Phú hộ vuốt râu cười, đám cưới làm linh đình nhất huyện.",
+          "effects": {
+            "meetNpc": {
+              "role": "con gái phú hộ",
+              "opposite": true,
+              "adult": true,
+              "affinity": 5
+            },
+            "romance": {
+              "marry": {
+                "affinity": 50
+              }
+            },
+            "silver": 40,
+            "stat.happiness": 6,
+            "reputation": {
+              "giang_ho": 3
+            }
+          }
+        },
+        "fail": {
+          "text": "Trận thứ hai ngươi bị hất văng xuống đài. Dân tình vỗ tay, không phải cho ngươi.",
+          "effects": {
+            "stat.health": -6,
+            "stat.happiness": -2,
+            "stat.physique": 1
+          }
+        }
+      },
+      {
+        "text": "Đứng dưới xem",
+        "result": {
+          "text": "Xem tới trận cuối, cổ họng khản vì hò reo.",
+          "effects": {
+            "stat.happiness": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "td_le_cuoi",
+    "category": "romance",
+    "title": "Lễ cưới",
+    "text": "Ngày lành tháng tốt đã chọn. Cưới to hay cưới nhỏ, cả nhà bàn tới khuya.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "flagsAll": [
+        "moi_cuoi"
+      ]
+    },
+    "weight": 10,
+    "cooldownYears": 0,
+    "choices": [
+      {
+        "text": "Cưới nhỏ, mời người thân",
+        "result": {
+          "text": "Mâm cỗ đơn sơ mà ấm. Ai tới cũng vui.",
+          "effects": {
+            "clearFlags": [
+              "moi_cuoi"
+            ],
+            "silver": -8,
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Cưới to, mổ lợn mời cả làng",
+        "result": {
+          "text": "Ba ngày cỗ, kèn trống inh ỏi. Cả làng nhắc mãi đám cưới nhà ngươi.",
+          "effects": {
+            "clearFlags": [
+              "moi_cuoi"
+            ],
+            "silver": -60,
+            "stat.happiness": 6,
+            "stat.charm": 1,
+            "reputation": {
+              "lang_xa": 6
+            }
+          }
+        },
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 60
+            }
+          ]
+        }
+      },
+      {
+        "text": "Không làm cỗ, góp bạc làm vốn",
+        "result": {
+          "text": "Không ai ăn cỗ, nhưng hai vợ chồng có một món vốn nhỏ. Hàng xóm chê keo.",
+          "effects": {
+            "clearFlags": [
+              "moi_cuoi"
+            ],
+            "stat.intellect": 1,
+            "stat.happiness": -1,
+            "reputation": {
+              "lang_xa": -2
+            }
+          }
+        }
+      }
+    ],
+    "urgent": true
+  },
+  {
+    "id": "td_cam_do",
+    "category": "romance",
+    "title": "Lời mời gọi",
+    "text": "Có người hay lui tới nhà, ánh mắt nhìn ngươi không giống nhìn người dưng. Ở nhà thì {lover} dạo này lạnh nhạt.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 20
+      },
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "romance": {
+        "target": "partner",
+        "maxAffinity": 50
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Giữ mình",
+        "result": {
+          "text": "Ngươi đóng cửa không tiếp. Trong lòng hơi tiếc, nhưng đêm ngủ yên.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "romance": {
+              "loverAffinity": 3
+            }
+          }
+        }
+      },
+      {
+        "text": "Lén lút qua lại",
+        "result": {
+          "text": "Mấy tháng vụng trộm, vui mà sợ. Giấy không gói được lửa.",
+          "effects": {
+            "setFlags": [
+              "ngoai_tinh"
+            ],
+            "stat.happiness": 3,
+            "karma": -2,
+            "followUp": {
+              "event": "td_bi_phat_hien",
+              "afterYears": [
+                1,
+                3
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "td_bi_phat_hien",
+    "category": "romance",
+    "title": "Bị phát hiện",
+    "text": "{lover} cầm lá thư tay của người kia, đứng giữa nhà. Hàng xóm thì đã kéo tới xem đánh ghen.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "flagsAll": [
+        "ngoai_tinh"
+      ],
+      "romance": {
+        "target": "partner"
+      }
+    },
+    "weight": 0,
+    "cooldownYears": 0,
+    "choices": [
+      {
+        "text": "Quỳ xuống xin lỗi",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Ngươi thề không tái phạm. {lover} khóc một trận rồi tha, nhưng vết nứt thì còn đó.",
+          "effects": {
+            "clearFlags": [
+              "ngoai_tinh"
+            ],
+            "romance": {
+              "loverAffinity": -15
+            },
+            "stat.happiness": -4,
+            "stat.charm": -1
+          }
+        },
+        "fail": {
+          "text": "{lover} ném trả tấm khăn cưới. Hai người ra trước lý trưởng làm giấy hòa ly.",
+          "effects": {
+            "clearFlags": [
+              "ngoai_tinh"
+            ],
+            "romance": {
+              "lose": true
+            },
+            "stat.happiness": -10,
+            "reputation": {
+              "lang_xa": -5
+            }
+          }
+        }
+      },
+      {
+        "text": "Chối đây đẩy",
+        "result": {
+          "text": "Chối không xong. Ngươi bị đánh ghen giữa sân, cả làng có chuyện để nói cả năm.",
+          "effects": {
+            "clearFlags": [
+              "ngoai_tinh"
+            ],
+            "romance": {
+              "loverAffinity": -25
+            },
+            "stat.health": -3,
+            "stat.happiness": -6,
+            "reputation": {
+              "lang_xa": -4
+            }
+          }
+        }
+      },
+      {
+        "text": "Thuận tình hòa ly",
+        "result": {
+          "text": "Đã không còn thương thì buông. Hai người chia đôi của cải, đường ai nấy đi.",
+          "effects": {
+            "clearFlags": [
+              "ngoai_tinh"
+            ],
+            "romance": {
+              "lose": true
+            },
+            "stat.happiness": -5,
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "td_tai_gia",
+    "category": "romance",
+    "title": "Mối tái giá",
+    "text": "Người bạn đời đã khuất mấy năm. Bà mối lại tới, bảo có người cũng góa bụa, hiền lành, muốn nối duyên.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 25,
+        "max": 60
+      },
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "flagsAll": [
+        "goa_bua"
+      ],
+      "romance": {
+        "partner": false,
+        "lover": false
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Nhận lời",
+        "result": {
+          "text": "Đám cưới lặng lẽ. Hai người từng mất mát nên biết thương nhau hơn.",
+          "effects": {
+            "meetNpc": {
+              "role": "người tái giá",
+              "opposite": true,
+              "adult": true,
+              "peer": true,
+              "affinity": 10
+            },
+            "romance": {
+              "marry": {
+                "affinity": 55
+              }
+            },
+            "stat.happiness": 5
+          }
+        }
+      },
+      {
+        "text": "Ở vậy",
+        "result": {
+          "text": "Ngươi lắc đầu. Bát hương trên bàn thờ vẫn thắp đều mỗi tối.",
+          "effects": {
+            "clearFlags": [
+              "goa_bua"
+            ],
+            "stat.daoHeart": 3,
+            "stat.happiness": -1,
+            "karma": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "td_nap_thiep",
+    "category": "romance",
+    "title": "Chuyện nạp thiếp",
+    "text": "Nhà cửa khá giả, người quen xúi ngươi nạp thêm một người thiếp cho \"đông con nhiều cháu\". {lover} nghe được, mặt không vui.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 25,
+        "max": 60
+      },
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "gender": "nam",
+      "romance": {
+        "target": "partner",
+        "concubine": false
+      },
+      "stats": [
+        {
+          "stat": "silver",
+          "gte": 150
+        }
+      ]
+    },
+    "weight": 3,
+    "cooldownYears": 20,
+    "choices": [
+      {
+        "text": "Nạp thiếp",
+        "result": {
+          "text": "Kiệu nhỏ rước người về cửa sau. Trong nhà từ đó thêm một người, và thêm nhiều chuyện.",
+          "effects": {
+            "meetNpc": {
+              "role": "thiếp",
+              "opposite": true,
+              "adult": true,
+              "peer": true,
+              "affinity": 5
+            },
+            "romance": {
+              "concubine": true,
+              "loverAffinity": -15
+            },
+            "silver": -60,
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Một vợ là đủ",
+        "result": {
+          "text": "Ngươi gạt đi. {lover} không nói gì, tối ấy nấu món ngươi thích.",
+          "effects": {
+            "romance": {
+              "loverAffinity": 8
+            },
+            "stat.daoHeart": 1,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "td_tranh_sung",
+    "category": "romance",
+    "title": "Thê thiếp tranh sủng",
+    "text": "{npc} khóc lóc kể bị chính thất làm khó, chính thất thì bảo người kia đặt điều. Cả nhà nhìn ngươi chờ phân xử.",
+    "themes": [
+      "romance"
+    ],
+    "conditions": {
+      "age": {
+        "min": 18
+      },
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "romance": {
+        "target": "concubine"
+      }
+    },
+    "weight": 4,
+    "cooldownYears": 4,
+    "choices": [
+      {
+        "text": "Bênh chính thất",
+        "result": {
+          "text": "Phép nhà phải giữ. {npc} cúi đầu, mắt đỏ hoe.",
+          "effects": {
+            "npc": {
+              "affinity": -10
+            },
+            "romance": {
+              "loverAffinity": 8
+            },
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Bênh thiếp",
+        "result": {
+          "text": "Chính thất đóng cửa phòng ba ngày không ra.",
+          "effects": {
+            "npc": {
+              "affinity": 10
+            },
+            "romance": {
+              "loverAffinity": -12
+            },
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Xử mỗi bên một nửa",
+        "result": {
+          "text": "Không ai vừa lòng, nhưng nhà yên được vài tháng.",
+          "effects": {
+            "stat.intellect": 1,
+            "stat.happiness": -2
+          }
+        }
+      }
+    ]
+  }
+]

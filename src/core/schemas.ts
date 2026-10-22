@@ -109,8 +109,10 @@ const BaseConditionsSchema = z
     romance: z
       .object({
         /** ex: the most recent person who turned the player down or was left, still alive. */
-        target: z.enum(['lover', 'partner', 'beloved', 'ex']).optional(),
+        target: z.enum(['lover', 'partner', 'beloved', 'ex', 'concubine']).optional(),
         lover: z.boolean().optional(),
+        /** 10.6: has a living thiếp (nạp thiếp), or not. */
+        concubine: z.boolean().optional(),
         couple: z.boolean().optional(),
         partner: z.boolean().optional(),
         /** The target's affinity range. */
@@ -317,6 +319,8 @@ export const EffectsSchema = z
         affinity: z.number().optional(),
         favor: z.number().optional(),
         grudge: z.number().optional(),
+        /** 10.6: of the other gender (a match the family arranges). */
+        opposite: z.boolean().optional(),
       })
       .strict()
       .optional(),
@@ -361,6 +365,8 @@ export const EffectsSchema = z
         partnerProgress: z.number().optional(),
         /** Task 3.9: the lover's (else the đạo lữ's) affinity, when the event is about someone else. */
         loverAffinity: z.number().optional(),
+        /** 10.6: take the event's NPC as a thiếp. */
+        concubine: z.boolean().optional(),
       })
       .strict()
       .optional(),
