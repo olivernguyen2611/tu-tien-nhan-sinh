@@ -8,6 +8,16 @@
 
 ## [Chưa phát hành]
 
+### 11.4 Việc giang hồ (2026-10-22)
+- Tiêu cục: hoạt động "Nhận chuyến tiêu xa" mở chuỗi 2–4 bước: chọn đường (quan lộ an toàn ít công, đường núi qua sơn trại, đường tắt qua đầm lầy), sơn trại chặn đường (đánh, nộp mãi lộ, nói giang hồ thoại), phát hiện hàng lậu trong tiêu (giao, báo quan, giữ lại bán chợ đen và bị truy nã).
+- Bảng treo thưởng: bắt đạo tặc truy nã (có ngoại hiệu), diệt sơn tặc (một mình hoặc tập hợp trai làng), tìm người mất tích.
+- Tỉ võ: tỉ võ chiêu thân (18–35 tuổi, chưa có người thương, thắng thì có lời đính ước), lôi đài hội chợ, khiêu chiến danh thủ để nổi danh.
+- Ân oán: sư phụ bị hại, thề báo thù, nhiều năm sau gặp lại hung thủ (cần võ đạo Nhất lưu trở lên); trả thù xong thì người thân của hung thủ tìm tới (thù truyền đời).
+- Ám sát 3 bước cho người của sát thủ lâu hoặc kẻ có ác danh: thăm dò (mở lối ra tay dễ hơn), ra tay (lén vào hoặc đụng hộ vệ), rút lui (lĩnh thưởng hoặc bị truy nã); có thể bỏ giữa chừng.
+- Hành hiệp: hoạt động cứu người, trừ cường hào, phát chẩn, đôi khi bị lợi dụng; sự kiện cường hào ức hiếp.
+- Tà giáo hư cấu Kim Đăng Hội: bị lừa nộp bạc, hoặc nằm vùng rồi vạch mặt, báo quan, cuốn hòm bạc.
+- 18 sự kiện (`viec-giang-ho.json`), 4 hoạt động. Mô phỏng: hiệp khách gặp 85 sự kiện khác nhau mỗi đời (trước 81).
+
 ### 11.3 Võ học phàm tục (2026-10-22)
 - 15 bí kíp võ công phàm (`content/martial-arts.json`): quyền, cước, đao, kiếm, thương, ám khí, khinh công, nội công; mỗi bí kíp có phẩm, 5–7 tầng, đòi hỏi Căn cốt / Ngộ tính / Khí vận, tăng chiến lực theo tầng và kéo về một trong năm con đường chiến đấu. Nội công luyện tới tầng cuối thêm thọ nguyên.
 - 8 phàm binh khí có phẩm: mua ở lò rèn (món tốt nhất túi tiền cho phép), được tặng, đoạt từ kẻ thua. Binh khí cùng loại với bí kíp đang luyện mạnh gấp rưỡi.

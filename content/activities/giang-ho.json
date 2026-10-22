@@ -655,5 +655,260 @@
     }
    }
   ]
+ },
+ {
+  "id": "nhan_ap_tieu_xa",
+  "group": "giang_ho",
+  "name": "Nhận chuyến tiêu xa",
+  "icon": "車",
+  "text": "Nhận một chuyến tiêu đường dài: tự chọn đường, tự gánh lấy rủi ro. Tiền công đi theo nguy hiểm.",
+  "conditions": {
+   "age": {
+    "min": 16
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "anyOf": [
+    {
+     "martial": {
+      "min": 0
+     }
+    },
+    {
+     "faction": {
+      "kinds": [
+       "tieu_cuc"
+      ]
+     }
+    }
+   ],
+   "law": {
+    "jailed": false
+   }
+  },
+  "months": 3,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 2
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Ngươi tới tiêu cục nhận việc. Chủ tiêu dẫn ngươi vào xem xe hàng.",
+     "Xe hàng đã chất xong, ngựa đã thắng yên. Chỉ còn chọn đường."
+    ],
+    "effects": {
+     "stat.physique": 1
+    },
+    "startEvent": "gh_tieu_chon_duong"
+   }
+  ]
+ },
+ {
+  "id": "xem_bang_treo_thuong",
+  "group": "giang_ho",
+  "name": "Xem bảng treo thưởng",
+  "icon": "榜",
+  "text": "Cổng huyện nha dán đầy cáo thị: truy nã, diệt cướp, tìm người. Bóc một tờ xuống là nhận việc.",
+  "conditions": {
+   "age": {
+    "min": 16
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "law": {
+    "wantedMax": 0,
+    "jailed": false
+   }
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 1
+  },
+  "outcomes": [
+   {
+    "weight": 2,
+    "text": [
+     "Ngươi bóc tờ cáo thị truy nã có tiền thưởng cao nhất.",
+     "Một tờ cáo thị mới dán, mực còn chưa khô."
+    ],
+    "effects": {
+     "stat.intellect": 1
+    },
+    "startEvent": "gh_thuong_truy_na"
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Ngươi bóc tờ cáo thị diệt sơn tặc. Bộ khoái đứng cạnh nhìn ngươi từ đầu tới chân.",
+     "Tờ cáo thị diệt cướp đã treo ba tháng, không ai dám bóc."
+    ],
+    "effects": {
+     "stat.daoHeart": 1
+    },
+    "startEvent": "gh_thuong_son_tac"
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Một tờ giấy viết vụng dán ở góc bảng: tìm người mất tích.",
+     "Tờ cáo thị tìm người chỉ hứa thưởng mười lượng, nét chữ run run."
+    ],
+    "effects": {
+     "stat.charm": 1
+    },
+    "startEvent": "gh_thuong_nguoi_mat_tich"
+   }
+  ]
+ },
+ {
+  "id": "hanh_hiep",
+  "group": "giang_ho",
+  "name": "Hành hiệp trượng nghĩa",
+  "icon": "俠",
+  "text": "Đi một vòng các làng, thấy chuyện bất bình thì ra tay. Có khi cứu được người, có khi bị người lợi dụng.",
+  "conditions": {
+   "age": {
+    "min": 16
+   },
+   "law": {
+    "jailed": false
+   }
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 1
+  },
+  "outcomes": [
+   {
+    "weight": 2,
+    "text": [
+     "Ngươi kéo một đứa trẻ khỏi dòng nước lũ, rồi lặng lẽ đi trước khi người nhà nó kịp hỏi tên.",
+     "Ngươi cõng một bà lão lạc đường về tận làng. Bà nhét vào tay ngươi nắm xôi."
+    ],
+    "effects": {
+     "fame": 3,
+     "karma": 1,
+     "stat.happiness": 2
+    }
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Ngươi đánh cho tên cường hào ức hiếp tá điền một trận, hắn thề không dám tăng tô nữa.",
+     "Ngươi bẻ gãy cây roi của gã đốc công đánh phu, ném xuống sông."
+    ],
+    "effects": {
+     "fame": 4,
+     "karma": 1,
+     "stat.health": -2,
+     "stat.happiness": 1
+    }
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Năm ấy mất mùa, ngươi bỏ bạc mua gạo phát chẩn ở đầu chợ. Hàng người xin gạo dài tới cuối phố.",
+     "Ngươi nấu mấy nồi cháo lớn phát cho dân đói, tới chiều thì hết sạch gạo."
+    ],
+    "effects": {
+     "silver": -20,
+     "fame": 3,
+     "karma": 2,
+     "stat.charm": 1
+    }
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Kẻ khóc lóc xin ngươi đòi lại món nợ hóa ra chính là chủ nợ. Ngươi bị lợi dụng, còn bị người ta kiện.",
+     "Ngươi giúp một người chạy trốn khỏi \"bọn cướp\", về sau mới biết hắn mới là cướp."
+    ],
+    "effects": {
+     "silver": -15,
+     "fame": -1,
+     "stat.happiness": -3,
+     "stat.intellect": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "len_loi_dai",
+  "group": "giang_ho",
+  "name": "Lên lôi đài hội chợ",
+  "icon": "擂",
+  "text": "Hội chợ có lôi đài, ai trụ được ba trận thì lĩnh thưởng. Dưới đài có người đặt cược.",
+  "conditions": {
+   "age": {
+    "min": 16
+   },
+   "realm": {
+    "max": "pham_nhan"
+   }
+  },
+  "months": 1,
+  "limit": {
+   "perYear": 1
+  },
+  "check": {
+   "stat": "stat.physique",
+   "difficulty": 50
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": {
+     "lines": [
+      {
+       "text": "Ba trận, ba lần đánh đối thủ văng khỏi đài. Cả hội chợ hô tên ngươi."
+      }
+     ],
+     "linesShare": 0.3,
+     "parts": [
+      [
+       "Trận thứ nhất",
+       "Trận đầu",
+       "Mở màn"
+      ],
+      [
+       "ngươi hạ một gã đồ tể,",
+       "ngươi quật ngã một tay đô vật vùng biển,",
+       "ngươi đỡ được mười chiêu của một kiếm khách lạ,"
+      ],
+      [
+       "rồi trụ thêm hai trận nữa. Lĩnh thưởng xuống đài, tay còn run.",
+       "đến trận thứ ba thì đối thủ xin thua. Dưới đài reo như sấm."
+      ]
+     ]
+    },
+    "effects": {
+     "fame": 2,
+     "stat.happiness": 2
+    },
+    "roll": {
+     "silver": [
+      15,
+      40
+     ]
+    }
+   }
+  ],
+  "failOutcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Trận thứ hai, ngươi bị hất văng xuống đài, rơi trúng gánh hàng xén.",
+     "Đối thủ ra đòn quá nhanh, ngươi chưa kịp thủ thế đã nằm dài."
+    ],
+    "effects": {
+     "stat.health": -3,
+     "stat.happiness": -2
+    }
+   }
+  ]
  }
 ]
