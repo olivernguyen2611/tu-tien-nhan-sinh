@@ -66,6 +66,13 @@ const BaseConditionsSchema = z
     lifeStage: ids,
     school: z.object({ enrolled: z.boolean().optional(), at: id.optional(), gradeMin: z.number().optional(), gradeMax: z.number().optional(), ever: z.boolean().optional() }).strict().optional(),
     trade: z.object({ id: id.optional(), any: z.boolean().optional(), levelMin: z.number().int().optional(), learning: z.boolean().optional() }).strict().optional(),
+    /** 10.3: the character's gender. */
+    gender: z.enum(['nam', 'nu']).optional(),
+    /** 10.3 Việc làm: holding a job (or this one, or one of this nhóm nghề), rung and hiệu suất range, at the job's top rung. */
+    job: z.object({
+      any: z.boolean().optional(), id: id.optional(), group: id.optional(), rungMin: z.number().int().optional(),
+      perfMin: z.number().optional(), perfMax: z.number().optional(), top: z.boolean().optional(),
+    }).strict().optional(),
     /** 10.2 Khoa cử: highest level passed (exams.json level ids; none = -1), times failed, can sit the next exam this year, the Đình placing. */
     exam: z.object({
       passed: id.optional(), notPassed: id.optional(), failsMin: z.number().int().optional(),
@@ -259,6 +266,11 @@ export const EffectsSchema = z
     tradeLevel: z.number().int().optional(),
     /** 10.2: lều chõng đi thi: sit the next exam held this year (the trường thi mini-game opens). */
     sitExam: z.boolean().optional(),
+    /** 10.3: take a job (jobs.json id; its requirements still apply), leave it (retire = nghỉ hưu), hiệu suất ±, one rung up. */
+    takeJob: id.optional(),
+    quitJob: z.enum(['quit', 'retire', 'fired']).optional(),
+    perf: z.number().optional(),
+    jobPromote: z.boolean().optional(),
     /** Extra % for the next martial breakthrough. */
     martialBonus: z.number().optional(),
     /** An elder of the sect takes you as a personal disciple. */
@@ -356,7 +368,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1649,6 +1661,30 @@ export const BalanceSchema = z
       })
       .strict()
       .optional(),
+    /** 10.3 Việc làm (content/jobs.json has the jobs). Hiệu suất 0–100 drifts each year toward target = targetBase + main stats × targetWeight. */
+    jobs: z
+      .object({
+        perfStart: z.number(),
+        drift: z.number().min(0).max(1),
+        targetBase: z.number(),
+        targetWeight: z.number(),
+        /** Hiệu suất lost in a year spent at under sickHealth sức khỏe. */
+        sickHealth: z.number(),
+        sickPerf: z.number(),
+        promoteAt: z.number(),
+        promoteChance: z.number().min(0).max(1),
+        yearsPerRung: z.number().int().min(1),
+        fireAt: z.number(),
+        fireChance: z.number().min(0).max(1),
+        /** Years before a fired life is taken back by the same trade. */
+        rehireYears: z.number().int().min(0),
+        /** Upkeep (jobs.json) applies once every this many years at the job. */
+        upkeepEvery: z.number().int().min(1),
+        retireAge: z.number().int().min(0),
+        colleagues: z.number().int().min(0),
+      })
+      .strict()
+      .optional(),
     /** Mortal careers (task 2.11). */
     careers: z
       .object({
@@ -2932,6 +2968,35 @@ export const ExamsFileSchema = z.object({
   }).strict(),
 }).strict();
 export type ExamsFile = z.infer<typeof ExamsFileSchema>;
+
+/** 10.3 content/jobs.json: nhóm nghề and ~30 jobs, each a short ladder with pay, months, upkeep and who works there. */
+export const JobsFileSchema = z.object({
+  groups: z.array(z.object({ id, name: z.string().min(1), glyph: z.string().min(1) }).strict()).min(1),
+  jobs: z.array(z.object({
+    id, group: id, name: z.string().min(1), description: z.string().min(1),
+    rungs: z.array(z.string().min(1)).min(1),
+    /** Lượng bạc a year at each rung (last value repeats). */
+    pay: z.array(z.number().min(0)).min(1),
+    months: z.number().int().min(0).max(12),
+    /** Stats (or aptitudes) whose mean sets the hiệu suất the job settles at. */
+    mainStats: z.array(z.enum([...MORTAL_STATS, ...APTITUDES])).min(1),
+    /** Who may take it (any event conditions: age, học lực, khoa cử, nghề, giới…). */
+    requires: z.lazy(() => ConditionsSchema).default({}),
+    /** Why it is closed, shown when `requires` fails. */
+    requiresText: z.string().min(1).optional(),
+    /** What a year at the job does to the body and mind (stat./aptitude keys → delta). */
+    upkeep: z.record(z.number()).default({}),
+    bossRole: z.string().min(1),
+    mateRole: z.string().min(1),
+    /** The top rung leads onto a life path at this rung (the 4 ladders of 2.11 are the peaks). */
+    peak: z.object({ career: id, rung: z.number().int().min(0) }).strict().optional(),
+  }).strict()).min(1),
+  texts: z.object({
+    hired: z.string().min(1), promoted: z.string().min(1), fired: z.string().min(1), quit: z.string().min(1), retire: z.string().min(1),
+    warn: z.string().min(1), peak: z.string().min(1),
+  }).strict(),
+}).strict();
+export type JobsFile = z.infer<typeof JobsFileSchema>;
 
 export const RelationsFileSchema = z.object({
   groups: z.array(z.object({ id, name: z.string().min(1) }).strict()).min(1),

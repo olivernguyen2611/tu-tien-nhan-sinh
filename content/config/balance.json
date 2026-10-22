@@ -258,8 +258,8 @@
     "levels": {
       "huyen": { "minAge": 10, "minGrade": 15, "fee": 1, "interval": 1, "passScore": 3, "penalty": 0, "reward": { "silver": 0, "happiness": 5, "reputation": 1 } },
       "vien": { "minAge": 12, "minGrade": 30, "fee": 2, "interval": 1, "passScore": 4, "penalty": 0.1, "reward": { "silver": 5, "happiness": 8, "reputation": 3 } },
-      "huong": { "minAge": 15, "minGrade": 45, "fee": 5, "interval": 3, "offset": 0, "passScore": 5, "penalty": 0.22, "reward": { "silver": 20, "happiness": 10, "reputation": 5 } },
-      "hoi": { "minAge": 16, "minGrade": 60, "fee": 10, "interval": 3, "offset": 2, "passScore": 6, "penalty": 0.4, "reward": { "silver": 30, "happiness": 10, "reputation": 5 } },
+      "huong": { "minAge": 15, "minGrade": 45, "fee": 5, "interval": 3, "offset": 0, "passScore": 5, "penalty": 0.28, "reward": { "silver": 20, "happiness": 10, "reputation": 5 } },
+      "hoi": { "minAge": 16, "minGrade": 60, "fee": 10, "interval": 3, "offset": 2, "passScore": 6, "penalty": 0.5, "reward": { "silver": 30, "happiness": 10, "reputation": 5 } },
       "dinh": { "minAge": 16, "minGrade": 0, "fee": 0, "interval": 0, "passScore": 2, "penalty": 0.1, "reward": { "silver": 100, "happiness": 15, "reputation": 10 } }
     },
     "approaches": {
@@ -273,6 +273,23 @@
     "anKhoaPhases": ["tan_trieu"],
     "placings": [{ "id": "trang_nguyen", "minScore": 9 }, { "id": "bang_nhan", "minScore": 8 }, { "id": "tham_hoa", "minScore": 7 }],
     "failHappiness": -6
+  },
+  "jobs": {
+    "perfStart": 50,
+    "drift": 0.25,
+    "targetBase": 25,
+    "targetWeight": 0.5,
+    "sickHealth": 30,
+    "sickPerf": -10,
+    "promoteAt": 65,
+    "promoteChance": 0.45,
+    "yearsPerRung": 3,
+    "fireAt": 22,
+    "fireChance": 0.5,
+    "rehireYears": 5,
+    "upkeepEvery": 3,
+    "retireAge": 55,
+    "colleagues": 2
   },
   "careers": {
     "joinAge": [14, 40],

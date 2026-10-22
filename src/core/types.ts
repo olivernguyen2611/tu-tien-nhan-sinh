@@ -119,6 +119,11 @@ export interface GameState {
   school?: { at: string | null; since: number | null; grade: number; teacher: string | null; ever: boolean };
   /** 10.1 Học nghề: the trade, its level (0 = học việc), years at this level, the master; learning = still under the master. */
   trade?: { id: string | null; level: number; years: number; master: string | null; learning: boolean };
+  /** 10.3 Việc làm: the job held (null = none), its rung, hiệu suất 0–100, years at this rung, the boss and đồng liêu (NPC ids), since when; `past` = jobs left (and why). */
+  job?: {
+    id: string | null; rung: number; perf: number; years: number; boss: string | null; mates: string[]; since: number;
+    past: { id: string; rung: number; left: number; why: 'quit' | 'retire' | 'fired' }[];
+  };
   /** 10.2 Khoa cử: index of the highest level passed (-1 = none), fails, the Đình placing, the life's calendar offset, age each level was last sat, the sitting in progress (blocks the year). */
   exam?: {
     rank: number; fails: number; placing: string | null; cycle: number; last: Record<string, number>;

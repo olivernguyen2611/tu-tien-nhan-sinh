@@ -1,6 +1,7 @@
 // Does a life meet an event's (or a choice's) conditions? Pure, no RNG.
 import { lifeStage, schoolOf, tradeOf } from '../schooling';
 import { examBlocked, examOf, levelIndex } from '../exams';
+import { jobDef, jobOf } from '../jobs';
 import type { Content } from '../../core/content';
 import type { GameEvent } from '../../core/schemas';
 import type { GameState } from '../../core/types';
@@ -126,6 +127,18 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (c.trade.id !== undefined && t.id !== c.trade.id) return false;
     if (c.trade.learning !== undefined && c.trade.learning !== t.learning) return false;
     if (c.trade.levelMin !== undefined && (!t.id || t.level < c.trade.levelMin)) return false;
+  }
+  if (c.gender !== undefined && state.character.gender !== c.gender) return false;
+  if (c.job) {
+    const j = jobOf(state);
+    const def = content ? jobDef(content, j.id) : undefined;
+    if (c.job.any !== undefined && c.job.any !== !!j.id) return false;
+    if (c.job.id !== undefined && j.id !== c.job.id) return false;
+    if (c.job.group !== undefined && def?.group !== c.job.group) return false;
+    if (c.job.rungMin !== undefined && (!j.id || j.rung < c.job.rungMin)) return false;
+    if (c.job.perfMin !== undefined && (!j.id || j.perf < c.job.perfMin)) return false;
+    if (c.job.perfMax !== undefined && (!j.id || j.perf > c.job.perfMax)) return false;
+    if (c.job.top !== undefined && (!def || (j.rung >= def.rungs.length - 1) !== c.job.top)) return false;
   }
   if (c.exam && content) {
     const ex = examOf(state);

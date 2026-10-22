@@ -1,0 +1,866 @@
+[
+  {
+    "id": "ng_chu_khen",
+    "category": "work",
+    "title": "Chủ khen trước mặt mọi người",
+    "text": "Cuối năm tính sổ, chủ gọi ngươi ra giữa sân, khen một câu trước mặt cả xưởng.",
+    "themes": [
+      "work"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "job": {
+        "any": true,
+        "perfMin": 70
+      }
+    },
+    "weight": 6,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Cúi đầu cảm ơn",
+        "result": {
+          "text": "Đồng liêu vỗ tay. Có người vỗ hơi nhẹ.",
+          "effects": {
+            "perf": 3,
+            "stat.happiness": 3
+          }
+        }
+      },
+      {
+        "text": "Nói công này của cả bọn",
+        "result": {
+          "text": "Cả xưởng nhìn ngươi khác hẳn. Chủ cũng gật gù.",
+          "effects": {
+            "stat.charm": 2,
+            "stat.happiness": 2,
+            "karma": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ng_dong_lieu_cuop_cong",
+    "category": "work",
+    "title": "Đồng liêu cướp công",
+    "text": "Việc ngươi làm cả tháng, một gã đồng liêu mang lên trình chủ như của mình.",
+    "themes": [
+      "work"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "job": {
+        "any": true
+      }
+    },
+    "weight": 6,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Lên nói thẳng với chủ",
+        "result": {
+          "text": "Chủ gọi cả hai tới đối chất. Gã kia đỏ mặt.",
+          "effects": {
+            "perf": 4,
+            "stat.charm": -1,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Nhịn, lần sau giữ kỹ hơn",
+        "result": {
+          "text": "Ngươi nuốt cục tức. Lần sau việc gì cũng ghi tên mình.",
+          "effects": {
+            "stat.happiness": -3,
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Chờ tối, chặn đường gã",
+        "result": {
+          "text": "Gã bầm mắt, không dám hé răng. Nhưng chủ nghe đồn.",
+          "effects": {
+            "perf": -6,
+            "stat.happiness": 2,
+            "karma": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ng_bi_nhac_nho",
+    "category": "work",
+    "title": "Chủ gọi lên nói chuyện",
+    "text": "Chủ đóng cửa phòng, nói nhỏ: \"Làm kiểu này thì ta khó giữ ngươi lại.\"",
+    "themes": [
+      "work"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "job": {
+        "any": true,
+        "perfMax": 35
+      }
+    },
+    "weight": 6,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Hứa sẽ sửa",
+        "result": {
+          "text": "Chủ thở dài: \"Cho ngươi thêm một năm.\"",
+          "effects": {
+            "perf": 8,
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Xin nghỉ trước khi bị đuổi",
+        "result": {
+          "text": "Ngươi tự gói đồ ra về. Ít ra còn giữ được thể diện.",
+          "effects": {
+            "quitJob": "quit",
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Cãi lại",
+        "result": {
+          "text": "Chủ đập bàn. Hôm sau ngươi không cần tới nữa.",
+          "effects": {
+            "quitJob": "fired",
+            "stat.happiness": -4
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ng_dia_chu_dan_doi",
+    "category": "mortal",
+    "title": "Năm đói, dân kéo tới cửa",
+    "text": "Mất mùa. Tá điền kéo tới cửa nhà ngươi xin giảm tô, ngoài đường đã có người chết đói.",
+    "themes": [
+      "work"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "job": {
+        "id": "lam_ruong",
+        "rungMin": 2
+      },
+      "worldVars": [
+        {
+          "id": "harvest",
+          "lte": 40
+        }
+      ]
+    },
+    "weight": 6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Mở kho phát chẩn",
+        "result": {
+          "text": "Kho vơi một nửa. Dân lập bài vị sống cho ngươi.",
+          "effects": {
+            "silver": -40,
+            "karma": 5,
+            "reputation": {
+              "lang_xa": 8
+            },
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Giảm tô một nửa",
+        "result": {
+          "text": "Tá điền vái lạy. Năm sau họ làm ruộng chăm hơn hẳn.",
+          "effects": {
+            "silver": -15,
+            "karma": 2,
+            "perf": 5,
+            "stat.happiness": 1
+          }
+        }
+      },
+      {
+        "text": "Găm lương chờ giá lên",
+        "result": {
+          "text": "Giá gạo gấp ba. Ngươi giàu lên, và đêm nào cổng cũng có đá ném vào.",
+          "effects": {
+            "silver": 60,
+            "karma": -5,
+            "reputation": {
+              "lang_xa": -8
+            },
+            "stat.daoHeart": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ng_kiem_cho_hiep_khach",
+    "category": "work",
+    "title": "Đơn đặt kiếm",
+    "text": "Một hiệp khách mang tới khối sắt đen, đặt rèn một thanh kiếm, trả trước gấp ba tiền công.",
+    "themes": [
+      "work"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "job": {
+        "id": "tho_ren",
+        "rungMin": 1
+      }
+    },
+    "weight": 6,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Rèn bằng hết tay nghề",
+        "check": {
+          "stat": "stat.comprehension",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Thanh kiếm ra lò kêu như rồng ngâm. Hiệp khách xin biết tên ngươi.",
+          "effects": {
+            "silver": 30,
+            "perf": 8,
+            "reputation": {
+              "giang_ho": 3
+            },
+            "stat.comprehension": 1
+          }
+        },
+        "fail": {
+          "text": "Kiếm ra lò bị nứt sống. Ngươi trả lại nửa tiền.",
+          "effects": {
+            "silver": 10,
+            "perf": -3,
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Từ chối, sắt lạ không dám rèn",
+        "result": {
+          "text": "Hiệp khách nhún vai đi. Lò rèn bên cạnh nhận.",
+          "effects": {
+            "stat.daoHeart": 1,
+            "stat.happiness": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ng_ren_cho_phan_quan",
+    "category": "mortal",
+    "title": "Rèn binh khí cho phản quân",
+    "text": "Đêm khuya có người gõ cửa lò, đặt rèn ba trăm mũi giáo. Không nói cho ai, trả bằng vàng.",
+    "themes": [
+      "work",
+      "justice"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "job": {
+        "group": "cong",
+        "rungMin": 2
+      },
+      "worldPhase": [
+        "trung_suy",
+        "loan_the"
+      ]
+    },
+    "weight": 6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận làm",
+        "result": {
+          "text": "Ba trăm mũi giáo rời lò trong đêm. Ngươi giàu, và từ nay không ngủ ngon.",
+          "effects": {
+            "silver": 120,
+            "karma": -3,
+            "setFlags": [
+              "ren_cho_phan_quan"
+            ],
+            "stat.daoHeart": -2
+          }
+        }
+      },
+      {
+        "text": "Từ chối, đóng cửa lò",
+        "result": {
+          "text": "Người kia nhìn ngươi lâu một lúc rồi đi.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Báo quan",
+        "result": {
+          "text": "Quan huyện thưởng ngươi mấy lạng. Có kẻ đã nhớ mặt ngươi.",
+          "effects": {
+            "silver": 10,
+            "reputation": {
+              "trieu_dinh": 5
+            },
+            "setFlags": [
+              "ke_thu_phan_quan"
+            ],
+            "karma": 1,
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ng_thuong_hoi_ep_gia",
+    "category": "mortal",
+    "title": "Thương hội ép giá",
+    "text": "Thương hội lớn trên trấn cho người tới: hoặc bán hàng qua tay họ, hoặc sạp của ngươi sẽ \"gặp chuyện\".",
+    "themes": [
+      "work"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "job": {
+        "group": "thuong"
+      }
+    },
+    "weight": 6,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Chịu theo",
+        "result": {
+          "text": "Lời ít đi một nửa, nhưng sạp còn nguyên.",
+          "effects": {
+            "silver": -10,
+            "stat.happiness": -2
+          }
+        }
+      },
+      {
+        "text": "Rủ các sạp khác cùng chống",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Cả chợ đóng cửa ba ngày. Thương hội phải xuống nước.",
+          "effects": {
+            "stat.charm": 2,
+            "reputation": {
+              "lang_xa": 4
+            },
+            "perf": 5
+          }
+        },
+        "fail": {
+          "text": "Mấy sạp kia sợ, bỏ ngươi một mình. Sạp bị đập phá.",
+          "effects": {
+            "silver": -20,
+            "stat.health": -3
+          }
+        }
+      },
+      {
+        "text": "Đút lót người của thương hội",
+        "result": {
+          "text": "Hắn nhận bạc, để yên cho ngươi. Năm sau hắn lại tới.",
+          "effects": {
+            "silver": -15,
+            "karma": -1,
+            "stat.daoHeart": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ng_quan_huyen_doi_le",
+    "category": "mortal",
+    "title": "Huyện lệnh đòi lễ",
+    "text": "Huyện lệnh mới nhậm chức sai lính tới cửa hiệu: \"Lễ ra mắt quan phụ mẫu, mười lạng.\"",
+    "themes": [
+      "work",
+      "justice"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "job": {
+        "group": "thuong",
+        "rungMin": 1
+      }
+    },
+    "weight": 6,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Nộp lễ",
+        "result": {
+          "text": "Lính cầm bạc đi. Từ đó chẳng ai làm khó cửa hiệu.",
+          "effects": {
+            "silver": -10,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Kêu nghèo, nộp một nửa",
+        "result": {
+          "text": "Lính cười khẩy, nhận. Tháng sau có người tới kiểm cân.",
+          "effects": {
+            "silver": -5,
+            "perf": -3,
+            "stat.charm": 1
+          }
+        }
+      },
+      {
+        "text": "Không nộp",
+        "result": {
+          "text": "Ba hôm sau cửa hiệu bị dán niêm phong một tháng.",
+          "effects": {
+            "perf": -10,
+            "stat.daoHeart": 2,
+            "reputation": {
+              "trieu_dinh": -3
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ng_thu_lai_sua_so",
+    "category": "mortal",
+    "title": "Sửa một dòng sổ",
+    "text": "Một phú hộ dúi vào tay ngươi túi bạc, chỉ xin sửa một dòng trong sổ địa bạ.",
+    "themes": [
+      "work",
+      "justice"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "job": {
+        "id": "thu_lai"
+      }
+    },
+    "weight": 6,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Sửa",
+        "result": {
+          "text": "Ngòi bút lướt một nét. Mảnh ruộng của nhà nghèo kia thành của phú hộ.",
+          "effects": {
+            "silver": 25,
+            "karma": -4,
+            "stat.daoHeart": -2
+          }
+        }
+      },
+      {
+        "text": "Trả bạc, không sửa",
+        "result": {
+          "text": "Phú hộ cười nhạt bỏ đi. Ngươi biết mình vừa có kẻ thù.",
+          "effects": {
+            "karma": 2,
+            "stat.daoHeart": 2,
+            "setFlags": [
+              "ke_thu_phu_ho"
+            ]
+          }
+        }
+      },
+      {
+        "text": "Báo quan huyện",
+        "result": {
+          "text": "Quan huyện khen ngươi thanh liêm, rồi tự mình nhận bạc của phú hộ.",
+          "effects": {
+            "stat.happiness": -3,
+            "stat.intellect": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ng_bo_khoai_bat_cuop",
+    "category": "mortal",
+    "title": "Truy bắt cướp",
+    "text": "Một toán cướp vừa đánh tiêu cục ngoài đèo. Huyện lệnh giao ngươi dẫn người truy bắt.",
+    "themes": [
+      "work",
+      "violence"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "job": {
+        "id": "bo_khoai"
+      }
+    },
+    "weight": 6,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Dẫn người lên núi",
+        "result": {
+          "text": "Trên đỉnh đèo, gã đầu sỏ đã chờ sẵn.",
+          "effects": {},
+          "fight": {
+            "foe": {
+              "name": "Đầu sỏ toán cướp",
+              "realm": "pham_nhan",
+              "powerMul": 1.0,
+              "intent": "kill"
+            },
+            "win": {
+              "text": "Toán cướp bị trói giải về huyện. Ngươi được thưởng.",
+              "effects": {
+                "perf": 12,
+                "silver": 15,
+                "reputation": {
+                  "trieu_dinh": 3
+                },
+                "stat.happiness": 3
+              }
+            },
+            "lose": {
+              "text": "Ngươi bị đánh lăn xuống dốc, người khiêng về.",
+              "effects": {
+                "stat.health": -12,
+                "perf": -5
+              }
+            }
+          }
+        }
+      },
+      {
+        "text": "Thả tin cho chúng chạy, nhận bạc chia",
+        "result": {
+          "text": "Toán cướp biến mất. Túi ngươi nặng thêm.",
+          "effects": {
+            "silver": 20,
+            "karma": -3,
+            "perf": -4,
+            "stat.daoHeart": -1
+          }
+        }
+      },
+      {
+        "text": "Báo lên phủ xin thêm người",
+        "result": {
+          "text": "Phủ cử thêm lính. Cướp bị bắt, công chia cho người khác.",
+          "effects": {
+            "perf": 3,
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ng_lang_trung_ca_kho",
+    "category": "mortal",
+    "title": "Ca bệnh khó",
+    "text": "Một đứa trẻ sốt li bì ba ngày, các thầy khác đã lắc đầu. Người nhà nó quỳ trước cửa hiệu thuốc.",
+    "themes": [
+      "work"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "job": {
+        "id": "boc_thuoc"
+      }
+    },
+    "weight": 6,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Bắt mạch, kê một phương lạ",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Sáng ra đứa trẻ đòi ăn. Tiếng ngươi lan khắp ba làng.",
+          "effects": {
+            "perf": 10,
+            "karma": 3,
+            "stat.happiness": 3
+          }
+        },
+        "fail": {
+          "text": "Thuốc không ăn thua. Đứa trẻ qua được là nhờ trời.",
+          "effects": {
+            "stat.happiness": -3,
+            "karma": 1
+          }
+        }
+      },
+      {
+        "text": "Giới thiệu sang thầy giỏi hơn",
+        "result": {
+          "text": "Ngươi viết thư tay cho thầy trên huyện. Đứa trẻ được cứu, công là của người khác.",
+          "effects": {
+            "karma": 2,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Từ chối, sợ mang tiếng",
+        "result": {
+          "text": "Người đàn bà bế đứa trẻ đi. Ngươi không dám hỏi chuyện sau đó.",
+          "effects": {
+            "karma": -2,
+            "stat.daoHeart": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ng_ganh_hat_vao_phu",
+    "category": "mortal",
+    "title": "Gánh hát vào phủ",
+    "text": "Một vị đại nhân mời gánh hát vào phủ diễn mừng thọ, chỉ đích danh ngươi đóng vai chính.",
+    "themes": [
+      "work"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "job": {
+        "group": "nghe_thuat",
+        "rungMin": 1
+      }
+    },
+    "weight": 6,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Diễn hết mình",
+        "check": {
+          "stat": "stat.charm",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Cả phủ đứng dậy vỗ tay. Đại nhân thưởng một túi vàng.",
+          "effects": {
+            "silver": 30,
+            "perf": 8,
+            "stat.charm": 1
+          }
+        },
+        "fail": {
+          "text": "Quên lời giữa chừng. Đại nhân phẩy tay cho lui.",
+          "effects": {
+            "perf": -5,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Nhận lời làm tai mắt cho đại nhân",
+        "result": {
+          "text": "Từ đó ngươi diễn ở đâu cũng nghe ngóng cho phủ. Tiền nhiều, bạn ít.",
+          "effects": {
+            "silver": 40,
+            "setFlags": [
+              "tai_mat_quyen_quy"
+            ],
+            "karma": -1,
+            "stat.daoHeart": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ng_phu_nghe_tin_don",
+    "category": "mortal",
+    "title": "Tin đồn ở bến",
+    "text": "Đám phu ở bến thì thầm: quan trên ăn bớt tiền đê, mùa lũ tới thì cả vùng chết.",
+    "themes": [
+      "work"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "job": {
+        "group": "ha_cuu_luu"
+      }
+    },
+    "weight": 6,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Kể cho cả bến nghe",
+        "result": {
+          "text": "Tin lan nhanh như lửa. Dân kéo lên huyện đòi đắp đê.",
+          "effects": {
+            "reputation": {
+              "lang_xa": 4
+            },
+            "setFlags": [
+              "thu_linh_dan_phu"
+            ],
+            "stat.charm": 1
+          }
+        }
+      },
+      {
+        "text": "Giữ mồm giữ miệng",
+        "result": {
+          "text": "Ngươi im lặng. Mùa lũ năm ấy nước ngập tới đầu gối.",
+          "effects": {
+            "stat.daoHeart": -1,
+            "stat.health": 1
+          }
+        }
+      },
+      {
+        "text": "Bán tin cho thương hội",
+        "result": {
+          "text": "Thương hội tích gạo chờ lũ. Ngươi được mấy lạng.",
+          "effects": {
+            "silver": 8,
+            "karma": -2,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "ng_nghi_huu_tiec",
+    "category": "work",
+    "title": "Tiệc tiễn về hưu",
+    "text": "Ngươi làm nghề đã ba mươi năm. Đồng liêu bàn nhau làm một bữa tiễn ngươi về nghỉ.",
+    "themes": [
+      "work"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "job": {
+        "any": true
+      },
+      "age": {
+        "min": 58
+      }
+    },
+    "weight": 6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận, về nghỉ",
+        "result": {
+          "text": "Rượu ngọt, lời tiễn chân thành. Sáng mai ngươi ngủ tới khi mặt trời lên.",
+          "effects": {
+            "quitJob": "retire",
+            "stat.happiness": 6,
+            "stat.health": 2
+          }
+        }
+      },
+      {
+        "text": "Còn sức thì còn làm",
+        "result": {
+          "text": "Đồng liêu lắc đầu cười. Ngươi lại ra xưởng từ sáng.",
+          "effects": {
+            "perf": 3,
+            "stat.daoHeart": 2,
+            "stat.health": -1
+          }
+        }
+      }
+    ]
+  }
+]

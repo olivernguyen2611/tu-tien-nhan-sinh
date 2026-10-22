@@ -109,7 +109,9 @@ export function careerYear(state: GameState, content: Content): GameState {
   if (!state.alive || !career || state.cult.realm !== 'pham_nhan') return state;
   const rng = Rng.fromState(state.rng);
   const lines: LogLine[] = [];
-  let s: GameState = { ...state, money: { ...state.money, silver: state.money.silver + careerIncome(state, content) } };
+  // 10.3: while the life holds a job, the job pays (the larger of the two, see jobYear).
+  const income = state.job?.id ? 0 : careerIncome(state, content);
+  let s: GameState = { ...state, money: { ...state.money, silver: state.money.silver + income } };
 
   if (rng.chance(promotionChance(s, content))) {
     const rung = s.career.rung + 1;

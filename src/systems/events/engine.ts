@@ -2,6 +2,7 @@
 // chooses, the outcome is applied. Pure functions over GameState + Content.
 import { addGrade, addTradeLevel, enrollSchool, leaveSchool, startTrade } from '../schooling';
 import { beginExam } from '../exams';
+import { addPerf, promoteJob, quitJob, takeJob } from '../jobs';
 import { ordinaryAptitude, ordinaryStat } from '../aptitudeGain';
 import type { Content } from '../../core/content';
 import { Rng } from '../../core/rng';
@@ -480,6 +481,11 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.tradeLevel) next = addTradeLevel(next, content, fx.tradeLevel);
   // 10.2: lều chõng đi thi (the trường thi card opens).
   if (fx.sitExam) next = beginExam(next, content);
+  // 10.3 Việc làm.
+  if (fx.quitJob) next = quitJob(next, content, fx.quitJob);
+  if (fx.takeJob) next = takeJob(next, content, fx.takeJob)?.state ?? next;
+  if (fx.perf) next = addPerf(next, fx.perf);
+  if (fx.jobPromote) next = promoteJob(next, content);
   if (fx.martialBonus) next = { ...next, martial: { ...next.martial, bonus: next.martial.bonus + fx.martialBonus } };
   if (fx.martialPromote) next = martialPromote(next, content);
   if (fx.martialAscend) next = martialAscend(next, content);

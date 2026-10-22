@@ -1,0 +1,941 @@
+{
+  "groups": [
+    {
+      "id": "nong",
+      "name": "Nông",
+      "glyph": "農"
+    },
+    {
+      "id": "cong",
+      "name": "Công",
+      "glyph": "工"
+    },
+    {
+      "id": "thuong",
+      "name": "Thương",
+      "glyph": "商"
+    },
+    {
+      "id": "van",
+      "name": "Văn",
+      "glyph": "文"
+    },
+    {
+      "id": "vo",
+      "name": "Võ",
+      "glyph": "武"
+    },
+    {
+      "id": "y",
+      "name": "Y",
+      "glyph": "醫"
+    },
+    {
+      "id": "nghe_thuat",
+      "name": "Nghệ",
+      "glyph": "藝"
+    },
+    {
+      "id": "ha_cuu_luu",
+      "name": "Hạ cửu lưu",
+      "glyph": "役"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "lam_ruong",
+      "group": "nong",
+      "name": "Làm ruộng",
+      "description": "Một nắng hai sương. Được mùa thì no, mất mùa thì đói.",
+      "rungs": [
+        "Tá điền",
+        "Tự canh",
+        "Phú nông",
+        "Địa chủ"
+      ],
+      "pay": [
+        6,
+        14,
+        35,
+        80
+      ],
+      "months": 6,
+      "mainStats": [
+        "physique",
+        "luck"
+      ],
+      "requires": {
+        "age": {
+          "min": 14
+        }
+      },
+      "upkeep": {
+        "stat.physique": 1,
+        "stat.health": -1
+      },
+      "bossRole": "địa chủ",
+      "mateRole": "tá điền cùng xóm",
+      "requiresText": "Đủ 14 tuổi mới cày nổi."
+    },
+    {
+      "id": "chan_nuoi",
+      "group": "nong",
+      "name": "Chăn nuôi",
+      "description": "Chăn trâu, nuôi lợn, thả vịt. Con vật không biết nói dối.",
+      "rungs": [
+        "Chăn thuê",
+        "Chủ chuồng",
+        "Chủ trại"
+      ],
+      "pay": [
+        5,
+        15,
+        40
+      ],
+      "months": 5,
+      "mainStats": [
+        "physique",
+        "luck"
+      ],
+      "requires": {
+        "age": {
+          "min": 12
+        }
+      },
+      "upkeep": {
+        "stat.happiness": 1
+      },
+      "bossRole": "chủ trại",
+      "mateRole": "người chăn cùng bãi",
+      "requiresText": "Đủ 12 tuổi mới chăn được trâu."
+    },
+    {
+      "id": "ngu_phu",
+      "group": "nong",
+      "name": "Đánh cá",
+      "description": "Chèo thuyền ra sông từ khi trời chưa sáng.",
+      "rungs": [
+        "Bạn thuyền",
+        "Chủ thuyền",
+        "Chủ vạn chài"
+      ],
+      "pay": [
+        6,
+        16,
+        40
+      ],
+      "months": 6,
+      "mainStats": [
+        "physique",
+        "luck"
+      ],
+      "requires": {
+        "age": {
+          "min": 14
+        }
+      },
+      "upkeep": {
+        "stat.physique": 1,
+        "stat.health": -1
+      },
+      "bossRole": "chủ thuyền",
+      "mateRole": "bạn thuyền",
+      "requiresText": "Đủ 14 tuổi mới theo thuyền."
+    },
+    {
+      "id": "tho_ren",
+      "group": "cong",
+      "name": "Thợ rèn",
+      "description": "Lửa lò không tắt, búa không ngơi. Kiếm cho hiệp khách, cày cho nông phu.",
+      "rungs": [
+        "Thợ phụ",
+        "Thợ cả",
+        "Chủ xưởng",
+        "Danh tượng"
+      ],
+      "pay": [
+        10,
+        24,
+        55,
+        120
+      ],
+      "months": 7,
+      "mainStats": [
+        "physique",
+        "comprehension"
+      ],
+      "requires": {
+        "age": {
+          "min": 15
+        },
+        "trade": {
+          "id": "ren",
+          "levelMin": 1
+        }
+      },
+      "upkeep": {
+        "stat.physique": 1,
+        "stat.health": -1
+      },
+      "bossRole": "chủ lò rèn",
+      "mateRole": "thợ cùng lò",
+      "requiresText": "Phải học nghề rèn tới thợ phụ."
+    },
+    {
+      "id": "tho_moc",
+      "group": "cong",
+      "name": "Thợ mộc",
+      "description": "Đục, bào, chạm. Nhà ai cũng cần một cái xà.",
+      "rungs": [
+        "Thợ phụ",
+        "Thợ cả",
+        "Chủ xưởng",
+        "Danh tượng"
+      ],
+      "pay": [
+        9,
+        22,
+        50,
+        110
+      ],
+      "months": 7,
+      "mainStats": [
+        "physique",
+        "comprehension"
+      ],
+      "requires": {
+        "age": {
+          "min": 15
+        },
+        "trade": {
+          "id": "moc",
+          "levelMin": 1
+        }
+      },
+      "upkeep": {
+        "stat.physique": 1
+      },
+      "bossRole": "chủ xưởng mộc",
+      "mateRole": "thợ cùng xưởng",
+      "requiresText": "Phải học nghề mộc tới thợ phụ."
+    },
+    {
+      "id": "tho_gom",
+      "group": "cong",
+      "name": "Thợ gốm",
+      "description": "Nhào đất, nặn hình, canh lửa lò ba ngày ba đêm.",
+      "rungs": [
+        "Thợ phụ",
+        "Thợ cả",
+        "Chủ lò"
+      ],
+      "pay": [
+        8,
+        20,
+        50
+      ],
+      "months": 7,
+      "mainStats": [
+        "comprehension",
+        "charm"
+      ],
+      "requires": {
+        "age": {
+          "min": 15
+        },
+        "trade": {
+          "id": "gom",
+          "levelMin": 1
+        }
+      },
+      "upkeep": {
+        "stat.health": -1
+      },
+      "bossRole": "chủ lò gốm",
+      "mateRole": "thợ cùng lò",
+      "requiresText": "Phải học nghề gốm tới thợ phụ."
+    },
+    {
+      "id": "tho_may",
+      "group": "cong",
+      "name": "Thợ may",
+      "description": "Kim chỉ đường may. Áo cưới, áo tang, áo quan đều qua tay.",
+      "rungs": [
+        "Thợ phụ",
+        "Thợ cả",
+        "Chủ tiệm may"
+      ],
+      "pay": [
+        8,
+        20,
+        48
+      ],
+      "months": 6,
+      "mainStats": [
+        "charm",
+        "comprehension"
+      ],
+      "requires": {
+        "age": {
+          "min": 14
+        },
+        "trade": {
+          "id": "may",
+          "levelMin": 1
+        }
+      },
+      "upkeep": {},
+      "bossRole": "chủ tiệm may",
+      "mateRole": "thợ cùng tiệm",
+      "requiresText": "Phải học nghề may tới thợ phụ."
+    },
+    {
+      "id": "dau_bep",
+      "group": "cong",
+      "name": "Đầu bếp",
+      "description": "Lửa to, chảo nóng, khách đông. Món ngon thì tửu lâu đông khách.",
+      "rungs": [
+        "Phụ bếp",
+        "Bếp chính",
+        "Bếp trưởng tửu lâu"
+      ],
+      "pay": [
+        8,
+        22,
+        55
+      ],
+      "months": 7,
+      "mainStats": [
+        "comprehension",
+        "charm"
+      ],
+      "requires": {
+        "age": {
+          "min": 14
+        },
+        "trade": {
+          "id": "bep",
+          "levelMin": 1
+        }
+      },
+      "upkeep": {
+        "stat.health": -1,
+        "stat.happiness": 1
+      },
+      "bossRole": "chủ tửu lâu",
+      "mateRole": "người làm bếp",
+      "requiresText": "Phải học nghề bếp tới thợ phụ."
+    },
+    {
+      "id": "tho_xay",
+      "group": "cong",
+      "name": "Thợ xây",
+      "description": "Trộn vữa, xếp gạch. Thành quách, đình chùa đều do tay thợ.",
+      "rungs": [
+        "Phu hồ",
+        "Thợ cả",
+        "Cai thợ"
+      ],
+      "pay": [
+        7,
+        18,
+        40
+      ],
+      "months": 7,
+      "mainStats": [
+        "physique"
+      ],
+      "requires": {
+        "age": {
+          "min": 15
+        }
+      },
+      "upkeep": {
+        "stat.physique": 1,
+        "stat.health": -2
+      },
+      "bossRole": "cai thợ",
+      "mateRole": "thợ cùng công trình",
+      "requiresText": "Đủ 15 tuổi mới khiêng nổi gạch."
+    },
+    {
+      "id": "ban_rong",
+      "group": "thuong",
+      "name": "Bán rong",
+      "description": "Gánh hàng đi khắp chợ làng. Rao khản cổ mới bán được một mẻ.",
+      "rungs": [
+        "Bán rong",
+        "Chủ sạp"
+      ],
+      "pay": [
+        7,
+        20
+      ],
+      "months": 6,
+      "mainStats": [
+        "charm",
+        "luck"
+      ],
+      "requires": {
+        "age": {
+          "min": 12
+        }
+      },
+      "upkeep": {
+        "stat.charm": 1,
+        "stat.health": -1
+      },
+      "bossRole": "đầu chợ",
+      "mateRole": "người bán cùng chợ",
+      "requiresText": "Đủ 12 tuổi mới tính được tiền.",
+      "peak": {
+        "career": "thuong",
+        "rung": 1
+      }
+    },
+    {
+      "id": "tieu_nhi",
+      "group": "thuong",
+      "name": "Tiểu nhị",
+      "description": "Bưng bê, chạy bàn, nghe đủ chuyện thiên hạ.",
+      "rungs": [
+        "Tiểu nhị",
+        "Chưởng quầy",
+        "Chưởng quỹ"
+      ],
+      "pay": [
+        6,
+        15,
+        30
+      ],
+      "months": 7,
+      "mainStats": [
+        "charm",
+        "intellect"
+      ],
+      "requires": {
+        "age": {
+          "min": 12
+        }
+      },
+      "upkeep": {
+        "stat.charm": 1
+      },
+      "bossRole": "chủ quán",
+      "mateRole": "người làm cùng quán",
+      "requiresText": "Đủ 12 tuổi mới chạy bàn được.",
+      "peak": {
+        "career": "thuong",
+        "rung": 1
+      }
+    },
+    {
+      "id": "thay_do",
+      "group": "van",
+      "name": "Thầy đồ",
+      "description": "Dạy trẻ con đọc chữ. Nghèo mà được trọng.",
+      "rungs": [
+        "Thầy đồ",
+        "Thầy đồ có tiếng"
+      ],
+      "pay": [
+        10,
+        25
+      ],
+      "months": 6,
+      "mainStats": [
+        "intellect",
+        "charm"
+      ],
+      "requires": {
+        "age": {
+          "min": 16
+        },
+        "exam": {
+          "passed": "vien"
+        }
+      },
+      "upkeep": {
+        "stat.daoHeart": 1
+      },
+      "bossRole": "hương trưởng",
+      "mateRole": "thầy đồ làng bên",
+      "requiresText": "Phải đỗ Tú tài mới mở lớp."
+    },
+    {
+      "id": "thu_lai",
+      "group": "van",
+      "name": "Thư lại",
+      "description": "Ghi chép sổ sách ở huyện nha. Ngòi bút nhỏ mà quyền không nhỏ.",
+      "rungs": [
+        "Thư lại",
+        "Lại mục",
+        "Đề lại"
+      ],
+      "pay": [
+        10,
+        22,
+        45
+      ],
+      "months": 8,
+      "mainStats": [
+        "intellect",
+        "charm"
+      ],
+      "requires": {
+        "age": {
+          "min": 16
+        },
+        "exam": {
+          "passed": "huyen"
+        }
+      },
+      "upkeep": {
+        "stat.happiness": -1
+      },
+      "bossRole": "quan huyện",
+      "mateRole": "thư lại cùng nha",
+      "requiresText": "Phải đỗ Đồng sinh mới vào huyện nha."
+    },
+    {
+      "id": "ho_vien",
+      "group": "vo",
+      "name": "Hộ viện",
+      "description": "Canh cổng cho nhà giàu. Trộm vào thì đánh, chủ say thì khiêng.",
+      "rungs": [
+        "Hộ viện",
+        "Hộ viện trưởng"
+      ],
+      "pay": [
+        10,
+        24
+      ],
+      "months": 6,
+      "mainStats": [
+        "physique",
+        "health"
+      ],
+      "requires": {
+        "age": {
+          "min": 16
+        }
+      },
+      "upkeep": {
+        "stat.physique": 1
+      },
+      "bossRole": "viên ngoại",
+      "mateRole": "hộ viện cùng phủ",
+      "requiresText": "Đủ 16 tuổi mới được giữ cổng."
+    },
+    {
+      "id": "linh",
+      "group": "vo",
+      "name": "Đi lính",
+      "description": "Ăn lương triều đình, giữ thành, đánh giặc khi có giặc.",
+      "rungs": [
+        "Lính",
+        "Đội trưởng",
+        "Cai đội"
+      ],
+      "pay": [
+        8,
+        20,
+        45
+      ],
+      "months": 9,
+      "mainStats": [
+        "physique",
+        "health"
+      ],
+      "requires": {
+        "age": {
+          "min": 16
+        },
+        "gender": "nam"
+      },
+      "upkeep": {
+        "stat.physique": 1,
+        "stat.health": -1,
+        "stat.happiness": -1
+      },
+      "bossRole": "quan võ",
+      "mateRole": "lính cùng doanh",
+      "requiresText": "Triều đình chỉ tuyển trai tráng từ 16 tuổi."
+    },
+    {
+      "id": "bo_khoai",
+      "group": "vo",
+      "name": "Bộ khoái",
+      "description": "Đeo đao, cầm lệnh bài, bắt trộm bắt cướp cho huyện nha.",
+      "rungs": [
+        "Bộ khoái",
+        "Bộ đầu"
+      ],
+      "pay": [
+        12,
+        35
+      ],
+      "months": 7,
+      "mainStats": [
+        "physique",
+        "intellect"
+      ],
+      "requires": {
+        "age": {
+          "min": 18
+        }
+      },
+      "upkeep": {
+        "stat.physique": 1,
+        "stat.health": -1
+      },
+      "bossRole": "quan huyện",
+      "mateRole": "bộ khoái cùng nha",
+      "requiresText": "Đủ 18 tuổi mới đeo đao huyện nha."
+    },
+    {
+      "id": "tieu_su",
+      "group": "vo",
+      "name": "Tiêu sư",
+      "description": "Áp tiêu qua núi qua đèo. Cờ tiêu cục cắm đâu, sơn tặc né đó.",
+      "rungs": [
+        "Tiêu sư",
+        "Tiêu đầu",
+        "Tổng tiêu đầu"
+      ],
+      "pay": [
+        14,
+        32,
+        70
+      ],
+      "months": 8,
+      "mainStats": [
+        "physique",
+        "luck"
+      ],
+      "requires": {
+        "age": {
+          "min": 18
+        },
+        "martial": {
+          "min": 0
+        }
+      },
+      "upkeep": {
+        "stat.physique": 1,
+        "stat.health": -2
+      },
+      "bossRole": "tổng tiêu đầu",
+      "mateRole": "tiêu sư cùng cục",
+      "requiresText": "Phải có chút võ nghệ mới theo tiêu cục.",
+      "peak": {
+        "career": "vo_lam",
+        "rung": 1
+      }
+    },
+    {
+      "id": "boc_thuoc",
+      "group": "y",
+      "name": "Bốc thuốc",
+      "description": "Cân thuốc, sắc thuốc, nghe bệnh nhân kể khổ.",
+      "rungs": [
+        "Bốc thuốc",
+        "Lang trung",
+        "Danh y"
+      ],
+      "pay": [
+        9,
+        25,
+        60
+      ],
+      "months": 6,
+      "mainStats": [
+        "intellect",
+        "comprehension"
+      ],
+      "requires": {
+        "age": {
+          "min": 15
+        },
+        "trade": {
+          "id": "thuoc",
+          "levelMin": 1
+        }
+      },
+      "upkeep": {
+        "stat.intellect": 1
+      },
+      "bossRole": "chủ hiệu thuốc",
+      "mateRole": "người bốc thuốc cùng hiệu",
+      "requiresText": "Phải học nghề thuốc tới thợ phụ.",
+      "peak": {
+        "career": "y",
+        "rung": 2
+      }
+    },
+    {
+      "id": "ba_do",
+      "group": "y",
+      "name": "Bà đỡ",
+      "description": "Đỡ đẻ cho cả làng. Đứa trẻ nào trong xóm cũng qua tay.",
+      "rungs": [
+        "Bà đỡ",
+        "Bà đỡ có tiếng"
+      ],
+      "pay": [
+        8,
+        22
+      ],
+      "months": 4,
+      "mainStats": [
+        "charm",
+        "comprehension"
+      ],
+      "requires": {
+        "age": {
+          "min": 20
+        },
+        "gender": "nu"
+      },
+      "upkeep": {
+        "stat.happiness": 1
+      },
+      "bossRole": "hương trưởng",
+      "mateRole": "bà đỡ làng bên",
+      "requiresText": "Nghề của đàn bà đã có tuổi, từ 20."
+    },
+    {
+      "id": "kep_hat",
+      "group": "nghe_thuat",
+      "name": "Kép hát",
+      "description": "Lên sân khấu làm vua, xuống sân khấu làm người thường.",
+      "rungs": [
+        "Học trò",
+        "Đào kép",
+        "Danh kỹ"
+      ],
+      "pay": [
+        5,
+        18,
+        60
+      ],
+      "months": 6,
+      "mainStats": [
+        "charm",
+        "luck"
+      ],
+      "requires": {
+        "age": {
+          "min": 12
+        }
+      },
+      "upkeep": {
+        "stat.charm": 1,
+        "stat.health": -1
+      },
+      "bossRole": "bầu gánh",
+      "mateRole": "người cùng gánh",
+      "requiresText": "Đủ 12 tuổi mới theo gánh hát."
+    },
+    {
+      "id": "nhac_cong",
+      "group": "nghe_thuat",
+      "name": "Nhạc công",
+      "description": "Đàn trong đám cưới, đám ma, đàn cả trong tửu lâu.",
+      "rungs": [
+        "Học trò",
+        "Nhạc công",
+        "Danh cầm"
+      ],
+      "pay": [
+        5,
+        15,
+        45
+      ],
+      "months": 5,
+      "mainStats": [
+        "comprehension",
+        "charm"
+      ],
+      "requires": {
+        "age": {
+          "min": 12
+        }
+      },
+      "upkeep": {
+        "stat.happiness": 1
+      },
+      "bossRole": "trưởng phường nhạc",
+      "mateRole": "nhạc công cùng phường",
+      "requiresText": "Đủ 12 tuổi mới theo phường nhạc."
+    },
+    {
+      "id": "hoa_si",
+      "group": "nghe_thuat",
+      "name": "Họa sĩ",
+      "description": "Vẽ tranh tết, vẽ chân dung, vẽ cả bản đồ cho quan.",
+      "rungs": [
+        "Thợ vẽ",
+        "Họa sĩ",
+        "Danh họa"
+      ],
+      "pay": [
+        5,
+        16,
+        50
+      ],
+      "months": 5,
+      "mainStats": [
+        "comprehension",
+        "intellect"
+      ],
+      "requires": {
+        "age": {
+          "min": 14
+        },
+        "stats": [
+          {
+            "stat": "stat.intellect",
+            "gte": 40
+          }
+        ]
+      },
+      "upkeep": {
+        "stat.daoHeart": 1
+      },
+      "bossRole": "chủ hiệu tranh",
+      "mateRole": "thợ vẽ cùng hiệu",
+      "requiresText": "Cần trí tuệ 40 mới cầm nổi bút vẽ."
+    },
+    {
+      "id": "phu_khuan_vac",
+      "group": "ha_cuu_luu",
+      "name": "Phu khuân vác",
+      "description": "Vác bao ở bến sông. Dễ vào nhất, nặng nhất, nghe được nhiều chuyện nhất.",
+      "rungs": [
+        "Phu",
+        "Cai phu"
+      ],
+      "pay": [
+        6,
+        16
+      ],
+      "months": 7,
+      "mainStats": [
+        "physique",
+        "health"
+      ],
+      "requires": {
+        "age": {
+          "min": 14
+        }
+      },
+      "upkeep": {
+        "stat.physique": 1,
+        "stat.health": -2
+      },
+      "bossRole": "cai phu",
+      "mateRole": "phu cùng bến",
+      "requiresText": "Đủ 14 tuổi mới vác nổi bao."
+    },
+    {
+      "id": "mo_lang",
+      "group": "ha_cuu_luu",
+      "name": "Mõ làng",
+      "description": "Gõ mõ rao việc làng, ăn cỗ ngồi chiếu cuối.",
+      "rungs": [
+        "Mõ làng"
+      ],
+      "pay": [
+        5
+      ],
+      "months": 3,
+      "mainStats": [
+        "charm"
+      ],
+      "requires": {
+        "age": {
+          "min": 16
+        }
+      },
+      "upkeep": {
+        "stat.charm": -1,
+        "stat.happiness": -1
+      },
+      "bossRole": "lý trưởng",
+      "mateRole": "người làm việc làng",
+      "requiresText": "Đủ 16 tuổi mới được làng giao mõ."
+    },
+    {
+      "id": "do_te",
+      "group": "ha_cuu_luu",
+      "name": "Đồ tể",
+      "description": "Mổ lợn, mổ trâu. Tay cầm dao, lòng phải cứng.",
+      "rungs": [
+        "Phụ việc",
+        "Đồ tể",
+        "Chủ lò mổ"
+      ],
+      "pay": [
+        7,
+        18,
+        40
+      ],
+      "months": 6,
+      "mainStats": [
+        "physique"
+      ],
+      "requires": {
+        "age": {
+          "min": 16
+        }
+      },
+      "upkeep": {
+        "stat.physique": 1,
+        "stat.daoHeart": -1
+      },
+      "bossRole": "chủ lò mổ",
+      "mateRole": "người làm cùng lò",
+      "requiresText": "Đủ 16 tuổi mới cầm dao mổ."
+    },
+    {
+      "id": "phu_do",
+      "group": "ha_cuu_luu",
+      "name": "Phu đò",
+      "description": "Chèo đò đưa khách qua sông. Ai qua sông cũng kể cho ngươi một chuyện.",
+      "rungs": [
+        "Phu đò",
+        "Chủ bến"
+      ],
+      "pay": [
+        6,
+        16
+      ],
+      "months": 6,
+      "mainStats": [
+        "physique",
+        "charm"
+      ],
+      "requires": {
+        "age": {
+          "min": 14
+        }
+      },
+      "upkeep": {
+        "stat.physique": 1
+      },
+      "bossRole": "chủ bến",
+      "mateRole": "phu đò cùng bến",
+      "requiresText": "Đủ 14 tuổi mới cầm sào."
+    }
+  ],
+  "texts": {
+    "hired": "Ngươi xin được làm {job}: khởi đầu là {rung}, dưới tay {boss}.",
+    "promoted": "Làm ăn được việc, ngươi lên {rung} trong nghề {job}.",
+    "fired": "Hiệu suất kém mãi, ngươi bị đuổi khỏi nghề {job}.",
+    "quit": "Ngươi thôi làm {job}.",
+    "retire": "Tuổi đã cao, ngươi gác nghề {job} về nghỉ.",
+    "warn": "Chủ nhắc khéo: làm {job} kiểu này thì sớm muộn phải nghỉ.",
+    "peak": "Tiếng tăm vượt khỏi nghề: người ta gọi ngươi là {rung} trên {career}."
+  }
+}

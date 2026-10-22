@@ -3,6 +3,7 @@
 // rồi gom thống kê nhiều đời để xem cân bằng. Không có logic game riêng ở đây: chỉ gọi hệ thống.
 import type { Content } from '../core/content';
 import { answerExam, examView, resolveIncident } from './exams';
+import { takeJob } from './jobs';
 import { Rng } from '../core/rng';
 import { advanceYear, createLife } from '../core/state';
 import type { GameState } from '../core/types';
@@ -44,13 +45,13 @@ export const BOT_PROFILES: BotProfile[] = ['random', 'steady', 'player', 'full']
  * one way. `choice`: first open choice, random, the kindest (karma up) or the cruellest (karma down).
  */
 export type MortalPersona = 'nong_dan' | 'thu_sinh' | 'thuong_nhan' | 'ke_cuop' | 'hiep_khach' | 'ke_luoi';
-interface PersonaDef { name: string; career?: string; activities: string[]; months: number; train?: boolean; choice: 'first' | 'random' | 'good' | 'evil' }
+interface PersonaDef { name: string; career?: string; jobs?: string[]; activities: string[]; months: number; train?: boolean; choice: 'first' | 'random' | 'good' | 'evil' }
 export const MORTAL_PERSONAS: Record<MortalPersona, PersonaDef> = {
-  nong_dan: { name: 'Nông dân an phận', activities: ['hoc_nghe_moc', 'lam_thue', 've_tham_que', 'ket_giao'], months: 5, choice: 'first' },
-  thu_sinh: { name: 'Thư sinh thi cử', career: 'quan', activities: ['xin_hoc_truong_lang', 'leu_chong_di_thi', 'cham_hoc', 'on_thi', 'thu_quan', 'ket_giao', 'ngao_du'], months: 4, choice: 'first' },
-  thuong_nhan: { name: 'Thương nhân', career: 'thuong', activities: ['hoc_nghe_may', 'ket_giao', 'lam_thue', 'song_bac'], months: 4, choice: 'random' },
-  ke_cuop: { name: 'Kẻ cướp', activities: ['tron_hoc', 'song_bac', 'luyen_quyen_som', 'ap_tieu'], months: 4, train: true, choice: 'evil' },
-  hiep_khach: { name: 'Hiệp khách', career: 'vo_lam', activities: ['theo_vo_duong', 'hoc_nghe_ren', 'luyen_quyen_som', 'ap_tieu', 'ngao_du', 'ket_giao'], months: 4, train: true, choice: 'good' },
+  nong_dan: { name: 'Nông dân an phận', jobs: ['lam_ruong'], activities: ['hoc_nghe_moc', 'lam_thue', 've_tham_que', 'ket_giao', 'lam_cham'], months: 5, choice: 'first' },
+  thu_sinh: { name: 'Thư sinh thi cử', career: 'quan', jobs: ['thay_do', 'thu_lai'], activities: ['xin_hoc_truong_lang', 'leu_chong_di_thi', 'cham_hoc', 'on_thi', 'thu_quan', 'ket_giao', 'ngao_du'], months: 4, choice: 'first' },
+  thuong_nhan: { name: 'Thương nhân', career: 'thuong', jobs: ['ban_rong', 'tieu_nhi'], activities: ['hoc_nghe_may', 'lam_cham', 'xin_tang_luong', 'ket_giao', 'lam_thue', 'song_bac'], months: 4, choice: 'random' },
+  ke_cuop: { name: 'Kẻ cướp', jobs: ['do_te', 'phu_khuan_vac'], activities: ['tron_hoc', 'an_bot', 'song_bac', 'luyen_quyen_som', 'ap_tieu'], months: 4, train: true, choice: 'evil' },
+  hiep_khach: { name: 'Hiệp khách', career: 'vo_lam', jobs: ['tieu_su', 'ho_vien'], activities: ['theo_vo_duong', 'hoc_nghe_ren', 'luyen_quyen_som', 'ap_tieu', 'ngao_du', 'ket_giao'], months: 4, train: true, choice: 'good' },
   ke_luoi: { name: 'Kẻ lười', activities: ['ngao_du', 'song_bac'], months: 2, choice: 'first' },
 };
 export const MORTAL_PROFILES = Object.keys(MORTAL_PERSONAS) as MortalPersona[];
@@ -274,6 +275,8 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     }
     if (persona && !s.seclusion && !s.events.pending && !s.combat) {
       if (persona.career && s.career.id !== persona.career) s = joinCareer(s, content, persona.career)?.state ?? s;
+      // 10.3: the first open job of the persona's list (a better one waits until the persona quits).
+      if (persona.jobs && !s.job?.id) for (const id of persona.jobs) { const r = takeJob(s, content, id); if (r) { s = r.state; break; } }
       if (persona.train) s = trainMartial(s, content)?.state ?? s;
       // Gambling only with silver to spare; escorting only while healthy.
       for (const id of persona.activities) {

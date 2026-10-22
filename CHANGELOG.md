@@ -8,6 +8,26 @@
 
 ## [Chưa phát hành]
 
+### 10.3 Nghề nghiệp (2026-10-22)
+- 26 nghề trong 8 nhóm (`content/jobs.json`, số trong `balance.jobs`):
+  - Nông: làm ruộng (tá điền → địa chủ), chăn nuôi, đánh cá.
+  - Công: thợ rèn, mộc, gốm, may, đầu bếp, thợ xây.
+  - Thương: bán rong, tiểu nhị.
+  - Văn: thầy đồ, thư lại.
+  - Võ: hộ viện, đi lính, bộ khoái, tiêu sư.
+  - Y: bốc thuốc, bà đỡ.
+  - Nghệ: kép hát, nhạc công, họa sĩ.
+  - Hạ cửu lưu: phu khuân vác, mõ làng, đồ tể, phu đò.
+- Mỗi nghề có điều kiện vào nghề (tuổi, cấp học nghề của 10.1, bậc khoa cử của 10.2, giới, võ nghệ). Mỗi nghề cũng có số tháng làm trong năm, lương theo bậc, và chỉ số bị hao vài năm một lần. Chủ và đồng liêu là người quen thật.
+- Hiệu suất 0–100: mỗi năm dần trôi về mức mà chỉ số chính cho phép, tụt khi ốm. Hiệu suất cao thì lên bậc. Thấp thì bị nhắc, rồi bị đuổi, và vài năm sau nghề đó mới nhận lại.
+- Bậc cao nhất của bán rong, tiểu nhị, tiêu sư, bốc thuốc mở đường đời Thương lộ, Võ lâm, Y lộ (bốn bậc thang của 2.11 thành đỉnh của nhóm nghề). Khi vừa có việc vừa có đường đời thì chỉ nhận khoản lương lớn hơn.
+- Hoạt động ở nơi làm (nhóm Nghề): làm chăm, xin tăng lương, nịnh chủ, kết thân đồng liêu, ăn bớt, nghỉ việc, nghỉ hưu (từ 55 tuổi). Làm thêm: làm vụ mùa, chèo đò thuê.
+- Mục Việc làm trong Bản thân: xem việc đang làm, tìm việc theo nhóm, có lý do khi chưa vào được. Hồ sơ có thêm dòng Việc làm.
+- 14 sự kiện nghề:
+  - Chuyện ở nơi làm: chủ khen, đồng liêu cướp công, bị nhắc, tiệc về hưu.
+  - Ngã rẽ lớn của từng nhóm: địa chủ năm đói, rèn binh khí cho phản quân, thương hội ép giá, huyện lệnh đòi lễ (NC P5), thư lại sửa sổ, bộ khoái truy cướp, ca bệnh khó, gánh hát vào phủ, tin đồn ở bến.
+- Điều kiện mới `job`, `gender`; hiệu ứng mới `takeJob`, `quitJob`, `perf`, `jobPromote`. Simulate: persona phàm nhân đi làm (nông dân làm ruộng, thương nhân bán rong, hiệp khách làm tiêu sư…).
+
 ### 10.2 Khoa cử (2026-10-22)
 - Năm bậc theo bảng tra 9.10: thi huyện (Đồng sinh) → thi viện (Tú tài) → thi Hương (Cử nhân) → thi Hội (Cống sĩ) → thi Đình (Tiến sĩ; ba người đầu là Trạng nguyên, Bảng nhãn, Thám hoa). Mỗi đời có lịch riêng: thi Hương ba năm một lần, thi Hội năm sau đó, đỗ thi Hội thì vào thi Đình ngay. Trung suy thì khó đỗ hơn, loạn thế chỉ mở thi huyện và thi viện, tân triều mở ân khoa mỗi năm. Mỗi bậc đòi tuổi, học lực và lộ phí.
 - Trường thi là mini-game 3 vòng: mỗi vòng có một đề, chọn Chính luận an toàn, Văn hoa hiểm hóc hoặc Đoán ý giám khảo. Tỉ lệ đạt hiện trên nút, tính theo học lực, trí tuệ, mị lực, khí vận và bậc thi. Một khoa có thể gặp một trong 6 sự cố: lều bên có tài liệu (làm thật, chép, tố cáo), bị vu oan, gặp đề lạ, lều dột, ốm giữa trường thi, giám khảo ra giá.

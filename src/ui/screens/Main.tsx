@@ -56,6 +56,7 @@ import { ActivityList } from '../components/ActivityPanel';
 import { daoHeartLabel, innerForce, karmaView, reputationViews } from '../../systems/statLabels';
 import { lifeStage, schoolLine, tradeLine } from '../../systems/schooling';
 import { examLine } from '../../systems/exams';
+import { jobLine } from '../../systems/jobs';
 
 
 const APTITUDE_LABELS = [
@@ -65,7 +66,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onActivity, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onExam, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onActivity, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onLearn, onTrain, onQuest, onExam, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -112,6 +113,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onPractice: (craftId: string) => string | null;
   /** Take up a mortal career from the "Tu luyện" sheet. */
   onJoinCareer: (careerId: string) => string | null;
+  /** 10.3: take a job from the Bản thân sheet. */
+  onTakeJob: (jobId: string) => string | null;
   /** A year of martial training (task 3.11). */
   onTrain: () => string | null;
   onBond: (target: BondTarget, action: BondAction, arg?: string) => { text: string; tone: Tone; changes: string };
@@ -325,8 +328,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       {sectOpen && <SectPanel state={state} content={content} onAction={onSectAction} onClose={() => setSectOpen(false)} />}
 
-      {selfOpen && <CultivatePanel view="self" extra={acts('ban_than')} state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onClose={() => setSelfOpen(false)} />}
-      {cultivateOpen && <CultivatePanel view="cultivate" extra={acts('tu_luyen')} state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onClose={() => setCultivateOpen(false)} />}
+      {selfOpen && <CultivatePanel view="self" extra={acts('ban_than')} state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onTakeJob={onTakeJob} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onClose={() => setSelfOpen(false)} />}
+      {cultivateOpen && <CultivatePanel view="cultivate" extra={acts('tu_luyen')} state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onTakeJob={onTakeJob} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onClose={() => setCultivateOpen(false)} />}
 
       {mapOpen && <MapPanel state={state} content={content} unlimited={!!dev} onTravel={onTravel} onClose={() => setMapOpen(false)} />}
 
@@ -367,6 +370,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             {schoolLine(state, content) && <p class="profile-note">Học hành: {schoolLine(state, content)}</p>}
             {tradeLine(state, content) && <p class="profile-note">Nghề: {tradeLine(state, content)}</p>}
             {examLine(state, content) && <p class="profile-note">Khoa cử: {examLine(state, content)}</p>}
+            {jobLine(state, content) && <p class="profile-note">Việc làm: {jobLine(state, content)}</p>}
             {sectLabel(state, content) && <p class="profile-note">Tông môn: {sectLabel(state, content)}</p>}
             {inventoryLabel(state, content) && <p class="profile-note">Mang theo: {inventoryLabel(state, content)}</p>}
             <p class="profile-note"><TermText text="Tư chất tiên thiên định từ lúc sinh, chỉ đổi được nhờ kỳ ngộ hay khí vận." /></p>

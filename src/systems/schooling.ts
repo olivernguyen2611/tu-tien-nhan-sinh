@@ -48,7 +48,7 @@ function pushLines(state: GameState, lines: LogLine[]): GameState['log'] {
 }
 
 /** Meet someone on a side stream: the life's own rng stays where it was. */
-function meetAside(state: GameState, content: Content, rng: Rng, spec: Parameters<typeof createNpc>[2]): { state: GameState; id: string } {
+export function meetAside(state: GameState, content: Content, rng: Rng, spec: Parameters<typeof createNpc>[2]): { state: GameState; id: string } {
   const met = createNpc({ ...state, rng: rng.getState() }, content, spec);
   return { state: { ...met.state, rng: state.rng }, id: met.id };
 }
