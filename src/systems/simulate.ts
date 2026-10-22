@@ -19,7 +19,7 @@ import { chooseFate } from './fate';
 import { placeStrand } from './goldenCore';
 import { meetIllusion } from './heartDemon';
 import { doActivity } from './activities';
-import { monthsUsed } from './timeBudget';
+import { monthsLeft, monthsUsed } from './timeBudget';
 import { caveView, rentCave } from './cave';
 import { runSeclusion } from './seclusion';
 import { doMission, joinSect, missionViews, requestMaster, masterBlocked, sectEligibility, sectTechniques } from './sect';
@@ -151,6 +151,8 @@ export interface LifeResult {
   activityKinds?: number;
   eventKinds?: number;
   eventfulShare?: number;
+  /** 13.6: share of lived years logged as "một năm bình lặng" (folded runs counted in full). */
+  quietShare?: number;
   tier?: string;
   /** 10.1: went to school at some point; highest trade level reached (-1 = none). */
   schooled?: boolean;
@@ -210,6 +212,10 @@ export interface SimOptions {
   goldenFinger?: string;
   /** 9.R4b: a seasoned player knows the whole Sổ tri thức (default, so every gate is open); 'none' plays a first life. */
   knowledge?: 'all' | 'none';
+  /** 13.6: pick this choice (index) at these events whenever it is open, e.g. giữ duyên at nhập đạo. */
+  choices?: Record<string, number>;
+  /** 13.6: a cultivator also tries these activities each year, in order, while months remain. */
+  daoActivities?: string[];
 }
 
 /** 9.R4c: the bot buys the first scroll it can afford and learn at a market it can enter, then learns it. */
@@ -276,7 +282,8 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
       const how = persona?.choice ?? (profile === 'random' ? 'random' : 'first');
       const ambition = (i: number) => choiceAmbition(event!, i, s);
       const bold = how === 'ambitious' && open.some((c) => ambition(c.index) !== 0) ? [...open].sort((a, b) => ambition(b.index) - ambition(a.index))[0].index : -1;
-      const pick = open.length === 0 ? 0 : bold >= 0 ? bold : how === 'random' || how === 'ambitious' ? botRng.pick(open).index : how === 'good' ? byKarma(1) : how === 'evil' ? byKarma(-1) : open[0].index;
+      const wanted = opts.choices?.[event?.id ?? ''];
+      const pick = open.length === 0 ? 0 : wanted !== undefined && open.some((c) => c.index === wanted) ? wanted : bold >= 0 ? bold : how === 'random' || how === 'ambitious' ? botRng.pick(open).index : how === 'good' ? byKarma(1) : how === 'evil' ? byKarma(-1) : open[0].index;
       eventful.add(s.character.age);
       s = checkDeath(resolveChoice(s, content, pick).state, content);
       s = runSeclusion(s, content);
@@ -321,6 +328,13 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
         if (monthsUsed(s) >= FULL_MONTHS || (id === 'ap_tieu' && s.stats.health < 60)) continue;
         s = doAct(s, id);
       }
+    }
+    if (opts.daoActivities && s.tier === 'tu_chan' && s.stats.health >= 50 && !s.seclusion && !s.events.pending && !s.combat) {
+      for (const id of opts.daoActivities) {
+        if (monthsLeft(s, content) <= 0 || s.events.pending || s.combat) break;
+        s = doAct(s, id);
+      }
+      if (s.events.pending || s.combat) continue;
     }
     if (persona && !s.seclusion && !s.events.pending && !s.combat) {
       if (persona.career && s.career.id !== persona.career) s = joinCareer(s, content, persona.career)?.state ?? s;
@@ -401,6 +415,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     activityKinds: Object.keys(s.activities?.last ?? {}).length,
     eventKinds: Object.keys(s.events.seen ?? {}).length,
     eventfulShare: topYears.lived ? Math.min(1, eventful.size / topYears.lived) : 0,
+    quietShare: topYears.lived ? s.log.reduce((n, y) => n + (y.lines.some((l) => l.quiet) ? (y.toAge ?? y.age) - y.age + 1 : 0), 0) / topYears.lived : 0,
     tier: s.tier,
     schooled: !!s.school?.ever,
     alias: !!s.jianghu?.alias,

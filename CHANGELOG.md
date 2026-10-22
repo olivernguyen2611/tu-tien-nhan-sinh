@@ -8,6 +8,31 @@
 
 ## [Chưa phát hành]
 
+### 13.6 Nội dung và cân bằng tầng 2 (2026-10-23)
+- **38 sự kiện song giới mới**, tổng cộng 61:
+  - về quê: đám cưới, giỗ tổ, lũ trẻ đòi xem phép, người xưa đã già, mộ tổ sạt lở, giếng làng cạn, hội làng;
+  - thiên quy: trừ yêu, cầu mưa, phát đan, tu sĩ ức hiếp phàm nhân, dạy võ cho thiếu niên không linh căn;
+  - triều đình: Khâm Thiên Giám mời làm Thiếu giám, hoàng tử cầu đạo, vua đòi tiên dược, lăng đế vương;
+  - gia tộc: cháu có linh căn, họ hàng cậy thế, gia tộc lụn bại, thờ người còn sống;
+  - đạo lữ phàm: bệnh nặng, đứa con hỏi vì sao cha mẹ không cùng già;
+  - bạn cũ: làm quan, ăn mày, kẻ thù cũ xin lỗi, thầy đồ cũ;
+  - phàm gian biến động nhìn từ trên núi: tân đế cầu quốc sư, ôn dịch, đại hạn, lũ sông Lạc, chiến loạn, sao chổi, nhật thực, đại khoa.
+- **16 sự kiện tu chân giới mới** gắn với sự kiện thiên hạ, tổng cộng 41:
+  - thú triều và thú vương;
+  - ngọc bài và hài cốt đại năng ở bí cảnh Thái Cổ;
+  - giao nhân ở Long cung, băng cung Bắc Minh;
+  - sứ giả yêu tộc, truy nã ma đầu, tán tu nổi loạn, hải tặc tu sĩ;
+  - thiên tài mới nổi, tranh chỗ ngồi linh mạch;
+  - có người phi thăng, di ngôn đại năng;
+  - tiền tuyến Tiên Ma, ma tu xin tha.
+- Văn bản cho hoạt động tu sĩ: mỗi kết quả có thêm một đến hai câu, có địa danh Thương Lan.
+- Săn yêu thú và khám phá di tích cần từ 14 tuổi và Sức khỏe từ 30. Yêu thú chặn đường đánh cho trọng thương thay vì giết.
+- Giả lập: thêm tùy chọn chọn sẵn lựa chọn ở một sự kiện, hoạt động tu sĩ mỗi năm, và số đo tỉ lệ năm bình lặng.
+- Số đo trên đời tu sĩ giữ duyên:
+  - năm bình lặng khoảng 4%, chỉ tiêu dưới 10%;
+  - đời nào cũng về quê và gặp hậu quả;
+  - đời 376 năm đi hết chuỗi kình địch.
+
 ### 13.5 Hoạt động tu sĩ (2026-10-23)
 - **Nhóm Tu hành** mới trong Hoạt động, 6 việc, mỗi việc tốn tháng:
   - săn yêu thú (yêu đan theo cảnh giới);

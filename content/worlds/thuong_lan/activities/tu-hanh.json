@@ -8,6 +8,15 @@
   "conditions": {
    "tier": [
     "tu_chan"
+   ],
+   "age": {
+    "min": 14
+   },
+   "stats": [
+    {
+     "stat": "stat.health",
+     "gte": 30
+    }
    ]
   },
   "months": 2,
@@ -26,7 +35,8 @@
     },
     "text": [
      "Ngươi phục ba ngày bên vũng nước, hạ được một con yêu lang. Nội đan còn ấm.",
-     "Một con lợn rừng một sừng lao ra, bị ngươi chém ngã. Thịt nướng được, nội đan bán được."
+     "Một con lợn rừng một sừng lao ra, bị ngươi chém ngã. Thịt nướng được, nội đan bán được.",
+     "Ở bìa Vạn Thú Sơn Mạch, một con báo đốm mắt đỏ rình ngươi cả buổi. Rốt cuộc kẻ đi săn là ngươi."
     ],
     "effects": {
      "addItems": [
@@ -45,7 +55,8 @@
     },
     "text": [
      "Ngươi hạ một con mãng xà hai đầu trong đầm lầy, lấy được nội đan cấp hai.",
-     "Đàn hỏa hồ vây ngươi một đêm, sáng ra ngươi xách về hai bộ da và một viên nội đan."
+     "Đàn hỏa hồ vây ngươi một đêm, sáng ra ngươi xách về hai bộ da và một viên nội đan.",
+     "Ở vùng giữa Vạn Thú Sơn Mạch, ngươi đánh lui một bầy thiết bối lang, đổi lấy nội đan con đầu đàn."
     ],
     "effects": {
      "addItems": [
@@ -63,7 +74,9 @@
      }
     },
     "text": [
-     "Yêu thú cấp ba ở Hắc Phong Lĩnh không dễ chết. Ngươi mất nửa tháng mới hạ được, nội đan sáng như than hồng."
+     "Yêu thú cấp ba ở Hắc Phong Lĩnh không dễ chết. Ngươi mất nửa tháng mới hạ được, nội đan sáng như than hồng.",
+     "Con ưng cánh sắt cấp ba lao xuống như mũi tên. Ngươi gãy hai xương sườn, nó gãy cổ.",
+     "Ngươi đuổi một con tê giác lửa từ Hắc Phong Lĩnh tới tận bờ sông, rồi kết liễu nó giữa dòng nước sôi sùng sục."
     ],
     "effects": {
      "addItems": [
@@ -81,7 +94,9 @@
      }
     },
     "text": [
-     "Ngươi xuống tận đáy vực, đánh nhau với một con giao long già ba ngày ba đêm."
+     "Ngươi xuống tận đáy vực, đánh nhau với một con giao long già ba ngày ba đêm.",
+     "Ở rìa Bắc Minh Tuyết Vực, ngươi hạ một con băng giao ngủ dưới lớp băng vạn năm.",
+     "Ngoài khơi Đông Hải, một con cự kình yêu hóa nổi lên. Mặt biển đỏ ba ngày."
     ],
     "effects": {
      "addItems": [
@@ -94,7 +109,9 @@
    {
     "weight": 2,
     "text": [
-     "Rừng sâu không thấy bóng thú, chỉ thấy dấu chân rất lớn. Ngươi về tay không, đôi giày rách."
+     "Rừng sâu không thấy bóng thú, chỉ thấy dấu chân rất lớn. Ngươi về tay không, đôi giày rách.",
+     "Yêu thú đánh hơi được sát khí của ngươi từ xa, trốn sạch. Đi một tháng, hái được mấy cây nấm.",
+     "Ngươi rình nhầm hang một con gấu già đang ngủ đông. Nó không phải yêu thú, nhưng vẫn đuổi ngươi chạy ba dặm."
     ],
     "effects": {
      "stat.happiness": -2,
@@ -122,6 +139,15 @@
   "conditions": {
    "tier": [
     "tu_chan"
+   ],
+   "age": {
+    "min": 14
+   },
+   "stats": [
+    {
+     "stat": "stat.health",
+     "gte": 30
+    }
    ]
   },
   "months": 3,
@@ -134,7 +160,8 @@
     "weight": 3,
     "text": [
      "Trong hang đá có một bộ hài cốt ngồi xếp bằng, bên cạnh là túi trữ vật đã mục. Bên trong còn mấy viên linh thạch.",
-     "Di tích chỉ còn mấy bức tường đổ, nhưng dưới nền gạch có một hộp ngọc."
+     "Di tích chỉ còn mấy bức tường đổ, nhưng dưới nền gạch có một hộp ngọc.",
+     "Bia mộ khắc niên hiệu một vương triều đã mất từ thời Thái Cổ. Bên dưới là mấy viên linh thạch đã mờ màu."
     ],
     "effects": {
      "spiritStones": 30,
@@ -144,7 +171,9 @@
    {
     "weight": 1,
     "text": [
-     "Trên vách đá khắc một bộ công pháp, chữ đã mờ. Ngươi ngồi chép suốt bảy ngày."
+     "Trên vách đá khắc một bộ công pháp, chữ đã mờ. Ngươi ngồi chép suốt bảy ngày.",
+     "Trên nóc một gian thạch thất có những nét kiếm khắc vội, như người viết biết mình sắp chết. Ngươi đọc ra một bộ công pháp.",
+     "Một ngọc giản nứt vỡ chỉ còn đọc được nửa đầu. Nửa đầu cũng đủ để ngươi tu."
     ],
     "effects": {
      "gainFittingTechnique": true,
@@ -154,7 +183,9 @@
    {
     "weight": 2,
     "text": [
-     "Một trận pháp cổ vẫn còn chạy. Ngươi lùi lại kịp, nhưng tóc mai đã cháy."
+     "Một trận pháp cổ vẫn còn chạy. Ngươi lùi lại kịp, nhưng tóc mai đã cháy.",
+     "Một con rối đá đứng dậy khi ngươi bước qua ngưỡng cửa, đấm ngươi văng ra ngoài.",
+     "Cấm chế bùng lên đúng lúc ngươi chạm tay vào hộp ngọc. Hộp vỡ, tay ngươi bỏng."
     ],
     "effects": {
      "stat.health": -8,
@@ -174,7 +205,9 @@
    {
     "weight": 2,
     "text": [
-     "Ngươi tìm thấy một gốc linh chi mọc trên mộ cổ."
+     "Ngươi tìm thấy một gốc linh chi mọc trên mộ cổ.",
+     "Trên nấm mồ không tên ở Thái Cổ Chiến Trường mọc một gốc linh thảo. Đất ở đó nuôi bằng máu của cả một đạo quân.",
+     "Linh thảo mọc kín sân một đạo quán bỏ hoang. Không ai hái, vì không ai còn nhớ đường lên."
     ],
     "effects": {
      "addItems": [
@@ -197,7 +230,16 @@
    ],
    "sect": {
     "member": false
-   }
+   },
+   "age": {
+    "min": 14
+   },
+   "stats": [
+    {
+     "stat": "stat.health",
+     "gte": 30
+    }
+   ]
   },
   "months": 2,
   "limit": {
@@ -209,7 +251,9 @@
     "weight": 4,
     "text": [
      "Hộ tống một thương đội qua núi. Đi về bình an, nhận đủ thù lao.",
-     "Tìm hộ một lão đan sư ba gốc Huyết Sâm. Lão trả công sòng phẳng."
+     "Tìm hộ một lão đan sư ba gốc Huyết Sâm. Lão trả công sòng phẳng.",
+     "Truy một tên trộm linh thạch tới tận chợ đen Lạc Hà, bắt sống được hắn.",
+     "Hộ tống một tiểu thư thế gia về nhà chồng. Dọc đường nàng khóc, tới nơi thì cười. Tiền công đủ."
     ],
     "effects": {
      "spiritStones": 25,
@@ -232,7 +276,9 @@
    {
     "weight": 1,
     "text": [
-     "Đòi nợ cho người ta, con nợ là một bà lão nghèo. Ngươi bỏ việc, trả lại tiền cọc."
+     "Đòi nợ cho người ta, con nợ là một bà lão nghèo. Ngươi bỏ việc, trả lại tiền cọc.",
+     "Việc là giết một tán tu \"phản bội\". Gặp rồi mới biết hắn chỉ lỡ thấy chủ thuê làm điều xấu. Ngươi thả hắn đi.",
+     "Người thuê muốn ngươi phá đập nước của một làng phàm để lấy mạch linh khí bên dưới. Ngươi trả tiền cọc."
     ],
     "effects": {
      "karma": 2,
@@ -263,7 +309,9 @@
     "weight": 4,
     "text": [
      "Một lão tu kể chuyện \"đạo khả đạo phi thường đạo\" ba canh giờ. Ngươi ngộ được một chữ.",
-     "Hai kiếm tu cãi nhau về kiếm ý, suýt đánh nhau. Ngươi nghe mà sáng ra một chiêu."
+     "Hai kiếm tu cãi nhau về kiếm ý, suýt đánh nhau. Ngươi nghe mà sáng ra một chiêu.",
+     "Một ni cô từ Vô Ưu Tự giảng chữ \"không\". Ngươi nghe không hiểu, nhưng đêm ấy ngủ rất ngon, sáng dậy thấy tu vi nhích lên.",
+     "Một lão tán tu kể chuyện Đạo Tổ ngồi dưới gốc cây cổ thụ suốt nghìn năm. Chuyện có thật hay không không biết, nhưng đạo lý thì thật."
     ],
     "effects": {
      "stat.comprehension": 1,
@@ -273,7 +321,9 @@
    {
     "weight": 1,
     "text": [
-     "Ngươi đứng lên nói một câu, cả hội lặng đi rồi vỗ tay. Có người tới hỏi tên."
+     "Ngươi đứng lên nói một câu, cả hội lặng đi rồi vỗ tay. Có người tới hỏi tên.",
+     "Ngươi hỏi vặn một vị chân nhân trước mặt mọi người, ông ta không đáp được. Hôm sau tên ngươi được truyền khắp phường thị.",
+     "Ngươi kể chuyện mình vượt kiếp, cả hội lặng đi. Một thiếu nữ tán tu lén ghi lại từng câu."
     ],
     "effects": {
      "stat.charm": 2,
@@ -285,7 +335,9 @@
    {
     "weight": 1,
     "text": [
-     "Ngươi nói hớ một câu, bị cả hội cười. Đỏ mặt về phòng."
+     "Ngươi nói hớ một câu, bị cả hội cười. Đỏ mặt về phòng.",
+     "Ngươi nói về ngũ hành mà nhầm thủy sinh mộc thành thủy khắc mộc. Lũ trẻ ngồi hàng đầu cười tới chảy nước mắt.",
+     "Ngươi luận hăng quá, ngủ gật lúc người khác nói. Tỉnh dậy thì hội đã tan, áo bị ai vẽ một con rùa."
     ],
     "effects": {
      "stat.happiness": -2,
@@ -315,7 +367,8 @@
     "weight": 4,
     "text": [
      "Ngươi hái được một gốc linh thảo trăm năm, rễ còn dính đất.",
-     "Mất ba ngày leo vách đá, được một nắm linh thảo."
+     "Mất ba ngày leo vách đá, được một nắm linh thảo.",
+     "Ngươi theo một con sóc trắng tìm tới một hốc đá đầy linh thảo. Ngươi chừa lại cho con sóc một nửa."
     ],
     "effects": {
      "addItems": [
@@ -327,7 +380,9 @@
    {
     "weight": 0.3,
     "text": [
-     "Hiếm hoi lắm mới gặp: một gốc linh chi nghìn năm giữa khe đá."
+     "Hiếm hoi lắm mới gặp: một gốc linh chi nghìn năm giữa khe đá.",
+     "Khe đá có một con rắn canh. Con rắn già tới mức chẳng buồn cắn, chỉ nhìn ngươi đào linh chi đi.",
+     "Linh chi nghìn năm mọc ngay trên đầu một pho tượng đá. Không biết ai đã đặt nó ở đó."
     ],
     "effects": {
      "addItems": [
@@ -339,7 +394,9 @@
    {
     "weight": 1,
     "text": [
-     "Hái nhầm độc thảo, ngươi nôn mửa cả đêm."
+     "Hái nhầm độc thảo, ngươi nôn mửa cả đêm.",
+     "Ngươi bị một bầy ong độc đốt sưng mặt, trông như vừa luyện thành Kim Thân.",
+     "Nấm hái về ăn thử, ngươi thấy cả rừng nhảy múa suốt ba ngày."
     ],
     "effects": {
      "stat.health": -6,
@@ -360,7 +417,16 @@
    ],
    "realm": {
     "min": "luyen_khi"
-   }
+   },
+   "age": {
+    "min": 14
+   },
+   "stats": [
+    {
+     "stat": "stat.health",
+     "gte": 30
+    }
+   ]
   },
   "months": 1,
   "limit": {

@@ -105,7 +105,8 @@
     "weight": 4,
     "text": [
      "Gã chủ sạp đếm bạc ba lần mới đưa ra mười viên linh thạch, viên nào cũng sứt mẻ.",
-     "Mười viên linh thạch đổi một túi bạc. Gã buôn cười tươi như bắt được vàng."
+     "Mười viên linh thạch đổi một túi bạc. Gã buôn cười tươi như bắt được vàng.",
+     "Chợ đen dưới chân cầu Lạc Hà mở lúc nửa đêm. Lão chủ đếm bạc chậm như rùa, đếm linh thạch nhanh như chớp."
     ],
     "effects": {
      "spiritStones": 10,
@@ -115,7 +116,9 @@
    {
     "weight": 1,
     "text": [
-     "Gã buôn tráo một nửa thành đá thường sơn màu. Lúc ngươi quay lại, sạp đã dẹp."
+     "Gã buôn tráo một nửa thành đá thường sơn màu. Lúc ngươi quay lại, sạp đã dẹp.",
+     "Ngươi đổi xong thì phát hiện ba viên linh thạch là đá sơn màu. Lão chủ đã biến mất cùng cái sạp.",
+     "Quan binh ập vào khám chợ, ngươi phải bỏ chạy, bỏ lại nửa túi bạc."
     ],
     "effects": {
      "spiritStones": 5,
@@ -154,7 +157,8 @@
     "weight": 1,
     "text": [
      "Thư hồi âm tới sau nửa năm: cả nhà khỏe, đã sửa lại mái nhà, có để phần ngươi một vò rượu.",
-     "Người nhà nhận bạc, nhờ người viết thư hỏi bao giờ ngươi về."
+     "Người nhà nhận bạc, nhờ người viết thư hỏi bao giờ ngươi về.",
+     "Người đưa thư quen đường, cầm bạc đi không nói một lời. Ba tháng sau thư nhà về, nét chữ run run."
     ],
     "effects": {
      "familyAffinity": 4,

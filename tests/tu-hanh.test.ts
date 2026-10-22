@@ -42,7 +42,7 @@ describe('13.5 Hoạt động tu sĩ', () => {
   });
 
   it('the Hành sự button lists Tu hành first in Tu chân giới', () => {
-    const dock = content.dock.find((d) => d.id === 'hoat_dong')!;
+    const dock = content.dock!.find((d) => d.id === 'hoat_dong')!;
     expect(dock.groups[0]).toBe('tu_hanh');
     expect(typeof dockGroups).toBe('function');
   });

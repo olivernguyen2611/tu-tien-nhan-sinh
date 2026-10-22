@@ -26,8 +26,7 @@
       "foe": {
        "name": "Yêu thú rừng sâu",
        "realm": "same",
-       "intent": "kill",
-       "powerMul": 1.15
+       "intent": "teach"
       },
       "win": {
        "text": "Con thú ngã xuống. Ngươi mổ được một viên nội đan to bằng quả trứng gà.",

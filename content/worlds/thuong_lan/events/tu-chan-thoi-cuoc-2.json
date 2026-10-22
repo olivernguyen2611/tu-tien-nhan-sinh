@@ -1,0 +1,1098 @@
+[
+ {
+  "id": "tcg2_thu_trieu_giu_lang",
+  "category": "cultivation",
+  "title": "Giữ làng trước thú triều",
+  "text": "Thú triều tràn qua bìa Vạn Thú sơn mạch. Một làng phàm nhân nằm ngay đường thú chạy, tông môn chỉ lo giữ sơn môn.",
+  "themes": [
+   "beast"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "thu_trieu_van_thu"
+    ],
+    "phase": 1
+   }
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Ở lại giữ làng",
+    "result": {
+     "text": "Ngươi đứng ở đầu làng ba ngày ba đêm.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Bầy yêu thú",
+       "realm": "same",
+       "intent": "kill",
+       "powerMul": 1.1
+      },
+      "win": {
+       "text": "Đàn thú rẽ sang hướng khác. Dân làng gọi ngươi là thần giữ cửa, còn ngươi thì ngủ một mạch ba ngày.",
+       "effects": {
+        "karma": 5,
+        "addItems": [
+         "noi_dan_2"
+        ],
+        "stat.physique": 1,
+        "stat.health": -5
+       }
+      },
+      "lose": {
+       "text": "Ngươi bị hất văng, phải dắt dân làng chạy vào núi. Làng mất, người còn.",
+       "effects": {
+        "karma": 3,
+        "stat.health": -14
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Dắt dân làng chạy trước",
+    "result": {
+     "text": "Mất làng, nhưng không mất người. Ngươi đi cuối đoàn, chặn mấy con thú lạc.",
+     "effects": {
+      "karma": 3,
+      "stat.health": -3,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Theo tông môn giữ sơn môn",
+    "requires": {
+     "sect": {
+      "member": true
+     }
+    },
+    "result": {
+     "text": "Sơn môn vững như bàn thạch. Làng dưới chân núi chỉ còn lại nền đất.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.happiness": -3,
+      "sectContribution": 20
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg2_thu_trieu_vuong",
+  "category": "cultivation",
+  "title": "Thú vương lộ diện",
+  "text": "Ở cuối thú triều, một bóng đen như núi bước ra khỏi sơn mạch. Thú vương. Ai lấy được nội đan của nó, có thể đổi cả một đời tu.",
+  "themes": [
+   "beast"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "kim_dan"
+   },
+   "worldEvent": {
+    "id": [
+     "thu_trieu_van_thu"
+    ],
+    "phase": 1
+   }
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Liên thủ với các tu sĩ khác vây giết",
+    "result": {
+     "text": "Mười tám tu sĩ Kim Đan vây một con thú.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Thú vương Vạn Thú",
+       "realm": "same",
+       "intent": "kill",
+       "powerMul": 1.3
+      },
+      "win": {
+       "text": "Thú vương ngã. Ngươi cướp được phần nội đan trước khi cả bọn trở mặt tranh nhau.",
+       "effects": {
+        "addItems": [
+         "noi_dan_4"
+        ],
+        "reputation": {
+         "chinh": 6
+        },
+        "stat.physique": 2,
+        "stat.health": -10
+       }
+      },
+      "lose": {
+       "text": "Thú vương quất đuôi một cái, sáu người chết. Ngươi may mắn là người thứ bảy còn sống.",
+       "effects": {
+        "stat.health": -25,
+        "stat.daoHeart": -2
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Đứng xa quan sát",
+    "result": {
+     "text": "Ngươi nhìn trận ấy từ đầu đến cuối, thấy rõ thú vương ra đòn thế nào, lúc nào nó sơ hở.",
+     "effects": {
+      "stat.comprehension": 2,
+      "cultProgress": 5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg2_thai_co_tranh_ngoc_bai",
+  "category": "cultivation",
+  "title": "Tranh ngọc bài Thái Cổ",
+  "text": "Bí cảnh Thái Cổ chỉ mở cho người cầm ngọc bài. Tông môn phát mười tấm cho một nghìn đệ tử. Ngoài phường thị, một tấm bị hét giá tới năm trăm linh thạch.",
+  "themes": [
+   "secret_realm"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "bi_canh_thai_co_mo"
+    ],
+    "phase": 0
+   }
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Mua một tấm",
+    "requires": {
+     "stats": [
+      {
+       "stat": "spiritStones",
+       "gte": 500
+      }
+     ]
+    },
+    "result": {
+     "text": "Năm trăm linh thạch, đổi một lần bước vào nơi đại năng thời Thái Cổ đã chết.",
+     "effects": {
+      "spiritStones": -500,
+      "setFlags": [
+       "ngoc_bai_thai_co"
+      ],
+      "stat.luck": 1
+     }
+    }
+   },
+   {
+    "text": "Thi đấu giành ngọc bài trong tông",
+    "requires": {
+     "sect": {
+      "member": true
+     }
+    },
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Ngươi thắng ba trận liền, cầm ngọc bài trong tay.",
+     "effects": {
+      "setFlags": [
+       "ngoc_bai_thai_co"
+      ],
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Thua ở trận thứ hai, ngươi chỉ được đứng nhìn người khác lên đường.",
+     "effects": {
+      "stat.happiness": -3,
+      "stat.physique": 1
+     }
+    }
+   },
+   {
+    "text": "Không đi",
+    "result": {
+     "text": "Đi mười người về ba. Ngươi giữ lại cái mạng, và chút tiếc nuối.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg2_thai_co_xuong_than",
+  "category": "cultivation",
+  "title": "Hài cốt đại năng",
+  "text": "Sâu trong bí cảnh Thái Cổ có một bộ xương cao ba trượng, tay còn nắm nửa thanh chiến kích. Trên trán khắc một chữ cổ không ai đọc được.",
+  "themes": [
+   "secret_realm",
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "bi_canh_thai_co_mo"
+    ],
+    "phase": 1
+   },
+   "flagsAll": [
+    "ngoc_bai_thai_co"
+   ]
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Đọc chữ cổ",
+    "check": {
+     "stat": "stat.comprehension",
+     "difficulty": 65
+    },
+    "success": {
+     "text": "Chữ ấy là \"Thủ\". Người này chết để giữ một cánh cửa. Phía sau cánh cửa là gì, ngươi không dám nghĩ. Ngươi ngộ ra một đạo phòng thủ.",
+     "effects": {
+      "gainFittingTechnique": true,
+      "stat.comprehension": 2,
+      "setFlags": [
+       "biet_thai_co_thu_mon"
+      ]
+     }
+    },
+    "fail": {
+     "text": "Nhìn chữ ấy lâu quá, thần thức ngươi như bị kim châm.",
+     "effects": {
+      "stat.health": -8,
+      "stat.comprehension": 1
+     }
+    }
+   },
+   {
+    "text": "Lấy nửa thanh chiến kích",
+    "result": {
+     "text": "Kích nặng như núi, ngươi phải dùng hết sức mới lôi ra. Bán đi đủ sống ba mươi năm.",
+     "effects": {
+      "spiritStones": 200,
+      "stat.physique": 1,
+      "karma": -1
+     }
+    }
+   },
+   {
+    "text": "Cúi đầu ba lạy rồi đi",
+    "result": {
+     "text": "Bộ xương rung lên rất khẽ, như gật đầu đáp lễ.",
+     "effects": {
+      "karma": 2,
+      "stat.daoHeart": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg2_long_cung_giao_nhan",
+  "category": "cultivation",
+  "title": "Giao nhân dưới Long cung",
+  "text": "Long cung Đông Hải hiện ra. Trong cung có một tộc giao nhân bị nhốt từ khi Long tộc rút khỏi hạ giới, đã quên mất ánh mặt trời.",
+  "themes": [
+   "secret_realm",
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "bi_canh_dong_hai_mo"
+    ],
+    "phase": 1
+   }
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Phá cấm chế thả họ ra",
+    "result": {
+     "text": "Giao nhân bơi lên mặt nước, khóc ra trân châu. Họ để lại một chuỗi cho ngươi.",
+     "effects": {
+      "addItems": [
+       "tran_chau_giao_nhan"
+      ],
+      "karma": 5,
+      "stat.health": -6
+     }
+    }
+   },
+   {
+    "text": "Đổi đồ với họ",
+    "result": {
+     "text": "Họ không biết linh thạch là gì, đổi một nắm trân châu lấy vài cái bánh khô.",
+     "effects": {
+      "addItems": [
+       "tran_chau_giao_nhan"
+      ],
+      "karma": -2,
+      "stat.happiness": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg2_bang_cung_bac_minh",
+  "category": "cultivation",
+  "title": "Băng cung Bắc Minh",
+  "text": "Giữa Bắc Minh tuyết vực, một tòa băng cung trồi lên khỏi lớp tuyết. Băng Tâm Cung bảo đó là cố cung của tổ sư họ, cấm người ngoài vào.",
+  "themes": [
+   "secret_realm"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "bi_canh_bac_minh"
+    ]
+   }
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Lẻn vào",
+    "result": {
+     "text": "Gió tuyết che dấu chân ngươi.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Đệ tử Băng Tâm Cung",
+       "realm": "same",
+       "intent": "teach"
+      },
+      "win": {
+       "text": "Ngươi đánh ngất hai người gác, lấy được một đóa băng tâm liên trong sân sau.",
+       "effects": {
+        "addItems": [
+         "bang_tam_lien"
+        ],
+        "reputation": {
+         "chinh": -3
+        },
+        "stat.luck": 1
+       }
+      },
+      "lose": {
+       "text": "Ngươi bị phát hiện, bị đuổi chạy ba trăm dặm trong tuyết.",
+       "effects": {
+        "stat.health": -12,
+        "stat.physique": 1
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Xin phép vào bái tổ",
+    "result": {
+     "text": "Băng Tâm Cung ngạc nhiên vì có người lễ phép. Họ cho ngươi vào sân ngoài, ngồi thiền một đêm dưới băng trụ.",
+     "effects": {
+      "cultProgress": 6,
+      "stat.daoHeart": 1,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Không dây vào",
+    "result": {
+     "text": "Một tháng sau nghe tin mười hai tu sĩ chết cóng trong băng cung.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.happiness": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg2_yeu_vuong_moi_lien_minh",
+  "category": "cultivation",
+  "title": "Sứ giả yêu tộc",
+  "text": "Yêu tộc tranh vương. Một sứ giả hồ tộc tìm tới, mời ngươi đứng về phía hoàng tử hồ tộc: \"Ngày hắn lên ngôi, Vạn Yêu Điện sẽ mở cửa cho ngươi.\"",
+  "themes": [
+   "beast",
+   "politics"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "yeu_toc_tranh_vuong"
+    ]
+   }
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Nhận lời",
+    "result": {
+     "text": "Một năm làm khách khanh cho yêu tộc. Ngươi học được nhiều thứ mà nhân tộc không dạy.",
+     "effects": {
+      "reputation": {
+       "yeu": 10,
+       "chinh": -5
+      },
+      "stat.comprehension": 1,
+      "cultProgress": -3,
+      "setFlags": [
+       "khach_khanh_yeu_toc"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Từ chối",
+    "result": {
+     "text": "\"Chuyện nhà ngươi, ta không nhúng tay.\" Sứ giả cười, để lại một chiếc lông hồ ly: \"Khi nào đổi ý thì đốt nó.\"",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Bắt sứ giả nộp tông môn",
+    "requires": {
+     "sect": {
+      "member": true
+     }
+    },
+    "result": {
+     "text": "Tông môn khen ngươi, yêu tộc ghi thù ngươi.",
+     "effects": {
+      "sectContribution": 30,
+      "reputation": {
+       "yeu": -15
+      },
+      "karma": -2,
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg2_ma_dau_truy_na",
+  "category": "cultivation",
+  "title": "Lệnh truy nã ma đầu",
+  "text": "Ma đầu xuất thế, một đêm luyện hết máu thịt một thành. Các tông phát lệnh truy nã: ai lấy được đầu hắn được thưởng một bộ công pháp Nguyên Anh.",
+  "themes": [
+   "demonic",
+   "justice"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co"
+   },
+   "worldEvent": {
+    "id": [
+     "ma_dau_xuat_the"
+    ]
+   }
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Gia nhập đội truy sát",
+    "result": {
+     "text": "Ba mươi tu sĩ lên đường, truy hắn qua bảy châu.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Ma đầu",
+       "realm": "above",
+       "intent": "kill"
+      },
+      "win": {
+       "text": "Ma đầu bị vây chết ở Huyết Uyên. Ngươi là kẻ ra đòn cuối.",
+       "effects": {
+        "gainFittingTechnique": true,
+        "reputation": {
+         "chinh": 12
+        },
+        "karma": 4,
+        "stat.health": -12
+       }
+      },
+      "lose": {
+       "text": "Đội truy sát chết quá nửa. Ngươi mang về một vết thương còn hơi ma khí.",
+       "effects": {
+        "stat.health": -20,
+        "stat.daoHeart": -2
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Lo phòng thủ quê mình",
+    "result": {
+     "text": "Ngươi bày trận bảo vệ một thành nhỏ. Ma đầu không tới, nhưng dân thành ngủ được.",
+     "effects": {
+      "karma": 2,
+      "spiritStones": -15,
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg2_tan_tu_noi_loan",
+  "category": "cultivation",
+  "title": "Tán tu nổi loạn",
+  "text": "Tán Tu Liên Minh nổi dậy chống thuế linh mạch của các đại tông. Họ chiếm một phường thị, treo đầu một trưởng lão thu thuế trước cổng.",
+  "themes": [
+   "politics"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "tan_tu_noi_loan"
+    ]
+   }
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Đứng về phía tán tu",
+    "result": {
+     "text": "\"Linh khí trời đất, sao lại là của riêng tông nào?\" Ngươi đứng trên tường phường thị cùng họ.",
+     "effects": {
+      "reputation": {
+       "tan_tu": 15,
+       "chinh": -8
+      },
+      "stat.charm": 1,
+      "karma": 1
+     }
+    }
+   },
+   {
+    "text": "Đứng về phía tông môn",
+    "result": {
+     "text": "Ngươi theo đội trấn áp. Máu tán tu loang khắp con đường lát đá.",
+     "effects": {
+      "reputation": {
+       "chinh": 8,
+       "tan_tu": -15
+      },
+      "sectContribution": 25,
+      "karma": -2,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Đứng giữa hòa giải",
+    "result": {
+     "text": "Hai bên không nghe ngươi, nhưng ít nhất một bên bớt giết người vì ngươi đứng ở đó.",
+     "effects": {
+      "karma": 3,
+      "stat.charm": 2,
+      "stat.health": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg2_hai_tac_tu_si",
+  "category": "cultivation",
+  "title": "Hải tặc tu sĩ",
+  "text": "Một bọn hải tặc có tu sĩ cầm đầu chặn hết đường biển Đông Hải, cướp cả thuyền chở linh thạch của tông môn.",
+  "themes": [
+   "justice"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "hai_tac_hoanh_hanh"
+    ]
+   }
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Đi diệt hải tặc",
+    "result": {
+     "text": "Thuyền ngươi rẽ sóng tìm sào huyệt chúng.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Hải tặc tu sĩ",
+       "realm": "same",
+       "intent": "kill"
+      },
+      "win": {
+       "text": "Sào huyệt hải tặc có cả núi của cải. Ngươi chia một phần cho dân chài bị cướp.",
+       "effects": {
+        "spiritStones": 80,
+        "karma": 3,
+        "stat.physique": 1
+       }
+      },
+      "lose": {
+       "text": "Thuyền ngươi bị đánh chìm. Ngươi bơi ba ngày mới vào được bờ.",
+       "effects": {
+        "stat.health": -12,
+        "stat.physique": 1
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Gia nhập hải tặc",
+    "result": {
+     "text": "Biển rộng, không ai hỏi tên tuổi. Ba năm làm hải tặc, ngươi giàu lên mà tâm thì đen đi.",
+     "effects": {
+      "spiritStones": 150,
+      "karma": -8,
+      "reputation": {
+       "ma": 5
+      },
+      "stat.happiness": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg2_thien_tai_moi",
+  "category": "cultivation",
+  "title": "Thiên tài mới nổi",
+  "text": "Thiên tài xuất thế: một đứa trẻ mười hai tuổi đã Trúc Cơ. Các tông giành nhau nó như giành báu vật. Nhìn nó, ngươi nhớ năm mình mười hai tuổi đang làm gì.",
+  "themes": [
+   "cultivation"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "thien_tai_xuat_the"
+    ]
+   }
+  },
+  "weight": 2,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Tới xem tận mắt",
+    "result": {
+     "text": "Đứa trẻ nhìn ngươi, nói một câu: \"Ngươi tu chậm quá.\" Ngươi về bế quan một năm.",
+     "effects": {
+      "cultProgress": 6,
+      "stat.daoHeart": -1,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Mặc kệ",
+    "result": {
+     "text": "Thiên tài nào chẳng có ngày ngã. Tu đạo là con đường dài.",
+     "effects": {
+      "stat.daoHeart": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg2_linh_mach_tranh_cho",
+  "category": "cultivation",
+  "title": "Tranh chỗ ngồi linh mạch",
+  "text": "Linh mạch phun trào ở một thung lũng hoang. Ai ngồi được gần mắt mạch nhất, tu một năm bằng mười năm. Đã có ba trăm tu sĩ ngồi kín sườn núi.",
+  "themes": [
+   "cultivation"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "linh_mach_phun"
+    ]
+   }
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Chen vào gần mắt mạch",
+    "result": {
+     "text": "Phải đánh mới có chỗ.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Tu sĩ giữ chỗ",
+       "realm": "same",
+       "intent": "teach"
+      },
+      "win": {
+       "text": "Ngươi ngồi được ở vòng trong. Linh khí như thác đổ vào kinh mạch.",
+       "effects": {
+        "cultProgress": 15,
+        "stat.health": -3
+       }
+      },
+      "lose": {
+       "text": "Bị đánh văng ra vòng ngoài, ngươi đành ngồi hít chút khí thừa.",
+       "effects": {
+        "cultProgress": 4,
+        "stat.health": -6
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Ngồi vòng ngoài",
+    "result": {
+     "text": "Vòng ngoài linh khí loãng, nhưng yên ổn. Ngươi nhìn vòng trong đánh nhau cả tháng.",
+     "effects": {
+      "cultProgress": 6,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg2_dieu_phi_thang_nhin",
+  "category": "cultivation",
+  "title": "Có người phi thăng",
+  "text": "Trời rạch một đường sáng. Có người phi thăng. Cả tu chân giới đều ngẩng nhìn, ai cũng tính xem mình còn bao nhiêu năm.",
+  "themes": [
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "dieu_phi_thang"
+    ]
+   }
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Ngồi thiền dưới ánh sáng ấy",
+    "result": {
+     "text": "Dư quang tiên giới rơi xuống như mưa. Ngươi thấy, rất mờ, một con đường đi tiếp.",
+     "effects": {
+      "cultProgress": 8,
+      "stat.comprehension": 1,
+      "setFlags": [
+       "thay_phi_thang"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Hỏi người ấy là ai",
+    "result": {
+     "text": "Không ai biết. Người phi thăng ở hạ giới hai nghìn năm, nhưng không ai nhớ tên.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg2_dai_nang_di_ngon",
+  "category": "cultivation",
+  "title": "Di ngôn của đại năng",
+  "text": "Một vị đại năng Hóa Thần tọa hóa. Trước khi đi, lão truyền âm cho mọi tu sĩ trong ba nghìn dặm một câu: \"Hạ giới sắp cạn. Ai đi được thì đi sớm.\"",
+  "themes": [
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "kim_dan"
+   },
+   "worldEvent": {
+    "id": [
+     "dai_nang_toa_hoa"
+    ]
+   }
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Ghi nhớ câu ấy",
+    "result": {
+     "text": "Hạ giới sắp cạn. Câu ấy ngươi ngẫm suốt trăm năm sau.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "setFlags": [
+       "biet_ha_gioi_can"
+      ],
+      "stat.comprehension": 1
+     }
+    }
+   },
+   {
+    "text": "Đi tìm động phủ của lão",
+    "result": {
+     "text": "Động phủ đã bị phong. Ở cửa có một dòng chữ: \"Không có gì để lại. Đừng tìm.\"",
+     "effects": {
+      "stat.happiness": -1,
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg2_dai_chien_tien_tuyen",
+  "category": "cultivation",
+  "title": "Tiền tuyến Tiên Ma",
+  "text": "Tiên Ma đại chiến lên tới đỉnh. Ngươi được phái ra tiền tuyến, trên một bình nguyên không còn ngọn cỏ nào.",
+  "themes": [
+   "war"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co"
+   },
+   "worldEvent": {
+    "id": [
+     "tien_ma_dai_chien"
+    ],
+    "phase": 1
+   },
+   "sect": {
+    "member": true
+   }
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Xông lên trước",
+    "result": {
+     "text": "Ma tu như kiến, phi kiếm như mưa.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Ma tu",
+       "realm": "same",
+       "intent": "kill",
+       "powerMul": 1.1
+      },
+      "win": {
+       "text": "Ngươi chém ba ma tu, đứng vững tới lúc thu binh.",
+       "effects": {
+        "sectContribution": 40,
+        "reputation": {
+         "chinh": 8
+        },
+        "stat.physique": 1,
+        "stat.health": -10,
+        "karma": 2
+       }
+      },
+      "lose": {
+       "text": "Ngươi trúng độc chú, được khiêng về hậu tuyến.",
+       "effects": {
+        "stat.health": -22,
+        "stat.daoHeart": -1
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Lo cứu thương ở hậu tuyến",
+    "result": {
+     "text": "Ngươi băng bó cho trăm người, chôn cất cho nghìn người.",
+     "effects": {
+      "karma": 4,
+      "stat.daoHeart": 1,
+      "stat.happiness": -4
+     }
+    }
+   },
+   {
+    "text": "Đào ngũ",
+    "result": {
+     "text": "Ngươi biến mất trong một đêm mưa. Danh sách đào binh có thêm một cái tên.",
+     "effects": {
+      "reputation": {
+       "chinh": -15
+      },
+      "setFlags": [
+       "dao_binh_tien_ma"
+      ],
+      "stat.health": 2,
+      "stat.daoHeart": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tcg2_dai_chien_ma_tu_xin_tha",
+  "category": "cultivation",
+  "title": "Ma tu xin tha",
+  "text": "Sau trận đánh, ngươi bắt được một ma tu bị thương. Hắn chừng mười sáu tuổi, run rẩy: \"Ta bị bắt vào ma tông lúc tám tuổi. Ta chưa giết ai.\"",
+  "themes": [
+   "war",
+   "demonic"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "worldEvent": {
+    "id": [
+     "tien_ma_dai_chien"
+    ],
+    "phase": 2
+   }
+  },
+  "weight": 3,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Thả hắn",
+    "result": {
+     "text": "Hắn chạy vào rừng, ngoái lại một lần. Trăm năm sau, có một ma tu Kim Đan nổi tiếng chưa từng giết chính đạo.",
+     "effects": {
+      "karma": 5,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Giao cho tông môn",
+    "requires": {
+     "sect": {
+      "member": true
+     }
+    },
+    "result": {
+     "text": "Tông môn có lao ngục cho ma tu. Ngươi không hỏi thêm.",
+     "effects": {
+      "sectContribution": 15,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Giết",
+    "result": {
+     "text": "Ma là ma.",
+     "effects": {
+      "karma": -4,
+      "stat.daoHeart": -2,
+      "sectContribution": 10
+     }
+    }
+   }
+  ]
+ }
+]
