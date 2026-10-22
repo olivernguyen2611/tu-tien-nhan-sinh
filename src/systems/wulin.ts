@@ -8,6 +8,7 @@ import { Rng } from '../core/rng';
 import type { GameState, LogLine } from '../core/types';
 import { combatPower } from './combat';
 import { addRenown } from './jianghu';
+import { meets } from './events/conditions';
 
 type Wulin = NonNullable<GameState['wulin']>;
 const EMPTY: Wulin = { last: null, best: 0, leader: null, held: 0 };
@@ -100,11 +101,18 @@ export function wulinResign(state: GameState, content: Content): GameState {
 }
 
 /** A minh chủ's year: the stipend, uy vọng drifting, the yearly report; a term not defended ends. */
-export function wulinYear(state: GameState, content: Content): GameState {
+export function wulinYear(given: GameState, content: Content): GameState {
   const cfg = content.balance.wulin;
   const file = content.wulin;
+  if (!cfg || !file || !given.alive) return given;
+  // The year of a đại hội: the invitation comes to everyone who qualifies (the event is follow-up only).
+  const invite = content.events.find((e) => e.id === file.event);
+  const state = invite && wulinOpen(given, content) && meets(given, invite.conditions, content) && wulinOf(given).last !== given.character.age
+    && !given.events.followUps.some((f) => f.event === invite.id)
+    ? { ...given, events: { ...given.events, followUps: [...given.events.followUps, { event: invite.id, atAge: given.character.age }] } }
+    : given;
   const w = state.wulin;
-  if (!cfg || !file || !w?.leader || !state.alive) return state;
+  if (!w?.leader) return state;
   const age = state.character.age;
   if (age - w.leader.since > cfg.every) {
     // The đại hội came and went without the minh chủ on the đài.

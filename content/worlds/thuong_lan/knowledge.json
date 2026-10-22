@@ -28,7 +28,7 @@
       {
         "kind": "event",
         "id": "gh_tien_nhan_lam_do_cho",
-        "chance": 1
+        "chance": 0.8
       }
     ],
     "unlocks": [

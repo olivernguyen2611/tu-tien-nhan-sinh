@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### 11.7 Nội dung và cân bằng giang hồ (2026-10-22)
+- 23 sự kiện giang hồ mới (`giang-ho-2.json`): áp tiêu (tiêu sư phản bội, qua ải biên, đứa trẻ trong rương tiêu), sơn trại (mời lên núi, bắt con tin, nội loạn tranh ngôi), sát thủ (bại lộ, mục tiêu là ân nhân), bang chiến (tranh bến cảng, bang chủ nghi kỵ, thu tiền bảo kê), tỉ võ (đá quán, luận kiếm đỉnh núi, kẻ thách đấu trẻ tuổi), hành hiệp (cứu nạn lũ, tham quan cướp lương, hiệp khách giả danh, người ăn xin bí ẩn), phản bội (huynh đệ bán đứng, sư đệ cướp bí kíp, tri kỷ trở mặt), cùng hai chuyện khách điếm. Tính cả 11.1–11.6, giang hồ có 70 sự kiện mới.
+- Thêm 15 bí kíp và 10 binh khí phàm (tổng 30 bí kíp, 18 binh khí), có thêm một tàn quyển giả và một tà công.
+- Đại hội võ lâm: mỗi kỳ, mọi võ giả đủ điều kiện (18–60 tuổi, hiệp danh 15, ác danh dưới 30) đều nhận được thư mời, không còn phụ thuộc may rủi bốc sự kiện. Đối thủ chung kết ngang Ngũ khí triều nguyên. Sự kiện đại hội cũ (theo nghề võ lâm) giảm tần suất.
+- Báo thù sư phụ dễ gặp hơn với võ giả. Tha cho hung thủ cũng tính là xong mối ân oán.
+- Mô phỏng (40 đời): hiệp khách sống tới 40 tuổi 100% (chỉ tiêu ≥ 70%), có ngoại hiệu 100% (≥ 30%), 5% đời hoàn thành một mối ân oán (chỉ tiêu: có ít nhất một), 20% làm minh chủ. Cột mới "Báo thù xong", "Sống ≥ 40".
+
 ### 11.6 Cầu nối giang hồ → tu tiên (2026-10-22)
 - Tin đồn tiên nhân ở quán trà; tiên nhân bay qua làm đổ hàng chợ (NC X2: đòi bồi thường, quỳ xin làm đồ đệ thì được xem linh căn bẩm sinh, lặng lẽ ghi hướng bay); kỳ vật xuất thế các phái tranh nhau. Hai sự kiện đầu là nguồn của mục tri thức "Lời đồn về tiên nhân".
 - Hoạt động "Tìm tiên tích" (mở khi đã ghi hướng bay, chưa xem linh căn): thường chỉ thấy mây, đôi khi gặp vách đá khắc võ học, mảnh ngọc lạ, hiếm khi gặp lão đạo ven đường (cơ duyên xem linh căn). Vẫn giữ luật linh căn bẩm sinh: không ai được linh căn nhờ chăm chỉ.

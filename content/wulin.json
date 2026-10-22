@@ -1,4 +1,5 @@
 {
+  "event": "vl_dai_hoi",
   "rounds": ["Vòng loại", "Đấu bảng", "Chung kết"],
   "texts": {
     "roundWin": [

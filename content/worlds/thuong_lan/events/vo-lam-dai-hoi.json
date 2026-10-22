@@ -12,7 +12,8 @@
     "pham_gian"
    ],
    "age": {
-    "min": 18
+    "min": 18,
+    "max": 60
    },
    "realm": {
     "max": "pham_nhan"
@@ -21,13 +22,11 @@
     "min": 1
    },
    "jianghu": {
-    "fameMin": 15
-   },
-   "wulin": {
-    "open": true
+    "fameMin": 15,
+    "infamyMax": 30
    }
   },
-  "weight": 6,
+  "weight": 0,
   "cooldownYears": 1,
   "choices": [
    {

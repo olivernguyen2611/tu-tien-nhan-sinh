@@ -3407,6 +3407,8 @@ export type JianghuFile = z.infer<typeof JianghuFileSchema>;
 
 /** 11.5 Võ lâm đại hội (content/wulin.json): the round names and lời văn ({round}; {prestige}, {silver}). */
 export const WulinFileSchema = z.object({
+  /** The invitation event, sent as a follow-up in each đại hội year to those who meet its conditions. */
+  event: z.string().min(1),
   rounds: z.array(z.string().min(1)).min(1),
   texts: z.object({
     roundWin: z.array(z.string().min(1)).min(1), roundLose: z.array(z.string().min(1)).min(1),

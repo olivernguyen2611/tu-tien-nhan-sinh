@@ -27,8 +27,8 @@ describe('Võ lâm đại hội và minh chủ (11.5)', () => {
     let s = wulinTournament(life(6), content);
     expect(s.wulin!.last).toBe(30);
     expect(wulinTournament(s, content)).toBe(s);
-    // Ngũ khí against a Hóa cảnh field nearly always wins; try a few seeds.
-    const won = ['a', 'b', 'c', 'd', 'e'].map((k) => wulinTournament({ ...life(6), seed: `vo-lam-${k}` }, content)).find((x) => x.wulin?.leader);
+    // A Ngũ khí fighter wins the đại hội now and then; try a handful of seeds.
+    const won = Array.from({ length: 30 }, (_, k) => k).map((k) => wulinTournament({ ...life(6), seed: `vo-lam-${k}` }, content)).find((x) => x.wulin?.leader);
     expect(won).toBeTruthy();
     s = won!;
     expect(s.wulin!.held).toBe(1);
