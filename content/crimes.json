@@ -209,6 +209,26 @@
       "fail": [
         "Lửa chưa bén đã bị người gác kho tóm được."
       ]
+    },
+    {
+      "id": "tham_o",
+      "name": "Tham ô",
+      "stat": "stat.intellect",
+      "difficulty": 50,
+      "loot": [
+        30,
+        120
+      ],
+      "karma": -6,
+      "expose": 0.3,
+      "heat": 2,
+      "severity": 4,
+      "success": [
+        "Sổ thuế sửa một nét, kho lương hụt một góc. Rương riêng của ngươi nặng thêm {silver} lượng."
+      ],
+      "fail": [
+        "Sổ sách vừa sửa xong thì thượng ty về kiểm kho bất ngờ."
+      ]
     }
   ],
   "verdicts": {

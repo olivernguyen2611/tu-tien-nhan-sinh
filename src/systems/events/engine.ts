@@ -9,6 +9,7 @@ import { addNetRenown, addRenown } from '../jianghu';
 import { addMerit, factionMission, factionTeach, hideFromHunt, joinFaction, leaveFaction } from '../jhFactions';
 import { addWound, buyWeapon, gainWeapon, learnArt, practiseArt } from '../martialArts';
 import { addPrestige, wulinResign, wulinTournament } from '../wulin';
+import { addOfficeEvidence, addOfficeMerit, officeDefend, officeJoin, officeResign, setOfficeFaction, setOfficeStyle } from '../office';
 import { catchDisease, cureAilment, injure, noteDrink } from '../health';
 import { addJailYears, addWanted, arrest, bribe, commitCrime, fleeLaw, imprison, sentence, tryEscape } from '../law';
 import { checkDeath } from '../time';
@@ -561,6 +562,14 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.wulinTournament) next = wulinTournament(next, content);
   if (fx.wulinPrestige) next = addPrestige(next, content, fx.wulinPrestige);
   if (fx.wulinResign) next = wulinResign(next, content);
+  // 12.2 Quan trường.
+  if (fx.officeJoin) next = officeJoin(next, content, fx.officeJoin);
+  if (fx.officeStyle) next = setOfficeStyle(next, content, fx.officeStyle);
+  if (fx.officeFaction) next = setOfficeFaction(next, content, fx.officeFaction);
+  if (fx.officeMerit) next = addOfficeMerit(next, content, fx.officeMerit);
+  if (fx.officeEvidence) next = addOfficeEvidence(next, content, fx.officeEvidence);
+  if (fx.officeDefend) next = officeDefend(next, content, fx.officeDefend);
+  if (fx.officeResign) next = officeResign(next, content);
   if (fx.worship) next = worship(next);
   if (fx.repairShrine) next = repairShrine(next, content);
   if (fx.childrenAffinity) next = childrenAffinity(next, fx.childrenAffinity);

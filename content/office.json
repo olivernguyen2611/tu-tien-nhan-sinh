@@ -1,0 +1,37 @@
+{
+  "career": "quan",
+  "grades": ["Cửu phẩm", "Thất phẩm", "Lục phẩm", "Tứ phẩm", "Tam phẩm", "Tam phẩm", "Nhị phẩm", "Nhất phẩm"],
+  "courtFrom": 5,
+  "impeachEvent": "qt_bi_dan_hac",
+  "styles": [
+    { "id": "thanh_liem", "name": "Thanh liêm", "hint": "Thu đúng sổ, không lấy một đồng. Dân thương, nhà nghèo, kẻ ăn chặn ghét.", "skim": 0, "evidence": 0, "merit": 4, "karma": 1, "fame": 2, "temperPromote": { "minh_quan": 0.4, "hon_quan": -0.3 } },
+    { "id": "vua_phai", "name": "Vừa phải", "hint": "Lệ làng phép nước: chút lễ đầu năm, chút phí giấy mực. Ai cũng làm vậy.", "skim": 0.5, "evidence": 3, "merit": 2, "karma": 0, "fame": 0, "temperPromote": {} },
+    { "id": "tham", "name": "Ăn chặn", "hint": "Thuế thu gấp rưỡi, nộp lên một nửa. Giàu nhanh, nhưng sổ sách nào cũng có dấu.", "skim": 2, "evidence": 9, "merit": 0, "karma": -2, "fame": -3, "temperPromote": { "minh_quan": -0.5, "hon_quan": 0.3, "bao_quan": -0.2 } }
+  ],
+  "factions": [
+    { "id": "trung_lap", "name": "Không theo ai", "hint": "Đứng ngoài bè cánh: thăng chậm, nhưng khi phe nào đổ cũng không kéo theo ngươi.", "promote": 0, "impeach": 0, "defend": 0 },
+    { "id": "thanh_luu", "name": "Phe thanh lưu", "hint": "Đi với đám ngự sử và nho thần cương trực. Có người bênh khi bị vu, nhưng quyền thần để mắt tới.", "promote": 0.15, "impeach": 0.03, "defend": 0.15 },
+    { "id": "quyen_than", "name": "Môn hạ quyền thần", "hint": "Bái vào cửa quyền thần: thăng như diều gặp gió, đàn hặc khó chạm tới. Nhưng cây đổ thì khỉ chạy đâu?", "promote": 0.6, "impeach": -0.03, "defend": 0.25, "needsMinister": true }
+  ],
+  "texts": {
+    "join": {
+      "exam": "Bảng vàng treo xong, ngươi nhận ấn tín làm {rank}.",
+      "buy": "Ngươi nộp {silver} lượng vào hộ bộ, nhận về một tờ giấy bổ làm {rank}. Người trong huyện gọi ngươi là quan, sau lưng thì gọi là quan mua.",
+      "recommend": "Có người tiến cử lên trên. Chẳng cần thi cử, ngươi được bổ làm {rank}."
+    },
+    "promote": "Chiếu chỉ ban xuống: ngươi được thăng làm {rank} ({grade}).",
+    "skim": "Thuế thu được dư {silver} lượng, ngươi lặng lẽ cất vào rương riêng.",
+    "impeach": "Một tờ sớ đàn hặc ngươi được dâng lên.",
+    "cleared": "Sớ đàn hặc bị bác. Ngươi vẫn ngồi ghế {rank}, có điều từ nay biết có người đang rình.",
+    "demoted": "Tội không tới mức cách chức, nhưng ngươi bị giáng làm {rank}.",
+    "dismissed": "Ngươi bị cách chức, ấn tín phải nộp lại. Ra khỏi nha môn, ngoảnh lại thấy người ta đã treo biển tên quan mới.",
+    "executed": "Án tham ô kết lại bằng ba chữ đỏ: tru di tộc. Ngươi không còn ngày mai.",
+    "resign": "Ngươi treo ấn từ quan, về quê làm dân thường.",
+    "patronFell": "Quyền thần {minister} đổ, cả môn hạ bị tra xét.",
+    "purged": "Tên ngươi nằm trong danh sách môn hạ của {minister}.",
+    "purgeEscaped": "Tên ngươi lọt khỏi danh sách tra xét. Ngươi vội vàng đốt hết thư từ cũ, từ nay không theo ai nữa.",
+    "noSilver": "Không đủ bạc lo lót, việc không thành.",
+    "style": "Từ nay ngươi thu thuế theo lối {style}.",
+    "faction": "Ngươi chọn: {faction}."
+  }
+}

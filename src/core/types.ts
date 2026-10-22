@@ -149,6 +149,9 @@ export interface GameState {
     emperor: { name: string; age: number; temper: string }; heir: { name: string; age: number } | null;
     minister: { name: string; sway: number } | null; affairs: { id: string; until: number }[]; started: Record<string, number>;
   };
+  /** 12.2 Quan trường (the rank is career.rung): tax style, phe (and the quyền thần served), chính tích toward the next rank, tội chứng 0–100, how the
+   *  office was had, the age of the last đàn hặc, the highest rank held. */
+  office?: { style: string; faction: string; patron: string | null; merit: number; evidence: number; via: 'exam' | 'buy' | 'recommend'; impeached: number | null; best: number };
   /** 11.5 Võ lâm đại hội: the age last contested, most rounds won, the minh chủ seat (since, uy vọng), times won it. */
   wulin?: { last: number | null; best: number; leader: { since: number; prestige: number } | null; held: number };
   /** 11.3 Võ học phàm tục: bí kíp known (tầng, xp toward the next), the binh khí carried, nội thương 0–100. */

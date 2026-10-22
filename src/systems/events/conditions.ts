@@ -6,6 +6,7 @@ import { debtTotal, ownedOf } from '../assets';
 import { festivalFor } from '../leisure';
 import { jianghuOf } from '../jianghu';
 import { wulinOpen } from '../wulin';
+import { officeOf } from '../office';
 import { courtTax } from '../court';
 import type { Content } from '../../core/content';
 import type { GameEvent } from '../../core/schemas';
@@ -175,6 +176,23 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (f.rankMin !== undefined && (!m || m.rank < f.rankMin)) return false;
     if (f.meritMin !== undefined && (!m || m.merit < f.meritMin)) return false;
     if (f.hunted !== undefined && !!state.jianghu?.hunted !== f.hunted) return false;
+  }
+  if (c.office) {
+    const o = content ? officeOf(state, content) : null;
+    const f = c.office;
+    if (f.held !== undefined && !!o !== f.held) return false;
+    if (f.held !== false && (f.rankMin !== undefined || f.rankMax !== undefined || f.style || f.faction || f.evidenceMin !== undefined || f.evidenceMax !== undefined || f.via || f.atCourt !== undefined) && !o) return false;
+    if (o) {
+      const rung = state.career.rung;
+      if (f.rankMin !== undefined && rung < f.rankMin) return false;
+      if (f.rankMax !== undefined && rung > f.rankMax) return false;
+      if (f.style && !f.style.includes(o.style)) return false;
+      if (f.faction && !f.faction.includes(o.faction)) return false;
+      if (f.evidenceMin !== undefined && o.evidence < f.evidenceMin) return false;
+      if (f.evidenceMax !== undefined && o.evidence > f.evidenceMax) return false;
+      if (f.via && !f.via.includes(o.via)) return false;
+      if (f.atCourt !== undefined && (rung >= (content?.office?.courtFrom ?? 99)) !== f.atCourt) return false;
+    }
   }
   if (c.court) {
     const k = state.court;

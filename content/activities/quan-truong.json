@@ -1,0 +1,235 @@
+[
+ {
+  "id": "mua_quan",
+  "group": "nghe",
+  "name": "Mua quan",
+  "icon": "捐",
+  "text": "Triều đình bán chức để lấy bạc. Bốn trăm lượng một ghế huyện thừa, ngàn hai thì được tri huyện. Mua được ghế, khó mua được lòng người.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "age": {
+    "min": 20,
+    "max": 50
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "office": {
+    "held": false
+   }
+  },
+  "months": 1,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 2
+  },
+  "outcomes": [
+   {
+    "text": [
+     "Ngươi mang hòm bạc lên phủ, qua bảy cửa, lót tay chín người."
+    ],
+    "effects": {
+     "officeJoin": "buy",
+     "stat.happiness": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "thang_duong",
+  "group": "nghe",
+  "name": "Thăng đường xử án",
+  "icon": "堂",
+  "text": "Ngồi công đường, gõ kinh đường mộc. Án nào xử cũng có người khóc người cười.",
+  "conditions": {
+   "office": {
+    "held": true
+   }
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "text": [
+     "Hôm nay có án tranh ruộng."
+    ],
+    "effects": {
+     "stat.intellect": 1
+    },
+    "startEvent": "qt_an_tranh_ruong"
+   },
+   {
+    "text": [
+     "Bộ khoái giải lên một nghi phạm án mạng."
+    ],
+    "effects": {
+     "stat.intellect": 1
+    },
+    "startEvent": "qt_an_mang_nghi_an"
+   },
+   {
+    "weight": 0.6,
+    "text": [
+     "Có án dính tới người trong kinh."
+    ],
+    "effects": {
+     "stat.intellect": 1
+    },
+    "startEvent": "qt_an_con_nha_quyen_the"
+   },
+   {
+    "text": [
+     "Án trộm trâu, chuyện thường ngày ở huyện."
+    ],
+    "effects": {
+     "stat.intellect": 1
+    },
+    "startEvent": "qt_an_trom_trau"
+   }
+  ]
+ },
+ {
+  "id": "dinh_le_thu_thue",
+  "group": "nghe",
+  "name": "Định lệ thu thuế",
+  "icon": "稅",
+  "text": "Thu đúng sổ, theo lệ cũ, hay thu gấp rưỡi? Bàn tay sạch hay bẩn bắt đầu từ cuốn sổ này.",
+  "conditions": {
+   "office": {
+    "held": true
+   }
+  },
+  "months": 1,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "text": [
+     "Ngươi cho gọi thư lại mang sổ thuế tới."
+    ],
+    "effects": {
+     "stat.intellect": 1
+    },
+    "startEvent": "qt_cach_thu_thue"
+   }
+  ]
+ },
+ {
+  "id": "chon_phe_canh",
+  "group": "nghe",
+  "name": "Chọn phe cánh",
+  "icon": "黨",
+  "text": "Trong quan trường không ai đứng một mình được lâu. Chọn ai mà theo, hay không theo ai.",
+  "conditions": {
+   "office": {
+    "held": true,
+    "rankMin": 1
+   }
+  },
+  "months": 1,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 3
+  },
+  "outcomes": [
+   {
+    "text": [
+     "Ngươi nhận lời một bữa rượu của đồng liêu."
+    ],
+    "effects": {
+     "stat.charm": 1
+    },
+    "startEvent": "qt_chon_phe"
+   }
+  ]
+ },
+ {
+  "id": "vi_hanh",
+  "group": "nghe",
+  "name": "Vi hành",
+  "icon": "訪",
+  "text": "Thay áo thường, đi giữa dân mà nghe. Nha môn cao, tiếng dân thấp.",
+  "conditions": {
+   "office": {
+    "held": true
+   }
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "weight": 3,
+    "text": [
+     "Ngươi ngồi quán nước ở chợ cả buổi, nghe dân than chuyện thuế đò. Về nha môn, ngươi bỏ ngay khoản thuế ấy.",
+     "Ngươi đi qua ba làng, thấy cái giếng nào cạn, con đê nào yếu. Năm sau làm được mấy việc ra trò."
+    ],
+    "effects": {
+     "officeMerit": 3,
+     "reputation": {
+      "lang_xa": 2
+     },
+     "stat.health": -1
+    }
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Giữa đường gặp một bà lão kêu oan: con trai bị cường hào vu tội trộm. Ngươi về lật lại hồ sơ, bắt đúng kẻ gian."
+    ],
+    "effects": {
+     "officeMerit": 5,
+     "karma": 1,
+     "stat.intellect": 1
+    }
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Bị móc mất túi tiền giữa chợ. Quan phụ mẫu mà cũng không thoát."
+    ],
+    "effects": {
+     "silver": -10,
+     "stat.happiness": -1
+    }
+   }
+  ]
+ },
+ {
+  "id": "treo_an",
+  "group": "nghe",
+  "name": "Treo ấn từ quan",
+  "icon": "印",
+  "text": "Cởi mũ, treo ấn, về làm dân. Không còn lương bổng, cũng không còn ai dâng sớ đàn hặc.",
+  "conditions": {
+   "office": {
+    "held": true
+   }
+  },
+  "months": 1,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "text": [
+     "Ngươi treo ấn lên xà nha môn, khoác áo vải về quê."
+    ],
+    "effects": {
+     "officeResign": true,
+     "stat.happiness": 3
+    }
+   }
+  ]
+ }
+]

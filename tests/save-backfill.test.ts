@@ -9,7 +9,7 @@ const fresh = createLife({ seed: 'backfill' }, content);
 
 describe('save backfill', () => {
   it('save version is 3 and a save from an older version still loads', () => {
-    expect(SAVE_VERSION).toBe(7);
+    expect(SAVE_VERSION).toBe(8);
     const save = makeSave(createLife({ seed: 'old' }, content), 1);
     expect(parseSave({ ...save, saveVersion: 1 }, [content.world.id], fresh).ok).toBe(true);
   });

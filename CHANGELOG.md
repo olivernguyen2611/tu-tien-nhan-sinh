@@ -8,6 +8,19 @@
 
 ## [Chưa phát hành]
 
+### 12.2 Quan trường (2026-10-22)
+- Quan lộ thành hệ thống quan trường (`office.json`, `src/systems/office.ts`): 8 bậc quan thay 5 nấc cũ, từ Huyện thừa (cửu phẩm) tới Tể tướng (nhất phẩm), mỗi bậc một mức lương. Cử nhân vào làm huyện thừa, Cống sĩ làm tri huyện, Tiến sĩ làm thông phán.
+- Ba cửa vào quan trường: khoa cử, **mua quan** (400 lượng ghế huyện thừa, 1200 lượng ghế tri huyện; quan mua mang sẵn tội chứng và không lên quá Tri phủ), hoặc **được tiến cử** khi đủ học lực.
+- Mỗi năm làm quan có lương, có chính tích (theo học lực, khẩu tài, lối làm quan), có tội chứng. Thăng quan cần đủ năm và đủ chính tích, càng lên cao càng khó.
+- Lối thu thuế: thanh liêm (dân thương, hương danh tăng, nghèo), vừa phải, ăn chặn (thêm bạc mỗi năm, năm sưu thuế nặng càng nhiều, nhưng tội chứng chồng chất). Minh quân trọng quan thanh liêm, hôn quân chuộng quan biết dâng lễ.
+- Phe cánh: không theo ai, phe thanh lưu (có người bênh khi bị vu), hoặc môn hạ quyền thần (thăng nhanh, khó bị đàn hặc). Quyền thần đổ (12.1) thì cả môn hạ bị tra xét.
+- Sớ đàn hặc nổ ra theo tội chứng. Ngươi chọn tự biện, lo lót hoặc nhận tội từ quan. Thua thì bị giáng chức, cách chức, ra công đường vì tội tham ô (tội mới), hoặc nặng nhất là tru di.
+- 6 hoạt động mới trong nhóm Nghề: Mua quan, Thăng đường xử án (4 vụ án: tranh ruộng, án mạng nghi án, con nhà quyền thế, trộm trâu), Định lệ thu thuế, Chọn phe cánh, Vi hành, Treo ấn từ quan.
+- 21 sự kiện quan trường (`quan-truong.json`): phong bì của thương nhân, thượng ty mừng thọ, đê nứt, vạn dân tán, thư lại cầm sổ đòi tiền, ngự sử tuần án, thư sinh xin tiến cử, thiệp mời của quyền thần, tranh luận giữa triều, lương cứu đói, đồng liêu rủ ăn chặn, long nhan thịnh nộ, xin về hưu, được tiến cử…
+- Hồ sơ có dòng "Quan trường:" (bậc, phẩm, lối thu thuế, phe, chính tích, tội chứng). Điều kiện `office` cho sự kiện.
+- Save cũ (phiên bản 8): quan đang tại chức giữ đúng chức cũ trên thang 8 bậc (Tri phủ vẫn là Tri phủ). Thử thách «Bạch Diện Tri Phủ» và các điều kiện cũ đã đổi theo.
+- Mô phỏng 40 đời thư sinh: 25% làm quan, phần lớn lên tới Tri phủ – Tuần phủ, chưa ai làm Tể tướng.
+
 ### 12.1 Triều đại và đại sự (2026-10-22)
 - Triều đình thành hệ thống (`court.json`, `src/systems/court.ts`), dựa trên thời cuộc 9.5. Mỗi triều có hoàng đế mang tên niên hiệu («Thái An đế») và tính cách: minh quân, vua bình thường, hôn quân, bạo quân. Tính cách kéo thời cuộc mỗi năm và định mức sưu thuế. Có thái tử được lập dần, có quyền thần nổi lên khi vua yếu, mất thế khi tân quân thanh trừng.
 - Đổi niên hiệu nghĩa là vua băng: thái tử lên ngôi, nếu chưa có thái tử đủ lớn thì nổ ra tranh ngôi. Tân quân thường đại xá thiên hạ, người đang ở ngục được thả về.
