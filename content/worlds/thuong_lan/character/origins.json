@@ -63,5 +63,27 @@
     "cultivatorClan": true,
     "rebirthCost": 30,
     "birthText": "Ngươi chào đời trong từ đường của một gia tộc tu tiên đã sa sút ở {hometown}. Lão tổ trong gia phả có lẽ đang nhìn ngươi."
+  },
+  {
+    "id": "quy_toc",
+    "name": "Con nhà quyền quý",
+    "description": "Thế gia vọng tộc trong kinh, đời nào cũng có người làm quan to. Gấm vóc từ lúc lọt lòng, nhưng cửa nhà quyền quý cũng là nơi nhiều tai mắt nhất.",
+    "weight": 3,
+    "effects": { "stat.charm": 8, "stat.intellect": 5, "stat.happiness": 5 },
+    "silver": 600,
+    "spiritStones": 0,
+    "rebirthCost": 25,
+    "birthText": "Ngươi chào đời trong một phủ đệ năm lớp cửa ở kinh thành, quê gốc {hometown}. Khách tới mừng xếp hàng dài tới đầu ngõ."
+  },
+  {
+    "id": "hoang_than",
+    "name": "Hoàng thân",
+    "description": "Sinh ra trong một chi của hoàng tộc, mang quốc tính, ăn lộc triều đình. Giàu sang tột bậc, nhưng ngai vàng ở gần thì lưỡi dao cũng ở gần.",
+    "weight": 1,
+    "effects": { "stat.charm": 10, "stat.intellect": 5, "stat.happiness": 5, "stat.health": 5 },
+    "silver": 1500,
+    "spiritStones": 0,
+    "rebirthCost": 50,
+    "birthText": "Ngươi chào đời trong vương phủ, tên được ghi vào ngọc điệp của hoàng tộc ngay hôm sau. Quê gốc của dòng họ ở {hometown}, nhưng ngươi sẽ lớn lên trong kinh thành."
   }
 ]

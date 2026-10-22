@@ -97,6 +97,22 @@ const BaseConditionsSchema = z
     jianghu: z.object({
       fameMin: z.number().optional(), fameMax: z.number().optional(), infamyMin: z.number().optional(), infamyMax: z.number().optional(), alias: z.boolean().optional(),
     }).strict().optional(),
+    /** 12.1: an đại sự running (one of these); the emperor's temper; a quyền thần holds power; sưu thuế at least. */
+    /** 12.3 Binh nghiệp: serving in the army; quân hàm at least / at most; came in drafted / of one's will; at war now;
+     *  has ever served; deserted. */
+    army: z.object({
+      serving: z.boolean().optional(), rankMin: z.number().int().optional(), rankMax: z.number().int().optional(), via: z.array(z.enum(['draft', 'volunteer'])).optional(),
+      atWar: z.boolean().optional(), served: z.boolean().optional(), deserted: z.boolean().optional(),
+    }).strict().optional(),
+    /** 12.2 Quan trường: holds office; rank (index into the quan lộ rungs) at least / at most; this tax style / phe; tội chứng
+     *  at least / at most; came in by this way; sits at court (rank ≥ office.courtFrom). */
+    office: z.object({
+      held: z.boolean().optional(), rankMin: z.number().int().optional(), rankMax: z.number().int().optional(), style: z.array(z.string()).optional(),
+      faction: z.array(z.string()).optional(), evidenceMin: z.number().optional(), evidenceMax: z.number().optional(), via: z.array(z.enum(['exam', 'buy', 'recommend'])).optional(), atCourt: z.boolean().optional(),
+    }).strict().optional(),
+    court: z.object({ affair: z.array(z.string()).optional(), noAffair: z.array(z.string()).optional(), temper: z.array(z.string()).optional(), minister: z.boolean().optional(), taxMin: z.number().optional() }).strict().optional(),
+    /** 11.5: a đại hội is held this year; is minh chủ; uy vọng at least; has been minh chủ; has contested a đại hội. */
+    wulin: z.object({ open: z.boolean().optional(), leader: z.boolean().optional(), prestigeMin: z.number().optional(), held: z.boolean().optional(), contested: z.boolean().optional() }).strict().optional(),
     /** 11.3: knows this art / at least this many; carries a binh khí; nội thương at least / at most. */
     arts: z.object({ knows: id.optional(), countMin: z.number().int().optional(), weapon: z.boolean().optional(), woundMin: z.number().optional(), woundMax: z.number().optional() }).strict().optional(),
     /** 11.2: in a thế lực (this one, of these kinds / sides, at least this rank or cống hiến); hunted after a phản bang. */
@@ -364,6 +380,25 @@ export const EffectsSchema = z
     leaveFaction: z.enum(['quit', 'betray']).optional(),
     /** Lying low: the hunt after a phản bang ends balance.factions.hideYears sooner. */
     hideFromHunt: z.boolean().optional(),
+    /** 11.5: contest this year's đại hội; a minh chủ's uy vọng ±; step down from the seat. */
+    /** 12.2 Quan trường: enter office by buying it or being recommended; set the tax style / phe; chính tích and tội chứng ±;
+     *  answer an đàn hặc (argue, bribe, confess and step down); leave office of one's own will. */
+    /** 12.3 Binh nghiệp: enlist (drafted or of one's will); quân công ±; fight a trận now; leave the army (giải ngũ,
+     *  đào ngũ, tan quân). */
+    armyJoin: z.enum(['draft', 'volunteer']).optional(),
+    armyMerit: z.number().optional(),
+    armyBattle: z.boolean().optional(),
+    armyLeave: z.enum(['discharge', 'desert', 'scatter']).optional(),
+    officeJoin: z.enum(['buy', 'recommend']).optional(),
+    officeStyle: id.optional(),
+    officeFaction: id.optional(),
+    officeMerit: z.number().optional(),
+    officeEvidence: z.number().optional(),
+    officeDefend: z.enum(['argue', 'bribe', 'confess']).optional(),
+    officeResign: z.boolean().optional(),
+    wulinTournament: z.boolean().optional(),
+    wulinPrestige: z.number().optional(),
+    wulinResign: z.boolean().optional(),
     /** 11.3 Võ học: learn a bí kíp (an id, or one drawn by grade / kind / tà công); practise the bí kíp; buy at the lò rèn
      *  ("best" the purse allows, or an id); win a binh khí; nội thương ± (a new one costs thọ nguyên). */
     learnArt: z.union([id, z.object({ grades: z.array(z.number().int()).optional(), kinds: z.array(z.string()).optional(), evil: z.boolean().optional() }).strict()]).optional(),
@@ -478,7 +513,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt', 'learnArt', 'practiseArt', 'buyWeapon', 'gainWeapon', 'wound'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt', 'learnArt', 'practiseArt', 'buyWeapon', 'gainWeapon', 'wound', 'wulinTournament', 'wulinPrestige', 'wulinResign', 'officeJoin', 'officeStyle', 'officeFaction', 'officeMerit', 'officeEvidence', 'officeDefend', 'officeResign', 'armyJoin', 'armyMerit', 'armyBattle', 'armyLeave'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1820,6 +1855,48 @@ export const BalanceSchema = z
       rankMerit: z.array(z.number()).min(1), missionPay: z.array(z.number()).min(1), stipend: z.array(z.number()).min(1),
       missionMerit: z.tuple([z.number(), z.number()]), missionFailMerit: z.number(), missionFailHealth: z.number(), missionRenown: z.number(), taKarma: z.number(),
       teachCost: z.number(), teachBonus: z.number(), huntYears: z.number().int(), hideYears: z.number().int(), betrayFame: z.number(), betrayInfamy: z.number(), chinhKarmaMin: z.number(),
+    }).strict().optional(),
+    /** 12.1 Triều đình: the age a thái tử counts as grown; chance a grown heir is still contested; chance a new emperor
+     *  purges the quyền thần; chance of an amnesty at a crowning; age a thái tử may be named and the yearly chance; the
+     *  quyền thần's yearly chance to rise; most affairs at once and years before one recurs; sưu thuế: the age it is paid
+     *  from and the bạc at 100; the ages called by bắt lính. */
+    /** 12.2 Quan trường: salary by rank; years at a rank before a promotion; chính tích needed to rise from each rank; the
+     *  yearly chính tích (base, per point of the mean of intellect and charm above 50, random range); promotion chance from each rank;
+     *  tội chứng fading per year for a clean hand; đàn hặc (base, per point of tội chứng, years between); what buying an
+     *  office costs (by rank bought), the rank a bought office cannot rise past, the tội chứng it starts with; answering an
+     *  đàn hặc (base chance cleared, per intellect point, per point of tội chứng, a bribe's cost per rank and bonus);
+     *  tội chứng at which a lost case is bãi chức, and at which it is tru di; the purge when a fallen patron's man is caught. */
+    /** 12.3 Binh nghiệp: pay by quân hàm; quân công needed to rise from each hàm and the chance; the enemy's strength
+     *  at each hàm, × in a war / peace year, how sharply strength decides; the hàm from which intellect leads (and how
+     *  much); a trận's chance in a peace year; quân công and bạc for a won trận by hàm; a lost trận's death, heavy wound
+     *  and health lost; years a draftee serves at least; age the army sends one home; years before a volunteer may ask out;
+     *  the truy nã a deserter gets; the age range to enlist. */
+    army: z.object({
+      pay: z.array(z.number()).min(1), meritNeed: z.array(z.number()).min(1), promoteChance: z.number(), foe: z.array(z.number()).min(1),
+      warMul: z.number(), peaceMul: z.number(), sharpness: z.number(), leadFrom: z.number().int(), leadWeight: z.number(), peaceBattle: z.number(),
+      winMerit: z.array(z.number()).min(1), winSilver: z.array(z.number()).min(1), loseDeath: z.number(), loseMaim: z.number(), loseHealth: z.number(),
+      draftYears: z.number().int(), retireAge: z.number().int(), leaveAfter: z.number().int(), desertWanted: z.number().int(), joinAge: z.tuple([z.number(), z.number()]),
+    }).strict().optional(),
+    office: z.object({
+      salary: z.array(z.number()).min(1), yearsPerRank: z.number().int().min(1), meritNeed: z.array(z.number()).min(1),
+      meritBase: z.number(), meritPerPoint: z.number(), meritRand: z.tuple([z.number(), z.number()]), promoteChance: z.array(z.number()).min(1),
+      evidenceDecay: z.number(), impeachBase: z.number(), impeachPerEvidence: z.number(), impeachGap: z.number().int(),
+      buyCost: z.array(z.number()).min(1), buyCap: z.number().int(), buyEvidence: z.number(),
+      defendBase: z.number(), defendPerPoint: z.number(), defendPerEvidence: z.number(), bribeCost: z.number(), bribeBonus: z.number(),
+      dismissEvidence: z.number(), executeEvidence: z.number(), purgeChance: z.number(), joinAge: z.tuple([z.number(), z.number()]),
+    }).strict().optional(),
+    court: z.object({
+      heirAdult: z.number().int(), contestChance: z.number(), purgeChance: z.number(), amnestyChance: z.number(), heirFrom: z.number().int(), heirChance: z.number(),
+      ministerChance: z.number(), maxAffairs: z.number().int().min(1), affairGap: z.number().int().min(0), taxAge: z.number().int(), taxSilver: z.number(),
+      draftAge: z.tuple([z.number().int(), z.number().int()]),
+    }).strict().optional(),
+    /** 11.5 Võ lâm đại hội: held every `every` years; the field's võ đạo stage and × per round; how sharply chiến lực
+     *  decides a round; bạc, hiệp danh, hạnh phúc by rounds won; health lost when beaten; a minh chủ's uy vọng at the
+     *  start and its yearly drift, the stipend, hiệp danh kept on stepping down. */
+    wulin: z.object({
+      every: z.number().int().min(2), foeStage: z.array(z.number().int()).min(1), foeMul: z.array(z.number()).min(1), sharpness: z.number().min(0.5),
+      silver: z.array(z.number()).min(1), fame: z.array(z.number()).min(1), happiness: z.array(z.number()).min(1), loseHealth: z.number(),
+      prestigeStart: z.number(), prestigeDrift: z.number(), stipend: z.number(), stepDownFame: z.number(),
     }).strict().optional(),
     /** 11.3 Võ học phàm tục: cap on chiến lực from bí kíp; × for a binh khí matching a known art; nội thương per lost fight,
      *  thọ nguyên it costs, chiến lực lost per point, healed per year, the level that hurts (health);
@@ -3390,6 +3467,90 @@ export const JianghuFileSchema = z.object({
   }).strict(),
 }).strict();
 export type JianghuFile = z.infer<typeof JianghuFileSchema>;
+
+/** 12.1 Triều đại và đại sự (content/worlds/<id>/court.json): the emperor's tempers (base sưu thuế, pull on the world
+ *  variables per year, how readily a quyền thần rises and grows), the đại sự that start from the world, the bắt lính event,
+ *  and lời văn. An affair starts when the world variables are below / above the given values (or the phase is one of
+ *  these, a quyền thần holds power, the emperor has this temper; onDeath = a tranh ngôi when an emperor dies). */
+/** 12.3 Binh nghiệp (content/army.json): the quân hàm, the hàm from which one is a tướng, the injuries a lost trận
+ *  may leave, the trận names by war or peace, and the lời văn. */
+export const ArmyFileSchema = z.object({
+  ranks: z.array(z.string().min(1)).min(2),
+  generalFrom: z.number().int().min(1),
+  maims: z.array(id).min(1),
+  battles: z.object({ war: z.array(z.string().min(1)).min(1), peace: z.array(z.string().min(1)).min(1) }).strict(),
+  texts: z.object({
+    join: z.record(z.enum(['draft', 'volunteer']), z.string().min(1)), win: z.array(z.string().min(1)).min(1), lose: z.array(z.string().min(1)).min(1),
+    died: z.string().min(1), maimed: z.string().min(1), promote: z.string().min(1), general: z.string().min(1), pay: z.string().min(1),
+    discharge: z.string().min(1), retire: z.string().min(1), desert: z.string().min(1), scatter: z.string().min(1), warOver: z.string().min(1),
+  }).strict(),
+}).strict();
+export type ArmyFile = z.infer<typeof ArmyFileSchema>;
+
+/** 12.2 Quan trường (content/office.json): the career it runs (its rungs are the ranks), the phẩm of each rank, the rank
+ *  from which one sits at court, the tax styles (extra silver as a share of salary, tội chứng, chính tích, nghiệp, hương
+ *  danh per year; promotion ± under an emperor's temper), the phe (promotion ±, đàn hặc ±, defence ±, needs a quyền thần),
+ *  the đàn hặc event and the lời văn. */
+export const OfficeFileSchema = z.object({
+  career: id,
+  grades: z.array(z.string().min(1)).min(1),
+  courtFrom: z.number().int().min(0),
+  impeachEvent: id,
+  styles: z.array(z.object({
+    id, name: z.string().min(1), hint: z.string().min(1), skim: z.number().min(0), evidence: z.number(), merit: z.number(), karma: z.number(), fame: z.number(),
+    temperPromote: z.record(z.string(), z.number()).default({}),
+  }).strict()).min(1),
+  factions: z.array(z.object({
+    id, name: z.string().min(1), hint: z.string().min(1), promote: z.number(), impeach: z.number(), defend: z.number(), needsMinister: z.boolean().default(false),
+  }).strict()).min(1),
+  texts: z.object({
+    join: z.record(z.enum(['exam', 'buy', 'recommend']), z.string().min(1)), promote: z.string().min(1), skim: z.string().min(1), impeach: z.string().min(1),
+    cleared: z.string().min(1), demoted: z.string().min(1), dismissed: z.string().min(1), executed: z.string().min(1), resign: z.string().min(1),
+    patronFell: z.string().min(1), purged: z.string().min(1), purgeEscaped: z.string().min(1), noSilver: z.string().min(1), style: z.string().min(1), faction: z.string().min(1),
+  }).strict(),
+}).strict();
+export type OfficeFile = z.infer<typeof OfficeFileSchema>;
+
+export const CourtFileSchema = z.object({
+  tempers: z.array(z.object({
+    id, name: z.string().min(1), weight: z.number().min(0), tax: z.number(), vars: z.record(z.number()).default({}),
+    ministerMul: z.number().min(0).default(1), ministerDrift: z.number().default(0),
+  }).strict()).min(1),
+  affairs: z.array(z.object({
+    id, name: z.string().min(1), text: z.string().min(1), endText: z.string().min(1).optional(),
+    when: z.object({
+      below: z.record(z.number()).optional(), above: z.record(z.number()).optional(), phases: z.array(z.string()).optional(),
+      minister: z.boolean().optional(), tempers: z.array(z.string()).optional(), onDeath: z.boolean().optional(),
+    }).strict(),
+    chance: z.number().min(0).max(1), years: z.tuple([z.number().int().min(1), z.number().int().min(1)]),
+    tax: z.number().optional(), priceMul: z.number().optional(), draft: z.boolean().optional(),
+    /** Pay × for a job group (jobs.json group). */
+    jobs: z.record(z.number()).default({}),
+    /** Pull on the world variables per year while it runs. */
+    vars: z.record(z.number()).default({}),
+  }).strict()),
+  /** The event a grown man gets when the army calls (12.3). */
+  draftEvent: z.string().min(1).optional(),
+  texts: z.object({
+    emperorName: z.string().min(1), heirName: z.string().min(1), founder: z.string().min(1), crowned: z.string().min(1), heirCrowned: z.string().min(1),
+    temper: z.string().min(1), heirNamed: z.string().min(1), ministerRise: z.string().min(1), ministerFall: z.string().min(1),
+    amnesty: z.string().min(1), tax: z.string().min(1),
+  }).strict(),
+}).strict();
+export type CourtFile = z.infer<typeof CourtFileSchema>;
+
+/** 11.5 Võ lâm đại hội (content/wulin.json): the round names and lời văn ({round}; {prestige}, {silver}). */
+export const WulinFileSchema = z.object({
+  /** The invitation event, sent as a follow-up in each đại hội year to those who meet its conditions. */
+  event: z.string().min(1),
+  rounds: z.array(z.string().min(1)).min(1),
+  texts: z.object({
+    roundWin: z.array(z.string().min(1)).min(1), roundLose: z.array(z.string().min(1)).min(1),
+    champion: z.string().min(1), defended: z.string().min(1), deposed: z.string().min(1), stepDown: z.string().min(1), termOver: z.string().min(1),
+    report: z.array(z.string().min(1)).min(1),
+  }).strict(),
+}).strict();
+export type WulinFile = z.infer<typeof WulinFileSchema>;
 
 /** 11.3 Võ học phàm tục (content/martial-arts.json): bí kíp (power per tầng, needs as stat.<x> minimums; tà công, tàn quyển
  *  giả, nội công that adds thọ nguyên once trained to its peak), phàm binh khí, the kinds (name, combat path) and lời văn. */

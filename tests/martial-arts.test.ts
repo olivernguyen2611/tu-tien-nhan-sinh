@@ -53,7 +53,7 @@ describe('Võ học phàm tục (11.3)', () => {
 
   it('buys the best binh khí the purse allows, fits an art of its kind; a won one is kept only if better', () => {
     let s = learnArt(at(20), content, 'thanh_phong_kiem');
-    const poor = buyWeapon({ ...s, money: { ...s.money, silver: 5 } }, content, 'best');
+    const poor = buyWeapon({ ...s, money: { ...s.money, silver: 2 } }, content, 'best');
     expect(artsOf(poor).weapon).toBeNull();
     s = buyWeapon(s, content, 'thu_tien_kiem');
     expect(artsOf(s).weapon).toBe('thu_tien_kiem');

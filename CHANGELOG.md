@@ -8,6 +8,74 @@
 
 ## [Chưa phát hành]
 
+### 12.4 Xuất thân hoàng tộc và quý tộc (2026-10-22)
+- Hai xuất thân mới, rất hiếm khi số mệnh tự rơi vào. Muốn chọn chắc thì phải trả điểm Luân Hồi ở Cầu đầu thai, như Con nhà quan và Hậu duệ gia tộc tu tiên.
+  - **Con nhà quyền quý** (25 điểm): thế gia trong kinh, 600 lượng, khẩu tài và học lực cao.
+  - **Hoàng thân** (50 điểm): một chi của hoàng tộc, 1500 lượng, khẩu tài cao nhất.
+- 16 sự kiện riêng cho hai xuất thân (`quy-toc.json`):
+  - Hoàng thân: thái phó dạy học (có thể kết thân với hoàng tử), cung yến bị vua hỏi bài, cung đấu (phi tần lôi kéo), bị vu mưu phản (có thể bị giáng làm thứ dân), chỉ hôn (hôn nhân chính trị, từ 18 tuổi), thân vương lôi kéo lúc tranh ngôi (theo đúng phe thì phong vương, sai phe thì mất đầu), kế tước, ra phố thấy dân khổ, chén trà có độc.
+  - Con nhà quyền quý: yến thơ thế gia, công tử hoàn khố, môn đăng hộ đối (từ 18 tuổi), tranh gia sản, gia biến khi quyền thần đổ (bị tịch biên), nhờ gia thế ra làm quan (12.2).
+  - Chung: thích khách đêm khuya.
+- Cửa tiên duyên «Tu sĩ tọa trấn triều đình» nay mở cho cả hai xuất thân mới.
+- Đây là nền cho đường tranh ngôi của hoàng thất (12.6).
+
+### 12.3 Binh nghiệp và chiến tranh (2026-10-22)
+- Binh nghiệp thành hệ thống (`army.json`, `src/systems/army.ts`): 8 quân hàm từ Binh tốt tới Đại tướng quân, mỗi hàm một mức quân lương. Vào quân bằng hai cửa: bị bắt lính, hoặc tự tòng quân.
+- Sự kiện **Bắt lính** (mẫu NC P6) nổ ra khi triều đình có đại sự cần quân (ngoại xâm, khởi nghĩa, tranh ngôi): lên đường, nộp bạc chuộc, hoặc trốn vào núi.
+- Năm có chiến sự thì đánh một trận, thời bình chỉ thỉnh thoảng đi tuần biên, dẹp phỉ. Trận đánh dùng chiến lực hiện có (thể chất, võ học); từ Bách hộ trở lên, học lực giúp cầm quân. Hàm càng cao, quân địch càng mạnh. Thắng thì có quân công và chiến lợi phẩm. Thua thì mất máu, có khi thành thương binh (tàn tật, được cho về làng), có khi tử trận.
+- Đủ quân công thì thăng hàm; từ Tướng quân là được phong tướng. Lính bị bắt được về làng khi chiến sự yên. Ai đủ 55 tuổi cũng được cho về. Lính tự nguyện thì xin giải ngũ được.
+- Đào ngũ là tội (tội mới "Đào ngũ"): bị truy nã, có ngày lính lạ về làng hỏi tên.
+- Đang tại ngũ thì không làm được nghề khác.
+- 5 hoạt động mới: Tòng quân, Thao luyện, Đọc binh thư (từ Thập trưởng), Xin giải ngũ, Đào ngũ (nhóm Phạm pháp).
+- 19 sự kiện (`binh-nghiep.json`):
+  - Bắt lính.
+  - 11 sự kiện trong quân: đêm trước trận, cảm tử quân, cứu đồng đội, lương cạn, chủ tướng cướp công, tù binh, rủ đào ngũ, đại quân tan, thao trường, thượng phương bảo kiếm, thư nhà.
+  - 2 sự kiện sau khi về: lão binh, sổ đào binh.
+  - 5 sự kiện chiến tranh lan tới quê nhà: giặc tới gần (tị nạn hoặc mất nhà), buôn lương thực, dân tị nạn, lính bại trận cướp làng, chiêu mộ nghĩa dũng.
+- Hồ sơ có dòng "Binh nghiệp:". Có điều kiện `army` cho sự kiện.
+- Mô phỏng: khoảng 1/4 người phàm từng tòng quân. Trong một cuộc chiến 4 năm, lính bị bắt chết khoảng 7%, thành thương binh khoảng 12%. Tuổi thọ trung bình gần như không đổi.
+
+### 12.2 Quan trường (2026-10-22)
+- Quan lộ thành hệ thống quan trường (`office.json`, `src/systems/office.ts`): 8 bậc quan thay 5 nấc cũ, từ Huyện thừa (cửu phẩm) tới Tể tướng (nhất phẩm), mỗi bậc một mức lương. Cử nhân vào làm huyện thừa, Cống sĩ làm tri huyện, Tiến sĩ làm thông phán.
+- Ba cửa vào quan trường: khoa cử, **mua quan** (400 lượng ghế huyện thừa, 1200 lượng ghế tri huyện; quan mua mang sẵn tội chứng và không lên quá Tri phủ), hoặc **được tiến cử** khi đủ học lực.
+- Mỗi năm làm quan có lương, có chính tích (theo học lực, khẩu tài, lối làm quan), có tội chứng. Thăng quan cần đủ năm và đủ chính tích, càng lên cao càng khó.
+- Lối thu thuế: thanh liêm (dân thương, hương danh tăng, nghèo), vừa phải, ăn chặn (thêm bạc mỗi năm, năm sưu thuế nặng càng nhiều, nhưng tội chứng chồng chất). Minh quân trọng quan thanh liêm, hôn quân chuộng quan biết dâng lễ.
+- Phe cánh: không theo ai, phe thanh lưu (có người bênh khi bị vu), hoặc môn hạ quyền thần (thăng nhanh, khó bị đàn hặc). Quyền thần đổ (12.1) thì cả môn hạ bị tra xét.
+- Sớ đàn hặc nổ ra theo tội chứng. Ngươi chọn tự biện, lo lót hoặc nhận tội từ quan. Thua thì bị giáng chức, cách chức, ra công đường vì tội tham ô (tội mới), hoặc nặng nhất là tru di.
+- 6 hoạt động mới trong nhóm Nghề: Mua quan, Thăng đường xử án (4 vụ án: tranh ruộng, án mạng nghi án, con nhà quyền thế, trộm trâu), Định lệ thu thuế, Chọn phe cánh, Vi hành, Treo ấn từ quan.
+- 21 sự kiện quan trường (`quan-truong.json`): phong bì của thương nhân, thượng ty mừng thọ, đê nứt, vạn dân tán, thư lại cầm sổ đòi tiền, ngự sử tuần án, thư sinh xin tiến cử, thiệp mời của quyền thần, tranh luận giữa triều, lương cứu đói, đồng liêu rủ ăn chặn, long nhan thịnh nộ, xin về hưu, được tiến cử…
+- Hồ sơ có dòng "Quan trường:" (bậc, phẩm, lối thu thuế, phe, chính tích, tội chứng). Điều kiện `office` cho sự kiện.
+- Save cũ (phiên bản 8): quan đang tại chức giữ đúng chức cũ trên thang 8 bậc (Tri phủ vẫn là Tri phủ). Thử thách «Bạch Diện Tri Phủ» và các điều kiện cũ đã đổi theo.
+- Mô phỏng 40 đời thư sinh: 25% làm quan, phần lớn lên tới Tri phủ – Tuần phủ, chưa ai làm Tể tướng.
+
+### 12.1 Triều đại và đại sự (2026-10-22)
+- Triều đình thành hệ thống (`court.json`, `src/systems/court.ts`), dựa trên thời cuộc 9.5. Mỗi triều có hoàng đế mang tên niên hiệu («Thái An đế») và tính cách: minh quân, vua bình thường, hôn quân, bạo quân. Tính cách kéo thời cuộc mỗi năm và định mức sưu thuế. Có thái tử được lập dần, có quyền thần nổi lên khi vua yếu, mất thế khi tân quân thanh trừng.
+- Đổi niên hiệu nghĩa là vua băng: thái tử lên ngôi, nếu chưa có thái tử đủ lớn thì nổ ra tranh ngôi. Tân quân thường đại xá thiên hạ, người đang ở ngục được thả về.
+- 8 đại sự nổ ra theo thời cuộc và kéo dài vài năm: tranh ngôi, thiên tai, ôn dịch, ngoại xâm, khởi nghĩa, quyền thần chuyên quyền, tăng thuế, thiên tử tuần du. Khi đang diễn ra, chúng làm tăng sưu thuế và giá cả, làm nghề này phất nghề kia lụn (thiên tai thì nhà nông thu kém, ngoại xâm thì nghề võ được giá, ôn dịch thì lang y đắt khách), và có thể bắt lính.
+- Người phàm từ 18 tuổi nộp sưu thuế mỗi năm theo mức của triều đình (ghi vào sổ thu chi).
+- 11 sự kiện cho người phàm (`trieu-dinh.json`): mất mùa, dân đói trước cửa, hàng xóm mắc dịch, quyên góp quân lương, nghĩa quân qua làng, bè đảng đòi lễ, thuế nặng, xa giá đi qua, quân hai phe tranh ngôi, chiếu giảm thuế của minh quân, bạo quân bắt phu xây cung.
+- Hồ sơ có dòng "Triều đình:". Điều kiện `court` (đại sự, tính cách vua, quyền thần, mức thuế).
+- Mô phỏng: bạc cuối đời của người phàm giảm khoảng 25% vì sưu thuế; tuổi thọ không đổi.
+
+### 11.7 Nội dung và cân bằng giang hồ (2026-10-22)
+- 23 sự kiện giang hồ mới (`giang-ho-2.json`): áp tiêu (tiêu sư phản bội, qua ải biên, đứa trẻ trong rương tiêu), sơn trại (mời lên núi, bắt con tin, nội loạn tranh ngôi), sát thủ (bại lộ, mục tiêu là ân nhân), bang chiến (tranh bến cảng, bang chủ nghi kỵ, thu tiền bảo kê), tỉ võ (đá quán, luận kiếm đỉnh núi, kẻ thách đấu trẻ tuổi), hành hiệp (cứu nạn lũ, tham quan cướp lương, hiệp khách giả danh, người ăn xin bí ẩn), phản bội (huynh đệ bán đứng, sư đệ cướp bí kíp, tri kỷ trở mặt), cùng hai chuyện khách điếm. Tính cả 11.1–11.6, giang hồ có 70 sự kiện mới.
+- Thêm 15 bí kíp và 10 binh khí phàm (tổng 30 bí kíp, 18 binh khí), có thêm một tàn quyển giả và một tà công.
+- Đại hội võ lâm: mỗi kỳ, mọi võ giả đủ điều kiện (18–60 tuổi, hiệp danh 15, ác danh dưới 30) đều nhận được thư mời, không còn phụ thuộc may rủi bốc sự kiện. Đối thủ chung kết ngang Ngũ khí triều nguyên. Sự kiện đại hội cũ (theo nghề võ lâm) giảm tần suất.
+- Báo thù sư phụ dễ gặp hơn với võ giả. Tha cho hung thủ cũng tính là xong mối ân oán.
+- Mô phỏng (40 đời): hiệp khách sống tới 40 tuổi 100% (chỉ tiêu ≥ 70%), có ngoại hiệu 100% (≥ 30%), 5% đời hoàn thành một mối ân oán (chỉ tiêu: có ít nhất một), 20% làm minh chủ. Cột mới "Báo thù xong", "Sống ≥ 40".
+
+### 11.6 Cầu nối giang hồ → tu tiên (2026-10-22)
+- Tin đồn tiên nhân ở quán trà; tiên nhân bay qua làm đổ hàng chợ (NC X2: đòi bồi thường, quỳ xin làm đồ đệ thì được xem linh căn bẩm sinh, lặng lẽ ghi hướng bay); kỳ vật xuất thế các phái tranh nhau. Hai sự kiện đầu là nguồn của mục tri thức "Lời đồn về tiên nhân".
+- Hoạt động "Tìm tiên tích" (mở khi đã ghi hướng bay, chưa xem linh căn): thường chỉ thấy mây, đôi khi gặp vách đá khắc võ học, mảnh ngọc lạ, hiếm khi gặp lão đạo ven đường (cơ duyên xem linh căn). Vẫn giữ luật linh căn bẩm sinh: không ai được linh căn nhờ chăm chỉ.
+- Thế lực giang hồ là bình phong của tu sĩ: chỉ lộ ra khi đã nhập đạo (Luyện Khí trở lên, từng có danh giang hồ hoặc ở một thế lực).
+- Validator thuật ngữ theo tầng (9.10) nay soát cả sự kiện giang hồ; bí kíp đổi "chân khí" thành "nội lực".
+
+### 11.5 Võ lâm đại hội và minh chủ (2026-10-22)
+- Đại hội võ lâm thành hệ thống: mười năm một kỳ (năm tổ chức tùy thế giới của mỗi đời), mở cho võ giả từ Nhị lưu có hiệp danh 15. Ba vòng: vòng loại, đấu bảng, chung kết; đối thủ mạnh dần (Nhất lưu → Hóa cảnh), thắng thua theo chiến lực. Thưởng bạc, hiệp danh theo số vòng thắng.
+- Thắng cả ba vòng làm minh chủ võ lâm: bổng lộc mỗi năm, uy vọng 0–100 (mỗi năm tự hao một ít). Uy vọng về 0 thì bị phế; kỳ đại hội sau không lên đài giữ ngôi thì mất ngôi; tuổi già có thể trao lệnh bài.
+- 7 sự kiện (`vo-lam-dai-hoi.json`): đại hội có tin đồn hạ độc (thi đấu / điều tra / cá cược, NC G7), hắc đạo hạ chiến thư, ám toán trong tiệc, minh chủ phân xử, hiệu triệu diệt ma, nghĩ chuyện trao ngôi, cựu minh chủ.
+- Hồ sơ có dòng "Võ lâm:". Điều kiện `wulin`; hiệu ứng `wulinTournament`, `wulinPrestige`, `wulinResign`. Dev mode: làm / bỏ ngôi minh chủ. Mô phỏng có cột "Minh chủ" (hiệp khách ~17%).
+
 ### 11.4 Việc giang hồ (2026-10-22)
 - Tiêu cục: hoạt động "Nhận chuyến tiêu xa" mở chuỗi 2–4 bước: chọn đường (quan lộ an toàn ít công, đường núi qua sơn trại, đường tắt qua đầm lầy), sơn trại chặn đường (đánh, nộp mãi lộ, nói giang hồ thoại), phát hiện hàng lậu trong tiêu (giao, báo quan, giữ lại bán chợ đen và bị truy nã).
 - Bảng treo thưởng: bắt đạo tặc truy nã (có ngoại hiệu), diệt sơn tặc (một mình hoặc tập hợp trai làng), tìm người mất tích.

@@ -1,0 +1,302 @@
+[
+ {
+  "id": "gh_tin_don_tien_nhan",
+  "category": "jianghu",
+  "title": "Chuyện tiên nhân ở quán trà",
+  "text": "Ông kể chuyện ở quán trà gõ thước: \"Năm ấy ở núi Thanh Vân, có người áo trắng đứng trên thanh kiếm bay qua đầu cả làng, nhanh hơn chim ưng.\" Cả quán cười, riêng ông lão ngồi góc không cười.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "age": {
+    "min": 10
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "knowledge": {
+    "none": [
+     "tin_don_tien_nhan"
+    ]
+   }
+  },
+  "weight": 0.6,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Ngồi nghe tới hết",
+    "result": {
+     "text": "Câu chuyện dài tới tận khi quán đóng cửa. Về nhà, ngươi nằm nhìn trời mãi không ngủ.",
+     "effects": {
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Mời ông lão ngồi góc một chén, hỏi chuyện",
+    "result": {
+     "text": "Ông lão uống cạn, chỉ tay về dãy núi phía tây: \"Ta tận mắt thấy. Hướng ấy.\"",
+     "effects": {
+      "silver": -2,
+      "setFlags": [
+       "ghi_huong_tien_tich"
+      ],
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Cười khẩy: chuyện bịa",
+    "result": {
+     "text": "Ngươi trả tiền trà rồi về. Người đời bịa chuyện giỏi thật.",
+     "effects": {
+      "stat.happiness": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "gh_tien_nhan_lam_do_cho",
+  "category": "jianghu",
+  "title": "Tiên nhân làm đổ hàng chợ",
+  "text": "Giữa phiên chợ, một luồng gió lớn quét qua: có người đứng trên thanh kiếm bay sát mái nhà, làm đổ cả dãy hàng. Người ấy không ngoảnh lại. Gánh hàng của ngươi nằm lăn lóc dưới đất.",
+  "themes": [
+   "jianghu"
+  ],
+  "tags": [
+   "rare"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "age": {
+    "min": 14
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "flagsNone": [
+    "ghi_huong_tien_tich"
+   ]
+  },
+  "weight": 0.4,
+  "cooldownYears": 15,
+  "choices": [
+   {
+    "text": "Đuổi theo, đòi bồi thường",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Người ấy dừng lại, nhìn ngươi như nhìn con kiến, rồi ném xuống một thỏi bạc. Cả chợ trố mắt.",
+     "effects": {
+      "silver": 20,
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Người ấy phẩy tay áo. Một luồng gió hất ngươi ngã sóng soài giữa chợ.",
+     "effects": {
+      "stat.health": -4,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Quỳ xuống xin làm đồ đệ",
+    "requires": {
+     "root": {
+      "tested": false
+     }
+    },
+    "hidden": true,
+    "result": {
+     "text": "Người ấy hạ xuống, nắm cổ tay ngươi xem một lúc lâu.",
+     "effects": {
+      "testRoot": true,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Lặng lẽ ghi lại hướng bay",
+    "result": {
+     "text": "Ngươi nhìn theo bóng ấy tới khi khuất sau núi phía bắc, khắc dấu hướng lên cán đòn gánh.",
+     "effects": {
+      "setFlags": [
+       "ghi_huong_tien_tich"
+      ],
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "gh_ky_vat_xuat_the",
+  "category": "jianghu",
+  "title": "Kỳ vật xuất thế",
+  "text": "Ba đêm liền, một luồng sáng xanh bốc lên từ khe núi phía nam. Người trong giang hồ đồn có kỳ vật xuất thế, các phái đã sai người tới.",
+  "themes": [
+   "jianghu"
+  ],
+  "tags": [
+   "violence"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "age": {
+    "min": 16
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "martial": {
+    "min": 0
+   }
+  },
+  "weight": 0.4,
+  "cooldownYears": 12,
+  "choices": [
+   {
+    "text": "Lên núi tranh kỳ vật",
+    "result": {
+     "text": "Khe núi đã chật người. Ai cũng tay lăm lăm binh khí.",
+     "effects": {
+      "stat.daoHeart": 1
+     },
+     "fight": {
+      "foe": {
+       "name": "Người các phái",
+       "realm": "same",
+       "intent": "rob",
+       "powerMul": 1.1,
+       "path": "weapon",
+       "lineage": "tien",
+       "plural": true
+      },
+      "win": {
+       "text": "Ngươi giành được một mảnh ngọc lạnh như băng, cầm lâu thì thấy đầu óc sáng ra. Người ta đồn nó là đồ của tiên nhân rơi lại.",
+       "effects": {
+        "fame": 3,
+        "setFlags": [
+         "ghi_huong_tien_tich"
+        ],
+        "stat.comprehension": 1,
+        "stat.happiness": 2
+       }
+      },
+      "lose": {
+       "text": "Ngươi bị chém một nhát, lăn xuống khe. Kỳ vật về tay ai, ngươi chẳng biết.",
+       "effects": {
+        "stat.health": -6,
+        "stat.happiness": -2
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Đứng ngoài xem cho rõ",
+    "result": {
+     "text": "Ngươi đứng xa nhìn các phái đánh nhau ba ngày. Cuối cùng luồng sáng tự tắt, không ai lấy được gì.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "jh_binh_phong_tu_si",
+  "category": "jianghu",
+  "title": "Bình phong của tu sĩ",
+  "text": "Giờ đã cảm được linh khí, ngươi mới nhận ra: người cầm đầu một thế lực giang hồ ngươi từng biết, hóa ra là một tu sĩ Luyện Khí ẩn mình, mượn danh giang hồ để thu gom dược liệu cho tông môn.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "realm": {
+    "min": "luyen_khi"
+   },
+   "anyOf": [
+    {
+     "jianghu": {
+      "fameMin": 1
+     }
+    },
+    {
+     "jianghu": {
+      "infamyMin": 1
+     }
+    },
+    {
+     "faction": {
+      "member": true
+     }
+    }
+   ],
+   "flagsNone": [
+    "biet_binh_phong"
+   ]
+  },
+  "weight": 0.6,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Tới chào hỏi, kết giao",
+    "result": {
+     "text": "Người ấy nhìn ngươi, cười: \"Thì ra là đồng đạo.\" Từ nay có thêm một chỗ quen biết.",
+     "effects": {
+      "setFlags": [
+       "biet_binh_phong"
+      ],
+      "meetNpc": {
+       "role": "tu sĩ ẩn thân giang hồ",
+       "root": true,
+       "realm": "luyen_khi",
+       "adult": true,
+       "affinity": 15
+      },
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Giữ kín, coi như không biết",
+    "result": {
+     "text": "Chuyện tu sĩ trong giang hồ, xưa nay vẫn thế. Ngươi im lặng.",
+     "effects": {
+      "setFlags": [
+       "biet_binh_phong"
+      ],
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Vạch mặt cho người giang hồ biết",
+    "result": {
+     "text": "Người giang hồ không tin ngươi. Người kia thì nhớ mặt ngươi.",
+     "effects": {
+      "setFlags": [
+       "biet_binh_phong"
+      ],
+      "stat.happiness": -1,
+      "fame": -1
+     }
+    }
+   }
+  ],
+  "crossTier": true
+ }
+]

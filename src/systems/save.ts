@@ -17,8 +17,9 @@ import { freshExam } from './exams';
  * v4: tầng (9.1): an older life is put in Phàm gian, or Tu chân giới when it already has a realm (`placeTier`).
  * v5: hoạt động (9.2): the last Ngao du trip moves into the activity record (`moveLeisure`).
  * v7: khoa cử (10.2): Quan lộ's old exam rungs become exam ranks, its offices start at Huấn đạo (`examFromCareer`).
+ * v8: quan trường (12.2): Quan lộ grows from 5 offices to 8 ranks; an official keeps the same office (`widenOffice`).
  */
-export const SAVE_VERSION = 7;
+export const SAVE_VERSION = 8;
 export const SLOT_COUNT = 9;
 const KEY_PREFIX = 'bachthe.save.';
 const META_KEY = 'bachthe.meta';
@@ -277,6 +278,13 @@ function examFromCareer(life: GameState): GameState {
   return { ...s, exam: { ...exam, rank }, career, flags };
 }
 
+/** 12.2: the 5 offices of 10.2 (Huấn đạo, Tri huyện, Tri phủ, Thượng thư, Tể tướng) → the 8 ranks of quan trường. */
+const WIDE_QUAN = [0, 1, 3, 6, 7];
+function widenOffice(life: GameState, version: number): GameState {
+  if (version >= 8 || life.career.id !== 'quan') return life;
+  return { ...life, career: { ...life.career, rung: WIDE_QUAN[Math.min(life.career.rung, WIDE_QUAN.length - 1)] } };
+}
+
 function migrateSteps(save: SaveFile): SaveFile {
   // Fields added within saveVersion 1 get their empty defaults.
   let life = save.life as GameState & { extremes?: GameState['extremes'] };
@@ -379,7 +387,7 @@ function migrateSteps(save: SaveFile): SaveFile {
       },
     };
   }
-  life = examFromCareer(addVillageName(moveLeisure(placeTier(restoreRoots(splitBody(life))))));
+  life = widenOffice(examFromCareer(addVillageName(moveLeisure(placeTier(restoreRoots(splitBody(life)))))), save.saveVersion);
   // 9.R4d: no mass root test any more: an untested life drops the booked visit (the tiên duyên gates take over).
   const booked = life.events.followUps.filter((f) => /^thu_linh_can/.test(f.event));
   if (!life.cult.root && booked.length) life = { ...life, events: { ...life.events, followUps: life.events.followUps.filter((f) => !booked.includes(f)) } };

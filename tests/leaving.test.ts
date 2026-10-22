@@ -13,7 +13,7 @@ import { commitCrime } from '../src/systems/law';
 const content = loadContent();
 
 function adult(age = 30, patch: Partial<GameState> = {}): GameState {
-  const b = createLife({ seed: 'leaving' }, content);
+  const b = createLife({ seed: 'leaving', originId: 'nong_dan' }, content);
   return { ...b, tier: 'pham_gian', character: { ...b.character, age }, money: { ...b.money, silver: 300 }, log: [...b.log, { age, lines: [] }], ...patch };
 }
 

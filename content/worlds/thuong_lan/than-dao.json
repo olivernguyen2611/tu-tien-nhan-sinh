@@ -151,7 +151,7 @@
      "when": {
       "career": {
        "id": "quan",
-       "minRung": 2
+       "minRung": 3
       }
      },
      "add": 1
@@ -160,7 +160,7 @@
      "when": {
       "career": {
        "id": "quan",
-       "minRung": 3
+       "minRung": 6
       }
      },
      "add": 1
@@ -220,7 +220,7 @@
      "when": {
       "career": {
        "id": "quan",
-       "minRung": 2
+       "minRung": 3
       },
       "stats": [
        {

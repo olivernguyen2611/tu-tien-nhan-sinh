@@ -22,6 +22,9 @@ import { lawYear } from '../systems/law';
 import { kinYear } from '../systems/kin';
 import { factionYear } from '../systems/jhFactions';
 import { artsYear } from '../systems/martialArts';
+import { wulinYear } from '../systems/wulin';
+import { officeYear } from '../systems/office';
+import { armyYear } from '../systems/army';
 import { sectYear } from '../systems/sect';
 import { lineageYear, rollPaths } from '../systems/paths';
 import { rankingYear } from '../systems/rankings';
@@ -36,6 +39,7 @@ import { knowledgeYear, knowsFor } from '../systems/knowledge';
 import { gatesYear } from '../systems/immortalGates';
 import { worldEventsYear } from '../systems/worldEvents';
 import { initTimes, timesYear } from '../systems/worldState';
+import { courtYear } from '../systems/court';
 import { acquaintanceYear, memoryText } from '../systems/acquaintances';
 import { pastTiesFor, reunionYear } from '../systems/karmaLedger';
 import { systemYear } from '../systems/heThong';
@@ -267,6 +271,9 @@ export function advanceYear(state: GameState, content: Content): GameState {
   return next;
 }
 
+/** 12.2–12.3: the career year, then quan trường and binh nghiệp on top of it. */
+const careerOfficeYear = (s: GameState, c: Content): GameState => armyYear(officeYear(careerYear(s, c), c), c);
+
 function advanceYearOnce(state: GameState, content: Content): GameState {
   if (!state.alive || state.events.pending || state.fate || state.combat || state.cult.coreForming || state.cult.heartDemonTrial || state.martial.quest?.game || state.exam?.sitting) return state;
   // Task 5b.10: moments a Trùng sinh can go back to.
@@ -277,12 +284,12 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   const used = monthsUsed(state);
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(pastimeYear(assetsYear(jobYear(schoolYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(artsYear(factionYear(kinYear(lawYear(healthYear(ageBody(acquaintanceYear(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content, used), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content);
+  const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(pastimeYear(assetsYear(jobYear(schoolYear(careerOfficeYear(applyJobCrafts(cultivateYear(ageExtremes(wulinYear(artsYear(factionYear(kinYear(lawYear(healthYear(ageBody(acquaintanceYear(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content, used), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content);
   // Task 4.1: in seclusion no ordinary event comes (follow-ups wait for the door to open);
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;
   // 9.R7e: the world moves on before the year's event is drawn.
-  const worldly = body.alive ? thanDaoYear(trungSinhYear(systemYear(reunionYear(timesYear(worldEventsYear(secluded, content), content), content), content), content), content) : secluded;
+  const worldly = body.alive ? thanDaoYear(trungSinhYear(systemYear(reunionYear(courtYear(timesYear(worldEventsYear(secluded, content), content), content), content), content), content), content) : secluded;
   const rolled = !body.alive ? worldly : state.seclusion ? rollSeclusionEvent(worldly, content) : rollYearEvent(gatesYear(worldly, content), content);
   // 9.R5a: what the year taught goes into the Sổ tri thức.
   const next = rolled.alive ? knowledgeYear(rolled, content) : rolled;

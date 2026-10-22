@@ -632,7 +632,7 @@
     "da_bao_thu"
    ]
   },
-  "weight": 0.4,
+  "weight": 4,
   "cooldownYears": 30,
   "choices": [
    {
@@ -654,8 +654,7 @@
      "text": "Ngươi lo tang lễ chu đáo. Thù hận chỉ kéo người ta theo, ngươi tự nhủ vậy.",
      "effects": {
       "stat.happiness": -5,
-      "stat.daoHeart": -1,
-      "karma": 1
+      "stat.daoHeart": -1
      }
     }
    }
@@ -683,7 +682,7 @@
     "min": 2
    }
   },
-  "weight": 1.5,
+  "weight": 3,
   "cooldownYears": 3,
   "choices": [
    {
@@ -709,7 +708,8 @@
          "thu_su_phu"
         ],
         "setFlags": [
-         "da_bao_thu"
+         "da_bao_thu",
+         "an_oan_xong"
         ],
         "fame": 6,
         "stat.happiness": 6,
@@ -733,6 +733,9 @@
      "effects": {
       "clearFlags": [
        "thu_su_phu"
+      ],
+      "setFlags": [
+       "an_oan_xong"
       ],
       "karma": 3,
       "fame": -2,

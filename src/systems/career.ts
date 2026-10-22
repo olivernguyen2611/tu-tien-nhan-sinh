@@ -8,6 +8,7 @@ import type { GameState, LogLine } from '../core/types';
 import { hookSum } from './cultivation';
 import { extremeHasHook } from './extremes';
 import { examOf, examTitle, levelIndex, passedLevel } from './exams';
+import { officeSalary } from './office';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -61,7 +62,7 @@ function addLines(state: GameState, lines: LogLine[]): GameState['log'] {
 }
 
 /** 10.2: the rung a career starts at (a Tiến sĩ enters Quan lộ higher). */
-function entryRung(state: GameState, content: Content, careerId: string): number {
+export function entryRung(state: GameState, content: Content, careerId: string): number {
   const career = careerDef(content, careerId);
   const passed = passedLevel(state, content);
   const rung = passed && career ? career.entryByExam[passed.id] ?? 0 : 0;
@@ -88,6 +89,8 @@ export function promotionChance(state: GameState, content: Content): number {
   const career = careerDef(content, state.career.id);
   const cfg = content.balance.careers;
   if (!career || state.career.rung >= career.rungs.length - 1) return 0;
+  // 12.2: quan trường promotes by chính tích (office.ts).
+  if (career.id === content.office?.career) return 0;
   if (state.character.age - state.career.since < cfg.yearsPerRung) return 0;
   const avg = career.mainStats.reduce((sum, k) => sum + value(state, k), 0) / career.mainStats.length;
   const difficulty = cfg.difficulty[Math.min(state.career.rung, cfg.difficulty.length - 1)];
@@ -98,6 +101,8 @@ export function promotionChance(state: GameState, content: Content): number {
 
 export function careerIncome(state: GameState, content: Content): number {
   if (!careerDef(content, state.career.id)) return 0;
+  // 12.2: an official is paid by rank (office.ts).
+  if (state.career.id === content.office?.career) return Math.max(0, Math.round(officeSalary(state, content) * (1 + hookSum(state, content, 'incomePct'))));
   const income = content.balance.careers.income;
   const base = income[Math.min(state.career.rung, income.length - 1)];
   return Math.max(0, Math.round(base * (1 + hookSum(state, content, 'incomePct'))));

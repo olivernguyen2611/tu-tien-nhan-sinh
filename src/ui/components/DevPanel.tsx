@@ -19,7 +19,7 @@ import type { RewindOption } from '../../systems/timeline';
 import {
   DEV_STATS, devAddKarma, devAddLifespan, devAddMoney, devAddStat, devClearHeartDemon, devFillProgress, devFindEvents, devFoundClan, devFoundSect,
   devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devWorldEvent, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect, devPastTie, devSpecial, devSystemPoints, devSystemBetray, devDrift, devMerit, devSetTier, devMeetKind, devSetPhase, devSetWorldVar,
-  devAwakenBody, devResetBond, devChildrenRoot, devSetBody, devStartMartialQuest, devQuestStep, devMarry, devResetEventHistory, devSetRealFestival, devLearnAllArts, devWound, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
+  devAwakenBody, devResetBond, devChildrenRoot, devSetBody, devStartMartialQuest, devQuestStep, devMarry, devResetEventHistory, devSetRealFestival, devLearnAllArts, devWound, devWulinLeader, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
   devResetItemUse, devResetFingerCooldowns, devSetFingerLevel, devSetFlag, devSetGoldenFinger, devSetRealm, devSkipYears, devStartFight, devTakeChosen, devToggleTrait, devTriggerEvent,
 } from '../../systems/dev';
 
@@ -378,6 +378,8 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devLearnAllArts(state, content))}>Học hết bí kíp</button>
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devWound(state, content, 30))}>Nội thương +30</button>
             <button class="chip-btn" disabled={!live || !state.martialArts?.wound} onClick={() => onChange(devWound(state, content, -100))}>Chữa lành</button>
+            <button class="chip-btn" disabled={!live || !!state.wulin?.leader} onClick={() => onChange(devWulinLeader(state, content, true))}>Làm minh chủ</button>
+            <button class="chip-btn" disabled={!live || !state.wulin?.leader} onClick={() => onChange(devWulinLeader(state, content, false))}>Bỏ ngôi minh chủ</button>
           </div>
           <p class="profile-note">Tuần lễ hội thật: {content.leisure?.festivals.find((f) => f.id === state.realFestival)?.name ?? 'không'}</p>
           <div class="action-chips">

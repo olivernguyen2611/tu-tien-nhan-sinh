@@ -209,6 +209,46 @@
       "fail": [
         "Lửa chưa bén đã bị người gác kho tóm được."
       ]
+    },
+    {
+      "id": "tham_o",
+      "name": "Tham ô",
+      "stat": "stat.intellect",
+      "difficulty": 50,
+      "loot": [
+        30,
+        120
+      ],
+      "karma": -6,
+      "expose": 0.3,
+      "heat": 2,
+      "severity": 4,
+      "success": [
+        "Sổ thuế sửa một nét, kho lương hụt một góc. Rương riêng của ngươi nặng thêm {silver} lượng."
+      ],
+      "fail": [
+        "Sổ sách vừa sửa xong thì thượng ty về kiểm kho bất ngờ."
+      ]
+    },
+    {
+      "id": "dao_ngu",
+      "name": "Đào ngũ",
+      "stat": "stat.luck",
+      "difficulty": 50,
+      "loot": [
+        0,
+        0
+      ],
+      "karma": -2,
+      "expose": 0.4,
+      "heat": 2,
+      "severity": 3,
+      "success": [
+        "Ngươi lẻn ra khỏi doanh trại lúc đổi gác. Sau lưng, đuốc vẫn sáng."
+      ],
+      "fail": [
+        "Vừa trèo qua hàng rào thì bị lính gác tóm cổ."
+      ]
     }
   ],
   "verdicts": {

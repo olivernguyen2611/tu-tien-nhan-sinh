@@ -66,6 +66,10 @@ import { lineageLine } from '../../systems/kin';
 import { jianghuLine } from '../../systems/jianghu';
 import { factionLine } from '../../systems/jhFactions';
 import { martialArtsLine } from '../../systems/martialArts';
+import { wulinLine } from '../../systems/wulin';
+import { courtLine } from '../../systems/court';
+import { officeLine } from '../../systems/office';
+import { armyLine } from '../../systems/army';
 
 
 const APTITUDE_LABELS = [
@@ -390,6 +394,10 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             {jianghuLine(state, content) && <p class="profile-note">Giang hồ: {jianghuLine(state, content)}</p>}
             {factionLine(state, content) && <p class="profile-note">Thế lực: {factionLine(state, content)}</p>}
             {martialArtsLine(state, content) && <p class="profile-note">Võ học: {martialArtsLine(state, content)}</p>}
+            {wulinLine(state, content) && <p class="profile-note">Võ lâm: {wulinLine(state, content)}</p>}
+            {courtLine(state, content) && <p class="profile-note">Triều đình: {courtLine(state, content)}</p>}
+            {officeLine(state, content) && <p class="profile-note">Quan trường: {officeLine(state, content)}</p>}
+            {armyLine(state, content) && <p class="profile-note">Binh nghiệp: {armyLine(state, content)}</p>}
             {sectLabel(state, content) && <p class="profile-note">Tông môn: {sectLabel(state, content)}</p>}
             {inventoryLabel(state, content) && <p class="profile-note">Mang theo: {inventoryLabel(state, content)}</p>}
             <p class="profile-note"><TermText text="Tư chất tiên thiên định từ lúc sinh, chỉ đổi được nhờ kỳ ngộ hay khí vận." /></p>

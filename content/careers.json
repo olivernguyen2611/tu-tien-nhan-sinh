@@ -3,12 +3,12 @@
     {
       "id": "quan",
       "name": "Quan lộ",
-      "description": "Đỗ Cử nhân thì được bổ làm quan nhỏ, Tiến sĩ vào thẳng chức tri huyện. Thăng hay giáng còn nhờ tài trị dân và miệng lưỡi.",
+      "description": "Đỗ Cử nhân thì được bổ làm huyện thừa, Cống sĩ làm tri huyện, Tiến sĩ vào thẳng thông phán. Thăng hay giáng nhờ chính tích, phe cánh, và bàn tay sạch hay bẩn.",
       "mainStats": ["intellect", "charm"],
-      "rungs": ["Huấn đạo", "Tri huyện", "Tri phủ", "Thượng thư", "Tể tướng"],
+      "rungs": ["Huyện thừa", "Tri huyện", "Thông phán", "Tri phủ", "Tuần phủ", "Thị lang", "Thượng thư", "Tể tướng"],
       "bonusFlags": ["tien_si"],
       "requires": { "examRank": "huong" },
-      "entryByExam": { "dinh": 1 },
+      "entryByExam": { "hoi": 1, "dinh": 2 },
       "promoteText": "Chiếu chỉ ban xuống: ngươi được thăng làm {rung}.",
       "title": "Tể tướng một triều"
     },

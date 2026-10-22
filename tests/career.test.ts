@@ -3,6 +3,7 @@ import { loadContent } from '../src/core/content';
 import { createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
 import { careerIncome, careerViews, careerYear, joinCareer, lifeTitles, promotionChance } from '../src/systems/career';
+import { officeYear } from '../src/systems/office';
 import { grantRoot } from '../src/systems/cultivation';
 import { eventWeight, findEvent, resolveChoice } from '../src/systems/events/engine';
 import { meets } from '../src/systems/events/conditions';
@@ -43,25 +44,27 @@ describe('mortal careers (task 2.11)', () => {
   it('joining starts at the first rung and pays a yearly income', () => {
     const s = joinCareer(cuNhan(mortal('b')), content, 'quan')!.state;
     expect(s.career).toEqual({ id: 'quan', rung: 0, since: 16 });
-    expect(s.log.at(-1)!.lines.at(-1)!.text).toContain('Huấn đạo');
-    // A Tiến sĩ starts as tri huyện.
-    expect(joinCareer(cuNhan(mortal('b'), 4), content, 'quan')!.state.career.rung).toBe(1);
-    expect(careerIncome(s, content)).toBe(10);
-    expect(careerYear(s, content).money.silver).toBe(s.money.silver + 10);
+    expect(s.log.at(-1)!.lines.at(-1)!.text).toContain('Huyện thừa');
+    // 12.2: a Tiến sĩ starts as thông phán; an official is paid by rank.
+    expect(joinCareer(cuNhan(mortal('b'), 4), content, 'quan')!.state.career.rung).toBe(2);
+    const pay = content.balance.office!.salary[0];
+    expect(careerIncome(s, content)).toBe(pay);
+    expect(careerYear(s, content).money.silver).toBe(s.money.silver + pay);
   });
 
   it('promotions wait a few years and follow the main stats', () => {
-    const s = joinCareer(cuNhan(mortal('c')), content, 'quan')!.state;
+    // Y lộ (Quan lộ promotes by chính tích since 12.2, see office.test.ts).
+    const s = joinCareer(mortal('c'), content, 'y')!.state;
     expect(promotionChance(s, content)).toBe(0);
     const later = { ...s, character: { ...s.character, age: 19 } };
-    const smart = { ...later, stats: { ...later.stats, intellect: 90, charm: 80 } };
+    const smart = { ...later, stats: { ...later.stats, intellect: 90 }, aptitudes: { ...later.aptitudes, comprehension: 90 } };
     expect(promotionChance(smart, content)).toBeGreaterThan(promotionChance(later, content));
-    expect(promotionChance({ ...later, flags: { tien_si: true } }, content)).toBeCloseTo(promotionChance(later, content) + 0.1);
+    expect(promotionChance({ ...later, flags: { nghe_thuoc: true } }, content)).toBeCloseTo(promotionChance(later, content) + 0.1);
   });
 
   it('a gifted scholar climbs several rungs over a life', () => {
     let s = joinCareer(cuNhan(mortal('d', 16, { stats: { health: 70, happiness: 50, intellect: 85, charm: 80 } })), content, 'quan')!.state;
-    for (let age = 17; age <= 60; age++) s = careerYear({ ...s, character: { ...s.character, age } }, content);
+    for (let age = 17; age <= 60; age++) s = officeYear(careerYear({ ...s, character: { ...s.character, age } }, content), content);
     expect(s.career.rung).toBeGreaterThanOrEqual(2);
   });
 
