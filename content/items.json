@@ -1451,6 +1451,112 @@
     }
   },
   {
+    "id": "phu_chi",
+    "name": "Phù chỉ",
+    "kind": "material",
+    "description": "Giấy vàng làm từ vỏ cây linh mộc, thấm được linh lực mà không cháy.",
+    "summary": "Nguyên liệu vẽ phù.",
+    "price": {
+      "spiritStones": 2
+    }
+  },
+  {
+    "id": "linh_chu_sa",
+    "name": "Linh chu sa",
+    "kind": "material",
+    "description": "Chu sa mài từ đá ở mạch linh khí, đỏ như máu đông.",
+    "summary": "Mực vẽ phù, khắc trận văn.",
+    "price": {
+      "spiritStones": 6
+    }
+  },
+  {
+    "id": "kim_cang_phu",
+    "name": "Kim Cang Phù",
+    "kind": "talisman",
+    "description": "Lá bùa nặng tay như tấm đồng mỏng.",
+    "summary": "Đốt trong trận: Chiến lực +20% một hiệp, hồi 10 Sức khỏe.",
+    "price": {
+      "spiritStones": 40
+    },
+    "use": {
+      "text": "Một lớp sáng vàng phủ khắp người, đao chém vào kêu keng keng.",
+      "effects": [
+        {
+          "hook": "combatPowerNext",
+          "add": 20
+        },
+        {
+          "hook": "stat.health",
+          "add": 10
+        }
+      ],
+      "combatOnly": true
+    }
+  },
+  {
+    "id": "tu_linh_phu",
+    "name": "Tụ Linh Phù",
+    "kind": "talisman",
+    "description": "Dán lên vách động phủ, linh khí quanh đó đặc lại như sương sớm.",
+    "summary": "Dùng: tu vi +4% tầng hiện tại.",
+    "price": {
+      "spiritStones": 45
+    },
+    "use": {
+      "text": "Lá bùa cháy chậm suốt một đêm, linh khí theo khói chui vào kinh mạch.",
+      "effects": [
+        {
+          "hook": "cultivationProgress",
+          "add": 4
+        }
+      ]
+    }
+  },
+  {
+    "id": "thanh_tam_phu",
+    "name": "Thanh Tâm Phù",
+    "kind": "talisman",
+    "description": "Nét bùa mảnh như tơ, nhìn lâu thấy lòng lắng xuống.",
+    "summary": "Dùng: Đạo tâm +2, Hạnh phúc +3.",
+    "price": {
+      "spiritStones": 60
+    },
+    "use": {
+      "text": "Ngươi đốt lá bùa, khói thơm như hương trầm. Những chuyện vướng bận trôi đi một ít.",
+      "effects": [
+        {
+          "hook": "stat.daoHeart",
+          "add": 2
+        },
+        {
+          "hook": "stat.happiness",
+          "add": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "ho_phu_tran_ban",
+    "name": "Hộ Phủ Trận Bàn",
+    "kind": "array",
+    "description": "Trận bàn chín mắt, đặt ở cửa động phủ thì kẻ lạ vào phải qua chín tầng mê.",
+    "summary": "Mang theo: thương tích nhận vào giảm 10%, bỏ chạy +10%.",
+    "price": {
+      "spiritStones": 400
+    },
+    "carried": [
+      {
+        "hook": "injuryReduce",
+        "add": 0.1
+      },
+      {
+        "hook": "escapeChance",
+        "add": 0.1
+      }
+    ]
+  },
+  {
     "id": "hon_phien",
     "name": "Hồn Phiên",
     "kind": "artifact",

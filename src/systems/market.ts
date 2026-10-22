@@ -55,9 +55,12 @@ export function marketOffers(state: GameState, content: Content, marketId: strin
   const m = content.markets.find((x) => x.id === marketId);
   if (!m) return [];
   const mul = priceMul(state, content, m);
+  const priced = (i: Item) => basePrice(i, m.currency) !== undefined;
+  const staples = content.items.filter((i) => m.staples.includes(i.id) && priced(i));
   const wares = content.items
-    .filter((i) => ((i.forSale && m.kinds.includes(i.kind)) || m.items.includes(i.id)) && basePrice(i, m.currency) !== undefined);
-  return yearPick(state, m.id, wares, (i) => i.id, m.stock)
+    .filter((i) => !m.staples.includes(i.id) && ((i.forSale && m.kinds.includes(i.kind)) || m.items.includes(i.id)) && priced(i));
+  // 13.7: staples (phù chỉ, chu sa…) are on the stall every year, outside the year's pick.
+  return [...staples, ...yearPick(state, m.id, wares, (i) => i.id, m.stock)]
     .map((item) => ({ item, price: Math.max(1, Math.round(basePrice(item, m.currency)! * mul)) }));
 }
 

@@ -8,6 +8,19 @@
 
 ## [Chưa phát hành]
 
+### 13.7a–b Phù lục và Trận pháp (2026-10-23)
+- **Phù lục:** có 8 công thức vẽ phù, mỗi mẻ được nhiều lá, cần Phù chỉ và Linh chu sa:
+  - Hỏa Cầu, Thần Hành, Kim Cang, Tụ Linh, Thanh Tâm, Thiên Lôi, Hộ Thân Linh, Phá Không.
+  - Ba loại phù mới: Kim Cang Phù (đỡ đòn, hồi sức), Tụ Linh Phù (thêm tu vi), Thanh Tâm Phù (thêm đạo tâm).
+- **Trận pháp:** có 4 công thức luyện trận bàn, trong đó có Hộ Phủ Trận Bàn mới (giảm thương tích, dễ bỏ chạy).
+- **Bày trận:** khi có động phủ thuê, có tông môn hoặc tự khai tông, có thể bày một trong 3 trận:
+  - Tụ Linh Trận: tu nhanh hơn;
+  - Mê Tung Trận: dễ bỏ chạy;
+  - Hộ Phủ Đại Trận: giảm thương tích và sát thương thiên kiếp.
+  - Bày trận là một mini game: cắm trận kỳ theo vòng ngũ hành tương sinh. Cấp nghề cao thì được sai nhiều lần hơn. Trận giữ 10–20 năm.
+- Vẽ phù và bày trận có câu văn riêng khi thành hay hỏng.
+- Phù chỉ và chu sa luôn có bán ở Kim Thiềm, Vô Chủ Phường, Vạn Bảo Phường, Huyết Nguyệt Thị và Đại Điển Thư Các, không tính vào số hàng bày mỗi năm.
+
 ### 13.6 Nội dung và cân bằng tầng 2 (2026-10-23)
 - **38 sự kiện song giới mới**, tổng cộng 61:
   - về quê: đám cưới, giỗ tổ, lũ trẻ đòi xem phép, người xưa đã già, mộ tổ sạt lở, giếng làng cạn, hội làng;

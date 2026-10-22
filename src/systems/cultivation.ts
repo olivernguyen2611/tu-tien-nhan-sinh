@@ -1,5 +1,6 @@
 // Cultivation (GĐ 2). Task 2.2: the spirit-root test and how a root is shown.
 // Task 2.3: yearly cultivation (PLAN.md G.1), Luyện Khí stages (G.2).
+import { formationHooks } from './formation';
 import { daoBondHooks } from './daoBond';
 import { specialHooks } from './specialOrigin';
 import { systemHooks } from './heThong';
@@ -300,6 +301,8 @@ export function lifeHooks(state: GameState, content: Content): Hook[] {
     ...trungSinhHooks(state, content),
     // 13.1: dứt hay giữ duyên phàm trần.
     ...daoBondHooks(state, content),
+    // 13.7b: the trận laid at the cave or sect.
+    ...formationHooks(state, content),
   ];
 }
 

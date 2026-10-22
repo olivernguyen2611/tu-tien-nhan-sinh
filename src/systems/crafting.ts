@@ -1,4 +1,5 @@
 // Luyện đan và luyện khí (task 4.7): turn materials into pills and artifacts.
+// 13.7: Phù lục (talismans, several to a batch) and Trận pháp (trận bàn) use the same recipes.
 // Making something takes the year's craft slot (like practice). The chance grows
 // with the craft level above the recipe's, Ngộ tính and craft.<id>.success hooks;
 // craft.<id>.yield hooks add to the count. A failed alchemy leaves a Phế Đan.
@@ -77,11 +78,11 @@ export function craftRecipe(state: GameState, content: Content, recipeId: string
   if (success) {
     const count = recipe.count + Math.max(0, Math.round(hookSum(s, content, `craft.${recipe.craft}.yield`)));
     s = addItems(s, Array<string>(count).fill(recipe.product));
-    line = { text: texts.success.replaceAll('{product}', name).replaceAll('{count}', String(count)), tone: 'good' };
+    line = { text: (texts.byCraft?.[recipe.craft]?.success ?? texts.success).replaceAll('{product}', name).replaceAll('{count}', String(count)), tone: 'good' };
   } else {
     const leftover = cfg.failProduct[recipe.craft];
     if (leftover) s = addItems(s, [leftover]);
-    line = { text: (leftover ? texts.failAlchemy : texts.fail).replaceAll('{product}', name), tone: 'bad' };
+    line = { text: (leftover ? texts.failAlchemy : texts.byCraft?.[recipe.craft]?.fail ?? texts.fail).replaceAll('{product}', name), tone: 'bad' };
   }
   const skill = s.crafts.skills[recipe.craft] ?? { level: 0, affinity: 0 };
   const lvl = Math.min(100, skill.level + (success ? cfg.xpSuccess : cfg.xpFail));

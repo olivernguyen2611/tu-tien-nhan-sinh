@@ -2,7 +2,76 @@
   "texts": {
     "success": "Ngươi khai lò luyện {product}. Lửa tắt, trong lò có {count} {product}.",
     "fail": "Lửa lò bùng sai lúc, nguyên liệu cháy thành tro. Luyện {product} thất bại.",
-    "failAlchemy": "Đan thành mà không thành: trong lò chỉ có một viên Phế Đan, đen như than."
+    "failAlchemy": "Đan thành mà không thành: trong lò chỉ có một viên Phế Đan, đen như than.",
+    "byCraft": {
+      "talisman": {
+        "success": "Ngươi mài chu sa, nín thở hạ bút. Nét cuối khép lại, giấy sáng lên rồi tắt: được {count} {product}.",
+        "fail": "Bút run ở nét thứ bảy, lá bùa bốc khói rồi cháy rụi. Vẽ {product} thất bại, phí cả giấy lẫn mực."
+      },
+      "formation": {
+        "success": "Trận văn khắc xong, ngươi đặt linh thạch vào mắt trận. Đĩa đá ấm lên, rung khẽ: thành một {product}.",
+        "fail": "Một đường trận văn lệch nửa phân. Linh khí chạy loạn, đĩa đá nứt đôi. Luyện {product} thất bại."
+      }
+    }
+  },
+  "formations": [
+    {
+      "id": "tu_linh_tran",
+      "name": "Tụ Linh Trận",
+      "text": "Ba lá trận kỳ quanh chỗ ngồi thiền, gom linh khí bốn phía về một điểm.",
+      "minLevel": 10,
+      "cost": 30,
+      "years": 10,
+      "length": 3,
+      "hooks": [
+        {
+          "hook": "cultivationSpeed",
+          "add": 0.08
+        }
+      ]
+    },
+    {
+      "id": "me_tung_tran",
+      "name": "Mê Tung Trận",
+      "text": "Bốn lá trận kỳ dựng mê lộ quanh động phủ. Kẻ đuổi theo ngươi vào đây chỉ thấy sương mù.",
+      "minLevel": 30,
+      "cost": 80,
+      "years": 10,
+      "length": 4,
+      "hooks": [
+        {
+          "hook": "escapeChance",
+          "add": 0.15
+        }
+      ]
+    },
+    {
+      "id": "ho_phu_dai_tran",
+      "name": "Hộ Phủ Đại Trận",
+      "text": "Năm lá trận kỳ khóa năm hướng, nối với linh mạch dưới đất. Sấm sét, đao kiếm đều phải qua một lớp màn sáng.",
+      "minLevel": 55,
+      "cost": 300,
+      "years": 20,
+      "length": 5,
+      "hooks": [
+        {
+          "hook": "injuryReduce",
+          "add": 0.12
+        },
+        {
+          "hook": "tribulationDefense",
+          "add": 0.08
+        }
+      ]
+    }
+  ],
+  "formationTexts": {
+    "intro": "Cắm trận kỳ theo vòng tương sinh: lá sau phải là hành mà lá trước sinh ra. Mấy lá đã cắm sẵn, ngươi cắm nốt.",
+    "win": "Lá trận kỳ cuối cùng cắm xuống, linh khí chạy trọn một vòng. {name} đã thành, giữ được {years} năm.",
+    "lose": "Trận kỳ cắm sai, linh khí chạy ngược, cả trận sụp. Linh thạch đặt ở mắt trận đã thành bột.",
+    "noPlace": "Cần một chỗ để bày trận: thuê động phủ, ở trong tông môn hoặc có tông môn của mình.",
+    "active": "Đang có {name} tới năm {until} tuổi.",
+    "ended": "{name} quanh động phủ đã cạn linh lực, trận kỳ đổ rạp."
   },
   "recipes": [
     {
@@ -292,6 +361,186 @@
       "cost": {
         "spiritStones": 200
       }
+    },
+    {
+      "id": "ve_hoa_cau_phu",
+      "craft": "talisman",
+      "product": "hoa_cau_phu",
+      "count": 3,
+      "minLevel": 0,
+      "materials": {
+        "phu_chi": 3,
+        "linh_chu_sa": 1
+      },
+      "cost": {},
+      "mortal": false
+    },
+    {
+      "id": "ve_than_hanh_phu",
+      "craft": "talisman",
+      "product": "than_hanh_phu",
+      "count": 2,
+      "minLevel": 10,
+      "materials": {
+        "phu_chi": 2,
+        "linh_chu_sa": 1
+      },
+      "cost": {},
+      "mortal": false
+    },
+    {
+      "id": "ve_kim_cang_phu",
+      "craft": "talisman",
+      "product": "kim_cang_phu",
+      "count": 2,
+      "minLevel": 20,
+      "materials": {
+        "phu_chi": 2,
+        "linh_chu_sa": 2
+      },
+      "cost": {},
+      "mortal": false
+    },
+    {
+      "id": "ve_tu_linh_phu",
+      "craft": "talisman",
+      "product": "tu_linh_phu",
+      "count": 1,
+      "minLevel": 30,
+      "materials": {
+        "phu_chi": 1,
+        "linh_chu_sa": 2
+      },
+      "cost": {
+        "spiritStones": 10
+      },
+      "mortal": false
+    },
+    {
+      "id": "ve_thanh_tam_phu",
+      "craft": "talisman",
+      "product": "thanh_tam_phu",
+      "count": 1,
+      "minLevel": 35,
+      "materials": {
+        "phu_chi": 1,
+        "linh_chu_sa": 2,
+        "linh_thao_tram_nam": 1
+      },
+      "cost": {},
+      "mortal": false
+    },
+    {
+      "id": "ve_thien_loi_phu",
+      "craft": "talisman",
+      "product": "thien_loi_phu",
+      "count": 1,
+      "minLevel": 55,
+      "materials": {
+        "phu_chi": 1,
+        "linh_chu_sa": 3,
+        "loi_tinh": 1
+      },
+      "cost": {},
+      "mortal": false
+    },
+    {
+      "id": "ve_ho_than_linh_phu",
+      "craft": "talisman",
+      "product": "ho_than_linh_phu",
+      "count": 1,
+      "minLevel": 60,
+      "materials": {
+        "phu_chi": 1,
+        "linh_chu_sa": 3,
+        "linh_tinh_moc": 1
+      },
+      "cost": {
+        "spiritStones": 40
+      },
+      "mortal": false
+    },
+    {
+      "id": "ve_pha_khong_phu",
+      "craft": "talisman",
+      "product": "pha_khong_phu",
+      "count": 1,
+      "minLevel": 75,
+      "materials": {
+        "phu_chi": 2,
+        "linh_chu_sa": 4,
+        "linh_tinh_kim": 2
+      },
+      "cost": {
+        "spiritStones": 80
+      },
+      "mortal": false
+    },
+    {
+      "id": "tran_tu_linh",
+      "craft": "formation",
+      "product": "tu_linh_tran_ban",
+      "count": 1,
+      "minLevel": 15,
+      "materials": {
+        "linh_tinh_tho": 1,
+        "linh_tinh_moc": 1,
+        "linh_chu_sa": 2
+      },
+      "cost": {
+        "spiritStones": 20
+      },
+      "mortal": false
+    },
+    {
+      "id": "tran_ho_phu",
+      "craft": "formation",
+      "product": "ho_phu_tran_ban",
+      "count": 1,
+      "minLevel": 40,
+      "materials": {
+        "linh_tinh_tho": 2,
+        "linh_tinh_kim": 1,
+        "linh_chu_sa": 3
+      },
+      "cost": {
+        "spiritStones": 80
+      },
+      "mortal": false
+    },
+    {
+      "id": "tran_pha_kiep",
+      "craft": "formation",
+      "product": "pha_kiep_tran_ban",
+      "count": 1,
+      "minLevel": 60,
+      "materials": {
+        "linh_tinh_thuy": 2,
+        "linh_tinh_tho": 2,
+        "loi_tinh": 1
+      },
+      "cost": {
+        "spiritStones": 300
+      },
+      "mortal": false
+    },
+    {
+      "id": "tran_tu_linh_dai",
+      "craft": "formation",
+      "product": "tu_linh_dai_tran_ban",
+      "count": 1,
+      "minLevel": 80,
+      "materials": {
+        "linh_tinh_kim": 1,
+        "linh_tinh_moc": 1,
+        "linh_tinh_thuy": 1,
+        "linh_tinh_hoa": 1,
+        "linh_tinh_tho": 1
+      },
+      "cost": {
+        "spiritStones": 600
+      },
+      "mortal": false
     }
   ]
 }

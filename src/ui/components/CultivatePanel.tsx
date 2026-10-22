@@ -18,11 +18,13 @@ import { pathsView } from '../../systems/paths';
 import { rankingBoard } from '../../systems/rankings';
 import { seclusionView } from '../../systems/seclusion';
 import { caveView } from '../../systems/cave';
+import { activeFormation, formationViews } from '../../systems/formation';
+import type { FormationAction } from './FormationPopup';
 import { recipeViews } from '../../systems/crafting';
 import { Meter } from './Meter';
 import { TermText } from './Tooltip';
 
-export function CultivatePanel({ state, content, view, extra, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onLearn, onTrain, onQuest, onSeclude, onRentCave, onCraft, onClose }: {
+export function CultivatePanel({ state, content, view, extra, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onLearn, onTrain, onQuest, onSeclude, onRentCave, onCraft, onFormation, onClose }: {
   state: GameState;
   content: Content;
   /** 9.7: "self" is the Bản thân sheet (võ đạo, đường đời, bách nghệ), "cultivate" the Tu luyện one. */
@@ -45,6 +47,8 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
   onQuest: (a: QuestAction) => string | null;
   /** Task 4.7: make one batch of a recipe; returns the log text, or null. */
   onCraft: (recipeId: string) => string | null;
+  /** 13.7b: lay a trận (opens the trận kỳ game). */
+  onFormation?: (a: FormationAction) => string | null;
   /** Task 4.1: bế quan; the sheet closes so the log shows the years. */
   onSeclude: (years: number) => void;
   /** 6b.14: rent a cave on a spirit vein for this many years; returns the log line. */
@@ -58,6 +62,8 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
   const gain = yearlyGain(state, content);
   const info = majorBreakthroughInfo(state, content);
   const crafts = craftViews(state, content);
+  const formations = formationViews(state, content);
+  const laid = activeFormation(state, content);
   const [practiced, setPracticed] = useState<string | null>(null);
   const [joined, setJoined] = useState<string | null>(null);
   const [careerOpen, setCareerOpen] = useState(false);
@@ -301,6 +307,19 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
                     Luyện tập{c.cost > 0 && <span class="chip-cost"> · {c.cost} bạc</span>}
                   </button>
                   {c.blocked && <span class="craft-note">{c.blocked}</span>}
+                  {c.id === 'formation' && onFormation && formations.length > 0 && (
+                    <details class="recipes">
+                      <summary>Bày trận{laid && ` · ${laid.name} tới ${laid.until} tuổi`}</summary>
+                      {formations.map((f) => (
+                        <div class="recipe" key={f.id}>
+                          <button class="chip-btn" disabled={!!f.blocked} title={f.blocked ?? undefined} onClick={() => setPracticed(onFormation({ kind: 'begin', id: f.id }))}>
+                            {f.name} · {f.cost} linh thạch · {f.years} năm
+                          </button>
+                          <span class="craft-note">{f.text}{f.blocked && ` · ${f.blocked}`}</span>
+                        </div>
+                      ))}
+                    </details>
+                  )}
                   {recipeViews(state, content, c.id).length > 0 && (
                     <details class="recipes">
                       <summary>Luyện chế</summary>

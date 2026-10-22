@@ -68,6 +68,7 @@ import { continueAsHeir } from '../systems/heir';
 import { buyProperty, foundClan } from '../systems/clan';
 import { meetIllusion } from '../systems/heartDemon';
 import { craftRecipe } from '../systems/crafting';
+import { beginFormation, formationInput, formationQuit } from '../systems/formation';
 import { doDiscipleAct } from '../systems/discipleActs';
 import { recruitDisciple, teachDisciple } from '../systems/disciples';
 import { build, decide, donate, foundSect } from '../systems/ownSect';
@@ -550,6 +551,13 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         onExam={(a) => {
           const r = a.kind === 'answer' ? answerExam(life, content, a.approach) : resolveIncident(life, content, a.index);
           if (r) setLife(r.state);
+        }}
+        onFormation={(a) => {
+          if (a.kind === 'input') { const r = formationInput(life, content, a.symbol); setLife(r.state); return r.done ? r.text : null; }
+          if (a.kind === 'quit') { const r = formationQuit(life, content); setLife(r.state); return r.text; }
+          const r = beginFormation(life, content, a.id);
+          if (r) setLife(r);
+          return null;
         }}
         onQuest={(a) => {
           if (a.kind === 'hide') { setLife(miniGameHide(life)); return null; }

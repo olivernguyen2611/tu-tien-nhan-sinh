@@ -304,6 +304,7 @@
     "role": "Kình địch",
     "steps": ["kd_so_ngo", "kd_dai_bi", "kd_luan_dao", "kd_cung_vao_bi_canh", "kd_nga_re", "kd_ket_cuc"]
   },
+  "formation": { "allowedBase": 1, "perLevel": 30, "xpWin": 4, "xpLose": 1, "secondGivenAt": 5 },
   "daoBond": {
     "hooks": {
       "dut_duyen": [{ "hook": "cultivationSpeed", "add": 0.1 }],

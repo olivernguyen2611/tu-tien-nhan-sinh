@@ -55,6 +55,16 @@ export interface MartialQuest {
 }
 
 /** A mini-game of the martial quest: enter `target` in order; more than `allowed` mistakes lose. */
+/** 13.7b: place trận kỳ along tương sinh; `given` slots are set already, the rest are filled in order. */
+export interface FormationGame {
+  id: string;
+  target: string[];
+  given: number[];
+  input: string[];
+  mistakes: number;
+  allowed: number;
+}
+
 export interface MiniGame {
   kind: 'ngu_hanh' | 'dieu_tuc';
   /** ngu_hanh: follow the tương sinh or the tương khắc cycle. */
@@ -165,6 +175,8 @@ export interface GameState {
    *  once out (deserted is remembered in flags). */
   /** 13.4 Kình địch suốt đời: the NPC, the next meeting of the chain (index into balance.rival.steps) and the age it is due. */
   rival?: { npc: string; step: number; next: number } | null;
+  /** 13.7b: the trận laid at the cave or sect (until that age) and a trận kỳ game in progress. */
+  formation?: { active: { id: string; until: number } | null; game: FormationGame | null };
   army?: { rank: number; merit: number; since: number; via: 'draft' | 'volunteer'; battles: number; wins: number; best: number } | null;
   /** 12.2 Quan trường (the rank is career.rung): tax style, phe (and the quyền thần served), chính tích toward the next rank, tội chứng 0–100, how the
    *  office was had, the age of the last đàn hặc, the highest rank held. */

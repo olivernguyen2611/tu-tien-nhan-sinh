@@ -1936,6 +1936,11 @@ export const BalanceSchema = z
       fromRealm: z.string().min(1), ageGap: z.number().int().min(0), aheadAt: z.array(z.number().int().min(0)).default([]),
       gapYears: z.tuple([z.number().int().min(1), z.number().int().min(1)]), role: z.string().min(1), steps: z.array(z.string().min(1)).min(1),
     }).strict().optional(),
+    /** 13.7b Bày trận: mistakes allowed in the trận kỳ game (base + one per `perLevel` craft levels), craft xp on a win / a loss, slots given at this length. */
+    formation: z.object({
+      allowedBase: z.number().int().min(0), perLevel: z.number().int().min(1), xpWin: z.number().int().min(0), xpLose: z.number().int().min(0),
+      secondGivenAt: z.number().int().min(2),
+    }).strict().optional(),
     /** 13.1 Nhập đạo: hooks by the flag of the bond chosen (dứt / giữ duyên), the share of silver kept on cutting, the yearly affinity drift of kin after cutting. */
     daoBond: z.object({
       hooks: z.record(z.string(), z.array(EffectHookSchema)).default({}),
@@ -3927,6 +3932,8 @@ export const MarketFileSchema = z.array(
       regions: ids.optional(),
       /** Playtest 2: items sold here even when not `forSale` or not of `kinds` (a local speciality). */
       items: ids,
+      /** 13.7: everyday materials on the stall every year, not counted in `stock`. */
+      staples: z.array(id).default([]),
       /** Playtest 2: technique scrolls on sale (price in this market's currency). */
       techniques: z.array(z.object({ id, price: z.number().int().min(1) }).strict()).default([]),
       /** Playtest 2: only this many wares on the stall each year, picked anew every year (omit = all). */
@@ -4269,15 +4276,28 @@ export const HeartDemonFileSchema = z
   .strict();
 export type HeartDemonFile = z.infer<typeof HeartDemonFileSchema>;
 
-/** content/recipes.json (task 4.7): Luyện đan and Luyện khí recipes. {product}, {count}. */
+/** content/recipes.json (task 4.7): Luyện đan and Luyện khí recipes; 13.7 Phù lục and Trận pháp. {product}, {count}. */
 export const RecipeFileSchema = z
   .object({
-    texts: z.object({ success: z.string().min(1), fail: z.string().min(1), failAlchemy: z.string().min(1) }).strict(),
+    texts: z.object({
+      success: z.string().min(1), fail: z.string().min(1), failAlchemy: z.string().min(1),
+      /** 13.7: a craft's own success and fail lines (vẽ phù, bày trận…). */
+      byCraft: z.record(z.string(), z.object({ success: z.string().min(1), fail: z.string().min(1) }).strict()).optional(),
+    }).strict(),
+    /** 13.7b: trận a cultivator lays at a cave or sect by placing trận kỳ (a ngũ hành game); hooks last `years`. */
+    formations: z.array(z.object({
+      id, name: z.string().min(1), text: z.string().min(1), minLevel: z.number().int().min(0).max(100),
+      cost: z.number().int().min(0), years: z.number().int().min(1), length: z.number().int().min(3).max(5),
+      hooks: z.array(EffectHookSchema).min(1),
+    }).strict()).default([]),
+    formationTexts: z.object({
+      intro: z.string().min(1), win: z.string().min(1), lose: z.string().min(1), noPlace: z.string().min(1), active: z.string().min(1), ended: z.string().min(1),
+    }).strict().optional(),
     recipes: z.array(
       z
         .object({
           id,
-          craft: z.enum(['alchemy', 'forging']),
+          craft: z.enum(['alchemy', 'forging', 'talisman', 'formation']),
           product: id,
           count: z.number().int().min(1).default(1),
           /** Craft level needed. */
