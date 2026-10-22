@@ -174,3 +174,58 @@ describe('Khởi nghĩa thời loạn (12.7)', () => {
     expect(peace.career.id).toBe(content.office!.career);
   });
 });
+
+describe('Quan lại, tướng lĩnh tạo phản (12.8)', () => {
+  const minister = (rank = 5): GameState => {
+    const s = createLife({ seed: 'tao-phan', originId: 'nong_dan' }, content);
+    const base = { ...s, character: { ...s.character, age: 40 }, court: initCourt(s, content) };
+    return { ...base, career: { id: content.office!.career, rung: rank, since: 30 } };
+  };
+
+  it('only a high official or a general can start plotting; the plot has quyền thế, binh quyền, danh nghĩa', () => {
+    const act = content.activities!.find((a) => a.id === 'muu_do_dai_su')!;
+    expect(meets(minister(5), act.conditions, content)).toBe(true);
+    expect(meets(minister(1), act.conditions, content)).toBe(false);
+    const s = fx(minister(5), { throneStart: 'usurp' });
+    expect(throneOf(s)).toMatchObject({ path: 'usurp', kind: 'minister', plotters: 1 });
+    expect(Object.keys(throneOf(s)!.bars).sort()).toEqual(Object.keys(file.bars.usurp!).sort());
+    expect(s.flags.tung_muu_phan).toBe(true);
+  });
+
+  it('every gain in quyền thế pulls in another plotter, and more plotters mean the plot is found out sooner', () => {
+    const s = fx(minister(), { throneStart: 'usurp' });
+    const grown = fx(fx(s, { throneBar: { power: 5 } }), { throneBar: { power: 5 } });
+    expect(throneOf(grown)!.plotters).toBe(3);
+    const found = (x: GameState) => {
+      let n = 0;
+      for (let i = 0; i < 200; i++) if (throneYear({ ...x, seed: `bl${i}` }, content).events.followUps.some((f) => f.event === file.events.discovered)) n++;
+      return n;
+    };
+    expect(found({ ...grown, throne: { ...throneOf(grown)!, plotters: 30 } })).toBeGreaterThan(found(grown));
+  });
+
+  it('enough strength and a weak throne bring the thời cơ; the rising is three steps to the throne or the block', () => {
+    const s = fx(minister(), { throneStart: 'usurp' });
+    const ready = { ...s, times: { ...s.times!, phase: 'loan_the' }, throne: { ...throneOf(s)!, plotters: 0, bars: { power: 90, troops: 90, cause: 90 } } };
+    let rose = false;
+    for (let i = 0; i < 30 && !rose; i++) rose = throneYear({ ...ready, seed: `ks${i}` }, content).events.followUps.some((f) => f.event === file.events.rise);
+    expect(rose).toBe(true);
+    const steps = ['tp_khoi_su_1', 'tp_khoi_su_2', 'tp_khoi_su_3'].map((id) => content.events.find((e) => e.id === id)!);
+    let x: GameState = ready;
+    for (const [i, ev] of steps.entries()) {
+      expect(meets(x, ev.conditions, content)).toBe(true);
+      if (i < 2) x = fx(x, { throneStep: 1 });
+    }
+    const king = fx(x, { throneAscend: true });
+    expect(king.reign).toMatchObject({ how: 'usurp', founder: true });
+    expect(king.career.id).toBeNull();
+    const dead = fx(x, { throneFail: 'death' });
+    expect(dead.alive).toBe(false);
+    expect(dead.flags.bi_tru_di).toBe(true);
+  });
+
+  it('the loyal side has its own events: reporting a plotter, putting down a rebel general', () => {
+    expect(content.events.find((e) => e.id === 'tp_to_giac_dong_lieu')!.conditions.throne?.none).toBe(true);
+    expect(content.events.find((e) => e.id === 'tp_dep_phan')!.conditions.army?.serving).toBe(true);
+  });
+});

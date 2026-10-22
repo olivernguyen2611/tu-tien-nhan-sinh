@@ -323,8 +323,13 @@ export function throneYear(state: GameState, content: Content): GameState {
   }
 
   if (t?.path === 'usurp') {
+    // Every plotter is a mouth; when quyền thế, binh quyền and danh nghĩa are enough, a weak throne is the thời cơ.
     const p = cfg.discoverBase + (t.plotters ?? 1) * cfg.discoverPerPlotter;
+    const ready = t.step === 0 && Object.entries(cfg.riseNeeds).every(([k, v]) => (t.bars[k] ?? 0) >= v);
+    const c = s.court;
+    const weak = cfg.risePhases.includes(s.times?.phase ?? '') || (!!c && (cfg.riseTempers.includes(c.emperor.temper) || c.affairs.length > 0));
     if (rng.chance(p)) s = follow(s, file.events.discovered, content);
+    else if (ready && rng.chance(weak ? cfg.riseChance : cfg.riseChance / 3)) s = follow(s, file.events.rise, content);
   }
 
   const r = reignOf(s);

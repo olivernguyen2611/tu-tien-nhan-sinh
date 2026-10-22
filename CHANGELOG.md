@@ -8,6 +8,15 @@
 
 ## [Chưa phát hành]
 
+### 12.8 Quan lại, tướng lĩnh tạo phản (2026-10-22)
+- Quan từ Tam phẩm trở lên, hoặc tướng từ Thiên hộ trở lên, mở được đường **tạo phản**: hoạt động Mưu đồ đại sự (quan) hoặc Ủng binh tự trọng (tướng), hoặc qua sự kiện (môn khách rủ rê dưới hôn quân, bạo quân; triều đình đòi giao binh quyền; anh hùng thời loạn).
+- Ba thanh: **Quyền thế**, **Binh quyền**, **Danh nghĩa**. Ba hoạt động mưu phản: Kết vây cánh, Nuôi tử sĩ, Tạo danh nghĩa.
+- Mỗi lần quyền thế tăng là thêm một người biết chuyện. Càng nhiều người biết, càng dễ **bại lộ**. Khi bại lộ: khởi sự ngay trong đêm, giết kẻ tố giác, bỏ trốn ra biên ải, hoặc tự trói xin tội.
+- Đủ quyền thế 50, binh quyền 35, danh nghĩa 35 thì chờ **thời cơ**: thời loạn, trung suy, hôn quân, bạo quân hay triều đình đang có đại sự thì dễ tới hơn. Khởi sự ba bước (thời cơ, hịch khởi binh, vào điện). Thành thì lập triều mới, bại thì tru di hoặc lưu vong.
+- Sự kiện đời mưu phản: mật thư bị chặn, đồng mưu dao động, chiếu triệu về kinh, điềm lành, mưu sĩ dâng kế, thiên tử hôn ám.
+- Phía trung thần: tố giác đồng liêu mưu phản, dẹp loạn phản thần (khi tại ngũ), tru di tam tộc của một đại thần.
+- Bot "Quyền thần tham vọng" (`--profile quyen_than`): khoảng 5% số đời leo được tới Tam phẩm mà mưu phản; trong số đó khoảng 20% lên ngôi, phần lớn còn lại chết.
+
 ### 12.7 Khởi nghĩa thời loạn (2026-10-22)
 - Thường dân dựng cờ khởi nghĩa được khi thiên hạ đang **Loạn thế** hoặc **Trung suy**. Đường khởi nghĩa có ba thanh: **Dân tâm**, **Binh lực**, **Lương thảo**. Lá cờ và căn cứ được đặt tên ngẫu nhiên (ví dụ "Hắc kỳ quân" ở núi Ngọa Ngưu).
 - Năm mồi lửa (`khoi-nghia.json`): quan sai đánh chết người vì thuế, kho lương quan giữa nạn đói, đồng dao "thạch nhân một mắt", đường cùng khi bị truy nã, nghĩa quân mất thủ lĩnh đi qua làng. Thêm hoạt động **Tụ nghĩa** (nhóm Phạm pháp).

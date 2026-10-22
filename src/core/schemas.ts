@@ -1910,7 +1910,7 @@ export const BalanceSchema = z
       banAt: z.number(), suspicionDrift: z.number(), adultAge: z.number().int(), deposeBelow: z.number(), softCap: z.number().min(0), rivalGrowth: z.tuple([z.number().int(), z.number().int()]), heirPower: z.number().min(0), siblingDeath: z.number().min(0).max(1), fallDeath: z.number().min(0).max(1),
       rebelPhases: z.array(z.string()), crushChance: z.number(), crushDeath: z.number().min(0).max(1), capitalCities: z.number().int(), garrison: z.number(), garrisonPerCity: z.number(),
       battleLoss: z.number(), battleWin: z.object({ troops: z.number(), grain: z.number(), people: z.number() }).strict(), amnestyChance: z.number(), rebelDecision: z.number().min(0).max(1), rebelUpkeep: z.number(), rebelDraw: z.number().min(0),
-      discoverBase: z.number(), discoverPerPlotter: z.number(), riseNeeds: z.record(z.string(), z.number()),
+      discoverBase: z.number(), discoverPerPlotter: z.number(), riseNeeds: z.record(z.string(), z.number()), riseChance: z.number().min(0).max(1), risePhases: z.array(z.string()), riseTempers: z.array(z.string()),
       reignStart: z.record(z.enum(['royal', 'rebel', 'usurp']), z.record(z.string(), z.number())), reignDrift: z.number(), dangerAt: z.number(), deedTitle: z.number(),
       phaseDrift: z.record(z.string(), z.record(z.string(), z.number())), affairDrift: z.record(z.string(), z.record(z.string(), z.number())),
     }).strict().optional(),

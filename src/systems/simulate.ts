@@ -45,7 +45,7 @@ export const BOT_PROFILES: BotProfile[] = ['random', 'steady', 'player', 'full']
  * 9.8 Persona phàm nhân: lives that stay mortal (never seek an entry technique nor break through) and live
  * one way. `choice`: first open choice, random, the kindest (karma up) or the cruellest (karma down).
  */
-export type MortalPersona = 'nong_dan' | 'thu_sinh' | 'thuong_nhan' | 'ke_cuop' | 'hiep_khach' | 'ke_luoi' | 'tham_vong' | 'nghia_quan';
+export type MortalPersona = 'nong_dan' | 'thu_sinh' | 'thuong_nhan' | 'ke_cuop' | 'hiep_khach' | 'ke_luoi' | 'tham_vong' | 'nghia_quan' | 'quyen_than';
 /** 12.10 `ambitious`: the choice that goes furthest toward the throne (else random). `origin`: born into this xuất thân. */
 interface PersonaDef { name: string; origin?: string; career?: string; jobs?: string[]; assets?: string[]; activities: string[]; months: number; train?: boolean; choice: 'first' | 'random' | 'good' | 'evil' | 'ambitious' }
 export const MORTAL_PERSONAS: Record<MortalPersona, PersonaDef> = {
@@ -56,6 +56,7 @@ export const MORTAL_PERSONAS: Record<MortalPersona, PersonaDef> = {
   hiep_khach: { name: 'Hiệp khách', career: 'vo_lam', jobs: ['tieu_su', 'ho_vien'], activities: ['theo_vo_duong', 'hoc_nghe_ren', 'luyen_quyen_som', 'ap_tieu', 'ngao_du', 'ket_giao', 'bai_nhap_mon_phai', 'lam_nhiem_vu_bang', 'doi_cong_hien_vo_hoc', 'hoc_vo_quan', 'luyen_bi_kip', 'luyen_bi_kip', 'mua_binh_khi', 'duong_noi_thuong', 'cau_cao_nhan_chi_diem', 'nhan_ap_tieu_xa', 'xem_bang_treo_thuong', 'hanh_hiep', 'len_loi_dai', 'tim_tien_tich'], months: 5, train: true, choice: 'good' },
   ke_luoi: { name: 'Kẻ lười', activities: ['ngao_du', 'song_bac', 'tuu_lau'], months: 4, choice: 'first' },
   nghia_quan: { name: 'Thủ lĩnh nghĩa quân', origin: 'nong_dan', jobs: ['lam_ruong'], activities: ['tu_nghia', 'luyen_quyen_som', 'ket_giao', 'doc_sach', 'lam_thue'], months: 5, train: true, choice: 'ambitious' },
+  quyen_than: { name: 'Quyền thần tham vọng', career: 'quan', jobs: ['thay_do', 'thu_lai'], activities: ['xin_hoc_truong_lang', 'leu_chong_di_thi', 'cham_hoc', 'on_thi', 'thu_quan', 'ket_giao', 'doc_sach', 'thang_duong', 'chon_phe_canh', 'muu_do_dai_su', 'ket_vay_canh', 'nuoi_tu_si', 'tao_danh_nghia'], months: 9, choice: 'ambitious' },
   tham_vong: { name: 'Hoàng tử tham vọng', origin: 'hoang_tu', activities: ['duong_danh', 'ket_dang', 'lap_cong', 'an_nhan', 'ham_hai', 'cham_hoc', 'doc_sach', 'ket_giao'], months: 6, choice: 'ambitious' },
 };
 /** 12.10: how far a choice goes toward the throne (its plain result, or a check's success). */
@@ -406,7 +407,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     executed: s.death?.cause === 'execution',
     throneTried: !!(s.flags.tung_khoi_nghia || s.flags.tung_muu_phan || s.flags.len_ngoi || content.origins.find((o) => o.id === s.character.originId)?.royal),
     reigned: !!s.flags.len_ngoi,
-    throneDied: !!s.flags.bi_tru_di || (s.death?.cause === 'execution' && !s.flags.len_ngoi && !!content.origins.find((o) => o.id === s.character.originId)?.royal),
+    throneDied: !!s.flags.bi_tru_di || (s.death?.cause === 'execution' && !s.flags.len_ngoi && (!!s.throne || !!content.origins.find((o) => o.id === s.character.originId)?.royal)),
     soldier: !!s.flags.tung_tong_quan,
     general: !!s.flags.phong_tuong,
     tradeLevel: s.trade?.id ? s.trade.level : -1,

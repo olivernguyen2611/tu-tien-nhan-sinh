@@ -1,0 +1,1255 @@
+[
+ {
+  "id": "tp_loi_ru_quyen_than",
+  "category": "usurp",
+  "title": "Lời rủ rê trong thư phòng",
+  "text": "Đêm khuya, một môn khách thân tín đóng cửa thư phòng, hạ giọng: \"Thiên tử hôn ám, triều chính trong tay đại nhân cả rồi. Sao không lấy luôn cái danh?\"",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "age": {
+    "min": 25,
+    "max": 65
+   },
+   "office": {
+    "rankMin": 4
+   },
+   "court": {
+    "temper": [
+     "hon_quan",
+     "bao_quan"
+    ]
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Gật đầu",
+    "result": {
+     "text": "Ngươi không nói gì, chỉ rót thêm cho hắn một chén. Từ đêm ấy, có những lá thư không bao giờ được gửi qua dịch trạm.",
+     "effects": {
+      "throneStart": "usurp",
+      "stat.daoHeart": -2,
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Quát lui",
+    "result": {
+     "text": "\"Câm miệng!\" Môn khách sợ hãi lui ra. Ngươi ngồi lại một mình rất lâu.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "karma": 1
+     }
+    }
+   },
+   {
+    "text": "Đem hắn nộp lên",
+    "result": {
+     "text": "Môn khách bị chém ở chợ. Thiên tử khen ngươi trung thành, ban thêm bổng lộc.",
+     "effects": {
+      "silver": 200,
+      "karma": -2,
+      "officeMerit": 5,
+      "stat.charm": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tp_loi_ru_tuong",
+  "category": "usurp",
+  "title": "Ủng binh tự trọng",
+  "text": "Quân lương đã nửa năm không về, mà sứ triều đình lại tới đòi ngươi giao bớt binh quyền. Các tướng dưới trướng nhìn ngươi, tay đặt lên chuôi đao.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "age": {
+    "min": 25,
+    "max": 65
+   },
+   "army": {
+    "serving": true,
+    "rankMin": 4
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Giữ binh, không giao",
+    "result": {
+     "text": "Ngươi đuổi sứ giả về. Từ nay đạo quân này nghe ngươi, không nghe triều đình.",
+     "effects": {
+      "throneStart": "usurp",
+      "stat.daoHeart": -1,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Giao binh quyền, về kinh",
+    "result": {
+     "text": "Ngươi giao ấn tướng, một mình cưỡi ngựa về kinh. Ba quân khóc tiễn.",
+     "effects": {
+      "armyLeave": "discharge",
+      "karma": 2,
+      "stat.daoHeart": 2
+     }
+    }
+   },
+   {
+    "text": "Viết sớ xin lương, chờ thêm",
+    "result": {
+     "text": "Ngươi dâng sớ lần thứ năm. Quân sĩ nhìn ngươi, nửa tin nửa ngờ.",
+     "effects": {
+      "stat.happiness": -2,
+      "armyMerit": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tp_thoi_loan_hung_hao",
+  "category": "usurp",
+  "title": "Anh hùng thời loạn",
+  "text": "Thiên hạ đại loạn, hoàng đế không giữ nổi kinh kỳ. Trong trướng, mưu sĩ của ngươi trải bản đồ: \"Người có binh thì có thiên hạ.\"",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "age": {
+    "min": 25,
+    "max": 65
+   },
+   "army": {
+    "serving": true,
+    "rankMin": 4
+   },
+   "worldPhase": [
+    "loan_the"
+   ]
+  },
+  "weight": 1.5,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Mưu đồ đại sự",
+    "result": {
+     "text": "Ngươi cuộn bản đồ lại, cất vào ngực áo.",
+     "effects": {
+      "throneStart": "usurp",
+      "stat.intellect": 1,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Một lòng cần vương",
+    "result": {
+     "text": "Ngươi dẫn quân về giữ kinh. Có lẽ đời sau sẽ chép tên ngươi vào sách trung thần.",
+     "effects": {
+      "armyMerit": 8,
+      "karma": 2,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tp_mat_thu",
+  "category": "usurp",
+  "title": "Mật thư bị chặn",
+  "text": "Một lá mật thư gửi cho đồng mưu bị lính tuần chặn giữa đường. Thư viết bằng ám ngữ, nhưng không phải ai cũng ngu.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "usurp"
+    ]
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Cho người cướp lại thư",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Tử sĩ của ngươi giết lính tuần trước khi thư tới nha môn. Không ai biết gì.",
+     "effects": {
+      "throneBar": {
+       "power": -2
+      },
+      "karma": -2,
+      "stat.luck": 1
+     }
+    },
+    "fail": {
+     "text": "Thư đã tới tay quan trên. Ngươi chỉ còn ít ngày.",
+     "effects": {
+      "followUp": {
+       "event": "tp_bai_lo",
+       "afterYears": [
+        0,
+        0
+       ]
+      },
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Làm giả một lá thư khác thay vào",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Lá thư giả vu cho một kẻ thù của ngươi. Hắn bị bắt, ngươi thêm một chỗ trống trong triều.",
+     "effects": {
+      "throneBar": {
+       "power": 4
+      },
+      "karma": -3,
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Nét chữ giả quá vụng. Có kẻ bắt đầu để ý tới ngươi.",
+     "effects": {
+      "throneBar": {
+       "cause": -3
+      },
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tp_dong_muu_dao_dong",
+  "category": "usurp",
+  "title": "Đồng mưu dao động",
+  "text": "Một người trong đám đồng mưu, đêm nào cũng uống rượu say, nói mơ cả tên ngươi.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "usurp"
+    ]
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Trừ khử hắn",
+    "result": {
+     "text": "Hắn chết đuối trong ao nhà mình. Đám đồng mưu còn lại im như thóc.",
+     "effects": {
+      "throneBar": {
+       "power": -3
+      },
+      "karma": -4,
+      "stat.daoHeart": -2
+     }
+    }
+   },
+   {
+    "text": "Gặp riêng, khuyên giải",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Hắn khóc, thề sống chết theo ngươi. Lần này có vẻ thật.",
+     "effects": {
+      "throneBar": {
+       "power": 3
+      },
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Hắn gật đầu, rồi hôm sau đi thẳng tới phủ Ngự sử.",
+     "effects": {
+      "followUp": {
+       "event": "tp_bai_lo",
+       "afterYears": [
+        0,
+        0
+       ]
+      },
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Mặc kệ",
+    "result": {
+     "text": "Ngươi bảo hắn chỉ là kẻ say. Có lẽ đúng.",
+     "effects": {
+      "stat.happiness": -1,
+      "stat.luck": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tp_trieu_kien",
+  "category": "usurp",
+  "title": "Chiếu triệu về kinh",
+  "text": "Thánh chỉ triệu ngươi về kinh \"bàn việc lớn\". Ai cũng biết, vào kinh lần này, có khi không ra.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "usurp"
+    ]
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Lên đường, tỏ lòng trung",
+    "result": {
+     "text": "Ngươi vào kinh, quỳ trước điện, tâu chuyện trị thủy suốt một buổi. Hoàng đế không tìm được cớ, cho về.",
+     "effects": {
+      "throneBar": {
+       "cause": -2
+      },
+      "stat.daoHeart": -1,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Cáo bệnh không về",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi gửi kèm một xấp đơn thuốc và tấu chương lời lẽ khẩn thiết. Triều đình bán tín bán nghi.",
+     "effects": {
+      "throneBar": {
+       "troops": 2
+      },
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Không ai tin ngươi bệnh. Tin đồn ngươi muốn làm phản bay khắp kinh thành.",
+     "effects": {
+      "followUp": {
+       "event": "tp_bai_lo",
+       "afterYears": [
+        0,
+        0
+       ]
+      },
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Giết sứ giả",
+    "result": {
+     "text": "Đầu sứ giả treo trên cổng thành. Từ nay không cần giả vờ nữa.",
+     "effects": {
+      "throneBar": {
+       "troops": 4,
+       "cause": -6
+      },
+      "karma": -3,
+      "stat.daoHeart": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tp_dieu_lanh",
+  "category": "usurp",
+  "title": "Điềm lành",
+  "text": "Ở quê ngươi, người ta đào được một phiến đá khắc tám chữ: \"Thiên mệnh sở quy, tất tại kỳ nhân\". Không ai biết ai khắc.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "usurp"
+    ]
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Cho người truyền khắp thiên hạ",
+    "result": {
+     "text": "Tám chữ ấy chạy nhanh hơn ngựa trạm. Trẻ con khắp nơi đọc thuộc.",
+     "effects": {
+      "throneBar": {
+       "cause": 8
+      },
+      "stat.charm": 1,
+      "karma": -1
+     }
+    }
+   },
+   {
+    "text": "Đập phiến đá, giấu cho kỹ",
+    "result": {
+     "text": "Phiến đá vỡ vụn dưới búa. Thận trọng một chút cũng không thừa.",
+     "effects": {
+      "throneBar": {
+       "cause": 2
+      },
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tp_muu_si",
+  "category": "usurp",
+  "title": "Mưu sĩ dâng kế",
+  "text": "Một mưu sĩ áo gai xin gặp, dâng ba kế: \"Thượng sách chiếm kinh, trung sách giữ đất, hạ sách chờ thời.\"",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "usurp"
+    ]
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 12,
+  "choices": [
+   {
+    "text": "Dùng thượng sách",
+    "result": {
+     "text": "Mưu sĩ gật đầu: \"Vậy thì phải nhanh.\" Hắn ở lại làm quân sư.",
+     "effects": {
+      "throneBar": {
+       "troops": 3,
+       "cause": 3
+      },
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Dùng trung sách",
+    "result": {
+     "text": "Thành trì của ngươi dày thêm, lương thảo đầy thêm.",
+     "effects": {
+      "throneBar": {
+       "power": 4
+      },
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Chê là hão huyền, đuổi về",
+    "result": {
+     "text": "Mưu sĩ cười dài bỏ đi. Có lẽ hắn sẽ tìm tới người khác.",
+     "effects": {
+      "stat.happiness": -1,
+      "stat.charm": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tp_thien_tu_hon_am",
+  "category": "usurp",
+  "title": "Thiên tử hôn ám",
+  "text": "Thiên tử lại giết một vị lão thần can gián. Cả triều run sợ, có người lén nhìn về phía ngươi.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "usurp"
+    ]
+   },
+   "court": {
+    "temper": [
+     "hon_quan",
+     "bao_quan"
+    ]
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Đứng ra bênh vực lão thần",
+    "result": {
+     "text": "Ngươi dâng sớ minh oan. Thiên tử nổi giận, còn thiên hạ thì nhớ tên ngươi.",
+     "effects": {
+      "throneBar": {
+       "cause": 8,
+       "power": -2
+      },
+      "karma": 1,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Âm thầm thu nạp con cháu lão thần",
+    "result": {
+     "text": "Người nhà lão thần được ngươi giấu đi, nuôi dưỡng. Họ thề báo ân.",
+     "effects": {
+      "throneBar": {
+       "power": 5,
+       "cause": 3
+      },
+      "silver": -100,
+      "karma": 1,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Im lặng",
+    "result": {
+     "text": "Ngươi cúi đầu như mọi người. Thời cơ chưa tới.",
+     "effects": {
+      "stat.daoHeart": -1,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tp_bai_lo",
+  "category": "usurp",
+  "title": "Mưu phản bại lộ",
+  "text": "Ngự sử dâng mật tấu kèm cả danh sách đồng mưu. Cấm quân đã nhận lệnh, sáng mai sẽ vây phủ.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "usurp"
+    ]
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Đêm nay khởi sự luôn",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ngươi ra tay trước khi trời sáng. Đã không còn đường lui, chỉ có đường tới.",
+     "effects": {
+      "throneStep": 1,
+      "followUp": {
+       "event": "tp_khoi_su_2",
+       "afterYears": [
+        0,
+        0
+       ]
+      },
+      "stat.daoHeart": -1,
+      "stat.physique": 1
+     }
+    },
+    "fail": {
+     "text": "Cổng phủ đã bị khóa từ ngoài. Đồng mưu khai ra ngươi đầu tiên.",
+     "effects": {
+      "throneFail": "death",
+      "stat.health": -20
+     }
+    }
+   },
+   {
+    "text": "Giết kẻ tố giác, phi tang chứng cứ",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Mật tấu cháy trong lò, kẻ tố giác chết trong ngục. Ngươi thoát, nhưng phải rửa tay rất lâu.",
+     "effects": {
+      "throneBar": {
+       "power": -8,
+       "cause": -3
+      },
+      "karma": -4,
+      "stat.daoHeart": -2
+     }
+    },
+    "fail": {
+     "text": "Ngươi chậm một bước.",
+     "effects": {
+      "throneFail": "death",
+      "stat.happiness": -10
+     }
+    }
+   },
+   {
+    "text": "Bỏ trốn ra biên ải",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ngươi cải trang thành lái buôn, vượt ải trong đêm. Từ nay ngươi là kẻ phản quốc lưu vong.",
+     "effects": {
+      "throneFail": "exile",
+      "wanted": 3,
+      "stat.happiness": -6
+     }
+    },
+    "fail": {
+     "text": "Ngươi bị bắt ở cổng thành, tay còn cầm túi vàng.",
+     "effects": {
+      "throneFail": "death",
+      "stat.health": -10
+     }
+    }
+   },
+   {
+    "text": "Tự trói vào triều xin tội",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 65
+    },
+    "success": {
+     "text": "Thiên tử tha chết, đày ngươi ra biên viễn. Đồng mưu thì không may như vậy.",
+     "effects": {
+      "throneFail": "exile",
+      "karma": -2,
+      "stat.happiness": -8
+     }
+    },
+    "fail": {
+     "text": "\"Mưu phản, tội tru di.\" Lời phán chỉ có năm chữ.",
+     "effects": {
+      "throneFail": "death",
+      "stat.happiness": -10
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tp_khoi_su_1",
+  "category": "usurp",
+  "title": "Thời cơ đã tới",
+  "text": "Quyền thế, binh quyền, danh nghĩa đều đã đủ. Thiên hạ đang rối, triều đình đang yếu. Mưu sĩ nói: \"Trời cho không lấy, ắt chịu tội.\"",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "usurp"
+    ],
+    "step": 0
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Khởi sự",
+    "result": {
+     "text": "Ngươi đặt bút ký vào tờ hịch. Ngày khởi binh định vào đầu xuân.",
+     "effects": {
+      "throneStep": 1,
+      "followUp": {
+       "event": "tp_khoi_su_2",
+       "afterYears": [
+        1,
+        1
+       ]
+      },
+      "stat.daoHeart": -1,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Chờ thêm một năm",
+    "result": {
+     "text": "Ngươi gác tờ hịch lại. Mỗi năm chờ là một năm có thêm người biết chuyện.",
+     "effects": {
+      "throneBar": {
+       "power": 2
+      },
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tp_khoi_su_2",
+  "category": "usurp",
+  "title": "Hịch khởi binh",
+  "text": "Tờ hịch dán khắp các cổng thành: kể mười tội của hôn quân, hô hào trừ gian thần, an xã tắc. Quân ngươi tiến về kinh.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "usurp"
+    ],
+    "step": 1
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Thần tốc đánh thẳng vào kinh",
+    "requires": {
+     "throne": {
+      "barMin": {
+       "troops": 40
+      }
+     }
+    },
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Quân ngươi đi đêm, sáng ra đã tới chân thành. Cổng thành mở: người của ngươi giữ cửa.",
+     "effects": {
+      "throneStep": 1,
+      "followUp": {
+       "event": "tp_khoi_su_3",
+       "afterYears": [
+        1,
+        1
+       ]
+      },
+      "stat.physique": 1,
+      "karma": -2
+     }
+    },
+    "fail": {
+     "text": "Quân cần vương chặn đường ở bến sông. Trận ấy, ngươi không về.",
+     "effects": {
+      "throneFail": "death",
+      "stat.health": -30
+     }
+    }
+   },
+   {
+    "text": "Dụ các trấn theo về trước",
+    "requires": {
+     "throne": {
+      "barMin": {
+       "power": 40
+      }
+     }
+    },
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 70
+    },
+    "success": {
+     "text": "Năm trấn treo cờ của ngươi. Kinh thành bị cô lập.",
+     "effects": {
+      "throneStep": 1,
+      "followUp": {
+       "event": "tp_khoi_su_3",
+       "afterYears": [
+        1,
+        1
+       ]
+      },
+      "throneBar": {
+       "troops": 10
+      },
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Các trấn đóng cửa thành, đợi xem ai thắng. Quân ngươi đơn độc, rồi tan. Ngươi chạy ra biên ải với mấy chục kỵ binh.",
+     "effects": {
+      "throneFail": "exile",
+      "wanted": 3,
+      "stat.happiness": -10
+     }
+    }
+   },
+   {
+    "text": "Dốc hết vốn liếng, liều một phen",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 85
+    },
+    "success": {
+     "text": "Không ai ngờ một toán quân nhỏ dám đánh thẳng vào kinh. Chính vì không ai ngờ, cổng thành mở.",
+     "effects": {
+      "throneStep": 1,
+      "followUp": {
+       "event": "tp_khoi_su_3",
+       "afterYears": [
+        1,
+        1
+       ]
+      },
+      "stat.luck": 1,
+      "karma": -2
+     }
+    },
+    "fail": {
+     "text": "Toán quân nhỏ tan trong một buổi sáng.",
+     "effects": {
+      "throneFail": "death",
+      "stat.health": -30
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tp_khoi_su_3",
+  "category": "usurp",
+  "title": "Vào điện",
+  "text": "Kinh thành đã chiếm. Hoàng đế cùng mấy thái giám co ro sau long sàng. Trăm quan quỳ ngoài sân, chờ xem ngươi làm gì.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "path": [
+     "usurp"
+    ],
+    "step": 2
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Ép thiên tử nhường ngôi",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 45
+    },
+    "success": {
+     "text": "Thiên tử run tay viết chiếu thiện nhượng. Ngươi từ chối ba lần cho phải phép, rồi nhận.",
+     "effects": {
+      "throneAscend": true,
+      "karma": -2,
+      "stat.happiness": 5
+     }
+    },
+    "fail": {
+     "text": "Đêm ấy, một toán cấm quân trung thành liều chết xông vào. Ngươi ngã xuống bậc điện.",
+     "effects": {
+      "throneFail": "death",
+      "stat.health": -40
+     }
+    }
+   },
+   {
+    "text": "Lập một hoàng tử nhỏ làm bù nhìn, tự làm nhiếp chính",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ba năm sau, đứa trẻ \"tự nguyện\" nhường ngôi. Không ai dám nói gì.",
+     "effects": {
+      "throneAscend": true,
+      "stat.intellect": 1,
+      "stat.happiness": 3
+     }
+    },
+    "fail": {
+     "text": "Các vương hầu khắp nơi kéo quân về \"cứu giá\". Ngươi phá vây chạy khỏi kinh, từ nay là giặc lưu vong.",
+     "effects": {
+      "throneFail": "exile",
+      "wanted": 3,
+      "stat.happiness": -10,
+      "stat.health": -10
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tp_to_giac_dong_lieu",
+  "category": "court",
+  "title": "Đồng liêu mưu phản",
+  "text": "Ngươi tình cờ đọc được một lá thư trong phòng một vị đồng liêu: hắn đang liên lạc với một tướng trấn biên, ám ngữ đầy rẫy.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "age": {
+    "min": 25,
+    "max": 65
+   },
+   "office": {
+    "held": true,
+    "rankMin": 2
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Tố giác",
+    "result": {
+     "text": "Hắn bị bắt, cả nhà bị tru di. Ngươi được thăng thưởng, đêm về nằm mơ thấy cả nhà hắn.",
+     "effects": {
+      "officeMerit": 15,
+      "karma": -1,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Giả như không biết",
+    "result": {
+     "text": "Ngươi đặt lá thư lại chỗ cũ. Nếu hắn thắng, ngươi chẳng mất gì. Nếu hắn thua…",
+     "effects": {
+      "stat.happiness": -2,
+      "stat.luck": 1
+     }
+    }
+   },
+   {
+    "text": "Riêng khuyên hắn dừng tay",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Hắn đốt lá thư trước mặt ngươi, xin cáo lão về quê. Một mạng người, và một cái đầu của chính ngươi, được giữ lại.",
+     "effects": {
+      "karma": 3,
+      "stat.daoHeart": 2
+     }
+    },
+    "fail": {
+     "text": "Hắn cười nhạt. Tuần sau, ngươi bị chính hắn vu cáo.",
+     "effects": {
+      "officeEvidence": 15,
+      "stat.happiness": -4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tp_dep_phan",
+  "category": "army",
+  "title": "Dẹp loạn phản thần",
+  "text": "Một viên tướng trấn biên làm phản, giết sứ giả, kéo quân về kinh. Triều đình điều đạo quân của ngươi ra chặn.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "age": {
+    "min": 25,
+    "max": 65
+   },
+   "army": {
+    "serving": true,
+    "rankMin": 2
+   },
+   "court": {
+    "affair": [
+     "khoi_nghia",
+     "tranh_ngoi",
+     "quyen_than"
+    ]
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Xung trận",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi chém rơi soái kỳ quân phản. Trận ấy kết thúc trước giờ ngọ.",
+     "effects": {
+      "armyMerit": 15,
+      "stat.physique": 1,
+      "fame": 1
+     }
+    },
+    "fail": {
+     "text": "Quân phản đông hơn tin báo. Ngươi mang thương về doanh.",
+     "effects": {
+      "stat.health": -12,
+      "armyMerit": 3
+     }
+    }
+   },
+   {
+    "text": "Dụ hàng tướng phản",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Ngươi một mình tới trại địch, nói một đêm. Sáng ra, viên tướng ấy cởi giáp ra hàng.",
+     "effects": {
+      "armyMerit": 12,
+      "karma": 2,
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Hắn giữ ngươi làm con tin ba tháng mới thả.",
+     "effects": {
+      "stat.health": -5,
+      "stat.happiness": -4
+     }
+    }
+   },
+   {
+    "text": "Án binh bất động, chờ xem bên nào thắng",
+    "result": {
+     "text": "Ngươi đóng quân bên sông, ngày ngày câu cá. Đời sau chép ngươi là kẻ thức thời, hoặc kẻ hèn.",
+     "effects": {
+      "armyMerit": -5,
+      "stat.daoHeart": -1,
+      "stat.luck": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "tp_tru_di_tam_toc",
+  "category": "court",
+  "title": "Tru di tam tộc",
+  "text": "Một vị đại thần mưu phản bị bắt. Bản án tru di ba họ được dán ở chợ. Trong danh sách có tên một người họ hàng xa của ngươi.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
+   },
+   "age": {
+    "min": 25,
+    "max": 65
+   },
+   "court": {
+    "affair": [
+     "quyen_than",
+     "tranh_ngoi"
+    ]
+   }
+  },
+  "weight": 0.8,
+  "cooldownYears": 20,
+  "choices": [
+   {
+    "text": "Lặng lẽ đứng xem",
+    "result": {
+     "text": "Ngươi đứng trong đám đông, không dám khóc. Cái tên ấy bị gạch bằng mực đỏ.",
+     "effects": {
+      "stat.happiness": -4,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Chạy vạy xin tha cho đứa trẻ trong họ",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Đứa trẻ được tha, đổi họ, nuôi trong nhà ngươi. Nó không bao giờ biết vì sao.",
+     "effects": {
+      "karma": 4,
+      "stat.happiness": 1,
+      "silver": -80
+     }
+    },
+    "fail": {
+     "text": "Ngươi bị nghi là đồng đảng, mất mấy tháng mới gột sạch.",
+     "effects": {
+      "stat.happiness": -5,
+      "silver": -150
+     }
+    }
+   }
+  ]
+ }
+]
