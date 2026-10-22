@@ -175,6 +175,10 @@ export interface GameState {
    *  once out (deserted is remembered in flags). */
   /** 13.4 Kình địch suốt đời: the NPC, the next meeting of the chain (index into balance.rival.steps) and the age it is due. */
   rival?: { npc: string; step: number; next: number } | null;
+  /** 13.7d: what grows in the linh điền (ripe at `ready`; `right`: sown in a year that suited it, `wrong` in one that did not). */
+  field?: { plots: { herb: string; planted: number; ready: number; fit: 'right' | 'normal' | 'wrong' }[] };
+  /** 13.7c: the linh thú bound by khế ước. */
+  beast?: { species: string; name: string; stage: number; exp: number; since: number } | null;
   /** 13.7b: the trận laid at the cave or sect (until that age) and a trận kỳ game in progress. */
   formation?: { active: { id: string; until: number } | null; game: FormationGame | null };
   army?: { rank: number; merit: number; since: number; via: 'draft' | 'volunteer'; battles: number; wins: number; best: number } | null;

@@ -19,12 +19,14 @@ import { rankingBoard } from '../../systems/rankings';
 import { seclusionView } from '../../systems/seclusion';
 import { caveView } from '../../systems/cave';
 import { activeFormation, formationViews } from '../../systems/formation';
-import type { FormationAction } from './FormationPopup';
+import type { BeastAction, FieldAction, FormationAction } from './FormationPopup';
+import { fieldView, harvestChance } from '../../systems/spiritField';
+import { beastBlocked, beastView, captureChance } from '../../systems/spiritBeast';
 import { recipeViews } from '../../systems/crafting';
 import { Meter } from './Meter';
 import { TermText } from './Tooltip';
 
-export function CultivatePanel({ state, content, view, extra, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onLearn, onTrain, onQuest, onSeclude, onRentCave, onCraft, onFormation, onClose }: {
+export function CultivatePanel({ state, content, view, extra, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onLearn, onTrain, onQuest, onSeclude, onRentCave, onCraft, onFormation, onBeast, onField, onClose }: {
   state: GameState;
   content: Content;
   /** 9.7: "self" is the Bản thân sheet (võ đạo, đường đời, bách nghệ), "cultivate" the Tu luyện one. */
@@ -49,6 +51,10 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
   onCraft: (recipeId: string) => string | null;
   /** 13.7b: lay a trận (opens the trận kỳ game). */
   onFormation?: (a: FormationAction) => string | null;
+  /** 13.7c: hatch, capture, feed or release the linh thú. */
+  onBeast?: (a: BeastAction) => string | null;
+  /** 13.7d: sow in the linh điền. */
+  onField?: (a: FieldAction) => string | null;
   /** Task 4.1: bế quan; the sheet closes so the log shows the years. */
   onSeclude: (years: number) => void;
   /** 6b.14: rent a cave on a spirit vein for this many years; returns the log line. */
@@ -64,6 +70,8 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
   const crafts = craftViews(state, content);
   const formations = formationViews(state, content);
   const laid = activeFormation(state, content);
+  const pet = beastView(state, content);
+  const field = fieldView(state, content);
   const [practiced, setPracticed] = useState<string | null>(null);
   const [joined, setJoined] = useState<string | null>(null);
   const [careerOpen, setCareerOpen] = useState(false);
@@ -307,6 +315,46 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
                     Luyện tập{c.cost > 0 && <span class="chip-cost"> · {c.cost} bạc</span>}
                   </button>
                   {c.blocked && <span class="craft-note">{c.blocked}</span>}
+                  {c.id === 'farming' && onField && field && (
+                    <details class="recipes">
+                      <summary>Linh điền · {field.growing.length}/{field.plots} ô · gặt thành {Math.round(harvestChance(state, content) * 100)}%</summary>
+                      {field.news && <p class="craft-note">{field.news}</p>}
+                      {field.growing.map((g, i) => (
+                        <p class="craft-note" key={i}>{g.herb}: chín năm {g.ready} tuổi{g.fit === 'wrong' ? ' (trồng trái tiết)' : g.fit === 'right' ? ' (hợp tiết)' : ''}</p>
+                      ))}
+                      {field.herbs.map((h) => (
+                        <div class="recipe" key={h.id}>
+                          <button class="chip-btn" disabled={!!h.blocked} title={h.blocked ?? undefined} onClick={() => setPracticed(onField({ kind: 'sow', id: h.id }))}>
+                            Gieo {h.name} · {h.seedCost} linh thạch · {h.years} năm
+                          </button>
+                          <span class="craft-note">{h.text}{h.blocked && ` · ${h.blocked}`}</span>
+                        </div>
+                      ))}
+                    </details>
+                  )}
+                  {c.id === 'beast' && onBeast && state.cult.realm !== 'pham_nhan' && (
+                    <details class="recipes">
+                      <summary>Linh thú{pet && ` · ${pet.name} (${pet.species}, ${pet.stage})`}</summary>
+                      {pet ? (
+                        <>
+                          <p class="craft-note">{pet.text} Đã theo ngươi {pet.years} năm.</p>
+                          <Meter label={pet.stage} value={pet.growth} color="var(--bar-cult)" text="" />
+                          {pet.feeds.filter((f) => f.have > 0).map((f) => (
+                            <button class="chip-btn" key={f.item} onClick={() => setPracticed(onBeast({ kind: 'feed', item: f.item }))}>Cho ăn {f.name} ({f.have})</button>
+                          ))}
+                          <button class="chip-btn" onClick={() => setPracticed(onBeast({ kind: 'release' }))}>Thả về rừng</button>
+                        </>
+                      ) : (
+                        <>
+                          <button class="chip-btn" disabled={!!beastBlocked(state, content, 'hatch')} title={beastBlocked(state, content, 'hatch') ?? undefined} onClick={() => setPracticed(onBeast({ kind: 'hatch' }))}>Ấp trứng linh thú</button>
+                          <button class="chip-btn" disabled={!!beastBlocked(state, content, 'capture')} title={beastBlocked(state, content, 'capture') ?? undefined} onClick={() => setPracticed(onBeast({ kind: 'capture' }))}>
+                            Thu phục linh thú · {Math.round(captureChance(state, content) * 100)}%
+                          </button>
+                          {beastBlocked(state, content, 'capture') && <span class="craft-note">{beastBlocked(state, content, 'capture')}</span>}
+                        </>
+                      )}
+                    </details>
+                  )}
                   {c.id === 'formation' && onFormation && formations.length > 0 && (
                     <details class="recipes">
                       <summary>Bày trận{laid && ` · ${laid.name} tới ${laid.until} tuổi`}</summary>

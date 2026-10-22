@@ -4,6 +4,12 @@ import type { Content } from '../../core/content';
 import type { GameState } from '../../core/types';
 import { formationSymbols, openSlots } from '../../systems/formation';
 
+/** 13.7d: sow a herb in the linh điền. */
+export type FieldAction = { kind: 'sow'; id: string };
+
+/** 13.7c: linh thú actions share the sheet's callback. */
+export type BeastAction = { kind: 'hatch' } | { kind: 'capture' } | { kind: 'feed'; item: string } | { kind: 'release' };
+
 export type FormationAction =
   | { kind: 'begin'; id: string }
   | { kind: 'input'; symbol: string }

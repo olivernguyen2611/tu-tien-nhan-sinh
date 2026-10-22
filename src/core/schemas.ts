@@ -1936,6 +1936,17 @@ export const BalanceSchema = z
       fromRealm: z.string().min(1), ageGap: z.number().int().min(0), aheadAt: z.array(z.number().int().min(0)).default([]),
       gapYears: z.tuple([z.number().int().min(1), z.number().int().min(1)]), role: z.string().min(1), steps: z.array(z.string().min(1)).min(1),
     }).strict().optional(),
+    /** 13.7d Linh thực: plots (more with a cave or a sect of one's own), harvest chance, yield change in a wrong / right year, craft xp per harvest. */
+    spiritField: z.object({
+      plots: z.number().int().min(1), plotsCave: z.number().int().min(0), plotsOwnSect: z.number().int().min(0),
+      successBase: z.number(), successPerLevel: z.number(), wrongYield: z.number().int(), rightYield: z.number().int(), xp: z.number().int().min(0),
+    }).strict().optional(),
+    /** 13.7c Ngự thú: exp to reach each stage, the share of the master's power each stage adds, exp a year and per nội đan fed, exp ×(1 + level × levelExpMul), capture chance, the craft level to try, happiness when it dies of age. */
+    spiritBeast: z.object({
+      stageExp: z.array(z.number().int().min(0)).length(4), stagePower: z.array(z.number().min(0)).length(4), yearExp: z.number().min(0),
+      feedExp: z.record(z.string(), z.number().min(0)), levelExpMul: z.number().min(0), captureBase: z.number(), capturePerLevel: z.number(),
+      captureMin: z.number().int().min(0), oldHappiness: z.number(),
+    }).strict().optional(),
     /** 13.7b Bày trận: mistakes allowed in the trận kỳ game (base + one per `perLevel` craft levels), craft xp on a win / a loss, slots given at this length. */
     formation: z.object({
       allowedBase: z.number().int().min(0), perLevel: z.number().int().min(1), xpWin: z.number().int().min(0), xpLose: z.number().int().min(0),
@@ -4284,6 +4295,21 @@ export const RecipeFileSchema = z
       /** 13.7: a craft's own success and fail lines (vẽ phù, bày trận…). */
       byCraft: z.record(z.string(), z.object({ success: z.string().min(1), fail: z.string().min(1) }).strict()).optional(),
     }).strict(),
+    /** 13.7d Linh thực: what a cultivator sows in the linh điền (weather: the year it likes, from assets.json weather, or any). */
+    herbs: z.array(z.object({
+      id, name: z.string().min(1), text: z.string().min(1), product: id, count: z.number().int().min(1), years: z.number().int().min(1),
+      weather: z.enum(['wet', 'dry', 'normal', 'any']), minLevel: z.number().int().min(0).max(100), seedCost: z.number().int().min(0),
+    }).strict()).default([]),
+    herbTexts: z.object({ sow: z.string().min(1), sowRight: z.string().min(1), sowWrong: z.string().min(1), harvest: z.string().min(1), fail: z.string().min(1) }).strict().optional(),
+    /** 13.7c Ngự thú: species of linh thú (an egg hatches into one with `egg`; capture finds one at the realm). */
+    beasts: z.array(z.object({
+      id, name: z.string().min(1), text: z.string().min(1), element: z.string().min(1), egg: z.boolean().default(false),
+      minRealm: z.string().min(1), power: z.number().min(0), lifespan: z.number().int().min(1), hooks: z.array(EffectHookSchema).default([]),
+    }).strict()).default([]),
+    beastTexts: z.object({
+      stages: z.array(z.string().min(1)).length(4), hatch: z.string().min(1), capture: z.string().min(1), captureFail: z.string().min(1),
+      feed: z.string().min(1), grow: z.string().min(1), old: z.string().min(1), release: z.string().min(1), names: z.array(z.string().min(1)).min(1),
+    }).strict().optional(),
     /** 13.7b: trận a cultivator lays at a cave or sect by placing trận kỳ (a ngũ hành game); hooks last `years`. */
     formations: z.array(z.object({
       id, name: z.string().min(1), text: z.string().min(1), minLevel: z.number().int().min(0).max(100),

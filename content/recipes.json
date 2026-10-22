@@ -73,6 +73,185 @@
     "active": "Đang có {name} tới năm {until} tuổi.",
     "ended": "{name} quanh động phủ đã cạn linh lực, trận kỳ đổ rạp."
   },
+  "beasts": [
+    {
+      "id": "hoa_ly",
+      "name": "Hỏa Ly",
+      "text": "Con mèo lửa lông đỏ, ngủ trong lò đan cũng không chết.",
+      "element": "hoa",
+      "egg": true,
+      "minRealm": "luyen_khi",
+      "power": 1.0,
+      "lifespan": 300,
+      "hooks": []
+    },
+    {
+      "id": "thanh_phong_dieu",
+      "name": "Thanh Phong Điêu",
+      "text": "Chim cắt cánh xanh, bay nhanh hơn kiếm quang của tu sĩ Trúc Cơ.",
+      "element": "moc",
+      "egg": true,
+      "minRealm": "luyen_khi",
+      "power": 0.8,
+      "lifespan": 250,
+      "hooks": [
+        {
+          "hook": "escapeChance",
+          "add": 0.1
+        }
+      ]
+    },
+    {
+      "id": "huyen_giap_quy",
+      "name": "Huyền Giáp Quy",
+      "text": "Rùa mai đen, chậm như đá trôi, nhưng chém không vỡ.",
+      "element": "thuy",
+      "egg": true,
+      "minRealm": "luyen_khi",
+      "power": 0.7,
+      "lifespan": 1000,
+      "hooks": [
+        {
+          "hook": "injuryReduce",
+          "add": 0.08
+        }
+      ]
+    },
+    {
+      "id": "kim_mao_hau",
+      "name": "Kim Mao Hầu",
+      "text": "Khỉ lông vàng tinh ranh, thấy linh dược là đào, thấy túi trữ vật là móc.",
+      "element": "kim",
+      "egg": false,
+      "minRealm": "truc_co",
+      "power": 0.9,
+      "lifespan": 400,
+      "hooks": [
+        {
+          "hook": "lootPct",
+          "add": 0.15
+        }
+      ]
+    },
+    {
+      "id": "liet_dia_hung",
+      "name": "Liệt Địa Hùng",
+      "text": "Gấu đất to như cái kho, một chưởng làm nứt núi đá.",
+      "element": "tho",
+      "egg": false,
+      "minRealm": "kim_dan",
+      "power": 1.3,
+      "lifespan": 800,
+      "hooks": []
+    },
+    {
+      "id": "bang_giao",
+      "name": "Băng Giao",
+      "text": "Giao long non ở Bắc Minh, hơi thở đóng băng cả mặt hồ.",
+      "element": "thuy",
+      "egg": false,
+      "minRealm": "nguyen_anh",
+      "power": 1.6,
+      "lifespan": 3000,
+      "hooks": [
+        {
+          "hook": "tribulationDefense",
+          "add": 0.05
+        }
+      ]
+    }
+  ],
+  "beastTexts": {
+    "stages": [
+      "Ấu thú",
+      "Thiếu thú",
+      "Thành thú",
+      "Thú vương"
+    ],
+    "hatch": "Vỏ trứng nứt một đường, một cái đầu nhỏ ló ra kêu chíp chíp: một con {beast} non. Từ nay nó theo ngươi.",
+    "capture": "Ngươi rình ba ngày, kết khế ước bằng một giọt máu đầu ngón tay. {beast} cúi đầu nhận chủ.",
+    "captureFail": "{beast} giãy khỏi khế ước, cào ngươi một đường rồi chạy mất vào rừng.",
+    "feed": "{name} nuốt viên {item}, lông mượt hẳn lên.",
+    "grow": "{name} lột xác, đã thành {stage}.",
+    "old": "{name} theo ngươi {years} năm, một sáng nằm im bên cửa động phủ, không dậy nữa.",
+    "release": "Ngươi giải khế ước, thả {name} về rừng. Nó ngoái lại ba lần rồi mới đi.",
+    "names": [
+      "Tiểu Hắc",
+      "A Hoàng",
+      "Đậu Đỏ",
+      "Bánh Bao",
+      "Tiểu Bạch",
+      "Lão Nhị",
+      "Hạt Dẻ",
+      "Cục Than",
+      "Mây Xanh",
+      "Hổ Phách"
+    ]
+  },
+  "herbs": [
+    {
+      "id": "gieo_linh_thao",
+      "name": "Linh thảo",
+      "text": "Dễ trồng, ưa mưa. Ba năm một lứa.",
+      "product": "linh_thao_tram_nam",
+      "count": 2,
+      "years": 3,
+      "weather": "wet",
+      "minLevel": 0,
+      "seedCost": 8
+    },
+    {
+      "id": "gieo_bang_tam_lien",
+      "name": "Băng tâm liên",
+      "text": "Sen mọc trong hồ lạnh, ưa năm khô, nước trong.",
+      "product": "bang_tam_lien",
+      "count": 2,
+      "years": 5,
+      "weather": "dry",
+      "minLevel": 25,
+      "seedCost": 40
+    },
+    {
+      "id": "gieo_ngo_dao_tra",
+      "name": "Ngộ đạo trà",
+      "text": "Cây trà lá dày, năm nào cũng trồng được, nhưng chậm.",
+      "product": "ngo_dao_tra",
+      "count": 1,
+      "years": 8,
+      "weather": "any",
+      "minLevel": 45,
+      "seedCost": 60
+    },
+    {
+      "id": "gieo_linh_chi",
+      "name": "Linh chi nghìn năm",
+      "text": "Linh điền ép tuổi cây: hai mươi năm thành nghìn năm. Ưa mưa.",
+      "product": "linh_chi_ngan_nam",
+      "count": 1,
+      "years": 20,
+      "weather": "wet",
+      "minLevel": 60,
+      "seedCost": 90
+    },
+    {
+      "id": "gieo_chu_qua",
+      "name": "Chu quả vạn năm",
+      "text": "Hạt chu quả cứng như sắt, năm mươi năm mới ra một trái. Ưa nắng.",
+      "product": "chu_qua_van_nam",
+      "count": 1,
+      "years": 50,
+      "weather": "dry",
+      "minLevel": 85,
+      "seedCost": 400
+    }
+  ],
+  "herbTexts": {
+    "sow": "Ngươi xới linh điền, vùi hạt {herb} xuống đất, tưới một chén nước có pha linh thạch tán.",
+    "sowRight": "Trời năm nay hợp với {herb}, mầm lên xanh mướt.",
+    "sowWrong": "Trời năm nay không hợp {herb}, mầm lên còi cọc, phải chờ thêm một năm.",
+    "harvest": "Linh điền tới mùa: gặt được {count} {product}.",
+    "fail": "Linh điền tới mùa mà {herb} đã thối rễ. Một lứa công cốc."
+  },
   "recipes": [
     {
       "id": "bo_khi_tan",

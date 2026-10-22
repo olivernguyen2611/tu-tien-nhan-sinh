@@ -32,7 +32,7 @@ import { SectPanel, type SectAction } from '../components/SectPanel';
 import { FatePopup } from '../components/FatePopup';
 import { CorePopup } from '../components/CorePopup';
 import { MiniGamePopup, type QuestAction } from '../components/MiniGamePopup';
-import { FormationPopup, type FormationAction } from '../components/FormationPopup';
+import { FormationPopup, type BeastAction, type FieldAction, type FormationAction } from '../components/FormationPopup';
 import { ExamPopup, type ExamAction } from '../components/ExamPopup';
 import type { BondAction, BondTarget } from '../../systems/familyBond';
 import { HeartDemonPopup } from '../components/HeartDemonPopup';
@@ -82,7 +82,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onActivity, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onAsset, onLearn, onTrain, onQuest, onFormation, onExam, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onActivity, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onAsset, onLearn, onTrain, onQuest, onFormation, onBeast, onField, onExam, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -142,6 +142,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onImport: (person: SavedPerson, setup: ImportSetup) => { ok: boolean; text: string };
   onQuest: (a: QuestAction) => string | null;
   onFormation: (a: FormationAction) => string | null;
+  onBeast: (a: BeastAction) => string | null;
+  onField: (a: FieldAction) => string | null;
   /** 10.2: one round of the trường thi, or its incident. */
   onExam: (a: ExamAction) => void;
   /** Practise a technique from a scroll (task 2.8). */
@@ -347,8 +349,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
 
       {sectOpen && <SectPanel state={state} content={content} onAction={onSectAction} onClose={() => setSectOpen(false)} />}
 
-      {selfOpen && <CultivatePanel view="self" extra={acts('ban_than')} state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onTakeJob={onTakeJob} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onFormation={onFormation} onClose={() => setSelfOpen(false)} />}
-      {cultivateOpen && <CultivatePanel view="cultivate" extra={acts('tu_luyen')} state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onTakeJob={onTakeJob} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onFormation={onFormation} onClose={() => setCultivateOpen(false)} />}
+      {selfOpen && <CultivatePanel view="self" extra={acts('ban_than')} state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onTakeJob={onTakeJob} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onFormation={onFormation} onBeast={onBeast} onField={onField} onClose={() => setSelfOpen(false)} />}
+      {cultivateOpen && <CultivatePanel view="cultivate" extra={acts('tu_luyen')} state={state} content={content} onBreakthrough={onBreakthrough} onPractice={onPractice} onJoinCareer={onJoinCareer} onTakeJob={onTakeJob} onLearn={onLearn} onTrain={onTrain} onQuest={onQuest} onSeclude={onSeclude} onRentCave={onRentCave} onCraft={onCraft} onFormation={onFormation} onBeast={onBeast} onField={onField} onClose={() => setCultivateOpen(false)} />}
 
       {mapOpen && <MapPanel state={state} content={content} unlimited={!!dev} onTravel={onTravel} onClose={() => setMapOpen(false)} />}
 

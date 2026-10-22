@@ -8,6 +8,21 @@
 
 ## [Chưa phát hành]
 
+### 13.7c–d Ngự thú và Linh thực (2026-10-23)
+- **Ngự thú:** mỗi tu sĩ có một linh thú theo bên, chọn trong 6 loài:
+  - Hỏa Ly, Thanh Phong Điêu (dễ bỏ chạy), Huyền Giáp Quy (giảm thương tích);
+  - Kim Mao Hầu (nhặt thêm chiến lợi phẩm), Liệt Địa Hùng, Băng Giao (đỡ thiên kiếp).
+  - Có linh thú bằng hai cách: ấp Trứng linh thú, hoặc thu phục (từ Ngự Thú cấp 10). Thu phục tốn lượt luyện nghề của năm, có thể hỏng và bị cào.
+  - Linh thú lớn dần theo năm và khi được cho ăn nội đan, qua 4 bậc: Ấu thú, Thiếu thú, Thành thú, Thú vương. Cấp Ngự Thú cao thì lớn nhanh hơn.
+  - Mỗi bậc thêm một phần chiến lực cho chủ. Linh thú chết già theo tuổi thọ của loài. Có thể thả về rừng.
+- **Linh thực:** tu sĩ có linh điền:
+  - 2 ô; thêm 1 khi thuê động phủ, thêm 2 khi có tông môn riêng.
+  - 5 loại để gieo: linh thảo, băng tâm liên, ngộ đạo trà, linh chi nghìn năm, chu quả vạn năm.
+  - Mỗi loại ưa một kiểu năm (mưa, hạn, hay năm nào cũng được), dùng chung thời tiết và lời đồn của ruộng phàm gian 10.4.
+  - Gieo trái tiết thì chín muộn một năm và được ít hơn.
+  - Tới mùa thì tự gặt. Tỉ lệ gặt thành tăng theo cấp Linh Thực; Mảnh vườn thần bí và các khí vận hợp nghề cho thêm sản lượng.
+- Cả hai nằm trong mục Bách nghệ, dưới nghề Ngự Thú và Linh Thực.
+
 ### 13.7a–b Phù lục và Trận pháp (2026-10-23)
 - **Phù lục:** có 8 công thức vẽ phù, mỗi mẻ được nhiều lá, cần Phù chỉ và Linh chu sa:
   - Hỏa Cầu, Thần Hành, Kim Cang, Tụ Linh, Thanh Tâm, Thiên Lôi, Hộ Thân Linh, Phá Không.

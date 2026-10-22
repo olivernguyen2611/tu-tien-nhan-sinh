@@ -304,6 +304,8 @@
     "role": "Kình địch",
     "steps": ["kd_so_ngo", "kd_dai_bi", "kd_luan_dao", "kd_cung_vao_bi_canh", "kd_nga_re", "kd_ket_cuc"]
   },
+  "spiritBeast": { "stageExp": [0, 30, 90, 200], "stagePower": [0.05, 0.12, 0.22, 0.35], "yearExp": 2, "feedExp": { "noi_dan_1": 6, "noi_dan_2": 14, "noi_dan_3": 30, "noi_dan_4": 60 }, "levelExpMul": 0.01, "captureBase": 0.3, "capturePerLevel": 0.01, "captureMin": 10, "oldHappiness": -12 },
+  "spiritField": { "plots": 2, "plotsCave": 1, "plotsOwnSect": 2, "successBase": 0.75, "successPerLevel": 0.003, "wrongYield": -1, "rightYield": 0, "xp": 2 },
   "formation": { "allowedBase": 1, "perLevel": 30, "xpWin": 4, "xpLose": 1, "secondGivenAt": 5 },
   "daoBond": {
     "hooks": {
