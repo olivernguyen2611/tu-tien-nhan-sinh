@@ -291,6 +291,7 @@
     "retireAge": 55,
     "colleagues": 2
   },
+  "law": { "maxWanted": 5, "decayEvery": 3, "fleeWanted": 2, "fine": [20, 60], "beatingHealth": -15, "jailYears": [2, 5], "exileYears": 3, "bribeCost": 50, "bribeHonest": 0.3, "bribeScore": 2, "escapeBase": 0.35, "escapePerFail": 0.08, "escapeMin": 0.05, "escapeFailYears": 2, "recordBars": ["thu_lai", "bo_khoai", "linh", "thay_do"] },
   "ailments": { "childChance": 0.05, "adultChance": 0.025, "oldFrom": 50, "oldPerYear": 0.004, "maxAilments": 2, "contagion": 0.3, "contagionDeath": 0.3, "doctorGoodShare": 0.55, "doctorGood": 1.25, "doctorBad": 0.55, "shamanHarm": 4, "selfPerLevel": 0.2, "drinkAt": 6, "drinkYears": 3, "drinkHealth": -3, "drinkHappiness": -1, "drinkSilver": -6 },
   "pastime": { "petEvery": 2, "petDeathHappiness": -6, "addictAt": 6, "addictYears": 3, "addictSilver": -15, "addictHappiness": -3, "omenMul": 4, "omenYears": 3, "artMax": 100 },
   "kinship": { "oathDaoHeart": -10, "oathKarma": -5, "swornDeathHappiness": -8, "temperAge": 16 },

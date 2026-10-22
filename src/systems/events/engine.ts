@@ -5,6 +5,8 @@ import { beginExam } from '../exams';
 import { addPerf, promoteJob, quitJob, takeJob } from '../jobs';
 import { addArt, adoptPet, castOmen, noteGamble, omenMul } from '../leisure';
 import { catchDisease, cureAilment, injure, noteDrink } from '../health';
+import { addJailYears, addWanted, arrest, bribe, commitCrime, fleeLaw, imprison, sentence, tryEscape } from '../law';
+import { checkDeath } from '../time';
 import { borrow, buyAsset, loseAsset, repayDebts, sellAsset, setStrategy, sowCrop } from '../assets';
 import { ordinaryAptitude, ordinaryStat } from '../aptitudeGain';
 import type { Content } from '../../core/content';
@@ -70,6 +72,8 @@ export function eventWeight(state: GameState, content: Content, event: GameEvent
   const target = event.conditions.romance?.target;
   const judged = target ? { ...state, events: { ...state.events, npc: romanceTarget(state, target)?.id ?? null } } : state;
   if (!meets(judged, event.conditions, content)) return 0;
+  // 10.9: in ngục only ngục events come.
+  if (state.law?.jail && !event.conditions.law?.jailed) return 0;
   let w = event.weight * themeMultiplier(state, content, event);
   // G.4, playtest 2026-10-12: kỳ ngộ come more often to the lucky.
   const ev = content.balance.events;
@@ -347,6 +351,8 @@ export function resolveChoice(given: GameState, content: Content, choiceIndex: n
   if (last && last.age === state.character.age) log[log.length - 1] = { ...last, lines: [...last.lines, ...lines] };
   else log.push({ age: state.character.age, lines });
   next = { ...next, log };
+  // 10.9–10.10: an end chosen in the event (xử trảm, quy ẩn, xuất gia…).
+  if (outcome.effects.die && next.alive) next = checkDeath(next, content, outcome.effects.die);
   if (outcome.fight) next = startBattle(next, content, outcome.fight, event.title);
   // 9.6: kỷ niệm with the NPC of the event.
   next = remember(next, content, next.events.npc, echoTitle(event.title, state, content));
@@ -511,6 +517,17 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.cure) next = cureAilment(next, content, fx.cure);
   if (fx.injure) next = injure(next, content, fx.injure);
   if (fx.drank) next = noteDrink(next);
+  // 10.9 Phạm pháp.
+  if (fx.crime) next = commitCrime(next, content, fx.crime);
+  if (fx.trial && next.law?.trial) next = { ...next, law: { ...next.law, trial: { ...next.law.trial, score: next.law.trial.score + fx.trial } } };
+  if (fx.bribe) next = bribe(next, content);
+  if (fx.wanted) next = addWanted(next, content, fx.wanted);
+  if (fx.imprison) next = imprison(next, content, next.law?.lastCrime ?? 'tu_toi', fx.imprison);
+  if (fx.jailYears) next = addJailYears(next, fx.jailYears);
+  if (fx.escape) next = tryEscape(next, content);
+  if (fx.fleeLaw) next = fleeLaw(next, content);
+  if (fx.arrest) next = arrest(next, content);
+  if (fx.sentence) next = sentence(next, content);
   if (fx.martialBonus) next = { ...next, martial: { ...next.martial, bonus: next.martial.bonus + fx.martialBonus } };
   if (fx.martialPromote) next = martialPromote(next, content);
   if (fx.martialAscend) next = martialAscend(next, content);

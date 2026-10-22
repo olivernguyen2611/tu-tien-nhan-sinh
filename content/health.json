@@ -73,11 +73,11 @@
     }
   ],
   "injuries": [
-    { "id": "que_chan", "name": "Què chân", "flag": "que_chan", "stats": { "stat.physique": -4, "stat.charm": -2 }, "text": "Xương chân lành lệch. Từ nay ngươi đi tập tễnh, trời trở gió lại nhức." },
-    { "id": "mu_mot_mat", "name": "Mù một mắt", "flag": "mu_mot_mat", "stats": { "stat.charm": -4, "stat.physique": -1 }, "text": "Một mắt không còn thấy gì nữa. Thế gian từ nay chỉ còn một nửa." },
+    { "id": "que_chan", "name": "Què chân", "flag": "que_chan", "stats": { "stat.physique": -4, "stat.charm": -2 }, "text": "Xương chân lành lệch. Từ nay ngươi đi tập tễnh, trời trở gió lại nhức.", "bars": ["linh", "bo_khoai", "tieu_su", "ho_vien", "phu_khuan_vac"] },
+    { "id": "mu_mot_mat", "name": "Mù một mắt", "flag": "mu_mot_mat", "stats": { "stat.charm": -4, "stat.physique": -1 }, "text": "Một mắt không còn thấy gì nữa. Thế gian từ nay chỉ còn một nửa.", "bars": ["linh", "hoa_si"] },
     { "id": "seo_mat", "name": "Sẹo mặt", "flag": "seo_mat", "stats": { "stat.charm": -6 }, "text": "Vết thương kéo da non thành một vệt sẹo dài trên mặt. Trẻ con nhìn thấy thì chạy." },
-    { "id": "cut_ngon", "name": "Cụt ngón tay", "flag": "cut_ngon", "stats": { "stat.physique": -2, "stat.charm": -1 }, "text": "Mất hai đốt ngón tay. Cầm đũa vẫn được, cầm bút thì phải tập lại." },
-    { "id": "dau_lung", "name": "Đau lưng kinh niên", "flag": "dau_lung", "stats": { "stat.health": -6, "stat.physique": -2 }, "text": "Lưng gãy gập một lần, từ đó không thẳng lại được. Cúi xuống là đau." }
+    { "id": "cut_ngon", "name": "Cụt ngón tay", "flag": "cut_ngon", "stats": { "stat.physique": -2, "stat.charm": -1 }, "text": "Mất hai đốt ngón tay. Cầm đũa vẫn được, cầm bút thì phải tập lại.", "bars": ["nhac_cong", "tho_may"] },
+    { "id": "dau_lung", "name": "Đau lưng kinh niên", "flag": "dau_lung", "stats": { "stat.health": -6, "stat.physique": -2 }, "text": "Lưng gãy gập một lần, từ đó không thẳng lại được. Cúi xuống là đau.", "bars": ["phu_khuan_vac", "tho_xay"] }
   ],
   "texts": {
     "worse": [

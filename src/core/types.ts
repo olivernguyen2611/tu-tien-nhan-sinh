@@ -1,6 +1,6 @@
 // Shared game-state types. Stat layers follow PLAN.md section K.2.
 import type { RngState } from './rng';
-import type { APTITUDES, Fight, MORTAL_STATS } from './schemas';
+import type { APTITUDES, DEATH_CAUSES, Fight, MORTAL_STATS } from './schemas';
 
 export type MortalStat = (typeof MORTAL_STATS)[number];
 export type Aptitude = (typeof APTITUDES)[number];
@@ -73,7 +73,7 @@ export interface SpiritRoot {
   elements: string[];
 }
 
-export type DeathCause = 'old_age' | 'illness' | 'breakthrough' | 'ordeal' | 'combat' | 'tribulation' | 'calamity';
+export type DeathCause = (typeof DEATH_CAUSES)[number];
 
 export interface GameState {
   version: 1;
@@ -131,6 +131,11 @@ export interface GameState {
   /** 10.4 Tài sản: what the life owns (uid = its own number), debts (owed grows by the loan's rate), the crop sown this year, the next uid. */
   assets?: { owned: OwnedAsset[]; loans: Loan[]; crop: string | null; nextUid: number };
   /** 10.7 Giải trí: this year's lễ hội, tài nghệ (0–100), pets, ages at the sòng bạc (recent), the event a quẻ named and until when. */
+  /** 10.9 Phạm pháp: mức truy nã, ngục (ra ngục năm until), đang hầu tòa, tiền án, vượt ngục, the last crime. */
+  law?: {
+    wanted: number; jail: { until: number; crime: string } | null; trial: { crime: string; score: number } | null;
+    convictions: number; escapes: number; failedEscapes: number; lastCrime: string | null; lastCrimeAge: number | null;
+  };
   /** 10.8 Sức khỏe: bệnh now (id, since age), thương tật for life, ages a cup was drunk (toward nghiện rượu). */
   body?: { ailments: { id: string; since: number }[]; injuries: string[]; drinks: number[] };
   pastime?: { festival: string | null; arts: Record<string, number>; pets: Pet[]; gambles: number[]; omen: { id: string; until: number } | null; nextUid: number };

@@ -7,6 +7,8 @@ const ids = z.array(id).default([]);
 
 /** Stat keys from PLAN.md K.2 (mortal body + aptitudes). */
 export const MORTAL_STATS = ['health', 'happiness', 'intellect', 'charm'] as const;
+/** Ways a life ends. 10.9: xử trảm; 10.10: chết đói, mất tích, quy ẩn, xuất gia. */
+export const DEATH_CAUSES = ['old_age', 'illness', 'breakthrough', 'ordeal', 'combat', 'tribulation', 'calamity', 'execution', 'starvation', 'missing', 'hermit', 'monk'] as const;
 export const APTITUDES = ['physique', 'comprehension', 'luck', 'daoHeart'] as const;
 /** Values an event can read or change, named like the trait hooks (K.6). */
 export const STAT_KEYS = [...MORTAL_STATS, ...APTITUDES].map((k) => `stat.${k}`);
@@ -83,6 +85,11 @@ const BaseConditionsSchema = z
     /** 10.8 Sức khỏe: has a bệnh (this one / any / a lây one); has a thương tật (this one / any). */
     ailment: z.object({ id: id.optional(), any: z.boolean().optional(), contagious: z.boolean().optional() }).strict().optional(),
     injury: z.object({ id: id.optional(), any: z.boolean().optional() }).strict().optional(),
+    /** 10.9 Phạm pháp: mức truy nã, in ngục, đang hầu tòa, có tiền án, số lần vượt ngục. */
+    law: z.object({
+      wantedMin: z.number().int().optional(), wantedMax: z.number().int().optional(), jailed: z.boolean().optional(),
+      trial: z.boolean().optional(), record: z.boolean().optional(), escapesMin: z.number().int().optional(),
+    }).strict().optional(),
     /** 10.2 Khoa cử: highest level passed (exams.json level ids; none = -1), times failed, can sit the next exam this year, the Đình placing. */
     exam: z.object({
       passed: id.optional(), notPassed: id.optional(), failsMin: z.number().int().optional(),
@@ -305,6 +312,21 @@ export const EffectsSchema = z
     catchDisease: id.optional(),
     injure: id.optional(),
     drank: z.boolean().optional(),
+    /** 10.9 Phạm pháp: commit a crime (crimes.json id); a step at công đường (± điểm); lót tay quan; the verdict;
+     *  try to break out; years of ngục ±; mức truy nã ±; flee far away (truy nã drops); bộ khoái take you to công đường. */
+    crime: id.optional(),
+    trial: z.number().optional(),
+    bribe: z.boolean().optional(),
+    sentence: z.boolean().optional(),
+    escape: z.boolean().optional(),
+    jailYears: z.number().int().optional(),
+    /** Into ngục for this many years (a reprieve from tử hình, a sentence an event gives). */
+    imprison: z.number().int().min(1).optional(),
+    wanted: z.number().int().optional(),
+    fleeLaw: z.boolean().optional(),
+    arrest: z.boolean().optional(),
+    /** 10.9–10.10: this life ends now, this way. */
+    die: z.enum(DEATH_CAUSES).optional(),
     /** Extra % for the next martial breakthrough. */
     martialBonus: z.number().optional(),
     /** An elder of the sect takes you as a personal disciple. */
@@ -408,7 +430,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1236,7 +1258,7 @@ export const BalanceSchema = z
     ghost: z
       .object({
         /** Chance of a lingering obsession by cause of death, + (luck − 50) × luckPerPoint + continueAfterDeath hooks. */
-        causeChance: z.record(z.enum(['old_age', 'illness', 'breakthrough', 'ordeal', 'combat', 'tribulation', 'calamity']), probability),
+        causeChance: z.record(z.enum(DEATH_CAUSES), probability),
         luckPerPoint: z.number(),
         maxChance: probability,
         /** The ghost's realm (at least), its technique, health on rising and years of afterlife. */
@@ -1725,6 +1747,15 @@ export const BalanceSchema = z
       })
       .strict()
       .optional(),
+    /** 10.9 Phạm pháp: bộ khoái, công đường, ngục. */
+    law: z.object({
+      maxWanted: z.number().int().min(1), decayEvery: z.number().int().min(1), fleeWanted: z.number().int().min(1),
+      fine: z.tuple([z.number(), z.number()]), beatingHealth: z.number(), jailYears: z.tuple([z.number().int(), z.number().int()]), exileYears: z.number().int(),
+      bribeCost: z.number(), bribeHonest: z.number(), bribeScore: z.number(),
+      escapeBase: z.number(), escapePerFail: z.number(), escapeMin: z.number(), escapeFailYears: z.number().int(),
+      /** Jobs that will not take someone with a tiền án. */
+      recordBars: z.array(z.string()).default([]),
+    }).strict().optional(),
     /** 10.8 Sức khỏe: a mortal falls ill (chance by age), bệnh spread to the household, lang trung good or bad,
      *  thầy cúng may hurt, nghề thuốc cures by level, drinking drinkAt times in drinkYears makes it nghiện. */
     ailments: z.object({
@@ -2298,6 +2329,8 @@ export const LifeTextsSchema = z
     deathIllness: lines,
     /** 6c.3: a yearly calamity (tai ương) of a cultivator; {age}. */
     deathCalamity: lines,
+    /** 10.9–10.10: other ends (execution, starvation, missing, hermit, monk): the death line and the summary label ({age}). */
+    deathMore: z.record(z.object({ label: z.string().min(1), lines }).strict()).default({}),
     calamity: lines,
     /** 6c.5: yearly money lines; {silver} {stones}. */
     economy: z.object({ exchange: z.string().min(1), upkeepPaid: z.string().min(1), upkeepShort: z.string().min(1) }).strict(),
@@ -3163,6 +3196,8 @@ export const HealthFileSchema = z.object({
     /** Set for good, so events, jobs and activities can read it. */
     flag: id,
     text: z.string().min(1),
+    /** Jobs closed to someone with this thương tật. */
+    bars: z.array(id).default([]),
   }).strict()).min(1),
   texts: z.object({
     /** {disease}. */
@@ -3175,6 +3210,29 @@ export const HealthFileSchema = z.object({
   }).strict(),
 }).strict();
 export type HealthFile = z.infer<typeof HealthFileSchema>;
+
+/** 10.9 Phạm pháp (content/crimes.json): tội danh, bản án, lời văn. */
+export const CrimesFileSchema = z.object({
+  crimes: z.array(z.object({
+    id, name: z.string().min(1),
+    /** The check that decides whether it works; loot in bạc; nghiệp; chance a success still gets out (truy nã +heat). */
+    stat: statKey, difficulty: z.number().min(0).max(100),
+    loot: z.tuple([z.number(), z.number()]), karma: z.number(), expose: z.number().min(0).max(1), heat: z.number().int(),
+    /** 1–5: how heavy the sentence starts (5 = tử hình). */
+    severity: z.number().int().min(1).max(5),
+    success: z.array(z.string().min(1)).min(1), fail: z.array(z.string().min(1)).min(1),
+  }).strict()).min(1),
+  /** One line per verdict: tha bổng, phạt bạc, đánh trượng, ngục, lưu đày, tử hình. {crime}, {years}, {silver}. */
+  verdicts: z.object({ acquit: z.string().min(1), fine: z.string().min(1), beating: z.string().min(1), jail: z.string().min(1), exile: z.string().min(1), death: z.string().min(1) }).strict(),
+  texts: z.object({
+    exposed: z.array(z.string().min(1)).min(1), caught: z.string().min(1), released: z.string().min(1),
+    escaped: z.string().min(1), escapeFail: z.string().min(1), cooled: z.string().min(1), fled: z.string().min(1),
+    bribeOk: z.string().min(1), bribeHonest: z.string().min(1), poor: z.string().min(1),
+    /** Mức truy nã 0–5 in words, for the profile. */
+    wanted: z.array(z.string().min(1)).min(1),
+  }).strict(),
+}).strict();
+export type CrimesFile = z.infer<typeof CrimesFileSchema>;
 
 export const RelationsFileSchema = z.object({
   groups: z.array(z.object({ id, name: z.string().min(1) }).strict()).min(1),
@@ -4183,7 +4241,7 @@ export const LifeCheckSchema = z
     mortal: z.boolean().optional(),
     ageMin: z.number().int().min(0).optional(),
     ageMax: z.number().int().min(0).optional(),
-    cause: z.array(z.enum(['old_age', 'illness', 'breakthrough', 'ordeal', 'combat', 'tribulation', 'calamity'])).optional(),
+    cause: z.array(z.enum(DEATH_CAUSES)).optional(),
     karmaMin: z.number().optional(),
     karmaMax: z.number().optional(),
     happinessMin: z.number().optional(),

@@ -8,6 +8,18 @@
 
 ## [Chưa phát hành]
 
+### 10.9 Phạm pháp, quan phủ, ngục tù (2026-10-22)
+- 10 tội danh (`content/crimes.json`): móc túi, trộm vặt, trộm nhà giàu, lừa đảo, buôn lậu muối sắt, cướp đường, đánh người, đầu độc, giết người, đốt nhà. Mỗi tội là một hoạt động mục Phạm pháp: thành thì có bạc, mất nghiệp, có thể bị lộ; hỏng thì bị bắt tại chỗ.
+- Mức truy nã 0–5: tăng khi bị lộ, nguội dần sau vài năm không phạm tội. Truy nã cao thì bộ khoái gõ cửa, cáo thị dán ở chợ, bạn thơ ấu làm bộ khoái chặn cổng thành (sự kiện mẫu X1). Có thể trốn đi thật xa (thành tha hương) hoặc ra đầu thú.
+- Công đường hai bước: khai thật / chối tội / im lặng, rồi gọi nhân chứng / kêu oan / lót tay quan / nhận án. Điểm thu được làm nhẹ án; quan thanh liêm thì lót tay là thêm tội.
+- Án: tha bổng, phạt bạc, đánh trượng, ngục (vài năm), lưu đày, tử hình. Tử hình còn đường kêu oan lên phủ trên hoặc chờ bạn giang hồ cướp ngục.
+- Ngục tù là một lối chơi nhỏ: trong ngục chỉ có hoạt động và sự kiện của ngục (cúi đầu chờ, đánh nhau giành chỗ, kết giao bạn tù, đút lót cai ngục, làm khổ sai giảm án, đào hầm vượt ngục). Vượt ngục khó dần sau mỗi lần thua, thua thì thêm án; thành công thì bị truy nã khắp nơi. Có đại ca phòng giam, dịch trong ngục, đại xá thiên hạ.
+- Tiền án: không xin được làm thư lại, bộ khoái, lính, thầy đồ. Thương tật cũng khóa nghề (què chân không làm lính, cụt ngón không làm nhạc công…).
+- Bị hại: nhà bị trộm, bị lừa, có thể đi kiện.
+- Kiểu chết mới "Bị xử trảm" (`die`), chuẩn bị sẵn chết đói, mất tích, quy ẩn, xuất gia cho 10.10. Hồ sơ có dòng "Quan phủ:".
+- 13 sự kiện (`pham-phap.json`), 18 hoạt động (`activities/pham-phap.json`). Điều kiện `law`; hiệu ứng `crime`, `trial`, `bribe`, `sentence`, `escape`, `jailYears`, `imprison`, `wanted`, `fleeLaw`, `arrest`, `die`; số cân bằng ở `balance.law`.
+- Mức truy nã tính chung một mức (không theo từng châu), vì người phàm hiện chỉ ở một đại vực.
+
 ### 10.8 Sức khỏe, bệnh tật, ngoại hình (2026-10-22)
 - Bệnh có tên (`content/health.json`): phong hàn, sốt rét, kiết lỵ, thương hàn, bệnh lao, đậu mùa, dịch tả. Trẻ nhỏ và người già dễ mắc hơn; mỗi năm bệnh trừ Sức khỏe tới khi tự khỏi, được chữa, hoặc giết người. Bệnh lây có thể truyền sang người nhà, người già và trẻ nhỏ có khi không qua khỏi. Tu sĩ không mắc bệnh phàm.
 - Chữa bệnh (mục Sức khỏe): mời lang trung (gặp thầy giỏi hay thầy dở), bốc thuốc tiệm, mời thầy cúng (rẻ, ít linh, có khi hại), tự bốc thuốc nếu có nghề thuốc (giỏi nghề thì dễ khỏi), thuốc quý trăm lượng gần như chắc khỏi.

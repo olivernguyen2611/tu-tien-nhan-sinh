@@ -23,7 +23,7 @@ import {
   devResetItemUse, devResetFingerCooldowns, devSetFingerLevel, devSetFlag, devSetGoldenFinger, devSetRealm, devSkipYears, devStartFight, devTakeChosen, devToggleTrait, devTriggerEvent,
 } from '../../systems/dev';
 
-const DEATHS: [DeathCause, string][] = [['old_age', 'Thọ tận'], ['illness', 'Bệnh'], ['combat', 'Tử trận'], ['breakthrough', 'Đột phá thất bại'], ['tribulation', 'Lôi kiếp'], ['ordeal', 'Tai kiếp'], ['calamity', 'Tai ương']];
+const DEATHS: [DeathCause, string][] = [['old_age', 'Thọ tận'], ['illness', 'Bệnh'], ['combat', 'Tử trận'], ['breakthrough', 'Đột phá thất bại'], ['tribulation', 'Lôi kiếp'], ['ordeal', 'Tai kiếp'], ['calamity', 'Tai ương'], ['execution', 'Xử trảm'], ['starvation', 'Chết đói'], ['missing', 'Mất tích'], ['hermit', 'Quy ẩn'], ['monk', 'Xuất gia']];
 
 function Section({ title, open, children }: { title: string; open?: boolean; children: ComponentChildren }) {
   return (

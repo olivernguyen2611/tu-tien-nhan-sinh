@@ -1,0 +1,545 @@
+[
+  {
+    "id": "pp_moc_tui",
+    "group": "pham_phap",
+    "name": "Móc túi",
+    "icon": "手",
+    "text": "Chợ phiên đông người, túi tiền lủng lẳng bên hông kẻ khác.",
+    "conditions": {
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "law": {
+        "trial": false
+      },
+      "age": {
+        "min": 12
+      }
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": "Ngươi len vào đám đông.",
+        "effects": {
+          "crime": "moc_tui",
+          "stat.daoHeart": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "pp_trom_vat",
+    "group": "pham_phap",
+    "name": "Trộm vặt",
+    "icon": "偷",
+    "text": "Gà nhà hàng xóm, buồng chuối sau vườn ai đó.",
+    "conditions": {
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "law": {
+        "trial": false
+      },
+      "age": {
+        "min": 10
+      }
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": "Đêm không trăng, ngươi trèo rào.",
+        "effects": {
+          "crime": "trom_vat",
+          "stat.daoHeart": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "pp_trom_nha_giau",
+    "group": "pham_phap",
+    "name": "Trộm nhà giàu",
+    "icon": "盜",
+    "text": "Nhà viên ngoại đầu làng, kho bạc sau ba lớp tường.",
+    "conditions": {
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "law": {
+        "trial": false
+      },
+      "age": {
+        "min": 16
+      }
+    },
+    "months": 2,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": "Ngươi khoác áo đen, mang theo dao khoét vách.",
+        "effects": {
+          "crime": "trom_nha_giau",
+          "stat.daoHeart": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "pp_lua_dao",
+    "group": "pham_phap",
+    "name": "Lừa đảo",
+    "icon": "騙",
+    "text": "Miệng lưỡi trơn tru, kẻ nhẹ dạ ở khắp nơi.",
+    "conditions": {
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "law": {
+        "trial": false
+      },
+      "age": {
+        "min": 16
+      }
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": "Ngươi dựng chuyện, chọn người.",
+        "effects": {
+          "crime": "lua_dao",
+          "stat.daoHeart": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "pp_buon_lau_muoi",
+    "group": "pham_phap",
+    "name": "Buôn lậu muối sắt",
+    "icon": "私",
+    "text": "Muối và sắt triều đình giữ độc quyền. Lãi gấp năm, tội cũng gấp năm.",
+    "conditions": {
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "law": {
+        "trial": false
+      },
+      "age": {
+        "min": 18
+      }
+    },
+    "months": 2,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": "Ngươi gánh hàng lậu đi đường tắt qua núi.",
+        "effects": {
+          "crime": "buon_lau_muoi",
+          "stat.daoHeart": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "pp_cuop_duong",
+    "group": "pham_phap",
+    "name": "Cướp đường",
+    "icon": "劫",
+    "text": "Bịt mặt, cầm đao, chờ khách buôn qua đèo.",
+    "conditions": {
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "law": {
+        "trial": false
+      },
+      "age": {
+        "min": 18
+      }
+    },
+    "months": 2,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": "Ngươi nấp sau tảng đá bên đường.",
+        "effects": {
+          "crime": "cuop_duong",
+          "stat.daoHeart": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "pp_danh_nguoi",
+    "group": "pham_phap",
+    "name": "Đánh người",
+    "icon": "毆",
+    "text": "Có kẻ làm ngươi ngứa mắt đã lâu.",
+    "conditions": {
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "law": {
+        "trial": false
+      },
+      "age": {
+        "min": 14
+      }
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": "Ngươi xắn tay áo.",
+        "effects": {
+          "crime": "danh_nguoi",
+          "stat.daoHeart": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "pp_dau_doc",
+    "group": "pham_phap",
+    "name": "Đầu độc",
+    "icon": "毒",
+    "text": "Một gói bột trắng, một chén trà. Tội đáng chém đầu.",
+    "conditions": {
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "law": {
+        "trial": false
+      },
+      "age": {
+        "min": 20
+      }
+    },
+    "months": 3,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": "Ngươi mua một gói thuốc ở chợ đen.",
+        "effects": {
+          "crime": "dau_doc",
+          "stat.daoHeart": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "pp_giet_nguoi",
+    "group": "pham_phap",
+    "name": "Giết người",
+    "icon": "殺",
+    "text": "Có những mối thù chỉ máu mới rửa được. Tội đáng chém đầu.",
+    "conditions": {
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "law": {
+        "trial": false
+      },
+      "age": {
+        "min": 18
+      }
+    },
+    "months": 3,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": "Ngươi mài dao suốt đêm.",
+        "effects": {
+          "crime": "giet_nguoi",
+          "stat.daoHeart": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "pp_dot_nha",
+    "group": "pham_phap",
+    "name": "Đốt nhà",
+    "icon": "火",
+    "text": "Một mồi lửa trả mối hận. Gió to thì cả xóm cháy theo.",
+    "conditions": {
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "law": {
+        "trial": false
+      },
+      "age": {
+        "min": 16
+      }
+    },
+    "months": 2,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": "Ngươi mang theo bùi nhùi và đá lửa.",
+        "effects": {
+          "crime": "dot_nha",
+          "stat.daoHeart": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "pp_tron_di_xa",
+    "group": "pham_phap",
+    "name": "Trốn đi thật xa",
+    "icon": "逃",
+    "text": "Cáo thị dán khắp nơi. Bỏ quê mà đi, tới nơi không ai biết mặt.",
+    "conditions": {
+      "law": {
+        "wantedMin": 1,
+        "jailed": false,
+        "trial": false
+      }
+    },
+    "cost": [
+      {
+        "silver": 10
+      }
+    ],
+    "months": 3,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Gói ghém vài bộ áo, đi trong đêm.",
+          "Ngươi theo thuyền buôn xuôi dòng, không ngoái lại."
+        ],
+        "effects": {
+          "fleeLaw": true,
+          "stat.happiness": -3
+        }
+      }
+    ]
+  },
+  {
+    "id": "pp_ra_dau_thu",
+    "group": "pham_phap",
+    "name": "Ra đầu thú",
+    "icon": "首",
+    "text": "Mệt mỏi vì trốn chạy, tự tới nha môn nhận tội.",
+    "conditions": {
+      "law": {
+        "wantedMin": 1,
+        "jailed": false,
+        "trial": false
+      }
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Ngươi đứng trước cổng nha môn rất lâu, rồi bước vào.",
+          "Ngươi tự trói tay mình, đi bộ lên huyện."
+        ],
+        "effects": {
+          "arrest": true,
+          "stat.daoHeart": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "pp_cui_dau_cho",
+    "group": "pham_phap",
+    "name": "Cúi đầu chờ ngày ra",
+    "icon": "忍",
+    "text": "Không gây chuyện, không kết thù, đếm từng ngày.",
+    "conditions": {
+      "law": {
+        "jailed": true
+      }
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Ngươi vạch lên tường một vạch mỗi ngày. Bức tường dần kín.",
+          "Ngồi trong góc tối, ngươi ôn lại cả đời mình."
+        ],
+        "effects": {
+          "stat.daoHeart": 2,
+          "stat.happiness": -2
+        }
+      }
+    ]
+  },
+  {
+    "id": "pp_gianh_cho",
+    "group": "pham_phap",
+    "name": "Đánh nhau giành chỗ",
+    "icon": "鬥",
+    "text": "Chỗ gần cửa sổ có gió, chỗ gần hố xí có mùi. Muốn chỗ tốt phải có nắm đấm.",
+    "conditions": {
+      "law": {
+        "jailed": true
+      }
+    },
+    "check": {
+      "stat": "stat.physique",
+      "difficulty": 55
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Một trận ẩu đả trong bóng tối. Sáng ra ngươi được nằm chỗ gần cửa sổ.",
+          "Ngươi đánh ngã gã to con nhất phòng giam. Từ đó không ai dám chạm vào ngươi."
+        ],
+        "effects": {
+          "stat.physique": 2,
+          "stat.happiness": 2
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Bị cả bọn xúm vào đánh. Cai ngục tới thì ngươi đã gãy hai cái xương sườn."
+        ],
+        "effects": {
+          "stat.health": -8,
+          "stat.happiness": -2
+        }
+      }
+    ]
+  },
+  {
+    "id": "pp_ket_giao_ban_tu",
+    "group": "pham_phap",
+    "name": "Kết giao bạn tù",
+    "icon": "友",
+    "text": "Trong ngục toàn kẻ giang hồ, đạo tặc, kẻ bị oan. Có người đáng làm bạn.",
+    "conditions": {
+      "law": {
+        "jailed": true
+      }
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Gã ngồi cạnh ngươi từng là đại đạo vùng sông nước. Hai người chia nhau nửa cái bánh.",
+          "Ông lão bị oan kể chuyện đời mình suốt đêm. Ngươi lặng nghe, thấy bớt cô đơn."
+        ],
+        "effects": {
+          "meetNpc": {
+            "role": "bạn tù",
+            "kind": "nguoi_quen",
+            "adult": true
+          },
+          "stat.happiness": 3
+        }
+      }
+    ]
+  },
+  {
+    "id": "pp_dut_lot_cai_nguc",
+    "group": "pham_phap",
+    "name": "Đút lót cai ngục",
+    "icon": "賄",
+    "text": "Cai ngục cũng là người, người thì cần tiền.",
+    "conditions": {
+      "law": {
+        "jailed": true
+      }
+    },
+    "cost": [
+      {
+        "silver": 40
+      }
+    ],
+    "limit": {
+      "perYear": 1,
+      "cooldownYears": 2
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Gói bạc đổi được một lời hứa: tên ngươi sẽ có trong danh sách giảm án.",
+          "Cai ngục đếm bạc, gật gù: \"Sang năm hẵng hay.\""
+        ],
+        "effects": {
+          "jailYears": -1,
+          "stat.happiness": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "pp_dao_ham",
+    "group": "pham_phap",
+    "name": "Đào hầm vượt ngục",
+    "icon": "穴",
+    "text": "Mỗi đêm một nắm đất, giấu trong ống quần đem rải ra sân. Càng thua càng khó.",
+    "conditions": {
+      "law": {
+        "jailed": true
+      }
+    },
+    "months": 6,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Đất dưới chân ngươi mềm dần. Đêm nay là đêm ấy.",
+          "Ngươi đã đào nửa năm. Tiếng mưa che tiếng xẻng."
+        ],
+        "effects": {
+          "escape": true,
+          "stat.health": -3
+        }
+      }
+    ]
+  },
+  {
+    "id": "pp_lam_khoan_sai",
+    "group": "pham_phap",
+    "name": "Làm khổ sai",
+    "icon": "役",
+    "text": "Đập đá, đắp đê, kéo gỗ. Làm chăm thì được giảm án.",
+    "conditions": {
+      "law": {
+        "jailed": true
+      }
+    },
+    "months": 6,
+    "limit": {
+      "perYear": 1,
+      "cooldownYears": 2
+    },
+    "outcomes": [
+      {
+        "weight": 2,
+        "text": [
+          "Cả năm đập đá dưới nắng. Tay chai cứng, lưng đen nhẻm. Cai ngục ghi tên ngươi vào sổ giảm án.",
+          "Đắp đê mùa lũ, ngươi cứu được một người bạn tù chết đuối. Quan coi ngục khen ngợi."
+        ],
+        "effects": {
+          "jailYears": -1,
+          "stat.physique": 2,
+          "stat.health": -3
+        }
+      },
+      {
+        "weight": 1,
+        "text": [
+          "Làm quần quật mà chẳng ai ghi công."
+        ],
+        "effects": {
+          "stat.physique": 1,
+          "stat.happiness": -3
+        }
+      }
+    ]
+  }
+]

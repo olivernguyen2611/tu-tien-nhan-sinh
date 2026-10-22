@@ -153,6 +153,16 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
       && (!c.ailment!.contagious || (content?.health?.diseases.find((d) => d.id === a.id)?.contagious ?? false)));
     if (has !== (c.ailment.any ?? true)) return false;
   }
+  if (c.law) {
+    const l = state.law;
+    const wanted = l?.wanted ?? 0;
+    if (c.law.wantedMin !== undefined && wanted < c.law.wantedMin) return false;
+    if (c.law.wantedMax !== undefined && wanted > c.law.wantedMax) return false;
+    if (c.law.jailed !== undefined && !!l?.jail !== c.law.jailed) return false;
+    if (c.law.trial !== undefined && !!l?.trial !== c.law.trial) return false;
+    if (c.law.record !== undefined && ((l?.convictions ?? 0) > 0) !== c.law.record) return false;
+    if (c.law.escapesMin !== undefined && (l?.escapes ?? 0) < c.law.escapesMin) return false;
+  }
   if (c.injury) {
     const has = (state.body?.injuries ?? []).some((i) => !c.injury!.id || i === c.injury!.id);
     if (has !== (c.injury.any ?? true)) return false;
