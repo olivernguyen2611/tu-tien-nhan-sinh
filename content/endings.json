@@ -195,6 +195,78 @@
     }
   },
   {
+    "id": "dau_roi_phap_truong",
+    "name": "Đầu rơi pháp trường",
+    "text": "Một nhát đao, xong một đời. Người xem về kể cho nhau nghe suốt mấy tháng.",
+    "check": {
+      "cause": [
+        "execution"
+      ]
+    }
+  },
+  {
+    "id": "quy_an_son_lam",
+    "name": "Quy ẩn sơn lâm",
+    "text": "Không ai biết ngày mất. Chỉ còn một túp lều tranh bên suối, và mấy luống rau ai đó vẫn chăm.",
+    "check": {
+      "cause": [
+        "hermit"
+      ]
+    }
+  },
+  {
+    "id": "cua_thien",
+    "name": "Bước qua cửa thiền",
+    "text": "Hồng trần bỏ lại sau lưng. Trong chùa có thêm một vị sư già ít nói.",
+    "check": {
+      "cause": [
+        "monk"
+      ]
+    }
+  },
+  {
+    "id": "bat_tich",
+    "name": "Bặt vô âm tín",
+    "text": "Người đi vào núi rồi không trở về. Đời sau có kẻ lạc tới hang ấy, thấy một bộ xương ngồi xếp bằng.",
+    "check": {
+      "cause": [
+        "missing"
+      ]
+    }
+  },
+  {
+    "id": "chet_doi",
+    "name": "Chết đói thời loạn",
+    "text": "Năm ấy đói to, người chết như rạ. Tên ngươi lẫn trong hàng nghìn cái tên không ai ghi.",
+    "check": {
+      "cause": [
+        "starvation"
+      ]
+    }
+  },
+  {
+    "id": "dai_dao_vo_hinh",
+    "name": "Đại đạo vô hình",
+    "text": "Cả đời làm giặc mà chưa từng bị bắt. Quan phủ đến nay vẫn treo thưởng cho một cái tên không ai biết mặt.",
+    "check": {
+      "crimesMin": 10,
+      "neverCaught": true
+    }
+  },
+  {
+    "id": "bang_vang_bia_da",
+    "name": "Bảng vàng bia đá",
+    "text": "Tên khắc ở Văn Miếu. Người đời sau đi qua còn chỉ cho con cháu đọc.",
+    "check": {
+      "mortal": true,
+      "holds": {
+        "exam": {
+          "passed": "dinh"
+        }
+      }
+    }
+  },
+  {
     "id": "nhap_the",
     "name": "Nhập thế",
     "text": "Có tu vi mà chọn sống trọn kiếp người: vợ con, mâm cơm, khói bếp. Không thành tiên, cũng chẳng hối.",

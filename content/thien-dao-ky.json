@@ -16,8 +16,17 @@
     { "id": "con_duong", "lines": [
       { "when": { "ownSect": true }, "text": "Về sau tự mở tông môn, lập nên {sect}, làm tổ sư một phái." },
       { "when": { "inSect": true }, "text": "{name} bái nhập {sect}, từ đó sớm tối theo sư môn, áo xanh kiếm gỗ." },
+      { "when": { "crimesMin": 10 }, "text": "{name} sống bằng nghề không ai dám nói ra: đêm đi ngày ngủ, tay nhanh hơn mắt người." },
+      { "when": { "holds": { "exam": { "passed": "huong" } } }, "text": "{name} dùi mài kinh sử, đỗ đạt, mũ áo vinh quy, cả làng ra đón." },
+      { "when": { "jobTop": true }, "text": "{name} làm nghề tới bậc cao nhất, người trong nghề nhắc tới tên là cúi đầu." },
+      { "when": { "holds": { "asset": { "kind": "land", "count": 3 } } }, "text": "{name} tích từng thửa ruộng, về già đã là địa chủ một vùng." },
       { "when": { "career": true }, "text": "{name} theo nghề {career}, lăn lộn giữa chợ đời mà sống." },
       { "text": "Cả đời {name} không thuộc về đâu, chỗ nào có cơm có rượu thì dừng chân." }
+    ] },
+    { "id": "quan_phu", "lines": [
+      { "when": { "holds": { "law": { "escapesMin": 2 } } }, "text": "Mấy lần vào ngục, mấy lần đào tường mà ra. Cáo thị vẽ mặt {name} dán khắp các ngả đường." },
+      { "when": { "holds": { "law": { "record": true } } }, "text": "Có lần {name} phải đứng trước công đường, tên ghi vào sổ tội. Vết ấy theo tới cuối đời." },
+      { "when": { "holds": { "injury": { "any": true } } }, "text": "Thân mang thương tật, {name} vẫn sống tiếp, chậm hơn người, nhưng không chịu dừng." }
     ] },
     { "id": "dinh", "lines": [
       { "when": { "realmMin": "hoa_than" }, "text": "Tu vi lên tới {realm}, một niệm dời non, đứng trên vạn người." },
@@ -58,6 +67,11 @@
       { "when": { "cause": ["breakthrough"] }, "text": "{cause}. Cửa ải ấy, có người qua, có người ở lại." },
       { "when": { "cause": ["combat"] }, "text": "{cause}. Kiếm không có mắt." },
       { "when": { "cause": ["old_age"] }, "text": "{cause}. Ra đi lúc ngọn đèn tự tắt, không phải ai cũng có phúc ấy." },
+      { "when": { "cause": ["execution"] }, "text": "{cause}. Đám đông dưới pháp trường xem xong rồi tản đi, chẳng ai nhớ lâu." },
+      { "when": { "cause": ["hermit"] }, "text": "{cause}. Có tiều phu kể từng gặp một ông lão ngồi câu cá bên suối, hỏi tên thì cười không đáp." },
+      { "when": { "cause": ["monk"] }, "text": "{cause}. Chuông chùa sớm chiều, kinh kệ thay cho tên tục." },
+      { "when": { "cause": ["missing"] }, "text": "{cause}. Không mộ, không bia, chỉ có lời đồn." },
+      { "when": { "cause": ["starvation"] }, "text": "{cause}. Năm ấy đói to, người chết như rạ." },
       { "text": "{cause}." }
     ] },
     { "id": "ket", "lines": [

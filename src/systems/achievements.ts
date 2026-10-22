@@ -7,7 +7,8 @@ import type { GameState } from '../core/types';
 import { activeCombos } from './destiny';
 import { chosenDisciple } from './chosen';
 import { codexOf } from './codex';
-import { readValue } from './events/conditions';
+import { meets, readValue } from './events/conditions';
+import { jobDef } from './jobs';
 
 type Achievement = AchievementFile['achievements'][number];
 type Badge = AchievementFile['badges'][number];
@@ -52,9 +53,22 @@ export function lifeMeets(state: GameState, content: Content, w: LifeCheck, live
   if (w.statsMin && Object.entries(w.statsMin).some(([k, v]) => readValue(state, k) < v)) return false;
   if (w.heartDemonMin !== undefined && state.cult.heartDemon < w.heartDemonMin) return false;
   if (w.martialMin !== undefined && state.martial.stage < w.martialMin) return false;
+  if (w.martialMax !== undefined && state.martial.stage > w.martialMax) return false;
+  if (w.scholarKidsMin !== undefined && state.family.filter((r) => r.role === 'child' && r.scholar).length < w.scholarKidsMin) return false;
   if (w.inSect !== undefined && (!!state.ownSect || !!state.sect.id) !== w.inSect) return false;
   if (w.career !== undefined && !!state.career.id !== w.career) return false;
   if (w.rooted !== undefined && (!!state.cult.root && state.cult.root.grade !== 'none') !== w.rooted) return false;
+  // 10.10: the đời phàm.
+  if (w.holds && !meets(state, w.holds, content)) return false;
+  const job = state.job;
+  const held = job ? [...job.past.map((p) => ({ id: p.id, rung: p.rung })), ...(job.id ? [{ id: job.id, rung: job.rung }] : [])] : [];
+  if (w.jobsMin !== undefined && new Set(held.map((h) => h.id)).size < w.jobsMin) return false;
+  if (w.jobEver && !held.some((h) => w.jobEver!.includes(h.id))) return false;
+  if (w.silverMax !== undefined && state.money.silver > w.silverMax) return false;
+  if (w.jobTop !== undefined && held.some((h) => h.rung >= (jobDef(content, h.id)?.rungs.length ?? 99) - 1) !== w.jobTop) return false;
+  const crimes = state.law?.crimes ?? 0;
+  if (w.crimesMin !== undefined && crimes < w.crimesMin) return false;
+  if (w.neverCaught !== undefined && (crimes > 0 && (state.law?.convictions ?? 0) === 0) !== w.neverCaught) return false;
   return true;
 }
 

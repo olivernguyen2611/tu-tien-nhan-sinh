@@ -1,0 +1,700 @@
+[
+ {
+  "id": "sk_dich_dau_mua",
+  "category": "health",
+  "title": "Đậu mùa về làng",
+  "text": "Đầu làng có nhà treo cành lá trước cổng. Rồi nhà thứ hai, nhà thứ ba. Đậu mùa đã về.",
+  "themes": [
+   "health"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 8
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Sang giúp chăm người bệnh",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ngươi bón cháo, lau mình cho người bệnh suốt tháng. Trời thương, ngươi không lây.",
+     "effects": {
+      "karma": 4,
+      "reputation": {
+       "lang_xa": 3
+      },
+      "stat.daoHeart": 2
+     }
+    },
+    "fail": {
+     "text": "Chăm người được mười hôm thì chính ngươi lên cơn sốt.",
+     "effects": {
+      "karma": 4,
+      "catchDisease": "dau_mua",
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Đóng chặt cửa, không tiếp ai",
+    "result": {
+     "text": "Cả nhà ngươi trốn trong bốn bức tường hai tháng trời. Không ai lây, nhưng cũng chẳng ai còn coi ngươi là hàng xóm tốt.",
+     "effects": {
+      "stat.happiness": -3,
+      "reputation": {
+       "lang_xa": -2
+      }
+     }
+    }
+   },
+   {
+    "text": "Đưa cả nhà lên núi tránh dịch",
+    "result": {
+     "text": "Dựng lều trên núi, ăn rau rừng. Khổ cực, nhưng về làng thì dịch đã qua.",
+     "effects": {
+      "stat.health": -2,
+      "silver": -10,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sk_dich_ta",
+  "category": "health",
+  "title": "Dịch tả",
+  "text": "Nước lũ rút, xác gà vịt nằm khắp đồng. Rồi người bắt đầu chết.",
+  "themes": [
+   "health"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 10
+   }
+  },
+  "weight": 1,
+  "cooldownYears": 20,
+  "choices": [
+   {
+    "text": "Đun sôi từng gáo nước",
+    "result": {
+     "text": "Ngươi bắt cả nhà chỉ uống nước đun sôi. Người làng cười là cầu kỳ. Nhà ngươi không ai mắc.",
+     "effects": {
+      "stat.intellect": 2,
+      "stat.health": 1
+     }
+    }
+   },
+   {
+    "text": "Cứ sống như thường",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Trời phù hộ, cả nhà qua mùa dịch bình an.",
+     "effects": {
+      "stat.happiness": 1
+     }
+    },
+    "fail": {
+     "text": "Một đêm ngươi đau bụng quặn thắt.",
+     "effects": {
+      "catchDisease": "dich_ta",
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Bỏ làng đi nơi khác một mùa",
+    "result": {
+     "text": "Gồng gánh đi ở nhờ nhà người quen trên huyện. Mất mùa, nhưng còn người.",
+     "effects": {
+      "silver": -15,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sk_nga_tu_mai_nha",
+  "category": "health",
+  "title": "Ngã từ mái nhà",
+  "text": "Mùa mưa bão, mái nhà dột. Ngươi trèo lên lợp lại thì ngói trơn trượt.",
+  "themes": [
+   "health"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 14
+   }
+  },
+  "weight": 1,
+  "cooldownYears": 15,
+  "choices": [
+   {
+    "text": "Chụp lấy xà nhà",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Tay ngươi bám được xà. Treo lủng lẳng một lúc rồi tự leo xuống, chỉ trầy da.",
+     "effects": {
+      "stat.physique": 1,
+      "stat.health": -1
+     }
+    },
+    "fail": {
+     "text": "Ngươi rơi xuống sân gạch, nghe rắc một tiếng ở chân.",
+     "effects": {
+      "injure": "que_chan",
+      "stat.health": -8
+     }
+    }
+   },
+   {
+    "text": "Thuê thợ lợp cho chắc",
+    "result": {
+     "text": "Ngươi trèo xuống, thuê thợ. Mất tiền nhưng còn nguyên xương.",
+     "effects": {
+      "silver": -8,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sk_chay_nha_hang_xom",
+  "category": "health",
+  "title": "Cháy nhà hàng xóm",
+  "text": "Nửa đêm có tiếng hô hoán. Nhà bên cháy, trong nhà còn đứa trẻ khóc thét.",
+  "themes": [
+   "health"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 16
+   }
+  },
+  "weight": 1,
+  "cooldownYears": 20,
+  "choices": [
+   {
+    "text": "Lao vào cứu",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ngươi bế được đứa trẻ ra, tóc cháy xém một mảng. Cả làng gọi ngươi là ân nhân.",
+     "effects": {
+      "karma": 8,
+      "reputation": {
+       "lang_xa": 5
+      },
+      "stat.daoHeart": 2
+     }
+    },
+    "fail": {
+     "text": "Ngươi cứu được đứa trẻ, nhưng một thanh xà cháy rơi trúng mặt.",
+     "effects": {
+      "karma": 8,
+      "reputation": {
+       "lang_xa": 5
+      },
+      "injure": "seo_mat",
+     "stat.health": -4
+     }
+    }
+   },
+   {
+    "text": "Chạy đi gọi người dập lửa",
+    "result": {
+     "text": "Ngươi đánh kẻng gọi cả xóm. Người ta xách nước tới kịp, đứa trẻ được một người khác bế ra.",
+     "effects": {
+      "karma": 2,
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Đứng nhìn",
+    "result": {
+     "text": "Ngươi đứng ngoài nhìn, chân không nhấc lên được. Đêm ấy và rất nhiều đêm sau, ngươi còn nghe tiếng khóc.",
+     "effects": {
+      "stat.happiness": -4,
+      "stat.daoHeart": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sk_tai_nan_lao_dong",
+  "category": "health",
+  "title": "Tai nạn lúc làm việc",
+  "text": "Lưỡi rìu trượt khỏi cán, bay sượt qua tay ngươi.",
+  "themes": [
+   "health"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 14
+   },
+   "job": {
+    "any": true
+   }
+  },
+  "weight": 1,
+  "cooldownYears": 15,
+  "choices": [
+   {
+    "text": "Rụt tay lại",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 45
+    },
+    "success": {
+     "text": "Nhanh tay lắm. Lưỡi rìu cắm phập xuống gỗ ngay chỗ tay vừa rời.",
+     "effects": {
+      "stat.physique": 1,
+      "stat.happiness": 1
+     }
+    },
+    "fail": {
+     "text": "Chậm mất một nhịp.",
+     "effects": {
+      "injure": "cut_ngon",
+      "stat.health": -4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sk_ban_nhau_ru",
+  "category": "health",
+  "title": "Bạn nhậu rủ",
+  "text": "Mấy bạn cũ kéo tới, xách theo hai vò rượu nếp: \"Lâu lắm không gặp, phải say một trận!\"",
+  "themes": [
+   "health"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 18
+   }
+  },
+  "weight": 3,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Say thì say",
+    "result": {
+     "text": "Uống từ chiều tới nửa đêm. Hát hò om sòm, sáng ra không nhớ đường về.",
+     "effects": {
+      "drank": true,
+      "stat.happiness": 4,
+      "stat.health": -2
+     }
+    }
+   },
+   {
+    "text": "Uống vài chén cho phải phép",
+    "result": {
+     "text": "Ba chén, rồi ngươi úp chén. Bạn chê nhạt, nhưng vẫn vui.",
+     "effects": {
+      "stat.happiness": 2
+     }
+    }
+   },
+   {
+    "text": "Mời trà thay rượu",
+    "result": {
+     "text": "Bạn bè ngán ngẩm, ngồi được nửa canh giờ thì về.",
+     "effects": {
+      "stat.health": 1,
+      "stat.charm": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sk_tai_nghien_ruou",
+  "category": "health",
+  "title": "Mùi rượu cũ",
+  "text": "Đi ngang tửu lâu, mùi rượu nếp ủ lâu năm bay ra. Cổ họng ngươi khô khốc.",
+  "themes": [
+   "health"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "flagsAll": [
+    "da_cai_ruou"
+   ],
+   "flagsNone": [
+    "nghien_ruou"
+   ]
+  },
+  "weight": 2,
+  "cooldownYears": 5,
+  "choices": [
+   {
+    "text": "Đi thẳng",
+    "check": {
+     "stat": "stat.daoHeart",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ngươi cắn răng bước qua. Tới đầu ngõ mới dám thở ra.",
+     "effects": {
+      "stat.daoHeart": 2
+     }
+    },
+    "fail": {
+     "text": "Chân ngươi tự rẽ vào. Một chén, rồi một vò.",
+     "effects": {
+      "setFlags": [
+       "nghien_ruou"
+      ],
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Rẽ sang đường khác",
+    "result": {
+     "text": "Từ hôm đó ngươi đi đường vòng, xa hơn nửa dặm.",
+     "effects": {
+      "stat.happiness": -1,
+      "stat.health": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sk_lang_bam",
+  "category": "health",
+  "title": "Lang băm bán thuốc",
+  "text": "Một gã mặc áo thầy thuốc dừng trước cổng: \"Bệnh của ngươi ta chữa được, ba ngày khỏi, không khỏi không lấy tiền.\"",
+  "themes": [
+   "health"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "ailment": {
+    "any": true
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Mua thử",
+    "result": {
+     "text": "Thuốc viên đen bóng, uống vào nóng ruột. Gã thầy biến mất cùng ba mươi lượng.",
+     "effects": {
+      "silver": -30,
+      "stat.health": -2,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Hỏi vặn gã vài câu",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 45
+    },
+    "success": {
+     "text": "Hỏi tới vị thứ ba thì gã ấp úng, cắp hòm thuốc chạy mất.",
+     "effects": {
+      "stat.intellect": 1,
+      "stat.happiness": 1
+     }
+    },
+    "fail": {
+     "text": "Gã nói trơn như mỡ. Ngươi nghe xuôi tai, móc tiền ra mua.",
+     "effects": {
+      "silver": -30,
+      "stat.health": -2
+     }
+    }
+   },
+   {
+    "text": "Đuổi đi",
+    "result": {
+     "text": "Gã lầm bầm chửi rồi sang nhà khác.",
+     "effects": {
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sk_than_y",
+  "category": "health",
+  "title": "Thần y qua làng",
+  "text": "Có ông lão thầy thuốc đi ngang, nghe nói ở kinh thành từng chữa cho cả quan lớn.",
+  "themes": [
+   "health"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "ailment": {
+    "any": true
+   }
+  },
+  "weight": 1,
+  "cooldownYears": 12,
+  "choices": [
+   {
+    "text": "Quỳ xin chữa bệnh",
+    "result": {
+     "text": "Ông lão bắt mạch rất lâu, kê một đơn lạ. Lấy ít tiền, dặn dò kỹ.",
+     "effects": {
+      "cure": "rare",
+      "silver": -10,
+      "stat.happiness": 2
+     }
+    }
+   },
+   {
+    "text": "Ngại, không dám làm phiền",
+    "result": {
+     "text": "Ông lão đi rồi ngươi mới tiếc.",
+     "effects": {
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sk_bi_che_que",
+  "category": "health",
+  "title": "Bị chê cười",
+  "text": "Bọn trẻ trong xóm chạy theo sau, bắt chước dáng ngươi đi.",
+  "themes": [
+   "health"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "injury": {
+    "any": true
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Cười theo chúng",
+    "result": {
+     "text": "Ngươi cười, rồi cũng bắt chước chính mình. Bọn trẻ cười lăn, từ đó không trêu nữa mà thân với ngươi.",
+     "effects": {
+      "stat.happiness": 2,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Quát đuổi",
+    "result": {
+     "text": "Bọn trẻ chạy tán loạn. Ngươi đứng lại, thấy mình già đi mấy tuổi.",
+     "effects": {
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Lặng lẽ về nhà",
+    "result": {
+     "text": "Đóng cửa ngồi một mình tới tối.",
+     "effects": {
+      "stat.happiness": -2,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sk_soi_guong",
+  "category": "health",
+  "title": "Soi gương",
+  "text": "Sáng nay soi gương đồng, ngươi thấy sợi tóc bạc đầu tiên.",
+  "themes": [
+   "health"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 35,
+    "max": 50
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 40,
+  "choices": [
+   {
+    "text": "Nhổ đi",
+    "result": {
+     "text": "Nhổ một sợi, mai mọc hai. Thôi thì kệ.",
+     "effects": {
+      "stat.happiness": -1,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Kệ nó",
+    "result": {
+     "text": "Tóc bạc là tóc của người từng trải. Ngươi tự an ủi thế.",
+     "effects": {
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Ra phố mua thuốc nhuộm",
+    "result": {
+     "text": "Nhuộm xong đen nhánh. Vợ con nhìn mãi mới nhận ra.",
+     "effects": {
+      "silver": -5,
+      "stat.charm": 2,
+      "stat.happiness": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "sk_lao_ho",
+  "category": "health",
+  "title": "Ho mãi không dứt",
+  "text": "Mùa đông năm nay ngươi ho suốt, có đêm ngồi dậy ho tới sáng.",
+  "themes": [
+   "health"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 40
+   },
+   "ailment": {
+    "any": false
+   }
+  },
+  "weight": 1,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Mời thầy xem ngay",
+    "result": {
+     "text": "Thầy bảo là phổi yếu, uống thuốc kịp thì không sao.",
+     "effects": {
+      "silver": -8,
+      "stat.health": 2
+     }
+    }
+   },
+   {
+    "text": "Kệ, ho rồi sẽ hết",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Qua tết thì hết ho thật.",
+     "effects": {
+      "stat.happiness": 1
+     }
+    },
+    "fail": {
+     "text": "Ho thành lao.",
+     "effects": {
+      "catchDisease": "lao",
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ }
+]

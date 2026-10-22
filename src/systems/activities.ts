@@ -6,6 +6,7 @@ import { Rng } from '../core/rng';
 import type { Activity, ActivityGroup, ActivityOutcome } from '../core/schemas';
 import type { GameState, Tone } from '../core/types';
 import { meets } from './events/conditions';
+import { jailed } from './law';
 import { applyOutcome, checkChance } from './events/engine';
 import { drawText } from './textPool';
 import { monthsLeft, monthsUsed } from './timeBudget';
@@ -89,10 +90,13 @@ function blockedReason(state: GameState, content: Content, a: Activity): string 
 }
 
 /** The menu: activities whose conditions hold, grouped in ACTIVITY_GROUP_NAMES order. */
+/** 10.9: in ngục only the ngục activities (conditions.law.jailed) are open. */
+const jailFits = (state: GameState, a: Activity): boolean => !jailed(state) || a.conditions.law?.jailed === true;
+
 export function activityViews(state: GameState, content: Content): ActivityView[] {
   const order = Object.keys(ACTIVITY_GROUP_NAMES);
   return (content.activities ?? [])
-    .filter((a) => meets(state, a.conditions, content))
+    .filter((a) => jailFits(state, a) && meets(state, a.conditions, content))
     .map((a) => {
       const pay = payable(state, content, a);
       return {
@@ -131,7 +135,7 @@ function outcomeEffects(state: GameState, content: Content, o: ActivityOutcome, 
  */
 export function doActivity(state: GameState, content: Content, id: string, target?: string): { state: GameState; text: string; tone: Tone; success: boolean | null } | null {
   const a = activityById(content, id);
-  if (!a || !meets(state, a.conditions, content) || blockedReason(state, content, a)) return null;
+  if (!a || !jailFits(state, a) || !meets(state, a.conditions, content) || blockedReason(state, content, a)) return null;
   const rng = Rng.fromState(state.rng);
   const pay = payable(state, content, a);
   const before = target ? { ...state, events: { ...state.events, npc: target } } : state;

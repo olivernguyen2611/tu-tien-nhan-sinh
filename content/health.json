@@ -1,0 +1,108 @@
+{
+  "diseases": [
+    {
+      "id": "phong_han", "name": "Phong hàn", "weight": 5,
+      "health": [2, 4], "happiness": 1, "selfHeal": 0.7,
+      "cure": { "doctor": 0.85, "shop": 0.7, "shaman": 0.3, "self": 0.6, "rare": 0.97 },
+      "onset": [
+        "Dầm mưa một buổi, về nhà ngươi hắt hơi liền mấy chục cái. Phong hàn nhập thể.",
+        "Gió bấc tràn về, ngươi nằm đắp ba lớp chăn vẫn run cầm cập. Là phong hàn.",
+        "Đêm ngủ quên đóng cửa sổ. Sáng ra đầu nặng như đeo đá, mũi nghẹt cứng."
+      ],
+      "healed": "Mấy bát cháo hành nóng, mồ hôi vã ra như tắm. {disease} lui hẳn."
+    },
+    {
+      "id": "sot_ret", "name": "Sốt rét", "weight": 3, "minAge": 6,
+      "health": [3, 6], "happiness": 2, "selfHeal": 0.35,
+      "cure": { "doctor": 0.7, "shop": 0.55, "shaman": 0.2, "self": 0.5, "rare": 0.95 },
+      "onset": [
+        "Đi rừng về, cơn sốt kéo tới lúc chiều tà: nóng như lò, rồi lạnh run như đứng giữa băng. Sốt rét rừng.",
+        "Muỗi đầm lầy cắn một đêm, mười ngày sau ngươi ngã xuống giữa ruộng. Sốt rét."
+      ],
+      "healed": "Cơn {disease} thưa dần rồi dứt. Ngươi gầy rộc, nhưng đã ăn được bát cơm đầy."
+    },
+    {
+      "id": "kiet_ly", "name": "Kiết lỵ", "weight": 3,
+      "health": [3, 5], "happiness": 2, "selfHeal": 0.45, "contagious": true,
+      "cure": { "doctor": 0.8, "shop": 0.65, "shaman": 0.2, "self": 0.6, "rare": 0.96 },
+      "onset": [
+        "Uống nước giếng đục mùa lũ, bụng quặn từng cơn. Kiết lỵ.",
+        "Ăn bát tiết canh ngoài chợ, ba ngày không rời được nhà xí."
+      ],
+      "healed": "Lá mơ lông, cháo loãng, nằm bảy hôm. {disease} cũng chịu buông tha."
+    },
+    {
+      "id": "thuong_han", "name": "Thương hàn", "weight": 2, "minAge": 4,
+      "health": [5, 9], "happiness": 3, "selfHeal": 0.3, "contagious": true,
+      "cure": { "doctor": 0.6, "shop": 0.4, "shaman": 0.1, "self": 0.4, "rare": 0.9 },
+      "onset": [
+        "Sốt li bì nửa tháng không lui, nói mê cả đêm. Lang trung bắt mạch rồi lắc đầu: thương hàn.",
+        "Ngươi mê man ba ngày, tỉnh dậy thấy mẹ ngồi khóc bên giường. Thương hàn."
+      ],
+      "healed": "Qua được cơn {disease}, tóc rụng gần hết, chân đi còn run. Nhưng còn sống."
+    },
+    {
+      "id": "lao", "name": "Bệnh lao", "weight": 1, "minAge": 16,
+      "health": [4, 8], "happiness": 3, "selfHeal": 0.08, "contagious": true,
+      "cure": { "doctor": 0.35, "shop": 0.2, "shaman": 0.05, "self": 0.25, "rare": 0.8 },
+      "onset": [
+        "Ho mãi không dứt, một sáng khạc ra máu. Lang trung nhìn khăn tay, im lặng hồi lâu. Bệnh lao.",
+        "Người gầy đi trông thấy, đêm nào cũng vã mồ hôi trộm. Bệnh lao đã bám vào phổi."
+      ],
+      "healed": "Ho thưa dần, má hồng trở lại. {disease} lui, thứ ít người phàm qua được."
+    },
+    {
+      "id": "dau_mua", "name": "Đậu mùa", "weight": 2, "maxAge": 30,
+      "health": [5, 10], "happiness": 2, "selfHeal": 0.4, "contagious": true,
+      "cure": { "doctor": 0.5, "shop": 0.3, "shaman": 0.1, "self": 0.35, "rare": 0.9 },
+      "onset": [
+        "Mụn nước nổi khắp người, sốt hầm hập. Cả xóm đóng cửa: nhà ngươi có người lên đậu.",
+        "Ngươi lên đậu. Mẹ treo cành lá trước cổng để người ngoài biết mà tránh."
+      ],
+      "healed": "Mụn {disease} khô vảy rồi bong. Mặt để lại vài vết rỗ nhỏ, thế là may."
+    },
+    {
+      "id": "dich_ta", "name": "Dịch tả", "weight": 1,
+      "health": [8, 14], "happiness": 4, "selfHeal": 0.35, "contagious": true,
+      "cure": { "doctor": 0.55, "shop": 0.35, "shaman": 0.05, "self": 0.4, "rare": 0.9 },
+      "onset": [
+        "Dịch tả tràn qua làng. Sáng còn đi chợ, chiều ngươi đã nằm lả, người khô như ngọn cỏ.",
+        "Người làng bên chết liền mấy nhà. Rồi tới lượt ngươi nôn thốc nôn tháo giữa đêm."
+      ],
+      "healed": "Uống nước muối, cháo gạo rang suốt nửa tháng. {disease} đi qua, ngươi còn đứng được."
+    }
+  ],
+  "injuries": [
+    { "id": "que_chan", "name": "Què chân", "flag": "que_chan", "stats": { "stat.physique": -4, "stat.charm": -2 }, "text": "Xương chân lành lệch. Từ nay ngươi đi tập tễnh, trời trở gió lại nhức.", "bars": ["linh", "bo_khoai", "tieu_su", "ho_vien", "phu_khuan_vac"] },
+    { "id": "mu_mot_mat", "name": "Mù một mắt", "flag": "mu_mot_mat", "stats": { "stat.charm": -4, "stat.physique": -1 }, "text": "Một mắt không còn thấy gì nữa. Thế gian từ nay chỉ còn một nửa.", "bars": ["linh", "hoa_si"] },
+    { "id": "seo_mat", "name": "Sẹo mặt", "flag": "seo_mat", "stats": { "stat.charm": -6 }, "text": "Vết thương kéo da non thành một vệt sẹo dài trên mặt. Trẻ con nhìn thấy thì chạy." },
+    { "id": "cut_ngon", "name": "Cụt ngón tay", "flag": "cut_ngon", "stats": { "stat.physique": -2, "stat.charm": -1 }, "text": "Mất hai đốt ngón tay. Cầm đũa vẫn được, cầm bút thì phải tập lại.", "bars": ["nhac_cong", "tho_may"] },
+    { "id": "dau_lung", "name": "Đau lưng kinh niên", "flag": "dau_lung", "stats": { "stat.health": -6, "stat.physique": -2 }, "text": "Lưng gãy gập một lần, từ đó không thẳng lại được. Cúi xuống là đau.", "bars": ["phu_khuan_vac", "tho_xay"] }
+  ],
+  "texts": {
+    "worse": [
+      "{disease} vẫn đeo bám. Cả năm người lúc khỏe lúc mệt.",
+      "Lại một năm sống chung với {disease}. Thuốc thang tốn kém mà chưa dứt.",
+      "{disease} trở nặng mấy tháng mùa đông. Ngươi gầy sút hẳn."
+    ],
+    "cureFail": [
+      "Uống hết thang này tới thang khác, {disease} không lui.",
+      "Thuốc đắng đã uống, {disease} vẫn y nguyên.",
+      "Tưởng đỡ được mấy hôm, rồi {disease} lại quay về."
+    ],
+    "doctorGood": [
+      "Lang trung râu bạc, bắt mạch một lúc là nói đúng bệnh. Ngươi thấy yên lòng.",
+      "Thầy thuốc này nổi tiếng cả huyện, kê đơn không cần nghĩ."
+    ],
+    "doctorBad": [
+      "Lang trung vừa bắt mạch vừa liếc túi tiền của ngươi.",
+      "Ông lang kê một đơn dài, mấy vị trong đó ngươi nghe cũng biết là không liên quan."
+    ],
+    "shamanHarm": "Bát nước bùa uống vào, bụng dạ đảo lộn suốt ba ngày.",
+    "noAilment": "Thầy thuốc bắt mạch rồi cười: ngươi khỏe như trâu, chỉ cần ăn ngủ cho đều.",
+    "spread": "{disease} lây sang {who} {name}. Cả nhà phải chăm hai người bệnh một lúc.",
+    "spreadDied": "{disease} lây sang {who} {name}. Người già yếu, e khó qua khỏi.",
+    "drunk": "Không có chén rượu thì tay ngươi run. Ngươi đã nghiện rượu.",
+    "drunkYear": "Rượu từ sáng tới tối. Tiền đội nón ra đi, gan cũng mệt mỏi."
+  }
+}

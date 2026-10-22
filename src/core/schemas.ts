@@ -7,6 +7,8 @@ const ids = z.array(id).default([]);
 
 /** Stat keys from PLAN.md K.2 (mortal body + aptitudes). */
 export const MORTAL_STATS = ['health', 'happiness', 'intellect', 'charm'] as const;
+/** Ways a life ends. 10.9: xử trảm; 10.10: chết đói, mất tích, quy ẩn, xuất gia. */
+export const DEATH_CAUSES = ['old_age', 'illness', 'breakthrough', 'ordeal', 'combat', 'tribulation', 'calamity', 'execution', 'starvation', 'missing', 'hermit', 'monk'] as const;
 export const APTITUDES = ['physique', 'comprehension', 'luck', 'daoHeart'] as const;
 /** Values an event can read or change, named like the trait hooks (K.6). */
 export const STAT_KEYS = [...MORTAL_STATS, ...APTITUDES].map((k) => `stat.${k}`);
@@ -29,6 +31,9 @@ export const StatConditionSchema = z
   })
   .strict();
 
+/** 11.2: the jianghu kinds and sides, early so conditions and effects can name them (JIANGHU_KINDS below is the same list). */
+const JIANGHU_KINDS_EARLY = ['mon_phai', 'the_gia', 'giao_phai', 'bang_hoi', 'sat_thu', 'tieu_cuc', 'thuong_hoi'] as const;
+const JIANGHU_ALIGNMENTS_EARLY = ['chinh', 'ta', 'trung_lap', 'ma'] as const;
 const BaseConditionsSchema = z
   .object({
     age: z.object({ min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional(),
@@ -80,6 +85,30 @@ const BaseConditionsSchema = z
     festival: ids.optional(),
     art: z.object({ id, min: z.number() }).strict().optional(),
     pet: z.object({ id: id.optional(), any: z.boolean().optional() }).strict().optional(),
+    /** 10.8 Sức khỏe: has a bệnh (this one / any / a lây one); has a thương tật (this one / any). */
+    ailment: z.object({ id: id.optional(), any: z.boolean().optional(), contagious: z.boolean().optional() }).strict().optional(),
+    injury: z.object({ id: id.optional(), any: z.boolean().optional() }).strict().optional(),
+    /** 10.11 Gia tộc: phân gia done; a người nối dõi chosen; từ đường at least; this gia quy kept; tế tổ times; living siblings. */
+    kin: z.object({
+      split: z.boolean().optional(), heir: z.boolean().optional(), shrineMin: z.number().int().optional(),
+      rule: id.optional(), ritesMin: z.number().int().optional(), siblings: z.boolean().optional(), met: z.boolean().optional(),
+    }).strict().optional(),
+    /** 11.1 Danh vọng giang hồ: hiệp danh, ác danh, has a ngoại hiệu. */
+    jianghu: z.object({
+      fameMin: z.number().optional(), fameMax: z.number().optional(), infamyMin: z.number().optional(), infamyMax: z.number().optional(), alias: z.boolean().optional(),
+    }).strict().optional(),
+    /** 11.3: knows this art / at least this many; carries a binh khí; nội thương at least / at most. */
+    arts: z.object({ knows: id.optional(), countMin: z.number().int().optional(), weapon: z.boolean().optional(), woundMin: z.number().optional(), woundMax: z.number().optional() }).strict().optional(),
+    /** 11.2: in a thế lực (this one, of these kinds / sides, at least this rank or cống hiến); hunted after a phản bang. */
+    faction: z.object({
+      member: z.boolean().optional(), id: id.optional(), kinds: z.array(z.enum(JIANGHU_KINDS_EARLY)).optional(), alignments: z.array(z.enum(JIANGHU_ALIGNMENTS_EARLY)).optional(),
+      rankMin: z.number().int().optional(), meritMin: z.number().optional(), hunted: z.boolean().optional(),
+    }).strict().optional(),
+    /** 10.9 Phạm pháp: mức truy nã, in ngục, đang hầu tòa, có tiền án, số lần vượt ngục. */
+    law: z.object({
+      wantedMin: z.number().int().optional(), wantedMax: z.number().int().optional(), jailed: z.boolean().optional(),
+      trial: z.boolean().optional(), record: z.boolean().optional(), escapesMin: z.number().int().optional(),
+    }).strict().optional(),
     /** 10.2 Khoa cử: highest level passed (exams.json level ids; none = -1), times failed, can sit the next exam this year, the Đình placing. */
     exam: z.object({
       passed: id.optional(), notPassed: id.optional(), failsMin: z.number().int().optional(),
@@ -296,6 +325,56 @@ export const EffectsSchema = z
     adoptPet: id.optional(),
     omen: z.boolean().optional(),
     gambled: z.boolean().optional(),
+    /** 10.8 Sức khỏe: try to cure the worst bệnh (by whom), fall ill (health.json id, or "random"), a thương tật for life,
+     *  one more cup (toward nghiện rượu). */
+    cure: z.enum(['doctor', 'shop', 'shaman', 'self', 'rare']).optional(),
+    catchDisease: id.optional(),
+    injure: id.optional(),
+    drank: z.boolean().optional(),
+    /** 10.9 Phạm pháp: commit a crime (crimes.json id); a step at công đường (± điểm); lót tay quan; the verdict;
+     *  try to break out; years of ngục ±; mức truy nã ±; flee far away (truy nã drops); bộ khoái take you to công đường. */
+    crime: id.optional(),
+    trial: z.number().optional(),
+    bribe: z.boolean().optional(),
+    sentence: z.boolean().optional(),
+    escape: z.boolean().optional(),
+    jailYears: z.number().int().optional(),
+    /** Into ngục for this many years (a reprieve from tử hình, a sentence an event gives). */
+    imprison: z.number().int().min(1).optional(),
+    wanted: z.number().int().optional(),
+    fleeLaw: z.boolean().optional(),
+    arrest: z.boolean().optional(),
+    /** 10.11 Gia tộc: phân gia (how the estate is shared), chọn người nối dõi, lập gia quy, tế tổ, tu sửa từ đường,
+     *  every living child's affinity ±. */
+    shareEstate: z.enum(['equal', 'eldest', 'yield']).optional(),
+    chooseHeir: z.enum(['eldest', 'ablest', 'filial']).optional(),
+    kinRule: id.optional(),
+    worship: z.boolean().optional(),
+    repairShrine: z.boolean().optional(),
+    childrenAffinity: z.number().optional(),
+    /** 11.1: hiệp danh ± and ác danh ± (reputation.giang_ho follows as their difference). */
+    fame: z.number().optional(),
+    infamy: z.number().optional(),
+    /** 11.2: join a thế lực (kinds / sides / one id; its entrance rule applies); cống hiến ±; a nhiệm vụ done or failed;
+     *  đổi cống hiến lấy võ học; leave in peace or phản bang. */
+    joinFaction: z.object({ kinds: z.array(z.enum(JIANGHU_KINDS_EARLY)).optional(), alignments: z.array(z.enum(JIANGHU_ALIGNMENTS_EARLY)).optional(), id: id.optional() }).strict().optional(),
+    factionMerit: z.number().optional(),
+    factionMission: z.enum(['success', 'fail']).optional(),
+    factionTeach: z.boolean().optional(),
+    leaveFaction: z.enum(['quit', 'betray']).optional(),
+    /** Lying low: the hunt after a phản bang ends balance.factions.hideYears sooner. */
+    hideFromHunt: z.boolean().optional(),
+    /** 11.3 Võ học: learn a bí kíp (an id, or one drawn by grade / kind / tà công); practise the bí kíp; buy at the lò rèn
+     *  ("best" the purse allows, or an id); win a binh khí; nội thương ± (a new one costs thọ nguyên). */
+    learnArt: z.union([id, z.object({ grades: z.array(z.number().int()).optional(), kinds: z.array(z.string()).optional(), evil: z.boolean().optional() }).strict()]).optional(),
+    practiseArt: z.boolean().optional(),
+    buyWeapon: z.string().min(1).optional(),
+    gainWeapon: id.optional(),
+    wound: z.number().optional(),
+    /** 10.10: move to a far châu (old acquaintances cool, flag tha_huong). */
+    moveHome: z.boolean().optional(),
+    /** 10.9–10.10: this life ends now, this way. */
+    die: z.enum(DEATH_CAUSES).optional(),
     /** Extra % for the next martial breakthrough. */
     martialBonus: z.number().optional(),
     /** An elder of the sect takes you as a personal disciple. */
@@ -399,7 +478,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt', 'learnArt', 'practiseArt', 'buyWeapon', 'gainWeapon', 'wound'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1227,7 +1306,7 @@ export const BalanceSchema = z
     ghost: z
       .object({
         /** Chance of a lingering obsession by cause of death, + (luck − 50) × luckPerPoint + continueAfterDeath hooks. */
-        causeChance: z.record(z.enum(['old_age', 'illness', 'breakthrough', 'ordeal', 'combat', 'tribulation', 'calamity']), probability),
+        causeChance: z.record(z.enum(DEATH_CAUSES), probability),
         luckPerPoint: z.number(),
         maxChance: probability,
         /** The ghost's realm (at least), its technique, health on rising and years of afterlife. */
@@ -1716,6 +1795,62 @@ export const BalanceSchema = z
       })
       .strict()
       .optional(),
+    /** 10.11 Gia tộc phàm tục: the họ is met at meetAge; how many họ hàng; the estate a father leaves [min, max] and
+     *  the eldest's share when he takes it; siblings' affinity by the way it is shared; karma for giving it all away. */
+    kin: z.object({
+      meetAge: z.number().int(), relatives: z.tuple([z.number().int(), z.number().int()]), affinity: z.tuple([z.number(), z.number()]), elderAffinity: z.number(),
+      estate: z.tuple([z.number().int(), z.number().int()]), eldestShare: z.number(),
+      siblingAffinity: z.object({ equal: z.number(), eldest: z.number(), yield: z.number() }).strict(), yieldKarma: z.number(),
+      passedOver: z.number(), maxRules: z.number().int().min(1), shrineMax: z.number().int().min(1),
+      /** The phân gia event, the year after the father dies (when siblings live). */
+      splitEvent: z.string(),
+      /** 10.13: a child turning scholarAge may pass Tú tài: base chance, more under gia quy hiếu học, a strict upbringing,
+       *  per bậc the parent passed, and per point of the child's ngộ tính. */
+      scholar: z.object({ age: z.number().int(), base: z.number(), studyRule: z.number(), strict: z.number(), perRank: z.number(), perInsight: z.number(), max: z.number() }).strict().optional(),
+    }).strict().optional(),
+    /** 11.1 Danh vọng giang hồ: a ngoại hiệu at aliasAt; the cap; the rank thresholds (texts.ranks); ác danh per bậc of a
+     *  crime that came out; hiệp danh per võ đạo stage reached; relation kinds whose NPCs carry a ngoại hiệu. */
+    jianghu: z.object({
+      aliasAt: z.number(), max: z.number(), ranks: z.array(z.number()).min(1), crimeInfamy: z.number(), stageFame: z.number(), aliasKinds: z.array(z.string()).default([]),
+    }).strict().optional(),
+    /** 11.2 Môn phái, bang hội: cống hiến for each rank up; bạc a nhiệm vụ pays and the yearly stipend by rank; cống hiến a
+     *  nhiệm vụ earns [min, max] or loses; health lost on a failed one; danh a nhiệm vụ brings; karma of a tà one; đổi võ học
+     *  (cost, training bonus); phản bang (years hunted, danh lost and gained); karma a chính phái wants. */
+    factions: z.object({
+      rankMerit: z.array(z.number()).min(1), missionPay: z.array(z.number()).min(1), stipend: z.array(z.number()).min(1),
+      missionMerit: z.tuple([z.number(), z.number()]), missionFailMerit: z.number(), missionFailHealth: z.number(), missionRenown: z.number(), taKarma: z.number(),
+      teachCost: z.number(), teachBonus: z.number(), huntYears: z.number().int(), hideYears: z.number().int(), betrayFame: z.number(), betrayInfamy: z.number(), chinhKarmaMin: z.number(),
+    }).strict().optional(),
+    /** 11.3 Võ học phàm tục: cap on chiến lực from bí kíp; × for a binh khí matching a known art; nội thương per lost fight,
+     *  thọ nguyên it costs, chiến lực lost per point, healed per year, the level that hurts (health);
+     *  tẩu hỏa chances (base, fake tàn quyển from tầng fakeFrom, tà công, đạo tâm below lowWillBelow) and what it costs;
+     *  path aptitude a new art adds. */
+    arts: z.object({
+      maxBonus: z.number(), weaponFit: z.number(), woundPerLoss: z.number(), woundLifespan: z.number(), woundPower: z.number(), woundHeal: z.number(),
+      woundHurtAt: z.number(), woundHurt: z.number(), pathAffinity: z.number(),
+      deviation: z.object({ base: z.number(), fake: z.number(), fakeFrom: z.number().int(), evil: z.number(), lowWill: z.number(), lowWillBelow: z.number(), health: z.number(), wound: z.number() }).strict(),
+    }).strict().optional(),
+    /** 10.13 Lịch lễ hội thật: days either side of a real lễ hội; the share of years that take it; festival event weight ×. */
+    calendar: z.object({ windowDays: z.number().int().min(0), share: z.number().min(0).max(1), boost: z.number().min(1) }).strict().optional(),
+    /** 10.10 Ra đi và kết đời phàm: moving far cools old ties; the age a quy ẩn opens; tang lễ events by the parent who died. */
+    leaving: z.object({ moveAffinity: z.number(), hermitAge: z.number().int(), funeralAge: z.number().int(), funeralEvents: z.record(z.string()) }).strict().optional(),
+    /** 10.9 Phạm pháp: bộ khoái, công đường, ngục. */
+    law: z.object({
+      maxWanted: z.number().int().min(1), decayEvery: z.number().int().min(1), fleeWanted: z.number().int().min(1),
+      fine: z.tuple([z.number(), z.number()]), beatingHealth: z.number(), jailYears: z.tuple([z.number().int(), z.number().int()]), exileYears: z.number().int(),
+      bribeCost: z.number(), bribeHonest: z.number(), bribeScore: z.number(),
+      escapeBase: z.number(), escapePerFail: z.number(), escapeMin: z.number(), escapeFailYears: z.number().int(),
+      /** Jobs that will not take someone with a tiền án. */
+      recordBars: z.array(z.string()).default([]),
+    }).strict().optional(),
+    /** 10.8 Sức khỏe: a mortal falls ill (chance by age), bệnh spread to the household, lang trung good or bad,
+     *  thầy cúng may hurt, nghề thuốc cures by level, drinking drinkAt times in drinkYears makes it nghiện. */
+    ailments: z.object({
+      childChance: z.number(), adultChance: z.number(), oldFrom: z.number().int(), oldPerYear: z.number(), maxAilments: z.number().int().min(1),
+      contagion: z.number(), contagionDeath: z.number(), doctorGoodShare: z.number(), doctorGood: z.number(), doctorBad: z.number(),
+      shamanHarm: z.number(), selfPerLevel: z.number(),
+      drinkAt: z.number().int().min(1), drinkYears: z.number().int().min(1), drinkHealth: z.number(), drinkHappiness: z.number(), drinkSilver: z.number(),
+    }).strict().optional(),
     /** 10.7 Giải trí: pets act every petEvery years; gambling addictAt times within addictYears makes it nghiện (yearly loss); an omen's event weighs omenMul for omenYears. */
     pastime: z.object({ petEvery: z.number().int().min(1), petDeathHappiness: z.number(), addictAt: z.number().int().min(1), addictYears: z.number().int().min(1), addictSilver: z.number(), addictHappiness: z.number(), omenMul: z.number().min(1), omenYears: z.number().int().min(1), artMax: z.number() }).strict().optional(),
     /** 10.5 Quan hệ: a broken kết nghĩa oath (Đạo tâm, nghiệp), a sworn sibling's death (Hạnh phúc), the age a child's temper shows. */
@@ -2281,6 +2416,8 @@ export const LifeTextsSchema = z
     deathIllness: lines,
     /** 6c.3: a yearly calamity (tai ương) of a cultivator; {age}. */
     deathCalamity: lines,
+    /** 10.9–10.10: other ends (execution, starvation, missing, hermit, monk): the death line and the summary label ({age}). */
+    deathMore: z.record(z.object({ label: z.string().min(1), lines }).strict()).default({}),
     calamity: lines,
     /** 6c.5: yearly money lines; {silver} {stones}. */
     economy: z.object({ exchange: z.string().min(1), upkeepPaid: z.string().min(1), upkeepShort: z.string().min(1) }).strict(),
@@ -2925,8 +3062,8 @@ export const RegionFileSchema = z.array(
 export type Region = z.infer<typeof RegionFileSchema>[number];
 
 /** 9.W: kinds and stances of giang hồ forces (kept apart from the cultivation sects in sects.json). */
-export const JIANGHU_KINDS = ['mon_phai', 'the_gia', 'giao_phai', 'bang_hoi', 'sat_thu', 'tieu_cuc', 'thuong_hoi'] as const;
-export const JIANGHU_ALIGNMENTS = ['chinh', 'ta', 'trung_lap', 'ma'] as const;
+export const JIANGHU_KINDS = JIANGHU_KINDS_EARLY;
+export const JIANGHU_ALIGNMENTS = JIANGHU_ALIGNMENTS_EARLY;
 
 /** content/worlds/<id>/jianghu-factions.json (9.W): thế gia, môn phái, giáo phái, bang hội of the mortal world. Joining comes in 11.2. */
 export const JianghuFactionFileSchema = z.array(
@@ -2948,6 +3085,16 @@ export const JianghuFactionFileSchema = z.array(
       allies: z.array(id).default([]),
       rivals: z.array(id).default([]),
       notable: z.array(z.object({ name: z.string().min(1), title: z.string().min(1), text: z.string().min(1) }).strict()).default([]),
+      /** 11.2: ranks of its own (else the kind's in jianghu.json); who it takes, beyond the kind's rule. */
+      ranks: z.array(z.string().min(1)).min(3).optional(),
+      join: z.object({
+        age: z.tuple([z.number().int(), z.number().int()]).optional(),
+        /** A thế gia that does take outsiders (khách khanh, gia tướng). */
+        open: z.boolean().optional(),
+        fameMin: z.number().optional(), infamyMin: z.number().optional(),
+        /** Holding this flag stands in for the ác danh (a thẻ bài an envoy left). */
+        flag: id.optional(),
+      }).strict().optional(),
     })
     .strict(),
 );
@@ -3096,8 +3243,8 @@ export const AssetsFileSchema = z.object({
   strategies: z.array(z.object({ id, name: z.string().min(1), profit: z.number(), risk: z.number().min(0).max(1), karma: z.number().default(0), illegal: z.boolean().default(false), caughtText: z.string().min(1).optional() }).strict()).min(1),
   loans: z.array(z.object({ id, name: z.string().min(1), amount: z.number().min(0), rate: z.number().min(0), lenderRole: z.string().min(1) }).strict()).min(1),
   texts: z.object({
-    bought: z.string().min(1), sold: z.string().min(1), soldFake: z.string().min(1), lost: z.string().min(1), harvest: z.string().min(1), shop: z.string().min(1),
-    tax: z.string().min(1), taxShort: z.string().min(1), borrowed: z.string().min(1), repaid: z.string().min(1), seized: z.string().min(1), bonded: z.string().min(1),
+    bought: z.string().min(1), sold: z.string().min(1), soldFake: z.string().min(1), lost: z.string().min(1), harvest: lineOrLines, shop: lineOrLines,
+    tax: z.string().min(1), taxShort: lineOrLines, borrowed: z.string().min(1), repaid: z.string().min(1), seized: z.string().min(1), bonded: z.string().min(1),
   }).strict(),
 }).strict();
 export type AssetsFile = z.infer<typeof AssetsFileSchema>;
@@ -3123,6 +3270,154 @@ export const LeisureFileSchema = z.object({
   }).strict(),
 }).strict();
 export type LeisureFile = z.infer<typeof LeisureFileSchema>;
+
+/** 10.8 Sức khỏe (content/health.json): bệnh có tên, thương tật vĩnh viễn, lời văn. */
+export const HealthFileSchema = z.object({
+  diseases: z.array(z.object({
+    id, name: z.string().min(1), weight: z.number().min(0).default(1),
+    minAge: z.number().int().optional(), maxAge: z.number().int().optional(),
+    contagious: z.boolean().default(false),
+    /** Health lost each year it lasts [min, max]; happiness lost each year. */
+    health: z.tuple([z.number(), z.number()]), happiness: z.number().default(0),
+    /** Chance a year that it passes on its own. */
+    selfHeal: z.number().min(0).max(1),
+    /** Chance each way of curing works (before the doctor's skill). */
+    cure: z.object({ doctor: z.number(), shop: z.number(), shaman: z.number(), self: z.number(), rare: z.number() }).strict(),
+    onset: z.array(z.string().min(1)).min(1),
+    healed: z.string().min(1),
+  }).strict()).min(1),
+  injuries: z.array(z.object({
+    id, name: z.string().min(1),
+    /** Stats moved once, for good (stat. keys). */
+    stats: z.record(z.number()).default({}),
+    /** Set for good, so events, jobs and activities can read it. */
+    flag: id,
+    text: z.string().min(1),
+    /** Jobs closed to someone with this thương tật. */
+    bars: z.array(id).default([]),
+  }).strict()).min(1),
+  texts: z.object({
+    /** {disease}. */
+    worse: z.array(z.string().min(1)).min(1), cureFail: z.array(z.string().min(1)).min(1),
+    doctorGood: z.array(z.string().min(1)).min(1), doctorBad: z.array(z.string().min(1)).min(1),
+    shamanHarm: z.string().min(1), noAilment: z.string().min(1),
+    /** {who} (role), {name}, {disease}. */
+    spread: z.string().min(1), spreadDied: z.string().min(1),
+    drunk: z.string().min(1), drunkYear: z.string().min(1),
+  }).strict(),
+}).strict();
+export type HealthFile = z.infer<typeof HealthFileSchema>;
+
+/** 10.9 Phạm pháp (content/crimes.json): tội danh, bản án, lời văn. */
+export const CrimesFileSchema = z.object({
+  crimes: z.array(z.object({
+    id, name: z.string().min(1),
+    /** The check that decides whether it works; loot in bạc; nghiệp; chance a success still gets out (truy nã +heat). */
+    stat: statKey, difficulty: z.number().min(0).max(100),
+    loot: z.tuple([z.number(), z.number()]), karma: z.number(), expose: z.number().min(0).max(1), heat: z.number().int(),
+    /** 1–5: how heavy the sentence starts (5 = tử hình). */
+    severity: z.number().int().min(1).max(5),
+    success: z.array(z.string().min(1)).min(1), fail: z.array(z.string().min(1)).min(1),
+  }).strict()).min(1),
+  /** One line per verdict: tha bổng, phạt bạc, đánh trượng, ngục, lưu đày, tử hình. {crime}, {years}, {silver}. */
+  verdicts: z.object({ acquit: z.string().min(1), fine: z.string().min(1), beating: z.string().min(1), jail: z.string().min(1), exile: z.string().min(1), death: z.string().min(1) }).strict(),
+  texts: z.object({
+    exposed: z.array(z.string().min(1)).min(1), caught: z.string().min(1), released: z.string().min(1),
+    escaped: z.string().min(1), escapeFail: z.string().min(1), cooled: z.string().min(1), fled: lineOrLines,
+    bribeOk: z.string().min(1), bribeHonest: z.string().min(1), poor: z.string().min(1),
+    /** Mức truy nã 0–5 in words, for the profile. */
+    wanted: z.array(z.string().min(1)).min(1),
+  }).strict(),
+}).strict();
+export type CrimesFile = z.infer<typeof CrimesFileSchema>;
+
+/** 10.11 Gia tộc phàm tục (content/kin.json): tộc trưởng, họ hàng, forebears in the gia phả, gia quy, lời văn. */
+export const KinFileSchema = z.object({
+  elder: z.object({ role: z.string().min(1), kind: id, ageOffset: z.tuple([z.number().int(), z.number().int()]) }).strict(),
+  relatives: z.array(z.object({ role: z.string().min(1), kind: id, paternal: z.boolean(), ageOffset: z.tuple([z.number().int(), z.number().int()]) }).strict()).min(1),
+  forebears: z.array(z.object({ role: z.string().min(1), gender: z.enum(['nam', 'nu']), paternal: z.boolean() }).strict()).min(1),
+  /** Yearly stats (stat. keys) while the rule is kept. */
+  rules: z.array(z.object({ id, name: z.string().min(1), text: z.string().min(1), stats: z.record(z.number()).default({}) }).strict()).min(1),
+  texts: z.object({
+    /** {elder}, {count}. */
+    met: z.string().min(1),
+    /** {silver}, {pot}. */
+    split: z.object({ equal: z.string().min(1), eldest: z.string().min(1), yield: z.string().min(1) }).strict(),
+    /** {child}. */
+    heir: z.string().min(1), noHeir: z.string().min(1),
+    /** {rule}, {text}. */
+    rule: z.string().min(1),
+    ancestors: z.string().min(1), forebears: z.string().min(1), parents: z.string().min(1), self: z.string().min(1), children: z.string().min(1),
+    /** 10.13: a child passed Tú tài ({child}); the mark beside the name in the gia phả. */
+    scholar: z.string().min(1).optional(), scholarMark: z.string().min(1).optional(),
+  }).strict(),
+}).strict();
+export type KinFile = z.infer<typeof KinFileSchema>;
+
+/** 11.1 Danh vọng giang hồ (content/jianghu.json): the parts a ngoại hiệu is built from, and lời văn. */
+const aliasPool = z.array(z.string().min(1)).min(1);
+export const JianghuFileSchema = z.object({
+  aliases: z.object({
+    traits: z.object({ hiep: aliasPool, ac: aliasPool, any: aliasPool }).strict(),
+    nouns: aliasPool,
+    /** Nouns that fit the strongest combat path (sword, body, spell, weapon, arts). */
+    nounsByPath: z.record(aliasPool).default({}),
+    /** A thương tật (health.json id) gives its own trait word. */
+    injury: z.record(z.string().min(1)).default({}),
+  }).strict(),
+  /** 11.2: thế lực by kind (ranks, ages it takes, born members only, danh needed) and lời văn. */
+  factions: z.object({
+    kinds: z.record(z.object({
+      ranks: z.array(z.string().min(1)).min(3), age: z.tuple([z.number().int(), z.number().int()]),
+      bornOnly: z.boolean().optional(), fameMin: z.number().optional(), infamyMin: z.number().optional(),
+    }).strict()),
+    texts: z.object({
+      /** {faction}, {rank}. */
+      joined: z.string().min(1), promoted: z.string().min(1), none: z.string().min(1),
+      blocked: z.object({ age: z.string().min(1), born: z.string().min(1), fame: z.string().min(1), infamy: z.string().min(1), karma: z.string().min(1), left: z.string().min(1) }).strict(),
+      /** {faction}, {silver}. */
+      mission: z.object({ chinh: aliasPool, ta: aliasPool, trung_lap: aliasPool }).strict(),
+      missionFail: aliasPool,
+      /** {faction}, {signature}. */
+      taught: z.string().min(1), teachPoor: z.string().min(1),
+      left: z.string().min(1), betrayed: z.string().min(1), huntOver: z.string().min(1),
+    }).strict(),
+  }).strict().optional(),
+  texts: z.object({
+    /** {alias}. */
+    alias: z.object({ hiep: z.string().min(1), ac: z.string().min(1) }).strict(),
+    ranks: z.object({ hiep: z.array(z.string().min(1)).min(1), ac: z.array(z.string().min(1)).min(1) }).strict(),
+  }).strict(),
+}).strict();
+export type JianghuFile = z.infer<typeof JianghuFileSchema>;
+
+/** 11.3 Võ học phàm tục (content/martial-arts.json): bí kíp (power per tầng, needs as stat.<x> minimums; tà công, tàn quyển
+ *  giả, nội công that adds thọ nguyên once trained to its peak), phàm binh khí, the kinds (name, combat path) and lời văn. */
+export const MartialArtsFileSchema = z.object({
+  arts: z.array(z.object({
+    id, name: z.string().min(1), kind: z.string().min(1), grade: z.number().int().min(1), power: z.number().min(0), maxLevel: z.number().int().min(1),
+    needs: z.record(z.number()).default({}), evil: z.boolean().optional(), fake: z.boolean().optional(), lifespan: z.number().optional(), text: z.string().min(1),
+  }).strict()).min(1),
+  weapons: z.array(z.object({ id, name: z.string().min(1), kind: z.string().min(1), grade: z.number().int().min(1), power: z.number().min(0), price: z.number().min(0), text: z.string().min(1) }).strict()).default([]),
+  kinds: z.record(z.object({ name: z.string().min(1), path: z.string().min(1) }).strict()),
+  texts: z.object({
+    learned: z.string().min(1), known: z.string().min(1), unfit: z.string().min(1), nothing: z.string().min(1), levelUp: z.string().min(1), maxed: z.string().min(1),
+    practice: z.array(z.string().min(1)).min(1), deviation: z.string().min(1), fakeExposed: z.string().min(1),
+    bought: z.string().min(1), poor: z.string().min(1), better: z.string().min(1), wounded: z.string().min(1), woundHurt: z.string().min(1), healed: z.string().min(1),
+  }).strict(),
+}).strict();
+export type MartialArtsFile = z.infer<typeof MartialArtsFileSchema>;
+
+/** 10.13 Lịch lễ hội thật (content/calendar.json): the real dates (dương lịch) of each lễ hội in leisure.json, by year.
+ *  In the days around one, the game's lễ hội that year is likely that one and festival events come more often. */
+export const CalendarFileSchema = z.object({
+  festivals: z.array(z.object({ id, dates: z.array(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)).min(1) }).strict()).min(1),
+  texts: z.object({
+    /** Shown on the lễ hội line in a real festival week: {festival}. */
+    real: z.string().min(1),
+  }).strict(),
+}).strict();
+export type CalendarFile = z.infer<typeof CalendarFileSchema>;
 
 export const RelationsFileSchema = z.object({
   groups: z.array(z.object({ id, name: z.string().min(1) }).strict()).min(1),
@@ -4131,7 +4426,7 @@ export const LifeCheckSchema = z
     mortal: z.boolean().optional(),
     ageMin: z.number().int().min(0).optional(),
     ageMax: z.number().int().min(0).optional(),
-    cause: z.array(z.enum(['old_age', 'illness', 'breakthrough', 'ordeal', 'combat', 'tribulation', 'calamity'])).optional(),
+    cause: z.array(z.enum(DEATH_CAUSES)).optional(),
     karmaMin: z.number().optional(),
     karmaMax: z.number().optional(),
     happinessMin: z.number().optional(),
@@ -4163,6 +4458,18 @@ export const LifeCheckSchema = z
     inSect: z.boolean().optional(),
     career: z.boolean().optional(),
     rooted: z.boolean().optional(),
+    /** 10.10: an event condition on the state at the end (job, exam, law, asset, art, pet, injury…). */
+    holds: z.lazy(() => ConditionsSchema.partial()).optional(),
+    /** 10.10: different jobs held in the life; reached the top rung of one; crimes done; never caught for any. */
+    jobsMin: z.number().int().min(1).optional(),
+    jobEver: ids.optional(),
+    silverMax: z.number().int().optional(),
+    jobTop: z.boolean().optional(),
+    crimesMin: z.number().int().min(1).optional(),
+    neverCaught: z.boolean().optional(),
+    /** 10.13: martial stage at most this (-1 = never reached Tam lưu); children who passed Tú tài. */
+    martialMax: z.number().int().min(-1).optional(),
+    scholarKidsMin: z.number().int().min(1).optional(),
   })
   .strict();
 export type LifeCheck = z.infer<typeof LifeCheckSchema>;

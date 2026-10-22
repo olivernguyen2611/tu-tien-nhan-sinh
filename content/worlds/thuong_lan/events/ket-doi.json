@@ -1,0 +1,527 @@
+[
+ {
+  "id": "ld_tang_cha",
+  "category": "life",
+  "title": "Đại tang",
+  "text": "Nhà treo đèn trắng, khăn tang trắng đầu. Họ hàng làng xóm kéo tới viếng người đã khuất. Lo tang lễ thế nào là việc của ngươi.",
+  "themes": [
+   "life"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Làm lớn cho trọn đạo hiếu",
+    "result": {
+     "text": "Kèn trống ba ngày ba đêm, cỗ bàn mời cả làng. Người ta khen nhà ngươi có hiếu. Túi tiền thì rỗng.",
+     "effects": {
+      "silver": -60,
+      "reputation": {
+       "lang_xa": 3
+      },
+      "karma": 2,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Vừa phải, đúng lệ làng",
+    "result": {
+     "text": "Mời thầy cúng, làm cỗ vừa đủ. Không ai chê được.",
+     "effects": {
+      "silver": -20,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Giản dị, thờ tại tâm",
+    "result": {
+     "text": "Một cỗ áo quan, mấy nén hương. Có người xì xào. Ngươi mặc kệ, khóc một mình bên mộ.",
+     "effects": {
+      "silver": -5,
+      "reputation": {
+       "lang_xa": -2
+      },
+      "stat.daoHeart": 2,
+      "stat.happiness": -4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ld_tang_me",
+  "category": "life",
+  "title": "Tang lễ",
+  "text": "Hương khói nghi ngút suốt ba ngày. Người nằm đó từng ru ngươi ngủ. Lo tang lễ thế nào là việc của ngươi.",
+  "themes": [
+   "life"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Làm lớn cho trọn đạo hiếu",
+    "result": {
+     "text": "Kèn trống ba ngày ba đêm, cỗ bàn mời cả làng. Người ta khen nhà ngươi có hiếu. Túi tiền thì rỗng.",
+     "effects": {
+      "silver": -60,
+      "reputation": {
+       "lang_xa": 3
+      },
+      "karma": 2,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Vừa phải, đúng lệ làng",
+    "result": {
+     "text": "Mời thầy cúng, làm cỗ vừa đủ. Không ai chê được.",
+     "effects": {
+      "silver": -20,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Giản dị, thờ tại tâm",
+    "result": {
+     "text": "Một cỗ áo quan, mấy nén hương. Có người xì xào. Ngươi mặc kệ, khóc một mình bên mộ.",
+     "effects": {
+      "silver": -5,
+      "reputation": {
+       "lang_xa": -2
+      },
+      "stat.daoHeart": 2,
+      "stat.happiness": -4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ld_quy_an",
+  "category": "life",
+  "title": "Quy ẩn sơn lâm",
+  "text": "Ngươi đã sống đủ lâu để biết danh lợi là gì. Trong núi có một khoảnh đất, một con suối, một gốc tùng.",
+  "themes": [
+   "life"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Vào núi, không trở lại",
+    "result": {
+     "text": "Ngươi dựng lều tranh bên suối, trồng rau, đọc sách, nhìn mây. Người đời quên dần tên ngươi. Những năm còn lại trôi qua êm như nước.",
+     "effects": {
+      "stat.happiness": 10,
+      "stat.daoHeart": 3,
+      "die": "hermit"
+     }
+    }
+   },
+   {
+    "text": "Chưa nỡ, còn vướng bận",
+    "result": {
+     "text": "Ngươi nhìn con cháu, nhìn mái nhà, rồi thở dài. Để mai tính.",
+     "effects": {
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ld_xuat_gia",
+  "category": "life",
+  "title": "Xuất gia",
+  "text": "Sư trụ trì nhìn ngươi hồi lâu: \"Cửa Phật rộng mở. Nhưng đã bước qua thì hồng trần là chuyện của kiếp khác.\"",
+  "themes": [
+   "life"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Cạo tóc quy y",
+    "result": {
+     "text": "Từng lọn tóc rơi xuống nền gạch. Chuông chùa vang lên. Ngươi nhận pháp danh, từ đây sớm kinh chiều kệ.",
+     "effects": {
+      "stat.daoHeart": 5,
+      "karma": 5,
+      "die": "monk"
+     }
+    }
+   },
+   {
+    "text": "Tu tại gia",
+    "result": {
+     "text": "Ngươi xin quy y, nhận ngũ giới, nhưng vẫn ở nhà làm ăn, lo cho gia đình.",
+     "effects": {
+      "stat.daoHeart": 3,
+      "karma": 2,
+      "setFlags": [
+       "tu_tai_gia"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Xuống núi",
+    "result": {
+     "text": "Ngươi chắp tay vái rồi quay về. Có lẽ chưa phải lúc.",
+     "effects": {
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ld_hang_sau",
+  "category": "life",
+  "title": "Miệng hang trong núi",
+  "text": "Đi rừng lạc đường, ngươi thấy một miệng hang sâu hun hút. Gió trong hang thổi ra lạnh buốt, thoang thoảng mùi trầm.",
+  "themes": [
+   "life"
+  ],
+  "conditions": {
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 16,
+    "max": 65
+   },
+   "tier": [
+    "pham_gian"
+   ]
+  },
+  "weight": 1,
+  "cooldownYears": 30,
+  "choices": [
+   {
+    "text": "Đốt đuốc đi vào",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Cuối hang là một thạch thất bỏ hoang, trên bàn đá có mấy thỏi bạc phủ bụi. Ngươi mang về, không dám kể với ai.",
+     "effects": {
+      "silver": 60,
+      "stat.happiness": 3
+     }
+    },
+    "fail": {
+     "text": "Đuốc tắt. Ngươi lần mò trong bóng tối, càng đi càng sâu...",
+     "effects": {
+      "stat.health": -10,
+      "followUp": {
+       "event": "ld_lac_trong_hang",
+       "afterYears": [
+        0,
+        0
+       ]
+      }
+     }
+    }
+   },
+   {
+    "text": "Đánh dấu rồi quay về",
+    "result": {
+     "text": "Ngươi khắc dấu lên thân cây, tìm đường xuống núi. Về sau không bao giờ tìm lại được chỗ ấy.",
+     "effects": {
+      "stat.intellect": 1,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ld_lac_trong_hang",
+  "category": "life",
+  "title": "Lạc trong lòng núi",
+  "text": "Không biết đã bao nhiêu ngày. Nước nhỏ giọt trên vách đá là thứ duy nhất ngươi còn nghe thấy.",
+  "themes": [
+   "life"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Lần theo tiếng nước",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Tiếng nước dẫn ra một khe đá. Ánh sáng! Ngươi bò ra, ngất đi giữa bãi cỏ. Người hái thuốc tìm thấy ngươi.",
+     "effects": {
+      "stat.health": -5,
+      "stat.daoHeart": 3
+     }
+    },
+    "fail": {
+     "text": "Khe đá hẹp dần rồi hết lối. Ngươi ngồi xuống, nhắm mắt.",
+     "effects": {
+      "stat.happiness": -10,
+      "die": "missing"
+     }
+    }
+   },
+   {
+    "text": "Ngồi yên chờ người tới tìm",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Ba ngày sau, có tiếng gọi tên ngươi vọng vào. Người làng mang đuốc tới.",
+     "effects": {
+      "stat.health": -8,
+      "stat.happiness": 4
+     }
+    },
+    "fail": {
+     "text": "Không ai tới. Bóng tối nuốt trọn tất cả.",
+     "effects": {
+      "stat.happiness": -10,
+      "die": "missing"
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ld_nan_doi",
+  "category": "life",
+  "title": "Nạn đói",
+  "text": "Mất mùa liên tiếp. Ngoài đường người ta bán con, đào rễ cây mà ăn. Nhà ngươi cũng chẳng còn hạt gạo nào.",
+  "themes": [
+   "life"
+  ],
+  "conditions": {
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "worldVars": [
+    {
+     "id": "harvest",
+     "lte": 30
+    }
+   ],
+   "stats": [
+    {
+     "stat": "silver",
+     "lte": 20
+    }
+   ]
+  },
+  "weight": 4,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Vào rừng đào củ",
+    "result": {
+     "text": "Củ mài, củ nâu, rễ chuối. Ăn cầm hơi qua mùa đói.",
+     "effects": {
+      "stat.health": -6,
+      "stat.physique": 1
+     }
+    }
+   },
+   {
+    "text": "Đi ăn xin ở thị trấn",
+    "result": {
+     "text": "Ngươi chìa tay trước cổng nhà giàu. Có hôm được nắm xôi, có hôm bị chó đuổi.",
+     "effects": {
+      "stat.charm": -3,
+      "stat.health": -3,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Bán đồ đạc lấy gạo",
+    "result": {
+     "text": "Bán cái nồi đồng, bộ áo cưới cũ. Đổi được mấy đấu gạo mốc.",
+     "effects": {
+      "stat.happiness": -4,
+      "stat.health": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ld_doi_la",
+  "category": "life",
+  "title": "Đói lả",
+  "text": "Đã mấy ngày không có gì vào bụng. Đứng dậy cũng hoa mắt.",
+  "themes": [
+   "life"
+  ],
+  "conditions": {
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "worldVars": [
+    {
+     "id": "harvest",
+     "lte": 30
+    }
+   ],
+   "stats": [
+    {
+     "stat": "silver",
+     "lte": 10
+    },
+    {
+     "stat": "stat.health",
+     "lte": 30
+    }
+   ]
+  },
+  "weight": 6,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Lết ra đầu làng xin cháo",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 45
+    },
+    "success": {
+     "text": "Có nhà phát chẩn đầu làng. Một bát cháo loãng cứu ngươi qua mùa đói.",
+     "effects": {
+      "stat.health": 5,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Hàng người xin cháo dài tới nửa dặm. Ngươi không chờ được tới lượt.",
+     "effects": {
+      "die": "starvation",
+      "stat.health": -30
+     }
+    }
+   },
+   {
+    "text": "Gắng gượng chờ qua mùa",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi nằm im giữ sức. Cơn mưa đầu mùa tới, rau dại mọc kín bờ ruộng.",
+     "effects": {
+      "stat.health": -5,
+      "stat.daoHeart": 2
+     }
+    },
+    "fail": {
+     "text": "Thân thể không chịu được nữa.",
+     "effects": {
+      "die": "starvation",
+      "stat.health": -30
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ld_nho_que",
+  "category": "life",
+  "title": "Nhớ quê",
+  "text": "Đêm ở đất khách, nghe tiếng sáo ai đó thổi, ngươi bỗng nhớ mái đình, cây đa, tiếng gọi về ăn cơm mỗi chiều.",
+  "themes": [
+   "life"
+  ],
+  "conditions": {
+   "flagsAll": [
+    "tha_huong"
+   ],
+   "age": {
+    "min": 30
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Về thăm quê",
+    "result": {
+     "text": "Làng xưa đã khác nhiều. Có người nhận ra ngươi, có người không. Ngươi thắp hương ở mộ tổ, đứng lặng hồi lâu.",
+     "effects": {
+      "clearFlags": [
+       "tha_huong"
+      ],
+      "silver": -10,
+      "stat.happiness": 5
+     }
+    }
+   },
+   {
+    "text": "Ở lại, quê người thành quê mình",
+    "result": {
+     "text": "Ngươi rót chén rượu, đổ xuống đất về hướng quê nhà. Rồi đi ngủ.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ld_hang_xom_moi",
+  "category": "life",
+  "title": "Đất mới người mới",
+  "text": "Tới nơi ở mới, bà cụ hàng xóm sang gõ cửa, mang theo một rổ khoai: \"Người mới đến hả? Có gì cứ hỏi già.\"",
+  "themes": [
+   "life"
+  ],
+  "conditions": {
+   "flagsAll": [
+    "tha_huong"
+   ]
+  },
+  "weight": 3,
+  "cooldownYears": 20,
+  "choices": [
+   {
+    "text": "Mời bà vào uống nước",
+    "result": {
+     "text": "Bà cụ kể hết chuyện trong xóm, ai tốt ai xấu, giếng nào nước ngọt. Ngươi có người quen đầu tiên.",
+     "effects": {
+      "meetNpc": {
+       "role": "hàng xóm mới",
+       "kind": "hang_xom"
+      },
+      "stat.happiness": 3
+     }
+    }
+   },
+   {
+    "text": "Cảm ơn rồi đóng cửa",
+    "result": {
+     "text": "Bà cụ lắc đầu đi về. Ở đất lạ, ngươi vẫn một mình.",
+     "effects": {
+      "stat.happiness": -2
+     }
+    }
+   }
+  ],
+  "oncePerLife": true
+ }
+]

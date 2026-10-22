@@ -1,0 +1,433 @@
+[
+ {
+  "id": "lh_tet_li_xi",
+  "category": "leisure",
+  "title": "Mồng một Tết",
+  "text": "Sáng mồng một, cả xóm áo mới, mặt ai cũng tươi. Người lớn ngồi uống trà, trẻ con xúm quanh chờ lì xì.",
+  "themes": [
+   "festival"
+  ],
+  "conditions": {
+   "festival": [
+    "tet"
+   ],
+   "age": {
+    "min": 6
+   },
+   "tier": [
+    "pham_gian"
+   ]
+  },
+  "weight": 0.6,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Đi chúc Tết khắp xóm",
+    "result": {
+     "text": "Ngươi đi từ đầu xóm tới cuối xóm, nhà nào cũng mời một chén rượu, một miếng mứt. Về tới nhà mặt đỏ gay.",
+     "variants": [
+      "Chúc Tết mười mấy nhà, câu chúc nói tới thuộc lòng. Hàng xóm khen ngươi biết điều.",
+      "Nhà nào cũng bắt ngồi lại. Ngươi ăn bánh chưng tới mức nhìn thấy lá dong là sợ."
+     ],
+     "effects": {
+      "stat.charm": 2,
+      "stat.happiness": 2,
+      "silver": -3
+     }
+    }
+   },
+   {
+    "text": "Mở sòng tổ tôm đầu năm",
+    "result": {
+     "text": "Vài ván tổ tôm cho vui cửa vui nhà. Được thua chẳng bao nhiêu, cười thì nhiều.",
+     "effects": {
+      "stat.happiness": 3,
+      "silver": -5
+     }
+    }
+   },
+   {
+    "text": "Ở nhà ngủ cho đã",
+    "result": {
+     "text": "Cả năm vất vả, ngươi ngủ một mạch tới trưa mồng một. Tỉnh dậy thấy người nhẹ hẳn.",
+     "effects": {
+      "stat.health": 2,
+      "stat.happiness": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "lh_tet_xong_dat",
+  "category": "leisure",
+  "title": "Xông đất",
+  "text": "Có người gõ cửa từ sáng sớm mồng một. Người xông đất năm nay là ai thì cả năm vận như thế, các cụ bảo vậy.",
+  "themes": [
+   "festival"
+  ],
+  "conditions": {
+   "festival": [
+    "tet"
+   ],
+   "age": {
+    "min": 6
+   },
+   "tier": [
+    "pham_gian"
+   ]
+  },
+  "weight": 0.6,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Mời vào, đãi một mâm",
+    "result": {
+     "text": "Khách vui vẻ ngồi xuống, chúc nhà ngươi năm mới phát tài. Ai biết thật hay không, nghe đã thấy sướng.",
+     "effects": {
+      "stat.happiness": 3,
+      "silver": -4,
+      "stat.luck": 1
+     }
+    }
+   },
+   {
+    "text": "Tự mình đi xông đất nhà giàu",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 45
+    },
+    "success": {
+     "text": "Viên ngoại thấy ngươi ăn nói khéo, mừng tuổi hẳn một phong bao dày.",
+     "effects": {
+      "silver": 12,
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Viên ngoại nhìn ngươi từ đầu tới chân rồi đóng cửa. Cả xóm nhắc chuyện ấy tới rằm.",
+     "effects": {
+      "stat.happiness": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "lh_nguyen_tieu_den",
+  "category": "leisure",
+  "title": "Rằm tháng Giêng",
+  "text": "Đêm rằm tháng Giêng, phố huyện treo đèn kín hai bên đường. Có người bày bàn đố đèn, ai đoán trúng được thưởng.",
+  "themes": [
+   "festival"
+  ],
+  "conditions": {
+   "festival": [
+    "nguyen_tieu"
+   ],
+   "age": {
+    "min": 6
+   },
+   "tier": [
+    "pham_gian"
+   ]
+  },
+  "weight": 0.6,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Đoán câu đố đèn",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ngươi đoán liền ba câu, ông chủ cười khà khà đưa một cây đèn kéo quân làm quà.",
+     "effects": {
+      "stat.intellect": 2,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Đoán câu nào trật câu đó. Mấy đứa trẻ đứng cạnh còn đoán nhanh hơn ngươi.",
+     "effects": {
+      "stat.happiness": -1,
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Đi dạo ngắm đèn",
+    "result": {
+     "text": "Ngươi chen giữa dòng người, ngắm đèn cá chép, đèn hoa sen. Gió lạnh mà lòng ấm.",
+     "effects": {
+      "stat.happiness": 3
+     }
+    }
+   },
+   {
+    "text": "Lên chùa lễ rằm",
+    "result": {
+     "text": "Khói hương nghi ngút, người đi lễ đông như hội. Ngươi khấn một câu cho cả năm bình an.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "silver": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "lh_thanh_minh_mo",
+  "category": "leisure",
+  "title": "Tảo mộ",
+  "text": "Tiết Thanh minh, cả họ ra đồng sửa sang mộ phần. Cỏ mọc lút mộ, có ngôi đã lún một góc.",
+  "themes": [
+   "festival"
+  ],
+  "conditions": {
+   "festival": [
+    "thanh_minh"
+   ],
+   "age": {
+    "min": 6
+   },
+   "tier": [
+    "pham_gian"
+   ]
+  },
+  "weight": 0.6,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Cắt cỏ, đắp lại từng ngôi",
+    "result": {
+     "text": "Ngươi làm tới xế chiều, tay phồng rộp. Đứng nhìn hàng mộ sạch sẽ, thấy lòng nhẹ đi.",
+     "effects": {
+      "stat.health": -1,
+      "stat.daoHeart": 2,
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Góp tiền thuê người làm",
+    "result": {
+     "text": "Ngươi bỏ bạc thuê người, chỉ ra thắp nén hương. Có người trong họ nhìn ngươi không vui.",
+     "effects": {
+      "silver": -8,
+      "stat.happiness": -1,
+      "stat.charm": -1
+     }
+    }
+   },
+   {
+    "text": "Ngồi kể chuyện người xưa cho đám trẻ",
+    "result": {
+     "text": "Ngươi kể chuyện các cụ đời trước, đám trẻ nghe tròn mắt. Lúc về chúng nhớ được tên từng người.",
+     "effects": {
+      "stat.charm": 2,
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "lh_doan_ngo_thuyen",
+  "category": "leisure",
+  "title": "Đua thuyền Đoan ngọ",
+  "text": "Mồng năm tháng năm, trên sông có hội đua thuyền rồng. Trống thúc dồn dập, hai bờ người reo như sấm.",
+  "themes": [
+   "festival"
+  ],
+  "conditions": {
+   "festival": [
+    "doan_ngo"
+   ],
+   "age": {
+    "min": 6
+   },
+   "tier": [
+    "pham_gian"
+   ]
+  },
+  "weight": 0.6,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Xuống chèo cho đội làng",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Đội làng ngươi về nhất. Cả làng khiêng ngươi lên vai, rượu mừng uống tới đêm.",
+     "effects": {
+      "stat.physique": 2,
+      "stat.happiness": 4
+     }
+    },
+    "fail": {
+     "text": "Chèo tới giữa sông thì đuối sức, đội về bét. Vai ngươi đau mấy hôm.",
+     "effects": {
+      "stat.health": -2,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Đứng bờ cổ vũ",
+    "result": {
+     "text": "Ngươi hò hét tới khản cổ. Thuyền thắng thua chẳng nhớ, chỉ nhớ hôm ấy vui.",
+     "effects": {
+      "stat.happiness": 3,
+      "stat.health": -1
+     }
+    }
+   },
+   {
+    "text": "Ăn bánh tro, uống rượu nếp diệt sâu bọ",
+    "result": {
+     "text": "Sáng sớm ăn bánh tro, uống chén rượu nếp, ăn mấy quả mận chua. Các cụ bảo thế là trừ được bệnh cả năm.",
+     "effects": {
+      "stat.health": 2,
+      "silver": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "lh_trung_thu_trang",
+  "category": "leisure",
+  "title": "Đêm Trung thu",
+  "text": "Rằm tháng tám, trăng tròn vằng vặc. Ngoài sân đình trẻ con rước đèn ông sao, múa lân rộn ràng.",
+  "themes": [
+   "festival"
+  ],
+  "conditions": {
+   "festival": [
+    "trung_thu"
+   ],
+   "age": {
+    "min": 6
+   },
+   "tier": [
+    "pham_gian"
+   ]
+  },
+  "weight": 0.6,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Bày mâm cỗ trông trăng",
+    "result": {
+     "text": "Bánh nướng, bánh dẻo, bưởi, hồng. Cả nhà ngồi ngắm trăng, chuyện trò tới khuya.",
+     "effects": {
+      "stat.happiness": 4,
+      "silver": -5
+     }
+    }
+   },
+   {
+    "text": "Làm đèn cho lũ trẻ xóm",
+    "result": {
+     "text": "Ngươi vót tre, dán giấy bóng kính, làm được năm cái đèn ông sao. Lũ trẻ quý ngươi như anh cả.",
+     "effects": {
+      "stat.charm": 2,
+      "stat.happiness": 2,
+      "silver": -2
+     }
+    }
+   },
+   {
+    "text": "Ra đình phá cỗ, thi ngâm thơ",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 45
+    },
+    "success": {
+     "text": "Bài thơ trăng của ngươi được các cụ chép lại. Danh tiếng trong làng lên một bậc.",
+     "effects": {
+      "stat.intellect": 1,
+      "stat.charm": 2
+     }
+    },
+    "fail": {
+     "text": "Ngâm tới câu thứ ba thì quên, cả đình cười ồ. Ngươi cũng cười theo.",
+     "effects": {
+      "stat.happiness": 1,
+      "stat.charm": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "lh_trung_cuu_nui",
+  "category": "leisure",
+  "title": "Lên cao Trùng cửu",
+  "text": "Mồng chín tháng chín, người ta rủ nhau lên núi, cài cành thù du, uống rượu cúc cho trường thọ.",
+  "themes": [
+   "festival"
+  ],
+  "conditions": {
+   "festival": [
+    "trung_cuu"
+   ],
+   "age": {
+    "min": 8
+   },
+   "tier": [
+    "pham_gian"
+   ]
+  },
+  "weight": 0.6,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Leo tới đỉnh núi",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 45
+    },
+    "success": {
+     "text": "Đứng trên đỉnh nhìn xuống, ruộng đồng như bàn cờ. Gió núi thổi sạch hết bực dọc.",
+     "effects": {
+      "stat.health": 2,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Mới tới lưng chừng đã thở không ra hơi, đành ngồi nghỉ ở quán nước.",
+     "effects": {
+      "stat.health": -1,
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Mang rượu cúc biếu người già trong xóm",
+    "result": {
+     "text": "Mấy cụ già cầm chén rượu cúc, chúc ngươi sống lâu. Ngươi thấy mình được chúc cũng đáng.",
+     "effects": {
+      "stat.charm": 1,
+      "stat.daoHeart": 2,
+      "silver": -3
+     }
+    }
+   },
+   {
+    "text": "Ngồi nhà ngắm cúc",
+    "result": {
+     "text": "Ngươi pha ấm trà, ngắm chậu cúc vàng nở trước hiên. Một ngày tĩnh lặng hiếm có.",
+     "effects": {
+      "stat.happiness": 2,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ }
+]

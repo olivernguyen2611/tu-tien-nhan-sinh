@@ -79,10 +79,33 @@
     },
     "outcomes": [
       {
-        "text": [
-          "Chủ ngẫm một lúc rồi gật: \"Được, ngươi làm được việc.\"",
-          "Chủ thở dài nhưng vẫn thêm tiền công cho ngươi."
-        ],
+        "text": {
+          "lines": [
+            "Chủ ngẫm một lúc rồi gật: \"Được, ngươi làm được việc.\"",
+            "Chủ thở dài nhưng vẫn thêm tiền công cho ngươi."
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            [
+              "Chủ ngẫm một lúc,",
+              "Chủ gõ bàn tính lạch cạch,",
+              "Chủ nhìn ngươi từ đầu tới chân,",
+              "Chủ thở dài một tiếng,"
+            ],
+            [
+              "rồi gật đầu: \"Được, ngươi làm được việc.\"",
+              "rồi thêm tiền công cho ngươi.",
+              "bảo: \"Năm sau làm cho tốt hơn.\"",
+              "đếm thêm mấy đồng bỏ vào tay ngươi."
+            ],
+            [
+              "Ngươi cúi đầu cảm tạ.",
+              "Ngươi về khoe cả nhà.",
+              "Bạn làm cùng nhìn ngươi đầy ghen tị.",
+              "Tối ấy ngươi mua thêm cân thịt."
+            ]
+          ]
+        },
         "effects": {
           "silver": 8,
           "stat.happiness": 2
@@ -206,10 +229,33 @@
     },
     "outcomes": [
       {
-        "text": [
-          "Không ai hay. Túi nặng thêm, lòng nhẹ đi.",
-          "Một chút thôi, ai mà biết."
-        ],
+        "text": {
+          "lines": [
+            "Không ai hay. Túi nặng thêm, lòng nhẹ đi.",
+            "Một chút thôi, ai mà biết."
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            [
+              "Ngươi ghi sổ lệch một chút,",
+              "Ngươi bớt mỗi bao một nắm,",
+              "Nhân lúc chủ đi vắng,",
+              "Ngươi khai hao hụt cao hơn thật,"
+            ],
+            [
+              "giấu mấy đồng vào cạp quần.",
+              "đem phần dôi ra bán ở chợ khác.",
+              "chẳng ai đếm lại.",
+              "số bạc lẻ vào túi ngươi."
+            ],
+            [
+              "Không ai hay.",
+              "Túi nặng thêm, lòng nhẹ đi.",
+              "Đêm về ngủ hơi chập chờn.",
+              "Một chút thôi, ai mà biết."
+            ]
+          ]
+        },
         "effects": {
           "silver": 10,
           "karma": -2,

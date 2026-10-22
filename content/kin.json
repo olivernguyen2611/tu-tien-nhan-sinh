@@ -1,0 +1,174 @@
+{
+  "elder": {
+    "role": "tộc trưởng",
+    "kind": "toc_truong",
+    "ageOffset": [
+      40,
+      60
+    ]
+  },
+  "relatives": [
+    {
+      "role": "chú",
+      "kind": "ho_noi",
+      "paternal": true,
+      "ageOffset": [
+        18,
+        30
+      ]
+    },
+    {
+      "role": "bác",
+      "kind": "ho_noi",
+      "paternal": true,
+      "ageOffset": [
+        25,
+        40
+      ]
+    },
+    {
+      "role": "cô",
+      "kind": "ho_noi",
+      "paternal": true,
+      "ageOffset": [
+        18,
+        35
+      ]
+    },
+    {
+      "role": "anh họ",
+      "kind": "ho_noi",
+      "paternal": true,
+      "ageOffset": [
+        2,
+        8
+      ]
+    },
+    {
+      "role": "chị họ",
+      "kind": "ho_noi",
+      "paternal": true,
+      "ageOffset": [
+        1,
+        7
+      ]
+    },
+    {
+      "role": "em họ",
+      "kind": "ho_noi",
+      "paternal": true,
+      "ageOffset": [
+        -4,
+        -1
+      ]
+    },
+    {
+      "role": "cậu",
+      "kind": "ho_ngoai",
+      "paternal": false,
+      "ageOffset": [
+        15,
+        30
+      ]
+    },
+    {
+      "role": "dì",
+      "kind": "ho_ngoai",
+      "paternal": false,
+      "ageOffset": [
+        15,
+        30
+      ]
+    },
+    {
+      "role": "anh họ bên ngoại",
+      "kind": "ho_ngoai",
+      "paternal": false,
+      "ageOffset": [
+        1,
+        8
+      ]
+    }
+  ],
+  "forebears": [
+    {
+      "role": "ông nội",
+      "gender": "nam",
+      "paternal": true
+    },
+    {
+      "role": "bà nội",
+      "gender": "nu",
+      "paternal": false
+    },
+    {
+      "role": "ông ngoại",
+      "gender": "nam",
+      "paternal": false
+    }
+  ],
+  "rules": [
+    {
+      "id": "can_kiem",
+      "name": "Cần kiệm",
+      "text": "Nhà này không ai được ăn không ngồi rồi, không ai được tiêu hoang.",
+      "stats": {
+        "stat.happiness": -1,
+        "stat.daoHeart": 1
+      }
+    },
+    {
+      "id": "hieu_hoc",
+      "name": "Hiếu học",
+      "text": "Con cháu phải biết chữ. Bán ruộng cũng phải cho đi học.",
+      "stats": {
+        "stat.intellect": 1
+      }
+    },
+    {
+      "id": "thuong_vo",
+      "name": "Thượng võ",
+      "text": "Trai gái trong nhà sáng nào cũng ra sân luyện quyền.",
+      "stats": {
+        "stat.physique": 1,
+        "stat.health": 1
+      }
+    },
+    {
+      "id": "tich_thien",
+      "name": "Tích thiện",
+      "text": "Mỗi tháng phát gạo cho người nghèo một lần. Đời mình không hưởng thì để phúc cho con cháu.",
+      "stats": {
+        "stat.happiness": 1,
+        "karma": 1
+      }
+    },
+    {
+      "id": "hoa_thuan",
+      "name": "Hòa thuận",
+      "text": "Anh em trong nhà không được to tiếng với nhau. Có chuyện thì ngồi xuống uống chén trà.",
+      "stats": {
+        "stat.happiness": 2,
+        "stat.charm": -1
+      }
+    }
+  ],
+  "texts": {
+    "met": "Ngươi đã lớn, được cha dắt lên từ đường ra mắt họ hàng. Tộc trưởng {elder} xoa đầu ngươi, đọc tên từng người trong họ. Hôm ấy có {count} người họ hàng nhớ mặt ngươi.",
+    "split": {
+      "equal": "Phân gia: gia sản chia đều cho anh chị em. Phần ngươi được {silver} lượng. Không ai giàu lên, cũng không ai mất lòng.",
+      "eldest": "Phân gia: ngươi giành phần trưởng, được {silver} lượng trong số {pot}. Anh chị em ngoài mặt không nói, trong lòng đã nguội.",
+      "yield": "Phân gia: ngươi nhường hết phần mình cho anh chị em, chỉ mang theo gói áo ra đi lập nghiệp. Cả họ nhắc tới ngươi bằng giọng khác hẳn."
+    },
+    "heir": "Ngươi gọi cả nhà tới trước bàn thờ tổ tiên, đặt tay lên vai {child}: \"Từ nay hương hỏa nhà này giao cho con.\"",
+    "noHeir": "Nhìn quanh, chưa đứa con nào đủ lớn để gánh vác. Chuyện nối dõi đành gác lại.",
+    "rule": "Lập gia quy: \"{rule}\". {text} Ngươi cho khắc lên tấm biển treo giữa nhà.",
+    "ancestors": "Tiên tổ",
+    "forebears": "Ông bà",
+    "parents": "Cha mẹ",
+    "self": "Bản thân",
+    "children": "Con cái",
+    "scholar": "Tin vui từ trường thi: {child} đỗ Tú tài. Cả họ kéo tới mừng, ngươi cười tới tận mang tai.",
+    "scholarMark": "(Tú tài)"
+  }
+}

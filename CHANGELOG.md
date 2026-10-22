@@ -8,6 +8,92 @@
 
 ## [Chưa phát hành]
 
+### 11.4 Việc giang hồ (2026-10-22)
+- Tiêu cục: hoạt động "Nhận chuyến tiêu xa" mở chuỗi 2–4 bước: chọn đường (quan lộ an toàn ít công, đường núi qua sơn trại, đường tắt qua đầm lầy), sơn trại chặn đường (đánh, nộp mãi lộ, nói giang hồ thoại), phát hiện hàng lậu trong tiêu (giao, báo quan, giữ lại bán chợ đen và bị truy nã).
+- Bảng treo thưởng: bắt đạo tặc truy nã (có ngoại hiệu), diệt sơn tặc (một mình hoặc tập hợp trai làng), tìm người mất tích.
+- Tỉ võ: tỉ võ chiêu thân (18–35 tuổi, chưa có người thương, thắng thì có lời đính ước), lôi đài hội chợ, khiêu chiến danh thủ để nổi danh.
+- Ân oán: sư phụ bị hại, thề báo thù, nhiều năm sau gặp lại hung thủ (cần võ đạo Nhất lưu trở lên); trả thù xong thì người thân của hung thủ tìm tới (thù truyền đời).
+- Ám sát 3 bước cho người của sát thủ lâu hoặc kẻ có ác danh: thăm dò (mở lối ra tay dễ hơn), ra tay (lén vào hoặc đụng hộ vệ), rút lui (lĩnh thưởng hoặc bị truy nã); có thể bỏ giữa chừng.
+- Hành hiệp: hoạt động cứu người, trừ cường hào, phát chẩn, đôi khi bị lợi dụng; sự kiện cường hào ức hiếp.
+- Tà giáo hư cấu Kim Đăng Hội: bị lừa nộp bạc, hoặc nằm vùng rồi vạch mặt, báo quan, cuốn hòm bạc.
+- 18 sự kiện (`viec-giang-ho.json`), 4 hoạt động. Mô phỏng: hiệp khách gặp 85 sự kiện khác nhau mỗi đời (trước 81).
+
+### 11.3 Võ học phàm tục (2026-10-22)
+- 15 bí kíp võ công phàm (`content/martial-arts.json`): quyền, cước, đao, kiếm, thương, ám khí, khinh công, nội công; mỗi bí kíp có phẩm, 5–7 tầng, đòi hỏi Căn cốt / Ngộ tính / Khí vận, tăng chiến lực theo tầng và kéo về một trong năm con đường chiến đấu. Nội công luyện tới tầng cuối thêm thọ nguyên.
+- 8 phàm binh khí có phẩm: mua ở lò rèn (món tốt nhất túi tiền cho phép), được tặng, đoạt từ kẻ thua. Binh khí cùng loại với bí kíp đang luyện mạnh gấp rưỡi.
+- Nội thương: người phàm thua trận mang nội thương (trừ thọ nguyên, giảm chiến lực), mỗi năm tự lành một ít; nặng thì trở trời lại đau. Dưỡng nội thương bằng thuốc.
+- Tẩu hỏa nhập ma khi luyện: tàn quyển giả (vỡ lẽ từ tầng 4, mất luôn bí kíp), tà công, Đạo tâm thấp.
+- 6 hoạt động (Giang hồ): học võ ở võ quán, học lén võ, luyện bí kíp, ghé lò rèn, dưỡng nội thương, cầu cao nhân chỉ điểm.
+- 6 sự kiện (`vo-hoc.json`): lão nhân ở quán trà, tàn quyển ở chợ trời, kiếm khách hấp hối (đoạt bí kíp), thợ rèn lang bạt (thành người quen), ma đầu truyền tà công, nội thương tái phát.
+- Hồ sơ có dòng "Võ học:". Điều kiện `arts`; hiệu ứng `learnArt`, `practiseArt`, `buyWeapon`, `gainWeapon`, `wound`. Dev mode: học hết bí kíp, thêm / chữa nội thương. Mô phỏng có cột "Bí kíp TB" (hiệp khách ~8.7, kẻ cướp ~4).
+
+### 11.2 Môn phái và bang hội võ lâm (2026-10-22)
+- Gia nhập thế lực giang hồ (mục Hành sự → Giang hồ): bái nhập danh môn chính phái (thử Căn cốt, 8–25 tuổi), vào bang hội / tiêu cục / thương hội (thử Mị lực), đầu quân hắc đạo (sơn trại, giáo phái, sát thủ lâu; cần ác danh hoặc thẻ bài người ta để lại). Mỗi thế lực có luật riêng: thế gia chỉ nhận người trong họ (trừ vài nhà nhận gia tướng, khách khanh), Thiếu Lâm nhận từ 6 tới 30 tuổi, Huyết Sát Lâu đòi ác danh.
+- Cấp bậc theo loại thế lực (đệ tử ký danh tới trưởng lão; bang chúng tới hộ pháp; sát thủ Đồng bài tới Huyết bài…), lên bậc bằng cống hiến; bậc cao có bổng lộc hằng năm.
+- Làm nhiệm vụ cho thế lực: được cống hiến, bạc theo bậc; chính phái thêm hiệp danh, tà phái thêm ác danh và nghiệp xấu. Đổi cống hiến lấy võ học của môn (luyện võ nhanh hơn).
+- Rời đi: tạ sư (cửa đóng lại) hoặc phản bang (cướp được ít bạc, mất hiệp danh, bị truy sát 8 năm; ẩn mình rút ngắn).
+- 6 sự kiện mới: truy sát, bang chiến, trưởng bối giao việc kín, nội gián, lệnh tàn ác của tà phái, đồng môn tỉ thí. Hồ sơ có dòng "Thế lực:".
+- Điều kiện `faction`; hiệu ứng `joinFaction`, `factionMission`, `factionMerit`, `factionTeach`, `leaveFaction`, `hideFromHunt`. Mô phỏng có cột "Thế lực" (hiệp khách 100%, kẻ cướp 83%).
+
+### 11.1 Hiệp danh, ác danh và ngoại hiệu (2026-10-22)
+- Danh vọng giang hồ tách thành hiệp danh và ác danh, cả hai cùng cao được (0–100 mỗi bên), mỗi bên có năm bậc danh xưng (Có chút tiếng… Danh chấn giang hồ; Tiếng xấu… Đại ma đầu). Sự kiện cũ cộng `reputation.giang_ho` thì phần dương vào hiệp danh, phần âm vào ác danh; lưu cũ đọc dấu của danh vọng cũ.
+- Ngoại hiệu tự sinh khi một bên đạt 30: [đặc điểm] + [binh khí hoặc thú], theo con đường chiến đấu mạnh nhất (vd. «Thiết Thủ Hắc Ưng», «Huyết Thủ Phán Quan Bút»); thương tật cho chữ riêng (mù một mắt thành «Độc Nhãn …»). Người giang hồ (kiểu quan hệ mới) cũng có ngoại hiệu, hiện trong mục thông tin người quen.
+- Lên bậc võ đạo tăng hiệp danh; phạm tội bị lộ hoặc bị bắt tăng ác danh theo mức nặng của tội.
+- 6 sự kiện danh vọng (`giang-ho.json`): thư khiêu chiến, quán trà nhận ra ngươi, dân làng đóng cửa, kẻ xin đi theo, kẻ mạo danh ngoại hiệu, bang hội ngầm tới mời.
+- Hồ sơ có dòng "Giang hồ:". Điều kiện `jianghu`, hiệu ứng `fame`, `infamy`, chữ `{alias}`, `{npcAlias}`. Mô phỏng có cột "Ngoại hiệu" (hiệp khách 93%, kẻ cướp phần lớn có ác danh đủ để có ngoại hiệu).
+
+### 10.13 Thiên Đạo Khảo Nghiệm cho mọi lối sống, lịch lễ hội thật (2026-10-22)
+- 10 đề thử thách tuần mới cho đời phàm: Bạch Diện Tri Phủ (sống tới 60, không vào hàng võ giả, làm tới Tri phủ), Ngũ Tử Đăng Khoa (nhà nông có 5 con đỗ Tú tài), Ba Lần Vượt Ngục, Đạo Tặc Vô Ảnh, Từ Phu Thành Phú Hộ, Danh Y Phàm Trần, Tông Sư Không Linh Căn, Lãng Tử Hồi Đầu, Hiếu Tử Hiền Tôn, Địa Chủ Một Vùng. Vẫn cùng một seed cho cả tuần.
+- Con cái tới 18 tuổi có thể đỗ Tú tài: dễ hơn khi nhà có gia quy hiếu học, con được dạy nghiêm, bản thân từng đỗ đạt, con có ngộ tính cao. Gia phả ghi "(Tú tài)" bên tên.
+- Lịch lễ hội thật (`content/calendar.json`, ngày dương lịch 2026–2030): trong khoảng ba ngày quanh Tết, Nguyên tiêu, Thanh minh, Đoan ngọ, Trung thu, Trùng cửu ngoài đời, lễ hội trong game phần nhiều trùng với lễ thật, dòng lễ hội có thêm câu nhắc, sự kiện lễ hội nặng gấp ba (`balance.calendar`).
+- 7 sự kiện lễ hội mới (`le-hoi.json`): chúc Tết, xông đất, đố đèn rằm tháng Giêng, tảo mộ, đua thuyền Đoan ngọ, đêm Trung thu, lên cao Trùng cửu.
+- Kiểm tra cuối đời có thêm `martialMax`, `scholarKidsMin`. Dev mode: giả làm tuần lễ hội thật.
+
+### 10.12 Cân bằng tầng phàm gian (2026-10-22)
+- Bớt câu lặp: thu hoạch ruộng, sổ sách cửa hàng, thiếu thuế, trốn đi xa có nhiều cách nói; mời lang trung, bốc thuốc, ăn uống điều độ, luyện quyền buổi sớm, tế tổ, họp họ, xin tăng lương, ăn bớt, móc túi, trộm, lừa, cướp đường, trốn đi xa ghép câu từ nhiều mảnh; công đường có thêm lời khai khác nhau; đọc sách thêm đề tài.
+- Mô phỏng (`npm run simulate -- --profile mortal`): bot phàm nhân đổi thứ tự hoạt động mỗi năm, thử thêm vài thú vui thường ngày, mỗi năm phạm tội nhiều nhất một lần, chỉ trốn đi xa khi bị truy nã gắt, mỗi loại tài sản mua tối đa hai, mời thầy thuốc lúc mới ốm rồi cách năm một lần.
+- Kết quả 40 đời mỗi lối sống: hoạt động khác nhau 18–26 mỗi đời (trước 4–10), sự kiện khác nhau 50–79, câu lặp 33–54% (trước 26–67%), chết già 53–95%, kẻ cướp chết vì bệnh từ 83% xuống khoảng 40%. Chưa đạt mốc 30 hoạt động và câu lặp dưới 15%: phần lặp còn lại là dòng thu nhập hằng năm và hoạt động bot làm năm nào cũng làm.
+
+### 10.11 Gia tộc phàm tục (2026-10-22)
+- Sinh ra trong một họ, không chỉ một nhà: lên 6 tuổi được ra mắt họ hàng ở từ đường. Tộc trưởng và 3–5 người họ nội, họ ngoại (chú, bác, cô, cậu, dì, anh chị em họ) là người quen thật, nằm trong nhóm "Họ hàng" (`content/kin.json`).
+- Gia phả ba đời trở lên trong hồ sơ: ông bà (hoặc tiên tổ ở các đời trước của dòng), cha mẹ, bản thân, con cái; người nối dõi được ghi rõ.
+- Phân gia năm sau khi cha mất, nếu còn anh chị em: chia đều, giành phần trưởng (được nhiều, anh em nguội lòng), hoặc nhường hết đi xa lập nghiệp (anh em quý, thêm nghiệp lành).
+- Làm chủ một nhà: lập gia quy (cần kiệm, hiếu học, thượng võ, tích thiện, hòa thuận; mỗi năm nhích chỉ số một chút), tế tổ, tu sửa từ đường, đi họp họ, chọn người nối dõi (con trưởng, đứa giỏi nhất, đứa hiếu thảo nhất; người được chọn đứng đầu danh sách người kế thừa).
+- Sự kiện: con chính con thứ tranh gia sản (có thê thiếp), con bất hiếu, người trong họ làm nhục gia môn, họ hàng hỏi vay, anh em họ rủ làm ăn, tộc trưởng gọi lên dặn dò, dì cậu mai mối, đám giỗ họ.
+- 10 sự kiện (`gia-toc.json`), 5 hoạt động (`activities/gia-toc.json`). Điều kiện `kin`; hiệu ứng `shareEstate`, `chooseHeir`, `kinRule`, `worship`, `repairShrine`, `childrenAffinity`; số cân bằng ở `balance.kin`. Đời cũ (save cũ) gặp họ hàng ở năm kế tiếp.
+
+### 10.10 Ra đi và kết đời phàm (2026-10-22)
+- Chuyển nhà sang châu khác (mục Bản thân): người quen cũ nhạt tình (trừ người bên gối), đời thành tha hương; ở đất mới có hàng xóm mới, về già có lúc nhớ quê và về thăm.
+- Tang lễ khi cha hoặc mẹ mất: làm lớn cho trọn đạo hiếu, vừa phải, hoặc giản dị thờ tại tâm (bạc, tiếng trong làng, Hạnh phúc, Đạo tâm).
+- Kiểu kết đời mới: Quy ẩn (từ 55 tuổi, tự chọn, đời khép lại bằng một đoạn tóm tắt), Xuất gia (hoặc tu tại gia, đời vẫn tiếp), Mất tích (lạc trong hang núi), Chết đói (nạn đói khi mùa màng mất, túi rỗng), cùng Xử trảm từ 10.9. Màn tổng kết, Thiên Đạo Ký và kết cục đều có lời riêng cho từng kiểu.
+- 30 danh hiệu cuối đời cho đời phàm: Phú Ông Keo Kiệt, Lãng Tử Tình Trường, Tên Trộm Không Ai Bắt Được, Ông Đồ Cả Làng Kính, Kẻ Cờ Bạc Tán Gia, Vua Vượt Ngục, Danh Đề Bảng Vàng, Địa Chủ Một Vùng, Cầm Sư, Tàn Mà Không Phế, Chết Vẫn Còn Nợ, Thọ Chung Chính Tẩm… 20 thành tựu phàm gian (6 thành tựu ẩn), 7 kết cục mới.
+- Thiên Đạo Ký có thêm câu theo lối sống phàm (trộm cướp, đỗ đạt, bậc thầy trong nghề, địa chủ), một đoạn về quan phủ và thương tật.
+- Kiểm tra cuối đời (`LifeCheck`) đọc được điều kiện sự kiện (`holds`), số nghề đã làm, đã lên bậc cao nhất, nghề từng làm, số tội đã phạm, chưa từng bị bắt, bạc tối đa.
+- Sự kiện chắc chắn tới theo chu kỳ (Hệ thống, Tử Khí Đông Lai) không còn bị một sự kiện nối tiếp (vd. tang lễ) chiếm chỗ; sự kiện nối tiếp chờ sang năm.
+- 10 sự kiện (`ket-doi.json`), 3 hoạt động (`activities/ket-doi.json`); hiệu ứng `moveHome`; số cân bằng ở `balance.leaving`.
+- Chưa làm: "tìm dấu tích kiếp trước" của người mất tích ở đời sau.
+
+### 10.9 Phạm pháp, quan phủ, ngục tù (2026-10-22)
+- 10 tội danh (`content/crimes.json`): móc túi, trộm vặt, trộm nhà giàu, lừa đảo, buôn lậu muối sắt, cướp đường, đánh người, đầu độc, giết người, đốt nhà. Mỗi tội là một hoạt động mục Phạm pháp: thành thì có bạc, mất nghiệp, có thể bị lộ; hỏng thì bị bắt tại chỗ.
+- Mức truy nã 0–5: tăng khi bị lộ, nguội dần sau vài năm không phạm tội. Truy nã cao thì bộ khoái gõ cửa, cáo thị dán ở chợ, bạn thơ ấu làm bộ khoái chặn cổng thành (sự kiện mẫu X1). Có thể trốn đi thật xa (thành tha hương) hoặc ra đầu thú.
+- Công đường hai bước: khai thật / chối tội / im lặng, rồi gọi nhân chứng / kêu oan / lót tay quan / nhận án. Điểm thu được làm nhẹ án; quan thanh liêm thì lót tay là thêm tội.
+- Án: tha bổng, phạt bạc, đánh trượng, ngục (vài năm), lưu đày, tử hình. Tử hình còn đường kêu oan lên phủ trên hoặc chờ bạn giang hồ cướp ngục.
+- Ngục tù là một lối chơi nhỏ: trong ngục chỉ có hoạt động và sự kiện của ngục (cúi đầu chờ, đánh nhau giành chỗ, kết giao bạn tù, đút lót cai ngục, làm khổ sai giảm án, đào hầm vượt ngục). Vượt ngục khó dần sau mỗi lần thua, thua thì thêm án; thành công thì bị truy nã khắp nơi. Có đại ca phòng giam, dịch trong ngục, đại xá thiên hạ.
+- Tiền án: không xin được làm thư lại, bộ khoái, lính, thầy đồ. Thương tật cũng khóa nghề (què chân không làm lính, cụt ngón không làm nhạc công…).
+- Bị hại: nhà bị trộm, bị lừa, có thể đi kiện.
+- Kiểu chết mới "Bị xử trảm" (`die`), chuẩn bị sẵn chết đói, mất tích, quy ẩn, xuất gia cho 10.10. Hồ sơ có dòng "Quan phủ:".
+- 13 sự kiện (`pham-phap.json`), 18 hoạt động (`activities/pham-phap.json`). Điều kiện `law`; hiệu ứng `crime`, `trial`, `bribe`, `sentence`, `escape`, `jailYears`, `imprison`, `wanted`, `fleeLaw`, `arrest`, `die`; số cân bằng ở `balance.law`.
+- Mức truy nã tính chung một mức (không theo từng châu), vì người phàm hiện chỉ ở một đại vực.
+
+### 10.8 Sức khỏe, bệnh tật, ngoại hình (2026-10-22)
+- Bệnh có tên (`content/health.json`): phong hàn, sốt rét, kiết lỵ, thương hàn, bệnh lao, đậu mùa, dịch tả. Trẻ nhỏ và người già dễ mắc hơn; mỗi năm bệnh trừ Sức khỏe tới khi tự khỏi, được chữa, hoặc giết người. Bệnh lây có thể truyền sang người nhà, người già và trẻ nhỏ có khi không qua khỏi. Tu sĩ không mắc bệnh phàm.
+- Chữa bệnh (mục Sức khỏe): mời lang trung (gặp thầy giỏi hay thầy dở), bốc thuốc tiệm, mời thầy cúng (rẻ, ít linh, có khi hại), tự bốc thuốc nếu có nghề thuốc (giỏi nghề thì dễ khỏi), thuốc quý trăm lượng gần như chắc khỏi.
+- Thương tật vĩnh viễn: què chân, mù một mắt, sẹo mặt, cụt ngón tay, đau lưng kinh niên; đổi chỉ số một lần và đặt flag cùng tên để sự kiện, nghề đọc.
+- Nghiện rượu: uống ở tửu lâu, rượu cúc nhiều lần thì nghiện, mỗi năm mất bạc, Sức khỏe, Hạnh phúc. Cai bằng Đạo tâm; có sự kiện tái nghiện.
+- Rèn thân và ngoại hình: ăn chay giữ giới, ăn uống điều độ, tập dưỡng sinh, tắm suối nước nóng, thuốc bổ, thuốc dưỡng nhan (đắt, có hàng giả), tập sống với thương tật.
+- 12 sự kiện (`suc-khoe.json`): đậu mùa về làng, dịch tả, ngã từ mái nhà, cháy nhà hàng xóm, tai nạn lúc làm việc, bạn nhậu rủ, tái nghiện, lang băm, thần y qua làng, bị chê cười, sợi tóc bạc đầu tiên, ho mãi không dứt.
+- Hồ sơ có dòng "Thân thể:". Điều kiện `ailment`, `injury`; hiệu ứng `catchDisease`, `cure`, `injure`, `drank`; số cân bằng ở `balance.ailments`.
+
 ### 10.7 Giải trí và đời sống (2026-10-22)
 - 21 hoạt động giải trí mới (`activities/giai-tri.json`): tửu lâu, trà quán nghe chuyện, chiếu tài xỉu, cai cờ bạc, hội chợ, xem hát, lên chùa xin quẻ, xem bói, du ngoạn danh thắng, đi săn, câu cá, đọc sách, học đàn, đánh cờ, làm thơ, vẽ tranh, may y phục mới, ghé thanh lâu (không miêu tả), kiếm thú nuôi, chơi với thú nuôi. Mỗi hoạt động ghép văn bản từ nhiều mảnh (≥ 8 kiểu câu).
 - Mini-game trong sự kiện: chiếu bạc (đặt tài, xỉu, bát úp chẵn lẻ; Khí vận quyết định), chọn chỗ câu cá, chọn chỗ đi săn (có chim ưng thì thả chim).

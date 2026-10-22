@@ -4,6 +4,14 @@ import { addGrade, addTradeLevel, enrollSchool, leaveSchool, startTrade } from '
 import { beginExam } from '../exams';
 import { addPerf, promoteJob, quitJob, takeJob } from '../jobs';
 import { addArt, adoptPet, castOmen, noteGamble, omenMul } from '../leisure';
+import { festivalBoost } from '../calendar';
+import { addNetRenown, addRenown } from '../jianghu';
+import { addMerit, factionMission, factionTeach, hideFromHunt, joinFaction, leaveFaction } from '../jhFactions';
+import { addWound, buyWeapon, gainWeapon, learnArt, practiseArt } from '../martialArts';
+import { catchDisease, cureAilment, injure, noteDrink } from '../health';
+import { addJailYears, addWanted, arrest, bribe, commitCrime, fleeLaw, imprison, sentence, tryEscape } from '../law';
+import { checkDeath } from '../time';
+import { childrenAffinity, chooseHeir, repairShrine, setRule, shareEstate, worship } from '../kin';
 import { borrow, buyAsset, loseAsset, repayDebts, sellAsset, setStrategy, sowCrop } from '../assets';
 import { ordinaryAptitude, ordinaryStat } from '../aptitudeGain';
 import type { Content } from '../../core/content';
@@ -69,6 +77,8 @@ export function eventWeight(state: GameState, content: Content, event: GameEvent
   const target = event.conditions.romance?.target;
   const judged = target ? { ...state, events: { ...state.events, npc: romanceTarget(state, target)?.id ?? null } } : state;
   if (!meets(judged, event.conditions, content)) return 0;
+  // 10.9: in ngục only ngục events come.
+  if (state.law?.jail && !event.conditions.law?.jailed) return 0;
   let w = event.weight * themeMultiplier(state, content, event);
   // G.4, playtest 2026-10-12: kỳ ngộ come more often to the lucky.
   const ev = content.balance.events;
@@ -79,6 +89,8 @@ export function eventWeight(state: GameState, content: Content, event: GameEvent
   if (seen > 0) w *= content.balance.events.repeatDecay ** seen;
   // 10.7: what a quẻ named comes more readily.
   w *= omenMul(state, content, event.id);
+  // 10.13: festival events in a real festival week.
+  w *= festivalBoost(state, content, event);
   return Math.max(0, w);
 }
 
@@ -107,16 +119,18 @@ export function popupChance(state: GameState, content: Content): number {
 export function rollYearEvent(state: GameState, content: Content): GameState {
   const rng = Rng.fromState(state.rng);
   const age = state.character.age;
-  const due = state.events.followUps.find((f) => f.atAge <= age && findEvent(content, f.event));
+  // Tử Khí Đông Lai (trigger.everyNYears): every N years of age an event of that theme is sure to come;
+  // 10.10: it comes before a due follow-up (a tang lễ…), which then waits a year.
+  const sureHook = lifeHooks(state, content)
+    .find((h) => h.hook === 'trigger.everyNYears' && h.years && h.tag && age > 0 && age % h.years === 0 && hookActive(h, state, content));
+  const due = sureHook ? undefined : state.events.followUps.find((f) => f.atAge <= age && findEvent(content, f.event));
   let picked: string | null = null;
   let followUps = state.events.followUps;
 
   let npc: string | null = null;
   // Task 4.10: an urgent event (đại hạn) skips the roll as soon as it is eligible.
   const urgent = due ? undefined : content.events.find((e) => e.urgent && eventWeight(state, content, e) > 0);
-  // Tử Khí Đông Lai (trigger.everyNYears): every N years of age an event of that theme is sure to come.
-  const sure = due || urgent ? undefined : lifeHooks(state, content)
-    .find((h) => h.hook === 'trigger.everyNYears' && h.years && h.tag && age > 0 && age % h.years === 0 && hookActive(h, state, content));
+  const sure = due || urgent ? undefined : sureHook;
   const visit = due || urgent || sure ? null : npcEvent(state, content, rng);
   if (due) {
     picked = due.event;
@@ -346,6 +360,8 @@ export function resolveChoice(given: GameState, content: Content, choiceIndex: n
   if (last && last.age === state.character.age) log[log.length - 1] = { ...last, lines: [...last.lines, ...lines] };
   else log.push({ age: state.character.age, lines });
   next = { ...next, log };
+  // 10.9–10.10: an end chosen in the event (xử trảm, quy ẩn, xuất gia…).
+  if (outcome.effects.die && next.alive) next = checkDeath(next, content, outcome.effects.die);
   if (outcome.fight) next = startBattle(next, content, outcome.fight, event.title);
   // 9.6: kỷ niệm with the NPC of the event.
   next = remember(next, content, next.events.npc, echoTitle(event.title, state, content));
@@ -415,8 +431,10 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   for (const [craft, n] of Object.entries(fx.craftXp ?? {})) next = addCraftXp(next, content, craft, n);
   if (fx.reputation) {
     const rep = { ...next.social.reputation };
-    for (const [k, v] of Object.entries(fx.reputation)) rep[k as keyof typeof rep] = Math.max(-100, Math.min(100, rep[k as keyof typeof rep] + v));
+    for (const [k, v] of Object.entries(fx.reputation)) if (k !== 'giang_ho') rep[k as keyof typeof rep] = Math.max(-100, Math.min(100, rep[k as keyof typeof rep] + v));
     next = { ...next, social: { ...next.social, reputation: rep } };
+    // 11.1: giang hồ reputation is hiệp danh (+) and ác danh (−).
+    if (fx.reputation.giang_ho) next = addNetRenown(next, content, fx.reputation.giang_ho);
   }
   next = removeItems(addItems(next, fx.addItems ?? []), fx.removeItems ?? []);
   // A kill (plain, or of the event's NPC) breaks Phật đạo precepts (task 3.12).
@@ -505,6 +523,48 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.adoptPet) next = adoptPet(next, content, fx.adoptPet);
   if (fx.gambled) next = noteGamble(next);
   if (fx.omen) next = castOmen(next, content);
+  // 10.8 Sức khỏe.
+  if (fx.catchDisease) next = catchDisease(next, content, fx.catchDisease);
+  if (fx.cure) next = cureAilment(next, content, fx.cure);
+  if (fx.injure) next = injure(next, content, fx.injure);
+  if (fx.drank) next = noteDrink(next);
+  // 10.9 Phạm pháp.
+  if (fx.crime) next = commitCrime(next, content, fx.crime);
+  if (fx.trial && next.law?.trial) next = { ...next, law: { ...next.law, trial: { ...next.law.trial, score: next.law.trial.score + fx.trial } } };
+  if (fx.bribe) next = bribe(next, content);
+  if (fx.wanted) next = addWanted(next, content, fx.wanted);
+  if (fx.imprison) next = imprison(next, content, next.law?.lastCrime ?? 'tu_toi', fx.imprison);
+  if (fx.jailYears) next = addJailYears(next, fx.jailYears);
+  if (fx.escape) next = tryEscape(next, content);
+  if (fx.fleeLaw) next = fleeLaw(next, content);
+  if (fx.arrest) next = arrest(next, content);
+  if (fx.sentence) next = sentence(next, content);
+  // 10.11 Gia tộc.
+  if (fx.shareEstate) next = shareEstate(next, content, fx.shareEstate);
+  if (fx.chooseHeir) next = chooseHeir(next, content, fx.chooseHeir);
+  if (fx.kinRule) next = setRule(next, content, fx.kinRule);
+  if (fx.fame || fx.infamy) next = addRenown(next, content, fx.fame ?? 0, fx.infamy ?? 0);
+  if (fx.joinFaction) next = joinFaction(next, content, fx.joinFaction);
+  if (fx.factionMission) next = factionMission(next, content, fx.factionMission === 'success');
+  if (fx.factionMerit) next = addMerit(next, content, fx.factionMerit);
+  if (fx.factionTeach) next = factionTeach(next, content);
+  if (fx.leaveFaction) next = leaveFaction(next, content, fx.leaveFaction);
+  if (fx.hideFromHunt) next = hideFromHunt(next, content);
+  // 11.3 Võ học phàm tục.
+  if (fx.learnArt) next = learnArt(next, content, fx.learnArt);
+  if (fx.practiseArt) next = practiseArt(next, content);
+  if (fx.buyWeapon) next = buyWeapon(next, content, fx.buyWeapon);
+  if (fx.gainWeapon) next = gainWeapon(next, content, fx.gainWeapon);
+  if (fx.wound) next = addWound(next, content, fx.wound);
+  if (fx.worship) next = worship(next);
+  if (fx.repairShrine) next = repairShrine(next, content);
+  if (fx.childrenAffinity) next = childrenAffinity(next, fx.childrenAffinity);
+  // 10.10: moving far: old acquaintances (not family) cool, the life is tha hương.
+  if (fx.moveHome) {
+    const d = content.balance.leaving?.moveAffinity ?? 0;
+    const home = new Set([next.romance.partner, next.romance.lover, ...(next.romance.concubines ?? [])]);
+    next = { ...next, flags: { ...next.flags, tha_huong: true }, npcs: next.npcs.map((n) => (n.alive && !home.has(n.id) ? { ...n, affinity: Math.max(0, Math.min(100, n.affinity + d)) } : n)) };
+  }
   if (fx.martialBonus) next = { ...next, martial: { ...next.martial, bonus: next.martial.bonus + fx.martialBonus } };
   if (fx.martialPromote) next = martialPromote(next, content);
   if (fx.martialAscend) next = martialAscend(next, content);

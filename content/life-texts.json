@@ -287,6 +287,13 @@
     "Năm {age} tuổi, một kiếp nạn bất ngờ ập xuống mà thân thể đã quá mỏi để chống đỡ. Ngươi gục giữa đường tu, đèn linh khí tắt lịm.",
     "Năm {age} tuổi, tai ương chồng tai ương, ngươi không kịp dưỡng thương thì kiếp sau đã tới. Đạo đồ dừng ở đây."
   ],
+  "deathMore": {
+    "execution": {"label": "Bị xử trảm năm {age} tuổi", "lines": ["Năm {age} tuổi, ngọ môn chém đầu. Đám đông xem xong rồi về ăn cơm.", "Năm {age} tuổi, đao phủ ngậm ngụm rượu phun lên lưỡi đao. Một nhát, xong một đời."]},
+    "starvation": {"label": "Chết đói năm {age} tuổi", "lines": ["Năm {age} tuổi, loạn lạc mất mùa. Ngươi gục bên đường, tay còn nắm nửa củ khoai.", "Năm {age} tuổi, đói tới mức không còn sức đứng dậy. Ngươi nhắm mắt dưới gốc cây đầu làng."]},
+    "missing": {"label": "Mất tích năm {age} tuổi", "lines": ["Năm {age} tuổi, ngươi đi vào nơi hiểm và không ai thấy ngươi trở ra.", "Năm {age} tuổi, người ta chỉ tìm thấy đôi giày của ngươi bên miệng vực."]},
+    "hermit": {"label": "Quy ẩn năm {age} tuổi, không rõ ngày mất", "lines": ["Năm {age} tuổi, ngươi gác lại thế sự, dựng lều tranh trong núi sâu. Những năm còn lại trôi như nước suối."]},
+    "monk": {"label": "Xuất gia năm {age} tuổi", "lines": ["Năm {age} tuổi, ngươi cạo tóc vào chùa. Người đời từ nay không còn gọi tên tục của ngươi nữa."]}
+  },
   "calamity": [
     "Linh khí trong người nổi cơn phản phệ, kinh mạch như bị kim châm.",
     "Một tên tán tu ôm thù cũ tập kích giữa đường, ngươi thoát được nhưng đổ máu.",

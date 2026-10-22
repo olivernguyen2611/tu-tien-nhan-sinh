@@ -1,0 +1,779 @@
+[
+ {
+  "id": "pp_cong_duong",
+  "category": "law",
+  "title": "Công đường",
+  "text": "Hai hàng nha dịch cầm gậy gõ xuống đất: \"Uy... vũ...\". Quan huyện ngồi trên cao, nhìn xuống: \"Phạm nhân, ngươi có nhận tội không?\"",
+  "themes": [
+   "law"
+  ],
+  "conditions": {
+   "law": {
+    "trial": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Khai thật mọi chuyện",
+    "result": {
+     "text": "Ngươi kể hết, không giấu điều gì. Quan huyện vuốt râu, ra hiệu cho thư lại ghi chép.",
+     "variants": [
+      "Ngươi khai rành mạch từng việc. Thư lại cắm cúi chép không kịp.",
+      "Ngươi nhận hết, giọng không run. Quan huyện nhìn ngươi lâu hơn thường lệ.",
+      "Ngươi kể đầu đuôi, không thêm không bớt. Nha dịch hai bên nhìn nhau."
+     ],
+     "effects": {
+      "trial": 1,
+      "stat.daoHeart": 1,
+      "chain": "pp_cong_duong_2"
+     }
+    }
+   },
+   {
+    "text": "Chối tội",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi chỉ ra mấy chỗ hở trong lời khai của nguyên cáo. Quan huyện nhíu mày.",
+     "variants": [
+      "Ngươi cãi từng câu, bắt bẻ nguyên cáo tới đỏ mặt.",
+      "Ngươi chối phăng, lại nêu ra một chứng cứ ngoại phạm nghe cũng xuôi tai.",
+      "Ngươi hỏi ngược nguyên cáo mấy câu, kẻ kia ấp úng không đáp được."
+     ],
+     "effects": {
+      "trial": 2,
+      "stat.intellect": 1,
+      "chain": "pp_cong_duong_2"
+     }
+    },
+    "fail": {
+     "text": "Ngươi chối quanh co, càng nói càng lộ.",
+     "effects": {
+      "trial": -1,
+      "stat.happiness": -2,
+      "chain": "pp_cong_duong_2"
+     }
+    }
+   },
+   {
+    "text": "Im lặng",
+    "result": {
+     "text": "Ngươi cúi đầu không nói một lời. Quan huyện đập kinh đường mộc.",
+     "variants": [
+      "Ngươi ngậm miệng như hến. Nha dịch nện gậy xuống nền gạch.",
+      "Ngươi nhìn xuống đất, mặc cho quan hỏi gì cũng không đáp."
+     ],
+     "effects": {
+      "stat.happiness": -1,
+      "chain": "pp_cong_duong_2"
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pp_cong_duong_2",
+  "category": "law",
+  "title": "Định tội",
+  "text": "Quan huyện nhìn hồ sơ một lúc lâu rồi hỏi: \"Còn điều gì muốn nói trước khi bản quan định tội?\"",
+  "themes": [
+   "law"
+  ],
+  "conditions": {
+   "law": {
+    "trial": true
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Xin gọi nhân chứng",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Có người đứng ra làm chứng cho ngươi. Tình thế xoay chuyển.",
+     "variants": [
+      "Một người hàng xóm run run bước ra làm chứng. Công đường lặng đi.",
+      "Nhân chứng khai khác hẳn nguyên cáo. Quan huyện nhíu mày nghĩ ngợi.",
+      "Có kẻ quen biết đứng ra nói giúp, lời lẽ đâu ra đấy."
+     ],
+     "effects": {
+      "trial": 2,
+      "stat.happiness": 1,
+      "sentence": true
+     }
+    },
+    "fail": {
+     "text": "Không ai dám đứng ra. Người quen nhìn đi chỗ khác.",
+     "effects": {
+      "stat.happiness": -3,
+      "sentence": true
+     }
+    }
+   },
+   {
+    "text": "Dập đầu kêu oan",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Lời kêu oan thống thiết, kể rõ đầu đuôi. Mấy người dự thính xì xào thương cảm.",
+     "variants": [
+      "Ngươi dập đầu tới rớm máu, xin quan xét lại. Có người dự thính lau nước mắt.",
+      "Tiếng kêu oan vang ra tận cổng nha môn. Quan huyện phẩy tay cho ngươi đứng dậy."
+     ],
+     "effects": {
+      "trial": 1,
+      "stat.health": -1,
+      "sentence": true
+     }
+    },
+    "fail": {
+     "text": "Trán rớm máu mà quan huyện không động lòng.",
+     "effects": {
+      "trial": -1,
+      "stat.health": -2,
+      "sentence": true
+     }
+    }
+   },
+   {
+    "text": "Lót tay quan",
+    "result": {
+     "text": "Ngươi nhờ người đưa một gói bạc qua cửa sau.",
+     "variants": [
+      "Một gói bạc lặng lẽ đổi tay sau tấm bình phong.",
+      "Ngươi gửi thư lại một cái hộp gỗ nặng trịch, dặn trao tận tay quan."
+     ],
+     "effects": {
+      "bribe": true,
+      "stat.happiness": -1,
+      "sentence": true
+     }
+    }
+   },
+   {
+    "text": "Cúi đầu nhận án",
+    "result": {
+     "text": "Ngươi không cãi thêm. Có những thứ phải tự mình gánh.",
+     "variants": [
+      "Ngươi quỳ thẳng lưng, chờ lời phán.",
+      "Ngươi thở ra một hơi dài. Việc đã làm, không chạy được."
+     ],
+     "effects": {
+      "trial": 1,
+      "stat.daoHeart": 2,
+      "sentence": true
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pp_an_tu",
+  "category": "law",
+  "title": "Án tử",
+  "text": "Ngươi bị giam vào tử lao. Ngoài song sắt, quạ đậu kín cành cây trước pháp trường.",
+  "themes": [
+   "law"
+  ],
+  "conditions": {},
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Chờ ngày hành hình",
+    "result": {
+     "text": "Ngươi ăn bữa cơm cuối, uống chén rượu cuối. Rồi nhắm mắt chờ.",
+     "effects": {
+      "stat.happiness": -10,
+      "die": "execution"
+     }
+    }
+   },
+   {
+    "text": "Kêu oan lần cuối lên phủ trên",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 65
+    },
+    "success": {
+     "text": "Đơn kêu oan tới tay quan tri phủ. Án được xét lại: đổi thành mười năm tù.",
+     "effects": {
+      "imprison": 10,
+      "stat.happiness": 5
+     }
+    },
+    "fail": {
+     "text": "Đơn bị xé. Ngày hành hình vẫn tới.",
+     "effects": {
+      "stat.happiness": -10,
+      "die": "execution"
+     }
+    }
+   },
+   {
+    "text": "Chờ bạn giang hồ cướp ngục",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 70
+    },
+    "success": {
+     "text": "Đêm trước ngày hành hình, tường ngục nổ tung. Mấy bóng đen kéo ngươi chạy ra.",
+     "effects": {
+      "wanted": 5,
+      "setFlags": [
+       "vuot_nguc"
+      ],
+      "stat.happiness": 8
+     }
+    },
+    "fail": {
+     "text": "Không ai tới. Sáng hôm sau, ngươi bị áp giải ra pháp trường.",
+     "effects": {
+      "stat.happiness": -10,
+      "die": "execution"
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pp_bo_khoai_go_cua",
+  "category": "law",
+  "title": "Bộ khoái gõ cửa",
+  "text": "Tiếng đập cửa dồn dập lúc gà gáy: \"Mở cửa! Quan sai bắt người!\"",
+  "themes": [
+   "law"
+  ],
+  "conditions": {
+   "law": {
+    "jailed": false,
+    "wantedMin": 2,
+    "trial": false
+   }
+  },
+  "weight": 5,
+  "cooldownYears": 2,
+  "choices": [
+   {
+    "text": "Chịu trói",
+    "result": {
+     "text": "Ngươi chìa tay ra. Dây thừng siết chặt cổ tay.",
+     "effects": {
+      "arrest": true,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Nhảy qua cửa sau bỏ chạy",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi lao qua vườn sau, nhảy xuống mương, trốn được. Nhưng tội lại nặng thêm.",
+     "effects": {
+      "wanted": 1,
+      "stat.physique": 1,
+      "stat.health": -2
+     }
+    },
+    "fail": {
+     "text": "Vừa nhảy qua rào đã bị lưới chụp xuống.",
+     "effects": {
+      "arrest": true,
+      "stat.health": -4
+     }
+    }
+   },
+   {
+    "text": "Đút lót bộ khoái",
+    "result": {
+     "text": "Một gói bạc đổi lấy câu \"Không thấy ai cả\". Chúng sẽ còn quay lại.",
+     "effects": {
+      "silver": -30,
+      "wanted": -1,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pp_ban_cu_chan_cong",
+  "category": "law",
+  "title": "Người bạn cũ ở cổng thành",
+  "text": "Tới cổng thành, ngươi sững lại: tên bộ khoái đứng gác chính là đứa bạn thả diều với ngươi năm nào. Hắn cũng đã nhận ra ngươi.",
+  "themes": [
+   "law"
+  ],
+  "conditions": {
+   "law": {
+    "jailed": false,
+    "wantedMin": 1,
+    "trial": false
+   },
+   "age": {
+    "min": 18
+   }
+  },
+  "weight": 3,
+  "cooldownYears": 15,
+  "choices": [
+   {
+    "text": "Gọi tên hắn, nhắc chuyện xưa",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Hắn quay mặt đi, khẽ nói: \"Đi nhanh lên, coi như ta chưa thấy.\" Ngươi qua cổng, lòng nặng trĩu.",
+     "effects": {
+      "wanted": -1,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Hắn rút còng ra: \"Ta có chức trách. Xin lỗi.\"",
+     "effects": {
+      "arrest": true,
+      "stat.happiness": -5
+     }
+    }
+   },
+   {
+    "text": "Xông qua",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi xô hắn ngã, chạy mất. Sau lưng có tiếng hắn gọi, không rõ là gọi người bắt hay gọi tên ngươi.",
+     "effects": {
+      "wanted": 1,
+      "stat.physique": 1,
+      "stat.happiness": -2
+     }
+    },
+    "fail": {
+     "text": "Hắn đã luyện võ ở nha môn bao năm. Ngươi bị quật ngã.",
+     "effects": {
+      "arrest": true,
+      "stat.health": -4
+     }
+    }
+   },
+   {
+    "text": "Lặng lẽ quay đầu",
+    "result": {
+     "text": "Ngươi kéo nón lá sụp xuống, đi đường khác. Mất cả ngày đường, nhưng không làm khó người bạn cũ.",
+     "effects": {
+      "stat.happiness": -2,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pp_cao_thi",
+  "category": "law",
+  "title": "Cáo thị có mặt mình",
+  "text": "Ở cổng chợ dán một tờ cáo thị mới. Bức vẽ không giống lắm, nhưng cái tên thì đúng là tên ngươi. Tiền thưởng không nhỏ.",
+  "themes": [
+   "law"
+  ],
+  "conditions": {
+   "law": {
+    "jailed": false,
+    "wantedMin": 3,
+    "trial": false
+   }
+  },
+  "weight": 3,
+  "cooldownYears": 5,
+  "choices": [
+   {
+    "text": "Trốn đi thật xa",
+    "result": {
+     "text": "Ngươi đi trong đêm, không kịp chào ai.",
+     "effects": {
+      "fleeLaw": true,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Cải trang, ở lại",
+    "result": {
+     "text": "Ngươi cạo râu, đổi kiểu tóc, ăn mặc như kẻ ăn mày. Người quen đi qua không nhận ra.",
+     "effects": {
+      "stat.charm": -3,
+      "wanted": -1
+     }
+    }
+   },
+   {
+    "text": "Ra đầu thú",
+    "result": {
+     "text": "Ngươi xé tờ cáo thị, đi thẳng tới nha môn.",
+     "effects": {
+      "arrest": true,
+      "stat.daoHeart": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pp_nguc_dai_ca",
+  "category": "law",
+  "title": "Đại ca phòng giam",
+  "text": "Gã to con nhất phòng giam ném bát cơm của ngươi xuống đất: \"Người mới phải biết lệ. Nộp hết đồ ăn cho ta một tháng.\"",
+  "themes": [
+   "law"
+  ],
+  "conditions": {
+   "law": {
+    "jailed": true
+   }
+  },
+  "weight": 3,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Nộp",
+    "result": {
+     "text": "Một tháng đói lả. Nhưng được yên thân.",
+     "effects": {
+      "stat.health": -4,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Đánh nhau",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Ngươi quật ngã gã giữa phòng giam. Từ nay ngươi là đại ca.",
+     "effects": {
+      "stat.physique": 2,
+      "stat.happiness": 4
+     }
+    },
+    "fail": {
+     "text": "Bị đánh tới ngất. Cai ngục phạt cả hai thêm án.",
+     "effects": {
+      "stat.health": -8,
+      "jailYears": 1
+     }
+    }
+   },
+   {
+    "text": "Mách cai ngục",
+    "result": {
+     "text": "Cai ngục cho gã ba roi. Đêm đó ngươi bị trùm chăn đánh.",
+     "effects": {
+      "stat.health": -5,
+      "stat.charm": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pp_nguc_ban_tu",
+  "category": "law",
+  "title": "Kẻ ngồi góc tường",
+  "text": "Ông lão ngồi góc tường đã mười năm. Đêm nay ông bỗng gọi ngươi lại gần.",
+  "themes": [
+   "law"
+  ],
+  "conditions": {
+   "law": {
+    "jailed": true
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Lại nghe",
+    "result": {
+     "text": "Ông kể về một kho bạc giấu ở miếu hoang ngoài thành, và một người bạn giang hồ ở bến sông. \"Ra ngoài, tìm hắn. Nói là lão Bảy gửi.\"",
+     "effects": {
+      "meetNpc": {
+       "role": "bạn giang hồ",
+       "kind": "nguoi_quen",
+       "adult": true
+      },
+      "stat.intellect": 1,
+      "stat.happiness": 2
+     }
+    }
+   },
+   {
+    "text": "Mặc kệ",
+    "result": {
+     "text": "Ông lão thở dài, quay mặt vào tường. Sáng ra người ta khiêng ông đi.",
+     "effects": {
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pp_nguc_dich",
+  "category": "law",
+  "title": "Dịch trong ngục",
+  "text": "Ngục ẩm thấp, chuột chạy khắp nơi. Mấy phòng giam bên cạnh có người lên cơn sốt.",
+  "themes": [
+   "law"
+  ],
+  "conditions": {
+   "law": {
+    "jailed": true
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Xé áo che mũi",
+    "result": {
+     "text": "Ngươi bịt kín mũi miệng, ngủ xa cửa thông. Chưa chắc đã thoát.",
+     "effects": {
+      "catchDisease": "random",
+      "stat.health": -2
+     }
+    }
+   },
+   {
+    "text": "Xin cai ngục cho ra ngoài làm khổ sai",
+    "result": {
+     "text": "Ra ngoài đập đá còn hơn chết rục trong này.",
+     "effects": {
+      "stat.physique": 1,
+      "stat.health": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pp_dai_xa",
+  "category": "law",
+  "title": "Đại xá thiên hạ",
+  "text": "Có chiếu chỉ từ kinh thành: tân hoàng đăng cơ, đại xá thiên hạ.",
+  "themes": [
+   "law"
+  ],
+  "conditions": {
+   "law": {
+    "jailed": true
+   }
+  },
+  "weight": 1,
+  "cooldownYears": 30,
+  "choices": [
+   {
+    "text": "Quỳ tạ ơn",
+    "result": {
+     "text": "Cửa ngục mở toang. Ngươi bước ra cùng hàng trăm tù nhân khác, ai cũng khóc.",
+     "effects": {
+      "jailYears": -20,
+      "stat.happiness": 8
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pp_bi_trom",
+  "category": "law",
+  "title": "Nhà bị trộm",
+  "text": "Sáng dậy thấy vách nhà bị khoét một lỗ to. Tráp bạc biến mất.",
+  "themes": [
+   "law"
+  ],
+  "conditions": {
+   "law": {
+    "jailed": false
+   },
+   "age": {
+    "min": 16
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Lên huyện kiện",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Bộ khoái lần theo dấu chân, bắt được kẻ trộm. Ngươi lấy lại được phần lớn.",
+     "effects": {
+      "silver": -5,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Quan huyện bảo về chờ. Chờ mãi không thấy gì, lại mất tiền lễ.",
+     "effects": {
+      "silver": -25,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Tự đi truy tìm",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi lần theo dấu chân tới tận xóm bên, đánh cho gã một trận, đòi lại bạc.",
+     "effects": {
+      "stat.physique": 1,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Mất dấu giữa đồng. Tiền đã mất, công cũng mất.",
+     "effects": {
+      "silver": -20,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Bỏ qua",
+    "result": {
+     "text": "Của đi thay người. Ngươi trát lại vách, mua thêm con chó.",
+     "effects": {
+      "silver": -20,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pp_bi_lua",
+  "category": "law",
+  "title": "Bị lừa",
+  "text": "Gã thương nhân hứa trả gấp đôi sau ba tháng. Ba tháng sau, nhà gã đã trống trơn.",
+  "themes": [
+   "law"
+  ],
+  "conditions": {
+   "law": {
+    "jailed": false
+   },
+   "age": {
+    "min": 18
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 12,
+  "choices": [
+   {
+    "text": "Đi kiện",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Có giấy tờ, có người làm chứng. Quan phủ xử ngươi thắng, gã phải bồi thường.",
+     "effects": {
+      "silver": 10,
+      "stat.happiness": 3
+     }
+    },
+    "fail": {
+     "text": "Giấy tờ mập mờ, quan xử hòa. Ngươi ôm cục tức về.",
+     "effects": {
+      "silver": -30,
+      "stat.happiness": -4
+     }
+    }
+   },
+   {
+    "text": "Nuốt hận",
+    "result": {
+     "text": "Ngươi tự nhủ: lần sau khôn hơn.",
+     "effects": {
+      "silver": -30,
+      "stat.intellect": 2,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "pp_tien_an_xin_viec",
+  "category": "law",
+  "title": "Tiền án",
+  "text": "Chủ hiệu nghe ngươi kể quê quán thì nheo mắt: \"À, người này từng ở tù phải không?\"",
+  "themes": [
+   "law"
+  ],
+  "conditions": {
+   "law": {
+    "jailed": false,
+    "record": true
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Nói thật, xin một cơ hội",
+    "result": {
+     "text": "Chủ hiệu im lặng hồi lâu. \"Ta cho ngươi làm thử một tháng. Có chuyện gì thì đừng trách.\"",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Chối",
+    "result": {
+     "text": "Ngươi chối, nhưng ánh mắt người ta đã khác. Việc không thành.",
+     "effects": {
+      "stat.happiness": -3,
+      "stat.charm": -1
+     }
+    }
+   },
+   {
+    "text": "Bỏ đi",
+    "result": {
+     "text": "Ngươi quay lưng. Thiên hạ rộng lớn, chỗ nào chẳng có việc.",
+     "effects": {
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ }
+]

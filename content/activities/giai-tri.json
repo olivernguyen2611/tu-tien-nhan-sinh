@@ -190,7 +190,8 @@
         },
         "effects": {
           "stat.happiness": 3,
-          "stat.health": -1
+          "stat.health": -1,
+          "drank": true
         }
       },
       {
@@ -216,7 +217,8 @@
             "kind": "ban_huu",
             "peer": true,
             "affinity": 10
-          }
+          },
+          "drank": true
         }
       }
     ]
@@ -756,13 +758,21 @@
               "Ngươi đọc chuyện liệt nữ xưa,",
               "Ngươi đọc sách nông tang,",
               "Ngươi đọc một tập thơ,",
-              "Ngươi đọc chuyện kỳ quái dân gian,"
+              "Ngươi đọc chuyện kỳ quái dân gian,",
+              "Ngươi đọc một cuốn địa chí cũ,",
+              "Ngươi đọc truyện kiếm hiệp chép tay,",
+              "Ngươi đọc sách thuốc nam,",
+              "Ngươi đọc lại cuốn sách thời đi học,"
             ],
             [
               "gật gù tới khuya.",
               "ghi được mấy điều hay.",
               "đèn cạn dầu lúc nào không hay.",
-              "nằm mơ thấy mình trong sách."
+              "nằm mơ thấy mình trong sách.",
+              "cười một mình như kẻ ngốc.",
+              "chép lại mấy câu vào vách.",
+              "đọc tới đâu quên tới đó, lại đọc lại.",
+              "bàn tán với bạn cả buổi."
             ]
           ]
         },
@@ -1635,7 +1645,8 @@
         },
         "effects": {
           "stat.health": 1,
-          "stat.happiness": 2
+          "stat.happiness": 2,
+          "drank": true
         }
       }
     ]

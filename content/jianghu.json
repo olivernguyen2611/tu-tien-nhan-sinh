@@ -1,0 +1,250 @@
+{
+  "aliases": {
+    "traits": {
+      "hiep": [
+        "Thiết Thủ",
+        "Phi Yến",
+        "Thanh Y",
+        "Bạch Mi",
+        "Ngọc Diện",
+        "Truy Phong",
+        "Hàn Giang",
+        "Lạc Nhật",
+        "Cô Vân",
+        "Lăng Ba",
+        "Kim Đao",
+        "Vô Ảnh"
+      ],
+      "ac": [
+        "Huyết Thủ",
+        "Quỷ Diện",
+        "Hắc Tâm",
+        "Độc Thủ",
+        "Ác Lang",
+        "Lãnh Huyết",
+        "Tang Môn",
+        "Đoạt Mệnh",
+        "Diêm La",
+        "Câu Hồn"
+      ],
+      "any": [
+        "Thiết Diện",
+        "Túy",
+        "Tiếu Diện",
+        "Lôi Đình",
+        "Bá Đạo",
+        "Phong Trần",
+        "Lãng Tử",
+        "Cuồng"
+      ]
+    },
+    "nouns": [
+      "Hắc Ưng",
+      "Thần Long",
+      "Mãnh Hổ",
+      "Bạch Hạc",
+      "Độc Xà",
+      "Kim Bằng",
+      "Cô Lang",
+      "Linh Hồ",
+      "Hồng Báo",
+      "Thanh Ngưu"
+    ],
+    "nounsByPath": {
+      "sword": [
+        "Kiếm",
+        "Kiếm Khách",
+        "Kiếm Ma"
+      ],
+      "body": [
+        "Thiết Quyền",
+        "Đồng Bì",
+        "Cự Linh"
+      ],
+      "spell": [
+        "Chưởng",
+        "Thần Chưởng",
+        "Huyền Công"
+      ],
+      "weapon": [
+        "Đao",
+        "Phán Quan Bút",
+        "Thiết Côn",
+        "Song Thương"
+      ],
+      "arts": [
+        "Phi Tiêu",
+        "Diệu Thủ",
+        "Thần Châm",
+        "Ám Tiễn"
+      ]
+    },
+    "injury": {
+      "mu_mot_mat": "Độc Nhãn",
+      "seo_mat": "Đao Ba",
+      "cut_ngon": "Cửu Chỉ",
+      "que_chan": "Thiết Quải"
+    }
+  },
+  "factions": {
+    "kinds": {
+      "mon_phai": {
+        "ranks": [
+          "Ký danh đệ tử",
+          "Ngoại môn đệ tử",
+          "Nội môn đệ tử",
+          "Chân truyền đệ tử",
+          "Trưởng lão",
+          "Chưởng môn"
+        ],
+        "age": [
+          8,
+          25
+        ]
+      },
+      "the_gia": {
+        "ranks": [
+          "Gia tướng",
+          "Khách khanh",
+          "Thượng khách",
+          "Cung phụng",
+          "Gia chủ"
+        ],
+        "age": [
+          16,
+          50
+        ],
+        "bornOnly": true
+      },
+      "giao_phai": {
+        "ranks": [
+          "Giáo chúng",
+          "Hương chủ",
+          "Đà chủ",
+          "Hộ pháp",
+          "Giáo chủ"
+        ],
+        "age": [
+          12,
+          45
+        ],
+        "infamyMin": 15
+      },
+      "bang_hoi": {
+        "ranks": [
+          "Bang chúng",
+          "Tiểu đầu mục",
+          "Đường chủ",
+          "Hộ pháp",
+          "Bang chủ"
+        ],
+        "age": [
+          10,
+          50
+        ]
+      },
+      "sat_thu": {
+        "ranks": [
+          "Sát thủ Đồng bài",
+          "Sát thủ Bạc bài",
+          "Sát thủ Kim bài",
+          "Sát thủ Huyết bài",
+          "Lâu chủ"
+        ],
+        "age": [
+          14,
+          40
+        ],
+        "infamyMin": 20
+      },
+      "tieu_cuc": {
+        "ranks": [
+          "Tiêu sư",
+          "Tiêu đầu",
+          "Phó tổng tiêu đầu",
+          "Tổng tiêu đầu"
+        ],
+        "age": [
+          16,
+          45
+        ]
+      },
+      "thuong_hoi": {
+        "ranks": [
+          "Hộ vệ",
+          "Quản sự",
+          "Đại quản sự",
+          "Hội trưởng"
+        ],
+        "age": [
+          16,
+          55
+        ]
+      }
+    },
+    "texts": {
+      "joined": "Qua được bài thử, ngươi được ghi tên vào {faction}, làm {rank}. Người dẫn đường vỗ vai: \"Từ nay là người một nhà.\"",
+      "promoted": "Cống hiến đã đủ, {faction} thăng ngươi làm {rank}. Kẻ nể người ghen, ánh mắt nhìn ngươi đã khác.",
+      "none": "Hỏi khắp nơi mà chẳng thế lực nào chịu nhận. Ngươi về, lòng hơi nguội.",
+      "blocked": {
+        "age": "Người gác cổng nhìn ngươi lắc đầu: tuổi này không hợp để nhập môn.",
+        "born": "Họ chỉ nhận người trong họ. Người ngoài như ngươi, có giỏi tới đâu cũng chỉ đứng ngoài cổng.",
+        "fame": "Người ta hỏi tên tuổi ngươi, nghe xong chỉ cười: \"Đợi khi có chút tiếng tăm hãy tới.\"",
+        "infamy": "Gã đầu mục nhếch mép: \"Tay còn sạch thế kia mà đòi theo bọn ta?\"",
+        "karma": "Lão trưởng lão nhìn ngươi rất lâu rồi phẩy tay: \"Lòng ngươi còn nặng sát khí, cửa này không hợp.\"",
+        "left": "Họ còn nhớ ngươi đã bỏ đi. Cánh cổng ấy không mở lần nữa."
+      },
+      "mission": {
+        "chinh": [
+          "{faction} sai ngươi đi diệt một ổ cướp quấy nhiễu dân làng. Việc xong, dân làng mổ lợn đãi, sư môn thưởng {silver} lượng.",
+          "Ngươi hộ tống một đoàn sư huynh đi tiếp ứng đồng đạo, đường xa mà trót lọt. Thưởng {silver} lượng.",
+          "Ngươi theo lệnh {faction} đi dẹp một vụ tranh chấp giữa hai làng, lời nói còn hơn đao kiếm. Được {silver} lượng.",
+          "{faction} giao ngươi điều tra một vụ mất trộm bí kíp, ngươi lần ra kẻ nội gián. Thưởng {silver} lượng."
+        ],
+        "ta": [
+          "{faction} sai ngươi đi thu tiền bảo kê ở bến sông. Kẻ nào chậm nộp thì ăn một trận. Phần ngươi {silver} lượng.",
+          "Ngươi giải một chuyến hàng không ai dám hỏi bên trong là gì. Tới nơi an toàn, được chia {silver} lượng.",
+          "Theo lệnh trên, ngươi dằn mặt một tay buôn không chịu cúi đầu. Đêm ấy nhà hắn cháy. Phần ngươi {silver} lượng.",
+          "Ngươi đi đòi một món nợ cho {faction}, mang về cả gốc lẫn lãi. Được {silver} lượng."
+        ],
+        "trung_lap": [
+          "{faction} giao ngươi áp một chuyến hàng qua núi, đi về êm ả. Được {silver} lượng.",
+          "Ngươi giữ cửa cho một buổi nghị sự của {faction}, không ai lọt vào. Được {silver} lượng.",
+          "{faction} cử ngươi đi đòi lại món hàng bị cướp, ngươi mang về đủ cả. Thưởng {silver} lượng."
+        ]
+      },
+      "missionFail": [
+        "Nhiệm vụ của {faction} hỏng giữa chừng: ngươi trúng phục kích, chạy về được là may.",
+        "Ngươi làm hỏng việc {faction} giao. Trên trách mắng, dưới cười thầm.",
+        "Đối phương mạnh hơn tin báo. Ngươi mang thương về, việc không thành."
+      ],
+      "taught": "Đổi cống hiến, ngươi được {faction} truyền cho một phần võ học: {signature} Luyện tới đâu thấm tới đó.",
+      "teachPoor": "Cống hiến chưa đủ, chưa được học võ học của môn.",
+      "left": "Ngươi xin tạ sư, rời {faction}. Không ai giữ, cũng không ai tiễn.",
+      "betrayed": "Ngươi phản {faction}, mang theo những gì biết được. Từ đêm ấy, sau lưng ngươi lúc nào cũng có bóng người.",
+      "huntOver": "Đã lâu không thấy người của {faction} bám theo. Có lẽ họ đã thôi truy sát."
+    }
+  },
+  "texts": {
+    "alias": {
+      "hiep": "Ở các quán trà, người kể chuyện bắt đầu gọi ngươi là «{alias}». Có đứa trẻ chạy theo hỏi thật hay không.",
+      "ac": "Tên ngươi bị người ta nhắc bằng giọng thì thào: «{alias}». Mấy nhà mở hàng thấy bóng ngươi là đóng cửa."
+    },
+    "ranks": {
+      "hiep": [
+        "Vô danh tiểu tốt",
+        "Có chút tiếng",
+        "Có tiếng",
+        "Lừng danh",
+        "Danh chấn giang hồ"
+      ],
+      "ac": [
+        "Kẻ xấu vặt",
+        "Tiếng xấu",
+        "Khét tiếng",
+        "Ác danh lẫy lừng",
+        "Đại ma đầu"
+      ]
+    }
+  }
+}

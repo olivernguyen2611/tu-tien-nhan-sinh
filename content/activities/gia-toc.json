@@ -1,0 +1,267 @@
+[
+  {
+    "id": "te_to",
+    "group": "quan_he",
+    "name": "Tế tổ",
+    "icon": "祭",
+    "text": "Sửa soạn mâm cỗ, thắp hương ở từ đường, khấn vái tổ tiên.",
+    "conditions": {
+      "kin": {
+        "met": true
+      },
+      "law": {
+        "jailed": false,
+        "trial": false
+      },
+      "age": {
+        "min": 12
+      }
+    },
+    "cost": [
+      {
+        "silver": 5
+      }
+    ],
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [
+            "Khói hương bay thẳng, quẻ âm dương ra một sấp một ngửa. Cụ già trong họ gật gù: tổ tiên đã chứng.",
+            "Cả họ quây quần trước từ đường. Trẻ con chạy nhảy, người già kể chuyện ông cha. Ngươi thấy mình có gốc."
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            [
+              "Mâm cỗ bày ra trước từ đường,",
+              "Ngày giỗ tổ, con cháu tụ về,",
+              "Hương trầm thắp lên ba nén,",
+              "Tộc trưởng khấn một bài dài,"
+            ],
+            [
+              "khói hương bay thẳng lên xà nhà.",
+              "trẻ con chạy nhảy ngoài sân, người già kể chuyện ông cha.",
+              "quẻ âm dương gieo ra một sấp một ngửa.",
+              "ngươi quỳ hàng sau, đầu gối tê dần."
+            ],
+            [
+              "Ngươi thấy mình có gốc.",
+              "Cụ già trong họ gật gù: tổ tiên đã chứng.",
+              "Xong lễ cả họ ngồi ăn cỗ tới chiều.",
+              "Ra về lòng thấy nhẹ, như vừa trả được món nợ cũ."
+            ]
+          ]
+        },
+        "effects": {
+          "worship": true,
+          "stat.happiness": 2,
+          "stat.daoHeart": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "tu_sua_tu_duong",
+    "group": "quan_he",
+    "name": "Tu sửa từ đường",
+    "icon": "祠",
+    "text": "Lợp lại mái ngói, sơn lại hoành phi câu đối. Từ đường khang trang thì họ mình nở mày nở mặt.",
+    "conditions": {
+      "kin": {
+        "met": true,
+        "shrineMin": 0
+      },
+      "law": {
+        "jailed": false,
+        "trial": false
+      },
+      "age": {
+        "min": 30
+      }
+    },
+    "cost": [
+      {
+        "silver": 120
+      }
+    ],
+    "months": 3,
+    "limit": {
+      "perYear": 1,
+      "cooldownYears": 10
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Thợ làm ba tháng. Ngày khánh thành, tộc trưởng đọc văn tế, cả làng tới xem.",
+          "Mái ngói mới đỏ au, cột lim đánh bóng. Người họ khác đi qua cũng phải ngoái nhìn."
+        ],
+        "effects": {
+          "repairShrine": true,
+          "reputation": {
+            "lang_xa": 3
+          },
+          "stat.happiness": 3
+        }
+      }
+    ]
+  },
+  {
+    "id": "lap_gia_quy",
+    "group": "quan_he",
+    "name": "Lập gia quy",
+    "icon": "規",
+    "text": "Làm chủ một nhà thì phải có phép nhà.",
+    "conditions": {
+      "kin": {
+        "met": true
+      },
+      "law": {
+        "jailed": false,
+        "trial": false
+      },
+      "age": {
+        "min": 30
+      },
+      "romance": {
+        "partner": true
+      }
+    },
+    "limit": {
+      "perYear": 1,
+      "cooldownYears": 10
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": "Ngươi ngồi bên án thư, mài mực, nghĩ xem nhà mình nên giữ phép gì.",
+        "effects": {
+          "stat.intellect": 1
+        },
+        "startEvent": "gt_lap_gia_quy"
+      }
+    ]
+  },
+  {
+    "id": "chon_nguoi_noi_doi",
+    "group": "quan_he",
+    "name": "Chọn người nối dõi",
+    "icon": "嗣",
+    "text": "Hương hỏa nhà này rồi sẽ giao cho ai?",
+    "conditions": {
+      "kin": {
+        "met": true
+      },
+      "law": {
+        "jailed": false,
+        "trial": false
+      },
+      "age": {
+        "min": 45
+      }
+    },
+    "limit": {
+      "perYear": 1,
+      "cooldownYears": 5
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": "Đêm ấy ngươi trằn trọc, nghĩ về từng đứa con.",
+        "effects": {
+          "stat.daoHeart": 1
+        },
+        "startEvent": "gt_chon_noi_doi"
+      }
+    ]
+  },
+  {
+    "id": "hop_ho",
+    "group": "quan_he",
+    "name": "Đi họp họ",
+    "icon": "族",
+    "text": "Cuối năm họp họ ở từ đường: đóng góp, bàn việc, ăn cỗ.",
+    "conditions": {
+      "kin": {
+        "met": true
+      },
+      "law": {
+        "jailed": false,
+        "trial": false
+      },
+      "age": {
+        "min": 16
+      }
+    },
+    "cost": [
+      {
+        "silver": 3
+      }
+    ],
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [
+            "Bàn chuyện tu bổ mộ tổ, chuyện ai đóng bao nhiêu. Cãi nhau một chặp rồi cũng xong, cùng ngồi ăn cỗ.",
+            "Tộc trưởng đọc gia phả, nhắc tên những người đã khuất. Ngươi nghe tên ông bà mình, lòng chùng xuống."
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            [
+              "Họp họ cuối năm,",
+              "Cả họ ngồi chật từ đường,",
+              "Tộc trưởng gõ bàn mở lời,"
+            ],
+            [
+              "bàn chuyện tu bổ mộ tổ, chuyện ai đóng bao nhiêu.",
+              "đọc lại gia phả, nhắc tên những người đã khuất.",
+              "khen nhà này có con đỗ đạt, chê nhà kia làm ăn lụn bại.",
+              "chia nhau việc giỗ chạp năm tới."
+            ],
+            [
+              "Cãi nhau một chặp rồi cũng xong, cùng ngồi ăn cỗ.",
+              "Ngươi nghe tên ông bà mình, lòng chùng xuống.",
+              "Ngươi được ngồi gần mâm trên, nở mày nở mặt.",
+              "Tan họp, mấy chú bác còn ở lại uống rượu tới khuya."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": 2,
+          "stat.charm": 1
+        }
+      },
+      {
+        "weight": 1,
+        "text": {
+          "lines": [
+            "Chú bác hỏi chuyện vợ con, chuyện làm ăn, chuyện đỗ đạt. Ngươi trả lời mỏi miệng."
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            [
+              "Chú bác hỏi chuyện vợ con,",
+              "Mấy bà thím hỏi chuyện làm ăn,",
+              "Ông chú họ xa hỏi chuyện đỗ đạt,"
+            ],
+            [
+              "hỏi xong lại so với con nhà người ta.",
+              "ngươi trả lời mỏi miệng.",
+              "câu nào cũng như đâm vào chỗ đau."
+            ],
+            [
+              "Ngươi cười trừ, ăn vội bát cơm rồi về.",
+              "Về tới nhà vẫn còn nóng mặt.",
+              "Ít ra cũng học được cách nói tránh."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": -1,
+          "stat.intellect": 1
+        }
+      }
+    ]
+  }
+]

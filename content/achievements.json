@@ -281,6 +281,221 @@
         "livesMin": 100
       },
       "unlockFinger": "thien_dao_bang"
+    },
+    {
+      "id": "pham_pham_toi",
+      "name": "Phạm Pháp",
+      "text": "Phạm tội lần đầu.",
+      "when": {
+        "crimesMin": 1
+      }
+    },
+    {
+      "id": "pham_bong_ma",
+      "name": "Bóng Ma Chợ Phiên",
+      "text": "Mười vụ phạm pháp, chưa một lần bị bắt.",
+      "hidden": true,
+      "when": {
+        "crimesMin": 10,
+        "neverCaught": true
+      }
+    },
+    {
+      "id": "pham_an_com_tu",
+      "name": "Ăn Cơm Tù",
+      "text": "Bị kết án ít nhất một lần.",
+      "when": {
+        "holds": {
+          "law": {
+            "record": true
+          }
+        }
+      }
+    },
+    {
+      "id": "pham_vuot_nguc",
+      "name": "Ba Lần Vượt Ngục",
+      "text": "Vượt ngục thành công ba lần trong một đời.",
+      "hidden": true,
+      "when": {
+        "holds": {
+          "law": {
+            "escapesMin": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "pham_bang_vang",
+      "name": "Bảng Vàng",
+      "text": "Đỗ thi Đình.",
+      "when": {
+        "holds": {
+          "exam": {
+            "passed": "dinh"
+          }
+        }
+      }
+    },
+    {
+      "id": "pham_dia_chu",
+      "name": "Địa Chủ",
+      "text": "Có ít nhất ba thửa ruộng khi mất.",
+      "when": {
+        "holds": {
+          "asset": {
+            "kind": "land",
+            "count": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "pham_van_luong",
+      "name": "Vạn Lượng",
+      "text": "Người phàm mà chết với hơn năm nghìn lượng bạc.",
+      "when": {
+        "mortal": true,
+        "silverMin": 5000
+      }
+    },
+    {
+      "id": "pham_nghe_nhan",
+      "name": "Bậc Thầy",
+      "text": "Lên bậc cao nhất của một nghề.",
+      "when": {
+        "jobTop": true
+      }
+    },
+    {
+      "id": "pham_bach_nghe",
+      "name": "Trăm Nghề",
+      "text": "Làm qua năm nghề khác nhau.",
+      "when": {
+        "jobsMin": 5
+      }
+    },
+    {
+      "id": "pham_tho_chung",
+      "name": "Thọ Chung Chính Tẩm",
+      "text": "Người phàm chết già, có vợ chồng và hai con trở lên.",
+      "when": {
+        "mortal": true,
+        "cause": [
+          "old_age"
+        ],
+        "partner": true,
+        "childrenMin": 2
+      }
+    },
+    {
+      "id": "pham_quy_an",
+      "name": "Quy Ẩn",
+      "text": "Kết đời bằng quy ẩn.",
+      "when": {
+        "cause": [
+          "hermit"
+        ]
+      }
+    },
+    {
+      "id": "pham_xuat_gia",
+      "name": "Xuất Gia",
+      "text": "Kết đời bằng xuất gia.",
+      "when": {
+        "cause": [
+          "monk"
+        ]
+      }
+    },
+    {
+      "id": "pham_mat_tich",
+      "name": "Mất Tích",
+      "text": "Đi vào nơi hiểm và không trở ra.",
+      "hidden": true,
+      "when": {
+        "cause": [
+          "missing"
+        ]
+      }
+    },
+    {
+      "id": "pham_xu_tram",
+      "name": "Pháp Trường",
+      "text": "Bị xử trảm.",
+      "hidden": true,
+      "when": {
+        "cause": [
+          "execution"
+        ]
+      }
+    },
+    {
+      "id": "pham_chet_doi",
+      "name": "Năm Đói",
+      "text": "Chết đói thời loạn.",
+      "hidden": true,
+      "when": {
+        "cause": [
+          "starvation"
+        ]
+      }
+    },
+    {
+      "id": "pham_cam_su",
+      "name": "Tài Hoa",
+      "text": "Tiếng đàn đạt tới 80.",
+      "when": {
+        "holds": {
+          "art": {
+            "id": "cam",
+            "min": 80
+          }
+        }
+      }
+    },
+    {
+      "id": "pham_tan_ma_khong_phe",
+      "name": "Tàn Mà Không Phế",
+      "text": "Mang thương tật mà Hạnh phúc vẫn từ 60.",
+      "when": {
+        "holds": {
+          "injury": {
+            "any": true
+          }
+        },
+        "happinessMin": 60
+      }
+    },
+    {
+      "id": "pham_cai_ruou",
+      "name": "Bỏ Rượu",
+      "text": "Cai được rượu.",
+      "when": {
+        "flagsAll": [
+          "da_cai_ruou"
+        ]
+      }
+    },
+    {
+      "id": "pham_tha_huong",
+      "name": "Tha Hương",
+      "text": "Chết nơi đất khách.",
+      "when": {
+        "flagsAll": [
+          "tha_huong"
+        ]
+      }
+    },
+    {
+      "id": "pham_dai_dao",
+      "name": "Đại Đạo",
+      "text": "Phạm mười lăm tội, nghiệp từ −60 trở xuống.",
+      "hidden": true,
+      "when": {
+        "crimesMin": 15,
+        "karmaMax": -60
+      }
     }
   ],
   "badges": [
@@ -447,6 +662,372 @@
       "priority": 30,
       "when": {
         "ageMax": 14
+      }
+    },
+    {
+      "id": "phu_ong_keo_kiet",
+      "name": "Phú Ông Keo Kiệt",
+      "text": "Chết trên đống bạc, chưa từng bố thí một đồng.",
+      "priority": 50,
+      "when": {
+        "mortal": true,
+        "silverMin": 2000,
+        "karmaMax": 0
+      }
+    },
+    {
+      "id": "lang_tu_tinh_truong",
+      "name": "Lãng Tử Tình Trường",
+      "text": "Cưới mấy lần, mỗi lần đều thề là lần cuối.",
+      "priority": 40,
+      "when": {
+        "mortal": true,
+        "flagsAll": [
+          "tai_gia"
+        ]
+      }
+    },
+    {
+      "id": "ten_trom_vo_hinh",
+      "name": "Tên Trộm Không Ai Bắt Được",
+      "text": "Mười vụ trộm cướp, chưa một lần đứng trước công đường.",
+      "priority": 62,
+      "when": {
+        "crimesMin": 10,
+        "neverCaught": true
+      }
+    },
+    {
+      "id": "dai_dao_khet_tieng",
+      "name": "Đại Đạo Khét Tiếng",
+      "text": "Tên tuổi dùng để dọa trẻ con nín khóc.",
+      "priority": 58,
+      "when": {
+        "crimesMin": 15,
+        "karmaMax": -60
+      }
+    },
+    {
+      "id": "vua_vuot_nguc",
+      "name": "Vua Vượt Ngục",
+      "text": "Ngục nào cũng ở qua, ngục nào cũng ra được.",
+      "priority": 60,
+      "when": {
+        "holds": {
+          "law": {
+            "escapesMin": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "hoan_luong",
+      "name": "Lãng Tử Hồi Đầu",
+      "text": "Từng ngồi tù, về sau sống tử tế tới cuối đời.",
+      "priority": 45,
+      "when": {
+        "holds": {
+          "law": {
+            "record": true
+          }
+        },
+        "karmaMin": 10
+      }
+    },
+    {
+      "id": "dau_roi_phap_truong",
+      "name": "Đầu Rơi Pháp Trường",
+      "text": "Đám đông xem chém đầu, có người còn mang theo hạt dưa.",
+      "priority": 55,
+      "when": {
+        "cause": [
+          "execution"
+        ]
+      }
+    },
+    {
+      "id": "ke_co_bac_tan_gia",
+      "name": "Kẻ Cờ Bạc Tán Gia",
+      "text": "Ruộng vườn nhà cửa, tất cả đổi thành tiếng xúc xắc.",
+      "priority": 48,
+      "when": {
+        "flagsAll": [
+          "nghien_bac"
+        ],
+        "silverMax": 20
+      }
+    },
+    {
+      "id": "tuu_quy",
+      "name": "Tửu Quỷ",
+      "text": "Một đời say nhiều hơn tỉnh.",
+      "priority": 35,
+      "when": {
+        "flagsAll": [
+          "nghien_ruou"
+        ]
+      }
+    },
+    {
+      "id": "ong_do_ca_lang_kinh",
+      "name": "Ông Đồ Cả Làng Kính",
+      "text": "Nửa làng biết chữ là nhờ một người.",
+      "priority": 50,
+      "when": {
+        "jobEver": [
+          "thay_do"
+        ],
+        "karmaMin": 0
+      }
+    },
+    {
+      "id": "danh_de_bang_vang",
+      "name": "Danh Đề Bảng Vàng",
+      "text": "Tên khắc trên bia tiến sĩ, mười đời con cháu còn nhắc.",
+      "priority": 66,
+      "when": {
+        "holds": {
+          "exam": {
+            "passed": "dinh"
+          }
+        }
+      }
+    },
+    {
+      "id": "tu_tai_lang",
+      "name": "Tú Tài Làng",
+      "text": "Đỗ Tú tài, rồi trượt cả đời. Vẫn là người hay chữ nhất làng.",
+      "priority": 30,
+      "when": {
+        "holds": {
+          "exam": {
+            "passed": "huyen",
+            "notPassed": "vien"
+          }
+        }
+      }
+    },
+    {
+      "id": "dia_chu_mot_vung",
+      "name": "Địa Chủ Một Vùng",
+      "text": "Ruộng thẳng cánh cò bay, tá điền cả trăm nóc nhà.",
+      "priority": 56,
+      "when": {
+        "mortal": true,
+        "holds": {
+          "asset": {
+            "kind": "land",
+            "count": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "thuong_nhan_giau_co",
+      "name": "Hoàng Thương Đất Phàm",
+      "text": "Thuyền buôn xuôi ngược, bạc chất đầy kho.",
+      "priority": 54,
+      "when": {
+        "mortal": true,
+        "jobEver": [
+          "tieu_nhi",
+          "ban_rong"
+        ],
+        "silverMin": 1000
+      }
+    },
+    {
+      "id": "bac_thay_trong_nghe",
+      "name": "Bậc Thầy Trong Nghề",
+      "text": "Một đời một nghề, làm tới bậc cao nhất.",
+      "priority": 46,
+      "when": {
+        "mortal": true,
+        "jobTop": true
+      }
+    },
+    {
+      "id": "thap_bat_ban",
+      "name": "Thập Bát Ban Nghề",
+      "text": "Nghề gì cũng làm qua, nghề nào cũng biết sơ sơ.",
+      "priority": 34,
+      "when": {
+        "mortal": true,
+        "jobsMin": 5
+      }
+    },
+    {
+      "id": "bat_cuop_nua_doi",
+      "name": "Bắt Cướp Nửa Đời",
+      "text": "Đường phố yên ổn vì có một người không ngủ.",
+      "priority": 44,
+      "when": {
+        "jobEver": [
+          "bo_khoai"
+        ],
+        "karmaMin": 10
+      }
+    },
+    {
+      "id": "cam_su",
+      "name": "Cầm Sư",
+      "text": "Tiếng đàn làm người nghe quên cả đường về.",
+      "priority": 42,
+      "when": {
+        "holds": {
+          "art": {
+            "id": "cam",
+            "min": 80
+          }
+        }
+      }
+    },
+    {
+      "id": "thi_nhan",
+      "name": "Thi Nhân",
+      "text": "Thơ chép đầy ba rương, có bài trẻ con trong làng còn thuộc.",
+      "priority": 42,
+      "when": {
+        "holds": {
+          "art": {
+            "id": "thi",
+            "min": 80
+          }
+        }
+      }
+    },
+    {
+      "id": "ky_thu",
+      "name": "Kỳ Thủ",
+      "text": "Một ván cờ ba ngày, người xem quên cả ăn.",
+      "priority": 40,
+      "when": {
+        "holds": {
+          "art": {
+            "id": "ky",
+            "min": 80
+          }
+        }
+      }
+    },
+    {
+      "id": "ban_cua_muong_thu",
+      "name": "Bạn Của Muông Thú",
+      "text": "Lúc nhắm mắt, con chó già vẫn nằm dưới chân giường.",
+      "priority": 28,
+      "when": {
+        "holds": {
+          "pet": {
+            "any": true
+          }
+        }
+      }
+    },
+    {
+      "id": "tan_ma_khong_phe",
+      "name": "Tàn Mà Không Phế",
+      "text": "Thân mang thương tật, lòng vẫn vui như thường.",
+      "priority": 44,
+      "when": {
+        "holds": {
+          "injury": {
+            "any": true
+          }
+        },
+        "happinessMin": 60
+      }
+    },
+    {
+      "id": "chet_van_con_no",
+      "name": "Chết Vẫn Còn Nợ",
+      "text": "Chủ nợ tới viếng đông hơn họ hàng.",
+      "priority": 38,
+      "when": {
+        "holds": {
+          "debt": {
+            "min": 100
+          }
+        }
+      }
+    },
+    {
+      "id": "chet_noi_dat_khach",
+      "name": "Chết Nơi Đất Khách",
+      "text": "Mộ phần ở nơi không ai nói giọng quê mình.",
+      "priority": 36,
+      "when": {
+        "flagsAll": [
+          "tha_huong"
+        ]
+      }
+    },
+    {
+      "id": "an_si_son_lam",
+      "name": "Ẩn Sĩ Sơn Lâm",
+      "text": "Đời người tới đâu thì thôi, phần còn lại để cho mây núi.",
+      "priority": 57,
+      "when": {
+        "cause": [
+          "hermit"
+        ]
+      }
+    },
+    {
+      "id": "nguoi_xuat_gia",
+      "name": "Người Xuất Gia",
+      "text": "Tên tục chôn theo mái tóc, chỉ còn pháp danh.",
+      "priority": 57,
+      "when": {
+        "cause": [
+          "monk"
+        ]
+      }
+    },
+    {
+      "id": "bat_tich",
+      "name": "Không Rõ Tung Tích",
+      "text": "Không mộ, không bia. Có người bảo vẫn thấy bóng ai ở bìa rừng.",
+      "priority": 57,
+      "when": {
+        "cause": [
+          "missing"
+        ]
+      }
+    },
+    {
+      "id": "ke_chet_doi",
+      "name": "Chết Đói Thời Loạn",
+      "text": "Thời ấy, chết đói là cái chết thường nhất.",
+      "priority": 50,
+      "when": {
+        "cause": [
+          "starvation"
+        ]
+      }
+    },
+    {
+      "id": "tho_chung_chinh_tam",
+      "name": "Thọ Chung Chính Tẩm",
+      "text": "Chết già trên giường nhà mình, vợ chồng con cháu đủ cả.",
+      "priority": 52,
+      "when": {
+        "mortal": true,
+        "cause": [
+          "old_age"
+        ],
+        "partner": true,
+        "childrenMin": 2
+      }
+    },
+    {
+      "id": "ke_cai_ruou",
+      "name": "Kẻ Bỏ Được Vò Rượu",
+      "text": "Cai được rượu, chuyện khó hơn đỗ Trạng nguyên.",
+      "priority": 32,
+      "when": {
+        "flagsAll": [
+          "da_cai_ruou"
+        ]
       }
     },
     {

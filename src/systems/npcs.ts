@@ -2,6 +2,7 @@
 // cultivate, break through, die, and keep a ledger of favor and grudge
 // (sổ ân oán) towards the player. Numbers in balance.npcs; personalities in
 // npc-traits.json.
+import { npcAlias } from './jianghu';
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameState, LogLine, Npc } from '../core/types';
@@ -89,6 +90,11 @@ export function createNpc(state: GameState, content: Content, spec: NpcSpec): { 
     grudge: clamp(spec.grudge ?? 0),
     heirOf: spec.heirOf ?? null,
   };
+  // 11.1: người giang hồ carry a ngoại hiệu (a side stream, so other rolls stay as they were).
+  if (content.balance.jianghu?.aliasKinds.includes(npc.kind ?? '')) {
+    const alias = npcAlias(content, `${state.seed}:npc-alias:${npc.id}`, (spec.grudge ?? 0) > 0 || npc.nature === 'tham_lam');
+    if (alias) npc.alias = alias;
+  }
   const npcs = forgetExtra([...state.npcs, npc], cfg.max);
   return { state: { ...state, rng: rng.getState(), npcs }, id: npc.id };
 }
@@ -319,6 +325,7 @@ export function npcInfo(state: GameState, content: Content, n: Npc): NpcInfo {
   const rows: NpcInfoRow[] = [];
   if (!seen) rows.push({ label: 'Tu vi', value: t?.unseen ?? '?' });
   const kind = content.relations?.kinds.find((k) => k.id === n.kind)?.name;
+  if (n.alias) rows.push({ label: 'Ngoại hiệu', value: `«${n.alias}»` });
   rows.push({ label: 'Thân phận', value: kind && kind.toLowerCase() !== n.role ? `${kind} (${n.role})` : n.role });
   // 9.6: what they do now, and the last things done together.
   const job = content.relations?.occupations.find((o) => o.id === n.occupation)?.name;

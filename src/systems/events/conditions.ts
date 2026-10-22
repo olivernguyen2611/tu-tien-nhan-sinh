@@ -4,6 +4,7 @@ import { examBlocked, examOf, levelIndex } from '../exams';
 import { jobDef, jobOf } from '../jobs';
 import { debtTotal, ownedOf } from '../assets';
 import { festivalFor } from '../leisure';
+import { jianghuOf } from '../jianghu';
 import type { Content } from '../../core/content';
 import type { GameEvent } from '../../core/schemas';
 import type { GameState } from '../../core/types';
@@ -147,6 +148,64 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
   if (c.pet) {
     const has = (state.pastime?.pets ?? []).some((p) => !c.pet!.id || p.id === c.pet!.id);
     if (has !== (c.pet.any ?? true)) return false;
+  }
+  if (c.ailment) {
+    const has = (state.body?.ailments ?? []).some((a) => (!c.ailment!.id || a.id === c.ailment!.id)
+      && (!c.ailment!.contagious || (content?.health?.diseases.find((d) => d.id === a.id)?.contagious ?? false)));
+    if (has !== (c.ailment.any ?? true)) return false;
+  }
+  if (c.jianghu) {
+    const j = jianghuOf(state);
+    if (c.jianghu.fameMin !== undefined && j.fame < c.jianghu.fameMin) return false;
+    if (c.jianghu.fameMax !== undefined && j.fame > c.jianghu.fameMax) return false;
+    if (c.jianghu.infamyMin !== undefined && j.infamy < c.jianghu.infamyMin) return false;
+    if (c.jianghu.infamyMax !== undefined && j.infamy > c.jianghu.infamyMax) return false;
+    if (c.jianghu.alias !== undefined && !!j.alias !== c.jianghu.alias) return false;
+  }
+  if (c.faction) {
+    const f = c.faction;
+    const m = state.jianghu?.faction ?? null;
+    const def = m ? content?.jianghuFactions?.find((x) => x.id === m.id) : undefined;
+    if (f.member !== undefined && !!m !== f.member) return false;
+    if (f.id !== undefined && m?.id !== f.id) return false;
+    if (f.kinds && (!def || !f.kinds.includes(def.kind))) return false;
+    if (f.alignments && (!def || !f.alignments.includes(def.alignment))) return false;
+    if (f.rankMin !== undefined && (!m || m.rank < f.rankMin)) return false;
+    if (f.meritMin !== undefined && (!m || m.merit < f.meritMin)) return false;
+    if (f.hunted !== undefined && !!state.jianghu?.hunted !== f.hunted) return false;
+  }
+  if (c.arts) {
+    const a = state.martialArts;
+    const known = a?.known ?? [];
+    if (c.arts.knows !== undefined && !known.some((k) => k.id === c.arts!.knows)) return false;
+    if (c.arts.countMin !== undefined && known.length < c.arts.countMin) return false;
+    if (c.arts.weapon !== undefined && !!a?.weapon !== c.arts.weapon) return false;
+    if (c.arts.woundMin !== undefined && (a?.wound ?? 0) < c.arts.woundMin) return false;
+    if (c.arts.woundMax !== undefined && (a?.wound ?? 0) > c.arts.woundMax) return false;
+  }
+  if (c.kin) {
+    const k = state.kin;
+    if (c.kin.met !== undefined && !!k !== c.kin.met) return false;
+    if (c.kin.split !== undefined && (k?.split ?? false) !== c.kin.split) return false;
+    if (c.kin.heir !== undefined && !!k?.heir !== c.kin.heir) return false;
+    if (c.kin.shrineMin !== undefined && (k?.shrine ?? 0) < c.kin.shrineMin) return false;
+    if (c.kin.rule !== undefined && !(k?.rules ?? []).includes(c.kin.rule)) return false;
+    if (c.kin.ritesMin !== undefined && (k?.rites ?? 0) < c.kin.ritesMin) return false;
+    if (c.kin.siblings !== undefined && state.family.some((r) => r.role === 'sibling' && r.alive) !== c.kin.siblings) return false;
+  }
+  if (c.law) {
+    const l = state.law;
+    const wanted = l?.wanted ?? 0;
+    if (c.law.wantedMin !== undefined && wanted < c.law.wantedMin) return false;
+    if (c.law.wantedMax !== undefined && wanted > c.law.wantedMax) return false;
+    if (c.law.jailed !== undefined && !!l?.jail !== c.law.jailed) return false;
+    if (c.law.trial !== undefined && !!l?.trial !== c.law.trial) return false;
+    if (c.law.record !== undefined && ((l?.convictions ?? 0) > 0) !== c.law.record) return false;
+    if (c.law.escapesMin !== undefined && (l?.escapes ?? 0) < c.law.escapesMin) return false;
+  }
+  if (c.injury) {
+    const has = (state.body?.injuries ?? []).some((i) => !c.injury!.id || i === c.injury!.id);
+    if (has !== (c.injury.any ?? true)) return false;
   }
   if (c.asset && content) {
     const owned = ownedOf(state, content, c.asset.kind, c.asset.id).length;

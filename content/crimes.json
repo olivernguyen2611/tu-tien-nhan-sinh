@@ -1,0 +1,251 @@
+{
+  "crimes": [
+    {
+      "id": "moc_tui",
+      "name": "Móc túi",
+      "stat": "stat.luck",
+      "difficulty": 40,
+      "loot": [
+        3,
+        15
+      ],
+      "karma": -2,
+      "expose": 0.15,
+      "heat": 1,
+      "severity": 1,
+      "success": [
+        "Chợ phiên đông nghịt, ngươi lách qua một lão nhà giàu. Túi tiền nhẹ tênh trong tay áo: {silver} lượng.",
+        "Một cú va vai, một câu xin lỗi. Ra tới đầu chợ mới đếm: {silver} lượng."
+      ],
+      "fail": [
+        "Tay vừa chạm túi tiền thì bị nắm cổ tay. \"Bắt được thằng móc túi!\""
+      ]
+    },
+    {
+      "id": "trom_vat",
+      "name": "Trộm vặt",
+      "stat": "stat.luck",
+      "difficulty": 35,
+      "loot": [
+        2,
+        10
+      ],
+      "karma": -2,
+      "expose": 0.15,
+      "heat": 1,
+      "severity": 1,
+      "success": [
+        "Con gà, buồng chuối, mấy đấu gạo. Đem bán được {silver} lượng.",
+        "Đêm tối trèo rào, sáng ra có {silver} lượng tiêu vặt."
+      ],
+      "fail": [
+        "Chó nhà người ta sủa ầm lên. Chủ nhà cầm đòn gánh đuổi theo, hàng xóm vây kín."
+      ]
+    },
+    {
+      "id": "trom_nha_giau",
+      "name": "Trộm nhà giàu",
+      "stat": "stat.intellect",
+      "difficulty": 55,
+      "loot": [
+        30,
+        120
+      ],
+      "karma": -5,
+      "expose": 0.35,
+      "heat": 2,
+      "severity": 3,
+      "success": [
+        "Ngươi rình ba đêm, biết giờ gác đổi. Khoét vách, lấy đi một tráp bạc: {silver} lượng.",
+        "Lẻn vào kho nhà viên ngoại, ra tay gọn ghẽ. {silver} lượng."
+      ],
+      "fail": [
+        "Vừa khoét xong vách thì đèn trong nhà bật sáng. Gia đinh xông ra trói gô ngươi lại."
+      ]
+    },
+    {
+      "id": "lua_dao",
+      "name": "Lừa đảo",
+      "stat": "stat.charm",
+      "difficulty": 50,
+      "loot": [
+        20,
+        80
+      ],
+      "karma": -4,
+      "expose": 0.3,
+      "heat": 2,
+      "severity": 2,
+      "success": [
+        "Bán cho gã nhà quê một tấm \"bản đồ kho báu\". Gã trả {silver} lượng, còn cảm ơn rối rít.",
+        "Giả làm người của quan phủ thu thuế, xong một vòng: {silver} lượng."
+      ],
+      "fail": [
+        "Nói được nửa câu thì gặp đúng người từng bị ngươi lừa năm ngoái."
+      ]
+    },
+    {
+      "id": "buon_lau_muoi",
+      "name": "Buôn lậu muối sắt",
+      "stat": "stat.intellect",
+      "difficulty": 50,
+      "loot": [
+        40,
+        150
+      ],
+      "karma": -3,
+      "expose": 0.3,
+      "heat": 2,
+      "severity": 3,
+      "success": [
+        "Gánh muối lậu vượt đèo trong đêm, tránh được trạm thuế. Lãi {silver} lượng.",
+        "Mấy thỏi sắt giấu dưới đáy thuyền chở rau. Bán cho lò rèn trên núi được {silver} lượng."
+      ],
+      "fail": [
+        "Tới trạm thuế, quan sai chọc giáo xuống đáy thuyền. Keng một tiếng."
+      ]
+    },
+    {
+      "id": "cuop_duong",
+      "name": "Cướp đường",
+      "stat": "stat.physique",
+      "difficulty": 55,
+      "loot": [
+        30,
+        100
+      ],
+      "karma": -8,
+      "expose": 0.5,
+      "heat": 3,
+      "severity": 4,
+      "success": [
+        "Bịt mặt chặn đường khách buôn qua rừng. Người ta ném túi tiền xuống đất rồi chạy: {silver} lượng.",
+        "Chặn một cỗ xe ngựa giữa đèo. Không ai bị thương, ngươi được {silver} lượng."
+      ],
+      "fail": [
+        "Gã khách buôn có thuê tiêu sư. Ngươi bị đánh ngã, trói lại giải lên huyện."
+      ]
+    },
+    {
+      "id": "danh_nguoi",
+      "name": "Đánh người",
+      "stat": "stat.physique",
+      "difficulty": 45,
+      "loot": [
+        0,
+        5
+      ],
+      "karma": -3,
+      "expose": 0.5,
+      "heat": 1,
+      "severity": 2,
+      "success": [
+        "Ngươi đánh gã một trận nhừ tử giữa chợ. Hả giận, nhưng nhiều người trông thấy.",
+        "Một trận đấm đá trong ngõ tối. Gã nằm rên, ngươi phủi tay đi về."
+      ],
+      "fail": [
+        "Gã ấy khỏe hơn ngươi tưởng, lại có anh em. Đánh xong cả hai cùng bị lính bắt."
+      ]
+    },
+    {
+      "id": "dau_doc",
+      "name": "Đầu độc",
+      "stat": "stat.intellect",
+      "difficulty": 60,
+      "loot": [
+        0,
+        40
+      ],
+      "karma": -15,
+      "expose": 0.5,
+      "heat": 3,
+      "severity": 5,
+      "success": [
+        "Thuốc bỏ vào chén trà. Ba ngày sau nhà ấy có tang. Không ai nghi ngươi, chưa.",
+        "Nhạt như nước lã, ngấm như mưa dầm. Kẻ thù của ngươi đổ bệnh rồi chết."
+      ],
+      "fail": [
+        "Người hầu bưng trà thấy lạ, đổ cho chó uống thử. Con chó chết, ngươi bị lôi ra."
+      ]
+    },
+    {
+      "id": "giet_nguoi",
+      "name": "Giết người",
+      "stat": "stat.physique",
+      "difficulty": 60,
+      "loot": [
+        0,
+        30
+      ],
+      "karma": -20,
+      "expose": 0.6,
+      "heat": 4,
+      "severity": 5,
+      "success": [
+        "Một nhát dao trong đêm. Máu thấm vào đất, ngươi chôn kỹ xác rồi rửa tay ở suối.",
+        "Ngươi xuống tay. Từ đêm đó, ngươi ngủ không còn yên giấc."
+      ],
+      "fail": [
+        "Người kia kêu lên. Cả xóm thức dậy, đuốc sáng rực, ngươi không còn đường chạy."
+      ]
+    },
+    {
+      "id": "dot_nha",
+      "name": "Đốt nhà",
+      "stat": "stat.luck",
+      "difficulty": 50,
+      "loot": [
+        0,
+        10
+      ],
+      "karma": -10,
+      "expose": 0.5,
+      "heat": 3,
+      "severity": 4,
+      "success": [
+        "Một mồi lửa ném vào kho thóc kẻ thù. Lửa cháy rực nửa trời.",
+        "Đêm gió to, một đốm lửa thành biển lửa. Ngươi đứng xa nhìn, tim đập thình thịch."
+      ],
+      "fail": [
+        "Lửa chưa bén đã bị người gác kho tóm được."
+      ]
+    }
+  ],
+  "verdicts": {
+    "acquit": "Quan huyện vỗ kinh đường mộc: chứng cứ không đủ, tội {crime} tha bổng. Ngươi bước ra cổng nha môn, chân còn run.",
+    "fine": "Tội {crime}, phạt {silver} lượng bạc. Ngươi móc túi nộp, coi như mua bài học.",
+    "beating": "Tội {crime}, xử đánh bốn mươi trượng. Ngươi nằm sấp ba tháng mới ngồi dậy được.",
+    "jail": "Tội {crime}, giam {years} năm. Cửa ngục đóng lại, tiếng khóa sắt lạnh tới tận xương.",
+    "exile": "Tội {crime}, lưu đày ba ngàn dặm, khổ sai {years} năm nơi biên viễn. Quê nhà từ nay chỉ còn trong giấc mơ.",
+    "death": "Tội {crime}, xử trảm. Quan huyện ném thẻ lệnh xuống đất, cả công đường im phăng phắc."
+  },
+  "texts": {
+    "exposed": [
+      "Có kẻ trông thấy. Mấy hôm sau, cáo thị vẽ mặt ngươi dán ở cổng chợ.",
+      "Bộ khoái bắt đầu hỏi han trong xóm. Tiếng ngươi đã tới tai quan phủ.",
+      "Người ta đồn ầm lên. Đi đâu ngươi cũng thấy có kẻ nhìn theo."
+    ],
+    "caught": "Ngươi bị trói giải lên công đường vì tội {crime}.",
+    "released": "Mãn hạn tù. Ngươi bước ra khỏi ngục, nắng chói tới hoa mắt. Đời ngoài kia vẫn chạy như chưa từng thiếu ngươi.",
+    "escaped": "Đêm mưa to, ngươi chui ra khỏi đường hầm, lăn xuống mương nước. Phía sau, chiêng báo động vang lên. Ngươi đã tự do, và bị truy nã khắp nơi.",
+    "escapeFail": "Đường hầm sập giữa chừng. Cai ngục lôi ngươi ra, án tăng thêm {years} năm, cùm thêm một đôi.",
+    "cooled": "Đã lâu không ai nhắc tới ngươi. Cáo thị cũ ở cổng chợ đã bạc màu.",
+    "fled": [
+      "Ngươi bỏ quê trong đêm, đi thật xa tới nơi không ai biết mặt. Quan phủ nơi cũ không với tới.",
+      "Ngươi đổi tên đổi họ, tới một huyện xa lạ. Cáo thị nơi cũ chẳng ai đọc tới đây.",
+      "Một mảnh đất mới, những gương mặt lạ. Bộ khoái nơi cũ đành bó tay.",
+      "Ngươi đi mãi tới khi không còn nghe ai nói giọng quê mình. Lệnh truy nã nhạt dần sau lưng."
+    ],
+    "bribeOk": "Gói bạc lót dưới tráp hồ sơ. Quan huyện nhìn ngươi bằng ánh mắt khác hẳn.",
+    "bribeHonest": "Quan huyện là người thanh liêm. Ngài đập bàn: \"Dám mua chuộc bản quan!\" Tội chồng thêm tội.",
+    "poor": "Ngươi định lót tay, móc túi ra chỉ có mấy đồng lẻ. Quan sai cười khẩy.",
+    "wanted": [
+      "Sạch sẽ",
+      "Bị để ý",
+      "Bị dán cáo thị",
+      "Bị truy nã",
+      "Truy nã gắt",
+      "Truy nã khắp nơi"
+    ]
+  }
+}

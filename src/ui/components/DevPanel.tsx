@@ -19,11 +19,11 @@ import type { RewindOption } from '../../systems/timeline';
 import {
   DEV_STATS, devAddKarma, devAddLifespan, devAddMoney, devAddStat, devClearHeartDemon, devFillProgress, devFindEvents, devFoundClan, devFoundSect,
   devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devWorldEvent, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect, devPastTie, devSpecial, devSystemPoints, devSystemBetray, devDrift, devMerit, devSetTier, devMeetKind, devSetPhase, devSetWorldVar,
-  devAwakenBody, devResetBond, devChildrenRoot, devSetBody, devStartMartialQuest, devQuestStep, devMarry, devResetEventHistory, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
+  devAwakenBody, devResetBond, devChildrenRoot, devSetBody, devStartMartialQuest, devQuestStep, devMarry, devResetEventHistory, devSetRealFestival, devLearnAllArts, devWound, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
   devResetItemUse, devResetFingerCooldowns, devSetFingerLevel, devSetFlag, devSetGoldenFinger, devSetRealm, devSkipYears, devStartFight, devTakeChosen, devToggleTrait, devTriggerEvent,
 } from '../../systems/dev';
 
-const DEATHS: [DeathCause, string][] = [['old_age', 'Thọ tận'], ['illness', 'Bệnh'], ['combat', 'Tử trận'], ['breakthrough', 'Đột phá thất bại'], ['tribulation', 'Lôi kiếp'], ['ordeal', 'Tai kiếp'], ['calamity', 'Tai ương']];
+const DEATHS: [DeathCause, string][] = [['old_age', 'Thọ tận'], ['illness', 'Bệnh'], ['combat', 'Tử trận'], ['breakthrough', 'Đột phá thất bại'], ['tribulation', 'Lôi kiếp'], ['ordeal', 'Tai kiếp'], ['calamity', 'Tai ương'], ['execution', 'Xử trảm'], ['starvation', 'Chết đói'], ['missing', 'Mất tích'], ['hermit', 'Quy ẩn'], ['monk', 'Xuất gia']];
 
 function Section({ title, open, children }: { title: string; open?: boolean; children: ComponentChildren }) {
   return (
@@ -372,6 +372,19 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
           </div>
           <div class="action-chips">
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devResetEventHistory(state))}>Xóa lịch sử sự kiện</button>
+          </div>
+          <p class="profile-note">Võ học phàm tục: {state.martialArts?.known.length ?? 0} bí kíp, nội thương {state.martialArts?.wound ?? 0}</p>
+          <div class="action-chips">
+            <button class="chip-btn" disabled={!live} onClick={() => onChange(devLearnAllArts(state, content))}>Học hết bí kíp</button>
+            <button class="chip-btn" disabled={!live} onClick={() => onChange(devWound(state, content, 30))}>Nội thương +30</button>
+            <button class="chip-btn" disabled={!live || !state.martialArts?.wound} onClick={() => onChange(devWound(state, content, -100))}>Chữa lành</button>
+          </div>
+          <p class="profile-note">Tuần lễ hội thật: {content.leisure?.festivals.find((f) => f.id === state.realFestival)?.name ?? 'không'}</p>
+          <div class="action-chips">
+            {(content.leisure?.festivals ?? []).map((f) => (
+              <button class="chip-btn" key={f.id} disabled={!live || state.realFestival === f.id} onClick={() => onChange(devSetRealFestival(state, f.id))}>{f.name}</button>
+            ))}
+            <button class="chip-btn" disabled={!live || !state.realFestival} onClick={() => onChange(devSetRealFestival(state, null))}>Bỏ</button>
           </div>
         </Section>
 

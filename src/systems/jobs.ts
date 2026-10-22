@@ -43,6 +43,10 @@ export function jobBlocked(state: GameState, content: Content, jobId: string): s
   if (jobOf(state).id === jobId) return 'Đang làm nghề này.';
   if (extremeHasHook(state, content, 'cannotWork')) return 'Thân thể thế này, chưa làm nổi việc gì.';
   if (schoolOf(state).at) return 'Đang đi học.';
+  if (state.law?.jail) return 'Đang ở trong ngục.';
+  if ((state.law?.convictions ?? 0) > 0 && content.balance.law?.recordBars.includes(jobId)) return 'Có tiền án, nghề này không nhận.';
+  const hurt = (state.body?.injuries ?? []).map((i) => content.health?.injuries.find((x) => x.id === i)).find((d) => d?.bars.includes(jobId));
+  if (hurt) return `${hurt.name}, nghề này không làm được.`;
   const fired = jobOf(state).past.find((p) => p.id === jobId && p.why === 'fired' && state.character.age - p.left < cfg.rehireYears);
   if (fired) return 'Mới bị đuổi, người trong nghề chưa ai chịu nhận lại.';
   if (!meets(state, def.requires, content)) return def.requiresText ?? 'Chưa đủ điều kiện.';

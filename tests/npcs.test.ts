@@ -73,7 +73,8 @@ describe('NPCs (task 3.4)', () => {
   });
 
   it('keeps at most balance.npcs.max NPCs and runs inside advanceYear', () => {
-    let s = life;
+    // 10.11: the họ already met (meeting it would bring new NPCs this year).
+    let s: typeof life = { ...life, kin: { elder: null, relatives: [], forebears: [], split: false, heir: null, rules: [], shrine: 0, rites: 0 } };
     for (let i = 0; i < content.balance.npcs.max + 5; i++) s = createNpc(s, content, { role: 'người quen' }).state;
     expect(s.npcs.length).toBe(content.balance.npcs.max);
     const ages = s.npcs.map((n) => n.age);
