@@ -1,6 +1,7 @@
 // Fights (task 3.3, PLAN.md K.4): one power number per side, up to 3 rounds,
 // the player picks one of 5 actions each round. Texts depend on the player's
 // combat path and on element counters (K.3.3).
+import { gradePowerMul } from './realmGrade';
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { CombatAction, Fight, FoeSpec } from '../core/schemas';
@@ -78,7 +79,9 @@ export function combatPower(state: GameState, content: Content): number {
     * (1 + c.stagePct * state.cult.stage)
     * (c.physiqueBase + state.aptitudes.physique / c.physiqueDivisor)
     * techMul * (c.lineagePower[lineage] ?? 1)
-    * Math.max(0.1, 1 + bonus);
+    * Math.max(0.1, 1 + bonus)
+    // 13.7e: the phẩm cấp of the realm the life stands in.
+    * gradePowerMul(state, content);
   return Math.round(power * 10) / 10;
 }
 

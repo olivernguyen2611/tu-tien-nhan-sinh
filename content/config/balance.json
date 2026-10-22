@@ -305,6 +305,12 @@
     "steps": ["kd_so_ngo", "kd_dai_bi", "kd_luan_dao", "kd_cung_vao_bi_canh", "kd_nga_re", "kd_ket_cuc"]
   },
   "spiritBeast": { "stageExp": [0, 30, 90, 200], "stagePower": [0.05, 0.12, 0.22, 0.35], "yearExp": 2, "feedExp": { "noi_dan_1": 6, "noi_dan_2": 14, "noi_dan_3": 30, "noi_dan_4": 60 }, "levelExpMul": 0.01, "captureBase": 0.3, "capturePerLevel": 0.01, "captureMin": 10, "oldHappiness": -12 },
+  "realmGrade": {
+    "realms": ["truc_co", "kim_dan", "nguyen_anh", "hoa_than"],
+    "power": [0.9, 1.0, 1.15, 1.3], "speed": [0.9, 1.0, 1.1, 1.2], "lifespanPct": [0, 0.05, 0.1, 0.2], "breakthrough": [-10, 0, 8, 15],
+    "foundationTier": { "ha": 1, "trung": 2, "thuong": 3, "hoan_my": 4 }, "coreTier": [4, 3, 3, 2, 2, 2, 1, 1, 1],
+    "rollPerPoint": 0.3, "prevBonus": 12, "thresholds": [35, 72, 92], "highDaoHeart": 70, "highDaoHeartRealms": ["hoa_than"], "defaultTier": 2
+  },
   "spiritField": { "plots": 2, "plotsCave": 1, "plotsOwnSect": 2, "successBase": 0.75, "successPerLevel": 0.003, "wrongYield": -1, "rightYield": 0, "xp": 2 },
   "formation": { "allowedBase": 1, "perLevel": 30, "xpWin": 4, "xpLose": 1, "secondGivenAt": 5 },
   "daoBond": {

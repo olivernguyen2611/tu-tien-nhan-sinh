@@ -23,6 +23,7 @@ import { goldenFingerMeets } from '../goldenFinger';
 import { pastSectMeets } from '../pastSect';
 import { hasUsableInnateRoot } from '../cultivation';
 import { bornKnowing } from '../knowledge';
+import { realmTier } from '../realmGrade';
 
 export type Conditions = Partial<GameEvent['conditions']>;
 
@@ -113,6 +114,8 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     const a = state.world?.active;
     if (!a || !c.worldEvent.id.includes(a.id) || (c.worldEvent.phase !== undefined && c.worldEvent.phase !== a.phase)) return false;
   }
+  // 13.7e: the phẩm cấp of a realm reached is at most this.
+  if (c.gradeMax && content && (realmTier(state, content, c.gradeMax.realm) ?? 5) > c.gradeMax.max) return false;
   // 9.5 Thời cuộc.
   if (c.worldPhase?.length && !c.worldPhase.includes(state.times?.phase ?? '')) return false;
   if (c.worldVars?.some((w) => {

@@ -195,5 +195,42 @@
   "beyond": {
     "name": "???",
     "description": "Phía trên Hóa Thần vẫn còn đường. Chỉ là chưa ai trong vùng này đi tới đó để kể lại."
+  },
+  "realmGrades": {
+    "tiers": [
+      "Hạ",
+      "Trung",
+      "Thượng",
+      "Cực"
+    ],
+    "names": {
+      "truc_co": [
+        "Hạ phẩm đạo cơ",
+        "Trung phẩm đạo cơ",
+        "Thượng phẩm đạo cơ",
+        "Thiên Đạo Trúc Cơ"
+      ],
+      "kim_dan": [
+        "Hạ phẩm Kim Đan",
+        "Trung phẩm Kim Đan",
+        "Thượng phẩm Kim Đan",
+        "Vô Hà Kim Đan"
+      ],
+      "nguyen_anh": [
+        "Phàm Anh",
+        "Linh Anh",
+        "Huyền Anh",
+        "Thánh Anh"
+      ],
+      "hoa_than": [
+        "Tàn Thần",
+        "Chân Thần",
+        "Đạo Thần",
+        "Hợp Đạo Thần"
+      ]
+    },
+    "enter": "Phẩm cấp của cảnh giới mới: {grade}.",
+    "capped": "Nền cũ chưa vững, phẩm cấp không thể cao hơn được nữa.",
+    "boCo": "Đạo cơ nứt rồi liền lại, chắc hơn xưa: nay là {grade}."
   }
 }

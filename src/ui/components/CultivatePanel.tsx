@@ -22,6 +22,7 @@ import { activeFormation, formationViews } from '../../systems/formation';
 import type { BeastAction, FieldAction, FormationAction } from './FormationPopup';
 import { fieldView, harvestChance } from '../../systems/spiritField';
 import { beastBlocked, beastView, captureChance } from '../../systems/spiritBeast';
+import { currentTier, tierName } from '../../systems/realmGrade';
 import { recipeViews } from '../../systems/crafting';
 import { Meter } from './Meter';
 import { TermText } from './Tooltip';
@@ -88,6 +89,8 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
   const [caveNote, setCaveNote] = useState<string | null>(null);
   const foundation = content.cultivation.realms.foundations.find((g) => g.id === cult.foundation);
   const coreGrade = cult.coreGrade !== null ? content.cultivation.realms.coreGradeNames[cult.coreGrade - 1] : null;
+  const tier = currentTier(state, content);
+  const grade = tier !== null ? `${tierName(content, cult.realm, tier)} (${content.cultivation.realms.realmGrades?.tiers[tier - 1]})` : null;
   const pattern = content.corePatterns.find((p) => p.id === cult.corePattern);
   const soul = content.nascentSouls.forms.find((f) => f.id === cult.soulForm);
   const self = view === 'self';
@@ -128,6 +131,7 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
           </Fold>
         )}
         {!self && foundation && <p class="profile-note"><TermText text={`Đạo cơ ${foundation.name}: ${foundation.description}`} /></p>}
+        {!self && grade && <p class="profile-note">Phẩm cấp: <b>{grade}</b></p>}
         {!self && coreGrade && <p class="profile-note"><TermText text={`Kim Đan ${coreGrade}${pattern ? `, ${pattern.name}: ${pattern.summary}` : ''}`} /></p>}
         {!self && soul && <p class="profile-note"><TermText text={`Nguyên Anh: ${soul.name}. ${soul.summary}`} /></p>}
         {self && !mortal ? null : mortal ? !cult.root ? null : (

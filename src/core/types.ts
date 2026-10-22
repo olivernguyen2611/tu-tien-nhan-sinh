@@ -382,6 +382,8 @@ export interface GameState {
     /** Task 4.2: the core being formed (blocks the year), and the Kim Đan grade 1–9 once formed. */
     coreForming: { round: number; offered: string[]; placed: string[]; purity: number; cracks: number; chancePct: number } | null;
     coreGrade: number | null;
+    /** 13.7e: phẩm cấp 1–4 rolled on entering Nguyên Anh / Hóa Thần, and a Trúc Cơ tier raised by bổ cơ. Trúc Cơ and Kim Đan otherwise come from foundation / coreGrade. */
+    grades?: Record<string, number>;
     /** Đan văn of the golden core (task 4.2, core-patterns.json). */
     corePattern: string | null;
     /** Hình thái Nguyên Anh (task 4.3, nascent-souls.json). */

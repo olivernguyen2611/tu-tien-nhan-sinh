@@ -8,6 +8,31 @@
 
 ## [Chưa phát hành]
 
+### 13.7e Phẩm cấp 4 bậc (2026-10-23)
+- Trúc Cơ, Kim Đan, Nguyên Anh và Hóa Thần dùng chung một thang 4 bậc: Hạ, Trung, Thượng, Cực. Mỗi cảnh giới có tên riêng cho các bậc:
+  - Trúc Cơ: Hạ phẩm đạo cơ … Thiên Đạo Trúc Cơ;
+  - Kim Đan: Hạ phẩm Kim Đan … Vô Hà Kim Đan;
+  - Nguyên Anh: Phàm Anh, Linh Anh, Huyền Anh, Thánh Anh;
+  - Hóa Thần: Tàn Thần, Chân Thần, Đạo Thần, Hợp Đạo Thần.
+- Cách tính bậc:
+  - Trúc Cơ lấy bậc từ đạo cơ; Kim Đan gom 9 phẩm thành 4 bậc.
+  - Nguyên Anh và Hóa Thần tung bậc khi vừa vào, theo ngộ tính, đạo tâm và bậc của cảnh giới trước.
+  - Hóa Thần muốn đạt bậc 3–4 cần đạo tâm từ 70.
+  - Bậc sau không vượt bậc trước quá 1.
+- Chỉ bậc của cảnh giới hiện tại có tác dụng:
+  - chiến lực ×0,9 / 1 / 1,15 / 1,3;
+  - tốc độ tu luyện ×0,9–1,2 ở Nguyên Anh và Hóa Thần (Trúc Cơ, Kim Đan giữ cách tính cũ);
+  - thọ nguyên +0–20% khi vào Nguyên Anh, Hóa Thần;
+  - đột phá rời Kim Đan, Nguyên Anh −10 tới +15.
+- Phẩm cấp hiện trong bảng Tu luyện.
+- Save cũ không cần chuyển: bậc được suy từ đạo cơ, phẩm Kim Đan đã có. Đang ở Nguyên Anh thì theo bậc Kim Đan, đang ở Hóa Thần thì nhận bậc Trung.
+- **Bổ cơ:** chuỗi 2 sự kiện hiếm cho tu sĩ đạo cơ Hạ, Trung phẩm. Lời đồn trong tạp ký dẫn tới Huyết Long Mộc ở đáy Huyết Uyên; nếu thành, đạo cơ lên một bậc, mỗi đời một lần.
+- **10 sự kiện cho đời Nguyên Anh dài:**
+  - hậu bối cầu chỉ điểm, cố nhân tọa hóa, giám bảo cho Kim Thiềm, tiểu bối thách đấu;
+  - cô độc, yến của đại năng, yêu thú nghìn năm, chép sử cho Khâm Thiên Giám;
+  - thư cũ ba trăm năm, linh khí hạ giới loãng dần.
+  - Đời 426 năm có 8,5% năm bình lặng.
+
 ### 13.7c–d Ngự thú và Linh thực (2026-10-23)
 - **Ngự thú:** mỗi tu sĩ có một linh thú theo bên, chọn trong 6 loài:
   - Hỏa Ly, Thanh Phong Điêu (dễ bỏ chạy), Huyền Giáp Quy (giảm thương tích);

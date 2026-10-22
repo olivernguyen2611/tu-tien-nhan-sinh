@@ -67,6 +67,8 @@ const BaseConditionsSchema = z
     /** 9.5 Thời cuộc: the pha thời thế now is one of these, and world variables are in range. */
     worldPhase: ids,
     worldVars: z.array(z.object({ id, gte: z.number().optional(), lte: z.number().optional() }).strict()).optional(),
+    /** 13.7e: the realm has been reached and its phẩm cấp (1–4) is at most `max`. */
+    gradeMax: z.object({ realm: id, max: z.number().int().min(1).max(4) }).strict().optional(),
     /** 10.1: giai đoạn tuổi (schooling.json stages), at school (and học lực range), learning or knowing a trade. */
     lifeStage: ids,
     school: z.object({ enrolled: z.boolean().optional(), at: id.optional(), gradeMin: z.number().optional(), gradeMax: z.number().optional(), ever: z.boolean().optional() }).strict().optional(),
@@ -416,6 +418,8 @@ export const EffectsSchema = z
     armyJoin: z.enum(['draft', 'volunteer']).optional(),
     /** 13.1 Dứt duyên phàm trần: leave job, office, army, throne; the gia sản stays with the family, a share of the silver is kept. */
     leaveMortal: z.boolean().optional(),
+    /** 13.7e Bổ cơ: the Trúc Cơ phẩm cấp goes up one. */
+    boCo: z.boolean().optional(),
     /** 13.1: every living parent, sibling and child's affinity ±. */
     familyAffinity: z.number().optional(),
     armyMerit: z.number().optional(),
@@ -545,7 +549,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt', 'learnArt', 'practiseArt', 'buyWeapon', 'gainWeapon', 'wound', 'wulinTournament', 'wulinPrestige', 'wulinResign', 'officeJoin', 'officeStyle', 'officeFaction', 'officeMerit', 'officeEvidence', 'officeDefend', 'officeResign', 'armyJoin', 'armyMerit', 'armyBattle', 'armyLeave', 'leaveMortal', 'familyAffinity', 'throneStart', 'throneBar', 'throneRival', 'throneRivalDies', 'throneStep', 'throneBattle', 'throneAscend', 'throneFail', 'reignBar', 'reignDeed', 'reignEnd'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt', 'learnArt', 'practiseArt', 'buyWeapon', 'gainWeapon', 'wound', 'wulinTournament', 'wulinPrestige', 'wulinResign', 'officeJoin', 'officeStyle', 'officeFaction', 'officeMerit', 'officeEvidence', 'officeDefend', 'officeResign', 'armyJoin', 'armyMerit', 'armyBattle', 'armyLeave', 'leaveMortal', 'boCo', 'familyAffinity', 'throneStart', 'throneBar', 'throneRival', 'throneRivalDies', 'throneStep', 'throneBattle', 'throneAscend', 'throneFail', 'reignBar', 'reignDeed', 'reignEnd'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1936,6 +1940,17 @@ export const BalanceSchema = z
       fromRealm: z.string().min(1), ageGap: z.number().int().min(0), aheadAt: z.array(z.number().int().min(0)).default([]),
       gapYears: z.tuple([z.number().int().min(1), z.number().int().min(1)]), role: z.string().min(1), steps: z.array(z.string().min(1)).min(1),
     }).strict().optional(),
+    /** 13.7e Phẩm cấp 4 bậc (index 0 = Hạ … 3 = Cực): power, speed (Nguyên Anh, Hóa Thần; Trúc Cơ and Kim Đan keep their own), lifespan % on entering (Nguyên Anh, Hóa Thần),
+     * breakthrough points out of the realm (Kim Đan, Nguyên Anh; Trúc Cơ keeps foundationBonus). Đạo cơ id → tier, Kim Đan grade 1–9 → tier.
+     * A tier rolled on entering: d100 + (ngộ tính + đạo tâm − 100) × rollPerPoint + (previous tier − 2) × prevBonus against thresholds (tiers 2–4); tiers 3–4 of
+     * highDaoHeartRealms need đạo tâm ≥ highDaoHeart. Never above the previous realm's tier + 1. A realm with no tier recorded (an old save) takes defaultTier. */
+    realmGrade: z.object({
+      realms: z.array(z.string().min(1)).min(1),
+      power: z.array(z.number()).length(4), speed: z.array(z.number()).length(4), lifespanPct: z.array(z.number()).length(4), breakthrough: z.array(z.number()).length(4),
+      foundationTier: z.record(z.string(), z.number().int().min(1).max(4)), coreTier: z.array(z.number().int().min(1).max(4)).length(9),
+      rollPerPoint: z.number(), prevBonus: z.number(), thresholds: z.array(z.number()).length(3),
+      highDaoHeart: z.number(), highDaoHeartRealms: z.array(z.string()).default([]), defaultTier: z.number().int().min(1).max(4),
+    }).strict().optional(),
     /** 13.7d Linh thực: plots (more with a cave or a sect of one's own), harvest chance, yield change in a wrong / right year, craft xp per harvest. */
     spiritField: z.object({
       plots: z.number().int().min(1), plotsCave: z.number().int().min(0), plotsOwnSect: z.number().int().min(0),
@@ -2735,6 +2750,14 @@ export const RealmsFileSchema = z
     foundations: z.array(z.object({ id, name: z.string().min(1), description: z.string().min(1) }).strict()).min(1),
     /** Shown as a greyed-out "???" after the last realm. */
     beyond: z.object({ name: z.string().min(1), description: z.string().min(1) }).strict(),
+    /** 13.7e Phẩm cấp: the four tiers (Hạ → Cực), each graded realm's own names for them, and the lines on taking one. {grade}. */
+    realmGrades: z.object({
+      tiers: z.array(z.string().min(1)).length(4),
+      names: z.record(id, z.array(z.string().min(1)).length(4)),
+      enter: z.string().min(1),
+      capped: z.string().min(1),
+      boCo: z.string().min(1),
+    }).strict().optional(),
   })
   .strict();
 export type RealmsFile = z.infer<typeof RealmsFileSchema>;

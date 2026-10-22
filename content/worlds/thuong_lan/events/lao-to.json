@@ -1,0 +1,502 @@
+[
+ {
+  "id": "lt_hau_boi_cau_chi_diem",
+  "category": "cultivation",
+  "title": "Hậu bối cầu chỉ điểm",
+  "text": "Một tu sĩ Trúc Cơ trẻ quỳ trước động phủ ba ngày, xin lão tổ chỉ cho một câu. Nó tu sai đường, tâm mạch đã có vết nứt.",
+  "themes": [
+   "cultivation"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "nguyen_anh"
+   }
+  },
+  "weight": 2.0,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Chỉ cho một câu",
+    "result": {
+     "text": "\"Ngươi vội quá.\" Nó ngẫm câu ấy mười năm, rồi Kết Đan.",
+     "effects": {
+      "karma": 2,
+      "stat.charm": 1,
+      "reputation": {
+       "chinh": 2
+      }
+     }
+    }
+   },
+   {
+    "text": "Giúp nó đả thông tâm mạch",
+    "result": {
+     "text": "Ngươi tốn chút chân nguyên. Nó dập đầu chín cái, xin làm ký danh đệ tử.",
+     "effects": {
+      "karma": 3,
+      "cultProgress": -2,
+      "stat.happiness": 2
+     }
+    }
+   },
+   {
+    "text": "Không tiếp",
+    "result": {
+     "text": "Đứa trẻ đi. Ngươi nghe nói ba năm sau nó tẩu hỏa nhập ma.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "lt_co_nhan_toa_hoa",
+  "category": "cultivation",
+  "title": "Cố nhân tọa hóa",
+  "text": "Tin truyền tới: một người cùng lứa với ngươi, từng uống rượu với ngươi ở phường thị năm Trúc Cơ, đã tọa hóa vì thọ tận. Hắn kẹt ở Kim Đan hai trăm năm.",
+  "themes": [
+   "life"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "nguyen_anh"
+   }
+  },
+  "weight": 2.0,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Đến tiễn",
+    "result": {
+     "text": "Trên mộ hắn có khắc một câu: \"Đạo dài, chân ngắn.\" Ngươi đứng đó tới chiều.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.happiness": -4
+     }
+    }
+   },
+   {
+    "text": "Rót một chén rượu từ xa",
+    "result": {
+     "text": "Ngươi rót chén rượu xuống đất. Người tu đạo sống lâu, nên tiễn biệt cũng nhiều.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "lt_giam_bao",
+  "category": "cultivation",
+  "title": "Phường thị mời giám bảo",
+  "text": "Kim Thiềm Thương Minh mời ngươi tới giám định một món đồ cổ đào được ở Thái Cổ chiến trường. Họ trả công hậu, chỉ cần một câu thật hay giả.",
+  "themes": [
+   "market"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "nguyen_anh"
+   }
+  },
+  "weight": 2.0,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Xem kỹ",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Đồ thật, lại là một mảnh giáp của đạo binh Thái Cổ. Thương minh tạ ơn bằng một túi linh thạch.",
+     "effects": {
+      "spiritStones": 120,
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Ngươi nói thật mà nó là giả. Thương minh lỗ một khoản, nhìn ngươi bằng nửa con mắt.",
+     "effects": {
+      "stat.charm": -1,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Từ chối",
+    "result": {
+     "text": "Lão tổ Nguyên Anh không làm việc cho thương nhân. Ít nhất là năm nay.",
+     "effects": {
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "lt_tieu_boi_thach_dau",
+  "category": "cultivation",
+  "title": "Tiểu bối thách đấu",
+  "text": "Một kiếm tu Kim Đan nổi danh tới thách ngươi, nói thẳng: \"Thắng được lão tổ Nguyên Anh, tên ta lên Thiên Kiêu bảng.\"",
+  "themes": [
+   "combat"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "nguyen_anh"
+   }
+  },
+  "weight": 2.0,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Nhận lời, đánh nhẹ tay",
+    "result": {
+     "text": "Ngươi chỉ dùng một ngón tay.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Kiếm tu Kim Đan",
+       "realm": "below",
+       "intent": "teach"
+      },
+      "win": {
+       "text": "Hắn ngã, nhưng ngươi khen một câu. Hắn đi, kiếm ý mạnh thêm một bậc.",
+       "effects": {
+        "reputation": {
+         "chinh": 4
+        },
+        "stat.charm": 1,
+        "karma": 1
+       }
+      },
+      "lose": {
+       "text": "Ngươi khinh địch, bị hắn chém rách tay áo. Cả phường thị bàn tán.",
+       "effects": {
+        "stat.happiness": -4,
+        "stat.daoHeart": -1
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Mặc kệ hắn",
+    "result": {
+     "text": "Hắn đứng chửi trước động phủ ba ngày rồi đi.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "lt_co_doc",
+  "category": "cultivation",
+  "title": "Cô độc",
+  "text": "Một đêm ngồi thiền, ngươi chợt đếm: những người ngươi quen năm đầu tu đạo, không còn ai sống. Động phủ yên tới mức nghe được tiếng tim mình.",
+  "themes": [
+   "life"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "nguyen_anh"
+   }
+  },
+  "weight": 2.0,
+  "cooldownYears": 25,
+  "choices": [
+   {
+    "text": "Xuống núi đi một vòng",
+    "result": {
+     "text": "Ngươi đi giữa phố phàm nhân, nghe tiếng rao, tiếng trẻ con khóc. Lòng ấm lại một chút.",
+     "effects": {
+      "stat.happiness": 5,
+      "cultProgress": -2
+     }
+    }
+   },
+   {
+    "text": "Ngồi tiếp",
+    "result": {
+     "text": "Cô độc là một phần của đạo. Ngươi ngồi tới sáng, tâm như mặt hồ.",
+     "effects": {
+      "stat.daoHeart": 3,
+      "stat.happiness": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "lt_yen_dai_nang",
+  "category": "cultivation",
+  "title": "Yến của đại năng",
+  "text": "Một vị Hóa Thần mở yến mừng thọ một nghìn năm, mời các Nguyên Anh khắp Thương Lan. Thiệp mời viết bằng vàng, nặng như một miếng sắt.",
+  "themes": [
+   "politics"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "nguyen_anh"
+   }
+  },
+  "weight": 2.0,
+  "cooldownYears": 40,
+  "choices": [
+   {
+    "text": "Đi dự, mang theo lễ",
+    "result": {
+     "text": "Trên yến, ngươi nghe được nhiều chuyện mà không sách nào chép, cả chuyện Thái Cổ lẫn chuyện phi thăng.",
+     "effects": {
+      "spiritStones": -60,
+      "stat.charm": 2,
+      "stat.comprehension": 1,
+      "setFlags": [
+       "du_yen_dai_nang"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Gửi lễ, không đi",
+    "result": {
+     "text": "Lễ tới, người không tới. Vị Hóa Thần cười, ghi tên ngươi vào sổ \"kẻ khó mời\".",
+     "effects": {
+      "spiritStones": -30,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "lt_yeu_thu_ngan_nam",
+  "category": "cultivation",
+  "title": "Yêu thú nghìn năm thức giấc",
+  "text": "Một con huyền xà nghìn năm ngủ dưới hồ gần động phủ của ngươi bỗng tỉnh, quẫy một cái làm sập nửa ngọn núi.",
+  "themes": [
+   "beast"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "nguyen_anh"
+   }
+  },
+  "weight": 2.0,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Trấn áp nó",
+    "result": {
+     "text": "Nước hồ sôi suốt ba ngày.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Huyền xà nghìn năm",
+       "realm": "same",
+       "intent": "teach"
+      },
+      "win": {
+       "text": "Huyền xà bị đánh chìm xuống đáy hồ, chịu ngủ tiếp. Ngươi lấy được một mảnh vảy.",
+       "effects": {
+        "spiritStones": 80,
+        "stat.physique": 1,
+        "stat.health": -6
+       }
+      },
+      "lose": {
+       "text": "Huyền xà quấn ngươi một vòng, gãy mấy đốt xương. Nó tự chán rồi lặn xuống.",
+       "effects": {
+        "stat.health": -18
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Dời động phủ",
+    "result": {
+     "text": "Đi tìm chỗ khác. Huyền xà không có lỗi, nó chỉ ngủ dậy.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "cultProgress": -3,
+      "karma": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "lt_vien_tich_su_ky",
+  "category": "cultivation",
+  "title": "Chép sử cho hậu thế",
+  "text": "Khâm Thiên Giám sai người lên núi xin ngươi kể lại những gì ngươi đã thấy trong mấy trăm năm, để chép vào quốc sử. Họ nói ngươi là người sống lâu nhất họ biết.",
+  "themes": [
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "nguyen_anh"
+   }
+  },
+  "weight": 2.0,
+  "cooldownYears": 60,
+  "choices": [
+   {
+    "text": "Kể hết",
+    "result": {
+     "text": "Ngươi kể ba ngày ba đêm: đại chiến, bí cảnh, những triều vua đã qua. Người chép sử viết gãy năm cây bút.",
+     "effects": {
+      "stat.charm": 2,
+      "stat.happiness": 3,
+      "setFlags": [
+       "chep_su_thuong_lan"
+      ]
+     }
+    }
+   },
+   {
+    "text": "Kể một nửa",
+    "result": {
+     "text": "Có những chuyện không nên ghi lại. Ngươi kể chuyện vui, giữ chuyện buồn.",
+     "effects": {
+      "stat.intellect": 1,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "lt_de_tu_tim_toi",
+  "category": "cultivation",
+  "title": "Người mang thư cũ",
+  "text": "Một người lạ mang tới bức thư viết từ ba trăm năm trước, của một người ngươi đã quên. Trong thư chỉ có một câu: \"Nếu ngươi còn sống, hãy nhớ đã hứa gì.\"",
+  "themes": [
+   "life"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "nguyen_anh"
+   }
+  },
+  "weight": 2.0,
+  "cooldownYears": 50,
+  "choices": [
+   {
+    "text": "Cố nhớ",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ngươi nhớ ra: một lời hứa che chở cho hậu duệ của người ấy. Ngươi lên đường tìm họ.",
+     "effects": {
+      "karma": 4,
+      "stat.daoHeart": 1,
+      "meetNpc": {
+       "role": "Hậu duệ cố nhân",
+       "root": true,
+       "affinity": 70
+      }
+     }
+    },
+    "fail": {
+     "text": "Ngươi không nhớ nổi. Bức thư cũ ngươi cất vào hộp, thỉnh thoảng lấy ra đọc.",
+     "effects": {
+      "stat.happiness": -2,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Đốt thư",
+    "result": {
+     "text": "Quá khứ là quá khứ. Ngọn lửa cháy rất nhanh.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "karma": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "lt_linh_khi_loang",
+  "category": "cultivation",
+  "title": "Linh khí loãng dần",
+  "text": "Mấy chục năm nay, ngươi thấy linh khí quanh động phủ loãng dần. Không chỉ ở đây: các lão quái khắp nơi đều than như vậy.",
+  "themes": [
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "nguyen_anh"
+   }
+  },
+  "weight": 2.0,
+  "cooldownYears": 80,
+  "choices": [
+   {
+    "text": "Tìm hiểu nguyên do",
+    "result": {
+     "text": "Ngươi đi khắp ba châu. Sách cổ ở Thiên Cơ Các nói: từ trận đại chiến Thái Cổ, linh mạch hạ giới cứ vạn năm lại cạn đi một phần.",
+     "effects": {
+      "stat.comprehension": 1,
+      "setFlags": [
+       "biet_ha_gioi_can"
+      ],
+      "cultProgress": -2
+     }
+    }
+   },
+   {
+    "text": "Kệ, tu chăm hơn",
+    "result": {
+     "text": "Linh khí ít thì ngồi lâu hơn.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "cultProgress": 3
+     }
+    }
+   }
+  ]
+ }
+]

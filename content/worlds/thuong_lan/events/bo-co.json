@@ -1,0 +1,159 @@
+[
+ {
+  "id": "bc_bo_co_tin_don",
+  "category": "cultivation",
+  "title": "Lời đồn bổ cơ",
+  "text": "Trong một quyển tạp ký mua ở phường thị, ngươi đọc thấy chuyện một tán tu đời trước đạo cơ hạ phẩm mà sau đắc đạo, nhờ một gốc Huyết Long Mộc mọc ở đáy Huyết Uyên. Cây ấy trăm năm mới nở hoa một lần.",
+  "themes": [
+   "cultivation",
+   "lore"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co",
+    "max": "kim_dan"
+   },
+   "flagsNone": [
+    "bo_co_xong",
+    "bo_co_tim"
+   ],
+   "gradeMax": {
+    "realm": "truc_co",
+    "max": 2
+   },
+   "stats": [
+    {
+     "stat": "stat.luck",
+     "gte": 45
+    }
+   ]
+  },
+  "weight": 0.4,
+  "oncePerLife": true,
+  "choices": [
+   {
+    "text": "Lên đường tìm",
+    "result": {
+     "text": "Ngươi gói ghém, xuống phía nam. Huyết Uyên xa, mà đạo cơ của ngươi thì không đợi.",
+     "effects": {
+      "setFlags": [
+       "bo_co_tim"
+      ],
+      "stat.daoHeart": 2,
+      "cultProgress": -3
+     }
+    }
+   },
+   {
+    "text": "Chuyện tạp ký, tin làm gì",
+    "result": {
+     "text": "Ngươi gấp sách, kê dưới chân bàn cho đỡ khập khiễng.",
+     "effects": {
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "bc_bo_co_huyet_long_moc",
+  "category": "cultivation",
+  "title": "Huyết Long Mộc",
+  "text": "Đáy Huyết Uyên đỏ như lò rèn. Giữa một bãi xương có một cây gỗ đen, hoa đỏ như máu, đang hé nụ. Quanh nó, ba con huyết dơi to bằng con nghé đang canh.",
+  "themes": [
+   "cultivation"
+  ],
+  "conditions": {
+   "tier": [
+    "tu_chan"
+   ],
+   "realm": {
+    "min": "truc_co"
+   },
+   "flagsAll": [
+    "bo_co_tim"
+   ],
+   "flagsNone": [
+    "bo_co_xong"
+   ]
+  },
+  "weight": 2.0,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Đánh lui đàn dơi",
+    "result": {
+     "text": "Ngươi rút kiếm.",
+     "effects": {},
+     "fight": {
+      "foe": {
+       "name": "Huyết dơi canh cây",
+       "realm": "same",
+       "intent": "teach",
+       "powerMul": 1.1
+      },
+      "win": {
+       "text": "Đàn dơi tan. Ngươi ngồi dưới gốc cây chờ hoa nở, nuốt cả cánh hoa lẫn giọt nhựa đỏ. Đạo cơ nứt rồi liền.",
+       "effects": {
+        "boCo": true,
+        "setFlags": [
+         "bo_co_xong"
+        ],
+        "stat.health": -15,
+        "stat.daoHeart": 3
+       }
+      },
+      "lose": {
+       "text": "Đàn dơi hút máu ngươi tới choáng váng. Ngươi bò ra khỏi Huyết Uyên, lần sau sẽ quay lại.",
+       "effects": {
+        "stat.health": -20,
+        "stat.physique": 1
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Dùng trận pháp dụ chúng đi",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Đàn dơi bay theo ánh lửa giả. Ngươi hái hoa trong yên lặng.",
+     "effects": {
+      "boCo": true,
+      "setFlags": [
+       "bo_co_xong"
+      ],
+      "stat.daoHeart": 2,
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Trận lửa tắt sớm, đàn dơi quay lại. Ngươi phải bỏ chạy.",
+     "effects": {
+      "stat.health": -10,
+      "stat.intellect": 1
+     }
+    }
+   },
+   {
+    "text": "Bỏ cuộc, về núi",
+    "result": {
+     "text": "Đạo cơ hạ phẩm thì đi đường hạ phẩm. Ngươi về, lòng nhẹ đi một chút.",
+     "effects": {
+      "clearFlags": [
+       "bo_co_tim"
+      ],
+      "stat.daoHeart": 1,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ }
+]
