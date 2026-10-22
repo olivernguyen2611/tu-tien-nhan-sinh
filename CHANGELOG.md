@@ -8,6 +8,9 @@
 
 ## [Chưa phát hành]
 
+### Góp ý 23/10 · Tiên sư thử linh căn hiếm hơn (2026-10-23)
+- Tiên môn mở hội thu đồ: 3%/năm trong tuổi 8–16 (trước 12%). Với người đã biết tin tiên môn thu đồ, khoảng 15% số đời được tiên sư thử linh căn khi còn nhỏ (trước 41%). Các đường tiên duyên khác giữ nguyên.
+
 ### Góp ý 23/10 · Tắt developer mode ở màn hình chính (2026-10-23)
 - Khi developer mode đang bật, dòng báo ở màn hình chính có nút **Tắt**. Không cần vào màn chơi mới tắt được.
 
