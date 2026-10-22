@@ -98,6 +98,18 @@ const BaseConditionsSchema = z
       fameMin: z.number().optional(), fameMax: z.number().optional(), infamyMin: z.number().optional(), infamyMax: z.number().optional(), alias: z.boolean().optional(),
     }).strict().optional(),
     /** 12.1: an đại sự running (one of these); the emperor's temper; a quyền thần holds power; sưu thuế at least. */
+    /** 12.6–12.8 Đế nghiệp: on this road to the throne; a bar at least / at most (royal: favor, power, suspicion; rebel:
+     *  people, troops, grain; usurp: power, troops, cause); the thái tử is self / another / not named; coup step; cities. */
+    throne: z.object({
+      path: z.array(z.enum(['royal', 'rebel', 'usurp'])).optional(), none: z.boolean().optional(),
+      barMin: z.record(z.string(), z.number()).optional(), barMax: z.record(z.string(), z.number()).optional(),
+      heir: z.enum(['self', 'other', 'none']).optional(), step: z.number().int().optional(), citiesMin: z.number().int().optional(), rivals: z.boolean().optional(),
+    }).strict().optional(),
+    /** 12.9 Làm vua: reigning; a bar at least / at most (treasury, people, army, court); years on the throne at least; came by. */
+    reign: z.object({
+      active: z.boolean().optional(), barMin: z.record(z.string(), z.number()).optional(), barMax: z.record(z.string(), z.number()).optional(),
+      yearsMin: z.number().int().optional(), how: z.array(z.enum(['royal', 'rebel', 'usurp'])).optional(),
+    }).strict().optional(),
     /** 12.3 Binh nghiệp: serving in the army; quân hàm at least / at most; came in drafted / of one's will; at war now;
      *  has ever served; deserted. */
     army: z.object({
@@ -385,6 +397,20 @@ export const EffectsSchema = z
      *  answer an đàn hặc (argue, bribe, confess and step down); leave office of one's own will. */
     /** 12.3 Binh nghiệp: enlist (drafted or of one's will); quân công ±; fight a trận now; leave the army (giải ngũ,
      *  đào ngũ, tan quân). */
+    /** 12.6–12.9 Đế nghiệp: start a road (rebel / usurp); bars ±; the strongest rival's standing ±, or his death; the coup
+     *  step (+1, or reset to 0); attack a city (rebel/usurp: troops against the garrison); take the throne; the road ends
+     *  (death, exile, made a commoner, or quietly); reign bars ±; a good or bad deed of the ruler; the reign ends. */
+    throneStart: z.enum(['rebel', 'usurp']).optional(),
+    throneBar: z.record(z.string(), z.number()).optional(),
+    throneRival: z.number().optional(),
+    throneRivalDies: z.boolean().optional(),
+    throneStep: z.union([z.number().int(), z.literal('reset')]).optional(),
+    throneBattle: z.boolean().optional(),
+    throneAscend: z.boolean().optional(),
+    throneFail: z.enum(['death', 'exile', 'commoner', 'quiet']).optional(),
+    reignBar: z.record(z.string(), z.number()).optional(),
+    reignDeed: z.enum(['good', 'bad']).optional(),
+    reignEnd: z.enum(['death', 'exile', 'abdicate']).optional(),
     armyJoin: z.enum(['draft', 'volunteer']).optional(),
     armyMerit: z.number().optional(),
     armyBattle: z.boolean().optional(),
@@ -513,7 +539,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt', 'learnArt', 'practiseArt', 'buyWeapon', 'gainWeapon', 'wound', 'wulinTournament', 'wulinPrestige', 'wulinResign', 'officeJoin', 'officeStyle', 'officeFaction', 'officeMerit', 'officeEvidence', 'officeDefend', 'officeResign', 'armyJoin', 'armyMerit', 'armyBattle', 'armyLeave'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt', 'learnArt', 'practiseArt', 'buyWeapon', 'gainWeapon', 'wound', 'wulinTournament', 'wulinPrestige', 'wulinResign', 'officeJoin', 'officeStyle', 'officeFaction', 'officeMerit', 'officeEvidence', 'officeDefend', 'officeResign', 'armyJoin', 'armyMerit', 'armyBattle', 'armyLeave', 'throneStart', 'throneBar', 'throneRival', 'throneRivalDies', 'throneStep', 'throneBattle', 'throneAscend', 'throneFail', 'reignBar', 'reignDeed', 'reignEnd'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -667,6 +693,8 @@ export const OriginSchema = z
     cultivatorClan: z.boolean().default(false),
     /** 9.R5b: not offered (nor rolled) until this Sổ tri thức entry is known. */
     requiresKnowledge: id.optional(),
+    /** 12.6: born a hoàng tử / công chúa (the royal road to the throne starts at birth). */
+    royal: z.boolean().default(false),
     /** Task 5b.9 Cầu đầu thai: choosing this origin costs Luân Hồi points (random draws are free). */
     rebirthCost: z.number().int().min(1).optional(),
     birthText: z.string().min(1),
@@ -1871,6 +1899,21 @@ export const BalanceSchema = z
      *  much); a trận's chance in a peace year; quân công and bạc for a won trận by hàm; a lost trận's death, heavy wound
      *  and health lost; years a draftee serves at least; age the army sends one home; years before a volunteer may ask out;
      *  the truy nã a deserter gets; the age range to enlist. */
+    /** 12.6–12.9 Đế nghiệp. royal: siblings in line, bar drift, the age the emperor names a thái tử (and the yearly
+     *  chance), weights of the heir score, the extra a woman needs, suspicion that brings the cup of wine; rebel: the
+     *  phases it opens in, the yearly chance a thịnh thế crushes it, cities to take the capital, the garrison per city taken,
+     *  troops lost in a lost battle, the chiêu an chance; usurp: discovery per plotter and base, the bars a rising needs;
+     *  reign: starting bars by road, drift, the line that brings a threat, the deed margin for a title. */
+    throne: z.object({
+      rivals: z.tuple([z.number().int(), z.number().int()]), heirAge: z.number().int(), heirChance: z.number(),
+      heirWeights: z.object({ favor: z.number(), power: z.number(), first: z.number(), queen: z.number(), suspicion: z.number() }).strict(), womanNeeds: z.number(),
+      banAt: z.number(), suspicionDrift: z.number(), adultAge: z.number().int(), deposeBelow: z.number(), softCap: z.number().min(0), rivalGrowth: z.tuple([z.number().int(), z.number().int()]), heirPower: z.number().min(0), siblingDeath: z.number().min(0).max(1), fallDeath: z.number().min(0).max(1),
+      rebelPhases: z.array(z.string()), crushChance: z.number(), capitalCities: z.number().int(), garrison: z.number(), garrisonPerCity: z.number(),
+      battleLoss: z.number(), battleWin: z.object({ troops: z.number(), grain: z.number(), people: z.number() }).strict(), amnestyChance: z.number(), rebelUpkeep: z.number(),
+      discoverBase: z.number(), discoverPerPlotter: z.number(), riseNeeds: z.record(z.string(), z.number()),
+      reignStart: z.record(z.enum(['royal', 'rebel', 'usurp']), z.record(z.string(), z.number())), reignDrift: z.number(), dangerAt: z.number(), deedTitle: z.number(),
+      phaseDrift: z.record(z.string(), z.record(z.string(), z.number())), affairDrift: z.record(z.string(), z.record(z.string(), z.number())),
+    }).strict().optional(),
     army: z.object({
       pay: z.array(z.number()).min(1), meritNeed: z.array(z.number()).min(1), promoteChance: z.number(), foe: z.array(z.number()).min(1),
       warMul: z.number(), peaceMul: z.number(), sharpness: z.number(), leadFrom: z.number().int(), leadWeight: z.number(), peaceBattle: z.number(),
@@ -3472,6 +3515,29 @@ export type JianghuFile = z.infer<typeof JianghuFileSchema>;
  *  variables per year, how readily a quyền thần rises and grows), the đại sự that start from the world, the bắt lính event,
  *  and lời văn. An affair starts when the world variables are below / above the given values (or the phase is one of
  *  these, a quyền thần holds power, the emperor has this temper; onDeath = a tranh ngôi when an emperor dies). */
+/** 12.6–12.9 Đế nghiệp (content/throne.json): the bar names of each road and of a reign, the events the engine books
+ *  (lập trữ lost, the cup of wine, a road's yearly decision, discovery, threats to a reign, the fall), rebel banner
+ *  pieces and bases, and the lời văn. */
+export const ThroneFileSchema = z.object({
+  bars: z.record(z.enum(['royal', 'rebel', 'usurp', 'reign']), z.record(z.string(), z.string().min(1))),
+  pathNames: z.record(z.enum(['royal', 'rebel', 'usurp']), z.string().min(1)),
+  events: z.object({
+    heirLost: id, banned: id, rebelYear: id, discovered: id, deposed: id,
+    threats: z.record(z.string(), id),
+  }).strict(),
+  banner: z.object({ first: z.array(z.string().min(1)).min(1), second: z.array(z.string().min(1)).min(1) }).strict(),
+  bases: z.array(z.string().min(1)).min(1),
+  dynastyNames: z.array(z.string().min(1)).min(1),
+  titles: z.object({ good: z.string(), bad: z.string(), founder: z.string(), lost: z.string(), plain: z.string() }).strict(),
+  texts: z.object({
+    heirSelf: z.string(), heirOther: z.string(), crowned: z.string(), crownedWoman: z.string(), newDynasty: z.string(), rivalDies: z.string(),
+    rebelStart: z.string(), usurpStart: z.string(), crushed: z.string(), amnesty: z.string(), cityWon: z.string(), cityLost: z.string(),
+    death: z.string(), exile: z.string(), commoner: z.string(), quiet: z.string(), report: z.string(), fallen: z.string(), abdicate: z.string(),
+    emperorName: z.string(), empressName: z.string(), siblingDies: z.string(), siblingCrowned: z.string(), dynastyFell: z.string(), heirDeposed: z.string(),
+  }).strict(),
+}).strict();
+export type ThroneFile = z.infer<typeof ThroneFileSchema>;
+
 /** 12.3 Binh nghiệp (content/army.json): the quân hàm, the hàm from which one is a tướng, the injuries a lost trận
  *  may leave, the trận names by war or peace, and the lời văn. */
 export const ArmyFileSchema = z.object({

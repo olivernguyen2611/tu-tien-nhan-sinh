@@ -1,0 +1,51 @@
+{
+  "bars": {
+    "royal": { "favor": "Thánh sủng", "power": "Thế lực triều thần", "suspicion": "Nghi kỵ" },
+    "rebel": { "people": "Dân tâm", "troops": "Binh lực", "grain": "Lương thảo" },
+    "usurp": { "power": "Quyền thế", "troops": "Binh quyền", "cause": "Danh nghĩa" },
+    "reign": { "treasury": "Quốc khố", "people": "Dân tâm", "army": "Binh lực", "court": "Triều thần" }
+  },
+  "pathNames": { "royal": "Hoàng thất tranh ngôi", "rebel": "Khởi nghĩa", "usurp": "Tạo phản" },
+  "events": {
+    "heirLost": "dn_lap_tru_khong_thanh",
+    "banned": "dn_chen_ruou_ban_chet",
+    "rebelYear": "kn_quyet_sach_nam",
+    "discovered": "tp_bai_lo",
+    "deposed": "tv_mat_nuoc",
+    "threats": { "people": "tv_dan_bien", "army": "tv_giac_vay_bien", "court": "tv_cung_bien", "treasury": "tv_quoc_kho_can" }
+  },
+  "banner": {
+    "first": ["Hồng", "Hắc", "Hoàng", "Thanh", "Bạch", "Xích", "Thiết", "Kim"],
+    "second": ["Cân quân", "Kỳ quân", "Mi quân", "Y quân", "Đao hội", "Thiên quân", "Nghĩa quân"]
+  },
+  "bases": ["núi Ngọa Ngưu", "đầm Lư Hoa", "thành nhỏ Thạch Bàn", "núi Thanh Phong", "bãi sậy Lương Tử", "trại Hổ Khẩu"],
+  "dynastyNames": ["Đại Thịnh", "Đại Hưng", "Đại An", "Đại Minh", "Đại Phúc", "Đại Thuận", "Đại Định"],
+  "titles": { "good": "Minh quân một đời", "bad": "Bạo quân sử chép", "founder": "Vua khai quốc", "lost": "Vua mất nước", "plain": "Từng ngồi ngai vàng" },
+  "texts": {
+    "heirSelf": "Chiếu lập trữ ban xuống: ngươi được lập làm thái tử. Từ hôm nay, mọi ánh mắt trong cung đều nhìn về phía ngươi.",
+    "heirOther": "Chiếu lập trữ ban xuống: {name} được lập làm thái tử. Tên ngươi không có trong chiếu.",
+    "crowned": "Ngươi lên ngôi hoàng đế, đổi niên hiệu {era}. Trăm quan quỳ rạp, tiếng tung hô vạn tuế vang tới tận cửa Ngọ.",
+    "crownedWoman": "Ngươi lên ngôi nữ hoàng, đổi niên hiệu {era}. Có kẻ trong triều cúi đầu mà nghiến răng, nhưng không ai dám đứng thẳng.",
+    "newDynasty": "Quốc hiệu đổi thành {dynasty}, niên hiệu {era}. Triều cũ từ nay chỉ còn trong sử sách.",
+    "rivalDies": "{name} đột ngột qua đời. Trong cung, người ta nói nhỏ với nhau, rồi không ai nói nữa.",
+    "rebelStart": "Ngươi dựng cờ {banner} ở {base}. Mấy trăm người đầu tiên tới theo, tay cầm cuốc thuổng, mắt sáng như lửa.",
+    "usurpStart": "Ngươi bắt đầu mưu đồ đại sự. Từ nay mỗi lá thư, mỗi bữa rượu đều có thể là bản án.",
+    "crushed": "Quan quân kéo tới như nước. Nghĩa quân tan tác trong một mùa.",
+    "amnesty": "Triều đình sai sứ tới chiêu an.",
+    "cityWon": "Nghĩa quân chiếm được một tòa thành. Cờ {banner} cắm trên cổng thành.",
+    "cityLost": "Đánh thành không nổi, nghĩa quân thiệt hại nặng nề.",
+    "death": "Đại sự không thành. Ngươi bị giải ra pháp trường, cả nhà chịu tội liên lụy.",
+    "exile": "Ngươi bị đày ra biên viễn, từ nay không được đặt chân về kinh.",
+    "commoner": "Ngươi bị phế làm thứ dân, tên bị xóa khỏi ngọc điệp. Từ hoàng tộc rơi xuống làm người thường.",
+    "quiet": "Ngươi buông tay. Giấc mộng ngai vàng tan như sương sớm.",
+    "report": "Triều chính: quốc khố {treasury}, dân tâm {people}, binh lực {army}, triều thần {court}.",
+    "fallen": "Ngai vàng sụp đổ. Triều đại của ngươi kết thúc.",
+    "abdicate": "Ngươi nhường ngôi, lui về làm thái thượng hoàng.",
+    "emperorName": "{era} đế",
+    "empressName": "{era} nữ hoàng",
+    "siblingDies": "{name} bệnh mất. Thứ tự kế vị lại xếp lại.",
+    "siblingCrowned": "{name} lên ngôi. Ngươi lui về vương phủ làm một nhàn vương, ngày ngày uống trà, đêm đêm nghe ngóng.",
+    "dynastyFell": "Nhà {dynasty} mất nước. Long bào của tổ tông bị kéo xuống, ngọc điệp hoàng tộc ném vào lửa.",
+    "heirDeposed": "Chiếu phế thái tử ban xuống: {name} bị giáng làm vương, dời ra khỏi Đông cung. Ngôi trữ quân lại bỏ trống."
+  }
+}

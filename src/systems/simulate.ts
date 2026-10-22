@@ -45,8 +45,9 @@ export const BOT_PROFILES: BotProfile[] = ['random', 'steady', 'player', 'full']
  * 9.8 Persona phàm nhân: lives that stay mortal (never seek an entry technique nor break through) and live
  * one way. `choice`: first open choice, random, the kindest (karma up) or the cruellest (karma down).
  */
-export type MortalPersona = 'nong_dan' | 'thu_sinh' | 'thuong_nhan' | 'ke_cuop' | 'hiep_khach' | 'ke_luoi';
-interface PersonaDef { name: string; career?: string; jobs?: string[]; assets?: string[]; activities: string[]; months: number; train?: boolean; choice: 'first' | 'random' | 'good' | 'evil' }
+export type MortalPersona = 'nong_dan' | 'thu_sinh' | 'thuong_nhan' | 'ke_cuop' | 'hiep_khach' | 'ke_luoi' | 'tham_vong';
+/** 12.10 `ambitious`: the choice that goes furthest toward the throne (else random). `origin`: born into this xuất thân. */
+interface PersonaDef { name: string; origin?: string; career?: string; jobs?: string[]; assets?: string[]; activities: string[]; months: number; train?: boolean; choice: 'first' | 'random' | 'good' | 'evil' | 'ambitious' }
 export const MORTAL_PERSONAS: Record<MortalPersona, PersonaDef> = {
   nong_dan: { name: 'Nông dân an phận', jobs: ['lam_ruong'], assets: ['leu_tranh', 'ruong', 'trau'], activities: ['hoc_nghe_moc', 'lam_thue', 've_tham_que', 'ket_giao', 'lam_cham', 'te_to', 'an_uong_dieu_do', 'hop_ho'], months: 6, choice: 'first' },
   thu_sinh: { name: 'Thư sinh thi cử', career: 'quan', jobs: ['thay_do', 'thu_lai'], activities: ['xin_hoc_truong_lang', 'leu_chong_di_thi', 'cham_hoc', 'on_thi', 'thu_quan', 'ket_giao', 'ngao_du', 'doc_sach', 'te_to', 'thang_duong', 'vi_hanh', 'dinh_le_thu_thue', 'chon_phe_canh'], months: 5, choice: 'first' },
@@ -54,7 +55,19 @@ export const MORTAL_PERSONAS: Record<MortalPersona, PersonaDef> = {
   ke_cuop: { name: 'Kẻ cướp', jobs: ['do_te', 'phu_khuan_vac'], activities: ['tron_hoc', 'pp_moc_tui', 'pp_trom_nha_giau', 'pp_cuop_duong', 'pp_lua_dao', 'pp_tron_di_xa', 'pp_gianh_cho', 'pp_ket_giao_ban_tu', 'pp_dao_ham', 'an_bot', 'song_bac', 'luyen_quyen_som', 'dau_quan_hac_dao', 'lam_nhiem_vu_bang', 'hoc_vo_quan', 'luyen_bi_kip', 'mua_binh_khi', 'len_loi_dai'], months: 6, train: true, choice: 'evil' },
   hiep_khach: { name: 'Hiệp khách', career: 'vo_lam', jobs: ['tieu_su', 'ho_vien'], activities: ['theo_vo_duong', 'hoc_nghe_ren', 'luyen_quyen_som', 'ap_tieu', 'ngao_du', 'ket_giao', 'bai_nhap_mon_phai', 'lam_nhiem_vu_bang', 'doi_cong_hien_vo_hoc', 'hoc_vo_quan', 'luyen_bi_kip', 'luyen_bi_kip', 'mua_binh_khi', 'duong_noi_thuong', 'cau_cao_nhan_chi_diem', 'nhan_ap_tieu_xa', 'xem_bang_treo_thuong', 'hanh_hiep', 'len_loi_dai', 'tim_tien_tich'], months: 5, train: true, choice: 'good' },
   ke_luoi: { name: 'Kẻ lười', activities: ['ngao_du', 'song_bac', 'tuu_lau'], months: 4, choice: 'first' },
+  tham_vong: { name: 'Hoàng tử tham vọng', origin: 'hoang_tu', activities: ['duong_danh', 'ket_dang', 'lap_cong', 'an_nhan', 'ham_hai', 'cham_hoc', 'doc_sach', 'ket_giao'], months: 6, choice: 'ambitious' },
 };
+/** 12.10: how far a choice goes toward the throne (its plain result, or a check's success). */
+function choiceAmbition(event: GameEvent, index: number): number {
+  const c = event.choices[index];
+  const eff = (c?.result ?? c?.success)?.effects as Record<string, unknown> | undefined;
+  if (!eff) return 0;
+  const bars = Object.entries((eff.throneBar ?? {}) as Record<string, number>).reduce((s, [k, v]) => s + (k === 'suspicion' ? -v / 2 : v), 0);
+  const step = typeof eff.throneStep === 'number' ? 20 * eff.throneStep : 0;
+  const fu = (eff.followUp as { event?: string } | undefined)?.event;
+  return (eff.throneAscend ? 100 : 0) + (eff.throneStart ? 30 : 0) + step + (eff.throneBattle ? 10 : 0) + (fu && /binh_bien|khoi_su|kn_|tp_/.test(fu) ? 15 : 0)
+    + bars + (typeof eff.throneRival === 'number' ? -eff.throneRival / 2 : 0) + (eff.throneFail ? -50 : 0) + (eff.die ? -100 : 0);
+}
 export const MORTAL_PROFILES = Object.keys(MORTAL_PERSONAS) as MortalPersona[];
 /** 10.12: everyday pastimes any mortal persona tries a few of each year (the ones not open are skipped). */
 const MORTAL_EXTRAS = ['tra_quan', 'hoi_cho', 'xem_hat', 'xin_que', 'cau_ca', 'danh_co', 'leo_nui', 'chuc_tet', 'tha_den', 'dap_thanh', 'dua_thuyen', 'mua_thu_nuoi', 'choi_voi_thu', 'tap_duong_sinh', 'tam_suoi_nong', 've_tham_que', 'sua_sang_nha', 'xem_boi', 'danh_thang', 'luyen_chu'];
@@ -147,6 +160,10 @@ export interface LifeResult {
   /** 12.2: highest quan trường rank held (−1 never in office), and whether the life ended executed. */
   officeBest?: number;
   executed?: boolean;
+  /** 12.10: took a road to the throne; sat on it; was put to death for it. */
+  throneTried?: boolean;
+  reigned?: boolean;
+  throneDied?: boolean;
   /** 12.3: served in the army; became a tướng. */
   soldier?: boolean;
   general?: boolean;
@@ -209,7 +226,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
   const realms = content.cultivation.realms.realms.map((r) => r.id);
   const knowledge = opts.knowledge === 'none' ? [] : (content.knowledge ?? []).map((e) => e.id);
   // 9.S1: a seasoned player is on a later life, so a Tình tiết đặc biệt hiếm can come.
-  const born = createLife({ seed, difficulty: opts.difficulty, goldenFinger: opts.goldenFinger, knowledge, lifeNo: opts.knowledge === 'none' ? 1 : 10 }, content);
+  const born = createLife({ seed, originId: personaOf(profile)?.origin, difficulty: opts.difficulty, goldenFinger: opts.goldenFinger, knowledge, lifeNo: opts.knowledge === 'none' ? 1 : 10 }, content);
   const offered = opts.traits ? { ...born, destiny: { ...born.destiny, offered: opts.traits } } : rollDestiny(born, content);
   let s: GameState = seeSpecial(confirmDestiny(offered, content), content);
   let peak = 0;
@@ -247,7 +264,9 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
       // An event with nothing to pick is cleared by choosing its first choice.
       const byKarma = (sign: number) => [...open].sort((a, b) => sign * (choiceKarma(event!, b.index) - choiceKarma(event!, a.index)))[0].index;
       const how = persona?.choice ?? (profile === 'random' ? 'random' : 'first');
-      const pick = open.length === 0 ? 0 : how === 'random' ? botRng.pick(open).index : how === 'good' ? byKarma(1) : how === 'evil' ? byKarma(-1) : open[0].index;
+      const ambition = (i: number) => choiceAmbition(event!, i);
+      const bold = how === 'ambitious' && open.some((c) => ambition(c.index) !== 0) ? [...open].sort((a, b) => ambition(b.index) - ambition(a.index))[0].index : -1;
+      const pick = open.length === 0 ? 0 : bold >= 0 ? bold : how === 'random' || how === 'ambitious' ? botRng.pick(open).index : how === 'good' ? byKarma(1) : how === 'evil' ? byKarma(-1) : open[0].index;
       eventful.add(s.character.age);
       s = checkDeath(resolveChoice(s, content, pick).state, content);
       s = runSeclusion(s, content);
@@ -381,6 +400,9 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     feud: !!s.flags.an_oan_xong,
     officeBest,
     executed: s.death?.cause === 'execution',
+    throneTried: !!(s.flags.tung_khoi_nghia || s.flags.tung_muu_phan || s.flags.len_ngoi || content.origins.find((o) => o.id === s.character.originId)?.royal),
+    reigned: !!s.flags.len_ngoi,
+    throneDied: !!s.flags.bi_tru_di || (s.death?.cause === 'execution' && !s.flags.len_ngoi && !!content.origins.find((o) => o.id === s.character.originId)?.royal),
     soldier: !!s.flags.tung_tong_quan,
     general: !!s.flags.phong_tuong,
     tradeLevel: s.trade?.id ? s.trade.level : -1,
@@ -478,6 +500,9 @@ export interface Report {
   officeShare?: number;
   triPhuShare?: number;
   executedShare?: number;
+  throneTriedShare?: number;
+  reignedShare?: number;
+  throneDiedShare?: number;
   soldierShare?: number;
   generalShare?: number;
   over40Share?: number;
@@ -547,6 +572,9 @@ export function summarize(results: LifeResult[], content: Content): Report {
     officeShare: mean(results.map((r) => ((r.officeBest ?? -1) >= 0 ? 1 : 0))),
     triPhuShare: mean(results.map((r) => ((r.officeBest ?? -1) >= 3 ? 1 : 0))),
     executedShare: mean(results.map((r) => (r.executed ? 1 : 0))),
+    throneTriedShare: mean(results.map((r) => (r.throneTried ? 1 : 0))),
+    reignedShare: mean(results.map((r) => (r.reigned ? 1 : 0))),
+    throneDiedShare: mean(results.map((r) => (r.throneDied ? 1 : 0))),
     soldierShare: mean(results.map((r) => (r.soldier ? 1 : 0))),
     generalShare: mean(results.map((r) => (r.general ? 1 : 0))),
     over40Share: mean(results.map((r) => (r.age >= 40 ? 1 : 0))),
@@ -635,11 +663,11 @@ export function formatReport(rep: Report, content: Content, title: string): stri
 /** 9.8: one row per persona phàm nhân, for the terminal. */
 export function formatPersonaTable(rows: { profile: BotProfile; report: Report }[]): string {
   const p = (v: number) => `${Math.round(v * 100)}%`;
-  const head = 'Persona | Đời | Vào tu tiên | Tuổi TB | Hạnh phúc TB | Bạc cuối (TB/trung vị) | Hoạt động khác nhau | Sự kiện khác nhau | Năm có chuyện | Câu lặp | Đi học/Học nghề | Tú tài/Cử nhân/Tiến sĩ | Ngoại hiệu | Thế lực | Bí kíp TB | Minh chủ | Báo thù xong | Làm quan/Tri phủ+/Bị xử tử | Tòng quân/Phong tướng | Sống ≥ 40 | Chết vì (nhiều nhất)';
+  const head = 'Persona | Đời | Vào tu tiên | Tuổi TB | Hạnh phúc TB | Bạc cuối (TB/trung vị) | Hoạt động khác nhau | Sự kiện khác nhau | Năm có chuyện | Câu lặp | Đi học/Học nghề | Tú tài/Cử nhân/Tiến sĩ | Ngoại hiệu | Thế lực | Bí kíp TB | Minh chủ | Báo thù xong | Làm quan/Tri phủ+/Bị xử tử | Tòng quân/Phong tướng | Tranh ngôi/Lên ngôi/Chết vì đế nghiệp | Sống ≥ 40 | Chết vì (nhiều nhất)';
   const lines = rows.map(({ profile, report: r }) => {
     const causes = Object.entries(r.byCause).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([c, k]) => `${c} ${p(k / r.count)}`).join(', ');
     return [personaOf(profile)?.name ?? profile, r.count, p(r.reached.luyen_khi ?? 0), r.age.mean.toFixed(1), (r.happyMean ?? 0).toFixed(1), `${Math.round(r.silverLeft ?? 0)}/${r.silverP50 ?? 0}`,
-      (r.activityKinds ?? 0).toFixed(1), (r.eventKinds ?? 0).toFixed(1), p(r.eventfulShare ?? 0), p(r.repeatRate ?? 0), `${p(r.schooledShare ?? 0)}/${p(r.tradeShare ?? 0)}`, (r.examShares ?? [0, 0, 0]).map(p).join('/'), p(r.aliasShare ?? 0), p(r.factionShare ?? 0), (r.artsMean ?? 0).toFixed(1), p(r.leaderShare ?? 0), p(r.feudShare ?? 0), `${p(r.officeShare ?? 0)}/${p(r.triPhuShare ?? 0)}/${p(r.executedShare ?? 0)}`, `${p(r.soldierShare ?? 0)}/${p(r.generalShare ?? 0)}`, p(r.over40Share ?? 0), causes].join(' | ');
+      (r.activityKinds ?? 0).toFixed(1), (r.eventKinds ?? 0).toFixed(1), p(r.eventfulShare ?? 0), p(r.repeatRate ?? 0), `${p(r.schooledShare ?? 0)}/${p(r.tradeShare ?? 0)}`, (r.examShares ?? [0, 0, 0]).map(p).join('/'), p(r.aliasShare ?? 0), p(r.factionShare ?? 0), (r.artsMean ?? 0).toFixed(1), p(r.leaderShare ?? 0), p(r.feudShare ?? 0), `${p(r.officeShare ?? 0)}/${p(r.triPhuShare ?? 0)}/${p(r.executedShare ?? 0)}`, `${p(r.soldierShare ?? 0)}/${p(r.generalShare ?? 0)}`, `${p(r.throneTriedShare ?? 0)}/${p(r.reignedShare ?? 0)}/${p(r.throneDiedShare ?? 0)}`, p(r.over40Share ?? 0), causes].join(' | ');
   });
   return [head, ...lines].join('\n');
 }

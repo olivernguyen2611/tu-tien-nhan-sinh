@@ -8,6 +8,7 @@ import { jianghuOf } from '../jianghu';
 import { wulinOpen } from '../wulin';
 import { officeOf } from '../office';
 import { armyOf, atWar } from '../army';
+import { reignOf, throneOf } from '../throne';
 import { courtTax } from '../court';
 import type { Content } from '../../core/content';
 import type { GameEvent } from '../../core/schemas';
@@ -177,6 +178,33 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (f.rankMin !== undefined && (!m || m.rank < f.rankMin)) return false;
     if (f.meritMin !== undefined && (!m || m.merit < f.meritMin)) return false;
     if (f.hunted !== undefined && !!state.jianghu?.hunted !== f.hunted) return false;
+  }
+  if (c.throne) {
+    const t = throneOf(state);
+    const f = c.throne;
+    if (f.none !== undefined && !t !== f.none) return false;
+    if ((f.path || f.barMin || f.barMax || f.heir || f.step !== undefined || f.citiesMin !== undefined || f.rivals !== undefined) && !t) return false;
+    if (t) {
+      if (f.path && !f.path.includes(t.path)) return false;
+      if (f.barMin) for (const [k, v] of Object.entries(f.barMin)) if ((t.bars[k] ?? 0) < v) return false;
+      if (f.barMax) for (const [k, v] of Object.entries(f.barMax)) if ((t.bars[k] ?? 0) > v) return false;
+      if (f.heir && (f.heir === 'self' ? t.heir !== 'self' : f.heir === 'none' ? !!t.heir : !t.heir || t.heir === 'self')) return false;
+      if (f.step !== undefined && t.step !== f.step) return false;
+      if (f.citiesMin !== undefined && (t.cities ?? 0) < f.citiesMin) return false;
+      if (f.rivals !== undefined && (t.rivals ?? []).some((r) => r.alive) !== f.rivals) return false;
+    }
+  }
+  if (c.reign) {
+    const r = reignOf(state);
+    const f = c.reign;
+    if (f.active !== undefined && !!r !== f.active) return false;
+    if ((f.barMin || f.barMax || f.yearsMin !== undefined || f.how) && !r) return false;
+    if (r) {
+      if (f.barMin) for (const [k, v] of Object.entries(f.barMin)) if ((r.bars[k] ?? 0) < v) return false;
+      if (f.barMax) for (const [k, v] of Object.entries(f.barMax)) if ((r.bars[k] ?? 0) > v) return false;
+      if (f.yearsMin !== undefined && state.character.age - r.since < f.yearsMin) return false;
+      if (f.how && !f.how.includes(r.how)) return false;
+    }
   }
   if (c.army) {
     const a = armyOf(state);

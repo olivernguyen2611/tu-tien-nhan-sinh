@@ -9,6 +9,7 @@ import { hookSum } from './cultivation';
 import { extremeHasHook } from './extremes';
 import { examOf, examTitle, levelIndex, passedLevel } from './exams';
 import { officeSalary } from './office';
+import { reignTitle } from './throne';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 
@@ -141,6 +142,8 @@ export function lifeTitles(state: GameState, content: Content): string[] {
   const out: string[] = [];
   const career = careerDef(content, state.career.id);
   if (career?.title && state.career.rung >= career.rungs.length - 1) out.push(career.title);
+  const crown = reignTitle(state, content);
+  if (crown) out.push(crown);
   const placed = examTitle(state, content);
   if (placed) out.push(placed);
   if (state.cult.realm === 'pham_nhan' && state.character.age >= content.balance.careers.longLifeAge) out.push(content.careers.longLifeTitle);

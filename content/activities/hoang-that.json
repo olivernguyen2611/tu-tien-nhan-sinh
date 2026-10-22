@@ -1,0 +1,295 @@
+[
+ {
+  "id": "duong_danh",
+  "group": "quan_he",
+  "name": "Dưỡng danh",
+  "icon": "名",
+  "text": "Mở thư viện, tiếp hiền sĩ, phát chẩn cho dân nghèo. Tiếng hiền đức không ngồi yên mà tới.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "age": {
+    "min": 14
+   }
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "weight": 3,
+    "text": [
+     "Ngươi mở kho phát gạo ba ngày. Ngoài phố, người ta bắt đầu gọi ngươi là \"hiền vương\".",
+     "Mười hai hiền sĩ được mời vào phủ đàm đạo. Câu chuyện về họ truyền tận tai phụ hoàng."
+    ],
+    "effects": {
+     "throneBar": {
+      "favor": 3,
+      "power": 1
+     },
+     "stat.charm": 1,
+     "karma": 1
+    }
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Hiền sĩ ngươi mời hóa ra là kẻ lừa đảo, ăn ở trong phủ nửa năm rồi biến."
+    ],
+    "effects": {
+     "stat.happiness": -2,
+     "silver": -50
+    }
+   }
+  ]
+ },
+ {
+  "id": "ket_dang",
+  "group": "quan_he",
+  "name": "Kết đảng",
+  "icon": "黨",
+  "text": "Mở tiệc, tặng lễ, kết giao trọng thần. Trong triều không ai đứng một mình mà đứng vững.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "age": {
+    "min": 14
+   }
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "check": {
+   "stat": "stat.charm",
+   "difficulty": 55
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Ba vị thị lang thành khách quen của phủ ngươi.",
+     "Một vị tướng giữ cửa thành nhận lễ của ngươi, hẹn ngày uống rượu."
+    ],
+    "effects": {
+     "throneBar": {
+      "power": 5,
+      "suspicion": 6
+     },
+     "stat.charm": 1
+    }
+   }
+  ],
+  "failOutcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Vị đại thần nhận lễ rồi đem nộp lên phụ hoàng."
+    ],
+    "effects": {
+     "throneBar": {
+      "suspicion": 10,
+      "power": 1
+     },
+     "stat.happiness": -2
+    }
+   }
+  ]
+ },
+ {
+  "id": "lap_cong",
+  "group": "nghe",
+  "name": "Xin đi lập công",
+  "icon": "功",
+  "text": "Xin phụ hoàng giao việc: trị thủy, cứu đói, hay ra biên. Việc khó, công lớn.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "age": {
+    "min": 14
+   }
+  },
+  "months": 4,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "check": {
+   "stat": "stat.intellect",
+   "difficulty": 60
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Đê sông Hoài đắp xong trước mùa lũ. Phụ hoàng thưởng ngươi một thanh kiếm ngự.",
+     "Ngươi dẹp yên một vụ loạn đói, không giết một người dân nào."
+    ],
+    "effects": {
+     "throneBar": {
+      "favor": 4,
+      "power": 2
+     },
+     "stat.intellect": 1,
+     "fame": 2
+    }
+   }
+  ],
+  "failOutcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Việc làm hỏng, triều thần dâng sớ đàn hặc. Phụ hoàng chỉ thở dài."
+    ],
+    "effects": {
+     "throneBar": {
+      "favor": -4
+     },
+     "stat.health": -3,
+     "stat.happiness": -2
+    }
+   }
+  ]
+ },
+ {
+  "id": "an_nhan",
+  "group": "quan_he",
+  "name": "Ẩn nhẫn",
+  "icon": "忍",
+  "text": "Đóng cửa phủ, trồng hoa, nuôi cá, đọc sách. Để phụ hoàng và anh em quên mình đi một chút.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "age": {
+    "min": 14
+   }
+  },
+  "months": 1,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Ngươi trồng một vườn cúc. Mùa thu, phụ hoàng ghé qua, ngồi uống trà mà không hỏi chuyện triều chính.",
+     "Cả năm ngươi không gặp một vị đại thần nào. Những con mắt dõi theo phủ ngươi thưa dần."
+    ],
+    "effects": {
+     "throneBar": {
+      "suspicion": -10,
+      "power": -2,
+      "favor": -1
+     },
+     "stat.daoHeart": 1,
+     "stat.happiness": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "ham_hai",
+  "group": "quan_he",
+  "name": "Hãm hại",
+  "icon": "陷",
+  "text": "Gài chứng cứ, mua chuộc người hầu, thả lời đồn. Muốn đứng cao thì phải có người ngã.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_tu"
+   ],
+   "throne": {
+    "path": [
+     "royal"
+    ]
+   },
+   "age": {
+    "min": 14
+   }
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "check": {
+   "stat": "stat.intellect",
+   "difficulty": 65
+  },
+  "outcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Một bức thư giả nét chữ hoàng huynh lọt vào tay phụ hoàng. Hoàng huynh bị quở một trận nhớ đời.",
+     "Người hầu thân tín của thái tử bỗng khai ra mấy chuyện xấu. Không ai biết hắn nhận của ai bao nhiêu."
+    ],
+    "effects": {
+     "throneRival": -8,
+     "throneBar": {
+      "suspicion": 4
+     },
+     "karma": -3,
+     "stat.intellect": 1
+    }
+   }
+  ],
+  "failOutcomes": [
+   {
+    "weight": 1,
+    "text": [
+     "Kẻ ngươi mua chuộc khai ra ngươi trước."
+    ],
+    "effects": {
+     "throneBar": {
+      "suspicion": 15,
+      "favor": -6
+     },
+     "stat.happiness": -3,
+     "karma": -1
+    }
+   }
+  ]
+ }
+]

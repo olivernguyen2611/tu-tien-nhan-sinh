@@ -8,6 +8,18 @@
 
 ## [Chưa phát hành]
 
+### 12.6 Hoàng thất tranh ngôi (2026-10-22)
+- Xuất thân mới **Hoàng tử, công chúa** (80 điểm ở Cầu đầu thai, cực hiếm khi tự rơi vào): con ruột hoàng đế, 3000 lượng, có 2–5 anh em cùng tranh ngôi, mẫu thân là hoàng hậu hoặc phi tần.
+- Khung đế nghiệp chung (`throne.json`, `src/systems/throne.ts`), dùng cho cả 12.6–12.9. Đường hoàng thất có ba thanh: **Thánh sủng**, **Thế lực triều thần**, **Nghi kỵ** (hiện ở màn chính, dòng "Ngai vàng").
+- Lập trữ: khi hoàng đế già, người chọn thái tử theo thánh sủng, thế lực, con trưởng, con hoàng hậu, trừ nghi kỵ. Người đứng đầu dễ được chọn nhưng không chắc chắn. Công chúa cần nhiều hơn để được lập.
+- Khi niên hiệu đổi (vua băng): thái tử lên ngôi; không được lập thì về làm nhàn vương. Nếu triều đại mất nước thì hoàng tộc bị phế làm thứ dân, có khi bị giết.
+- Nghi kỵ quá cao: **chén rượu ngự ban** (uống, giả điên, khởi binh ngay đêm ấy nếu đủ thế lực, hoặc trèo tường trốn).
+- Lập trữ không thành: chấp nhận làm hiền vương, rời cung, hoặc **binh biến** ba bước (mưu binh biến, đêm khởi sự, bức cung). Thất bại là ra pháp trường, cả nhà liên lụy.
+- 5 hoạt động mưu ngôi: Dưỡng danh, Kết đảng, Xin đi lập công, Ẩn nhẫn, Hãm hại. Hãm hại tới mức thánh sủng của thái tử dưới 20 thì thái tử bị phế.
+- 21 sự kiện (`hoang-that.json`): phụ hoàng hỏi bài, thu săn, mẫu phi tranh sủng, hoàng huynh bắt nạt, bệnh nặng thuở nhỏ, mừng thọ, đại thần đầu quân, phụ hoàng thử lòng, bị vu cáo, phong vương (ở kinh hay ra đất phong), ngoại thích, huynh đệ tương tàn, thái tử giám quốc, Đông cung bị nghi, hòa thân (công chúa, từ 18 tuổi), nữ trữ quân bị can ("gà mái gáy sáng") và chuỗi lập trữ, chén rượu, binh biến.
+- Lên ngôi thì làm vua (12.9). Hoàng tộc không nộp sưu thuế, không bị bắt lính.
+- Bot "Hoàng tử tham vọng" (`npm run simulate -- --profile tham_vong`): 100 đời, khoảng 16–19% lên ngôi, 35–40% chết vì đế nghiệp.
+
 ### 12.4 Xuất thân hoàng tộc và quý tộc (2026-10-22)
 - Hai xuất thân mới, rất hiếm khi số mệnh tự rơi vào. Muốn chọn chắc thì phải trả điểm Luân Hồi ở Cầu đầu thai, như Con nhà quan và Hậu duệ gia tộc tu tiên.
   - **Con nhà quyền quý** (25 điểm): thế gia trong kinh, 600 lượng, khẩu tài và học lực cao.

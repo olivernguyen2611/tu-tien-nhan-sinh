@@ -85,4 +85,4 @@ for (const profile of profiles) {
   console.log(formatReport(report, content, `${profile} · ${difficulty || content.balance.defaultDifficulty}${firstLife ? ' · kiếp đầu' : ''}`));
   console.log(`(${((Date.now() - started) / 1000).toFixed(1)}s)\n`);
 }
-if (which === 'mortal') console.log(`== Persona phàm nhân ==\n${formatPersonaTable(rows)}`);
+if (which === 'mortal' || (MORTAL_PROFILES as string[]).includes(which)) console.log(`== Persona phàm nhân ==\n${formatPersonaTable(rows)}`);
