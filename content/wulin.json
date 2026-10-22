@@ -1,0 +1,27 @@
+{
+  "rounds": ["Vòng loại", "Đấu bảng", "Chung kết"],
+  "texts": {
+    "roundWin": [
+      "{round}: ngươi thắng, đối thủ chắp tay lui xuống.",
+      "{round}: qua mấy chục chiêu, ngươi đánh rơi binh khí của đối thủ.",
+      "{round}: đối thủ ra đòn hiểm, ngươi tránh được rồi phản đòn hạ hắn.",
+      "{round}: dưới đài reo như sấm, ngươi đứng vững tới cuối cùng."
+    ],
+    "roundLose": [
+      "{round}: ngươi bị đánh văng khỏi đài.",
+      "{round}: đối thủ nhanh hơn ngươi nửa nhịp, nửa nhịp ấy là đủ.",
+      "{round}: ngươi đỡ được ba mươi chiêu, chiêu thứ ba mươi mốt thì không.",
+      "{round}: ngươi ngã xuống, nghe dưới đài thở dài."
+    ],
+    "champion": "Quần hùng đứng dậy chắp tay. Từ hôm nay ngươi là minh chủ võ lâm.",
+    "defended": "Ngươi giữ được ngôi minh chủ thêm một kỳ đại hội. Không ai còn dám nghi ngờ.",
+    "deposed": "Uy vọng không còn, các phái liên danh phế bỏ ngôi minh chủ của ngươi.",
+    "stepDown": "Ngươi trả lại lệnh bài minh chủ. Giang hồ nhắc tới ngươi bằng giọng kính trọng.",
+    "termOver": "Đại hội võ lâm năm ấy không có mặt ngươi trên đài. Ngôi minh chủ về tay người khác.",
+    "report": [
+      "Minh chủ võ lâm: năm nay các phái giữ hòa khí, uy vọng {prestige}. Bổng lộc {silver} lượng.",
+      "Minh chủ võ lâm: thư từ các phái chất cao một góc bàn, uy vọng {prestige}. Bổng lộc {silver} lượng.",
+      "Minh chủ võ lâm: có mấy vụ tranh chấp nhỏ, ngươi cho người đi dàn xếp; uy vọng {prestige}. Bổng lộc {silver} lượng."
+    ]
+  }
+}

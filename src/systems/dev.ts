@@ -26,6 +26,7 @@ import { sectById } from './sect';
 import { startWorldEvent } from './worldEvents';
 import { hoaCanhGift } from './martial';
 import { addWound, artsOf } from './martialArts';
+import { wulinOf } from './wulin';
 import { finishStep, questForStage } from './martialQuest';
 import { Rng } from '../core/rng';
 import { initTimes } from './worldState';
@@ -552,6 +553,13 @@ export function devLearnAllArts(state: GameState, content: Content): GameState {
 
 export function devWound(state: GameState, content: Content, d: number): GameState {
   return devLog(addWound(state, content, d), `nội thương ${d > 0 ? '+' : ''}${d}`);
+}
+
+/** 11.5: make the life minh chủ võ lâm now (uy vọng 50), or end the seat. */
+export function devWulinLeader(state: GameState, content: Content, on: boolean): GameState {
+  const w = wulinOf(state);
+  const leader = on ? { since: state.character.age, prestige: content.balance.wulin?.prestigeStart ?? 50 } : null;
+  return devLog({ ...state, wulin: { ...w, leader, held: w.held + (on && !w.leader ? 1 : 0) } }, on ? 'làm minh chủ võ lâm' : 'bỏ ngôi minh chủ');
 }
 
 /** 9.R6a: a life touched by developer mode is marked for good and earns no records. */

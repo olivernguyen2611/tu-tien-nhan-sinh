@@ -140,6 +140,8 @@ export interface LifeResult {
   faction?: boolean;
   /** 11.3: bí kíp known at the end. */
   arts?: number;
+  /** 11.5: became minh chủ. */
+  leader?: boolean;
   tradeLevel?: number;
   /** 10.2: highest khoa cử level passed (-1 = none). */
   examRank?: number;
@@ -365,6 +367,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     alias: !!s.jianghu?.alias,
     faction: !!s.jianghu?.faction || (s.jianghu?.left?.length ?? 0) > 0,
     arts: s.martialArts?.known.length ?? 0,
+    leader: (s.wulin?.held ?? 0) > 0,
     tradeLevel: s.trade?.id ? s.trade.level : -1,
     examRank: s.exam?.rank ?? -1,
   };
@@ -455,6 +458,7 @@ export interface Report {
   aliasShare?: number;
   factionShare?: number;
   artsMean?: number;
+  leaderShare?: number;
   tradeShare?: number;
   /** 10.2: share of lives reaching at least Tú tài, Cử nhân, Tiến sĩ. */
   examShares?: [number, number, number];
@@ -516,6 +520,7 @@ export function summarize(results: LifeResult[], content: Content): Report {
     aliasShare: mean(results.map((r) => (r.alias ? 1 : 0))),
     factionShare: mean(results.map((r) => (r.faction ? 1 : 0))),
     artsMean: mean(results.map((r) => r.arts ?? 0)),
+    leaderShare: mean(results.map((r) => (r.leader ? 1 : 0))),
     tradeShare: mean(results.map((r) => ((r.tradeLevel ?? -1) >= 0 ? 1 : 0))),
     examShares: [1, 2, 4].map((k) => mean(results.map((r) => ((r.examRank ?? -1) >= k ? 1 : 0)))) as [number, number, number],
     silverP50: (() => { const v = results.map((r) => r.silverLeft ?? 0).sort((a, b) => a - b); return v[Math.floor(v.length / 2)] ?? 0; })(),
@@ -601,11 +606,11 @@ export function formatReport(rep: Report, content: Content, title: string): stri
 /** 9.8: one row per persona phàm nhân, for the terminal. */
 export function formatPersonaTable(rows: { profile: BotProfile; report: Report }[]): string {
   const p = (v: number) => `${Math.round(v * 100)}%`;
-  const head = 'Persona | Đời | Vào tu tiên | Tuổi TB | Hạnh phúc TB | Bạc cuối (TB/trung vị) | Hoạt động khác nhau | Sự kiện khác nhau | Năm có chuyện | Câu lặp | Đi học/Học nghề | Tú tài/Cử nhân/Tiến sĩ | Ngoại hiệu | Thế lực | Bí kíp TB | Chết vì (nhiều nhất)';
+  const head = 'Persona | Đời | Vào tu tiên | Tuổi TB | Hạnh phúc TB | Bạc cuối (TB/trung vị) | Hoạt động khác nhau | Sự kiện khác nhau | Năm có chuyện | Câu lặp | Đi học/Học nghề | Tú tài/Cử nhân/Tiến sĩ | Ngoại hiệu | Thế lực | Bí kíp TB | Minh chủ | Chết vì (nhiều nhất)';
   const lines = rows.map(({ profile, report: r }) => {
     const causes = Object.entries(r.byCause).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([c, k]) => `${c} ${p(k / r.count)}`).join(', ');
     return [personaOf(profile)?.name ?? profile, r.count, p(r.reached.luyen_khi ?? 0), r.age.mean.toFixed(1), (r.happyMean ?? 0).toFixed(1), `${Math.round(r.silverLeft ?? 0)}/${r.silverP50 ?? 0}`,
-      (r.activityKinds ?? 0).toFixed(1), (r.eventKinds ?? 0).toFixed(1), p(r.eventfulShare ?? 0), p(r.repeatRate ?? 0), `${p(r.schooledShare ?? 0)}/${p(r.tradeShare ?? 0)}`, (r.examShares ?? [0, 0, 0]).map(p).join('/'), p(r.aliasShare ?? 0), p(r.factionShare ?? 0), (r.artsMean ?? 0).toFixed(1), causes].join(' | ');
+      (r.activityKinds ?? 0).toFixed(1), (r.eventKinds ?? 0).toFixed(1), p(r.eventfulShare ?? 0), p(r.repeatRate ?? 0), `${p(r.schooledShare ?? 0)}/${p(r.tradeShare ?? 0)}`, (r.examShares ?? [0, 0, 0]).map(p).join('/'), p(r.aliasShare ?? 0), p(r.factionShare ?? 0), (r.artsMean ?? 0).toFixed(1), p(r.leaderShare ?? 0), causes].join(' | ');
   });
   return [head, ...lines].join('\n');
 }

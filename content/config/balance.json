@@ -293,6 +293,7 @@
   },
   "kin": { "meetAge": 6, "relatives": [3, 5], "affinity": [35, 65], "elderAffinity": 45, "estate": [40, 240], "eldestShare": 0.6, "siblingAffinity": { "equal": 5, "eldest": -30, "yield": 20 }, "yieldKarma": 4, "passedOver": -8, "maxRules": 2, "shrineMax": 3, "splitEvent": "gt_phan_gia", "scholar": { "age": 18, "base": 0.08, "studyRule": 0.25, "strict": 0.12, "perRank": 0.06, "perInsight": 0.004, "max": 0.75 } },
   "jianghu": { "aliasAt": 30, "max": 100, "ranks": [1, 15, 35, 60, 85], "crimeInfamy": 1, "stageFame": 3, "aliasKinds": ["vo_lam_nhan"] },
+  "wulin": { "every": 10, "foeStage": [2, 3, 4], "foeMul": [1, 1.1, 1], "sharpness": 2, "silver": [0, 20, 60, 200], "fame": [1, 4, 8, 20], "happiness": [-2, 1, 3, 10], "loseHealth": 5, "prestigeStart": 50, "prestigeDrift": -2, "stipend": 40, "stepDownFame": 5 },
   "arts": { "maxBonus": 0.8, "weaponFit": 1.5, "woundPerLoss": 8, "woundLifespan": 1, "woundPower": 0.005, "woundHeal": 5, "woundHurtAt": 70, "woundHurt": -3, "pathAffinity": 2, "deviation": { "base": 0.01, "fake": 0.35, "fakeFrom": 4, "evil": 0.1, "lowWill": 0.06, "lowWillBelow": 30, "health": -12, "wound": 15 } },
   "factions": { "rankMerit": [30, 80, 160, 280, 450], "missionPay": [8, 15, 30, 50, 80], "stipend": [0, 5, 15, 30, 60], "missionMerit": [8, 16], "missionFailMerit": -4, "missionFailHealth": -5, "missionRenown": 3, "taKarma": -2, "teachCost": 40, "teachBonus": 10, "huntYears": 8, "hideYears": 1, "betrayFame": 5, "betrayInfamy": 10, "chinhKarmaMin": -20 },
   "calendar": { "windowDays": 3, "share": 0.7, "boost": 3 },

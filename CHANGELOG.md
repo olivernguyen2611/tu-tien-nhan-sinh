@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### 11.5 Võ lâm đại hội và minh chủ (2026-10-22)
+- Đại hội võ lâm thành hệ thống: mười năm một kỳ (năm tổ chức tùy thế giới của mỗi đời), mở cho võ giả từ Nhị lưu có hiệp danh 15. Ba vòng: vòng loại, đấu bảng, chung kết; đối thủ mạnh dần (Nhất lưu → Hóa cảnh), thắng thua theo chiến lực. Thưởng bạc, hiệp danh theo số vòng thắng.
+- Thắng cả ba vòng làm minh chủ võ lâm: bổng lộc mỗi năm, uy vọng 0–100 (mỗi năm tự hao một ít). Uy vọng về 0 thì bị phế; kỳ đại hội sau không lên đài giữ ngôi thì mất ngôi; tuổi già có thể trao lệnh bài.
+- 7 sự kiện (`vo-lam-dai-hoi.json`): đại hội có tin đồn hạ độc (thi đấu / điều tra / cá cược, NC G7), hắc đạo hạ chiến thư, ám toán trong tiệc, minh chủ phân xử, hiệu triệu diệt ma, nghĩ chuyện trao ngôi, cựu minh chủ.
+- Hồ sơ có dòng "Võ lâm:". Điều kiện `wulin`; hiệu ứng `wulinTournament`, `wulinPrestige`, `wulinResign`. Dev mode: làm / bỏ ngôi minh chủ. Mô phỏng có cột "Minh chủ" (hiệp khách ~17%).
+
 ### 11.4 Việc giang hồ (2026-10-22)
 - Tiêu cục: hoạt động "Nhận chuyến tiêu xa" mở chuỗi 2–4 bước: chọn đường (quan lộ an toàn ít công, đường núi qua sơn trại, đường tắt qua đầm lầy), sơn trại chặn đường (đánh, nộp mãi lộ, nói giang hồ thoại), phát hiện hàng lậu trong tiêu (giao, báo quan, giữ lại bán chợ đen và bị truy nã).
 - Bảng treo thưởng: bắt đạo tặc truy nã (có ngoại hiệu), diệt sơn tặc (một mình hoặc tập hợp trai làng), tìm người mất tích.

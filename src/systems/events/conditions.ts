@@ -5,6 +5,7 @@ import { jobDef, jobOf } from '../jobs';
 import { debtTotal, ownedOf } from '../assets';
 import { festivalFor } from '../leisure';
 import { jianghuOf } from '../jianghu';
+import { wulinOpen } from '../wulin';
 import type { Content } from '../../core/content';
 import type { GameEvent } from '../../core/schemas';
 import type { GameState } from '../../core/types';
@@ -173,6 +174,14 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (f.rankMin !== undefined && (!m || m.rank < f.rankMin)) return false;
     if (f.meritMin !== undefined && (!m || m.merit < f.meritMin)) return false;
     if (f.hunted !== undefined && !!state.jianghu?.hunted !== f.hunted) return false;
+  }
+  if (c.wulin) {
+    const w = state.wulin;
+    if (c.wulin.open !== undefined && (!content || wulinOpen(state, content) !== c.wulin.open)) return false;
+    if (c.wulin.leader !== undefined && !!w?.leader !== c.wulin.leader) return false;
+    if (c.wulin.prestigeMin !== undefined && (w?.leader?.prestige ?? -1) < c.wulin.prestigeMin) return false;
+    if (c.wulin.held !== undefined && (w?.held ?? 0) > 0 !== c.wulin.held) return false;
+    if (c.wulin.contested !== undefined && (w?.last != null) !== c.wulin.contested) return false;
   }
   if (c.arts) {
     const a = state.martialArts;

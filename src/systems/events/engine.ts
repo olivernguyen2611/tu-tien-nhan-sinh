@@ -8,6 +8,7 @@ import { festivalBoost } from '../calendar';
 import { addNetRenown, addRenown } from '../jianghu';
 import { addMerit, factionMission, factionTeach, hideFromHunt, joinFaction, leaveFaction } from '../jhFactions';
 import { addWound, buyWeapon, gainWeapon, learnArt, practiseArt } from '../martialArts';
+import { addPrestige, wulinResign, wulinTournament } from '../wulin';
 import { catchDisease, cureAilment, injure, noteDrink } from '../health';
 import { addJailYears, addWanted, arrest, bribe, commitCrime, fleeLaw, imprison, sentence, tryEscape } from '../law';
 import { checkDeath } from '../time';
@@ -556,6 +557,10 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.buyWeapon) next = buyWeapon(next, content, fx.buyWeapon);
   if (fx.gainWeapon) next = gainWeapon(next, content, fx.gainWeapon);
   if (fx.wound) next = addWound(next, content, fx.wound);
+  // 11.5 Võ lâm đại hội.
+  if (fx.wulinTournament) next = wulinTournament(next, content);
+  if (fx.wulinPrestige) next = addPrestige(next, content, fx.wulinPrestige);
+  if (fx.wulinResign) next = wulinResign(next, content);
   if (fx.worship) next = worship(next);
   if (fx.repairShrine) next = repairShrine(next, content);
   if (fx.childrenAffinity) next = childrenAffinity(next, fx.childrenAffinity);

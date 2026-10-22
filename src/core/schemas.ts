@@ -97,6 +97,8 @@ const BaseConditionsSchema = z
     jianghu: z.object({
       fameMin: z.number().optional(), fameMax: z.number().optional(), infamyMin: z.number().optional(), infamyMax: z.number().optional(), alias: z.boolean().optional(),
     }).strict().optional(),
+    /** 11.5: a đại hội is held this year; is minh chủ; uy vọng at least; has been minh chủ; has contested a đại hội. */
+    wulin: z.object({ open: z.boolean().optional(), leader: z.boolean().optional(), prestigeMin: z.number().optional(), held: z.boolean().optional(), contested: z.boolean().optional() }).strict().optional(),
     /** 11.3: knows this art / at least this many; carries a binh khí; nội thương at least / at most. */
     arts: z.object({ knows: id.optional(), countMin: z.number().int().optional(), weapon: z.boolean().optional(), woundMin: z.number().optional(), woundMax: z.number().optional() }).strict().optional(),
     /** 11.2: in a thế lực (this one, of these kinds / sides, at least this rank or cống hiến); hunted after a phản bang. */
@@ -364,6 +366,10 @@ export const EffectsSchema = z
     leaveFaction: z.enum(['quit', 'betray']).optional(),
     /** Lying low: the hunt after a phản bang ends balance.factions.hideYears sooner. */
     hideFromHunt: z.boolean().optional(),
+    /** 11.5: contest this year's đại hội; a minh chủ's uy vọng ±; step down from the seat. */
+    wulinTournament: z.boolean().optional(),
+    wulinPrestige: z.number().optional(),
+    wulinResign: z.boolean().optional(),
     /** 11.3 Võ học: learn a bí kíp (an id, or one drawn by grade / kind / tà công); practise the bí kíp; buy at the lò rèn
      *  ("best" the purse allows, or an id); win a binh khí; nội thương ± (a new one costs thọ nguyên). */
     learnArt: z.union([id, z.object({ grades: z.array(z.number().int()).optional(), kinds: z.array(z.string()).optional(), evil: z.boolean().optional() }).strict()]).optional(),
@@ -478,7 +484,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt', 'learnArt', 'practiseArt', 'buyWeapon', 'gainWeapon', 'wound'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt', 'learnArt', 'practiseArt', 'buyWeapon', 'gainWeapon', 'wound', 'wulinTournament', 'wulinPrestige', 'wulinResign'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1820,6 +1826,14 @@ export const BalanceSchema = z
       rankMerit: z.array(z.number()).min(1), missionPay: z.array(z.number()).min(1), stipend: z.array(z.number()).min(1),
       missionMerit: z.tuple([z.number(), z.number()]), missionFailMerit: z.number(), missionFailHealth: z.number(), missionRenown: z.number(), taKarma: z.number(),
       teachCost: z.number(), teachBonus: z.number(), huntYears: z.number().int(), hideYears: z.number().int(), betrayFame: z.number(), betrayInfamy: z.number(), chinhKarmaMin: z.number(),
+    }).strict().optional(),
+    /** 11.5 Võ lâm đại hội: held every `every` years; the field's võ đạo stage and × per round; how sharply chiến lực
+     *  decides a round; bạc, hiệp danh, hạnh phúc by rounds won; health lost when beaten; a minh chủ's uy vọng at the
+     *  start and its yearly drift, the stipend, hiệp danh kept on stepping down. */
+    wulin: z.object({
+      every: z.number().int().min(2), foeStage: z.array(z.number().int()).min(1), foeMul: z.array(z.number()).min(1), sharpness: z.number().min(0.5),
+      silver: z.array(z.number()).min(1), fame: z.array(z.number()).min(1), happiness: z.array(z.number()).min(1), loseHealth: z.number(),
+      prestigeStart: z.number(), prestigeDrift: z.number(), stipend: z.number(), stepDownFame: z.number(),
     }).strict().optional(),
     /** 11.3 Võ học phàm tục: cap on chiến lực from bí kíp; × for a binh khí matching a known art; nội thương per lost fight,
      *  thọ nguyên it costs, chiến lực lost per point, healed per year, the level that hurts (health);
@@ -3390,6 +3404,17 @@ export const JianghuFileSchema = z.object({
   }).strict(),
 }).strict();
 export type JianghuFile = z.infer<typeof JianghuFileSchema>;
+
+/** 11.5 Võ lâm đại hội (content/wulin.json): the round names and lời văn ({round}; {prestige}, {silver}). */
+export const WulinFileSchema = z.object({
+  rounds: z.array(z.string().min(1)).min(1),
+  texts: z.object({
+    roundWin: z.array(z.string().min(1)).min(1), roundLose: z.array(z.string().min(1)).min(1),
+    champion: z.string().min(1), defended: z.string().min(1), deposed: z.string().min(1), stepDown: z.string().min(1), termOver: z.string().min(1),
+    report: z.array(z.string().min(1)).min(1),
+  }).strict(),
+}).strict();
+export type WulinFile = z.infer<typeof WulinFileSchema>;
 
 /** 11.3 Võ học phàm tục (content/martial-arts.json): bí kíp (power per tầng, needs as stat.<x> minimums; tà công, tàn quyển
  *  giả, nội công that adds thọ nguyên once trained to its peak), phàm binh khí, the kinds (name, combat path) and lời văn. */

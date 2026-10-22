@@ -1,0 +1,473 @@
+[
+ {
+  "id": "vl_dai_hoi",
+  "category": "jianghu",
+  "title": "Võ lâm đại hội",
+  "text": "Mười năm một lần, quần hùng tụ về Trung Nguyên tranh ngôi minh chủ. Đêm trước ngày khai hội, quán trọ nào cũng xì xào: có kẻ định hạ độc vào nước uống của các cao thủ.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "age": {
+    "min": 18
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "martial": {
+    "min": 1
+   },
+   "jianghu": {
+    "fameMin": 15
+   },
+   "wulin": {
+    "open": true
+   }
+  },
+  "weight": 6,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Lên đài tranh ngôi minh chủ",
+    "result": {
+     "text": "Ngươi đưa thiếp ghi danh. Sáng hôm sau, trống trận nổi lên giữa quảng trường.",
+     "effects": {
+      "wulinTournament": true,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Điều tra tin hạ độc",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi bám theo gã tạp dịch lén lút ở giếng nước, lôi ra cả một gói bột trắng. Các phái nợ ngươi một ân lớn.",
+     "effects": {
+      "fame": 6,
+      "stat.charm": 2,
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Ngươi uống nhầm chén trà của chính kẻ hạ độc. Ba ngày nằm liệt, đại hội qua lúc nào không hay.",
+     "effects": {
+      "stat.health": -6,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Đứng ngoài, đặt cược",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Con ngựa ô ngươi đặt cược thắng tới vòng chung kết. Túi bạc nặng hẳn.",
+     "effects": {
+      "silver": 40,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Người ngươi đặt cược thua ngay vòng loại. Mất bạc, lại bị bạn bè cười.",
+     "effects": {
+      "silver": -20,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "vl_hac_dao_quyet_chien",
+  "category": "jianghu",
+  "title": "Hắc đạo hạ chiến thư",
+  "text": "Giáo chủ một tà giáo gửi chiến thư tới minh chủ: \"Đỉnh núi Vọng Nguyệt, rằm tháng sau. Ngươi thua, võ lâm nghe theo ta.\"",
+  "themes": [
+   "jianghu"
+  ],
+  "tags": [
+   "violence"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "wulin": {
+    "leader": true
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Nhận lời quyết chiến",
+    "result": {
+     "text": "Đỉnh Vọng Nguyệt, gió lạnh cắt da. Quần hùng hai phe đứng kín sườn núi.",
+     "effects": {
+      "stat.daoHeart": 1
+     },
+     "fight": {
+      "foe": {
+       "name": "Giáo chủ tà giáo",
+       "realm": "same",
+       "intent": "kill",
+       "powerMul": 1.2,
+       "path": "arts",
+       "lineage": "tien"
+      },
+      "win": {
+       "text": "Giáo chủ ngã xuống vực. Tiếng hô \"minh chủ\" vang khắp sườn núi.",
+       "effects": {
+        "wulinPrestige": 15,
+        "fame": 6,
+        "stat.happiness": 5
+       }
+      },
+      "lose": {
+       "text": "Ngươi thua một chiêu. Giáo chủ cười dài bỏ đi, uy vọng minh chủ sụt hẳn.",
+       "effects": {
+        "wulinPrestige": -20,
+        "stat.health": -6,
+        "stat.happiness": -4
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Mời giáo chủ tới đàm phán",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Hai bên vạch rõ địa giới, hẹn mười năm không xâm phạm. Có kẻ chê ngươi nhát, nhiều người khen ngươi khôn.",
+     "effects": {
+      "wulinPrestige": 5,
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Giáo chủ không tới, chỉ gửi lại một câu: \"Minh chủ sợ rồi.\" Câu ấy truyền khắp giang hồ.",
+     "effects": {
+      "wulinPrestige": -10,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "vl_bi_am_toan",
+  "category": "jianghu",
+  "title": "Ám toán trong tiệc",
+  "text": "Đại tiệc mừng thọ một trưởng lão. Chén rượu trước mặt ngươi thoảng một mùi hạnh nhân rất nhẹ.",
+  "themes": [
+   "jianghu"
+  ],
+  "tags": [
+   "dark"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "wulin": {
+    "leader": true
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 5,
+  "choices": [
+   {
+    "text": "Lặng lẽ đổi chén, tìm kẻ hạ độc",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ngươi đổi chén, rồi nhìn quanh: gã thị nữ mặt tái đi. Hỏi ra mới biết kẻ đứng sau là một phó chưởng môn.",
+     "effects": {
+      "wulinPrestige": 5,
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Ngươi chưa kịp nghĩ đã uống cạn. Đêm ấy nôn ra máu, nửa tháng mới đứng dậy được.",
+     "effects": {
+      "stat.health": -12,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Uống, rồi vận công bức độc",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi uống cạn, mỉm cười, khói trắng bốc lên từ đầu ngón tay. Cả tiệc lặng đi.",
+     "effects": {
+      "wulinPrestige": 8,
+      "stat.health": -3,
+      "fame": 2
+     }
+    },
+    "fail": {
+     "text": "Độc mạnh hơn ngươi tưởng. Ngươi gục xuống giữa tiệc, các phái nhìn nhau.",
+     "effects": {
+      "stat.health": -15,
+      "wulinPrestige": -5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "vl_phan_xu",
+  "category": "jianghu",
+  "title": "Minh chủ phân xử",
+  "text": "Hai phái tranh nhau một cuốn bí kíp, đã có người chết. Cả hai cùng tới xin minh chủ phân xử.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "wulin": {
+    "leader": true
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Điều tra, xử theo lẽ phải",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 45
+    },
+    "success": {
+     "text": "Ngươi tra ra cuốn bí kíp vốn của phái nhỏ, bị phái lớn cướp. Xử xong, cả giang hồ phục.",
+     "effects": {
+      "wulinPrestige": 8,
+      "fame": 2,
+      "karma": 1,
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Ngươi xử sai. Phái bị thiệt rời liên minh, trước khi đi còn đập vỡ bàn.",
+     "effects": {
+      "wulinPrestige": -6,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Nghiêng về phái lớn",
+    "result": {
+     "text": "Phái lớn gửi lễ tạ hậu hĩnh. Phái nhỏ im lặng ra về.",
+     "effects": {
+      "wulinPrestige": 3,
+      "silver": 30,
+      "karma": -1,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Mở tiệc rượu hòa giải",
+    "result": {
+     "text": "Rượu vào, hai chưởng môn ôm vai nhau khóc. Bí kíp chia đôi, mỗi bên chép một bản.",
+     "effects": {
+      "silver": -30,
+      "wulinPrestige": 5,
+      "stat.charm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "vl_hieu_trieu_diet_ma",
+  "category": "jianghu",
+  "title": "Hiệu triệu diệt ma",
+  "text": "Ma giáo tàn sát một trấn ven sông, dân chạy nạn kéo về các môn phái. Mọi con mắt đổ dồn về minh chủ.",
+  "themes": [
+   "jianghu"
+  ],
+  "tags": [
+   "violence"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "wulin": {
+    "leader": true,
+    "prestigeMin": 40
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Hiệu triệu các phái, đánh thẳng vào tổng đàn",
+    "result": {
+     "text": "Lệnh bài minh chủ truyền đi khắp nơi. Ba nghìn người theo ngươi lên núi.",
+     "effects": {
+      "stat.daoHeart": 2
+     },
+     "fight": {
+      "foe": {
+       "name": "Ma giáo tổng đàn",
+       "realm": "same",
+       "intent": "kill",
+       "powerMul": 1.4,
+       "path": "arts",
+       "lineage": "tien",
+       "plural": true
+      },
+      "win": {
+       "text": "Tổng đàn ma giáo cháy rực ba ngày. Giang hồ gọi trận ấy là trận của ngươi.",
+       "effects": {
+        "wulinPrestige": 20,
+        "fame": 10,
+        "karma": 2,
+        "stat.happiness": 5
+       }
+      },
+      "lose": {
+       "text": "Liên quân tan vỡ ở chân núi. Người chết đếm không xuể, các phái trách minh chủ khinh địch.",
+       "effects": {
+        "wulinPrestige": -25,
+        "stat.health": -8,
+        "stat.happiness": -6
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Lo cứu tế dân chạy nạn trước",
+    "result": {
+     "text": "Ngươi mở kho bạc của liên minh phát cháo. Ma giáo không bị diệt, nhưng dân nhớ ơn.",
+     "effects": {
+      "silver": -40,
+      "wulinPrestige": 4,
+      "karma": 3,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Án binh bất động",
+    "result": {
+     "text": "Ngươi bảo các phái giữ lấy sơn môn. Có người chửi minh chủ là rùa rụt cổ.",
+     "effects": {
+      "wulinPrestige": -12,
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "vl_tu_bo_ngoi",
+  "category": "jianghu",
+  "title": "Nghĩ chuyện trao ngôi",
+  "text": "Tóc ngươi đã bạc nhiều. Đêm nằm nghe tiếng mõ canh, ngươi chợt nghĩ: cái ngôi minh chủ này, giữ tới bao giờ?",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "wulin": {
+    "leader": true
+   },
+   "age": {
+    "min": 55
+   }
+  },
+  "weight": 0.8,
+  "cooldownYears": 5,
+  "choices": [
+   {
+    "text": "Trao lệnh bài cho người trẻ",
+    "result": {
+     "text": "Ngươi chọn một người trẻ có tài, trao lệnh bài giữa quần hùng. Lòng nhẹ như mây.",
+     "effects": {
+      "wulinResign": true,
+      "stat.happiness": 3,
+      "stat.daoHeart": 2
+     }
+    }
+   },
+   {
+    "text": "Còn sức thì còn giữ",
+    "result": {
+     "text": "Ngươi tắt đèn, ngủ tiếp. Sáng ra thư từ các phái lại chất cao một góc bàn.",
+     "effects": {
+      "wulinPrestige": -3,
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "vl_cu_minh_chu",
+  "category": "jianghu",
+  "title": "Cựu minh chủ",
+  "text": "Người trẻ trong giang hồ vẫn tìm tới cửa nhà ngươi, xin một lời chỉ giáo của cựu minh chủ.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "wulin": {
+    "held": true,
+    "leader": false
+   }
+  },
+  "weight": 0.6,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Ngồi uống trà, kể chuyện cũ",
+    "result": {
+     "text": "Ngươi kể chuyện đại hội năm xưa. Người nghe mắt sáng rỡ.",
+     "effects": {
+      "fame": 2,
+      "stat.happiness": 2
+     }
+    }
+   },
+   {
+    "text": "Đóng cửa không tiếp",
+    "result": {
+     "text": "Người ta đứng ngoài cổng một lúc rồi đi. Ngươi đã mỏi với giang hồ.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ }
+]
