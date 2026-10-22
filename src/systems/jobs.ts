@@ -44,6 +44,8 @@ export function jobBlocked(state: GameState, content: Content, jobId: string): s
   if (jobOf(state).id === jobId) return 'Đang làm nghề này.';
   if (extremeHasHook(state, content, 'cannotWork')) return 'Thân thể thế này, chưa làm nổi việc gì.';
   if (state.army) return 'Đang tại ngũ, quân doanh không cho làm nghề khác.';
+  if (state.reign) return 'Đã là thiên tử, không ai dám thuê.';
+  if (holdsOffice(state, content)) return 'Đang làm quan, lệ triều đình không cho kiêm nghề.';
   if (schoolOf(state).at) return 'Đang đi học.';
   if (state.law?.jail) return 'Đang ở trong ngục.';
   if ((state.law?.convictions ?? 0) > 0 && content.balance.law?.recordBars.includes(jobId)) return 'Có tiền án, nghề này không nhận.';
@@ -140,13 +142,16 @@ export function perfTarget(state: GameState, content: Content): number {
   return cfg.targetBase + avg * cfg.targetWeight;
 }
 
+/** A quan (the office career) keeps no job on the side. */
+const holdsOffice = (state: GameState, content: Content): boolean => !!content.office && state.career.id === content.office.career;
+
 /** A year at work: pay, upkeep, hiệu suất drift, maybe a rung up or the sack. */
 export function jobYear(state: GameState, content: Content): GameState {
   const cfg = content.balance.jobs;
   const j = jobOf(state);
   const def = jobDef(content, j.id);
   if (!cfg || !def || !state.alive) return state;
-  if (state.cult.realm !== 'pham_nhan') return quitJob(state, content, 'quit');
+  if (state.cult.realm !== 'pham_nhan' || state.reign || holdsOffice(state, content)) return quitJob(state, content, 'quit');
   // The job and the đường đời are one livelihood: the larger pay of the two.
   let s: GameState = { ...state, money: { ...state.money, silver: state.money.silver + Math.max(jobPay(state, content), careerIncome(state, content)) } };
   const stats = { ...s.stats };

@@ -8,6 +8,12 @@
 
 ## [Chưa phát hành]
 
+### Góp ý 23/10 · Thân phận và bắt lính (2026-10-23)
+- Quan lại không còn bị bắt lính, không phải nộp sưu thuế. Sự kiện "Bắt lính" cũ của thời cuộc (biên ải nguy cấp) giờ chỉ đến với nam phàm nhân không làm quan, không tại ngũ, không làm vua, và "Đi lính" thật sự vào quân ngũ. "Bắt phu xây cung" cũng vậy.
+- Sự kiện hẹn sẵn (follow-up) không còn hợp điều kiện lúc tới hạn thì bỏ qua: bị gọi lính rồi kịp nhậm chức thì thôi.
+- Thân phận (`balance.standing`): khi làm vua, làm quan hoặc tại ngũ, những sự kiện và hoạt động của thường dân không còn tới. Thiên tử không ai tới mượn tiền, nhờ trông nhà, rủ buôn chung; không làm thuê, chèo đò, đi thi, mua quan, móc túi. Quan không chèo đò thuê, không áp tiêu. Lính không đi thi, không bái nhập môn phái.
+- Làm quan hoặc làm vua thì bỏ nghề làm thuê (lệ triều không cho kiêm nghề). Khởi nghĩa thì bỏ cả ấn quan.
+
 ### 12.10 Nội dung và cân bằng triều đình (2026-10-22)
 - 16 sự kiện thêm (`de-nghiep-them.json`):
   - Đế nghiệp: thái hậu gọi, em gái bị chỉ hôn, tướng địch xin hàng, lính cướp của dân, kết thông gia với phiên trấn, tin đồn làm phản trong quân, sủng thần dò hỏi.

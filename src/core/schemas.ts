@@ -1914,6 +1914,13 @@ export const BalanceSchema = z
       reignStart: z.record(z.enum(['royal', 'rebel', 'usurp']), z.record(z.string(), z.number())), reignDrift: z.number(), reignIncome: z.record(z.string(), z.number()), dangerAt: z.number(), deedTitle: z.number(),
       phaseDrift: z.record(z.string(), z.record(z.string(), z.number())), affairDrift: z.record(z.string(), z.record(z.string(), z.number())),
     }).strict().optional(),
+    /** Thân phận: while reigning, holding office or in the army, events of these categories / themes / ids come at `mul` of their weight
+     *  (a thiên tử is not asked to mind a neighbour's house). */
+    standing: z.record(z.enum(['reign', 'office', 'army']), z.object({
+      mul: z.number().min(0), categories: z.array(z.string()).default([]), themes: z.array(z.string()).default([]), ids: z.array(z.string()).default([]),
+      /** Activities closed to this standing (unless their conditions speak of it). */
+      activityGroups: z.array(z.string()).default([]), activityIds: z.array(z.string()).default([]),
+    }).strict()).optional(),
     army: z.object({
       pay: z.array(z.number()).min(1), meritNeed: z.array(z.number()).min(1), promoteChance: z.number(), foe: z.array(z.number()).min(1),
       warMul: z.number(), peaceMul: z.number(), sharpness: z.number(), leadFrom: z.number().int(), leadWeight: z.number(), peaceBattle: z.number(),

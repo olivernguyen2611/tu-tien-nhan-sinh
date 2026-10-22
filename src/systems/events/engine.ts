@@ -23,6 +23,7 @@ import { Rng } from '../../core/rng';
 import type { GameEvent } from '../../core/schemas';
 import { fillTemplate } from '../../core/state';
 import { extremeThemeMultiplier } from '../extremes';
+import { standingMul } from '../standing';
 import type { GameState, LogLine, Tone } from '../../core/types';
 import { meets, readValue } from './conditions';
 import { addProgress, addSpeedBuff, enterFirstRealm, awakenBody, grantRoot, hookActive, hookSum, lifeHooks, reducePeakFails, revealRoot, startCultivating } from '../cultivation';
@@ -83,7 +84,7 @@ export function eventWeight(state: GameState, content: Content, event: GameEvent
   if (!meets(judged, event.conditions, content)) return 0;
   // 10.9: in ngục only ngục events come.
   if (state.law?.jail && !event.conditions.law?.jailed) return 0;
-  let w = event.weight * themeMultiplier(state, content, event);
+  let w = event.weight * themeMultiplier(state, content, event) * standingMul(state, content, event);
   // G.4, playtest 2026-10-12: kỳ ngộ come more often to the lucky.
   const ev = content.balance.events;
   if (event.luckAffected || ev.luckCategories.includes(event.category)) w *= Math.max(ev.luckMin, 1 + (state.aptitudes.luck - 50) * ev.luckPerPoint);
@@ -127,9 +128,11 @@ export function rollYearEvent(state: GameState, content: Content): GameState {
   // 10.10: it comes before a due follow-up (a tang lễ…), which then waits a year.
   const sureHook = lifeHooks(state, content)
     .find((h) => h.hook === 'trigger.everyNYears' && h.years && h.tag && age > 0 && age % h.years === 0 && hookActive(h, state, content));
-  const due = sureHook ? undefined : state.events.followUps.find((f) => f.atAge <= age && findEvent(content, f.event));
+  // A due follow-up whose event no longer fits (a draftee who has since taken office…) is dropped.
+  const stale = state.events.followUps.filter((f) => f.atAge <= age && !meets(state, findEvent(content, f.event)?.conditions, content));
+  let followUps = stale.length ? state.events.followUps.filter((f) => !stale.includes(f)) : state.events.followUps;
+  const due = sureHook ? undefined : followUps.find((f) => f.atAge <= age && findEvent(content, f.event));
   let picked: string | null = null;
-  let followUps = state.events.followUps;
 
   let npc: string | null = null;
   // Task 4.10: an urgent event (đại hạn) skips the roll as soon as it is eligible.

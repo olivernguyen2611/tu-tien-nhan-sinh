@@ -693,6 +693,19 @@
    },
    "realm": {
     "max": "pham_nhan"
+   },
+   "gender": "nam",
+   "army": {
+    "serving": false
+   },
+   "office": {
+    "held": false
+   },
+   "throne": {
+    "none": true
+   },
+   "reign": {
+    "active": false
    }
   },
   "weight": 1.0,

@@ -32,13 +32,13 @@
     "title": "Bắt lính",
     "text": "Lý trưởng gõ mõ khắp làng: biên ải nguy cấp, mỗi nhà một suất đinh. Quan sai đứng đầu ngõ, tay cầm sổ.",
     "themes": ["justice", "family_tragedy"],
-    "conditions": { "age": { "min": 16, "max": 45 }, "tier": ["pham_gian"], "worldVars": [{ "id": "border", "gte": 65 }], "flagsNone": ["quan_ngu"] },
+    "conditions": { "age": { "min": 16, "max": 45 }, "tier": ["pham_gian"], "worldVars": [{ "id": "border", "gte": 65 }], "flagsNone": ["quan_ngu"], "gender": "nam", "realm": { "max": "pham_nhan" }, "army": { "serving": false }, "office": { "held": false }, "throne": { "none": true }, "reign": { "active": false } },
     "weight": 12,
     "oncePerLife": true,
     "choices": [
       {
         "text": "Đi lính",
-        "result": { "text": "Ngươi khoác áo chiến, theo đoàn quân ra biên ải. Người nhà đứng đầu làng tới khi bụi đường lắng hẳn.", "effects": { "setFlags": ["quan_ngu"], "stat.physique": 2, "stat.happiness": -6, "stat.daoHeart": 1 } }
+        "result": { "text": "Ngươi khoác áo chiến, theo đoàn quân ra biên ải. Người nhà đứng đầu làng tới khi bụi đường lắng hẳn.", "effects": { "setFlags": ["quan_ngu"], "armyJoin": "draft", "stat.physique": 2, "stat.happiness": -6, "stat.daoHeart": 1 } }
       },
       {
         "text": "Nộp bạc chuộc suất đinh",
@@ -49,7 +49,7 @@
         "text": "Trốn lên núi chờ qua đợt",
         "check": { "stat": "stat.luck", "difficulty": 50 },
         "success": { "text": "Ngươi trốn trong hang đá nửa tháng, ăn quả dại, đợt bắt lính qua thì lẳng lặng về.", "effects": { "stat.health": -2, "stat.happiness": 1 } },
-        "fail": { "text": "Bị bắt ở lưng chừng núi, bị đánh hai mươi trượng rồi vẫn phải đi lính.", "effects": { "setFlags": ["quan_ngu"], "stat.health": -10, "stat.happiness": -8 } }
+        "fail": { "text": "Bị bắt ở lưng chừng núi, bị đánh hai mươi trượng rồi vẫn phải đi lính.", "effects": { "setFlags": ["quan_ngu"], "armyJoin": "draft", "stat.health": -10, "stat.happiness": -8 } }
       }
     ]
   },

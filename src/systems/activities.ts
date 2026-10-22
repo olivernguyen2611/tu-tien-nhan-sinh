@@ -10,6 +10,7 @@ import { jailed } from './law';
 import { applyOutcome, checkChance } from './events/engine';
 import { drawText } from './textPool';
 import { monthsLeft, monthsUsed } from './timeBudget';
+import { standingAllows } from './standing';
 
 /** Menu headings, in menu order. */
 export const ACTIVITY_GROUP_NAMES: Record<ActivityGroup, string> = {
@@ -92,11 +93,13 @@ function blockedReason(state: GameState, content: Content, a: Activity): string 
 /** The menu: activities whose conditions hold, grouped in ACTIVITY_GROUP_NAMES order. */
 /** 10.9: in ngục only the ngục activities (conditions.law.jailed) are open. */
 const jailFits = (state: GameState, a: Activity): boolean => !jailed(state) || a.conditions.law?.jailed === true;
+/** Thân phận (standing.ts): a thiên tử does not row a ferry for hire. */
+const fits = (state: GameState, content: Content, a: Activity): boolean => jailFits(state, a) && standingAllows(state, content, a) && meets(state, a.conditions, content);
 
 export function activityViews(state: GameState, content: Content): ActivityView[] {
   const order = Object.keys(ACTIVITY_GROUP_NAMES);
   return (content.activities ?? [])
-    .filter((a) => jailFits(state, a) && meets(state, a.conditions, content))
+    .filter((a) => fits(state, content, a))
     .map((a) => {
       const pay = payable(state, content, a);
       return {
@@ -135,7 +138,7 @@ function outcomeEffects(state: GameState, content: Content, o: ActivityOutcome, 
  */
 export function doActivity(state: GameState, content: Content, id: string, target?: string): { state: GameState; text: string; tone: Tone; success: boolean | null } | null {
   const a = activityById(content, id);
-  if (!a || !jailFits(state, a) || !meets(state, a.conditions, content) || blockedReason(state, content, a)) return null;
+  if (!a || !fits(state, content, a) || blockedReason(state, content, a)) return null;
   const rng = Rng.fromState(state.rng);
   const pay = payable(state, content, a);
   const before = target ? { ...state, events: { ...state.events, npc: target } } : state;
