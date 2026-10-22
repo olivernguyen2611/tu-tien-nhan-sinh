@@ -155,7 +155,8 @@ export function fleeLaw(state: GameState, content: Content): GameState {
   const t = content.crimes?.texts;
   if (!cfg || !t) return state;
   const s = addWanted(state, content, -cfg.fleeWanted);
-  return pushLines({ ...s, flags: { ...s.flags, tha_huong: true } }, [{ text: t.fled, tone: 'normal' }]);
+  const text = typeof t.fled === 'string' ? t.fled : new Rng(`${state.seed}:flee:${state.character.age}`).pick(t.fled);
+  return pushLines({ ...s, flags: { ...s.flags, tha_huong: true } }, [{ text, tone: 'normal' }]);
 }
 
 /** A year: ngục ends, mức truy nã cools when no crime has been done for a while. */

@@ -3173,8 +3173,8 @@ export const AssetsFileSchema = z.object({
   strategies: z.array(z.object({ id, name: z.string().min(1), profit: z.number(), risk: z.number().min(0).max(1), karma: z.number().default(0), illegal: z.boolean().default(false), caughtText: z.string().min(1).optional() }).strict()).min(1),
   loans: z.array(z.object({ id, name: z.string().min(1), amount: z.number().min(0), rate: z.number().min(0), lenderRole: z.string().min(1) }).strict()).min(1),
   texts: z.object({
-    bought: z.string().min(1), sold: z.string().min(1), soldFake: z.string().min(1), lost: z.string().min(1), harvest: z.string().min(1), shop: z.string().min(1),
-    tax: z.string().min(1), taxShort: z.string().min(1), borrowed: z.string().min(1), repaid: z.string().min(1), seized: z.string().min(1), bonded: z.string().min(1),
+    bought: z.string().min(1), sold: z.string().min(1), soldFake: z.string().min(1), lost: z.string().min(1), harvest: lineOrLines, shop: lineOrLines,
+    tax: z.string().min(1), taxShort: lineOrLines, borrowed: z.string().min(1), repaid: z.string().min(1), seized: z.string().min(1), bonded: z.string().min(1),
   }).strict(),
 }).strict();
 export type AssetsFile = z.infer<typeof AssetsFileSchema>;
@@ -3253,7 +3253,7 @@ export const CrimesFileSchema = z.object({
   verdicts: z.object({ acquit: z.string().min(1), fine: z.string().min(1), beating: z.string().min(1), jail: z.string().min(1), exile: z.string().min(1), death: z.string().min(1) }).strict(),
   texts: z.object({
     exposed: z.array(z.string().min(1)).min(1), caught: z.string().min(1), released: z.string().min(1),
-    escaped: z.string().min(1), escapeFail: z.string().min(1), cooled: z.string().min(1), fled: z.string().min(1),
+    escaped: z.string().min(1), escapeFail: z.string().min(1), cooled: z.string().min(1), fled: lineOrLines,
     bribeOk: z.string().min(1), bribeHonest: z.string().min(1), poor: z.string().min(1),
     /** Mức truy nã 0–5 in words, for the profile. */
     wanted: z.array(z.string().min(1)).min(1),

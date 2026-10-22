@@ -19,6 +19,11 @@
     "text": "Khai thật mọi chuyện",
     "result": {
      "text": "Ngươi kể hết, không giấu điều gì. Quan huyện vuốt râu, ra hiệu cho thư lại ghi chép.",
+     "variants": [
+      "Ngươi khai rành mạch từng việc. Thư lại cắm cúi chép không kịp.",
+      "Ngươi nhận hết, giọng không run. Quan huyện nhìn ngươi lâu hơn thường lệ.",
+      "Ngươi kể đầu đuôi, không thêm không bớt. Nha dịch hai bên nhìn nhau."
+     ],
      "effects": {
       "trial": 1,
       "stat.daoHeart": 1,
@@ -34,6 +39,11 @@
     },
     "success": {
      "text": "Ngươi chỉ ra mấy chỗ hở trong lời khai của nguyên cáo. Quan huyện nhíu mày.",
+     "variants": [
+      "Ngươi cãi từng câu, bắt bẻ nguyên cáo tới đỏ mặt.",
+      "Ngươi chối phăng, lại nêu ra một chứng cứ ngoại phạm nghe cũng xuôi tai.",
+      "Ngươi hỏi ngược nguyên cáo mấy câu, kẻ kia ấp úng không đáp được."
+     ],
      "effects": {
       "trial": 2,
       "stat.intellect": 1,
@@ -53,6 +63,10 @@
     "text": "Im lặng",
     "result": {
      "text": "Ngươi cúi đầu không nói một lời. Quan huyện đập kinh đường mộc.",
+     "variants": [
+      "Ngươi ngậm miệng như hến. Nha dịch nện gậy xuống nền gạch.",
+      "Ngươi nhìn xuống đất, mặc cho quan hỏi gì cũng không đáp."
+     ],
      "effects": {
       "stat.happiness": -1,
       "chain": "pp_cong_duong_2"
@@ -85,6 +99,11 @@
     },
     "success": {
      "text": "Có người đứng ra làm chứng cho ngươi. Tình thế xoay chuyển.",
+     "variants": [
+      "Một người hàng xóm run run bước ra làm chứng. Công đường lặng đi.",
+      "Nhân chứng khai khác hẳn nguyên cáo. Quan huyện nhíu mày nghĩ ngợi.",
+      "Có kẻ quen biết đứng ra nói giúp, lời lẽ đâu ra đấy."
+     ],
      "effects": {
       "trial": 2,
       "stat.happiness": 1,
@@ -107,6 +126,10 @@
     },
     "success": {
      "text": "Lời kêu oan thống thiết, kể rõ đầu đuôi. Mấy người dự thính xì xào thương cảm.",
+     "variants": [
+      "Ngươi dập đầu tới rớm máu, xin quan xét lại. Có người dự thính lau nước mắt.",
+      "Tiếng kêu oan vang ra tận cổng nha môn. Quan huyện phẩy tay cho ngươi đứng dậy."
+     ],
      "effects": {
       "trial": 1,
       "stat.health": -1,
@@ -126,6 +149,10 @@
     "text": "Lót tay quan",
     "result": {
      "text": "Ngươi nhờ người đưa một gói bạc qua cửa sau.",
+     "variants": [
+      "Một gói bạc lặng lẽ đổi tay sau tấm bình phong.",
+      "Ngươi gửi thư lại một cái hộp gỗ nặng trịch, dặn trao tận tay quan."
+     ],
      "effects": {
       "bribe": true,
       "stat.happiness": -1,
@@ -137,6 +164,10 @@
     "text": "Cúi đầu nhận án",
     "result": {
      "text": "Ngươi không cãi thêm. Có những thứ phải tự mình gánh.",
+     "variants": [
+      "Ngươi quỳ thẳng lưng, chờ lời phán.",
+      "Ngươi thở ra một hơi dài. Việc đã làm, không chạy được."
+     ],
      "effects": {
       "trial": 1,
       "stat.daoHeart": 2,

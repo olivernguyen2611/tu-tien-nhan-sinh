@@ -25,10 +25,33 @@
     "outcomes": [
       {
         "weight": 1,
-        "text": [
-          "Khói hương bay thẳng, quẻ âm dương ra một sấp một ngửa. Cụ già trong họ gật gù: tổ tiên đã chứng.",
-          "Cả họ quây quần trước từ đường. Trẻ con chạy nhảy, người già kể chuyện ông cha. Ngươi thấy mình có gốc."
-        ],
+        "text": {
+          "lines": [
+            "Khói hương bay thẳng, quẻ âm dương ra một sấp một ngửa. Cụ già trong họ gật gù: tổ tiên đã chứng.",
+            "Cả họ quây quần trước từ đường. Trẻ con chạy nhảy, người già kể chuyện ông cha. Ngươi thấy mình có gốc."
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            [
+              "Mâm cỗ bày ra trước từ đường,",
+              "Ngày giỗ tổ, con cháu tụ về,",
+              "Hương trầm thắp lên ba nén,",
+              "Tộc trưởng khấn một bài dài,"
+            ],
+            [
+              "khói hương bay thẳng lên xà nhà.",
+              "trẻ con chạy nhảy ngoài sân, người già kể chuyện ông cha.",
+              "quẻ âm dương gieo ra một sấp một ngửa.",
+              "ngươi quỳ hàng sau, đầu gối tê dần."
+            ],
+            [
+              "Ngươi thấy mình có gốc.",
+              "Cụ già trong họ gật gù: tổ tiên đã chứng.",
+              "Xong lễ cả họ ngồi ăn cỗ tới chiều.",
+              "Ra về lòng thấy nhẹ, như vừa trả được món nợ cũ."
+            ]
+          ]
+        },
         "effects": {
           "worship": true,
           "stat.happiness": 2,
@@ -178,10 +201,32 @@
     "outcomes": [
       {
         "weight": 1,
-        "text": [
-          "Bàn chuyện tu bổ mộ tổ, chuyện ai đóng bao nhiêu. Cãi nhau một chặp rồi cũng xong, cùng ngồi ăn cỗ.",
-          "Tộc trưởng đọc gia phả, nhắc tên những người đã khuất. Ngươi nghe tên ông bà mình, lòng chùng xuống."
-        ],
+        "text": {
+          "lines": [
+            "Bàn chuyện tu bổ mộ tổ, chuyện ai đóng bao nhiêu. Cãi nhau một chặp rồi cũng xong, cùng ngồi ăn cỗ.",
+            "Tộc trưởng đọc gia phả, nhắc tên những người đã khuất. Ngươi nghe tên ông bà mình, lòng chùng xuống."
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            [
+              "Họp họ cuối năm,",
+              "Cả họ ngồi chật từ đường,",
+              "Tộc trưởng gõ bàn mở lời,"
+            ],
+            [
+              "bàn chuyện tu bổ mộ tổ, chuyện ai đóng bao nhiêu.",
+              "đọc lại gia phả, nhắc tên những người đã khuất.",
+              "khen nhà này có con đỗ đạt, chê nhà kia làm ăn lụn bại.",
+              "chia nhau việc giỗ chạp năm tới."
+            ],
+            [
+              "Cãi nhau một chặp rồi cũng xong, cùng ngồi ăn cỗ.",
+              "Ngươi nghe tên ông bà mình, lòng chùng xuống.",
+              "Ngươi được ngồi gần mâm trên, nở mày nở mặt.",
+              "Tan họp, mấy chú bác còn ở lại uống rượu tới khuya."
+            ]
+          ]
+        },
         "effects": {
           "stat.happiness": 2,
           "stat.charm": 1
@@ -189,9 +234,29 @@
       },
       {
         "weight": 1,
-        "text": [
-          "Chú bác hỏi chuyện vợ con, chuyện làm ăn, chuyện đỗ đạt. Ngươi trả lời mỏi miệng."
-        ],
+        "text": {
+          "lines": [
+            "Chú bác hỏi chuyện vợ con, chuyện làm ăn, chuyện đỗ đạt. Ngươi trả lời mỏi miệng."
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            [
+              "Chú bác hỏi chuyện vợ con,",
+              "Mấy bà thím hỏi chuyện làm ăn,",
+              "Ông chú họ xa hỏi chuyện đỗ đạt,"
+            ],
+            [
+              "hỏi xong lại so với con nhà người ta.",
+              "ngươi trả lời mỏi miệng.",
+              "câu nào cũng như đâm vào chỗ đau."
+            ],
+            [
+              "Ngươi cười trừ, ăn vội bát cơm rồi về.",
+              "Về tới nhà vẫn còn nóng mặt.",
+              "Ít ra cũng học được cách nói tránh."
+            ]
+          ]
+        },
         "effects": {
           "stat.happiness": -1,
           "stat.intellect": 1

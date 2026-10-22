@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### 10.12 Cân bằng tầng phàm gian (2026-10-22)
+- Bớt câu lặp: thu hoạch ruộng, sổ sách cửa hàng, thiếu thuế, trốn đi xa có nhiều cách nói; mời lang trung, bốc thuốc, ăn uống điều độ, luyện quyền buổi sớm, tế tổ, họp họ, xin tăng lương, ăn bớt, móc túi, trộm, lừa, cướp đường, trốn đi xa ghép câu từ nhiều mảnh; công đường có thêm lời khai khác nhau; đọc sách thêm đề tài.
+- Mô phỏng (`npm run simulate -- --profile mortal`): bot phàm nhân đổi thứ tự hoạt động mỗi năm, thử thêm vài thú vui thường ngày, mỗi năm phạm tội nhiều nhất một lần, chỉ trốn đi xa khi bị truy nã gắt, mỗi loại tài sản mua tối đa hai, mời thầy thuốc lúc mới ốm rồi cách năm một lần.
+- Kết quả 40 đời mỗi lối sống: hoạt động khác nhau 18–26 mỗi đời (trước 4–10), sự kiện khác nhau 50–79, câu lặp 33–54% (trước 26–67%), chết già 53–95%, kẻ cướp chết vì bệnh từ 83% xuống khoảng 40%. Chưa đạt mốc 30 hoạt động và câu lặp dưới 15%: phần lặp còn lại là dòng thu nhập hằng năm và hoạt động bot làm năm nào cũng làm.
+
 ### 10.11 Gia tộc phàm tục (2026-10-22)
 - Sinh ra trong một họ, không chỉ một nhà: lên 6 tuổi được ra mắt họ hàng ở từ đường. Tộc trưởng và 3–5 người họ nội, họ ngoại (chú, bác, cô, cậu, dì, anh chị em họ) là người quen thật, nằm trong nhóm "Họ hàng" (`content/kin.json`).
 - Gia phả ba đời trở lên trong hồ sơ: ông bà (hoặc tiên tổ ở các đời trước của dòng), cha mẹ, bản thân, con cái; người nối dõi được ghi rõ.

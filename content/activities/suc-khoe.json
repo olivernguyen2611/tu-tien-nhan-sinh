@@ -38,21 +38,28 @@
               "text": "Có đứa trẻ trong xóm ra đứng xem rồi bắt chước. Ngươi dạy nó một thế, tự thấy mình cũng hiểu thêm."
             }
           ],
-          "linesShare": 0.3,
+          "linesShare": 0.2,
           "parts": [
             [
-              "Trời chưa sáng ngươi đã ra bãi sau nhà,",
-              "Mùa này ngươi luyện quyền bên bờ ao,",
-              "Ngươi dậy trước gà gáy,",
+              "Một mùa dậy sớm,",
+              "Sáng nào cũng vậy,",
+              "Sương còn đọng trên cỏ,",
               "Mưa phùn cũng không bỏ buổi nào,",
-              "Ngươi luyện quyền dưới gốc đa đầu làng,"
+              "Trời rét căm căm,"
             ],
             [
-              "đánh quyền tới khi sương tan.",
-              "đứng tấn tới mỏi rời hai chân.",
-              "đấm bao cát tới khi bao rách.",
-              "luyện đi luyện lại một thế tới thuộc.",
-              "về tới nhà vẫn còn thở dốc."
+              "ngươi đánh hết bài quyền này sang bài quyền khác.",
+              "một trăm cú đấm vào bao cát.",
+              "ngươi đứng tấn tới khi chân run.",
+              "ngươi chạy quanh làng ba vòng rồi mới đánh quyền.",
+              "có đứa trẻ trong xóm ra đứng xem rồi bắt chước."
+            ],
+            [
+              "Bước chân vững hơn hẳn.",
+              "Mồ hôi thấm áo, người nhẹ như bấc.",
+              "Hàng xóm đi chợ về vẫn thấy ngươi đứng đó.",
+              "Bao cát rách trước khi tay ngươi rách.",
+              "Ăn được thêm hai bát cơm."
             ]
           ]
         },
@@ -96,10 +103,33 @@
     "outcomes": [
       {
         "weight": 1,
-        "text": [
-          "Ngươi nằm nghe thầy bắt mạch, đắp chăn uống thuốc theo đơn.",
-          "Thầy thuốc châm cứu mấy mũi, dặn kiêng gió kiêng lạnh."
-        ],
+        "text": {
+          "lines": [
+            "Ngươi nằm nghe thầy bắt mạch, đắp chăn uống thuốc theo đơn.",
+            "Thầy thuốc châm cứu mấy mũi, dặn kiêng gió kiêng lạnh."
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            [
+              "Thầy thuốc vén áo ngồi xuống,",
+              "Lang trung xách tráp thuốc tới,",
+              "Ông thầy râu bạc tới từ sớm,",
+              "Thầy thuốc trẻ trong huyện tới,"
+            ],
+            [
+              "bắt mạch hai tay, xem lưỡi, hỏi chuyện ăn ngủ.",
+              "châm mấy mũi kim, đốt một mồi ngải.",
+              "nghe ngươi ho một tràng rồi lắc đầu chép miệng.",
+              "sờ trán, nắn bụng, lẩm nhẩm tên mấy vị thuốc."
+            ],
+            [
+              "Đơn kê dài một gang tay.",
+              "Dặn kiêng gió, kiêng lạnh, kiêng cả rượu.",
+              "Thuốc đắng nhưng uống vào thấy ấm người.",
+              "Tiền thầy không rẻ, nhưng lòng yên được phần nào."
+            ]
+          ]
+        },
         "effects": {
           "cure": "doctor",
           "stat.happiness": 1
@@ -126,10 +156,33 @@
     "outcomes": [
       {
         "weight": 1,
-        "text": [
-          "Ông chủ tiệm nghe kể xong, gói cho bốn thang. Bếp nhà thơm mùi cam thảo.",
-          "Thuốc sắc đặc quánh, đắng tới tận cuống họng."
-        ],
+        "text": {
+          "lines": [
+            "Ông chủ tiệm nghe kể xong, gói cho bốn thang. Bếp nhà thơm mùi cam thảo.",
+            "Thuốc sắc đặc quánh, đắng tới tận cuống họng."
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            [
+              "Ông chủ tiệm thuốc bắc",
+              "Cậu học việc ở tiệm thuốc",
+              "Bà chủ tiệm thuốc đầu chợ",
+              "Người bán thuốc dạo"
+            ],
+            [
+              "nghe ngươi tả bệnh xong, gói cho mấy thang.",
+              "cân cam thảo, quế chi, gói vào giấy bản.",
+              "bốc vội mấy vị, dặn sắc ba bát còn một.",
+              "đưa cho một gói cao đen, bảo ngậm dần."
+            ],
+            [
+              "Bếp nhà thơm mùi thuốc cả tuần.",
+              "Thuốc đắng tới tận cuống họng.",
+              "Uống xong ngủ một giấc dài.",
+              "Chẳng biết khỏi vì thuốc hay vì trời thương."
+            ]
+          ]
+        },
         "effects": {
           "cure": "shop",
           "stat.health": 1
@@ -276,10 +329,33 @@
     "outcomes": [
       {
         "weight": 1,
-        "text": [
-          "Cả năm cơm canh đúng bữa. Bụng không đau, người không ốm.",
-          "Bỏ thói ăn đêm, bỏ thói ăn vội. Da dẻ hồng hào thấy rõ."
-        ],
+        "text": {
+          "lines": [
+            "Cả năm cơm canh đúng bữa. Bụng không đau, người không ốm.",
+            "Bỏ thói ăn đêm, bỏ thói ăn vội. Da dẻ hồng hào thấy rõ."
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            [
+              "Năm nay ngươi ăn đúng bữa,",
+              "Bỏ thói ăn đêm, ăn vội,",
+              "Bớt mặn bớt béo, thêm rau dưa,",
+              "Rượu chỉ nhấp một chén lúc ăn cơm,"
+            ],
+            [
+              "ngủ đúng giờ, dậy đúng giờ.",
+              "bữa nào cũng chừa bụng một chút.",
+              "cơm canh đạm bạc mà đủ chất.",
+              "mùa nào thức nấy, không ham của lạ."
+            ],
+            [
+              "Bụng không đau, người không ốm.",
+              "Da dẻ hồng hào thấy rõ.",
+              "Bạn cũ gặp lại khen trẻ ra mấy tuổi.",
+              "Chỉ hơi thèm thịt mỡ những ngày mưa."
+            ]
+          ]
+        },
         "effects": {
           "stat.health": 3,
           "stat.happiness": -1

@@ -183,6 +183,9 @@ export function assetsYear(state: GameState, content: Content): GameState {
   let silver = 0;
   const lines: LogLine[] = [];
   const a = assetsOf(s);
+  // 10.12: a line may have variants; a side stream picks one so the yearly rolls stay as they were.
+  const textRng = new Rng(`${state.seed}:asset-text:${age}`);
+  const say = (t: string | string[]) => (typeof t === 'string' ? t : textRng.pick(t));
   // Ruộng: the crop against the weather.
   const fields = ownedOf(s, content, 'land');
   if (fields.length) {
@@ -192,7 +195,7 @@ export function assetsYear(state: GameState, content: Content): GameState {
     const harvest = (s.times?.vars.harvest ?? 50) / 50;
     const got = Math.round(fields.reduce((sum, o) => sum + (assetDef(content, o.id)?.income ?? 0), 0) * harvest * fit);
     silver += got;
-    lines.push({ text: fill(file.texts.harvest, { count: fields.length, silver: got }), tone: fit >= cfg.cropFit.normal ? 'good' : 'bad' });
+    lines.push({ text: fill(say(file.texts.harvest), { count: fields.length, silver: got }), tone: fit >= cfg.cropFit.normal ? 'good' : 'bad' });
   }
   let landRolled = false;
   for (const o of a.owned) {
@@ -204,13 +207,13 @@ export function assetsYear(state: GameState, content: Content): GameState {
       if (st.illegal && rng.chance(st.risk)) {
         silver -= def.income * 2;
         s = { ...s, flags: { ...s.flags, buon_lau: true }, social: { ...s.social, karma: s.social.karma + st.karma, reputation: { ...s.social.reputation, trieu_dinh: s.social.reputation.trieu_dinh - 5 } } };
-        lines.push({ text: fill(st.caughtText ?? file.texts.shop, { asset: def.name, silver: -def.income * 2 }), tone: 'bad' });
+        lines.push({ text: fill(st.caughtText ?? say(file.texts.shop), { asset: def.name, silver: -def.income * 2 }), tone: 'bad' });
       } else {
         const bad = !st.illegal && rng.chance(st.risk);
         const got = bad ? -Math.round(def.income * 0.5) : Math.round(def.income * st.profit * (1 + (rng.next() * 2 - 1) * cfg.shopSpread));
         silver += got;
         if (st.karma) s = { ...s, social: { ...s.social, karma: s.social.karma + st.karma } };
-        lines.push({ text: fill(file.texts.shop, { asset: def.name, silver: got }), tone: got >= 0 ? 'normal' : 'bad' });
+        lines.push({ text: fill(say(file.texts.shop), { asset: def.name, silver: got }), tone: got >= 0 ? 'normal' : 'bad' });
       }
     } else if (def.kind !== 'land') {
       silver += def.income;
@@ -242,7 +245,7 @@ export function assetsYear(state: GameState, content: Content): GameState {
       // A small shortfall the lý trưởng lets go; the tax line shows only now and then.
       if (due - paid >= t.forgiveBelow) {
         s = { ...s, stats: { ...s.stats, happiness: clamp(s.stats.happiness - t.shortHappiness) }, social: { ...s.social, reputation: { ...s.social.reputation, trieu_dinh: s.social.reputation.trieu_dinh - 2 } } };
-        lines.push({ text: fill(file.texts.taxShort, { silver: due - paid }), tone: 'bad' });
+        lines.push({ text: fill(say(file.texts.taxShort), { silver: due - paid }), tone: 'bad' });
       } else if (paid === due && due >= t.logAt && age % t.logEvery === 0) lines.push({ text: fill(file.texts.tax, { silver: due }), tone: 'normal' });
     }
   }

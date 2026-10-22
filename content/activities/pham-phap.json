@@ -19,7 +19,32 @@
     "outcomes": [
       {
         "weight": 1,
-        "text": "Ngươi len vào đám đông.",
+        "text": {
+          "lines": [
+            "Ngươi len vào đám đông."
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            [
+              "Ngươi len vào đám đông",
+              "Ngươi giả làm kẻ đi chợ",
+              "Ngươi đứng xem gánh xiếc",
+              "Ngươi chen lên phía trước hàng bánh"
+            ],
+            [
+              "giữa chợ phiên,",
+              "lúc người ta tranh nhau mua hàng,",
+              "khi trống chèo vừa nổi,",
+              "dưới mái hiên chật người,"
+            ],
+            [
+              "mắt dán vào túi tiền một lão béo.",
+              "hai ngón tay đã sẵn.",
+              "chọn một kẻ đang mải mặc cả.",
+              "lách tay vào vạt áo người bên cạnh."
+            ]
+          ]
+        },
         "effects": {
           "crime": "moc_tui",
           "stat.daoHeart": -1
@@ -76,7 +101,30 @@
     "outcomes": [
       {
         "weight": 1,
-        "text": "Ngươi khoác áo đen, mang theo dao khoét vách.",
+        "text": {
+          "lines": [
+            "Ngươi khoác áo đen, mang theo dao khoét vách."
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            [
+              "Đêm không trăng,",
+              "Canh ba, chó trong xóm thôi sủa,",
+              "Nhân lúc nhà viên ngoại có đám,"
+            ],
+            [
+              "ngươi khoác áo đen, mang theo dao khoét vách.",
+              "ngươi trèo qua bờ tường sau vườn.",
+              "ngươi lẻn vào lối cửa bếp.",
+              "ngươi buộc khăn bịt mặt, men theo rãnh nước."
+            ],
+            [
+              "Kho bạc ở ngay trước mặt.",
+              "Tim đập như trống làng.",
+              "Trong nhà còn le lói ánh đèn."
+            ]
+          ]
+        },
         "effects": {
           "crime": "trom_nha_giau",
           "stat.daoHeart": -1
@@ -105,7 +153,31 @@
     "outcomes": [
       {
         "weight": 1,
-        "text": "Ngươi dựng chuyện, chọn người.",
+        "text": {
+          "lines": [
+            "Ngươi dựng chuyện, chọn người."
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            [
+              "Ngươi dựng chuyện",
+              "Ngươi giả làm thầy phong thủy,",
+              "Ngươi bày bán thuốc trường sinh giả,",
+              "Ngươi xưng là người nhà quan huyện,"
+            ],
+            [
+              "chọn một kẻ nhẹ dạ.",
+              "đi khắp mấy làng bên.",
+              "ngồi ở cổng chợ.",
+              "gõ cửa từng nhà giàu."
+            ],
+            [
+              "Miệng nói không ngừng, mắt đếm từng đồng.",
+              "Có kẻ nghe tới đâu gật tới đó.",
+              "Phải nhớ cho kỹ lời mình đã bịa."
+            ]
+          ]
+        },
         "effects": {
           "crime": "lua_dao",
           "stat.daoHeart": -1
@@ -163,7 +235,31 @@
     "outcomes": [
       {
         "weight": 1,
-        "text": "Ngươi nấp sau tảng đá bên đường.",
+        "text": {
+          "lines": [
+            "Ngươi nấp sau tảng đá bên đường."
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            [
+              "Ngươi nấp sau tảng đá bên đường,",
+              "Ngươi buộc khăn đen nằm chờ trong bụi,",
+              "Ngươi đứng chặn giữa đèo,",
+              "Ngươi theo dấu xe hàng từ sáng,"
+            ],
+            [
+              "tay nắm chặt cán đao.",
+              "chờ khách buôn qua.",
+              "nghe tiếng lục lạc xa dần lại gần.",
+              "mồ hôi rịn ra lòng bàn tay."
+            ],
+            [
+              "Đêm nay không về tay trắng.",
+              "Gió đèo lạnh buốt.",
+              "Không có đường lui."
+            ]
+          ]
+        },
         "effects": {
           "crime": "cuop_duong",
           "stat.daoHeart": -1
@@ -308,10 +404,32 @@
     "outcomes": [
       {
         "weight": 1,
-        "text": [
-          "Gói ghém vài bộ áo, đi trong đêm.",
-          "Ngươi theo thuyền buôn xuôi dòng, không ngoái lại."
-        ],
+        "text": {
+          "lines": [
+            "Gói ghém vài bộ áo, đi trong đêm.",
+            "Ngươi theo thuyền buôn xuôi dòng, không ngoái lại."
+          ],
+          "linesShare": 0.2,
+          "parts": [
+            [
+              "Gói ghém vài bộ áo,",
+              "Bán vội mấy món đồ trong nhà,",
+              "Nhờ một người quen chèo thuyền,",
+              "Đổi họ đổi tên,"
+            ],
+            [
+              "ngươi đi trong đêm.",
+              "theo thuyền buôn xuôi dòng.",
+              "trà trộn vào đoàn phu đi phủ khác.",
+              "băng rừng qua mấy ngọn núi."
+            ],
+            [
+              "Không ngoái lại.",
+              "Quê nhà khuất sau rặng tre.",
+              "Tới nơi mới, chẳng ai biết mặt."
+            ]
+          ]
+        },
         "effects": {
           "fleeLaw": true,
           "stat.happiness": -3

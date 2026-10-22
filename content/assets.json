@@ -64,10 +64,28 @@
     "sold": "Bán {asset}, thu về {silver} lượng.",
     "soldFake": "Đem {asset} đi bán mới biết là đồ giả. Người ta chỉ trả {silver} lượng.",
     "lost": "Mất {asset}.",
-    "harvest": "Thu hoạch {count} mẫu ruộng được {silver} lượng.",
-    "shop": "{asset} năm nay lời lỗ: {silver} lượng.",
+    "harvest": [
+      "Thu hoạch {count} mẫu ruộng được {silver} lượng.",
+      "Mùa gặt xong, {count} mẫu ruộng bán thóc được {silver} lượng.",
+      "Lúa {count} mẫu phơi khô đầy sân, đổi được {silver} lượng.",
+      "Cả nhà xắn quần gặt {count} mẫu ruộng, cân thóc ra {silver} lượng.",
+      "Thương lái tới tận bờ ruộng, trả {silver} lượng cho thóc {count} mẫu.",
+      "Thóc {count} mẫu ruộng vào kho, bán bớt được {silver} lượng."
+    ],
+    "shop": [
+      "{asset} năm nay lời lỗ: {silver} lượng.",
+      "Cuối năm tính sổ {asset}: {silver} lượng.",
+      "Gảy bàn tính một đêm, {asset} năm nay ra {silver} lượng.",
+      "Người làm ở {asset} đem sổ tới: năm nay {silver} lượng.",
+      "{asset} đông khách hay vắng khách, gộp lại cả năm: {silver} lượng."
+    ],
     "tax": "Nộp thuế sưu {silver} lượng cho quan huyện.",
-    "taxShort": "Không đủ bạc nộp thuế, còn thiếu {silver} lượng, bị lý trưởng ghi tên.",
+    "taxShort": [
+      "Không đủ bạc nộp thuế, còn thiếu {silver} lượng, bị lý trưởng ghi tên.",
+      "Lý trưởng gõ cửa thu sưu, ngươi lục hết túi vẫn thiếu {silver} lượng.",
+      "Thuế năm nay còn nợ {silver} lượng, tên ngươi bị dán ngoài đình.",
+      "Nộp thuế thiếu {silver} lượng, bị mõ làng rao tên khắp xóm."
+    ],
     "borrowed": "{loan}: cầm về {silver} lượng, lãi tính từ hôm nay.",
     "repaid": "Trả hết nợ {silver} lượng, nhẹ cả người.",
     "seized": "{lender} dẫn người tới cửa xiết nợ, mang {asset} đi.",

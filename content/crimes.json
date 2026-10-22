@@ -230,7 +230,12 @@
     "escaped": "Đêm mưa to, ngươi chui ra khỏi đường hầm, lăn xuống mương nước. Phía sau, chiêng báo động vang lên. Ngươi đã tự do, và bị truy nã khắp nơi.",
     "escapeFail": "Đường hầm sập giữa chừng. Cai ngục lôi ngươi ra, án tăng thêm {years} năm, cùm thêm một đôi.",
     "cooled": "Đã lâu không ai nhắc tới ngươi. Cáo thị cũ ở cổng chợ đã bạc màu.",
-    "fled": "Ngươi bỏ quê trong đêm, đi thật xa tới nơi không ai biết mặt. Quan phủ nơi cũ không với tới.",
+    "fled": [
+      "Ngươi bỏ quê trong đêm, đi thật xa tới nơi không ai biết mặt. Quan phủ nơi cũ không với tới.",
+      "Ngươi đổi tên đổi họ, tới một huyện xa lạ. Cáo thị nơi cũ chẳng ai đọc tới đây.",
+      "Một mảnh đất mới, những gương mặt lạ. Bộ khoái nơi cũ đành bó tay.",
+      "Ngươi đi mãi tới khi không còn nghe ai nói giọng quê mình. Lệnh truy nã nhạt dần sau lưng."
+    ],
     "bribeOk": "Gói bạc lót dưới tráp hồ sơ. Quan huyện nhìn ngươi bằng ánh mắt khác hẳn.",
     "bribeHonest": "Quan huyện là người thanh liêm. Ngài đập bàn: \"Dám mua chuộc bản quan!\" Tội chồng thêm tội.",
     "poor": "Ngươi định lót tay, móc túi ra chỉ có mấy đồng lẻ. Quan sai cười khẩy.",
