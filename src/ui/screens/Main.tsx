@@ -53,6 +53,7 @@ import { currentPhase, eraLabel } from '../../systems/worldState';
 import { dockGroups, dockView, identityLine, type DockView } from '../../systems/dock';
 import { ActivityList } from '../components/ActivityPanel';
 import { daoHeartLabel, innerForce, karmaView, reputationViews } from '../../systems/statLabels';
+import { lifeStage, schoolLine, tradeLine } from '../../systems/schooling';
 
 
 const APTITUDE_LABELS = [
@@ -342,7 +343,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             <div class="kicker">Nhân vật</div>
             <h2>{c.name}</h2>
             <p class="story">
-              {c.gender === 'nam' ? 'Nam' : 'Nữ'} · {origin?.name} · quê {c.hometown} · độ khó {difficultyName(state, content)}
+              {c.gender === 'nam' ? 'Nam' : 'Nữ'} · {origin?.name} · quê {c.hometown}{lifeStage(content, c.age) ? ` · ${lifeStage(content, c.age)!.name}` : ''} · độ khó {difficultyName(state, content)}
             </p>
             <div class="profile-grid">
               {APTITUDE_LABELS.map(([key, label, glyph, term]) => {
@@ -359,6 +360,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             {identityLine(state, content) && <p class="profile-note">Thân phận: {identityLine(state, content)}</p>}
             {state.times && <p class="profile-note">Thời thế: {currentPhase(state, content)?.name ?? ''} · {state.times.dynasty}, {eraLabel(state, c.age)}</p>}
             {careerLabel(state, content) && <p class="profile-note">Đường đời: {careerLabel(state, content)}</p>}
+            {schoolLine(state, content) && <p class="profile-note">Học hành: {schoolLine(state, content)}</p>}
+            {tradeLine(state, content) && <p class="profile-note">Nghề: {tradeLine(state, content)}</p>}
             {sectLabel(state, content) && <p class="profile-note">Tông môn: {sectLabel(state, content)}</p>}
             {inventoryLabel(state, content) && <p class="profile-note">Mang theo: {inventoryLabel(state, content)}</p>}
             <p class="profile-note"><TermText text="Tư chất tiên thiên định từ lúc sinh, chỉ đổi được nhờ kỳ ngộ hay khí vận." /></p>

@@ -1,4 +1,5 @@
 // Does a life meet an event's (or a choice's) conditions? Pure, no RNG.
+import { lifeStage, schoolOf, tradeOf } from '../schooling';
 import type { Content } from '../../core/content';
 import type { GameEvent } from '../../core/schemas';
 import type { GameState } from '../../core/types';
@@ -108,6 +109,23 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     const v = state.times?.vars[w.id];
     return v === undefined || (w.gte !== undefined && v < w.gte) || (w.lte !== undefined && v > w.lte);
   })) return false;
+  // 10.1 Học đường, học nghề.
+  if (c.lifeStage?.length && content && !c.lifeStage.includes(lifeStage(content, state.character.age)?.id ?? '')) return false;
+  if (c.school) {
+    const sc = schoolOf(state);
+    if (c.school.enrolled !== undefined && c.school.enrolled !== !!sc.at) return false;
+    if (c.school.at !== undefined && sc.at !== c.school.at) return false;
+    if (c.school.ever !== undefined && c.school.ever !== sc.ever) return false;
+    if (c.school.gradeMin !== undefined && sc.grade < c.school.gradeMin) return false;
+    if (c.school.gradeMax !== undefined && sc.grade > c.school.gradeMax) return false;
+  }
+  if (c.trade) {
+    const t = tradeOf(state);
+    if (c.trade.any !== undefined && c.trade.any !== !!t.id) return false;
+    if (c.trade.id !== undefined && t.id !== c.trade.id) return false;
+    if (c.trade.learning !== undefined && c.trade.learning !== t.learning) return false;
+    if (c.trade.levelMin !== undefined && (!t.id || t.level < c.trade.levelMin)) return false;
+  }
   if (c.flagsAll?.some((f) => !state.flags[f])) return false;
   if (c.itemsAll?.some((i) => !(state.inventory[i] > 0))) return false;
   if (c.flagsNone?.some((f) => state.flags[f])) return false;
@@ -130,6 +148,9 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
   if (c.family) {
     if (c.family.deadAny !== undefined && state.family.some((r) => !r.alive) !== c.family.deadAny) return false;
     if (c.family.parentAlive !== undefined && state.family.some((r) => r.alive && (r.role === 'father' || r.role === 'mother')) !== c.family.parentAlive) return false;
+    const ca = c.family.childAge;
+    if (ca && !state.family.some((r) => r.alive && r.role === 'child' && (ca.min === undefined || r.age >= ca.min) && (ca.max === undefined || r.age <= ca.max))) return false;
+    if (c.family.siblingAlive !== undefined && state.family.some((r) => r.alive && r.role === 'sibling') !== c.family.siblingAlive) return false;
   }
   if (c.lifespan) {
     const left = state.cult.lifespan - state.character.age;

@@ -239,6 +239,17 @@
     "careerMonths": { "quan": 10, "thuong": 8, "vo_lam": 6, "y": 8, "tap_dich": 9 },
     "careerMonthsDefault": 8
   },
+  "schooling": {
+    "enrollAge": [6, 12],
+    "leaveAge": 16,
+    "gradeBase": 3,
+    "intellectWeight": 0.08,
+    "classmates": 2,
+    "tradeMinAge": 12,
+    "tradeMonths": 4,
+    "tradeYears": [2, 3, 4],
+    "tradeChance": { "base": 0.3, "weight": 0.004 }
+  },
   "careers": {
     "joinAge": [14, 40],
     "income": [10, 25, 50, 100, 200],

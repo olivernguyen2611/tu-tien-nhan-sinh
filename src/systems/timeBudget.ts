@@ -1,6 +1,7 @@
 // 9.4 Quỹ thời gian: each year has balance.time.monthsPerYear months. A mortal's career takes its months first;
 // activities spend months; for a cultivator the months left at the end of the year go to cultivation, so a
 // year of visits and errands is a year of slower tu vi. Bế quan locks the whole year for cultivation.
+import { schoolMonths } from './schooling';
 import type { Content } from '../core/content';
 import type { GameState } from '../core/types';
 
@@ -19,7 +20,7 @@ export function careerMonths(state: GameState, content: Content): number {
 
 /** Months still free this year for activities. */
 export function monthsLeft(state: GameState, content: Content): number {
-  return Math.max(0, content.balance.time.monthsPerYear - careerMonths(state, content) - monthsUsed(state));
+  return Math.max(0, content.balance.time.monthsPerYear - careerMonths(state, content) - schoolMonths(state, content) - monthsUsed(state));
 }
 
 /** Share of the year that goes to cultivation, given the months activities took. */

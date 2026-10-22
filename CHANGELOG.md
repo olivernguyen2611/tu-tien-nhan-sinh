@@ -8,6 +8,15 @@
 
 ## [Chưa phát hành]
 
+### 10.1 Tuổi thơ và học hành (2026-10-22)
+- Giai đoạn tuổi (sơ sinh, nhi đồng, thiếu niên, trưởng thành) hiện trong hồ sơ; điều kiện sự kiện mới `lifeStage`.
+- Học đường (`content/schooling.json`, số trong `balance.schooling`): trường làng (3 lạng/năm) và tư thục (10 lạng/năm). Vào học thì thầy đồ và 2 bạn học thành người quen thật. Học lực 0–100 tăng theo trí tuệ mỗi năm; hết tiền thì thôi học, 16 tuổi thì ra trường. Đi học tốn 4–6 tháng trong quỹ năm.
+- Học nghề dưới tay một sư phụ: rèn, mộc, thuốc, may, bếp, gốm; lên bậc học việc → thợ phụ → thợ chính → thợ cả theo năm và căn cốt. Thợ chính nghề rèn/thuốc mở nghề phụ luyện khí/luyện đan.
+- 13 hoạt động học hành (chăm học, trốn học, chép bài, luyện chữ, nịnh thầy, xin học, nghe lỏm, theo võ đường, học 6 nghề…).
+- 25 sự kiện học đường (`hoc-duong.json`), gồm "Con học không vào" cho phía cha mẹ và chuỗi "Huynh đệ khác đường" (anh chị em có linh căn được đón lên núi, nhiều năm sau trở về).
+- Sự kiện Vào trường tư thục giờ cho vào học thật. Điều kiện mới `school`, `trade`, `family.siblingAlive`, `family.childAge`; hiệu ứng mới `grade`, `enrollSchool`, `leaveSchool`, `startTrade`, `tradeLevel`; chữ mẫu `{sibling}`, `{teacher}`, `{school}`.
+- Simulate: persona phàm nhân đi học và học nghề; báo cáo thêm tỉ lệ đi học/học nghề (Thư sinh 88% đi học, Nông dân/Thương nhân/Hiệp khách ~95% học nghề).
+
 ### Chơi thử Mốc A (2026-10-21)
 - Bot giao diện chơi tới 48 tuổi ở 390px và 1280px: dock Hành sự, quỹ tháng ("còn 11/12 tháng"), niên hiệu trên từng năm nhật ký, dòng Thời cuộc, hồ sơ có Tâm tính / Danh vọng / Nhân quả qua lời đồn đều chạy; không lỗi script.
 - Sửa: nút Ngao du có ghi chú dài tràn ngang màn hình điện thoại (giờ xuống dòng); phàm nhân nhận dòng thời cuộc dùng từ tu chân ("tán tu", "linh dược"), nay có `mortalText` riêng; Quan uy âm hiện là "Mất lòng quan phủ".

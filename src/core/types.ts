@@ -115,6 +115,10 @@ export interface GameState {
     dynasty: string; era: string; eraFrom: number; reignLeft: number;
     eras: { dynasty: string; era: string; from: number }[];
   };
+  /** 10.1 Học đường: the school attended now (null when not), since when, học lực 0–100, the teacher; `ever` = went to school once. */
+  school?: { at: string | null; since: number | null; grade: number; teacher: string | null; ever: boolean };
+  /** 10.1 Học nghề: the trade, its level (0 = học việc), years at this level, the master; learning = still under the master. */
+  trade?: { id: string | null; level: number; years: number; master: string | null; learning: boolean };
   /** 9.R6a: developer mode was on during this life; it earns no records (thành tựu, thử thách tuần, điểm Luân Hồi, Thiên Thư, Sổ tri thức). */
   devUsed?: boolean;
   /** Task 5b.1: thiên phú luân hồi this life was born with (id → level), bought in earlier lives. */

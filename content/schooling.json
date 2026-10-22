@@ -1,0 +1,27 @@
+{
+  "stages": [
+    { "id": "so_sinh", "name": "Sơ sinh", "maxAge": 3 },
+    { "id": "nhi_dong", "name": "Nhi đồng", "maxAge": 11 },
+    { "id": "thieu_nien", "name": "Thiếu niên", "maxAge": 17 },
+    { "id": "truong_thanh", "name": "Trưởng thành" }
+  ],
+  "schools": [
+    { "id": "truong_lang", "name": "Trường làng", "fee": 3, "months": 4, "teacherRole": "thầy dạy chữ", "classmateRole": "bạn đồng song" },
+    { "id": "tu_thuc", "name": "Tư thục", "fee": 10, "months": 6, "teacherRole": "thầy dạy chữ", "classmateRole": "bạn đồng song", "minSilver": 10 }
+  ],
+  "trades": [
+    { "id": "ren", "name": "Nghề rèn", "masterRole": "thầy dạy nghề", "craft": "forging", "flag": "nghe_ren", "levels": ["Học việc", "Thợ phụ", "Thợ chính", "Thợ cả"] },
+    { "id": "moc", "name": "Nghề mộc", "masterRole": "thầy dạy nghề", "levels": ["Học việc", "Thợ phụ", "Thợ chính", "Thợ cả"] },
+    { "id": "thuoc", "name": "Nghề thuốc", "masterRole": "thầy dạy nghề", "craft": "alchemy", "flag": "nghe_thuoc", "levels": ["Học việc", "Bốc thuốc", "Lang trung", "Thầy thuốc giỏi"] },
+    { "id": "may", "name": "Nghề may", "masterRole": "thầy dạy nghề", "levels": ["Học việc", "Thợ phụ", "Thợ chính", "Thợ cả"] },
+    { "id": "bep", "name": "Nghề bếp", "masterRole": "thầy dạy nghề", "levels": ["Phụ bếp", "Bếp phó", "Bếp chính", "Đầu bếp danh tiếng"] },
+    { "id": "gom", "name": "Nghề gốm", "masterRole": "thầy dạy nghề", "levels": ["Học việc", "Thợ phụ", "Thợ chính", "Thợ cả"] }
+  ],
+  "texts": {
+    "enroll": "Ngươi vào {school}. Thầy đồ là {teacher}, nét mặt nghiêm như tượng đá.",
+    "leave": "Ngươi rời {school}, học lực {grade}. Thầy dặn: chữ nghĩa không mang theo được thì đừng vứt đi.",
+    "dropOut": "Nhà hết tiền đóng học, ngươi phải thôi {school}.",
+    "tradeStart": "Ngươi bái {master} làm thầy, học {trade}. Bắt đầu từ chân {level}.",
+    "tradeLevel": "{trade}: ngươi lên {level}."
+  }
+}

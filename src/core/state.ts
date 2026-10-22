@@ -12,6 +12,7 @@ import { makeName, splitName } from '../systems/names';
 import { cultivateYear, rootTestAge } from '../systems/cultivation';
 import { applyJobCrafts } from '../systems/crafts';
 import { careerYear } from '../systems/career';
+import { schoolYear } from '../systems/schooling';
 import { sectYear } from '../systems/sect';
 import { lineageYear, rollPaths } from '../systems/paths';
 import { rankingYear } from '../systems/rankings';
@@ -96,6 +97,10 @@ export function fillTemplate(text: string, state: GameState, content?: Content):
     // Task 3.9: forms of address by gender: the lover calls themself muội/huynh, calls the player chàng/nàng.
     .replace(/\{loverSelf\}/g, romanceTarget(state, 'beloved')?.gender === 'nam' ? 'huynh' : 'muội')
     .replace(/\{playerDear\}/g, state.character.gender === 'nam' ? 'chàng' : 'nàng')
+    // 10.1: a living sibling, the teacher (thầy đồ or thầy dạy nghề) and the school.
+    .replace(/\{sibling\}/g, state.family.find((r) => r.role === 'sibling' && r.alive)?.name ?? 'anh em ruột')
+    .replace(/\{teacher\}/g, npcById(state, state.school?.teacher ?? state.trade?.master)?.name ?? 'thầy')
+    .replace(/\{school\}/g, content?.schooling?.schools.find((x) => x.id === state.school?.at)?.name ?? 'trường')
     // Task 3.9: {deceased} = a parent who has died, else any relative.
     .replace(/\{deceased\}/g, deceasedName(state))
     // Task 5b.7: the past life's sect and the name its master had then.
@@ -213,6 +218,8 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     extremes: { streak: {}, active: {}, givenAt: {}, lastLeisure: null },
     activities: { last: {}, year: -1, uses: {} },
     times: initTimes(input.seed, content, 0),
+    school: { at: null, since: null, grade: 0, teacher: null, ever: false },
+    trade: { id: null, level: 0, years: 0, master: null, learning: false },
     log: [],
   };
   state.log.push({ age: 0, lines: [{ text: fillTemplate(origin.birthText, state), tone: 'normal' }] });
@@ -254,7 +261,7 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   const used = monthsUsed(state);
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(acquaintanceYear(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content, used), content), content), content), content), content), content), content), content), content), content), content);
+  const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(schoolYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(acquaintanceYear(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content, used), content), content), content), content), content), content), content), content), content), content), content), content);
   // Task 4.1: in seclusion no ordinary event comes (follow-ups wait for the door to open);
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;

@@ -3,7 +3,7 @@
     "id": "vao_tu_thuc",
     "category": "study",
     "title": "Vào trường tư thục",
-    "text": "Trong {hometown} có một trường tư thục, học phí mười lạng một năm.",
+    "text": "Trong {hometown} có một trường tư thục, học phí mười lạng một năm, đóng vào cuối năm.",
     "themes": [
       "study"
     ],
@@ -11,6 +11,9 @@
       "age": {
         "min": 6,
         "max": 8
+      },
+      "school": {
+        "enrolled": false
       }
     },
     "weight": 10,
@@ -29,11 +32,8 @@
         "result": {
           "text": "Ngày đầu tiên ngươi học được chữ 'nhân'. Ngày thứ hai đã quên.",
           "effects": {
-            "silver": -10,
             "stat.intellect": 4,
-            "setFlags": [
-              "di_hoc"
-            ]
+            "enrollSchool": "tu_thuc"
           }
         }
       },

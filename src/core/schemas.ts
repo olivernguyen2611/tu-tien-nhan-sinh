@@ -62,6 +62,10 @@ const BaseConditionsSchema = z
     /** 9.5 Thời cuộc: the pha thời thế now is one of these, and world variables are in range. */
     worldPhase: ids,
     worldVars: z.array(z.object({ id, gte: z.number().optional(), lte: z.number().optional() }).strict()).optional(),
+    /** 10.1: giai đoạn tuổi (schooling.json stages), at school (and học lực range), learning or knowing a trade. */
+    lifeStage: ids,
+    school: z.object({ enrolled: z.boolean().optional(), at: id.optional(), gradeMin: z.number().optional(), gradeMax: z.number().optional(), ever: z.boolean().optional() }).strict().optional(),
+    trade: z.object({ id: id.optional(), any: z.boolean().optional(), levelMin: z.number().int().optional(), learning: z.boolean().optional() }).strict().optional(),
     root: z.object({ tested: z.boolean().optional(), usable: z.boolean().optional(), minElements: z.number().int().min(1).optional(), innate: z.boolean().optional() }).strict().optional(),
     /** Stage within the current realm, 0-based (task 2.8: "Luyện Khí tầng 4+" = min 3). */
     stage: z.object({ min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional(),
@@ -131,7 +135,7 @@ const BaseConditionsSchema = z
       .strict()
       .optional(),
     /** Task 3.9: family state ({deceased} = a relative who has died). */
-    family: z.object({ deadAny: z.boolean().optional(), parentAlive: z.boolean().optional() }).strict().optional(),
+    family: z.object({ deadAny: z.boolean().optional(), parentAlive: z.boolean().optional(), siblingAlive: z.boolean().optional(), childAge: z.object({ min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional() }).strict().optional(),
     /** Task 4.10: nearEnd = years left ≤ balance.lifespan.pressureLeftPct of the lifespan; maxLeft = at most this many years left. */
     lifespan: z.object({ nearEnd: z.boolean().optional(), maxLeft: z.number().int().min(0).optional() }).strict().optional(),
     /** Task 3.4: the NPC this event is about (met earlier, or picked by an npcTrigger). */
@@ -242,6 +246,12 @@ export const EffectsSchema = z
     martialAscend: z.boolean().optional(),
     martialAttempt: z.boolean().optional(),
     martialYears: z.number().int().optional(),
+    /** 10.1: học lực ±; enter a school (schooling.json id) or leave it; take up a trade under a master, or gain a level of it. */
+    grade: z.number().optional(),
+    enrollSchool: id.optional(),
+    leaveSchool: z.boolean().optional(),
+    startTrade: id.optional(),
+    tradeLevel: z.number().int().optional(),
     /** Extra % for the next martial breakthrough. */
     martialBonus: z.number().optional(),
     /** An elder of the sect takes you as a personal disciple. */
@@ -339,7 +349,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1578,6 +1588,25 @@ export const BalanceSchema = z
         careerMonthsDefault: z.number().int().min(0),
       })
       .strict(),
+    /** 10.1 Học đường, học nghề (content/schooling.json has the schools and trades). */
+    schooling: z
+      .object({
+        /** Ages a child may enter a school; everyone leaves at leaveAge. */
+        enrollAge: range,
+        leaveAge: z.number().int().min(1),
+        /** Học lực gained in a school year: base + trí tuệ × intellectWeight, × months / school months. */
+        gradeBase: z.number(),
+        intellectWeight: z.number(),
+        classmates: z.number().int().min(0),
+        /** Học nghề: from this age; months a year; years at each level before the next (last value repeats). */
+        tradeMinAge: z.number().int().min(0),
+        tradeMonths: z.number().int().min(0),
+        tradeYears: z.array(z.number().int().min(1)).min(1),
+        /** Chance to pass to the next level once the years are served: base + (căn cốt + ngộ tính) × weight. */
+        tradeChance: z.object({ base: z.number(), weight: z.number() }).strict(),
+      })
+      .strict()
+      .optional(),
     /** Mortal careers (task 2.11). */
     careers: z
       .object({
@@ -2809,6 +2838,30 @@ export type TierTermsFile = z.infer<typeof TierTermsFileSchema>;
  * 9.6 relations.json: kinds of relation (bằng hữu, kẻ thù, chủ nợ…) shown under groups in the Nhân duyên tab,
  * the role texts each kind takes by default, and the occupations an NPC can move into over the years.
  */
+/** 10.1 content/schooling.json: giai đoạn tuổi, schools, trades and their log lines. */
+export const SchoolingFileSchema = z.object({
+  stages: z.array(z.object({ id, name: z.string().min(1), maxAge: z.number().int().optional() }).strict()).min(1),
+  schools: z.array(z.object({
+    id, name: z.string().min(1), fee: z.number().min(0), months: z.number().int().min(0),
+    teacherRole: z.string().min(1), classmateRole: z.string().min(1),
+    /** Origins that may enter without the fee check failing them first (a poor child cannot pay a tư thục). */
+    minSilver: z.number().min(0).default(0),
+  }).strict()).min(1),
+  trades: z.array(z.object({
+    id, name: z.string().min(1), masterRole: z.string().min(1),
+    /** The bách nghệ it leads to if the life ever cultivates. */
+    craft: z.enum(['alchemy', 'forging', 'formation', 'talisman', 'farming', 'beast']).optional(),
+    /** Flag set at the third level (thợ chính): the job flags balance.crafts reads (nghe_ren, nghe_thuoc…). */
+    flag: id.optional(),
+    levels: z.array(z.string().min(1)).min(2),
+  }).strict()).min(1),
+  texts: z.object({
+    enroll: z.string().min(1), leave: z.string().min(1), dropOut: z.string().min(1),
+    tradeStart: z.string().min(1), tradeLevel: z.string().min(1),
+  }).strict(),
+}).strict();
+export type SchoolingFile = z.infer<typeof SchoolingFileSchema>;
+
 export const RelationsFileSchema = z.object({
   groups: z.array(z.object({ id, name: z.string().min(1) }).strict()).min(1),
   kinds: z.array(z.object({ id, name: z.string().min(1), group: id, roles: z.array(z.string().min(1)).default([]) }).strict()).min(1),
