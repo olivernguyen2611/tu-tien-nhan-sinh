@@ -98,6 +98,12 @@ const BaseConditionsSchema = z
       fameMin: z.number().optional(), fameMax: z.number().optional(), infamyMin: z.number().optional(), infamyMax: z.number().optional(), alias: z.boolean().optional(),
     }).strict().optional(),
     /** 12.1: an đại sự running (one of these); the emperor's temper; a quyền thần holds power; sưu thuế at least. */
+    /** 12.3 Binh nghiệp: serving in the army; quân hàm at least / at most; came in drafted / of one's will; at war now;
+     *  has ever served; deserted. */
+    army: z.object({
+      serving: z.boolean().optional(), rankMin: z.number().int().optional(), rankMax: z.number().int().optional(), via: z.array(z.enum(['draft', 'volunteer'])).optional(),
+      atWar: z.boolean().optional(), served: z.boolean().optional(), deserted: z.boolean().optional(),
+    }).strict().optional(),
     /** 12.2 Quan trường: holds office; rank (index into the quan lộ rungs) at least / at most; this tax style / phe; tội chứng
      *  at least / at most; came in by this way; sits at court (rank ≥ office.courtFrom). */
     office: z.object({
@@ -377,6 +383,12 @@ export const EffectsSchema = z
     /** 11.5: contest this year's đại hội; a minh chủ's uy vọng ±; step down from the seat. */
     /** 12.2 Quan trường: enter office by buying it or being recommended; set the tax style / phe; chính tích and tội chứng ±;
      *  answer an đàn hặc (argue, bribe, confess and step down); leave office of one's own will. */
+    /** 12.3 Binh nghiệp: enlist (drafted or of one's will); quân công ±; fight a trận now; leave the army (giải ngũ,
+     *  đào ngũ, tan quân). */
+    armyJoin: z.enum(['draft', 'volunteer']).optional(),
+    armyMerit: z.number().optional(),
+    armyBattle: z.boolean().optional(),
+    armyLeave: z.enum(['discharge', 'desert', 'scatter']).optional(),
     officeJoin: z.enum(['buy', 'recommend']).optional(),
     officeStyle: id.optional(),
     officeFaction: id.optional(),
@@ -501,7 +513,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt', 'learnArt', 'practiseArt', 'buyWeapon', 'gainWeapon', 'wound', 'wulinTournament', 'wulinPrestige', 'wulinResign', 'officeJoin', 'officeStyle', 'officeFaction', 'officeMerit', 'officeEvidence', 'officeDefend', 'officeResign'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt', 'learnArt', 'practiseArt', 'buyWeapon', 'gainWeapon', 'wound', 'wulinTournament', 'wulinPrestige', 'wulinResign', 'officeJoin', 'officeStyle', 'officeFaction', 'officeMerit', 'officeEvidence', 'officeDefend', 'officeResign', 'armyJoin', 'armyMerit', 'armyBattle', 'armyLeave'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1854,6 +1866,17 @@ export const BalanceSchema = z
      *  office costs (by rank bought), the rank a bought office cannot rise past, the tội chứng it starts with; answering an
      *  đàn hặc (base chance cleared, per intellect point, per point of tội chứng, a bribe's cost per rank and bonus);
      *  tội chứng at which a lost case is bãi chức, and at which it is tru di; the purge when a fallen patron's man is caught. */
+    /** 12.3 Binh nghiệp: pay by quân hàm; quân công needed to rise from each hàm and the chance; the enemy's strength
+     *  at each hàm, × in a war / peace year, how sharply strength decides; the hàm from which intellect leads (and how
+     *  much); a trận's chance in a peace year; quân công and bạc for a won trận by hàm; a lost trận's death, heavy wound
+     *  and health lost; years a draftee serves at least; age the army sends one home; years before a volunteer may ask out;
+     *  the truy nã a deserter gets; the age range to enlist. */
+    army: z.object({
+      pay: z.array(z.number()).min(1), meritNeed: z.array(z.number()).min(1), promoteChance: z.number(), foe: z.array(z.number()).min(1),
+      warMul: z.number(), peaceMul: z.number(), sharpness: z.number(), leadFrom: z.number().int(), leadWeight: z.number(), peaceBattle: z.number(),
+      winMerit: z.array(z.number()).min(1), winSilver: z.array(z.number()).min(1), loseDeath: z.number(), loseMaim: z.number(), loseHealth: z.number(),
+      draftYears: z.number().int(), retireAge: z.number().int(), leaveAfter: z.number().int(), desertWanted: z.number().int(), joinAge: z.tuple([z.number(), z.number()]),
+    }).strict().optional(),
     office: z.object({
       salary: z.array(z.number()).min(1), yearsPerRank: z.number().int().min(1), meritNeed: z.array(z.number()).min(1),
       meritBase: z.number(), meritPerPoint: z.number(), meritRand: z.tuple([z.number(), z.number()]), promoteChance: z.array(z.number()).min(1),
@@ -3449,6 +3472,21 @@ export type JianghuFile = z.infer<typeof JianghuFileSchema>;
  *  variables per year, how readily a quyền thần rises and grows), the đại sự that start from the world, the bắt lính event,
  *  and lời văn. An affair starts when the world variables are below / above the given values (or the phase is one of
  *  these, a quyền thần holds power, the emperor has this temper; onDeath = a tranh ngôi when an emperor dies). */
+/** 12.3 Binh nghiệp (content/army.json): the quân hàm, the hàm from which one is a tướng, the injuries a lost trận
+ *  may leave, the trận names by war or peace, and the lời văn. */
+export const ArmyFileSchema = z.object({
+  ranks: z.array(z.string().min(1)).min(2),
+  generalFrom: z.number().int().min(1),
+  maims: z.array(id).min(1),
+  battles: z.object({ war: z.array(z.string().min(1)).min(1), peace: z.array(z.string().min(1)).min(1) }).strict(),
+  texts: z.object({
+    join: z.record(z.enum(['draft', 'volunteer']), z.string().min(1)), win: z.array(z.string().min(1)).min(1), lose: z.array(z.string().min(1)).min(1),
+    died: z.string().min(1), maimed: z.string().min(1), promote: z.string().min(1), general: z.string().min(1), pay: z.string().min(1),
+    discharge: z.string().min(1), retire: z.string().min(1), desert: z.string().min(1), scatter: z.string().min(1), warOver: z.string().min(1),
+  }).strict(),
+}).strict();
+export type ArmyFile = z.infer<typeof ArmyFileSchema>;
+
 /** 12.2 Quan trường (content/office.json): the career it runs (its rungs are the ranks), the phẩm of each rank, the rank
  *  from which one sits at court, the tax styles (extra silver as a share of salary, tội chứng, chính tích, nghiệp, hương
  *  danh per year; promotion ± under an emperor's temper), the phe (promotion ±, đàn hặc ±, defence ±, needs a quyền thần),

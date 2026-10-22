@@ -7,6 +7,7 @@ import { festivalFor } from '../leisure';
 import { jianghuOf } from '../jianghu';
 import { wulinOpen } from '../wulin';
 import { officeOf } from '../office';
+import { armyOf, atWar } from '../army';
 import { courtTax } from '../court';
 import type { Content } from '../../core/content';
 import type { GameEvent } from '../../core/schemas';
@@ -176,6 +177,18 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (f.rankMin !== undefined && (!m || m.rank < f.rankMin)) return false;
     if (f.meritMin !== undefined && (!m || m.merit < f.meritMin)) return false;
     if (f.hunted !== undefined && !!state.jianghu?.hunted !== f.hunted) return false;
+  }
+  if (c.army) {
+    const a = armyOf(state);
+    const f = c.army;
+    if (f.serving !== undefined && !!a !== f.serving) return false;
+    if ((f.rankMin !== undefined || f.rankMax !== undefined || f.via) && !a) return false;
+    if (a && f.rankMin !== undefined && a.rank < f.rankMin) return false;
+    if (a && f.rankMax !== undefined && a.rank > f.rankMax) return false;
+    if (a && f.via && !f.via.includes(a.via)) return false;
+    if (f.atWar !== undefined && (!content || atWar(state, content) !== f.atWar)) return false;
+    if (f.served !== undefined && !!state.flags.tung_tong_quan !== f.served) return false;
+    if (f.deserted !== undefined && !!state.flags.dao_ngu !== f.deserted) return false;
   }
   if (c.office) {
     const o = content ? officeOf(state, content) : null;

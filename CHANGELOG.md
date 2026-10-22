@@ -8,6 +8,22 @@
 
 ## [Chưa phát hành]
 
+### 12.3 Binh nghiệp và chiến tranh (2026-10-22)
+- Binh nghiệp thành hệ thống (`army.json`, `src/systems/army.ts`): 8 quân hàm từ Binh tốt tới Đại tướng quân, mỗi hàm một mức quân lương. Vào quân bằng hai cửa: bị bắt lính, hoặc tự tòng quân.
+- Sự kiện **Bắt lính** (mẫu NC P6) nổ ra khi triều đình có đại sự cần quân (ngoại xâm, khởi nghĩa, tranh ngôi): lên đường, nộp bạc chuộc, hoặc trốn vào núi.
+- Năm có chiến sự thì đánh một trận, thời bình chỉ thỉnh thoảng đi tuần biên, dẹp phỉ. Trận đánh dùng chiến lực hiện có (thể chất, võ học); từ Bách hộ trở lên, học lực giúp cầm quân. Hàm càng cao, quân địch càng mạnh. Thắng thì có quân công và chiến lợi phẩm. Thua thì mất máu, có khi thành thương binh (tàn tật, được cho về làng), có khi tử trận.
+- Đủ quân công thì thăng hàm; từ Tướng quân là được phong tướng. Lính bị bắt được về làng khi chiến sự yên. Ai đủ 55 tuổi cũng được cho về. Lính tự nguyện thì xin giải ngũ được.
+- Đào ngũ là tội (tội mới "Đào ngũ"): bị truy nã, có ngày lính lạ về làng hỏi tên.
+- Đang tại ngũ thì không làm được nghề khác.
+- 5 hoạt động mới: Tòng quân, Thao luyện, Đọc binh thư (từ Thập trưởng), Xin giải ngũ, Đào ngũ (nhóm Phạm pháp).
+- 19 sự kiện (`binh-nghiep.json`):
+  - Bắt lính.
+  - 11 sự kiện trong quân: đêm trước trận, cảm tử quân, cứu đồng đội, lương cạn, chủ tướng cướp công, tù binh, rủ đào ngũ, đại quân tan, thao trường, thượng phương bảo kiếm, thư nhà.
+  - 2 sự kiện sau khi về: lão binh, sổ đào binh.
+  - 5 sự kiện chiến tranh lan tới quê nhà: giặc tới gần (tị nạn hoặc mất nhà), buôn lương thực, dân tị nạn, lính bại trận cướp làng, chiêu mộ nghĩa dũng.
+- Hồ sơ có dòng "Binh nghiệp:". Có điều kiện `army` cho sự kiện.
+- Mô phỏng: khoảng 1/4 người phàm từng tòng quân. Trong một cuộc chiến 4 năm, lính bị bắt chết khoảng 7%, thành thương binh khoảng 12%. Tuổi thọ trung bình gần như không đổi.
+
 ### 12.2 Quan trường (2026-10-22)
 - Quan lộ thành hệ thống quan trường (`office.json`, `src/systems/office.ts`): 8 bậc quan thay 5 nấc cũ, từ Huyện thừa (cửu phẩm) tới Tể tướng (nhất phẩm), mỗi bậc một mức lương. Cử nhân vào làm huyện thừa, Cống sĩ làm tri huyện, Tiến sĩ làm thông phán.
 - Ba cửa vào quan trường: khoa cử, **mua quan** (400 lượng ghế huyện thừa, 1200 lượng ghế tri huyện; quan mua mang sẵn tội chứng và không lên quá Tri phủ), hoặc **được tiến cử** khi đủ học lực.

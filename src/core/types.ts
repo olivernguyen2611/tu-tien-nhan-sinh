@@ -149,6 +149,9 @@ export interface GameState {
     emperor: { name: string; age: number; temper: string }; heir: { name: string; age: number } | null;
     minister: { name: string; sway: number } | null; affairs: { id: string; until: number }[]; started: Record<string, number>;
   };
+  /** 12.3 Binh nghiệp: quân hàm, quân công toward the next, joined at, drafted or volunteer, trận fought / won; or null
+   *  once out (deserted is remembered in flags). */
+  army?: { rank: number; merit: number; since: number; via: 'draft' | 'volunteer'; battles: number; wins: number; best: number } | null;
   /** 12.2 Quan trường (the rank is career.rung): tax style, phe (and the quyền thần served), chính tích toward the next rank, tội chứng 0–100, how the
    *  office was had, the age of the last đàn hặc, the highest rank held. */
   office?: { style: string; faction: string; patron: string | null; merit: number; evidence: number; via: 'exam' | 'buy' | 'recommend'; impeached: number | null; best: number };

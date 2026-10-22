@@ -1,0 +1,1119 @@
+[
+ {
+  "id": "tr_bat_linh",
+  "category": "jianghu",
+  "title": "Bắt lính",
+  "text": "Lý trưởng gõ mõ khắp làng, tay cầm cuốn sổ đinh: triều đình bắt lính, nhà nào có trai tráng phải nộp một người. Tên ngươi nằm ngay trang đầu.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "army": {
+    "serving": false
+   },
+   "office": {
+    "held": false
+   }
+  },
+  "weight": 0,
+  "cooldownYears": 1,
+  "choices": [
+   {
+    "text": "Lên đường",
+    "result": {
+     "text": "Ngươi gói một bộ áo, mấy nắm cơm, đi theo đoàn tân binh.",
+     "effects": {
+      "armyJoin": "draft",
+      "stat.physique": 1,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Nộp bạc chuộc",
+    "result": {
+     "text": "Ngươi nộp bốn mươi lượng cho lý trưởng. Một người khác đi thay, có điều ánh mắt nhà người ấy nhìn ngươi thật khó quên.",
+     "effects": {
+      "silver": -40,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Trốn vào núi",
+    "result": {
+     "text": "Đêm ấy ngươi trốn lên núi, sống trong hang đá cả mùa. Lý trưởng gạch tên ngươi, ghi thêm hai chữ \"trốn lính\".",
+     "effects": {
+      "wanted": 1,
+      "setFlags": [
+       "tron_linh"
+      ],
+      "stat.health": -2,
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qb_dem_truoc_tran",
+  "category": "army",
+  "title": "Đêm trước trận",
+  "text": "Mai là trận lớn. Lửa trại lách tách, có kẻ mài đao, có kẻ ngồi nhìn lên trời không nói.",
+  "themes": [
+   "army"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "army": {
+    "serving": true,
+    "atWar": true
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Viết thư về nhà",
+    "result": {
+     "text": "Ngươi nhờ một người biết chữ viết hộ mấy dòng. Gấp thư lại, nhét vào ngực áo.",
+     "effects": {
+      "stat.happiness": 2,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Mài đao tới sáng",
+    "result": {
+     "text": "Lưỡi đao sáng như nước. Ngươi không ngủ, nhưng tay không run.",
+     "effects": {
+      "stat.physique": 1,
+      "armyMerit": 1
+     }
+    }
+   },
+   {
+    "text": "Uống rượu với đồng đội",
+    "result": {
+     "text": "Mấy bình rượu nhạt chuyền tay nhau. Ai cũng cười, ai cũng biết mai có người không về.",
+     "effects": {
+      "stat.charm": 1,
+      "stat.happiness": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qb_cam_tu_quan",
+  "category": "army",
+  "title": "Cảm tử quân",
+  "text": "Chủ tướng cần một toán xung phong phá cổng thành. Ai sống sót về được thăng ba cấp.",
+  "themes": [
+   "army"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "army": {
+    "serving": true,
+    "atWar": true
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Bước ra nhận",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi trèo thang lên tường giữa mưa đá, chém đứt dây then cổng. Thành vỡ, tên ngươi được đọc trước ba quân.",
+     "effects": {
+      "armyMerit": 15,
+      "stat.physique": 1,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Ngươi bị hất từ thang xuống, gãy mấy cái xương sườn. Cổng thành vẫn đứng.",
+     "effects": {
+      "stat.health": -12,
+      "armyMerit": 3
+     }
+    }
+   },
+   {
+    "text": "Giữ đúng hàng ngũ",
+    "result": {
+     "text": "Ngươi đứng ở hàng thứ ba, giơ khiên, nhìn toán cảm tử chạy lên.",
+     "effects": {
+      "armyMerit": 2,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Lẩn ra phía sau",
+    "result": {
+     "text": "Ngươi giả vờ buộc lại dây giày tới khi trận xong. Đội trưởng nhìn ngươi lạnh tanh.",
+     "effects": {
+      "armyMerit": -3,
+      "stat.happiness": -1,
+      "stat.charm": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qb_cuu_dong_doi",
+  "category": "army",
+  "title": "Đồng đội trúng tên",
+  "text": "Giữa trận, gã đồng hương nằm cạnh ngươi bị một mũi tên xuyên đùi, kêu tên ngươi.",
+  "themes": [
+   "army"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "army": {
+    "serving": true
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Cõng hắn về",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ngươi cõng hắn chạy hai dặm dưới mưa tên. Hắn sống, cả đời gọi ngươi là ân nhân.",
+     "effects": {
+      "karma": 2,
+      "armyMerit": 4,
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Ngươi cõng hắn về được, còn mình lãnh một mũi tên vào vai.",
+     "effects": {
+      "karma": 2,
+      "stat.health": -8
+     }
+    }
+   },
+   {
+    "text": "Bỏ lại",
+    "result": {
+     "text": "Ngươi quay mặt đi. Tiếng gọi tên ngươi theo tới tận giấc mơ.",
+     "effects": {
+      "karma": -2,
+      "stat.daoHeart": -2,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qb_luong_can",
+  "category": "army",
+  "title": "Lương cạn",
+  "text": "Đường lương bị cắt. Quân trong doanh ăn cháo loãng đã nửa tháng, ngựa chết dần.",
+  "themes": [
+   "army"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "army": {
+    "serving": true
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Nhường phần cho kẻ yếu",
+    "result": {
+     "text": "Ngươi chia nửa bát cháo cho tên tân binh gầy nhất. Đội trưởng gật đầu.",
+     "effects": {
+      "stat.health": -3,
+      "karma": 1,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Theo đồng đội vào làng cướp thóc",
+    "result": {
+     "text": "Làng bên mất sạch thóc giống. Doanh trại có cơm, còn ngươi có một bao bạc nhỏ.",
+     "effects": {
+      "silver": 15,
+      "karma": -4,
+      "stat.health": 1,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Vào rừng đào rễ, bắt chuột",
+    "result": {
+     "text": "Ngươi sống được, và học được rằng rễ cây nào ăn được.",
+     "effects": {
+      "stat.health": -1,
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qb_tuong_cuop_cong",
+  "category": "army",
+  "title": "Chủ tướng cướp công",
+  "text": "Thủ cấp tướng địch do ngươi chém, nhưng trong tấu báo công, tên ngươi biến mất, thay bằng tên cháu chủ tướng.",
+  "themes": [
+   "army"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "army": {
+    "serving": true,
+    "rankMin": 1
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 5,
+  "choices": [
+   {
+    "text": "Nuốt giận",
+    "result": {
+     "text": "Ngươi im lặng. Trong quân, kẻ biết im lặng thường sống lâu.",
+     "effects": {
+      "stat.happiness": -2,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Tố lên quân pháp",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Mấy người làm chứng đứng ra. Quân pháp trả lại công cho ngươi.",
+     "effects": {
+      "armyMerit": 10,
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Chủ tướng gọi ngươi vào trướng, cười nhạt. Tháng sau ngươi bị đẩy ra tiền đồn.",
+     "effects": {
+      "armyMerit": -8,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Đòi lại ngay trước mặt mọi người",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Cả đội đứng sau ngươi. Chủ tướng đành sửa lại tấu báo, mặt tái mét.",
+     "effects": {
+      "armyMerit": 8,
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Ngươi bị phạt hai mươi roi vì tội vô lễ với thượng cấp.",
+     "effects": {
+      "stat.health": -6,
+      "armyMerit": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qb_tu_binh",
+  "category": "army",
+  "title": "Tù binh",
+  "text": "Đội của ngươi bắt được mấy tên lính địch, đứa nhỏ nhất chưa mọc râu.",
+  "themes": [
+   "army"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "army": {
+    "serving": true
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Giết cho gọn",
+    "result": {
+     "text": "Không ai phải canh tù binh nữa. Đêm đó đội ngươi ngủ ngon, trừ ngươi.",
+     "effects": {
+      "armyMerit": 2,
+      "karma": -3,
+      "stat.daoHeart": -2
+     }
+    }
+   },
+   {
+    "text": "Thả đứa nhỏ",
+    "result": {
+     "text": "Ngươi cắt dây cho thằng bé, chỉ đường về. Nó quỳ lạy rồi chạy mất.",
+     "effects": {
+      "karma": 2,
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Tra hỏi quân tình",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Một tên khai ra chỗ giấu lương của địch. Trận sau thắng lớn, công đầu ghi tên ngươi.",
+     "effects": {
+      "armyMerit": 8,
+      "stat.intellect": 1
+     }
+    },
+    "fail": {
+     "text": "Bọn chúng khai bừa. Đội ngươi đi lạc vào bẫy, may mà kịp rút.",
+     "effects": {
+      "stat.health": -5,
+      "armyMerit": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qb_ru_dao_ngu",
+  "category": "army",
+  "title": "Rủ đào ngũ",
+  "text": "Đêm khuya, gã nằm cạnh lay ngươi dậy: \"Đánh nữa chỉ có chết. Tối mai đổi gác, theo ta về quê.\"",
+  "themes": [
+   "army"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "army": {
+    "serving": true
+   }
+  },
+  "weight": 0.8,
+  "cooldownYears": 5,
+  "choices": [
+   {
+    "text": "Đi cùng",
+    "result": {
+     "text": "Hai người lẻn qua hàng rào lúc đổi gác, chạy một mạch tới sáng.",
+     "effects": {
+      "armyLeave": "desert",
+      "stat.happiness": 2,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Ở lại",
+    "result": {
+     "text": "\"Đi thì đi một mình.\" Sáng hôm sau giường bên cạnh trống trơn.",
+     "effects": {
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Báo lên đội trưởng",
+    "result": {
+     "text": "Gã bị bắt trước khi kịp trốn. Ngươi được ghi công, nhưng cả đội từ đó tránh mặt ngươi.",
+     "effects": {
+      "armyMerit": 4,
+      "karma": -1,
+      "stat.charm": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qb_dai_quan_tan",
+  "category": "army",
+  "title": "Đại quân tan",
+  "text": "Tin dữ truyền về: chủ soái tử trận, đại quân tan như ong vỡ tổ. Khắp nơi là lính chạy loạn.",
+  "themes": [
+   "army"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "army": {
+    "serving": true,
+    "atWar": true
+   }
+  },
+  "weight": 0.6,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Chạy về quê",
+    "result": {
+     "text": "Ngươi ném giáo, cởi giáp, lẫn vào đám dân chạy loạn.",
+     "effects": {
+      "armyLeave": "scatter",
+      "stat.health": -3
+     }
+    }
+   },
+   {
+    "text": "Gom tàn quân giữ đồn",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi gom được mấy trăm người, giữ đồn ba ngày tới khi viện binh tới. Tên ngươi được tâu về triều.",
+     "effects": {
+      "armyMerit": 20,
+      "stat.charm": 1,
+      "stat.daoHeart": 1
+     }
+    },
+    "fail": {
+     "text": "Tàn quân không nghe lệnh, bỏ chạy hết. Ngươi một mình giữ đồn, suýt chết.",
+     "effects": {
+      "stat.health": -10,
+      "armyMerit": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qb_luyen_quan",
+  "category": "army",
+  "title": "Thao trường",
+  "text": "Mùa thao luyện. Đội trưởng mới về, nổi tiếng hà khắc.",
+  "themes": [
+   "army"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "army": {
+    "serving": true,
+    "atWar": false
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Tập hết sức",
+    "result": {
+     "text": "Mỗi ngày vác bao cát chạy mười dặm. Người gầy đi, tay chân thành sắt.",
+     "effects": {
+      "stat.physique": 2,
+      "stat.health": -1,
+      "armyMerit": 2
+     }
+    }
+   },
+   {
+    "text": "Học binh thư lúc rảnh",
+    "result": {
+     "text": "Ngươi mượn được cuốn binh thư cũ của quân sư, đọc dưới đèn dầu.",
+     "effects": {
+      "stat.intellect": 2
+     }
+    }
+   },
+   {
+    "text": "Đánh bạc trong doanh",
+    "result": {
+     "text": "Thắng mấy trận, thua mấy trận, cuối cùng vẫn mất nửa tháng lương.",
+     "effects": {
+      "silver": -5,
+      "stat.happiness": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qb_ban_kiem",
+  "category": "army",
+  "title": "Thượng phương bảo kiếm",
+  "text": "Hoàng đế ban cho ngươi một thanh bảo kiếm và quyền tiền trảm hậu tấu. Cả triều nhìn ngươi bằng ánh mắt vừa kính vừa sợ.",
+  "themes": [
+   "army"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "army": {
+    "serving": true,
+    "rankMin": 6
+   }
+  },
+  "weight": 0.8,
+  "cooldownYears": 20,
+  "choices": [
+   {
+    "text": "Quỳ tạ ơn vua",
+    "result": {
+     "text": "Ngươi dập đầu ba lần. Thanh kiếm nặng hơn ngươi tưởng.",
+     "effects": {
+      "stat.happiness": 3,
+      "fame": 3
+     }
+    }
+   },
+   {
+    "text": "Xin vua thu lại",
+    "result": {
+     "text": "\"Thần không dám.\" Hoàng đế cười, nhưng trong lòng nhớ rằng ngươi biết điều.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qb_thu_nha",
+  "category": "army",
+  "title": "Thư nhà",
+  "text": "Có lá thư từ quê gửi tới, chữ xiêu vẹo, đã nhòe nước mưa.",
+  "themes": [
+   "army"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "army": {
+    "serving": true
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Đọc đi đọc lại",
+    "result": {
+     "text": "Ruộng nhà vẫn cấy, giếng vẫn trong, người nhà vẫn chờ. Ngươi gấp thư cất kỹ.",
+     "effects": {
+      "stat.happiness": 3
+     }
+    }
+   },
+   {
+    "text": "Gửi bạc về nhà",
+    "result": {
+     "text": "Ngươi gửi nửa số quân lương về quê.",
+     "effects": {
+      "silver": -10,
+      "stat.happiness": 2,
+      "karma": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qb_cuu_binh",
+  "category": "jianghu",
+  "title": "Lão binh",
+  "text": "Trẻ con trong làng vây quanh, đòi ngươi kể chuyện đánh trận.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "army": {
+    "serving": false,
+    "served": true
+   },
+   "age": {
+    "min": 30
+   }
+  },
+  "weight": 0.8,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Kể chuyện thắng trận",
+    "result": {
+     "text": "Ngươi kể tới đoạn giật cờ địch, bọn trẻ reo ầm lên.",
+     "effects": {
+      "stat.happiness": 2,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Kể chuyện đồng đội đã chết",
+    "result": {
+     "text": "Bọn trẻ im lặng. Có đứa về hỏi bố nó: \"Đánh trận để làm gì?\"",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qb_bi_bat_dao_ngu",
+  "category": "jianghu",
+  "title": "Sổ đào binh",
+  "text": "Hai tên lính lạ ghé quán nước đầu làng, hỏi thăm một kẻ có tên giống hệt tên ngươi.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "army": {
+    "serving": false,
+    "deserted": true
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 5,
+  "choices": [
+   {
+    "text": "Trốn đi nơi khác",
+    "result": {
+     "text": "Ngươi gói ghém trong đêm, bỏ làng mà đi.",
+     "effects": {
+      "fleeLaw": true,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Giả làm người khác",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi đổi giọng, đổi tên, nói chuyện như dân miền xuôi. Hai tên lính lắc đầu bỏ đi.",
+     "effects": {
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Một tên nhận ra vết sẹo trên tay ngươi.",
+     "effects": {
+      "arrest": true,
+      "stat.happiness": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "cc_giac_toi_gan",
+  "category": "court",
+  "title": "Giặc tới gần",
+  "text": "Khói lửa bốc lên ở mấy làng phía bắc. Người chạy qua đường bảo giặc chỉ còn cách hai ngày đường.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "army": {
+    "serving": false
+   },
+   "court": {
+    "affair": [
+     "ngoai_xam",
+     "khoi_nghia",
+     "tranh_ngoi"
+    ]
+   },
+   "realm": {
+    "max": "pham_nhan"
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 5,
+  "choices": [
+   {
+    "text": "Bỏ nhà đi tị nạn",
+    "result": {
+     "text": "Cả nhà gồng gánh đi về phương nam. Sau lưng, làng cũ chìm trong khói.",
+     "effects": {
+      "moveHome": true,
+      "silver": -20,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Ở lại giữ nhà",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Giặc rẽ sang đường khác. Làng ngươi thoát nạn.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.luck": 1
+     }
+    },
+    "fail": {
+     "text": "Giặc tràn qua. Nhà bị đốt, ngươi mất hết đồ đạc, chỉ giữ được cái mạng.",
+     "effects": {
+      "silver": -40,
+      "stat.health": -6,
+      "stat.happiness": -4
+     }
+    }
+   },
+   {
+    "text": "Chôn của, trốn vào rừng",
+    "result": {
+     "text": "Ngươi chôn hũ bạc dưới gốc cây, cả nhà trốn trong rừng nửa tháng.",
+     "effects": {
+      "stat.health": -3,
+      "stat.physique": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "cc_buon_luong",
+  "category": "court",
+  "title": "Buôn lương thực",
+  "text": "Giá gạo trong thành tăng gấp năm. Quân doanh thu mua lương thảo giá cao, chỉ cần dám chở qua vùng giáp ranh.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "army": {
+    "serving": false
+   },
+   "court": {
+    "affair": [
+     "ngoai_xam",
+     "khoi_nghia",
+     "tranh_ngoi"
+    ]
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 18
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Gom thóc chở bán",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ba chuyến xe trót lọt. Ngươi phất lên nhanh như diều gặp gió.",
+     "effects": {
+      "silver": 120,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Xe lương bị toán lính bại trận chặn cướp. Vốn liếng mất sạch.",
+     "effects": {
+      "silver": -60,
+      "stat.health": -4,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Bán gạo giá rẻ cho dân",
+    "result": {
+     "text": "Ngươi bán gạo với giá thường ngày. Lãi chẳng bao nhiêu, nhưng cả phố nhớ ơn.",
+     "effects": {
+      "karma": 2,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Không dính vào",
+    "result": {
+     "text": "Tiền chiến loạn, kiếm dễ mất cũng dễ. Ngươi đứng ngoài.",
+     "effects": {
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "cc_dan_ti_nan",
+  "category": "court",
+  "title": "Dân tị nạn",
+  "text": "Dân tị nạn từ phương bắc tràn về, ngủ dưới hiên chợ, gầy rộc.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "army": {
+    "serving": false
+   },
+   "court": {
+    "affair": [
+     "ngoai_xam",
+     "khoi_nghia",
+     "tranh_ngoi"
+    ]
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 16
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Cho một nhà ở nhờ",
+    "result": {
+     "text": "Một nhà năm miệng ăn ở nhờ chái sau. Tốn gạo, nhưng nhà ngươi thêm tiếng cười.",
+     "effects": {
+      "silver": -15,
+      "karma": 2,
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Thuê họ làm công rẻ",
+    "result": {
+     "text": "Mấy người khỏe mạnh làm ruộng cho ngươi, chỉ xin bữa cơm.",
+     "effects": {
+      "silver": 15,
+      "karma": -1,
+      "stat.charm": -1
+     }
+    }
+   },
+   {
+    "text": "Đóng cửa",
+    "result": {
+     "text": "Ngươi đóng cửa, tránh nhìn ra ngõ.",
+     "effects": {
+      "karma": -1,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "cc_linh_bai_tran",
+  "category": "court",
+  "title": "Lính bại trận",
+  "text": "Một toán lính bại trận kéo vào làng, mặt mũi bặm trợn, đòi cơm rượu và bạc.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "army": {
+    "serving": false
+   },
+   "court": {
+    "affair": [
+     "ngoai_xam",
+     "khoi_nghia",
+     "tranh_ngoi"
+    ]
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 14
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Nộp của cho yên",
+    "result": {
+     "text": "Ngươi nộp ít bạc, mấy bình rượu. Chúng ăn uống no say rồi đi.",
+     "effects": {
+      "silver": -15,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Cùng trai làng chống lại",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Gậy gộc, dao phay, cả làng xông ra. Toán lính bỏ chạy.",
+     "effects": {
+      "stat.physique": 1,
+      "karma": 1,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Ngươi bị chém một nhát vào tay. Làng vẫn mất của.",
+     "effects": {
+      "stat.health": -8,
+      "silver": -10
+     }
+    }
+   },
+   {
+    "text": "Trốn vào bụi tre",
+    "result": {
+     "text": "Ngươi nằm trong bụi tre tới tối. Về nhà thấy đồ đạc bị lục tung.",
+     "effects": {
+      "silver": -8,
+      "stat.health": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "cc_mo_linh_tinh_nguyen",
+  "category": "court",
+  "title": "Chiêu mộ nghĩa dũng",
+  "text": "Quan huyện dựng cờ giữa chợ chiêu mộ nghĩa dũng giữ thành, hứa mỗi người năm lượng bạc.",
+  "themes": [
+   "court"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "army": {
+    "serving": false
+   },
+   "court": {
+    "affair": [
+     "ngoai_xam",
+     "khoi_nghia",
+     "tranh_ngoi"
+    ]
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 16,
+    "max": 40
+   },
+   "office": {
+    "held": false
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 5,
+  "choices": [
+   {
+    "text": "Ghi tên tòng quân",
+    "result": {
+     "text": "Ngươi bước lên ghi tên. Quan huyện vỗ vai ngươi, ném cho năm lượng.",
+     "effects": {
+      "armyJoin": "volunteer",
+      "silver": 5,
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Đứng xem",
+    "result": {
+     "text": "Ngươi đứng xem người ta ghi tên, lòng nửa muốn nửa sợ.",
+     "effects": {
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ }
+]

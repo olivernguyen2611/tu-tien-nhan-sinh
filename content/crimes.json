@@ -229,6 +229,26 @@
       "fail": [
         "Sổ sách vừa sửa xong thì thượng ty về kiểm kho bất ngờ."
       ]
+    },
+    {
+      "id": "dao_ngu",
+      "name": "Đào ngũ",
+      "stat": "stat.luck",
+      "difficulty": 50,
+      "loot": [
+        0,
+        0
+      ],
+      "karma": -2,
+      "expose": 0.4,
+      "heat": 2,
+      "severity": 3,
+      "success": [
+        "Ngươi lẻn ra khỏi doanh trại lúc đổi gác. Sau lưng, đuốc vẫn sáng."
+      ],
+      "fail": [
+        "Vừa trèo qua hàng rào thì bị lính gác tóm cổ."
+      ]
     }
   ],
   "verdicts": {

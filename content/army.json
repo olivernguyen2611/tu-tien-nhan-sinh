@@ -1,0 +1,27 @@
+{
+  "ranks": ["Binh tốt", "Ngũ trưởng", "Thập trưởng", "Bách hộ", "Thiên hộ", "Đô úy", "Tướng quân", "Đại tướng quân"],
+  "generalFrom": 6,
+  "maims": ["que_chan", "mu_mot_mat", "cut_ngon", "seo_mat"],
+  "battles": {
+    "war": ["trận giữ ải", "trận phá doanh trại địch", "trận đánh úp lúc canh tư", "trận công thành", "trận giáp lá cà ngoài đồng trống", "trận chặn đường lương địch"],
+    "peace": ["chuyến tuần biên", "trận dẹp ổ thổ phỉ", "trận đuổi toán cướp ngựa ngoài ải", "chuyến hộ tống lương thảo"]
+  },
+  "texts": {
+    "join": {
+      "draft": "Ngươi khoác áo lính, ôm cây giáo cùn, theo đoàn tân binh ra khỏi làng. Mấy người nhà đứng ở đầu đường tới khi không còn thấy bóng.",
+      "volunteer": "Ngươi tới quân doanh ghi tên tòng quân. Viên đội trưởng nhìn ngươi từ đầu tới chân, ném cho một bộ áo giáp da."
+    },
+    "win": ["Thắng {battle}. Ngươi chém ngã mấy tên địch, máu dính cả lên mặt.", "Thắng {battle}. Cờ địch bị giật xuống, cả đội reo hò tới khàn giọng.", "Thắng {battle}. Ngươi sống, đồng đội phần lớn cũng sống. Thế là may."],
+    "lose": ["Thua {battle}. Đội ngũ vỡ tan, ngươi chạy giữa mưa tên.", "Thua {battle}. Ngươi bị đánh văng khỏi ngựa, nằm giữa xác người tới chiều.", "Thua {battle}. Quân lùi ba mươi dặm, xác đồng đội bỏ lại sau lưng."],
+    "died": "Một mũi tên lạc. Ngươi ngã xuống giữa chiến trường, không kịp nhìn lại quê nhà.",
+    "maimed": "Vết thương nặng tới mức quân y lắc đầu: không cầm giáo được nữa. Ngươi được cho về làng với tấm thẻ thương binh.",
+    "promote": "Lập được quân công, ngươi được thăng làm {rank}.",
+    "general": "Chiếu chỉ ban xuống, ngươi được phong {rank}. Từ một tên lính cầm giáo cùn, nay dưới trướng có cả vạn người.",
+    "pay": "Quân lương năm nay: {silver} lượng.",
+    "discharge": "Ngươi được giải ngũ, mang về chút bạc thưởng và cả một bụng chuyện chiến trường.",
+    "retire": "Tuổi đã cao, quân doanh cho ngươi về. Trên người không còn chỗ nào không có sẹo.",
+    "desert": "Đêm ấy ngươi trốn khỏi doanh trại. Từ nay tên ngươi nằm trong sổ đào binh.",
+    "scatter": "Đại quân tan rã. Ngươi ném áo giáp, lẫn vào dòng người chạy loạn mà về quê.",
+    "warOver": "Chiến sự yên, quân doanh cho tân binh về làng."
+  }
+}

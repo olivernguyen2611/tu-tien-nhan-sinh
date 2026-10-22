@@ -24,6 +24,7 @@ import { factionYear } from '../systems/jhFactions';
 import { artsYear } from '../systems/martialArts';
 import { wulinYear } from '../systems/wulin';
 import { officeYear } from '../systems/office';
+import { armyYear } from '../systems/army';
 import { sectYear } from '../systems/sect';
 import { lineageYear, rollPaths } from '../systems/paths';
 import { rankingYear } from '../systems/rankings';
@@ -270,8 +271,8 @@ export function advanceYear(state: GameState, content: Content): GameState {
   return next;
 }
 
-/** 12.2: the career year, then quan trường on top of it. */
-const careerOfficeYear = (s: GameState, c: Content): GameState => officeYear(careerYear(s, c), c);
+/** 12.2–12.3: the career year, then quan trường and binh nghiệp on top of it. */
+const careerOfficeYear = (s: GameState, c: Content): GameState => armyYear(officeYear(careerYear(s, c), c), c);
 
 function advanceYearOnce(state: GameState, content: Content): GameState {
   if (!state.alive || state.events.pending || state.fate || state.combat || state.cult.coreForming || state.cult.heartDemonTrial || state.martial.quest?.game || state.exam?.sitting) return state;

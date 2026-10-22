@@ -43,6 +43,7 @@ export function jobBlocked(state: GameState, content: Content, jobId: string): s
   if (state.cult.realm !== 'pham_nhan') return 'Đã bước vào tu tiên, chuyện phàm trần gác lại.';
   if (jobOf(state).id === jobId) return 'Đang làm nghề này.';
   if (extremeHasHook(state, content, 'cannotWork')) return 'Thân thể thế này, chưa làm nổi việc gì.';
+  if (state.army) return 'Đang tại ngũ, quân doanh không cho làm nghề khác.';
   if (schoolOf(state).at) return 'Đang đi học.';
   if (state.law?.jail) return 'Đang ở trong ngục.';
   if ((state.law?.convictions ?? 0) > 0 && content.balance.law?.recordBars.includes(jobId)) return 'Có tiền án, nghề này không nhận.';

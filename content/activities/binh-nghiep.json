@@ -1,0 +1,172 @@
+[
+ {
+  "id": "tong_quan",
+  "group": "nghe",
+  "name": "Tòng quân",
+  "icon": "兵",
+  "text": "Ghi tên vào quân doanh. Lương ít, chết dễ, nhưng một mũi giáo có thể đổi được cả đời.",
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "age": {
+    "min": 16,
+    "max": 40
+   },
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "army": {
+    "serving": false,
+    "deserted": false
+   },
+   "office": {
+    "held": false
+   }
+  },
+  "months": 1,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "text": [
+     "Ngươi tới quân doanh ghi tên."
+    ],
+    "effects": {
+     "armyJoin": "volunteer",
+     "stat.physique": 1
+    }
+   }
+  ]
+ },
+ {
+  "id": "thao_luyen",
+  "group": "nghe",
+  "name": "Thao luyện",
+  "icon": "操",
+  "text": "Ra thao trường tập trận: múa giáo, cưỡi ngựa, giữ hàng ngũ.",
+  "conditions": {
+   "army": {
+    "serving": true
+   }
+  },
+  "months": 3,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "weight": 3,
+    "text": [
+     "Cả mùa đông ngươi tập giáo dưới tuyết. Đội trưởng gật đầu.",
+     "Ngươi tập cưỡi ngựa tới rách cả đùi, nhưng giờ thì ngồi vững."
+    ],
+    "effects": {
+     "stat.physique": 1,
+     "armyMerit": 3
+    }
+   },
+   {
+    "weight": 1,
+    "text": [
+     "Ngã ngựa giữa thao trường, trật vai."
+    ],
+    "effects": {
+     "stat.health": -3
+    }
+   }
+  ]
+ },
+ {
+  "id": "doc_binh_thu",
+  "group": "nghe",
+  "name": "Đọc binh thư",
+  "icon": "策",
+  "text": "Trận mạc không chỉ có sức. Kẻ đọc binh thư biết khi nào nên đánh, khi nào nên chạy.",
+  "conditions": {
+   "army": {
+    "serving": true,
+    "rankMin": 2
+   }
+  },
+  "months": 2,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "text": [
+     "Ngươi chép tay mấy thiên binh pháp, đọc tới thuộc lòng.",
+     "Ngươi xếp đá trên bàn bày lại trận năm ngoái, mới thấy chỗ thua."
+    ],
+    "effects": {
+     "stat.intellect": 2,
+     "armyMerit": 2
+    }
+   }
+  ]
+ },
+ {
+  "id": "xin_giai_ngu",
+  "group": "nghe",
+  "name": "Xin giải ngũ",
+  "icon": "歸",
+  "text": "Treo giáp, về quê. Tòng quân đủ năm mới được xin về.",
+  "conditions": {
+   "army": {
+    "serving": true,
+    "via": [
+     "volunteer"
+    ]
+   }
+  },
+  "months": 1,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "text": [
+     "Ngươi dâng đơn xin về, quân doanh chuẩn."
+    ],
+    "effects": {
+     "armyLeave": "discharge",
+     "stat.happiness": 3
+    }
+   }
+  ]
+ },
+ {
+  "id": "dao_ngu",
+  "group": "pham_phap",
+  "name": "Đào ngũ",
+  "icon": "逃",
+  "text": "Trốn khỏi quân doanh. Thoát thì về được nhà, nhưng tên nằm trong sổ đào binh cả đời.",
+  "conditions": {
+   "army": {
+    "serving": true
+   }
+  },
+  "months": 1,
+  "limit": {
+   "perYear": 1,
+   "cooldownYears": 1
+  },
+  "outcomes": [
+   {
+    "text": [
+     "Đêm không trăng, ngươi lẻn qua hàng rào doanh trại."
+    ],
+    "effects": {
+     "armyLeave": "desert",
+     "stat.happiness": 1
+    }
+   }
+  ]
+ }
+]

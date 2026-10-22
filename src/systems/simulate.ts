@@ -147,6 +147,9 @@ export interface LifeResult {
   /** 12.2: highest quan trường rank held (−1 never in office), and whether the life ended executed. */
   officeBest?: number;
   executed?: boolean;
+  /** 12.3: served in the army; became a tướng. */
+  soldier?: boolean;
+  general?: boolean;
   tradeLevel?: number;
   /** 10.2: highest khoa cử level passed (-1 = none). */
   examRank?: number;
@@ -378,6 +381,8 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     feud: !!s.flags.an_oan_xong,
     officeBest,
     executed: s.death?.cause === 'execution',
+    soldier: !!s.flags.tung_tong_quan,
+    general: !!s.flags.phong_tuong,
     tradeLevel: s.trade?.id ? s.trade.level : -1,
     examRank: s.exam?.rank ?? -1,
   };
@@ -473,6 +478,8 @@ export interface Report {
   officeShare?: number;
   triPhuShare?: number;
   executedShare?: number;
+  soldierShare?: number;
+  generalShare?: number;
   over40Share?: number;
   tradeShare?: number;
   /** 10.2: share of lives reaching at least Tú tài, Cử nhân, Tiến sĩ. */
@@ -540,6 +547,8 @@ export function summarize(results: LifeResult[], content: Content): Report {
     officeShare: mean(results.map((r) => ((r.officeBest ?? -1) >= 0 ? 1 : 0))),
     triPhuShare: mean(results.map((r) => ((r.officeBest ?? -1) >= 3 ? 1 : 0))),
     executedShare: mean(results.map((r) => (r.executed ? 1 : 0))),
+    soldierShare: mean(results.map((r) => (r.soldier ? 1 : 0))),
+    generalShare: mean(results.map((r) => (r.general ? 1 : 0))),
     over40Share: mean(results.map((r) => (r.age >= 40 ? 1 : 0))),
     tradeShare: mean(results.map((r) => ((r.tradeLevel ?? -1) >= 0 ? 1 : 0))),
     examShares: [1, 2, 4].map((k) => mean(results.map((r) => ((r.examRank ?? -1) >= k ? 1 : 0)))) as [number, number, number],
@@ -626,11 +635,11 @@ export function formatReport(rep: Report, content: Content, title: string): stri
 /** 9.8: one row per persona phàm nhân, for the terminal. */
 export function formatPersonaTable(rows: { profile: BotProfile; report: Report }[]): string {
   const p = (v: number) => `${Math.round(v * 100)}%`;
-  const head = 'Persona | Đời | Vào tu tiên | Tuổi TB | Hạnh phúc TB | Bạc cuối (TB/trung vị) | Hoạt động khác nhau | Sự kiện khác nhau | Năm có chuyện | Câu lặp | Đi học/Học nghề | Tú tài/Cử nhân/Tiến sĩ | Ngoại hiệu | Thế lực | Bí kíp TB | Minh chủ | Báo thù xong | Làm quan/Tri phủ+/Bị xử tử | Sống ≥ 40 | Chết vì (nhiều nhất)';
+  const head = 'Persona | Đời | Vào tu tiên | Tuổi TB | Hạnh phúc TB | Bạc cuối (TB/trung vị) | Hoạt động khác nhau | Sự kiện khác nhau | Năm có chuyện | Câu lặp | Đi học/Học nghề | Tú tài/Cử nhân/Tiến sĩ | Ngoại hiệu | Thế lực | Bí kíp TB | Minh chủ | Báo thù xong | Làm quan/Tri phủ+/Bị xử tử | Tòng quân/Phong tướng | Sống ≥ 40 | Chết vì (nhiều nhất)';
   const lines = rows.map(({ profile, report: r }) => {
     const causes = Object.entries(r.byCause).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([c, k]) => `${c} ${p(k / r.count)}`).join(', ');
     return [personaOf(profile)?.name ?? profile, r.count, p(r.reached.luyen_khi ?? 0), r.age.mean.toFixed(1), (r.happyMean ?? 0).toFixed(1), `${Math.round(r.silverLeft ?? 0)}/${r.silverP50 ?? 0}`,
-      (r.activityKinds ?? 0).toFixed(1), (r.eventKinds ?? 0).toFixed(1), p(r.eventfulShare ?? 0), p(r.repeatRate ?? 0), `${p(r.schooledShare ?? 0)}/${p(r.tradeShare ?? 0)}`, (r.examShares ?? [0, 0, 0]).map(p).join('/'), p(r.aliasShare ?? 0), p(r.factionShare ?? 0), (r.artsMean ?? 0).toFixed(1), p(r.leaderShare ?? 0), p(r.feudShare ?? 0), `${p(r.officeShare ?? 0)}/${p(r.triPhuShare ?? 0)}/${p(r.executedShare ?? 0)}`, p(r.over40Share ?? 0), causes].join(' | ');
+      (r.activityKinds ?? 0).toFixed(1), (r.eventKinds ?? 0).toFixed(1), p(r.eventfulShare ?? 0), p(r.repeatRate ?? 0), `${p(r.schooledShare ?? 0)}/${p(r.tradeShare ?? 0)}`, (r.examShares ?? [0, 0, 0]).map(p).join('/'), p(r.aliasShare ?? 0), p(r.factionShare ?? 0), (r.artsMean ?? 0).toFixed(1), p(r.leaderShare ?? 0), p(r.feudShare ?? 0), `${p(r.officeShare ?? 0)}/${p(r.triPhuShare ?? 0)}/${p(r.executedShare ?? 0)}`, `${p(r.soldierShare ?? 0)}/${p(r.generalShare ?? 0)}`, p(r.over40Share ?? 0), causes].join(' | ');
   });
   return [head, ...lines].join('\n');
 }

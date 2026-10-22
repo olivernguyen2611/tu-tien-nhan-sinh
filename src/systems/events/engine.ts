@@ -9,6 +9,7 @@ import { addNetRenown, addRenown } from '../jianghu';
 import { addMerit, factionMission, factionTeach, hideFromHunt, joinFaction, leaveFaction } from '../jhFactions';
 import { addWound, buyWeapon, gainWeapon, learnArt, practiseArt } from '../martialArts';
 import { addPrestige, wulinResign, wulinTournament } from '../wulin';
+import { addArmyMerit, armyBattle, armyJoin, armyLeave } from '../army';
 import { addOfficeEvidence, addOfficeMerit, officeDefend, officeJoin, officeResign, setOfficeFaction, setOfficeStyle } from '../office';
 import { catchDisease, cureAilment, injure, noteDrink } from '../health';
 import { addJailYears, addWanted, arrest, bribe, commitCrime, fleeLaw, imprison, sentence, tryEscape } from '../law';
@@ -562,6 +563,11 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.wulinTournament) next = wulinTournament(next, content);
   if (fx.wulinPrestige) next = addPrestige(next, content, fx.wulinPrestige);
   if (fx.wulinResign) next = wulinResign(next, content);
+  // 12.3 Binh nghiệp.
+  if (fx.armyJoin) next = armyJoin(next, content, fx.armyJoin);
+  if (fx.armyMerit) next = addArmyMerit(next, fx.armyMerit);
+  if (fx.armyBattle) next = armyBattle(next, content);
+  if (fx.armyLeave) next = armyLeave(next, content, fx.armyLeave);
   // 12.2 Quan trường.
   if (fx.officeJoin) next = officeJoin(next, content, fx.officeJoin);
   if (fx.officeStyle) next = setOfficeStyle(next, content, fx.officeStyle);
