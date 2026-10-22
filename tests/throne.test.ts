@@ -111,3 +111,66 @@ describe('Hoàng thất tranh ngôi (12.6)', () => {
     for (const a of acts) expect(meets(royal(), a.conditions, content)).toBe(true);
   });
 });
+
+describe('Khởi nghĩa thời loạn (12.7)', () => {
+  const commoner = (phase = 'loan_the'): GameState => {
+    const s = createLife({ seed: 'khoi-nghia', originId: 'nong_dan' }, content);
+    return { ...s, character: { ...s.character, age: 25 }, court: initCourt(s, content), times: { ...s.times!, phase } };
+  };
+  const rebel = (phase = 'loan_the') => fx(commoner(phase), { throneStart: 'rebel' });
+
+  it('a mồi lửa only lights in a loạn thế, and raising the banner starts the rebel road', () => {
+    const ev = content.events.find((e) => e.id === 'kn_moi_lua_thue')!;
+    expect(meets(commoner('loan_the'), ev.conditions, content)).toBe(true);
+    expect(meets(commoner('thinh_the'), ev.conditions, content)).toBe(false);
+    const s = rebel();
+    expect(throneOf(s)).toMatchObject({ path: 'rebel', cities: 0 });
+    expect(throneOf(s)!.banner).toBeTruthy();
+    expect(s.flags.tung_khoi_nghia).toBe(true);
+    expect(throneLine(s, content)).toContain(throneOf(s)!.banner!);
+    expect(meets(s, ev.conditions, content)).toBe(false);
+  });
+
+  it('each year the army eats, men come by dân tâm, and the big decision is booked', () => {
+    let booked = false;
+    for (let i = 0; i < 20 && !booked; i++) {
+      const s = { ...rebel(), seed: `ky${i}` };
+      const next = throneYear(s, content);
+      expect(throneOf(next)!.bars.grain).toBeLessThan(throneOf(s)!.bars.grain);
+      booked = next.events.followUps.some((f) => [file.events.rebelYear, file.events.amnesty].includes(f.event));
+    }
+    expect(booked).toBe(true);
+  });
+
+  it('enough cities bring the assault on the capital; taking it founds a new dynasty', () => {
+    const s = rebel();
+    const strong = { ...s, throne: { ...throneOf(s)!, cities: cfg.capitalCities } };
+    expect(throneYear(strong, content).events.followUps.some((f) => f.event === file.events.capital)).toBe(true);
+    const king = fx(strong, { throneAscend: true });
+    expect(king.reign).toMatchObject({ how: 'rebel', founder: true });
+    expect(king.flags.khai_quoc).toBe(true);
+    expect(king.times!.dynasty).not.toBe(s.times!.dynasty);
+  });
+
+  it('a rising out of its time is crushed; no troops left ends it', () => {
+    let ended = 0;
+    for (let i = 0; i < 20; i++) {
+      const s = { ...rebel('thinh_the'), seed: `dep${i}` };
+      if (!throneOf(throneYear(s, content))) ended++;
+    }
+    expect(ended).toBeGreaterThan(0);
+    const s = rebel();
+    const broken = throneYear({ ...s, throne: { ...throneOf(s)!, bars: { people: 0, troops: 0, grain: 0 } } }, content);
+    expect(throneOf(broken)).toBeNull();
+  });
+
+  it('a won battle takes a city; chiêu an ends the road and gives an office', () => {
+    const s = rebel();
+    let took = false;
+    for (let i = 0; i < 20 && !took; i++) took = (throneOf(fx({ ...s, seed: `thanh${i}`, throne: { ...throneOf(s)!, bars: { people: 80, troops: 90, grain: 60 } } }, { throneBattle: true }))!.cities ?? 0) > 0;
+    expect(took).toBe(true);
+    const peace = fx({ ...s, character: { ...s.character, age: 30 } }, { throneFail: 'quiet', officeJoin: 'recommend' });
+    expect(throneOf(peace)).toBeNull();
+    expect(peace.career.id).toBe(content.office!.career);
+  });
+});

@@ -10,7 +10,10 @@
     "heirLost": "dn_lap_tru_khong_thanh",
     "banned": "dn_chen_ruou_ban_chet",
     "rebelYear": "kn_quyet_sach_nam",
+    "amnesty": "kn_chieu_an",
+    "capital": "kn_cong_kinh",
     "discovered": "tp_bai_lo",
+    "rise": "tp_khoi_su_1",
     "deposed": "tv_mat_nuoc",
     "threats": { "people": "tv_dan_bien", "army": "tv_giac_vay_bien", "court": "tv_cung_bien", "treasury": "tv_quoc_kho_can" }
   },

@@ -45,7 +45,7 @@ export const BOT_PROFILES: BotProfile[] = ['random', 'steady', 'player', 'full']
  * 9.8 Persona phàm nhân: lives that stay mortal (never seek an entry technique nor break through) and live
  * one way. `choice`: first open choice, random, the kindest (karma up) or the cruellest (karma down).
  */
-export type MortalPersona = 'nong_dan' | 'thu_sinh' | 'thuong_nhan' | 'ke_cuop' | 'hiep_khach' | 'ke_luoi' | 'tham_vong';
+export type MortalPersona = 'nong_dan' | 'thu_sinh' | 'thuong_nhan' | 'ke_cuop' | 'hiep_khach' | 'ke_luoi' | 'tham_vong' | 'nghia_quan';
 /** 12.10 `ambitious`: the choice that goes furthest toward the throne (else random). `origin`: born into this xuất thân. */
 interface PersonaDef { name: string; origin?: string; career?: string; jobs?: string[]; assets?: string[]; activities: string[]; months: number; train?: boolean; choice: 'first' | 'random' | 'good' | 'evil' | 'ambitious' }
 export const MORTAL_PERSONAS: Record<MortalPersona, PersonaDef> = {
@@ -55,17 +55,21 @@ export const MORTAL_PERSONAS: Record<MortalPersona, PersonaDef> = {
   ke_cuop: { name: 'Kẻ cướp', jobs: ['do_te', 'phu_khuan_vac'], activities: ['tron_hoc', 'pp_moc_tui', 'pp_trom_nha_giau', 'pp_cuop_duong', 'pp_lua_dao', 'pp_tron_di_xa', 'pp_gianh_cho', 'pp_ket_giao_ban_tu', 'pp_dao_ham', 'an_bot', 'song_bac', 'luyen_quyen_som', 'dau_quan_hac_dao', 'lam_nhiem_vu_bang', 'hoc_vo_quan', 'luyen_bi_kip', 'mua_binh_khi', 'len_loi_dai'], months: 6, train: true, choice: 'evil' },
   hiep_khach: { name: 'Hiệp khách', career: 'vo_lam', jobs: ['tieu_su', 'ho_vien'], activities: ['theo_vo_duong', 'hoc_nghe_ren', 'luyen_quyen_som', 'ap_tieu', 'ngao_du', 'ket_giao', 'bai_nhap_mon_phai', 'lam_nhiem_vu_bang', 'doi_cong_hien_vo_hoc', 'hoc_vo_quan', 'luyen_bi_kip', 'luyen_bi_kip', 'mua_binh_khi', 'duong_noi_thuong', 'cau_cao_nhan_chi_diem', 'nhan_ap_tieu_xa', 'xem_bang_treo_thuong', 'hanh_hiep', 'len_loi_dai', 'tim_tien_tich'], months: 5, train: true, choice: 'good' },
   ke_luoi: { name: 'Kẻ lười', activities: ['ngao_du', 'song_bac', 'tuu_lau'], months: 4, choice: 'first' },
+  nghia_quan: { name: 'Thủ lĩnh nghĩa quân', origin: 'nong_dan', jobs: ['lam_ruong'], activities: ['tu_nghia', 'luyen_quyen_som', 'ket_giao', 'doc_sach', 'lam_thue'], months: 5, train: true, choice: 'ambitious' },
   tham_vong: { name: 'Hoàng tử tham vọng', origin: 'hoang_tu', activities: ['duong_danh', 'ket_dang', 'lap_cong', 'an_nhan', 'ham_hai', 'cham_hoc', 'doc_sach', 'ket_giao'], months: 6, choice: 'ambitious' },
 };
 /** 12.10: how far a choice goes toward the throne (its plain result, or a check's success). */
-function choiceAmbition(event: GameEvent, index: number): number {
+function choiceAmbition(event: GameEvent, index: number, state: GameState): number {
   const c = event.choices[index];
   const eff = (c?.result ?? c?.success)?.effects as Record<string, unknown> | undefined;
   if (!eff) return 0;
-  const bars = Object.entries((eff.throneBar ?? {}) as Record<string, number>).reduce((s, [k, v]) => s + (k === 'suspicion' ? -v / 2 : v), 0);
+  // A bar that runs low is worth more.
+  const cur = (k: string) => state.throne?.bars[k] ?? 50;
+  const need = (k: string) => Math.max(0.2, Math.min(2, (70 - cur(k)) / 30));
+  const bars = Object.entries((eff.throneBar ?? {}) as Record<string, number>).reduce((s, [k, v]) => s + (k === 'suspicion' ? -v / 2 : v * need(k)), 0);
   const step = typeof eff.throneStep === 'number' ? 20 * eff.throneStep : 0;
   const fu = (eff.followUp as { event?: string } | undefined)?.event;
-  return (eff.throneAscend ? 100 : 0) + (eff.throneStart ? 30 : 0) + step + (eff.throneBattle ? 10 : 0) + (fu && /binh_bien|khoi_su|kn_|tp_/.test(fu) ? 15 : 0)
+  return (eff.throneAscend ? 100 : 0) + (eff.throneStart ? 30 : 0) + step + (eff.throneBattle ? ((state.throne?.bars.troops ?? 0) >= 40 ? 25 : -5) : 0) + (fu && /binh_bien|khoi_su|kn_|tp_/.test(fu) ? 15 : 0)
     + bars + (typeof eff.throneRival === 'number' ? -eff.throneRival / 2 : 0) + (eff.throneFail ? -50 : 0) + (eff.die ? -100 : 0);
 }
 export const MORTAL_PROFILES = Object.keys(MORTAL_PERSONAS) as MortalPersona[];
@@ -264,7 +268,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
       // An event with nothing to pick is cleared by choosing its first choice.
       const byKarma = (sign: number) => [...open].sort((a, b) => sign * (choiceKarma(event!, b.index) - choiceKarma(event!, a.index)))[0].index;
       const how = persona?.choice ?? (profile === 'random' ? 'random' : 'first');
-      const ambition = (i: number) => choiceAmbition(event!, i);
+      const ambition = (i: number) => choiceAmbition(event!, i, s);
       const bold = how === 'ambitious' && open.some((c) => ambition(c.index) !== 0) ? [...open].sort((a, b) => ambition(b.index) - ambition(a.index))[0].index : -1;
       const pick = open.length === 0 ? 0 : bold >= 0 ? bold : how === 'random' || how === 'ambitious' ? botRng.pick(open).index : how === 'good' ? byKarma(1) : how === 'evil' ? byKarma(-1) : open[0].index;
       eventful.add(s.character.age);

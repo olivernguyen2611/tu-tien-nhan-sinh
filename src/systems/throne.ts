@@ -73,7 +73,7 @@ export function throneStart(state: GameState, content: Content, path: 'rebel' | 
     const banner = `${rng.pick(file.banner.first)} ${rng.pick(file.banner.second).toLowerCase()}`;
     const base = rng.pick(file.bases);
     const fame = Math.max(state.social.reputation.lang_xa, state.jianghu?.fame ?? 0);
-    const throne: Throne = { path, bars: { people: clamp(30 + fame / 3), troops: 15, grain: 20 }, since: age, step: 0, banner, base, cities: 0 };
+    const throne: Throne = { path, bars: { people: clamp(30 + fame / 3), troops: 20, grain: 25 }, since: age, step: 0, banner, base, cities: 0 };
     return pushLines({ ...state, throne, army: null, flags: { ...state.flags, tung_khoi_nghia: true } }, [{ text: fill(file.texts.rebelStart, { banner, base }), tone: 'rare' }]);
   }
   const kind = state.army ? 'warlord' : 'minister';
@@ -147,7 +147,8 @@ export function throneBattle(state: GameState, content: Content): GameState {
   const rng = new Rng(`${state.seed}:throne:battle:${state.character.age}:${t.cities ?? 0}:${t.bars.troops}`);
   const garrison = cfg.garrison + (t.cities ?? 0) * cfg.garrisonPerCity * (state.times?.phase === 'thinh_the' ? 1.5 : 1);
   const lead = (state.stats.intellect + (state.martial.stage + 1) * 8) / 2;
-  const own = t.bars.troops + lead / 4 + (t.bars.grain < 15 ? -15 : 0);
+  // Dân tâm opens gates; an army without grain fights badly.
+  const own = t.bars.troops + lead / 4 + (t.bars.people ?? 0) / 10 + (t.bars.grain < 15 ? -15 : 0);
   const p = Math.max(0.1, Math.min(0.85, 0.5 + (own - garrison) / 80));
   if (rng.chance(p)) {
     const w = cfg.battleWin;
@@ -301,19 +302,24 @@ export function throneYear(state: GameState, content: Content): GameState {
   }
 
   if (t?.path === 'rebel') {
-    // Upkeep: an army eats; a thịnh thế crushes a rising; the court may offer chiêu an.
-    s = addThroneBars(s, content, { grain: -cfg.rebelUpkeep });
+    // Upkeep: an army eats (hungry men leave); a rising outside a loạn thế is crushed; the court may offer chiêu an;
+    // enough cities and the capital is in reach.
+    // Dân tâm brings men and grain every year.
+    const draw = (t.bars.people ?? 0) * cfg.rebelDraw;
+    s = addThroneBars(s, content, { grain: draw - cfg.rebelUpkeep, troops: draw - (t.bars.grain <= 0 ? cfg.rebelUpkeep : 0) });
     const phase = s.times?.phase ?? '';
-    if (phase === 'thinh_the' && rng.chance(cfg.crushChance)) {
+    if (!cfg.rebelPhases.includes(phase) && rng.chance(cfg.crushChance)) {
       lines.push({ text: file.texts.crushed, tone: 'bad' });
-      return throneFail(pushLines(s, lines), content, rng.chance(0.5) ? 'death' : 'quiet');
+      return throneFail(pushLines(s, lines), content, rng.chance(cfg.crushDeath) ? 'death' : 'quiet');
     }
     const r = throneOf(s)!;
     if (r.bars.troops <= 0) {
       lines.push({ text: file.texts.crushed, tone: 'bad' });
-      return throneFail(pushLines(s, lines), content, rng.chance(0.4) ? 'death' : 'quiet');
+      return throneFail(pushLines(s, lines), content, rng.chance(cfg.crushDeath) ? 'death' : 'quiet');
     }
-    s = follow(s, file.events.rebelYear, content);
+    // Most years bring the big decision; the rest leave room for the road's other events.
+    const next = (r.cities ?? 0) >= cfg.capitalCities ? file.events.capital : rng.chance(cfg.amnestyChance) ? file.events.amnesty : rng.chance(cfg.rebelDecision) ? file.events.rebelYear : null;
+    if (next) s = follow(s, next, content);
   }
 
   if (t?.path === 'usurp') {

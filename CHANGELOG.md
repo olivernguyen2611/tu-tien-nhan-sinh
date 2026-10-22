@@ -8,6 +8,16 @@
 
 ## [Chưa phát hành]
 
+### 12.7 Khởi nghĩa thời loạn (2026-10-22)
+- Thường dân dựng cờ khởi nghĩa được khi thiên hạ đang **Loạn thế** hoặc **Trung suy**. Đường khởi nghĩa có ba thanh: **Dân tâm**, **Binh lực**, **Lương thảo**. Lá cờ và căn cứ được đặt tên ngẫu nhiên (ví dụ "Hắc kỳ quân" ở núi Ngọa Ngưu).
+- Năm mồi lửa (`khoi-nghia.json`): quan sai đánh chết người vì thuế, kho lương quan giữa nạn đói, đồng dao "thạch nhân một mắt", đường cùng khi bị truy nã, nghĩa quân mất thủ lĩnh đi qua làng. Thêm hoạt động **Tụ nghĩa** (nhóm Phạm pháp).
+- Mỗi năm: quân ăn lương, dân tâm kéo thêm người và lương. Hết lương thì quân bỏ đi. Phần lớn các năm có **Quyết sách trong năm**: chiêu binh, cướp kho lương, đánh một tòa thành, chiêu hiền, nghiêm quân kỷ, hay thả quân cướp bóc.
+- Đánh thành theo binh lực, tài cầm quân, dân tâm, lương thảo, so với quân giữ thành (thành sau mạnh hơn thành trước). Chiếm đủ 5 thành thì đánh vào kinh thành. Vào được kinh thì lập triều đại mới, đổi quốc hiệu và niên hiệu.
+- Ngoài thời loạn, quan quân dễ dẹp tan nghĩa quân. Hết binh lực thì tan rã. Thua thì có khi bị xử tử, có khi trốn thoát.
+- Triều đình có thể sai sứ **chiêu an**: nhận thì giải tán quân và được làm quan, hoặc xé chiếu, hoặc giả nhận để lừa lương.
+- Sự kiện đời nghĩa quân: phó tướng làm phản, quân sư tới trại, quan quân vây tiễu, dân mang cơm nước, liên minh nghĩa quân (hoặc bày tiệc giết), xưng vương, ôn dịch trong trại, quê nhà bị liên lụy.
+- Bot "Thủ lĩnh nghĩa quân" (`--profile nghia_quan`): 200 đời, khoảng 13–18% lên ngôi, khoảng 30% số đời thất bại chết vì đế nghiệp.
+
 ### 12.6 Hoàng thất tranh ngôi (2026-10-22)
 - Xuất thân mới **Hoàng tử, công chúa** (80 điểm ở Cầu đầu thai, cực hiếm khi tự rơi vào): con ruột hoàng đế, 3000 lượng, có 2–5 anh em cùng tranh ngôi, mẫu thân là hoàng hậu hoặc phi tần.
 - Khung đế nghiệp chung (`throne.json`, `src/systems/throne.ts`), dùng cho cả 12.6–12.9. Đường hoàng thất có ba thanh: **Thánh sủng**, **Thế lực triều thần**, **Nghi kỵ** (hiện ở màn chính, dòng "Ngai vàng").
