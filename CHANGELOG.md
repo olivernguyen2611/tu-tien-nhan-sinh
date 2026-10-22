@@ -8,6 +8,10 @@
 
 ## [Chưa phát hành]
 
+### Góp ý 23/10 · Kho tên họ lớn hơn (2026-10-23)
+- 109 họ (trước ít hơn nhiều), 50 tên đệm nam, 48 tên đệm nữ, 90 tên nam, 78 tên nữ, 62 tên đặt sẵn mỗi giới (có cả tên mộc mạc như Thiết Trụ, Thúy Hoa), 20 quê quán.
+- Tên đặt sẵn chỉ còn 15% (trước 30%), 12% là tên một chữ, còn lại ghép đệm + tên. Ít lặp tên hơn hẳn.
+
 ### Góp ý 23/10 · Bí tịch tu tiên không bán ở chợ phàm (2026-10-23)
 - Chợ phiên phàm nhân không còn bán công pháp tu tiên (trước có Dẫn Khí Quyết 60 lượng bạc). Phường thị tu sĩ bán Dẫn Khí Quyết giá 15 linh thạch (trước 3).
 - Người có linh căn mà chưa vào tông môn vẫn có đường kiếm công pháp nhập môn: hai kỳ ngộ mới, tán tu bán bí tịch (150 lượng hoặc ba tháng làm công) và tu sĩ hấp hối để lại bí tịch.

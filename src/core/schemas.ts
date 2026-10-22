@@ -747,6 +747,9 @@ export const NamesSchema = z
     femaleMiddle: z.array(z.string().min(1)).min(1),
     femaleGiven: z.array(z.string().min(1)).min(2),
     hometowns: z.array(z.string().min(1)).min(1),
+    /** Share of given names taken whole from the curated lists, and of one-syllable given names (góp ý 23/10). */
+    curatedShare: z.number().min(0).max(1).default(0.3),
+    singleShare: z.number().min(0).max(1).default(0),
   })
   .strict();
 

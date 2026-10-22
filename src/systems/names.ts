@@ -1,12 +1,10 @@
 // Character names: surname + given name, where the given name is either a
-// curated pair ("Thanh Phong") or middle + given syllable ("Hạo" + "Nhiên").
+// curated pair ("Thanh Phong"), middle + given syllable ("Hạo" + "Nhiên") or one syllable ("Tùng").
 // Relatives never repeat a given name already used in the family.
 import type { Rng } from '../core/rng';
 import type { Names } from '../core/schemas';
 import type { Gender } from '../core/types';
 
-/** Share of given names taken whole from the curated lists. */
-const CURATED_SHARE = 0.3;
 const MAX_TRIES = 40;
 
 const norm = (s: string) => s.trim().toLocaleLowerCase('vi');
@@ -37,9 +35,12 @@ export function splitName(full: string, names: Names): { surname: string; given:
 
 function givenName(rng: Rng, names: Names, gender: Gender): string {
   const curated = gender === 'nam' ? names.male : names.female;
-  if (rng.chance(CURATED_SHARE)) return rng.pick(curated);
+  // One draw decides curated, one syllable ("Lý Tùng") or middle + given.
+  const r = rng.next();
+  if (r < names.curatedShare) return rng.pick(curated);
   const middles = gender === 'nam' ? names.maleMiddle : names.femaleMiddle;
   const givens = gender === 'nam' ? names.maleGiven : names.femaleGiven;
+  if (r < names.curatedShare + names.singleShare) return rng.pick(givens);
   const middle = rng.pick(middles);
   let given = rng.pick(givens);
   if (given === middle) given = rng.pick(givens);
