@@ -1,0 +1,150 @@
+{
+  "levels": [
+    { "id": "huyen", "name": "Thi huyện", "title": "Đồng sinh", "flag": "dong_sinh" },
+    { "id": "vien", "name": "Thi viện", "title": "Tú tài", "flag": "tu_tai" },
+    { "id": "huong", "name": "Thi Hương", "title": "Cử nhân", "flag": "cu_nhan" },
+    { "id": "hoi", "name": "Thi Hội", "title": "Cống sĩ", "flag": "cong_si" },
+    { "id": "dinh", "name": "Thi Đình", "title": "Tiến sĩ", "flag": "tien_si" }
+  ],
+  "approaches": [
+    {
+      "id": "chinh_luan", "name": "Chính luận an toàn", "hint": "Viết đúng sách, chắc điểm, khó nổi bật.",
+      "winText": ["Bài viết vuông vức như gạch xây tường, không ai chê được.", "Ngươi dẫn kinh điển từng câu một, chặt chẽ không kẽ hở.", "Lời lẽ ôn hòa, ý tứ đầy đủ. Giám khảo gật gù."],
+      "loseText": ["Viết đúng sách mà nhạt như nước ốc. Giám khảo ngáp.", "Ngươi dẫn sai một câu kinh, cả bài mất đi phần hồn.", "Bài viết an toàn tới mức chẳng ai nhớ nổi."]
+    },
+    {
+      "id": "van_hoa", "name": "Văn hoa hiểm hóc", "hint": "Phô tài văn chương: hay thì vang danh, dở thì lố.",
+      "winText": ["Câu văn bay bổng, giám khảo đọc xong phải đặt bút xuống thở dài.", "Ngươi viết một đoạn biền ngẫu, người chấm khoanh đỏ cả trang.", "Văn như nước chảy mây trôi. Bài của ngươi được chuyền tay trong trường thi."],
+      "loseText": ["Chữ hoa mỹ quá, đọc xong không biết ngươi muốn nói gì.", "Ngươi dùng điển tích hiểm, giám khảo không hiểu, cho là bịa.", "Văn hoa lòe loẹt, bị phê: \"phù phiếm\"."]
+    },
+    {
+      "id": "doan_y", "name": "Đoán ý giám khảo", "hint": "Viết theo sở thích người chấm: trúng thì cao điểm, trật thì hỏng.",
+      "winText": ["Nghe đồn chủ khảo thích bàn chuyện thủy lợi, ngươi viết đúng chuyện ấy.", "Ngươi đoán trúng: người chấm năm nay ghét văn dài. Bài ngươi ngắn gọn mà sắc.", "Lời văn hợp ý quan chủ khảo tới lạ, như viết riêng cho ông ta đọc."],
+      "loseText": ["Đoán trật. Chủ khảo năm nay ghét đúng cái ngươi viết.", "Ngươi nịnh khéo quá thành lộ, bị phê: \"a dua\".", "Tin đồn về sở thích chủ khảo hóa ra là chuyện bịa."]
+    }
+  ],
+  "prompts": [
+    "Đề hỏi: dân là gốc của nước, nói rõ vì sao.",
+    "Đề hỏi: trị thủy và trị dân giống nhau chỗ nào.",
+    "Đề hỏi: thuế nặng thì nước giàu hay nghèo.",
+    "Đề hỏi: dùng người tài mà người tài kiêu thì sao.",
+    "Đề hỏi: biên ải nên giữ bằng binh hay bằng hòa.",
+    "Đề hỏi: ruộng công nên chia thế nào cho đều.",
+    "Đề làm thơ: vịnh cây tùng giữa tuyết.",
+    "Đề làm phú: tả cảnh mùa màng ở {level}.",
+    "Đề hỏi: pháp nghiêm hay đức rộng thì nước yên.",
+    "Đề hỏi: cái học của kẻ sĩ là để làm gì.",
+    "Đề hỏi: năm mất mùa, kho lương nên mở hay giữ.",
+    "Đề làm văn sách: đường giao thương nên mở hay đóng.",
+    "Đề hỏi: người xưa nói \"nước có thể chở thuyền, cũng có thể lật thuyền\", bàn rộng ra.",
+    "Đề làm thơ: tiễn bạn đi xa."
+  ],
+  "incidents": [
+    {
+      "id": "lieu_ben_giau_tai_lieu", "title": "Lều bên có tài liệu",
+      "text": "Người lều bên lén đẩy sang một cuộn giấy nhỏ, thì thầm: \"Bài mẫu đấy, chép đi, chia ta năm lạng.\"",
+      "levels": [],
+      "choices": [
+        { "text": "Làm bài thật", "outcome": { "text": "Ngươi đẩy cuộn giấy trả lại, cúi đầu viết tiếp.", "effects": { "stat.daoHeart": 2, "karma": 1 } } },
+        {
+          "text": "Chép bài mẫu",
+          "outcome": { "text": "Bài mẫu viết khá, ngươi chép trơn tru. Năm lạng thì phải trả.", "score": 2, "effects": { "silver": -5, "karma": -2 } },
+          "risk": { "chance": 0.3, "outcome": { "text": "Lính tuần trường bắt quả tang. Ngươi bị đuổi khỏi trường thi.", "disqualify": true, "effects": { "stat.happiness": -6, "karma": -2 } } }
+        },
+        {
+          "text": "Tố cáo với giám khảo",
+          "outcome": { "text": "Kẻ gian lận bị lôi đi. Giám khảo nhìn ngươi bằng con mắt khác.", "score": 1, "effects": { "karma": 2, "reputation": { "trieu_dinh": 2 } } },
+          "risk": { "chance": 0.25, "outcome": { "text": "Hắn cắn ngược lại, nói ngươi là đồng bọn. Hai người cùng bị đuổi.", "disqualify": true, "effects": { "stat.happiness": -8, "stat.daoHeart": 1 } } }
+        }
+      ]
+    },
+    {
+      "id": "bi_vu_oan_trong_lieu", "title": "Bị vu oan",
+      "text": "Lính khám lều lôi ra từ dưới chiếu của ngươi một mảnh giấy chép sẵn. Ngươi chưa từng thấy nó.",
+      "levels": [],
+      "choices": [
+        {
+          "text": "Kêu oan ngay tại chỗ",
+          "outcome": { "text": "Giám khảo so nét chữ, thấy không phải của ngươi. Kẻ vu oan bị bắt.", "effects": { "stat.daoHeart": 2, "stat.happiness": -1 } },
+          "risk": { "chance": 0.4, "outcome": { "text": "Không ai tin. Ngươi bị giải ra khỏi trường thi giữa tiếng xì xào.", "disqualify": true, "effects": { "stat.happiness": -10, "stat.daoHeart": -2 } } }
+        },
+        {
+          "text": "Xin giám khảo ra đề thử tại chỗ",
+          "outcome": { "text": "Ngươi đọc thuộc cả thiên sách trước mặt giám khảo. Không cần mảnh giấy nào.", "score": 1, "effects": { "stat.intellect": 1, "stat.charm": 1 } },
+          "risk": { "chance": 0.35, "outcome": { "text": "Run tay, ngươi đọc vấp ngay câu đầu. Giám khảo phẩy tay đuổi ra.", "disqualify": true, "effects": { "stat.happiness": -8 } } }
+        },
+        {
+          "text": "Nhét bạc cho lính khám lều",
+          "outcome": { "text": "Lính vo mảnh giấy nuốt luôn. Chuyện như chưa có.", "effects": { "silver": -10, "karma": -1, "stat.daoHeart": -1 } }
+        }
+      ]
+    },
+    {
+      "id": "gap_de_la", "title": "Gặp đề lạ",
+      "text": "Đề năm nay hỏi chuyện ngươi chưa từng đọc ở sách nào. Cả trường thi lặng như tờ.",
+      "levels": [],
+      "choices": [
+        {
+          "text": "Viết theo hiểu biết của mình",
+          "outcome": { "text": "Ngươi viết bằng những gì đã thấy ngoài đời. Lạ, nhưng thật.", "score": 2, "effects": { "stat.comprehension": 1 } },
+          "risk": { "chance": 0.45, "outcome": { "text": "Viết xa đề quá, bị phê \"lạc đề\".", "score": -2, "effects": { "stat.happiness": -3 } } }
+        },
+        { "text": "Viết sáo rỗng cho qua", "outcome": { "text": "Bài viết đủ chữ mà rỗng ruột. Coi như không mất gì.", "effects": { "stat.daoHeart": -1 } } },
+        { "text": "Bỏ trắng câu này", "outcome": { "text": "Ngươi để trống, dồn sức cho câu sau.", "score": -1, "effects": { "stat.happiness": -1, "stat.intellect": 1 } } }
+      ]
+    },
+    {
+      "id": "lieu_thi_mua_dot", "title": "Lều thi dột",
+      "text": "Nửa đêm trời đổ mưa. Mái lều của ngươi dột ngay chỗ để giấy.",
+      "levels": [],
+      "choices": [
+        { "text": "Lấy áo che giấy, chịu ướt", "outcome": { "text": "Bài còn nguyên, người thì cảm lạnh.", "effects": { "stat.health": -4, "stat.daoHeart": 1 } } },
+        {
+          "text": "Chép lại bài từ đầu",
+          "outcome": { "text": "Ngươi chép kịp trước khi trời sáng, chữ còn đẹp hơn bản đầu.", "score": 1, "effects": { "stat.health": -2 } },
+          "risk": { "chance": 0.4, "outcome": { "text": "Không kịp. Bài nộp lên còn dở dang.", "score": -2, "effects": { "stat.happiness": -3 } } }
+        }
+      ]
+    },
+    {
+      "id": "om_giua_truong_thi", "title": "Ốm giữa trường thi",
+      "text": "Ngày thứ hai, ngươi sốt hầm hập, tay cầm bút run lẩy bẩy.",
+      "levels": [],
+      "choices": [
+        { "text": "Cố viết cho xong", "outcome": { "text": "Ngươi viết như người say, không nhớ mình viết gì.", "score": -1, "effects": { "stat.health": -6, "stat.daoHeart": 2 } } },
+        { "text": "Xin bỏ thi về nghỉ", "outcome": { "text": "Ngươi được khiêng ra khỏi trường thi. Lần sau vậy.", "disqualify": true, "effects": { "stat.health": 2, "stat.happiness": -4 } } },
+        {
+          "text": "Uống viên thuốc mang theo",
+          "outcome": { "text": "Thuốc hạ sốt, đầu óc tỉnh lại kịp làm bài.", "effects": { "silver": -2, "stat.health": -1 } },
+          "risk": { "chance": 0.3, "outcome": { "text": "Thuốc không hợp, ngươi ngủ gục tới khi trống thu bài.", "score": -2, "effects": { "stat.health": -3 } } }
+        }
+      ]
+    },
+    {
+      "id": "giam_khao_ra_gia", "title": "Giám khảo ra giá",
+      "text": "Một gã thư lại ghé tai ngươi: \"Quan chủ khảo năm nay dễ nói chuyện. Hai mươi lạng, bài nào cũng thành bài hay.\"",
+      "levels": ["huong", "hoi"],
+      "choices": [
+        {
+          "text": "Đưa hai mươi lạng",
+          "outcome": { "text": "Bạc đi, điểm về. Ngươi không dám nhìn vào mắt bạn cùng lều.", "score": 3, "effects": { "silver": -20, "karma": -3, "setFlags": ["mua_de"] } },
+          "risk": { "chance": 0.25, "outcome": { "text": "Ngự sử đang điều tra vụ mua bán điểm. Ngươi bị gạch tên.", "disqualify": true, "effects": { "silver": -20, "karma": -3, "reputation": { "trieu_dinh": -5 } } } }
+        },
+        { "text": "Lắc đầu", "outcome": { "text": "Gã thư lại cười nhạt bỏ đi. Ngươi viết tiếp, lòng thanh thản.", "effects": { "stat.daoHeart": 2, "karma": 1 } } }
+      ]
+    }
+  ],
+  "placings": [
+    { "id": "trang_nguyen", "name": "Trạng nguyên", "title": "Trạng nguyên khai khoa" },
+    { "id": "bang_nhan", "name": "Bảng nhãn", "title": "Bảng nhãn đề danh" },
+    { "id": "tham_hoa", "name": "Thám hoa", "title": "Thám hoa lang" }
+  ],
+  "texts": {
+    "begin": "Ngươi lều chõng lên đường dự {level}.",
+    "round": "Vòng {round}: {approach}. {result}",
+    "pass": "{level}: bảng vàng có tên ngươi. Từ nay là {title}.",
+    "fail": "{level}: bảng vàng không có tên ngươi.",
+    "disqualified": "{level}: ngươi bị đuổi khỏi trường thi.",
+    "placing": "Thi Đình đỗ {placing}. Áo gấm về làng, cả {hometown} đốt pháo."
+  }
+}

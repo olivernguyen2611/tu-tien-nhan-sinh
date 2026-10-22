@@ -1,0 +1,680 @@
+[
+  {
+    "id": "kc_ban_ruong_lo_phi",
+    "category": "mortal",
+    "title": "Bán ruộng lấy lộ phí",
+    "text": "Khoa thi Hương sắp mở. Cha ngươi lặng lẽ đem bán một sào ruộng, đặt túi bạc lên bàn: \"Đi đi, đừng lo nhà.\"",
+    "themes": [
+      "study",
+      "family"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "age": {
+        "min": 15,
+        "max": 40
+      },
+      "exam": {
+        "passed": "vien",
+        "notPassed": "huong"
+      },
+      "family": {
+        "parentAlive": true
+      },
+      "flagsNone": [
+        "no_father"
+      ]
+    },
+    "weight": 6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận bạc, hứa sẽ đỗ",
+        "result": {
+          "text": "Túi bạc nặng trĩu trong tay. Ngươi thấy lưng mình còn nặng hơn.",
+          "effects": {
+            "silver": 15,
+            "stat.daoHeart": 2,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Trả lại, tự đi làm thuê lấy tiền",
+        "result": {
+          "text": "Cha nhìn ngươi lâu một lúc rồi cất túi bạc. Ngươi đi khuân vác cả mùa.",
+          "effects": {
+            "silver": 6,
+            "stat.physique": 1,
+            "stat.health": -2,
+            "karma": 1
+          }
+        }
+      },
+      {
+        "text": "Thôi không thi nữa",
+        "result": {
+          "text": "Cha không nói gì. Đêm ấy ngươi nghe tiếng thở dài bên vách.",
+          "effects": {
+            "stat.happiness": -3,
+            "stat.daoHeart": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kc_vinh_quy_bai_to",
+    "category": "mortal",
+    "title": "Vinh quy bái tổ",
+    "text": "Chiếu chỉ cho tân Tiến sĩ về quê bái tổ. Cờ biển rợp đường, cả {hometown} ra tận đầu làng đón.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "exam": {
+        "passed": "dinh"
+      }
+    },
+    "weight": 30,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Vào từ đường thắp hương",
+        "result": {
+          "text": "Ngươi quỳ trước bài vị tổ tiên rất lâu. Các cụ trong họ khóc như mưa.",
+          "effects": {
+            "stat.happiness": 6,
+            "reputation": {
+              "lang_xa": 4
+            },
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Mở tiệc khao cả làng",
+        "result": {
+          "text": "Ba ngày ba đêm trống chèo không dứt. Tiền bổng lộc đi mất một nửa.",
+          "effects": {
+            "silver": -30,
+            "reputation": {
+              "lang_xa": 8
+            },
+            "stat.charm": 2,
+            "stat.happiness": 4
+          }
+        }
+      },
+      {
+        "text": "Về lặng lẽ, thăm thầy dạy cũ",
+        "result": {
+          "text": "Thầy đồ già nắm tay ngươi, không nói được câu nào.",
+          "effects": {
+            "karma": 2,
+            "stat.happiness": 4,
+            "stat.daoHeart": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kc_lao_si_tu",
+    "category": "mortal",
+    "title": "Lão sĩ tử",
+    "text": "Tóc đã bạc mà ngươi vẫn lều chõng theo đám trẻ đáng tuổi cháu. Có đứa gọi ngươi là \"ông\".",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "age": {
+        "min": 45
+      },
+      "exam": {
+        "failsMin": 4,
+        "notPassed": "huong"
+      }
+    },
+    "weight": 6,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Cười: còn sống thì còn thi",
+        "result": {
+          "text": "Đám trẻ nể ngươi. Có đứa xin ngươi chỉ cách làm văn sách.",
+          "effects": {
+            "stat.daoHeart": 3,
+            "stat.charm": 1
+          }
+        }
+      },
+      {
+        "text": "Gác bút, về dạy cháu học",
+        "result": {
+          "text": "Ngươi treo cái lều lên gác bếp. Lần đầu tiên sau bao năm, ngươi ngủ một giấc ngon.",
+          "effects": {
+            "stat.happiness": 5,
+            "setFlags": [
+              "gac_but"
+            ]
+          }
+        }
+      },
+      {
+        "text": "Cay đắng uống rượu một mình",
+        "result": {
+          "text": "Rượu đắng, đời còn đắng hơn.",
+          "effects": {
+            "stat.happiness": -3,
+            "stat.health": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kc_ban_hoc_do_truoc",
+    "category": "study",
+    "title": "Bạn cùng khoa đỗ trước",
+    "text": "Bảng vàng năm nay có tên đứa bạn ngồi cùng lều với ngươi. Ngươi thì không.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "age": {
+        "min": 14
+      },
+      "exam": {
+        "failsMin": 1,
+        "notPassed": "dinh"
+      }
+    },
+    "weight": 6,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Tới chúc mừng thật lòng",
+        "result": {
+          "text": "Nó cảm động, hứa lên kinh sẽ gửi sách về cho ngươi.",
+          "effects": {
+            "stat.charm": 1,
+            "karma": 1,
+            "stat.happiness": 1
+          }
+        }
+      },
+      {
+        "text": "Mượn bài nó về đọc",
+        "result": {
+          "text": "Đọc xong ngươi mới biết mình thua ở đâu.",
+          "effects": {
+            "grade": 3,
+            "stat.intellect": 1,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Nói nó đỗ nhờ chạy chọt",
+        "result": {
+          "text": "Lời đồn lan nhanh. Nó không nói gì, chỉ không còn chào ngươi nữa.",
+          "effects": {
+            "stat.charm": -2,
+            "karma": -1,
+            "stat.happiness": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kc_mai_moi_cu_nhan",
+    "category": "mortal",
+    "title": "Bà mối tìm tới",
+    "text": "Đỗ Cử nhân chưa được ba hôm, bà mối đã tới gõ cửa: \"Tiểu thư nhà viên ngoại họ Lâm, đẹp người đẹp nết.\"",
+    "themes": [
+      "study",
+      "romance"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "age": {
+        "min": 18
+      },
+      "exam": {
+        "passed": "huong"
+      }
+    },
+    "weight": 6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận lời gặp mặt",
+        "result": {
+          "text": "Hai nhà gặp nhau. Chưa biết duyên thế nào, nhưng của hồi môn thì đã bàn xong.",
+          "effects": {
+            "stat.happiness": 3,
+            "stat.charm": 1
+          }
+        }
+      },
+      {
+        "text": "Từ chối: lập nghiệp đã",
+        "result": {
+          "text": "Bà mối bĩu môi đi. Ngươi lại vùi đầu vào sách.",
+          "effects": {
+            "grade": 2,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Hỏi khéo xem của hồi môn bao nhiêu",
+        "result": {
+          "text": "Bà mối cười tít mắt. Hàng xóm cười to hơn.",
+          "effects": {
+            "stat.charm": -1,
+            "stat.happiness": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kc_lang_xin_mo_truong",
+    "category": "mortal",
+    "title": "Làng xin mở trường",
+    "text": "Các cụ trong làng tới nhà: \"Làng mình có Tú tài rồi, phải có trường cho bọn trẻ.\"",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "age": {
+        "min": 16
+      },
+      "exam": {
+        "passed": "vien"
+      },
+      "flagsNone": [
+        "mo_truong_lang"
+      ]
+    },
+    "weight": 6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận dạy",
+        "result": {
+          "text": "Đình làng dọn một gian cho ngươi mở lớp. Mười hai đứa trẻ đến ngày đầu.",
+          "effects": {
+            "setFlags": [
+              "mo_truong_lang"
+            ],
+            "reputation": {
+              "lang_xa": 5
+            },
+            "silver": 5,
+            "stat.happiness": 2
+          }
+        }
+      },
+      {
+        "text": "Từ chối, còn phải thi tiếp",
+        "result": {
+          "text": "Các cụ gật đầu: chí lớn thì phải đi xa. Nhưng mặt ai cũng buồn.",
+          "effects": {
+            "grade": 1,
+            "reputation": {
+              "lang_xa": -1
+            },
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kc_quan_huyen_moi",
+    "category": "mortal",
+    "title": "Quan huyện mời làm việc",
+    "text": "Huyện thiếu một chân huấn đạo. Quan huyện nghe tiếng ngươi đỗ Cử nhân, sai người mang thiếp tới mời.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "age": {
+        "min": 18,
+        "max": 55
+      },
+      "exam": {
+        "passed": "huong"
+      },
+      "career": {
+        "member": false
+      }
+    },
+    "weight": 6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nhận chức",
+        "result": {
+          "text": "Ngươi mặc áo quan lần đầu. Áo rộng, nhưng rồi sẽ vừa.",
+          "effects": {
+            "joinCareer": "quan",
+            "stat.happiness": 4,
+            "reputation": {
+              "trieu_dinh": 3
+            }
+          }
+        }
+      },
+      {
+        "text": "Từ chối, chờ thi Hội",
+        "result": {
+          "text": "Quan huyện tiếc mãi. Ngươi đóng cửa ôn thi.",
+          "effects": {
+            "grade": 2,
+            "stat.daoHeart": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kc_den_sach_dem_khuya",
+    "category": "study",
+    "title": "Đèn sách đêm khuya",
+    "text": "Gà gáy canh ba, cả làng ngủ, chỉ còn ngọn đèn dầu nhà ngươi cháy.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "age": {
+        "min": 13,
+        "max": 50
+      },
+      "exam": {
+        "notPassed": "dinh"
+      },
+      "school": {
+        "ever": true
+      }
+    },
+    "weight": 6,
+    "cooldownYears": 4,
+    "choices": [
+      {
+        "text": "Đọc thêm một quyển",
+        "result": {
+          "text": "Sáng ra mắt đỏ hoe, nhưng chữ nghĩa thì vào.",
+          "effects": {
+            "grade": 3,
+            "stat.health": -2
+          }
+        }
+      },
+      {
+        "text": "Tắt đèn đi ngủ",
+        "result": {
+          "text": "Ngủ đủ, đầu óc minh mẫn. Mai học tiếp.",
+          "effects": {
+            "stat.health": 2,
+            "stat.happiness": 1
+          }
+        }
+      },
+      {
+        "text": "Ngồi ngắm trăng làm thơ",
+        "result": {
+          "text": "Bài thơ khá, nhưng không ai ra đề thơ vịnh trăng năm nay.",
+          "effects": {
+            "stat.charm": 1,
+            "stat.happiness": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kc_truot_lan_nua",
+    "category": "mortal",
+    "title": "Trượt thêm một khoa",
+    "text": "Lại một khoa thi đi qua. Người nhà không ai nhắc tới, nhưng bữa cơm hôm ấy im lặng lạ.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "age": {
+        "min": 15
+      },
+      "exam": {
+        "failsMin": 2,
+        "notPassed": "huong"
+      },
+      "flagsNone": [
+        "gac_but"
+      ]
+    },
+    "weight": 6,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Đọc lại bài thi, tìm chỗ hỏng",
+        "result": {
+          "text": "Ngươi thấy ra ba chỗ sai. Khoa sau sẽ không sai nữa.",
+          "effects": {
+            "grade": 2,
+            "stat.daoHeart": 2,
+            "stat.happiness": -1
+          }
+        }
+      },
+      {
+        "text": "Ra quán uống một bữa",
+        "result": {
+          "text": "Rượu làm quên được một đêm.",
+          "effects": {
+            "stat.happiness": 2,
+            "stat.health": -3,
+            "silver": -2
+          }
+        }
+      },
+      {
+        "text": "Gác bút theo nghề khác",
+        "result": {
+          "text": "Ngươi đem sách cất vào rương. Nhẹ người lạ lùng.",
+          "effects": {
+            "setFlags": [
+              "gac_but"
+            ],
+            "stat.happiness": 4,
+            "stat.intellect": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kc_hoc_tro_ngheo_xin_theo",
+    "category": "mortal",
+    "title": "Học trò nghèo xin theo học",
+    "text": "Một đứa trẻ chân đất đứng ngoài cổng mấy ngày liền, xin được theo ngươi học chữ mà không có tiền.",
+    "themes": [
+      "study"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "age": {
+        "min": 18
+      },
+      "exam": {
+        "passed": "vien"
+      }
+    },
+    "weight": 6,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Nhận dạy không lấy tiền",
+        "result": {
+          "text": "Thằng bé học nhanh lạ thường. Năm sau nó đỗ thi huyện, mang gà tới tạ thầy.",
+          "effects": {
+            "karma": 3,
+            "stat.happiness": 3,
+            "reputation": {
+              "lang_xa": 2
+            }
+          }
+        }
+      },
+      {
+        "text": "Bắt nó làm việc nhà trừ học phí",
+        "result": {
+          "text": "Nó quét sân, gánh nước, tối mới được học. Nó vẫn biết ơn.",
+          "effects": {
+            "karma": 1,
+            "stat.health": 1
+          }
+        }
+      },
+      {
+        "text": "Đuổi về",
+        "result": {
+          "text": "Hôm sau không thấy nó nữa. Ngươi không nghĩ tới chuyện ấy, cho tới một hôm.",
+          "effects": {
+            "karma": -1,
+            "stat.daoHeart": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "kc_trang_nguyen_vao_cung",
+    "category": "mortal",
+    "title": "Vào cung tạ ơn",
+    "text": "Tân khoa đỗ đầu được vào cung tạ ơn. Thiên tử hỏi ngươi một câu ngoài đề: \"Trẫm nên làm gì trước tiên?\"",
+    "themes": [
+      "study",
+      "court"
+    ],
+    "conditions": {
+      "tier": [
+        "pham_gian"
+      ],
+      "realm": {
+        "max": "pham_nhan"
+      },
+      "exam": {
+        "placing": [
+          "trang_nguyen",
+          "bang_nhan",
+          "tham_hoa"
+        ]
+      }
+    },
+    "weight": 30,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Tâu: giảm thuế cho dân",
+        "result": {
+          "text": "Thiên tử im lặng một lúc rồi gật đầu. Văn võ bá quan liếc nhìn nhau.",
+          "effects": {
+            "karma": 3,
+            "reputation": {
+              "trieu_dinh": 5
+            },
+            "stat.daoHeart": 2
+          }
+        }
+      },
+      {
+        "text": "Tâu: chỉnh đốn quan lại",
+        "result": {
+          "text": "Mấy vị đại thần đổi sắc mặt. Thiên tử thì cười.",
+          "effects": {
+            "reputation": {
+              "trieu_dinh": 3
+            },
+            "stat.charm": 1,
+            "setFlags": [
+              "thanh_quan"
+            ]
+          }
+        }
+      },
+      {
+        "text": "Tâu: bệ hạ anh minh, không cần làm gì",
+        "result": {
+          "text": "Thiên tử cười lớn, thưởng ngươi một nghiên mực ngọc. Ngươi không vui như tưởng.",
+          "effects": {
+            "silver": 20,
+            "stat.daoHeart": -2,
+            "stat.charm": 1
+          }
+        }
+      }
+    ]
+  }
+]

@@ -1048,3 +1048,7 @@ html[data-motion='reduce'][data-fx]::after { display: none; }
   .modal-backdrop.sheet > .event-card { width: 100%; max-height: calc(100dvh - 40px); margin: 0; }
   .modal-backdrop.sheet .event-card .crafts { display: block; }
 }
+
+/* 10.2 Trường thi */
+.exam-lines { margin: 0.25rem 0 0.5rem; padding-left: 1.1rem; font-size: 0.875rem; color: var(--muted); }
+.exam-lines li { margin: 0.15rem 0; }

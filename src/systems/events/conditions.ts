@@ -1,5 +1,6 @@
 // Does a life meet an event's (or a choice's) conditions? Pure, no RNG.
 import { lifeStage, schoolOf, tradeOf } from '../schooling';
+import { examBlocked, examOf, levelIndex } from '../exams';
 import type { Content } from '../../core/content';
 import type { GameEvent } from '../../core/schemas';
 import type { GameState } from '../../core/types';
@@ -125,6 +126,14 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (c.trade.id !== undefined && t.id !== c.trade.id) return false;
     if (c.trade.learning !== undefined && c.trade.learning !== t.learning) return false;
     if (c.trade.levelMin !== undefined && (!t.id || t.level < c.trade.levelMin)) return false;
+  }
+  if (c.exam && content) {
+    const ex = examOf(state);
+    if (c.exam.passed !== undefined && ex.rank < levelIndex(content, c.exam.passed)) return false;
+    if (c.exam.notPassed !== undefined && ex.rank >= levelIndex(content, c.exam.notPassed)) return false;
+    if (c.exam.failsMin !== undefined && ex.fails < c.exam.failsMin) return false;
+    if (c.exam.canSit !== undefined && (examBlocked(state, content) === null) !== c.exam.canSit) return false;
+    if (c.exam.placing?.length && !c.exam.placing.includes(ex.placing ?? '')) return false;
   }
   if (c.flagsAll?.some((f) => !state.flags[f])) return false;
   if (c.itemsAll?.some((i) => !(state.inventory[i] > 0))) return false;

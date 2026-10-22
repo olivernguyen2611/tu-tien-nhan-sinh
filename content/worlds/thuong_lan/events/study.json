@@ -74,9 +74,9 @@
         "min": 7,
         "max": 14
       },
-      "flagsAll": [
-        "di_hoc"
-      ]
+      "school": {
+        "enrolled": true
+      }
     },
     "weight": 10,
     "cooldownYears": 4,
@@ -178,84 +178,6 @@
           "text": "Lửa cháy xanh lè, thơm lạ. Hơi tiếc.",
           "effects": {
             "stat.happiness": 2
-          }
-        }
-      }
-    ]
-  },
-  {
-    "id": "khao_thi_huyen",
-    "category": "study",
-    "title": "Khảo thí ở huyện",
-    "text": "Kỳ khảo thí ở huyện tới. Đỗ thì làm rạng danh tổ tông, trượt thì làm trò cười cho hàng xóm.",
-    "themes": [
-      "study"
-    ],
-    "conditions": {
-      "age": {
-        "min": 14,
-        "max": 20
-      },
-      "flagsAll": [
-        "di_hoc"
-      ],
-      "flagsNone": [
-        "tu_tai"
-      ]
-    },
-    "weight": 10,
-    "cooldownYears": 3,
-    "choices": [
-      {
-        "text": "Dốc sức thi",
-        "check": {
-          "stat": "stat.intellect",
-          "difficulty": 60
-        },
-        "success": {
-          "text": "Tên ngươi được dán ở cổng huyện. Cả xóm đi khoe khắp chợ.",
-          "effects": {
-            "stat.happiness": 10,
-            "stat.charm": 3,
-            "silver": 30,
-            "setFlags": [
-              "tu_tai"
-            ]
-          }
-        },
-        "fail": {
-          "text": "Bảng không có tên ngươi. Hàng xóm an ủi rất to.",
-          "effects": {
-            "stat.happiness": -8
-          }
-        }
-      },
-      {
-        "text": "Bỏ thi, đi làm",
-        "result": {
-          "text": "Ngươi nghĩ: chữ nhiều không no bụng.",
-          "effects": {
-            "stat.happiness": 3,
-            "stat.intellect": -1
-          }
-        }
-      },
-      {
-        "text": "Đoán đề từ tính cách quan chủ khảo",
-        "hidden": true,
-        "requires": {
-          "traitsAny": [
-            "thong_minh_vat"
-          ]
-        },
-        "result": {
-          "text": "Trúng tám phần. Quan chủ khảo khen bài văn 'rất hiểu ý ta'.",
-          "effects": {
-            "stat.happiness": 10,
-            "silver": 30,
-            "setFlags": [
-              "tu_tai"
-            ]
           }
         }
       }

@@ -13,6 +13,7 @@ import { cultivateYear, rootTestAge } from '../systems/cultivation';
 import { applyJobCrafts } from '../systems/crafts';
 import { careerYear } from '../systems/career';
 import { schoolYear } from '../systems/schooling';
+import { freshExam } from '../systems/exams';
 import { sectYear } from '../systems/sect';
 import { lineageYear, rollPaths } from '../systems/paths';
 import { rankingYear } from '../systems/rankings';
@@ -219,6 +220,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     activities: { last: {}, year: -1, uses: {} },
     times: initTimes(input.seed, content, 0),
     school: { at: null, since: null, grade: 0, teacher: null, ever: false },
+    exam: freshExam(input.seed),
     trade: { id: null, level: 0, years: 0, master: null, learning: false },
     log: [],
   };
@@ -252,7 +254,7 @@ export function advanceYear(state: GameState, content: Content): GameState {
 }
 
 function advanceYearOnce(state: GameState, content: Content): GameState {
-  if (!state.alive || state.events.pending || state.fate || state.combat || state.cult.coreForming || state.cult.heartDemonTrial || state.martial.quest?.game) return state;
+  if (!state.alive || state.events.pending || state.fate || state.combat || state.cult.coreForming || state.cult.heartDemonTrial || state.martial.quest?.game || state.exam?.sitting) return state;
   // Task 5b.10: moments a Trùng sinh can go back to.
   state = withCheckpoints(state);
   // Task 5b.2: the Kim Thủ Chỉ awakens further once the realm allows.

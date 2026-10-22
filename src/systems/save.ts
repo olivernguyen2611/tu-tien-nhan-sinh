@@ -9,14 +9,16 @@ import { EMPTY_CODEX, mergeCodex, type Codex } from './codex';
 import { readKarmaLedger } from './karmaLedger';
 import { EMPTY_CHRONICLE, mergeChronicle, readChronicle, type Chronicle } from './chronicle';
 import { BASIC_KNOWLEDGE } from './knowledge';
+import { freshExam } from './exams';
 
 /**
  * v2: after the per-version steps in `migrate`, missing fields are backfilled from a fresh life (`backfillLife`).
  * v3: a special body no longer stands in for the root; old "thể chất" lives get an ordinary root back (`restoreRoots`).
  * v4: tầng (9.1): an older life is put in Phàm gian, or Tu chân giới when it already has a realm (`placeTier`).
  * v5: hoạt động (9.2): the last Ngao du trip moves into the activity record (`moveLeisure`).
+ * v7: khoa cử (10.2): Quan lộ's old exam rungs become exam ranks, its offices start at Huấn đạo (`examFromCareer`).
  */
-export const SAVE_VERSION = 6;
+export const SAVE_VERSION = 7;
 export const SLOT_COUNT = 9;
 const KEY_PREFIX = 'bachthe.save.';
 const META_KEY = 'bachthe.meta';
@@ -250,6 +252,31 @@ function addVillageName(life: GameState): GameState {
   return { ...life, social: { ...life.social, reputation: { ...life.social.reputation, lang_xa: 0 } } };
 }
 
+/** 10.2: old exam events retired by the khoa cử system. */
+const RETIRED_EVENTS = ['khao_thi_huyen', 'thi_huong', 'thi_hoi'];
+/** Old Quan lộ rungs (Tú tài, Cử nhân, Tiến sĩ, Tri phủ, Tể tướng) → exam rank (index in exams.json) and the new office rung (null = not an official yet). */
+const OLD_QUAN: [number, number | null][] = [[1, null], [2, 0], [4, 1], [4, 2], [4, 4]];
+const EXAM_FLAGS = ['dong_sinh', 'tu_tai', 'cu_nhan', 'cong_si', 'tien_si'];
+
+function examFromCareer(life: GameState): GameState {
+  let s = life;
+  if (s.events.pending && RETIRED_EVENTS.includes(s.events.pending)) s = { ...s, events: { ...s.events, pending: null } };
+  if (s.events.followUps.some((f) => RETIRED_EVENTS.includes(f.event))) s = { ...s, events: { ...s.events, followUps: s.events.followUps.filter((f) => !RETIRED_EVENTS.includes(f.event)) } };
+  if (s.exam) return s;
+  const exam = freshExam(s.seed);
+  // An old Tú tài flag from the retired khảo thí event counts as Tú tài.
+  let rank = s.flags.tu_tai ? 1 : -1;
+  let career = s.career;
+  if (career.id === 'quan') {
+    const [r, office] = OLD_QUAN[Math.min(career.rung, OLD_QUAN.length - 1)];
+    rank = Math.max(rank, r);
+    career = office === null ? { id: null, rung: 0, since: 0 } : { ...career, rung: office };
+  }
+  const flags = { ...s.flags };
+  for (let i = 0; i <= rank; i++) flags[EXAM_FLAGS[i]] = true;
+  return { ...s, exam: { ...exam, rank }, career, flags };
+}
+
 function migrateSteps(save: SaveFile): SaveFile {
   // Fields added within saveVersion 1 get their empty defaults.
   let life = save.life as GameState & { extremes?: GameState['extremes'] };
@@ -352,7 +379,7 @@ function migrateSteps(save: SaveFile): SaveFile {
       },
     };
   }
-  life = addVillageName(moveLeisure(placeTier(restoreRoots(splitBody(life)))));
+  life = examFromCareer(addVillageName(moveLeisure(placeTier(restoreRoots(splitBody(life))))));
   // 9.R4d: no mass root test any more: an untested life drops the booked visit (the tiên duyên gates take over).
   const booked = life.events.followUps.filter((f) => /^thu_linh_can/.test(f.event));
   if (!life.cult.root && booked.length) life = { ...life, events: { ...life.events, followUps: life.events.followUps.filter((f) => !booked.includes(f)) } };

@@ -1,6 +1,7 @@
 // EventEngine (PLAN.md task 1.5): each year pick at most one event, the player
 // chooses, the outcome is applied. Pure functions over GameState + Content.
 import { addGrade, addTradeLevel, enrollSchool, leaveSchool, startTrade } from '../schooling';
+import { beginExam } from '../exams';
 import { ordinaryAptitude, ordinaryStat } from '../aptitudeGain';
 import type { Content } from '../../core/content';
 import { Rng } from '../../core/rng';
@@ -477,6 +478,8 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.grade) next = addGrade(next, fx.grade);
   if (fx.startTrade) next = startTrade(next, content, fx.startTrade);
   if (fx.tradeLevel) next = addTradeLevel(next, content, fx.tradeLevel);
+  // 10.2: lều chõng đi thi (the trường thi card opens).
+  if (fx.sitExam) next = beginExam(next, content);
   if (fx.martialBonus) next = { ...next, martial: { ...next.martial, bonus: next.martial.bonus + fx.martialBonus } };
   if (fx.martialPromote) next = martialPromote(next, content);
   if (fx.martialAscend) next = martialAscend(next, content);

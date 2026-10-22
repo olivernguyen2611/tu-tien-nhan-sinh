@@ -2,7 +2,7 @@
 // rules as `npm run validate`.
 import {
   AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, type Nation, FigureFileSchema, type Figure, WorldEventFileSchema, type WorldEvent, WorldClanFileSchema, type WorldClan, RaceFileSchema, type Race, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, type CombatTexts, type Market, type FateTalent, type Item, type Lineage, type MartialFile, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile, NpcTraitsFileSchema, RankingTextsSchema, type RankingTexts, RomanceFileSchema, type RomanceFile, HeartDemonFileSchema, type HeartDemonFile, RecipeFileSchema, type RecipeFile, CorePatternFileSchema, type CorePattern, NascentSoulFileSchema, type NascentSoulFile, DisciplesFileSchema, type DisciplesFile, FoundingFileSchema, type FoundingFile, HeirFileSchema, type HeirFile, ChosenFileSchema, type ChosenFile, ClanFileSchema, type ClanFile, BlessingFileSchema, type BlessingFile, RebirthTalentFileSchema, type RebirthTalentFile, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, type TraitComboFile, CodexFileSchema, type CodexFile, EndingFileSchema, type Ending, ThienDaoKyFileSchema, type ThienDaoKyFile, SpecialOriginFileSchema, type SpecialOrigin, SystemFileSchema, type SystemDef, TrungSinhFileSchema, type TrungSinhFile, ThanDaoFileSchema, type ThanDaoFile, AchievementFileSchema, type AchievementFile, ChallengeFileSchema, type ChallengeFile, type NpcTraitsFile,
-  ActivityFileSchema, type Activity, DockFileSchema, type DockButton, WorldStateFileSchema, type WorldStateFile, RelationsFileSchema, type RelationsFile, SchoolingFileSchema, type SchoolingFile, StatLabelsFileSchema, type StatLabelsFile,
+  ActivityFileSchema, type Activity, DockFileSchema, type DockButton, WorldStateFileSchema, type WorldStateFile, RelationsFileSchema, type RelationsFile, SchoolingFileSchema, type SchoolingFile, ExamsFileSchema, type ExamsFile, StatLabelsFileSchema, type StatLabelsFile,
   BalanceSchema, EventFileSchema, FamilyActionFileSchema, GlossarySchema, NpcActFileSchema, EffectLabelsSchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema,
   type Balance, type FamilyAction, type NpcAct, type EffectLabels, type GameEvent, type Glossary, type LifeTexts, type Names, type Origin, type StatExtremesFile, type Trait, type World,
 } from './schemas';
@@ -99,6 +99,7 @@ export interface Content {
   relations?: RelationsFile;
   /** 10.1 giai đoạn tuổi, học đường, học nghề. */
   schooling?: SchoolingFile;
+  exams?: ExamsFile;
   /** 9.7: dock buttons (dock.json). */
   dock?: DockButton[];
   /** Task 5b.5: thành tựu, huy hiệu cuối đời, cáo phó. */
@@ -239,6 +240,7 @@ export function loadContent(worldId: string = DEFAULT_WORLD_ID): Content {
     statLabels: files['stat-labels.json'] ? StatLabelsFileSchema.parse(files['stat-labels.json']) : undefined,
     relations: files['relations.json'] ? RelationsFileSchema.parse(files['relations.json']) : undefined,
     schooling: files['schooling.json'] ? SchoolingFileSchema.parse(files['schooling.json']) : undefined,
+    exams: files['exams.json'] ? ExamsFileSchema.parse(files['exams.json']) : undefined,
     dock: files['dock.json'] ? DockFileSchema.parse(files['dock.json']) : undefined,
     activities: Object.entries(files)
       .filter(([p]) => p.startsWith('activities/') || p.startsWith(`${dir}activities/`))

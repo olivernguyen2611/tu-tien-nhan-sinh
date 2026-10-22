@@ -1,80 +1,5 @@
 [
   {
-    "id": "thi_hoi",
-    "category": "mortal",
-    "title": "Thi Hội ở kinh thành",
-    "text": "Ba nghìn cử nhân, ba trăm suất tiến sĩ. Ngoài trường thi có người bán \"đề thi năm nay\", giá năm trăm lượng, bao đỗ.",
-    "conditions": {
-      "career": {
-        "id": "quan",
-        "minRung": 1,
-        "maxRung": 1
-      }
-    },
-    "weight": 4,
-    "cooldownYears": 3,
-    "choices": [
-      {
-        "text": "Dốc sức thi",
-        "check": {
-          "stat": "stat.intellect",
-          "difficulty": 60
-        },
-        "success": {
-          "text": "Tên ngươi nằm giữa bảng vàng, không cao không thấp, vừa đủ.",
-          "effects": {
-            "careerPromote": true,
-            "stat.happiness": 10,
-            "reputation": {
-              "trieu_dinh": 10
-            }
-          }
-        },
-        "fail": {
-          "text": "Bảng vàng dài ba trượng, không có tên ngươi.",
-          "effects": {
-            "stat.happiness": -10,
-            "stat.daoHeart": 2
-          }
-        }
-      },
-      {
-        "text": "Mua đề",
-        "requires": {
-          "stats": [
-            {
-              "stat": "silver",
-              "gte": 500
-            }
-          ]
-        },
-        "result": {
-          "text": "Đề thật. Ngươi đỗ. Ba năm sau kẻ bán đề bị bắt, khai ra hai trăm cái tên.",
-          "effects": {
-            "careerPromote": true,
-            "silver": -500,
-            "karma": -10,
-            "setFlags": [
-              "mua_de"
-            ],
-            "stat.happiness": 5
-          }
-        }
-      },
-      {
-        "text": "Bỏ thi, về quê dạy học",
-        "result": {
-          "text": "Lũ trẻ trong làng gọi ngươi là thầy. Nghe cũng sướng tai.",
-          "effects": {
-            "stat.happiness": 5,
-            "stat.intellect": 2,
-            "leaveCareer": true
-          }
-        }
-      }
-    ]
-  },
-  {
     "id": "han_han_ba_nam",
     "category": "mortal",
     "title": "Hạn hán ba năm",
@@ -85,7 +10,7 @@
     "conditions": {
       "career": {
         "id": "quan",
-        "minRung": 3
+        "minRung": 2
       }
     },
     "weight": 4,

@@ -32,6 +32,7 @@ import { SectPanel, type SectAction } from '../components/SectPanel';
 import { FatePopup } from '../components/FatePopup';
 import { CorePopup } from '../components/CorePopup';
 import { MiniGamePopup, type QuestAction } from '../components/MiniGamePopup';
+import { ExamPopup, type ExamAction } from '../components/ExamPopup';
 import type { BondAction, BondTarget } from '../../systems/familyBond';
 import { HeartDemonPopup } from '../components/HeartDemonPopup';
 import type { HeartDemonOption } from '../../systems/heartDemon';
@@ -54,6 +55,7 @@ import { dockGroups, dockView, identityLine, type DockView } from '../../systems
 import { ActivityList } from '../components/ActivityPanel';
 import { daoHeartLabel, innerForce, karmaView, reputationViews } from '../../systems/statLabels';
 import { lifeStage, schoolLine, tradeLine } from '../../systems/schooling';
+import { examLine } from '../../systems/exams';
 
 
 const APTITUDE_LABELS = [
@@ -63,7 +65,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onActivity, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onActivity, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onLearn, onTrain, onQuest, onExam, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -119,6 +121,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   getSources: () => SavedPerson[];
   onImport: (person: SavedPerson, setup: ImportSetup) => { ok: boolean; text: string };
   onQuest: (a: QuestAction) => string | null;
+  /** 10.2: one round of the trường thi, or its incident. */
+  onExam: (a: ExamAction) => void;
   /** Practise a technique from a scroll (task 2.8). */
   onLearn: (techniqueId: string) => string | null;
   /** Nghịch Thiên Cải Mệnh: take a talent, or refresh the offer (task 2.7). */
@@ -153,8 +157,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const [selfOpen, setSelfOpen] = useState(false);
   // Kết đan and tâm ma take over the screen; the Tu luyện sheet steps aside so its outcome shows in the log (task 4.2).
   useEffect(() => {
-    if (state.cult.coreForming || state.cult.heartDemonTrial || state.martial.quest?.game) { setCultivateOpen(false); setSelfOpen(false); }
-  }, [!!state.cult.coreForming, !!state.cult.heartDemonTrial, !!state.martial.quest?.game]);
+    if (state.cult.coreForming || state.cult.heartDemonTrial || state.martial.quest?.game || state.exam?.sitting) { setCultivateOpen(false); setSelfOpen(false); setActivityOpen(false); }
+  }, [!!state.cult.coreForming, !!state.cult.heartDemonTrial, !!state.martial.quest?.game, !!state.exam?.sitting]);
   const [sectOpen, setSectOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
   const anySheet = profileOpen || familyOpen || bagOpen || fingerOpen || systemOpen || activityOpen || memoryOpen || marketOpen || mapOpen || cultivateOpen || selfOpen || sectOpen || devOpen;
@@ -362,6 +366,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             {careerLabel(state, content) && <p class="profile-note">Đường đời: {careerLabel(state, content)}</p>}
             {schoolLine(state, content) && <p class="profile-note">Học hành: {schoolLine(state, content)}</p>}
             {tradeLine(state, content) && <p class="profile-note">Nghề: {tradeLine(state, content)}</p>}
+            {examLine(state, content) && <p class="profile-note">Khoa cử: {examLine(state, content)}</p>}
             {sectLabel(state, content) && <p class="profile-note">Tông môn: {sectLabel(state, content)}</p>}
             {inventoryLabel(state, content) && <p class="profile-note">Mang theo: {inventoryLabel(state, content)}</p>}
             <p class="profile-note"><TermText text="Tư chất tiên thiên định từ lúc sinh, chỉ đổi được nhờ kỳ ngộ hay khí vận." /></p>
@@ -415,6 +420,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
       {/* Kết đan sits above every sheet: the year waits for it (task 4.2). */}
       {state.cult.coreForming && <CorePopup state={state} content={content} onPlace={onPlaceStrand} />}
       {state.martial.quest?.game && <MiniGamePopup state={state} content={content} onAction={onQuest} />}
+      {state.exam?.sitting && <ExamPopup state={state} content={content} onAction={onExam} />}
       {state.cult.heartDemonTrial && <HeartDemonPopup state={state} content={content} onMeet={onMeetIllusion} />}
     </div>
   );

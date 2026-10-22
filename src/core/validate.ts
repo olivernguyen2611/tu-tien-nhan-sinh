@@ -4,7 +4,7 @@
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
 import { KY_KEYS } from '../systems/thienDaoKy';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, SpecialOriginFileSchema, type SpecialOrigin, ActivityFileSchema, type Activity, DockFileSchema, type DockButton, WorldStateFileSchema, type WorldStateFile, RelationsFileSchema, type RelationsFile, StatLabelsFileSchema, SchoolingFileSchema, TierTermsFileSchema, type TierTermsFile, STAT_KEYS, SystemFileSchema, type SystemFile, TrungSinhFileSchema, type TrungSinhFile, ThanDaoFileSchema, type ThanDaoFile, ThienDaoKyFileSchema, type ThienDaoKyFile, type Ending, MORTAL_STATS, APTITUDES, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, SpecialOriginFileSchema, type SpecialOrigin, ActivityFileSchema, type Activity, DockFileSchema, type DockButton, WorldStateFileSchema, type WorldStateFile, RelationsFileSchema, type RelationsFile, StatLabelsFileSchema, SchoolingFileSchema, ExamsFileSchema, TierTermsFileSchema, type TierTermsFile, STAT_KEYS, SystemFileSchema, type SystemFile, TrungSinhFileSchema, type TrungSinhFile, ThanDaoFileSchema, type ThanDaoFile, ThienDaoKyFileSchema, type ThienDaoKyFile, type Ending, MORTAL_STATS, APTITUDES, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -68,6 +68,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
     if (rest === 'relations.json') return RelationsFileSchema;
     if (rest === 'stat-labels.json') return StatLabelsFileSchema;
     if (rest === 'schooling.json') return SchoolingFileSchema;
+    if (rest === 'exams.json') return ExamsFileSchema;
     if (rest === 'thien-dao-ky.json') return ThienDaoKyFileSchema;
     if (rest === 'achievements.json') return AchievementFileSchema;
     return null;
@@ -933,6 +934,32 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       for (const v of Object.values(r)) walk(file, v);
     };
     for (const [file, raw] of Object.entries(files)) if (/events\/|activities\//.test(file)) walk(file, raw);
+  }
+
+  // 10.2: exams.json and balance.exams name the same levels, approaches and placings; conditions and careers name real levels.
+  const exams = files['exams.json'] ? ExamsFileSchema.safeParse(files['exams.json']) : null;
+  const examCfg = parsedShared.balance?.exams;
+  if (exams?.success && examCfg) {
+    const levelIds = exams.data.levels.map((l) => l.id);
+    const same = (what: string, a: string[], b: string[]) => {
+      for (const x of a) if (!b.includes(x)) problems.push({ file: 'exams.json', level: 'error', message: `${what} "${x}" có trong exams.json mà thiếu trong balance.exams` });
+      for (const x of b) if (!a.includes(x)) problems.push({ file: 'config/balance.json', level: 'error', message: `${what} "${x}" có trong balance.exams mà thiếu trong exams.json` });
+    };
+    same('khoa thi', levelIds, Object.keys(examCfg.levels));
+    same('cách làm bài', exams.data.approaches.map((a) => a.id), Object.keys(examCfg.approaches));
+    same('thứ hạng', exams.data.placings.map((p) => p.id), examCfg.placings.map((p) => p.id));
+    for (const inc of exams.data.incidents) for (const l of inc.levels) if (!levelIds.includes(l)) problems.push({ file: 'exams.json', level: 'error', message: `sự cố "${inc.id}" nhắc khoa thi lạ "${l}"` });
+    const walkExam = (file: string, o: unknown) => {
+      if (Array.isArray(o)) { for (const v of o) walkExam(file, v); return; }
+      if (!o || typeof o !== 'object') return;
+      const r = o as Record<string, unknown>;
+      const ex = r.exam as { passed?: unknown; notPassed?: unknown } | undefined;
+      for (const l of [ex?.passed, ex?.notPassed]) if (ex && typeof ex === 'object' && typeof l === 'string' && !levelIds.includes(l)) problems.push({ file, level: 'error', message: `điều kiện khoa thi lạ "${l}"` });
+      const rq = r.requires as { examRank?: unknown } | undefined;
+      if (rq && typeof rq === 'object' && typeof rq.examRank === 'string' && !levelIds.includes(rq.examRank)) problems.push({ file, level: 'error', message: `đường đời đòi khoa thi lạ "${rq.examRank}"` });
+      for (const v of Object.values(r)) walkExam(file, v);
+    };
+    for (const [file, raw] of Object.entries(files)) if (/events\/|activities\/|careers\.json/.test(file)) walkExam(file, raw);
   }
   return problems;
 }

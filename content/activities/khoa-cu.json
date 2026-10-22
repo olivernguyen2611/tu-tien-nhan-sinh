@@ -1,0 +1,83 @@
+[
+  {
+    "id": "leu_chong_di_thi",
+    "group": "hoc_hanh",
+    "name": "Lều chõng đi thi",
+    "icon": "試",
+    "text": "Gánh lều, gánh chõng, mang theo nghiên bút và nắm cơm nắm, lên đường dự khoa thi năm nay.",
+    "conditions": { "tier": ["pham_gian"], "exam": { "canSit": true } },
+    "months": 2,
+    "outcomes": [
+      {
+        "text": ["Ngươi lên đường từ khi gà chưa gáy.", "Ngươi gánh lều chõng theo đám sĩ tử ra cổng làng."],
+        "effects": { "sitExam": true, "stat.daoHeart": 1 }
+      }
+    ]
+  },
+  {
+    "id": "on_thi",
+    "group": "hoc_hanh",
+    "name": "Ôn thi",
+    "icon": "溫",
+    "text": "Đóng cửa đọc lại kinh sách, tập viết văn sách theo đề các khoa trước.",
+    "conditions": { "age": { "min": 14 }, "tier": ["pham_gian"], "school": { "enrolled": false }, "exam": { "notPassed": "dinh" } },
+    "months": 2,
+    "check": { "stat": "stat.intellect", "difficulty": 40 },
+    "outcomes": [
+      {
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            ["Ngươi chép lại mười bài văn sách đỗ đầu khoa trước,", "Ngươi đọc thuộc một thiên sử cũ,", "Đêm nào ngươi cũng tự ra đề tự làm,", "Ngươi tìm tới một lão tú tài nhờ chấm bài,", "Ngươi luyện viết chữ cho đều tay,"],
+            ["chữ nghĩa dần vào nếp.", "thấy mình viết khá hơn hẳn năm ngoái.", "mắt thâm quầng mà lòng vững hơn.", "chỗ dở trong văn mình lộ ra từng chỗ một.", "giấy chất cao bằng đầu gối."]
+          ]
+        },
+        "effects": { "grade": 3, "stat.intellect": 1 }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": ["Đọc tới đâu quên tới đó. Ngươi gục đầu lên sách mà ngủ.", "Ngồi cả tháng mà viết không ra một bài cho ra hồn."],
+        "effects": { "grade": 1, "stat.happiness": -2 }
+      }
+    ]
+  },
+  {
+    "id": "viet_thue",
+    "group": "hoc_hanh",
+    "name": "Viết thuê",
+    "icon": "寫",
+    "text": "Ngồi đầu chợ viết thư, viết văn tế, viết đơn kiện thuê cho người không biết chữ.",
+    "conditions": { "age": { "min": 14 }, "tier": ["pham_gian"], "exam": { "passed": "huyen" } },
+    "months": 2,
+    "outcomes": [
+      {
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            ["Một bà cụ nhờ viết thư cho con trai đi lính,", "Một gã lái buôn thuê viết tờ văn tự,", "Nhà bên mời viết bài văn tế cha,", "Hai nhà kiện nhau, cả hai cùng thuê ngươi viết đơn,"],
+            ["ngươi được mấy đồng và một nải chuối.", "tiền công không nhiều nhưng đều tay.", "người ta đọc xong khóc to, trả thêm tiền.", "ngươi viết cho cả hai, ai cũng hài lòng."]
+          ]
+        },
+        "effects": { "silver": 4, "stat.charm": 1 }
+      }
+    ]
+  },
+  {
+    "id": "mo_lop_day_chu",
+    "group": "hoc_hanh",
+    "name": "Mở lớp dạy chữ",
+    "icon": "教",
+    "text": "Tú tài được mở trường làng. Một gian nhà, mấy chiếc chiếu, lũ trẻ con hàng xóm.",
+    "conditions": { "age": { "min": 16 }, "tier": ["pham_gian"], "exam": { "passed": "vien" } },
+    "months": 4,
+    "outcomes": [
+      {
+        "text": ["Lũ trẻ đọc bài vang cả xóm. Cha mẹ chúng mang gạo, mang gà tới biếu.", "Có đứa học trò sáng dạ, ngươi dạy nó mà thấy như dạy chính mình ngày trước.", "Lớp học ồn như chợ. Cuối năm, mấy đứa đọc được cả chữ trên bia đình."],
+        "effects": { "silver": 8, "reputation": { "lang_xa": 2 }, "stat.happiness": 1 }
+      }
+    ]
+  }
+]

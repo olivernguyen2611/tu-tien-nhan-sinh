@@ -66,6 +66,11 @@ const BaseConditionsSchema = z
     lifeStage: ids,
     school: z.object({ enrolled: z.boolean().optional(), at: id.optional(), gradeMin: z.number().optional(), gradeMax: z.number().optional(), ever: z.boolean().optional() }).strict().optional(),
     trade: z.object({ id: id.optional(), any: z.boolean().optional(), levelMin: z.number().int().optional(), learning: z.boolean().optional() }).strict().optional(),
+    /** 10.2 Khoa cử: highest level passed (exams.json level ids; none = -1), times failed, can sit the next exam this year, the Đình placing. */
+    exam: z.object({
+      passed: id.optional(), notPassed: id.optional(), failsMin: z.number().int().optional(),
+      canSit: z.boolean().optional(), placing: ids,
+    }).strict().optional(),
     root: z.object({ tested: z.boolean().optional(), usable: z.boolean().optional(), minElements: z.number().int().min(1).optional(), innate: z.boolean().optional() }).strict().optional(),
     /** Stage within the current realm, 0-based (task 2.8: "Luyện Khí tầng 4+" = min 3). */
     stage: z.object({ min: z.number().int().optional(), max: z.number().int().optional() }).strict().optional(),
@@ -252,6 +257,8 @@ export const EffectsSchema = z
     leaveSchool: z.boolean().optional(),
     startTrade: id.optional(),
     tradeLevel: z.number().int().optional(),
+    /** 10.2: lều chõng đi thi: sit the next exam held this year (the trường thi mini-game opens). */
+    sitExam: z.boolean().optional(),
     /** Extra % for the next martial breakthrough. */
     martialBonus: z.number().optional(),
     /** An elder of the sect takes you as a personal disciple. */
@@ -349,7 +356,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1607,6 +1614,41 @@ export const BalanceSchema = z
       })
       .strict()
       .optional(),
+    /** 10.2 Khoa cử (content/exams.json has the names and texts). Chance of an approach = base + Σ weight × value − level penalty − phase penalty. */
+    exams: z
+      .object({
+        rounds: z.number().int().min(1),
+        chanceMin: z.number(),
+        chanceMax: z.number(),
+        /** Chance one incident (gian lận, vu oan, đề lạ) comes in a sitting. */
+        incidentChance: z.number().min(0).max(1),
+        levels: z.record(z.object({
+          minAge: z.number().int().min(0),
+          minGrade: z.number().min(0),
+          fee: z.number().min(0),
+          /** Held every `interval` years (offset by the life's own calendar + offset); 0 = right after passing the level before (thi Đình). */
+          interval: z.number().int().min(0),
+          offset: z.number().int().min(0).default(0),
+          passScore: z.number(),
+          penalty: z.number(),
+          reward: z.object({ silver: z.number().default(0), happiness: z.number().default(0), reputation: z.number().default(0) }).strict(),
+        }).strict()),
+        approaches: z.record(z.object({
+          base: z.number(), win: z.number(), lose: z.number(),
+          /** Value names: grade (học lực) or a stat/aptitude. */
+          weights: z.record(z.number()),
+        }).strict()),
+        /** Penalty by thời thế phase; phases where only the lowest levels are held; phases that hold ân khoa (every level every year). */
+        phasePenalty: z.record(z.number()),
+        closedPhases: ids,
+        openLevels: ids,
+        anKhoaPhases: ids,
+        /** Score on the last level for each placing, best first. */
+        placings: z.array(z.object({ id, minScore: z.number() }).strict()),
+        failHappiness: z.number(),
+      })
+      .strict()
+      .optional(),
     /** Mortal careers (task 2.11). */
     careers: z
       .object({
@@ -2425,7 +2467,10 @@ export const CareersFileSchema = z
             /** Flags from earlier events that make promotions easier. */
             bonusFlags: ids,
             bonusOrigins: ids,
-            requires: z.object({ rootless: z.boolean().optional() }).strict().default({}),
+            /** 10.2: examRank = the khoa cử level needed to take this path (Quan lộ needs Cử nhân). */
+            requires: z.object({ rootless: z.boolean().optional(), examRank: id.optional() }).strict().default({}),
+            /** 10.2: starting rung by the highest exam passed (Tiến sĩ starts higher). */
+            entryByExam: z.record(z.number().int().min(0)).default({}),
             /** {rung} = the new rung's name. */
             promoteText: z.string().min(1),
             /** End-of-life title when the last rung is reached. */
@@ -2861,6 +2906,32 @@ export const SchoolingFileSchema = z.object({
   }).strict(),
 }).strict();
 export type SchoolingFile = z.infer<typeof SchoolingFileSchema>;
+
+/** 10.2 content/exams.json: khoa cử levels (in order), the three ways to write, đề, incidents and log lines. Numbers: balance.exams. */
+const ExamOutcomeSchema = z.object({ text: z.string().min(1), score: z.number().default(0), disqualify: z.boolean().default(false), effects: EffectsSchema.default({}) }).strict();
+export const ExamsFileSchema = z.object({
+  levels: z.array(z.object({ id, name: z.string().min(1), title: z.string().min(1), flag: id }).strict()).min(1),
+  approaches: z.array(z.object({ id, name: z.string().min(1), hint: z.string().min(1), winText: z.array(z.string().min(1)).min(1), loseText: z.array(z.string().min(1)).min(1) }).strict()).min(1),
+  /** Đề, drawn per round; {level} = the exam's name. */
+  prompts: z.array(z.string().min(1)).min(3),
+  incidents: z.array(z.object({
+    id, title: z.string().min(1), text: z.string().min(1),
+    /** Exam levels it can come in (all when empty). */
+    levels: ids,
+    choices: z.array(z.object({
+      text: z.string().min(1),
+      outcome: ExamOutcomeSchema,
+      /** A gamble: with this chance the risk outcome happens instead. */
+      risk: z.object({ chance: z.number().min(0).max(1), outcome: ExamOutcomeSchema }).strict().optional(),
+    }).strict()).min(2),
+  }).strict()),
+  placings: z.array(z.object({ id, name: z.string().min(1), title: z.string().min(1) }).strict()),
+  texts: z.object({
+    begin: z.string().min(1), pass: z.string().min(1), fail: z.string().min(1), disqualified: z.string().min(1),
+    placing: z.string().min(1), round: z.string().min(1),
+  }).strict(),
+}).strict();
+export type ExamsFile = z.infer<typeof ExamsFileSchema>;
 
 export const RelationsFileSchema = z.object({
   groups: z.array(z.object({ id, name: z.string().min(1) }).strict()).min(1),

@@ -119,6 +119,11 @@ export interface GameState {
   school?: { at: string | null; since: number | null; grade: number; teacher: string | null; ever: boolean };
   /** 10.1 Học nghề: the trade, its level (0 = học việc), years at this level, the master; learning = still under the master. */
   trade?: { id: string | null; level: number; years: number; master: string | null; learning: boolean };
+  /** 10.2 Khoa cử: index of the highest level passed (-1 = none), fails, the Đình placing, the life's calendar offset, age each level was last sat, the sitting in progress (blocks the year). */
+  exam?: {
+    rank: number; fails: number; placing: string | null; cycle: number; last: Record<string, number>;
+    sitting: ExamSitting | null;
+  };
   /** 9.R6a: developer mode was on during this life; it earns no records (thành tựu, thử thách tuần, điểm Luân Hồi, Thiên Thư, Sổ tri thức). */
   devUsed?: boolean;
   /** Task 5b.1: thiên phú luân hồi this life was born with (id → level), bought in earlier lives. */
@@ -472,3 +477,15 @@ export type KarmaTieKind = 'dao_lu' | 'an' | 'oan' | 'ke_thu';
 export interface KarmaTie { kind: KarmaTieKind; name: string; gender: Gender; self: string; weight: number; lives: number }
 export interface PastSectRecord { world: string; name: string; lineage: string; founder: string; members: number; lives: number }
 export interface PastSect { name: string; lineage: string; founder: string; members: number; status: 'unknown' | 'met' | 'claimed' | 'spurned' }
+
+/** 10.2 One sitting of a khoa cử exam: rounds answered so far, score, the đề of each round, the incident (if one comes) and when. */
+export interface ExamSitting {
+  level: string;
+  round: number;
+  score: number;
+  prompts: string[];
+  incident: string | null;
+  incidentRound: number;
+  /** What happened, round by round (shown in the card, summed up in the log). */
+  lines: string[];
+}

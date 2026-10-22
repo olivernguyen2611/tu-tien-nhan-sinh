@@ -8,6 +8,15 @@
 
 ## [Chưa phát hành]
 
+### 10.2 Khoa cử (2026-10-22)
+- Năm bậc theo bảng tra 9.10: thi huyện (Đồng sinh) → thi viện (Tú tài) → thi Hương (Cử nhân) → thi Hội (Cống sĩ) → thi Đình (Tiến sĩ; ba người đầu là Trạng nguyên, Bảng nhãn, Thám hoa). Mỗi đời có lịch riêng: thi Hương ba năm một lần, thi Hội năm sau đó, đỗ thi Hội thì vào thi Đình ngay. Trung suy thì khó đỗ hơn, loạn thế chỉ mở thi huyện và thi viện, tân triều mở ân khoa mỗi năm. Mỗi bậc đòi tuổi, học lực và lộ phí.
+- Trường thi là mini-game 3 vòng: mỗi vòng có một đề, chọn Chính luận an toàn, Văn hoa hiểm hóc hoặc Đoán ý giám khảo. Tỉ lệ đạt hiện trên nút, tính theo học lực, trí tuệ, mị lực, khí vận và bậc thi. Một khoa có thể gặp một trong 6 sự cố: lều bên có tài liệu (làm thật, chép, tố cáo), bị vu oan, gặp đề lạ, lều dột, ốm giữa trường thi, giám khảo ra giá.
+- Quan lộ làm lại: phải đỗ Cử nhân mới ra làm quan. Các nấc giờ là chức quan (Huấn đạo, Tri huyện, Tri phủ, Thượng thư, Tể tướng); Tiến sĩ vào thẳng Tri huyện. Trạng nguyên, Bảng nhãn, Thám hoa thành danh hiệu cuối đời.
+- Hoạt động mới: Lều chõng đi thi, Ôn thi (người đã thôi học vẫn tăng học lực), Viết thuê (từ Đồng sinh), Mở lớp dạy chữ (từ Tú tài).
+- 11 sự kiện khoa cử (`khoa-cu.json`): bán ruộng lấy lộ phí, vinh quy bái tổ, lão sĩ tử, bà mối tìm Cử nhân, quan huyện mời làm Huấn đạo, vào cung tạ ơn…
+- Bỏ ba sự kiện thi cũ (Khảo thí ở huyện, Thi Hương, Thi Hội) vì đã có hệ thống thay. Save v7: Quan lộ cũ đổi thành bậc thi tương ứng (Tú tài, Cử nhân, Tiến sĩ…), sự kiện thi cũ đang chờ thì được xóa.
+- Simulate: Thư sinh đỗ Tú tài 71%, Cử nhân 27%, Tiến sĩ 14%. Tú tài chưa được miễn sưu vì game chưa có thuế; flag `tu_tai` đã có sẵn cho 10.4 dùng.
+
 ### 10.1 Tuổi thơ và học hành (2026-10-22)
 - Giai đoạn tuổi (sơ sinh, nhi đồng, thiếu niên, trưởng thành) hiện trong hồ sơ; điều kiện sự kiện mới `lifeStage`.
 - Học đường (`content/schooling.json`, số trong `balance.schooling`): trường làng (3 lạng/năm) và tư thục (10 lạng/năm). Vào học thì thầy đồ và 2 bạn học thành người quen thật. Học lực 0–100 tăng theo trí tuệ mỗi năm; hết tiền thì thôi học, 16 tuổi thì ra trường. Đi học tốn 4–6 tháng trong quỹ năm.

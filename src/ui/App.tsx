@@ -55,6 +55,7 @@ import { learnTechnique } from '../systems/technique';
 import { chooseFate, rerollFate } from '../systems/fate';
 import { trainMartial } from '../systems/martial';
 import { beginQuestStep, miniGameHide, miniGameInput, miniGameQuit } from '../systems/martialQuest';
+import { answerExam, resolveIncident } from '../systems/exams';
 import { romanceAction } from '../systems/romance';
 import { giftNpc } from '../systems/npcGift';
 import { doNpcAct } from '../systems/npcActs';
@@ -528,6 +529,10 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
           if (!r) return null;
           setLife(r.state);
           return r.text;
+        }}
+        onExam={(a) => {
+          const r = a.kind === 'answer' ? answerExam(life, content, a.approach) : resolveIncident(life, content, a.index);
+          if (r) setLife(r.state);
         }}
         onQuest={(a) => {
           if (a.kind === 'hide') { setLife(miniGameHide(life)); return null; }
