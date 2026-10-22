@@ -1,43 +1,72 @@
 import { describe, expect, it } from 'vitest';
 import { loadContent } from '../src/core/content';
-import { advanceYear, createLife } from '../src/core/state';
+import { createLife } from '../src/core/state';
 import type { GameState } from '../src/core/types';
 import { activityViews, doActivity } from '../src/systems/activities';
+import { eventWeight, findEvent, resolveChoice } from '../src/systems/events/engine';
+import { artsLine, festivalFor, pastimeOf, pastimeYear, petsLine } from '../src/systems/leisure';
 
 const content = loadContent();
-const adult = (seed: string, patch: Partial<GameState> = {}): GameState => {
-  const s = createLife({ seed }, content);
-  return { ...s, destiny: { ...s.destiny, confirmed: true }, character: { ...s.character, age: 30 }, ...patch };
-};
+const cfg = content.balance.pastime!;
 
-describe('6b.2 happiness', () => {
-  it('drifts toward rest every year, not only in quiet years', () => {
-    let s = adult('drift');
-    s = { ...s, stats: { ...s.stats, happiness: 0 } };
-    const next = advanceYear(s, content);
-    expect(next.stats.happiness).toBeGreaterThanOrEqual(content.balance.extremes.happinessDrift);
+function adult(age = 25, patch: Partial<GameState> = {}): GameState {
+  const b = createLife({ seed: 'leisure' }, content);
+  return { ...b, tier: 'pham_gian', character: { ...b.character, age }, money: { ...b.money, silver: 200 }, log: [...b.log, { age, lines: [] }], ...patch };
+}
+
+describe('10.7 giải trí', () => {
+  it('one lễ hội a year opens its own activities, and the years differ', () => {
+    const seen = new Set<string>();
+    for (let age = 20; age < 40; age++) {
+      const s = adult(age);
+      const f = festivalFor(s, content)!;
+      seen.add(f);
+      const own = content.activities!.filter((a) => a.conditions.festival?.includes(f)).map((a) => a.id);
+      const other = content.activities!.filter((a) => a.conditions.festival && !a.conditions.festival.includes(f)).map((a) => a.id);
+      const ids = activityViews(s, content).map((v) => v.id);
+      expect(own.length).toBeGreaterThanOrEqual(2);
+      for (const id of own) expect(ids).toContain(id);
+      for (const id of other) expect(ids).not.toContain(id);
+    }
+    expect(seen.size).toBeGreaterThanOrEqual(4);
   });
 
-  // 9.2: Ngao du is now an activity (content/activities/giai-tri.json); its numbers come from there.
-  const trip = content.activities!.find((a) => a.id === 'ngao_du')!;
-  const view = (s: GameState) => activityViews(s, content).find((a) => a.id === 'ngao_du')!;
-
-  it('Ngao du lifts happiness once a year and costs spirit stones for a cultivator', () => {
-    let s = adult('trip');
-    s = { ...s, stats: { ...s.stats, happiness: 10 }, money: { silver: 0, spiritStones: 50 }, cult: { ...s.cult, realm: 'luyen_khi' } };
-    const r = doActivity(s, content, 'ngao_du')!;
-    expect(r.state.money.spiritStones).toBe(50 - trip.cost[0].spiritStones!);
-    expect(r.state.stats.happiness).toBeGreaterThanOrEqual(10 + trip.outcomes[0].roll['stat.happiness'][0]);
-    expect(r.state.aptitudes.daoHeart).toBe(Math.min(100, s.aptitudes.daoHeart + (trip.outcomes[0].bonus[0].effects['stat.daoHeart'] as number)));
-    expect(view(r.state).blocked).not.toBeNull();
-    expect(doActivity(r.state, content, 'ngao_du')).toBeNull();
+  it('arts grow and show; a pet is bought, named, ages and dies', () => {
+    let s = doActivity(adult(), content, 'hoc_dan')!.state;
+    expect(pastimeOf(s).arts.cam).toBe(4);
+    expect(artsLine(s, content)).toContain('Đàn 4');
+    s = doActivity(s, content, 'mua_thu_nuoi')!.state;
+    expect(s.events.pending).toBe('gt_mua_thu');
+    s = resolveChoice(s, content, 0).state;
+    expect(pastimeOf(s).pets).toHaveLength(1);
+    expect(petsLine(s, content)).toContain('Chó');
+    const life = content.leisure!.pets.find((p) => p.id === 'cho')!.lifespan;
+    const before = s.stats.happiness;
+    for (let i = 0; i < life; i++) s = pastimeYear({ ...s, character: { ...s.character, age: s.character.age + 1 } }, content);
+    expect(pastimeOf(s).pets).toHaveLength(0);
+    expect(s.stats.happiness).not.toBe(before);
   });
 
-  it('an empty purse still allows a free walk', () => {
-    let s = adult('free');
-    s = { ...s, stats: { ...s.stats, happiness: 30 }, money: { silver: 0, spiritStones: 0 } };
-    expect(view(s).cost).toBe('miễn phí, 1 tháng');
-    const r = doActivity(s, content, 'ngao_du')!;
-    expect(r.state.stats.happiness).toBeGreaterThanOrEqual(30 + trip.free!.outcomes[0].roll['stat.happiness'][0]);
+  it('a quẻ names a coming event and makes it likelier', () => {
+    const s = doActivity(adult(), content, 'xin_que')!.state;
+    const o = pastimeOf(s).omen!;
+    expect(o).toBeTruthy();
+    const e = findEvent(content, o.id)!;
+    const plain = { ...s, pastime: { ...pastimeOf(s), omen: null } };
+    expect(eventWeight(s, content, e)).toBeCloseTo(eventWeight(plain, content, e) * cfg.omenMul);
+  });
+
+  it('too many nights at the sòng bạc become a habit that costs every year', () => {
+    let s = adult();
+    for (let i = 0; i < cfg.addictAt; i++) {
+      s = doActivity({ ...s, money: { ...s.money, silver: 200 } }, content, 'chieu_bac')!.state;
+      s = resolveChoice(s, content, 0).state;
+      if (i % 3 === 2) s = { ...s, character: { ...s.character, age: s.character.age + 1 } };
+    }
+    s = pastimeYear(s, content);
+    expect(s.flags.nghien_bac).toBe(true);
+    const silver = s.money.silver;
+    s = pastimeYear({ ...s, character: { ...s.character, age: s.character.age + 1 } }, content);
+    expect(s.money.silver).toBe(Math.max(0, silver + cfg.addictSilver));
   });
 });

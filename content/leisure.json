@@ -1,0 +1,148 @@
+{
+  "festivals": [
+    {
+      "id": "tet",
+      "name": "Tết Nguyên đán",
+      "text": "Pháo nổ đầu ngõ, bánh chưng xanh trên bàn thờ."
+    },
+    {
+      "id": "nguyen_tieu",
+      "name": "Tết Nguyên tiêu",
+      "text": "Rằm tháng giêng, phố treo đèn kín mái hiên."
+    },
+    {
+      "id": "thanh_minh",
+      "name": "Tiết Thanh minh",
+      "text": "Tháng ba mưa bụi, người người đi tảo mộ."
+    },
+    {
+      "id": "doan_ngo",
+      "name": "Tết Đoan ngọ",
+      "text": "Mồng năm tháng năm, trên sông đua thuyền rộn ràng."
+    },
+    {
+      "id": "trung_thu",
+      "name": "Tết Trung thu",
+      "text": "Trăng rằm tháng tám, trẻ con rước đèn khắp xóm."
+    },
+    {
+      "id": "trung_cuu",
+      "name": "Tết Trùng cửu",
+      "text": "Mồng chín tháng chín, người già rủ nhau lên núi uống rượu cúc."
+    }
+  ],
+  "arts": [
+    {
+      "id": "cam",
+      "name": "Đàn"
+    },
+    {
+      "id": "ky",
+      "name": "Cờ"
+    },
+    {
+      "id": "thi",
+      "name": "Thơ"
+    },
+    {
+      "id": "hoa",
+      "name": "Họa"
+    }
+  ],
+  "pets": [
+    {
+      "id": "cho",
+      "name": "Chó",
+      "lifespan": 13,
+      "stats": {
+        "stat.happiness": 2,
+        "stat.health": 1
+      },
+      "names": [
+        "Mực",
+        "Vàng",
+        "Đốm",
+        "Lu",
+        "Bông",
+        "Mực Con",
+        "Ki"
+      ]
+    },
+    {
+      "id": "meo",
+      "name": "Mèo",
+      "lifespan": 15,
+      "stats": {
+        "stat.happiness": 2
+      },
+      "names": [
+        "Mướp",
+        "Mun",
+        "Tam Thể",
+        "Bơ",
+        "Miu",
+        "Xám"
+      ]
+    },
+    {
+      "id": "ngua_cung",
+      "name": "Ngựa cưng",
+      "lifespan": 25,
+      "stats": {
+        "stat.physique": 1,
+        "stat.charm": 1
+      },
+      "names": [
+        "Xích Thố Con",
+        "Bạch Vân",
+        "Hắc Phong",
+        "Gió Bấc",
+        "Táo Đỏ"
+      ]
+    },
+    {
+      "id": "chim_ung",
+      "name": "Chim ưng",
+      "lifespan": 18,
+      "stats": {
+        "stat.intellect": 1,
+        "stat.charm": 1
+      },
+      "names": [
+        "Thiết Trảo",
+        "Phi Vân",
+        "Mắt Vàng",
+        "Lôi Điểu"
+      ]
+    },
+    {
+      "id": "ga_choi",
+      "name": "Gà chọi",
+      "lifespan": 7,
+      "stats": {
+        "stat.happiness": 2,
+        "stat.physique": 1
+      },
+      "names": [
+        "Ô Kim",
+        "Tía",
+        "Nhạn",
+        "Điều",
+        "Xám Tro"
+      ]
+    }
+  ],
+  "texts": {
+    "festival": "{festival}: {text}",
+    "adopted": "Nhà có thêm một con {pet}, đặt tên là {name}.",
+    "petDied": "Con {pet} {name} già yếu, nằm xuống không dậy nữa. Ngươi chôn nó dưới gốc cây sau nhà.",
+    "omen": [
+      "Lời quẻ úp mở, nhưng ngươi nghe ra một điềm: \"{hint}\".",
+      "Người ta rỉ tai: chẳng bao lâu nữa sẽ có chuyện \"{hint}\".",
+      "Quẻ hiện chữ mờ mờ, đọc mãi mới ra: \"{hint}\"."
+    ],
+    "omenNone": "Quẻ trống trơn. Thầy bảo trời chưa muốn nói.",
+    "addicted": "Đêm nào không ngồi chiếu bạc là tay chân bứt rứt. Ngươi đã nghiện cờ bạc.",
+    "addictedYear": "Cờ bạc là bác thằng bần: năm nay lại nướng một khoản vào chiếu bạc."
+  }
+}

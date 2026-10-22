@@ -59,6 +59,7 @@ import { examLine } from '../../systems/exams';
 import { jobLine } from '../../systems/jobs';
 import { type AssetAction, assetsLine } from '../../systems/assets';
 import { AssetSection } from '../components/AssetSection';
+import { artsLine, petsLine } from '../../systems/leisure';
 
 
 const APTITUDE_LABELS = [
@@ -375,6 +376,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             {examLine(state, content) && <p class="profile-note">Khoa cử: {examLine(state, content)}</p>}
             {jobLine(state, content) && <p class="profile-note">Việc làm: {jobLine(state, content)}</p>}
             {assetsLine(state, content) && <p class="profile-note">Gia sản: {assetsLine(state, content)}</p>}
+            {artsLine(state, content) && <p class="profile-note">Tài nghệ: {artsLine(state, content)}</p>}
+            {petsLine(state, content) && <p class="profile-note">Thú nuôi: {petsLine(state, content)}</p>}
             {sectLabel(state, content) && <p class="profile-note">Tông môn: {sectLabel(state, content)}</p>}
             {inventoryLabel(state, content) && <p class="profile-note">Mang theo: {inventoryLabel(state, content)}</p>}
             <p class="profile-note"><TermText text="Tư chất tiên thiên định từ lúc sinh, chỉ đổi được nhờ kỳ ngộ hay khí vận." /></p>

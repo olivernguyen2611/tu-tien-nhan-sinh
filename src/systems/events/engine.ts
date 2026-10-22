@@ -3,6 +3,7 @@
 import { addGrade, addTradeLevel, enrollSchool, leaveSchool, startTrade } from '../schooling';
 import { beginExam } from '../exams';
 import { addPerf, promoteJob, quitJob, takeJob } from '../jobs';
+import { addArt, adoptPet, castOmen, noteGamble, omenMul } from '../leisure';
 import { borrow, buyAsset, loseAsset, repayDebts, sellAsset, setStrategy, sowCrop } from '../assets';
 import { ordinaryAptitude, ordinaryStat } from '../aptitudeGain';
 import type { Content } from '../../core/content';
@@ -76,6 +77,8 @@ export function eventWeight(state: GameState, content: Content, event: GameEvent
   // Playtest 2026-10-12: each time it already happened this life, it grows rarer.
   const seen = state.events.seen?.[event.id] ?? (last !== undefined ? 1 : 0);
   if (seen > 0) w *= content.balance.events.repeatDecay ** seen;
+  // 10.7: what a quẻ named comes more readily.
+  w *= omenMul(state, content, event.id);
   return Math.max(0, w);
 }
 
@@ -497,6 +500,11 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.sowCrop) next = sowCrop(next, content, fx.sowCrop);
   if (fx.borrow) next = borrow(next, content, fx.borrow)?.state ?? next;
   if (fx.repayDebts) next = repayDebts(next, content)?.state ?? next;
+  // 10.7 Giải trí.
+  if (fx.art) next = addArt(next, content, fx.art);
+  if (fx.adoptPet) next = adoptPet(next, content, fx.adoptPet);
+  if (fx.gambled) next = noteGamble(next);
+  if (fx.omen) next = castOmen(next, content);
   if (fx.martialBonus) next = { ...next, martial: { ...next.martial, bonus: next.martial.bonus + fx.martialBonus } };
   if (fx.martialPromote) next = martialPromote(next, content);
   if (fx.martialAscend) next = martialAscend(next, content);

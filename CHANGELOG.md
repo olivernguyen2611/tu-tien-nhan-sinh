@@ -8,6 +8,16 @@
 
 ## [Chưa phát hành]
 
+### 10.7 Giải trí và đời sống (2026-10-22)
+- 21 hoạt động giải trí mới (`activities/giai-tri.json`): tửu lâu, trà quán nghe chuyện, chiếu tài xỉu, cai cờ bạc, hội chợ, xem hát, lên chùa xin quẻ, xem bói, du ngoạn danh thắng, đi săn, câu cá, đọc sách, học đàn, đánh cờ, làm thơ, vẽ tranh, may y phục mới, ghé thanh lâu (không miêu tả), kiếm thú nuôi, chơi với thú nuôi. Mỗi hoạt động ghép văn bản từ nhiều mảnh (≥ 8 kiểu câu).
+- Mini-game trong sự kiện: chiếu bạc (đặt tài, xỉu, bát úp chẵn lẻ; Khí vận quyết định), chọn chỗ câu cá, chọn chỗ đi săn (có chim ưng thì thả chim).
+- Nghiện cờ bạc: ngồi chiếu quá nhiều trong vài năm thì nghiện, mỗi năm mất bạc và Hạnh phúc; hết bạc còn có thể phải cầm nhà. Cai được bằng Đạo tâm.
+- Quẻ và tin đồn là gợi ý thật: chúng gọi tên một sự kiện có thể tới và làm nó dễ tới hơn trong vài năm (`balance.pastime.omenMul`).
+- Lễ hội theo năm (`content/leisure.json`): Tết, Nguyên tiêu, Thanh minh, Đoan ngọ, Trung thu, Trùng cửu; mỗi năm một lễ, mỗi lễ 2 hoạt động riêng chỉ mở năm đó (12 hoạt động). Bảng Hành sự ghi lễ của năm.
+- Tài nghệ cầm, kỳ, thi, họa (0–100) lớn dần khi luyện, mở sự kiện văn nhân (thi hội văn nhân, tri âm, ván cờ với ông lão lạ). Hồ sơ có dòng "Tài nghệ:".
+- Thú nuôi: chó, mèo, ngựa cưng, chim ưng, gà chọi; có tên, lớn tuổi rồi mất (Hạnh phúc giảm), vài năm một lần tác động chỉ số; sự kiện chó sủa báo trộm, gà chọi ra trận, thú nuôi ốm. Hồ sơ có dòng "Thú nuôi:".
+- Điều kiện `festival`, `art`, `pet`; hiệu ứng `art`, `adoptPet`, `omen`, `gambled`; `sellAsset` nhận cả loại tài sản (vd. "house").
+
 ### 10.6 Tình duyên và hôn nhân phàm tục (2026-10-22)
 - Hôn nhân sắp đặt: bà mối đưa canh thiếp (nghe lời, xem tuổi trước, từ chối); người nhà ép cưới người khác khi đã có người thương (bỏ trốn, quỳ xin, chia tay), bỏ trốn có chuỗi về làng xin tha thứ.
 - Gặp gỡ: hội đèn Nguyên tiêu, lên chùa cầu duyên, tỉ võ chiêu thân, hoạt động nhờ bà mối (bà mối có thể nói quá). Hiệu ứng `meetNpc.opposite` để mối mai luôn là người khác giới, đủ 18 tuổi.

@@ -76,6 +76,10 @@ const BaseConditionsSchema = z
     /** 10.4 Tài sản: owns at least `count` of these assets (or of this kind), owes money. */
     asset: z.object({ id: id.optional(), kind: z.enum(['house', 'land', 'shop', 'animal', 'vehicle', 'valuable']).optional(), count: z.number().int().min(0).optional(), none: z.boolean().optional() }).strict().optional(),
     debt: z.object({ min: z.number().optional(), any: z.boolean().optional() }).strict().optional(),
+    /** 10.7 Giải trí: this year's lễ hội is one of these (leisure.json); a tài nghệ at least this high; keeps a pet (of this kind). */
+    festival: ids.optional(),
+    art: z.object({ id, min: z.number() }).strict().optional(),
+    pet: z.object({ id: id.optional(), any: z.boolean().optional() }).strict().optional(),
     /** 10.2 Khoa cử: highest level passed (exams.json level ids; none = -1), times failed, can sit the next exam this year, the Đình placing. */
     exam: z.object({
       passed: id.optional(), notPassed: id.optional(), failsMin: z.number().int().optional(),
@@ -286,6 +290,12 @@ export const EffectsSchema = z
     sowCrop: id.optional(),
     borrow: id.optional(),
     repayDebts: z.boolean().optional(),
+    /** 10.7: tài nghệ (cầm, kỳ, thi, họa) ±; take in a pet (leisure.json id, named from its pool); a quẻ or a rumour
+     *  that names an event likely to come (and makes it likelier); one more time at the sòng bạc (toward nghiện). */
+    art: z.record(id, z.number()).optional(),
+    adoptPet: id.optional(),
+    omen: z.boolean().optional(),
+    gambled: z.boolean().optional(),
     /** Extra % for the next martial breakthrough. */
     martialBonus: z.number().optional(),
     /** An elder of the sect takes you as a personal disciple. */
@@ -389,7 +399,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1706,6 +1716,8 @@ export const BalanceSchema = z
       })
       .strict()
       .optional(),
+    /** 10.7 Giải trí: pets act every petEvery years; gambling addictAt times within addictYears makes it nghiện (yearly loss); an omen's event weighs omenMul for omenYears. */
+    pastime: z.object({ petEvery: z.number().int().min(1), petDeathHappiness: z.number(), addictAt: z.number().int().min(1), addictYears: z.number().int().min(1), addictSilver: z.number(), addictHappiness: z.number(), omenMul: z.number().min(1), omenYears: z.number().int().min(1), artMax: z.number() }).strict().optional(),
     /** 10.5 Quan hệ: a broken kết nghĩa oath (Đạo tâm, nghiệp), a sworn sibling's death (Hạnh phúc), the age a child's temper shows. */
     kinship: z.object({ oathDaoHeart: z.number(), oathKarma: z.number(), swornDeathHappiness: z.number(), temperAge: z.number().int().min(1) }).strict().optional(),
     /** 10.4 Tài sản (content/assets.json has the assets, crops, ways of trading and loans). */
@@ -3089,6 +3101,28 @@ export const AssetsFileSchema = z.object({
   }).strict(),
 }).strict();
 export type AssetsFile = z.infer<typeof AssetsFileSchema>;
+
+/** 10.7 Giải trí (content/leisure.json): lễ hội (one a year), tài nghệ, thú nuôi, lời quẻ, nghiện cờ bạc. */
+export const LeisureFileSchema = z.object({
+  festivals: z.array(z.object({ id, name: z.string().min(1), text: z.string().min(1) }).strict()).min(1),
+  arts: z.array(z.object({ id, name: z.string().min(1) }).strict()).min(1),
+  pets: z.array(z.object({
+    id, name: z.string().min(1), lifespan: z.number().int().min(1),
+    /** Stats (stat. keys) it moves every balance.pastime.petEvery years. */
+    stats: z.record(z.number()).default({}),
+    names: z.array(z.string().min(1)).min(1),
+  }).strict()).min(1),
+  texts: z.object({
+    /** {festival}, {text}. */
+    festival: z.string().min(1),
+    /** {pet} (kind), {name}. */
+    adopted: z.string().min(1), petDied: z.string().min(1),
+    /** {hint}: the title of the event the quẻ names. */
+    omen: z.array(z.string().min(1)).min(1), omenNone: z.string().min(1),
+    addicted: z.string().min(1), addictedYear: z.string().min(1),
+  }).strict(),
+}).strict();
+export type LeisureFile = z.infer<typeof LeisureFileSchema>;
 
 export const RelationsFileSchema = z.object({
   groups: z.array(z.object({ id, name: z.string().min(1) }).strict()).min(1),

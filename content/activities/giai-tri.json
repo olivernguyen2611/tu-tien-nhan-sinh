@@ -5,30 +5,96 @@
     "name": "Ngao du",
     "icon": "遊",
     "text": "Gác việc một chút, đi cho khuây khỏa.",
-    "conditions": { "age": { "min": 8 } },
+    "conditions": {
+      "age": {
+        "min": 8
+      }
+    },
     "months": 1,
     "cost": [
-      { "when": { "realm": { "min": "luyen_khi" } }, "spiritStones": 3, "months": 1 },
-      { "when": { "realm": { "max": "pham_nhan" } }, "silver": 5, "months": 1 }
+      {
+        "when": {
+          "realm": {
+            "min": "luyen_khi"
+          }
+        },
+        "spiritStones": 3,
+        "months": 1
+      },
+      {
+        "when": {
+          "realm": {
+            "max": "pham_nhan"
+          }
+        },
+        "silver": 5,
+        "months": 1
+      }
     ],
     "outcomes": [
       {
         "text": {
           "lines": [
-            { "text": "Ngươi gác việc tu hành, xuống núi dạo một vòng. Uống trà ở quán ven sông, nghe kể chuyện tới khi trời tối.", "when": { "tier": ["tu_chan"] } },
-            { "text": "Ngươi lên thuyền đi ngược dòng mấy trăm dặm, ngắm hai bờ núi xanh. Về tới nơi mới nhớ ra chưa hỏi giá vé." },
-            { "text": "Ngươi ghé một trấn nhỏ đúng hội hoa đăng. Thả một chiếc đèn xuống sông, chẳng cầu gì, chỉ thấy lòng nhẹ đi." },
-            { "text": "Ngươi về thăm quê, ăn một bát mì đầu chợ. Mì vẫn dở, nhưng ngươi ăn hết." },
-            { "text": "Ngươi trèo lên đỉnh núi xem mặt trời mọc. Gió lạnh, mây trôi, mấy chuyện vướng bận bỗng nhỏ lại." }
+            {
+              "text": "Ngươi gác việc tu hành, xuống núi dạo một vòng. Uống trà ở quán ven sông, nghe kể chuyện tới khi trời tối.",
+              "when": {
+                "tier": [
+                  "tu_chan"
+                ]
+              }
+            },
+            {
+              "text": "Ngươi lên thuyền đi ngược dòng mấy trăm dặm, ngắm hai bờ núi xanh. Về tới nơi mới nhớ ra chưa hỏi giá vé."
+            },
+            {
+              "text": "Ngươi ghé một trấn nhỏ đúng hội hoa đăng. Thả một chiếc đèn xuống sông, chẳng cầu gì, chỉ thấy lòng nhẹ đi."
+            },
+            {
+              "text": "Ngươi về thăm quê, ăn một bát mì đầu chợ. Mì vẫn dở, nhưng ngươi ăn hết."
+            },
+            {
+              "text": "Ngươi trèo lên đỉnh núi xem mặt trời mọc. Gió lạnh, mây trôi, mấy chuyện vướng bận bỗng nhỏ lại."
+            }
           ],
           "linesShare": 0.2,
           "parts": [
-            ["Ngươi đi ngao du một chuyến,", "Ngươi theo đoàn hành hương lên chùa núi,", "Ngươi ghé chợ phiên ở trấn bên,", "Ngươi đi câu cá ở đầm sen,", "Ngươi lang thang một mình qua mấy làng,"],
-            ["nghe kể chuyện ở quán trà tới khi trời tối.", "thấy lòng nhẹ đi mấy phần.", "về mang theo một túi bánh và mấy câu chuyện.", "gặp một ông lão đánh cờ, thua ba ván mà vẫn vui.", "ngắm hai bờ núi xanh, chẳng nghĩ ngợi gì."]
+            [
+              "Ngươi đi ngao du một chuyến,",
+              "Ngươi theo đoàn hành hương lên chùa núi,",
+              "Ngươi ghé chợ phiên ở trấn bên,",
+              "Ngươi đi câu cá ở đầm sen,",
+              "Ngươi lang thang một mình qua mấy làng,"
+            ],
+            [
+              "nghe kể chuyện ở quán trà tới khi trời tối.",
+              "thấy lòng nhẹ đi mấy phần.",
+              "về mang theo một túi bánh và mấy câu chuyện.",
+              "gặp một ông lão đánh cờ, thua ba ván mà vẫn vui.",
+              "ngắm hai bờ núi xanh, chẳng nghĩ ngợi gì."
+            ]
           ]
         },
-        "roll": { "stat.happiness": [8, 14] },
-        "bonus": [{ "when": { "stats": [{ "stat": "stat.happiness", "lte": 20 }] }, "effects": { "stat.daoHeart": 1 } }]
+        "roll": {
+          "stat.happiness": [
+            8,
+            14
+          ]
+        },
+        "bonus": [
+          {
+            "when": {
+              "stats": [
+                {
+                  "stat": "stat.happiness",
+                  "lte": 20
+                }
+              ]
+            },
+            "effects": {
+              "stat.daoHeart": 1
+            }
+          }
+        ]
       }
     ],
     "free": {
@@ -36,20 +102,165 @@
         {
           "text": {
             "lines": [
-              { "text": "Trong túi chẳng còn gì, ngươi đi bộ ra bờ suối ngồi cả buổi. Không tốn đồng nào, mà cũng đỡ hơn." },
-              { "text": "Ngươi nằm dưới gốc cây đếm mây. Đếm tới đám thứ bảy mươi thì ngủ quên." }
+              {
+                "text": "Trong túi chẳng còn gì, ngươi đi bộ ra bờ suối ngồi cả buổi. Không tốn đồng nào, mà cũng đỡ hơn."
+              },
+              {
+                "text": "Ngươi nằm dưới gốc cây đếm mây. Đếm tới đám thứ bảy mươi thì ngủ quên."
+              }
             ],
             "linesShare": 0.2,
             "parts": [
-              ["Trong túi chẳng còn gì,", "Không có tiền đi xa,", "Rảnh mà nghèo,", "Chẳng có đồng nào,"],
-              ["ngươi đi bộ ra bờ suối ngồi cả buổi.", "ngươi nằm dưới gốc cây đếm mây, đếm mãi rồi ngủ quên.", "ngươi ra đầu làng xem người ta đánh cờ.", "ngươi trèo lên đồi sau nhà ngắm hoàng hôn."]
+              [
+                "Trong túi chẳng còn gì,",
+                "Không có tiền đi xa,",
+                "Rảnh mà nghèo,",
+                "Chẳng có đồng nào,"
+              ],
+              [
+                "ngươi đi bộ ra bờ suối ngồi cả buổi.",
+                "ngươi nằm dưới gốc cây đếm mây, đếm mãi rồi ngủ quên.",
+                "ngươi ra đầu làng xem người ta đánh cờ.",
+                "ngươi trèo lên đồi sau nhà ngắm hoàng hôn."
+              ]
             ]
           },
-          "roll": { "stat.happiness": [3, 5] },
-          "bonus": [{ "when": { "stats": [{ "stat": "stat.happiness", "lte": 20 }] }, "effects": { "stat.daoHeart": 1 } }]
+          "roll": {
+            "stat.happiness": [
+              3,
+              5
+            ]
+          },
+          "bonus": [
+            {
+              "when": {
+                "stats": [
+                  {
+                    "stat": "stat.happiness",
+                    "lte": 20
+                  }
+                ]
+              },
+              "effects": {
+                "stat.daoHeart": 1
+              }
+            }
+          ]
         }
       ]
     }
+  },
+  {
+    "id": "tuu_lau",
+    "group": "giai_tri",
+    "name": "Lên tửu lâu",
+    "icon": "酒",
+    "text": "Gọi một bình rượu, ngồi bên cửa sổ nhìn phố.",
+    "conditions": {
+      "age": {
+        "min": 16
+      }
+    },
+    "months": 1,
+    "cost": [
+      {
+        "silver": 6
+      }
+    ],
+    "outcomes": [
+      {
+        "weight": 4,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Rượu ấm bụng,",
+              "Ngươi gọi thêm đĩa lạc rang,",
+              "Tiếng đàn tì bà dưới lầu vọng lên,",
+              "Bàn bên kể chuyện quan huyện mới,"
+            ],
+            [
+              "ngồi tới khi đèn lồng được thắp.",
+              "nghe thiên hạ bàn chuyện mùa màng.",
+              "lòng nhẹ như mây.",
+              "ngươi nghe mà cười thầm."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": 3,
+          "stat.health": -1
+        }
+      },
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Một vị khách lạ ngồi chung bàn,",
+              "Gã thư sinh say rượu mời ngươi một chén,"
+            ],
+            [
+              "hai người uống tới khuya, thành quen.",
+              "nói chuyện trên trời dưới đất, chia tay thì đã là bạn."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": 3,
+          "meetNpc": {
+            "role": "bạn rượu",
+            "kind": "ban_huu",
+            "peer": true,
+            "affinity": 10
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "tra_quan",
+    "group": "giai_tri",
+    "name": "Ngồi trà quán nghe chuyện",
+    "icon": "茶",
+    "text": "Một ấm trà, một ông kể chuyện, cả quán im phăng phắc.",
+    "conditions": {},
+    "months": 1,
+    "cost": [
+      {
+        "silver": 1
+      }
+    ],
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ông kể chuyện vỗ thước một cái,",
+              "Giữa quán có người buôn muối kể chuyện đường xa,",
+              "Mấy bà bán cá bàn tán ầm ĩ,",
+              "Ngươi ngồi góc quán nghe lỏm,"
+            ],
+            [
+              "kể chuyện Tam quốc thời xưa.",
+              "nhắc tới một chuyện lạ sắp tới.",
+              "tin đồn bay khắp quán.",
+              "nghe được một tin đáng nhớ."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.intellect": 1,
+          "omen": true
+        }
+      }
+    ]
   },
   {
     "id": "song_bac",
@@ -57,10 +268,24 @@
     "name": "Vào sòng bạc",
     "icon": "賭",
     "text": "Ba con xúc xắc, một chén úp. Khí vận quyết định túi tiền nặng hay nhẹ.",
-    "conditions": { "age": { "min": 18 } },
-    "cost": [{ "silver": 10, "months": 0 }],
-    "limit": { "perYear": 2 },
-    "check": { "stat": "stat.luck", "difficulty": 55 },
+    "conditions": {
+      "age": {
+        "min": 18
+      }
+    },
+    "cost": [
+      {
+        "silver": 10,
+        "months": 0
+      }
+    ],
+    "limit": {
+      "perYear": 2
+    },
+    "check": {
+      "stat": "stat.luck",
+      "difficulty": 55
+    },
     "outcomes": [
       {
         "weight": 3,
@@ -69,14 +294,33 @@
           "Ngươi thắng một ván lớn rồi đứng dậy ngay. Ra tới cửa vẫn nghe tiếng chửi sau lưng.",
           "Vận đỏ như son. Ngươi ôm bạc về, ngủ không yên vì sợ có người theo."
         ],
-        "effects": { "stat.happiness": 4 },
-        "roll": { "silver": [14, 30] }
+        "effects": {
+          "stat.happiness": 4,
+          "gambled": true
+        },
+        "roll": {
+          "silver": [
+            14,
+            30
+          ]
+        }
       },
       {
         "weight": 1,
-        "text": ["Thắng to tới mức chủ sòng mời ngươi chén rượu, rồi lịch sự mời ngươi đừng quay lại."],
-        "effects": { "stat.happiness": 6, "karma": -1 },
-        "roll": { "silver": [40, 60] }
+        "text": [
+          "Thắng to tới mức chủ sòng mời ngươi chén rượu, rồi lịch sự mời ngươi đừng quay lại."
+        ],
+        "effects": {
+          "stat.happiness": 6,
+          "karma": -1,
+          "gambled": true
+        },
+        "roll": {
+          "silver": [
+            40,
+            60
+          ]
+        }
       }
     ],
     "failOutcomes": [
@@ -87,12 +331,1312 @@
           "Ván cuối tưởng thắng, chén mở ra lại là xỉu. Ngươi đi về, đá bay một hòn sỏi.",
           "Ngồi cạnh một gã mặt đỏ, gã thắng bao nhiêu ngươi thua bấy nhiêu. Về rồi mới ngờ là chim mồi."
         ],
-        "effects": { "stat.happiness": -4 }
+        "effects": {
+          "stat.happiness": -4,
+          "gambled": true
+        }
       },
       {
         "weight": 1,
-        "text": ["Bắt được nhà cái chơi gian, ngươi lật bàn. Bạc không lấy lại được, mặt mũi còn sưng."],
-        "effects": { "stat.happiness": -3, "stat.health": -4 }
+        "text": [
+          "Bắt được nhà cái chơi gian, ngươi lật bàn. Bạc không lấy lại được, mặt mũi còn sưng."
+        ],
+        "effects": {
+          "stat.happiness": -3,
+          "stat.health": -4,
+          "gambled": true
+        }
+      }
+    ]
+  },
+  {
+    "id": "chieu_bac",
+    "group": "giai_tri",
+    "name": "Ngồi chiếu tài xỉu",
+    "icon": "骰",
+    "text": "Tự tay đặt cửa: tài hay xỉu, chẵn hay lẻ. Ăn thua tùy khí vận.",
+    "conditions": {
+      "age": {
+        "min": 18
+      }
+    },
+    "months": 0,
+    "limit": {
+      "perYear": 3,
+      "cooldownYears": 1
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Khói thuốc mù mịt,",
+              "Tiếng xóc đĩa lách cách,",
+              "Nhà cái cười nhăn nhở,",
+              "Chiếu bạc đông nghẹt,"
+            ],
+            [
+              "ngươi chen vào một chỗ ngồi.",
+              "tim ngươi đập theo từng tiếng xúc xắc.",
+              "tay ngươi đã sờ tới túi bạc."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": 1
+        },
+        "startEvent": "gt_song_bac"
+      }
+    ]
+  },
+  {
+    "id": "cai_bac",
+    "group": "giai_tri",
+    "name": "Cai cờ bạc",
+    "icon": "戒",
+    "text": "Thề trước bàn thờ tổ tiên, không bước chân vào sòng nữa.",
+    "conditions": {
+      "flagsAll": [
+        "nghien_bac"
+      ]
+    },
+    "months": 1,
+    "check": {
+      "stat": "stat.daoHeart",
+      "difficulty": 55
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Ngươi chặt một đốt tre làm chứng. Năm ấy đi qua sòng bạc mà không ngoái lại.",
+          "Mấy đêm đầu bứt rứt tới mất ngủ. Rồi cũng qua. Tay đã quen cầm việc khác."
+        ],
+        "effects": {
+          "clearFlags": [
+            "nghien_bac"
+          ],
+          "stat.daoHeart": 2,
+          "stat.happiness": 1
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Thề buổi sáng, buổi tối đã ngồi chiếu bạc.",
+          "Được ba hôm thì có người rủ \"đánh vài ván cho vui\". Vui thật."
+        ],
+        "effects": {
+          "stat.happiness": -2,
+          "stat.daoHeart": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "hoi_cho",
+    "group": "giai_tri",
+    "name": "Đi hội chợ",
+    "icon": "市",
+    "text": "Hội chợ phiên rằm, hàng quán bày kín bãi đất.",
+    "conditions": {},
+    "months": 1,
+    "cost": [
+      {
+        "silver": 2
+      }
+    ],
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ngươi xem làm xiếc khỉ,",
+              "Ngươi mua một chiếc quạt giấy,",
+              "Ngươi ăn một bát chè,",
+              "Ngươi xem thầy đồ viết câu đối,"
+            ],
+            [
+              "cười tới đau bụng.",
+              "rồi đi một vòng nữa.",
+              "về nhà còn tiếc.",
+              "hội tan mới chịu về."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": 2,
+          "stat.charm": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "xem_hat",
+    "group": "giai_tri",
+    "name": "Xem hát",
+    "icon": "戲",
+    "text": "Gánh hát rong dựng rạp giữa đình làng.",
+    "conditions": {},
+    "months": 1,
+    "cost": [
+      {
+        "silver": 2
+      }
+    ],
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Tích Quan Âm Thị Kính diễn tới đoạn oan,",
+              "Anh hề mũi đỏ ra sân khấu,",
+              "Vai đào hát một câu lả lướt,",
+              "Trống chầu thúc liên hồi,"
+            ],
+            [
+              "cả đình sụt sùi.",
+              "cả làng cười nghiêng ngả.",
+              "ngươi nhớ mãi.",
+              "ngươi vỗ tay rát cả lòng bàn tay."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": 3,
+          "stat.intellect": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "xin_que",
+    "group": "giai_tri",
+    "name": "Lên chùa xin quẻ",
+    "icon": "籤",
+    "text": "Thắp nén nhang, lắc ống thẻ trước điện Phật.",
+    "conditions": {},
+    "months": 1,
+    "cost": [
+      {
+        "silver": 1
+      }
+    ],
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ống thẻ lắc ba lần,",
+              "Sư thầy cầm thẻ soi dưới đèn,",
+              "Tiếng chuông chùa ngân dài,"
+            ],
+            [
+              "một thẻ rơi ra.",
+              "đọc lên mấy câu thơ.",
+              "ngươi nghe lời giải mà lặng người."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.daoHeart": 1,
+          "omen": true
+        }
+      }
+    ]
+  },
+  {
+    "id": "xem_boi",
+    "group": "giai_tri",
+    "name": "Xem bói",
+    "icon": "卜",
+    "text": "Ông thầy bói mù ngồi đầu chợ, sờ tay đoán số.",
+    "conditions": {},
+    "months": 1,
+    "cost": [
+      {
+        "silver": 5
+      }
+    ],
+    "check": {
+      "stat": "stat.luck",
+      "difficulty": 40
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Thầy bói sờ chỉ tay ngươi,",
+              "Thầy gieo ba đồng xu,",
+              "Thầy nheo mắt nhìn tướng ngươi,"
+            ],
+            [
+              "phán một câu rồi im.",
+              "lẩm bẩm như nói với trời.",
+              "bảo năm nay có chuyện."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": 1,
+          "omen": true
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Thầy bói nói dựa: \"Có người tốt có người xấu.\" Mất năm lượng mua câu nói ai cũng biết.",
+          "Thầy phán ngươi sống trăm tuổi, rồi đòi thêm tiền mới nói tiếp. Ngươi bỏ về."
+        ],
+        "effects": {
+          "stat.happiness": -1,
+          "stat.intellect": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "danh_thang",
+    "group": "giai_tri",
+    "name": "Du ngoạn danh thắng",
+    "icon": "景",
+    "text": "Khăn gói đi thăm núi non danh tiếng trong vùng.",
+    "conditions": {
+      "age": {
+        "min": 16
+      }
+    },
+    "months": 2,
+    "cost": [
+      {
+        "silver": 15
+      }
+    ],
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Đứng trên đỉnh núi nhìn mây trôi,",
+              "Thăm ngôi chùa cổ trên vách đá,",
+              "Ngồi thuyền qua động nước,",
+              "Leo lên tháp cổ,"
+            ],
+            [
+              "ngươi thấy mình nhỏ bé.",
+              "lòng rộng ra như trời.",
+              "về làng kể mãi không hết.",
+              "đề một câu thơ lên vách."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": 4,
+          "stat.intellect": 1,
+          "stat.charm": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "di_san_ban",
+    "group": "giai_tri",
+    "name": "Đi săn",
+    "icon": "獵",
+    "text": "Vác cung nỏ vào rừng, xem hôm nay trời cho gì.",
+    "conditions": {
+      "age": {
+        "min": 14
+      }
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Sương còn phủ cánh rừng,",
+              "Ngươi lần theo dấu chân thú,"
+            ],
+            [
+              "ngươi chọn một hướng mà đi.",
+              "tới chỗ rẽ thì dừng lại."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.physique": 1
+        },
+        "startEvent": "gt_san_ban"
+      }
+    ]
+  },
+  {
+    "id": "cau_ca",
+    "group": "giai_tri",
+    "name": "Đi câu cá",
+    "icon": "釣",
+    "text": "Cần trúc, mồi giun, một buổi chiều yên ả.",
+    "conditions": {
+      "age": {
+        "min": 8
+      }
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ngươi vác cần ra ngoài làng,",
+              "Gió chiều hiu hiu,"
+            ],
+            [
+              "chọn chỗ ngồi câu.",
+              "nước lặng như gương."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": 1
+        },
+        "startEvent": "gt_cau_ca"
+      }
+    ]
+  },
+  {
+    "id": "doc_sach",
+    "group": "giai_tri",
+    "name": "Đọc sách",
+    "icon": "書",
+    "text": "Mượn được mấy cuốn sách cũ, đọc dưới ngọn đèn dầu.",
+    "conditions": {
+      "age": {
+        "min": 8
+      }
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ngươi đọc chuyện liệt nữ xưa,",
+              "Ngươi đọc sách nông tang,",
+              "Ngươi đọc một tập thơ,",
+              "Ngươi đọc chuyện kỳ quái dân gian,"
+            ],
+            [
+              "gật gù tới khuya.",
+              "ghi được mấy điều hay.",
+              "đèn cạn dầu lúc nào không hay.",
+              "nằm mơ thấy mình trong sách."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.intellect": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "hoc_dan",
+    "group": "giai_tri",
+    "name": "Học đàn",
+    "icon": "琴",
+    "text": "Ôm cây đàn nguyệt, dạo từng cung.",
+    "conditions": {
+      "age": {
+        "min": 8
+      }
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Tiếng đàn còn vấp,",
+              "Ngón tay rớm máu,",
+              "Hôm nay đàn trọn một khúc,",
+              "Hàng xóm ngó qua hàng rào,"
+            ],
+            [
+              "nhưng đã ra giai điệu.",
+              "mà tiếng tơ đã trong hơn.",
+              "con mèo cũng nằm nghe.",
+              "bảo ngươi đàn hay hơn tháng trước."
+            ]
+          ]
+        },
+        "effects": {
+          "art": {
+            "cam": 4
+          },
+          "stat.charm": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "danh_co",
+    "group": "giai_tri",
+    "name": "Đánh cờ",
+    "icon": "棋",
+    "text": "Bày bàn cờ tướng dưới gốc đa, chờ người tới đấu.",
+    "conditions": {
+      "age": {
+        "min": 8
+      }
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ông lão đầu làng tới đấu,",
+              "Một gã bán hàng rong dừng chân,",
+              "Ngươi tự bày thế cờ tàn,",
+              "Đám trẻ vây quanh bàn cờ,"
+            ],
+            [
+              "ván cờ kéo tới tối.",
+              "thua ngươi ba ván.",
+              "nghĩ nát óc mới giải được.",
+              "ngươi đi một nước, cả đám ồ lên."
+            ]
+          ]
+        },
+        "effects": {
+          "art": {
+            "ky": 4
+          },
+          "stat.intellect": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "lam_tho",
+    "group": "giai_tri",
+    "name": "Làm thơ",
+    "icon": "詩",
+    "text": "Ngắm cảnh, mài mực, nghĩ một câu cho ra hồn.",
+    "conditions": {
+      "age": {
+        "min": 10
+      }
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ngươi làm một bài thơ vịnh trăng,",
+              "Ngươi viết bốn câu về cánh đồng,",
+              "Ngươi họa lại thơ người xưa,",
+              "Ngươi đề thơ lên quạt,"
+            ],
+            [
+              "đọc lên nghe cũng xuôi tai.",
+              "gạch đi viết lại mười lần.",
+              "tự thấy cũng được ba phần.",
+              "đem khoe khắp xóm."
+            ]
+          ]
+        },
+        "effects": {
+          "art": {
+            "thi": 4
+          },
+          "stat.intellect": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "ve_tranh",
+    "group": "giai_tri",
+    "name": "Vẽ tranh",
+    "icon": "畫",
+    "text": "Trải giấy dó, vẽ cảnh núi sông.",
+    "conditions": {
+      "age": {
+        "min": 8
+      }
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ngươi vẽ con trâu bên lũy tre,",
+              "Ngươi vẽ núi xa mây mờ,",
+              "Ngươi vẽ chân dung người nhà,",
+              "Ngươi vẽ một cành mai,"
+            ],
+            [
+              "nhìn cũng ra trâu.",
+              "mực loang mà thành đẹp.",
+              "người ta nhìn mà cười.",
+              "treo lên vách cho cả nhà xem."
+            ]
+          ]
+        },
+        "effects": {
+          "art": {
+            "hoa": 4
+          },
+          "stat.happiness": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "may_ao_moi",
+    "group": "giai_tri",
+    "name": "May y phục mới",
+    "icon": "衣",
+    "text": "Ra tiệm vải chọn một xấp lụa, may một bộ áo cho tươm tất.",
+    "conditions": {
+      "age": {
+        "min": 12
+      }
+    },
+    "months": 1,
+    "cost": [
+      {
+        "silver": 8
+      }
+    ],
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Áo lụa màu lam may vừa vặn,",
+              "Bộ áo mới thơm mùi vải,",
+              "Thợ may khéo tay,"
+            ],
+            [
+              "ra đường ai cũng ngoái nhìn.",
+              "mặc vào thấy mình khác hẳn.",
+              "người mặc cũng sáng sủa lên."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.charm": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "thanh_lau",
+    "group": "giai_tri",
+    "name": "Ghé thanh lâu",
+    "icon": "樓",
+    "text": "Lầu son đèn đỏ, có đàn hát, có rượu, có chuyện.",
+    "conditions": {
+      "age": {
+        "min": 18
+      }
+    },
+    "months": 1,
+    "cost": [
+      {
+        "silver": 15
+      }
+    ],
+    "outcomes": [
+      {
+        "weight": 4,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Nghe một khúc tỳ bà,",
+              "Ngồi uống rượu nghe ca kỹ hát,",
+              "Đối thơ với một văn nhân trong lầu,"
+            ],
+            [
+              "lòng như say mà không phải vì rượu.",
+              "tới canh hai mới về.",
+              "được mấy câu hay mang về."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": 3,
+          "stat.charm": 1
+        }
+      },
+      {
+        "weight": 1,
+        "text": [
+          "Ra về thì túi tiền không cánh mà bay.",
+          "Bị người quen nhìn thấy, ngày mai cả làng biết."
+        ],
+        "effects": {
+          "silver": -15,
+          "stat.happiness": -2
+        }
+      },
+      {
+        "weight": 1,
+        "text": [
+          "Gặp một vị khách phóng khoáng, hai người uống tới sáng, kết làm bạn."
+        ],
+        "effects": {
+          "stat.happiness": 2,
+          "meetNpc": {
+            "role": "khách quen thanh lâu",
+            "kind": "ban_huu",
+            "peer": true,
+            "affinity": 10
+          }
+        }
+      },
+      {
+        "weight": 1,
+        "text": [
+          "Tiếng xấu đồn về tới làng. Người lớn trong họ lắc đầu."
+        ],
+        "effects": {
+          "stat.charm": -1,
+          "reputation": {
+            "lang_xa": -3
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "mua_thu_nuoi",
+    "group": "giai_tri",
+    "name": "Kiếm thú nuôi",
+    "icon": "畜",
+    "text": "Ra chợ phiên xem người ta bán chó mèo, gà chọi, chim ưng.",
+    "conditions": {
+      "age": {
+        "min": 8
+      },
+      "pet": {
+        "any": false
+      }
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Chợ phiên lũ trẻ xúm quanh lồng chó con,",
+              "Mấy ông lão ôm gà chọi khoe nhau,"
+            ],
+            [
+              "ngươi đứng xem mãi.",
+              "ngươi thấy ngứa tay."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": 1
+        },
+        "startEvent": "gt_mua_thu"
+      }
+    ]
+  },
+  {
+    "id": "choi_voi_thu",
+    "group": "giai_tri",
+    "name": "Chơi với thú nuôi",
+    "icon": "寵",
+    "text": "Dắt thú nuôi ra đồng, chạy nhảy một buổi.",
+    "conditions": {
+      "pet": {
+        "any": true
+      }
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Con vật quấn chân ngươi,",
+              "Ngươi ném cành cây cho nó đuổi,",
+              "Nó nằm phơi nắng cạnh ngươi,"
+            ],
+            [
+              "vui như trẻ con.",
+              "cả buổi không chán.",
+              "ngươi thấy đời cũng nhẹ."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "chuc_tet",
+    "group": "giai_tri",
+    "name": "Đi chúc Tết",
+    "icon": "賀",
+    "text": "Áo mới, khăn mới, đi chúc Tết họ hàng làng xóm.",
+    "conditions": {
+      "festival": [
+        "tet"
+      ]
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Nhà nào cũng mời chén rượu,",
+              "Lì xì được mấy đồng tiền mới,",
+              "Ông cụ đầu xóm chúc ngươi một câu,"
+            ],
+            [
+              "về tới nhà thì đã ngà ngà.",
+              "đứa trẻ nào cũng cười.",
+              "năm mới thấy lòng ấm."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": 2,
+          "stat.charm": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "dot_phao",
+    "group": "giai_tri",
+    "name": "Đốt pháo giao thừa",
+    "icon": "炮",
+    "text": "Treo một dây pháo ở đầu ngõ chờ giao thừa.",
+    "conditions": {
+      "festival": [
+        "tet"
+      ]
+    },
+    "months": 1,
+    "cost": [
+      {
+        "silver": 2
+      }
+    ],
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Pháo nổ đì đùng,",
+              "Khói pháo thơm cả ngõ,",
+              "Xác pháo đỏ rực sân,"
+            ],
+            [
+              "đuổi hết xui xẻo năm cũ.",
+              "trẻ con chạy nhặt pháo tịt.",
+              "năm mới bắt đầu bằng tiếng cười."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": 3
+        }
+      }
+    ]
+  },
+  {
+    "id": "tha_den",
+    "group": "giai_tri",
+    "name": "Thả đèn hoa đăng",
+    "icon": "燈",
+    "text": "Ra bờ sông thả đèn hoa đăng, gửi một điều ước.",
+    "conditions": {
+      "festival": [
+        "nguyen_tieu"
+      ]
+    },
+    "months": 1,
+    "cost": [
+      {
+        "silver": 1
+      }
+    ],
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ngọn đèn trôi xa,",
+              "Mặt sông lấp lánh trăm ngọn đèn,",
+              "Ngươi chắp tay ước một điều,"
+            ],
+            [
+              "mang theo điều ước của ngươi.",
+              "đẹp như sông Ngân.",
+              "không nói cho ai biết."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": 2,
+          "stat.daoHeart": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "doan_do_den",
+    "group": "giai_tri",
+    "name": "Đoán đố đèn",
+    "icon": "謎",
+    "text": "Dưới mỗi chiếc đèn treo một câu đố, đoán trúng được quà.",
+    "conditions": {
+      "festival": [
+        "nguyen_tieu"
+      ]
+    },
+    "months": 1,
+    "check": {
+      "stat": "stat.intellect",
+      "difficulty": 45
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Ngươi đoán trúng câu đố chữ,",
+              "Câu đố khó nhất phố bị ngươi giải,"
+            ],
+            [
+              "được một chiếc đèn con cá.",
+              "cả đám đông vỗ tay."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": 3,
+          "stat.intellect": 1
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Đoán mười câu sai cả mười. Người bán đèn tặng ngươi một câu đố về nhà mà nghĩ.",
+          "Ngươi đoán liều, cả phố cười. Thôi thì cười cũng là vui."
+        ],
+        "effects": {
+          "stat.happiness": -1,
+          "stat.intellect": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "ta_mo",
+    "group": "giai_tri",
+    "name": "Tảo mộ",
+    "icon": "墓",
+    "text": "Mang cuốc, mang hương ra nghĩa địa sửa sang mộ phần.",
+    "conditions": {
+      "festival": [
+        "thanh_minh"
+      ]
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Đắp lại nấm mộ,",
+              "Thắp nén hương cho người đã khuất,",
+              "Nhổ cỏ quanh mộ ông bà,"
+            ],
+            [
+              "lòng lắng xuống.",
+              "ngươi đứng lặng hồi lâu.",
+              "nghĩ tới những người đi trước."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.daoHeart": 2,
+          "stat.happiness": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "dap_thanh",
+    "group": "giai_tri",
+    "name": "Đạp thanh",
+    "icon": "青",
+    "text": "Tiết trời ấm, rủ nhau đi chơi đồng cỏ xanh.",
+    "conditions": {
+      "festival": [
+        "thanh_minh"
+      ]
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Cỏ non mướt chân,",
+              "Thả diều trên đồi,",
+              "Ngồi bên suối ăn xôi,"
+            ],
+            [
+              "gió xuân mát rượi.",
+              "diều bay cao tít.",
+              "chim hót líu lo."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.health": 1,
+          "stat.happiness": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "dua_thuyen",
+    "group": "giai_tri",
+    "name": "Đua thuyền rồng",
+    "icon": "舟",
+    "text": "Làng ngươi có một chiếc thuyền rồng, thiếu tay chèo.",
+    "conditions": {
+      "age": {
+        "min": 14
+      },
+      "festival": [
+        "doan_ngo"
+      ]
+    },
+    "months": 1,
+    "check": {
+      "stat": "stat.physique",
+      "difficulty": 45
+    },
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Trống thúc dồn dập,",
+              "Mái chèo đều tay,"
+            ],
+            [
+              "thuyền làng ngươi về nhất.",
+              "cả bến sông reo hò."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.physique": 1,
+          "stat.happiness": 3
+        }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "weight": 1,
+        "text": [
+          "Chèo lệch nhịp, thuyền xoay vòng giữa sông. Cả làng bên cười tới chảy nước mắt.",
+          "Ngươi rơi xuống sông giữa cuộc đua. Vớt lên ướt như chuột."
+        ],
+        "effects": {
+          "stat.health": -2,
+          "stat.happiness": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "diet_sau_bo",
+    "group": "giai_tri",
+    "name": "Ăn Tết diệt sâu bọ",
+    "icon": "粽",
+    "text": "Sáng sớm ăn rượu nếp, trái cây cho \"diệt sâu bọ\".",
+    "conditions": {
+      "festival": [
+        "doan_ngo"
+      ]
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Bát rượu nếp ngọt lừ,",
+              "Mận chua mà ngon,",
+              "Người nhà nhuộm móng tay cho trẻ,"
+            ],
+            [
+              "ăn xong thấy khỏe hẳn.",
+              "cả nhà xuýt xoa.",
+              "ngày Tết nhỏ mà vui."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.health": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "ruoc_den",
+    "group": "giai_tri",
+    "name": "Rước đèn Trung thu",
+    "icon": "月",
+    "text": "Rước đèn ông sao quanh xóm cùng lũ trẻ.",
+    "conditions": {
+      "festival": [
+        "trung_thu"
+      ]
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Đèn ông sao đỏ rực,",
+              "Trống ếch tùng tùng,",
+              "Múa lân trước sân đình,"
+            ],
+            [
+              "trẻ con hát vang ngõ.",
+              "ngươi cũng thấy mình nhỏ lại.",
+              "cả xóm thức tới khuya."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": 3
+        }
+      }
+    ]
+  },
+  {
+    "id": "pha_co",
+    "group": "giai_tri",
+    "name": "Phá cỗ trông trăng",
+    "icon": "餅",
+    "text": "Bày mâm cỗ bánh nướng, bánh dẻo dưới trăng.",
+    "conditions": {
+      "festival": [
+        "trung_thu"
+      ]
+    },
+    "months": 1,
+    "cost": [
+      {
+        "silver": 2
+      }
+    ],
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Bánh nướng chia tư,",
+              "Mâm cỗ bày hình con chó bằng bưởi,",
+              "Trăng lên tròn vành vạnh,"
+            ],
+            [
+              "mỗi người một miếng.",
+              "trẻ con tranh nhau.",
+              "cả nhà ngồi ngắm."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.happiness": 2,
+          "stat.charm": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "leo_nui",
+    "group": "giai_tri",
+    "name": "Leo núi Trùng cửu",
+    "icon": "山",
+    "text": "Lên núi cao cài cành thù du, tránh tai ương.",
+    "conditions": {
+      "festival": [
+        "trung_cuu"
+      ]
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Lên tới đỉnh thở không ra hơi,",
+              "Gió thu thổi lồng lộng,",
+              "Ngồi trên tảng đá nhìn xuống làng,"
+            ],
+            [
+              "mà lòng sảng khoái.",
+              "cành thù du trên tóc rung rung.",
+              "thấy mọi chuyện nhỏ lại."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.physique": 1,
+          "stat.health": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "ruou_cuc",
+    "group": "giai_tri",
+    "name": "Uống rượu hoa cúc",
+    "icon": "菊",
+    "text": "Mấy người già trong làng mời ngươi chén rượu cúc.",
+    "conditions": {
+      "festival": [
+        "trung_cuu"
+      ]
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 1,
+        "text": {
+          "lines": [],
+          "linesShare": 0,
+          "parts": [
+            [
+              "Rượu cúc thơm dịu,",
+              "Các cụ kể chuyện ngày xưa,",
+              "Chén rượu vàng óng,"
+            ],
+            [
+              "uống một chén thấy người nhẹ hẳn.",
+              "ngươi nghe say hơn uống.",
+              "chúc nhau sống lâu."
+            ]
+          ]
+        },
+        "effects": {
+          "stat.health": 1,
+          "stat.happiness": 2
+        }
       }
     ]
   }

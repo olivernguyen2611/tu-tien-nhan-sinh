@@ -70,7 +70,8 @@ function remove(state: GameState, uid: number): GameState {
 
 /** Sell one (the latest of this id, or this uid). */
 export function sellAsset(state: GameState, content: Content, id: string, uid?: number): { state: GameState; text: string } | null {
-  const o = [...assetsOf(state).owned].reverse().find((x) => (uid !== undefined ? x.uid === uid : x.id === id));
+  // id may name a kind ("house"): the latest of that kind.
+  const o = [...assetsOf(state).owned].reverse().find((x) => (uid !== undefined ? x.uid === uid : x.id === id || assetDef(content, x.id)?.kind === id));
   const def = assetDef(content, o?.id);
   if (!o || !def || !content.assets) return null;
   const got = sellValue(state, content, o);

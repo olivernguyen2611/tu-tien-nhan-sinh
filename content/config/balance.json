@@ -291,6 +291,7 @@
     "retireAge": 55,
     "colleagues": 2
   },
+  "pastime": { "petEvery": 2, "petDeathHappiness": -6, "addictAt": 6, "addictYears": 3, "addictSilver": -15, "addictHappiness": -3, "omenMul": 4, "omenYears": 3, "artMax": 100 },
   "kinship": { "oathDaoHeart": -10, "oathKarma": -5, "swornDeathHappiness": -8, "temperAge": 16 },
   "assets": {
     "priceFollow": 0.6,

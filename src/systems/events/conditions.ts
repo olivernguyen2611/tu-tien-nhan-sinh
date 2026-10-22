@@ -3,6 +3,7 @@ import { lifeStage, schoolOf, tradeOf } from '../schooling';
 import { examBlocked, examOf, levelIndex } from '../exams';
 import { jobDef, jobOf } from '../jobs';
 import { debtTotal, ownedOf } from '../assets';
+import { festivalFor } from '../leisure';
 import type { Content } from '../../core/content';
 import type { GameEvent } from '../../core/schemas';
 import type { GameState } from '../../core/types';
@@ -140,6 +141,12 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if (c.job.perfMin !== undefined && (!j.id || j.perf < c.job.perfMin)) return false;
     if (c.job.perfMax !== undefined && (!j.id || j.perf > c.job.perfMax)) return false;
     if (c.job.top !== undefined && (!def || (j.rung >= def.rungs.length - 1) !== c.job.top)) return false;
+  }
+  if (c.festival && content && !c.festival.includes(festivalFor(state, content) ?? '')) return false;
+  if (c.art && (state.pastime?.arts[c.art.id] ?? 0) < c.art.min) return false;
+  if (c.pet) {
+    const has = (state.pastime?.pets ?? []).some((p) => !c.pet!.id || p.id === c.pet!.id);
+    if (has !== (c.pet.any ?? true)) return false;
   }
   if (c.asset && content) {
     const owned = ownedOf(state, content, c.asset.kind, c.asset.id).length;

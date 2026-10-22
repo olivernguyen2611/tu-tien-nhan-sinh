@@ -1,0 +1,809 @@
+[
+  {
+    "id": "gt_song_bac",
+    "category": "leisure",
+    "title": "Chiếu bạc",
+    "text": "Nhà cái úp bát, lắc ba lần: \"Đặt đi, đặt đi! Tài hay xỉu, chẵn hay lẻ!\"",
+    "themes": [
+      "leisure"
+    ],
+    "conditions": {},
+    "weight": 0,
+    "cooldownYears": 0,
+    "choices": [
+      {
+        "text": "Đặt tài, mười lượng",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Bát mở: bốn, năm, sáu. Tài! Ngươi vơ bạc về.",
+          "effects": {
+            "silver": 10,
+            "stat.happiness": 3,
+            "gambled": true
+          },
+          "variants": [
+            "Ba con sáu đỏ chót. Cả chiếu ồ lên.",
+            "Năm, năm, bốn. Tài. Nhà cái nhăn mặt."
+          ]
+        },
+        "fail": {
+          "text": "Bát mở: một, hai, hai. Xỉu. Mười lượng đi tong.",
+          "effects": {
+            "silver": -10,
+            "stat.happiness": -3,
+            "gambled": true
+          },
+          "variants": [
+            "Một, một, ba. Ngươi nhìn mà muốn lật chiếu.",
+            "Hai, ba, một. Xỉu. Người bên cạnh cười khẩy."
+          ]
+        },
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 10
+            }
+          ]
+        }
+      },
+      {
+        "text": "Đặt xỉu, mười lượng",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Một, hai, ba. Xỉu! Ngươi thắng một ván.",
+          "effects": {
+            "silver": 10,
+            "stat.happiness": 3,
+            "gambled": true
+          },
+          "variants": [
+            "Hai, hai, một. Xỉu. Ngươi đếm bạc tay run run."
+          ]
+        },
+        "fail": {
+          "text": "Năm, sáu, sáu. Tài. Thua.",
+          "effects": {
+            "silver": -10,
+            "stat.happiness": -3,
+            "gambled": true
+          },
+          "variants": [
+            "Bốn, năm, sáu. Tài to. Ngươi chép miệng."
+          ]
+        },
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 10
+            }
+          ]
+        }
+      },
+      {
+        "text": "Bát úp chẵn lẻ, ba mươi lượng",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Bát mở ra, đúng số chẵn. Ba mươi lượng thành sáu mươi.",
+          "effects": {
+            "silver": 30,
+            "stat.happiness": 5,
+            "gambled": true
+          }
+        },
+        "fail": {
+          "text": "Bát mở ra, số lẻ. Ba mươi lượng nằm lại trên chiếu.",
+          "effects": {
+            "silver": -30,
+            "stat.happiness": -6,
+            "gambled": true
+          }
+        },
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 30
+            }
+          ]
+        }
+      },
+      {
+        "text": "Đứng dậy ra về",
+        "result": {
+          "text": "Ngươi đứng dậy giữa tiếng cười chê. Bạc trong túi vẫn còn nguyên.",
+          "effects": {
+            "stat.daoHeart": 1,
+            "stat.happiness": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "gt_cau_ca",
+    "category": "leisure",
+    "title": "Chọn chỗ ngồi câu",
+    "text": "Bến sông, đầm sen hay con suối trên núi: chỗ nào cá cũng có, chỉ là cá có chịu cắn câu không.",
+    "themes": [
+      "leisure"
+    ],
+    "conditions": {},
+    "weight": 0,
+    "cooldownYears": 0,
+    "choices": [
+      {
+        "text": "Bến sông đầu làng",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 35
+        },
+        "success": {
+          "text": "Phao chìm liền mấy lần. Được một giỏ cá mè, đem bán được mấy đồng.",
+          "effects": {
+            "silver": 3,
+            "stat.happiness": 3
+          }
+        },
+        "fail": {
+          "text": "Ngồi tới chiều, câu được một chiếc dép.",
+          "effects": {
+            "stat.happiness": -1,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Đầm sen sau chùa",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Một con cá chép to bằng bắp chân. Cả xóm sang xem.",
+          "effects": {
+            "silver": 8,
+            "stat.happiness": 4
+          }
+        },
+        "fail": {
+          "text": "Cá rỉa hết mồi, ngươi ngồi ngắm sen. Cũng đẹp.",
+          "effects": {
+            "stat.happiness": 1,
+            "stat.daoHeart": 1
+          }
+        }
+      },
+      {
+        "text": "Suối trên núi",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 55
+        },
+        "success": {
+          "text": "Leo dốc, lội suối, được mấy con cá chình quý. Bán lên huyện được giá cao.",
+          "effects": {
+            "silver": 15,
+            "stat.physique": 1,
+            "stat.happiness": 3
+          }
+        },
+        "fail": {
+          "text": "Trượt chân trên đá rêu, ngã đau, cá thì chẳng thấy đâu.",
+          "effects": {
+            "stat.health": -3,
+            "stat.happiness": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "gt_san_ban",
+    "category": "leisure",
+    "title": "Vào rừng săn",
+    "text": "Trước mặt là rừng thưa có thỏ, sau núi là rừng sâu có lợn rừng.",
+    "themes": [
+      "leisure"
+    ],
+    "conditions": {},
+    "weight": 0,
+    "cooldownYears": 0,
+    "choices": [
+      {
+        "text": "Săn thỏ ở rừng thưa",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 40
+        },
+        "success": {
+          "text": "Hai con thỏ béo, tối nay nhà có thịt.",
+          "effects": {
+            "stat.happiness": 3,
+            "stat.health": 1
+          }
+        },
+        "fail": {
+          "text": "Thỏ chạy nhanh hơn tên. Về tay không.",
+          "effects": {
+            "stat.happiness": -1,
+            "stat.physique": 1
+          }
+        }
+      },
+      {
+        "text": "Đuổi lợn rừng trong rừng sâu",
+        "check": {
+          "stat": "stat.physique",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Một mũi tên trúng cổ. Lợn rừng to, bán thịt được hai mươi lượng.",
+          "effects": {
+            "silver": 20,
+            "stat.physique": 1,
+            "stat.happiness": 4
+          }
+        },
+        "fail": {
+          "text": "Lợn rừng quay lại húc. Ngươi trèo lên cây, ôm chân bị thương mà về.",
+          "effects": {
+            "stat.health": -8,
+            "stat.happiness": -3
+          }
+        }
+      },
+      {
+        "text": "Thả chim ưng",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 30
+        },
+        "success": {
+          "text": "Chim ưng sà xuống bụi cỏ, quắp lên một con gà rừng. Ngươi huýt sáo gọi nó về.",
+          "effects": {
+            "silver": 10,
+            "stat.happiness": 4,
+            "stat.charm": 1
+          }
+        },
+        "fail": {
+          "text": "Chim ưng bay một vòng rồi đậu trên cây ngủ. Ngươi đứng chờ tới chiều.",
+          "effects": {
+            "stat.happiness": -1,
+            "stat.intellect": 1
+          }
+        },
+        "requires": {
+          "pet": {
+            "id": "chim_ung"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "gt_mua_thu",
+    "category": "leisure",
+    "title": "Chợ thú nuôi",
+    "text": "Lồng chó con, ổ mèo mướp, gà chọi mào đỏ, một con chim ưng bị trói chân, và một con ngựa non buộc ở góc chợ.",
+    "themes": [
+      "leisure"
+    ],
+    "conditions": {},
+    "weight": 0,
+    "cooldownYears": 0,
+    "choices": [
+      {
+        "text": "Một con chó con (3 lượng)",
+        "result": {
+          "text": "Con chó con liếm tay ngươi, theo về tận nhà.",
+          "effects": {
+            "adoptPet": "cho",
+            "silver": -3,
+            "stat.happiness": 2
+          }
+        },
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 3
+            }
+          ]
+        }
+      },
+      {
+        "text": "Một con mèo (2 lượng)",
+        "result": {
+          "text": "Mèo con kêu meo meo suốt đường về, tới nhà thì chui ngay vào bếp.",
+          "effects": {
+            "adoptPet": "meo",
+            "silver": -2,
+            "stat.happiness": 2
+          }
+        },
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 2
+            }
+          ]
+        }
+      },
+      {
+        "text": "Một con gà chọi (8 lượng)",
+        "result": {
+          "text": "Gà chọi mào đỏ, cựa sắc, đi ngang như tướng.",
+          "effects": {
+            "adoptPet": "ga_choi",
+            "silver": -8,
+            "stat.happiness": 2
+          }
+        },
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 8
+            }
+          ]
+        }
+      },
+      {
+        "text": "Chim ưng (40 lượng)",
+        "result": {
+          "text": "Con chim ưng nhìn ngươi bằng đôi mắt vàng. Phải mất mấy tháng mới thuần.",
+          "effects": {
+            "adoptPet": "chim_ung",
+            "silver": -40,
+            "stat.charm": 1,
+            "stat.happiness": 2
+          }
+        },
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 40
+            }
+          ],
+          "age": {
+            "min": 14
+          }
+        }
+      },
+      {
+        "text": "Ngựa non (60 lượng)",
+        "result": {
+          "text": "Ngựa non háu đá, nhưng quen hơi người rồi thì ngoan.",
+          "effects": {
+            "adoptPet": "ngua_cung",
+            "silver": -60,
+            "stat.physique": 1,
+            "stat.happiness": 2
+          }
+        },
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 60
+            }
+          ],
+          "age": {
+            "min": 14
+          }
+        }
+      },
+      {
+        "text": "Chỉ xem thôi",
+        "result": {
+          "text": "Xem chán rồi về. Lũ chó con nhìn theo.",
+          "effects": {
+            "stat.happiness": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "gt_no_bac_mat_nha",
+    "category": "leisure",
+    "title": "Nợ bạc tới cổ",
+    "text": "Túi rỗng, nợ chiếu bạc thì chồng chất. Chủ sòng gợi ý: \"Cầm cái nhà, gỡ một ván là xong.\"",
+    "themes": [
+      "leisure"
+    ],
+    "conditions": {
+      "flagsAll": [
+        "nghien_bac"
+      ],
+      "asset": {
+        "kind": "house"
+      },
+      "stats": [
+        {
+          "stat": "silver",
+          "lte": 10
+        }
+      ],
+      "age": {
+        "min": 18
+      }
+    },
+    "weight": 6,
+    "cooldownYears": 5,
+    "choices": [
+      {
+        "text": "Cầm nhà gỡ gạc",
+        "result": {
+          "text": "Ván gỡ cũng thua. Cả nhà dọn ra ở nhờ.",
+          "effects": {
+            "sellAsset": "house",
+            "stat.happiness": -10,
+            "gambled": true
+          }
+        }
+      },
+      {
+        "text": "Thề bỏ bạc từ nay",
+        "check": {
+          "stat": "stat.daoHeart",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Ngươi đập vỡ bát họ trước mặt chủ sòng. Từ đó không bước chân tới nữa.",
+          "effects": {
+            "clearFlags": [
+              "nghien_bac"
+            ],
+            "stat.daoHeart": 3,
+            "stat.happiness": -2
+          }
+        },
+        "fail": {
+          "text": "Thề được nửa tháng. Rồi lại ngồi chiếu.",
+          "effects": {
+            "stat.happiness": -4,
+            "stat.daoHeart": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "gt_van_nhan_thi_hoi",
+    "category": "leisure",
+    "title": "Thi hội văn nhân",
+    "text": "Mấy vị văn nhân trên huyện mở hội bình thơ, nghe tiếng ngươi biết làm thơ nên mời tới.",
+    "themes": [
+      "leisure"
+    ],
+    "conditions": {
+      "art": {
+        "id": "thi",
+        "min": 30
+      },
+      "age": {
+        "min": 16
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Đọc một bài mới làm",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Cả hội lặng đi rồi vỗ tay. Bài thơ được chép truyền tay mấy huyện.",
+          "effects": {
+            "art": {
+              "thi": 3
+            },
+            "stat.charm": 2,
+            "reputation": {
+              "lang_xa": 3
+            }
+          }
+        },
+        "fail": {
+          "text": "Đọc tới câu thứ ba thì quên. Cả hội cười xòa.",
+          "effects": {
+            "stat.happiness": -2,
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Chỉ ngồi nghe",
+        "result": {
+          "text": "Nghe người ta bình thơ, học được mấy cách gieo vần.",
+          "effects": {
+            "art": {
+              "thi": 2
+            },
+            "stat.intellect": 1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "gt_tri_am",
+    "category": "leisure",
+    "title": "Tri âm",
+    "text": "Ngươi ngồi đàn bên bờ sông. Có người dừng thuyền, nghe hết khúc rồi họa lại một câu.",
+    "themes": [
+      "leisure"
+    ],
+    "conditions": {
+      "art": {
+        "id": "cam",
+        "min": 40
+      },
+      "age": {
+        "min": 16
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Mời người ấy lên bờ",
+        "result": {
+          "text": "Hai người đàn họa tới khuya. Trên đời khó nhất là tìm được người hiểu tiếng đàn của mình.",
+          "effects": {
+            "meetNpc": {
+              "role": "tri âm",
+              "kind": "ban_huu",
+              "peer": true,
+              "affinity": 25
+            },
+            "stat.happiness": 4,
+            "art": {
+              "cam": 2
+            }
+          }
+        }
+      },
+      {
+        "text": "Gật đầu chào rồi đàn tiếp",
+        "result": {
+          "text": "Thuyền trôi đi. Tiếng đàn hai người còn vang trên mặt nước.",
+          "effects": {
+            "stat.daoHeart": 2,
+            "art": {
+              "cam": 1
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "gt_ky_dau",
+    "category": "leisure",
+    "title": "Ván cờ với ông lão lạ",
+    "text": "Một ông lão râu tóc bạc phơ ngồi xuống bàn cờ của ngươi: \"Đánh một ván, thua thì mất ấm trà.\"",
+    "themes": [
+      "leisure"
+    ],
+    "conditions": {
+      "art": {
+        "id": "ky",
+        "min": 40
+      }
+    },
+    "weight": 2,
+    "cooldownYears": 12,
+    "choices": [
+      {
+        "text": "Đánh hết sức",
+        "check": {
+          "stat": "stat.intellect",
+          "difficulty": 60
+        },
+        "success": {
+          "text": "Ngươi thắng nửa nước. Ông lão cười, chỉ cho ngươi một thế cờ rồi đi mất.",
+          "effects": {
+            "art": {
+              "ky": 5
+            },
+            "stat.intellect": 2
+          }
+        },
+        "fail": {
+          "text": "Thua tan tác. Ông lão vẫn để lại một lời chỉ điểm.",
+          "effects": {
+            "art": {
+              "ky": 2
+            },
+            "stat.intellect": 1
+          }
+        }
+      },
+      {
+        "text": "Nhường ông lão",
+        "result": {
+          "text": "Ông lão biết ngươi nhường, lắc đầu đi. Ngươi tiếc mãi.",
+          "effects": {
+            "stat.charm": 1,
+            "stat.happiness": -1
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "gt_cho_bao_trom",
+    "category": "leisure",
+    "title": "Chó sủa đêm",
+    "text": "Nửa đêm con chó trong nhà sủa ầm lên, lao ra cổng.",
+    "themes": [
+      "leisure"
+    ],
+    "conditions": {
+      "pet": {
+        "id": "cho"
+      },
+      "asset": {
+        "kind": "house"
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Cầm gậy ra xem",
+        "result": {
+          "text": "Một bóng người vội vàng trèo rào chạy mất, bỏ lại cái bao tải. Con chó vẫy đuôi chờ khen.",
+          "effects": {
+            "stat.happiness": 3,
+            "stat.physique": 1
+          }
+        }
+      },
+      {
+        "text": "Trùm chăn ngủ tiếp",
+        "result": {
+          "text": "Sáng ra thấy mất hai con gà. Con chó nhìn ngươi đầy trách móc.",
+          "effects": {
+            "stat.happiness": -2,
+            "silver": -2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "gt_ga_choi_dau",
+    "category": "leisure",
+    "title": "Gà chọi ra trận",
+    "text": "Ở đình làng có hội chọi gà, người ta rủ đem gà nhà ra đấu, ăn thua mười lượng.",
+    "themes": [
+      "leisure"
+    ],
+    "conditions": {
+      "pet": {
+        "id": "ga_choi"
+      },
+      "age": {
+        "min": 14
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 4,
+    "choices": [
+      {
+        "text": "Đem gà ra đấu",
+        "check": {
+          "stat": "stat.luck",
+          "difficulty": 50
+        },
+        "success": {
+          "text": "Gà nhà mổ ba đòn, gà đối thủ bỏ chạy. Ngươi ôm gà về như ôm tướng thắng trận.",
+          "effects": {
+            "silver": 10,
+            "stat.happiness": 4,
+            "gambled": true
+          }
+        },
+        "fail": {
+          "text": "Gà nhà bị đá văng khỏi vòng. Mất mười lượng, gà thì ủ rũ.",
+          "effects": {
+            "silver": -10,
+            "stat.happiness": -3,
+            "gambled": true
+          }
+        },
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 10
+            }
+          ]
+        }
+      },
+      {
+        "text": "Chỉ đứng xem",
+        "result": {
+          "text": "Xem người ta chọi gà, hò hét tới khản cổ.",
+          "effects": {
+            "stat.happiness": 2
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "gt_thu_nuoi_om",
+    "category": "leisure",
+    "title": "Thú nuôi ốm",
+    "text": "Con vật trong nhà mấy hôm nay bỏ ăn, nằm lì một góc.",
+    "themes": [
+      "leisure"
+    ],
+    "conditions": {
+      "pet": {
+        "any": true
+      }
+    },
+    "weight": 3,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Mời thầy thuốc về xem",
+        "result": {
+          "text": "Tốn ít bạc, mấy hôm sau nó lại chạy nhảy.",
+          "effects": {
+            "silver": -5,
+            "stat.happiness": 2
+          }
+        },
+        "requires": {
+          "stats": [
+            {
+              "stat": "silver",
+              "gte": 5
+            }
+          ]
+        }
+      },
+      {
+        "text": "Tự sắc lá thuốc",
+        "result": {
+          "text": "Ngươi sắc lá theo cách các cụ bảo. Nó khỏi, ngươi cũng biết thêm một vị thuốc.",
+          "effects": {
+            "stat.intellect": 1,
+            "stat.happiness": 1
+          }
+        }
+      },
+      {
+        "text": "Để tự khỏi",
+        "result": {
+          "text": "Nó gượng dậy được, nhưng gầy hẳn đi.",
+          "effects": {
+            "stat.happiness": -2
+          }
+        }
+      }
+    ]
+  }
+]

@@ -16,6 +16,7 @@ import { schoolYear } from '../systems/schooling';
 import { freshExam } from '../systems/exams';
 import { jobYear } from '../systems/jobs';
 import { assetsYear } from '../systems/assets';
+import { pastimeYear } from '../systems/leisure';
 import { sectYear } from '../systems/sect';
 import { lineageYear, rollPaths } from '../systems/paths';
 import { rankingYear } from '../systems/rankings';
@@ -225,6 +226,7 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     exam: freshExam(input.seed),
     job: { id: null, rung: 0, perf: 0, years: 0, boss: null, mates: [], since: 0, past: [] },
     assets: { owned: [], loans: [], crop: null, nextUid: 1 },
+    pastime: { festival: null, arts: {}, pets: [], gambles: [], omen: null, nextUid: 1 },
     trade: { id: null, level: 0, years: 0, master: null, learning: false },
     log: [],
   };
@@ -267,7 +269,7 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   const used = monthsUsed(state);
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(assetsYear(jobYear(schoolYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(acquaintanceYear(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content, used), content), content), content), content), content), content), content), content), content), content), content), content), content), content);
+  const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(pastimeYear(assetsYear(jobYear(schoolYear(careerYear(applyJobCrafts(cultivateYear(ageExtremes(ageBody(acquaintanceYear(ageNpcs(ageFamily(withYear(aged), content), content), content), content), content), content, used), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content);
   // Task 4.1: in seclusion no ordinary event comes (follow-ups wait for the door to open);
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;
