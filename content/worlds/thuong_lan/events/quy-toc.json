@@ -1,0 +1,1116 @@
+[
+ {
+  "id": "ht_thai_pho",
+  "category": "noble",
+  "title": "Thái phó dạy học",
+  "text": "Trong thư phòng của vương phủ, thái phó râu bạc giảng sách cho đám con cháu tôn thất. Đứa nào cũng mặc gấm, đứa nào cũng ngáp.",
+  "themes": [
+   "noble"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_than"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 6,
+    "max": 12
+   }
+  },
+  "weight": 3,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Chăm chú nghe giảng",
+    "result": {
+     "text": "Thái phó hỏi tới đâu ngươi đáp tới đó. Lão gật gù, ghi tên ngươi vào sổ tay.",
+     "effects": {
+      "stat.intellect": 3
+     }
+    }
+   },
+   {
+    "text": "Vẽ rùa lên lưng áo thái phó",
+    "result": {
+     "text": "Cả lớp cười rũ. Ngươi bị phạt quỳ một canh giờ, nhưng đám anh em họ nể ngươi hẳn.",
+     "effects": {
+      "stat.happiness": 2,
+      "stat.charm": 1,
+      "stat.intellect": -1
+     }
+    }
+   },
+   {
+    "text": "Kết thân với hoàng tử ngồi bàn bên",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Hai đứa chia nhau miếng bánh quế, từ đó thành bạn học. Người lớn trong phủ nhìn ngươi bằng ánh mắt khác.",
+     "effects": {
+      "setFlags": [
+       "than_hoang_tu"
+      ],
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Hoàng tử hất tay ngươi ra: \"Ngươi là ai mà dám?\" Cả lớp im phăng phắc.",
+     "effects": {
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ht_cung_yen",
+  "category": "noble",
+  "title": "Cung yến",
+  "text": "Tết Nguyên tiêu, vương phủ được triệu vào cung dự yến. Hoàng đế ngồi trên cao, bỗng gọi tên ngươi, hỏi một câu về sách Xuân Thu.",
+  "themes": [
+   "noble"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_than"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 10,
+    "max": 40
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 5,
+  "choices": [
+   {
+    "text": "Đáp cho trôi chảy",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi đáp gọn, có dẫn cả điển cố. Hoàng đế cười, ban một chén rượu ngự.",
+     "effects": {
+      "stat.happiness": 3,
+      "fame": 1,
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Ngươi lỡ nói một chữ phạm húy. Cả điện lặng đi, người nhà ngươi mặt cắt không còn giọt máu.",
+     "effects": {
+      "stat.happiness": -4,
+      "stat.daoHeart": -1
+     }
+    }
+   },
+   {
+    "text": "Khiêm nhường nói không dám bàn",
+    "result": {
+     "text": "\"Thần còn non dại, không dám luận thánh kinh.\" Hoàng đế gật đầu, quay sang người khác.",
+     "effects": {
+      "stat.daoHeart": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ht_cung_dau",
+  "category": "noble",
+  "title": "Cung đấu",
+  "text": "Một vị phi tần sai người mang tới phủ một hộp ngọc, kèm lời nhắn: trong cung sắp có chuyện, mong ngươi nhớ ai là người nhà.",
+  "themes": [
+   "noble"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_than"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 16,
+    "max": 50
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Nhận lễ, đứng về phía bà",
+    "result": {
+     "text": "Ngươi gửi lại một phong thư tạ ơn. Từ nay trong cung, ngươi có một chỗ dựa, và vài kẻ thù.",
+     "effects": {
+      "silver": 60,
+      "setFlags": [
+       "theo_phe_cung"
+      ],
+      "stat.charm": 1,
+      "karma": -1
+     }
+    }
+   },
+   {
+    "text": "Trả lễ, đứng ngoài",
+    "result": {
+     "text": "Hộp ngọc được gửi trả nguyên vẹn. Ngươi ngủ yên, chỉ có điều cửa cung với ngươi lạnh đi đôi chút.",
+     "effects": {
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Mang chuyện báo cho hoàng hậu",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Hoàng hậu nhìn ngươi rất lâu rồi mỉm cười. Mấy tháng sau, vị phi kia bị đày vào lãnh cung.",
+     "effects": {
+      "stat.intellect": 1,
+      "silver": 40,
+      "karma": -2
+     }
+    },
+    "fail": {
+     "text": "Hoàng hậu không tin, còn đem chuyện kể lại cho vị phi kia. Giờ ngươi có hai kẻ thù.",
+     "effects": {
+      "stat.happiness": -3,
+      "setFlags": [
+       "bi_cung_ghet"
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ht_bi_vu_muu_phan",
+  "category": "noble",
+  "title": "Bị vu mưu phản",
+  "text": "Có kẻ dâng mật tấu: trong phủ ngươi giấu long bào, mưu đồ phản nghịch. Cấm quân đã bao vây vương phủ.",
+  "themes": [
+   "noble"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_than"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 20,
+    "max": 70
+   }
+  },
+  "weight": 0.6,
+  "cooldownYears": 20,
+  "choices": [
+   {
+    "text": "Vào cung tự biện",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi chỉ ra từng chỗ vô lý trong mật tấu. Hoàng đế cho lục soát lại, bắt được kẻ giấu long bào: chính là tên quản gia bị mua chuộc.",
+     "effects": {
+      "stat.intellect": 1,
+      "stat.daoHeart": 2,
+      "karma": 1
+     }
+    },
+    "fail": {
+     "text": "Lời biện bạch không ai nghe. Ngươi bị tước tước vị, giáng làm thứ dân, gia sản sung công.",
+     "effects": {
+      "silver": -2000,
+      "setFlags": [
+       "bi_phe_thu_dan"
+      ],
+      "stat.happiness": -8,
+      "stat.charm": -3
+     }
+    }
+   },
+   {
+    "text": "Dâng hết gia sản xin tha",
+    "result": {
+     "text": "Vàng bạc, ruộng đất, phủ đệ đều sung vào quốc khố. Hoàng đế khoát tay tha tội, ngươi ra khỏi kinh thành với một cỗ xe ngựa.",
+     "effects": {
+      "silver": -1500,
+      "stat.happiness": -5,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Đêm khuya trốn khỏi kinh",
+    "result": {
+     "text": "Ngươi cải trang thành thương nhân, ra cổng thành lúc canh tư. Từ nay ngươi là kẻ bị truy nã.",
+     "effects": {
+      "wanted": 3,
+      "setFlags": [
+       "bi_phe_thu_dan"
+      ],
+      "stat.health": -3,
+      "stat.happiness": -4
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ht_chi_hon",
+  "category": "noble",
+  "title": "Chỉ hôn",
+  "text": "Thánh chỉ ban xuống: gả ngươi cho con nhà một vị tướng trấn biên, để buộc chặt binh quyền vào hoàng tộc. Ngày cưới đã định, chẳng ai hỏi ngươi muốn gì.",
+  "themes": [
+   "noble"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_than"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 18,
+    "max": 28
+   },
+   "romance": {
+    "partner": false
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Tiếp chỉ",
+    "result": {
+     "text": "Lễ cưới linh đình ba ngày. Người kia ít nói, nhưng không đến nỗi khó gần.",
+     "effects": {
+      "meetNpc": {
+       "role": "con nhà tướng trấn biên",
+       "opposite": true,
+       "adult": true,
+       "peer": true,
+       "affinity": 0
+      },
+      "romance": {
+       "marry": {
+        "affinity": 40
+       }
+      },
+      "silver": 200,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Xin hoàng đế thu hồi thánh chỉ",
+    "check": {
+     "stat": "stat.charm",
+     "difficulty": 65
+    },
+    "success": {
+     "text": "Hoàng đế nhìn ngươi hồi lâu rồi bật cười: \"Thôi được, để trẫm chọn người khác.\"",
+     "effects": {
+      "stat.happiness": 3,
+      "stat.charm": 1
+     }
+    },
+    "fail": {
+     "text": "Hoàng đế nổi giận, phạt ngươi cấm túc một năm rồi vẫn gả như cũ.",
+     "effects": {
+      "meetNpc": {
+       "role": "con nhà tướng trấn biên",
+       "opposite": true,
+       "adult": true,
+       "peer": true,
+       "affinity": 0
+      },
+      "romance": {
+       "marry": {
+        "affinity": 25
+       }
+      },
+      "stat.happiness": -5
+     }
+    }
+   },
+   {
+    "text": "Kháng chỉ",
+    "result": {
+     "text": "Ngươi quỳ trước điện, nhất quyết không lấy. Thánh chỉ bị thu lại, kèm theo tước lộc của ngươi.",
+     "effects": {
+      "silver": -500,
+      "stat.daoHeart": 2,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ht_tranh_ngoi_loi_keo",
+  "category": "noble",
+  "title": "Thân vương lôi kéo",
+  "text": "Các thân vương đang tranh ngôi. Người của một vị tới phủ ngươi giữa đêm, đặt lên bàn một tờ danh sách: \"Ký tên vào đây, sau này cùng hưởng phú quý.\"",
+  "themes": [
+   "noble"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_than"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 18
+   },
+   "court": {
+    "affair": [
+     "tranh_ngoi"
+    ]
+   }
+  },
+  "weight": 3,
+  "cooldownYears": 3,
+  "choices": [
+   {
+    "text": "Ký tên",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Vị thân vương ngươi theo lên ngôi. Ngươi được phong quận vương, ban thêm ngàn mẫu ruộng.",
+     "effects": {
+      "silver": 800,
+      "fame": 3,
+      "stat.happiness": 5
+     }
+    },
+    "fail": {
+     "text": "Phe ngươi thua. Tân quân cầm tờ danh sách, đọc tới tên ngươi.",
+     "effects": {
+      "die": "execution",
+      "stat.happiness": -10
+     }
+    }
+   },
+   {
+    "text": "Từ chối, đóng cửa phủ",
+    "result": {
+     "text": "Ngươi cáo bệnh, đóng cửa ba tháng không tiếp ai. Ai thắng cũng không nhớ tới ngươi.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Đem danh sách dâng vua",
+    "result": {
+     "text": "Tờ danh sách tới tay hoàng đế. Vài cái đầu rơi, ngươi được thưởng, và bị cả họ tôn thất xa lánh.",
+     "effects": {
+      "silver": 300,
+      "karma": -3,
+      "stat.charm": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ht_ke_tuoc",
+  "category": "noble",
+  "title": "Kế tước",
+  "text": "Tước vị trong nhà truyền tới đời ngươi. Lễ tập tước tổ chức ở thái miếu, khói hương nghi ngút.",
+  "themes": [
+   "noble"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_than"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 28,
+    "max": 60
+   },
+   "flagsNone": [
+    "bi_phe_thu_dan",
+    "da_ke_tuoc"
+   ]
+  },
+  "weight": 2,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Nhận tước, lo việc tôn thất",
+    "result": {
+     "text": "Ngươi đội mũ quận công, từ nay ngồi hàng đầu trong các lễ tế.",
+     "effects": {
+      "setFlags": [
+       "da_ke_tuoc"
+      ],
+      "silver": 300,
+      "stat.happiness": 3,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Nhường tước cho người khác trong họ",
+    "result": {
+     "text": "Ngươi dâng sớ nhường tước. Cả họ khen ngươi khiêm, có người còn bảo ngươi khôn.",
+     "effects": {
+      "setFlags": [
+       "da_ke_tuoc"
+      ],
+      "stat.daoHeart": 2,
+      "karma": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ht_vi_hanh_pho",
+  "category": "noble",
+  "title": "Ra phố",
+  "text": "Ngươi thay áo vải lẻn ra khỏi phủ, lần đầu thấy chợ kinh thành tận mắt: ăn mày nằm dọc bờ tường, trẻ con tranh nhau mẩu bánh.",
+  "themes": [
+   "noble"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_than"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 12,
+    "max": 30
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Phát hết túi bạc",
+    "result": {
+     "text": "Bạc trong túi phát sạch trong chớp mắt. Về phủ, ngươi ngồi thừ cả buổi tối.",
+     "effects": {
+      "silver": -30,
+      "karma": 2,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Mua đồ chơi rồi về",
+    "result": {
+     "text": "Ngươi mua một con diều giấy, một xiên kẹo hồ lô. Chuyện ngoài kia, coi như không thấy.",
+     "effects": {
+      "stat.happiness": 2
+     }
+    }
+   },
+   {
+    "text": "Hỏi chuyện dân chúng",
+    "result": {
+     "text": "Ngươi ngồi quán nước nghe người ta chửi quan, chửi thuế. Về phủ, ngươi hiểu thêm nhiều điều sách không dạy.",
+     "effects": {
+      "stat.intellect": 2,
+      "stat.charm": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "ht_ham_hai_doc",
+  "category": "noble",
+  "title": "Chén trà có độc",
+  "text": "Trong bữa tiệc của họ tôn thất, chén trà dâng tới tay ngươi có mùi đắng lạ.",
+  "themes": [
+   "noble"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_than"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 14,
+    "max": 60
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Lén đổ đi",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ngươi giả vờ lỡ tay làm đổ. Con mèo trong phủ liếm phải, nằm cứng đơ ngay tối hôm ấy.",
+     "effects": {
+      "stat.luck": 1,
+      "stat.daoHeart": -1
+     }
+    },
+    "fail": {
+     "text": "Ngươi chỉ kịp nhấp một ngụm. Ba tháng nằm liệt, tóc rụng từng mảng.",
+     "effects": {
+      "stat.health": -20,
+      "stat.charm": -2
+     }
+    }
+   },
+   {
+    "text": "Giữ chén trà làm chứng, tra cho ra",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 60
+    },
+    "success": {
+     "text": "Ngươi lần ra kẻ hạ độc là một người anh em họ ham tước vị. Hắn bị đày ra biên ải.",
+     "effects": {
+      "stat.intellect": 1,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Tra mãi không ra, chỉ biết từ nay trong phủ có kẻ muốn ngươi chết.",
+     "effects": {
+      "stat.happiness": -3,
+      "stat.daoHeart": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qq_tiec_tho",
+  "category": "noble",
+  "title": "Yến thơ thế gia",
+  "text": "Các nhà thế gia trong kinh mở yến thưởng hoa, con cháu thi nhau làm thơ. Thua thì cả nhà mất mặt.",
+  "themes": [
+   "noble"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "quy_toc"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 14,
+    "max": 30
+   }
+  },
+  "weight": 2.5,
+  "cooldownYears": 4,
+  "choices": [
+   {
+    "text": "Làm một bài thật hay",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Bài thơ của ngươi được chép truyền khắp kinh thành. Bà mối tới gõ cửa nhà ngươi không ngớt.",
+     "effects": {
+      "stat.charm": 2,
+      "fame": 1,
+      "stat.happiness": 2
+     }
+    },
+    "fail": {
+     "text": "Ngươi bí vần, đành đọc một bài chép của người xưa. Có kẻ nhận ra, cười khẩy.",
+     "effects": {
+      "stat.charm": -2,
+      "stat.happiness": -2
+     }
+    }
+   },
+   {
+    "text": "Uống rượu, để người khác làm thơ",
+    "result": {
+     "text": "Ngươi say mềm từ giữa tiệc, được gia nhân khiêng về.",
+     "effects": {
+      "stat.happiness": 2,
+      "stat.health": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qq_hoan_kho",
+  "category": "noble",
+  "title": "Công tử hoàn khố",
+  "text": "Đám con nhà quyền quý trong kinh rủ ngươi đi đua ngựa, chọi gà, đêm đêm lui tới tửu lâu.",
+  "themes": [
+   "noble"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "quy_toc"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 15,
+    "max": 28
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 5,
+  "choices": [
+   {
+    "text": "Theo chúng ăn chơi",
+    "result": {
+     "text": "Một năm tiêu hết mấy trăm lượng. Vui thì có vui, mà người nhà nhìn ngươi lắc đầu.",
+     "effects": {
+      "silver": -150,
+      "stat.happiness": 4,
+      "stat.intellect": -2
+     }
+    }
+   },
+   {
+    "text": "Đóng cửa đọc sách",
+    "result": {
+     "text": "Ngươi từ chối hết. Đám bạn gọi ngươi là mọt sách, ngươi mặc kệ.",
+     "effects": {
+      "stat.intellect": 3,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Đi cùng mà giữ chừng mực",
+    "check": {
+     "stat": "stat.daoHeart",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Ngươi chơi vừa đủ, quen được mấy người sau này đều làm quan to.",
+     "effects": {
+      "stat.charm": 2,
+      "silver": -40
+     }
+    },
+    "fail": {
+     "text": "Một đêm say quá, ngươi đánh nhau với con nhà thượng thư. Người nhà phải tới tạ lỗi.",
+     "effects": {
+      "silver": -80,
+      "stat.health": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qq_dinh_hon",
+  "category": "noble",
+  "title": "Môn đăng hộ đối",
+  "text": "Hai nhà thế gia định hôn cho ngươi, để hai họ thêm thế. Người kia ngươi mới gặp đúng một lần, ở buổi lễ đầu xuân.",
+  "themes": [
+   "noble"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "quy_toc"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 18,
+    "max": 28
+   },
+   "romance": {
+    "partner": false
+   }
+  },
+  "weight": 2,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Thuận theo người nhà",
+    "result": {
+     "text": "Lễ cưới rình rang nửa kinh thành. Hai họ từ đó như một.",
+     "effects": {
+      "meetNpc": {
+       "role": "con nhà thế gia",
+       "opposite": true,
+       "adult": true,
+       "peer": true,
+       "affinity": 0
+      },
+      "romance": {
+       "marry": {
+        "affinity": 45
+       }
+      },
+      "silver": 150,
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Từ hôn",
+    "result": {
+     "text": "Ngươi nhất quyết không lấy. Hai nhà cạch mặt nhau, người nhà ngươi mất cả mấy mối làm ăn.",
+     "effects": {
+      "silver": -200,
+      "stat.daoHeart": 2,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Xin gặp riêng người kia trước",
+    "result": {
+     "text": "Hai người nói chuyện cả buổi chiều trong vườn mai. Hóa ra người kia cũng đang lo y như ngươi.",
+     "effects": {
+      "stat.charm": 1,
+      "stat.happiness": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qq_tranh_gia_san",
+  "category": "noble",
+  "title": "Tranh gia sản",
+  "text": "Trưởng bối trong nhà vừa khuất. Đám tang chưa xong, anh em họ đã kéo nhau ra từ đường, cãi nhau về mấy trăm mẫu ruộng.",
+  "themes": [
+   "noble"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "quy_toc"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 20,
+    "max": 60
+   }
+  },
+  "weight": 1.2,
+  "cooldownYears": 15,
+  "choices": [
+   {
+    "text": "Lên công đường kiện cho ra lẽ",
+    "check": {
+     "stat": "stat.intellect",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Tờ di chúc ngươi giữ được công nhận. Phần lớn ruộng vườn về tay ngươi.",
+     "effects": {
+      "silver": 400,
+      "stat.happiness": 2,
+      "karma": -1
+     }
+    },
+    "fail": {
+     "text": "Đối phương lo lót quan huyện. Ngươi thua kiện, mất thêm tiền lót tay.",
+     "effects": {
+      "silver": -100,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Chia đều, giữ hòa khí",
+    "result": {
+     "text": "Ngươi đứng ra chia đều. Ai cũng không vừa ý, nhưng không ai đánh ai.",
+     "effects": {
+      "silver": 100,
+      "stat.charm": 1,
+      "karma": 1
+     }
+    }
+   },
+   {
+    "text": "Nhường hết, dọn ra ở riêng",
+    "result": {
+     "text": "Ngươi xách một rương sách ra khỏi nhà lớn. Người ngoài bảo ngươi dại, ngươi thì thấy nhẹ cả người.",
+     "effects": {
+      "stat.daoHeart": 3,
+      "stat.happiness": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qq_gia_bien",
+  "category": "noble",
+  "title": "Gia biến",
+  "text": "Quyền thần mà nhà ngươi nương tựa đã đổ. Quan quân tới cửa, dán niêm phong lên từng rương bạc.",
+  "themes": [
+   "noble"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "quy_toc"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 10
+   },
+   "court": {
+    "minister": false
+   },
+   "flagsNone": [
+    "qq_gia_bien"
+   ]
+  },
+  "weight": 0.4,
+  "cooldownYears": 30,
+  "choices": [
+   {
+    "text": "Cúi đầu chịu tịch biên",
+    "result": {
+     "text": "Phủ đệ sung công, người nhà dọn ra ở một căn nhà thuê. Từ quyền quý xuống thường dân chỉ mất một buổi sáng.",
+     "effects": {
+      "silver": -1500,
+      "setFlags": [
+       "qq_gia_bien"
+      ],
+      "stat.happiness": -6,
+      "stat.daoHeart": 2
+     }
+    }
+   },
+   {
+    "text": "Lén giấu một rương vàng",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Rương vàng chôn dưới gốc mai lọt khỏi mắt quan quân. Nhà sa sút, nhưng chưa đói.",
+     "effects": {
+      "silver": -800,
+      "setFlags": [
+       "qq_gia_bien"
+      ],
+      "stat.happiness": -3,
+      "stat.luck": 1
+     }
+    },
+    "fail": {
+     "text": "Lính lục ra rương vàng. Tội chồng thêm tội, người nhà bị giam mấy tháng.",
+     "effects": {
+      "silver": -2000,
+      "setFlags": [
+       "qq_gia_bien"
+      ],
+      "stat.happiness": -8,
+      "stat.health": -3
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qq_nho_gia_the",
+  "category": "noble",
+  "title": "Nhờ gia thế",
+  "text": "Một vị thượng thư là chỗ quen biết của nhà ngươi nhắn: ngươi muốn ra làm quan, chỉ cần một lời của ông.",
+  "themes": [
+   "noble"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "quy_toc"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 20,
+    "max": 40
+   },
+   "office": {
+    "held": false
+   }
+  },
+  "weight": 1.5,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Nhận lời",
+    "result": {
+     "text": "Mấy tháng sau, công văn bổ nhiệm về tận phủ.",
+     "effects": {
+      "officeJoin": "recommend",
+      "stat.happiness": 2
+     }
+    }
+   },
+   {
+    "text": "Muốn tự mình đi thi",
+    "result": {
+     "text": "\"Đa tạ, nhưng con muốn tự đỗ.\" Vị thượng thư cười, bảo ngươi có chí.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "qq_thich_khach",
+  "category": "noble",
+  "title": "Thích khách",
+  "text": "Đêm khuya, mái ngói khẽ động. Một bóng đen nhảy xuống sân, lưỡi dao lóe dưới trăng.",
+  "themes": [
+   "noble"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "origins": [
+    "hoang_than",
+    "quy_toc"
+   ],
+   "realm": {
+    "max": "pham_nhan"
+   },
+   "age": {
+    "min": 16,
+    "max": 70
+   }
+  },
+  "weight": 0.8,
+  "cooldownYears": 10,
+  "choices": [
+   {
+    "text": "Hô hoán, chạy ra hậu viện",
+    "check": {
+     "stat": "stat.luck",
+     "difficulty": 50
+    },
+    "success": {
+     "text": "Gia đinh kéo tới đông nghịt. Thích khách bỏ chạy, chỉ để lại một vệt máu trên tường.",
+     "effects": {
+      "stat.luck": 1,
+      "stat.happiness": -1
+     }
+    },
+    "fail": {
+     "text": "Ngươi chạy chậm một bước, lãnh một nhát dao vào lưng.",
+     "effects": {
+      "stat.health": -15,
+      "stat.happiness": -3
+     }
+    }
+   },
+   {
+    "text": "Rút kiếm treo tường ra đánh",
+    "check": {
+     "stat": "stat.physique",
+     "difficulty": 55
+    },
+    "success": {
+     "text": "Ngươi chém trúng tay hắn. Hắn rơi dao, trèo tường mà chạy.",
+     "effects": {
+      "stat.physique": 1,
+      "stat.daoHeart": 1
+     }
+    },
+    "fail": {
+     "text": "Kiếm treo tường là kiếm trang trí, cùn như dao gỗ.",
+     "effects": {
+      "stat.health": -12,
+      "stat.happiness": -2
+     }
+    }
+   }
+  ]
+ }
+]

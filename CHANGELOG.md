@@ -8,6 +8,17 @@
 
 ## [Chưa phát hành]
 
+### 12.4 Xuất thân hoàng tộc và quý tộc (2026-10-22)
+- Hai xuất thân mới, rất hiếm khi số mệnh tự rơi vào. Muốn chọn chắc thì phải trả điểm Luân Hồi ở Cầu đầu thai, như Con nhà quan và Hậu duệ gia tộc tu tiên.
+  - **Con nhà quyền quý** (25 điểm): thế gia trong kinh, 600 lượng, khẩu tài và học lực cao.
+  - **Hoàng thân** (50 điểm): một chi của hoàng tộc, 1500 lượng, khẩu tài cao nhất.
+- 16 sự kiện riêng cho hai xuất thân (`quy-toc.json`):
+  - Hoàng thân: thái phó dạy học (có thể kết thân với hoàng tử), cung yến bị vua hỏi bài, cung đấu (phi tần lôi kéo), bị vu mưu phản (có thể bị giáng làm thứ dân), chỉ hôn (hôn nhân chính trị, từ 18 tuổi), thân vương lôi kéo lúc tranh ngôi (theo đúng phe thì phong vương, sai phe thì mất đầu), kế tước, ra phố thấy dân khổ, chén trà có độc.
+  - Con nhà quyền quý: yến thơ thế gia, công tử hoàn khố, môn đăng hộ đối (từ 18 tuổi), tranh gia sản, gia biến khi quyền thần đổ (bị tịch biên), nhờ gia thế ra làm quan (12.2).
+  - Chung: thích khách đêm khuya.
+- Cửa tiên duyên «Tu sĩ tọa trấn triều đình» nay mở cho cả hai xuất thân mới.
+- Đây là nền cho đường tranh ngôi của hoàng thất (12.6).
+
 ### 12.3 Binh nghiệp và chiến tranh (2026-10-22)
 - Binh nghiệp thành hệ thống (`army.json`, `src/systems/army.ts`): 8 quân hàm từ Binh tốt tới Đại tướng quân, mỗi hàm một mức quân lương. Vào quân bằng hai cửa: bị bắt lính, hoặc tự tòng quân.
 - Sự kiện **Bắt lính** (mẫu NC P6) nổ ra khi triều đình có đại sự cần quân (ngoại xâm, khởi nghĩa, tranh ngôi): lên đường, nộp bạc chuộc, hoặc trốn vào núi.
