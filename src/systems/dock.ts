@@ -48,10 +48,11 @@ export function dockGroups(state: GameState, content: Content, id: string): Acti
   const shown = shownButtons(state, content);
   const b = shown.find((x) => x.id === id) ?? content.dock?.find((x) => x.id === id);
   if (!b) return [];
-  if (!b.catchAll) return b.groups;
+  const hidden = new Set<string>(tierDef(content, currentTier(state, content))?.hideGroups ?? []);
+  if (!b.catchAll) return b.groups.filter((g) => !hidden.has(g));
   const taken = new Set(shown.flatMap((x) => x.groups));
   const rest = activityViews(state, content).map((v) => v.group).filter((g) => !taken.has(g));
-  return [...new Set([...b.groups, ...rest])];
+  return [...new Set([...b.groups, ...rest])].filter((g) => !hidden.has(g));
 }
 
 /** "Thân phận": what the world knows the character as (rung of the career, martial stage, sect, lối sống, place). */

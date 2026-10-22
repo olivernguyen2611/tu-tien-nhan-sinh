@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### Góp ý 23/10 · Phàm nhân không thấy chuyện tu tiên (2026-10-23)
+- Khi còn là phàm nhân: ẩn linh thạch, thanh Tu vi, dòng Linh căn/Thể chất trong hồ sơ và tab Tu luyện. Chỉ khi có linh căn dùng được và có công pháp (hoặc bí tịch) thì tab Tu luyện mới mở; lần tu luyện đầu tiên đưa người chơi vào đạo, từ đó mọi thứ của tu sĩ hiện ra.
+- Đã nhập đạo thì ẩn bớt chuyện phàm trần: nhóm Giang hồ trong thanh hành động (`tier.hideGroups`), các dòng võ lâm, thế lực giang hồ trong hồ sơ và mục giang hồ ở tab Tông môn.
+- Sổ tri thức không còn tự mở tab Tu luyện cho người chưa có linh căn.
+
 ### Góp ý 23/10 · Tiên sư thử linh căn hiếm hơn (2026-10-23)
 - Tiên môn mở hội thu đồ: 3%/năm trong tuổi 8–16 (trước 12%). Với người đã biết tin tiên môn thu đồ, khoảng 15% số đời được tiên sư thử linh căn khi còn nhỏ (trước 41%). Các đường tiên duyên khác giữ nguyên.
 

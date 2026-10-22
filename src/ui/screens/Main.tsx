@@ -71,6 +71,7 @@ import { courtLine } from '../../systems/court';
 import { officeLine } from '../../systems/office';
 import { armyLine } from '../../systems/army';
 import { throneLine } from '../../systems/throne';
+import { daoView } from '../../systems/daoGate';
 
 
 const APTITUDE_LABELS = [
@@ -190,6 +191,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const origin = content.origins.find((o) => o.id === c.originId);
   const warn = extremeWarnings(state, content);
   const force = innerForce(state, content);
+  const dao = daoView(state);
   const karma = karmaView(state, content);
   const finger = fingerDef(content, state.goldenFinger?.id);
   const heThong = systemDef(content, state.system?.id);
@@ -231,7 +233,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         </div>
         <div class="purse">
           <span class="silver">{money.silver} <Term id="luong_bac">lượng bạc</Term></span>
-          <span class="stone">{money.spiritStones} <Term id="linh_thach">linh thạch</Term></span>
+          {dao.stones && <span class="stone">{money.spiritStones} <Term id="linh_thach">linh thạch</Term></span>}
         </div>
         <div class="top-actions">
           {dev && <button class="icon-btn dev-btn" aria-label="Developer mode" title="Developer mode" onClick={() => setDevOpen(true)}>Dev</button>}
@@ -319,10 +321,10 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
         {force ? (
           <div class="stat-row wide"><span class="icon">勁</span><Meter label={force.label} term={force.term} value={force.pct} color="var(--bar-cult)"
             text={`${force.stage ?? 'Mới nhập môn'} · ${force.pct}%`} /></div>
-        ) : (
+        ) : dao.cultivation ? (
           <div class="stat-row wide"><span class="icon">修</span><Meter label="Tu vi" term="tu_vi" value={cult.progress} color="var(--bar-cult)"
-            text={cult.realm === 'pham_nhan' ? 'Chưa tu luyện' : `${realmLabel(state, content)} · ${Math.floor(cult.progress)}%`} /></div>
-        )}
+            text={`${realmLabel(state, content)} · ${Math.floor(cult.progress)}%`} /></div>
+        ) : null}
         <div class="stat-row wide"><span class="icon">壽</span><Meter label="Tuổi" term="tho_nguyen" value={c.age} max={cult.lifespan} color="var(--bar-life)" text={`${c.age} tuổi`} /></div>
       </section>
 
@@ -377,8 +379,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
               <p class="profile-note">Danh vọng: {reputationViews(state, content).map((r) => `${r.name} ${r.value > 0 ? '+' : ''}${r.value}`).join(' · ')}</p>
             )}
             {karma && <p class="profile-note"><TermText text={`${karma.label}: ${karma.value !== null ? `${karma.value > 0 ? '+' : ''}${karma.value}` : karma.text}`} /></p>}
-            <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>
-            <p class="profile-root"><TermText text={`Thể chất: ${bodyLabel(state, content)}`} /></p>
+            {dao.root && <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>}
+            {dao.root && <p class="profile-root"><TermText text={`Thể chất: ${bodyLabel(state, content)}`} /></p>}
             {identityLine(state, content) && <p class="profile-note">Thân phận: {identityLine(state, content)}</p>}
             {state.times && <p class="profile-note">Thời thế: {currentPhase(state, content)?.name ?? ''} · {state.times.dynasty}, {eraLabel(state, c.age)}</p>}
             {careerLabel(state, content) && <p class="profile-note">Đường đời: {careerLabel(state, content)}</p>}
@@ -392,10 +394,10 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             {healthLine(state, content) && <p class="profile-note">Thân thể: {healthLine(state, content)}</p>}
             {lawLine(state, content) && <p class="profile-note">Quan phủ: {lawLine(state, content)}</p>}
             {lineageLine(state, content) && <p class="profile-note">Gia phả: {lineageLine(state, content)}</p>}
-            {jianghuLine(state, content) && <p class="profile-note">Giang hồ: {jianghuLine(state, content)}</p>}
-            {factionLine(state, content) && <p class="profile-note">Thế lực: {factionLine(state, content)}</p>}
+            {dao.jianghu && jianghuLine(state, content) && <p class="profile-note">Giang hồ: {jianghuLine(state, content)}</p>}
+            {dao.jianghu && factionLine(state, content) && <p class="profile-note">Thế lực: {factionLine(state, content)}</p>}
             {martialArtsLine(state, content) && <p class="profile-note">Võ học: {martialArtsLine(state, content)}</p>}
-            {wulinLine(state, content) && <p class="profile-note">Võ lâm: {wulinLine(state, content)}</p>}
+            {dao.jianghu && wulinLine(state, content) && <p class="profile-note">Võ lâm: {wulinLine(state, content)}</p>}
             {courtLine(state, content) && <p class="profile-note">Triều đình: {courtLine(state, content)}</p>}
             {officeLine(state, content) && <p class="profile-note">Quan trường: {officeLine(state, content)}</p>}
             {armyLine(state, content) && <p class="profile-note">Binh nghiệp: {armyLine(state, content)}</p>}

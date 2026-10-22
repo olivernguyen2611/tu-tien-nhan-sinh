@@ -96,7 +96,8 @@ describe('9.R5b kiếp đầu là phàm nhân, mở khóa dần', () => {
     const s = base();
     expect(featureOpen(s, content, 'tab', 'tu_luyen')).toBe(false);
     expect(featureOpen(s, content, 'tab', 'tong_mon')).toBe(false);
-    expect(featureOpen({ ...s, knowledge: ['dan_khi_nhap_the'] }, content, 'tab', 'tu_luyen')).toBe(true);
+    // Góp ý 23/10: Tu luyện waits for the life's own root and scroll, whatever past lives knew.
+    expect(featureOpen({ ...s, knowledge: ['dan_khi_nhap_the'] }, content, 'tab', 'tu_luyen')).toBe(false);
     expect(featureOpen({ ...s, cult: { ...s.cult, root: { grade: 'tam', elements: ['kim', 'moc', 'thuy'] } } }, content, 'tab', 'tong_mon')).toBe(true);
     expect(featureOpen({ ...s, knowledge: ['phat_duyen'] }, content, 'tab', 'tong_mon')).toBe(true);
     // A tab no entry gates is always open.

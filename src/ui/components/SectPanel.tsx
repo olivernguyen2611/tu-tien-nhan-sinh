@@ -15,6 +15,7 @@ import { TermText } from './Tooltip';
 import { OwnSectSection } from './OwnSectSection';
 import { SectIdentity } from './SectIdentity';
 import { JianghuSection } from './JianghuSection';
+import { daoView } from '../../systems/daoGate';
 import { featureOpen } from '../../systems/knowledge';
 
 export type SectAction =
@@ -207,7 +208,7 @@ export function SectPanel({ state, content, onAction, onClose }: {
           </>
         )}
 
-        <JianghuSection content={content} />
+        {daoView(state).jianghu && <JianghuSection content={content} />}
 
         <OwnSectSection state={state} content={content} onFound={(name, rules) => act({ kind: 'found', name, rules })}
           onDecide={(decisionId) => act({ kind: 'decide', decisionId })} onBuild={(buildingId) => act({ kind: 'build', buildingId })} onDonate={() => act({ kind: 'donate' })} onElder={(npcId) => act({ kind: 'elder', npcId })} onRecruit={(npcId) => act({ kind: 'recruit', npcId })} />

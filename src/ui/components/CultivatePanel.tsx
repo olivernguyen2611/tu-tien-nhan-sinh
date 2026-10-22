@@ -6,6 +6,7 @@ import { identityLine } from '../../systems/dock';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
 import { bodyLabel, inBottleneck, majorBreakthroughInfo, realmLabel, rootLabel, rootUsable, yearlyGain } from '../../systems/cultivation';
+import { daoView } from '../../systems/daoGate';
 import { craftViews } from '../../systems/crafts';
 import { careerIncome, careerLabel, careerViews } from '../../systems/career';
 import { jobLine, jobViews } from '../../systems/jobs';
@@ -84,8 +85,8 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
         <div class="kicker">{self ? 'Bản thân' : 'Tu luyện'}</div>
         <h2>{self ? state.character.name : realmLabel(state, content)}</h2>
         {self && identity && <p class="profile-note">Thân phận: {identity}</p>}
-        <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>
-        <p class="profile-root"><TermText text={`Thể chất: ${bodyLabel(state, content)}`} /></p>
+        {daoView(state).root && <p class="profile-root"><TermText text={`Linh căn: ${rootLabel(state, content)}`} /></p>}
+        {daoView(state).root && <p class="profile-root"><TermText text={`Thể chất: ${bodyLabel(state, content)}`} /></p>}
         {!self && currentTechnique(state, content) && (
           <div class="technique">
             <p class="story"><b>Công pháp: {currentTechnique(state, content)!.name}</b></p>
@@ -115,9 +116,9 @@ export function CultivatePanel({ state, content, view, extra, onBreakthrough, on
         {!self && foundation && <p class="profile-note"><TermText text={`Đạo cơ ${foundation.name}: ${foundation.description}`} /></p>}
         {!self && coreGrade && <p class="profile-note"><TermText text={`Kim Đan ${coreGrade}${pattern ? `, ${pattern.name}: ${pattern.summary}` : ''}`} /></p>}
         {!self && soul && <p class="profile-note"><TermText text={`Nguyên Anh: ${soul.name}. ${soul.summary}`} /></p>}
-        {self && !mortal ? null : mortal ? (
+        {self && !mortal ? null : mortal ? !cult.root ? null : (
           <p class="story">
-            <TermText text={rootUsable(state, content) ? 'Có linh căn nhưng chưa nhập đạo: cần một công pháp nhập môn, tông môn hoặc tiên sư dẫn đường.' : cult.root ? 'Không có linh căn, linh khí không đọng lại trong người. Đường tu tiên tạm thời khép cửa.' : 'Chưa ai từng thử linh căn cho ngươi. Tiên môn thu đồ, tiên nhân để mắt… tiên duyên không hẹn trước.'} />
+            <TermText text={rootUsable(state, content) ? 'Có linh căn nhưng chưa nhập đạo: cần một công pháp nhập môn, tông môn hoặc tiên sư dẫn đường.' : 'Không có linh căn, linh khí không đọng lại trong người. Đường tu tiên tạm thời khép cửa.'} />
           </p>
         ) : (
           <>

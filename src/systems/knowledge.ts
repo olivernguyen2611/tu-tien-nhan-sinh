@@ -6,6 +6,7 @@ import { Rng } from '../core/rng';
 import type { KnowledgeEntry } from '../core/schemas';
 import type { GameState } from '../core/types';
 import { rootUsable } from './cultivation';
+import { daoReady } from './daoGate';
 
 type Source = KnowledgeEntry['sources'][number];
 
@@ -82,9 +83,10 @@ export function knowledgeUnlocks(known: string[], content: Content, kind: Knowle
  * that opens it is known, or when the life is already inside it (cultivating, in a sect, rooted).
  */
 export function featureOpen(state: GameState, content: Content, kind: KnowledgeEntry['unlocks'][number]['kind'], id: string, opts: { born?: boolean } = {}): boolean {
+  // Góp ý 23/10: the Tu luyện tab opens with the life itself (daoGate.ts), whatever past lives knew.
+  if (kind === 'tab' && id === 'tu_luyen') return state.cult.realm !== 'pham_nhan' || daoReady(state, content);
   const gated = (content.knowledge ?? []).some((e) => e.unlocks.some((u) => u.kind === kind && u.id === id));
   if (!gated || knowledgeUnlocks(opts.born ? bornKnowing(state) : knownEntries(state), content, kind, id)) return true;
-  if (kind === 'tab' && id === 'tu_luyen') return state.cult.realm !== 'pham_nhan' || rootUsable(state, content);
   if (kind === 'tab' && id === 'tong_mon') return !!state.sect.id || !!state.ownSect || rootUsable(state, content);
   return false;
 }

@@ -722,6 +722,8 @@ export const WorldSchema = z
     tiers: z.array(z.object({
       id: z.string().regex(/^[a-z0-9_]+$/), name: z.string().min(1), entry: ConditionsSchema.default({}),
       dock: z.array(z.string().min(1)).default([]), locked: z.boolean().default(false),
+      /** Activity groups the dock sheets no longer list in this tier (the phàm gian giang hồ once in the Dao). */
+      hideGroups: z.array(z.string().min(1)).default([]),
       /** Shown on the full-screen "nhập đạo" card when the life enters this tier. */
       enterText: z.string().optional(),
     }).strict()).default([]),
