@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### Góp ý 23/10 · Quan trường thêm chuyện, mưu phản dễ thấy (2026-10-23)
+- 28 sự kiện quan trường mới (`quan-truong-2.json`):
+  - Thăng đường có thêm 10 án: bỏ vợ, một con gà hai chủ, bát canh có độc, cường hào chiếm đất, cháy chợ, án ma ám, gian lận thi Hương, nô tỳ bỏ trốn, thư lại nhận hối, buôn muối lậu.
+  - Vi hành có thêm 8 chuyện dọc đường: quán trọ đen, làng đói, ông lão câu cá, bị dân nhận ra, tiếng khóc ở miếu, giặc cỏ chặn đường, thần đồng chăn trâu, quan dưới lộng hành.
+  - 9 chuyện quan trường tự đến: kinh sát ba năm, dẹp phỉ, ôn dịch, ngự giá tuần du, thư tiến cử, đào kênh, tiếp sứ ngoại bang, hoàng đế hỏi kế, đồng liêu hạ bệ. Vài chuyện làm tốt được thăng chức ngay.
+- Mưu phản: hoạt động "Mưu đồ đại sự" đổi tên thành **Mưu phản**, cùng ba hoạt động mưu phản khác chuyển sang nhóm **Nghề**, cạnh các việc quan. Trước đây nó nằm lẫn trong nhóm Quan hệ nên khó thấy. Quan Nhị phẩm, Nhất phẩm còn có sự kiện **Dưới một người** mời mưu đồ đại sự.
+
 ### Góp ý 23/10 · Thân phận và bắt lính (2026-10-23)
 - Quan lại không còn bị bắt lính, không phải nộp sưu thuế. Sự kiện "Bắt lính" cũ của thời cuộc (biên ải nguy cấp) giờ chỉ đến với nam phàm nhân không làm quan, không tại ngũ, không làm vua, và "Đi lính" thật sự vào quân ngũ. "Bắt phu xây cung" cũng vậy.
 - Sự kiện hẹn sẵn (follow-up) không còn hợp điều kiện lúc tới hạn thì bỏ qua: bị gọi lính rồi kịp nhậm chức thì thôi.
