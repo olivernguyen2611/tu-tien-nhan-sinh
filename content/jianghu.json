@@ -1,0 +1,28 @@
+{
+  "aliases": {
+    "traits": {
+      "hiep": ["Thiết Thủ", "Phi Yến", "Thanh Y", "Bạch Mi", "Ngọc Diện", "Truy Phong", "Hàn Giang", "Lạc Nhật", "Cô Vân", "Lăng Ba", "Kim Đao", "Vô Ảnh"],
+      "ac": ["Huyết Thủ", "Quỷ Diện", "Hắc Tâm", "Độc Thủ", "Ác Lang", "Lãnh Huyết", "Tang Môn", "Đoạt Mệnh", "Diêm La", "Câu Hồn"],
+      "any": ["Thiết Diện", "Túy", "Tiếu Diện", "Lôi Đình", "Bá Đạo", "Phong Trần", "Lãng Tử", "Cuồng"]
+    },
+    "nouns": ["Hắc Ưng", "Thần Long", "Mãnh Hổ", "Bạch Hạc", "Độc Xà", "Kim Bằng", "Cô Lang", "Linh Hồ", "Hồng Báo", "Thanh Ngưu"],
+    "nounsByPath": {
+      "sword": ["Kiếm", "Kiếm Khách", "Kiếm Ma"],
+      "body": ["Thiết Quyền", "Đồng Bì", "Cự Linh"],
+      "spell": ["Chưởng", "Thần Chưởng", "Huyền Công"],
+      "weapon": ["Đao", "Phán Quan Bút", "Thiết Côn", "Song Thương"],
+      "arts": ["Phi Tiêu", "Diệu Thủ", "Thần Châm", "Ám Tiễn"]
+    },
+    "injury": { "mu_mot_mat": "Độc Nhãn", "seo_mat": "Đao Ba", "cut_ngon": "Cửu Chỉ", "que_chan": "Thiết Quải" }
+  },
+  "texts": {
+    "alias": {
+      "hiep": "Ở các quán trà, người kể chuyện bắt đầu gọi ngươi là «{alias}». Có đứa trẻ chạy theo hỏi thật hay không.",
+      "ac": "Tên ngươi bị người ta nhắc bằng giọng thì thào: «{alias}». Mấy nhà mở hàng thấy bóng ngươi là đóng cửa."
+    },
+    "ranks": {
+      "hiep": ["Vô danh tiểu tốt", "Có chút tiếng", "Có tiếng", "Lừng danh", "Danh chấn giang hồ"],
+      "ac": ["Kẻ xấu vặt", "Tiếng xấu", "Khét tiếng", "Ác danh lẫy lừng", "Đại ma đầu"]
+    }
+  }
+}

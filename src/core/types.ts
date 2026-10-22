@@ -135,6 +135,8 @@ export interface GameState {
   /** 10.7 Giải trí: this year's lễ hội, tài nghệ (0–100), pets, ages at the sòng bạc (recent), the event a quẻ named and until when. */
   /** 10.11 Gia tộc phàm tục: tộc trưởng, họ hàng (NPC ids), forebears for the gia phả, phân gia done, người nối dõi,
    *  gia quy, từ đường level, tế tổ times. */
+  /** 11.1: hiệp danh (fame) and ác danh (infamy), 0–100 each; the ngoại hiệu and the age it was given. */
+  jianghu?: { fame: number; infamy: number; alias: string | null; aliasAt: number | null };
   /** 10.13: the real lễ hội this week (set from the device's date when a life starts or loads), or null. */
   realFestival?: string | null;
   kin?: {
@@ -452,6 +454,8 @@ export interface Npc {
   alive: boolean;
   /** How the player knows them: bằng hữu, ân nhân, kẻ thù, đồng môn… (free text from the event). */
   role: string;
+  /** 11.1: a người giang hồ's ngoại hiệu. */
+  alias?: string;
   /** Cultivation; root false = a mortal who never cultivates. */
   root: boolean;
   aptitude: number;

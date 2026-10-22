@@ -8,6 +8,7 @@ import { Rng } from '../core/rng';
 import type { GameState, LogLine } from '../core/types';
 import { startCultivating } from './cultivation';
 import { learnTechnique } from './technique';
+import { addRenown } from './jianghu';
 
 const value = (state: GameState, key: string) =>
   key in state.stats ? state.stats[key as keyof GameState['stats']] : state.aptitudes[key as keyof GameState['aptitudes']];
@@ -125,6 +126,8 @@ export function martialPromote(state: GameState, content: Content): GameState {
     cult: { ...state.cult, lifespan: state.cult.lifespan + add },
   };
   s = { ...s, log: addLines(s, [{ text: content.martial.texts.promote.replaceAll('{stage}', def.name).replaceAll('{description}', def.description), tone: 'good' }]) };
+  // 11.1: a new stage is talked about in the giang hồ.
+  if (content.balance.jianghu) s = addRenown(s, content, content.balance.jianghu.stageFame * (stage + 1), 0);
   if (stage === content.martial.gift.stage) s = hoaCanhGift(s, content);
   if (stage === content.martial.stages.length - 1 && content.martial.texts.peak) s = { ...s, log: addLines(s, [{ text: content.martial.texts.peak, tone: 'rare' }]) };
   return s;

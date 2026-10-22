@@ -5,6 +5,7 @@ import { beginExam } from '../exams';
 import { addPerf, promoteJob, quitJob, takeJob } from '../jobs';
 import { addArt, adoptPet, castOmen, noteGamble, omenMul } from '../leisure';
 import { festivalBoost } from '../calendar';
+import { addNetRenown, addRenown } from '../jianghu';
 import { catchDisease, cureAilment, injure, noteDrink } from '../health';
 import { addJailYears, addWanted, arrest, bribe, commitCrime, fleeLaw, imprison, sentence, tryEscape } from '../law';
 import { checkDeath } from '../time';
@@ -428,8 +429,10 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   for (const [craft, n] of Object.entries(fx.craftXp ?? {})) next = addCraftXp(next, content, craft, n);
   if (fx.reputation) {
     const rep = { ...next.social.reputation };
-    for (const [k, v] of Object.entries(fx.reputation)) rep[k as keyof typeof rep] = Math.max(-100, Math.min(100, rep[k as keyof typeof rep] + v));
+    for (const [k, v] of Object.entries(fx.reputation)) if (k !== 'giang_ho') rep[k as keyof typeof rep] = Math.max(-100, Math.min(100, rep[k as keyof typeof rep] + v));
     next = { ...next, social: { ...next.social, reputation: rep } };
+    // 11.1: giang hồ reputation is hiệp danh (+) and ác danh (−).
+    if (fx.reputation.giang_ho) next = addNetRenown(next, content, fx.reputation.giang_ho);
   }
   next = removeItems(addItems(next, fx.addItems ?? []), fx.removeItems ?? []);
   // A kill (plain, or of the event's NPC) breaks Phật đạo precepts (task 3.12).
@@ -538,6 +541,7 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.shareEstate) next = shareEstate(next, content, fx.shareEstate);
   if (fx.chooseHeir) next = chooseHeir(next, content, fx.chooseHeir);
   if (fx.kinRule) next = setRule(next, content, fx.kinRule);
+  if (fx.fame || fx.infamy) next = addRenown(next, content, fx.fame ?? 0, fx.infamy ?? 0);
   if (fx.worship) next = worship(next);
   if (fx.repairShrine) next = repairShrine(next, content);
   if (fx.childrenAffinity) next = childrenAffinity(next, fx.childrenAffinity);

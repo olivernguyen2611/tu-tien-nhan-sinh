@@ -165,6 +165,18 @@
       ]
     },
     {
+      "id": "vo_lam_nhan",
+      "name": "Người giang hồ",
+      "group": "khac",
+      "roles": [
+        "người giang hồ",
+        "hiệp khách",
+        "kiếm khách",
+        "đao khách",
+        "cao thủ giang hồ"
+      ]
+    },
+    {
       "id": "toc_truong",
       "name": "Tộc trưởng",
       "group": "ho_hang",

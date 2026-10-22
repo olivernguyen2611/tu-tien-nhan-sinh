@@ -1,0 +1,392 @@
+[
+ {
+  "id": "jh_thu_khieu_chien",
+  "category": "jianghu",
+  "title": "Thư khiêu chiến",
+  "text": "Một tờ thư cắm trên mũi phi tiêu găm vào cột nhà: \"Nghe danh đã lâu. Mồng năm, bãi sông phía tây, một trận định cao thấp.\" Ký tên một kẻ ngươi chưa từng nghe.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "jianghu": {
+    "fameMin": 25
+   },
+   "age": {
+    "min": 16
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Tới bãi sông ứng chiến",
+    "result": {
+     "text": "Gã kia đã đứng chờ, khoanh tay, sau lưng có mấy kẻ tới xem.",
+     "effects": {
+      "stat.happiness": -1
+     },
+     "fight": {
+      "foe": {
+       "name": "Kẻ khiêu chiến",
+       "realm": "same",
+       "intent": "teach",
+       "powerMul": 0.9,
+       "path": "weapon",
+       "lineage": "tien"
+      },
+      "win": {
+       "text": "Ba hiệp, gã nằm đo đất. Người xem về kể khắp huyện, tiếng ngươi lại lên.",
+       "effects": {
+        "fame": 6,
+        "stat.happiness": 3
+       }
+      },
+      "lose": {
+       "text": "Ngươi thua. Gã cười to bỏ đi, từ nay khoe khắp nơi đã thắng ngươi.",
+       "effects": {
+        "fame": -4,
+        "stat.happiness": -4,
+        "stat.health": -5
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Không đi, kệ nó",
+    "result": {
+     "text": "Ngươi đốt tờ thư. Mấy hôm sau nghe đồn gã khắp nơi rêu rao ngươi sợ không dám tới.",
+     "effects": {
+      "fame": -3,
+      "stat.happiness": -1,
+      "stat.daoHeart": 1
+     }
+    }
+   },
+   {
+    "text": "Hẹn gặp, mời rượu thay vì đánh",
+    "result": {
+     "text": "Gã ngớ người, rồi cũng ngồi xuống uống. Rượu vào, hai người thành bạn.",
+     "effects": {
+      "fame": 2,
+      "stat.charm": 2,
+      "silver": -5
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "jh_quan_tra_nhan_ra",
+  "category": "jianghu",
+  "title": "Người ta nhận ra ngươi",
+  "text": "Ngươi vừa bước vào quán trà, người kể chuyện ngừng lại. Cả quán quay ra nhìn. Có kẻ thì thầm: \"Chính là người ấy.\"",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "jianghu": {
+    "fameMin": 20
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Ngồi xuống nghe kể chuyện mình",
+    "result": {
+     "text": "Người kể chuyện nói về ngươi, thêm thắt tới mức chính ngươi cũng không nhận ra. Chủ quán không lấy tiền trà.",
+     "variants": [
+      "Chuyện kể về ngươi qua miệng người ta đã thành ba đầu sáu tay. Ngươi cười, chẳng cãi.",
+      "Có đứa trẻ hỏi ngươi có bay được thật không. Cả quán cười ồ."
+     ],
+     "effects": {
+      "stat.happiness": 3,
+      "stat.charm": 1
+     }
+    }
+   },
+   {
+    "text": "Kéo nón che mặt, đi ra",
+    "result": {
+     "text": "Tiếng tăm là thứ phiền. Ngươi lặng lẽ ra đi, nghe sau lưng còn tiếng xì xào.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Mời cả quán một chầu",
+    "result": {
+     "text": "Bạc ra như nước, tiếng ngươi hào sảng truyền thêm mấy huyện.",
+     "effects": {
+      "fame": 3,
+      "silver": -15,
+      "stat.happiness": 2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "jh_dan_lang_dong_cua",
+  "category": "jianghu",
+  "title": "Cửa đóng then cài",
+  "text": "Ngươi đi qua một thôn nhỏ. Thấy bóng ngươi, người lớn kéo con vào nhà, chó cũng thôi sủa. Cả thôn như không có người.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "jianghu": {
+    "infamyMin": 25
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Mặc kệ, đi tiếp",
+    "result": {
+     "text": "Ngươi đi hết thôn không gặp một bóng người. Cảm giác ấy, thật khó nói là thích hay không.",
+     "effects": {
+      "stat.happiness": -2,
+      "infamy": 1
+     }
+    }
+   },
+   {
+    "text": "Gõ cửa xin bát nước",
+    "result": {
+     "text": "Bà lão run run mở cửa, đưa bát nước rồi quỳ xuống lạy. Ngươi uống xong để lại mấy đồng.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "silver": -2,
+      "infamy": -1
+     }
+    }
+   },
+   {
+    "text": "Vào thôn bắt nộp lương",
+    "result": {
+     "text": "Không ai dám cãi. Ngươi đi ra với một túi gạo và mấy con gà, phía sau có tiếng khóc.",
+     "effects": {
+      "infamy": 4,
+      "silver": 10,
+      "karma": -3,
+      "stat.daoHeart": -2
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "jh_nguoi_xin_theo",
+  "category": "jianghu",
+  "title": "Kẻ xin đi theo",
+  "text": "Một thiếu niên quỳ trước cửa từ sáng: \"Nghe danh đại hiệp, xin cho tiểu nhân theo hầu, rửa bát cũng được.\"",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "jianghu": {
+    "fameMin": 35
+   },
+   "age": {
+    "min": 20
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Nhận làm tùy tùng",
+    "result": {
+     "text": "Thằng bé mừng tới phát khóc. Từ đó có người xách túi, có người nấu cơm, cũng có người hỏi chuyện suốt ngày.",
+     "effects": {
+      "meetNpc": {
+       "role": "thuộc hạ",
+       "realm": "pham_nhan",
+       "root": false,
+       "affinity": 70
+      },
+      "stat.happiness": 2,
+      "fame": 1
+     }
+    }
+   },
+   {
+    "text": "Dạy vài thế rồi bảo về",
+    "result": {
+     "text": "Ngươi chỉ cho nó mấy thế quyền, bảo về giúp nhà. Nó vái ba vái rồi đi, lòng ngươi cũng ấm.",
+     "effects": {
+      "stat.charm": 1,
+      "karma": 1,
+      "stat.happiness": 1
+     }
+    }
+   },
+   {
+    "text": "Đuổi đi",
+    "result": {
+     "text": "\"Giang hồ không phải chỗ chơi.\" Thằng bé đi, ngoái lại mãi.",
+     "effects": {
+      "stat.daoHeart": 1,
+      "stat.happiness": -1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "jh_ke_mao_danh",
+  "category": "jianghu",
+  "title": "Kẻ mạo danh",
+  "text": "Tin đồn tới tai: ở huyện bên có kẻ xưng là «{alias}», ăn quỵt khắp nơi, lại còn chọc ghẹo con gái nhà người ta.",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "jianghu": {
+    "alias": true
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 6,
+  "choices": [
+   {
+    "text": "Tìm tới tận nơi vạch mặt",
+    "result": {
+     "text": "Ngươi tìm thấy gã ở tửu lâu, đang vỗ ngực kể chuyện \"mình\".",
+     "effects": {
+      "stat.happiness": -1
+     },
+     "fight": {
+      "foe": {
+       "name": "Kẻ mạo danh",
+       "realm": "same",
+       "intent": "rob",
+       "powerMul": 0.7,
+       "path": "body",
+       "lineage": "tien"
+      },
+      "win": {
+       "text": "Gã quỳ xin tha trước mặt cả tửu lâu. Từ đó không ai dám mạo danh ngươi nữa.",
+       "effects": {
+        "fame": 4,
+        "stat.happiness": 3
+       }
+      },
+      "lose": {
+       "text": "Gã có mấy tay đỡ đầu. Ngươi bị đánh lui, tiếng ngươi lại thêm một vết.",
+       "effects": {
+        "fame": -3,
+        "stat.health": -6,
+        "stat.happiness": -3
+       }
+      }
+     }
+    }
+   },
+   {
+    "text": "Mặc kệ, tiếng tốt tự nó sáng",
+    "result": {
+     "text": "Ngươi không đi. Nửa năm sau gã bị bắt, người ta mới biết đó là đồ giả.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "fame": -1
+     }
+    }
+   },
+   {
+    "text": "Cho người dán cáo thị đính chính",
+    "result": {
+     "text": "Tốn ít bạc. Người ta đọc cáo thị rồi cười, chẳng biết tin ai.",
+     "effects": {
+      "silver": -10,
+      "stat.intellect": 1
+     }
+    }
+   }
+  ]
+ },
+ {
+  "id": "jh_bang_chieu_mo",
+  "category": "jianghu",
+  "title": "Có người tới mời",
+  "text": "Một gã mặc áo the, đội nón lá, ghé tai ngươi ở quán rượu: \"Đường chủ nhà ta để ý tới ngươi đã lâu. Có muốn về với chúng ta?\"",
+  "themes": [
+   "jianghu"
+  ],
+  "conditions": {
+   "tier": [
+    "pham_gian"
+   ],
+   "anyOf": [
+    {
+     "jianghu": {
+      "fameMin": 25
+     }
+    },
+    {
+     "jianghu": {
+      "infamyMin": 25
+     }
+    }
+   ],
+   "age": {
+    "min": 16
+   }
+  },
+  "weight": 1.0,
+  "cooldownYears": 8,
+  "choices": [
+   {
+    "text": "Hỏi xem là bang nào",
+    "result": {
+     "text": "Gã chỉ cười, để lại một tấm thẻ gỗ khắc hình đầu sói: \"Khi nào nghĩ thông, cầm thẻ tới bến Hạ Khẩu.\"",
+     "effects": {
+      "stat.intellect": 1,
+      "setFlags": ["the_go_dau_soi"]
+     }
+    }
+   },
+   {
+    "text": "Từ chối thẳng",
+    "result": {
+     "text": "\"Ta quen đi một mình.\" Gã nhún vai, uống cạn chén rồi đi. Mấy hôm sau ngươi thấy có người theo dõi.",
+     "effects": {
+      "stat.daoHeart": 2,
+      "stat.happiness": -1
+     }
+    }
+   },
+   {
+    "text": "Hắt rượu vào mặt",
+    "result": {
+     "text": "Gã lau mặt, cười nhạt rồi đi. Ngươi vừa gây thù với một đám người chưa biết mặt.",
+     "effects": {
+      "fame": 2,
+      "infamy": 1,
+      "stat.happiness": 1
+     }
+    }
+   }
+  ]
+ }
+]

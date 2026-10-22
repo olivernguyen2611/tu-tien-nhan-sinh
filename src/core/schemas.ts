@@ -90,6 +90,10 @@ const BaseConditionsSchema = z
       split: z.boolean().optional(), heir: z.boolean().optional(), shrineMin: z.number().int().optional(),
       rule: id.optional(), ritesMin: z.number().int().optional(), siblings: z.boolean().optional(), met: z.boolean().optional(),
     }).strict().optional(),
+    /** 11.1 Danh vọng giang hồ: hiệp danh, ác danh, has a ngoại hiệu. */
+    jianghu: z.object({
+      fameMin: z.number().optional(), fameMax: z.number().optional(), infamyMin: z.number().optional(), infamyMax: z.number().optional(), alias: z.boolean().optional(),
+    }).strict().optional(),
     /** 10.9 Phạm pháp: mức truy nã, in ngục, đang hầu tòa, có tiền án, số lần vượt ngục. */
     law: z.object({
       wantedMin: z.number().int().optional(), wantedMax: z.number().int().optional(), jailed: z.boolean().optional(),
@@ -338,6 +342,9 @@ export const EffectsSchema = z
     worship: z.boolean().optional(),
     repairShrine: z.boolean().optional(),
     childrenAffinity: z.number().optional(),
+    /** 11.1: hiệp danh ± and ác danh ± (reputation.giang_ho follows as their difference). */
+    fame: z.number().optional(),
+    infamy: z.number().optional(),
     /** 10.10: move to a far châu (old acquaintances cool, flag tha_huong). */
     moveHome: z.boolean().optional(),
     /** 10.9–10.10: this life ends now, this way. */
@@ -445,7 +452,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -1774,6 +1781,11 @@ export const BalanceSchema = z
       /** 10.13: a child turning scholarAge may pass Tú tài: base chance, more under gia quy hiếu học, a strict upbringing,
        *  per bậc the parent passed, and per point of the child's ngộ tính. */
       scholar: z.object({ age: z.number().int(), base: z.number(), studyRule: z.number(), strict: z.number(), perRank: z.number(), perInsight: z.number(), max: z.number() }).strict().optional(),
+    }).strict().optional(),
+    /** 11.1 Danh vọng giang hồ: a ngoại hiệu at aliasAt; the cap; the rank thresholds (texts.ranks); ác danh per bậc of a
+     *  crime that came out; hiệp danh per võ đạo stage reached; relation kinds whose NPCs carry a ngoại hiệu. */
+    jianghu: z.object({
+      aliasAt: z.number(), max: z.number(), ranks: z.array(z.number()).min(1), crimeInfamy: z.number(), stageFame: z.number(), aliasKinds: z.array(z.string()).default([]),
     }).strict().optional(),
     /** 10.13 Lịch lễ hội thật: days either side of a real lễ hội; the share of years that take it; festival event weight ×. */
     calendar: z.object({ windowDays: z.number().int().min(0), share: z.number().min(0).max(1), boost: z.number().min(1) }).strict().optional(),
@@ -3288,6 +3300,25 @@ export const KinFileSchema = z.object({
   }).strict(),
 }).strict();
 export type KinFile = z.infer<typeof KinFileSchema>;
+
+/** 11.1 Danh vọng giang hồ (content/jianghu.json): the parts a ngoại hiệu is built from, and lời văn. */
+const aliasPool = z.array(z.string().min(1)).min(1);
+export const JianghuFileSchema = z.object({
+  aliases: z.object({
+    traits: z.object({ hiep: aliasPool, ac: aliasPool, any: aliasPool }).strict(),
+    nouns: aliasPool,
+    /** Nouns that fit the strongest combat path (sword, body, spell, weapon, arts). */
+    nounsByPath: z.record(aliasPool).default({}),
+    /** A thương tật (health.json id) gives its own trait word. */
+    injury: z.record(z.string().min(1)).default({}),
+  }).strict(),
+  texts: z.object({
+    /** {alias}. */
+    alias: z.object({ hiep: z.string().min(1), ac: z.string().min(1) }).strict(),
+    ranks: z.object({ hiep: z.array(z.string().min(1)).min(1), ac: z.array(z.string().min(1)).min(1) }).strict(),
+  }).strict(),
+}).strict();
+export type JianghuFile = z.infer<typeof JianghuFileSchema>;
 
 /** 10.13 Lịch lễ hội thật (content/calendar.json): the real dates (dương lịch) of each lễ hội in leisure.json, by year.
  *  In the days around one, the game's lễ hội that year is likely that one and festival events come more often. */

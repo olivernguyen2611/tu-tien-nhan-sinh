@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### 11.1 Hiệp danh, ác danh và ngoại hiệu (2026-10-22)
+- Danh vọng giang hồ tách thành hiệp danh và ác danh, cả hai cùng cao được (0–100 mỗi bên), mỗi bên có năm bậc danh xưng (Có chút tiếng… Danh chấn giang hồ; Tiếng xấu… Đại ma đầu). Sự kiện cũ cộng `reputation.giang_ho` thì phần dương vào hiệp danh, phần âm vào ác danh; lưu cũ đọc dấu của danh vọng cũ.
+- Ngoại hiệu tự sinh khi một bên đạt 30: [đặc điểm] + [binh khí hoặc thú], theo con đường chiến đấu mạnh nhất (vd. «Thiết Thủ Hắc Ưng», «Huyết Thủ Phán Quan Bút»); thương tật cho chữ riêng (mù một mắt thành «Độc Nhãn …»). Người giang hồ (kiểu quan hệ mới) cũng có ngoại hiệu, hiện trong mục thông tin người quen.
+- Lên bậc võ đạo tăng hiệp danh; phạm tội bị lộ hoặc bị bắt tăng ác danh theo mức nặng của tội.
+- 6 sự kiện danh vọng (`giang-ho.json`): thư khiêu chiến, quán trà nhận ra ngươi, dân làng đóng cửa, kẻ xin đi theo, kẻ mạo danh ngoại hiệu, bang hội ngầm tới mời.
+- Hồ sơ có dòng "Giang hồ:". Điều kiện `jianghu`, hiệu ứng `fame`, `infamy`, chữ `{alias}`, `{npcAlias}`. Mô phỏng có cột "Ngoại hiệu" (hiệp khách 93%, kẻ cướp phần lớn có ác danh đủ để có ngoại hiệu).
+
 ### 10.13 Thiên Đạo Khảo Nghiệm cho mọi lối sống, lịch lễ hội thật (2026-10-22)
 - 10 đề thử thách tuần mới cho đời phàm: Bạch Diện Tri Phủ (sống tới 60, không vào hàng võ giả, làm tới Tri phủ), Ngũ Tử Đăng Khoa (nhà nông có 5 con đỗ Tú tài), Ba Lần Vượt Ngục, Đạo Tặc Vô Ảnh, Từ Phu Thành Phú Hộ, Danh Y Phàm Trần, Tông Sư Không Linh Căn, Lãng Tử Hồi Đầu, Hiếu Tử Hiền Tôn, Địa Chủ Một Vùng. Vẫn cùng một seed cho cả tuần.
 - Con cái tới 18 tuổi có thể đỗ Tú tài: dễ hơn khi nhà có gia quy hiếu học, con được dạy nghiêm, bản thân từng đỗ đạt, con có ngộ tính cao. Gia phả ghi "(Tú tài)" bên tên.

@@ -4,6 +4,7 @@ import { examBlocked, examOf, levelIndex } from '../exams';
 import { jobDef, jobOf } from '../jobs';
 import { debtTotal, ownedOf } from '../assets';
 import { festivalFor } from '../leisure';
+import { jianghuOf } from '../jianghu';
 import type { Content } from '../../core/content';
 import type { GameEvent } from '../../core/schemas';
 import type { GameState } from '../../core/types';
@@ -152,6 +153,14 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     const has = (state.body?.ailments ?? []).some((a) => (!c.ailment!.id || a.id === c.ailment!.id)
       && (!c.ailment!.contagious || (content?.health?.diseases.find((d) => d.id === a.id)?.contagious ?? false)));
     if (has !== (c.ailment.any ?? true)) return false;
+  }
+  if (c.jianghu) {
+    const j = jianghuOf(state);
+    if (c.jianghu.fameMin !== undefined && j.fame < c.jianghu.fameMin) return false;
+    if (c.jianghu.fameMax !== undefined && j.fame > c.jianghu.fameMax) return false;
+    if (c.jianghu.infamyMin !== undefined && j.infamy < c.jianghu.infamyMin) return false;
+    if (c.jianghu.infamyMax !== undefined && j.infamy > c.jianghu.infamyMax) return false;
+    if (c.jianghu.alias !== undefined && !!j.alias !== c.jianghu.alias) return false;
   }
   if (c.kin) {
     const k = state.kin;

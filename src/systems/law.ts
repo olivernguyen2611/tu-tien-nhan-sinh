@@ -8,6 +8,7 @@ import { Rng } from '../core/rng';
 import type { GameState, LogLine } from '../core/types';
 import { checkChance } from './events/engine';
 import { quitJob } from './jobs';
+import { addRenown } from './jianghu';
 
 type Law = NonNullable<GameState['law']>;
 const EMPTY: Law = { wanted: 0, jail: null, trial: null, convictions: 0, escapes: 0, failedEscapes: 0, lastCrime: null, lastCrimeAge: null };
@@ -58,7 +59,9 @@ export function commitCrime(state: GameState, content: Content, id: string): Gam
   const rng = new Rng(`${state.seed}:crime:${age}:${id}:${lawOf(state).convictions + lawOf(state).escapes}`);
   let s = withLaw(state, { lastCrime: id, lastCrimeAge: age, crimes: (lawOf(state).crimes ?? 0) + 1 });
   s = { ...s, social: { ...s.social, karma: s.social.karma + def.karma } };
+  const infamy = def.severity * (content.balance.jianghu?.crimeInfamy ?? 0);
   if (!rng.chance(checkChance(state, content, def.stat, def.difficulty))) {
+    s = addRenown(s, content, 0, infamy);
     s = pushLines(s, [{ text: rng.pick(def.fail), tone: 'bad' }]);
     return arrest(addWanted(s, content, 1), content, id);
   }
@@ -66,7 +69,7 @@ export function commitCrime(state: GameState, content: Content, id: string): Gam
   s = { ...s, money: { ...s.money, silver: s.money.silver + loot } };
   const lines: LogLine[] = [{ text: rng.pick(def.success).replace('{silver}', String(loot)), tone: 'normal' }];
   if (rng.chance(def.expose)) {
-    s = addWanted(s, content, def.heat);
+    s = addRenown(addWanted(s, content, def.heat), content, 0, infamy);
     lines.push({ text: rng.pick(file.texts.exposed), tone: 'bad' });
   }
   return pushLines(s, lines);

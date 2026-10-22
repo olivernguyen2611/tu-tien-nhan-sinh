@@ -93,6 +93,9 @@ export function fillTemplate(text: string, state: GameState, content?: Content):
     .replace(/\{npc\}/g, npc?.name ?? 'người kia')
     .replace(/\{npcRole\}/g, npc?.role ?? 'người quen')
     .replace(/\{npcKin\}/g, kin?.name ?? 'người thân')
+    // 11.1: the player's ngoại hiệu, and the NPC's.
+    .replace(/\{alias\}/g, state.jianghu?.alias ?? state.character.name)
+    .replace(/\{npcAlias\}/g, npc?.alias ?? npc?.name ?? 'người kia')
     // 9.6: the last kỷ niệm with the NPC, and what they do now.
     .replace(/\{npcMemory\}/g, memoryText(state, npc))
     .replace(/\{npcJob\}/g, content?.relations?.occupations.find((o) => o.id === npc?.occupation)?.name ?? npc?.role ?? 'người quen')
