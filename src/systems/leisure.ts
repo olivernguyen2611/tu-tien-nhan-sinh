@@ -38,7 +38,12 @@ function applyStats(state: GameState, fx: Record<string, number>): GameState {
 export function festivalFor(state: GameState, content: Content): string | null {
   const list = content.leisure?.festivals ?? [];
   if (list.length === 0) return null;
-  return new Rng(`${state.seed}:festival:${state.character.age}`).pick(list).id;
+  const rng = new Rng(`${state.seed}:festival:${state.character.age}`);
+  const id = rng.pick(list).id;
+  // 10.13: in a real festival week most years keep that lễ hội (a second roll on the same stream).
+  const real = state.realFestival;
+  if (real && list.some((f) => f.id === real) && rng.chance(content.balance.calendar?.share ?? 0)) return real;
+  return id;
 }
 
 export function addArt(state: GameState, content: Content, fx: Record<string, number>): GameState {
@@ -131,7 +136,11 @@ export function pastimeYear(state: GameState, content: Content): GameState {
 /** "Tết Trung thu: Trăng rằm tháng tám…" for the Hành sự sheet (the year's own activities). */
 export function festivalLine(state: GameState, content: Content): string | null {
   const f = content.leisure?.festivals.find((x) => x.id === festivalFor(state, content));
-  return f && content.leisure ? content.leisure.texts.festival.replace('{festival}', f.name).replace('{text}', f.text) : null;
+  if (!f || !content.leisure) return null;
+  const line = content.leisure.texts.festival.replace('{festival}', f.name).replace('{text}', f.text);
+  // 10.13: the same lễ hội is on outside the game too.
+  const real = f.id === state.realFestival ? content.calendar?.texts.real : undefined;
+  return real ? `${line} ${real.replace('{festival}', f.name)}` : line;
 }
 
 /** "Đàn 32 · Thơ 15" for the profile. */

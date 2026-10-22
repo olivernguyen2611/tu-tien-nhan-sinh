@@ -536,6 +536,11 @@ export function devResetEventHistory(state: GameState): GameState {
   return devLog({ ...state, events: { ...state.events, history: {}, seen: {} } }, 'xóa lịch sử sự kiện');
 }
 
+/** 10.13: play as if this were a real lễ hội week (null = none). */
+export function devSetRealFestival(state: GameState, id: string | null): GameState {
+  return devLog({ ...state, realFestival: id }, id ? `giả làm tuần lễ hội thật: ${id}` : 'bỏ tuần lễ hội thật');
+}
+
 /** 9.R6a: a life touched by developer mode is marked for good and earns no records. */
 export function markDevLife(state: GameState): GameState {
   return state.devUsed ? state : { ...state, devUsed: true };

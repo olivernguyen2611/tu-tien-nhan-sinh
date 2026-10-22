@@ -38,6 +38,8 @@ export interface Relative {
   rearing?: number;
   temper?: string;
   married?: boolean;
+  /** 10.13: passed Tú tài on coming of age. */
+  scholar?: boolean;
 }
 
 /** Quest chain of the martial path: one step a year; `game` is the mini-game being played. */
@@ -133,6 +135,8 @@ export interface GameState {
   /** 10.7 Giải trí: this year's lễ hội, tài nghệ (0–100), pets, ages at the sòng bạc (recent), the event a quẻ named and until when. */
   /** 10.11 Gia tộc phàm tục: tộc trưởng, họ hàng (NPC ids), forebears for the gia phả, phân gia done, người nối dõi,
    *  gia quy, từ đường level, tế tổ times. */
+  /** 10.13: the real lễ hội this week (set from the device's date when a life starts or loads), or null. */
+  realFestival?: string | null;
   kin?: {
     elder: string | null; relatives: string[]; forebears: { role: string; name: string }[]; split: boolean;
     heir: string | null; rules: string[]; shrine: number; rites: number;

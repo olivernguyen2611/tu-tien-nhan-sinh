@@ -19,7 +19,7 @@ import type { RewindOption } from '../../systems/timeline';
 import {
   DEV_STATS, devAddKarma, devAddLifespan, devAddMoney, devAddStat, devClearHeartDemon, devFillProgress, devFindEvents, devFoundClan, devFoundSect,
   devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devWorldEvent, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect, devPastTie, devSpecial, devSystemPoints, devSystemBetray, devDrift, devMerit, devSetTier, devMeetKind, devSetPhase, devSetWorldVar,
-  devAwakenBody, devResetBond, devChildrenRoot, devSetBody, devStartMartialQuest, devQuestStep, devMarry, devResetEventHistory, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
+  devAwakenBody, devResetBond, devChildrenRoot, devSetBody, devStartMartialQuest, devQuestStep, devMarry, devResetEventHistory, devSetRealFestival, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
   devResetItemUse, devResetFingerCooldowns, devSetFingerLevel, devSetFlag, devSetGoldenFinger, devSetRealm, devSkipYears, devStartFight, devTakeChosen, devToggleTrait, devTriggerEvent,
 } from '../../systems/dev';
 
@@ -372,6 +372,13 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
           </div>
           <div class="action-chips">
             <button class="chip-btn" disabled={!live} onClick={() => onChange(devResetEventHistory(state))}>Xóa lịch sử sự kiện</button>
+          </div>
+          <p class="profile-note">Tuần lễ hội thật: {content.leisure?.festivals.find((f) => f.id === state.realFestival)?.name ?? 'không'}</p>
+          <div class="action-chips">
+            {(content.leisure?.festivals ?? []).map((f) => (
+              <button class="chip-btn" key={f.id} disabled={!live || state.realFestival === f.id} onClick={() => onChange(devSetRealFestival(state, f.id))}>{f.name}</button>
+            ))}
+            <button class="chip-btn" disabled={!live || !state.realFestival} onClick={() => onChange(devSetRealFestival(state, null))}>Bỏ</button>
           </div>
         </Section>
 

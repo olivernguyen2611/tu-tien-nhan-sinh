@@ -4,6 +4,7 @@ import { addGrade, addTradeLevel, enrollSchool, leaveSchool, startTrade } from '
 import { beginExam } from '../exams';
 import { addPerf, promoteJob, quitJob, takeJob } from '../jobs';
 import { addArt, adoptPet, castOmen, noteGamble, omenMul } from '../leisure';
+import { festivalBoost } from '../calendar';
 import { catchDisease, cureAilment, injure, noteDrink } from '../health';
 import { addJailYears, addWanted, arrest, bribe, commitCrime, fleeLaw, imprison, sentence, tryEscape } from '../law';
 import { checkDeath } from '../time';
@@ -85,6 +86,8 @@ export function eventWeight(state: GameState, content: Content, event: GameEvent
   if (seen > 0) w *= content.balance.events.repeatDecay ** seen;
   // 10.7: what a quẻ named comes more readily.
   w *= omenMul(state, content, event.id);
+  // 10.13: festival events in a real festival week.
+  w *= festivalBoost(state, content, event);
   return Math.max(0, w);
 }
 

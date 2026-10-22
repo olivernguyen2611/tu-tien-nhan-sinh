@@ -77,7 +77,28 @@ export function kinYear(state: GameState, content: Content): GameState {
     const rule = file.rules.find((r) => r.id === id);
     if (rule) s = applyStats(s, rule.stats);
   }
-  return s;
+  return scholarYear(s, content);
+}
+
+/** 10.13: a child coming of age this year may pass Tú tài (gia quy hiếu học, a strict upbringing, the parent's own bậc help). */
+function scholarYear(state: GameState, content: Content): GameState {
+  const cfg = content.balance.kin?.scholar;
+  const t = content.kin?.texts.scholar;
+  if (!cfg || !t) return state;
+  const due = state.family.filter((r) => r.role === 'child' && r.alive && r.age === cfg.age && !r.scholar);
+  if (due.length === 0) return state;
+  const rng = new Rng(`${state.seed}:scholar:${state.character.age}`);
+  const rank = state.exam ? state.exam.rank + 1 : 0;
+  const study = kinOf(state).rules.includes('hieu_hoc') ? cfg.studyRule : 0;
+  const passed = new Set<string>();
+  for (const r of due) {
+    const chance = Math.min(cfg.max, cfg.base + study + ((r.rearing ?? 0) < 0 ? cfg.strict : 0) + rank * cfg.perRank + (r.insight ?? 0) * cfg.perInsight);
+    if (rng.chance(chance)) passed.add(r.id);
+  }
+  if (passed.size === 0) return state;
+  const family = state.family.map((r) => (passed.has(r.id) ? { ...r, scholar: true, affinity: clamp(r.affinity + 5) } : r));
+  const lines = state.family.filter((r) => passed.has(r.id)).map((r) => ({ text: fill(t, { child: r.name }), tone: 'good' as const }));
+  return pushLines(applyStats({ ...state, family }, { 'stat.happiness': 4 * passed.size }), lines);
 }
 
 /** Phân gia: the estate the father left, shared among the living siblings by `how`. */
@@ -151,7 +172,8 @@ export function lineageRows(state: GameState, content: Content): { gen: string; 
   const parents = state.family.filter((r) => r.role === 'father' || r.role === 'mother').map((r) => r.name);
   if (parents.length) rows.push({ gen: file.texts.parents, names: parents });
   rows.push({ gen: file.texts.self, names: [state.character.name] });
-  const kids = state.family.filter((r) => r.role === 'child').map((r) => (r.id === k.heir ? `${r.name} (nối dõi)` : r.name));
+  const mark = file.texts.scholarMark;
+  const kids = state.family.filter((r) => r.role === 'child').map((r) => `${r.name}${r.scholar && mark ? ` ${mark}` : ''}${r.id === k.heir ? ' (nối dõi)' : ''}`);
   if (kids.length) rows.push({ gen: file.texts.children, names: kids });
   return rows;
 }

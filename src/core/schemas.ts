@@ -1771,7 +1771,12 @@ export const BalanceSchema = z
       passedOver: z.number(), maxRules: z.number().int().min(1), shrineMax: z.number().int().min(1),
       /** The phân gia event, the year after the father dies (when siblings live). */
       splitEvent: z.string(),
+      /** 10.13: a child turning scholarAge may pass Tú tài: base chance, more under gia quy hiếu học, a strict upbringing,
+       *  per bậc the parent passed, and per point of the child's ngộ tính. */
+      scholar: z.object({ age: z.number().int(), base: z.number(), studyRule: z.number(), strict: z.number(), perRank: z.number(), perInsight: z.number(), max: z.number() }).strict().optional(),
     }).strict().optional(),
+    /** 10.13 Lịch lễ hội thật: days either side of a real lễ hội; the share of years that take it; festival event weight ×. */
+    calendar: z.object({ windowDays: z.number().int().min(0), share: z.number().min(0).max(1), boost: z.number().min(1) }).strict().optional(),
     /** 10.10 Ra đi và kết đời phàm: moving far cools old ties; the age a quy ẩn opens; tang lễ events by the parent who died. */
     leaving: z.object({ moveAffinity: z.number(), hermitAge: z.number().int(), funeralAge: z.number().int(), funeralEvents: z.record(z.string()) }).strict().optional(),
     /** 10.9 Phạm pháp: bộ khoái, công đường, ngục. */
@@ -3278,9 +3283,22 @@ export const KinFileSchema = z.object({
     /** {rule}, {text}. */
     rule: z.string().min(1),
     ancestors: z.string().min(1), forebears: z.string().min(1), parents: z.string().min(1), self: z.string().min(1), children: z.string().min(1),
+    /** 10.13: a child passed Tú tài ({child}); the mark beside the name in the gia phả. */
+    scholar: z.string().min(1).optional(), scholarMark: z.string().min(1).optional(),
   }).strict(),
 }).strict();
 export type KinFile = z.infer<typeof KinFileSchema>;
+
+/** 10.13 Lịch lễ hội thật (content/calendar.json): the real dates (dương lịch) of each lễ hội in leisure.json, by year.
+ *  In the days around one, the game's lễ hội that year is likely that one and festival events come more often. */
+export const CalendarFileSchema = z.object({
+  festivals: z.array(z.object({ id, dates: z.array(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)).min(1) }).strict()).min(1),
+  texts: z.object({
+    /** Shown on the lễ hội line in a real festival week: {festival}. */
+    real: z.string().min(1),
+  }).strict(),
+}).strict();
+export type CalendarFile = z.infer<typeof CalendarFileSchema>;
 
 export const RelationsFileSchema = z.object({
   groups: z.array(z.object({ id, name: z.string().min(1) }).strict()).min(1),
@@ -4330,6 +4348,9 @@ export const LifeCheckSchema = z
     jobTop: z.boolean().optional(),
     crimesMin: z.number().int().min(1).optional(),
     neverCaught: z.boolean().optional(),
+    /** 10.13: martial stage at most this (-1 = never reached Tam lưu); children who passed Tú tài. */
+    martialMax: z.number().int().min(-1).optional(),
+    scholarKidsMin: z.number().int().min(1).optional(),
   })
   .strict();
 export type LifeCheck = z.infer<typeof LifeCheckSchema>;

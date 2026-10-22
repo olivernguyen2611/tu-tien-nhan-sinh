@@ -167,6 +167,8 @@
     "forebears": "Ông bà",
     "parents": "Cha mẹ",
     "self": "Bản thân",
-    "children": "Con cái"
+    "children": "Con cái",
+    "scholar": "Tin vui từ trường thi: {child} đỗ Tú tài. Cả họ kéo tới mừng, ngươi cười tới tận mang tai.",
+    "scholarMark": "(Tú tài)"
   }
 }

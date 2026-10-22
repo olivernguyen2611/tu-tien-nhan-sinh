@@ -8,6 +8,13 @@
 
 ## [Chưa phát hành]
 
+### 10.13 Thiên Đạo Khảo Nghiệm cho mọi lối sống, lịch lễ hội thật (2026-10-22)
+- 10 đề thử thách tuần mới cho đời phàm: Bạch Diện Tri Phủ (sống tới 60, không vào hàng võ giả, làm tới Tri phủ), Ngũ Tử Đăng Khoa (nhà nông có 5 con đỗ Tú tài), Ba Lần Vượt Ngục, Đạo Tặc Vô Ảnh, Từ Phu Thành Phú Hộ, Danh Y Phàm Trần, Tông Sư Không Linh Căn, Lãng Tử Hồi Đầu, Hiếu Tử Hiền Tôn, Địa Chủ Một Vùng. Vẫn cùng một seed cho cả tuần.
+- Con cái tới 18 tuổi có thể đỗ Tú tài: dễ hơn khi nhà có gia quy hiếu học, con được dạy nghiêm, bản thân từng đỗ đạt, con có ngộ tính cao. Gia phả ghi "(Tú tài)" bên tên.
+- Lịch lễ hội thật (`content/calendar.json`, ngày dương lịch 2026–2030): trong khoảng ba ngày quanh Tết, Nguyên tiêu, Thanh minh, Đoan ngọ, Trung thu, Trùng cửu ngoài đời, lễ hội trong game phần nhiều trùng với lễ thật, dòng lễ hội có thêm câu nhắc, sự kiện lễ hội nặng gấp ba (`balance.calendar`).
+- 7 sự kiện lễ hội mới (`le-hoi.json`): chúc Tết, xông đất, đố đèn rằm tháng Giêng, tảo mộ, đua thuyền Đoan ngọ, đêm Trung thu, lên cao Trùng cửu.
+- Kiểm tra cuối đời có thêm `martialMax`, `scholarKidsMin`. Dev mode: giả làm tuần lễ hội thật.
+
 ### 10.12 Cân bằng tầng phàm gian (2026-10-22)
 - Bớt câu lặp: thu hoạch ruộng, sổ sách cửa hàng, thiếu thuế, trốn đi xa có nhiều cách nói; mời lang trung, bốc thuốc, ăn uống điều độ, luyện quyền buổi sớm, tế tổ, họp họ, xin tăng lương, ăn bớt, móc túi, trộm, lừa, cướp đường, trốn đi xa ghép câu từ nhiều mảnh; công đường có thêm lời khai khác nhau; đọc sách thêm đề tài.
 - Mô phỏng (`npm run simulate -- --profile mortal`): bot phàm nhân đổi thứ tự hoạt động mỗi năm, thử thêm vài thú vui thường ngày, mỗi năm phạm tội nhiều nhất một lần, chỉ trốn đi xa khi bị truy nã gắt, mỗi loại tài sản mua tối đa hai, mời thầy thuốc lúc mới ốm rồi cách năm một lần.

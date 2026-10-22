@@ -83,6 +83,7 @@ import { CodexScreen } from './screens/Codex';
 import { codexOf } from '../systems/codex';
 import { visibleGlossary } from '../systems/knowledge';
 import { earnedAchievements, unlockedFingers } from '../systems/achievements';
+import { withRealDate } from '../systems/calendar';
 import { challengeDef, challengeResult, creditKey, startChallenge, weekKey, weeklyChallenge } from '../systems/challenge';
 import { ChallengeScreen } from './screens/Challenge';
 import { nextPastSectRecord } from '../systems/pastSect';
@@ -168,6 +169,8 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
   useEffect(() => { if (life && !!life.options?.gentle !== prefs.gentle) setLife(setGentle(life, prefs.gentle)); }, [life?.seed, prefs.gentle]);
   // 9.1: an action (breakthrough, kỳ vật, joining a career…) may change the tầng or lối sống.
   useEffect(() => { if (life) { const s = syncTier(life, content); if (s !== life) setLife(s); } }, [life]);
+  // 10.13: the real lễ hội of this week (the device's date), read when a life starts or loads.
+  useEffect(() => { if (life && !life.devUsed) { const s = withRealDate(life, content, new Date()); if (s !== life) setLife(s); } }, [life?.seed]);
   const toggleTheme = () => setTheme(nextThemePref);
 
   // Autosave: every change to a confirmed life (each year, choice, family action).
