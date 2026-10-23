@@ -1,6 +1,6 @@
 [
-  { "id": "hoang_toc", "name": "Hoàng tộc", "glyph": "皇", "rank": 7, "description": "Mang quốc tính, sống sau mười hai lớp cửa cung hay trong vương phủ. Thái phó dạy chữ, thị vệ theo hầu; không làm thuê, không lều chõng đi thi." },
-  { "id": "quyen_quy", "name": "Quyền quý", "glyph": "貴", "rank": 6, "description": "Thế gia nhiều đời làm quan to, điền trang rộng, gia binh môn khách đông. Con cháu học tộc học, lớn lên tập ấm mà ra làm quan." },
+  { "id": "hoang_toc", "name": "Hoàng tộc", "glyph": "皇", "rank": 7, "description": "Mang quốc tính, sống sau mười hai lớp cửa cung hay trong vương phủ. Thái phó dạy chữ, thị vệ theo hầu; không làm thuê, không lều chõng đi thi.", "stipendText": "Tông nhân phủ phát bổng lộc tông thất năm nay: {silver} lượng bạc." },
+  { "id": "quyen_quy", "name": "Quyền quý", "glyph": "貴", "rank": 6, "description": "Thế gia nhiều đời làm quan to, điền trang rộng, gia binh môn khách đông. Con cháu học tộc học, lớn lên tập ấm mà ra làm quan.", "stipendText": "Quản gia phát tiền tiêu cho các thiếu chủ: {silver} lượng bạc." },
   { "id": "tu_gia", "name": "Tu tiên thế gia", "glyph": "仙", "rank": 5, "description": "Dòng họ có người tu tiên. Trẻ con học chữ trong tộc học, nghe tộc lão giảng đạo, luyện thể theo phép trong tộc." },
   { "id": "quan_gia", "name": "Quan gia", "glyph": "官", "rank": 4, "description": "Nhà có người làm quan, coi khoa cử là đường chính. Con cái đi tư thục, theo danh sư, không làm nghề hạ cửu lưu." },
   { "id": "thuong_gia", "name": "Thương gia", "glyph": "商", "rank": 3, "description": "Nhà buôn có cửa hiệu. Con cái học tính sổ từ nhỏ, lớn lên theo hàng, góp vốn, có tiền thì mua chức." },

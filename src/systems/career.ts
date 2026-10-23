@@ -9,6 +9,7 @@ import { hookSum } from './cultivation';
 import { extremeHasHook } from './extremes';
 import { examOf, examTitle, levelIndex, passedLevel } from './exams';
 import { officeSalary } from './office';
+import { classOf } from './socialClass';
 import { reignTitle } from './throne';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
@@ -39,7 +40,9 @@ export interface CareerView {
 
 export function careerViews(state: GameState, content: Content): CareerView[] {
   const [minAge, maxAge] = content.balance.careers.joinAge;
-  return content.careers.careers.map((c) => {
+  // 15.4: a path the life's giai cấp never walks is not shown (unless walked now).
+  const cls = classOf(state, content);
+  return content.careers.careers.filter((c) => state.career.id === c.id || !cls || !c.notClasses.includes(cls)).map((c) => {
     const current = state.career.id === c.id;
     let blocked: string | null = null;
     if (!state.alive) blocked = 'Đã hết một đời.';

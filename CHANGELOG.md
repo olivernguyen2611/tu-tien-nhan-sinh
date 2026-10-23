@@ -8,6 +8,20 @@
 
 ## [Chưa phát hành]
 
+### 15.4 Việc làm, đường đời, việc với người nhà theo giai cấp (2026-10-23)
+- **Việc làm**: mỗi nhóm nghề trong `jobs.json` ghi giai cấp nào làm (`classes`; nghề riêng có thể ghi đè, như bộ khoái nhận cả con quan gia).
+  - Hoàng tộc không thấy nghề nào nên mục Việc làm ẩn hẳn.
+  - Quyền quý chỉ thấy nghề văn. Quan gia không làm ruộng, không vào hạ cửu lưu.
+  - Nghề đang làm vẫn hiện dù giai cấp đã đổi.
+- **Đường đời**: `careers.json` thêm `notClasses`. Hoàng tộc không đi Quan lộ, Thương, Võ lâm, Tạp dịch; quyền quý và tu tiên thế gia không làm tạp dịch.
+- **Việc với người nhà**: `family-actions.json` thêm `classes`/`notClasses`/`byClass`.
+  - Hoàng tử "Xin ban thưởng" thay vì "Xin tiền", "Hầu phụ mẫu dùng thiện" thay vì "Phụ việc nhà".
+  - Con nhà quyền quý thì "Xin tiền tiêu", "Thần hôn định tỉnh".
+- **Bổng lộc**: từ 12 tuổi, mỗi năm tông thất nhận 60 lượng, con quyền quý 25 lượng (`balance.classStipend`).
+  - Chỉ khi còn là phàm nhân, không ở ngục, chưa lên ngôi.
+  - Hoàng tộc mất bổng lộc khi triều đại đã đổi.
+- Validator kiểm tra giai cấp nhắc tới trong nghề, đường đời, việc người nhà và bổng lộc.
+
 ### 15.3 Học hành theo giai cấp (2026-10-23)
 - Bốn trường mới (`schooling.json`):
   - **Thượng thư phòng** cho hoàng tộc: thầy là thái phó, bạn học là thư đồng.

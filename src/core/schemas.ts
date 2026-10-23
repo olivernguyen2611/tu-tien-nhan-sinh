@@ -727,6 +727,8 @@ export const SocialClassSchema = z.object({
   glyph: z.string().refine((t) => [...t].length === 1, 'glyph là đúng một chữ'),
   rank: z.number().int().min(0),
   description: z.string().min(1),
+  /** 15.4: the yearly bổng lộc line ({silver}); the amount is balance.classStipend. */
+  stipendText: z.string().min(1).optional(),
 }).strict();
 export const SocialClassFileSchema = z.array(SocialClassSchema);
 export type SocialClass = z.infer<typeof SocialClassSchema>;
@@ -1995,6 +1997,8 @@ export const BalanceSchema = z
       hooks: z.record(z.string(), z.array(EffectHookSchema)).default({}),
       silverKeep: z.number().min(0).max(1), cutFlag: z.string().min(1), cutDrift: z.number().min(0),
     }).strict().optional(),
+    /** 15.4: bổng lộc a year by giai cấp (tông thất, thế gia), from this age, while a mortal not in ngục nor on the throne. */
+    classStipend: z.object({ fromAge: z.number().int().min(0), silver: z.record(z.string(), z.number().min(0)) }).strict().optional(),
     /** 15.1: what each giai cấp never sees (or sees less): like `standing`, by class id. */
     classes: z.record(z.string(), z.object({
       mul: z.number().min(0), categories: z.array(z.string()).default([]), themes: z.array(z.string()).default([]), ids: z.array(z.string()).default([]),
@@ -2441,6 +2445,10 @@ export const FamilyActionSchema = z
     maxAge: z.number().int().optional(),
     /** Only for these roles; empty = everyone. */
     roles: z.array(z.enum(['father', 'mother', 'sibling', 'child'])).default([]),
+    /** 15.4: only for / never for these giai cấp; the name a giai cấp uses (Xin tiền → Xin ban thưởng). */
+    classes: ids,
+    notClasses: ids,
+    byClass: z.record(id, z.string().min(1)).default({}),
     minTargetAge: z.number().int().optional(),
     /** Silver spent. */
     cost: z.number().int().min(0).default(0),
@@ -2943,6 +2951,8 @@ export const CareersFileSchema = z
             bonusOrigins: ids,
             /** 10.2: examRank = the khoa cử level needed to take this path (Quan lộ needs Cử nhân). */
             requires: z.object({ rootless: z.boolean().optional(), examRank: id.optional() }).strict().default({}),
+            /** 15.4: closed to (hidden from) these giai cấp. */
+            notClasses: ids,
             /** 10.2: starting rung by the highest exam passed (Tiến sĩ starts higher). */
             entryByExam: z.record(z.number().int().min(0)).default({}),
             /** {rung} = the new rung's name. */
@@ -3426,9 +3436,11 @@ export type ExamsFile = z.infer<typeof ExamsFileSchema>;
 
 /** 10.3 content/jobs.json: nhóm nghề and ~30 jobs, each a short ladder with pay, months, upkeep and who works there. */
 export const JobsFileSchema = z.object({
-  groups: z.array(z.object({ id, name: z.string().min(1), glyph: z.string().min(1) }).strict()).min(1),
+  /** 15.4: `classes`: the giai cấp who would take a job of this group (empty: everyone); a job's own list wins. */
+  groups: z.array(z.object({ id, name: z.string().min(1), glyph: z.string().min(1), classes: ids }).strict()).min(1),
   jobs: z.array(z.object({
     id, group: id, name: z.string().min(1), description: z.string().min(1),
+    classes: ids,
     rungs: z.array(z.string().min(1)).min(1),
     /** Lượng bạc a year at each rung (last value repeats). */
     pay: z.array(z.number().min(0)).min(1),

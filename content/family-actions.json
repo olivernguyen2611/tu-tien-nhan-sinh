@@ -148,6 +148,7 @@
   },
   {
     "id": "phu_giup",
+    "byClass": {"hoang_toc": "Hầu phụ mẫu dùng thiện", "quyen_quy": "Thần hôn định tỉnh"},
     "name": "Phụ việc nhà",
     "minAge": 6,
     "roles": [
@@ -171,6 +172,7 @@
   },
   {
     "id": "xin_tien",
+    "byClass": {"hoang_toc": "Xin ban thưởng", "quyen_quy": "Xin tiền tiêu"},
     "name": "Xin tiền",
     "minAge": 6,
     "maxAge": 25,

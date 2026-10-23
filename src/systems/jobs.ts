@@ -11,6 +11,7 @@ import { meets } from './events/conditions';
 import { extremeHasHook } from './extremes';
 import { courtJobMul } from './court';
 import { meetAside, schoolOf } from './schooling';
+import { classOf } from './socialClass';
 
 type Job = NonNullable<GameState['job']>;
 const EMPTY_JOB: Job = { id: null, rung: 0, perf: 0, years: 0, boss: null, mates: [], since: 0, past: [] };
@@ -34,6 +35,14 @@ function value(state: GameState, key: string): number {
   return key in state.stats ? state.stats[key as keyof GameState['stats']] : state.aptitudes[key as keyof GameState['aptitudes']];
 }
 
+/** 15.4: a job the life's giai cấp would take (the job's own list, else its group's; empty: everyone). */
+export function jobFitsClass(state: GameState, content: Content, jobId: string): boolean {
+  const def = jobDef(content, jobId);
+  const list = def?.classes.length ? def.classes : jobGroup(content, def?.group)?.classes ?? [];
+  const cls = classOf(state, content);
+  return list.length === 0 || !cls || list.includes(cls);
+}
+
 /** Why this job is closed to the life now (null = open). */
 export function jobBlocked(state: GameState, content: Content, jobId: string): string | null {
   const def = jobDef(content, jobId);
@@ -45,6 +54,7 @@ export function jobBlocked(state: GameState, content: Content, jobId: string): s
   if (extremeHasHook(state, content, 'cannotWork')) return 'Thân thể thế này, chưa làm nổi việc gì.';
   if (state.army) return 'Đang tại ngũ, quân doanh không cho làm nghề khác.';
   if (state.reign) return 'Đã là thiên tử, không ai dám thuê.';
+  if (!jobFitsClass(state, content, jobId)) return 'Thân phận này không ai làm nghề ấy.';
   if (holdsOffice(state, content)) return 'Đang làm quan, lệ triều đình không cho kiêm nghề.';
   if (schoolOf(state).at) return 'Đang đi học.';
   if (state.law?.jail) return 'Đang ở trong ngục.';
@@ -59,9 +69,10 @@ export function jobBlocked(state: GameState, content: Content, jobId: string): s
 
 export interface JobView { id: string; name: string; group: string; description: string; pay: number; months: number; current: boolean; blocked: string | null }
 
-/** Every job, in jobs.json order, with why it is closed. */
+/** Every job of the life's giai cấp (and the one held now), in jobs.json order, with why it is closed. */
 export function jobViews(state: GameState, content: Content): JobView[] {
-  return (content.jobs?.jobs ?? []).map((j) => ({
+  const held = jobOf(state).id;
+  return (content.jobs?.jobs ?? []).filter((j) => j.id === held || jobFitsClass(state, content, j.id)).map((j) => ({
     id: j.id, name: j.name, group: j.group, description: j.description, pay: j.pay[0], months: j.months,
     current: jobOf(state).id === j.id, blocked: jobOf(state).id === j.id ? null : jobBlocked(state, content, j.id),
   }));

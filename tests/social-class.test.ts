@@ -2,8 +2,11 @@ import { describe, expect, it } from 'vitest';
 import { loadContent, type Content } from '../src/core/content';
 import { advanceYear, createLife } from '../src/core/state';
 import { activityViews } from '../src/systems/activities';
+import { careerViews, joinCareer } from '../src/systems/career';
+import { jobViews, takeJob } from '../src/systems/jobs';
+import { availableActions } from '../src/systems/relationships';
 import { meets } from '../src/systems/events/conditions';
-import { classDef, classOf, setClass } from '../src/systems/socialClass';
+import { classDef, classOf, setClass, stipendYear } from '../src/systems/socialClass';
 import { standingAllows, standingMul } from '../src/systems/standing';
 
 const content = loadContent();
@@ -134,5 +137,58 @@ describe('Học hành theo giai cấp (15.3)', () => {
     expect(at('quy_toc', 13)).toContain('vao_quoc_tu_giam');
     expect(at('quan_gia', 13)).not.toContain('vao_quoc_tu_giam');
     expect(at('nong_dan', 13)).not.toContain('vao_quoc_tu_giam');
+  });
+});
+
+describe('Việc làm, đường đời, người nhà theo giai cấp (15.4)', () => {
+  const free = (origin: string) => ({ ...life(origin), school: undefined });
+
+  it('a hoàng tử sees no job (the Việc làm fold is hidden); a farmer sees the hạ cửu lưu, a quan gia child does not', () => {
+    const royal = free('hoang_tu');
+    expect(jobViews(royal, content)).toHaveLength(0);
+    expect(takeJob(royal, content, 'lam_ruong')).toBeNull();
+    const farmer = jobViews(free('nong_dan'), content).map((j) => j.id);
+    expect(farmer).toContain('phu_do');
+    expect(farmer).toContain('lam_ruong');
+    const official = jobViews(free('quan_gia'), content).map((j) => j.id);
+    expect(official).not.toContain('phu_do');
+    expect(official).not.toContain('lam_ruong');
+    expect(official).toContain('thay_do');
+    expect(official).toContain('bo_khoai');
+  });
+
+  it('a job held before the class changed stays listed', () => {
+    const s = takeJob(free('nong_dan'), content, 'lam_ruong')!.state;
+    const risen = setClass(s, content, 'hoang_toc');
+    expect(jobViews(risen, content).map((j) => j.id)).toEqual(['lam_ruong']);
+  });
+
+  it('careers: no Quan lộ, Thương, Võ lâm or Tạp dịch for a hoàng tử; Tạp dịch closed to thế gia', () => {
+    const royal = careerViews(life('hoang_tu'), content).map((c) => c.id);
+    expect(royal).toEqual(['y']);
+    expect(joinCareer(life('hoang_tu'), content, 'thuong')).toBeNull();
+    expect(careerViews(life('quy_toc'), content).map((c) => c.id)).not.toContain('tap_dich');
+    expect(careerViews(life('nong_dan'), content).map((c) => c.id)).toContain('tap_dich');
+  });
+
+  it('family actions take the class name: a hoàng tử asks for a ban thưởng', () => {
+    const royal = life('hoang_tu', 14);
+    const father = royal.family.find((r) => r.role === 'father')!;
+    const names = availableActions(royal, content, father).map((a) => a.name);
+    expect(names).toContain('Xin ban thưởng');
+    expect(names).not.toContain('Xin tiền');
+    const farmer = life('nong_dan', 14);
+    expect(availableActions(farmer, content, farmer.family.find((r) => r.role === 'father')!).map((a) => a.name)).toContain('Xin tiền');
+  });
+
+  it('bổng lộc: a tông thất child draws a yearly allowance from balance.classStipend; a farmer does not', () => {
+    const cfg = content.balance.classStipend!;
+    const royal = { ...life('hoang_tu', cfg.fromAge), log: [{ age: cfg.fromAge, lines: [] }] };
+    const paid = stipendYear(royal, content);
+    expect(paid.money.silver - royal.money.silver).toBe(cfg.silver.hoang_toc);
+    expect(paid.log.at(-1)!.lines.at(-1)!.ledger).toBe(true);
+    expect(stipendYear({ ...royal, character: { ...royal.character, age: cfg.fromAge - 1 } }, content)).toEqual({ ...royal, character: { ...royal.character, age: cfg.fromAge - 1 } });
+    const farmer = life('nong_dan', 20);
+    expect(stipendYear(farmer, content)).toBe(farmer);
   });
 });

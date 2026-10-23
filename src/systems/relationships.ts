@@ -7,6 +7,7 @@ import type { GameState, Gender, LogLine, Relative, Tone } from '../core/types';
 import { describeDelta } from './deltas';
 import { makeName, splitName } from './names';
 import { houseLabel, houseLine } from './royalHouse';
+import { classOf } from './socialClass';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 const between = (rng: Rng, [a, b]: readonly [number, number]) => rng.int(a, b);
@@ -187,8 +188,11 @@ export interface ActionView {
 export function availableActions(state: GameState, content: Content, r: Relative): ActionView[] {
   if (!r.alive || !state.alive) return [];
   const age = state.character.age;
+  const cls = classOf(state, content);
   return content.familyActions
     .filter((a) => age >= a.minAge && (a.maxAge === undefined || age <= a.maxAge))
+    // 15.4: by giai cấp (a hoàng tử does not "xin tiền", he asks for a ban thưởng).
+    .filter((a) => !cls || ((a.classes.length === 0 || a.classes.includes(cls)) && !a.notClasses.includes(cls)))
     .filter((a) => a.roles.length === 0 || a.roles.includes(r.role))
     .filter((a) => a.minTargetAge === undefined || r.age >= a.minTargetAge)
     .filter((a) => !a.marry || !r.married)
@@ -198,7 +202,7 @@ export function availableActions(state: GameState, content: Content, r: Relative
     .map((a) => {
       const done = r.lastActions[a.id] === age;
       const poor = state.money.silver < a.cost;
-      return { id: a.id, name: a.name, cost: a.cost, disabled: done || poor, reason: done ? 'Năm nay đã làm' : poor ? 'Không đủ bạc' : null };
+      return { id: a.id, name: (cls && a.byClass[cls]) || a.name, cost: a.cost, disabled: done || poor, reason: done ? 'Năm nay đã làm' : poor ? 'Không đủ bạc' : null };
     });
 }
 

@@ -2,41 +2,49 @@
   "groups": [
     {
       "id": "nong",
+      "classes": ["vo_gia", "nong_gia", "ban_dan", "tu_gia"],
       "name": "Nông",
       "glyph": "農"
     },
     {
       "id": "cong",
+      "classes": ["thuong_gia", "vo_gia", "nong_gia", "ban_dan", "tu_gia"],
       "name": "Công",
       "glyph": "工"
     },
     {
       "id": "thuong",
+      "classes": ["thuong_gia", "vo_gia", "nong_gia", "ban_dan", "tu_gia"],
       "name": "Thương",
       "glyph": "商"
     },
     {
       "id": "van",
+      "classes": ["quyen_quy", "quan_gia", "thuong_gia", "vo_gia", "nong_gia", "ban_dan", "tu_gia"],
       "name": "Văn",
       "glyph": "文"
     },
     {
       "id": "vo",
+      "classes": ["thuong_gia", "vo_gia", "nong_gia", "ban_dan", "tu_gia"],
       "name": "Võ",
       "glyph": "武"
     },
     {
       "id": "y",
+      "classes": ["quan_gia", "thuong_gia", "vo_gia", "nong_gia", "ban_dan", "tu_gia"],
       "name": "Y",
       "glyph": "醫"
     },
     {
       "id": "nghe_thuat",
+      "classes": ["quan_gia", "thuong_gia", "vo_gia", "nong_gia", "ban_dan", "tu_gia"],
       "name": "Nghệ",
       "glyph": "藝"
     },
     {
       "id": "ha_cuu_luu",
+      "classes": ["vo_gia", "nong_gia", "ban_dan"],
       "name": "Hạ cửu lưu",
       "glyph": "役"
     }
@@ -564,6 +572,7 @@
     },
     {
       "id": "bo_khoai",
+      "classes": ["quan_gia", "thuong_gia", "vo_gia", "nong_gia", "ban_dan", "tu_gia"],
       "group": "vo",
       "name": "Bộ khoái",
       "description": "Đeo đao, cầm lệnh bài, bắt trộm bắt cướp cho huyện nha.",

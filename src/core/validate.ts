@@ -726,8 +726,17 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       for (const c of [...(a.conditions.classes ?? []), ...(a.conditions.notClasses ?? []), ...Object.keys(a.byClass)]) classRefs.push({ file, what: `hoạt động "${a.id}"`, id: c });
     }
   }
+  // 15.4: jobs, careers and family actions by giai cấp.
+  const jobsRefs = files['jobs.json'] ? JobsFileSchema.safeParse(files['jobs.json']) : null;
+  if (jobsRefs?.success) for (const j of [...jobsRefs.data.groups, ...jobsRefs.data.jobs]) for (const c of j.classes) classRefs.push({ file: 'jobs.json', what: `nghề "${j.id}"`, id: c });
+  const careerRefs = files['careers.json'] ? CareersFileSchema.safeParse(files['careers.json']) : null;
+  if (careerRefs?.success) for (const k of careerRefs.data.careers) for (const c of k.notClasses) classRefs.push({ file: 'careers.json', what: `đường đời "${k.id}"`, id: c });
+  const familyRefs = files['family-actions.json'] ? FamilyActionFileSchema.safeParse(files['family-actions.json']) : null;
+  if (familyRefs?.success) for (const a of familyRefs.data) for (const c of [...a.classes, ...a.notClasses, ...Object.keys(a.byClass)]) classRefs.push({ file: 'family-actions.json', what: `việc với người nhà "${a.id}"`, id: c });
+  for (const c of Object.keys(parsedShared.balance?.classStipend?.silver ?? {})) classRefs.push({ file: 'config/balance.json', what: 'balance.classStipend', id: c });
   for (const c of Object.keys(parsedShared.balance?.classes ?? {})) classRefs.push({ file: 'config/balance.json', what: 'balance.classes', id: c });
-  for (const r of classRefs) if (!classIds.has(r.id)) problems.push({ file: r.file, level: 'error', message: `${r.what} nhắc tới giai cấp lạ "${r.id}"` });
+  // A partial content set (tests) without classes.json has nothing to check against.
+  if (classIds.size > 0) for (const r of classRefs) if (!classIds.has(r.id)) problems.push({ file: r.file, level: 'error', message: `${r.what} nhắc tới giai cấp lạ "${r.id}"` });
   // 9.7: dock buttons are unique; every tier's dock names a button there (or "nam", the +1 năm button).
   if (dockFile) {
     const { file, data } = dockFile;

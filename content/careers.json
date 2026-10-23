@@ -2,6 +2,7 @@
   "careers": [
     {
       "id": "quan",
+      "notClasses": ["hoang_toc"],
       "name": "Quan lộ",
       "description": "Đỗ Cử nhân thì được bổ làm huyện thừa, Cống sĩ làm tri huyện, Tiến sĩ vào thẳng thông phán. Thăng hay giáng nhờ chính tích, phe cánh, và bàn tay sạch hay bẩn.",
       "mainStats": ["intellect", "charm"],
@@ -14,6 +15,7 @@
     },
     {
       "id": "thuong",
+      "notClasses": ["hoang_toc"],
       "name": "Thương lộ",
       "description": "Mua rẻ bán đắt, đi một chuyến hàng bằng người ta làm một năm.",
       "mainStats": ["charm", "luck"],
@@ -24,6 +26,7 @@
     },
     {
       "id": "vo_lam",
+      "notClasses": ["hoang_toc"],
       "name": "Võ lâm",
       "description": "Quyền cước làm cơm ăn, giang hồ làm nhà ở.",
       "mainStats": ["physique", "health"],
@@ -45,6 +48,7 @@
     },
     {
       "id": "tap_dich",
+      "notClasses": ["hoang_toc", "quyen_quy", "tu_gia"],
       "name": "Tạp dịch tông môn",
       "description": "Không linh căn, nhưng xin được vào tông môn gánh nước quét sân. Gần tiên duyên, dù chỉ đứng ngoài cửa.",
       "mainStats": ["comprehension", "daoHeart"],
