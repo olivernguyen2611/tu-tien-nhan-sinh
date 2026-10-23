@@ -472,7 +472,7 @@ Thứ tự theo rủi ro tăng dần, mỗi mục là một task riêng:
 | 15.8 | [x] Nông gia + bần dân, cô nhi |
 | 15.9 | [x] Tu tiên thế gia (phần phàm) |
 | 15.10 | [x] Sự kiện theo giai cấp |
-| 15.11 | [ ] Đổi giai cấp: phất lên, sa sút |
+| 15.11 | [x] Đổi giai cấp: phất lên, sa sút |
 | 15.12 | [ ] Cân bằng, bot theo giai cấp, chơi thử |
 
 Tuỳ chọn bất kỳ lúc nào: script trong `tools/` xuất nháp JSON theo chủ đề để soạn nội dung nhanh hơn (vẫn qua bước duyệt và kiểm trùng `id`).

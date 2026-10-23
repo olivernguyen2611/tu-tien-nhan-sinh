@@ -349,6 +349,8 @@ export interface GameState {
     originId: string;
     /** 15.1: the giai cấp now, when it has changed from the one born into (absent: the origin's). */
     classId?: string;
+    /** 15.11: the age the life last changed giai cấp. */
+    classSince?: number;
     hometown: string;
     age: number;
   };

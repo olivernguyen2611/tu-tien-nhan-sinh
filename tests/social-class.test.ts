@@ -7,6 +7,7 @@ import { jobViews, takeJob } from '../src/systems/jobs';
 import { availableActions } from '../src/systems/relationships';
 import { meets } from '../src/systems/events/conditions';
 import { classDef, classOf, setClass, stipendYear } from '../src/systems/socialClass';
+import { classShiftYear, eventSetClass } from '../src/systems/classShift';
 import { standingAllows, standingMul } from '../src/systems/standing';
 
 const content = loadContent();
@@ -339,5 +340,39 @@ describe('Sự kiện theo giai cấp (15.10)', () => {
     const famine = ev('gc_nan_doi_mo_kho');
     expect(famine.conditions.classes).toEqual(expect.arrayContaining(['hoang_toc', 'quyen_quy']));
     expect(meets(life('nong_dan', 20), famine.conditions, content)).toBe(false);
+  });
+});
+
+describe('Đổi giai cấp (15.11)', () => {
+  it('a farmer who opens a shop with silver in hand becomes a merchant; the year after, the merchant activities show', () => {
+    const s = life('nong_dan', 30);
+    const shop = content.assets!.assets.find((a) => a.kind === 'shop')!;
+    const rich: typeof s = { ...s, money: { ...s.money, silver: 2000 }, assets: { owned: [{ uid: 1, id: shop.id, since: 25, paid: 100, fake: false, strategy: null }], loans: [], crop: null, nextUid: 2 } as never };
+    const moved = classShiftYear(rich, content);
+    expect(classOf(moved, content)).toBe('thuong_gia');
+    expect(moved.character.classSince).toBe(30);
+    expect(moved.log.at(-1)!.lines.at(-1)!.text).toContain('Thương gia');
+    expect(activityViews(moved, content).map((a) => a.id)).toContain('trong_quay');
+    // Not again within balance.classShift.gap years.
+    const ruined = { ...moved, money: { ...moved.money, silver: 0 }, assets: { owned: [], loans: [{ owed: 500 }], crop: null, nextUid: 2 } as never };
+    expect(classOf(classShiftYear(ruined, content), content)).toBe('thuong_gia');
+    // Later, ruined: down to bần dân.
+    const later = { ...ruined, character: { ...ruined.character, age: 30 + content.balance.classShift!.gap } };
+    expect(classOf(classShiftYear(later, content), content)).toBe('ban_dan');
+  });
+
+  it('a hoàng tộc whose dynasty fell is no longer royal', () => {
+    const s = life('hoang_tu', 30);
+    const t = s.times!;
+    const fallen = { ...s, times: { ...t, eras: [...t.eras, { dynasty: 'khac', era: 'x', from: 29 }], dynasty: 'khac' } };
+    expect(classOf(classShiftYear(fallen, content), content)).toBe(content.balance.classShift!.dynastyFall);
+    expect(classOf(classShiftYear(s, content), content)).toBe('hoang_toc');
+  });
+
+  it('an event moves the life (setClass) and says so', () => {
+    const s = { ...life('co_nhi', 20), log: [{ age: 20, lines: [] }] };
+    const moved = eventSetClass(s, content, 'nong_gia');
+    expect(classOf(moved, content)).toBe('nong_gia');
+    expect(moved.log.at(-1)!.lines.at(-1)!.text).toContain('Nông gia');
   });
 });

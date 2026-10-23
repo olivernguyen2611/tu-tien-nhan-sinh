@@ -21,7 +21,7 @@ import { careerYear } from '../systems/career';
 import { schoolYear } from '../systems/schooling';
 import { freshExam } from '../systems/exams';
 import { jobYear } from '../systems/jobs';
-import { classYear } from '../systems/socialClass';
+import { classYear } from '../systems/classShift';
 import { assetsYear } from '../systems/assets';
 import { pastimeYear } from '../systems/leisure';
 import { healthYear } from '../systems/health';

@@ -18,7 +18,8 @@ export const classDef = (content: Content, id: string | null | undefined): Socia
 export function setClass(state: GameState, content: Content, id: string): GameState {
   if (!classDef(content, id)) return state;
   const born = content.origins.find((o) => o.id === state.character.originId)?.class;
-  const { classId: _old, ...character } = state.character;
+  const { classId: _old, ...rest } = state.character;
+  const character = { ...rest, classSince: state.character.age };
   return { ...state, character: id === born ? character : { ...character, classId: id } };
 }
 
@@ -50,11 +51,4 @@ export function seenAs(state: GameState, content: Content, activityId: string): 
   if (!d || !state.flags[d.flag] || !d.activityIds.includes(activityId)) return state;
   const cls = classOf(state, content);
   return cls && d.classes.includes(cls) ? { ...state, character: { ...state.character, classId: d.as } } : state;
-}
-
-/** The giai cấp's year: the disguise of last year is put away, the bổng lộc is paid. */
-export function classYear(state: GameState, content: Content): GameState {
-  const flag = content.balance.classDisguise?.flag;
-  const s = flag && state.flags[flag] ? { ...state, flags: { ...state.flags, [flag]: false } } : state;
-  return stipendYear(s, content);
 }

@@ -8,6 +8,20 @@
 
 ## [Chưa phát hành]
 
+### 15.11 Đổi giai cấp (2026-10-23)
+- Giai cấp không còn đứng yên. Mỗi năm đọc luật trong `worlds/<id>/character/class-shifts.json`, theo thứ tự:
+  - lên ngôi thì thành hoàng tộc;
+  - làm quan tới Thị lang thì thành quyền quý;
+  - làm quan thì thành quan gia;
+  - có cửa hiệu và trên 600 lượng thì thành thương gia;
+  - bần dân có ruộng thì thành nông gia;
+  - hết nhà cửa, nợ từ 200 lượng, túi rỗng thì sa sút xuống bần dân.
+- Mỗi lần đổi có một dòng báo. Hoạt động cũ biến mất, hoạt động mới hiện ra.
+- Hai lần đổi cách nhau ít nhất `balance.classShift.gap` năm (5), để không đổi qua đổi lại.
+- Hoàng tộc mà triều đại đã mất thì thành kẻ tiền triều lẫn trong bần dân (`dynastyFall`).
+- Hiệu ứng mới `setClass` cho sự kiện. Cô nhi tìm được nhà cũ (miếng ngọc vỡ) giờ thành nông gia.
+- Validator kiểm tra giai cấp nhắc tới trong luật đổi và `balance.classShift`.
+
 ### 15.10 Sự kiện theo giai cấp (2026-10-23)
 - Rà các sự kiện phàm gian chưa gắn giai cấp mà có chữ chỉ cảnh nghèo (đói, chủ nợ, cường hào, lý trưởng, bắt lính, hàng xóm, đầu làng…).
 - Bảng `balance.classes` tắt chúng theo giai cấp (dùng chung cơ chế `standing.ts`):

@@ -3,7 +3,7 @@
 import {
   AptitudesFileSchema, DifficultyFileSchema, TutorialFileSchema, type TutorialFile, CareersFileSchema, type CareersFile, SectFileSchema, TechniqueFileSchema, SectLifeSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, type Nation, FigureFileSchema, type Figure, WorldEventFileSchema, type WorldEvent, WorldClanFileSchema, type WorldClan, RaceFileSchema, type Race, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, type CombatTexts, type Market, type FateTalent, type Item, type Lineage, type MartialFile, type Sect, type SectLife, type Technique, RealmsFileSchema, type Difficulty, RootsFileSchema, type AptitudesFile, type RealmsFile, type RootsFile, NpcTraitsFileSchema, RankingTextsSchema, type RankingTexts, RomanceFileSchema, type RomanceFile, HeartDemonFileSchema, type HeartDemonFile, RecipeFileSchema, type RecipeFile, CorePatternFileSchema, type CorePattern, NascentSoulFileSchema, type NascentSoulFile, DisciplesFileSchema, type DisciplesFile, FoundingFileSchema, type FoundingFile, HeirFileSchema, type HeirFile, ChosenFileSchema, type ChosenFile, ClanFileSchema, type ClanFile, BlessingFileSchema, type BlessingFile, RebirthTalentFileSchema, type RebirthTalentFile, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, type TraitComboFile, CodexFileSchema, type CodexFile, EndingFileSchema, type Ending, ThienDaoKyFileSchema, type ThienDaoKyFile, SpecialOriginFileSchema, type SpecialOrigin, SystemFileSchema, type SystemDef, TrungSinhFileSchema, type TrungSinhFile, ThanDaoFileSchema, type ThanDaoFile, AchievementFileSchema, type AchievementFile, ChallengeFileSchema, type ChallengeFile, type NpcTraitsFile,
   ActivityFileSchema, type Activity, DockFileSchema, type DockButton, WorldStateFileSchema, type WorldStateFile, RelationsFileSchema, type RelationsFile, SchoolingFileSchema, type SchoolingFile, ExamsFileSchema, type ExamsFile, JobsFileSchema, type JobsFile, AssetsFileSchema, type AssetsFile, LeisureFileSchema, type LeisureFile, HealthFileSchema, type HealthFile, CrimesFileSchema, type CrimesFile, KinFileSchema, type KinFile, CalendarFileSchema, type CalendarFile, JianghuFileSchema, type JianghuFile, MartialArtsFileSchema, type MartialArtsFile, WulinFileSchema, type WulinFile, OfficeFileSchema, type OfficeFile, ArmyFileSchema, type ArmyFile, ThroneFileSchema, type ThroneFile, CourtFileSchema, type CourtFile, StatLabelsFileSchema, type StatLabelsFile,
-  BalanceSchema, EventFileSchema, FamilyActionFileSchema, GlossarySchema, NpcActFileSchema, EffectLabelsSchema, LifeTextsSchema, NamesSchema, OriginFileSchema, SocialClassFileSchema, type SocialClass, StatExtremesFileSchema, TraitFileSchema, WorldSchema,
+  BalanceSchema, EventFileSchema, FamilyActionFileSchema, GlossarySchema, NpcActFileSchema, EffectLabelsSchema, LifeTextsSchema, NamesSchema, OriginFileSchema, SocialClassFileSchema, type SocialClass, ClassShiftFileSchema, type ClassShiftFile, StatExtremesFileSchema, TraitFileSchema, WorldSchema,
   type Balance, type FamilyAction, type NpcAct, type EffectLabels, type GameEvent, type Glossary, type LifeTexts, type Names, type Origin, type StatExtremesFile, type Trait, type World,
 } from './schemas';
 import { splitWorldPath, validateContent } from './validate';
@@ -23,6 +23,8 @@ export interface Content {
   origins: Origin[];
   /** 15.1: the world's giai cấp (character/classes.json; empty when the world has none). */
   classes?: SocialClass[];
+  /** 15.11: how a life rises or falls between them (character/class-shifts.json). */
+  classShifts?: ClassShiftFile;
   names: Names;
   traits: Trait[];
   familyActions: FamilyAction[];
@@ -207,6 +209,7 @@ export function loadContent(worldId: string = DEFAULT_WORLD_ID): Content {
     glossary: GlossarySchema.parse(files['glossary.json'] ?? []),
     origins: OriginFileSchema.parse(files[`${dir}character/origins.json`]),
     classes: SocialClassFileSchema.parse(files[`${dir}character/classes.json`] ?? []),
+    classShifts: files[`${dir}character/class-shifts.json`] ? ClassShiftFileSchema.parse(files[`${dir}character/class-shifts.json`]) : undefined,
     names: NamesSchema.parse(files[`${dir}character/names.json`]),
     traits: TraitFileSchema.parse(files['traits.json']),
     familyActions: FamilyActionFileSchema.parse(files['family-actions.json'] ?? []),

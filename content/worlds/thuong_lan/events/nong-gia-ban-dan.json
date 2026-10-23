@@ -12,7 +12,7 @@
       {
         "text": "Gõ cửa",
         "check": { "stat": "stat.luck", "difficulty": 50 },
-        "success": { "text": "Một bà lão tóc bạc ra mở cửa, nhìn miếng ngọc rồi òa khóc. Bà là bà nội ngươi. Song thân của ngươi đã mất trong một trận dịch năm ấy, đứa con nhỏ thất lạc từ đó. Bà dúi vào tay ngươi một túi bạc và chiếc chìa khóa từ đường.", "effects": { "setFlags": ["biet_than_the"], "silver": 200, "stat.happiness": 6, "stat.daoHeart": 2 } },
+        "success": { "text": "Một bà lão tóc bạc ra mở cửa, nhìn miếng ngọc rồi òa khóc. Bà là bà nội ngươi. Song thân của ngươi đã mất trong một trận dịch năm ấy, đứa con nhỏ thất lạc từ đó. Bà dúi vào tay ngươi một túi bạc và chiếc chìa khóa từ đường.", "effects": { "setFlags": ["biet_than_the"], "silver": 200, "stat.happiness": 6, "stat.daoHeart": 2, "setClass": "nong_gia" } },
         "fail": { "text": "Người mở cửa là một nhà xa lạ. Họ mua lại căn nhà từ mười năm trước, chủ cũ đã đi đâu không ai biết.", "effects": { "setFlags": ["biet_than_the"], "stat.happiness": -3, "stat.daoHeart": 2 } }
       },
       {

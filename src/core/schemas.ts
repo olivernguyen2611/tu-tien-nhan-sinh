@@ -344,6 +344,8 @@ export const EffectsSchema = z
     /** 10.3: take a job (jobs.json id), leave it (retire = nghỉ hưu), hiệu suất ±, one rung up. 15.6: `waive` = hired through
      * the family's name (nhờ thế cha), the job's `requires` is waived. */
     takeJob: z.union([id, z.object({ id, waive: z.boolean() }).strict()]).optional(),
+    /** 15.11: the life rises or falls into this giai cấp (character/classes.json id). */
+    setClass: id.optional(),
     quitJob: z.enum(['quit', 'retire', 'fired']).optional(),
     perf: z.number().optional(),
     jobPromote: z.boolean().optional(),
@@ -553,7 +555,7 @@ export const EffectsSchema = z
   .superRefine((e, ctx) => {
     const lists = ['setFlags', 'clearFlags', 'addItems', 'removeItems', 'addTraits', 'followUp', 'testRoot', 'grantRoot', 'awakenBody', 'learnTechnique', 'joinSect', 'sectContribution', 'sectPromote', 'leaveSect',
       'cultProgress', 'speedBuff', 'craftXp', 'reputation', 'nextBreakthroughBonus', 'reducePeakFails', 'gainTechnique', 'gainFittingTechnique',
-      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt', 'learnArt', 'practiseArt', 'buyWeapon', 'gainWeapon', 'wound', 'wulinTournament', 'wulinPrestige', 'wulinResign', 'officeJoin', 'officeStyle', 'officeFaction', 'officeMerit', 'officeEvidence', 'officeDefend', 'officeResign', 'armyJoin', 'armyMerit', 'armyBattle', 'armyLeave', 'leaveMortal', 'boCo', 'familyAffinity', 'throneStart', 'throneBar', 'throneRival', 'throneRivalDies', 'throneStep', 'throneBattle', 'throneAscend', 'throneFail', 'reignBar', 'reignDeed', 'reignEnd'];
+      'joinCareer', 'careerPromote', 'leaveCareer', 'gainMaster', 'martialPromote', 'martialAscend', 'martialAttempt', 'martialYears', 'martialBonus', 'kill', 'pathAffinity', 'meetNpc', 'npc', 'romance', 'lifespanYears', 'lifespanPct', 'chain', 'heartDemon', 'relativeDies', 'seclusionYears', 'ownSect', 'chosenOne', 'chosenRole', 'goldenFinger', 'loseGoldenFinger', 'pastSect', 'succeedSect', 'grade', 'enrollSchool', 'leaveSchool', 'startTrade', 'tradeLevel', 'sitExam', 'takeJob', 'setClass', 'quitJob', 'perf', 'jobPromote', 'buyAsset', 'sellAsset', 'loseAsset', 'shopStrategy', 'sowCrop', 'borrow', 'repayDebts', 'art', 'adoptPet', 'omen', 'gambled', 'cure', 'catchDisease', 'injure', 'drank', 'crime', 'trial', 'bribe', 'sentence', 'escape', 'jailYears', 'imprison', 'wanted', 'fleeLaw', 'arrest', 'die', 'moveHome', 'shareEstate', 'chooseHeir', 'kinRule', 'worship', 'repairShrine', 'childrenAffinity', 'fame', 'infamy', 'joinFaction', 'factionMerit', 'factionMission', 'factionTeach', 'leaveFaction', 'hideFromHunt', 'learnArt', 'practiseArt', 'buyWeapon', 'gainWeapon', 'wound', 'wulinTournament', 'wulinPrestige', 'wulinResign', 'officeJoin', 'officeStyle', 'officeFaction', 'officeMerit', 'officeEvidence', 'officeDefend', 'officeResign', 'armyJoin', 'armyMerit', 'armyBattle', 'armyLeave', 'leaveMortal', 'boCo', 'familyAffinity', 'throneStart', 'throneBar', 'throneRival', 'throneRivalDies', 'throneStep', 'throneBattle', 'throneAscend', 'throneFail', 'reignBar', 'reignDeed', 'reignEnd'];
     for (const key of Object.keys(e)) {
       if (!lists.includes(key) && (key === 'age' || !NUMERIC_KEYS.includes(key))) {
         ctx.addIssue({ code: 'custom', path: [key], message: `hiệu ứng "${key}" không hợp lệ (dùng stat.<tên>, silver, spiritStones, karma)` });
@@ -732,6 +734,24 @@ export const SocialClassSchema = z.object({
   stipendText: z.string().min(1).optional(),
 }).strict();
 export const SocialClassFileSchema = z.array(SocialClassSchema);
+
+/** 15.11 Đổi giai cấp (character/class-shifts.json): checked in order each year; the first that holds moves the life. */
+export const ClassShiftSchema = z.object({
+  id,
+  /** The giai cấp it moves from (empty: any but `to`). */
+  from: ids,
+  to: id,
+  when: ConditionsSchema.partial(),
+  text: z.string().min(1),
+  tone: z.enum(['good', 'bad', 'rare', 'normal']).default('normal'),
+}).strict();
+export const ClassShiftFileSchema = z.object({
+  /** fallen: a hoàng tộc whose dynasty fell; changed: the line after an event's setClass ({class}). */
+  texts: z.object({ fallen: z.string().min(1), changed: z.string().min(1) }).strict(),
+  shifts: z.array(ClassShiftSchema),
+}).strict();
+export type ClassShiftFile = z.infer<typeof ClassShiftFileSchema>;
+export type ClassShift = z.infer<typeof ClassShiftSchema>;
 export type SocialClass = z.infer<typeof SocialClassSchema>;
 
 /** content/worlds/<id>/world.json: one playable world with its own storylines. */
@@ -2000,6 +2020,8 @@ export const BalanceSchema = z
     }).strict().optional(),
     /** 15.4: bổng lộc a year by giai cấp (tông thất, thế gia), from this age, while a mortal not in ngục nor on the throne. */
     classStipend: z.object({ fromAge: z.number().int().min(0), silver: z.record(z.string(), z.number().min(0)) }).strict().optional(),
+    /** 15.11 Đổi giai cấp: at least `gap` years between two shifts; a hoàng tộc whose dynasty fell becomes `dynastyFall`. */
+    classShift: z.object({ gap: z.number().int().min(0), dynastyFall: z.string().min(1) }).strict().optional(),
     /** 15.5 Cải trang vi hành: while `flag` is up (one year), a life of `classes` does `activityIds` as a life of class `as`. */
     classDisguise: z.object({ flag: z.string().min(1), classes: z.array(z.string()).min(1), as: z.string().min(1), activityIds: z.array(z.string()).min(1) }).strict().optional(),
     /** 15.1: what each giai cấp never sees (or sees less): like `standing`, by class id. */
