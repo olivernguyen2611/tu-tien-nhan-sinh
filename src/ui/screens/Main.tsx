@@ -1,7 +1,9 @@
 // Main screen in a BitLife-style layout: who-you-are bar on top, life log in the
 // middle, a dock with the big age button, and stat bars underneath.
 import type { DiscipleAct } from '../../systems/discipleActs';
+import type { ComponentChildren } from 'preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { GearIcon } from '../components/SettingsPanel';
 import { useBackClose } from '../components/useBackClose';
 import type { Content } from '../../core/content';
 import type { GameState, Tone } from '../../core/types';
@@ -82,7 +84,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onActivity, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onAsset, onLearn, onTrain, onQuest, onFormation, onBeast, onField, onExam, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, onSettings, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onActivity, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onAsset, onLearn, onTrain, onQuest, onFormation, onBeast, onField, onExam, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, onSettings, settingsPanel, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -161,8 +163,9 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onSummary: () => void;
   /** Open the save slots (Sổ lưu). */
   onSaves: () => void;
-  /** Góp ý 23/10: Cài đặt. */
+  /** Góp ý 23/10: the gear opens Cài đặt, drawn over the game. */
   onSettings: () => void;
+  settingsPanel: ComponentChildren;
   /** Set when developer mode is on: apply a cheat, or turn the mode off. */
   dev: { rewinds: RewindOption[]; onRewindTime: (years: number) => void; meta: SaveMeta; onChange: (next: GameState) => void; onMeta: (next: SaveMeta) => void; onDisable: () => void } | null;
   theme: ThemePref;
@@ -255,7 +258,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
           {state.trungSinh && <button class="icon-btn" aria-label="Ký ức kiếp trước" title="Ký ức kiếp trước" onClick={() => setMemoryOpen(true)}>憶</button>}
           <button class="icon-btn" aria-label="Túi đồ" title="Túi đồ" onClick={() => setBagOpen(true)}>囊</button>
           <button class="icon-btn" aria-label="Sổ lưu" title="Sổ lưu" onClick={onSaves}>簿</button>
-          <button class="icon-btn" aria-label="Cài đặt" title="Cài đặt" onClick={onSettings}>設</button>
+          <button class="icon-btn" aria-label="Cài đặt" title="Cài đặt" onClick={onSettings}><GearIcon /></button>
           <span class="desktop-only">
             <ThemeToggle pref={theme} onChange={onToggleTheme} />
           </span>
@@ -465,6 +468,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
       {state.formation?.game && <FormationPopup state={state} content={content} onAction={onFormation} />}
       {state.exam?.sitting && <ExamPopup state={state} content={content} onAction={onExam} />}
       {state.cult.heartDemonTrial && <HeartDemonPopup state={state} content={content} onMeet={onMeetIllusion} />}
+      {settingsPanel}
     </div>
   );
 }
