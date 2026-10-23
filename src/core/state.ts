@@ -21,7 +21,7 @@ import { careerYear } from '../systems/career';
 import { schoolYear } from '../systems/schooling';
 import { freshExam } from '../systems/exams';
 import { jobYear } from '../systems/jobs';
-import { stipendYear } from '../systems/socialClass';
+import { classYear } from '../systems/socialClass';
 import { assetsYear } from '../systems/assets';
 import { pastimeYear } from '../systems/leisure';
 import { healthYear } from '../systems/health';
@@ -342,7 +342,7 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
     (s) => careerOfficeYear(s, content),
     (s) => schoolYear(s, content),
     (s) => jobYear(s, content),
-    (s) => stipendYear(s, content),
+    (s) => classYear(s, content),
     (s) => assetsYear(s, content),
     (s) => pastimeYear(s, content),
     (s) => sectYear(s, content),

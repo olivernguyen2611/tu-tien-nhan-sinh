@@ -1999,6 +1999,8 @@ export const BalanceSchema = z
     }).strict().optional(),
     /** 15.4: bổng lộc a year by giai cấp (tông thất, thế gia), from this age, while a mortal not in ngục nor on the throne. */
     classStipend: z.object({ fromAge: z.number().int().min(0), silver: z.record(z.string(), z.number().min(0)) }).strict().optional(),
+    /** 15.5 Cải trang vi hành: while `flag` is up (one year), a life of `classes` does `activityIds` as a life of class `as`. */
+    classDisguise: z.object({ flag: z.string().min(1), classes: z.array(z.string()).min(1), as: z.string().min(1), activityIds: z.array(z.string()).min(1) }).strict().optional(),
     /** 15.1: what each giai cấp never sees (or sees less): like `standing`, by class id. */
     classes: z.record(z.string(), z.object({
       mul: z.number().min(0), categories: z.array(z.string()).default([]), themes: z.array(z.string()).default([]), ids: z.array(z.string()).default([]),

@@ -1,0 +1,114 @@
+[
+  {
+    "id": "gc_vi_hanh_bi_nhan_ra",
+    "category": "social",
+    "title": "Bị nhận ra",
+    "text": "Một lão bán trà nhìn ngươi, rồi nhìn miếng ngọc bội lấp ló dưới áo vải. Lão buông ấm, run run định quỳ xuống giữa phố.",
+    "themes": ["royal"],
+    "conditions": {},
+    "weight": 0,
+    "cooldownYears": 0,
+    "choices": [
+      {
+        "text": "Đỡ lão dậy, nháy mắt bảo im",
+        "result": { "text": "Lão hiểu ý, rót cho ngươi chén trà ngon nhất quán, không lấy tiền. Từ đó quán trà ấy là chỗ ngươi nghe chuyện dân gian.", "effects": { "stat.charm": 2, "karma": 1, "stat.happiness": 2 } }
+      },
+      {
+        "text": "Quay người bỏ đi, lẩn vào đám đông",
+        "result": { "text": "Ngươi luồn qua ba con hẻm mới cắt được những ánh mắt tò mò. Chuyến vi hành coi như hỏng một nửa.", "effects": { "stat.happiness": -2, "stat.physique": 1 } }
+      },
+      {
+        "text": "Đứng thẳng, nhận mình là ai",
+        "result": { "text": "Cả phố quỳ rạp. Thị vệ hớt hải chạy tới. Tối ấy chuyện đến tai trong cung, ngươi bị cấm ra ngoài nửa năm.", "effects": { "stat.happiness": -3, "fame": 2, "clearFlags": ["vi_hanh"] } }
+      }
+    ]
+  },
+  {
+    "id": "gc_vi_hanh_thay_bat_cong",
+    "category": "social",
+    "title": "Chuyện bất bình ngoài phố",
+    "text": "Đang vi hành, ngươi thấy một tên nha dịch đạp đổ gánh rau của bà lão, rồi đòi tiền \"phạt chiếm đường\".",
+    "themes": ["royal"],
+    "conditions": {},
+    "weight": 0,
+    "cooldownYears": 0,
+    "choices": [
+      {
+        "text": "Ra mặt, xưng danh, bắt tên nha dịch quỳ xin lỗi",
+        "result": { "text": "Tên nha dịch dập đầu tới chảy máu. Huyện lệnh hôm sau tới phủ ngươi tạ tội. Dân phố truyền tai nhau chuyện \"quý nhân áo vải\".", "effects": { "karma": 2, "fame": 2, "stat.charm": 1 } }
+      },
+      {
+        "text": "Lặng lẽ đưa bà lão một thỏi bạc",
+        "result": { "text": "Bà lão cầm thỏi bạc, khóc không ra tiếng. Ngươi đi tiếp, trong lòng nặng trĩu.", "effects": { "silver": -10, "karma": 2, "stat.daoHeart": 2 } }
+      },
+      {
+        "text": "Ghi lại tên hắn, về cung mới tính",
+        "result": { "text": "Ba tháng sau, tên nha dịch bị cách chức mà không biết vì sao. Ngươi biết, thế là đủ.", "effects": { "stat.intellect": 1, "karma": 1, "stat.happiness": 1 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_hoang_tu_thu_dong_lon_len",
+    "category": "social",
+    "title": "Thư đồng",
+    "text": "Thư đồng theo ngươi từ năm sáu tuổi nay đã thành người lớn. Hắn quỳ xin ra cung, về quê lấy vợ.",
+    "themes": ["royal"],
+    "conditions": { "classes": ["hoang_toc"], "age": { "min": 16, "max": 22 }, "tier": ["pham_gian"] },
+    "weight": 6,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Cho về, tặng một khoản bạc làm vốn",
+        "result": { "text": "Hắn lạy ba lạy rồi đi. Mấy năm sau, mỗi dịp Tết lại có một gói trà quê gửi vào phủ, không đề tên.", "effects": { "silver": -30, "karma": 2, "stat.happiness": 1 } }
+      },
+      {
+        "text": "Giữ lại, cất nhắc làm quản sự trong phủ",
+        "result": { "text": "Hắn ở lại. Người hiểu ngươi nhất trên đời, giờ cầm chìa khóa kho của ngươi.", "effects": { "stat.charm": 1, "stat.intellect": 1, "throneBar": { "power": 2 } } }
+      }
+    ]
+  },
+  {
+    "id": "gc_cong_chua_hoa_than",
+    "category": "social",
+    "title": "Chuyện hòa thân",
+    "text": "Sứ giả nước ngoài vào triều cầu thân. Trong cung đồn rằng người được chọn có thể là ngươi.",
+    "themes": ["royal"],
+    "conditions": { "classes": ["hoang_toc"], "gender": "nu", "age": { "min": 16, "max": 24 }, "tier": ["pham_gian"], "flagsNone": ["no_father", "no_mother"] },
+    "weight": 4,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Tới quỳ trước điện, xin đi thay muội muội",
+        "result": { "text": "Phụ hoàng đỡ ngươi dậy, mắt đỏ hoe. Cuối cùng sứ giả lại chọn một quận chúa khác, nhưng cả triều đã biết ngươi là người thế nào.", "effects": { "stat.daoHeart": 3, "fame": 3, "karma": 2 } }
+      },
+      {
+        "text": "Nhờ mẫu phi xin với phụ hoàng",
+        "result": { "text": "Mẫu phi khóc suốt đêm trước tẩm điện. Tên ngươi được gạch khỏi danh sách, nhưng mẫu phi bị phạt nửa năm bổng lộc.", "effects": { "stat.happiness": -2, "stat.intellect": 1 } }
+      },
+      {
+        "text": "Im lặng chờ",
+        "result": { "text": "Ngươi không ăn không ngủ suốt một tháng. Rồi tin tới: người được chọn không phải ngươi.", "effects": { "stat.health": -2, "stat.happiness": 2 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_khai_phu_mat_tham",
+    "category": "social",
+    "title": "Người lạ trong phủ",
+    "text": "Phủ mới mở được ít lâu, quản sự báo có một tên gia nhân hay lén ra cửa sau lúc nửa đêm.",
+    "themes": ["royal"],
+    "conditions": { "classes": ["hoang_toc"], "flagsAll": ["khai_phu"], "tier": ["pham_gian"] },
+    "weight": 8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Bắt lại tra hỏi",
+        "result": { "text": "Hắn khai là người của một vị hoàng huynh. Ngươi đuổi hắn đi, nhưng biết chắc trong phủ vẫn còn kẻ khác.", "effects": { "stat.intellect": 1, "stat.happiness": -1, "throneBar": { "suspicion": -2 } } }
+      },
+      {
+        "text": "Giả như không biết, cho hắn nghe những gì ngươi muốn hắn nghe",
+        "result": { "text": "Ba tháng liền hắn chỉ báo về những chuyện ngươi đọc sách, trồng hoa. Phía bên kia yên tâm, còn ngươi thì rảnh tay.", "effects": { "stat.intellect": 2, "stat.daoHeart": 1, "throneBar": { "power": 2 } } }
+      }
+    ]
+  }
+]

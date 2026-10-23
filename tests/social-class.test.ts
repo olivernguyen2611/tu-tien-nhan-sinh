@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { loadContent, type Content } from '../src/core/content';
 import { advanceYear, createLife } from '../src/core/state';
-import { activityViews } from '../src/systems/activities';
+import { activityViews, doActivity } from '../src/systems/activities';
 import { careerViews, joinCareer } from '../src/systems/career';
 import { jobViews, takeJob } from '../src/systems/jobs';
 import { availableActions } from '../src/systems/relationships';
@@ -190,5 +190,48 @@ describe('Việc làm, đường đời, người nhà theo giai cấp (15.4)', 
     expect(stipendYear({ ...royal, character: { ...royal.character, age: cfg.fromAge - 1 } }, content)).toEqual({ ...royal, character: { ...royal.character, age: cfg.fromAge - 1 } });
     const farmer = life('nong_dan', 20);
     expect(stipendYear(farmer, content)).toBe(farmer);
+  });
+});
+
+describe('Hoàng tộc trọn bộ, cải trang vi hành (15.5)', () => {
+  const ids = (s: ReturnType<typeof life>) => activityViews(s, content).map((a) => a.id);
+
+  it('a hoàng tử has his own học hành and, grown up, khai phủ then sai sự Lục bộ; a farmer sees none of it', () => {
+    const boy = life('hoang_tu', 10);
+    expect(ids(boy)).toEqual(expect.arrayContaining(['hoc_le_nghi_cung_dinh', 'doc_sach_tang_thu_cac', 'luan_kinh_nghia']));
+    const man = life('hoang_tu', 20);
+    expect(ids(man)).toContain('xin_phong_tuoc');
+    expect(ids(man)).not.toContain('sai_su_luc_bo');
+    const opened = { ...man, flags: { ...man.flags, khai_phu: true } };
+    expect(ids(opened)).toEqual(expect.arrayContaining(['sai_su_luc_bo', 've_phong_dia']));
+    expect(ids(opened)).not.toContain('xin_phong_tuoc');
+    const farmer = ids(life('nong_dan', 20));
+    for (const id of ['xin_phong_tuoc', 'hoc_le_nghi_cung_dinh', 'cai_trang_vi_hanh', 'yen_tiec_ton_that']) expect(farmer).not.toContain(id);
+  });
+
+  it('a công chúa learns cầm kỳ thi họa; a hoàng thân goes to court instead of the throne race', () => {
+    const girl = createLife({ seed: 'cong-chua', originId: 'hoang_tu', gender: 'nu' }, content);
+    expect(ids({ ...girl, character: { ...girl.character, age: 10 } })).toContain('hoc_cam_ky_thi_hoa');
+    const prince = ids(life('hoang_than', 20));
+    expect(prince).toEqual(expect.arrayContaining(['vao_trieu_hau', 'dang_so_xin_viec']));
+    expect(prince).not.toContain('hau_phe_tau');
+  });
+
+  it('in disguise a hoàng tử sees the hội chợ and lôi đài with a commoner\'s words, for one year', () => {
+    const s = life('hoang_tu', 20);
+    expect(ids(s)).not.toContain('hoi_cho');
+    expect(ids(s)).toContain('cai_trang_vi_hanh');
+    const out = doActivity(s, content, 'cai_trang_vi_hanh');
+    expect(out).not.toBeNull();
+    const disguised = { ...out!.state, events: { ...out!.state.events, pending: null } };
+    expect(disguised.flags.vi_hanh).toBe(true);
+    expect(ids(disguised)).toEqual(expect.arrayContaining(['hoi_cho', 'len_loi_dai', 'hanh_hiep']));
+    expect(ids(disguised)).not.toContain('cai_trang_vi_hanh');
+    // Still a hoàng tử: no trường làng, no móc túi.
+    expect(ids(disguised)).not.toContain('pp_moc_tui');
+    expect(classOf(disguised, content)).toBe('hoang_toc');
+    const next = advanceYear(disguised, content);
+    expect(next.flags.vi_hanh).toBeFalsy();
+    expect(ids({ ...next, events: { ...next.events, pending: null } })).not.toContain('hoi_cho');
   });
 });

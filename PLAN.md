@@ -466,7 +466,7 @@ Thứ tự theo rủi ro tăng dần, mỗi mục là một task riêng:
 | 15.2 | [x] Gắn nhãn hoạt động cũ theo giai cấp |
 | 15.3 | [x] Học hành theo giai cấp (Thượng thư phòng, tộc học, Quốc Tử Giám, chùa làng; tự nhập học) |
 | 15.4 | [x] Việc làm, Đường đời, việc với người nhà theo giai cấp; bổng lộc |
-| 15.5 | [ ] Hoàng tộc trọn bộ + cải trang vi hành |
+| 15.5 | [x] Hoàng tộc trọn bộ + cải trang vi hành |
 | 15.6 | [ ] Quyền quý + quan gia |
 | 15.7 | [ ] Thương gia + võ gia |
 | 15.8 | [ ] Nông gia + bần dân, cô nhi |

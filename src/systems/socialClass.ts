@@ -40,3 +40,21 @@ export function stipendYear(state: GameState, content: Content): GameState {
   if (text && last) log[log.length - 1] = { ...last, lines: [...last.lines, { text, tone: 'normal', ledger: true }] };
   return { ...state, money: { ...state.money, silver: state.money.silver + silver }, log };
 }
+
+/**
+ * 15.5 Cải trang vi hành: the life as the activity sees it. In disguise (balance.classDisguise.flag) a hoàng tộc or
+ * quyền quý does the listed commoner activities (hội chợ, lôi đài…) as a commoner would, words and all.
+ */
+export function seenAs(state: GameState, content: Content, activityId: string): GameState {
+  const d = content.balance.classDisguise;
+  if (!d || !state.flags[d.flag] || !d.activityIds.includes(activityId)) return state;
+  const cls = classOf(state, content);
+  return cls && d.classes.includes(cls) ? { ...state, character: { ...state.character, classId: d.as } } : state;
+}
+
+/** The giai cấp's year: the disguise of last year is put away, the bổng lộc is paid. */
+export function classYear(state: GameState, content: Content): GameState {
+  const flag = content.balance.classDisguise?.flag;
+  const s = flag && state.flags[flag] ? { ...state, flags: { ...state.flags, [flag]: false } } : state;
+  return stipendYear(s, content);
+}

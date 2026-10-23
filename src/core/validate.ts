@@ -660,6 +660,9 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     }
   }
 
+  // 15.5: an activity sets flags too (Xin phong tước → khai_phu).
+  for (const { activities } of activityFiles) for (const a of activities) for (const o of [...a.outcomes, ...(a.failOutcomes ?? []), ...(a.free?.outcomes ?? [])]) o.effects.setFlags?.forEach((f) => flagsSet.add(f));
+
   // 9.R5a: Sổ tri thức sources and unlocks name real things of the same world.
   for (const { file, entries } of knowledgeFiles) {
     const world = splitWorldPath(file).worldId ?? '';
@@ -733,6 +736,9 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   if (careerRefs?.success) for (const k of careerRefs.data.careers) for (const c of k.notClasses) classRefs.push({ file: 'careers.json', what: `đường đời "${k.id}"`, id: c });
   const familyRefs = files['family-actions.json'] ? FamilyActionFileSchema.safeParse(files['family-actions.json']) : null;
   if (familyRefs?.success) for (const a of familyRefs.data) for (const c of [...a.classes, ...a.notClasses, ...Object.keys(a.byClass)]) classRefs.push({ file: 'family-actions.json', what: `việc với người nhà "${a.id}"`, id: c });
+  const disguise = parsedShared.balance?.classDisguise;
+  for (const c of disguise ? [...disguise.classes, disguise.as] : []) classRefs.push({ file: 'config/balance.json', what: 'balance.classDisguise', id: c });
+  for (const id of disguise?.activityIds ?? []) if (activityIds.length > 0 && !activityIds.includes(id)) problems.push({ file: 'config/balance.json', level: 'error', message: `balance.classDisguise nhắc tới hoạt động lạ "${id}"` });
   for (const c of Object.keys(parsedShared.balance?.classStipend?.silver ?? {})) classRefs.push({ file: 'config/balance.json', what: 'balance.classStipend', id: c });
   for (const c of Object.keys(parsedShared.balance?.classes ?? {})) classRefs.push({ file: 'config/balance.json', what: 'balance.classes', id: c });
   // A partial content set (tests) without classes.json has nothing to check against.

@@ -8,6 +8,19 @@
 
 ## [Chưa phát hành]
 
+### 15.5 Hoàng tộc trọn bộ, cải trang vi hành (2026-10-23)
+- 15 hoạt động mới cho hoàng tộc (`activities/hoang-toc.json`):
+  - **Học**: Học lễ nghi cung đình, Đọc sách ở Tàng thư các, Luận kinh nghĩa, Tập cưỡi ngựa bắn cung; hoàng tử 14+ được Hầu phụ hoàng phê tấu.
+  - **Công chúa**: Học cầm kỳ thi họa, Mở yến thi văn.
+  - **Trưởng thành**: Xin phong tước, khai phủ (16+). Có phủ rồi mới Nhận sai sự ở Lục bộ (thay Việc làm) và Về phong địa.
+  - **Giao tế và giải trí**: Nuôi môn khách, Dự yến tông thất, Thu điền vây săn.
+  - **Hoàng thân**: Vào triều hầu, Dâng sớ xin việc.
+- **Cải trang vi hành** (hoàng tộc, quyền quý, từ 12 tuổi): trong một năm được làm như dân thường một số việc (hội chợ, xem hát, sòng bạc, hành hiệp, lôi đài, võ quán, bảng treo thưởng, thư quán).
+  - Danh sách ở `balance.classDisguise`. Hết năm thì cởi áo vải.
+  - Có lúc bị nhận ra, có lúc gặp chuyện bất bình ngoài phố (sự kiện).
+- 5 sự kiện mới (`worlds/thuong_lan/events/hoang-toc.json`): bị nhận ra khi vi hành, chuyện bất bình, thư đồng xin ra cung, chuyện hòa thân của công chúa, người lạ trong phủ mới mở.
+- Validator: cờ do hoạt động đặt cũng được tính; kiểm tra `classDisguise`.
+
 ### 15.4 Việc làm, đường đời, việc với người nhà theo giai cấp (2026-10-23)
 - **Việc làm**: mỗi nhóm nghề trong `jobs.json` ghi giai cấp nào làm (`classes`; nghề riêng có thể ghi đè, như bộ khoái nhận cả con quan gia).
   - Hoàng tộc không thấy nghề nào nên mục Việc làm ẩn hẳn.
