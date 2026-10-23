@@ -8,6 +8,15 @@
 
 ## [Chưa phát hành]
 
+### 15.0 Hoàng tộc khớp triều đình (2026-10-23)
+- Trước đây một đời hoàng tử có ba "hoàng gia" không liên quan: cha mẹ anh em trong tab Gia đình là người thường họ ngẫu nhiên, hoàng đế và thái tử của triều đình chỉ là cái tên, còn các hoàng tử tranh ngôi là một danh sách thứ ba. Vì vậy vua băng hà mà cha vẫn sống, thái tử lên ngôi là người lạ.
+- Nay cha của hoàng tử, công chúa **chính là hoàng đế đương triều**; cả nhà mang **quốc tính** của triều đại (`royalSurnames` trong `world-state.json`); mẹ là hoàng hậu hoặc phi tần; thêm hoàng huynh con các phi khác để có thứ bậc kế vị.
+- Đối thủ tranh ngôi là **các anh em trai trong tab Gia đình**; em trai sinh sau (hậu cung đông con hơn) cũng vào hàng kế vị; anh em mất thì rời hàng. Thái tử được lập luôn là người trong nhà hoặc chính mình, tab Gia đình ghi chú "Thái tử", "Đương kim hoàng đế".
+- Sống chết đồng bộ hai chiều: phụ hoàng băng hà thì đổi niên hiệu ngay năm đó (có dòng quốc tang, không có tang lễ làng và phân gia); niên hiệu không tự hết khi phụ hoàng còn sống; mất nước thì phụ hoàng tuẫn quốc. Hoàng huynh lên ngôi thì chính người đó là hoàng đế của triều đình.
+- Danh xưng: Phụ hoàng, Mẫu hậu/Mẫu phi, Hoàng huynh, Hoàng tỷ, Hoàng đệ, Hoàng muội; hoàng thân gọi Phụ vương, Mẫu phi. Văn bản ở `throne.json` mục `house`, số ở `balance.throne` (`emperorAge`, `youngerSiblingChance`, `maxSiblings`).
+- Sửa kèm: hoàng tử đã thành nhàn vương (anh em lên ngôi) không còn bị mở lại đường tranh ngôi mỗi năm.
+- Đời hoàng tử đang chơi dở (save cũ) được nối lại khi qua năm: cha còn sống và chưa đổi niên hiệu thì là hoàng đế, đã đổi niên hiệu thì thành Thái thượng hoàng; các đối thủ cũ ghép vào anh em trai trong nhà. Không cần đổi phiên bản save.
+
 ### Sửa deploy kẹt (2026-10-23)
 - Bản chơi thử trên web không cập nhật từ #140: bước đóng gói (`vite build`) chạy hàng giờ không xong. Nguyên nhân là vòng năm (`advanceYearOnce` trong `src/core/state.ts`) gọi 30 hệ thống lồng vào nhau thành một biểu thức, khiến bước lọc code thừa của Rollup chậm theo cấp số nhân với độ sâu; GĐ 13 thêm bốn tầng nữa là kẹt hẳn.
 - Viết lại thành danh sách các bước chạy lần lượt, thứ tự giữ nguyên. Đóng gói từ hơn 3 tiếng xuống khoảng 7 giây (cả kiểm tra kiểu khoảng 25 giây). Không đổi cách chơi.

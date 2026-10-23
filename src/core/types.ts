@@ -41,6 +41,10 @@ export interface Relative {
   married?: boolean;
   /** 10.13: passed Tú tài on coming of age. */
   scholar?: boolean;
+  /** 15.0: born in the imperial house (hoang) or a thân vương's house (vuong): labels Phụ hoàng, Hoàng huynh… */
+  house?: 'hoang' | 'vuong';
+  /** 15.0: place at court: the reigning emperor, the thái tử, a retired emperor, a fallen one, the mother's rank. */
+  rank?: 'emperor' | 'heir' | 'retired' | 'fallen' | 'hau' | 'phi';
 }
 
 /** Quest chain of the martial path: one step a year; `game` is the mini-game being played. */
@@ -157,7 +161,8 @@ export interface GameState {
   /** 12.1 Triều đình: the emperor (named by the niên hiệu, his temper), the thái tử, the quyền thần (sway 0–100), the đại sự
    *  running (until age) and the age each one last started. */
   court?: {
-    emperor: { name: string; age: number; temper: string }; heir: { name: string; age: number } | null;
+    emperor: { name: string; age: number; temper: string; /** 15.0: the family member who reigns. */ npcId?: string };
+    heir: { name: string; age: number; npcId?: string } | null;
     minister: { name: string; sway: number } | null; affairs: { id: string; until: number }[]; started: Record<string, number>;
   };
   /** 12.6–12.8 Đế nghiệp: the road to the throne the life is on, its bars (0–100) and road-specific state: royal (place in
@@ -165,7 +170,7 @@ export interface GameState {
    *  cities taken), usurp (minister or warlord, people in the plot); `step` is a coup's progress. */
   throne?: {
     path: 'royal' | 'rebel' | 'usurp'; bars: Record<string, number>; since: number; step: number;
-    rank?: number; mother?: 'hau' | 'phi'; rivals?: { name: string; favor: number; power: number; alive: boolean }[]; heir?: string | null;
+    rank?: number; mother?: 'hau' | 'phi'; rivals?: { name: string; favor: number; power: number; alive: boolean; /** 15.0: the brother in the family. */ npcId?: string }[]; heir?: string | null;
     banner?: string; base?: string; cities?: number; kind?: 'minister' | 'warlord'; plotters?: number;
   } | null;
   /** 12.9 Làm vua: since when, the dynasty and niên hiệu, how the throne was had, bars (treasury, people, army, court),

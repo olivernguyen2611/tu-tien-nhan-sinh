@@ -705,6 +705,8 @@ export const OriginSchema = z
     requiresKnowledge: id.optional(),
     /** 12.6: born a hoàng tử / công chúa (the royal road to the throne starts at birth). */
     royal: z.boolean().default(false),
+    /** 15.0: the house born into: hoang (the emperor is the father), vuong (a thân vương's house of the quốc tính). */
+    house: z.enum(['hoang', 'vuong']).optional(),
     /** Task 5b.9 Cầu đầu thai: choosing this origin costs Luân Hồi points (random draws are free). */
     rebirthCost: z.number().int().min(1).optional(),
     birthText: z.string().min(1),
@@ -1929,6 +1931,8 @@ export const BalanceSchema = z
       rivals: z.tuple([z.number().int(), z.number().int()]), heirAge: z.number().int(), heirChance: z.number(),
       heirWeights: z.object({ favor: z.number(), power: z.number(), first: z.number(), queen: z.number(), suspicion: z.number() }).strict(), womanNeeds: z.number(),
       banAt: z.number(), suspicionDrift: z.number(), adultAge: z.number().int(), deposeBelow: z.number(), softCap: z.number().min(0), rivalGrowth: z.tuple([z.number().int(), z.number().int()]), heirPower: z.number().min(0), siblingDeath: z.number().min(0).max(1), fallDeath: z.number().min(0).max(1),
+      /** 15.0: the emperor father's age at the life's birth; a sibling born in the palace each year (other consorts too) up to maxSiblings. */
+      emperorAge: z.tuple([z.number().int(), z.number().int()]), youngerSiblingChance: z.number().min(0).max(1), maxSiblings: z.number().int().min(0),
       rebelPhases: z.array(z.string()), crushChance: z.number(), crushDeath: z.number().min(0).max(1), capitalCities: z.number().int(), garrison: z.number(), garrisonPerCity: z.number(),
       battleLoss: z.number(), battleWin: z.object({ troops: z.number(), grain: z.number(), people: z.number() }).strict(), amnestyChance: z.number(), rebelDecision: z.number().min(0).max(1), rebelUpkeep: z.number(), rebelDraw: z.number().min(0),
       discoverBase: z.number(), discoverPerPlotter: z.number(), riseNeeds: z.record(z.string(), z.number()), riseChance: z.number().min(0).max(1), risePhases: z.array(z.string()), riseTempers: z.array(z.string()),
@@ -3614,6 +3618,25 @@ export const ThroneFileSchema = z.object({
     death: z.string(), exile: z.string(), commoner: z.string(), quiet: z.string(), report: z.string(), fallen: z.string(), abdicate: z.string(),
     emperorName: z.string(), empressName: z.string(), siblingDies: z.string(), siblingCrowned: z.string(), dynastyFell: z.string(), heirDeposed: z.string(),
   }).strict(),
+  /** 15.0: how a royal life calls its family, the ranks shown under a name, and the house's lines. */
+  house: z.object({
+    labels: z.record(z.enum(['hoang', 'vuong']), z.object({
+      father: z.string().min(1), mother: z.string().min(1), motherHau: z.string().min(1),
+      olderBrother: z.string().min(1), olderSister: z.string().min(1), youngerBrother: z.string().min(1), youngerSister: z.string().min(1),
+    }).strict()),
+    ranks: z.object({ emperor: z.string(), heir: z.string(), retired: z.string(), fallen: z.string(), hau: z.string(), phi: z.string() }).strict(),
+    texts: z.object({
+      /** {label} {name} {age} */
+      emperorDies: z.string().min(1),
+      /** {name}, {sibling} (Hoàng đệ / Hoàng muội) */
+      born: z.string().min(1),
+      /** {label} {name} {dynasty} */
+      fallen: z.string().min(1),
+      /** {label} {name}: a brother named thái tử / crowned while the life is out of the race. */
+      heirNamed: z.string().min(1),
+      crowned: z.string().min(1),
+    }).strict(),
+  }).strict().optional(),
 }).strict();
 export type ThroneFile = z.infer<typeof ThroneFileSchema>;
 
@@ -3782,6 +3805,8 @@ export const WorldStateFileSchema = z.object({
   dynasties: z.array(z.string().min(1)).min(2),
   eraNames: z.array(z.string().min(1)).min(4),
   reignYears: z.tuple([z.number().int().min(1), z.number().int().min(1)]),
+  /** 15.0: the quốc tính of each dynasty (a royal life carries it); a dynasty not listed keeps the life's own surname. */
+  royalSurnames: z.record(z.string(), z.string().min(1)).default({}),
   /** Price multiplier at variable 0 and at 100 (straight line between), multiplied together. */
   prices: z.array(z.object({ var: id, at0: z.number().positive(), at100: z.number().positive() }).strict()).default([]),
   texts: z.object({

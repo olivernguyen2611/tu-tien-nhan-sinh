@@ -48,6 +48,7 @@
   ],
   "dynasties": ["Đại Ung", "Đại Khang", "Đại Hằng", "Đại Viêm", "Đại Thuần", "Đại Cảnh", "Đại Tuyên"],
   "eraNames": ["Thái An", "Hưng Vũ", "Cảnh Long", "Vĩnh Hòa", "Thiên Khải", "Gia Hựu", "Diên Bình", "Hàm Ninh", "Quang Định", "Thịnh Xương", "Long Khánh", "Bảo Thái", "Chiêu Minh", "Tuyên Hòa", "Kiến An", "Đoan Củng"],
+  "royalSurnames": { "Đại Ung": "Tiêu", "Đại Khang": "Triệu", "Đại Hằng": "Vũ Văn", "Đại Viêm": "Lý", "Đại Thuần": "Độc Cô", "Đại Cảnh": "Chu", "Đại Tuyên": "Tư Mã" },
   "reignYears": [14, 40],
   "prices": [
     { "var": "harvest", "at0": 1.6, "at100": 0.85 },

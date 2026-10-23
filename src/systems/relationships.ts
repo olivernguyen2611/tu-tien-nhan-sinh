@@ -6,6 +6,7 @@ import { Rng } from '../core/rng';
 import type { GameState, Gender, LogLine, Relative, Tone } from '../core/types';
 import { describeDelta } from './deltas';
 import { makeName, splitName } from './names';
+import { houseLabel, houseLine } from './royalHouse';
 
 const clamp = (v: number) => Math.max(0, Math.min(100, Math.round(v)));
 const between = (rng: Rng, [a, b]: readonly [number, number]) => rng.int(a, b);
@@ -52,8 +53,10 @@ export function createFamily(rng: Rng, content: Content, surname: string, noPare
   return family;
 }
 
-/** What the player calls this relative: cha, mẹ, anh, chị, em trai, em gái. */
-export function relationLabel(r: Relative, playerAge: number): string {
+/** What the player calls this relative: cha, mẹ, anh, chị, em trai, em gái (15.0: Phụ hoàng, Hoàng huynh… in a royal house). */
+export function relationLabel(r: Relative, playerAge: number, content?: Content): string {
+  const royal = content && houseLabel(r, playerAge, content);
+  if (royal) return royal;
   if (r.role === 'father') return 'Cha';
   if (r.role === 'mother') return 'Mẹ';
   if (r.role === 'child') return r.gender === 'nam' ? 'Con trai' : 'Con gái';
@@ -89,7 +92,9 @@ export function ageFamily(state: GameState, content: Content): GameState {
     if (!r.alive) return r;
     const age = r.age + 1;
     if (age >= r.lifespan) {
-      if (r.role === 'father' || r.role === 'mother') funerals.push(r.role);
+      // 15.0: a reigning (or retired) emperor gets a quốc tang, not the village funeral and phân gia.
+      const emperor = r.rank === 'emperor' || r.rank === 'retired';
+      if ((r.role === 'father' || r.role === 'mother') && !emperor) funerals.push(r.role);
       // Grief: even a relative you drifted from hurts; a close one hurts most.
       const [distant, close] = cfg.grief[r.role];
       const loss = Math.round(distant + (close - distant) * (r.affinity / 100));
@@ -102,7 +107,9 @@ export function ageFamily(state: GameState, content: Content): GameState {
         const dao = describeDelta('daoHeart', d);
         change = [change, dao].filter(Boolean).join(' · ');
       }
-      lines.push({ text: `${relationLabel(r, state.character.age)} ${r.name} qua đời, hưởng thọ ${age} tuổi.${change ? ` ${change}.` : ''}`, tone: 'bad' });
+      const label = relationLabel(r, state.character.age, content);
+      const royal = emperor ? houseLine(content, 'emperorDies', { label, name: r.name, age }) : null;
+      lines.push({ text: `${royal?.text ?? `${label} ${r.name} qua đời, hưởng thọ ${age} tuổi.`}${change ? ` ${change}.` : ''}`, tone: 'bad' });
       return { ...r, age, alive: false };
     }
     const grown = { ...r, age, affinity: clamp(r.affinity - cfg.affinityDecay) };
@@ -117,7 +124,12 @@ export function ageFamily(state: GameState, content: Content): GameState {
   const father = family.find((r) => r.role === 'father');
   const mother = family.find((r) => r.role === 'mother');
   const siblings = family.filter((r) => r.role === 'sibling').length;
-  if (father?.alive && mother?.alive && mother.age <= cfg.motherMaxAgeForChild && siblings < cfg.maxSiblings && rng.chance(cfg.youngerSiblingChance)) {
+  // 15.0: an emperor's hậu cung brings more children (other consorts too, so the mother's age does not stop it).
+  const th = content.balance.throne;
+  const palace = father?.house === 'hoang' && father.rank === 'emperor' && !!th;
+  const fertile = palace ? father!.alive && siblings < th!.maxSiblings && rng.chance(th!.youngerSiblingChance)
+    : father?.alive && mother?.alive && mother.age <= cfg.motherMaxAgeForChild && siblings < cfg.maxSiblings && rng.chance(cfg.youngerSiblingChance);
+  if (fertile) {
     const gender: Gender = rng.chance(0.5) ? 'nam' : 'nu';
     const baby: Relative = {
       id: `sibling_${siblings}_${state.character.age}`,
@@ -129,9 +141,11 @@ export function ageFamily(state: GameState, content: Content): GameState {
       lifespan: relativeLifespan(rng, content),
       affinity: between(rng, cfg.affinityStart),
       lastActions: {},
+      ...(father?.house ? { house: father.house } : {}),
     };
     family.push(baby);
-    lines.push({ text: `Nhà có thêm ${gender === 'nam' ? 'một em trai' : 'một em gái'}: ${baby.name}.`, tone: 'good' });
+    const royalBirth = palace ? houseLine(content, 'born', { name: baby.name, sibling: relationLabel(baby, state.character.age, content).toLowerCase() }) : null;
+    lines.push(royalBirth ?? { text: `Nhà có thêm ${gender === 'nam' ? 'một em trai' : 'một em gái'}: ${baby.name}.`, tone: 'good' });
   }
 
   // Events that need a parent stop once that parent is gone (no_father / no_mother; both = no_parents).
@@ -231,7 +245,7 @@ export function performFamilyAction(state: GameState, content: Content, relative
   const gain = between(rng, outcome.affinity);
   if (gain < 0 && tone === 'good') tone = 'normal';
 
-  const label = relationLabel(r, state.character.age).toLowerCase();
+  const label = relationLabel(r, state.character.age, content).toLowerCase();
   const drawn = drawText(state, content, key, outcome.texts, { affinity: r.affinity, relation: r.role }, rng);
   const text = drawn.text
     .replace(/\{Rel\}/g, label.charAt(0).toUpperCase() + label.slice(1))

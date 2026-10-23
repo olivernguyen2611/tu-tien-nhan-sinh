@@ -8,6 +8,7 @@
 import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameState, LogLine } from '../core/types';
+import { eldestBrother, emperorRelative, houseEmperor, houseLabel, houseLine, houseOf, killRelative, setRank } from './royalHouse';
 
 type Court = NonNullable<GameState['court']>;
 type Affair = NonNullable<Content['court']>['affairs'][number];
@@ -40,6 +41,9 @@ export function initCourt(state: GameState, content: Content): Court | undefined
   const rng = new Rng(`${state.seed}:court:init`);
   const emperor = newEmperor(content, rng, state.times.era, rng.int(25, 55));
   const heir = rng.chance(0.6) ? { name: fill(content.court.texts.heirName, { name: rng.pick(content.names.maleGiven) }), age: rng.int(5, 25) } : null;
+  // 15.0: a hoàng tử's father is the emperor; the thái tử is named among the brothers later.
+  const father = houseEmperor(state, content);
+  if (father) return { emperor: { ...emperor, ...father }, heir: null, minister: null, affairs: [], started: {} };
   return { emperor, heir, minister: null, affairs: [], started: {} };
 }
 
@@ -101,17 +105,30 @@ export function courtYear(state: GameState, content: Content): GameState {
 
   // A new niên hiệu this year: the old emperor is gone.
   const changed = t.eraFrom === age && t.eras.length > 1 && c.emperor.name !== fill(file.texts.emperorName, { era: t.era });
+  // 15.0: the emperor of a royal life's family, and whether the life itself is in the race (throne.ts crowns then).
+  const kin = emperorRelative({ ...s, court: c });
+  const race = s.throne?.path === 'royal';
   if (changed) {
     const newDynasty = t.eras[t.eras.length - 2]?.dynasty !== t.dynasty;
     const old = c.emperor.name;
     if (newDynasty) {
+      if (kin?.alive) {
+        const line = houseLine(content, 'fallen', { label: houseLabel(kin, age, content) ?? '', name: kin.name, dynasty: t.eras[t.eras.length - 2]?.dynasty ?? '' });
+        s = setRank(killRelative(s, kin.id), kin.id, 'fallen');
+        if (line) lines.push(line);
+      }
       c = { ...c, emperor: newEmperor(content, rng, t.era, rng.int(30, 50)), heir: null, minister: null, affairs: [] };
       say(fill(file.texts.founder, { emperor: c.emperor.name, dynasty: t.dynasty }));
     } else {
       const heir = c.heir;
       const grown = heir && heir.age >= cfg.heirAdult;
-      c = { ...c, emperor: { ...newEmperor(content, rng, t.era, heir?.age), name: fill(file.texts.emperorName, { era: t.era }) }, heir: null };
-      say(fill(heir ? file.texts.heirCrowned : file.texts.crowned, { old, heir: heir?.name ?? '', emperor: c.emperor.name }));
+      c = { ...c, emperor: { ...newEmperor(content, rng, t.era, heir?.age), name: fill(file.texts.emperorName, { era: t.era }), ...(heir?.npcId && !race ? { npcId: heir.npcId } : {}) }, heir: null };
+      if (heir?.npcId && !race) {
+        s = setRank(s, heir.npcId, 'emperor');
+        const b = emperorRelative({ ...s, court: c });
+        const line = b && houseLine(content, 'crowned', { label: houseLabel(b, age, content) ?? '', name: b.name });
+        if (line) lines.push(line);
+      } else if (!race) say(fill(heir ? file.texts.heirCrowned : file.texts.crowned, { old, heir: heir?.name ?? '', emperor: c.emperor.name }));
       const succession = file.affairs.find((a) => a.when.onDeath);
       if (succession && (!grown || rng.chance(cfg.contestChance))) c = startAffair(c, succession, age, rng, say, { emperor: c.emperor.name });
       // A new emperor purges the quyền thần, or keeps him.
@@ -125,11 +142,22 @@ export function courtYear(state: GameState, content: Content): GameState {
       lines.push({ text: file.texts.amnesty, tone: 'good' });
     }
   } else {
-    c = { ...c, emperor: { ...c.emperor, age: c.emperor.age + 1 }, heir: c.heir ? { ...c.heir, age: c.heir.age + 1 } : null };
+    c = { ...c, emperor: { ...c.emperor, age: kin?.age ?? c.emperor.age + 1 }, heir: c.heir ? { ...c.heir, age: c.heir.age + 1 } : null };
   }
 
-  // A thái tử is named in time.
-  if (!c.heir && c.emperor.age >= cfg.heirFrom && rng.chance(cfg.heirChance)) {
+  // A thái tử is named in time: by throne.ts while the life is in the race; among the brothers while the father reigns.
+  const fatherReigns = !!kin?.alive && kin.role === 'father' && houseOf(s, content) === 'hoang';
+  if (race) {
+    // throne.ts names the heir.
+  } else if (fatherReigns) {
+    const b = !c.heir && c.emperor.age >= cfg.heirFrom && rng.chance(cfg.heirChance) ? eldestBrother(s) : undefined;
+    if (b) {
+      c = { ...c, heir: { name: b.name, age: b.age, npcId: b.id } };
+      s = setRank(s, b.id, 'heir');
+      const line = houseLine(content, 'heirNamed', { label: houseLabel(b, age, content) ?? '', name: b.name });
+      if (line) lines.push(line);
+    }
+  } else if (!c.heir && c.emperor.age >= cfg.heirFrom && rng.chance(cfg.heirChance)) {
     c = { ...c, heir: { name: fill(file.texts.heirName, { name: rng.pick(content.names.maleGiven) }), age: rng.int(8, 18) } };
     say(fill(file.texts.heirNamed, { heir: c.heir!.name, emperor: c.emperor.name }));
   }
@@ -155,6 +183,10 @@ export function courtYear(state: GameState, content: Content): GameState {
     if (last !== undefined && age - last < cfg.affairGap) continue;
     if (affairFits(c, t.vars, t.phase, a) && rng.chance(a.chance)) c = startAffair(c, a, age, rng, say, { minister: c.minister?.name ?? '', emperor: c.emperor.name });
   }
+
+  // 15.0: an emperor of the family is as old as he is in the family.
+  const reigning = emperorRelative({ ...s, court: c });
+  if (reigning) c = { ...c, emperor: { ...c.emperor, age: reigning.age } };
 
   // The emperor's temper and the affairs pull the world.
   const vars = { ...t.vars };
