@@ -59,3 +59,40 @@ describe('Giai cấp (15.1)', () => {
     expect(standingMul(farmer, patched, { id: 'x', category: 'work', themes: [] })).toBe(1);
   });
 });
+
+describe('Hoạt động theo giai cấp (15.2)', () => {
+  const ids = (origin: string, age: number) => activityViews(life(origin, age), content).map((v) => v.id);
+  const NEVER_ROYAL = ['xin_hoc_truong_lang', 'tu_hoc_len', 'nghe_lom', 'lam_muon_som', 'lam_thue', 'lam_vu_mua', 'cheo_do_thue', 'viet_thue',
+    'hoc_nghe_ren', 'hoc_nghe_gom', 'pp_moc_tui', 'pp_trom_vat', 'chieu_bac', 'gia_nhap_bang_hoi', 'ap_tieu', 'tong_quan', 'leu_chong_di_thi', 'on_thi', 'mua_quan'];
+
+  it('a hoàng tử or a hoàng thân never sees a commoner\'s errands at any age', () => {
+    for (const origin of ['hoang_tu', 'hoang_than']) for (const age of [6, 8, 10, 14, 20, 35]) {
+      const seen = ids(origin, age);
+      for (const id of NEVER_ROYAL) expect(seen, `${origin} ${age}: ${id}`).not.toContain(id);
+    }
+  });
+
+  it('a noble or an official\'s child never sees the village school, the hired work or petty crime', () => {
+    for (const origin of ['quy_toc', 'quan_gia', 'tu_tien_gia_toc']) for (const age of [8, 14, 20]) {
+      const seen = ids(origin, age);
+      for (const id of ['xin_hoc_truong_lang', 'nghe_lom', 'lam_muon_som', 'lam_thue', 'pp_moc_tui', 'pp_trom_vat']) expect(seen, `${origin} ${age}: ${id}`).not.toContain(id);
+    }
+  });
+
+  it('a farmer\'s child and an orphan still find the village school and odd jobs', () => {
+    for (const origin of ['nong_dan', 'co_nhi']) {
+      expect(ids(origin, 8)).toContain('xin_hoc_truong_lang');
+      expect(ids(origin, 8)).toContain('nghe_lom');
+      expect(ids(origin, 20)).toContain('lam_thue');
+    }
+  });
+
+  it('the same activity reads by giai cấp: Truyền thái y, yến tiệc tông thất', () => {
+    const prince = life('hoang_tu', 30);
+    const ill = { ...prince, health: { ailments: [{ id: 'cam_mao', since: 30 }] } } as never;
+    const sick = activityViews(ill, content).find((v) => v.id === 'moi_lang_trung');
+    if (sick) expect(sick.name).toBe('Truyền thái y');
+    expect(activityViews(prince, content).find((v) => v.id === 'ket_giao')!.name).toBe('Dự yến tiệc tông thất');
+    expect(activityViews(life('nong_dan', 30), content).find((v) => v.id === 'ket_giao')!.name).toBe('Uống rượu đầu làng');
+  });
+});

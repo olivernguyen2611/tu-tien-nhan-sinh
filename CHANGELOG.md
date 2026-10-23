@@ -8,6 +8,16 @@
 
 ## [Chưa phát hành]
 
+### 15.2 Gắn nhãn hoạt động cũ theo giai cấp (2026-10-23)
+- **Lỗi anh báo:** hoàng tử không còn thấy "Xin vào trường làng", "Tự học lén", "Nghe lỏm ngoài cửa lớp". Ba việc này giờ chỉ dành cho võ gia, nông gia, bần dân.
+- 23 hoạt động chỉ dành cho người bình dân (`classes`): làm mướn từ nhỏ, làm thuê, làm vụ mùa, chèo đò, học lén võ, chiếu tài xỉu, mời thầy cúng, móc túi, trộm vặt, trộm nhà giàu, cướp đường, lừa đảo, buôn lậu, viết thuê, vào bang hội, đầu quân hắc đạo, áp tiêu, nhận tiêu xa, bảng treo thưởng, lôi đài hội chợ.
+- 26 hoạt động ẩn với một số giai cấp (`notClasses`):
+  - Hoàng tộc, quyền quý, quan gia không học nghề rèn, mộc, may, bếp, gốm.
+  - Hoàng tộc, quyền quý không học võ quán, võ đường làng, không mở lớp dạy chữ.
+  - Hoàng tộc không tòng quân, mua quan, ôn thi, lều chõng đi thi, bái nhập môn phái, về thăm quê, nhờ bà mối, chuyển nhà, bốc thuốc tiệm, hành hiệp, hội chợ, thanh lâu, sòng bạc, xem hát đình làng, chợ thú nuôi, chúc Tết làng xóm, tảo mộ nghĩa địa, thư quán đầu phố. Những việc này sẽ có bản riêng của hoàng tộc ở 15.5 (cải trang vi hành mở lại một số).
+- 9 hoạt động đổi tên theo giai cấp (`byClass`): Truyền thái y, Mời danh y về phủ, Mời tộc y; Dự yến tiệc tông thất, thế gia, thương hội, Uống rượu với hào kiệt, Uống rượu đầu làng; Thu điền vây săn; Tắm suối nóng ở hành cung; Xuất gia ở quốc tự; Xin binh khí từ Binh bộ; Xin vào cấm quân; Tế Thái miếu; Dự tông thất đại hội.
+- Test "danh sách cấm": hoàng tử và hoàng thân ở mọi tuổi không bao giờ thấy việc của thường dân; con nhà quyền quý, quan, tu tiên thế gia không thấy trường làng, làm thuê, móc túi.
+
 ### 15.1 Nền giai cấp (2026-10-23)
 - Thế giới có 8 **giai cấp** (`character/classes.json`): Hoàng tộc, Quyền quý, Tu tiên thế gia, Quan gia, Thương gia, Võ gia, Nông gia, Bần dân, xếp theo thứ bậc. Mỗi xuất thân thuộc một giai cấp (`class` trong `origins.json`); hồ sơ nhân vật ghi giai cấp cạnh xuất thân.
 - Điều kiện mới `classes` / `notClasses` cho hoạt động, sự kiện… (giai cấp hiện tại, đọc lười từ xuất thân nên save cũ không cần đổi).

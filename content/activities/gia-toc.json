@@ -5,6 +5,7 @@
     "name": "Tế tổ",
     "icon": "祭",
     "text": "Sửa soạn mâm cỗ, thắp hương ở từ đường, khấn vái tổ tiên.",
+    "byClass": {"hoang_toc": {"name": "Tế Thái miếu", "text": "Áo mũ chỉnh tề theo nghi lễ, vào Thái miếu dâng hương liệt tổ liệt tông."}},
     "conditions": {
       "kin": {
         "met": true
@@ -181,6 +182,7 @@
     "name": "Đi họp họ",
     "icon": "族",
     "text": "Cuối năm họp họ ở từ đường: đóng góp, bàn việc, ăn cỗ.",
+    "byClass": {"hoang_toc": {"name": "Dự tông thất đại hội", "text": "Tông nhân phủ triệu tập con cháu hoàng tộc bàn việc trong họ."}},
     "conditions": {
       "kin": {
         "met": true

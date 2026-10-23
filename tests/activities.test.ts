@@ -9,7 +9,7 @@ import { validateContent } from '../src/core/validate';
 
 const content = loadContent();
 const adult = (seed: string, patch: Partial<GameState> = {}): GameState => {
-  const s = createLife({ seed }, content);
+  const s = createLife({ seed, originId: 'nong_dan' }, content);
   return { ...s, destiny: { ...s.destiny, confirmed: true }, character: { ...s.character, age: 30 }, money: { silver: 100, spiritStones: 0 }, ...patch };
 };
 const withActivity = (a: unknown): Content => ({ ...content, activities: [...(content.activities ?? []), ActivitySchema.parse(a)] });

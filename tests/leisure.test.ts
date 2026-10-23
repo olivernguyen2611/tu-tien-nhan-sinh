@@ -10,7 +10,7 @@ const content = loadContent();
 const cfg = content.balance.pastime!;
 
 function adult(age = 25, patch: Partial<GameState> = {}): GameState {
-  const b = createLife({ seed: 'leisure' }, content);
+  const b = createLife({ seed: 'leisure', originId: 'nong_dan' }, content);
   return { ...b, tier: 'pham_gian', character: { ...b.character, age }, money: { ...b.money, silver: 200 }, log: [...b.log, { age, lines: [] }], ...patch };
 }
 

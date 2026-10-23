@@ -6,6 +6,7 @@
   "icon": "捐",
   "text": "Triều đình bán chức để lấy bạc. Bốn trăm lượng một ghế huyện thừa, ngàn hai thì được tri huyện. Mua được ghế, khó mua được lòng người.",
   "conditions": {
+    "notClasses": ["hoang_toc"],
    "tier": [
     "pham_gian"
    ],

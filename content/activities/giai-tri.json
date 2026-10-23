@@ -271,6 +271,7 @@
     "icon": "賭",
     "text": "Ba con xúc xắc, một chén úp. Khí vận quyết định túi tiền nặng hay nhẹ.",
     "conditions": {
+      "notClasses": ["hoang_toc"],
       "age": {
         "min": 18
       }
@@ -358,6 +359,7 @@
     "icon": "骰",
     "text": "Tự tay đặt cửa: tài hay xỉu, chẵn hay lẻ. Ăn thua tùy khí vận.",
     "conditions": {
+      "classes": ["thuong_gia", "vo_gia", "nong_gia", "ban_dan"],
       "age": {
         "min": 18
       }
@@ -446,7 +448,9 @@
     "name": "Đi hội chợ",
     "icon": "市",
     "text": "Hội chợ phiên rằm, hàng quán bày kín bãi đất.",
-    "conditions": {},
+    "conditions": {
+      "notClasses": ["hoang_toc"]
+    },
     "months": 1,
     "cost": [
       {
@@ -487,7 +491,9 @@
     "name": "Xem hát",
     "icon": "戲",
     "text": "Gánh hát rong dựng rạp giữa đình làng.",
-    "conditions": {},
+    "conditions": {
+      "notClasses": ["hoang_toc"]
+    },
     "months": 1,
     "cost": [
       {
@@ -669,6 +675,7 @@
     "name": "Đi săn",
     "icon": "獵",
     "text": "Vác cung nỏ vào rừng, xem hôm nay trời cho gì.",
+    "byClass": {"hoang_toc": {"name": "Thu điền vây săn", "text": "Theo đoàn ngự lâm quân ra bãi săn, cờ xí rợp đồi."}, "quyen_quy": {"name": "Đi săn ở điền trang", "text": "Dắt chó săn, mang chim ưng ra khu rừng thuộc điền trang nhà mình."}},
     "conditions": {
       "age": {
         "min": 14
@@ -999,6 +1006,7 @@
     "icon": "樓",
     "text": "Lầu son đèn đỏ, có đàn hát, có rượu, có chuyện.",
     "conditions": {
+      "notClasses": ["hoang_toc"],
       "age": {
         "min": 18
       }
@@ -1080,6 +1088,7 @@
     "icon": "畜",
     "text": "Ra chợ phiên xem người ta bán chó mèo, gà chọi, chim ưng.",
     "conditions": {
+      "notClasses": ["hoang_toc"],
       "age": {
         "min": 8
       },
@@ -1156,6 +1165,7 @@
     "icon": "賀",
     "text": "Áo mới, khăn mới, đi chúc Tết họ hàng làng xóm.",
     "conditions": {
+      "notClasses": ["hoang_toc"],
       "festival": [
         "tet"
       ]
@@ -1332,6 +1342,7 @@
     "icon": "墓",
     "text": "Mang cuốc, mang hương ra nghĩa địa sửa sang mộ phần.",
     "conditions": {
+      "notClasses": ["hoang_toc"],
       "festival": [
         "thanh_minh"
       ]

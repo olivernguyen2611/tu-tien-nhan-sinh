@@ -5,7 +5,9 @@
   "name": "Tòng quân",
   "icon": "兵",
   "text": "Ghi tên vào quân doanh. Lương ít, chết dễ, nhưng một mũi giáo có thể đổi được cả đời.",
+  "byClass": {"quyen_quy": {"name": "Xin vào cấm quân", "text": "Nhờ thế nhà, xin một chân trong cấm quân, khởi đầu từ dưới mà lên."}},
   "conditions": {
+    "notClasses": ["hoang_toc"],
    "tier": [
     "pham_gian"
    ],

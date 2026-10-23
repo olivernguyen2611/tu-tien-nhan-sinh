@@ -5,7 +5,7 @@
     "name": "Đọc sách ở thư quán",
     "icon": "書",
     "text": "Mất vài đồng tiền trà, ngồi cả ngày trong thư quán đầu phố.",
-    "conditions": { "age": { "min": 7 }, "tier": ["pham_gian"] },
+    "conditions": {"notClasses": ["hoang_toc"], "age": {"min": 7}, "tier": ["pham_gian"]},
     "cost": [{ "silver": 2, "months": 1 }],
     "check": { "stat": "stat.intellect", "difficulty": 35 },
     "outcomes": [

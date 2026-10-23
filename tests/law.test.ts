@@ -11,7 +11,7 @@ const content = loadContent();
 const cfg = content.balance.law!;
 
 function adult(age = 25, patch: Partial<GameState> = {}): GameState {
-  const b = createLife({ seed: 'law' }, content);
+  const b = createLife({ seed: 'law', originId: 'nong_dan' }, content);
   return { ...b, tier: 'pham_gian', character: { ...b.character, age }, money: { ...b.money, silver: 300 }, log: [...b.log, { age, lines: [] }], ...patch };
 }
 const older = (s: GameState, n = 1): GameState => ({ ...s, character: { ...s.character, age: s.character.age + n } });

@@ -299,6 +299,7 @@
     "icon": "入",
     "text": "Trường làng học phí rẻ, thầy đồ hiền, nhận cả con nhà nghèo.",
     "conditions": {
+      "classes": ["vo_gia", "nong_gia", "ban_dan"],
       "age": {
         "min": 6,
         "max": 12
@@ -335,6 +336,7 @@
     "icon": "讀",
     "text": "Không được đi học thì tự tìm chữ mà học.",
     "conditions": {
+      "classes": ["vo_gia", "nong_gia", "ban_dan"],
       "age": {
         "min": 6,
         "max": 17
@@ -396,6 +398,7 @@
     "icon": "聽",
     "text": "Đứng ngoài cửa sổ trường làng, nghe thầy giảng ké.",
     "conditions": {
+      "classes": ["vo_gia", "nong_gia", "ban_dan"],
       "age": {
         "min": 6,
         "max": 14
@@ -438,6 +441,7 @@
     "icon": "傭",
     "text": "Chăn trâu, nhặt củi, trông em cho nhà người ta lấy mấy đồng.",
     "conditions": {
+      "classes": ["vo_gia", "nong_gia", "ban_dan"],
       "age": {
         "min": 8,
         "max": 15
@@ -487,6 +491,7 @@
     "icon": "武",
     "text": "Võ đường đầu làng nhận trẻ từ tám tuổi, dạy đứng tấn, đấm bao cát.",
     "conditions": {
+      "notClasses": ["hoang_toc", "quyen_quy", "tu_gia"],
       "age": {
         "min": 8,
         "max": 40
@@ -539,6 +544,7 @@
     "icon": "鍛",
     "text": "Lò rèn đầu chợ cần đứa học việc, mỗi ngày quai búa tới khi tay rã.",
     "conditions": {
+      "notClasses": ["hoang_toc", "quyen_quy", "quan_gia"],
       "age": {
         "min": 12,
         "max": 30
@@ -570,6 +576,7 @@
     "icon": "木",
     "text": "Thợ mộc trong làng nhận học trò, dạy từ cái bào cái đục.",
     "conditions": {
+      "notClasses": ["hoang_toc", "quyen_quy", "quan_gia"],
       "age": {
         "min": 12,
         "max": 30
@@ -632,6 +639,7 @@
     "icon": "縫",
     "text": "Bà thợ may đầu phố nhận học việc, ngồi cả ngày bên khung cửi.",
     "conditions": {
+      "notClasses": ["hoang_toc", "quyen_quy", "quan_gia"],
       "age": {
         "min": 12,
         "max": 30
@@ -663,6 +671,7 @@
     "icon": "灶",
     "text": "Tửu lâu trong trấn cần phụ bếp, chặt rau thái thịt từ sáng tới tối.",
     "conditions": {
+      "notClasses": ["hoang_toc", "quyen_quy", "quan_gia"],
       "age": {
         "min": 12,
         "max": 30
@@ -694,6 +703,7 @@
     "icon": "陶",
     "text": "Lò gốm bên sông nhận học việc, nhào đất nặn hình từ tờ mờ sáng.",
     "conditions": {
+      "notClasses": ["hoang_toc", "quyen_quy", "quan_gia"],
       "age": {
         "min": 12,
         "max": 30
