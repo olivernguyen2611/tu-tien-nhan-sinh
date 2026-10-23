@@ -5,7 +5,7 @@
     "name": "Lều chõng đi thi",
     "icon": "試",
     "text": "Gánh lều, gánh chõng, mang theo nghiên bút và nắm cơm nắm, lên đường dự khoa thi năm nay.",
-    "conditions": { "tier": ["pham_gian"], "exam": { "canSit": true } },
+    "conditions": {"notClasses": ["hoang_toc"], "tier": ["pham_gian"], "exam": {"canSit": true}},
     "months": 2,
     "outcomes": [
       {
@@ -20,7 +20,7 @@
     "name": "Ôn thi",
     "icon": "溫",
     "text": "Đóng cửa đọc lại kinh sách, tập viết văn sách theo đề các khoa trước.",
-    "conditions": { "age": { "min": 14 }, "tier": ["pham_gian"], "school": { "enrolled": false }, "exam": { "notPassed": "dinh" } },
+    "conditions": {"notClasses": ["hoang_toc"], "age": {"min": 14}, "tier": ["pham_gian"], "school": {"enrolled": false}, "exam": {"notPassed": "dinh"}},
     "months": 2,
     "check": { "stat": "stat.intellect", "difficulty": 40 },
     "outcomes": [
@@ -49,7 +49,7 @@
     "name": "Viết thuê",
     "icon": "寫",
     "text": "Ngồi đầu chợ viết thư, viết văn tế, viết đơn kiện thuê cho người không biết chữ.",
-    "conditions": { "age": { "min": 14 }, "tier": ["pham_gian"], "exam": { "passed": "huyen" } },
+    "conditions": {"classes": ["thuong_gia", "vo_gia", "nong_gia", "ban_dan"], "age": {"min": 14}, "tier": ["pham_gian"], "exam": {"passed": "huyen"}},
     "months": 2,
     "outcomes": [
       {
@@ -71,7 +71,7 @@
     "name": "Mở lớp dạy chữ",
     "icon": "教",
     "text": "Tú tài được mở trường làng. Một gian nhà, mấy chiếc chiếu, lũ trẻ con hàng xóm.",
-    "conditions": { "age": { "min": 16 }, "tier": ["pham_gian"], "exam": { "passed": "vien" } },
+    "conditions": {"notClasses": ["hoang_toc", "quyen_quy"], "age": {"min": 16}, "tier": ["pham_gian"], "exam": {"passed": "vien"}},
     "months": 4,
     "outcomes": [
       {

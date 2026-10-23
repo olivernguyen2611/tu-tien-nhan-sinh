@@ -6,6 +6,7 @@
     "icon": "手",
     "text": "Chợ phiên đông người, túi tiền lủng lẳng bên hông kẻ khác.",
     "conditions": {
+      "classes": ["vo_gia", "nong_gia", "ban_dan"],
       "realm": {
         "max": "pham_nhan"
       },
@@ -59,6 +60,7 @@
     "icon": "偷",
     "text": "Gà nhà hàng xóm, buồng chuối sau vườn ai đó.",
     "conditions": {
+      "classes": ["vo_gia", "nong_gia", "ban_dan"],
       "realm": {
         "max": "pham_nhan"
       },
@@ -87,6 +89,7 @@
     "icon": "盜",
     "text": "Nhà viên ngoại đầu làng, kho bạc sau ba lớp tường.",
     "conditions": {
+      "classes": ["vo_gia", "nong_gia", "ban_dan"],
       "realm": {
         "max": "pham_nhan"
       },
@@ -139,6 +142,7 @@
     "icon": "騙",
     "text": "Miệng lưỡi trơn tru, kẻ nhẹ dạ ở khắp nơi.",
     "conditions": {
+      "classes": ["thuong_gia", "vo_gia", "nong_gia", "ban_dan"],
       "realm": {
         "max": "pham_nhan"
       },
@@ -192,6 +196,7 @@
     "icon": "私",
     "text": "Muối và sắt triều đình giữ độc quyền. Lãi gấp năm, tội cũng gấp năm.",
     "conditions": {
+      "classes": ["thuong_gia", "vo_gia", "nong_gia", "ban_dan"],
       "realm": {
         "max": "pham_nhan"
       },
@@ -221,6 +226,7 @@
     "icon": "劫",
     "text": "Bịt mặt, cầm đao, chờ khách buôn qua đèo.",
     "conditions": {
+      "classes": ["vo_gia", "nong_gia", "ban_dan"],
       "realm": {
         "max": "pham_nhan"
       },

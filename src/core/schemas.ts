@@ -162,6 +162,9 @@ const BaseConditionsSchema = z
     martial: z.object({ min: z.number().int().optional(), max: z.number().int().optional(), ready: z.boolean().optional() }).strict().optional(),
     /** Born into one of these origins. */
     origins: ids,
+    /** 15.1: the life's giai cấp now is one of these / none of these. */
+    classes: ids,
+    notClasses: ids,
     /** Task 3.9: items carried (all of them). */
     itemsAll: ids,
     /**
@@ -707,12 +710,28 @@ export const OriginSchema = z
     royal: z.boolean().default(false),
     /** 15.0: the house born into: hoang (the emperor is the father), vuong (a thân vương's house of the quốc tính). */
     house: z.enum(['hoang', 'vuong']).optional(),
+    /** 15.1: the giai cấp born into (character/classes.json). */
+    class: id.optional(),
     /** Task 5b.9 Cầu đầu thai: choosing this origin costs Luân Hồi points (random draws are free). */
     rebirthCost: z.number().int().min(1).optional(),
     birthText: z.string().min(1),
   })
   .strict();
 export const OriginFileSchema = z.array(OriginSchema).min(1);
+
+/** 15.1 Giai cấp (worlds/<id>/character/classes.json): who a life is in the world's order; activities, events, jobs and
+ *  schools name the classes they belong to. `rank`: higher is nobler (texts and class shifts read it). */
+export const SocialClassSchema = z.object({
+  id,
+  name: z.string().min(1),
+  glyph: z.string().refine((t) => [...t].length === 1, 'glyph là đúng một chữ'),
+  rank: z.number().int().min(0),
+  description: z.string().min(1),
+  /** 15.4: the yearly bổng lộc line ({silver}); the amount is balance.classStipend. */
+  stipendText: z.string().min(1).optional(),
+}).strict();
+export const SocialClassFileSchema = z.array(SocialClassSchema);
+export type SocialClass = z.infer<typeof SocialClassSchema>;
 
 /** content/worlds/<id>/world.json: one playable world with its own storylines. */
 export const WorldSchema = z
@@ -1978,6 +1997,13 @@ export const BalanceSchema = z
       hooks: z.record(z.string(), z.array(EffectHookSchema)).default({}),
       silverKeep: z.number().min(0).max(1), cutFlag: z.string().min(1), cutDrift: z.number().min(0),
     }).strict().optional(),
+    /** 15.4: bổng lộc a year by giai cấp (tông thất, thế gia), from this age, while a mortal not in ngục nor on the throne. */
+    classStipend: z.object({ fromAge: z.number().int().min(0), silver: z.record(z.string(), z.number().min(0)) }).strict().optional(),
+    /** 15.1: what each giai cấp never sees (or sees less): like `standing`, by class id. */
+    classes: z.record(z.string(), z.object({
+      mul: z.number().min(0), categories: z.array(z.string()).default([]), themes: z.array(z.string()).default([]), ids: z.array(z.string()).default([]),
+      activityGroups: z.array(z.string()).default([]), activityIds: z.array(z.string()).default([]),
+    }).strict()).optional(),
     standing: z.record(z.enum(['reign', 'office', 'army']), z.object({
       mul: z.number().min(0), categories: z.array(z.string()).default([]), themes: z.array(z.string()).default([]), ids: z.array(z.string()).default([]),
       /** Activities closed to this standing (unless their conditions speak of it). */
@@ -2419,6 +2445,10 @@ export const FamilyActionSchema = z
     maxAge: z.number().int().optional(),
     /** Only for these roles; empty = everyone. */
     roles: z.array(z.enum(['father', 'mother', 'sibling', 'child'])).default([]),
+    /** 15.4: only for / never for these giai cấp; the name a giai cấp uses (Xin tiền → Xin ban thưởng). */
+    classes: ids,
+    notClasses: ids,
+    byClass: z.record(id, z.string().min(1)).default({}),
     minTargetAge: z.number().int().optional(),
     /** Silver spent. */
     cost: z.number().int().min(0).default(0),
@@ -2501,6 +2531,12 @@ export const ActivitySchema = z
     check: z.object({ stat: statKey, difficulty: z.number().min(0).max(100) }).strict().optional(),
     outcomes: z.array(ActivityOutcomeSchema).min(1),
     failOutcomes: z.array(ActivityOutcomeSchema).min(1).optional(),
+    /** 15.1: the same activity as a giai cấp sees it (Mời lang trung → Truyền thái y): name, icon, text by class id. */
+    byClass: z.record(id, z.object({
+      name: z.string().min(1).optional(),
+      icon: z.string().refine((t) => [...t].length === 1, 'icon là đúng một chữ').optional(),
+      text: z.string().min(1).optional(),
+    }).strict()).default({}),
   })
   .strict()
   .superRefine((a, ctx) => {
@@ -2915,6 +2951,8 @@ export const CareersFileSchema = z
             bonusOrigins: ids,
             /** 10.2: examRank = the khoa cử level needed to take this path (Quan lộ needs Cử nhân). */
             requires: z.object({ rootless: z.boolean().optional(), examRank: id.optional() }).strict().default({}),
+            /** 15.4: closed to (hidden from) these giai cấp. */
+            notClasses: ids,
             /** 10.2: starting rung by the highest exam passed (Tiến sĩ starts higher). */
             entryByExam: z.record(z.number().int().min(0)).default({}),
             /** {rung} = the new rung's name. */
@@ -3347,6 +3385,13 @@ export const SchoolingFileSchema = z.object({
     teacherRole: z.string().min(1), classmateRole: z.string().min(1),
     /** Origins that may enter without the fee check failing them first (a poor child cannot pay a tư thục). */
     minSilver: z.number().min(0).default(0),
+    /** 15.3: the giai cấp whose children are sent here at autoEnrollAge without asking (Thượng thư phòng, tộc học…). */
+    classes: ids,
+    autoEnrollAge: z.number().int().min(0).optional(),
+    /** 15.3: học lực gained a year × this (a thái phó teaches better than a thầy đồ làng). */
+    gradeMul: z.number().min(0).default(1),
+    /** 15.3: the enrol line of this school ({school}, {teacher}); else texts.enroll. */
+    enrollText: z.string().min(1).optional(),
   }).strict()).min(1),
   trades: z.array(z.object({
     id, name: z.string().min(1), masterRole: z.string().min(1),
@@ -3391,9 +3436,11 @@ export type ExamsFile = z.infer<typeof ExamsFileSchema>;
 
 /** 10.3 content/jobs.json: nhóm nghề and ~30 jobs, each a short ladder with pay, months, upkeep and who works there. */
 export const JobsFileSchema = z.object({
-  groups: z.array(z.object({ id, name: z.string().min(1), glyph: z.string().min(1) }).strict()).min(1),
+  /** 15.4: `classes`: the giai cấp who would take a job of this group (empty: everyone); a job's own list wins. */
+  groups: z.array(z.object({ id, name: z.string().min(1), glyph: z.string().min(1), classes: ids }).strict()).min(1),
   jobs: z.array(z.object({
     id, group: id, name: z.string().min(1), description: z.string().min(1),
+    classes: ids,
     rungs: z.array(z.string().min(1)).min(1),
     /** Lượng bạc a year at each rung (last value repeats). */
     pay: z.array(z.number().min(0)).min(1),

@@ -5,7 +5,7 @@
     "name": "Về thăm quê",
     "icon": "鄉",
     "text": "Gác mọi việc, về quê ở với người nhà vài tháng.",
-    "conditions": { "age": { "min": 16 } },
+    "conditions": {"notClasses": ["hoang_toc"], "age": {"min": 16}},
     "months": 2,
     "cost": [{ "silver": 3 }],
     "free": {
@@ -43,6 +43,7 @@
     "name": "Dự tiệc, kết giao",
     "icon": "宴",
     "text": "Một bữa tiệc, vài chén rượu, mấy người quen mới. Mị lực quyết định họ có nhớ tên ngươi.",
+    "byClass": {"hoang_toc": {"name": "Dự yến tiệc tông thất", "text": "Yến tiệc trong cung, chén vàng đũa ngọc, ai cười với ai cũng có ý."}, "quyen_quy": {"name": "Dự yến tiệc thế gia", "text": "Thế gia mở yến, con cháu các nhà ngồi đủ, rượu ngon mà lời còn ngon hơn."}, "thuong_gia": {"name": "Dự tiệc thương hội", "text": "Thương hội mở tiệc, ai cũng đem theo bàn tính trong bụng."}, "vo_gia": {"name": "Uống rượu với hào kiệt", "text": "Bày vò rượu, mời mấy tay hảo hán qua đường ngồi chung."}, "nong_gia": {"name": "Uống rượu đầu làng", "text": "Chiều nông nhàn, mấy người trong làng ngồi quán đầu đình chén chú chén anh."}},
     "conditions": { "age": { "min": 16 } },
     "months": 1,
     "cost": [
@@ -92,7 +93,7 @@
     "name": "Theo tiêu cục áp tiêu",
     "icon": "鏢",
     "text": "Hai tháng đường xa, giữ một xe hàng không phải của mình. Thân thủ quyết định tiền công hay thương tích.",
-    "conditions": { "age": { "min": 16 }, "anyOf": [{ "martial": { "min": 0 } }, { "realm": { "min": "luyen_khi" } }] },
+    "conditions": {"classes": ["thuong_gia", "vo_gia", "nong_gia", "ban_dan", "tu_gia"], "age": {"min": 16}, "anyOf": [{"martial": {"min": 0}}, {"realm": {"min": "luyen_khi"}}]},
     "months": 2,
     "limit": { "perYear": 1 },
     "check": { "stat": "stat.physique", "difficulty": 45 },
@@ -138,7 +139,7 @@
     "name": "Làm thuê thời vụ",
     "icon": "傭",
     "text": "Gánh hàng, gặt thuê, khuân vác ở bến. Ba tháng đổi lấy ít bạc vụn.",
-    "conditions": { "age": { "min": 12 }, "realm": { "max": "pham_nhan" } },
+    "conditions": {"classes": ["vo_gia", "nong_gia", "ban_dan"], "age": {"min": 12}, "realm": {"max": "pham_nhan"}},
     "months": 3,
     "outcomes": [
       {

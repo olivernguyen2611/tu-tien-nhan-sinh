@@ -1,5 +1,6 @@
 // Main screen in a BitLife-style layout: who-you-are bar on top, life log in the
 // middle, a dock with the big age button, and stat bars underneath.
+import { classDef, classOf } from '../../systems/socialClass';
 import type { DiscipleAct } from '../../systems/discipleActs';
 import type { ComponentChildren } from 'preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
@@ -198,6 +199,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   const logRef = useRef<HTMLElement>(null);
   const { character: c, stats, cult, money } = state;
   const origin = content.origins.find((o) => o.id === c.originId);
+  const cls = classDef(content, classOf(state, content));
   const warn = extremeWarnings(state, content);
   const force = innerForce(state, content);
   const dao = daoView(state);
@@ -377,7 +379,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
             <div class="kicker">Nhân vật</div>
             <h2>{c.name}</h2>
             <p class="story">
-              {c.gender === 'nam' ? 'Nam' : 'Nữ'} · {origin?.name} · quê {c.hometown}{lifeStage(content, c.age) ? ` · ${lifeStage(content, c.age)!.name}` : ''} · độ khó {difficultyName(state, content)}
+              {c.gender === 'nam' ? 'Nam' : 'Nữ'} · {origin?.name}{cls && cls.name !== origin?.name ? ` (${cls.name})` : ''} · quê {c.hometown}{lifeStage(content, c.age) ? ` · ${lifeStage(content, c.age)!.name}` : ''} · độ khó {difficultyName(state, content)}
             </p>
             <div class="profile-grid">
               {APTITUDE_LABELS.map(([key, label, glyph, term]) => {

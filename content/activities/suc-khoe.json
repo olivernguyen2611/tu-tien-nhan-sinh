@@ -89,6 +89,7 @@
     "name": "Mời lang trung",
     "icon": "醫",
     "text": "Mời thầy thuốc trong huyện tới bắt mạch, kê đơn.",
+    "byClass": {"hoang_toc": {"name": "Truyền thái y", "icon": "御", "text": "Sai thái giám chạy sang Thái y viện, gọi người giỏi nhất tới bắt mạch."}, "quyen_quy": {"name": "Mời danh y về phủ", "text": "Cho kiệu đi rước vị danh y có tiếng nhất trong thành."}, "tu_gia": {"name": "Mời tộc y", "text": "Nhờ vị tộc y già trong họ tới xem bệnh."}},
     "conditions": {
       "ailment": {
         "any": true
@@ -144,6 +145,7 @@
     "icon": "藥",
     "text": "Ra tiệm thuốc bắc tả bệnh, xin vài thang về sắc.",
     "conditions": {
+      "notClasses": ["hoang_toc"],
       "ailment": {
         "any": true
       }
@@ -197,6 +199,7 @@
     "icon": "符",
     "text": "Rẻ thì rẻ, linh thì chưa chắc. Thầy cúng đốt bùa trừ tà.",
     "conditions": {
+      "classes": ["quan_gia", "thuong_gia", "vo_gia", "nong_gia", "ban_dan"],
       "ailment": {
         "any": true
       }
@@ -394,6 +397,7 @@
     "name": "Tắm suối nước nóng",
     "icon": "泉",
     "text": "Lên núi tắm suối nước nóng, nghe đồn trị được đau lưng.",
+    "byClass": {"hoang_toc": {"name": "Tắm suối nóng ở hành cung", "text": "Xa giá rời kinh, tới hành cung có suối nước nóng nghỉ mấy hôm."}},
     "conditions": {
       "age": {
         "min": 16

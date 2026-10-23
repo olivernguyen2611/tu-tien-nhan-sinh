@@ -1,0 +1,111 @@
+[
+  {
+    "id": "gc_thuong_thu_phong_ngay_dau",
+    "category": "study",
+    "title": "Ngày đầu ở Thượng thư phòng",
+    "text": "Trời chưa sáng đã có thái giám gọi dậy. Trong Thượng thư phòng, {teacher} đứng chờ, cạnh ngươi là một thư đồng cùng tuổi, đầu cúi gằm.",
+    "themes": ["study"],
+    "conditions": { "school": { "at": "thuong_thu_phong" }, "tier": ["pham_gian"] },
+    "weight": 30,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Ngồi ngay ngắn, đọc theo thái phó từng chữ",
+        "result": { "text": "Thái phó gật đầu, ghi một dòng vào sổ. Chiều ấy phụ hoàng hỏi tới, nghe nói ngươi chăm thì mỉm cười.", "effects": { "grade": 4, "stat.intellect": 1, "throneBar": { "favor": 2 } } }
+      },
+      {
+        "text": "Bắt thư đồng chép bài thay",
+        "result": { "text": "Thư đồng chép đẹp hơn ngươi. Thái phó nhìn hai nét chữ, không nói gì, chỉ quất thước vào tay thư đồng.", "effects": { "grade": 1, "stat.happiness": 2, "karma": -1 } }
+      },
+      {
+        "text": "Hỏi thái phó vì sao ông phải quỳ trước một đứa trẻ",
+        "result": { "text": "Thái phó im lâu lắm rồi đáp: \"Lạy cái ghế mà điện hạ có thể sẽ ngồi.\" Câu ấy ngươi nhớ suốt đời.", "effects": { "stat.intellect": 2, "stat.daoHeart": 2 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_thuong_thu_phong_thu_dong",
+    "category": "study",
+    "title": "Thư đồng chịu đòn",
+    "text": "Ngươi quên bài. Theo lệ, hoàng tử không bị đánh, thư đồng chịu thay. {teacher} cầm thước đứng chờ ngươi lên tiếng.",
+    "themes": ["study"],
+    "conditions": { "school": { "at": "thuong_thu_phong" }, "tier": ["pham_gian"], "age": { "min": 8, "max": 15 } },
+    "weight": 12,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Xin chịu đòn thay thư đồng",
+        "result": { "text": "Thái phó ngẩn ra, rồi đánh nhẹ hai thước vào tay ngươi. Thư đồng nhìn ngươi như nhìn ân nhân, từ đó theo ngươi không rời.", "effects": { "stat.charm": 2, "karma": 2, "stat.health": -1 } }
+      },
+      {
+        "text": "Im lặng, để lệ là lệ",
+        "result": { "text": "Mười thước đánh xuống tay thư đồng. Ngươi đọc lại bài, lần này không sót chữ nào.", "effects": { "grade": 3, "stat.daoHeart": -1 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_toc_hoc_ngay_dau",
+    "category": "study",
+    "title": "Ngày đầu ở tộc học",
+    "text": "Tộc học xây trong từ đường, bàn ghế bằng gỗ lim. Đám con cháu trong họ ngồi theo vai vế, ngươi được xếp ở hàng giữa.",
+    "themes": ["study"],
+    "conditions": { "school": { "at": "toc_hoc" }, "tier": ["pham_gian"] },
+    "weight": 30,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Thi đọc với anh họ ngồi hàng đầu",
+        "result": { "text": "Ngươi đọc nhanh hơn một câu. Anh họ hậm hực, tiên sinh thì ghi tên ngươi lên bảng.", "effects": { "grade": 3, "stat.intellect": 1, "stat.happiness": 1 } }
+      },
+      {
+        "text": "Kết thân với đứa em họ nhút nhát",
+        "result": { "text": "Hai đứa chia nhau đĩa bánh tộc học phát buổi trưa. Từ đó có người đi học cùng.", "effects": { "stat.charm": 2, "stat.happiness": 2 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_quoc_tu_giam_binh_van",
+    "category": "study",
+    "title": "Bình văn ở Quốc Tử Giám",
+    "text": "Đầu tháng, Quốc Tử Giám bình văn. Bài của giám sinh được dán lên tường cho cả trường đọc, bài dở bị đọc to cho cả trường cười.",
+    "themes": ["study"],
+    "conditions": { "school": { "at": "quoc_tu_giam" }, "tier": ["pham_gian"] },
+    "weight": 25,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Viết một bài bàn chuyện thuế má thật thà",
+        "requires": { "stats": [{ "stat": "stat.intellect", "gte": 40 }] },
+        "result": { "text": "Bài của ngươi được dán ở chỗ cao nhất. Có một vị quan lớn đi qua, đứng đọc rất lâu.", "effects": { "grade": 5, "reputation": { "trieu_dinh": 3 }, "stat.happiness": 2 } }
+      },
+      {
+        "text": "Viết bài ca tụng, cho an toàn",
+        "result": { "text": "Bài không hay không dở, không ai nhớ. Ngươi cũng vậy.", "effects": { "grade": 2, "stat.happiness": -1 } }
+      },
+      {
+        "text": "Mua bài của một giám sinh nghèo",
+        "result": { "text": "Bài được khen. Đứa giám sinh nghèo nhìn ngươi từ xa, tay vẫn còn cầm bạc.", "effects": { "grade": 3, "silver": -10, "karma": -2, "stat.happiness": 1 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_chua_lang_hoc_chu",
+    "category": "study",
+    "title": "Học chữ ở chùa",
+    "text": "Sư thầy {teacher} dạy chữ bằng que vạch trên sân đất. Ngươi học ba chữ, quét sân hai lượt, gánh bốn thùng nước.",
+    "themes": ["study"],
+    "conditions": { "school": { "at": "chua_lang" }, "tier": ["pham_gian"] },
+    "weight": 25,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đêm về vạch chữ lên tay mà nhớ",
+        "result": { "text": "Sáng ra ngươi đọc lại không sai chữ nào. Sư thầy cho thêm một bát cháo.", "effects": { "grade": 4, "stat.intellect": 1, "stat.daoHeart": 1 } }
+      },
+      {
+        "text": "Hỏi sư thầy chữ \"tâm\" viết thế nào",
+        "result": { "text": "Sư thầy vạch một nét cong, ba chấm. \"Dễ viết, khó giữ.\" Ngươi nghĩ mãi câu ấy.", "effects": { "stat.daoHeart": 3, "stat.happiness": 1 } }
+      }
+    ]
+  }
+]

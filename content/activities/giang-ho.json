@@ -6,6 +6,7 @@
     "icon": "門",
     "text": "Lên núi xin bái nhập một danh môn chính phái. Cửa nào cũng có bài thử riêng.",
     "conditions": {
+      "notClasses": ["hoang_toc"],
       "law": {
         "trial": false
       },
@@ -67,6 +68,7 @@
     "icon": "幫",
     "text": "Tìm tới một bang hội, tiêu cục hay thương hội đang cần người.",
     "conditions": {
+      "classes": ["thuong_gia", "vo_gia", "nong_gia", "ban_dan"],
       "law": {
         "trial": false
       },
@@ -129,6 +131,7 @@
     "icon": "黑",
     "text": "Tìm tới chốn hắc đạo: sơn trại, giáo phái, sát thủ lâu. Ở đó người ta không hỏi quá khứ.",
     "conditions": {
+      "classes": ["thuong_gia", "vo_gia", "nong_gia", "ban_dan"],
       "law": {
         "trial": false
       },
@@ -376,6 +379,7 @@
   "icon": "館",
   "text": "Nộp bạc cho võ quán đầu trấn, theo sư phụ học một bộ quyền cước nhập môn.",
   "conditions": {
+    "notClasses": ["hoang_toc", "quyen_quy", "tu_gia"],
    "age": {
     "min": 8
    },
@@ -483,6 +487,7 @@
   "name": "Ghé lò rèn",
   "icon": "鍛",
   "text": "Tới lò rèn xem binh khí. Món tốt thì đắt, món rẻ thì giòn.",
+  "byClass": {"hoang_toc": {"name": "Xin binh khí từ Binh bộ", "icon": "兵", "text": "Một tờ thủ dụ, Binh bộ đem tới mấy món binh khí tốt nhất kho."}, "quyen_quy": {"name": "Gọi thợ rèn vào phủ", "text": "Cho người gọi thợ rèn giỏi nhất thành vào phủ đo tay mà rèn."}},
   "conditions": {
    "age": {
     "min": 14
@@ -606,6 +611,7 @@
   "icon": "窺",
   "text": "Nấp sau tường võ quán, nhìn lén người ta dạy võ rồi về tự tập. Bị bắt là ăn đòn.",
   "conditions": {
+    "classes": ["nong_gia", "ban_dan"],
    "age": {
     "min": 8
    },
@@ -663,6 +669,7 @@
   "icon": "車",
   "text": "Nhận một chuyến tiêu đường dài: tự chọn đường, tự gánh lấy rủi ro. Tiền công đi theo nguy hiểm.",
   "conditions": {
+    "classes": ["thuong_gia", "vo_gia", "nong_gia", "ban_dan", "tu_gia"],
    "age": {
     "min": 16
    },
@@ -713,6 +720,7 @@
   "icon": "榜",
   "text": "Cổng huyện nha dán đầy cáo thị: truy nã, diệt cướp, tìm người. Bóc một tờ xuống là nhận việc.",
   "conditions": {
+    "classes": ["thuong_gia", "vo_gia", "nong_gia", "ban_dan", "tu_gia"],
    "age": {
     "min": 16
    },
@@ -771,6 +779,7 @@
   "icon": "俠",
   "text": "Đi một vòng các làng, thấy chuyện bất bình thì ra tay. Có khi cứu được người, có khi bị người lợi dụng.",
   "conditions": {
+    "notClasses": ["hoang_toc"],
    "age": {
     "min": 16
    },
@@ -843,6 +852,7 @@
   "icon": "擂",
   "text": "Hội chợ có lôi đài, ai trụ được ba trận thì lĩnh thưởng. Dưới đài có người đặt cược.",
   "conditions": {
+    "classes": ["thuong_gia", "vo_gia", "nong_gia", "ban_dan", "tu_gia"],
    "age": {
     "min": 16
    },

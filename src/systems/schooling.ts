@@ -5,6 +5,7 @@ import type { Content } from '../core/content';
 import { Rng } from '../core/rng';
 import type { GameState, LogLine } from '../core/types';
 import { createNpc } from './npcs';
+import { classOf } from './socialClass';
 
 type School = NonNullable<GameState['school']>;
 type Trade = NonNullable<GameState['trade']>;
@@ -67,7 +68,7 @@ export function enrollSchool(state: GameState, content: Content, schoolId: strin
   const name = s.npcs.find((n) => n.id === teacher.id)?.name ?? '';
   const school: School = { ...schoolOf(s), at: def.id, since: s.character.age, teacher: teacher.id, ever: true };
   s = { ...s, school, flags: { ...s.flags, di_hoc: true } };
-  const text = content.schooling?.texts.enroll;
+  const text = def.enrollText ?? content.schooling?.texts.enroll;
   return text ? { ...s, log: pushLines(s, [{ text: fill(text, { school: def.name, teacher: name }), tone: 'good' }]) } : s;
 }
 
@@ -114,9 +115,14 @@ export function schoolYear(state: GameState, content: Content): GameState {
   const age = state.character.age;
   let s = state;
   const lines: LogLine[] = [];
+  // 15.3: a child of a house with its own school is sent there (Thượng thư phòng, tộc học, tư thục of a quan gia).
+  const cls = classOf(s, content);
+  const auto = !schoolOf(s).at && !schoolOf(s).ever && cls && s.cult.realm === 'pham_nhan' && !s.law?.jail && age < cfg.leaveAge
+    ? file.schools.find((x) => x.autoEnrollAge !== undefined && age >= x.autoEnrollAge && x.classes.includes(cls)) : undefined;
+  if (auto) s = enrollSchool(s, content, auto.id);
   const sc = schoolOf(s);
   const def = schoolDef(content, sc.at);
-  if (def) {
+  if (def && !auto) {
     if (age >= cfg.leaveAge) {
       s = leaveSchool(s);
       lines.push({ text: fill(file.texts.leave, { school: def.name, grade: Math.round(sc.grade) }), tone: 'normal' });
@@ -124,7 +130,7 @@ export function schoolYear(state: GameState, content: Content): GameState {
       s = leaveSchool(s);
       lines.push({ text: fill(file.texts.dropOut, { school: def.name }), tone: 'bad' });
     } else {
-      const gain = cfg.gradeBase + s.stats.intellect * cfg.intellectWeight;
+      const gain = (cfg.gradeBase + s.stats.intellect * cfg.intellectWeight) * def.gradeMul;
       s = addGrade({ ...s, money: { ...s.money, silver: s.money.silver - def.fee } }, gain);
     }
   }

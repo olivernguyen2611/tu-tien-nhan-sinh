@@ -6,6 +6,7 @@
     "icon": "媒",
     "text": "Mang trầu cau tới nhờ bà mối tìm cho một mối tử tế.",
     "conditions": {
+      "notClasses": ["hoang_toc"],
       "age": {
         "min": 18
       },

@@ -16,9 +16,10 @@ import { devPeople, devPersonCheat, personCheatsAvailable, type PersonCheat } fr
 import { DevPersonSheet } from './DevPersonSheet';
 import type { SaveMeta } from '../../systems/save';
 import type { RewindOption } from '../../systems/timeline';
+import { classOf } from '../../systems/socialClass';
 import {
   DEV_STATS, devAddKarma, devAddLifespan, devAddMoney, devAddStat, devClearHeartDemon, devFillProgress, devFindEvents, devFoundClan, devFoundSect,
-  devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devWorldEvent, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect, devPastTie, devSpecial, devSystemPoints, devSystemBetray, devDrift, devMerit, devSetTier, devMeetKind, devSetPhase, devSetWorldVar,
+  devGiveAllItems, devGiveAllScrolls, devGiveItem, devHeal, devLearnTechnique, devJoinSect, devWorldEvent, devKill, devMeetNpc, devMetaFingerPity, devMetaPoints, devMetaTalent, devMetaUnlockAll, devNextStage, devPastSect, devPastTie, devSpecial, devSystemPoints, devSystemBetray, devDrift, devMerit, devSetTier, devSetClass, devMeetKind, devSetPhase, devSetWorldVar,
   devAwakenBody, devResetBond, devChildrenRoot, devSetBody, devStartMartialQuest, devQuestStep, devMarry, devResetEventHistory, devSetRealFestival, devLearnAllArts, devWound, devWulinLeader, devRootOptions, devSetMartial, devSetRoot, devSpouseAffinity,
   devResetItemUse, devResetFingerCooldowns, devSetFingerLevel, devSetFlag, devSetGoldenFinger, devSetRealm, devSkipYears, devStartFight, devTakeChosen, devToggleTrait, devTriggerEvent,
 } from '../../systems/dev';
@@ -244,6 +245,9 @@ export function DevPanel({ state, content, meta, rewinds, onRewindTime, onChange
             <button class="chip-btn" disabled={!live || !state.trungSinh} onClick={() => onChange(devDrift(state, -100))}>Lịch sử về 0</button>
             {content.world.tiers.map((t) => (
               <button key={t.id} class="chip-btn" disabled={!live || state.tier === t.id} onClick={() => onChange(devSetTier(state, content, t.id))}>Tầng: {t.name}</button>
+            ))}
+            {(content.classes ?? []).map((c) => (
+              <button key={c.id} class="chip-btn" disabled={!live || classOf(state, content) === c.id} onClick={() => onChange(devSetClass(state, content, c.id))}>Giai cấp: {c.name}</button>
             ))}
             {(content.worldState?.phases ?? []).map((p) => (
               <button key={p.id} class="chip-btn" disabled={!live || state.times?.phase === p.id} onClick={() => onChange(devSetPhase(state, content, p.id))}>Thời cuộc: {p.name}</button>

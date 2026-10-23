@@ -23,6 +23,7 @@ import { goldenFingerMeets } from '../goldenFinger';
 import { pastSectMeets } from '../pastSect';
 import { hasUsableInnateRoot } from '../cultivation';
 import { bornKnowing } from '../knowledge';
+import { classOf } from '../socialClass';
 import { realmTier } from '../realmGrade';
 
 export type Conditions = Partial<GameEvent['conditions']>;
@@ -85,6 +86,11 @@ export function meets(state: GameState, c: Conditions | undefined, content?: Con
     if ((!!step && state.martial.years >= step.years) !== c.martial.ready) return false;
   }
   if (c.origins?.length && !c.origins.includes(state.character.originId)) return false;
+  if (c.classes?.length || c.notClasses?.length) {
+    const cls = classOf(state, content);
+    if (c.classes?.length && (!cls || !c.classes.includes(cls))) return false;
+    if (c.notClasses?.length && cls && c.notClasses.includes(cls)) return false;
+  }
   if (c.talentsAny?.length && !c.talentsAny.some((t) => state.talents.includes(t))) return false;
   if (c.sect && content) {
     const s = c.sect;

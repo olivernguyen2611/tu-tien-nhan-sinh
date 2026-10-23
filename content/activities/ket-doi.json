@@ -6,6 +6,7 @@
     "icon": "遷",
     "text": "Bán bớt đồ đạc, thuê xe, tới một vùng đất mới. Người quen cũ ở xa, tình nghĩa nhạt dần.",
     "conditions": {
+      "notClasses": ["hoang_toc"],
       "age": {
         "min": 18
       },
@@ -71,6 +72,7 @@
     "name": "Xuất gia",
     "icon": "僧",
     "text": "Cạo tóc quy y, bỏ lại hồng trần.",
+    "byClass": {"hoang_toc": {"name": "Xuất gia ở quốc tự", "text": "Xin thánh chỉ, cạo tóc ở quốc tự, từ nay ngọc điệp ghi thêm một pháp danh."}},
     "conditions": {
       "age": {
         "min": 16

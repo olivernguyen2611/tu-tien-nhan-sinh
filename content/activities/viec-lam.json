@@ -344,6 +344,7 @@
     "icon": "穫",
     "text": "Gặt thuê cho nhà giàu lúc vào mùa.",
     "conditions": {
+      "classes": ["vo_gia", "nong_gia", "ban_dan"],
       "tier": [
         "pham_gian"
       ],
@@ -385,6 +386,7 @@
     "icon": "渡",
     "text": "Chèo đò đưa khách qua sông những ngày chợ phiên.",
     "conditions": {
+      "classes": ["vo_gia", "nong_gia", "ban_dan"],
       "tier": [
         "pham_gian"
       ],

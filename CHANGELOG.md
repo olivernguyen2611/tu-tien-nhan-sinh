@@ -8,6 +8,56 @@
 
 ## [Chưa phát hành]
 
+### 15.4 Việc làm, đường đời, việc với người nhà theo giai cấp (2026-10-23)
+- **Việc làm**: mỗi nhóm nghề trong `jobs.json` ghi giai cấp nào làm (`classes`; nghề riêng có thể ghi đè, như bộ khoái nhận cả con quan gia).
+  - Hoàng tộc không thấy nghề nào nên mục Việc làm ẩn hẳn.
+  - Quyền quý chỉ thấy nghề văn. Quan gia không làm ruộng, không vào hạ cửu lưu.
+  - Nghề đang làm vẫn hiện dù giai cấp đã đổi.
+- **Đường đời**: `careers.json` thêm `notClasses`. Hoàng tộc không đi Quan lộ, Thương, Võ lâm, Tạp dịch; quyền quý và tu tiên thế gia không làm tạp dịch.
+- **Việc với người nhà**: `family-actions.json` thêm `classes`/`notClasses`/`byClass`.
+  - Hoàng tử "Xin ban thưởng" thay vì "Xin tiền", "Hầu phụ mẫu dùng thiện" thay vì "Phụ việc nhà".
+  - Con nhà quyền quý thì "Xin tiền tiêu", "Thần hôn định tỉnh".
+- **Bổng lộc**: từ 12 tuổi, mỗi năm tông thất nhận 60 lượng, con quyền quý 25 lượng (`balance.classStipend`).
+  - Chỉ khi còn là phàm nhân, không ở ngục, chưa lên ngôi.
+  - Hoàng tộc mất bổng lộc khi triều đại đã đổi.
+- Validator kiểm tra giai cấp nhắc tới trong nghề, đường đời, việc người nhà và bổng lộc.
+
+### 15.3 Học hành theo giai cấp (2026-10-23)
+- Bốn trường mới (`schooling.json`):
+  - **Thượng thư phòng** cho hoàng tộc: thầy là thái phó, bạn học là thư đồng.
+  - **Tộc học** cho quyền quý và tu tiên thế gia.
+  - **Quốc Tử Giám** cho giám sinh.
+  - **Chùa làng** cho bần dân: học chữ không mất tiền, đổi lại quét sân gánh nước.
+- Nhà có trường riêng thì 6 tuổi **tự nhập học**, không phải bấm xin:
+  - hoàng tộc vào Thượng thư phòng;
+  - quyền quý và tu tiên thế gia vào tộc học;
+  - quan gia vào tư thục.
+- Mỗi trường có câu nhập học riêng và hệ số học lực riêng (`gradeMul`): thái phó và Quốc Tử Giám dạy giỏi hơn trường làng, chùa dạy chậm hơn.
+- Ba hoạt động mới (`hoc-theo-giai-cap.json`):
+  - **Vào Quốc Tử Giám**: quyền quý vào bằng ấm sinh, con nhà quan phải đỗ thi huyện.
+  - **Xin vào tư thục**: cho thương gia, võ gia, nông gia.
+  - **Xin học chữ ở chùa**: cho bần dân, nông gia.
+- 5 sự kiện học đường mới: ngày đầu ở Thượng thư phòng, thư đồng chịu đòn thay, ngày đầu ở tộc học, bình văn ở Quốc Tử Giám, học chữ ở chùa.
+- Các sự kiện trường làng (trường thấp lè tè, bị bắt nạt ở bờ ao, không đủ tiền đóng học, thi đọc thơ ở đình…) không rơi vào hoàng tộc, quyền quý, tu tiên thế gia. "Bán ruộng lấy lộ phí" không rơi vào nhà quyền quý. Sự kiện "Vào trường tư thục" chỉ đến với nhà buôn, võ, nông.
+
+### 15.2 Gắn nhãn hoạt động cũ theo giai cấp (2026-10-23)
+- **Lỗi anh báo:** hoàng tử không còn thấy "Xin vào trường làng", "Tự học lén", "Nghe lỏm ngoài cửa lớp". Ba việc này giờ chỉ dành cho võ gia, nông gia, bần dân.
+- 23 hoạt động chỉ dành cho người bình dân (`classes`): làm mướn từ nhỏ, làm thuê, làm vụ mùa, chèo đò, học lén võ, chiếu tài xỉu, mời thầy cúng, móc túi, trộm vặt, trộm nhà giàu, cướp đường, lừa đảo, buôn lậu, viết thuê, vào bang hội, đầu quân hắc đạo, áp tiêu, nhận tiêu xa, bảng treo thưởng, lôi đài hội chợ.
+- 26 hoạt động ẩn với một số giai cấp (`notClasses`):
+  - Hoàng tộc, quyền quý, quan gia không học nghề rèn, mộc, may, bếp, gốm.
+  - Hoàng tộc, quyền quý không học võ quán, võ đường làng, không mở lớp dạy chữ.
+  - Hoàng tộc không tòng quân, mua quan, ôn thi, lều chõng đi thi, bái nhập môn phái, về thăm quê, nhờ bà mối, chuyển nhà, bốc thuốc tiệm, hành hiệp, hội chợ, thanh lâu, sòng bạc, xem hát đình làng, chợ thú nuôi, chúc Tết làng xóm, tảo mộ nghĩa địa, thư quán đầu phố. Những việc này sẽ có bản riêng của hoàng tộc ở 15.5 (cải trang vi hành mở lại một số).
+- 9 hoạt động đổi tên theo giai cấp (`byClass`): Truyền thái y, Mời danh y về phủ, Mời tộc y; Dự yến tiệc tông thất, thế gia, thương hội, Uống rượu với hào kiệt, Uống rượu đầu làng; Thu điền vây săn; Tắm suối nóng ở hành cung; Xuất gia ở quốc tự; Xin binh khí từ Binh bộ; Xin vào cấm quân; Tế Thái miếu; Dự tông thất đại hội.
+- Test "danh sách cấm": hoàng tử và hoàng thân ở mọi tuổi không bao giờ thấy việc của thường dân; con nhà quyền quý, quan, tu tiên thế gia không thấy trường làng, làm thuê, móc túi.
+
+### 15.1 Nền giai cấp (2026-10-23)
+- Thế giới có 8 **giai cấp** (`character/classes.json`): Hoàng tộc, Quyền quý, Tu tiên thế gia, Quan gia, Thương gia, Võ gia, Nông gia, Bần dân, xếp theo thứ bậc. Mỗi xuất thân thuộc một giai cấp (`class` trong `origins.json`); hồ sơ nhân vật ghi giai cấp cạnh xuất thân.
+- Điều kiện mới `classes` / `notClasses` cho hoạt động, sự kiện… (giai cấp hiện tại, đọc lười từ xuất thân nên save cũ không cần đổi).
+- `balance.classes`: bảng tắt theo giai cấp giống `balance.standing` (hoạt động theo id/nhóm, sự kiện theo id/loại/chủ đề). Hoạt động tự ghi `classes` thì vẫn mở cho giai cấp đó.
+- `byClass` trong hoạt động: cùng một việc, mỗi giai cấp thấy tên, chữ, câu mô tả riêng.
+- Giai cấp có thể đổi (`character.classId`, hàm `setClass`) để làm phất lên, sa sút ở 15.11. Developer mode có nút đổi giai cấp.
+- Validator báo lỗi khi xuất thân, hoạt động hay `balance.classes` nhắc tới giai cấp không có.
+
 ### 15.0 Hoàng tộc khớp triều đình (2026-10-23)
 - Trước đây một đời hoàng tử có ba "hoàng gia" không liên quan: cha mẹ anh em trong tab Gia đình là người thường họ ngẫu nhiên, hoàng đế và thái tử của triều đình chỉ là cái tên, còn các hoàng tử tranh ngôi là một danh sách thứ ba. Vì vậy vua băng hà mà cha vẫn sống, thái tử lên ngôi là người lạ.
 - Nay cha của hoàng tử, công chúa **chính là hoàng đế đương triều**; cả nhà mang **quốc tính** của triều đại (`royalSurnames` trong `world-state.json`); mẹ là hoàng hậu hoặc phi tần; thêm hoàng huynh con các phi khác để có thứ bậc kế vị.
