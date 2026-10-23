@@ -82,7 +82,7 @@ const APTITUDE_LABELS = [
   ['daoHeart', 'Đạo tâm', '心', 'dao_tam'],
 ] as const;
 
-export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onActivity, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onAsset, onLearn, onTrain, onQuest, onFormation, onBeast, onField, onExam, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, dev, theme, onToggleTheme }: {
+export function MainScreen({ state, content, saveWarning, onAdvance, onFastForward, onLeisure, onActivity, onSeclude, onRentCave, onPlaceStrand, onMeetIllusion, onCraft, onDisciple, onClan, onChoose, onFamilyAction, onRomance, onGiftNpc, onNpcAct, onBond, onSaveNpc, getSources, onImport, onUseItem, onFingerAction, onSystemAction, onMarket, onTravel, onCombat, onSettle, onBreakthrough, onPractice, onJoinCareer, onTakeJob, onAsset, onLearn, onTrain, onQuest, onFormation, onBeast, onField, onExam, onSectAction, onFate, onTip, onNewLife, onSummary, onSaves, onSettings, dev, theme, onToggleTheme }: {
   state: GameState;
   content: Content;
   /** Shown when autosave failed. */
@@ -161,6 +161,8 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
   onSummary: () => void;
   /** Open the save slots (Sổ lưu). */
   onSaves: () => void;
+  /** Góp ý 23/10: Cài đặt. */
+  onSettings: () => void;
   /** Set when developer mode is on: apply a cheat, or turn the mode off. */
   dev: { rewinds: RewindOption[]; onRewindTime: (years: number) => void; meta: SaveMeta; onChange: (next: GameState) => void; onMeta: (next: SaveMeta) => void; onDisable: () => void } | null;
   theme: ThemePref;
@@ -253,6 +255,7 @@ export function MainScreen({ state, content, saveWarning, onAdvance, onFastForwa
           {state.trungSinh && <button class="icon-btn" aria-label="Ký ức kiếp trước" title="Ký ức kiếp trước" onClick={() => setMemoryOpen(true)}>憶</button>}
           <button class="icon-btn" aria-label="Túi đồ" title="Túi đồ" onClick={() => setBagOpen(true)}>囊</button>
           <button class="icon-btn" aria-label="Sổ lưu" title="Sổ lưu" onClick={onSaves}>簿</button>
+          <button class="icon-btn" aria-label="Cài đặt" title="Cài đặt" onClick={onSettings}>設</button>
           <span class="desktop-only">
             <ThemeToggle pref={theme} onChange={onToggleTheme} />
           </span>

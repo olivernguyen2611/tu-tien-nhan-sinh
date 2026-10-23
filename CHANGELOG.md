@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### Góp ý 23/10: màn Cài đặt riêng (2026-10-23)
+- Màn hình chính có thêm mục **Cài đặt**; trong lúc chơi có nút 設 cạnh nút Sổ lưu.
+- Cài đặt gom: giao diện ngày/đêm, âm thanh, tua nhanh tối đa, cỡ chữ, giảm chuyển động, ẩn nội dung nhạy cảm, và công tắc chế độ thử nghiệm (bật thì hỏi lại trước, tắt ngay một chạm). Trước đây các mục này nằm cuối Sổ lưu nên khó tìm.
+- Sổ lưu chỉ còn ô lưu, Sổ nhân vật, nhập file, kèm một nút sang Cài đặt.
+
 ### Tổng tra 3: Nợ cũ và những trận đánh "không giết" (2026-10-23)
 - 15 sự kiện "Nợ cũ" (`no-cu.json`): những lựa chọn từ nhiều năm trước quay lại. Gã sư huynh béo năm xưa, nghĩa quân nhớ mặt người thợ rèn báo quan, phú hộ gửi thư nặc danh, hồ ly trả ơn, trưởng lão Vạn Yêu Điện đòi nợ nội đan, Tô gia treo thưởng, chấp sự Vô Chủ Phường, Hàn gia tranh linh mạch, thiếu gia thế gia tái đấu, người ở phòng đấu giá bên cạnh, gã bán đan giả, kẻ hạ độc trong cung, tân vương hỏi tội quốc sư cũ, lời tâu "chỉnh đốn quan lại", đêm xem sao của Thiếu giám. Mỗi sự kiện đọc một cờ trước đây đặt xong là bị quên.
 - 12 trận đánh có lời kể "nó không giết ngươi", "sư huynh kịp cứu", "chỉ lấy long châu" nhưng đối thủ lại mang ý giết (thua là chết). Nay đổi thành ý dạy dỗ hoặc cướp cho khớp lời kể: giữ cổng sơn môn, dẹp nội loạn, đồ đệ phản sư, đại tu sĩ mua đan, kẻ phá chợ, lão quái nhòm động thiên, tri kỷ trở mặt, kiếm khách hấp hối, long châu, Kinh địch "ngã rẽ" (nhánh tự liều mạng, có người cứu)…

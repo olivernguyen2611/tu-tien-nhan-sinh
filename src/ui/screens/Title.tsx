@@ -4,7 +4,7 @@ import { DEV_TAP_GAP_MS, DEV_TAPS, DEV_WARNING } from '../devMode';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import type { ThemePref } from '../theme';
 
-export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, onDevUnlock, onDevOff, onContinue, onStart, onSaves, onRebirth, onCodex, onChallenge, theme, onToggleTheme }: {
+export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, onDevUnlock, onDevOff, onContinue, onStart, onSaves, onSettings, onRebirth, onCodex, onChallenge, theme, onToggleTheme }: {
   canContinue: boolean;
   livesPlayed: number;
   /** Task 5b.1: Luân Hồi points kept across lives. */
@@ -17,6 +17,8 @@ export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, 
   onContinue: () => void;
   onStart: () => void;
   onSaves: () => void;
+  /** Góp ý 23/10: Cài đặt (settings, developer mode switch). */
+  onSettings: () => void;
   /** Task 5b.1: the Luân Hồi đài (shown once a life has ended). */
   onRebirth: () => void;
   /** Task 5b.4: Thiên Thư. */
@@ -58,6 +60,7 @@ export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, 
       {canContinue && <button class="btn-primary start" onClick={onContinue}>Tiếp tục</button>}
       <button class={canContinue ? 'btn-secondary start' : 'btn-primary start'} onClick={onStart}>Nhập thế</button>
       <button class="link-btn" onClick={onSaves}>Sổ lưu</button>
+      <button class="link-btn" onClick={onSettings}>Cài đặt</button>
       {(livesPlayed > 0 || rebirthPoints > 0) && <button class="link-btn" onClick={onRebirth}>Luân Hồi Đài</button>}
       {(livesPlayed > 0 || devMode) && <button class="link-btn" onClick={onCodex}>Thiên Thư</button>}
       {(livesPlayed > 0 || devMode) && <button class="link-btn" onClick={onChallenge}>Thử thách tuần</button>}
