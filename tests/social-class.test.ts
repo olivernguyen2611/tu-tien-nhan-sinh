@@ -376,3 +376,30 @@ describe('Đổi giai cấp (15.11)', () => {
     expect(moved.log.at(-1)!.lines.at(-1)!.text).toContain('Nông gia');
   });
 });
+
+describe('Phủ kín theo giai cấp (15.12)', () => {
+  const ORIGIN: Record<string, string> = {
+    hoang_toc: 'hoang_tu', quyen_quy: 'quy_toc', quan_gia: 'quan_gia', thuong_gia: 'thuong_nhan',
+    vo_gia: 'vo_lam', nong_gia: 'nong_dan', ban_dan: 'co_nhi', tu_gia: 'tu_tien_gia_toc',
+  };
+
+  it('every giai cấp has something to learn or to work at, at 6, 10, 14, 20 and 35', () => {
+    for (const [cls, origin] of Object.entries(ORIGIN)) {
+      for (const age of [6, 10, 14, 20, 35]) {
+        const s = { ...life(origin, age), school: undefined };
+        expect(classOf(s, content)).toBe(cls);
+        const own = activityViews(s, content).filter((a) => a.group === 'hoc_hanh' || a.group === 'nghe');
+        expect(own.length, `${cls} at ${age}`).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it('a hoàng tử never sees the commoner\'s lot', () => {
+    const banned = ['xin_hoc_truong_lang', 'tu_hoc_len', 'nghe_lom', 'lam_muon_som', 'pp_moc_tui', 'an_xin_dau_cho', 'o_do', 'lam_thue', 'chan_trau_cat_co', 'mua_quan', 'tap_am'];
+    for (const age of [6, 10, 14, 20, 35, 50]) {
+      const seen = activityViews(life('hoang_tu', age), content).map((a) => a.id);
+      for (const id of banned) expect(seen, `${id} at ${age}`).not.toContain(id);
+    }
+    expect(jobViews(life('hoang_tu', 30), content)).toHaveLength(0);
+  });
+});

@@ -5,7 +5,7 @@
 import type { Content } from '../core/content';
 import type { GameState, LogLine } from '../core/types';
 import { meets } from './events/conditions';
-import { classDef, classOf, setClass, stipendYear } from './socialClass';
+import { classDef, classOf, houseFell, setClass, stipendYear } from './socialClass';
 
 function pushLine(state: GameState, line: LogLine): GameState {
   const log = state.log.slice();
@@ -27,8 +27,7 @@ export function classShiftYear(state: GameState, content: Content): GameState {
   const cls = classOf(state, content);
   if (!cfg || !cls || !state.alive) return state;
   if (state.character.age - (state.character.classSince ?? -Infinity) < cfg.gap) return state;
-  const t = state.times;
-  if (cls === 'hoang_toc' && !state.reign && t?.eras[0] && t.eras[0].dynasty !== t.dynasty) {
+  if (cls === 'hoang_toc' && !state.reign && houseFell(state)) {
     const text = content.classShifts?.texts.fallen;
     return text ? shiftClass(state, content, cfg.dynastyFall, text, 'bad') : state;
   }

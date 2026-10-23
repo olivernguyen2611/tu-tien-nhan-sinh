@@ -33,8 +33,7 @@ export function stipendYear(state: GameState, content: Content): GameState {
   const silver = cls ? cfg?.silver[cls] ?? 0 : 0;
   if (!cfg || !cls || silver <= 0 || !state.alive || state.character.age < cfg.fromAge) return state;
   if (state.cult.realm !== 'pham_nhan' || state.reign || state.law?.jail) return state;
-  const t = state.times;
-  if (cls === 'hoang_toc' && t && t.eras[0] && t.eras[0].dynasty !== t.dynasty) return state;
+  if (cls === 'hoang_toc' && houseFell(state)) return state;
   const text = classDef(content, cls)?.stipendText?.replace('{silver}', String(silver));
   const log = state.log.slice();
   const last = log[log.length - 1];
@@ -51,4 +50,14 @@ export function seenAs(state: GameState, content: Content, activityId: string): 
   if (!d || !state.flags[d.flag] || !d.activityIds.includes(activityId)) return state;
   const cls = classOf(state, content);
   return cls && d.classes.includes(cls) ? { ...state, character: { ...state.character, classId: d.as } } : state;
+}
+
+/** 15.11: the dynasty the life's house reigned under when it became royal (born into it, or crowned) has fallen. */
+export function houseFell(state: GameState): boolean {
+  const t = state.times;
+  if (!t || t.eras.length === 0) return false;
+  const since = state.character.classSince;
+  const eras = since === undefined ? [t.eras[0]] : t.eras.filter((e) => e.from <= since);
+  const own = eras[eras.length - 1] ?? t.eras[0];
+  return own.dynasty !== t.dynasty;
 }

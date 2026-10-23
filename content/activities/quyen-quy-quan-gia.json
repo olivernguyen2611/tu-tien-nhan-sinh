@@ -137,7 +137,7 @@
     "name": "Theo cha học kinh sử",
     "icon": "經",
     "text": "Tối tối cha mở sách ra giảng, chỗ nào trong trường không dạy thì cha dạy. Cha là quan, chữ của cha là chữ dùng được.",
-    "conditions": { "classes": ["quan_gia"], "tier": ["pham_gian"], "age": { "min": 6, "max": 17 }, "flagsNone": ["no_father"] },
+    "conditions": { "classes": ["quan_gia", "quyen_quy"], "tier": ["pham_gian"], "age": { "min": 6, "max": 17 }, "flagsNone": ["no_father"] },
     "months": 1,
     "outcomes": [
       {

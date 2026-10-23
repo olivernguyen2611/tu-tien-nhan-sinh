@@ -8,6 +8,22 @@
 
 ## [Chưa phát hành]
 
+### 15.12 Cân bằng theo giai cấp (2026-10-23)
+- Tám persona giả lập theo giai cấp (`gc_hoang_toc` … `gc_tu_gia`). Chạy bằng `npm run simulate -- --profile class`; bảng persona có thêm cột "Đổi giai cấp".
+- Kết quả 30 đời mỗi persona:
+  - Tuổi thọ trung bình 67–99.
+  - Bạc cuối đời: hoàng tộc ≈ 5.200, quyền quý ≈ 2.700, thương gia ≈ 10.900, quan gia và bần dân ≈ 1.000.
+  - Mỗi đời làm 20–27 hoạt động khác nhau.
+  - Đổi giai cấp:
+    - bần dân 53% (có ruộng, tìm được nhà);
+    - hoàng tộc 47% (triều đại mất khi còn sống);
+    - các giai cấp khác dưới 10%.
+- Sửa: hoàng tộc chỉ mất thân phận khi chính triều đại của nhà mình mất. Người tự lên ngôi lập triều mới rồi thoái vị không còn bị tính là "mất nước".
+- Test phủ kín:
+  - mỗi giai cấp ở tuổi 6, 10, 14, 20 và 35 đều có việc trong mục Học hành hoặc Nghề;
+  - hoàng tử ở mọi tuổi không thấy trường làng, móc túi, ăn xin, ở đợ, làm thuê, mua quan, tập ấm.
+- Con nhà quyền quý cũng được Theo cha học kinh sử, để tuổi nhỏ không bị trống.
+
 ### 15.11 Đổi giai cấp (2026-10-23)
 - Giai cấp không còn đứng yên. Mỗi năm đọc luật trong `worlds/<id>/character/class-shifts.json`, theo thứ tự:
   - lên ngôi thì thành hoàng tộc;

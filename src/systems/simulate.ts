@@ -46,7 +46,9 @@ export const BOT_PROFILES: BotProfile[] = ['random', 'steady', 'player', 'full']
  * 9.8 Persona phàm nhân: lives that stay mortal (never seek an entry technique nor break through) and live
  * one way. `choice`: first open choice, random, the kindest (karma up) or the cruellest (karma down).
  */
-export type MortalPersona = 'nong_dan' | 'thu_sinh' | 'thuong_nhan' | 'ke_cuop' | 'hiep_khach' | 'ke_luoi' | 'tham_vong' | 'nghia_quan' | 'quyen_than';
+export type MortalPersona = 'nong_dan' | 'thu_sinh' | 'thuong_nhan' | 'ke_cuop' | 'hiep_khach' | 'ke_luoi' | 'tham_vong' | 'nghia_quan' | 'quyen_than' | ClassPersona;
+/** 15.12: one persona per giai cấp, born into it, doing its own activities. */
+export type ClassPersona = 'gc_hoang_toc' | 'gc_quyen_quy' | 'gc_quan_gia' | 'gc_thuong_gia' | 'gc_vo_gia' | 'gc_nong_gia' | 'gc_ban_dan' | 'gc_tu_gia';
 /** 12.10 `ambitious`: the choice that goes furthest toward the throne (else random). `origin`: born into this xuất thân. */
 interface PersonaDef { name: string; origin?: string; career?: string; jobs?: string[]; assets?: string[]; activities: string[]; months: number; train?: boolean; choice: 'first' | 'random' | 'good' | 'evil' | 'ambitious' }
 export const MORTAL_PERSONAS: Record<MortalPersona, PersonaDef> = {
@@ -58,6 +60,14 @@ export const MORTAL_PERSONAS: Record<MortalPersona, PersonaDef> = {
   ke_luoi: { name: 'Kẻ lười', activities: ['ngao_du', 'song_bac', 'tuu_lau'], months: 4, choice: 'first' },
   nghia_quan: { name: 'Thủ lĩnh nghĩa quân', origin: 'nong_dan', jobs: ['lam_ruong'], activities: ['tu_nghia', 'luyen_quyen_som', 'ket_giao', 'doc_sach', 'lam_thue', 'giam_thue', 'tang_thue', 'mo_an_khoa', 'duyet_binh', 'tri_thuy', 'tuan_du', 'dai_xa'], months: 5, train: true, choice: 'ambitious' },
   quyen_than: { name: 'Quyền thần tham vọng', career: 'quan', jobs: ['thay_do', 'thu_lai'], activities: ['xin_hoc_truong_lang', 'leu_chong_di_thi', 'cham_hoc', 'on_thi', 'thu_quan', 'ket_giao', 'doc_sach', 'thang_duong', 'chon_phe_canh', 'muu_do_dai_su', 'ket_vay_canh', 'nuoi_tu_si', 'tao_danh_nghia', 'giam_thue', 'tang_thue', 'mo_an_khoa', 'duyet_binh', 'tri_thuy', 'tuan_du', 'dai_xa'], months: 9, choice: 'ambitious' },
+  gc_hoang_toc: { name: 'Hoàng tộc', origin: 'hoang_tu', activities: ['hoc_le_nghi_cung_dinh', 'doc_sach_tang_thu_cac', 'luan_kinh_nghia', 'tap_cuoi_ngua_ban_cung', 'hau_phe_tau', 'xin_phong_tuoc', 'sai_su_luc_bo', 've_phong_dia', 'nuoi_mon_khach', 'yen_tiec_ton_that', 'thu_dien_vay_san', 'cai_trang_vi_hanh', 'hoi_cho', 'duong_danh'], months: 7, choice: 'first' },
+  gc_quyen_quy: { name: 'Quyền quý', origin: 'quy_toc', activities: ['tap_cuoi_ngua_ban_cung', 'hanh_quyen', 'tap_am', 'vao_cam_quan', 'quan_dien_trang', 'dau_de_dua_ngua', 'mo_thi_xa', 'nuoi_mon_khach', 'lam_mon_sinh', 'thang_duong', 'cai_trang_vi_hanh'], months: 7, choice: 'first' },
+  gc_quan_gia: { name: 'Quan gia', origin: 'quan_gia', career: 'quan', activities: ['theo_cha_hoc_kinh_su', 'theo_cha_di_nham', 'bai_danh_su', 'hanh_quyen', 'ket_van_huu', 'leu_chong_di_thi', 'on_thi', 'nho_the_cha', 'lam_mon_sinh', 'thang_duong'], months: 6, choice: 'first' },
+  gc_thuong_gia: { name: 'Thương gia', origin: 'thuong_nhan', career: 'thuong', assets: ['quan_tra', 'nha_ngoi'], activities: ['hoc_tinh_so', 'theo_cha_ap_hang', 'trong_quay', 'buon_chuyen_xa', 'do_gia_cac_chau', 'gop_von_thuong_hoi', 'nghi_su_thuong_hoi', 'xin_lam_hoang_thuong', 'ket_van_huu'], months: 7, choice: 'random' },
+  gc_vo_gia: { name: 'Võ gia', origin: 'vo_lam', career: 'vo_lam', activities: ['tan_ma_bo', 'hoc_vo_gia_truyen', 'theo_cha_ap_tieu', 'thi_vo_cu', 'thu_do_de', 'ap_tieu', 'len_loi_dai', 'hanh_hiep'], months: 6, train: true, choice: 'good' },
+  gc_nong_gia: { name: 'Nông gia', origin: 'nong_dan', jobs: ['lam_ruong'], assets: ['ruong', 'trau'], activities: ['chan_trau_cat_co', 'mo_cua_bat_oc', 'lam_ruong_giup_nha', 'di_cho_phien', 'khai_hoang', 'doi_cong', 'thue_them_ruong', 'di_phu_dap_de'], months: 7, choice: 'first' },
+  gc_ban_dan: { name: 'Bần dân', origin: 'co_nhi', activities: ['an_xin_dau_cho', 'nhat_cui_ban', 'lam_mo', 'o_do', 'theo_ganh_xiec', 'vao_cai_bang', 'tim_than_the', 'khai_hoang', 'di_phu_dap_de'], months: 7, choice: 'first' },
+  gc_tu_gia: { name: 'Tu tiên thế gia (phàm)', origin: 'tu_tien_gia_toc', activities: ['nghe_toc_lao_giang_dao', 'luyen_the_toc_truyen', 'phu_viec_linh_dien', 'du_toc_ty', 'doc_tang_kinh_gia_toc', 'hau_tong_lao', 'quan_dien_trang'], months: 6, choice: 'first' },
   tham_vong: { name: 'Hoàng tử tham vọng', origin: 'hoang_tu', activities: ['duong_danh', 'ket_dang', 'lap_cong', 'an_nhan', 'ham_hai', 'cham_hoc', 'doc_sach', 'ket_giao', 'giam_thue', 'tang_thue', 'mo_an_khoa', 'duyet_binh', 'tri_thuy', 'tuan_du', 'dai_xa'], months: 6, choice: 'ambitious' },
 };
 /** 12.10: how far a choice goes toward the throne (its plain result, or a check's success). */
@@ -75,7 +85,8 @@ function choiceAmbition(event: GameEvent, index: number, state: GameState): numb
   return (eff.throneAscend ? 100 : 0) + (eff.throneStart ? 30 : 0) + step + (eff.throneBattle ? ((state.throne?.bars.troops ?? 0) >= 40 ? 25 : -5) : 0) + (fu && /binh_bien|khoi_su|kn_|tp_/.test(fu) ? 15 : 0)
     + bars + (typeof eff.throneRival === 'number' ? -eff.throneRival / 2 : 0) + (eff.throneFail ? -50 : 0) + (eff.reignEnd && eff.reignEnd !== 'abdicate' ? -80 : 0) + (eff.die ? -100 : 0);
 }
-export const MORTAL_PROFILES = Object.keys(MORTAL_PERSONAS) as MortalPersona[];
+export const MORTAL_PROFILES = (Object.keys(MORTAL_PERSONAS) as MortalPersona[]).filter((p) => !p.startsWith('gc_'));
+export const CLASS_PROFILES = (Object.keys(MORTAL_PERSONAS) as MortalPersona[]).filter((p) => p.startsWith('gc_'));
 /** 10.12: everyday pastimes any mortal persona tries a few of each year (the ones not open are skipped). */
 const MORTAL_EXTRAS = ['tra_quan', 'hoi_cho', 'xem_hat', 'xin_que', 'cau_ca', 'danh_co', 'leo_nui', 'chuc_tet', 'tha_den', 'dap_thanh', 'dua_thuyen', 'mua_thu_nuoi', 'choi_voi_thu', 'tap_duong_sinh', 'tam_suoi_nong', 've_tham_que', 'sua_sang_nha', 'xem_boi', 'danh_thang', 'luyen_chu'];
 const personaOf = (p: BotProfile): PersonaDef | null => MORTAL_PERSONAS[p as MortalPersona] ?? null;
@@ -172,6 +183,8 @@ export interface LifeResult {
   /** 12.10: took a road to the throne; sat on it; was put to death for it. */
   throneTried?: boolean;
   reigned?: boolean;
+  /** 15.12: the life ended in another giai cấp than it was born into. */
+  classShifted?: boolean;
   throneDied?: boolean;
   /** 12.9: how a reign ended (fell, abdicated, or the ruler died on the throne) and the title it left. */
   reignEnd?: 'fell' | 'abdicated' | 'died' | null;
@@ -427,6 +440,7 @@ export function simulateLife(content: Content, seed: string, opts: SimOptions = 
     executed: s.death?.cause === 'execution',
     throneTried: !!(s.flags.tung_khoi_nghia || s.flags.tung_muu_phan || s.flags.len_ngoi || content.origins.find((o) => o.id === s.character.originId)?.royal),
     reigned: !!s.flags.len_ngoi,
+    classShifted: !!s.character.classId,
     reignEnd: !s.flags.len_ngoi ? null : s.flags.mat_nuoc ? 'fell' : s.flags.thai_thuong_hoang ? 'abdicated' : 'died',
     reignTitle: reignTitle(s, content),
     throneDied: !!s.flags.bi_tru_di || (s.death?.cause === 'execution' && !s.flags.len_ngoi && (!!s.throne || !!content.origins.find((o) => o.id === s.character.originId)?.royal)),
@@ -529,6 +543,7 @@ export interface Report {
   executedShare?: number;
   throneTriedShare?: number;
   reignedShare?: number;
+  classShiftShare?: number;
   throneDiedShare?: number;
   soldierShare?: number;
   generalShare?: number;
@@ -601,6 +616,7 @@ export function summarize(results: LifeResult[], content: Content): Report {
     executedShare: mean(results.map((r) => (r.executed ? 1 : 0))),
     throneTriedShare: mean(results.map((r) => (r.throneTried ? 1 : 0))),
     reignedShare: mean(results.map((r) => (r.reigned ? 1 : 0))),
+    classShiftShare: mean(results.map((r) => (r.classShifted ? 1 : 0))),
     throneDiedShare: mean(results.map((r) => (r.throneDied ? 1 : 0))),
     soldierShare: mean(results.map((r) => (r.soldier ? 1 : 0))),
     generalShare: mean(results.map((r) => (r.general ? 1 : 0))),
@@ -690,11 +706,11 @@ export function formatReport(rep: Report, content: Content, title: string): stri
 /** 9.8: one row per persona phàm nhân, for the terminal. */
 export function formatPersonaTable(rows: { profile: BotProfile; report: Report }[]): string {
   const p = (v: number) => `${Math.round(v * 100)}%`;
-  const head = 'Persona | Đời | Vào tu tiên | Tuổi TB | Hạnh phúc TB | Bạc cuối (TB/trung vị) | Hoạt động khác nhau | Sự kiện khác nhau | Năm có chuyện | Câu lặp | Đi học/Học nghề | Tú tài/Cử nhân/Tiến sĩ | Ngoại hiệu | Thế lực | Bí kíp TB | Minh chủ | Báo thù xong | Làm quan/Tri phủ+/Bị xử tử | Tòng quân/Phong tướng | Tranh ngôi/Lên ngôi/Chết vì đế nghiệp | Sống ≥ 40 | Chết vì (nhiều nhất)';
+  const head = 'Persona | Đời | Vào tu tiên | Tuổi TB | Hạnh phúc TB | Bạc cuối (TB/trung vị) | Hoạt động khác nhau | Sự kiện khác nhau | Năm có chuyện | Câu lặp | Đi học/Học nghề | Tú tài/Cử nhân/Tiến sĩ | Ngoại hiệu | Thế lực | Bí kíp TB | Minh chủ | Báo thù xong | Làm quan/Tri phủ+/Bị xử tử | Tòng quân/Phong tướng | Tranh ngôi/Lên ngôi/Chết vì đế nghiệp | Đổi giai cấp | Sống ≥ 40 | Chết vì (nhiều nhất)';
   const lines = rows.map(({ profile, report: r }) => {
     const causes = Object.entries(r.byCause).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([c, k]) => `${c} ${p(k / r.count)}`).join(', ');
     return [personaOf(profile)?.name ?? profile, r.count, p(r.reached.luyen_khi ?? 0), r.age.mean.toFixed(1), (r.happyMean ?? 0).toFixed(1), `${Math.round(r.silverLeft ?? 0)}/${r.silverP50 ?? 0}`,
-      (r.activityKinds ?? 0).toFixed(1), (r.eventKinds ?? 0).toFixed(1), p(r.eventfulShare ?? 0), p(r.repeatRate ?? 0), `${p(r.schooledShare ?? 0)}/${p(r.tradeShare ?? 0)}`, (r.examShares ?? [0, 0, 0]).map(p).join('/'), p(r.aliasShare ?? 0), p(r.factionShare ?? 0), (r.artsMean ?? 0).toFixed(1), p(r.leaderShare ?? 0), p(r.feudShare ?? 0), `${p(r.officeShare ?? 0)}/${p(r.triPhuShare ?? 0)}/${p(r.executedShare ?? 0)}`, `${p(r.soldierShare ?? 0)}/${p(r.generalShare ?? 0)}`, `${p(r.throneTriedShare ?? 0)}/${p(r.reignedShare ?? 0)}/${p(r.throneDiedShare ?? 0)}`, p(r.over40Share ?? 0), causes].join(' | ');
+      (r.activityKinds ?? 0).toFixed(1), (r.eventKinds ?? 0).toFixed(1), p(r.eventfulShare ?? 0), p(r.repeatRate ?? 0), `${p(r.schooledShare ?? 0)}/${p(r.tradeShare ?? 0)}`, (r.examShares ?? [0, 0, 0]).map(p).join('/'), p(r.aliasShare ?? 0), p(r.factionShare ?? 0), (r.artsMean ?? 0).toFixed(1), p(r.leaderShare ?? 0), p(r.feudShare ?? 0), `${p(r.officeShare ?? 0)}/${p(r.triPhuShare ?? 0)}/${p(r.executedShare ?? 0)}`, `${p(r.soldierShare ?? 0)}/${p(r.generalShare ?? 0)}`, `${p(r.throneTriedShare ?? 0)}/${p(r.reignedShare ?? 0)}/${p(r.throneDiedShare ?? 0)}`, p(r.classShiftShare ?? 0), p(r.over40Share ?? 0), causes].join(' | ');
   });
   return [head, ...lines].join('\n');
 }
