@@ -34,6 +34,7 @@ import { CreateCharacterScreen } from './screens/CreateCharacter';
 import { DeathScreen } from './screens/Death';
 import { DestinyRollScreen } from './screens/DestinyRoll';
 import { MainScreen } from './screens/Main';
+import { PreferencesScreen } from './screens/Preferences';
 import { SettingsScreen, type SlotView } from './screens/Settings';
 import { TitleScreen } from './screens/Title';
 import { loadDevMode, saveDevMode } from './devMode';
@@ -91,7 +92,7 @@ import { challengeDef, challengeResult, creditKey, startChallenge, weekKey, week
 import { ChallengeScreen } from './screens/Challenge';
 import { nextPastSectRecord } from '../systems/pastSect';
 
-type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves' | 'rebirth' | 'codex' | 'challenge';
+type Screen = 'title' | 'create' | 'destiny' | 'main' | 'death' | 'saves' | 'rebirth' | 'codex' | 'challenge' | 'prefs';
 /** Why the slot list is open in pick mode. */
 type Picking = { purpose: 'new' } | { purpose: 'challenge' } | { purpose: 'import'; save: SaveFile } | null;
 type Message = { text: string; tone: 'good' | 'bad' } | null;
@@ -129,6 +130,8 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
   // 9.R6a: playing with developer mode on marks the life (no records).
   useEffect(() => { if (devMode && life && life.destiny.confirmed && !life.devUsed) setLife(markDevLife(life)); }, [devMode, life]);
   const [savesFrom, setSavesFrom] = useState<Screen>('title');
+  /** Góp ý 23/10: where Cài đặt was opened from, to go back there. */
+  const [prefsFrom, setPrefsFrom] = useState<Screen>('title');
   const [picking, setPicking] = useState<Picking>(null);
   const [message, setMessage] = useState<Message>(null);
   const [saveFailed, setSaveFailed] = useState(false);
@@ -295,6 +298,14 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
           // The life on screen may have been deleted or replaced.
           setScreen(savesFrom === 'main' && life && slot !== null ? 'main' : 'title');
         }}
+        onSettings={() => { setPrefsFrom('saves'); setScreen('prefs'); }}
+      />
+    );
+  }
+  if (screen === 'prefs') {
+    return (
+      <PreferencesScreen
+        onBack={() => setScreen(prefsFrom === 'main' && !life ? 'title' : prefsFrom)}
         theme={theme}
         onToggleTheme={toggleTheme}
         sound={sound}
@@ -628,6 +639,7 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         onNewLife={() => setScreen('create')}
         onSummary={() => setScreen('death')}
         onSaves={() => openSaves('main')}
+        onSettings={() => { setPrefsFrom('main'); setScreen('prefs'); }}
         dev={devMode ? { rewinds: rewindOptions(history.current, life, content), onRewindTime: (years) => { const r = rewindTime(history.current, life, years); if (r) { history.current = r.history; setLife(r.state); } }, meta: readMeta(store), onChange: (next) => setLife(checkDeath(next, content)), onMeta: (m) => { replaceMeta(store, m); refresh((n) => n + 1); }, onDisable: () => toggleDev(false) } : null}
         theme={theme}
         onToggleTheme={toggleTheme}
@@ -650,6 +662,7 @@ function Screens({ content, onKnown }: { content: Content; onKnown: (known: stri
         else { openSaves('title'); setPicking({ purpose: 'new' }); }
       }}
       onSaves={() => openSaves('title')}
+      onSettings={() => { setPrefsFrom('title'); setScreen('prefs'); }}
       onRebirth={() => openRebirth('title')}
       onCodex={() => setScreen('codex')}
       onChallenge={() => setScreen('challenge')}

@@ -1,13 +1,9 @@
-// "Sổ lưu": the save slots (play, export, delete, import) plus settings.
+// "Sổ lưu": the save slots (play, export, delete, import); settings live in Cài đặt (Preferences.tsx).
 // In pick mode the player chooses a slot for a new life or an imported save.
 import { useRef, useState } from 'preact/hooks';
 import type { SlotSummary } from '../../systems/save';
 import type { SavedPerson } from '../../systems/npcLibrary';
 import { ConfirmDialog } from '../components/ConfirmDialog';
-import { ThemeToggle } from '../components/ThemeToggle';
-import type { ThemePref } from '../theme';
-import { DEV_WARNING } from '../devMode';
-import { FONT_LABELS, type Prefs } from '../prefs';
 
 export interface SlotView {
   slot: number;
@@ -22,7 +18,7 @@ type Pending = { kind: 'delete' | 'overwrite'; slot: number } | null;
 
 const when = (iso: string) => new Date(iso).toLocaleString('vi-VN', { dateStyle: 'short', timeStyle: 'short' });
 
-export function SettingsScreen({ slots, library, realmName, onSavePlayer, onRemovePerson, pick, worldName, message, onPlay, onExport, onDelete, onImport, onPick, onBack, theme, onToggleTheme, sound, onToggleSound, devMode, onToggleDev, prefs, onPrefs, ffChoices, ffDefault }: {
+export function SettingsScreen({ slots, library, realmName, onSavePlayer, onRemovePerson, pick, worldName, message, onPlay, onExport, onDelete, onImport, onPick, onBack, onSettings }: {
   slots: SlotView[];
   /** Backlog 11: the Sổ nhân vật, and writing a slot's protagonist into it. */
   library: SavedPerson[];
@@ -39,21 +35,10 @@ export function SettingsScreen({ slots, library, realmName, onSavePlayer, onRemo
   onImport: (file: File) => void;
   onPick: (slot: number) => void;
   onBack: () => void;
-  theme: ThemePref;
-  onToggleTheme: () => void;
-  sound: boolean;
-  onToggleSound: () => void;
-  /** 9.R6a: the developer mode switch; turning it on asks first. */
-  devMode: boolean;
-  onToggleDev: (on: boolean) => void;
-  /** 9.R11: pace, text size, motion, sensitive content. */
-  prefs: Prefs;
-  onPrefs: (next: Prefs) => void;
-  ffChoices: number[];
-  ffDefault: number;
+  /** Opens the Cài đặt screen. */
+  onSettings: () => void;
 }) {
   const [pending, setPending] = useState<Pending>(null);
-  const [askDev, setAskDev] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const pendingSlot = pending && slots.find((s) => s.slot === pending.slot);
   const pendingName = pendingSlot?.summary?.name ?? 'save hỏng';
@@ -133,52 +118,8 @@ export function SettingsScreen({ slots, library, realmName, onSavePlayer, onRemo
               (e.target as HTMLInputElement).value = '';
             }} />
           <p class="settings-note">Game tự lưu mỗi năm vào ô đang chơi. Save nằm trong trình duyệt này; muốn chơi trên máy khác hay giữ phòng hờ thì xuất file.</p>
-          <div class="settings-row">
-            <span>Giao diện</span>
-            <ThemeToggle pref={theme} onChange={onToggleTheme} />
-          </div>
-          <div class="settings-row">
-            <span>Âm thanh (chuông, mõ)</span>
-            <button class="chip-btn" role="switch" aria-checked={sound} onClick={onToggleSound}>{sound ? 'Bật' : 'Tắt'}</button>
-          </div>
-          <div class="settings-row">
-            <span>Tua nhanh tối đa</span>
-            <select class="chip-btn" aria-label="Số năm tối đa mỗi lần tua nhanh" value={String(prefs.ffYears ?? ffDefault)}
-              onChange={(e) => onPrefs({ ...prefs, ffYears: Number((e.target as HTMLSelectElement).value) })}>
-              {ffChoices.map((n) => <option key={n} value={String(n)}>{n} năm</option>)}
-            </select>
-          </div>
-          <div class="settings-row">
-            <span>Cỡ chữ</span>
-            <div class="chip-group" role="radiogroup" aria-label="Cỡ chữ">
-              {FONT_LABELS.map(([f, label]) => (
-                <button key={f} class={`chip-btn${prefs.font === f ? ' on' : ''}`} role="radio" aria-checked={prefs.font === f} onClick={() => onPrefs({ ...prefs, font: f })}>{label}</button>
-              ))}
-            </div>
-          </div>
-          <div class="settings-row">
-            <span>Giảm chuyển động</span>
-            <button class="chip-btn" role="switch" aria-checked={prefs.reduceMotion} onClick={() => onPrefs({ ...prefs, reduceMotion: !prefs.reduceMotion })}>{prefs.reduceMotion ? 'Bật' : 'Tắt'}</button>
-          </div>
-          <div class="settings-row">
-            <span>Ẩn nội dung nhạy cảm<small class="muted settings-sub">Bỏ các biến cố tàn độc, ma đạo hắc ám và chuyện thân mật. Có hiệu lực từ năm kế tiếp.</small></span>
-            <button class="chip-btn" role="switch" aria-checked={prefs.gentle} onClick={() => onPrefs({ ...prefs, gentle: !prefs.gentle })}>{prefs.gentle ? 'Bật' : 'Tắt'}</button>
-          </div>
-          <div class="settings-row">
-            <span>Chế độ thử nghiệm</span>
-            <button class="chip-btn" role="switch" aria-checked={devMode} onClick={() => (devMode ? onToggleDev(false) : setAskDev(true))}>{devMode ? 'Bật' : 'Tắt'}</button>
-          </div>
+          <button class="btn-secondary wide" onClick={onSettings}>Cài đặt</button>
         </>
-      )}
-
-      {askDev && (
-        <ConfirmDialog
-          title="Bật chế độ thử nghiệm?"
-          text={DEV_WARNING}
-          confirmLabel="Bật"
-          onCancel={() => setAskDev(false)}
-          onConfirm={() => { setAskDev(false); onToggleDev(true); }}
-        />
       )}
 
       {pending && (
