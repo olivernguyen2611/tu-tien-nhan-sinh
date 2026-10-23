@@ -256,3 +256,25 @@ describe('Quyền quý, quan gia (15.6)', () => {
     for (const id of ['tap_am', 'nho_the_cha', 'theo_cha_hoc_kinh_su', 'quan_dien_trang']) expect(farmer).not.toContain(id);
   });
 });
+
+describe('Thương gia, võ gia (15.7)', () => {
+  const ids = (s: ReturnType<typeof life>) => activityViews(s, content).map((a) => a.id);
+
+  it('a merchant child learns the abacus, grows into the counter, the long trade run, the thương hội and the hoàng thương', () => {
+    expect(ids(life('thuong_nhan', 8))).toContain('hoc_tinh_so');
+    const grown = life('thuong_nhan', 26);
+    expect(ids(grown)).toEqual(expect.arrayContaining(['trong_quay', 'buon_chuyen_xa', 'do_gia_cac_chau', 'gop_von_thuong_hoi']));
+    expect(ids(grown)).not.toContain('xin_lam_hoang_thuong');
+    const member = { ...grown, flags: { ...grown.flags, thuong_hoi: true } };
+    expect(ids(member)).toEqual(expect.arrayContaining(['nghi_su_thuong_hoi', 'xin_lam_hoang_thuong']));
+    expect(ids(member)).not.toContain('gop_von_thuong_hoi');
+  });
+
+  it('a võ gia child stands in mã bộ, learns the family art, rides with the tiêu, sits the võ cử', () => {
+    expect(ids(life('vo_lam', 6))).toContain('tan_ma_bo');
+    expect(ids(life('vo_lam', 14))).toEqual(expect.arrayContaining(['hoc_vo_gia_truyen', 'theo_cha_ap_tieu']));
+    expect(ids(life('vo_lam', 24))).toEqual(expect.arrayContaining(['thi_vo_cu', 'thu_do_de']));
+    const farmer = ids(life('nong_dan', 24));
+    for (const id of ['tan_ma_bo', 'hoc_vo_gia_truyen', 'thi_vo_cu', 'trong_quay', 'buon_chuyen_xa']) expect(farmer).not.toContain(id);
+  });
+});

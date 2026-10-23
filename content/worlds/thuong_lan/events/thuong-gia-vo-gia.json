@@ -1,0 +1,100 @@
+[
+  {
+    "id": "gc_hang_gia_tran_vao_hieu",
+    "category": "social",
+    "title": "Hàng giả trong kho",
+    "text": "Kiểm kho cuối năm, ngươi phát hiện cả lô thuốc quý nhập tháng trước là hàng giả. Bán ra thì có lời, đốt đi thì lỗ nặng.",
+    "themes": ["wealth"],
+    "conditions": { "classes": ["thuong_gia"], "age": { "min": 16 }, "tier": ["pham_gian"] },
+    "weight": 5,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Đốt cả lô trước mặt người làm",
+        "result": { "text": "Khói bốc cao cả buổi. Tiếng \"hiệu nhà ấy không bán đồ giả\" truyền đi, khách quen tới đông hơn trước.", "effects": { "silver": -100, "karma": 2, "fame": 2, "stat.daoHeart": 1 } }
+      },
+      {
+        "text": "Trả lại cho lái buôn, đòi bồi thường",
+        "result": { "text": "Lái buôn chối bay chối biến. Kiện lên huyện, hai bên mỗi người mất một nửa.", "effects": { "silver": -40, "stat.intellect": 1, "stat.happiness": -1 } }
+      },
+      {
+        "text": "Trộn vào hàng thật mà bán",
+        "result": { "text": "Lô hàng bán hết. Nửa năm sau có người uống thuốc giả mà chết, cả nhà họ kéo tới đập cửa hiệu.", "effects": { "silver": 120, "karma": -3, "infamy": 2, "stat.happiness": -3 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_quan_thue_doi_tien",
+    "category": "social",
+    "title": "Quan thuế tới cửa",
+    "text": "Một viên thuế quan mới nhậm chức tới hiệu, nói sổ thuế nhà ngươi \"có chỗ không ổn\", rồi ngồi uống trà mãi không về.",
+    "themes": ["wealth"],
+    "conditions": { "classes": ["thuong_gia"], "age": { "min": 18 }, "tier": ["pham_gian"] },
+    "weight": 5,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Dúi phong bì",
+        "result": { "text": "Viên thuế quan cười, đứng dậy về. Năm sau hắn lại tới, phong bì phải dày gấp đôi.", "effects": { "silver": -50, "karma": -1, "stat.happiness": -1 } }
+      },
+      {
+        "text": "Mời hắn đối sổ từng trang",
+        "result": { "text": "Sổ nhà ngươi sạch như nước. Viên thuế quan đọc tới trang thứ ba thì cáo từ, không bao giờ quay lại.", "effects": { "stat.intellect": 2, "stat.daoHeart": 1 } }
+      },
+      {
+        "text": "Nhờ thương hội lên tiếng",
+        "result": { "text": "Hội trưởng gửi một lá thư lên phủ. Tháng sau viên thuế quan bị điều đi huyện khác.", "effects": { "stat.charm": 1, "fame": 1, "stat.happiness": 2 } },
+        "requires": { "flagsAll": ["thuong_hoi"] },
+        "hidden": true
+      }
+    ]
+  },
+  {
+    "id": "gc_vo_quan_bi_khieu_chien",
+    "category": "social",
+    "title": "Đạp quán",
+    "text": "Một gã võ sĩ lạ mặt bước vào võ quán nhà ngươi, đá đổ tấm biển, tuyên bố muốn \"đạp quán\".",
+    "themes": ["jianghu"],
+    "conditions": { "classes": ["vo_gia"], "age": { "min": 15 }, "tier": ["pham_gian"] },
+    "weight": 6,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Ra sân tỉ thí",
+        "check": { "stat": "stat.physique", "difficulty": 50 },
+        "success": { "text": "Ba mươi chiêu, ngươi quật gã xuống đất. Gã chắp tay nhận thua, treo lại tấm biển rồi đi. Tiếng võ quán vang khắp huyện.", "effects": { "fame": 3, "stat.physique": 1, "stat.happiness": 3 } },
+        "fail": { "text": "Gã đánh ngươi ngã ba lần. Tấm biển bị mang đi. Phải mất ba năm, võ quán mới gượng dậy được.", "effects": { "stat.health": -5, "stat.happiness": -4, "infamy": 1 } }
+      },
+      {
+        "text": "Mời trà, hỏi lai lịch",
+        "result": { "text": "Gã là đồ đệ một kẻ thù cũ của ông nội. Chén trà nguội, mối thù cũng nguội đi một nửa.", "effects": { "stat.charm": 2, "stat.intellect": 1 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_bao_thu_mon_ho",
+    "category": "social",
+    "title": "Mối thù môn hộ",
+    "text": "Đồ đệ trưởng của võ quán bị người của một bang hội đánh trọng thương giữa chợ. Cả võ quán chờ ngươi lên tiếng.",
+    "themes": ["jianghu"],
+    "conditions": { "classes": ["vo_gia"], "age": { "min": 20 }, "tier": ["pham_gian"] },
+    "weight": 4,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Dẫn đồ đệ tới tận tổng đà đòi người",
+        "check": { "stat": "stat.physique", "difficulty": 55 },
+        "success": { "text": "Bang chủ phải ra mặt xin lỗi, bồi thường thuốc thang. Từ đó người của bang tránh võ quán nhà ngươi một con phố.", "effects": { "fame": 3, "stat.happiness": 2, "stat.physique": 1 } },
+        "fail": { "text": "Bang hội đông người, ngươi bị đánh lui. Đồ đệ bỏ đi gần một nửa.", "effects": { "stat.health": -6, "stat.happiness": -3, "stat.daoHeart": 1 } }
+      },
+      {
+        "text": "Kiện lên quan",
+        "result": { "text": "Quan huyện xử bang hội nộp phạt. Người giang hồ chê ngươi \"cậy quan\", nhưng đồ đệ ngươi được bồi thường.", "effects": { "silver": 30, "infamy": 1, "stat.intellect": 1 } }
+      },
+      {
+        "text": "Nhịn, bảo đồ đệ rằng võ để giữ mình",
+        "result": { "text": "Đồ đệ trưởng nằm ba tháng mới dậy được. Hắn không nói gì, nhưng ánh mắt nhìn ngươi đã khác.", "effects": { "stat.daoHeart": 2, "stat.happiness": -2, "karma": 1 } }
+      }
+    ]
+  }
+]

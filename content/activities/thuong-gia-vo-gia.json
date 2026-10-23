@@ -1,0 +1,314 @@
+[
+  {
+    "id": "hoc_tinh_so",
+    "group": "hoc_hanh",
+    "name": "Học tính sổ ở cửa hiệu",
+    "icon": "算",
+    "text": "Ngồi sau quầy với lão chưởng quỹ, học gảy bàn tính, ghi sổ thu chi, nhìn mặt khách mà đoán túi tiền.",
+    "conditions": { "classes": ["thuong_gia"], "tier": ["pham_gian"], "age": { "min": 6, "max": 15 } },
+    "months": 2,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Lão chưởng quỹ đọc một dãy số, ngươi gảy bàn tính ra đúng kết quả trước cả lão. Lão vuốt râu: \"Có tướng nhà buôn.\"",
+          "Ngươi bắt được một khoản ghi sai trong sổ tháng trước. Cha thưởng cho ngươi một chuỗi tiền đồng."
+        ],
+        "effects": { "stat.intellect": 2, "silver": 5 }
+      },
+      {
+        "text": "Ngồi sau quầy cả ngày, ngươi ngủ gật lên bàn tính. Lão chưởng quỹ gõ đầu ngươi bằng cán bút lông.",
+        "effects": { "stat.intellect": 1, "stat.happiness": -1 }
+      }
+    ]
+  },
+  {
+    "id": "theo_cha_ap_hang",
+    "group": "hoc_hanh",
+    "name": "Theo cha áp hàng",
+    "icon": "貨",
+    "text": "Cha đi buôn chuyến xa, cho ngươi theo xe hàng. Học ở đường đi nhiều hơn học trong sách.",
+    "conditions": { "classes": ["thuong_gia"], "tier": ["pham_gian"], "age": { "min": 11, "max": 17 } },
+    "months": 3,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Tới châu bên, ngươi thấy cùng một tấm lụa mà giá gấp đôi ở quê. Ngươi hiểu ra nghề buôn là gì.",
+          "Ngươi đứng xem cha mặc cả với lái buôn người Hồ suốt một buổi. Về sau ngươi nhớ từng câu."
+        ],
+        "effects": { "stat.intellect": 1, "stat.charm": 2, "stat.physique": 1 }
+      },
+      {
+        "text": "Giữa đường gặp mưa lũ, xe hàng sa lầy. Ngươi đẩy xe cùng phu khuân suốt đêm, sáng ra sốt mê man.",
+        "effects": { "stat.health": -3, "stat.physique": 2, "stat.daoHeart": 1 }
+      }
+    ]
+  },
+  {
+    "id": "trong_quay",
+    "group": "nghe",
+    "name": "Trông quầy",
+    "icon": "櫃",
+    "text": "Đứng quầy cửa hiệu nhà, đón khách, mặc cả, ghi sổ. Việc của con nhà buôn, không phải đi làm thuê cho ai.",
+    "conditions": { "classes": ["thuong_gia"], "tier": ["pham_gian"], "age": { "min": 14 } },
+    "months": 4,
+    "check": { "stat": "stat.charm", "difficulty": 35 },
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi bán được lô hàng tồn ba năm cho một vị khách sộp. Cha khen một câu, cả tháng ngươi vui.",
+          "Khách quen tới hiệu ngày càng đông. Có người đi xa hai chục dặm chỉ để mua hàng của ngươi."
+        ],
+        "effects": { "silver": 70, "stat.charm": 1, "stat.happiness": 2 },
+        "bonus": [{ "when": { "flagsAll": ["hoang_thuong"] }, "effects": { "silver": 80 } }]
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": "Ngươi bị một gã khách lừa đổi bạc giả. Cha không mắng, chỉ đưa cho ngươi một thỏi bạc thật để so.",
+        "effects": { "silver": 15, "stat.intellect": 1, "stat.happiness": -2 }
+      }
+    ]
+  },
+  {
+    "id": "buon_chuyen_xa",
+    "group": "tai_san",
+    "name": "Buôn một chuyến đường xa",
+    "icon": "商",
+    "text": "Gom vốn mua hàng, thuê tiêu cục, đi ba tháng tới châu khác bán. Lãi gấp đôi, hoặc mất trắng.",
+    "conditions": { "classes": ["thuong_gia"], "tier": ["pham_gian"], "age": { "min": 17 } },
+    "cost": [{ "silver": 120 }],
+    "months": 3,
+    "outcomes": [
+      {
+        "weight": 4,
+        "text": [
+          "Hàng tới nơi đúng lúc thành đang khan hàng. Ngươi bán sạch trong ba ngày, lãi gấp đôi.",
+          "Đường xa mà êm. Ngươi về nhà với túi bạc nặng và một sổ ghi giá cả các châu."
+        ],
+        "effects": { "silver": 260, "stat.intellect": 1, "stat.happiness": 3 }
+      },
+      {
+        "weight": 2,
+        "text": "Tới nơi mới biết đã có ba đoàn buôn tới trước. Giá rớt, ngươi bán hòa vốn rồi về.",
+        "effects": { "silver": 120, "stat.happiness": -1, "stat.intellect": 1 }
+      },
+      {
+        "text": "Qua đèo thì gặp cướp. Tiêu sư bỏ chạy, hàng mất sạch, ngươi giữ được cái mạng.",
+        "effects": { "stat.health": -4, "stat.happiness": -4, "stat.daoHeart": 1 }
+      }
+    ]
+  },
+  {
+    "id": "do_gia_cac_chau",
+    "group": "tai_san",
+    "name": "Dò giá các châu",
+    "icon": "價",
+    "text": "Gửi thư cho các lái buôn quen, ngồi đối chiếu giá gạo, muối, lụa ở từng châu. Ai biết giá trước, người ấy ăn lãi.",
+    "conditions": { "classes": ["thuong_gia"], "tier": ["pham_gian"], "age": { "min": 15 } },
+    "months": 1,
+    "check": { "stat": "stat.intellect", "difficulty": 45 },
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi đoán ra giá muối sắp lên vì triều đình siết lệ. Gom trước ba trăm bao, tháng sau bán ra lãi đậm.",
+          "Thư từ Giang Nam báo lụa mất mùa. Ngươi giữ hàng lại, đợi giá lên mới bán."
+        ],
+        "effects": { "silver": 90, "stat.intellect": 2 }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": "Tin ngươi nhận được là tin cũ. Ngươi gom hàng đúng lúc giá bắt đầu rớt.",
+        "effects": { "silver": -30, "stat.happiness": -2, "stat.intellect": 1 }
+      }
+    ]
+  },
+  {
+    "id": "gop_von_thuong_hoi",
+    "group": "tai_san",
+    "name": "Góp vốn thương hội",
+    "icon": "會",
+    "text": "Thương hội trong thành nhận góp vốn của các nhà buôn có tiếng. Có chân trong hội thì có chỗ dựa, có tin tức.",
+    "conditions": { "classes": ["thuong_gia"], "tier": ["pham_gian"], "age": { "min": 20 }, "flagsNone": ["thuong_hoi"] },
+    "cost": [{ "silver": 300 }],
+    "months": 1,
+    "outcomes": [
+      {
+        "text": [
+          "Hội trưởng đặt tên ngươi vào sổ hội. Từ nay mỗi năm ngươi được chia một phần lãi của hội.",
+          "Ngươi được ngồi ghế cuối trong phòng nghị sự của thương hội. Chỗ ngồi nhỏ, nhưng tai nghe được nhiều."
+        ],
+        "effects": { "setFlags": ["thuong_hoi"], "stat.charm": 1, "fame": 1, "stat.happiness": 2 }
+      }
+    ]
+  },
+  {
+    "id": "nghi_su_thuong_hoi",
+    "group": "tai_san",
+    "name": "Dự nghị sự thương hội",
+    "icon": "利",
+    "text": "Mỗi quý thương hội họp một lần: chia lãi, chia mối, bàn chuyện ép giá kẻ ngoài hội.",
+    "conditions": { "classes": ["thuong_gia"], "tier": ["pham_gian"], "flagsAll": ["thuong_hoi"] },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 4,
+        "text": [
+          "Năm nay buôn may bán đắt, hội chia lãi hậu. Ngươi còn nhận thêm một mối hàng gốm từ phương nam.",
+          "Hội bàn chuyện giữ giá gạo. Ngươi góp một kế, mấy lão nhà buôn gật gù."
+        ],
+        "effects": { "silver": 80, "stat.charm": 1 }
+      },
+      {
+        "text": "Một đoàn thuyền của hội đắm ngoài cửa biển. Năm nay không ai được chia đồng nào, buổi họp toàn tiếng thở dài.",
+        "effects": { "stat.happiness": -2, "stat.daoHeart": 1 }
+      }
+    ]
+  },
+  {
+    "id": "xin_lam_hoang_thuong",
+    "group": "nghe",
+    "name": "Lo lót xin làm hoàng thương",
+    "icon": "皇",
+    "text": "Được làm hoàng thương là được bán hàng cho cung, có bảng vàng treo cửa. Cửa ấy phải lo lót từ thái giám tới Hộ bộ.",
+    "conditions": { "classes": ["thuong_gia"], "tier": ["pham_gian"], "age": { "min": 25 }, "flagsAll": ["thuong_hoi"], "flagsNone": ["hoang_thuong"] },
+    "cost": [{ "silver": 500 }],
+    "months": 2,
+    "check": { "stat": "stat.charm", "difficulty": 55 },
+    "outcomes": [
+      {
+        "text": "Bảng vàng \"Ngự dụng\" được treo trước cửa hiệu. Khách tới xem bảng còn đông hơn khách mua hàng.",
+        "effects": { "setFlags": ["hoang_thuong"], "fame": 3, "stat.happiness": 4, "stat.charm": 1 }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": "Bạc đã vào tay ba vị công công, việc vẫn không thành. Hỏi lại thì ai cũng bảo \"đang lo, đang lo\".",
+        "effects": { "stat.happiness": -4, "stat.intellect": 1 }
+      }
+    ]
+  },
+  {
+    "id": "tan_ma_bo",
+    "group": "suc_khoe",
+    "name": "Đứng tấn mã bộ",
+    "icon": "樁",
+    "text": "Con nhà võ, biết đi là biết đứng tấn. Một nén nhang, hai nén nhang, chân run cũng không được ngồi.",
+    "conditions": { "classes": ["vo_gia"], "tier": ["pham_gian"], "age": { "min": 4, "max": 13 } },
+    "months": 2,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Ngươi đứng tấn được trọn ba nén nhang. Cha không nói gì, chỉ gật đầu một cái.",
+          "Đứng tấn dưới mưa. Nước chảy vào mắt, ngươi không dám chớp."
+        ],
+        "effects": { "stat.physique": 2, "stat.health": 1, "stat.daoHeart": 1 }
+      },
+      {
+        "text": "Ngươi ngã ngồi giữa sân. Mấy đồ đệ của cha cười ồ, ngươi đứng dậy tấn lại từ đầu.",
+        "effects": { "stat.physique": 1, "stat.happiness": -1 }
+      }
+    ]
+  },
+  {
+    "id": "hoc_vo_gia_truyen",
+    "group": "giang_ho",
+    "name": "Học võ gia truyền",
+    "icon": "傳",
+    "text": "Chiêu thức nhà mình truyền ba đời, người ngoài trả bạc cũng không học được.",
+    "conditions": { "classes": ["vo_gia"], "tier": ["pham_gian"], "age": { "min": 8 } },
+    "months": 3,
+    "limit": { "perYear": 1, "cooldownYears": 2 },
+    "check": { "stat": "stat.physique", "difficulty": 40 },
+    "outcomes": [
+      {
+        "text": [
+          "Cha mở hòm gỗ lấy ra quyển võ phổ ố vàng: \"Từ hôm nay, ngươi học cái này.\"",
+          "Ngươi luyện thành chiêu đầu tiên của võ học nhà. Ông nội đứng ngoài sân, cười tới chảy nước mắt."
+        ],
+        "effects": { "learnArt": { "grades": [1, 2] }, "stat.physique": 1 }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": "Chiêu thức nhà mình khó hơn ngươi tưởng. Luyện cả mùa mà chưa ra hình dạng gì.",
+        "effects": { "stat.physique": 1, "stat.happiness": -1 }
+      }
+    ]
+  },
+  {
+    "id": "theo_cha_ap_tieu",
+    "group": "giang_ho",
+    "name": "Theo cha áp tiêu",
+    "icon": "鏢",
+    "text": "Tiêu cục nhà nhận chuyến hàng đi xa, cha cho ngươi theo xe. Học cách đọc đường, học cách hô tiêu hiệu.",
+    "conditions": { "classes": ["vo_gia"], "tier": ["pham_gian"], "age": { "min": 12, "max": 18 } },
+    "months": 3,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Ngươi hô tiêu hiệu qua đèo, giọng còn vỡ. Mấy tay lục lâm trên núi nghe cờ hiệu nhà ngươi, không ra mặt.",
+          "Dọc đường, cha dạy ngươi nhìn dấu chân trên đất mà biết người đi trước là ai."
+        ],
+        "effects": { "stat.physique": 1, "stat.intellect": 1, "fame": 1 }
+      },
+      {
+        "text": "Gặp cướp chặn đường. Ngươi nấp sau xe, thấy cha một mình đánh lui năm tên. Đêm ấy ngươi không ngủ được.",
+        "effects": { "stat.daoHeart": 2, "stat.happiness": -1, "stat.physique": 1 }
+      }
+    ]
+  },
+  {
+    "id": "thi_vo_cu",
+    "group": "nghe",
+    "name": "Thi võ cử",
+    "icon": "武",
+    "text": "Triều đình mở khoa võ: cưỡi ngựa, bắn cung, múa đao, viết binh pháp. Đỗ thì vào quân làm võ quan, không phải làm lính trơn.",
+    "conditions": { "classes": ["vo_gia", "quan_gia", "quyen_quy"], "tier": ["pham_gian"], "age": { "min": 18, "max": 40 }, "realm": { "max": "pham_nhan" }, "office": { "held": false } },
+    "months": 2,
+    "limit": { "perYear": 1, "cooldownYears": 3 },
+    "check": { "stat": "stat.physique", "difficulty": 55 },
+    "outcomes": [
+      {
+        "text": [
+          "Chín phát tên trúng bảy. Quan chủ khảo gọi tên ngươi đầu bảng, binh bộ bổ ngươi vào quân làm võ quan.",
+          "Ngươi đỗ võ cử nhân. Ngày vinh quy, cả võ quán nhà đốt pháo suốt một canh giờ."
+        ],
+        "effects": { "armyJoin": "volunteer", "armyMerit": 30, "fame": 3, "stat.happiness": 4 }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": "Ngựa ngươi sợ tiếng trống, chạy lệch khỏi sân. Ba năm nữa mới có khoa sau.",
+        "effects": { "stat.happiness": -3, "stat.physique": 1 }
+      }
+    ]
+  },
+  {
+    "id": "thu_do_de",
+    "group": "quan_he",
+    "name": "Thu đồ đệ cho võ quán",
+    "icon": "徒",
+    "text": "Mở cửa võ quán nhận đồ đệ. Thu học phí mà sống, dạy cho ra người mà giữ tiếng.",
+    "conditions": { "classes": ["vo_gia"], "tier": ["pham_gian"], "age": { "min": 22 } },
+    "months": 3,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Võ quán nhận thêm mười đồ đệ. Sáng nào sân cũng vang tiếng hô.",
+          "Một đồ đệ của ngươi đoạt giải lôi đài trong huyện. Học trò mới kéo tới xin nhập môn."
+        ],
+        "effects": { "silver": 60, "fame": 1, "stat.charm": 1 }
+      },
+      {
+        "text": "Một đồ đệ cậy võ đánh người trong chợ. Quan sai tới võ quán hỏi tội thầy.",
+        "effects": { "silver": -20, "stat.happiness": -2, "stat.daoHeart": 1 }
+      }
+    ]
+  }
+]

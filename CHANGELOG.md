@@ -8,6 +8,14 @@
 
 ## [Chưa phát hành]
 
+### 15.7 Thương gia, võ gia (2026-10-23)
+- 13 hoạt động mới (`activities/thuong-gia-vo-gia.json`):
+  - **Thương gia**: Học tính sổ ở cửa hiệu, Theo cha áp hàng, Trông quầy, Buôn một chuyến đường xa (lãi gấp đôi hoặc mất trắng), Dò giá các châu.
+  - **Thương hội**: Góp vốn thương hội mở ra Dự nghị sự thương hội và Lo lót xin làm hoàng thương. Làm hoàng thương rồi thì trông quầy được thêm bạc.
+  - **Võ gia**: Đứng tấn mã bộ, Học võ gia truyền, Theo cha áp tiêu, Thu đồ đệ cho võ quán.
+  - **Thi võ cử** (võ gia, quan gia, quyền quý): đỗ thì vào quân làm võ quan.
+- 4 sự kiện mới: hàng giả trong kho, quan thuế tới cửa, đạp quán, mối thù môn hộ.
+
 ### 15.6 Quyền quý, quan gia (2026-10-23)
 - 12 hoạt động mới (`activities/quyen-quy-quan-gia.json`):
   - **Quyền quý**:
