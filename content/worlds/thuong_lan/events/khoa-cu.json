@@ -9,6 +9,7 @@
       "family"
     ],
     "conditions": {
+      "notClasses": ["hoang_toc", "quyen_quy"],
       "tier": [
         "pham_gian"
       ],

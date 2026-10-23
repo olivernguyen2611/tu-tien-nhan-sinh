@@ -8,6 +8,7 @@
       "study"
     ],
     "conditions": {
+      "classes": ["thuong_gia", "vo_gia", "nong_gia"],
       "age": {
         "min": 6,
         "max": 8
@@ -70,6 +71,7 @@
       "study"
     ],
     "conditions": {
+      "notClasses": ["hoang_toc"],
       "age": {
         "min": 7,
         "max": 14

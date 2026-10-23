@@ -3375,6 +3375,13 @@ export const SchoolingFileSchema = z.object({
     teacherRole: z.string().min(1), classmateRole: z.string().min(1),
     /** Origins that may enter without the fee check failing them first (a poor child cannot pay a tư thục). */
     minSilver: z.number().min(0).default(0),
+    /** 15.3: the giai cấp whose children are sent here at autoEnrollAge without asking (Thượng thư phòng, tộc học…). */
+    classes: ids,
+    autoEnrollAge: z.number().int().min(0).optional(),
+    /** 15.3: học lực gained a year × this (a thái phó teaches better than a thầy đồ làng). */
+    gradeMul: z.number().min(0).default(1),
+    /** 15.3: the enrol line of this school ({school}, {teacher}); else texts.enroll. */
+    enrollText: z.string().min(1).optional(),
   }).strict()).min(1),
   trades: z.array(z.object({
     id, name: z.string().min(1), masterRole: z.string().min(1),

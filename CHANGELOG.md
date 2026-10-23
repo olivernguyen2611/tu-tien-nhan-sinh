@@ -8,6 +8,24 @@
 
 ## [Chưa phát hành]
 
+### 15.3 Học hành theo giai cấp (2026-10-23)
+- Bốn trường mới (`schooling.json`):
+  - **Thượng thư phòng** cho hoàng tộc: thầy là thái phó, bạn học là thư đồng.
+  - **Tộc học** cho quyền quý và tu tiên thế gia.
+  - **Quốc Tử Giám** cho giám sinh.
+  - **Chùa làng** cho bần dân: học chữ không mất tiền, đổi lại quét sân gánh nước.
+- Nhà có trường riêng thì 6 tuổi **tự nhập học**, không phải bấm xin:
+  - hoàng tộc vào Thượng thư phòng;
+  - quyền quý và tu tiên thế gia vào tộc học;
+  - quan gia vào tư thục.
+- Mỗi trường có câu nhập học riêng và hệ số học lực riêng (`gradeMul`): thái phó và Quốc Tử Giám dạy giỏi hơn trường làng, chùa dạy chậm hơn.
+- Ba hoạt động mới (`hoc-theo-giai-cap.json`):
+  - **Vào Quốc Tử Giám**: quyền quý vào bằng ấm sinh, con nhà quan phải đỗ thi huyện.
+  - **Xin vào tư thục**: cho thương gia, võ gia, nông gia.
+  - **Xin học chữ ở chùa**: cho bần dân, nông gia.
+- 5 sự kiện học đường mới: ngày đầu ở Thượng thư phòng, thư đồng chịu đòn thay, ngày đầu ở tộc học, bình văn ở Quốc Tử Giám, học chữ ở chùa.
+- Các sự kiện trường làng (trường thấp lè tè, bị bắt nạt ở bờ ao, không đủ tiền đóng học, thi đọc thơ ở đình…) không rơi vào hoàng tộc, quyền quý, tu tiên thế gia. "Bán ruộng lấy lộ phí" không rơi vào nhà quyền quý. Sự kiện "Vào trường tư thục" chỉ đến với nhà buôn, võ, nông.
+
 ### 15.2 Gắn nhãn hoạt động cũ theo giai cấp (2026-10-23)
 - **Lỗi anh báo:** hoàng tử không còn thấy "Xin vào trường làng", "Tự học lén", "Nghe lỏm ngoài cửa lớp". Ba việc này giờ chỉ dành cho võ gia, nông gia, bần dân.
 - 23 hoạt động chỉ dành cho người bình dân (`classes`): làm mướn từ nhỏ, làm thuê, làm vụ mùa, chèo đò, học lén võ, chiếu tài xỉu, mời thầy cúng, móc túi, trộm vặt, trộm nhà giàu, cướp đường, lừa đảo, buôn lậu, viết thuê, vào bang hội, đầu quân hắc đạo, áp tiêu, nhận tiêu xa, bảng treo thưởng, lôi đài hội chợ.

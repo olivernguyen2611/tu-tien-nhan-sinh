@@ -1,0 +1,72 @@
+[
+  {
+    "id": "vao_quoc_tu_giam",
+    "group": "hoc_hanh",
+    "name": "Vào Quốc Tử Giám",
+    "icon": "監",
+    "text": "Con nhà quyền quý vào bằng ấm sinh, con nhà quan đỗ khảo thí huyện thì được tiến cử làm giám sinh.",
+    "conditions": {
+      "classes": ["quyen_quy", "quan_gia"],
+      "anyOf": [{ "classes": ["quyen_quy"] }, { "exam": { "passed": "huyen" } }],
+      "age": { "min": 12, "max": 15 },
+      "tier": ["pham_gian"],
+      "flagsNone": ["giam_sinh"]
+    },
+    "cost": [{ "silver": 20 }],
+    "outcomes": [
+      {
+        "text": [
+          "Tờ tiến cử đóng dấu đỏ, ngươi khăn gói lên kinh vào Quốc Tử Giám.",
+          "Cổng Quốc Tử Giám cao gấp ba cổng nhà, ngươi đứng dưới bia tiến sĩ đọc tên người xưa."
+        ],
+        "effects": { "enrollSchool": "quoc_tu_giam", "setFlags": ["giam_sinh"], "stat.intellect": 2, "stat.happiness": 2 }
+      }
+    ]
+  },
+  {
+    "id": "xin_vao_tu_thuc",
+    "group": "hoc_hanh",
+    "name": "Xin vào tư thục",
+    "icon": "塾",
+    "text": "Trường tư trong huyện, thầy giỏi hơn trường làng, học phí cũng nặng hơn.",
+    "conditions": {
+      "classes": ["thuong_gia", "vo_gia", "nong_gia"],
+      "age": { "min": 6, "max": 12 },
+      "school": { "enrolled": false },
+      "tier": ["pham_gian"]
+    },
+    "cost": [{ "silver": 10 }],
+    "outcomes": [
+      {
+        "text": [
+          "Người nhà đếm đủ mười lạng, dắt ngươi tới tư thục trong huyện.",
+          "Ngươi mặc áo mới tới tư thục, đứa nào trong lớp cũng đi giày vải."
+        ],
+        "effects": { "enrollSchool": "tu_thuc", "stat.happiness": 2 }
+      }
+    ]
+  },
+  {
+    "id": "xin_hoc_chua",
+    "group": "hoc_hanh",
+    "name": "Xin học chữ ở chùa",
+    "icon": "寺",
+    "text": "Sư thầy trong chùa dạy chữ không lấy tiền, chỉ cần chịu khó quét sân gánh nước.",
+    "conditions": {
+      "classes": ["ban_dan", "nong_gia"],
+      "age": { "min": 6, "max": 12 },
+      "school": { "enrolled": false },
+      "tier": ["pham_gian"]
+    },
+    "months": 1,
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi đứng ở cổng chùa từ sáng tới trưa. Sư thầy ra, xoa đầu ngươi rồi dắt vào.",
+          "Sư thầy hỏi ngươi biết quét sân không. Ngươi gật đầu. Từ hôm ấy ngươi có chỗ học chữ."
+        ],
+        "effects": { "enrollSchool": "chua_lang", "stat.happiness": 3, "stat.daoHeart": 1 }
+      }
+    ]
+  }
+]

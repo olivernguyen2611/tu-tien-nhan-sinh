@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { loadContent, type Content } from '../src/core/content';
-import { createLife } from '../src/core/state';
+import { advanceYear, createLife } from '../src/core/state';
 import { activityViews } from '../src/systems/activities';
 import { meets } from '../src/systems/events/conditions';
 import { classDef, classOf, setClass } from '../src/systems/socialClass';
@@ -94,5 +94,45 @@ describe('Hoạt động theo giai cấp (15.2)', () => {
     if (sick) expect(sick.name).toBe('Truyền thái y');
     expect(activityViews(prince, content).find((v) => v.id === 'ket_giao')!.name).toBe('Dự yến tiệc tông thất');
     expect(activityViews(life('nong_dan', 30), content).find((v) => v.id === 'ket_giao')!.name).toBe('Uống rượu đầu làng');
+  });
+});
+
+describe('Học hành theo giai cấp (15.3)', () => {
+  const grow = (origin: string, to: number) => {
+    let s = createLife({ seed: `hoc-${origin}`, originId: origin }, content);
+    s = { ...s, destiny: { ...s.destiny, confirmed: true } };
+    while (s.character.age < to && s.alive) {
+      if (s.events.pending) { s = { ...s, events: { ...s.events, pending: null } }; continue; }
+      const next = advanceYear(s, content);
+      if (next === s) break;
+      s = next;
+    }
+    return s;
+  };
+
+  it('a child of a house with its own school is sent there at six; a farmer\'s child is not', () => {
+    expect(grow('hoang_tu', 7).school?.at).toBe('thuong_thu_phong');
+    expect(grow('quy_toc', 7).school?.at).toBe('toc_hoc');
+    expect(grow('tu_tien_gia_toc', 7).school?.at).toBe('toc_hoc');
+    expect(grow('quan_gia', 7).school?.at).toBe('tu_thuc');
+    expect(grow('nong_dan', 7).school?.at ?? null).toBeNull();
+    const teacher = (s: ReturnType<typeof grow>) => s.npcs.find((n) => n.id === s.school!.teacher)!.role;
+    expect(teacher(grow('hoang_tu', 7))).toBe('thái phó');
+  });
+
+  it('a royal tutor teaches more than a village teacher', () => {
+    const def = (id: string) => content.schooling!.schools.find((x) => x.id === id)!;
+    expect(def('thuong_thu_phong').gradeMul).toBeGreaterThan(def('truong_lang').gradeMul);
+    expect(def('quoc_tu_giam').gradeMul).toBeGreaterThan(def('tu_thuc').gradeMul);
+  });
+
+  it('the way into a school follows the class: chùa for the poor, tư thục for a merchant, Quốc Tử Giám for the noble', () => {
+    const at = (origin: string, age: number) => activityViews(life(origin, age), content).map((v) => v.id);
+    expect(at('co_nhi', 8)).toContain('xin_hoc_chua');
+    expect(at('thuong_nhan', 8)).toContain('xin_vao_tu_thuc');
+    expect(at('hoang_tu', 8)).not.toContain('xin_hoc_chua');
+    expect(at('quy_toc', 13)).toContain('vao_quoc_tu_giam');
+    expect(at('quan_gia', 13)).not.toContain('vao_quoc_tu_giam');
+    expect(at('nong_dan', 13)).not.toContain('vao_quoc_tu_giam');
   });
 });
