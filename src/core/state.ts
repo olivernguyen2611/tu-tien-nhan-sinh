@@ -11,6 +11,7 @@ import { APTITUDES, MORTAL_STATS } from './schemas';
 import type { GameState, Gender, KarmaTie, LogYear, PastSectRecord } from './types';
 import { rollSeclusionEvent, rollYearEvent } from '../systems/events/engine';
 import { ageFamily, createFamily } from '../systems/relationships';
+import { bornIntoHouse, houseYear } from '../systems/royalHouse';
 import { ageExtremes } from '../systems/extremes';
 import { ageBody, checkDeath } from '../systems/time';
 import { makeName, splitName } from '../systems/names';
@@ -248,9 +249,11 @@ export function createLife(input: NewLifeInput, content: Content): GameState {
     trade: { id: null, level: 0, years: 0, master: null, learning: false },
     log: [],
   };
-  state.log.push({ age: 0, lines: [{ text: fillTemplate(origin.birthText, state), tone: 'normal' }] });
+  // 15.0: a royal life's family is the court (quốc tính, the emperor father, brothers in line).
+  const born = bornIntoHouse(state, content);
+  born.log.push({ age: 0, lines: [{ text: fillTemplate(origin.birthText, born), tone: 'normal' }] });
   // 9.1: born in the first tầng.
-  return syncTier(state, content);
+  return syncTier(born, content);
 }
 
 /** 9.3: two or more periodic lines (income, stipend, sect report) this year become one sổ thu chi line. */
@@ -295,6 +298,9 @@ export function advanceYear(state: GameState, content: Content): GameState {
   if (next !== state) notifyYear(next);
   return next;
 }
+
+/** 15.0: a royal family's emperor holds or ends the niên hiệu, then the world's year. */
+const houseTimesYear = (s: GameState, c: Content): GameState => timesYear(houseYear(s, c), c);
 
 /** 12.6–12.9: the court's year, then the road to the throne (or the reign). */
 const courtThroneYear = (s: GameState, c: Content): GameState => throneYear(courtYear(s, c), c);
@@ -351,7 +357,7 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;
   // 9.R7e: the world moves on before the year's event is drawn.
-  const worldly = body.alive ? thanDaoYear(trungSinhYear(systemYear(reunionYear(courtThroneYear(timesYear(worldEventsYear(secluded, content), content), content), content), content), content), content) : secluded;
+  const worldly = body.alive ? thanDaoYear(trungSinhYear(systemYear(reunionYear(courtThroneYear(houseTimesYear(worldEventsYear(secluded, content), content), content), content), content), content), content) : secluded;
   const rolled = !body.alive ? worldly : state.seclusion ? rollSeclusionEvent(worldly, content) : rollYearEvent(gatesYear(rivalYear(worldly, content), content), content);
   // 9.R5a: what the year taught goes into the Sổ tri thức.
   const next = rolled.alive ? knowledgeYear(rolled, content) : rolled;

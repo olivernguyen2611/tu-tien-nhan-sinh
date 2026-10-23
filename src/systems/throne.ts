@@ -14,6 +14,7 @@ import { Rng } from '../core/rng';
 import type { GameState, LogLine } from '../core/types';
 import { checkDeath } from './time';
 import { quitJob } from './jobs';
+import { brothersOf, killRelative, relativeOf, setRank } from './royalHouse';
 
 type Throne = NonNullable<GameState['throne']>;
 type Reign = NonNullable<GameState['reign']>;
@@ -48,18 +49,15 @@ export function initRoyal(state: GameState, content: Content): Throne | null {
   const cfg = content.balance.throne;
   if (!cfg || !royalOrigin(state, content)) return null;
   const rng = new Rng(`${state.seed}:throne:royal`);
-  const count = rng.int(cfg.rivals[0], cfg.rivals[1]);
-  const rank = rng.int(1, count + 1);
-  const used = new Set([state.character.name.split(' ').pop()]);
-  const rivals = Array.from({ length: count }, () => {
-    const pool = content.names.maleGiven.filter((n) => !used.has(n));
-    const given = rng.pick(pool.length ? pool : content.names.maleGiven);
-    used.add(given);
-    return { name: `Hoàng tử ${given}`, favor: rng.int(30, 60), power: rng.int(20, 50), alive: true };
-  });
+  // 15.0: the rivals are the brothers in the family; the place in line counts the older ones.
+  const brothers = brothersOf(state);
+  const age = state.character.age;
+  const rivals = brothers.map((b) => ({ name: b.name, npcId: b.id, favor: rng.int(30, 60), power: b.age >= cfg.adultAge ? rng.int(20, 50) : rng.int(5, 20), alive: true }));
+  const rank = brothers.filter((b) => b.age > age).length + 1;
+  const mother = state.family.find((r) => r.role === 'mother')?.rank;
   return {
     path: 'royal', bars: { favor: rng.int(35, 55), power: 10, suspicion: 5 }, since: 0, step: 0,
-    rank, mother: rng.chance(0.3) ? 'hau' : 'phi', rivals, heir: null,
+    rank, mother: mother === 'hau' || mother === 'phi' ? mother : rng.chance(0.3) ? 'hau' : 'phi', rivals, heir: null,
   };
 }
 
@@ -104,6 +102,19 @@ export function addThroneBars(state: GameState, content: Content, d: Record<stri
 export const strongestRival = (t: Throne) =>
   (t.rivals ?? []).filter((r) => r.alive).sort((a, b) => b.favor + b.power - (a.favor + a.power))[0];
 
+/** 15.0: the court's thái tử and the family's ranks follow the royal road's heir ('self', a brother, or none). */
+function mirrorHeir(state: GameState): GameState {
+  const t = state.throne;
+  const c = state.court;
+  if (t?.path !== 'royal' || !c) return state;
+  const r = t.heir && t.heir !== 'self' ? (t.rivals ?? []).find((x) => x.name === t.heir) : undefined;
+  const kin = relativeOf(state, r?.npcId);
+  const heir = t.heir === 'self' ? { name: state.character.name, age: state.character.age } : r ? { name: r.name, age: kin?.age ?? c.heir?.age ?? 0, npcId: r.npcId } : null;
+  let s: GameState = { ...state, court: { ...c, heir } };
+  for (const x of s.family) if (x.rank === 'heir' && x.id !== r?.npcId) s = setRank(s, x.id, undefined);
+  return r?.npcId ? setRank(s, r.npcId, 'heir') : s;
+}
+
 /** Strike the sibling in the way: the named thái tử if it is not you, else the strongest. A thái tử whose thánh sủng
  *  falls below deposeBelow is phế. */
 export function hitRival(state: GameState, content: Content, d: number, dies = false): GameState {
@@ -115,7 +126,8 @@ export function hitRival(state: GameState, content: Content, d: number, dies = f
   const rivals = t.rivals!.map((r) => (r === top ? hit : r));
   const deposed = t.heir === top.name && (dies || hit.favor < (content.balance.throne?.deposeBelow ?? 20));
   const lines: LogLine[] = deposed && !dies && content.throne ? [{ text: fill(content.throne.texts.heirDeposed, { name: top.name }), tone: 'good' }] : [];
-  return pushLines({ ...state, throne: { ...t, rivals, heir: deposed ? null : t.heir } }, lines);
+  const s = dies ? killRelative(state, top.npcId) : deposed ? setRank(state, top.npcId, undefined) : state;
+  return pushLines(mirrorHeir({ ...s, throne: { ...t, rivals, heir: deposed ? null : t.heir } }), lines);
 }
 
 export function setThroneStep(state: GameState, step: number | 'reset'): GameState {
@@ -256,7 +268,7 @@ export function throneYear(state: GameState, content: Content): GameState {
   const rng = new Rng(`${state.seed}:throne:${age}`);
   const lines: LogLine[] = [];
   let s = state;
-  if (!s.throne && !s.reign && royalOrigin(s, content) && !s.flags.bi_phe_thu_dan && !s.flags.roi_cung && !s.flags.len_ngoi) {
+  if (!s.throne && !s.reign && royalOrigin(s, content) && !s.flags.bi_phe_thu_dan && !s.flags.roi_cung && !s.flags.len_ngoi && !s.flags.nhan_vuong) {
     const t = initRoyal(s, content);
     if (t) s = { ...s, throne: { ...t, since: age } };
   }
@@ -266,10 +278,19 @@ export function throneYear(state: GameState, content: Content): GameState {
 
   if (t?.path === 'royal') {
     const bars: Record<string, number> = { ...t.bars, suspicion: clamp(t.bars.suspicion + cfg.suspicionDrift + (t.bars.power > 50 ? 3 : 0)) };
+    // 15.0: brothers born since join the line; a brother who died in the family is out of it.
+    const known = new Set((t.rivals ?? []).map((r) => r.npcId));
+    const born = brothersOf(s).filter((b) => !known.has(b.id)).map((b) => ({ name: b.name, npcId: b.id, favor: rng.int(20, 40), power: rng.int(0, 10), alive: true }));
     // Siblings drift; one may die young.
-    const rivals = (t.rivals ?? []).map((r) => {
+    const rivals = [...(t.rivals ?? []), ...born].map((r) => {
       if (!r.alive) return r;
-      if (rng.chance(cfg.siblingDeath)) { lines.push({ text: fill(file.texts.siblingDies, { name: r.name }), tone: 'normal' }); return { ...r, alive: false }; }
+      const kin = relativeOf(s, r.npcId);
+      if (kin && !kin.alive) return { ...r, alive: false };
+      if (rng.chance(cfg.siblingDeath)) {
+        lines.push({ text: fill(file.texts.siblingDies, { name: r.name }), tone: 'normal' });
+        s = killRelative(s, r.npcId);
+        return { ...r, alive: false };
+      }
       const [lo, hi] = cfg.rivalGrowth;
       return { ...r, favor: clamp(r.favor + rng.int(lo, hi)), power: clamp(r.power + rng.int(lo, hi)) };
     });
@@ -285,7 +306,9 @@ export function throneYear(state: GameState, content: Content): GameState {
         s = follow(s, file.events.heirLost, content);
       }
     }
-    s = { ...s, throne: next };
+    // A named heir who died leaves the Đông cung empty.
+    if (next.heir && next.heir !== 'self' && !rivals.some((r) => r.name === next.heir && r.alive)) next = { ...next, heir: null };
+    s = mirrorHeir({ ...s, throne: next });
     if (bars.suspicion >= cfg.banAt) s = follow(s, file.events.banned, content);
     // The emperor is gone (a new niên hiệu this year): the named heir takes the throne.
     const t2 = s.times;
@@ -304,7 +327,11 @@ export function throneYear(state: GameState, content: Content): GameState {
       }
       if (next.heir === 'self') return throneAscend(pushLines({ ...s, throne: next }, lines), content);
       lines.push({ text: fill(file.texts.siblingCrowned, { name: next.heir! }), tone: 'bad' });
-      return pushLines({ ...s, throne: null, flags: { ...s.flags, nhan_vuong: true } }, lines);
+      // 15.0: the brother crowned is the court's emperor now.
+      const king = (next.rivals ?? []).find((r) => r.name === next.heir);
+      const kin = relativeOf(s, king?.npcId);
+      const court = s.court && kin ? { ...s.court, emperor: { ...s.court.emperor, age: kin.age, npcId: kin.id }, heir: null } : s.court;
+      return pushLines(setRank({ ...s, court, throne: null, flags: { ...s.flags, nhan_vuong: true } }, kin?.id, 'emperor'), lines);
     }
   }
 

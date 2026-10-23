@@ -456,6 +456,25 @@ Thứ tự theo rủi ro tăng dần, mỗi mục là một task riêng:
 | 8.3 | [ ] Trò chuyện với NPC (giới hạn lượt, chỉ ảnh hưởng nhẹ thiện cảm) |
 | 8.4 | [ ] Kỳ ngộ do AI tạo theo khuôn JSON + validator |
 
+### GĐ 15 — Hoạt động theo giai cấp (yêu cầu 23/10)
+> Kế hoạch chi tiết: `/mnt/project-files/tu-tien/ke-hoach/hoat-dong-theo-giai-cap.md`. Mỗi giai cấp (hoàng tộc, quyền quý, quan gia, thương gia, võ gia, nông gia, bần dân, tu tiên thế gia) chỉ thấy hoạt động hợp thân phận.
+
+| # | Task |
+|---|---|
+| 15.0 | [x] Hoàng tộc khớp triều đình: cha là hoàng đế thật, anh em là đối thủ tranh ngôi thật, vua băng hà ↔ cha mất, thái tử là người trong nhà, danh xưng Phụ hoàng/Hoàng huynh |
+| 15.1 | [ ] Nền giai cấp: dữ liệu giai cấp, điều kiện `classes`/`notClasses`, bảng tắt theo giai cấp, biến thể `byClass` |
+| 15.2 | [ ] Gắn nhãn hoạt động cũ theo giai cấp |
+| 15.3 | [ ] Học hành theo giai cấp (Thượng thư phòng, tộc học, Quốc Tử Giám, chùa làng; tự nhập học) |
+| 15.4 | [ ] Việc làm, Đường đời, việc với người nhà theo giai cấp; bổng lộc |
+| 15.5 | [ ] Hoàng tộc trọn bộ + cải trang vi hành |
+| 15.6 | [ ] Quyền quý + quan gia |
+| 15.7 | [ ] Thương gia + võ gia |
+| 15.8 | [ ] Nông gia + bần dân, cô nhi |
+| 15.9 | [ ] Tu tiên thế gia (phần phàm) |
+| 15.10 | [ ] Sự kiện theo giai cấp |
+| 15.11 | [ ] Đổi giai cấp: phất lên, sa sút |
+| 15.12 | [ ] Cân bằng, bot theo giai cấp, chơi thử |
+
 Tuỳ chọn bất kỳ lúc nào: script trong `tools/` xuất nháp JSON theo chủ đề để soạn nội dung nhanh hơn (vẫn qua bước duyệt và kiểm trùng `id`).
 
 ---

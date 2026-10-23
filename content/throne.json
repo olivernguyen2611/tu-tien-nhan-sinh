@@ -50,5 +50,19 @@
     "siblingCrowned": "{name} lên ngôi. Ngươi lui về vương phủ làm một nhàn vương, ngày ngày uống trà, đêm đêm nghe ngóng.",
     "dynastyFell": "Nhà {dynasty} mất nước. Long bào của tổ tông bị kéo xuống, ngọc điệp hoàng tộc ném vào lửa.",
     "heirDeposed": "Chiếu phế thái tử ban xuống: {name} bị giáng làm vương, dời ra khỏi Đông cung. Ngôi trữ quân lại bỏ trống."
+  },
+  "house": {
+    "labels": {
+      "hoang": { "father": "Phụ hoàng", "mother": "Mẫu phi", "motherHau": "Mẫu hậu", "olderBrother": "Hoàng huynh", "olderSister": "Hoàng tỷ", "youngerBrother": "Hoàng đệ", "youngerSister": "Hoàng muội" },
+      "vuong": { "father": "Phụ vương", "mother": "Mẫu phi", "motherHau": "Mẫu phi", "olderBrother": "Huynh trưởng", "olderSister": "Tỷ tỷ", "youngerBrother": "Đệ đệ", "youngerSister": "Muội muội" }
+    },
+    "ranks": { "emperor": "Đương kim hoàng đế", "heir": "Thái tử", "retired": "Thái thượng hoàng", "fallen": "Vua mất nước", "hau": "Hoàng hậu", "phi": "Phi tần" },
+    "texts": {
+      "emperorDies": "{label} {name} băng hà, hưởng thọ {age} tuổi. Chuông chùa cả kinh thành gõ suốt ba ngày, thiên hạ để quốc tang.",
+      "born": "Trong cung thêm một {sibling}: {name}. Hậu cung lại có thêm một người để đếm.",
+      "fallen": "{label} {name} không chịu cởi long bào, tuẫn quốc cùng nhà {dynasty}.",
+      "heirNamed": "Chiếu lập trữ ban xuống: {label} {name} vào ở Đông cung.",
+      "crowned": "{label} {name} lên ngôi. Từ nay gặp anh em ruột cũng phải quỳ."
+    }
   }
 }
