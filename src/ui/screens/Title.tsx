@@ -1,10 +1,12 @@
+import type { ComponentChildren } from 'preact';
 import { useRef, useState } from 'preact/hooks';
+import { GearIcon } from '../components/SettingsPanel';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { DEV_TAP_GAP_MS, DEV_TAPS, DEV_WARNING } from '../devMode';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import type { ThemePref } from '../theme';
 
-export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, onDevUnlock, onDevOff, onContinue, onStart, onSaves, onSettings, onRebirth, onCodex, onChallenge, theme, onToggleTheme }: {
+export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, onDevUnlock, onDevOff, onContinue, onStart, onSaves, onSettings, settingsPanel, onRebirth, onCodex, onChallenge, theme, onToggleTheme }: {
   canContinue: boolean;
   livesPlayed: number;
   /** Task 5b.1: Luân Hồi points kept across lives. */
@@ -17,8 +19,9 @@ export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, 
   onContinue: () => void;
   onStart: () => void;
   onSaves: () => void;
-  /** Góp ý 23/10: Cài đặt (settings, developer mode switch). */
+  /** Góp ý 23/10: the gear opens Cài đặt (settings, developer mode switch), drawn over this screen. */
   onSettings: () => void;
+  settingsPanel: ComponentChildren;
   /** Task 5b.1: the Luân Hồi đài (shown once a life has ended). */
   onRebirth: () => void;
   /** Task 5b.4: Thiên Thư. */
@@ -50,6 +53,7 @@ export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, 
   return (
     <main class="title-screen">
       <div class="theme-corner">
+        <button class="icon-btn" aria-label="Cài đặt" title="Cài đặt" onClick={onSettings}><GearIcon /></button>
         <ThemeToggle pref={theme} onChange={onToggleTheme} />
       </div>
       <div class="seal-mark" aria-hidden="true" onClick={tapSeal}>仙</div>
@@ -60,11 +64,11 @@ export function TitleScreen({ canContinue, livesPlayed, rebirthPoints, devMode, 
       {canContinue && <button class="btn-primary start" onClick={onContinue}>Tiếp tục</button>}
       <button class={canContinue ? 'btn-secondary start' : 'btn-primary start'} onClick={onStart}>Nhập thế</button>
       <button class="link-btn" onClick={onSaves}>Sổ lưu</button>
-      <button class="link-btn" onClick={onSettings}>Cài đặt</button>
       {(livesPlayed > 0 || rebirthPoints > 0) && <button class="link-btn" onClick={onRebirth}>Luân Hồi Đài</button>}
       {(livesPlayed > 0 || devMode) && <button class="link-btn" onClick={onCodex}>Thiên Thư</button>}
       {(livesPlayed > 0 || devMode) && <button class="link-btn" onClick={onChallenge}>Thử thách tuần</button>}
       <p class="note">{livesPlayed > 0 ? `Đã trải ${livesPlayed} kiếp · ` : ''}{rebirthPoints > 0 ? `${rebirthPoints} điểm Luân Hồi · ` : ''}Bản thử nghiệm {__APP_VERSION__}</p>
+      {settingsPanel}
       {ask && <ConfirmDialog title="Bật chế độ thử nghiệm?" text={DEV_WARNING} confirmLabel="Bật" onCancel={() => setAsk(false)} onConfirm={() => { setAsk(false); onDevUnlock(); }} />}
     </main>
   );

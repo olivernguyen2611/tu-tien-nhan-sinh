@@ -8,6 +8,11 @@
 
 ## [Chưa phát hành]
 
+### Góp ý 23/10: bánh răng Cài đặt (2026-10-23)
+- Màn hình chính và thanh trên trong lúc chơi có nút **bánh răng** ở góc trên. Bấm vào mở bảng Cài đặt ngay trên màn đang xem, không phải chuyển màn; bấm ✕, chạm ra ngoài hoặc nút Back của điện thoại để đóng.
+- Bảng giữ đủ các mục: giao diện, âm thanh, tua nhanh tối đa, cỡ chữ, giảm chuyển động, ẩn nội dung nhạy cảm, chế độ thử nghiệm. Bỏ màn Cài đặt riêng và dòng chữ "Cài đặt" ở màn hình chính.
+- Biểu tượng bánh răng vẽ bằng SVG ngay trong code, không dùng ảnh ngoài.
+
 ### Góp ý 23/10: màn Cài đặt riêng (2026-10-23)
 - Màn hình chính có thêm mục **Cài đặt**; trong lúc chơi có nút 設 cạnh nút Sổ lưu.
 - Cài đặt gom: giao diện ngày/đêm, âm thanh, tua nhanh tối đa, cỡ chữ, giảm chuyển động, ẩn nội dung nhạy cảm, và công tắc chế độ thử nghiệm (bật thì hỏi lại trước, tắt ngay một chạm). Trước đây các mục này nằm cuối Sổ lưu nên khó tìm.

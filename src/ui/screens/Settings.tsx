@@ -1,5 +1,6 @@
-// "Sổ lưu": the save slots (play, export, delete, import); settings live in Cài đặt (Preferences.tsx).
+// "Sổ lưu": the save slots (play, export, delete, import); settings live in the Cài đặt sheet (SettingsPanel.tsx).
 // In pick mode the player chooses a slot for a new life or an imported save.
+import type { ComponentChildren } from 'preact';
 import { useRef, useState } from 'preact/hooks';
 import type { SlotSummary } from '../../systems/save';
 import type { SavedPerson } from '../../systems/npcLibrary';
@@ -18,7 +19,7 @@ type Pending = { kind: 'delete' | 'overwrite'; slot: number } | null;
 
 const when = (iso: string) => new Date(iso).toLocaleString('vi-VN', { dateStyle: 'short', timeStyle: 'short' });
 
-export function SettingsScreen({ slots, library, realmName, onSavePlayer, onRemovePerson, pick, worldName, message, onPlay, onExport, onDelete, onImport, onPick, onBack, onSettings }: {
+export function SettingsScreen({ slots, library, realmName, onSavePlayer, onRemovePerson, pick, worldName, message, onPlay, onExport, onDelete, onImport, onPick, onBack, onSettings, settingsPanel }: {
   slots: SlotView[];
   /** Backlog 11: the Sổ nhân vật, and writing a slot's protagonist into it. */
   library: SavedPerson[];
@@ -35,8 +36,9 @@ export function SettingsScreen({ slots, library, realmName, onSavePlayer, onRemo
   onImport: (file: File) => void;
   onPick: (slot: number) => void;
   onBack: () => void;
-  /** Opens the Cài đặt screen. */
+  /** Opens the Cài đặt sheet, drawn over this screen. */
   onSettings: () => void;
+  settingsPanel: ComponentChildren;
 }) {
   const [pending, setPending] = useState<Pending>(null);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -138,6 +140,7 @@ export function SettingsScreen({ slots, library, realmName, onSavePlayer, onRemo
           }}
         />
       )}
+      {settingsPanel}
     </main>
   );
 }

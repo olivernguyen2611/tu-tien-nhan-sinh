@@ -1059,3 +1059,9 @@ html[data-motion='reduce'][data-fx]::after { display: none; }
 .chip-row .chip-btn { white-space: normal; text-align: left; padding: 4px 12px; }
 .chip-btn[aria-pressed="true"] { background: var(--jade); color: var(--bg); }
 .asset-more { margin-top: 10px; }
+/* Góp ý 23/10: Cài đặt as a sheet over the screen, opened by the gear. */
+.settings-panel { display: flex; flex-direction: column; gap: 10px; text-align: left; }
+.settings-panel .settings-head { justify-content: space-between; }
+.settings-panel .settings-head h2 { margin: 0; font-family: var(--font-story); font-size: 1.375rem; }
+.theme-corner { display: flex; gap: 8px; }
+.icon-btn svg { display: block; }
