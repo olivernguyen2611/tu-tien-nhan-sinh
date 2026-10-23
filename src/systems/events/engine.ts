@@ -3,6 +3,7 @@
 import { addGrade, addTradeLevel, enrollSchool, leaveSchool, startTrade } from '../schooling';
 import { beginExam } from '../exams';
 import { addPerf, promoteJob, quitJob, takeJob } from '../jobs';
+import { eventSetClass } from '../classShift';
 import { addArt, adoptPet, castOmen, noteGamble, omenMul } from '../leisure';
 import { festivalBoost } from '../calendar';
 import { addNetRenown, addRenown } from '../jianghu';
@@ -524,7 +525,11 @@ function applyExtras(state: GameState, content: Content, fx: Outcome['effects'],
   if (fx.sitExam) next = beginExam(next, content);
   // 10.3 Việc làm.
   if (fx.quitJob) next = quitJob(next, content, fx.quitJob);
-  if (fx.takeJob) next = takeJob(next, content, fx.takeJob)?.state ?? next;
+  if (fx.setClass) next = eventSetClass(next, content, fx.setClass);
+  if (fx.takeJob) {
+    const job = typeof fx.takeJob === 'string' ? { id: fx.takeJob, waive: false } : fx.takeJob;
+    next = takeJob(next, content, job.id, job.waive)?.state ?? next;
+  }
   if (fx.perf) next = addPerf(next, fx.perf);
   if (fx.jobPromote) next = promoteJob(next, content);
   // 10.4 Tài sản.

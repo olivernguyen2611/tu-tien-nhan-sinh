@@ -8,6 +8,101 @@
 
 ## [Chưa phát hành]
 
+### 15.12 Cân bằng theo giai cấp (2026-10-23)
+- Tám persona giả lập theo giai cấp (`gc_hoang_toc` … `gc_tu_gia`). Chạy bằng `npm run simulate -- --profile class`; bảng persona có thêm cột "Đổi giai cấp".
+- Kết quả 30 đời mỗi persona:
+  - Tuổi thọ trung bình 67–99.
+  - Bạc cuối đời: hoàng tộc ≈ 5.200, quyền quý ≈ 2.700, thương gia ≈ 10.900, quan gia và bần dân ≈ 1.000.
+  - Mỗi đời làm 20–27 hoạt động khác nhau.
+  - Đổi giai cấp:
+    - bần dân 53% (có ruộng, tìm được nhà);
+    - hoàng tộc 47% (triều đại mất khi còn sống);
+    - các giai cấp khác dưới 10%.
+- Sửa: hoàng tộc chỉ mất thân phận khi chính triều đại của nhà mình mất. Người tự lên ngôi lập triều mới rồi thoái vị không còn bị tính là "mất nước".
+- Test phủ kín:
+  - mỗi giai cấp ở tuổi 6, 10, 14, 20 và 35 đều có việc trong mục Học hành hoặc Nghề;
+  - hoàng tử ở mọi tuổi không thấy trường làng, móc túi, ăn xin, ở đợ, làm thuê, mua quan, tập ấm.
+- Con nhà quyền quý cũng được Theo cha học kinh sử, để tuổi nhỏ không bị trống.
+
+### 15.11 Đổi giai cấp (2026-10-23)
+- Giai cấp không còn đứng yên. Mỗi năm đọc luật trong `worlds/<id>/character/class-shifts.json`, theo thứ tự:
+  - lên ngôi thì thành hoàng tộc;
+  - làm quan tới Thị lang thì thành quyền quý;
+  - làm quan thì thành quan gia;
+  - có cửa hiệu và trên 600 lượng thì thành thương gia;
+  - bần dân có ruộng thì thành nông gia;
+  - hết nhà cửa, nợ từ 200 lượng, túi rỗng thì sa sút xuống bần dân.
+- Mỗi lần đổi có một dòng báo. Hoạt động cũ biến mất, hoạt động mới hiện ra.
+- Hai lần đổi cách nhau ít nhất `balance.classShift.gap` năm (5), để không đổi qua đổi lại.
+- Hoàng tộc mà triều đại đã mất thì thành kẻ tiền triều lẫn trong bần dân (`dynastyFall`).
+- Hiệu ứng mới `setClass` cho sự kiện. Cô nhi tìm được nhà cũ (miếng ngọc vỡ) giờ thành nông gia.
+- Validator kiểm tra giai cấp nhắc tới trong luật đổi và `balance.classShift`.
+
+### 15.10 Sự kiện theo giai cấp (2026-10-23)
+- Rà các sự kiện phàm gian chưa gắn giai cấp mà có chữ chỉ cảnh nghèo (đói, chủ nợ, cường hào, lý trưởng, bắt lính, hàng xóm, đầu làng…).
+- Bảng `balance.classes` tắt chúng theo giai cấp (dùng chung cơ chế `standing.ts`):
+  - **Hoàng tộc**: tắt 28 sự kiện (năm đói, bắt lính, chủ nợ, cường hào chiếm ruộng, cháy nhà hàng xóm, chó dữ đầu làng…).
+  - **Quyền quý**: tắt 11 sự kiện về đói, nợ, bắt lính, bắt phu.
+  - **Tu tiên thế gia**: tắt 4 sự kiện (đói lả, chủ nợ, bắt lính, trưng binh).
+- 4 sự kiện thay thế cho nhà giàu (`the-su-nha-giau.json`):
+  - Năm đói: mở kho phát chẩn, bán giá cũ hay đóng cửa canh kho.
+  - Dịch trong kinh: lánh về biệt trang hay lập trạm thuốc.
+  - Triều đình mượn gia binh.
+  - Phủ bên lấn đất.
+- Validator báo lỗi khi `balance.classes` tắt một sự kiện không tồn tại.
+
+### 15.9 Tu tiên thế gia (2026-10-23)
+- 6 hoạt động mới cho con cháu tu tiên thế gia lúc còn là phàm nhân (`activities/tu-gia.json`):
+  - Nghe tộc lão giảng đạo, Luyện thể tộc truyền, Phụ việc linh điền gia tộc;
+  - Dự tộc tỷ, Đọc tàng kinh gia tộc (tầng thấp), Hầu trà tộc lão.
+- Không hoạt động nào tạo ra linh căn: linh căn vẫn là bẩm sinh, có test giữ luật này.
+- 3 sự kiện mới:
+  - kẻ không linh căn trong tộc (quản việc thế tục, luyện thể hay bỏ đi);
+  - phần linh thạch cuối năm;
+  - lão tổ xuất quan.
+- Hoạt động mới nào nhắc tới cha hoặc mẹ thì ẩn khi người ấy đã mất (`no_father`/`no_mother`). Câu nào không cần nhắc tới cha mẹ thì viết lại cho trung tính.
+
+### 15.8 Nông gia, bần dân (2026-10-23)
+- 15 hoạt động mới (`activities/nong-gia-ban-dan.json`):
+  - **Nông gia**: Chăn trâu cắt cỏ, Mò cua bắt ốc (cả bần dân), Làm ruộng giúp nhà, Đi chợ phiên bán nông sản, Đổi công với hàng xóm, Thuê thêm ruộng.
+  - **Nông gia và bần dân**: Khai hoang, Đi phu đắp đê.
+  - **Bần dân**: Ăn xin đầu chợ, Nhặt củi bán, Làm mõ làng, Ở đợ nhà giàu, Theo gánh xiếc, Vào Cái Bang.
+  - **Cô nhi**: Đi tìm thân thế, có lúc lần ra được nhà cũ.
+    - Hiện chỉ đặt cờ `biet_than_the`; việc đổi giai cấp khi tìm được nhà để dành cho 15.11.
+- 5 sự kiện mới: miếng ngọc vỡ (thân thế), trâu ốm, được mùa, bị đuổi khỏi miếu, cái bánh của người lạ.
+
+### 15.7 Thương gia, võ gia (2026-10-23)
+- 13 hoạt động mới (`activities/thuong-gia-vo-gia.json`):
+  - **Thương gia**: Học tính sổ ở cửa hiệu, Theo cha áp hàng, Trông quầy, Buôn một chuyến đường xa (lãi gấp đôi hoặc mất trắng), Dò giá các châu.
+  - **Thương hội**: Góp vốn thương hội mở ra Dự nghị sự thương hội và Lo lót xin làm hoàng thương. Làm hoàng thương rồi thì trông quầy được thêm bạc.
+  - **Võ gia**: Đứng tấn mã bộ, Học võ gia truyền, Theo cha áp tiêu, Thu đồ đệ cho võ quán.
+  - **Thi võ cử** (võ gia, quan gia, quyền quý): đỗ thì vào quân làm võ quan.
+- 4 sự kiện mới: hàng giả trong kho, quan thuế tới cửa, đạp quán, mối thù môn hộ.
+
+### 15.6 Quyền quý, quan gia (2026-10-23)
+- 12 hoạt động mới (`activities/quyen-quy-quan-gia.json`):
+  - **Quyền quý**:
+    - **Tập ấm** thay Mua quan: nhờ công cha ông mà được bổ chức. Quyền quý không còn thấy Mua quan.
+    - Vào cấm quân làm thị vệ, Quản điền trang (cả tu tiên thế gia), Đấu dế đua ngựa, Mở thi xã.
+    - Đã có từ 15.5: Nuôi môn khách, Thu điền vây săn, Cải trang vi hành.
+  - **Quan gia**: Theo cha học kinh sử, Theo cha đi nhậm, Bái danh sư ôn thi, Hành quyển, Kết văn hữu sĩ tử, Làm môn sinh quan lớn.
+  - **Nhờ thế cha xin việc**: vào làm thư lại không cần đỗ Đồng sinh.
+    - Hiệu ứng `takeJob` nhận thêm dạng `{ id, waive }` để bỏ qua điều kiện của nghề.
+- 4 sự kiện mới: cha bị đàn hặc, tá điền xin giảm tô, chuyện liên hôn (18+), có người bán đề thi.
+
+### 15.5 Hoàng tộc trọn bộ, cải trang vi hành (2026-10-23)
+- 15 hoạt động mới cho hoàng tộc (`activities/hoang-toc.json`):
+  - **Học**: Học lễ nghi cung đình, Đọc sách ở Tàng thư các, Luận kinh nghĩa, Tập cưỡi ngựa bắn cung; hoàng tử 14+ được Hầu phụ hoàng phê tấu.
+  - **Công chúa**: Học cầm kỳ thi họa, Mở yến thi văn.
+  - **Trưởng thành**: Xin phong tước, khai phủ (16+). Có phủ rồi mới Nhận sai sự ở Lục bộ (thay Việc làm) và Về phong địa.
+  - **Giao tế và giải trí**: Nuôi môn khách, Dự yến tông thất, Thu điền vây săn.
+  - **Hoàng thân**: Vào triều hầu, Dâng sớ xin việc.
+- **Cải trang vi hành** (hoàng tộc, quyền quý, từ 12 tuổi): trong một năm được làm như dân thường một số việc (hội chợ, xem hát, sòng bạc, hành hiệp, lôi đài, võ quán, bảng treo thưởng, thư quán).
+  - Danh sách ở `balance.classDisguise`. Hết năm thì cởi áo vải.
+  - Có lúc bị nhận ra, có lúc gặp chuyện bất bình ngoài phố (sự kiện).
+- 5 sự kiện mới (`worlds/thuong_lan/events/hoang-toc.json`): bị nhận ra khi vi hành, chuyện bất bình, thư đồng xin ra cung, chuyện hòa thân của công chúa, người lạ trong phủ mới mở.
+- Validator: cờ do hoạt động đặt cũng được tính; kiểm tra `classDisguise`.
+
 ### 15.4 Việc làm, đường đời, việc với người nhà theo giai cấp (2026-10-23)
 - **Việc làm**: mỗi nhóm nghề trong `jobs.json` ghi giai cấp nào làm (`classes`; nghề riêng có thể ghi đè, như bộ khoái nhận cả con quan gia).
   - Hoàng tộc không thấy nghề nào nên mục Việc làm ẩn hẳn.

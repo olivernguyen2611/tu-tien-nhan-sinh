@@ -1,0 +1,56 @@
+{
+  "texts": {
+    "fallen": "Triều cũ đã mất, quốc tính thành tội. Ngươi không còn là hoàng tộc, chỉ là kẻ tiền triều mai danh ẩn tích giữa đám bần dân.",
+    "changed": "Từ nay, ngươi thuộc hàng {class}."
+  },
+  "shifts": [
+    {
+      "id": "len_ngoi",
+      "from": [],
+      "to": "hoang_toc",
+      "when": { "reign": { "active": true } },
+      "text": "Ngồi lên ngai vàng, họ của ngươi thành quốc tính. Cả nhà từ nay là {class}.",
+      "tone": "rare"
+    },
+    {
+      "id": "quan_to_thanh_the_gia",
+      "from": ["quan_gia", "thuong_gia", "vo_gia", "nong_gia", "ban_dan", "tu_gia"],
+      "to": "quyen_quy",
+      "when": { "office": { "held": true, "rankMin": 5 } },
+      "text": "Áo tía đai vàng, đứng hàng đầu triều. Nhà ngươi từ nay là {class}, con cháu được tập ấm.",
+      "tone": "rare"
+    },
+    {
+      "id": "lam_quan",
+      "from": ["thuong_gia", "vo_gia", "nong_gia", "ban_dan"],
+      "to": "quan_gia",
+      "when": { "office": { "held": true } },
+      "text": "Mũ cánh chuồn đội lên đầu, nhà ngươi từ nay là {class}. Hàng xóm cũ gặp ngươi phải chắp tay.",
+      "tone": "good"
+    },
+    {
+      "id": "mo_hieu_buon",
+      "from": ["nong_gia", "ban_dan", "vo_gia"],
+      "to": "thuong_gia",
+      "when": { "asset": { "kind": "shop", "count": 1 }, "stats": [{ "stat": "silver", "gte": 600 }] },
+      "text": "Cửa hiệu treo biển, sổ sách dày lên. Người ta không gọi ngươi theo tên ruộng nữa mà gọi theo tên hiệu: ngươi đã thành {class}.",
+      "tone": "good"
+    },
+    {
+      "id": "co_ruong",
+      "from": ["ban_dan"],
+      "to": "nong_gia",
+      "when": { "asset": { "kind": "land", "count": 1 } },
+      "text": "Có mảnh ruộng đứng tên mình, ngươi không còn là kẻ trôi dạt. Từ nay ngươi là {class}.",
+      "tone": "good"
+    },
+    {
+      "id": "sa_sut",
+      "from": ["quyen_quy", "quan_gia", "thuong_gia", "vo_gia", "nong_gia"],
+      "to": "ban_dan",
+      "when": { "asset": { "none": true }, "debt": { "min": 200 }, "stats": [{ "stat": "silver", "lte": 0 }], "office": { "held": false } },
+      "text": "Nhà cửa bán sạch, nợ vẫn còn. Người quen cũ đi qua cũng làm như không thấy. Ngươi đã rơi xuống hàng {class}.",
+      "tone": "bad"
+    }
+  ]
+}

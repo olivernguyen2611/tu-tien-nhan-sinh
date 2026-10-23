@@ -11,7 +11,7 @@ import { applyOutcome, checkChance } from './events/engine';
 import { drawText } from './textPool';
 import { monthsLeft, monthsUsed } from './timeBudget';
 import { standingAllows } from './standing';
-import { classOf } from './socialClass';
+import { classOf, seenAs } from './socialClass';
 
 /** Menu headings, in menu order. */
 export const ACTIVITY_GROUP_NAMES: Record<ActivityGroup, string> = {
@@ -95,7 +95,11 @@ function blockedReason(state: GameState, content: Content, a: Activity): string 
 /** 10.9: in ngục only the ngục activities (conditions.law.jailed) are open. */
 const jailFits = (state: GameState, a: Activity): boolean => !jailed(state) || a.conditions.law?.jailed === true;
 /** Thân phận (standing.ts): a thiên tử does not row a ferry for hire. */
-const fits = (state: GameState, content: Content, a: Activity): boolean => jailFits(state, a) && standingAllows(state, content, a) && meets(state, a.conditions, content);
+const fits = (state: GameState, content: Content, a: Activity): boolean => {
+  // 15.5: a life in disguise is a commoner for the commoner's activities.
+  const seen = seenAs(state, content, a.id);
+  return jailFits(state, a) && standingAllows(seen, content, a) && meets(seen, a.conditions, content);
+};
 
 export function activityViews(state: GameState, content: Content): ActivityView[] {
   const order = Object.keys(ACTIVITY_GROUP_NAMES);
@@ -121,7 +125,7 @@ export function activityViews(state: GameState, content: Content): ActivityView[
 
 /** 15.1: the activity as the life's giai cấp sees it (byClass), else as written. */
 function lookFor(state: GameState, content: Content, a: Activity): { name: string; icon: string; text: string } {
-  const cls = classOf(state, content);
+  const cls = classOf(seenAs(state, content, a.id), content);
   const v = cls ? a.byClass[cls] : undefined;
   return { name: v?.name ?? a.name, icon: v?.icon ?? a.icon, text: v?.text ?? a.text };
 }

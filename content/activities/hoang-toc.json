@@ -1,0 +1,394 @@
+[
+  {
+    "id": "hoc_le_nghi_cung_dinh",
+    "group": "hoc_hanh",
+    "name": "Học lễ nghi cung đình",
+    "icon": "禮",
+    "text": "Lạy mấy lạy, đi mấy bước, tay áo vén tới đâu. Lễ bộ cử một lão thị lang tới dạy từng li.",
+    "conditions": { "classes": ["hoang_toc"], "age": { "min": 6, "max": 15 }, "tier": ["pham_gian"] },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Ngươi tập quỳ lạy tới mỏi gối. Lão thị lang gật đầu: \"Lần này mới ra dáng thiên gia.\"",
+          "Ngươi học được cách nâng chén rượu sao cho ống tay áo không chạm mặt bàn. Chuyện nhỏ, nhưng trong cung là chuyện lớn."
+        ],
+        "effects": { "stat.charm": 2, "stat.intellect": 1 }
+      },
+      {
+        "text": "Ngươi bước sai nửa bước trong buổi tập tế. Lão thị lang tâu lên, cả cung biết chuyện.",
+        "effects": { "stat.happiness": -2, "stat.charm": 1 }
+      }
+    ]
+  },
+  {
+    "id": "tap_cuoi_ngua_ban_cung",
+    "group": "suc_khoe",
+    "name": "Tập cưỡi ngựa bắn cung",
+    "icon": "射",
+    "text": "Một võ tướng cấm quân dắt ngựa tới thao trường sau cung, dạy cách giương cung trên lưng ngựa.",
+    "conditions": { "classes": ["hoang_toc", "quyen_quy"], "age": { "min": 8 }, "tier": ["pham_gian"] },
+    "months": 2,
+    "check": { "stat": "stat.physique", "difficulty": 40 },
+    "outcomes": [
+      {
+        "text": [
+          "Mũi tên thứ ba cắm giữa hồng tâm. Võ tướng vỗ tay, đám thị vệ hô lớn.",
+          "Ngựa phi nước đại, ngươi buông cương mà vẫn ngồi vững. Gió thổi rát mặt, lòng thì nóng ran."
+        ],
+        "effects": { "stat.physique": 2, "stat.health": 1, "stat.happiness": 2 }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "weight": 4,
+        "text": "Ngựa hất ngươi xuống bãi cỏ. Võ tướng tái mặt chạy tới, may chỉ trầy tay.",
+        "effects": { "stat.health": -2, "stat.physique": 1 }
+      },
+      {
+        "text": "Ngươi ngã ngựa, chân bị ngựa giẫm. Thái y nắn xương ba ngày, nói sau này đi hơi tập tễnh.",
+        "effects": { "stat.health": -6, "injure": "que_chan" }
+      }
+    ]
+  },
+  {
+    "id": "doc_sach_tang_thu_cac",
+    "group": "hoc_hanh",
+    "name": "Đọc sách ở Tàng thư các",
+    "icon": "閣",
+    "text": "Kho sách của triều đình, có những quyển cả thiên hạ chỉ còn một bản.",
+    "conditions": { "classes": ["hoang_toc"], "age": { "min": 8 }, "tier": ["pham_gian"] },
+    "months": 2,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Ngươi đọc hết một bộ sử triều trước, ghi chép kín ba quyển vở.",
+          "Trên giá cao nhất có một quyển binh thư bụi phủ dày. Ngươi đọc suốt mùa đông."
+        ],
+        "effects": { "stat.intellect": 3, "stat.comprehension": 1 }
+      },
+      {
+        "text": "Kẹp giữa hai quyển sách cũ là một tờ mật chiếu của tiên đế, mực đã phai. Ngươi đọc xong, lặng lẽ cất lại chỗ cũ.",
+        "effects": { "stat.intellect": 2, "stat.daoHeart": 2, "setFlags": ["doc_mat_chieu"] }
+      }
+    ]
+  },
+  {
+    "id": "luan_kinh_nghia",
+    "group": "hoc_hanh",
+    "name": "Luận kinh nghĩa",
+    "icon": "論",
+    "text": "Ngồi với thư đồng và con tôn thất, mỗi người giảng một chương, rồi cãi nhau tới tối.",
+    "conditions": { "classes": ["hoang_toc"], "age": { "min": 10, "max": 20 }, "tier": ["pham_gian"] },
+    "months": 1,
+    "check": { "stat": "stat.intellect", "difficulty": 45 },
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi giảng chương Vương đạo, cả phòng lặng nghe. Thái phó đứng ngoài cửa sổ, không vào.",
+          "Ngươi bắt bẻ một câu của tông huynh, hắn đỏ mặt mà không đáp được."
+        ],
+        "effects": { "stat.intellect": 2, "stat.charm": 1, "grade": 2 }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": "Thư đồng giảng hay hơn ngươi. Cả bọn nhìn ngươi, rồi nhìn thư đồng, không ai dám cười.",
+        "effects": { "stat.happiness": -1, "stat.intellect": 1 }
+      }
+    ]
+  },
+  {
+    "id": "hau_phe_tau",
+    "group": "hoc_hanh",
+    "name": "Hầu phụ hoàng phê tấu",
+    "icon": "奏",
+    "text": "Đứng sau ngự án mài mực, nhìn phụ hoàng phê từng tờ tấu chương. Thấy nhiều, hiểu nhiều, mà lời nào cũng phải giữ.",
+    "conditions": { "origins": ["hoang_tu"], "gender": "nam", "throne": { "path": ["royal"] }, "reign": { "active": false }, "age": { "min": 14 }, "tier": ["pham_gian"], "flagsNone": ["no_father"] },
+    "months": 3,
+    "limit": { "perYear": 1, "cooldownYears": 1 },
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Phụ hoàng hỏi ngươi nên xử tờ tấu xin cứu đói thế nào. Ngươi đáp gọn, ngài gật đầu.",
+          "Ngươi đọc được tờ tấu đàn hặc cậu ruột mình. Mặt không đổi sắc, tay mài mực không dừng."
+        ],
+        "effects": { "stat.intellect": 2, "throneBar": { "favor": 4, "power": 1 } }
+      },
+      {
+        "text": "Ngươi lỡ lời bàn chuyện binh quyền. Phụ hoàng nhìn ngươi rất lâu, rồi cho lui.",
+        "effects": { "stat.happiness": -3, "throneBar": { "suspicion": 6 } }
+      }
+    ]
+  },
+  {
+    "id": "hoc_cam_ky_thi_hoa",
+    "group": "hoc_hanh",
+    "name": "Học cầm kỳ thi họa",
+    "icon": "琴",
+    "text": "Nữ quan trong cung dạy đàn, cờ, thơ, họa. Bốn môn, mỗi ngày một môn.",
+    "conditions": { "classes": ["hoang_toc", "quyen_quy"], "gender": "nu", "age": { "min": 7, "max": 20 }, "tier": ["pham_gian"], "flagsNone": ["no_mother"] },
+    "months": 2,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Khúc đàn đầu tiên ngươi gảy trọn vẹn. Nữ quan khẽ gật đầu, ngoài hiên chim sẻ cũng ngừng kêu.",
+          "Ngươi vẽ một nhành mai. Mẫu phi treo bức họa trong tẩm cung."
+        ],
+        "effects": { "stat.charm": 2, "stat.happiness": 2, "art": { "cam": 3 } }
+      },
+      {
+        "text": "Ngươi thua cờ nữ quan ba ván liền, giận tới không ăn cơm tối.",
+        "effects": { "stat.intellect": 1, "stat.happiness": -1 }
+      }
+    ]
+  },
+  {
+    "id": "yen_thi_van",
+    "group": "giai_tri",
+    "name": "Mở yến thi văn",
+    "icon": "宴",
+    "text": "Mời tiểu thư thế gia và các công chúa vào ngự hoa viên, mỗi người một bài thơ, ai hay được thưởng trâm ngọc.",
+    "conditions": { "classes": ["hoang_toc"], "gender": "nu", "age": { "min": 13 }, "tier": ["pham_gian"] },
+    "cost": [{ "silver": 30 }],
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Bài thơ của ngươi được chép truyền khắp kinh thành. Mấy hôm sau, có người đề nó trên tường tửu lâu.",
+          "Yến tan, tiểu thư nhà thừa tướng nắm tay ngươi xin làm bạn thơ."
+        ],
+        "effects": { "stat.charm": 2, "stat.happiness": 3, "fame": 2 }
+      },
+      {
+        "text": "Một tiểu thư thế gia làm bài thơ hay hơn ngươi. Cả yến im phăng phắc chờ xem ngươi nói gì.",
+        "effects": { "stat.charm": 1, "stat.daoHeart": 1, "stat.happiness": -1 }
+      }
+    ]
+  },
+  {
+    "id": "xin_phong_tuoc",
+    "group": "nghe",
+    "name": "Xin phong tước, khai phủ",
+    "icon": "封",
+    "text": "Tới tuổi thì dâng biểu xin ra khỏi cung, lập phủ riêng, có tước có lộc.",
+    "conditions": { "classes": ["hoang_toc"], "age": { "min": 16 }, "tier": ["pham_gian"], "reign": { "active": false }, "flagsNone": ["khai_phu"] },
+    "months": 1,
+    "outcomes": [
+      {
+        "text": [
+          "Chiếu ban xuống: ngươi được phong tước, ban phủ đệ ở phía tây kinh thành. Ngày dọn ra, ngươi ngoái lại nhìn cổng cung rất lâu.",
+          "Tông nhân phủ khắc ấn tước cho ngươi. Từ nay ngươi có phủ riêng, có người hầu riêng, và có cả tai mắt của kẻ khác."
+        ],
+        "effects": { "setFlags": ["khai_phu"], "silver": 200, "stat.happiness": 4, "stat.charm": 1, "throneBar": { "power": 5 } }
+      }
+    ]
+  },
+  {
+    "id": "sai_su_luc_bo",
+    "group": "nghe",
+    "name": "Nhận sai sự ở Lục bộ",
+    "icon": "部",
+    "text": "Hoàng tộc không làm thuê, nhưng có thể xin triều đình một việc ở Lục bộ: tra sổ thuế, coi đê, xét án.",
+    "conditions": { "classes": ["hoang_toc"], "age": { "min": 16 }, "tier": ["pham_gian"], "reign": { "active": false }, "flagsAll": ["khai_phu"] },
+    "months": 4,
+    "check": { "stat": "stat.intellect", "difficulty": 50 },
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi tra ra ba vạn lượng thuế bị nuốt ở Hộ bộ. Thánh thượng ban thưởng, các quan nhìn ngươi bằng con mắt khác.",
+          "Đê sông cả vững qua mùa lũ. Dân ven sông lập bàn thờ sống cho \"vị điện hạ đội nón lá\"."
+        ],
+        "effects": { "stat.intellect": 2, "silver": 120, "fame": 2, "throneBar": { "favor": 5, "power": 3 } }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": "Việc giao cho ngươi rối tung. Thượng thư ngoài mặt cung kính, sau lưng tâu rằng điện hạ còn non.",
+        "effects": { "stat.happiness": -2, "silver": 40, "throneBar": { "favor": -2 } }
+      }
+    ]
+  },
+  {
+    "id": "nuoi_mon_khach",
+    "group": "quan_he",
+    "name": "Nuôi môn khách",
+    "icon": "客",
+    "text": "Mở cửa phủ đón kẻ sĩ, kiếm khách, mưu sĩ bốn phương. Ăn của ngươi, lúc cần thì làm việc cho ngươi.",
+    "conditions": { "classes": ["hoang_toc", "quyen_quy"], "age": { "min": 18 }, "tier": ["pham_gian"] },
+    "cost": [{ "silver": 60 }],
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Một thư sinh nghèo tới phủ, ăn ba bữa không nói gì. Bữa thứ tư hắn hiến cho ngươi một kế, đáng cả trăm lượng.",
+          "Phủ ngươi đông khách. Ngoài phố đồn \"cửa phủ điện hạ không bao giờ đóng\"."
+        ],
+        "effects": { "stat.charm": 2, "fame": 2, "throneBar": { "power": 3 } }
+      },
+      {
+        "text": "Một môn khách ăn ở nửa năm rồi cuỗm bạc bỏ trốn, còn để lại một bài thơ chế giễu.",
+        "effects": { "stat.happiness": -2, "silver": -40 }
+      }
+    ]
+  },
+  {
+    "id": "yen_tiec_ton_that",
+    "group": "giai_tri",
+    "name": "Dự yến tông thất",
+    "icon": "筵",
+    "text": "Yến trong cung có đủ thân vương, công chúa, tôn thất. Rượu ngon, nhạc hay, và chuyện thật chuyện giả trộn lẫn.",
+    "conditions": { "classes": ["hoang_toc"], "age": { "min": 12 }, "tier": ["pham_gian"] },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Ngươi nâng chén mời hoàng thúc. Ông cười lớn, nói ngươi giống tiên đế hồi trẻ.",
+          "Rượu được ba tuần, ngươi nghe lỏm được chuyện ai sắp được phong, ai sắp bị giáng."
+        ],
+        "effects": { "stat.happiness": 3, "stat.charm": 1 }
+      },
+      {
+        "text": "Một tông thân say rượu chỉ mặt ngươi nói lời khó nghe. Cả yến im lặng, rồi nhạc lại nổi lên như chưa có gì.",
+        "effects": { "stat.happiness": -2, "stat.daoHeart": 1 }
+      }
+    ]
+  },
+  {
+    "id": "thu_dien_vay_san",
+    "group": "giai_tri",
+    "name": "Thu điền vây săn",
+    "icon": "獵",
+    "text": "Mùa thu theo xa giá ra vườn săn: ngàn quân vây núi, chim thú dồn về một phía.",
+    "conditions": { "classes": ["hoang_toc", "quyen_quy"], "age": { "min": 12 }, "tier": ["pham_gian"] },
+    "months": 1,
+    "check": { "stat": "stat.physique", "difficulty": 45 },
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi bắn hạ một con hươu sao trước mặt mọi người. Thánh thượng ban cung ngọc.",
+          "Ngươi đuổi theo một con báo vào rừng sâu, khi quay ra, cả đoàn tưởng ngươi đã gặp chuyện."
+        ],
+        "effects": { "stat.physique": 2, "stat.happiness": 3, "fame": 1, "throneBar": { "favor": 2 } }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "weight": 3,
+        "text": "Cả buổi ngươi không trúng con nào. Tông huynh cầm con thỏ ngươi để sổng giơ lên cười.",
+        "effects": { "stat.happiness": -2, "stat.physique": 1 }
+      },
+      {
+        "text": "Con lợn rừng lao ra, ngựa ngươi chồm lên. Ngươi ngã xuống dốc đá, lưng đau tới mùa xuân năm sau.",
+        "effects": { "stat.health": -5, "injure": "dau_lung" }
+      }
+    ]
+  },
+  {
+    "id": "ve_phong_dia",
+    "group": "tai_san",
+    "name": "Về phong địa",
+    "icon": "邑",
+    "text": "Rời kinh về đất phong, xem ruộng thuế, xử kiện, gặp quan sở tại.",
+    "conditions": { "classes": ["hoang_toc"], "age": { "min": 18 }, "tier": ["pham_gian"], "reign": { "active": false }, "flagsAll": ["khai_phu"] },
+    "months": 3,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Ngươi giảm một phần ba tô cho năm mất mùa. Dân trong đất phong kéo ra tận đầu đường đưa tiễn.",
+          "Ngươi xét lại sổ thuế, đuổi một gã quản sự tham ô. Năm nay thuế nộp về phủ nhiều hơn mọi năm."
+        ],
+        "effects": { "silver": 150, "karma": 1, "stat.happiness": 2, "stat.intellect": 1 }
+      },
+      {
+        "text": "Đất phong gặp lũ, ruộng ngập trắng. Ngươi mở kho phủ cứu dân, năm nay không thu được đồng nào.",
+        "effects": { "silver": -30, "karma": 3, "stat.daoHeart": 2 }
+      }
+    ]
+  },
+  {
+    "id": "vao_trieu_hau",
+    "group": "quan_he",
+    "name": "Vào triều hầu",
+    "icon": "朝",
+    "text": "Thân vương được vào triều đứng hàng tông thất. Không có quyền, nhưng có mặt.",
+    "conditions": { "origins": ["hoang_than"], "age": { "min": 16 }, "tier": ["pham_gian"], "reign": { "active": false } },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Hoàng đế gọi tên ngươi trong buổi chầu, hỏi chuyện phong địa. Ngươi đáp ba câu, đều trúng ý.",
+          "Ngươi đứng nghe hai phe trong triều cãi nhau suốt buổi, về phủ ghi lại từng người đứng phe nào."
+        ],
+        "effects": { "stat.intellect": 2, "stat.charm": 1, "fame": 1 }
+      },
+      {
+        "text": "Ngươi đứng nhầm hàng, bị ngự sử tâu là thất lễ. Hoàng đế phất tay cho qua, nhưng cả triều đã nghe.",
+        "effects": { "stat.happiness": -2, "stat.charm": -1 }
+      }
+    ]
+  },
+  {
+    "id": "dang_so_xin_viec",
+    "group": "nghe",
+    "name": "Dâng sớ xin việc",
+    "icon": "疏",
+    "text": "Thân vương ngồi không thì người ta bảo vô dụng, xin việc thì người ta bảo có dã tâm. Ngươi vẫn dâng sớ.",
+    "conditions": { "origins": ["hoang_than"], "age": { "min": 18 }, "tier": ["pham_gian"], "reign": { "active": false } },
+    "months": 3,
+    "check": { "stat": "stat.charm", "difficulty": 45 },
+    "outcomes": [
+      {
+        "text": [
+          "Hoàng đế giao cho ngươi coi việc sửa lăng tẩm tiên đế. Việc nhỏ mà sạch, xong được thưởng hậu.",
+          "Ngươi được cử đi tuần biên một chuyến. Về kinh, sớ tâu của ngươi được đọc trước triều."
+        ],
+        "effects": { "silver": 100, "stat.intellect": 1, "fame": 2, "stat.happiness": 2 }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": "Sớ dâng lên như đá chìm đáy biển. Nửa năm sau, có người nhắc khéo ngươi nên ở yên trong phủ.",
+        "effects": { "stat.happiness": -3, "stat.daoHeart": 1 }
+      }
+    ]
+  },
+  {
+    "id": "cai_trang_vi_hanh",
+    "group": "giang_ho",
+    "name": "Cải trang vi hành",
+    "icon": "微",
+    "text": "Thay áo gấm bằng áo vải, để thị vệ đứng xa. Năm nay ngươi được đi hội chợ, vào tửu quán, xem lôi đài như dân thường, chỉ cần đừng ai nhận ra.",
+    "conditions": { "classes": ["hoang_toc", "quyen_quy"], "age": { "min": 12 }, "tier": ["pham_gian"], "reign": { "active": false }, "flagsNone": ["vi_hanh"] },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 4,
+        "text": [
+          "Ngươi đội nón lá, lẫn vào dòng người ngoài chợ. Bánh bao ở đây ngon hơn ngự thiện, ngươi ăn liền ba cái.",
+          "Lần đầu tiên có người gọi ngươi là \"chú em\" thay vì \"điện hạ\". Ngươi cười suốt dọc đường."
+        ],
+        "effects": { "setFlags": ["vi_hanh"], "stat.happiness": 4, "stat.charm": 1 }
+      },
+      {
+        "text": "Vừa ra khỏi cổng thành đã có người nhìn ngươi chằm chằm.",
+        "effects": { "setFlags": ["vi_hanh"], "stat.happiness": 1 },
+        "startEvent": "gc_vi_hanh_bi_nhan_ra"
+      },
+      {
+        "text": "Đi tới đầu phố chợ thì nghe tiếng khóc.",
+        "effects": { "setFlags": ["vi_hanh"], "stat.daoHeart": 1 },
+        "startEvent": "gc_vi_hanh_thay_bat_cong"
+      }
+    ]
+  }
+]

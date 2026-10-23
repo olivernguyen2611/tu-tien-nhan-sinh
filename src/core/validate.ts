@@ -4,7 +4,7 @@
 import type { ZodTypeAny } from 'zod';
 import { isChosenEvent } from '../systems/chosen';
 import { KY_KEYS } from '../systems/thienDaoKy';
-import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, SocialClassFileSchema, type SocialClass, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, SpecialOriginFileSchema, type SpecialOrigin, ActivityFileSchema, type Activity, DockFileSchema, type DockButton, WorldStateFileSchema, type WorldStateFile, RelationsFileSchema, type RelationsFile, StatLabelsFileSchema, SchoolingFileSchema, ExamsFileSchema, JobsFileSchema, AssetsFileSchema, LeisureFileSchema, HealthFileSchema, CrimesFileSchema, KinFileSchema, CalendarFileSchema, JianghuFileSchema, MartialArtsFileSchema, WulinFileSchema, OfficeFileSchema, ArmyFileSchema, ThroneFileSchema, CourtFileSchema, TierTermsFileSchema, type TierTermsFile, STAT_KEYS, SystemFileSchema, type SystemFile, TrungSinhFileSchema, type TrungSinhFile, ThanDaoFileSchema, type ThanDaoFile, ThienDaoKyFileSchema, type ThienDaoKyFile, type Ending, MORTAL_STATS, APTITUDES, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
+import { AptitudesFileSchema, BalanceSchema, DifficultyFileSchema, TutorialFileSchema, CareersFileSchema, SectFileSchema, SectLifeSchema, TechniqueFileSchema, FateTalentFileSchema, ItemFileSchema, MartialFileSchema, LineageFileSchema, MarketFileSchema, type Market, RegionFileSchema, type Region, JianghuFactionFileSchema, type JianghuFaction, NationFileSchema, FigureFileSchema, type Figure, WorldClanFileSchema, RaceFileSchema, WorldEventFileSchema, type WorldEvent, KnowledgeFileSchema, type KnowledgeEntry, ImmortalGateFileSchema, type ImmortalGate, CombatTextsSchema, LINEAGES, type Fight, type MartialFile, type Sect, type SectLife, type Technique, FamilyActionFileSchema, NpcActFileSchema, RealmsFileSchema, RootsFileSchema, EventFileSchema, GlossarySchema, LifeTextsSchema, NamesSchema, OriginFileSchema, SocialClassFileSchema, ClassShiftFileSchema, type SocialClass, StatExtremesFileSchema, TraitFileSchema, WorldSchema, type AptitudesFile, type Balance, type GameEvent, type Origin, type RealmsFile, type RootsFile, type TutorialFile, type StatExtremesFile, type Trait, type World, NpcTraitsFileSchema, RankingTextsSchema, RomanceFileSchema, HeartDemonFileSchema, RecipeFileSchema, type RecipeFile, DisciplesFileSchema, CorePatternFileSchema, NascentSoulFileSchema, FoundingFileSchema, type FoundingFile, HeirFileSchema, ClanFileSchema, BlessingFileSchema, ChosenFileSchema, RebirthTalentFileSchema, GoldenFingerFileSchema, type GoldenFingerFile, TraitComboFileSchema, CodexFileSchema, EndingFileSchema, SpecialOriginFileSchema, type SpecialOrigin, ActivityFileSchema, type Activity, DockFileSchema, type DockButton, WorldStateFileSchema, type WorldStateFile, RelationsFileSchema, type RelationsFile, StatLabelsFileSchema, SchoolingFileSchema, ExamsFileSchema, JobsFileSchema, AssetsFileSchema, LeisureFileSchema, HealthFileSchema, CrimesFileSchema, KinFileSchema, CalendarFileSchema, JianghuFileSchema, MartialArtsFileSchema, WulinFileSchema, OfficeFileSchema, ArmyFileSchema, ThroneFileSchema, CourtFileSchema, TierTermsFileSchema, type TierTermsFile, STAT_KEYS, SystemFileSchema, type SystemFile, TrungSinhFileSchema, type TrungSinhFile, ThanDaoFileSchema, type ThanDaoFile, ThienDaoKyFileSchema, type ThienDaoKyFile, type Ending, MORTAL_STATS, APTITUDES, AchievementFileSchema, ChallengeFileSchema, EffectLabelsSchema } from './schemas';
 
 export interface Problem {
   file: string;
@@ -91,6 +91,7 @@ export function schemaFor(path: string): ZodTypeAny | null {
   if (rest === 'character/origins.json') return OriginFileSchema;
   if (rest === 'character/names.json') return NamesSchema;
   if (rest === 'character/classes.json') return SocialClassFileSchema;
+  if (rest === 'character/class-shifts.json') return ClassShiftFileSchema;
   if (rest === 'sects.json') return SectFileSchema;
   if (rest === 'sect-life.json') return SectLifeSchema;
   if (rest === 'markets.json') return MarketFileSchema;
@@ -286,6 +287,11 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       for (const c of parsed.data as SocialClass[]) {
         if (classIds.has(c.id)) problems.push({ file, level: 'error', message: `trùng id giai cấp "${c.id}"` });
         classIds.add(c.id);
+      }
+    }
+    if (schema === ClassShiftFileSchema) {
+      for (const r of (parsed.data as { shifts: { id: string; from: string[]; to: string }[] }).shifts) {
+        for (const c of [...r.from, r.to]) classRefs.push({ file, what: `đổi giai cấp "${r.id}"`, id: c });
       }
     }
     if (schema === OriginFileSchema) {
@@ -660,6 +666,9 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
     }
   }
 
+  // 15.5: an activity sets flags too (Xin phong tước → khai_phu).
+  for (const { activities } of activityFiles) for (const a of activities) for (const o of [...a.outcomes, ...(a.failOutcomes ?? []), ...(a.free?.outcomes ?? [])]) o.effects.setFlags?.forEach((f) => flagsSet.add(f));
+
   // 9.R5a: Sổ tri thức sources and unlocks name real things of the same world.
   for (const { file, entries } of knowledgeFiles) {
     const world = splitWorldPath(file).worldId ?? '';
@@ -733,8 +742,14 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   if (careerRefs?.success) for (const k of careerRefs.data.careers) for (const c of k.notClasses) classRefs.push({ file: 'careers.json', what: `đường đời "${k.id}"`, id: c });
   const familyRefs = files['family-actions.json'] ? FamilyActionFileSchema.safeParse(files['family-actions.json']) : null;
   if (familyRefs?.success) for (const a of familyRefs.data) for (const c of [...a.classes, ...a.notClasses, ...Object.keys(a.byClass)]) classRefs.push({ file: 'family-actions.json', what: `việc với người nhà "${a.id}"`, id: c });
+  const disguise = parsedShared.balance?.classDisguise;
+  for (const c of disguise ? [...disguise.classes, disguise.as] : []) classRefs.push({ file: 'config/balance.json', what: 'balance.classDisguise', id: c });
+  for (const id of disguise?.activityIds ?? []) if (activityIds.length > 0 && !activityIds.includes(id)) problems.push({ file: 'config/balance.json', level: 'error', message: `balance.classDisguise nhắc tới hoạt động lạ "${id}"` });
+  if (parsedShared.balance?.classShift) classRefs.push({ file: 'config/balance.json', what: 'balance.classShift', id: parsedShared.balance.classShift.dynastyFall });
   for (const c of Object.keys(parsedShared.balance?.classStipend?.silver ?? {})) classRefs.push({ file: 'config/balance.json', what: 'balance.classStipend', id: c });
   for (const c of Object.keys(parsedShared.balance?.classes ?? {})) classRefs.push({ file: 'config/balance.json', what: 'balance.classes', id: c });
+  // 15.10: the events a giai cấp never meets must exist.
+  for (const [c, v] of Object.entries(parsedShared.balance?.classes ?? {})) for (const id of v.ids) if (allEventIds.size > 0 && !allEventIds.has(id)) problems.push({ file: 'config/balance.json', level: 'error', message: `balance.classes.${c} tắt sự kiện lạ "${id}"` });
   // A partial content set (tests) without classes.json has nothing to check against.
   if (classIds.size > 0) for (const r of classRefs) if (!classIds.has(r.id)) problems.push({ file: r.file, level: 'error', message: `${r.what} nhắc tới giai cấp lạ "${r.id}"` });
   // 9.7: dock buttons are unique; every tier's dock names a button there (or "nam", the +1 năm button).
@@ -993,7 +1008,8 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       if (Array.isArray(o)) { for (const v of o) walkJob(file, v); return; }
       if (!o || typeof o !== 'object') return;
       const r = o as Record<string, unknown>;
-      if (typeof r.takeJob === 'string' && !jobIds.includes(r.takeJob)) problems.push({ file, level: 'error', message: `nghề lạ "${r.takeJob}"` });
+      const taken = typeof r.takeJob === 'string' ? r.takeJob : (r.takeJob as { id?: unknown } | undefined)?.id;
+      if (typeof taken === 'string' && !jobIds.includes(taken)) problems.push({ file, level: 'error', message: `nghề lạ "${taken}"` });
       const jb = r.job as { id?: unknown; group?: unknown } | undefined;
       if (jb && typeof jb === 'object' && typeof jb.id === 'string' && !jobIds.includes(jb.id)) problems.push({ file, level: 'error', message: `điều kiện nghề lạ "${jb.id}"` });
       if (jb && typeof jb === 'object' && typeof jb.group === 'string' && !groupIds.includes(jb.group)) problems.push({ file, level: 'error', message: `điều kiện nhóm nghề lạ "${jb.group}"` });

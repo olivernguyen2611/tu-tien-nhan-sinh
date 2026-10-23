@@ -1,0 +1,144 @@
+[
+  {
+    "id": "nghe_toc_lao_giang_dao",
+    "group": "hoc_hanh",
+    "name": "Nghe tộc lão giảng đạo",
+    "icon": "道",
+    "text": "Mồng một hằng tháng, tộc lão ngồi trên bồ đoàn trong từ đường giảng chuyện tu tiên cho con cháu. Hiểu được bao nhiêu là tùy người.",
+    "conditions": { "classes": ["tu_gia"], "tier": ["pham_gian"], "age": { "min": 6 } },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Tộc lão giảng chữ \"tĩnh\". Ngươi ngồi im suốt một canh giờ mà không thấy chân tê.",
+          "Tộc lão kể chuyện lão tổ năm xưa vượt lôi kiếp. Đêm ấy ngươi nằm mơ thấy sấm sét."
+        ],
+        "effects": { "stat.comprehension": 1, "stat.daoHeart": 2 }
+      },
+      {
+        "text": "Ngươi ngủ gật giữa buổi giảng. Tộc lão không mắng, chỉ búng nhẹ một tia linh khí vào trán ngươi. Ngươi tỉnh cả tháng.",
+        "effects": { "stat.intellect": 1, "stat.happiness": -1 }
+      }
+    ]
+  },
+  {
+    "id": "luyen_the_toc_truyen",
+    "group": "suc_khoe",
+    "name": "Luyện thể tộc truyền",
+    "icon": "體",
+    "text": "Phép luyện thể truyền trong tộc: ngâm thuốc, đứng dưới thác, đấm vào bao cát nhồi sỏi. Không tạo ra linh căn, nhưng thân thể dẻo dai hơn người thường.",
+    "conditions": { "classes": ["tu_gia"], "tier": ["pham_gian"], "age": { "min": 6 } },
+    "months": 3,
+    "check": { "stat": "stat.physique", "difficulty": 35 },
+    "outcomes": [
+      {
+        "text": [
+          "Thùng thuốc tắm đen như mực, nóng như lửa. Ngươi ngâm trọn một nén nhang, ra ngoài da hồng như trẻ sơ sinh.",
+          "Đứng dưới thác suốt mùa hạ, vai ngươi rộng ra, tay cầm đá cũng không run."
+        ],
+        "effects": { "stat.physique": 2, "stat.health": 2 }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": "Thuốc tắm quá mạnh, ngươi ngất trong thùng. Người hầu kéo ra kịp, nằm sốt ba ngày.",
+        "effects": { "stat.health": -3, "stat.physique": 1 }
+      }
+    ]
+  },
+  {
+    "id": "phu_viec_linh_dien",
+    "group": "nghe",
+    "name": "Phụ việc linh điền gia tộc",
+    "icon": "苗",
+    "text": "Linh điền của tộc trồng linh thảo, cần người nhổ cỏ, tưới nước, đuổi chim. Chưa tu cũng làm được, lại được ngửi linh khí.",
+    "conditions": { "classes": ["tu_gia"], "tier": ["pham_gian"], "age": { "min": 8 } },
+    "months": 3,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Ngươi tưới linh thảo mỗi sáng. Cuối mùa quản sự linh điền thưởng cho ngươi một viên linh thạch vụn.",
+          "Ngươi bắt được con chuột tham ăn gặm rễ linh sâm. Quản sự khen ngươi tinh mắt."
+        ],
+        "effects": { "spiritStones": 1, "stat.health": 1, "stat.comprehension": 1 }
+      },
+      {
+        "text": "Ngươi nhổ nhầm một cây linh thảo non tưởng là cỏ dại. Quản sự mặt tái mét, trừ tiền tiêu của ngươi ba tháng.",
+        "effects": { "silver": -10, "stat.happiness": -2, "stat.intellect": 1 }
+      }
+    ]
+  },
+  {
+    "id": "du_toc_ty",
+    "group": "giang_ho",
+    "name": "Dự tộc tỷ",
+    "icon": "比",
+    "text": "Mỗi năm con cháu trong tộc tỷ thí một lần, phân thứ hạng trên bảng gỗ ở từ đường. Hạng cao thì được tộc lão để mắt.",
+    "conditions": { "classes": ["tu_gia"], "tier": ["pham_gian"], "age": { "min": 10, "max": 20 } },
+    "months": 1,
+    "check": { "stat": "stat.physique", "difficulty": 45 },
+    "outcomes": [
+      {
+        "text": [
+          "Ngươi thắng liền bốn trận, tên được khắc lên hàng đầu bảng gỗ. Tộc trưởng đứng xa nhìn, khẽ gật đầu.",
+          "Ngươi đánh ngã người anh họ hơn ba tuổi. Từ hôm ấy, đám trẻ trong tộc gọi ngươi là \"đại sư huynh\"."
+        ],
+        "effects": { "stat.physique": 1, "stat.happiness": 3, "fame": 1 }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": "Ngươi thua ngay trận đầu. Tên ngươi ghi ở cuối bảng, ngay dưới đứa em họ mới lên tám.",
+        "effects": { "stat.happiness": -2, "stat.daoHeart": 1 }
+      }
+    ]
+  },
+  {
+    "id": "doc_tang_kinh_gia_toc",
+    "group": "hoc_hanh",
+    "name": "Đọc tàng kinh gia tộc",
+    "icon": "藏",
+    "text": "Tầng thấp nhất của tàng kinh các trong tộc mở cho con cháu chưa tu: dược phổ, địa chí, truyện cũ của lão tổ.",
+    "conditions": { "classes": ["tu_gia"], "tier": ["pham_gian"], "age": { "min": 8 } },
+    "months": 2,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Ngươi đọc hết quyển dược phổ, nhận được ba mươi loại linh thảo chỉ bằng mùi.",
+          "Trong một quyển địa chí cũ, ngươi đọc được tên một bí cảnh mà ngươi chưa nghe ai nhắc tới."
+        ],
+        "effects": { "stat.intellect": 2, "stat.comprehension": 1 }
+      },
+      {
+        "text": "Ngươi lén leo lên tầng hai, bị cấm chế đẩy văng xuống cầu thang. Đau ê ẩm nửa tháng, lại bị phạt chép gia quy.",
+        "effects": { "stat.health": -2, "stat.happiness": -2, "stat.daoHeart": 1 }
+      }
+    ]
+  },
+  {
+    "id": "hau_tong_lao",
+    "group": "quan_he",
+    "name": "Hầu trà tộc lão",
+    "icon": "茶",
+    "text": "Pha trà, mài mực, đứng hầu bên cạnh tộc lão. Người già trong tộc ít khi khen ai, nhưng nhớ rất lâu.",
+    "conditions": { "classes": ["tu_gia"], "tier": ["pham_gian"], "age": { "min": 10 } },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Tộc lão uống trà ngươi pha, khen nước vừa độ. Rồi ông kể chuyện năm xưa ông suýt chết trong bí cảnh.",
+          "Tộc lão vừa uống trà vừa chỉ ra ba chỗ sai trong tư thế ngồi thiền của ngươi."
+        ],
+        "effects": { "stat.charm": 1, "stat.daoHeart": 1, "stat.comprehension": 1 }
+      },
+      {
+        "text": "Ngươi làm vỡ chén trà sứ mà tộc lão dùng ba trăm năm. Ông nhìn mảnh vỡ rất lâu, rồi phẩy tay bảo ngươi lui.",
+        "effects": { "stat.happiness": -3, "stat.daoHeart": 1 }
+      }
+    ]
+  }
+]

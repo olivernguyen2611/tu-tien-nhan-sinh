@@ -1,12 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { loadContent, type Content } from '../src/core/content';
 import { advanceYear, createLife } from '../src/core/state';
-import { activityViews } from '../src/systems/activities';
+import { activityViews, doActivity } from '../src/systems/activities';
 import { careerViews, joinCareer } from '../src/systems/career';
 import { jobViews, takeJob } from '../src/systems/jobs';
 import { availableActions } from '../src/systems/relationships';
 import { meets } from '../src/systems/events/conditions';
 import { classDef, classOf, setClass, stipendYear } from '../src/systems/socialClass';
+import { classShiftYear, eventSetClass } from '../src/systems/classShift';
 import { standingAllows, standingMul } from '../src/systems/standing';
 
 const content = loadContent();
@@ -190,5 +191,215 @@ describe('Việc làm, đường đời, người nhà theo giai cấp (15.4)', 
     expect(stipendYear({ ...royal, character: { ...royal.character, age: cfg.fromAge - 1 } }, content)).toEqual({ ...royal, character: { ...royal.character, age: cfg.fromAge - 1 } });
     const farmer = life('nong_dan', 20);
     expect(stipendYear(farmer, content)).toBe(farmer);
+  });
+});
+
+describe('Hoàng tộc trọn bộ, cải trang vi hành (15.5)', () => {
+  const ids = (s: ReturnType<typeof life>) => activityViews(s, content).map((a) => a.id);
+
+  it('a hoàng tử has his own học hành and, grown up, khai phủ then sai sự Lục bộ; a farmer sees none of it', () => {
+    const boy = life('hoang_tu', 10);
+    expect(ids(boy)).toEqual(expect.arrayContaining(['hoc_le_nghi_cung_dinh', 'doc_sach_tang_thu_cac', 'luan_kinh_nghia']));
+    const man = life('hoang_tu', 20);
+    expect(ids(man)).toContain('xin_phong_tuoc');
+    expect(ids(man)).not.toContain('sai_su_luc_bo');
+    const opened = { ...man, flags: { ...man.flags, khai_phu: true } };
+    expect(ids(opened)).toEqual(expect.arrayContaining(['sai_su_luc_bo', 've_phong_dia']));
+    expect(ids(opened)).not.toContain('xin_phong_tuoc');
+    const farmer = ids(life('nong_dan', 20));
+    for (const id of ['xin_phong_tuoc', 'hoc_le_nghi_cung_dinh', 'cai_trang_vi_hanh', 'yen_tiec_ton_that']) expect(farmer).not.toContain(id);
+  });
+
+  it('a công chúa learns cầm kỳ thi họa; a hoàng thân goes to court instead of the throne race', () => {
+    const girl = createLife({ seed: 'cong-chua', originId: 'hoang_tu', gender: 'nu' }, content);
+    expect(ids({ ...girl, character: { ...girl.character, age: 10 } })).toContain('hoc_cam_ky_thi_hoa');
+    const prince = ids(life('hoang_than', 20));
+    expect(prince).toEqual(expect.arrayContaining(['vao_trieu_hau', 'dang_so_xin_viec']));
+    expect(prince).not.toContain('hau_phe_tau');
+  });
+
+  it('in disguise a hoàng tử sees the hội chợ and lôi đài with a commoner\'s words, for one year', () => {
+    const s = life('hoang_tu', 20);
+    expect(ids(s)).not.toContain('hoi_cho');
+    expect(ids(s)).toContain('cai_trang_vi_hanh');
+    const out = doActivity(s, content, 'cai_trang_vi_hanh');
+    expect(out).not.toBeNull();
+    const disguised = { ...out!.state, events: { ...out!.state.events, pending: null } };
+    expect(disguised.flags.vi_hanh).toBe(true);
+    expect(ids(disguised)).toEqual(expect.arrayContaining(['hoi_cho', 'len_loi_dai', 'hanh_hiep']));
+    expect(ids(disguised)).not.toContain('cai_trang_vi_hanh');
+    // Still a hoàng tử: no trường làng, no móc túi.
+    expect(ids(disguised)).not.toContain('pp_moc_tui');
+    expect(classOf(disguised, content)).toBe('hoang_toc');
+    const next = advanceYear(disguised, content);
+    expect(next.flags.vi_hanh).toBeFalsy();
+    expect(ids({ ...next, events: { ...next.events, pending: null } })).not.toContain('hoi_cho');
+  });
+});
+
+describe('Quyền quý, quan gia (15.6)', () => {
+  const ids = (s: ReturnType<typeof life>) => activityViews(s, content).map((a) => a.id);
+
+  it('a quyền quý child takes tập ấm instead of buying an office, keeps an estate, plays đấu dế', () => {
+    const noble = ids(life('quy_toc', 20));
+    expect(noble).toEqual(expect.arrayContaining(['tap_am', 'vao_cam_quan', 'quan_dien_trang', 'dau_de_dua_ngua', 'mo_thi_xa']));
+    expect(noble).not.toContain('mua_quan');
+    const out = doActivity(life('quy_toc', 20), content, 'tap_am');
+    expect(out!.state.career.id).toBe(content.office!.career);
+  });
+
+  it('a quan gia child learns from the father, follows him to his post, gets a thư lại seat by his name', () => {
+    expect(ids(life('quan_gia', 10))).toEqual(expect.arrayContaining(['theo_cha_hoc_kinh_su', 'theo_cha_di_nham']));
+    const grown = { ...life('quan_gia', 20), school: undefined };
+    expect(ids(grown)).toEqual(expect.arrayContaining(['nho_the_cha', 'hanh_quyen', 'ket_van_huu', 'lam_mon_sinh', 'bai_danh_su']));
+    expect(doActivity(grown, content, 'nho_the_cha')!.state.job?.id).toBe('thu_lai');
+    const farmer = ids(life('nong_dan', 20));
+    for (const id of ['tap_am', 'nho_the_cha', 'theo_cha_hoc_kinh_su', 'quan_dien_trang']) expect(farmer).not.toContain(id);
+  });
+});
+
+describe('Thương gia, võ gia (15.7)', () => {
+  const ids = (s: ReturnType<typeof life>) => activityViews(s, content).map((a) => a.id);
+
+  it('a merchant child learns the abacus, grows into the counter, the long trade run, the thương hội and the hoàng thương', () => {
+    expect(ids(life('thuong_nhan', 8))).toContain('hoc_tinh_so');
+    const grown = life('thuong_nhan', 26);
+    expect(ids(grown)).toEqual(expect.arrayContaining(['trong_quay', 'buon_chuyen_xa', 'do_gia_cac_chau', 'gop_von_thuong_hoi']));
+    expect(ids(grown)).not.toContain('xin_lam_hoang_thuong');
+    const member = { ...grown, flags: { ...grown.flags, thuong_hoi: true } };
+    expect(ids(member)).toEqual(expect.arrayContaining(['nghi_su_thuong_hoi', 'xin_lam_hoang_thuong']));
+    expect(ids(member)).not.toContain('gop_von_thuong_hoi');
+  });
+
+  it('a võ gia child stands in mã bộ, learns the family art, rides with the tiêu, sits the võ cử', () => {
+    expect(ids(life('vo_lam', 6))).toContain('tan_ma_bo');
+    expect(ids(life('vo_lam', 14))).toEqual(expect.arrayContaining(['hoc_vo_gia_truyen', 'theo_cha_ap_tieu']));
+    expect(ids(life('vo_lam', 24))).toEqual(expect.arrayContaining(['thi_vo_cu', 'thu_do_de']));
+    const farmer = ids(life('nong_dan', 24));
+    for (const id of ['tan_ma_bo', 'hoc_vo_gia_truyen', 'thi_vo_cu', 'trong_quay', 'buon_chuyen_xa']) expect(farmer).not.toContain(id);
+  });
+});
+
+describe('Nông gia, bần dân (15.8)', () => {
+  const ids = (s: ReturnType<typeof life>) => activityViews(s, content).map((a) => a.id);
+
+  it('a farm child herds the buffalo; grown, works the family field, the chợ phiên, khai hoang, rents more land', () => {
+    expect(ids(life('nong_dan', 8))).toEqual(expect.arrayContaining(['chan_trau_cat_co', 'mo_cua_bat_oc']));
+    expect(ids(life('nong_dan', 22))).toEqual(expect.arrayContaining(['lam_ruong_giup_nha', 'di_cho_phien', 'khai_hoang', 'doi_cong', 'di_phu_dap_de', 'thue_them_ruong']));
+  });
+
+  it('an orphan begs, gathers wood, serves a rich house, may join the Cái Bang and look for its origin', () => {
+    expect(ids(life('co_nhi', 8))).toEqual(expect.arrayContaining(['an_xin_dau_cho', 'nhat_cui_ban']));
+    const grown = ids(life('co_nhi', 18));
+    expect(grown).toEqual(expect.arrayContaining(['o_do', 'lam_mo', 'theo_ganh_xiec', 'vao_cai_bang', 'tim_than_the']));
+    for (const origin of ['hoang_tu', 'quy_toc', 'quan_gia', 'thuong_nhan']) {
+      const rich = ids(life(origin, 18));
+      for (const id of ['an_xin_dau_cho', 'o_do', 'chan_trau_cat_co', 'di_phu_dap_de', 'tim_than_the']) expect(rich, `${origin} ${id}`).not.toContain(id);
+    }
+  });
+});
+
+describe('Tu tiên thế gia (15.9)', () => {
+  const ids = (s: ReturnType<typeof life>) => activityViews(s, content).map((a) => a.id);
+
+  it('a child of a cultivating clan hears the tộc lão, trains the clan body art, tends the linh điền, joins the tộc tỷ', () => {
+    const child = ids(life('tu_tien_gia_toc', 12));
+    expect(child).toEqual(expect.arrayContaining(['nghe_toc_lao_giang_dao', 'luyen_the_toc_truyen', 'phu_viec_linh_dien', 'du_toc_ty', 'doc_tang_kinh_gia_toc', 'hau_tong_lao']));
+    expect(ids(life('nong_dan', 12))).not.toContain('nghe_toc_lao_giang_dao');
+  });
+
+  it('no clan activity grants a spiritual root (the innate-root rule)', () => {
+    const own = content.activities!.filter((a) => a.conditions.classes?.includes('tu_gia'));
+    for (const a of own) for (const o of [...a.outcomes, ...(a.failOutcomes ?? [])]) expect(o.effects.testRoot, a.id).toBeFalsy();
+  });
+
+  it('an activity that speaks of the father hides once he is gone', () => {
+    const s = life('quan_gia', 10);
+    expect(ids(s)).toContain('theo_cha_hoc_kinh_su');
+    expect(ids({ ...s, flags: { ...s.flags, no_father: true } })).not.toContain('theo_cha_hoc_kinh_su');
+  });
+});
+
+describe('Sự kiện theo giai cấp (15.10)', () => {
+  const ev = (id: string) => {
+    for (const e of content.events) if (e.id === id) return e;
+    throw new Error(id);
+  };
+
+  it('a hoàng tử never meets the năm đói, the bắt lính, the chủ nợ; a farmer still does', () => {
+    for (const id of ['tc_nan_doi', 'tc_bat_linh', 'ts_chu_no_toi_cua', 'cho_du_dau_lang', 'ld_doi_la']) {
+      expect(standingMul(life('hoang_tu', 20), content, ev(id)), id).toBe(0);
+      expect(standingMul(life('nong_dan', 20), content, ev(id)), id).toBe(1);
+    }
+    // A quyền quý is spared the hunger, but the chuyện họ hàng hỏi vay stays.
+    expect(standingMul(life('quy_toc', 20), content, ev('ld_nan_doi'))).toBe(0);
+    expect(standingMul(life('quy_toc', 20), content, ev('gt_hk_muon_tien'))).toBe(1);
+  });
+
+  it('the rich get their own version: open the granary or shut the gate', () => {
+    const famine = ev('gc_nan_doi_mo_kho');
+    expect(famine.conditions.classes).toEqual(expect.arrayContaining(['hoang_toc', 'quyen_quy']));
+    expect(meets(life('nong_dan', 20), famine.conditions, content)).toBe(false);
+  });
+});
+
+describe('Đổi giai cấp (15.11)', () => {
+  it('a farmer who opens a shop with silver in hand becomes a merchant; the year after, the merchant activities show', () => {
+    const s = life('nong_dan', 30);
+    const shop = content.assets!.assets.find((a) => a.kind === 'shop')!;
+    const rich: typeof s = { ...s, money: { ...s.money, silver: 2000 }, assets: { owned: [{ uid: 1, id: shop.id, since: 25, paid: 100, fake: false, strategy: null }], loans: [], crop: null, nextUid: 2 } as never };
+    const moved = classShiftYear(rich, content);
+    expect(classOf(moved, content)).toBe('thuong_gia');
+    expect(moved.character.classSince).toBe(30);
+    expect(moved.log.at(-1)!.lines.at(-1)!.text).toContain('Thương gia');
+    expect(activityViews(moved, content).map((a) => a.id)).toContain('trong_quay');
+    // Not again within balance.classShift.gap years.
+    const ruined = { ...moved, money: { ...moved.money, silver: 0 }, assets: { owned: [], loans: [{ owed: 500 }], crop: null, nextUid: 2 } as never };
+    expect(classOf(classShiftYear(ruined, content), content)).toBe('thuong_gia');
+    // Later, ruined: down to bần dân.
+    const later = { ...ruined, character: { ...ruined.character, age: 30 + content.balance.classShift!.gap } };
+    expect(classOf(classShiftYear(later, content), content)).toBe('ban_dan');
+  });
+
+  it('a hoàng tộc whose dynasty fell is no longer royal', () => {
+    const s = life('hoang_tu', 30);
+    const t = s.times!;
+    const fallen = { ...s, times: { ...t, eras: [...t.eras, { dynasty: 'khac', era: 'x', from: 29 }], dynasty: 'khac' } };
+    expect(classOf(classShiftYear(fallen, content), content)).toBe(content.balance.classShift!.dynastyFall);
+    expect(classOf(classShiftYear(s, content), content)).toBe('hoang_toc');
+  });
+
+  it('an event moves the life (setClass) and says so', () => {
+    const s = { ...life('co_nhi', 20), log: [{ age: 20, lines: [] }] };
+    const moved = eventSetClass(s, content, 'nong_gia');
+    expect(classOf(moved, content)).toBe('nong_gia');
+    expect(moved.log.at(-1)!.lines.at(-1)!.text).toContain('Nông gia');
+  });
+});
+
+describe('Phủ kín theo giai cấp (15.12)', () => {
+  const ORIGIN: Record<string, string> = {
+    hoang_toc: 'hoang_tu', quyen_quy: 'quy_toc', quan_gia: 'quan_gia', thuong_gia: 'thuong_nhan',
+    vo_gia: 'vo_lam', nong_gia: 'nong_dan', ban_dan: 'co_nhi', tu_gia: 'tu_tien_gia_toc',
+  };
+
+  it('every giai cấp has something to learn or to work at, at 6, 10, 14, 20 and 35', () => {
+    for (const [cls, origin] of Object.entries(ORIGIN)) {
+      for (const age of [6, 10, 14, 20, 35]) {
+        const s = { ...life(origin, age), school: undefined };
+        expect(classOf(s, content)).toBe(cls);
+        const own = activityViews(s, content).filter((a) => a.group === 'hoc_hanh' || a.group === 'nghe');
+        expect(own.length, `${cls} at ${age}`).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it('a hoàng tử never sees the commoner\'s lot', () => {
+    const banned = ['xin_hoc_truong_lang', 'tu_hoc_len', 'nghe_lom', 'lam_muon_som', 'pp_moc_tui', 'an_xin_dau_cho', 'o_do', 'lam_thue', 'chan_trau_cat_co', 'mua_quan', 'tap_am'];
+    for (const age of [6, 10, 14, 20, 35, 50]) {
+      const seen = activityViews(life('hoang_tu', age), content).map((a) => a.id);
+      for (const id of banned) expect(seen, `${id} at ${age}`).not.toContain(id);
+    }
+    expect(jobViews(life('hoang_tu', 30), content)).toHaveLength(0);
   });
 });

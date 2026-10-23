@@ -105,7 +105,7 @@ describe('Hoàng thất tranh ngôi (12.6)', () => {
 
   it('royal activities only show for a hoàng tử on the road', () => {
     const acts = content.activities!.filter((a) => a.conditions.throne?.path?.includes('royal'));
-    expect(acts.map((a) => a.id).sort()).toEqual(['an_nhan', 'duong_danh', 'ham_hai', 'ket_dang', 'lap_cong']);
+    expect(acts.map((a) => a.id).sort()).toEqual(['an_nhan', 'duong_danh', 'ham_hai', 'hau_phe_tau', 'ket_dang', 'lap_cong']);
     const farmer = createLife({ seed: 'hoang-that', originId: 'nong_dan' }, content);
     for (const a of acts) expect(meets({ ...farmer, character: { ...farmer.character, age: 20 } }, a.conditions, content)).toBe(false);
     for (const a of acts) expect(meets(royal(), a.conditions, content)).toBe(true);

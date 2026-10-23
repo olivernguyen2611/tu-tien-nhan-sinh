@@ -1,0 +1,98 @@
+[
+  {
+    "id": "gc_cha_bi_dan_hac",
+    "category": "social",
+    "title": "Cha bị đàn hặc",
+    "text": "Ngự sử dâng sớ đàn hặc cha ngươi tội nhận hối lộ. Cửa nhà vắng hẳn, người quen đi qua cũng rẽ lối khác.",
+    "themes": ["office"],
+    "conditions": { "classes": ["quan_gia"], "age": { "min": 12, "max": 35 }, "tier": ["pham_gian"], "family": { "alive": ["father"] }, "flagsNone": ["no_father"] },
+    "weight": 5,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đi khắp các nhà đồng liêu của cha xin một lời bênh vực",
+        "result": { "text": "Mười cửa thì chín cửa đóng. Cửa thứ mười mở, và một lá sớ bênh vực được dâng lên. Cha bị giáng hai cấp mà giữ được mũ quan.", "effects": { "stat.charm": 2, "stat.happiness": -2, "familyAffinity": 6 } }
+      },
+      {
+        "text": "Đóng cửa đọc sách, giữ nếp nhà như chưa có gì",
+        "result": { "text": "Nửa năm sau án xét xong, cha được minh oan. Người ta nhắc tới nhà ngươi như một nhà biết giữ gia phong.", "effects": { "stat.daoHeart": 2, "stat.intellect": 1, "fame": 1 } }
+      },
+      {
+        "text": "Lục sổ sách trong nhà, xem cha có thật nhận hối lộ không",
+        "result": { "text": "Ngươi tìm thấy một tờ biên nhận. Đêm ấy ngươi đốt nó, rồi ngồi trước đèn tới sáng.", "effects": { "stat.intellect": 1, "karma": -1, "stat.daoHeart": -1, "stat.happiness": -2 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_ta_dien_xin_giam_to",
+    "category": "social",
+    "title": "Tá điền xin giảm tô",
+    "text": "Năm mất mùa, mấy chục tá điền quỳ trước cổng phủ xin giảm tô. Quản sự hỏi ngươi xử thế nào.",
+    "themes": ["wealth"],
+    "conditions": { "classes": ["quyen_quy"], "age": { "min": 16 }, "tier": ["pham_gian"] },
+    "weight": 5,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Giảm một nửa tô năm nay",
+        "result": { "text": "Tá điền dập đầu tạ ơn. Kho nhà năm nay vơi đi, nhưng tên ngươi được nhắc trong từng bữa cơm ở làng.", "effects": { "silver": -80, "karma": 3, "stat.happiness": 2 } }
+      },
+      {
+        "text": "Giữ lệ cũ, nhưng cho vay thóc giống",
+        "result": { "text": "Không ai chết đói, mà cũng không ai cảm ơn. Sổ nợ thì dày thêm mấy trang.", "effects": { "silver": 20, "stat.intellect": 1 } }
+      },
+      {
+        "text": "Đuổi đi, mất mùa là chuyện của trời",
+        "result": { "text": "Quản sự cho gia đinh dẹp đám tá điền. Mùa sau, nửa làng bỏ đi nơi khác, ruộng bỏ hoang.", "effects": { "silver": 60, "karma": -3, "stat.daoHeart": -1 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_lien_hon_the_gia",
+    "category": "social",
+    "title": "Chuyện liên hôn",
+    "text": "Một thế gia môn đăng hộ đối sai người mang canh thiếp tới, ngỏ ý kết thông gia. Cha mẹ ngươi xem ra rất vừa lòng.",
+    "themes": ["family"],
+    "conditions": { "classes": ["quyen_quy", "hoang_toc"], "age": { "min": 18, "max": 28 }, "tier": ["pham_gian"], "romance": { "partner": false }, "flagsNone": ["no_father", "no_mother"] },
+    "weight": 4,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Nghe theo cha mẹ",
+        "result": { "text": "Hai nhà trao canh thiếp. Ngươi chưa gặp người ấy lần nào, chỉ biết nhà họ có ba đời làm thượng thư.", "effects": { "stat.happiness": -1, "stat.charm": 1, "familyAffinity": 5 } }
+      },
+      {
+        "text": "Xin gặp mặt trước rồi mới quyết",
+        "result": { "text": "Hai người gặp nhau trong vườn chùa, nói được dăm câu. Không nên duyên, nhưng cũng thành bạn.", "effects": { "stat.charm": 2, "stat.happiness": 1 } }
+      },
+      {
+        "text": "Từ chối thẳng",
+        "result": { "text": "Cả nhà giận tới mức cả tháng không ai nói với ngươi câu nào. Nhà kia cũng giận, giận lâu hơn.", "effects": { "stat.daoHeart": 2, "stat.happiness": 1, "familyAffinity": -6 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_ban_de_thi",
+    "category": "study",
+    "title": "Có người bán đề thi",
+    "text": "Trước kỳ thi một tháng, một người mặc áo xanh tìm tới nhà, nói biết trước đề, giá năm trăm lượng. Hắn xưng là người của quan chủ khảo.",
+    "themes": ["study"],
+    "conditions": { "classes": ["quan_gia", "quyen_quy", "thuong_gia"], "age": { "min": 15, "max": 40 }, "tier": ["pham_gian"] },
+    "weight": 3,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Đuổi hắn ra khỏi cửa",
+        "result": { "text": "Hắn cười khẩy rồi đi. Kỳ ấy có ba sĩ tử bị bắt vì mua đề, trong đó có một người ngươi quen.", "effects": { "stat.daoHeart": 2, "karma": 1 } }
+      },
+      {
+        "text": "Báo lên quan",
+        "result": { "text": "Quan sai bắt được hắn, lần ra cả một đường dây. Ngươi được khen trước sân Lễ bộ, nhưng cũng có thêm kẻ thù.", "effects": { "fame": 2, "karma": 2, "stat.happiness": -1 } }
+      },
+      {
+        "text": "Mua",
+        "result": { "text": "Đề hắn bán là đề giả. Năm trăm lượng mất trắng, mà ngươi chẳng dám kêu ai.", "effects": { "silver": -500, "stat.happiness": -4, "karma": -2 } }
+      }
+    ]
+  }
+]
