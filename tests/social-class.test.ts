@@ -278,3 +278,22 @@ describe('Thương gia, võ gia (15.7)', () => {
     for (const id of ['tan_ma_bo', 'hoc_vo_gia_truyen', 'thi_vo_cu', 'trong_quay', 'buon_chuyen_xa']) expect(farmer).not.toContain(id);
   });
 });
+
+describe('Nông gia, bần dân (15.8)', () => {
+  const ids = (s: ReturnType<typeof life>) => activityViews(s, content).map((a) => a.id);
+
+  it('a farm child herds the buffalo; grown, works the family field, the chợ phiên, khai hoang, rents more land', () => {
+    expect(ids(life('nong_dan', 8))).toEqual(expect.arrayContaining(['chan_trau_cat_co', 'mo_cua_bat_oc']));
+    expect(ids(life('nong_dan', 22))).toEqual(expect.arrayContaining(['lam_ruong_giup_nha', 'di_cho_phien', 'khai_hoang', 'doi_cong', 'di_phu_dap_de', 'thue_them_ruong']));
+  });
+
+  it('an orphan begs, gathers wood, serves a rich house, may join the Cái Bang and look for its origin', () => {
+    expect(ids(life('co_nhi', 8))).toEqual(expect.arrayContaining(['an_xin_dau_cho', 'nhat_cui_ban']));
+    const grown = ids(life('co_nhi', 18));
+    expect(grown).toEqual(expect.arrayContaining(['o_do', 'lam_mo', 'theo_ganh_xiec', 'vao_cai_bang', 'tim_than_the']));
+    for (const origin of ['hoang_tu', 'quy_toc', 'quan_gia', 'thuong_nhan']) {
+      const rich = ids(life(origin, 18));
+      for (const id of ['an_xin_dau_cho', 'o_do', 'chan_trau_cat_co', 'di_phu_dap_de', 'tim_than_the']) expect(rich, `${origin} ${id}`).not.toContain(id);
+    }
+  });
+});

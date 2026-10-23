@@ -8,6 +8,15 @@
 
 ## [Chưa phát hành]
 
+### 15.8 Nông gia, bần dân (2026-10-23)
+- 15 hoạt động mới (`activities/nong-gia-ban-dan.json`):
+  - **Nông gia**: Chăn trâu cắt cỏ, Mò cua bắt ốc (cả bần dân), Làm ruộng giúp nhà, Đi chợ phiên bán nông sản, Đổi công với hàng xóm, Thuê thêm ruộng.
+  - **Nông gia và bần dân**: Khai hoang, Đi phu đắp đê.
+  - **Bần dân**: Ăn xin đầu chợ, Nhặt củi bán, Làm mõ làng, Ở đợ nhà giàu, Theo gánh xiếc, Vào Cái Bang.
+  - **Cô nhi**: Đi tìm thân thế, có lúc lần ra được nhà cũ.
+    - Hiện chỉ đặt cờ `biet_than_the`; việc đổi giai cấp khi tìm được nhà để dành cho 15.11.
+- 5 sự kiện mới: miếng ngọc vỡ (thân thế), trâu ốm, được mùa, bị đuổi khỏi miếu, cái bánh của người lạ.
+
 ### 15.7 Thương gia, võ gia (2026-10-23)
 - 13 hoạt động mới (`activities/thuong-gia-vo-gia.json`):
   - **Thương gia**: Học tính sổ ở cửa hiệu, Theo cha áp hàng, Trông quầy, Buôn một chuyến đường xa (lãi gấp đôi hoặc mất trắng), Dò giá các châu.

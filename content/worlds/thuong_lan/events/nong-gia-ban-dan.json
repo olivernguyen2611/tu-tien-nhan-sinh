@@ -1,0 +1,116 @@
+[
+  {
+    "id": "gc_than_the_lo_ra",
+    "category": "social",
+    "title": "Miếng ngọc vỡ",
+    "text": "Lão thợ ngọc dẫn ngươi tới trước một tòa nhà cũ ở huyện bên. Trên xà cửa khắc đúng hoa văn trên miếng ngọc của ngươi.",
+    "themes": ["family"],
+    "conditions": {},
+    "weight": 0,
+    "cooldownYears": 0,
+    "choices": [
+      {
+        "text": "Gõ cửa",
+        "check": { "stat": "stat.luck", "difficulty": 50 },
+        "success": { "text": "Một bà lão tóc bạc ra mở cửa, nhìn miếng ngọc rồi òa khóc. Bà là bà nội ngươi. Song thân của ngươi đã mất trong một trận dịch năm ấy, đứa con nhỏ thất lạc từ đó. Bà dúi vào tay ngươi một túi bạc và chiếc chìa khóa từ đường.", "effects": { "setFlags": ["biet_than_the"], "silver": 200, "stat.happiness": 6, "stat.daoHeart": 2 } },
+        "fail": { "text": "Người mở cửa là một nhà xa lạ. Họ mua lại căn nhà từ mười năm trước, chủ cũ đã đi đâu không ai biết.", "effects": { "setFlags": ["biet_than_the"], "stat.happiness": -3, "stat.daoHeart": 2 } }
+      },
+      {
+        "text": "Đứng ngoài nhìn, rồi quay về",
+        "result": { "text": "Ngươi đứng tới tối. Có tiếng trẻ con cười trong nhà. Ngươi cất miếng ngọc vào ngực áo, quay lưng đi, không ngoái lại.", "effects": { "setFlags": ["biet_than_the"], "stat.daoHeart": 3, "stat.happiness": -1 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_trau_om",
+    "category": "social",
+    "title": "Trâu ốm",
+    "text": "Con trâu cày duy nhất của nhà nằm bỏ cỏ đã ba hôm. Thầy lang thú nói phải có thuốc bắc, giá bằng nửa con trâu.",
+    "themes": ["wealth"],
+    "conditions": { "classes": ["nong_gia"], "age": { "min": 10 }, "tier": ["pham_gian"] },
+    "weight": 5,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Vay tiền mua thuốc",
+        "result": { "text": "Trâu khỏi, cày được mùa này. Món nợ thì cả nhà trả tới ba năm.", "effects": { "silver": -30, "stat.happiness": 1, "stat.intellect": 1 } }
+      },
+      {
+        "text": "Thức đêm chăm, đắp lá theo cách của ông nội",
+        "check": { "stat": "stat.luck", "difficulty": 45 },
+        "success": { "text": "Sáng thứ năm, trâu đứng dậy ăn cỏ. Ngươi ôm cổ nó mà cười như trẻ con.", "effects": { "stat.happiness": 4, "stat.daoHeart": 1 } },
+        "fail": { "text": "Trâu chết. Năm ấy cả nhà phải kéo cày thay trâu.", "effects": { "stat.health": -3, "stat.happiness": -4, "stat.physique": 1 } }
+      },
+      {
+        "text": "Bán thịt trâu trước khi nó chết",
+        "result": { "text": "Bán được ít tiền, nhưng mùa sau không có trâu cày. Ngươi phải đi đổi công khắp xóm.", "effects": { "silver": 25, "stat.happiness": -2, "karma": -1 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_mua_trung_mua",
+    "category": "social",
+    "title": "Được mùa",
+    "text": "Năm nay mưa thuận gió hòa, lúa nặng trĩu bông. Cả làng mở hội cơm mới.",
+    "themes": ["fortune"],
+    "conditions": { "classes": ["nong_gia"], "age": { "min": 8 }, "tier": ["pham_gian"] },
+    "weight": 6,
+    "cooldownYears": 6,
+    "choices": [
+      {
+        "text": "Bán bớt thóc lấy tiền",
+        "result": { "text": "Lái buôn tới tận nhà mua thóc. Lần đầu tiên nhà ngươi có của để dành.", "effects": { "silver": 40, "stat.happiness": 3 } }
+      },
+      {
+        "text": "Để dành phòng năm đói",
+        "result": { "text": "Bồ thóc đầy tới miệng. Hai năm sau mất mùa, nhà ngươi là nhà duy nhất trong xóm không phải ăn cháo.", "effects": { "stat.intellect": 1, "stat.happiness": 2, "stat.health": 1 } }
+      },
+      {
+        "text": "Góp thóc làm cỗ cúng đình",
+        "result": { "text": "Mâm cỗ nhà ngươi được đặt ở chiếu giữa. Các cụ trong làng nhìn nhà ngươi bằng con mắt khác.", "effects": { "reputation": { "lang_xa": 3 }, "stat.charm": 1, "karma": 1 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_bi_duoi_khoi_mieu",
+    "category": "social",
+    "title": "Bị đuổi khỏi miếu",
+    "text": "Ngôi miếu hoang ngươi ngủ nhờ bao năm nay được làng sửa lại. Lý trưởng sai người tới đuổi đi trước ngày khánh thành.",
+    "themes": ["mishap"],
+    "conditions": { "classes": ["ban_dan"], "age": { "min": 8, "max": 30 }, "tier": ["pham_gian"] },
+    "weight": 5,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Xin ở lại làm người quét miếu",
+        "check": { "stat": "stat.charm", "difficulty": 40 },
+        "success": { "text": "Ông từ già gật đầu. Ngươi có mái nhà, có bát cơm, đổi lại sáng nào cũng quét sân trước giờ gà gáy.", "effects": { "stat.happiness": 3, "stat.health": 1 } },
+        "fail": { "text": "Lý trưởng không nghe. Ngươi ôm bọc quần áo ra ngủ dưới gầm cầu.", "effects": { "stat.health": -2, "stat.happiness": -3 } }
+      },
+      {
+        "text": "Đi luôn, không xin ai",
+        "result": { "text": "Ngươi đi qua ba làng mới tìm được một cái chòi bỏ hoang. Gió lùa, nhưng là chỗ của mình.", "effects": { "stat.daoHeart": 2, "stat.health": -1 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_nguoi_la_cho_banh",
+    "category": "social",
+    "title": "Cái bánh của người lạ",
+    "text": "Ngươi đói lả ngồi bên vệ đường. Một thư sinh đi qua, dừng lại, bẻ đôi cái bánh nướng đưa cho ngươi một nửa.",
+    "themes": ["fortune"],
+    "conditions": { "classes": ["ban_dan"], "age": { "min": 6, "max": 20 }, "tier": ["pham_gian"] },
+    "weight": 5,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Hỏi tên người ấy",
+        "result": { "text": "Thư sinh cười: \"Một cái bánh, nhớ tên làm gì.\" Ngươi vẫn nhớ khuôn mặt ấy, và tự hứa sau này cũng sẽ bẻ bánh cho người khác.", "effects": { "stat.health": 1, "karma": 2, "stat.daoHeart": 1 } }
+      },
+      {
+        "text": "Ăn vội rồi chạy đi",
+        "result": { "text": "Cái bánh còn ấm. Ngươi ăn tới miếng cuối, mới thấy mắt cay cay.", "effects": { "stat.health": 2, "stat.happiness": 1 } }
+      }
+    ]
+  }
+]

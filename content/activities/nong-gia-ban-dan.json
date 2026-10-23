@@ -1,0 +1,352 @@
+[
+  {
+    "id": "chan_trau_cat_co",
+    "group": "nghe",
+    "name": "Chăn trâu cắt cỏ",
+    "icon": "牛",
+    "text": "Sáng dắt trâu ra bãi, chiều gánh cỏ về chuồng. Việc của trẻ nhà nông từ khi cao bằng cái cày.",
+    "conditions": { "classes": ["nong_gia"], "tier": ["pham_gian"], "age": { "min": 6, "max": 13 } },
+    "months": 3,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Ngươi nằm trên lưng trâu thổi sáo lá, nhìn mây trôi cả buổi chiều.",
+          "Trâu nhà ngươi béo nhất xóm. Cha xoa đầu ngươi, nói năm nay cày ruộng khỏe."
+        ],
+        "effects": { "stat.physique": 1, "stat.happiness": 2, "silver": 2 }
+      },
+      {
+        "text": "Mải chơi đánh khăng, trâu ăn mất nửa ruộng mạ nhà hàng xóm. Tối ấy ngươi bị đòn.",
+        "effects": { "stat.happiness": -2, "stat.health": -1 }
+      }
+    ]
+  },
+  {
+    "id": "mo_cua_bat_oc",
+    "group": "giai_tri",
+    "name": "Mò cua bắt ốc",
+    "icon": "蟹",
+    "text": "Lội ruộng, mò mương, tối về có bát canh cua. Vui hơn mọi trò chơi trong sách.",
+    "conditions": { "classes": ["nong_gia", "ban_dan"], "tier": ["pham_gian"], "age": { "min": 5, "max": 14 } },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Ngươi mò được cả giỏ cua đồng. Mẹ nấu canh rau đay, cả nhà ăn không sót giọt nào.",
+          "Ngươi bắt được con lươn to bằng cổ tay, giơ lên khoe khắp xóm."
+        ],
+        "effects": { "stat.happiness": 3, "stat.health": 1 }
+      },
+      {
+        "text": "Đỉa bám đầy chân, ngươi khóc thét chạy lên bờ. Bọn trẻ cùng xóm cười cả tháng.",
+        "effects": { "stat.happiness": -1, "stat.daoHeart": 1 }
+      }
+    ]
+  },
+  {
+    "id": "lam_ruong_giup_nha",
+    "group": "nghe",
+    "name": "Làm ruộng giúp nhà",
+    "icon": "田",
+    "text": "Cày, bừa, cấy, gặt. Ruộng nhà mình thì làm không công, nhưng đói no cả nhà trông vào đó.",
+    "conditions": { "classes": ["nong_gia"], "tier": ["pham_gian"], "age": { "min": 12 } },
+    "months": 4,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Mùa này lúa trổ đều. Gặt xong, cha đong riêng cho ngươi một thúng thóc mà bán lấy tiền tiêu.",
+          "Ngươi cày thẳng luống như kẻ chỉ. Ông cụ hàng xóm đứng bờ ruộng xem, khen nức nở."
+        ],
+        "effects": { "stat.physique": 2, "silver": 15, "stat.happiness": 1 }
+      },
+      {
+        "text": "Sâu cắn lúa, mất nửa vụ. Cả nhà ăn cháo tới mùa sau.",
+        "effects": { "stat.health": -2, "stat.happiness": -2, "stat.daoHeart": 1 }
+      }
+    ]
+  },
+  {
+    "id": "di_cho_phien",
+    "group": "tai_san",
+    "name": "Đi chợ phiên bán nông sản",
+    "icon": "市",
+    "text": "Gánh rau, trứng, gà ra chợ phiên huyện. Bán được giá hay không tùy cái miệng.",
+    "conditions": { "classes": ["nong_gia"], "tier": ["pham_gian"], "age": { "min": 10 } },
+    "months": 1,
+    "check": { "stat": "stat.charm", "difficulty": 30 },
+    "outcomes": [
+      {
+        "text": [
+          "Gánh rau bán hết trước giờ ngọ. Ngươi mua cho mẹ một cái lược sừng.",
+          "Ngươi mặc cả được với lái buôn, bán đôi gà trống hơn giá năm mười đồng."
+        ],
+        "effects": { "silver": 12, "stat.charm": 1, "stat.happiness": 2 }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": "Chợ tan mà rau còn nửa gánh. Ngươi gánh về, đổ cho lợn ăn.",
+        "effects": { "silver": 3, "stat.happiness": -1 }
+      }
+    ]
+  },
+  {
+    "id": "khai_hoang",
+    "group": "tai_san",
+    "name": "Khai hoang",
+    "icon": "墾",
+    "text": "Ra bãi bồi ven sông phát cỏ, đào mương, đắp bờ. Ba năm đầu không ra hột thóc, nhưng đất khai ra là đất của mình.",
+    "conditions": { "classes": ["nong_gia", "ban_dan"], "tier": ["pham_gian"], "age": { "min": 16 } },
+    "months": 4,
+    "limit": { "perYear": 1, "cooldownYears": 2 },
+    "check": { "stat": "stat.physique", "difficulty": 40 },
+    "outcomes": [
+      {
+        "text": [
+          "Mảnh đất hoang thành ruộng. Vụ đầu tiên chỉ được nửa thúng thóc, ngươi vẫn đem lên bàn thờ tổ.",
+          "Ngươi đào được con mương dẫn nước vào bãi. Cả làng kéo ra xem, rồi kéo nhau đi khai hoang theo."
+        ],
+        "effects": { "silver": 30, "stat.physique": 2, "reputation": { "lang_xa": 2 } }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": "Lũ về giữa mùa, cuốn sạch bờ đất ngươi đắp. Ngồi nhìn bãi bồi trắng nước, ngươi không khóc được.",
+        "effects": { "stat.health": -2, "stat.happiness": -3, "stat.daoHeart": 1 }
+      }
+    ]
+  },
+  {
+    "id": "doi_cong",
+    "group": "quan_he",
+    "name": "Đổi công với hàng xóm",
+    "icon": "鄰",
+    "text": "Hôm nay ngươi cấy giúp nhà họ, mai họ gặt giúp nhà ngươi. Không mất tiền, chỉ mất mồ hôi.",
+    "conditions": { "classes": ["nong_gia"], "tier": ["pham_gian"], "age": { "min": 12 } },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Cả xóm cấy xong một ngày. Chiều ấy nhà ngươi nấu nồi chè đỗ đen đãi mọi người.",
+          "Lão Ba đầu xóm làm việc ít mà ăn nhiều, nhưng kể chuyện thì hay nhất làng."
+        ],
+        "effects": { "stat.charm": 1, "stat.happiness": 2, "reputation": { "lang_xa": 1 } }
+      },
+      {
+        "text": "Nhà kia ăn công mà không trả công. Hai nhà giận nhau tới tận Tết.",
+        "effects": { "stat.happiness": -2, "stat.intellect": 1 }
+      }
+    ]
+  },
+  {
+    "id": "di_phu_dap_de",
+    "group": "nghe",
+    "name": "Đi phu đắp đê",
+    "icon": "堤",
+    "text": "Quan huyện bắt phu đắp đê trước mùa lũ. Đi thì được ít gạo, không đi thì phải nộp tiền thay.",
+    "conditions": { "classes": ["nong_gia", "ban_dan"], "tier": ["pham_gian"], "age": { "min": 16, "max": 55 }, "realm": { "max": "pham_nhan" } },
+    "months": 2,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Hai tháng gánh đất dưới nắng. Đê xong trước lũ, cả huyện yên ổn qua mùa nước.",
+          "Ngươi quen được mấy người làng bên trong lán phu. Đêm đêm ngồi kể chuyện bên đống lửa."
+        ],
+        "effects": { "stat.physique": 2, "silver": 10, "karma": 1 }
+      },
+      {
+        "text": "Đất sạt lúc đang đắp, ngươi bị vùi tới ngực. Người ta đào ra kịp, nhưng nằm cả tháng mới dậy.",
+        "effects": { "stat.health": -6, "stat.daoHeart": 1 }
+      }
+    ]
+  },
+  {
+    "id": "thue_them_ruong",
+    "group": "tai_san",
+    "name": "Thuê thêm ruộng",
+    "icon": "租",
+    "text": "Thuê lại mấy mẫu ruộng của địa chủ. Làm giỏi thì dư thóc bán, làm dở thì nợ tô chồng chất.",
+    "conditions": { "classes": ["nong_gia"], "tier": ["pham_gian"], "age": { "min": 18 } },
+    "cost": [{ "silver": 40 }],
+    "months": 4,
+    "check": { "stat": "stat.physique", "difficulty": 45 },
+    "outcomes": [
+      {
+        "text": [
+          "Ruộng thuê được mùa. Trừ tô còn dư mấy chục thúng thóc, ngươi chất đầy bồ.",
+          "Ngươi làm cả ruộng nhà lẫn ruộng thuê. Gầy rộc người, nhưng cuối năm đếm tiền thấy vui."
+        ],
+        "effects": { "silver": 90, "stat.physique": 1, "stat.happiness": 2 }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": "Hạn hán, ruộng thuê nứt nẻ. Tô vẫn phải nộp đủ, ngươi bán con lợn nái mới đủ.",
+        "effects": { "silver": 10, "stat.happiness": -3, "stat.health": -1 }
+      }
+    ]
+  },
+  {
+    "id": "an_xin_dau_cho",
+    "group": "nghe",
+    "name": "Ăn xin đầu chợ",
+    "icon": "乞",
+    "text": "Ngồi đầu chợ chìa cái bát mẻ. Có người cho đồng tiền, có người cho cái đá.",
+    "conditions": { "classes": ["ban_dan"], "tier": ["pham_gian"], "age": { "min": 5 } },
+    "months": 2,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Một bà bán xôi cho ngươi nắm xôi nóng. Ngươi ăn từng hạt, nhớ mặt bà suốt đời.",
+          "Cả ngày được mười hai đồng. Đủ mua hai cái bánh đa."
+        ],
+        "effects": { "silver": 4, "stat.health": 1, "stat.charm": 1 }
+      },
+      {
+        "text": "Bọn ăn mày lớn tuổi giật bát của ngươi, đuổi ra khỏi chỗ ngồi.",
+        "effects": { "stat.happiness": -3, "stat.health": -1, "stat.daoHeart": 1 }
+      }
+    ]
+  },
+  {
+    "id": "nhat_cui_ban",
+    "group": "nghe",
+    "name": "Nhặt củi bán",
+    "icon": "柴",
+    "text": "Lên núi từ tờ mờ sáng, chiều gánh củi xuống chợ. Một gánh củi đổi được bữa cơm.",
+    "conditions": { "classes": ["ban_dan"], "tier": ["pham_gian"], "age": { "min": 7 } },
+    "months": 2,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Gánh củi nặng gấp rưỡi người. Bán xong, ngươi mua được một bát cháo nóng.",
+          "Trên núi ngươi tìm thấy một khóm nấm hương, bán được giá hơn cả gánh củi."
+        ],
+        "effects": { "silver": 6, "stat.physique": 1, "stat.health": 1 }
+      },
+      {
+        "text": "Trượt chân trên dốc, ngươi lăn xuống khe, gãy cả đòn gánh. Củi bỏ lại trên núi.",
+        "effects": { "stat.health": -3, "stat.happiness": -1 }
+      }
+    ]
+  },
+  {
+    "id": "lam_mo",
+    "group": "nghe",
+    "name": "Làm mõ làng",
+    "icon": "柝",
+    "text": "Đánh mõ báo việc làng, rao tin, chạy giấy. Bị người ta coi rẻ, nhưng được ăn phần cỗ.",
+    "conditions": { "classes": ["ban_dan"], "tier": ["pham_gian"], "age": { "min": 10 } },
+    "months": 3,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "\"Ới làng nước ơi!\" Tiếng mõ của ngươi vang khắp xóm. Cỗ đình năm nay ngươi được một mâm riêng ở góc sân.",
+          "Đi rao việc làng, ngươi biết nhà nào sắp cưới, nhà nào sắp bán ruộng, nhà nào nợ ai."
+        ],
+        "effects": { "silver": 8, "stat.intellect": 1, "stat.happiness": 1 }
+      },
+      {
+        "text": "Lý trưởng say rượu bắt ngươi đánh mõ suốt đêm. Sáng ra hai tay phồng rộp.",
+        "effects": { "stat.health": -1, "stat.happiness": -2, "stat.daoHeart": 1 }
+      }
+    ]
+  },
+  {
+    "id": "o_do",
+    "group": "nghe",
+    "name": "Ở đợ nhà giàu",
+    "icon": "僕",
+    "text": "Bán sức cho nhà phú hộ: gánh nước, bổ củi, chăn ngựa. Có cơm ăn, có chỗ ngủ, cuối năm được ít tiền.",
+    "conditions": { "classes": ["ban_dan"], "tier": ["pham_gian"], "age": { "min": 12 } },
+    "months": 6,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Một năm ở đợ, ngươi được hai bộ áo và ba quan tiền. Bà chủ còn cho thêm nắm xôi lúc về.",
+          "Cậu ấm nhà chủ học chữ, ngươi đứng hầu bên cạnh mà thuộc được cả quyển Tam Tự."
+        ],
+        "effects": { "silver": 30, "stat.physique": 1, "stat.intellect": 1 }
+      },
+      {
+        "text": "Nhà chủ mất cái trâm vàng, đổ cho ngươi lấy. Bị đánh một trận rồi đuổi đi, tiền công không được đồng nào.",
+        "effects": { "stat.health": -3, "stat.happiness": -4, "stat.daoHeart": 1 }
+      }
+    ]
+  },
+  {
+    "id": "theo_ganh_xiec",
+    "group": "giang_ho",
+    "name": "Theo gánh xiếc",
+    "icon": "戲",
+    "text": "Gánh xiếc rong đi qua làng, đang thiếu người. Theo họ thì đi khắp nơi, học trò lạ, ăn bữa đực bữa cái.",
+    "conditions": { "classes": ["ban_dan"], "tier": ["pham_gian"], "age": { "min": 10, "max": 25 } },
+    "months": 4,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Ngươi học được trò đi trên dây. Lần đầu biểu diễn ở chợ huyện, đám đông vỗ tay rần rần.",
+          "Ông bầu gánh dạy ngươi nuốt kiếm, phun lửa. Đi một vòng ba châu, ngươi thấy thiên hạ rộng thật."
+        ],
+        "effects": { "stat.physique": 2, "stat.charm": 1, "silver": 15, "stat.happiness": 2 }
+      },
+      {
+        "text": "Ngã từ trên cột cao xuống. Ông bầu gánh để lại ít tiền thuốc rồi cả đoàn đi mất.",
+        "effects": { "stat.health": -5, "silver": 5, "stat.daoHeart": 1 }
+      }
+    ]
+  },
+  {
+    "id": "vao_cai_bang",
+    "group": "giang_ho",
+    "name": "Vào Cái Bang",
+    "icon": "丐",
+    "text": "Kẻ ăn mày cũng có bang hội. Vào bang thì có anh em, có chỗ dựa, có người dạy võ.",
+    "conditions": { "classes": ["ban_dan"], "tier": ["pham_gian"], "age": { "min": 12 }, "faction": { "member": false } },
+    "months": 1,
+    "outcomes": [
+      {
+        "text": [
+          "Một lão ăn mày chống gậy trúc gõ lên vai ngươi ba cái. Từ hôm nay ngươi là đệ tử Cái Bang.",
+          "Ngươi được phát một cái bao bố, buộc một nút. Lão đường chủ nói: \"Bao này đầy nút thì ngươi thành trưởng lão.\""
+        ],
+        "effects": { "joinFaction": { "id": "cai_bang" }, "stat.happiness": 2 }
+      }
+    ]
+  },
+  {
+    "id": "tim_than_the",
+    "group": "ban_than",
+    "name": "Đi tìm thân thế",
+    "icon": "尋",
+    "text": "Ngươi chỉ có một miếng ngọc vỡ đeo cổ từ lúc bị bỏ lại. Có lẽ đã tới lúc đi hỏi xem nó từ đâu tới.",
+    "conditions": { "origins": ["co_nhi"], "tier": ["pham_gian"], "age": { "min": 15 }, "flagsNone": ["biet_than_the"] },
+    "months": 3,
+    "limit": { "perYear": 1, "cooldownYears": 3 },
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Ngươi hỏi khắp các tiệm ngọc trong huyện. Không ai biết, nhưng một lão thợ già cứ nhìn miếng ngọc mãi.",
+          "Ngươi về ngôi miếu nơi người ta nhặt được mình, hỏi bà cụ giữ miếu. Bà chỉ nhớ đêm ấy trời mưa rất to."
+        ],
+        "effects": { "stat.daoHeart": 1, "stat.happiness": -1 }
+      },
+      {
+        "text": "Một lão thợ ngọc nhìn miếng ngọc vỡ, tay run run: \"Hoa văn này... là của một nhà.\"",
+        "effects": { "stat.daoHeart": 1, "stat.intellect": 1 },
+        "startEvent": "gc_than_the_lo_ra"
+      }
+    ]
+  }
+]
