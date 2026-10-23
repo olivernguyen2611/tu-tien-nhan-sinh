@@ -999,7 +999,8 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
       if (Array.isArray(o)) { for (const v of o) walkJob(file, v); return; }
       if (!o || typeof o !== 'object') return;
       const r = o as Record<string, unknown>;
-      if (typeof r.takeJob === 'string' && !jobIds.includes(r.takeJob)) problems.push({ file, level: 'error', message: `nghề lạ "${r.takeJob}"` });
+      const taken = typeof r.takeJob === 'string' ? r.takeJob : (r.takeJob as { id?: unknown } | undefined)?.id;
+      if (typeof taken === 'string' && !jobIds.includes(taken)) problems.push({ file, level: 'error', message: `nghề lạ "${taken}"` });
       const jb = r.job as { id?: unknown; group?: unknown } | undefined;
       if (jb && typeof jb === 'object' && typeof jb.id === 'string' && !jobIds.includes(jb.id)) problems.push({ file, level: 'error', message: `điều kiện nghề lạ "${jb.id}"` });
       if (jb && typeof jb === 'object' && typeof jb.group === 'string' && !groupIds.includes(jb.group)) problems.push({ file, level: 'error', message: `điều kiện nhóm nghề lạ "${jb.group}"` });

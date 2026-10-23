@@ -235,3 +235,24 @@ describe('Hoàng tộc trọn bộ, cải trang vi hành (15.5)', () => {
     expect(ids({ ...next, events: { ...next.events, pending: null } })).not.toContain('hoi_cho');
   });
 });
+
+describe('Quyền quý, quan gia (15.6)', () => {
+  const ids = (s: ReturnType<typeof life>) => activityViews(s, content).map((a) => a.id);
+
+  it('a quyền quý child takes tập ấm instead of buying an office, keeps an estate, plays đấu dế', () => {
+    const noble = ids(life('quy_toc', 20));
+    expect(noble).toEqual(expect.arrayContaining(['tap_am', 'vao_cam_quan', 'quan_dien_trang', 'dau_de_dua_ngua', 'mo_thi_xa']));
+    expect(noble).not.toContain('mua_quan');
+    const out = doActivity(life('quy_toc', 20), content, 'tap_am');
+    expect(out!.state.career.id).toBe(content.office!.career);
+  });
+
+  it('a quan gia child learns from the father, follows him to his post, gets a thư lại seat by his name', () => {
+    expect(ids(life('quan_gia', 10))).toEqual(expect.arrayContaining(['theo_cha_hoc_kinh_su', 'theo_cha_di_nham']));
+    const grown = { ...life('quan_gia', 20), school: undefined };
+    expect(ids(grown)).toEqual(expect.arrayContaining(['nho_the_cha', 'hanh_quyen', 'ket_van_huu', 'lam_mon_sinh', 'bai_danh_su']));
+    expect(doActivity(grown, content, 'nho_the_cha')!.state.job?.id).toBe('thu_lai');
+    const farmer = ids(life('nong_dan', 20));
+    for (const id of ['tap_am', 'nho_the_cha', 'theo_cha_hoc_kinh_su', 'quan_dien_trang']) expect(farmer).not.toContain(id);
+  });
+});

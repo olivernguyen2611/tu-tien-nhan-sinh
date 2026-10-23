@@ -8,6 +8,17 @@
 
 ## [Chưa phát hành]
 
+### 15.6 Quyền quý, quan gia (2026-10-23)
+- 12 hoạt động mới (`activities/quyen-quy-quan-gia.json`):
+  - **Quyền quý**:
+    - **Tập ấm** thay Mua quan: nhờ công cha ông mà được bổ chức. Quyền quý không còn thấy Mua quan.
+    - Vào cấm quân làm thị vệ, Quản điền trang (cả tu tiên thế gia), Đấu dế đua ngựa, Mở thi xã.
+    - Đã có từ 15.5: Nuôi môn khách, Thu điền vây săn, Cải trang vi hành.
+  - **Quan gia**: Theo cha học kinh sử, Theo cha đi nhậm, Bái danh sư ôn thi, Hành quyển, Kết văn hữu sĩ tử, Làm môn sinh quan lớn.
+  - **Nhờ thế cha xin việc**: vào làm thư lại không cần đỗ Đồng sinh.
+    - Hiệu ứng `takeJob` nhận thêm dạng `{ id, waive }` để bỏ qua điều kiện của nghề.
+- 4 sự kiện mới: cha bị đàn hặc, tá điền xin giảm tô, chuyện liên hôn (18+), có người bán đề thi.
+
 ### 15.5 Hoàng tộc trọn bộ, cải trang vi hành (2026-10-23)
 - 15 hoạt động mới cho hoàng tộc (`activities/hoang-toc.json`):
   - **Học**: Học lễ nghi cung đình, Đọc sách ở Tàng thư các, Luận kinh nghĩa, Tập cưỡi ngựa bắn cung; hoàng tử 14+ được Hầu phụ hoàng phê tấu.

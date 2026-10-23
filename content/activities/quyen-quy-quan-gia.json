@@ -1,0 +1,300 @@
+[
+  {
+    "id": "tap_am",
+    "group": "nghe",
+    "name": "Tập ấm",
+    "icon": "蔭",
+    "text": "Cha ông có công với triều đình, con cháu được nhận chức mà không cần lều chõng. Ghế nhỏ, nhưng là ghế quan.",
+    "conditions": { "classes": ["quyen_quy"], "tier": ["pham_gian"], "age": { "min": 18, "max": 40 }, "realm": { "max": "pham_nhan" }, "office": { "held": false } },
+    "months": 1,
+    "limit": { "perYear": 1, "cooldownYears": 3 },
+    "outcomes": [
+      {
+        "text": [
+          "Lại bộ xét gia phả, thấy tên tổ phụ ngươi trong công thần lục. Ba hôm sau có chiếu bổ dụng.",
+          "Phụ thân viết một lá thư gửi lên kinh. Tháng sau, ngươi khoác áo quan."
+        ],
+        "effects": { "officeJoin": "recommend", "stat.happiness": 2 }
+      }
+    ]
+  },
+  {
+    "id": "vao_cam_quan",
+    "group": "nghe",
+    "name": "Vào cấm quân làm thị vệ",
+    "icon": "衛",
+    "text": "Con nhà thế gia được tuyển vào cấm quân, đứng gác cửa cung, theo hầu xa giá. Oai thì oai, mỏi chân cũng mỏi.",
+    "conditions": { "classes": ["quyen_quy"], "tier": ["pham_gian"], "age": { "min": 16, "max": 35 }, "realm": { "max": "pham_nhan" }, "office": { "held": false } },
+    "months": 4,
+    "check": { "stat": "stat.physique", "difficulty": 40 },
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Ngươi đứng gác cửa Ngọ Môn cả mùa hạ. Một hôm thánh thượng đi qua, liếc ngươi một cái, hỏi tên.",
+          "Ngươi theo hầu xa giá ra ngoại thành, đường xa nắng gắt mà không rời hàng nửa bước."
+        ],
+        "effects": { "stat.physique": 2, "silver": 60, "fame": 1 }
+      },
+      {
+        "text": "Đêm trực có kẻ trèo tường cung. Ngươi đuổi kịp, quật ngã giữa sân đá. Sáng ra được thưởng một tấm lụa.",
+        "effects": { "stat.physique": 1, "silver": 90, "fame": 2, "stat.happiness": 2 }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": "Ngươi ngủ gật lúc đứng gác, bị đội trưởng phạt quỳ ba canh. May mà nhà có người, chuyện không lên tới trên.",
+        "effects": { "stat.happiness": -2, "stat.health": -1, "silver": 20 }
+      }
+    ]
+  },
+  {
+    "id": "quan_dien_trang",
+    "group": "tai_san",
+    "name": "Quản điền trang",
+    "icon": "莊",
+    "text": "Điền trang của nhà rộng mấy trăm mẫu, tá điền cả làng. Quản thì có lợi, bỏ mặc thì quản sự ăn hết.",
+    "conditions": { "classes": ["quyen_quy", "tu_gia"], "tier": ["pham_gian"], "age": { "min": 16 } },
+    "months": 3,
+    "check": { "stat": "stat.intellect", "difficulty": 40 },
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Ngươi đi thăm từng thửa ruộng, đối chiếu sổ sách. Năm nay thu về hơn năm ngoái ba phần.",
+          "Ngươi giảm tô cho mấy nhà tá điền mất mùa. Mùa sau họ cày cấy chăm như ruộng nhà mình."
+        ],
+        "effects": { "silver": 120, "stat.intellect": 1, "karma": 1 }
+      },
+      {
+        "text": "Ngươi bắt được quản sự gian lận sổ sách mười năm nay. Nghĩ tới mười năm bị ăn bớt, ngươi tức suốt tháng.",
+        "effects": { "silver": 200, "stat.happiness": -1, "stat.intellect": 2 }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": "Sổ sách rối như canh hẹ. Ngươi xem cả tháng vẫn không hiểu tiền đi đâu, đành để quản sự làm như cũ.",
+        "effects": { "silver": 40, "stat.happiness": -2 }
+      }
+    ]
+  },
+  {
+    "id": "dau_de_dua_ngua",
+    "group": "giai_tri",
+    "name": "Đấu dế, đua ngựa",
+    "icon": "馬",
+    "text": "Thú chơi của công tử kinh thành: dế đất Sơn Đông, ngựa giống Tây Lương, đặt cược bằng vàng.",
+    "conditions": { "classes": ["quyen_quy", "hoang_toc"], "tier": ["pham_gian"], "age": { "min": 14 } },
+    "cost": [{ "silver": 30 }],
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 2,
+        "text": [
+          "Con dế \"Hắc Tướng Quân\" của ngươi cắn bại ba con liền. Cả đám công tử vây quanh hỏi mua.",
+          "Ngựa ngươi về nhất, mấy công tử nhà thừa tướng mặt xanh như tàu lá."
+        ],
+        "effects": { "silver": 80, "stat.happiness": 4, "fame": 1 }
+      },
+      {
+        "weight": 2,
+        "text": "Ngựa ngươi về bét. Ngươi cười xòa, mời cả đám đi uống rượu cho đỡ quê.",
+        "effects": { "stat.happiness": 1, "stat.charm": 1 }
+      },
+      {
+        "text": "Đặt cược quá tay, ngươi thua sạch tiền tiêu cả tháng, còn phải viết giấy nợ.",
+        "effects": { "silver": -60, "stat.happiness": -3 }
+      }
+    ]
+  },
+  {
+    "id": "mo_thi_xa",
+    "group": "giai_tri",
+    "name": "Mở thi xã",
+    "icon": "詩",
+    "text": "Gom văn nhân trong kinh lập một thi xã, mỗi tháng một buổi xướng họa, rượu ngon trà quý do ngươi lo.",
+    "conditions": { "classes": ["quyen_quy", "quan_gia"], "tier": ["pham_gian"], "age": { "min": 16 } },
+    "cost": [{ "silver": 25 }],
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Thi xã của ngươi có thêm một vị cử nhân nổi danh. Từ đó văn nhân trong kinh tranh nhau xin vào.",
+          "Bài thơ xướng của ngươi được ba người họa lại. Có bài còn hay hơn bài của ngươi."
+        ],
+        "effects": { "stat.intellect": 1, "stat.charm": 2, "fame": 2 }
+      },
+      {
+        "text": "Hai thi hữu cãi nhau vì một chữ, tới mức đòi tuyệt giao. Ngươi phải bày tiệc rượu mới giảng hòa được.",
+        "effects": { "stat.charm": 1, "stat.happiness": -1 }
+      }
+    ]
+  },
+  {
+    "id": "theo_cha_hoc_kinh_su",
+    "group": "hoc_hanh",
+    "name": "Theo cha học kinh sử",
+    "icon": "經",
+    "text": "Tối tối cha mở sách ra giảng, chỗ nào trong trường không dạy thì cha dạy. Cha là quan, chữ của cha là chữ dùng được.",
+    "conditions": { "classes": ["quan_gia"], "tier": ["pham_gian"], "age": { "min": 6, "max": 17 } },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Cha giảng một chương Xuân Thu, rồi kể vụ án ông xử năm ngoái. Ngươi hiểu ra vì sao sách lại viết như thế.",
+          "Ngươi đọc thuộc bài trước mặt cha. Ông không khen, chỉ đặt thêm một quyển sách lên bàn."
+        ],
+        "effects": { "stat.intellect": 2, "grade": 2 }
+      },
+      {
+        "text": "Ngươi đọc sai một chữ, cha quát. Ngươi khóc, cha thở dài, rồi giảng lại từ đầu.",
+        "effects": { "stat.intellect": 1, "stat.happiness": -1 }
+      }
+    ]
+  },
+  {
+    "id": "bai_danh_su",
+    "group": "hoc_hanh",
+    "name": "Bái danh sư ôn thi",
+    "icon": "師",
+    "text": "Mang lễ tới cửa một vị tiến sĩ đã cáo quan, xin được học văn khoa cử. Danh sư nhận ít học trò, học phí không rẻ.",
+    "conditions": { "classes": ["quan_gia", "quyen_quy", "thuong_gia"], "tier": ["pham_gian"], "age": { "min": 12, "max": 40 } },
+    "cost": [{ "silver": 40 }],
+    "months": 3,
+    "check": { "stat": "stat.intellect", "difficulty": 45 },
+    "outcomes": [
+      {
+        "text": [
+          "Danh sư đọc bài văn ngươi, gạch nửa trang, rồi chỉ cho ngươi chỗ gạch ấy mới là cái tầm thường.",
+          "Ba tháng theo danh sư, ngươi viết một bài sách luận. Thầy đọc xong, gật đầu: \"Kỳ thi tới, có thể thử.\""
+        ],
+        "effects": { "stat.intellect": 3, "stat.comprehension": 1 }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": "Danh sư nhận lễ, giảng cho ngươi một buổi, rồi bảo về đọc thêm ba năm hãy tới.",
+        "effects": { "stat.intellect": 1, "stat.happiness": -2 }
+      }
+    ]
+  },
+  {
+    "id": "hanh_quyen",
+    "group": "hoc_hanh",
+    "name": "Hành quyển",
+    "icon": "卷",
+    "text": "Chép văn hay của mình thành quyển, dâng lên cửa các vị quan có tiếng trước kỳ thi. Có người khen thì danh truyền tới quan trường.",
+    "conditions": { "classes": ["quan_gia", "quyen_quy"], "tier": ["pham_gian"], "age": { "min": 15, "max": 45 } },
+    "months": 1,
+    "limit": { "perYear": 1, "cooldownYears": 2 },
+    "check": { "stat": "stat.intellect", "difficulty": 50 },
+    "outcomes": [
+      {
+        "text": [
+          "Một vị thị lang đọc quyển văn của ngươi, đề vào cuối trang bốn chữ \"hậu sinh khả úy\". Tin ấy truyền khắp trường thi.",
+          "Quyển văn tới tay một vị học sĩ. Ông cho mời ngươi tới phủ uống trà, hỏi han rất lâu."
+        ],
+        "effects": { "stat.intellect": 1, "fame": 3, "stat.happiness": 3 }
+      }
+    ],
+    "failOutcomes": [
+      {
+        "text": "Quyển văn dâng lên như đá chìm biển. Nghe nói người gác cổng đã đem lót bàn.",
+        "effects": { "stat.happiness": -2, "stat.daoHeart": 1 }
+      }
+    ]
+  },
+  {
+    "id": "ket_van_huu",
+    "group": "quan_he",
+    "name": "Kết văn hữu sĩ tử",
+    "icon": "友",
+    "text": "Tụ tập với các sĩ tử cùng lứa: bình văn, đánh cờ, bàn chuyện thiên hạ. Người hôm nay ngồi cùng chiếu, mai kia có thể đứng cùng triều.",
+    "conditions": { "classes": ["quan_gia", "quyen_quy", "thuong_gia"], "tier": ["pham_gian"], "age": { "min": 14, "max": 45 } },
+    "months": 1,
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Ngươi quen một thư sinh nghèo mà văn hay. Hai người thề sau này ai đỗ trước thì kéo người kia lên.",
+          "Một đêm bình văn tới sáng, ngươi học được ở bạn nhiều hơn cả tháng ngồi trường."
+        ],
+        "effects": { "stat.charm": 1, "stat.intellect": 1, "stat.happiness": 2 }
+      },
+      {
+        "text": "Bàn chuyện triều chính quá trớn, một người trong bọn bị bắt. Cả nhóm tan tác, ngươi nằm nhà mấy tháng không dám ra.",
+        "effects": { "stat.happiness": -3, "stat.daoHeart": 1 }
+      }
+    ]
+  },
+  {
+    "id": "theo_cha_di_nham",
+    "group": "ban_than",
+    "name": "Theo cha đi nhậm",
+    "icon": "任",
+    "text": "Cha được bổ làm quan ở châu xa. Cả nhà khăn gói theo, ở công đường, nghe tiếng mõ nha môn mà lớn.",
+    "conditions": { "classes": ["quan_gia"], "tier": ["pham_gian"], "age": { "min": 8, "max": 20 } },
+    "months": 2,
+    "limit": { "perYear": 1, "cooldownYears": 5 },
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Ở huyện mới, ngươi đứng nấp sau bình phong nghe cha xử án. Có án cha xử sai, ngươi biết mà không dám nói.",
+          "Đường tới châu xa đi ba tháng. Ngươi thấy núi, thấy biển, thấy dân đói ven đường."
+        ],
+        "effects": { "stat.intellect": 2, "stat.daoHeart": 1, "stat.happiness": 1 }
+      },
+      {
+        "text": "Châu mới có lam chướng. Ngươi sốt rét nửa tháng, mẹ khóc cạn nước mắt.",
+        "effects": { "stat.health": -4, "stat.physique": 1 }
+      }
+    ]
+  },
+  {
+    "id": "lam_mon_sinh",
+    "group": "quan_he",
+    "name": "Làm môn sinh quan lớn",
+    "icon": "門",
+    "text": "Nhờ cha dẫn tới bái một vị đại thần làm thầy. Có thầy trong triều thì đường quan dễ đi, có điều thầy đổ thì trò cũng đổ.",
+    "conditions": { "classes": ["quan_gia", "quyen_quy"], "tier": ["pham_gian"], "age": { "min": 16, "max": 40 } },
+    "cost": [{ "silver": 50 }],
+    "months": 1,
+    "limit": { "perYear": 1, "cooldownYears": 5 },
+    "outcomes": [
+      {
+        "weight": 3,
+        "text": [
+          "Đại thần nhận lễ, cho ngươi ngồi ghế cuối trong buổi giảng. Từ hôm ấy, người ta gọi ngươi là \"môn sinh của tướng phủ\".",
+          "Vị thượng thư già hỏi ngươi ba câu về thuế ruộng. Ngươi đáp được hai, ông cười nhận."
+        ],
+        "effects": { "stat.charm": 1, "fame": 2 }
+      },
+      {
+        "text": "Vị đại thần ngươi bái làm thầy, năm sau bị đàn hặc cách chức. Tên ngươi bị ghi vào sổ \"đảng của hắn\".",
+        "effects": { "stat.happiness": -3, "infamy": 1, "stat.intellect": 1 }
+      }
+    ]
+  },
+  {
+    "id": "nho_the_cha",
+    "group": "nghe",
+    "name": "Nhờ thế cha xin việc",
+    "icon": "托",
+    "text": "Cha là quan, một lời của cha là một chân thư lại trong nha môn. Không oai như làm quan, nhưng là cửa vào quan trường.",
+    "conditions": { "classes": ["quan_gia"], "tier": ["pham_gian"], "age": { "min": 16, "max": 40 }, "realm": { "max": "pham_nhan" }, "office": { "held": false } },
+    "months": 1,
+    "limit": { "perYear": 1, "cooldownYears": 2 },
+    "outcomes": [
+      {
+        "text": [
+          "Cha viết một mảnh giấy gửi huyện thừa. Hôm sau ngươi có bàn riêng trong nha môn.",
+          "Không cần thi tuyển, không cần lót tay. Người ta nhìn ngươi, rồi nhìn họ của ngươi, rồi gật đầu."
+        ],
+        "effects": { "takeJob": { "id": "thu_lai", "waive": true }, "stat.happiness": 1 }
+      }
+    ]
+  }
+]

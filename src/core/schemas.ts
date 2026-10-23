@@ -341,8 +341,9 @@ export const EffectsSchema = z
     tradeLevel: z.number().int().optional(),
     /** 10.2: lều chõng đi thi: sit the next exam held this year (the trường thi mini-game opens). */
     sitExam: z.boolean().optional(),
-    /** 10.3: take a job (jobs.json id; its requirements still apply), leave it (retire = nghỉ hưu), hiệu suất ±, one rung up. */
-    takeJob: id.optional(),
+    /** 10.3: take a job (jobs.json id), leave it (retire = nghỉ hưu), hiệu suất ±, one rung up. 15.6: `waive` = hired through
+     * the family's name (nhờ thế cha), the job's `requires` is waived. */
+    takeJob: z.union([id, z.object({ id, waive: z.boolean() }).strict()]).optional(),
     quitJob: z.enum(['quit', 'retire', 'fired']).optional(),
     perf: z.number().optional(),
     jobPromote: z.boolean().optional(),

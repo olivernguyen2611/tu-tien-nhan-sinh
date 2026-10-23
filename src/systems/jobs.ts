@@ -44,7 +44,7 @@ export function jobFitsClass(state: GameState, content: Content, jobId: string):
 }
 
 /** Why this job is closed to the life now (null = open). */
-export function jobBlocked(state: GameState, content: Content, jobId: string): string | null {
+export function jobBlocked(state: GameState, content: Content, jobId: string, waive = false): string | null {
   const def = jobDef(content, jobId);
   const cfg = content.balance.jobs;
   if (!def || !cfg) return 'Không có nghề này.';
@@ -63,7 +63,7 @@ export function jobBlocked(state: GameState, content: Content, jobId: string): s
   if (hurt) return `${hurt.name}, nghề này không làm được.`;
   const fired = jobOf(state).past.find((p) => p.id === jobId && p.why === 'fired' && state.character.age - p.left < cfg.rehireYears);
   if (fired) return 'Mới bị đuổi, người trong nghề chưa ai chịu nhận lại.';
-  if (!meets(state, def.requires, content)) return def.requiresText ?? 'Chưa đủ điều kiện.';
+  if (!waive && !meets(state, def.requires, content)) return def.requiresText ?? 'Chưa đủ điều kiện.';
   return null;
 }
 
@@ -89,10 +89,11 @@ export function quitJob(state: GameState, content: Content, why: 'quit' | 'retir
 }
 
 /** Take a job: the boss and đồng liêu become acquaintances. Null when it is closed. */
-export function takeJob(state: GameState, content: Content, jobId: string): { state: GameState; text: string } | null {
+/** `waive`: the job's own `requires` (an exam passed…) is waived, as when the family's name opens the door. */
+export function takeJob(state: GameState, content: Content, jobId: string, waive = false): { state: GameState; text: string } | null {
   const def = jobDef(content, jobId);
   const cfg = content.balance.jobs;
-  if (!def || !cfg || jobBlocked(state, content, jobId)) return null;
+  if (!def || !cfg || jobBlocked(state, content, jobId, waive)) return null;
   let s = jobOf(state).id ? quitJob(state, content, 'quit') : state;
   const rng = new Rng(`${state.seed}:job-in:${state.character.age}:${jobId}`);
   const boss = meetAside(s, content, rng, { role: def.bossRole, kind: 'chu', age: state.character.age + rng.int(5, 25), affinity: 45, root: false });
