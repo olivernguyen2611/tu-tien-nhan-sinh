@@ -312,7 +312,41 @@ function advanceYearOnce(state: GameState, content: Content): GameState {
   const used = monthsUsed(state);
   const age = state.character.age + 1;
   const aged: GameState = { ...state, character: { ...state.character, age } };
-  const body = checkDeath(economyYear(martialQuestYear(clanYear(ownSectYear(romanceYear(rankingYear(lineageYear(sectYear(pastimeYear(assetsYear(jobYear(schoolYear(careerOfficeYear(applyJobCrafts(cultivateYear(ageExtremes(wulinYear(artsYear(factionYear(kinYear(lawYear(healthYear(ageBody(acquaintanceYear(ageNpcs(fieldYear(beastYear(formationYear(daoBondYear(ageFamily(withYear(aged), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content, used), content), content), content), content), content), content), content), content), content), content), content), content), content), content), content);
+  // Each system takes the year in turn. Written as a list, not one nested call: Rollup's
+  // tree-shaking slows down exponentially with call nesting depth (the deploy build hung).
+  const yearSteps: ((s: GameState) => GameState)[] = [
+    (s) => ageFamily(s, content),
+    (s) => daoBondYear(s, content),
+    (s) => formationYear(s, content),
+    (s) => beastYear(s, content),
+    (s) => fieldYear(s, content),
+    (s) => ageNpcs(s, content),
+    (s) => acquaintanceYear(s, content),
+    (s) => ageBody(s, content),
+    (s) => healthYear(s, content),
+    (s) => lawYear(s, content),
+    (s) => kinYear(s, content),
+    (s) => factionYear(s, content),
+    (s) => artsYear(s, content),
+    (s) => wulinYear(s, content),
+    (s) => ageExtremes(s, content),
+    (s) => cultivateYear(s, content, used),
+    (s) => applyJobCrafts(s, content),
+    (s) => careerOfficeYear(s, content),
+    (s) => schoolYear(s, content),
+    (s) => jobYear(s, content),
+    (s) => assetsYear(s, content),
+    (s) => pastimeYear(s, content),
+    (s) => sectYear(s, content),
+    (s) => lineageYear(s, content),
+    (s) => rankingYear(s, content),
+    (s) => romanceYear(s, content),
+    (s) => ownSectYear(s, content),
+    (s) => clanYear(s, content),
+    (s) => martialQuestYear(s, content),
+    (s) => economyYear(s, content),
+  ];
+  const body = checkDeath(yearSteps.reduce((s, step) => step(s), withYear(aged)), content);
   // Task 4.1: in seclusion no ordinary event comes (follow-ups wait for the door to open);
   // the door opens by itself when the years are up.
   const secluded = body.seclusion && age >= body.seclusion.until ? { ...body, seclusion: null } : body;

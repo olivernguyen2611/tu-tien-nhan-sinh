@@ -8,6 +8,10 @@
 
 ## [Chưa phát hành]
 
+### Sửa deploy kẹt (2026-10-23)
+- Bản chơi thử trên web không cập nhật từ #140: bước đóng gói (`vite build`) chạy hàng giờ không xong. Nguyên nhân là vòng năm (`advanceYearOnce` trong `src/core/state.ts`) gọi 30 hệ thống lồng vào nhau thành một biểu thức, khiến bước lọc code thừa của Rollup chậm theo cấp số nhân với độ sâu; GĐ 13 thêm bốn tầng nữa là kẹt hẳn.
+- Viết lại thành danh sách các bước chạy lần lượt, thứ tự giữ nguyên. Đóng gói từ hơn 3 tiếng xuống khoảng 7 giây (cả kiểm tra kiểu khoảng 25 giây). Không đổi cách chơi.
+
 ### Góp ý 23/10: bánh răng Cài đặt (2026-10-23)
 - Màn hình chính và thanh trên trong lúc chơi có nút **bánh răng** ở góc trên. Bấm vào mở bảng Cài đặt ngay trên màn đang xem, không phải chuyển màn; bấm ✕, chạm ra ngoài hoặc nút Back của điện thoại để đóng.
 - Bảng giữ đủ các mục: giao diện, âm thanh, tua nhanh tối đa, cỡ chữ, giảm chuyển động, ẩn nội dung nhạy cảm, chế độ thử nghiệm. Bỏ màn Cài đặt riêng và dòng chữ "Cài đặt" ở màn hình chính.
