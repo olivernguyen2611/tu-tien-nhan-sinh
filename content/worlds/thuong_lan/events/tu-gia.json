@@ -1,0 +1,70 @@
+[
+  {
+    "id": "gc_tu_gia_vo_linh_can",
+    "category": "social",
+    "title": "Kẻ không linh căn trong tộc",
+    "text": "Từ ngày đo ra không có linh căn, chỗ ngồi của ngươi trong từ đường bị dời xuống cuối. Đám anh em họ đi qua cũng không chào nữa.",
+    "themes": ["family"],
+    "conditions": { "classes": ["tu_gia"], "age": { "min": 9, "max": 25 }, "tier": ["pham_gian"], "root": { "tested": true, "usable": false } },
+    "weight": 8,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Xin quản việc thế tục của tộc: ruộng đất, cửa hiệu, sổ sách",
+        "result": { "text": "Tộc trưởng ngạc nhiên rồi gật đầu. Mười năm sau, tộc ăn mặc no đủ nhờ cái đầu của kẻ không linh căn.", "effects": { "stat.intellect": 2, "silver": 50, "stat.happiness": 2 } }
+      },
+      {
+        "text": "Vẫn luyện thể mỗi ngày, mặc ai cười",
+        "result": { "text": "Ngươi không tu được tiên, nhưng thân thể ngày một rắn chắc. Có hôm một tộc lão dừng lại xem ngươi đấm bao cát, không nói gì.", "effects": { "stat.physique": 2, "stat.daoHeart": 2 } }
+      },
+      {
+        "text": "Bỏ tộc đi xa",
+        "result": { "text": "Ngươi để lại lá thư trên bàn thờ tổ rồi đi trong đêm. Thiên hạ rộng, chắc gì đã không có đường cho kẻ không linh căn.", "effects": { "stat.daoHeart": 3, "stat.happiness": -2, "setFlags": ["roi_toc"] } }
+      }
+    ]
+  },
+  {
+    "id": "gc_tu_gia_tranh_linh_thach",
+    "crossTier": true,
+    "category": "social",
+    "title": "Phần linh thạch cuối năm",
+    "text": "Cuối năm tộc chia linh thạch cho con cháu. Quản sự chia cho chi nhà ngươi ít hơn chi trưởng một nửa, nói là \"theo lệ\".",
+    "themes": ["family"],
+    "conditions": { "classes": ["tu_gia"], "age": { "min": 14 }, "tier": ["pham_gian"] },
+    "weight": 5,
+    "cooldownYears": 8,
+    "choices": [
+      {
+        "text": "Lên tiếng trước mặt tộc trưởng",
+        "check": { "stat": "stat.charm", "difficulty": 45 },
+        "success": { "text": "Ngươi kể từng khoản, từng năm. Tộc trưởng sai lật sổ, quả nhiên quản sự ăn bớt. Chi nhà ngươi được bù đủ.", "effects": { "spiritStones": 3, "stat.charm": 1, "fame": 1 } },
+        "fail": { "text": "Tộc trưởng nghe xong chỉ nói: \"Trẻ con biết gì về lệ.\" Từ đó chi trưởng nhìn nhà ngươi như cái gai.", "effects": { "stat.happiness": -3, "stat.daoHeart": 1 } }
+      },
+      {
+        "text": "Nhận phần, không nói gì",
+        "result": { "text": "Ngươi cất mấy viên linh thạch vụn vào túi. Có những thứ nhớ lâu hơn là đòi ngay.", "effects": { "spiritStones": 1, "stat.daoHeart": 2 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_tu_gia_lao_to_xuat_quan",
+    "crossTier": true,
+    "category": "fortune",
+    "title": "Lão tổ xuất quan",
+    "text": "Lão tổ bế quan trăm năm bỗng xuất quan. Cả tộc quỳ ở sân từ đường, còn lão tổ thì đi chậm rãi qua từng hàng con cháu, nhìn từng khuôn mặt.",
+    "themes": ["fortune"],
+    "conditions": { "classes": ["tu_gia"], "age": { "min": 6, "max": 30 }, "tier": ["pham_gian"] },
+    "weight": 3,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Ngẩng đầu nhìn thẳng lão tổ",
+        "result": { "text": "Lão tổ dừng lại trước ngươi, khẽ cười, đặt một ngón tay lên trán ngươi. Một luồng mát lạnh chạy khắp người. Từ đó đầu óc ngươi sáng hẳn.", "effects": { "stat.comprehension": 3, "stat.daoHeart": 1 } }
+      },
+      {
+        "text": "Cúi đầu thật thấp",
+        "result": { "text": "Lão tổ đi qua, không dừng. Nhưng tối ấy có người mang tới phòng ngươi một hộp đan dược, nói là \"lão tổ ban cho con cháu biết lễ\".", "effects": { "stat.health": 3, "stat.charm": 1 } }
+      }
+    ]
+  }
+]

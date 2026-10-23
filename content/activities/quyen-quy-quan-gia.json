@@ -137,7 +137,7 @@
     "name": "Theo cha học kinh sử",
     "icon": "經",
     "text": "Tối tối cha mở sách ra giảng, chỗ nào trong trường không dạy thì cha dạy. Cha là quan, chữ của cha là chữ dùng được.",
-    "conditions": { "classes": ["quan_gia"], "tier": ["pham_gian"], "age": { "min": 6, "max": 17 } },
+    "conditions": { "classes": ["quan_gia"], "tier": ["pham_gian"], "age": { "min": 6, "max": 17 }, "flagsNone": ["no_father"] },
     "months": 1,
     "outcomes": [
       {
@@ -235,7 +235,7 @@
     "name": "Theo cha đi nhậm",
     "icon": "任",
     "text": "Cha được bổ làm quan ở châu xa. Cả nhà khăn gói theo, ở công đường, nghe tiếng mõ nha môn mà lớn.",
-    "conditions": { "classes": ["quan_gia"], "tier": ["pham_gian"], "age": { "min": 8, "max": 20 } },
+    "conditions": { "classes": ["quan_gia"], "tier": ["pham_gian"], "age": { "min": 8, "max": 20 }, "flagsNone": ["no_father", "no_mother"] },
     "months": 2,
     "limit": { "perYear": 1, "cooldownYears": 5 },
     "outcomes": [
@@ -259,7 +259,7 @@
     "name": "Làm môn sinh quan lớn",
     "icon": "門",
     "text": "Nhờ cha dẫn tới bái một vị đại thần làm thầy. Có thầy trong triều thì đường quan dễ đi, có điều thầy đổ thì trò cũng đổ.",
-    "conditions": { "classes": ["quan_gia", "quyen_quy"], "tier": ["pham_gian"], "age": { "min": 16, "max": 40 } },
+    "conditions": { "classes": ["quan_gia", "quyen_quy"], "tier": ["pham_gian"], "age": { "min": 16, "max": 40 }, "flagsNone": ["no_father"] },
     "cost": [{ "silver": 50 }],
     "months": 1,
     "limit": { "perYear": 1, "cooldownYears": 5 },
@@ -284,7 +284,7 @@
     "name": "Nhờ thế cha xin việc",
     "icon": "托",
     "text": "Cha là quan, một lời của cha là một chân thư lại trong nha môn. Không oai như làm quan, nhưng là cửa vào quan trường.",
-    "conditions": { "classes": ["quan_gia"], "tier": ["pham_gian"], "age": { "min": 16, "max": 40 }, "realm": { "max": "pham_nhan" }, "office": { "held": false } },
+    "conditions": { "classes": ["quan_gia"], "tier": ["pham_gian"], "age": { "min": 16, "max": 40 }, "realm": { "max": "pham_nhan" }, "office": { "held": false }, "flagsNone": ["no_father"] },
     "months": 1,
     "limit": { "perYear": 1, "cooldownYears": 2 },
     "outcomes": [

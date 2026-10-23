@@ -12,7 +12,7 @@
         "weight": 3,
         "text": [
           "Ngươi nằm trên lưng trâu thổi sáo lá, nhìn mây trôi cả buổi chiều.",
-          "Trâu nhà ngươi béo nhất xóm. Cha xoa đầu ngươi, nói năm nay cày ruộng khỏe."
+          "Trâu nhà ngươi béo nhất xóm. Người nhà xoa đầu ngươi, nói năm nay cày ruộng khỏe."
         ],
         "effects": { "stat.physique": 1, "stat.happiness": 2, "silver": 2 }
       },
@@ -28,7 +28,7 @@
     "name": "Mò cua bắt ốc",
     "icon": "蟹",
     "text": "Lội ruộng, mò mương, tối về có bát canh cua. Vui hơn mọi trò chơi trong sách.",
-    "conditions": { "classes": ["nong_gia", "ban_dan"], "tier": ["pham_gian"], "age": { "min": 5, "max": 14 } },
+    "conditions": { "classes": ["nong_gia", "ban_dan"], "tier": ["pham_gian"], "age": { "min": 5, "max": 14 }, "flagsNone": ["no_mother"] },
     "months": 1,
     "outcomes": [
       {
@@ -57,7 +57,7 @@
       {
         "weight": 3,
         "text": [
-          "Mùa này lúa trổ đều. Gặt xong, cha đong riêng cho ngươi một thúng thóc mà bán lấy tiền tiêu.",
+          "Mùa này lúa trổ đều. Gặt xong, nhà đong riêng cho ngươi một thúng thóc mà bán lấy tiền tiêu.",
           "Ngươi cày thẳng luống như kẻ chỉ. Ông cụ hàng xóm đứng bờ ruộng xem, khen nức nở."
         ],
         "effects": { "stat.physique": 2, "silver": 15, "stat.happiness": 1 }
@@ -74,7 +74,7 @@
     "name": "Đi chợ phiên bán nông sản",
     "icon": "市",
     "text": "Gánh rau, trứng, gà ra chợ phiên huyện. Bán được giá hay không tùy cái miệng.",
-    "conditions": { "classes": ["nong_gia"], "tier": ["pham_gian"], "age": { "min": 10 } },
+    "conditions": { "classes": ["nong_gia"], "tier": ["pham_gian"], "age": { "min": 10 }, "flagsNone": ["no_mother"] },
     "months": 1,
     "check": { "stat": "stat.charm", "difficulty": 30 },
     "outcomes": [

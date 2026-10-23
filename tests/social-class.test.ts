@@ -297,3 +297,24 @@ describe('Nông gia, bần dân (15.8)', () => {
     }
   });
 });
+
+describe('Tu tiên thế gia (15.9)', () => {
+  const ids = (s: ReturnType<typeof life>) => activityViews(s, content).map((a) => a.id);
+
+  it('a child of a cultivating clan hears the tộc lão, trains the clan body art, tends the linh điền, joins the tộc tỷ', () => {
+    const child = ids(life('tu_tien_gia_toc', 12));
+    expect(child).toEqual(expect.arrayContaining(['nghe_toc_lao_giang_dao', 'luyen_the_toc_truyen', 'phu_viec_linh_dien', 'du_toc_ty', 'doc_tang_kinh_gia_toc', 'hau_tong_lao']));
+    expect(ids(life('nong_dan', 12))).not.toContain('nghe_toc_lao_giang_dao');
+  });
+
+  it('no clan activity grants a spiritual root (the innate-root rule)', () => {
+    const own = content.activities!.filter((a) => a.conditions.classes?.includes('tu_gia'));
+    for (const a of own) for (const o of [...a.outcomes, ...(a.failOutcomes ?? [])]) expect(o.effects.testRoot, a.id).toBeFalsy();
+  });
+
+  it('an activity that speaks of the father hides once he is gone', () => {
+    const s = life('quan_gia', 10);
+    expect(ids(s)).toContain('theo_cha_hoc_kinh_su');
+    expect(ids({ ...s, flags: { ...s.flags, no_father: true } })).not.toContain('theo_cha_hoc_kinh_su');
+  });
+});

@@ -106,7 +106,7 @@
     "name": "Hầu phụ hoàng phê tấu",
     "icon": "奏",
     "text": "Đứng sau ngự án mài mực, nhìn phụ hoàng phê từng tờ tấu chương. Thấy nhiều, hiểu nhiều, mà lời nào cũng phải giữ.",
-    "conditions": { "origins": ["hoang_tu"], "gender": "nam", "throne": { "path": ["royal"] }, "reign": { "active": false }, "age": { "min": 14 }, "tier": ["pham_gian"] },
+    "conditions": { "origins": ["hoang_tu"], "gender": "nam", "throne": { "path": ["royal"] }, "reign": { "active": false }, "age": { "min": 14 }, "tier": ["pham_gian"], "flagsNone": ["no_father"] },
     "months": 3,
     "limit": { "perYear": 1, "cooldownYears": 1 },
     "outcomes": [
@@ -130,7 +130,7 @@
     "name": "Học cầm kỳ thi họa",
     "icon": "琴",
     "text": "Nữ quan trong cung dạy đàn, cờ, thơ, họa. Bốn môn, mỗi ngày một môn.",
-    "conditions": { "classes": ["hoang_toc", "quyen_quy"], "gender": "nu", "age": { "min": 7, "max": 20 }, "tier": ["pham_gian"] },
+    "conditions": { "classes": ["hoang_toc", "quyen_quy"], "gender": "nu", "age": { "min": 7, "max": 20 }, "tier": ["pham_gian"], "flagsNone": ["no_mother"] },
     "months": 2,
     "outcomes": [
       {
@@ -194,14 +194,14 @@
     "group": "nghe",
     "name": "Nhận sai sự ở Lục bộ",
     "icon": "部",
-    "text": "Hoàng tộc không làm thuê, nhưng có thể xin phụ hoàng một việc ở Lục bộ: tra sổ thuế, coi đê, xét án.",
+    "text": "Hoàng tộc không làm thuê, nhưng có thể xin triều đình một việc ở Lục bộ: tra sổ thuế, coi đê, xét án.",
     "conditions": { "classes": ["hoang_toc"], "age": { "min": 16 }, "tier": ["pham_gian"], "reign": { "active": false }, "flagsAll": ["khai_phu"] },
     "months": 4,
     "check": { "stat": "stat.intellect", "difficulty": 50 },
     "outcomes": [
       {
         "text": [
-          "Ngươi tra ra ba vạn lượng thuế bị nuốt ở Hộ bộ. Phụ hoàng ban thưởng, các quan nhìn ngươi bằng con mắt khác.",
+          "Ngươi tra ra ba vạn lượng thuế bị nuốt ở Hộ bộ. Thánh thượng ban thưởng, các quan nhìn ngươi bằng con mắt khác.",
           "Đê sông cả vững qua mùa lũ. Dân ven sông lập bàn thờ sống cho \"vị điện hạ đội nón lá\"."
         ],
         "effects": { "stat.intellect": 2, "silver": 120, "fame": 2, "throneBar": { "favor": 5, "power": 3 } }

@@ -8,6 +8,17 @@
 
 ## [Chưa phát hành]
 
+### 15.9 Tu tiên thế gia (2026-10-23)
+- 6 hoạt động mới cho con cháu tu tiên thế gia lúc còn là phàm nhân (`activities/tu-gia.json`):
+  - Nghe tộc lão giảng đạo, Luyện thể tộc truyền, Phụ việc linh điền gia tộc;
+  - Dự tộc tỷ, Đọc tàng kinh gia tộc (tầng thấp), Hầu trà tộc lão.
+- Không hoạt động nào tạo ra linh căn: linh căn vẫn là bẩm sinh, có test giữ luật này.
+- 3 sự kiện mới:
+  - kẻ không linh căn trong tộc (quản việc thế tục, luyện thể hay bỏ đi);
+  - phần linh thạch cuối năm;
+  - lão tổ xuất quan.
+- Hoạt động mới nào nhắc tới cha hoặc mẹ thì ẩn khi người ấy đã mất (`no_father`/`no_mother`). Câu nào không cần nhắc tới cha mẹ thì viết lại cho trung tính.
+
 ### 15.8 Nông gia, bần dân (2026-10-23)
 - 15 hoạt động mới (`activities/nong-gia-ban-dan.json`):
   - **Nông gia**: Chăn trâu cắt cỏ, Mò cua bắt ốc (cả bần dân), Làm ruộng giúp nhà, Đi chợ phiên bán nông sản, Đổi công với hàng xóm, Thuê thêm ruộng.

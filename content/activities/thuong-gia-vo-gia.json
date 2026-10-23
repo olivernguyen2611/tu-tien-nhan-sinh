@@ -5,7 +5,7 @@
     "name": "Học tính sổ ở cửa hiệu",
     "icon": "算",
     "text": "Ngồi sau quầy với lão chưởng quỹ, học gảy bàn tính, ghi sổ thu chi, nhìn mặt khách mà đoán túi tiền.",
-    "conditions": { "classes": ["thuong_gia"], "tier": ["pham_gian"], "age": { "min": 6, "max": 15 } },
+    "conditions": { "classes": ["thuong_gia"], "tier": ["pham_gian"], "age": { "min": 6, "max": 15 }, "flagsNone": ["no_father"] },
     "months": 2,
     "outcomes": [
       {
@@ -28,7 +28,7 @@
     "name": "Theo cha áp hàng",
     "icon": "貨",
     "text": "Cha đi buôn chuyến xa, cho ngươi theo xe hàng. Học ở đường đi nhiều hơn học trong sách.",
-    "conditions": { "classes": ["thuong_gia"], "tier": ["pham_gian"], "age": { "min": 11, "max": 17 } },
+    "conditions": { "classes": ["thuong_gia"], "tier": ["pham_gian"], "age": { "min": 11, "max": 17 }, "flagsNone": ["no_father"] },
     "months": 3,
     "outcomes": [
       {
@@ -57,7 +57,7 @@
     "outcomes": [
       {
         "text": [
-          "Ngươi bán được lô hàng tồn ba năm cho một vị khách sộp. Cha khen một câu, cả tháng ngươi vui.",
+          "Ngươi bán được lô hàng tồn ba năm cho một vị khách sộp. Lão chưởng quỹ khen một câu, cả tháng ngươi vui.",
           "Khách quen tới hiệu ngày càng đông. Có người đi xa hai chục dặm chỉ để mua hàng của ngươi."
         ],
         "effects": { "silver": 70, "stat.charm": 1, "stat.happiness": 2 },
@@ -66,7 +66,7 @@
     ],
     "failOutcomes": [
       {
-        "text": "Ngươi bị một gã khách lừa đổi bạc giả. Cha không mắng, chỉ đưa cho ngươi một thỏi bạc thật để so.",
+        "text": "Ngươi bị một gã khách lừa đổi bạc giả. Lão chưởng quỹ không mắng, chỉ đưa cho ngươi một thỏi bạc thật để so.",
         "effects": { "silver": 15, "stat.intellect": 1, "stat.happiness": -2 }
       }
     ]
@@ -202,13 +202,13 @@
       {
         "weight": 3,
         "text": [
-          "Ngươi đứng tấn được trọn ba nén nhang. Cha không nói gì, chỉ gật đầu một cái.",
+          "Ngươi đứng tấn được trọn ba nén nhang. Lão giáo đầu trong nhà không nói gì, chỉ gật đầu một cái.",
           "Đứng tấn dưới mưa. Nước chảy vào mắt, ngươi không dám chớp."
         ],
         "effects": { "stat.physique": 2, "stat.health": 1, "stat.daoHeart": 1 }
       },
       {
-        "text": "Ngươi ngã ngồi giữa sân. Mấy đồ đệ của cha cười ồ, ngươi đứng dậy tấn lại từ đầu.",
+        "text": "Ngươi ngã ngồi giữa sân. Mấy đồ đệ trong võ quán cười ồ, ngươi đứng dậy tấn lại từ đầu.",
         "effects": { "stat.physique": 1, "stat.happiness": -1 }
       }
     ]
@@ -226,7 +226,7 @@
     "outcomes": [
       {
         "text": [
-          "Cha mở hòm gỗ lấy ra quyển võ phổ ố vàng: \"Từ hôm nay, ngươi học cái này.\"",
+          "Trưởng bối trong nhà mở hòm gỗ lấy ra quyển võ phổ ố vàng: \"Từ hôm nay, ngươi học cái này.\"",
           "Ngươi luyện thành chiêu đầu tiên của võ học nhà. Ông nội đứng ngoài sân, cười tới chảy nước mắt."
         ],
         "effects": { "learnArt": { "grades": [1, 2] }, "stat.physique": 1 }
@@ -245,7 +245,7 @@
     "name": "Theo cha áp tiêu",
     "icon": "鏢",
     "text": "Tiêu cục nhà nhận chuyến hàng đi xa, cha cho ngươi theo xe. Học cách đọc đường, học cách hô tiêu hiệu.",
-    "conditions": { "classes": ["vo_gia"], "tier": ["pham_gian"], "age": { "min": 12, "max": 18 } },
+    "conditions": { "classes": ["vo_gia"], "tier": ["pham_gian"], "age": { "min": 12, "max": 18 }, "flagsNone": ["no_father"] },
     "months": 3,
     "outcomes": [
       {
