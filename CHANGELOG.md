@@ -8,6 +8,14 @@
 
 ## [Chưa phát hành]
 
+### 15.1 Nền giai cấp (2026-10-23)
+- Thế giới có 8 **giai cấp** (`character/classes.json`): Hoàng tộc, Quyền quý, Tu tiên thế gia, Quan gia, Thương gia, Võ gia, Nông gia, Bần dân, xếp theo thứ bậc. Mỗi xuất thân thuộc một giai cấp (`class` trong `origins.json`); hồ sơ nhân vật ghi giai cấp cạnh xuất thân.
+- Điều kiện mới `classes` / `notClasses` cho hoạt động, sự kiện… (giai cấp hiện tại, đọc lười từ xuất thân nên save cũ không cần đổi).
+- `balance.classes`: bảng tắt theo giai cấp giống `balance.standing` (hoạt động theo id/nhóm, sự kiện theo id/loại/chủ đề). Hoạt động tự ghi `classes` thì vẫn mở cho giai cấp đó.
+- `byClass` trong hoạt động: cùng một việc, mỗi giai cấp thấy tên, chữ, câu mô tả riêng.
+- Giai cấp có thể đổi (`character.classId`, hàm `setClass`) để làm phất lên, sa sút ở 15.11. Developer mode có nút đổi giai cấp.
+- Validator báo lỗi khi xuất thân, hoạt động hay `balance.classes` nhắc tới giai cấp không có.
+
 ### 15.0 Hoàng tộc khớp triều đình (2026-10-23)
 - Trước đây một đời hoàng tử có ba "hoàng gia" không liên quan: cha mẹ anh em trong tab Gia đình là người thường họ ngẫu nhiên, hoàng đế và thái tử của triều đình chỉ là cái tên, còn các hoàng tử tranh ngôi là một danh sách thứ ba. Vì vậy vua băng hà mà cha vẫn sống, thái tử lên ngôi là người lạ.
 - Nay cha của hoàng tử, công chúa **chính là hoàng đế đương triều**; cả nhà mang **quốc tính** của triều đại (`royalSurnames` trong `world-state.json`); mẹ là hoàng hậu hoặc phi tần; thêm hoàng huynh con các phi khác để có thứ bậc kế vị.

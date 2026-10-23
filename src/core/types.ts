@@ -347,6 +347,8 @@ export interface GameState {
     name: string;
     gender: Gender;
     originId: string;
+    /** 15.1: the giai cấp now, when it has changed from the one born into (absent: the origin's). */
+    classId?: string;
     hometown: string;
     age: number;
   };

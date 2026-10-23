@@ -162,6 +162,9 @@ const BaseConditionsSchema = z
     martial: z.object({ min: z.number().int().optional(), max: z.number().int().optional(), ready: z.boolean().optional() }).strict().optional(),
     /** Born into one of these origins. */
     origins: ids,
+    /** 15.1: the life's giai cấp now is one of these / none of these. */
+    classes: ids,
+    notClasses: ids,
     /** Task 3.9: items carried (all of them). */
     itemsAll: ids,
     /**
@@ -707,12 +710,26 @@ export const OriginSchema = z
     royal: z.boolean().default(false),
     /** 15.0: the house born into: hoang (the emperor is the father), vuong (a thân vương's house of the quốc tính). */
     house: z.enum(['hoang', 'vuong']).optional(),
+    /** 15.1: the giai cấp born into (character/classes.json). */
+    class: id.optional(),
     /** Task 5b.9 Cầu đầu thai: choosing this origin costs Luân Hồi points (random draws are free). */
     rebirthCost: z.number().int().min(1).optional(),
     birthText: z.string().min(1),
   })
   .strict();
 export const OriginFileSchema = z.array(OriginSchema).min(1);
+
+/** 15.1 Giai cấp (worlds/<id>/character/classes.json): who a life is in the world's order; activities, events, jobs and
+ *  schools name the classes they belong to. `rank`: higher is nobler (texts and class shifts read it). */
+export const SocialClassSchema = z.object({
+  id,
+  name: z.string().min(1),
+  glyph: z.string().refine((t) => [...t].length === 1, 'glyph là đúng một chữ'),
+  rank: z.number().int().min(0),
+  description: z.string().min(1),
+}).strict();
+export const SocialClassFileSchema = z.array(SocialClassSchema);
+export type SocialClass = z.infer<typeof SocialClassSchema>;
 
 /** content/worlds/<id>/world.json: one playable world with its own storylines. */
 export const WorldSchema = z
@@ -1978,6 +1995,11 @@ export const BalanceSchema = z
       hooks: z.record(z.string(), z.array(EffectHookSchema)).default({}),
       silverKeep: z.number().min(0).max(1), cutFlag: z.string().min(1), cutDrift: z.number().min(0),
     }).strict().optional(),
+    /** 15.1: what each giai cấp never sees (or sees less): like `standing`, by class id. */
+    classes: z.record(z.string(), z.object({
+      mul: z.number().min(0), categories: z.array(z.string()).default([]), themes: z.array(z.string()).default([]), ids: z.array(z.string()).default([]),
+      activityGroups: z.array(z.string()).default([]), activityIds: z.array(z.string()).default([]),
+    }).strict()).optional(),
     standing: z.record(z.enum(['reign', 'office', 'army']), z.object({
       mul: z.number().min(0), categories: z.array(z.string()).default([]), themes: z.array(z.string()).default([]), ids: z.array(z.string()).default([]),
       /** Activities closed to this standing (unless their conditions speak of it). */
@@ -2501,6 +2523,12 @@ export const ActivitySchema = z
     check: z.object({ stat: statKey, difficulty: z.number().min(0).max(100) }).strict().optional(),
     outcomes: z.array(ActivityOutcomeSchema).min(1),
     failOutcomes: z.array(ActivityOutcomeSchema).min(1).optional(),
+    /** 15.1: the same activity as a giai cấp sees it (Mời lang trung → Truyền thái y): name, icon, text by class id. */
+    byClass: z.record(id, z.object({
+      name: z.string().min(1).optional(),
+      icon: z.string().refine((t) => [...t].length === 1, 'icon là đúng một chữ').optional(),
+      text: z.string().min(1).optional(),
+    }).strict()).default({}),
   })
   .strict()
   .superRefine((a, ctx) => {

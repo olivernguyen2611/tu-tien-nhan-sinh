@@ -3,6 +3,7 @@
 import type { Content } from '../core/content';
 import type { Activity, GameEvent } from '../core/schemas';
 import type { GameState } from '../core/types';
+import { classOf } from './socialClass';
 
 type Standing = 'reign' | 'office' | 'army';
 
@@ -14,13 +15,18 @@ function standingsOf(state: GameState, content: Content): Standing[] {
   return out;
 }
 
+/** 15.1: the giai cấp's own mute list (balance.classes), when the life has one. */
+const classCfg = (state: GameState, content: Content) => {
+  const id = classOf(state, content);
+  return id ? content.balance.classes?.[id] : undefined;
+};
+
 /** Weight factor of this event for the life's standing now (1 = untouched, 0 = never). */
 export function standingMul(state: GameState, content: Content, event: Pick<GameEvent, 'id' | 'category' | 'themes'>): number {
   const cfg = content.balance.standing;
-  if (!cfg) return 1;
+  const lists = [...(cfg ? standingsOf(state, content).map((k) => cfg[k]) : []), classCfg(state, content)];
   let mul = 1;
-  for (const k of standingsOf(state, content)) {
-    const s = cfg[k];
+  for (const s of lists) {
     if (!s) continue;
     if (s.ids.includes(event.id) || s.categories.includes(event.category) || event.themes.some((t) => s.themes.includes(t))) mul *= s.mul;
   }
@@ -29,6 +35,9 @@ export function standingMul(state: GameState, content: Content, event: Pick<Game
 
 /** False when this activity is closed to the life's standing (one whose conditions name the standing stays open). */
 export function standingAllows(state: GameState, content: Content, a: Pick<Activity, 'id' | 'group' | 'conditions'>): boolean {
+  // 15.1: closed to the giai cấp, unless the activity names its classes itself.
+  const cls = classCfg(state, content);
+  if (cls && !a.conditions.classes?.length && (cls.activityIds.includes(a.id) || cls.activityGroups.includes(a.group))) return false;
   const cfg = content.balance.standing;
   if (!cfg) return true;
   return standingsOf(state, content).every((k) => {

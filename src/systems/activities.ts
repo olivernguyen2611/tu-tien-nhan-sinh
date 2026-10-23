@@ -11,6 +11,7 @@ import { applyOutcome, checkChance } from './events/engine';
 import { drawText } from './textPool';
 import { monthsLeft, monthsUsed } from './timeBudget';
 import { standingAllows } from './standing';
+import { classOf } from './socialClass';
 
 /** Menu headings, in menu order. */
 export const ACTIVITY_GROUP_NAMES: Record<ActivityGroup, string> = {
@@ -102,12 +103,13 @@ export function activityViews(state: GameState, content: Content): ActivityView[
     .filter((a) => fits(state, content, a))
     .map((a) => {
       const pay = payable(state, content, a);
+      const look = lookFor(state, content, a);
       return {
         id: a.id,
         group: a.group,
-        name: a.name,
-        icon: a.icon,
-        text: a.text,
+        name: look.name,
+        icon: look.icon,
+        text: look.text,
         cost: pay ? costText(pay, monthsFor(a, pay)) : pay === null ? ['miễn phí', costText(null, a.months)].filter(Boolean).join(', ') : costText(null, a.months) || null,
         // The free version has no check: the walk always happens.
         chance: a.check && pay !== null ? checkChance(state, content, a.check.stat, a.check.difficulty) : null,
@@ -115,6 +117,13 @@ export function activityViews(state: GameState, content: Content): ActivityView[
       };
     })
     .sort((x, y) => order.indexOf(x.group) - order.indexOf(y.group));
+}
+
+/** 15.1: the activity as the life's giai cấp sees it (byClass), else as written. */
+function lookFor(state: GameState, content: Content, a: Activity): { name: string; icon: string; text: string } {
+  const cls = classOf(state, content);
+  const v = cls ? a.byClass[cls] : undefined;
+  return { name: v?.name ?? a.name, icon: v?.icon ?? a.icon, text: v?.text ?? a.text };
 }
 
 /** Effects of one outcome for this use: its effects, the rolled ranges, and the bonuses that hold now. */
@@ -162,7 +171,7 @@ export function doActivity(state: GameState, content: Content, id: string, targe
   // Bonuses read the life as it was before the activity (e.g. how unhappy it was).
   const r = applyOutcome(said.state, content, { text: said.text, effects: outcomeEffects(state, content, outcome, rng) }, rng);
   const tone: Tone = success === false ? 'bad' : 'good';
-  const text = `${a.name}: ${r.text}`;
+  const text = `${lookFor(state, content, a).name}: ${r.text}`;
   const log = r.state.log.slice();
   const last = log[log.length - 1];
   if (last) log[log.length - 1] = { ...last, lines: [...last.lines, { text, tone }] };

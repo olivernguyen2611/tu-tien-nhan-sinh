@@ -1,6 +1,7 @@
 // Developer mode: cheats for play-testing. Pure functions on GameState, like
 // every other system; the UI panel only calls these. Every change is logged
 // with a [Dev] mark so a tested life is never mistaken for a real one.
+import { setClass } from './socialClass';
 import { bringBack } from './karmaLedger';
 import { originDef, rollSpecialOrigin } from './specialOrigin';
 import { applyOutcome } from './events/engine';
@@ -363,6 +364,11 @@ export function devMerit(state: GameState, id: string, add: number): GameState {
 /** 9.1: move the life to a tầng (its screen shows; no realm change). */
 export function devSetTier(state: GameState, content: Content, tierId: string): GameState {
   return devLog(enterTier(state, content, tierId), `tầng ${tierId}`);
+}
+
+/** 15.1: move the life into a giai cấp (activities and events follow). */
+export function devSetClass(state: GameState, content: Content, classId: string): GameState {
+  return devLog(setClass(state, content, classId), `giai cấp ${classId}`);
 }
 
 /** Set or clear a flag. */
