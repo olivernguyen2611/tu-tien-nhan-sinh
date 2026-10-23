@@ -471,7 +471,7 @@ Thứ tự theo rủi ro tăng dần, mỗi mục là một task riêng:
 | 15.7 | [x] Thương gia + võ gia |
 | 15.8 | [x] Nông gia + bần dân, cô nhi |
 | 15.9 | [x] Tu tiên thế gia (phần phàm) |
-| 15.10 | [ ] Sự kiện theo giai cấp |
+| 15.10 | [x] Sự kiện theo giai cấp |
 | 15.11 | [ ] Đổi giai cấp: phất lên, sa sút |
 | 15.12 | [ ] Cân bằng, bot theo giai cấp, chơi thử |
 

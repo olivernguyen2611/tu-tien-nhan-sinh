@@ -318,3 +318,26 @@ describe('Tu tiên thế gia (15.9)', () => {
     expect(ids({ ...s, flags: { ...s.flags, no_father: true } })).not.toContain('theo_cha_hoc_kinh_su');
   });
 });
+
+describe('Sự kiện theo giai cấp (15.10)', () => {
+  const ev = (id: string) => {
+    for (const e of content.events) if (e.id === id) return e;
+    throw new Error(id);
+  };
+
+  it('a hoàng tử never meets the năm đói, the bắt lính, the chủ nợ; a farmer still does', () => {
+    for (const id of ['tc_nan_doi', 'tc_bat_linh', 'ts_chu_no_toi_cua', 'cho_du_dau_lang', 'ld_doi_la']) {
+      expect(standingMul(life('hoang_tu', 20), content, ev(id)), id).toBe(0);
+      expect(standingMul(life('nong_dan', 20), content, ev(id)), id).toBe(1);
+    }
+    // A quyền quý is spared the hunger, but the chuyện họ hàng hỏi vay stays.
+    expect(standingMul(life('quy_toc', 20), content, ev('ld_nan_doi'))).toBe(0);
+    expect(standingMul(life('quy_toc', 20), content, ev('gt_hk_muon_tien'))).toBe(1);
+  });
+
+  it('the rich get their own version: open the granary or shut the gate', () => {
+    const famine = ev('gc_nan_doi_mo_kho');
+    expect(famine.conditions.classes).toEqual(expect.arrayContaining(['hoang_toc', 'quyen_quy']));
+    expect(meets(life('nong_dan', 20), famine.conditions, content)).toBe(false);
+  });
+});

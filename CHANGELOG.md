@@ -8,6 +8,19 @@
 
 ## [Chưa phát hành]
 
+### 15.10 Sự kiện theo giai cấp (2026-10-23)
+- Rà các sự kiện phàm gian chưa gắn giai cấp mà có chữ chỉ cảnh nghèo (đói, chủ nợ, cường hào, lý trưởng, bắt lính, hàng xóm, đầu làng…).
+- Bảng `balance.classes` tắt chúng theo giai cấp (dùng chung cơ chế `standing.ts`):
+  - **Hoàng tộc**: tắt 28 sự kiện (năm đói, bắt lính, chủ nợ, cường hào chiếm ruộng, cháy nhà hàng xóm, chó dữ đầu làng…).
+  - **Quyền quý**: tắt 11 sự kiện về đói, nợ, bắt lính, bắt phu.
+  - **Tu tiên thế gia**: tắt 4 sự kiện (đói lả, chủ nợ, bắt lính, trưng binh).
+- 4 sự kiện thay thế cho nhà giàu (`the-su-nha-giau.json`):
+  - Năm đói: mở kho phát chẩn, bán giá cũ hay đóng cửa canh kho.
+  - Dịch trong kinh: lánh về biệt trang hay lập trạm thuốc.
+  - Triều đình mượn gia binh.
+  - Phủ bên lấn đất.
+- Validator báo lỗi khi `balance.classes` tắt một sự kiện không tồn tại.
+
 ### 15.9 Tu tiên thế gia (2026-10-23)
 - 6 hoạt động mới cho con cháu tu tiên thế gia lúc còn là phàm nhân (`activities/tu-gia.json`):
   - Nghe tộc lão giảng đạo, Luyện thể tộc truyền, Phụ việc linh điền gia tộc;

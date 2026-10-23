@@ -741,6 +741,8 @@ export function validateContent(files: Record<string, unknown>): Problem[] {
   for (const id of disguise?.activityIds ?? []) if (activityIds.length > 0 && !activityIds.includes(id)) problems.push({ file: 'config/balance.json', level: 'error', message: `balance.classDisguise nhắc tới hoạt động lạ "${id}"` });
   for (const c of Object.keys(parsedShared.balance?.classStipend?.silver ?? {})) classRefs.push({ file: 'config/balance.json', what: 'balance.classStipend', id: c });
   for (const c of Object.keys(parsedShared.balance?.classes ?? {})) classRefs.push({ file: 'config/balance.json', what: 'balance.classes', id: c });
+  // 15.10: the events a giai cấp never meets must exist.
+  for (const [c, v] of Object.entries(parsedShared.balance?.classes ?? {})) for (const id of v.ids) if (allEventIds.size > 0 && !allEventIds.has(id)) problems.push({ file: 'config/balance.json', level: 'error', message: `balance.classes.${c} tắt sự kiện lạ "${id}"` });
   // A partial content set (tests) without classes.json has nothing to check against.
   if (classIds.size > 0) for (const r of classRefs) if (!classIds.has(r.id)) problems.push({ file: r.file, level: 'error', message: `${r.what} nhắc tới giai cấp lạ "${r.id}"` });
   // 9.7: dock buttons are unique; every tier's dock names a button there (or "nam", the +1 năm button).

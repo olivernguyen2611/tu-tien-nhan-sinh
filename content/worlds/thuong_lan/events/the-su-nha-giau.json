@@ -1,0 +1,98 @@
+[
+  {
+    "id": "gc_nan_doi_mo_kho",
+    "category": "life",
+    "title": "Năm đói, mở kho hay đóng cửa",
+    "text": "Mất mùa liền mấy vụ. Ngoài tường phủ, dân đói ngồi kín cả con đường, trong kho nhà ngươi thóc vẫn đầy tới xà.",
+    "themes": ["karma"],
+    "conditions": { "classes": ["hoang_toc", "quyen_quy", "tu_gia"], "age": { "min": 14 }, "tier": ["pham_gian"], "worldVars": [{ "id": "harvest", "lte": 35 }] },
+    "weight": 10,
+    "cooldownYears": 10,
+    "choices": [
+      {
+        "text": "Mở kho phát chẩn",
+        "result": { "text": "Ba ngày phát cháo, người xếp hàng dài tới cổng thành. Kho vơi một nửa, còn tên ngươi thì được người ta khắc lên bia ở đầu cầu.", "effects": { "silver": -150, "karma": 4, "fame": 3, "stat.happiness": 2 } }
+      },
+      {
+        "text": "Bán thóc ra với giá cũ",
+        "result": { "text": "Không lãi, không lỗ. Dân mua được gạo, nhà buôn trong thành thì nhìn ngươi như kẻ phá giá.", "effects": { "karma": 2, "stat.intellect": 1, "stat.charm": 1 } }
+      },
+      {
+        "text": "Đóng cửa, tăng gia binh canh kho",
+        "result": { "text": "Kho thóc còn nguyên. Một đêm có đám đói liều trèo tường, gia binh đuổi ra. Sáng ra có hai cái xác ngoài tường phủ.", "effects": { "karma": -4, "infamy": 2, "stat.daoHeart": -2 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_dich_benh_lanh_nan",
+    "category": "health",
+    "title": "Dịch trong kinh thành",
+    "text": "Ôn dịch lan tới kinh thành. Các phủ đệ lục tục đóng cửa, có nhà thu xếp xe ngựa về biệt trang ngoài thành.",
+    "themes": ["health"],
+    "conditions": { "classes": ["hoang_toc", "quyen_quy"], "age": { "min": 8 }, "tier": ["pham_gian"] },
+    "weight": 4,
+    "cooldownYears": 15,
+    "choices": [
+      {
+        "text": "Về biệt trang lánh dịch",
+        "result": { "text": "Biệt trang trên núi gió mát, nước trong. Nửa năm sau trở về, nửa con phố quen đã thành nhà trống.", "effects": { "stat.health": 2, "stat.happiness": -1 } }
+      },
+      {
+        "text": "Ở lại, bỏ tiền mời thầy thuốc chữa cho dân",
+        "check": { "stat": "stat.health", "difficulty": 45 },
+        "success": { "text": "Ngươi đứng ra lập trạm thuốc ở cửa thành. Dịch qua, ngươi vẫn khỏe, người trong kinh gọi ngươi là \"thiện nhân\".", "effects": { "silver": -80, "karma": 3, "fame": 3, "stat.daoHeart": 2 } },
+        "fail": { "text": "Ngươi lập trạm thuốc, rồi chính ngươi phát sốt. Nằm thập tử nhất sinh suốt một tháng mới gượng dậy được.", "effects": { "silver": -80, "karma": 3, "stat.health": -8 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_gop_gia_binh",
+    "category": "court",
+    "title": "Triều đình mượn gia binh",
+    "text": "Biên ải cấp báo. Binh bộ gửi công văn tới các nhà quyền quý: mỗi phủ góp một đội gia binh, hoặc nộp bạc thay.",
+    "themes": ["court"],
+    "conditions": { "classes": ["hoang_toc", "quyen_quy"], "age": { "min": 18 }, "tier": ["pham_gian"], "reign": { "active": false } },
+    "weight": 4,
+    "cooldownYears": 12,
+    "choices": [
+      {
+        "text": "Góp gia binh, tự mình dẫn đi",
+        "check": { "stat": "stat.physique", "difficulty": 50 },
+        "success": { "text": "Đội gia binh của ngươi giữ được một cửa ải nhỏ suốt mười ngày. Tấu chương báo công có tên ngươi ở dòng đầu.", "effects": { "fame": 4, "stat.physique": 1, "throneBar": { "favor": 4, "power": 3 } } },
+        "fail": { "text": "Đội gia binh tan ở trận đầu. Ngươi chạy về với một vết tên trên vai và nỗi nhục cả kinh thành bàn tán.", "effects": { "stat.health": -6, "infamy": 1, "stat.happiness": -3 } }
+      },
+      {
+        "text": "Góp gia binh, giao cho tướng triều đình",
+        "result": { "text": "Gia binh nhà ngươi theo quân ra biên. Về được hai phần ba. Binh bộ gửi một tấm biển khen treo trước cổng.", "effects": { "fame": 1, "stat.charm": 1, "karma": 1 } }
+      },
+      {
+        "text": "Nộp bạc thay",
+        "result": { "text": "Ba trăm lượng nộp lên Binh bộ. Không ai trách, cũng không ai nhớ.", "effects": { "silver": -300, "stat.happiness": 1 } }
+      }
+    ]
+  },
+  {
+    "id": "gc_phu_ben_tranh_dat",
+    "category": "social",
+    "title": "Phủ bên lấn đất",
+    "text": "Phủ bên xây thêm vườn hoa, tường mới lấn sang đất nhà ngươi ba thước. Chủ phủ bên là một vị thị lang đang được sủng.",
+    "themes": ["wealth"],
+    "conditions": { "classes": ["hoang_toc", "quyen_quy"], "age": { "min": 16 }, "tier": ["pham_gian"] },
+    "weight": 4,
+    "oncePerLife": true,
+    "choices": [
+      {
+        "text": "Viết thư nhắc khéo",
+        "result": { "text": "Thị lang hồi âm, lời lẽ khiêm cung, rồi cho dỡ tường lùi lại. Từ đó hai phủ năm nào cũng gửi quà Tết cho nhau.", "effects": { "stat.charm": 2, "stat.intellect": 1 } }
+      },
+      {
+        "text": "Nhường ba thước",
+        "result": { "text": "Ngươi cho người trồng một hàng trúc dọc bức tường mới. Thị lang biết chuyện, thấy ngại, tự lùi tường lại sáu thước.", "effects": { "stat.daoHeart": 2, "karma": 1, "fame": 1 } }
+      },
+      {
+        "text": "Sai gia đinh đập tường",
+        "result": { "text": "Tường đổ, hai nhà thành thù. Tháng sau có sớ đàn hặc nhà ngươi \"cậy thế ức hiếp quan triều\".", "effects": { "stat.happiness": 1, "infamy": 2, "throneBar": { "suspicion": 3 } } }
+      }
+    ]
+  }
+]
